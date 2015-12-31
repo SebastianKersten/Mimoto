@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+	Options -MultiViews
+
+#	RewriteEngine On
+	#RewriteBase /Users/apple/Development/Webroot/Popvote/web
+	#RewriteCond %{REQUEST_FILENAME} !-f
+	#RewriteRule ^ index.php [L]
+
+	# Always remove the www to keep the session in sync over the pages
+   #RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+   #RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+RewriteRule ^static/ - [L,NC]
+
+    RewriteRule ^ index.php [L]
+</IfModule>
