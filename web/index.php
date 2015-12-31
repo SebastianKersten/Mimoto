@@ -27,8 +27,12 @@ $app['debug'] = true;
 $app['twig'] = $twig;
 
 
-$app->get('/', 'MaidoProjects\\Controller\\PageProjectsController::getIndex');
-$app->post('/pages/create', 'MaidoProjects\\Controller\\DashboardController::create');
+$app->get('/', 'MaidoProjects\\Controller\\pages\\ProjectsController::getIndex');
+$app->get('/prognose', 'MaidoProjects\\Controller\\pages\\ForecastController::getIndex');
+$app->get('/resultaat', 'MaidoProjects\\Controller\\pages\\ResultController::getIndex');
+
+$app->get('/client/add', 'MaidoProjects\\Controller\\ClientController::add');
+$app->post('/client/edit', 'MaidoProjects\\Controller\\ClientController::edit');
 
 $app->post('/pages/{id}/{slug}/add/{ownerid}', 'MimotoCMS\\Controller\\EditorController::addNode');
 $app->get('/pages/{id}/{slug}', 'MaidoProjects\\Controller\\EditorController::getDataset');
