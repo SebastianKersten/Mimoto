@@ -1,0 +1,40 @@
+<div class="popup_title">New project</div>
+<form name="form_project" action="" method="post">
+<div class="form">
+    <div class="form_field_name">Project name</div>
+    <div class="form_field"><input id="form_field_name" name="name" type="text" class="textfield" /></div>
+    <div class="form_field_name">Project description</div>
+    <div class="form_field"><textarea id="form_field_description" name="description" class="textfield"></textarea></div>
+    <div class="form_field_name">Client</div>
+    <div class="form_field">
+        <select id="form_field_client_id" name="client_id">
+            <option value="0">Select a client ..</option>
+            {% for client in clients %}
+                <option value="{{ client.id }}">{{ client.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form_field_name">Agency<span class="optional"> - optional</span></div>
+    <div class="form_field">
+        <select id="form_field_agency_id" name="agency_id">
+            <option value="0"></option>
+            {% for agency in agencies %}
+                <option value="{{ agency.id }}">{{ agency.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form_field_name">Project manager</div>
+    <div class="form_field">
+        <select id="form_field_projectmanager_id" name="projectmanager_id">
+            <option value="0">Select a project manager ..</option>
+            {% for projectmanager in projectmanagers %}
+                <option value="{{ projectmanager.id }}">{{ projectmanager.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form_menu">
+        <div class="textbutton" onClick="Maido.popup.close();">Cancel</div>
+        <div class="button" onClick="Maido.saveProject(document.getElementById('form_field_name').value, document.getElementById('form_field_description').value, document.getElementById('form_field_client_id').value, document.getElementById('form_field_agency_id').value, document.getElementById('form_field_projectmanager_id').value);">Save</div>
+    </div>
+</div>
+</form>

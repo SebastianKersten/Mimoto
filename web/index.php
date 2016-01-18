@@ -31,10 +31,24 @@ $app->get('/', 'MaidoProjects\\Controller\\pages\\ProjectsController::getIndex')
 $app->get('/prognose', 'MaidoProjects\\Controller\\pages\\ForecastController::getIndex');
 $app->get('/resultaat', 'MaidoProjects\\Controller\\pages\\ResultController::getIndex');
 
-$app->get('/client/add', 'MaidoProjects\\Controller\\ClientController::add');
-$app->post('/client/edit', 'MaidoProjects\\Controller\\ClientController::edit');
+$app->get('/project/new', 'MaidoProjects\\Controller\\pages\\ProjectsController::formNewProject');
+$app->post('/project/save', 'MaidoProjects\\Controller\\pages\\ProjectsController::saveProject');
 
-$app->post('/pages/{id}/{slug}/add/{ownerid}', 'MimotoCMS\\Controller\\EditorController::addNode');
-$app->get('/pages/{id}/{slug}', 'MaidoProjects\\Controller\\EditorController::getDataset');
+$app->get('/client/new', 'MaidoProjects\\Controller\\ClientController::new');
+$app->post('/client/change', 'MaidoProjects\\Controller\\ClientController::change');
+
+$app->get('/settings', 'MaidoProjects\\Controller\\pages\\SettingsController::getOverview');
+$app->get('/settings/projectmanagers', 'MaidoProjects\\Controller\\pages\\SettingsController::getProjectManagerOverview');
+$app->get('/settings/projectmanager/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formNewProjectManager');
+$app->post('/settings/projectmanager/save', 'MaidoProjects\\Controller\\pages\\SettingsController::saveProjectManager');
+$app->get('/settings/clients', 'MaidoProjects\\Controller\\pages\\SettingsController::getClientOverview');
+$app->get('/settings/client/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formNewClient');
+$app->post('/settings/client/save', 'MaidoProjects\\Controller\\pages\\SettingsController::saveClient');
+$app->get('/settings/agencies', 'MaidoProjects\\Controller\\pages\\SettingsController::getAgencyOverview');
+$app->get('/settings/agency/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formNewAgency');
+$app->post('/settings/agency/save', 'MaidoProjects\\Controller\\pages\\SettingsController::saveAgency');
+
+$app->get('/ctfo', 'MaidoProjects\\Controller\\pages\\CTFOController::analyzeBuckaroo');
+
 
 $app->run();

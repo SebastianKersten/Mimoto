@@ -20,8 +20,8 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  *
  * @author apple
  */
-class ProjectsController {
-    //put your code here
+class ProjectsController
+{
     
     public function getIndex(Application $app)
     {   
@@ -40,10 +40,103 @@ class ProjectsController {
             array(
                 'section' => 'projects',
                 'pagetemplate' => 'page_projects.twig',
-                'name' => 'Sebastian',
                 'projects' => $aProjects
             )
         );
     }
     
+    public function formNewProject(Application $app)
+    {   
+        
+        $sQuery = "SELECT * FROM clients ORDER BY name ASC";
+        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+        $nItemCount = mysql_num_rows($result);
+        
+        $aClients = array();
+        
+        for ($i = 0; $i < $nItemCount; $i++)
+        {
+            
+            $object = (object) array();
+            
+            $object->id = mysql_result($result, $i, 'id');
+            $object->name = mysql_result($result, $i, 'name');
+            
+            $aClients[] = $object;
+        }
+        
+        $sQuery = "SELECT * FROM agencies ORDER BY name ASC";
+        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+        $nItemCount = mysql_num_rows($result);
+        
+        $aAgencies = array();
+        
+        for ($i = 0; $i < $nItemCount; $i++)
+        {
+            
+            $object = (object) array();
+            
+            $object->id = mysql_result($result, $i, 'id');
+            $object->name = mysql_result($result, $i, 'name');
+            
+            $aAgencies[] = $object;
+        }
+        
+        $sQuery = "SELECT * FROM projectmanagers ORDER BY name ASC";
+        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+        $nItemCount = mysql_num_rows($result);
+        
+        $aProjectManagers = array();
+        
+        for ($i = 0; $i < $nItemCount; $i++)
+        {
+            
+            $object = (object) array();
+            
+            $object->id = mysql_result($result, $i, 'id');
+            $object->name = mysql_result($result, $i, 'name');
+            
+            $aProjectManagers[] = $object;
+        }
+        
+        return $app['twig']->render(
+            'forms/project.twig',
+            array(
+                'clients' => $aClients,
+                'agencies' => $aAgencies,
+                'projectmanagers' => $aProjectManagers
+            )
+        );
+    }
+    
+    public function saveProject(Application $app, Request $request)
+    {
+        
+        $sName = $request->get('name');
+        $sDescription = $request->get('description');
+        $nClientID = $request->get('client_id');
+        $nAgencyID = $request->get('agency_id');
+        $nProjectManagerID = $request->get('projectmanager_id');
+        
+        
+        $query = "
+            INSERT INTO
+                projects
+            SET
+                name='".$sName."',
+                description='".$sDescription."',
+                client_id='".$nClientID."',
+                agency_id='".$nAgencyID."',
+                projectmanager_id='".$nProjectManagerID."',
+                created='".date('YmdHis')."'";
+        
+        $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        
+        
+        $response = (object) array();
+        $response->result = 'Ok!';
+        $response->name = $sName;
+        
+        return json_encode($response);
+    }   
 }
