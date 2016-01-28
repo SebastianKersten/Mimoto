@@ -80,40 +80,21 @@ class SettingsController
             array(
                 'section' => 'settings',
                 'pagetemplate' => 'pages/settings/projectmanagers.twig',
-                'simplelist_data' => $aObjects
+                'simplelist_data' => $aObjects,
+                'changeMethod' => 'changeProjectManager'
             )
         );
     }
     
-    public function formNewProjectManager(Application $app)
-    {   
-        return $app['twig']->render(
-            'forms/projectmanager.twig'
-        );
+    public function formProjectManager(Application $app, $id = false)
+    {
+        return $this->formSimpleListItem($app, 'projectmanagers', 'projectmanager', $id);
     }
     
     public function saveProjectManager(Application $app, Request $request)
     {
-        
-        $sName = $request->get('name');
-        
-        
-        $query = "
-            INSERT INTO
-                projectmanagers
-            SET
-                name='".$sName."',
-                created='".date('YmdHis')."'";
-        
-        $result = mysql_query($query) or die('Query failed: ' . mysql_error());
-        
-        
-        $response = (object) array();
-        $response->result = 'Ok!';
-        $response->name = $sName;
-        
-        return json_encode($response);
-    }    
+        return $this->saveSimpleListItem('projectmanagers', $request->get('id'), $request->get('name'));
+    }
     
     
     /**
@@ -157,39 +138,21 @@ class SettingsController
             array(
                 'section' => 'settings',
                 'pagetemplate' => 'pages/settings/clients.twig',
-                'simplelist_data' => $aObjects
+                'simplelist_data' => $aObjects,
+                'changeMethod' => 'changeClient'
             )
         );
     }
     
+    
+    public function formClient(Application $app, $id = false)
+    {
+        return $this->formSimpleListItem($app, 'clients', 'client', $id);
+    }
+    
     public function saveClient(Application $app, Request $request)
     {
-        
-        $sName = $request->get('name');
-        
-        
-        $query = "
-            INSERT INTO
-                clients
-            SET
-                name='".$sName."',
-                created='".date('YmdHis')."'";
-        
-        $result = mysql_query($query) or die('Query failed: ' . mysql_error());
-        
-        
-        $response = (object) array();
-        $response->result = 'Ok!';
-        $response->name = $sName;
-        
-        return json_encode($response);
-    }   
-    
-    public function formNewClient(Application $app)
-    {   
-        return $app['twig']->render(
-            'forms/client.twig'
-        );
+        return $this->saveSimpleListItem('clients', $request->get('id'), $request->get('name'));
     }
     
     
@@ -235,32 +198,78 @@ class SettingsController
             array(
                 'section' => 'settings',
                 'pagetemplate' => 'pages/settings/agencies.twig',
-                'simplelist_data' => $aObjects
+                'simplelist_data' => $aObjects,
+                'changeMethod' => 'changeAgency'
             )
         );
     }
     
-    public function formNewAgency(Application $app)
-    {   
-        return $app['twig']->render(
-            'forms/agency.twig'
-        );
+    public function formAgency(Application $app, $id = false)
+    {
+        return $this->formSimpleListItem($app, 'agencies', 'agency', $id);
     }
     
     public function saveAgency(Application $app, Request $request)
     {
+        return $this->saveSimpleListItem('agencies', $request->get('id'), $request->get('name'));
+    }
+    
+    
+    
+    
+    
+    
+    private function formSimpleListItem(Application $app, $sDBTable, $sTwig, $nID)
+    {
         
-        $sName = $request->get('name');
+        $aData = array();
         
+        if ($nID !== false && !is_nan($nID))
+        {   
+            $sQuery = "SELECT * FROM ".$sDBTable." WHERE id='".$nID."'";
+            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+            $nItemCount = mysql_num_rows($result);
+            
+            if ($nItemCount == 1)
+            {
+                $aData['id'] = mysql_result($result, 0, 'id');
+                $aData['name'] = mysql_result($result, 0, 'name');
+            }
+        }
         
-        $query = "
-            INSERT INTO
-                agencies
-            SET
-                name='".$sName."',
-                created='".date('YmdHis')."'";
+        return $app['twig']->render(
+            'forms/'.$sTwig.'.twig',
+            $aData
+        );
+    }
+    
+    private function saveSimpleListItem($sDBTable, $nID, $sName)
+    {
         
-        $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        if (!empty($nID) && !is_nan($nID))
+        {
+             $query = "
+                UPDATE
+                    ".$sDBTable."
+                SET
+                    name='".$sName."',
+                    created='".date('YmdHis')."'
+                WHERE
+                    id='".$nID."'";
+            
+            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        }
+        else
+        {
+            $query = "
+                INSERT INTO
+                    ".$sDBTable."
+                SET
+                    name='".$sName."',
+                    created='".date('YmdHis')."'";
+
+            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        }
         
         
         $response = (object) array();
@@ -268,5 +277,5 @@ class SettingsController
         $response->name = $sName;
         
         return json_encode($response);
-    }   
+    }    
 }

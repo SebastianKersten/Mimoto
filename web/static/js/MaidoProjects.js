@@ -1,22 +1,21 @@
 Maido = {};
 
-Maido.addProject = function()
+Maido._aProjects = Array();
+
+
+Maido.newProject = function()
 {
     Maido.popup.open('/project/new');   
 }
 
-Maido.saveProject = function(sName, sDescription, nClientID, nAgencyID, nProjectManagerID)
+Maido.changeProject = function(nID)
+{   
+    Maido.popup.open('/project/change/' + nID);
+}
+
+Maido.saveProject = function(data)
 {
     // show loader
-    
-    var data = {
-        name: sName,
-        description: sDescription,
-        client_id: nClientID,
-        agency_id: nAgencyID,
-        projectmanager_id: nProjectManagerID
-    };
-    
     $.ajax({
         type: 'POST',
         url: "/project/save",
@@ -25,9 +24,45 @@ Maido.saveProject = function(sName, sDescription, nClientID, nAgencyID, nProject
         success: function (data) {
             document.getElementById('popup_content').innerHTML = data.name;
             window.open('/', '_self');//location.reload();
-        },
-    });  
+        }
+    });
 }
+
+
+Maido.toggleProjectState = function(nID)
+{
+    
+    // register
+    var project_details = document.getElementById('project_details_' + nID);
+    
+    
+    if (Maido._aProjects[nID] === true)
+    {    
+        // show
+        project_details.classList.remove('show');
+    
+        // update
+        Maido._aProjects[nID] = false;
+    }
+    else
+    {
+        // show
+        project_details.classList.add('show');
+    
+        // update
+        Maido._aProjects[nID] = true;
+    }
+    
+    
+}
+
+Maido.newSubproject = function(nProjectID)
+{
+    Maido.popup.open('/project/' + nProjectID + '/subproject/new');   
+}
+
+
+
 
 
 Maido.settings = {};
@@ -39,16 +74,11 @@ Maido.settings.newProjectManager = function()
 
 Maido.settings.changeProjectManager = function(nID)
 {
-    Maido.popup.open('/settings/projectmanager/change');  
+    Maido.popup.open('/settings/projectmanager/change/' + nID);  
 }
 
-Maido.settings.saveProjectManager = function(sName)
+Maido.settings.saveProjectManager = function(data)
 {
-    
-    var data = {
-        name: sName
-    };
-    
     $.ajax({
         type: 'POST',
         url: "/settings/projectmanager/save",
@@ -66,13 +96,13 @@ Maido.settings.newClient = function()
     Maido.popup.open('/settings/client/new');  
 }
 
-Maido.settings.saveClient = function(sName)
+Maido.settings.changeClient = function(nID)
 {
-    
-    var data = {
-        name: sName
-    };
-    
+    Maido.popup.open('/settings/client/change/' + nID);  
+}
+
+Maido.settings.saveClient = function(data)
+{    
     $.ajax({
         type: 'POST',
         url: "/settings/client/save",
@@ -91,13 +121,13 @@ Maido.settings.newAgency = function()
     Maido.popup.open('/settings/agency/new');  
 }
 
-Maido.settings.saveAgency = function(sName)
+Maido.settings.changeAgency = function(nID)
 {
-    
-    var data = {
-        name: sName
-    };
-    
+    Maido.popup.open('/settings/agency/change/' + nID);  
+}
+
+Maido.settings.saveAgency = function(data)
+{
     $.ajax({
         type: 'POST',
         url: "/settings/agency/save",

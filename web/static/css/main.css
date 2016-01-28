@@ -169,12 +169,21 @@ div.page {
 div.button {
     color: #ffffff;
     background-color: #000000;
-    display:inline-block;
+    display: inline-block;
     padding: 10px 15px 10px 15px;
     cursor: pointer;
 }
 
-div.textbutton {
+div.button_small {
+    font-size: 12px;
+    color: #ffffff;
+    background-color: #837dbb;
+    display: inline-block;
+    padding: 3px 6px 3px 6px;
+    cursor: pointer;
+}
+
+div.button_text {
     color: #c3c3c3;
     text-decoration: underline;
     display:inline-block;
@@ -184,8 +193,9 @@ div.textbutton {
 
 
 div.component_project {
-    background-color: #eeeeee;
+    background-color: #f5f5f5;
     margin-bottom: 10px;
+    position: relative;
 }
 
 
@@ -269,8 +279,14 @@ div.simplelist {
         width: 100%;
         max-width: 600px;
         padding: 10px;
-        background-color: 9ececa;
+        background-color: #9ececa;
+        cursor: pointer;
     }
+    
+        div.simplelist_item:hover {
+            text-decoration: underline;
+            font-weight: bold;
+        }
     
         div.simplelist_item_label {
             -webkit-flex: 5;
@@ -282,3 +298,79 @@ div.simplelist {
             flex: 1;
             text-align: right;
         }
+
+        
+div.project_summary {
+    display: -webkit-flex;
+    display: flex;
+    padding: 20px 40px 20px 20px;
+}
+
+    div.project_summary div.project {
+        -webkit-flex: 5;
+        flex: 5;
+    }
+    
+    div.project_subinfo {
+        -webkit-flex: 1;
+        flex: 1;
+        text-align: center;
+    }
+    
+    div.project_menu {
+        position: absolute;
+        right: 0;
+        text-align: right;
+        padding: 10px;
+    }
+    
+    div.client_name {
+        font-weight: bold;
+        font-size: 14px;
+        padding-left: 0px;
+        color: #df5b57;
+    }
+    
+    div.project_name {
+        font-size: 30px;
+        font-weight: bold;
+        padding-bottom: 10px;
+    }
+    
+    span.agency_name {
+        font-style: italic;
+        color: #858585;
+    }
+    
+div.project_details {
+    display: none;
+    padding: 0 15px 15px 15px;
+}
+
+    div.project_details.show {
+        display: block;
+    }
+    
+        div.project_details_inner {
+            background-color: #fefefe;
+        }
+    
+div.projectmanager_avatar {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-color: #c3c3c3
+}
+
+div.projectmanager_name {
+    margin-top: 5px;
+}
+
+div.project_subinfo_value {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+div.project_subinfo_key {
+    margin-top: 5px;
+}

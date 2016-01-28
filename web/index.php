@@ -27,25 +27,32 @@ $app['debug'] = true;
 $app['twig'] = $twig;
 
 
-$app->get('/', 'MaidoProjects\\Controller\\pages\\ProjectsController::getIndex');
+$app->get('/', 'MaidoProjects\\Controller\\pages\\ProjectsController::getOverview');
 $app->get('/prognose', 'MaidoProjects\\Controller\\pages\\ForecastController::getIndex');
 $app->get('/resultaat', 'MaidoProjects\\Controller\\pages\\ResultController::getIndex');
 
-$app->get('/project/new', 'MaidoProjects\\Controller\\pages\\ProjectsController::formNewProject');
+$app->get('/project/new', 'MaidoProjects\\Controller\\pages\\ProjectsController::formProject');
+$app->get('/project/change/{id}', 'MaidoProjects\\Controller\\pages\\ProjectsController::formProject');
 $app->post('/project/save', 'MaidoProjects\\Controller\\pages\\ProjectsController::saveProject');
 
-$app->get('/client/new', 'MaidoProjects\\Controller\\ClientController::new');
-$app->post('/client/change', 'MaidoProjects\\Controller\\ClientController::change');
+$app->get('/project/{project_id}/subproject/new', 'MaidoProjects\\Controller\\pages\\ProjectsController::formSubproject');
+
 
 $app->get('/settings', 'MaidoProjects\\Controller\\pages\\SettingsController::getOverview');
+
 $app->get('/settings/projectmanagers', 'MaidoProjects\\Controller\\pages\\SettingsController::getProjectManagerOverview');
-$app->get('/settings/projectmanager/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formNewProjectManager');
+$app->get('/settings/projectmanager/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formProjectManager');
+$app->get('/settings/projectmanager/change/{id}', 'MaidoProjects\\Controller\\pages\\SettingsController::formProjectManager');
 $app->post('/settings/projectmanager/save', 'MaidoProjects\\Controller\\pages\\SettingsController::saveProjectManager');
+
 $app->get('/settings/clients', 'MaidoProjects\\Controller\\pages\\SettingsController::getClientOverview');
-$app->get('/settings/client/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formNewClient');
+$app->get('/settings/client/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formClient');
+$app->get('/settings/client/change/{id}', 'MaidoProjects\\Controller\\pages\\SettingsController::formClient');
 $app->post('/settings/client/save', 'MaidoProjects\\Controller\\pages\\SettingsController::saveClient');
+
 $app->get('/settings/agencies', 'MaidoProjects\\Controller\\pages\\SettingsController::getAgencyOverview');
-$app->get('/settings/agency/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formNewAgency');
+$app->get('/settings/agency/new', 'MaidoProjects\\Controller\\pages\\SettingsController::formAgency');
+$app->get('/settings/agency/change/{id}', 'MaidoProjects\\Controller\\pages\\SettingsController::formAgency');
 $app->post('/settings/agency/save', 'MaidoProjects\\Controller\\pages\\SettingsController::saveAgency');
 
 $app->get('/ctfo', 'MaidoProjects\\Controller\\pages\\CTFOController::analyzeBuckaroo');

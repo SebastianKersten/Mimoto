@@ -1,16 +1,15 @@
-<div class="popup_title">New project</div>
-<form name="form_project" action="" method="post">
+<div class="popup_title">{% if formdata.id is defined %}Change{% else %}New{% endif %} project</div>
 <div class="form">
     <div class="form_field_name">Project name</div>
-    <div class="form_field"><input id="form_field_name" name="name" type="text" class="textfield" /></div>
+    <div class="form_field"><input id="form_field_name" name="name" type="text" class="textfield" value="{% if formdata.name is defined %}{{ formdata.name }}{% endif %}" /></div>
     <div class="form_field_name">Project description</div>
-    <div class="form_field"><textarea id="form_field_description" name="description" class="textfield"></textarea></div>
+    <div class="form_field"><textarea id="form_field_description" name="description" class="textfield">{% if formdata.description is defined %}{{ formdata.description }}{% endif %}</textarea></div>
     <div class="form_field_name">Client</div>
     <div class="form_field">
         <select id="form_field_client_id" name="client_id">
-            <option value="0">Select a client ..</option>
+            {% if client_id is empty %}<option value="0">Select a client ..</option>{% endif %}
             {% for client in clients %}
-                <option value="{{ client.id }}">{{ client.name }}</option>
+                <option {{ formdata.client_id }} value="{{ client.id }}" {% if client.id == formdata.client_id %}selected{% endif %}>{{ client.name }}</option>
             {% endfor %}
         </select>
     </div>
@@ -19,22 +18,21 @@
         <select id="form_field_agency_id" name="agency_id">
             <option value="0"></option>
             {% for agency in agencies %}
-                <option value="{{ agency.id }}">{{ agency.name }}</option>
+                <option value="{{ agency.id }}" {% if agency.id == formdata.agency_id %}selected{% endif %}>{{ agency.name }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="form_field_name">Project manager</div>
     <div class="form_field">
         <select id="form_field_projectmanager_id" name="projectmanager_id">
-            <option value="0">Select a project manager ..</option>
+            {% if projectmanager_id is empty %}<option value="0" selected>Select a project manager ..</option>{% endif %}
             {% for projectmanager in projectmanagers %}
-                <option value="{{ projectmanager.id }}">{{ projectmanager.name }}</option>
+                <option value="{{ projectmanager.id }}" {% if projectmanager.id == formdata.projectmanager_id %}selected{% endif %}>{{ projectmanager.name }}</option>
             {% endfor %}
         </select>
     </div>
     <div class="form_menu">
-        <div class="textbutton" onClick="Maido.popup.close();">Cancel</div>
-        <div class="button" onClick="Maido.saveProject(document.getElementById('form_field_name').value, document.getElementById('form_field_description').value, document.getElementById('form_field_client_id').value, document.getElementById('form_field_agency_id').value, document.getElementById('form_field_projectmanager_id').value);">Save</div>
+        <div class="button_text" onClick="Maido.popup.close();">Cancel</div>
+        <div class="button" onClick="Maido.saveProject({ {% if formdata.id is defined %}id:{{ formdata.id }},{% endif %} name:document.getElementById('form_field_name').value, description:document.getElementById('form_field_description').value, client_id:document.getElementById('form_field_client_id').value, agency_id:document.getElementById('form_field_agency_id').value, projectmanager_id:document.getElementById('form_field_projectmanager_id').value } );">Save</div>
     </div>
 </div>
-</form>

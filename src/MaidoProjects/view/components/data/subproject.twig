@@ -1,34 +1,29 @@
-<div class="component_project">
+<div class="component_subproject">
     <div class="project_menu">
             <div class="button_small" onClick="Maido.changeProject({{ id }});">Edit</div>
         </div>
     <div id="{{ id }}" class="project_summary">
         
         <div class="project">
-            <div class="client_name">- {{ client_name }}{% if agency_name is defined %}<span class="agency_name"> - {{ agency_name }}</span>{% endif %}</div>
             <div class="project_name"> {{ name|e }}</div>
-            <div class="button_small" onClick="Maido.toggleProjectState({{ id }});">View 3 subprojects</div>
-            <div class="button_small" onClick="Maido.newSubproject({{ id }});">Add subproject +</div>
         </div>
         
         <div class="project_subinfo">
-            <div class="project_subinfo_value">50k</div>
-            <div class="project_subinfo_key">Expected</div>
+            <div class="project_subinfo_value">Offerte gestuurd</div>
+            <div class="project_subinfo_key">Status</div>
         </div>
         <div class="project_subinfo">
-            <div class="project_subinfo_value">180k</span></div>
-            <div class="project_subinfo_key">Signed</div>
+            <div class="project_subinfo_value">Budget</span></div>
+            <div class="project_subinfo_key">60k</div>
         </div>
         <div class="project_subinfo">
-            <div class="project_subinfo_value">112k</div>
-            <div class="project_subinfo_key">Used</div>
+            <div class="project_subinfo_value">90%</div>
+            <div class="project_subinfo_key">Slagingskans</div>
         </div>
         <div class="project_subinfo">
             <div class="projectmanager_avatar"></div>
             <div class="projectmanager_name">{{ projectmanager_name }}</div>
         </div>
-        
-        
     </div>
     <div id="project_details_{{ id }}" class="project_details">
         <hr>

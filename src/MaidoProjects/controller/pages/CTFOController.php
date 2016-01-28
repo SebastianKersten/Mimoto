@@ -65,6 +65,9 @@ class CTFOController
     
     
     
+    var $_aTransactions = array();
+    
+    
     public function analyzeBuckaroo(Application $app)
     {   
         
@@ -75,7 +78,8 @@ class CTFOController
             "crs20150708357769",
             "De Correspondent - Verlenging lidmaatschap 1 jaar (rfd) BuckID: YLARAOGY1YGCQMNQEY4F",
             "De Correspondent - Verlenging lidmaatschap 1 jaar (rfd) BuckID: ZT8DIRDHMW4HSLJ8HWVX",
-            "De Correspondent - Verlenging lidmaatschap 1 jaar (rfd) BuckID: DTE8ISNGYCY34H8PFNTU"
+            "De Correspondent - Verlenging lidmaatschap 1 jaar (rfd) BuckID: DTE8ISNGYCY34H8PFNTU",
+            "crs1535700000142545"
         );
         
         $aPartialRefunds = array(
@@ -264,7 +268,7 @@ class CTFOController
                     if (substr($payment->Description, 0, 22) == "Uitbetaling ".$payment->ReleaseDate) $payment->Description = substr($payment->Description, 0, 22);
                     
                     
-
+                    
                     switch($payment->Description)
                     {
                         case "Uitbetaling ".$payment->ReleaseDate:
@@ -282,7 +286,7 @@ class CTFOController
                         case $this::YEAR_RENEW:
                         case $this::YEAR_RENEW_DONATION:
                             
-                            $this->addYear($revenue, $payment->Description, $payment->Debit);
+                            $this->addYear($revenue, $payment->Description, $payment->Debit, $payment->TranDate);
                             break;
                         
                         case $this::REFUND_YEAR:
@@ -298,7 +302,7 @@ class CTFOController
                         case $this::MONTH_RENEW:
                         case $this::MONTH_RENEW_DONATION:    
                             
-                            $this->addMonth($revenue, $payment->Description, $payment->Debit);
+                            $this->addMonth($revenue, $payment->Description, $payment->Debit, $payment->TranDate);
                             break;
                         
                         case $this::REFUND_MONTH:
@@ -311,7 +315,7 @@ class CTFOController
                         
                         case $this::GIFT_3MONTHS:
                             
-                            $this->addGift3Months($revenue);
+                            $this->addGift3Months($revenue, $payment->TranDate);
                             break;
                         
                         case $this::REFUND_GIFT_3MONTH:
@@ -321,8 +325,11 @@ class CTFOController
                         
                         case $this::GIFT_12MONTHS:
                             
-                            $this->addGift12Months($revenue);
+                            $this->addGift12Months($revenue, $payment->TranDate);
                             break;
+                        
+                        
+                        // #todo ------------------------------ !!!
                         
                         case $this::DONATION:
                             
@@ -369,12 +376,12 @@ class CTFOController
                                         {
                                             if ($payment->Debit == $this::PRICE_GIFT_3MONTHS)
                                             {
-                                               $this->addGift3Months($revenue);
+                                               $this->addGift3Months($revenue, $payment->TranDate);
                                             }
                                             else
                                             if ($payment->Debit >= $this::PRICE_YEAR)
                                             {
-                                               $this->addYear($revenue, $payment->Description, $payment->Debit);
+                                               $this->addYear($revenue, $payment->Description, $payment->Debit, $payment->TranDate);
                                             }
                                             else
                                             {
@@ -694,6 +701,54 @@ class CTFOController
             $data->records[] = $record;
         }
         
+        echo "<pre>";
+        print_r($this->_aTransactions);
+        echo "</pre>";
+        
+        
+        
+        
+        $aMonths = array();
+        
+        
+        foreach ($this->_aTransactions as $month => $members)
+        {
+            
+            $nOffsetYear = intval(substr($month, 0, 4));
+            $nOffsetMonth = intval(substr($month, 5, 2));
+            
+            
+            for ($nMonthCount = 0; $nMonthCount < 12; $nMonthCount++)
+            {
+                
+                $sYearMonth = date("Y.m", mktime(0, 0, 0, $nOffsetMonth + $nMonthCount, 1, $nOffsetYear));
+                
+                if (!isset($aMonths[$sYearMonth])) { $aMonths[$sYearMonth] = 0; }
+                
+                if ($nMonthCount === 0)
+                {
+                    $aMonths[$sYearMonth] += $members->month;
+                }
+                
+                if ($nMonthCount < 3)
+                {
+                    $aMonths[$sYearMonth] += $members->gift3months;
+                }
+                
+                $aMonths[$sYearMonth] += $members->year;
+                $aMonths[$sYearMonth] += $members->gift12months;
+            }   
+            
+        }
+        
+        echo "<pre>";
+        print_r($aMonths);
+        echo "</pre>";
+        
+        //die();
+        
+        
+        
         
         
         // --- income ---
@@ -756,7 +811,7 @@ class CTFOController
      * @param string $sDescription
      * @param float $nAmount
      */
-    private function addYear($revenue, $sDescription, $nAmount)
+    private function addYear($revenue, $sDescription, $nAmount, $sTransactionDate)
     {
         
         switch($sDescription)
@@ -795,6 +850,12 @@ class CTFOController
             $revenue->year->donations[$nDonationAmount]++;
             $revenue->income->donations += $nDonationAmount;
         }
+        
+        
+        // register yearly membership
+        $sTransactionMonth = substr($sTransactionDate, 6, 4).".".substr($sTransactionDate, 3, 2);
+        if (!isset($this->_aTransactions[$sTransactionMonth])) $this->_aTransactions[$sTransactionMonth] = (object) array();
+        $this->_aTransactions[$sTransactionMonth]->year++;
     }
     
     /**
@@ -852,7 +913,7 @@ class CTFOController
      * @param string $sDescription
      * @param float $nAmount
      */
-    private function addMonth($revenue, $sDescription, $nAmount)
+    private function addMonth($revenue, $sDescription, $nAmount, $sTransactionDate)
     {
         
         switch($sDescription)
@@ -890,6 +951,12 @@ class CTFOController
             $revenue->month->donations[$nDonationAmount]++;
             $revenue->income->donations += $nDonationAmount;
         }
+        
+        
+        // register monthly membership
+        $sTransactionMonth = substr($sTransactionDate, 6, 4).".".substr($sTransactionDate, 3, 2);
+        if (!isset($this->_aTransactions[$sTransactionMonth])) $this->_aTransactions[$sTransactionMonth] = (object) array();
+        $this->_aTransactions[$sTransactionMonth]->month++;
     }
     
     /**
@@ -942,12 +1009,18 @@ class CTFOController
      * Add a payment for a 3 month gift
      * @param object $revenue
      */
-    private function addGift3Months($revenue)
+    private function addGift3Months($revenue, $sTransactionDate)
     {
         
         // register
         $revenue->gift_3months->amount++;
         $revenue->income->gift_3months += $this::PRICE_GIFT_3MONTHS;
+        
+        
+        // register 3 monthly gift
+        $sTransactionMonth = substr($sTransactionDate, 6, 4).".".substr($sTransactionDate, 3, 2);
+        if (!isset($this->_aTransactions[$sTransactionMonth])) $this->_aTransactions[$sTransactionMonth] = (object) array();
+        $this->_aTransactions[$sTransactionMonth]->gift3months++;
     } 
     
     /**
@@ -966,12 +1039,18 @@ class CTFOController
      * Add a payment for a 12 month gift
      * @param object $revenue
      */
-    private function addGift12Months($revenue)
+    private function addGift12Months($revenue, $sTransactionDate)
     {
         
         // register
         $revenue->gift_12months->amount++;
         $revenue->income->gift_3months += $this::PRICE_GIFT_12MONTHS;
+        
+        
+        // register 12 monthly gift
+        $sTransactionMonth = substr($sTransactionDate, 6, 4).".".substr($sTransactionDate, 3, 2);
+        if (!isset($this->_aTransactions[$sTransactionMonth])) $this->_aTransactions[$sTransactionMonth] = (object) array();
+        $this->_aTransactions[$sTransactionMonth]->gift12months++;
     }
     
     /**

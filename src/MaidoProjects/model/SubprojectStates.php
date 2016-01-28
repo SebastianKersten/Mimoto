@@ -11,7 +11,7 @@
  *
  * @author apple
  */
-class ProjectTypes {
+class SubprojectTypes {
     
     const FIXED = 'fixed';
     const TIME_MATERIAL = 'time_material';
