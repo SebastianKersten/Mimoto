@@ -67,6 +67,29 @@
                 background-color: #000000;
                 color: #ffffff;
             }
+            
+            td.payouts {
+                background-color: #ffffff;
+                color: #000000;
+            }
+            
+            td.neutral {
+                background-color: #ffffff;
+                color: #000000;
+            }
+            
+            td.negative {
+                background-color: #df5b57;
+                color: #000000;
+            }
+            
+            td.positive {
+                background-color: #9ececa;
+                color: #000000;
+            }
+            
+            
+            
         </style>
     </head>
     <body>
@@ -77,6 +100,7 @@
                 <td colspan="{{ 13 + data.donationTypes|length }}" class="income">Inkomsten</td>
                 <td colspan="{{ 14 + data.donationRefundTypes|length }}" class="expenses">Uitgaven</td>
                 <td colspan="2" class="result">Resultaat</td>
+                <td colspan="2" class="result">Uitbetalingen</td>
             </tr>
             <tr class="header">
                 <td colspan="9" class="subcategory">Leden</td>
@@ -93,6 +117,9 @@
                 
                 <td rowspan="2" class="result">Totaal<br><span class="subtitle">besteedbaar</span></td>
                 <td rowspan="2" class="result">BTW<br><span class="subtitle">af&nbsp;te&nbsp;dragen</span></td>
+                
+                <td rowspan="2" class="payouts">Uitbetaald<br><span class="subtitle">door&nbsp;Buckaroo</span></td>
+                <td rowspan="2" class="payouts">Verschil<br><span class="subtitle">t.o.v.&nbsp;opgebouwd</span></td>
             </tr>
             <tr class="header">
                 <td>Jaar (new)</td>
@@ -156,6 +183,9 @@
                 
                 <td class="right result">&euro;&nbsp;{{ record.resultIncome }}</td>
                 <td class="right result"><b>&euro;&nbsp;{{ record.resultVAT }}</b></td>
+                
+                <td class="right ">&euro;&nbsp;{{ record.payout }}</td>
+                <td class="right {{ record.payout_difference_color }}">&euro;&nbsp;{{ record.payout_difference }}</td>
                 
             </tr>
         {% endfor %}

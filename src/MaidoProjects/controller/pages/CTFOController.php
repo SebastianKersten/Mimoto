@@ -8,6 +8,7 @@
 
 namespace MaidoProjects\Controller\pages;
 
+error_reporting(E_ALL);
 
 use Silex\Application;
 
@@ -224,10 +225,11 @@ class CTFOController
                         'refunds_year_renew' => 0,      // amount of refunds of renewed yearly memberships
                         'refunds_month_new' => 0,       // amount of refunds of new monthly memberships
                         'refunds_month_renew' => 0,     // amount of refunds of renewed monthly memberships
-                        'refunds_gift_3mnd' => 0,       // amount of refunds of 3 month gifts
-                        'refunds_gift_12mnd' => 0,      // amount of refunds of 12 month gifts
+                        'refunds_gift_3months' => 0,    // amount of refunds of 3 month gifts
+                        'refunds_gift_12months' => 0,   // amount of refunds of 12 month gifts
                         'refunds_donations' => 0,       // amount of refunds of donations
-                        'partial_refunds' => 0          // amount of partial refunds (#todo - needs refinement?)
+                        'partial_refunds' => 0,         // amount of partial refunds (#todo - needs refinement?)
+                        'donations' => 0                // amount of refunded donations
                     ),
                     'payment' => 0,                     // payments received from Buckaroo
                     'creditnotas' => 0                  // credit notes received from Buckaroo
@@ -455,19 +457,17 @@ class CTFOController
         }
         
         
-        // #todo omvormen tot plotbare dataset
         
+        // -----------------------------
+        // --- Convert to table data ---
+        // -----------------------------
         
         
         $data = (object) array();
         $totals = (object) array();
         
-        
-        
-        
         $data->donationTypes = array();
         $data->donationRefundTypes = array();
-        
         
         
         for ($i = 0; $i < count($aFiles); $i++)
@@ -502,9 +502,9 @@ class CTFOController
                         if (!in_array($sKey, $data->donationTypes))
                         {
                             $data->donationTypes[] = $sKey;
-                            $file->donations[$sKey] = 0;
                         }
                         
+                        if (!isset($file->donations[$sKey])) { $file->donations[$sKey] = 0; }
                         $file->donations[$sKey] += $value;
                     }
                 }
@@ -521,9 +521,9 @@ class CTFOController
                         if (!in_array($sKey, $data->donationRefundTypes))
                         {
                             $data->donationRefundTypes[] = $sKey;
-                            $file->donationRefunds[$sKey] = 0;
                         }
                         
+                        if (!isset($file->donationRefunds[$sKey])) { $file->donationRefunds[$sKey] = 0; }
                         $file->donationRefunds[$sKey] += $value;
                     }
                 }
@@ -544,7 +544,18 @@ class CTFOController
         $aLastRecordTotals->donations = array();
         $aLastRecordTotals->donationRefunds = array();
         
+        $aLastRecordTotals->incomeProductsInclVat = 0;
+        $aLastRecordTotals->incomeProductsExclVat = 0;
+        $aLastRecordTotals->incomeProductsVat = 0;
         
+        $aLastRecordTotals->refundsProductsInclVat = 0;
+        $aLastRecordTotals->refundsProductsExclVat = 0;
+        $aLastRecordTotals->refundsProductsVat = 0;
+        
+        $aLastRecordTotals->exceptionalDepositsTotal = 0;
+        
+        $aLastRecordTotals->donationTotal = 0;
+                
         
         for ($i = 0; $i < count($aFiles); $i++)
         {
@@ -569,7 +580,11 @@ class CTFOController
                 $revenue->gift_3months->amount,
                 $revenue->gift_12months->amount
             );
-            for ($k = 0; $k < count($record->products); $k++) $aLastRecordTotals->products[$k] += $record->products[$k];
+            for ($k = 0; $k < count($record->products); $k++)
+            {
+                if (!isset($aLastRecordTotals->products[$k])) { $aLastRecordTotals->products[$k] = 0; }
+                $aLastRecordTotals->products[$k] += $record->products[$k];
+            }
             
             
             $nIncomeProducts =
@@ -598,7 +613,11 @@ class CTFOController
                 $revenue->gift_3months->refunds,
                 $revenue->gift_12months->refunds
             );
-            for ($k = 0; $k < count($record->refundsProducts); $k++) $aLastRecordTotals->refundsProducts[$k] += $record->refundsProducts[$k];
+            for ($k = 0; $k < count($record->refundsProducts); $k++)
+            {
+                if (!isset($aLastRecordTotals->refundsProducts[$k])) { $aLastRecordTotals->refundsProducts[$k] = 0; }
+                $aLastRecordTotals->refundsProducts[$k] += $record->refundsProducts[$k];
+            }
             
             $nRefundsProducts =
                 $revenue->year->refund_new * $this::PRICE_YEAR +
@@ -623,9 +642,16 @@ class CTFOController
             $record->donations = $file->donations;
             for ($nDonationCount = 0; $nDonationCount < count($data->donationTypes); $nDonationCount++)
             {
-                $record->donationTotal += $record->donations[$data->donationTypes[$nDonationCount]] * $data->donationTypes[$nDonationCount];
+                
+                if (!isset($record->donationTotal)) { $record->donationTotal = 0; }
+                
+                if (isset($record->donations[$data->donationTypes[$nDonationCount]]))
+                {
+                    $record->donationTotal += $record->donations[$data->donationTypes[$nDonationCount]] * $data->donationTypes[$nDonationCount];
+                }
                 $aLastRecordTotals->donationTotal += $record->donations[$data->donationTypes[$nDonationCount]] * $data->donationTypes[$nDonationCount];
                 
+                if (!isset($aLastRecordTotals->donations[$data->donationTypes[$nDonationCount]])) { $aLastRecordTotals->donations[$data->donationTypes[$nDonationCount]] = 0; }
                 $aLastRecordTotals->donations[$data->donationTypes[$nDonationCount]] += $record->donations[$data->donationTypes[$nDonationCount]];
             }
             $record->incomeInclVat = $nIncomeProducts + $record->donationTotal + $record->exceptionalDepositsTotal;
@@ -669,7 +695,50 @@ class CTFOController
             $aLastRecordTotals->resultVAT += $record->resultVAT;
             
             
-            // --- prepare for presentation
+            // --- payout ---
+            
+            $record->payout = $revenue->payment;
+            $aLastRecordTotals->payout += $revenue->payment;
+            
+            if ($i == 0)
+            {
+                $record->payout_difference = 0;
+                $record->payout_difference_color = 'neutral';
+            }
+            else
+            {
+                $previousRecord = $data->records[count($data->records) - 1];
+                $record->payout_difference = $revenue->payment - ($previousRecord->incomeInclVat - $previousRecord->expensesInclVat);
+                
+                if ($record->payout_difference < 0) { $record->payout_difference_color = 'negative'; }
+                if ($record->payout_difference == 0) { $record->payout_difference_color = 'neutral'; }
+                if ($record->payout_difference > 0) { $record->payout_difference_color = 'positive'; }
+                
+                
+                $aLastRecordTotals->payout_difference += $record->payout_difference;
+                
+                if ($aLastRecordTotals->payout_difference < 0) { $aLastRecordTotals->payout_difference_color = 'negative'; }
+                if ($aLastRecordTotals->payout_difference == 0) { $aLastRecordTotals->payout_difference_color = 'neutral'; }
+                if ($aLastRecordTotals->payout_difference > 0) { $aLastRecordTotals->payout_difference_color = 'positive'; }
+            }
+            
+            
+            // store
+            $data->records[] = $record;
+        }
+        
+        
+        
+        // ---------------------------------
+        // --- prepare for presentations ---
+        // ---------------------------------
+        
+        for ($i = 0; $i < count($data->records); $i++)
+        {
+            
+            // load
+            $record = $data->records[$i];
+            
             
             $record->incomeProductsInclVat = number_format($record->incomeProductsInclVat, 2, '.', ',');
             $record->incomeProductsExclVat = number_format($record->incomeProductsExclVat, 2, '.', ',');
@@ -680,8 +749,6 @@ class CTFOController
             
             $record->incomeInclVat = number_format($record->incomeInclVat, 2, ',', '.');
             $record->incomeExclVat = number_format($record->incomeExclVat, 2, ',', '.');
-            
-            
             
             $record->refundsProductsInclVat = number_format($record->refundsProductsInclVat, 2, ',', '.');
             $record->refundsProductsExclVat = number_format($record->refundsProductsExclVat, 2, ',', '.');
@@ -697,13 +764,19 @@ class CTFOController
             $record->resultIncome = number_format($record->resultIncome, 2, ',', '.');
             $record->resultVAT = number_format($record->resultVAT, 2, ',', '.');
             
-            // store
-            $data->records[] = $record;
+            $record->payout = number_format($record->payout, 2, ',', '.');
+            $record->payout_difference = number_format($record->payout_difference, 2, ',', '.');
+            
+            
+            // save
+            $data->records[$i] = $record;
         }
         
-        echo "<pre>";
-        print_r($this->_aTransactions);
-        echo "</pre>";
+        
+        
+        //echo "<pre>";
+        //print_r($this->_aTransactions);
+        //echo "</pre>";
         
         
         
@@ -741,9 +814,9 @@ class CTFOController
             
         }
         
-        echo "<pre>";
-        print_r($aMonths);
-        echo "</pre>";
+        //echo "<pre>";
+        //print_r($aMonths);
+        //echo "</pre>";
         
         //die();
         
@@ -783,6 +856,9 @@ class CTFOController
         $aLastRecordTotals->resultIncome = number_format($aLastRecordTotals->resultIncome, 2, ',', '.');
         $aLastRecordTotals->resultVAT = number_format($aLastRecordTotals->resultVAT, 2, ',', '.');
         
+        
+        $aLastRecordTotals->payout = number_format($aLastRecordTotals->payout, 2, ',', '.');
+        $aLastRecordTotals->payout_difference = number_format($aLastRecordTotals->payout_difference, 2, ',', '.');
         
         
         //array_unshift($data->records, $aLastRecordTotals);
@@ -855,6 +931,7 @@ class CTFOController
         // register yearly membership
         $sTransactionMonth = substr($sTransactionDate, 6, 4).".".substr($sTransactionDate, 3, 2);
         if (!isset($this->_aTransactions[$sTransactionMonth])) $this->_aTransactions[$sTransactionMonth] = (object) array();
+        if (!isset($this->_aTransactions[$sTransactionMonth]->year)) $this->_aTransactions[$sTransactionMonth]->year = 0;
         $this->_aTransactions[$sTransactionMonth]->year++;
     }
     
@@ -875,14 +952,14 @@ class CTFOController
             case $this::REFUND_YEAR_DONATION:
 
                 $revenue->year->refund_new++;
-                $revenue->expenses->refund_year_new += $this::PRICE_YEAR;
+                $revenue->expenses->refunds_year_new += $this::PRICE_YEAR;
                 break;
 
             case $this::REFUND_YEAR_RENEW:
             case $this::REFUND_YEAR_RENEW_DONATION:
 
                 $revenue->year->refund_renew++;
-                $revenue->expenses->refund_year_renew += $this::PRICE_YEAR;
+                $revenue->expenses->refunds_year_renew += $this::PRICE_YEAR;
                 break;
             
             DEFAULT:
@@ -956,6 +1033,7 @@ class CTFOController
         // register monthly membership
         $sTransactionMonth = substr($sTransactionDate, 6, 4).".".substr($sTransactionDate, 3, 2);
         if (!isset($this->_aTransactions[$sTransactionMonth])) $this->_aTransactions[$sTransactionMonth] = (object) array();
+        if (!isset($this->_aTransactions[$sTransactionMonth]->month)) $this->_aTransactions[$sTransactionMonth]->month = 0;
         $this->_aTransactions[$sTransactionMonth]->month++;
     }
     
@@ -974,14 +1052,14 @@ class CTFOController
             case $this::REFUND_MONTH_DONATION:
 
                 $revenue->month->refund_new++;
-                $revenue->expenses->refund_month_new += $this::PRICE_MONTH;
+                $revenue->expenses->refunds_month_new += $this::PRICE_MONTH;
                 break;
 
             case $this::REFUND_MONTH_RENEW:
             case $this::REFUND_MONTH_RENEW_DONATION:
 
                 $revenue->month->refund_renew++;
-                $revenue->expenses->refund_month_renew += $this::PRICE_MONTH;
+                $revenue->expenses->refunds_month_renew += $this::PRICE_MONTH;
                 break;
             
             DEFAULT:
@@ -1020,6 +1098,7 @@ class CTFOController
         // register 3 monthly gift
         $sTransactionMonth = substr($sTransactionDate, 6, 4).".".substr($sTransactionDate, 3, 2);
         if (!isset($this->_aTransactions[$sTransactionMonth])) $this->_aTransactions[$sTransactionMonth] = (object) array();
+        if (!isset($this->_aTransactions[$sTransactionMonth]->gift3months)) $this->_aTransactions[$sTransactionMonth]->gift3months = 0;
         $this->_aTransactions[$sTransactionMonth]->gift3months++;
     } 
     
@@ -1032,7 +1111,7 @@ class CTFOController
         
         // register
         $revenue->gift_3months->refunds++;
-        $revenue->expenses->gift_3months += $this::PRICE_GIFT_3MONTHS;
+        $revenue->expenses->refunds_gift_3months += $this::PRICE_GIFT_3MONTHS;
     } 
     
     /**
@@ -1050,6 +1129,7 @@ class CTFOController
         // register 12 monthly gift
         $sTransactionMonth = substr($sTransactionDate, 6, 4).".".substr($sTransactionDate, 3, 2);
         if (!isset($this->_aTransactions[$sTransactionMonth])) $this->_aTransactions[$sTransactionMonth] = (object) array();
+        if (!isset($this->_aTransactions[$sTransactionMonth]->gift12months)) $this->_aTransactions[$sTransactionMonth]->gift12months = 0;
         $this->_aTransactions[$sTransactionMonth]->gift12months++;
     }
     

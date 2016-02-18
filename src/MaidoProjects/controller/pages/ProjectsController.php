@@ -277,8 +277,17 @@ class ProjectsController
         
         
         $aProbabilities = array('10%', '50%', '90%');
-        $aStates = array('Offerte gestuurd', 'Wacht op vervolg', 'In uitvoering%');
+        $aStates = array(
+            'Onbehandeld',
+            'Wacht op vervolg',
+            'Offerte gestuurd',
+            'In uitvoering',
+            'Vervallen',
+            'Afgerond',
+        );
         
+        
+        // order by period (toekomstige zaken komen verderop in de lijst
         
         return $app['twig']->render(
             'forms/subproject.twig',
