@@ -12,6 +12,11 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 
 
+/**
+ * ProjectServiceProvider
+ *
+ * @author Sebastian Kersten
+ */
 class ProjectServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)

@@ -18,10 +18,29 @@ class AgencyRepository
     const MYSQL_TABLE_AGENCIES = 'agencies';
     
     
+    // ----------------------------------------------------------------------------
+    // --- Constructor ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
     
+    
+    /**
+     * Constructor
+     */
     public function __construct() {}
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Get single agency by ID
+     * @param int $nId
+     * @return Agency
+     * @throws AgencyException
+     */
     public function get($nId)
     {
         // load
@@ -48,6 +67,10 @@ class AgencyRepository
         }
     }
     
+    /**
+     * Find agencies
+     * @return Array containing Agency
+     */
     public function find()
     {
         
@@ -73,6 +96,40 @@ class AgencyRepository
         
         // send
         return $aAgencies;
+    }
+    
+    /**
+     * Store agency
+     * @param type $nId
+     * @param type $sName
+     */
+    public function store($nId, $sName)
+    {
+        
+        if (!empty($nId) && !is_nan($nId))
+        {
+             $query = "
+                UPDATE
+                    ".self::MYSQL_TABLE_AGENCIES."
+                SET
+                    name='".$sName."',
+                    created='".date('YmdHis')."'
+                WHERE
+                    id='".$nId."'";
+            
+            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        }
+        else
+        {
+            $query = "
+                INSERT INTO
+                    ".self::MYSQL_TABLE_AGENCIES."
+                SET
+                    name='".$sName."',
+                    created='".date('YmdHis')."'";
+
+            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        }
     }
     
 }

@@ -20,14 +20,27 @@ class ProjectManagerService
     private $_ProjectManagerRepository;
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($ProjectManagerRepository)
     {
         // init
-        $this->_ProjectManagerRepository = new ProjectManagerRepository();
+        $this->_ProjectManagerRepository = $ProjectManagerRepository;
     }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
     
     /**
      * Get project manager by ID
@@ -61,9 +74,9 @@ class ProjectManagerService
     }
     
     /**
-     * Save project manager
+     * Store project manager
      */
-    public function saveProjectManager($nId, $sName)
+    public function storeProjectManager($nId, $sName)
     {
         // store
         $this->_ProjectManagerRepository->store($nId, $sName);

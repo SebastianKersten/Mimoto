@@ -1,7 +1,9 @@
 <?php
 
+// classpath
 namespace MaidoProjects\Client;
 
+// Momkai classes
 use MaidoProjects\Client\Client;
 use MaidoProjects\Client\ClientException;
 
@@ -19,9 +21,29 @@ class ClientRepository
     
     
     
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     */
     public function __construct() {}
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Get single client by ID
+     * @param int $nId
+     * @return Client
+     * @throws ClientException
+     */
     public function get($nId)
     {
         // load
@@ -48,6 +70,10 @@ class ClientRepository
         }
     }
     
+    /**
+     * Find clients
+     * @return Array containing Client
+     */
     public function find()
     {
         
@@ -73,6 +99,40 @@ class ClientRepository
         
         // send
         return $aClients;
+    }
+    
+    /**
+     * Store client
+     * @param type $nId
+     * @param type $sName
+     */
+    public function store($nId, $sName)
+    {
+        
+        if (!empty($nId) && !is_nan($nId))
+        {
+             $query = "
+                UPDATE
+                    ".self::MYSQL_TABLE_CLIENTS."
+                SET
+                    name='".$sName."',
+                    created='".date('YmdHis')."'
+                WHERE
+                    id='".$nId."'";
+            
+            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        }
+        else
+        {
+            $query = "
+                INSERT INTO
+                    ".self::MYSQL_TABLE_CLIENTS."
+                SET
+                    name='".$sName."',
+                    created='".date('YmdHis')."'";
+
+            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
+        }
     }
     
 }

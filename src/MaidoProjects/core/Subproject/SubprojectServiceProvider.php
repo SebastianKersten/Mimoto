@@ -1,18 +1,29 @@
 <?php
 
+// classpath
 namespace MaidoProjects\Subproject;
 
+// Momkai classes
+use MaidoProjects\Subproject\SubprojectService;
+use MaidoProjects\Subproject\SubprojectRepository;
+use MaidoProjects\Subproject\SubprojectStateRepository;
+
+// Silex classes
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use MaidoProjects\Subproject\SubprojectService;
 
 
+/**
+ * SubprojectServiceProvider
+ *
+ * @author Sebastian Kersten
+ */
 class SubprojectServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
         $app['SubprojectService'] = $app->share(function ($app) {
-            return new SubprojectService();
+            return new SubprojectService(new SubprojectRepository(), new SubprojectStateRepository());
         });
     }
 

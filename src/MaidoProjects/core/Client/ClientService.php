@@ -4,7 +4,6 @@
 namespace MaidoProjects\Client;
 
 // Momkai classes
-use MaidoProjects\Client\ClientRepository;
 use MaidoProjects\Client\ClientException;
 
 
@@ -20,14 +19,27 @@ class ClientService
     private $_ClientRepository;
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($ClientRepository)
     {
         // init
-        $this->_ClientRepository = new ClientRepository();
+        $this->_ClientRepository = $ClientRepository;
     }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
     
     /**
      * Get client by ID
@@ -49,14 +61,6 @@ class ClientService
     }
     
     /**
-     * Save client
-     */
-    public function saveClient($client)
-    {
-        // ?
-    }
-    
-    /**
      * Get all clients
      */
     public function getAllClients()
@@ -66,6 +70,15 @@ class ClientService
         
         // send
         return $aClients;
+    }
+    
+    /**
+     * Store client
+     */
+    public function storeClient($nId, $sName)
+    {
+        // store
+        $this->_ClientRepository->store($nId, $sName);
     }
     
 }

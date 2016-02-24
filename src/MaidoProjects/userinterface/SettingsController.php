@@ -1,24 +1,20 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+// classpath
 namespace MaidoProjects\UserInterface;
 
-
+// Silex classes
 use Silex\Application;
 
+// Symfony classes
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+//use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 
 /**
- * Description of newPHPClass
+ * SettingsController
  *
- * @author apple
+ * @author Sebastian Kersten
  */
 class SettingsController
 {
@@ -80,16 +76,20 @@ class SettingsController
         );
     }
     
+    /**
+     * Save project manager
+     * @param Application $app
+     * @param Request $request
+     * @return json with result
+     */
     public function saveProjectManager(Application $app, Request $request)
     {
-        
         // load data
-        $app['ProjectManagerService']->saveProjectManager($request->get('id'), $request->get('name'));
+        $app['ProjectManagerService']->storeProjectManager($request->get('id'), $request->get('name'));
         
         // setup
         $response = (object) array();
         $response->result = 'Ok!';
-        $response->name = $sName;
         
         // send
         return json_encode($response);
@@ -137,9 +137,23 @@ class SettingsController
         );
     }
     
+    /**
+     * Save client
+     * @param Application $app
+     * @param Request $request
+     * @return json with result
+     */
     public function saveClient(Application $app, Request $request)
     {
-        return $this->saveSimpleListItem('clients', $request->get('id'), $request->get('name'));
+        // load data
+        $app['ClientService']->storeClient($request->get('id'), $request->get('name'));
+        
+        // setup
+        $response = (object) array();
+        $response->result = 'Ok!';
+        
+        // send
+        return json_encode($response);
     }
     
     
@@ -184,9 +198,23 @@ class SettingsController
         );
     }
     
+    /**
+     * Save agency
+     * @param Application $app
+     * @param Request $request
+     * @return json with result
+     */
     public function saveAgency(Application $app, Request $request)
     {
-        return $this->saveSimpleListItem('agencies', $request->get('id'), $request->get('name'));
+        // load data
+        $app['AgencyService']->storeAgency($request->get('id'), $request->get('name'));
+        
+        // setup
+        $response = (object) array();
+        $response->result = 'Ok!';
+        
+        // send
+        return json_encode($response);
     }
     
     
@@ -240,81 +268,29 @@ class SettingsController
         return $this->formSimpleListItem($app, 'subproject_states', 'subproject_state', $id);
     }
     
+    /**
+     * Save subproject state
+     * @param Application $app
+     * @param Request $request
+     * @return json with result
+     */
     public function saveSubprojectState(Application $app, Request $request)
     {
-        return $this->saveSimpleListItem('subproject_states', $request->get('id'), $request->get('name'));
+        // load data
+        $app['SubprojectService']->storeSubprojectState($request->get('id'), $request->get('name'));
+        
+        // setup
+        $response = (object) array();
+        $response->result = 'Ok!';
+        
+        // send
+        return json_encode($response);
     }
+    
     
     public function removeSubprojectState(Application $app, Request $request)
     {
-        return $this->saveSimpleListItem('subproject_states', $request->get('id'), $request->get('name'));
+        //return $this->saveSimpleListItem('subproject_states', $request->get('id'), $request->get('name'));
     }
-    
-    
-    
-    
-    // ----------------------
-    // --- Common methods ---
-    // ----------------------
-    
-    
-    private function formSimpleListItem(Application $app, $sDBTable, $sTwig, $nID)
-    {
-        
-        $aData = array();
-        
-        if ($nID !== false && !is_nan($nID))
-        {   
-            $sQuery = "SELECT * FROM ".$sDBTable." WHERE id='".$nID."'";
-            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-            $nItemCount = mysql_num_rows($result);
-            
-            if ($nItemCount == 1)
-            {
-                $aData['id'] = mysql_result($result, 0, 'id');
-                $aData['name'] = mysql_result($result, 0, 'name');
-            }
-        }
-        
-        return $app['twig']->render(
-            'forms/'.$sTwig.'.twig',
-            $aData
-        );
-    }
-    
-    private function saveSimpleListItem($sDBTable, $nID, $sName)
-    {
-        
-        if (!empty($nID) && !is_nan($nID))
-        {
-             $query = "
-                UPDATE
-                    ".$sDBTable."
-                SET
-                    name='".$sName."',
-                    created='".date('YmdHis')."'
-                WHERE
-                    id='".$nID."'";
-            
-            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
-        }
-        else
-        {
-            $query = "
-                INSERT INTO
-                    ".$sDBTable."
-                SET
-                    name='".$sName."',
-                    created='".date('YmdHis')."'";
-
-            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
-        }
-        
-        
-        $response = (object) array();
-        $response->result = 'Ok!';
-        $response->name = $sName;
-        
-        return json_encode($response);
-    }    
+   
 }

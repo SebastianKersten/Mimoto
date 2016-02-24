@@ -4,7 +4,6 @@
 namespace MaidoProjects\Agency;
 
 // Momkai classes
-use MaidoProjects\Agency\Agency;
 use MaidoProjects\Agency\AgencyException;
 
 
@@ -20,14 +19,27 @@ class AgencyService
     private $_AgencyRepository;
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($AgencyRepository)
     {
         // init
-        $this->_AgencyRepository = new AgencyRepository();
+        $this->_AgencyRepository = $AgencyRepository;
     }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods----------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
     
     /**
      * Get agency by ID
@@ -58,6 +70,15 @@ class AgencyService
         
         // send
         return $aAgencies;
+    }
+    
+    /**
+     * Store agency
+     */
+    public function storeAgency($nId, $sName)
+    {
+        // store
+        $this->_AgencyRepository->store($nId, $sName);
     }
     
 }

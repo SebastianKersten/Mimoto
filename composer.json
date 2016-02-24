@@ -6,11 +6,11 @@
     "autoload": {
         "psr-4": {
             "MaidoProjects\\UserInterface\\": "./src/MaidoProjects/userinterface",
-            "MaidoProjects\\Project\\": "./src/MaidoProjects/domains/Project",
-            "MaidoProjects\\Subproject\\": "./src/MaidoProjects/domains/Subproject",
-            "MaidoProjects\\Client\\": "./src/MaidoProjects/domains/Client",
-            "MaidoProjects\\ProjectManager\\": "./src/MaidoProjects/domains/ProjectManager",
-            "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency"
+            "MaidoProjects\\Project\\": "./src/MaidoProjects/core/Project",
+            "MaidoProjects\\Subproject\\": "./src/MaidoProjects/core/Subproject",
+            "MaidoProjects\\Client\\": "./src/MaidoProjects/core/Client",
+            "MaidoProjects\\ProjectManager\\": "./src/MaidoProjects/core/ProjectManager",
+            "MaidoProjects\\Agency\\": "./src/MaidoProjects/core/Agency"
         }
     }
 }

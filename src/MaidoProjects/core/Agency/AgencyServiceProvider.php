@@ -1,18 +1,28 @@
 <?php
 
+// classpath
 namespace MaidoProjects\Agency;
 
+// Momkai classes
+use MaidoProjects\Agency\AgencyService;
+use MaidoProjects\Agency\AgencyRepository;
+
+// Silex classes
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use MaidoProjects\Agency\AgencyService;
 
 
+/**
+ * AgencyServiceProvider
+ *
+ * @author Sebastian Kersten
+ */
 class AgencyServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
         $app['AgencyService'] = $app->share(function ($app) {
-            return new AgencyService();
+            return new AgencyService(new AgencyRepository());
         });
     }
 

@@ -3,10 +3,6 @@
 // classpath
 namespace MaidoProjects\Subproject;
 
-// Momkai classes
-use MaidoProjects\Subproject\SubprojectRepository;
-use MaidoProjects\Subproject\SubprojectStateRepository;
-
 
 /**
  * SubprojectService
@@ -21,16 +17,30 @@ class SubprojectService
     private $_SubprojectStateRepository;
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($SubprojectRepository, $SubprojectStateRepository)
     {
         // init
-        $this->_SubprojectRepository = new SubprojectRepository();
-        $this->_SubprojectStateRepository = new SubprojectStateRepository();
+        $this->_SubprojectRepository = $SubprojectRepository;
+        $this->_SubprojectStateRepository = $SubprojectStateRepository;
     }
     
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    // --- Subprojects ---
     
     
     /**
@@ -66,6 +76,19 @@ class SubprojectService
         return $aSubprojects;
     }
     
+    /**
+     * Store subproject
+     */
+    public function storeSubproject($nId, $sName)
+    {
+        // store
+        $this->_SubprojectRepository->store($nId, $sName);
+    }
+    
+    
+    
+    // --- SubprojectStates ----
+    
     
     /**
      * Get subproject state by ID
@@ -98,6 +121,15 @@ class SubprojectService
         
         // send
         return $aSubprojectStates;
+    }
+    
+    /**
+     * Store subproject state
+     */
+    public function storeSubprojectState($nId, $sName)
+    {
+        // store
+        $this->_SubprojectStateRepository->store($nId, $sName);
     }
     
 }

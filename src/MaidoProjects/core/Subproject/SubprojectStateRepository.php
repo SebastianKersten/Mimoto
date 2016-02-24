@@ -1,78 +1,85 @@
 <?php
 
-namespace MaidoProjects\ProjectManager;
+namespace MaidoProjects\Subproject;
 
-use MaidoProjects\ProjectManager\ProjectManager;
-use MaidoProjects\ProjectManager\ProjectManagerException;
+use MaidoProjects\Subproject\SubprojectState;
+use MaidoProjects\Subproject\SubprojectStateException;
 
 
 /**
- * ProjectManagerRepository
+ * SubprojectStateRepository
  *
  * @author Sebastian Kersten
  */
-class ProjectManagerRepository
+class SubprojectStateRepository
 {
     
     // private
-    const MYSQL_TABLE_PROJECTMANAGERS = 'projectmanagers';
+    const MYSQL_TABLE_SUBPROJECTSTATES = 'subproject_states';
     
     
     
     // ----------------------------------------------------------------------------
-    // --- Constructief -----------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
+    /**
+     * Constructor
+     */
     public function __construct() {}
     
     
     
     // ----------------------------------------------------------------------------
-    // --- Pubic methods ----------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
     /**
-     * Get project manager
+     * Get subproject state by ID
      * @param int $nId
-     * @return ProjectManager
-     * @throws ProjectManagerException
+     * @return SubprojectState
+     * @throws SubprojectStateException
      */
     public function get($nId)
     {
         // load
-        $sQuery = "SELECT * FROM ".self::MYSQL_TABLE_PROJECTMANAGERS." WHERE id=".$nId;
+        $sQuery = "SELECT * FROM ".self::MYSQL_TABLE_SUBPROJECTSTATES." WHERE id=".$nId;
         $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
         $nItemCount = mysql_num_rows($result);
         
         if ($nItemCount !== 1)
         {
-             throw new ProjectManagerException('Cannot find project manager with ID='.$nId);
+             throw new SubprojectStateException('Cannot find subproject state with ID='.$nId);
         }
         else
         {
             
             // init
-            $projectManager = new ProjectManager();
+            $subprojectState = new SubprojectState();
             
             // register
-            $projectManager->setId(mysql_result($result, 0, 'id'));
-            $projectManager->setName(mysql_result($result, 0, 'name'));
+            $subprojectState->setId(mysql_result($result, 0, 'id'));
+            $subprojectState->setName(mysql_result($result, 0, 'name'));
             
             // send
-            return $projectManager;
+            return $subprojectState;
         }
     }
     
+    /**
+     * Find subproject states
+     * @return Array containing SubprojectState
+     */
     public function find()
     {
         
         // init
-        $aProjectManagers = array();
+        $aSubprojectStates = array();
         
         // load
-        $sQuery = "SELECT * FROM ".self::MYSQL_TABLE_PROJECTMANAGERS." ORDER BY name ASC";
+        $sQuery = "SELECT * FROM ".self::MYSQL_TABLE_SUBPROJECTSTATES." ORDER BY created ASC";
         $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
         $nItemCount = mysql_num_rows($result);
         
@@ -80,18 +87,23 @@ class ProjectManagerRepository
         for ($i = 0; $i < $nItemCount; $i++)
         {
             
-            $projectManager = new ProjectManager();
+            $subprojectState = new SubprojectState();
             
-            $projectManager->setId(mysql_result($result, $i, 'id'));
-            $projectManager->setName(mysql_result($result, $i, 'name'));
+            $subprojectState->setId(mysql_result($result, $i, 'id'));
+            $subprojectState->setName(mysql_result($result, $i, 'name'));
             
-            $aProjectManagers[] = $projectManager;
+            $aSubprojectStates[] = $subprojectState;
         }
         
         // send
-        return $aProjectManagers;
+        return $aSubprojectStates;
     }
     
+    /**
+     * Store subproject state
+     * @param type $nId
+     * @param type $sName
+     */
     public function store($nId, $sName)
     {
         
@@ -99,12 +111,12 @@ class ProjectManagerRepository
         {
              $query = "
                 UPDATE
-                    ".self::MYSQL_TABLE_PROJECTMANAGERS."
+                    ".self::MYSQL_TABLE_SUBPROJECTSTATES."
                 SET
                     name='".$sName."',
                     created='".date('YmdHis')."'
                 WHERE
-                    id='".$nID."'";
+                    id='".$nId."'";
             
             $result = mysql_query($query) or die('Query failed: ' . mysql_error());
         }
@@ -112,13 +124,13 @@ class ProjectManagerRepository
         {
             $query = "
                 INSERT INTO
-                    ".self::MYSQL_TABLE_PROJECTMANAGERS."
+                    ".self::MYSQL_TABLE_SUBPROJECTSTATES."
                 SET
                     name='".$sName."',
                     created='".date('YmdHis')."'";
 
             $result = mysql_query($query) or die('Query failed: ' . mysql_error());
         }
-    }    
+    }
     
 }
