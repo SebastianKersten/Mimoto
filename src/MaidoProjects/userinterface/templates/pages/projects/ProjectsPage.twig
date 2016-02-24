@@ -1,0 +1,4 @@
+<div>filter: aanvragen - lopend - archief</div><br>
+{% for project in projects %}
+    {% include 'pages/projects/components/Project.twig' with { 'project':project } %}
+{% endfor %}

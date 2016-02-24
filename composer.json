@@ -5,8 +5,12 @@
     },
     "autoload": {
         "psr-4": {
-            "MaidoProjects\\Controller\\": "./src/MaidoProjects/controller",
-            "MaidoProjects\\Model\\": "./src/MaidoProjects/model"
+            "MaidoProjects\\UserInterface\\": "./src/MaidoProjects/userinterface",
+            "MaidoProjects\\Project\\": "./src/MaidoProjects/domains/Project",
+            "MaidoProjects\\Subproject\\": "./src/MaidoProjects/domains/Subproject",
+            "MaidoProjects\\Client\\": "./src/MaidoProjects/domains/Client",
+            "MaidoProjects\\ProjectManager\\": "./src/MaidoProjects/domains/ProjectManager",
+            "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency"
         }
     }
 }

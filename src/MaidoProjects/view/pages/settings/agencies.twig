@@ -1,8 +1,0 @@
-<div class="page_title">Agencies</div>
-
-<div class="simplelist">
-    {% for simplelist_item_data in simplelist_data %}
-        {% include 'components/data/simplelist_item.twig' with { 'changeMethod':changeMethod, 'id':simplelist_item_data.id, 'label':simplelist_item_data.label } %}
-    {% endfor %}
-</div>
-<div class="button" onclick="Maido.settings.newAgency();">Add new agency +</div>

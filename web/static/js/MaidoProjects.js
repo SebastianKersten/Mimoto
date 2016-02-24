@@ -141,6 +141,32 @@ Maido.settings.saveAgency = function(data)
 }
 
 
+Maido.settings.newSubprojectState = function()
+{
+    Maido.popup.open('/settings/subprojectstate/new');  
+}
+
+Maido.settings.changeSubprojectState = function(nID)
+{
+    Maido.popup.open('/settings/subprojectstate/change/' + nID);  
+}
+
+Maido.settings.saveSubprojectState = function(data)
+{    
+    $.ajax({
+        type: 'POST',
+        url: "/settings/subprojectstate/save",
+        data: data,
+        dataType: 'json',
+        success: function (data) {
+            document.getElementById('popup_content').innerHTML = data.name;
+            location.reload();
+        },
+    });    
+}
+
+
+
 
 //Maido.addProject();
 
