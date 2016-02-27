@@ -1,40 +1,47 @@
 <?php
 
+// classpath
 namespace MaidoProjects\Subproject;
 
 
 /**
  * The "SubprojectState"-model contains the information of a subproject state
  *
- * @author Sebastian Kersten (sebastian@momkai.com)
+ * @author Sebastian Kersten
  */
 class SubprojectState
 {
     
     /**
-     * The client's id
-     * @var number 
+     * The sub[project state's id
+     * @var int 
      */
     var $_nId = 0;
     
     /**
-     * The client's name
+     * The subproject state's name
      * @var string
      */
     var $_sName = '';
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
      /**
-     * Get the subproject's id
+     * Get the subproject state's id
      * 
-     * @return number
+     * @return int
      */
     public function getId() { return $this->_nId; }
     
     /**
      * Set the subproject state's id
      * 
-     * @param string $nId The subproject state's id
+     * @param int $nId The subproject state's id
      */
     public function setId($nId) { $this->_nId = $nId; }
     

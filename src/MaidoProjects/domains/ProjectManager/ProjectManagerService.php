@@ -31,7 +31,7 @@ class ProjectManagerService
      */
     public function __construct($ProjectManagerRepository)
     {
-        // init
+        // register
         $this->_ProjectManagerRepository = $ProjectManagerRepository;
     }
     

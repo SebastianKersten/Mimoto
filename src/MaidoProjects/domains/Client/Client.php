@@ -1,19 +1,20 @@
 <?php
 
+// classpath
 namespace MaidoProjects\Client;
 
 
 /**
  * The "Client"-model contains the information of a client
  *
- * @author Sebastian Kersten (sebastian@momkai.com)
+ * @author Sebastian Kersten
  */
 class Client
 {
     
     /**
      * The client's id
-     * @var number 
+     * @var int 
      */
     var $_nId = 0;
     
@@ -30,17 +31,23 @@ class Client
     var $_sLogoURL = '';
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
      /**
      * Get the client's id
      * 
-     * @return number
+     * @return int
      */
     public function getId() { return $this->_nId; }
     
     /**
      * Set the client's id
      * 
-     * @param string $nId The client's id
+     * @param int $nId The client's id
      */
     public function setId($nId) { $this->_nId = $nId; }
     
@@ -65,7 +72,7 @@ class Client
      * 
      * @return string
      */
-    public function getLogoURL() { return $this->_sAvatarURL; }
+    public function getLogoURL() { return $this->_sLogoURL; }
     
     /**
      * Set the URL of the client's logo
@@ -73,4 +80,5 @@ class Client
      * @param string $sLogoURL The URL of the client's logo
      */
     public function setLogoURL($sLogoURL) { $this->_sLogoURL = $sLogoURL; }
+    
 }

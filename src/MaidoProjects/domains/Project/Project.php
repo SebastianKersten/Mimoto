@@ -1,11 +1,12 @@
 <?php
 
+// classpath
 namespace MaidoProjects\Project;
 
 /**
  * The "Project"-model contains the information of a project
  *
- * @author Sebastian Kersten (sebastian@momkai.com)
+ * @author Sebastian Kersten
  */
 class Project
 {
@@ -207,6 +208,7 @@ class Project
     
     
     
+    // #todo - delegate
     
     
     /**

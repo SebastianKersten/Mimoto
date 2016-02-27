@@ -1,19 +1,20 @@
 <?php
 
+// classpath
 namespace MaidoProjects\Agency;
 
 
 /**
  * The "Agency"-model contains the information of an agency
  *
- * @author Sebastian Kersten (sebastian@momkai.com)
+ * @author Sebastian Kersten
  */
 class Agency
 {
     
     /**
      * The agency's id
-     * @var number 
+     * @var int 
      */
     var $_nId = 0;
     
@@ -24,17 +25,23 @@ class Agency
     var $_sName = '';
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
      /**
      * Get the agency's id
      * 
-     * @return number
+     * @return int
      */
     public function getId() { return $this->_nId; }
     
     /**
      * Set the agency's id
      * 
-     * @param string $nId The agency's id
+     * @param int $nId The agency's id
      */
     public function setId($nId) { $this->_nId = $nId; }
     

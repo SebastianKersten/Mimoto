@@ -30,7 +30,7 @@ class ClientService
      */
     public function __construct($ClientRepository)
     {
-        // init
+        // register
         $this->_ClientRepository = $ClientRepository;
     }
     

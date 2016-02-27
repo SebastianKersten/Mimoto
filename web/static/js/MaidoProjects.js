@@ -188,10 +188,21 @@ Maido.popup.open = function(sURL)
     // load
     var r = new XMLHttpRequest();
     r.open("GET", sURL, true);
-    r.onreadystatechange = function () {
-      if (r.readyState != 4 || r.status != 200) return;
-
-      popup_content.innerHTML = r.responseText;
+    r.onreadystatechange = function ()
+    {
+        if (r.readyState != 4 || r.status != 200) return;
+        
+        popup_content.innerHTML = r.responseText;
+        
+        // focus primary input
+        var primaryInput = document.getElementById('form_field_name');
+        if (primaryInput)
+        {
+            primaryInput.focus();
+            var val = primaryInput.value;
+            primaryInput.value = '';
+            primaryInput.value = val;
+        }
     };
     r.send("banana=yellow");
 }

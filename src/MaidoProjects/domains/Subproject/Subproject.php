@@ -1,18 +1,19 @@
 <?php
 
+// classpath
 namespace MaidoProjects\Subproject;
 
 /**
  * The "Subproject"-model contains the information of a subproject
  *
- * @author Sebastian Kersten (sebastian@momkai.com)
+ * @author Sebastian Kersten
  */
 class Subproject
 {
     
     /**
      * The subproject's id
-     * @var number 
+     * @var int 
      */
     var $_nId = 0;
     
@@ -26,17 +27,23 @@ class Subproject
     #todo status, budget, slagingskans, periode
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
     /**
      * Get the subproject's id
      * 
-     * @return number
+     * @return int
      */
     public function getId() { return $this->_nId; }
     
     /**
      * Set the subproject's id
      * 
-     * @param string $nId The subproject's id
+     * @param int $nId The subproject's id
      */
     public function setId($nId) { $this->_nId = $nId; }
     

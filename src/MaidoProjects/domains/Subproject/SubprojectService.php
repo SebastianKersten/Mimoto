@@ -28,7 +28,7 @@ class SubprojectService
      */
     public function __construct($SubprojectRepository, $SubprojectStateRepository)
     {
-        // init
+        // register
         $this->_SubprojectRepository = $SubprojectRepository;
         $this->_SubprojectStateRepository = $SubprojectStateRepository;
     }

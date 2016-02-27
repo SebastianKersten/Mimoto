@@ -30,7 +30,7 @@ class AgencyService
      */
     public function __construct($AgencyRepository)
     {
-        // init
+        // register
         $this->_AgencyRepository = $AgencyRepository;
     }
     

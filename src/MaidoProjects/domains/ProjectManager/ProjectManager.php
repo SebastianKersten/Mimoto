@@ -1,18 +1,19 @@
 <?php
 
+// classpath
 namespace MaidoProjects\ProjectManager;
 
 /**
  * The "ProjectManager"-model contains the information of a project manager
  *
- * @author Sebastian Kersten (sebastian@momkai.com)
+ * @author Sebastian Kersten
  */
 class ProjectManager
 {
     
     /**
      * The client's id
-     * @var number 
+     * @var int 
      */
     var $_nId = 0;
     
@@ -29,17 +30,23 @@ class ProjectManager
     var $_sAvatarURL = '';
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
      /**
      * Get the project manager's id
      * 
-     * @return number
+     * @return int
      */
     public function getId() { return $this->_nId; }
     
     /**
      * Set the project manager's id
      * 
-     * @param string $nId The project manager's id
+     * @param int $nId The project manager's id
      */
     public function setId($nId) { $this->_nId = $nId; }
     

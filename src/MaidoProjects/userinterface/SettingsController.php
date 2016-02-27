@@ -58,6 +58,12 @@ class SettingsController
         );
     }
     
+    /**
+     * Get the form to create or edit a project manager
+     * @param Application $app
+     * @param $nId The project manager's ID or empty in case of new project manager
+     * @return rendered HTML
+     */
     public function formProjectManager(Application $app, $nId = false)
     {
         // init
@@ -119,6 +125,12 @@ class SettingsController
         );
     }
     
+    /**
+     * Get the form to create or edit a client
+     * @param Application $app
+     * @param $nId The client's ID or empty in case of new client
+     * @return rendered HTML
+     */
     public function formClient(Application $app, $nId = false)
     {
         // init
@@ -180,6 +192,12 @@ class SettingsController
         );
     }
     
+    /**
+     * Get the form to create or edit an agency
+     * @param Application $app
+     * @param $nId The agency's ID or empty in case of new agency
+     * @return rendered HTML
+     */
     public function formAgency(Application $app, $nId = false)
     {
         // init
@@ -246,7 +264,12 @@ class SettingsController
         );
     }
     
-    
+    /**
+     * Get the form to create or edit a subproject state
+     * @param Application $app
+     * @param $nId The subproject state's ID or empty in case of new subproject state
+     * @return rendered HTML
+     */
     public function formSubprojectState(Application $app, $nId = false)
     {
         // init
@@ -263,9 +286,6 @@ class SettingsController
             'forms/SubprojectStateForm.twig',
             $data
         );
-        
-        
-        return $this->formSimpleListItem($app, 'subproject_states', 'subproject_state', $id);
     }
     
     /**
@@ -285,12 +305,6 @@ class SettingsController
         
         // send
         return json_encode($response);
-    }
-    
-    
-    public function removeSubprojectState(Application $app, Request $request)
-    {
-        //return $this->saveSimpleListItem('subproject_states', $request->get('id'), $request->get('name'));
     }
    
 }

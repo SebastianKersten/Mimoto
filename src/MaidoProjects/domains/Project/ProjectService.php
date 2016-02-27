@@ -58,6 +58,25 @@ class ProjectService
     
     
     /**
+     * Get project by ID
+     */
+    public function getProjectById($nId)
+    {
+        // load
+        try
+        {
+            $project = $this->_ProjectRepository->get($nId);
+        }
+        catch(ClientException $e)
+        {
+            die($e->getMessage());
+        }
+        
+        // send
+        return $project;
+    }
+    
+    /**
      * Get all projects
      */
     public function getAllProjects()

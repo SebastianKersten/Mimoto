@@ -284,8 +284,8 @@ div.simplelist {
     }
     
         div.simplelist_item:hover {
-            text-decoration: underline;
-            font-weight: bold;
+            color: #ffffff;
+            background-color: #000000;
         }
     
         div.simplelist_item_label {
