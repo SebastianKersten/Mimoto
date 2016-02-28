@@ -132,6 +132,9 @@ class ProjectRepository
         if (!empty($project->getAgencyId())) { $project->setAgencyName($this->_AgencyService->getAgencyById($project->getAgencyId())->getName()); }
         $project->setProjectManagerName($this->_ProjectManagerService->getProjectManagerById($project->getProjectManagerId())->getName());
         
+        
+        $project->setSubprojects($this->_SubprojectService->getAllSubprojectsByProjectId($project->getId()));
+        
         // send
         return $project;   
     }

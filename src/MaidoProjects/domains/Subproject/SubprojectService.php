@@ -3,6 +3,9 @@
 // classpath
 namespace MaidoProjects\Subproject;
 
+// Momkai classes
+use MaidoProjects\Subproject\SubprojectRepositoryCriteria;
+
 
 /**
  * SubprojectService
@@ -67,10 +70,15 @@ class SubprojectService
      * Get all subprojects
      * @return Array containing Subprojects
      */
-    public function getAllSubprojects()
+    public function getAllSubprojectsByProjectId($nProjectId)
     {   
+        // configure
+        $criteria = new SubprojectRepositoryCriteria();
+        $criteria->setCriterium(SubprojectRepositoryCriteria::BY_PROJECT_ID);
+        $criteria->setProjectId($nProjectId);
+        
         // load
-        $aSubprojects = $this->_SubprojectRepository->find();
+        $aSubprojects = $this->_SubprojectRepository->find($criteria);
         
         // send
         return $aSubprojects;

@@ -65,6 +65,13 @@ class Project
      */
     var $_sProjectManagerName = '';
     
+    /**
+     * The project's subprojects
+     * @var array
+     */
+    var $_aSubprojects;
+    
+    
     
     
     // ----------------------------------------------------------------------------
@@ -216,6 +223,13 @@ class Project
      * 
      * @return Array
      */
-    public function getSubprojects() { return []; }
+    public function getSubprojects() { return $this->_aSubprojects; }
+    
+     /**
+     * Set the project's subprojects
+     * 
+     * @param array $aSubprojects The project's subprojects
+     */
+    public function setSubprojects($aSubprojects) { $this->_aSubprojects = $aSubprojects; }
     
 }

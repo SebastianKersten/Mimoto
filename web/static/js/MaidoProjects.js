@@ -61,6 +61,26 @@ Maido.newSubproject = function(nProjectID)
     Maido.popup.open('/project/' + nProjectID + '/subproject/new');   
 }
 
+Maido.changeSubproject = function(nProjectID, nSubprojectID)
+{   
+    Maido.popup.open('/project/' + nProjectID + '/subproject/change/' + nSubprojectID);
+}
+
+Maido.saveSubproject = function(data)
+{
+    alert(JSON.stringify(data));
+    // show loader
+    $.ajax({
+        type: 'POST',
+        url: "/subproject/save",
+        data: data,
+        dataType: 'json',
+        success: function (data) {
+            document.getElementById('popup_content').innerHTML = data.name;
+            window.open('/', '_self');//location.reload();
+        }
+    });
+}
 
 
 
@@ -221,3 +241,12 @@ Maido.popup.close = function()
     layer_overlay.classList.add('hidden');
     layer_popup.classList.add('hidden');
 }
+
+
+
+
+Maido.projects = {};
+
+//Maido.projects.toggleFilter(); -> auto reload pagina
+
+// reload after filter-set

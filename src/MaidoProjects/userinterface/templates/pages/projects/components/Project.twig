@@ -1,7 +1,7 @@
 <div class="component_project">
     <div class="project_menu">
-            <div class="button_small" onClick="Maido.changeProject({{ project.getId }});">Edit</div>
-        </div>
+        <div class="button_small" onClick="Maido.changeProject({{ project.getId }});">Edit</div>
+    </div>
     <div id="{{ project.getId }}" class="project_summary">
         
         <div class="project">
@@ -24,29 +24,31 @@
             <div class="project_subinfo_key">Used</div>
         </div>
         <div class="project_subinfo">
-            <div class="projectmanager_avatar"></div>
+            <div class="projectmanager_avatar"><img src="/dynamic/avatars/avatar_{{ project.getProjectManagerId }}.jpg"></div>
             <div class="projectmanager_name">{{ project.getProjectManagerName }}</div>
         </div>
         
         
     </div>
     <div id="project_details_{{ project.getId }}" class="project_details">
-        <hr>
-        {{ project.getDescription|e }}
-        
-        <div class="subproject_title">Aanvragen</div>
-        loop: aanvragen<br>
-        <br>
-        <div class="subproject_title">Lopend</div>
-        loop: lopende projecten<br>
-        <br>
-        <br>
-        Subproject | Status | Budget | Slagingskans<br>
-        
-        
-        
-        <div class="subprojects">
+        <div class="project_menu">
             <div class="button_small" onClick="Maido.newSubproject({{ project.getId }});">Add subproject +</div>
+        </div>
+        <div class="project_details_container">
+            <div class="project_details_description">
+                {{ project.getDescription|e }}
+            </div>
+            <div class="project_details_subprojects">
+                {% if filter.request %}
+                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Requests" } %}
+                {% endif %}
+                {% if filter.currentproject %}
+                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Current projects" } %}
+                {% endif %}
+                {% if filter.archived %}
+                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Archived" } %}
+                {% endif %}
+            </div>
         </div>
     </div>
     

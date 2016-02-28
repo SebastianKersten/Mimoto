@@ -49,10 +49,12 @@ $app->get('/prognose', 'MaidoProjects\\UserInterface\\ForecastController::getInd
 $app->get('/resultaat', 'MaidoProjects\\UserInterface\\ResultController::getIndex');
 
 $app->get('/project/new', 'MaidoProjects\\UserInterface\\ProjectsController::formProject');
-$app->get('/project/change/{id}', 'MaidoProjects\\UserInterface\\ProjectsController::formProject');
+$app->get('/project/change/{nId}', 'MaidoProjects\\UserInterface\\ProjectsController::formProject');
 $app->post('/project/save', 'MaidoProjects\\UserInterface\\ProjectsController::saveProject');
 
-$app->get('/project/{project_id}/subproject/new', 'MaidoProjects\\UserInterface\\ProjectsController::formSubproject');
+$app->get('/project/{nProjectId}/subproject/new', 'MaidoProjects\\UserInterface\\ProjectsController::formSubproject');
+$app->get('/subproject/change/{nId}', 'MaidoProjects\\UserInterface\\ProjectsController::formSubproject');
+$app->post('/subproject/save', 'MaidoProjects\\UserInterface\\ProjectsController::saveSubproject');
 
 
 $app->get('/settings', 'MaidoProjects\\UserInterface\\SettingsController::getSettingsOverview');
