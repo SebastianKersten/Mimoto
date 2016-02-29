@@ -7,8 +7,8 @@
         <div class="project">
             <div class="client_name">- {{ project.getClientName }}{% if project.getAgencyName != empty %}<span class="agency_name"> - {{ project.getAgencyName }}</span>{% endif %}</div>
             <div class="project_name"> {{ project.getName|e }}</div>
-            <div class="button_small" onClick="Maido.toggleProjectState({{ project.getId }});">View 3 subprojects</div>
-            <div class="button_small" onClick="Maido.newSubproject({{ project.getId }});">Add subproject +</div>
+            <div class="button_small" onClick="Maido.toggleProjectState({{ project.getId }});">View details</div>
+            <!--<div class="button_small" onClick="Maido.newSubproject({{ project.getId }});">Add subproject +</div>-->
         </div>
         
         <div class="project_subinfo">
@@ -36,17 +36,19 @@
         </div>
         <div class="project_details_container">
             <div class="project_details_description">
-                {{ project.getDescription|e }}
+                <u>Project description</u><br>
+                <br>
+                <i>{{ project.getDescription|e }}</i>
             </div>
             <div class="project_details_subprojects">
-                {% if filter.request %}
-                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Requests" } %}
+                {% if filter.request and project.getSubprojects.request|length > 0 %}
+                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Requests", subprojects:project.getSubprojects.request } %}
                 {% endif %}
-                {% if filter.currentproject %}
-                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Current projects" } %}
+                {% if filter.currentproject and project.getSubprojects.currentproject|length > 0 %}
+                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Current projects", subprojects:project.getSubprojects.currentproject } %}
                 {% endif %}
-                {% if filter.archived %}
-                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Archived" } %}
+                {% if filter.archived and project.getSubprojects.archived|length > 0 %}
+                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Archived", subprojects:project.getSubprojects.archived } %}
                 {% endif %}
             </div>
         </div>

@@ -80,30 +80,32 @@ class SubprojectRepository
                 
                 throw new SubprojectException('Cannot find subprojects with these CRITERIA');
         }
-                
         
+        // load
         $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
         $nItemCount = mysql_num_rows($result);
+        
         
         // register
         for ($i = 0; $i < $nItemCount; $i++)
         {
-            
+            // init
             $subproject = new Subproject();
             
+            // register
             $subproject->setId(mysql_result($result, $i, 'id'));
             $subproject->setName(mysql_result($result, $i, 'name'));
             $subproject->setContactName(mysql_result($result, $i, 'contact_name'));
             $subproject->setPhase(mysql_result($result, $i, 'phase'));
             $subproject->setStateId(mysql_result($result, $i, 'state_id'));
-            
-            $subproject->setStateName('xxx');
-            
             $subproject->setProbability(mysql_result($result, $i, 'probability'));
             $subproject->setBudget(mysql_result($result, $i, 'budget'));
             $subproject->setPaymentType(mysql_result($result, $i, 'payment_type'));
             
+            // register for data representation
+            $subproject->setStateName('xxx'); //<- memcached (+flush)
             
+            // register
             $aSubprojects[$subproject->getPhase()][] = $subproject;
         }
         

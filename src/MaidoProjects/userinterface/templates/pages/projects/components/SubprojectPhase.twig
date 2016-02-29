@@ -10,20 +10,14 @@
         <div class="subproject_edit subproject_header">&nbsp;</div>
     </div>
     
-    <div class="subproject_container">
-        <div class="subproject_name subproject_content">Specificatiefase <div class="button_small" onClick="Maido.changeSubproject({{ subproject.getId }});">Details</div></div>
-        <div class="subproject_status subproject_content">Offerte gestuurd</div>
-        <div class="subproject_budget subproject_content">60k</div>
-        <div class="subproject_chanceofsuccess subproject_content">90%</div>
-        <div class="subproject_edit subproject_content"><div class="button_small" onClick="Maido.changeSubproject({{ subproject.getId }});">Edit</div></div>
-    </div>
-    
-    <div class="subproject_container">
-        <div class="subproject_name subproject_content">In-store visuals</div>
-        <div class="subproject_status subproject_content">Wacht op vervolg</div>
-        <div class="subproject_budget subproject_content">5k</div>
-        <div class="subproject_chanceofsuccess subproject_content">10%</div>
-        <div class="subproject_edit subproject_content"><div class="button_small" onClick="Maido.changeSubproject({{ subproject.getId }});">Edit</div></div>
-    </div>
+    {% for subproject in subprojects %}
+        <div class="subproject_container">
+            <div class="subproject_name subproject_content">{{ subproject.name }}</div>
+            <div class="subproject_status subproject_content">{{ subproject.getStateName }}</div>
+            <div class="subproject_budget subproject_content">{{ subproject.getBudget/1000 }}k</div>
+            <div class="subproject_chanceofsuccess subproject_content">{{ subproject.getProbability*100 }}%</div>
+            <div class="subproject_edit subproject_content"><div class="button_small" onClick="Maido.changeSubproject({{ subproject.getId }});">Edit</div></div>
+        </div>
+    {% endfor %}
     
 </div>

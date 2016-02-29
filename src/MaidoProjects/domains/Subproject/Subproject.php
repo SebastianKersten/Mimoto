@@ -57,13 +57,13 @@ class Subproject
      * The subproject's budget
      * @var int
      */
-    var $_nBudget = 0;
+    var $_nBudget;
     
     /**
      * The subproject's payment type
      * @var string
      */
-    var $_sPaymentType = '';
+    var $_sPaymentType;
     
     
     
@@ -159,7 +159,7 @@ class Subproject
      * 
      * @param int $nStateId The subproject's state ID
      */
-    public function setStateId($nStateId) { $this->_nStateId = $nstateId; }
+    public function setStateId($nStateId) { $this->_nStateId = $nStateId; }
     
     
     /**
@@ -167,7 +167,7 @@ class Subproject
      * 
      * @return string
      */
-    public function getStateName() { return $this->_sStateId; }
+    public function getStateName() { return $this->_sStateName; }
     
     /**
      * Set the subproject's state sname

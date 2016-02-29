@@ -61,9 +61,9 @@ Maido.newSubproject = function(nProjectID)
     Maido.popup.open('/project/' + nProjectID + '/subproject/new');   
 }
 
-Maido.changeSubproject = function(nProjectID, nSubprojectID)
+Maido.changeSubproject = function(nSubprojectId)
 {   
-    Maido.popup.open('/project/' + nProjectID + '/subproject/change/' + nSubprojectID);
+    Maido.popup.open('/subproject/change/' + nSubprojectId);
 }
 
 Maido.saveSubproject = function(data)

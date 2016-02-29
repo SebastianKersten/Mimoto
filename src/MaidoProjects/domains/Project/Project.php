@@ -15,55 +15,55 @@ class Project
      * The project's id
      * @var int 
      */
-    var $_nId = 0;
+    var $_nId;
     
     /**
      * The project's name
      * @var string
      */
-    var $_sName = '';
+    var $_sName;
     
     /**
      * The project's description
      * @var string
      */
-    var $_sDescription = '';
+    var $_sDescription;
     
     /**
      * The project's client id
      * @var int 
      */
-    var $_nClientId = 0;
+    var $_nClientId;
     
     /**
      * The project's client's name
      * @var string
      */
-    var $_sClientName = '';
+    var $_sClientName;
     
     /**
      * The project's agency id
      * @var int 
      */
-    var $_nAgencyId = 0;
+    var $_nAgencyId;
     
     /**
      * The project's agency's name
      * @var string
      */
-    var $_sAgencyName = '';
+    var $_sAgencyName;
     
     /**
      * The project's project manager id
      * @var int 
      */
-    var $_nProjectManagerId = 0;
+    var $_nProjectManagerId;
     
     /**
      * The project's project managers's name
      * @var string
      */
-    var $_sProjectManagerName = '';
+    var $_sProjectManagerName;
     
     /**
      * The project's subprojects

@@ -126,40 +126,15 @@ class ProjectRepository
         $project->setClientId(mysql_result($mysqlResult, $nIndex, 'client_id'));
         $project->setAgencyId(mysql_result($mysqlResult, $nIndex, 'agency_id'));
         $project->setProjectManagerId(mysql_result($mysqlResult, $nIndex, 'projectmanager_id'));
+        $project->setSubprojects($this->_SubprojectService->getAllSubprojectsByProjectId($project->getId()));
 
         // register data for presentation
         $project->setClientName($this->_ClientService->getClientById($project->getClientId())->getName());
         if (!empty($project->getAgencyId())) { $project->setAgencyName($this->_AgencyService->getAgencyById($project->getAgencyId())->getName()); }
         $project->setProjectManagerName($this->_ProjectManagerService->getProjectManagerById($project->getProjectManagerId())->getName());
         
-        
-        $project->setSubprojects($this->_SubprojectService->getAllSubprojectsByProjectId($project->getId()));
-        
         // send
         return $project;   
     }
-    
-    
-    /*
-     * Set retriever
-     * 
-     * $aSubprojects = array();
-
-            for ($j = 0; $j < $nSubprojectCount; $j++)
-            {
-                
-                $subproject = array();
-            
-                // --- project ---
-                $subproject['id'] = mysql_result($resultSubprojects, $i, 'id');
-                $subproject['name'] = mysql_result($resultSubprojects, $i, 'name');
-                $subproject['phase'] = mysql_result($resultSubprojects, $i, 'phase');
-                
-                $project['subprojects'][] = $subproject;
-            }
-     * 
-     * 
-     * 
-     */
         
 }

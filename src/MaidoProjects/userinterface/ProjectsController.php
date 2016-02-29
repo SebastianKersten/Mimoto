@@ -57,10 +57,11 @@ class ProjectsController
         // load data
         $aProjects = $app['ProjectService']->getAllProjects();
         
-        echo "<pre>";
-        print_r($aProjects);
-        echo "</pre>";
-        die();
+        //echo "<pre>";
+        //print_r($aProjects);
+        //echo "</pre>";
+        //die();
+        
         
         
         return $app['twig']->render(
