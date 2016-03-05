@@ -245,12 +245,21 @@ $app['dispatcher']->addListener(SubprojectStateEvent::CREATED, function($subproj
 });
 
 
+
+
 // connect elements from template -> send content, voorzien van meta data
-// auto update, connect field with event -> mapping
+// auto update, connect field with event -> mapping ->type = component (via url) of field (via direct value)
 
 // ----------> ListComponent
 // gearman -> type-async -> in jobserver
 // listener class -> start van sequence
+// generaliseer PusherEventHandler en pas toe op de 4 pagina's
+// scheduled requests/actions (ActionSequence)
+// Queue met statusupdates, bijwerking en monitoring
+
+
+
+// validate validity of the client monitor (auto-reboot)
 
 
 
