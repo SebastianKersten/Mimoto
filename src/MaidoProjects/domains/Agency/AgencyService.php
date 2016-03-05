@@ -4,6 +4,7 @@
 namespace MaidoProjects\Agency;
 
 // Momkai classes
+use MaidoProjects\Agency\Agency;
 use MaidoProjects\Agency\AgencyException;
 
 
@@ -37,7 +38,7 @@ class AgencyService
     
     
     // ----------------------------------------------------------------------------
-    // --- Public methods----------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
@@ -77,8 +78,16 @@ class AgencyService
      */
     public function storeAgency($nId, $sName)
     {
+        
+        // init
+        $agency = new Agency();
+        
+        // register
+        $agency->setId($nId);
+        $agency->setName($sName);
+        
         // store
-        $this->_AgencyRepository->store($nId, $sName);
+        $this->_AgencyRepository->store($agency);
     }
     
 }

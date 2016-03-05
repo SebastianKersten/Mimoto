@@ -16,13 +16,19 @@ class SubprojectState
      * The sub[project state's id
      * @var int 
      */
-    var $_nId = 0;
+    var $_nId;
     
     /**
      * The subproject state's name
      * @var string
      */
-    var $_sName = '';
+    var $_sName;
+    
+    /**
+     * The moment of creation
+     * @var datetime
+     */
+    var $_datetimeCreated;
     
     
     
@@ -59,5 +65,20 @@ class SubprojectState
      * @param string $sName The subproject state's name
      */
     public function setName($sName) { $this->_sName = $sName; }
+    
+    
+    /**
+     * Get the moment of creation
+     * 
+     * @return datetime
+     */
+    public function getCreated() { return $this->_datetimeCreated; }
+    
+    /**
+     * Set the moment of creation
+     * 
+     * @param datetime $datetimeCreated The moment of creation
+     */
+    public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
     
 }

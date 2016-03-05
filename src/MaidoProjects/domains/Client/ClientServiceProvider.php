@@ -22,7 +22,7 @@ class ClientServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['ClientService'] = $app->share(function ($app) {
-            return new ClientService(new ClientRepository());
+            return new ClientService(new ClientRepository($app['EventService']));
         });
     }
 

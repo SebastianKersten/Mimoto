@@ -23,7 +23,8 @@ Maido.saveProject = function(data)
         dataType: 'json',
         success: function (data) {
             document.getElementById('popup_content').innerHTML = data.name;
-            window.open('/', '_self');//location.reload();
+            Maido.popup.close();
+            window.open('/', '_self');
         }
     });
 }
@@ -68,7 +69,6 @@ Maido.changeSubproject = function(nSubprojectId)
 
 Maido.saveSubproject = function(data)
 {
-    alert(JSON.stringify(data));
     // show loader
     $.ajax({
         type: 'POST',
@@ -76,12 +76,10 @@ Maido.saveSubproject = function(data)
         data: data,
         dataType: 'json',
         success: function (data) {
-            document.getElementById('popup_content').innerHTML = data.name;
-            window.open('/', '_self');//location.reload();
+            Maido.popup.close();
         }
     });
 }
-
 
 
 
@@ -105,8 +103,7 @@ Maido.settings.saveProjectManager = function(data)
         data: data,
         dataType: 'json',
         success: function (data) {
-            document.getElementById('popup_content').innerHTML = data.name;
-            location.reload();
+            Maido.popup.close();
         }
     });    
 }
@@ -129,9 +126,8 @@ Maido.settings.saveClient = function(data)
         data: data,
         dataType: 'json',
         success: function (data) {
-            document.getElementById('popup_content').innerHTML = data.name;
-            location.reload();
-        },
+            Maido.popup.close();
+        }
     });    
 }
 
@@ -154,8 +150,7 @@ Maido.settings.saveAgency = function(data)
         data: data,
         dataType: 'json',
         success: function (data) {
-            document.getElementById('popup_content').innerHTML = data.name;
-            location.reload();
+            Maido.popup.close();
         }
     });    
 }
@@ -250,3 +245,126 @@ Maido.projects = {};
 //Maido.projects.toggleFilter(); -> auto reload pagina
 
 // reload after filter-set
+
+
+
+
+
+
+
+
+
+
+
+// Notifications
+
+Maido.notifications = {};
+        
+Maido.notifications.connectPage = function(sPage)
+{
+    
+    // Enable pusher logging - don't include this in production
+    Pusher.log = function(message) {
+        if (window.console && window.console.log) { window.console.log(message); }
+    };
+
+    var pusher = new Pusher('55152f70c4cec27de21d', {
+        cluster: 'eu',
+        encrypted: true
+    });
+    
+    
+    switch(sPage)
+    {
+        case 'clients':
+            
+            var channel = pusher.subscribe('clients');
+            
+            channel.bind('client.created', function(data) {
+                if (data.type == 'livescreen') { Maido.livescreen.create(data.ajax, data.dom); }
+            });
+            
+            channel.bind('client.updated', function(data) {
+                if (data.type == 'livescreen') { Maido.livescreen.update(data.ajax, data.dom); }
+            });
+            
+            break;
+            
+        case 'agencies':
+            
+            var channel = pusher.subscribe('agencies');
+            
+            channel.bind('agency.created', function(data) {
+                if (data.type == 'livescreen') { Maido.livescreen.create(data.ajax, data.dom); }
+            });
+            
+            channel.bind('agency.updated', function(data) {
+                if (data.type == 'livescreen') { Maido.livescreen.update(data.ajax, data.dom); }
+            });
+            
+            break;
+            
+        case 'projectmanagers':
+            
+            var channel = pusher.subscribe('projectmanagers');
+            
+            channel.bind('projectmanager.created', function(data) {
+                if (data.type == 'livescreen') { Maido.livescreen.create(data.ajax, data.dom); }
+            });
+            
+            channel.bind('projectmanager.updated', function(data) {
+                if (data.type == 'livescreen') { Maido.livescreen.update(data.ajax, data.dom); }
+            });
+            
+            break;
+            
+        case 'subprojectstates':
+            
+            var channel = pusher.subscribe('subprojectstates');
+            
+            channel.bind('subprojectstate.created', function(data) {
+                if (data.type == 'livescreen') { Maido.livescreen.create(data.ajax, data.dom); }
+            });
+            
+            channel.bind('subprojectstate.updated', function(data) {
+                if (data.type == 'livescreen') { Maido.livescreen.update(data.ajax, data.dom); }
+            });
+            
+            break;
+    }
+}
+
+
+Maido.livescreen = {};
+
+Maido.livescreen.connect = function()
+{
+
+}
+
+
+Maido.livescreen.create = function(ajax, dom)
+{
+    $.ajax({
+        type: ajax.type,
+        url: ajax.url,
+        data: ajax.data,
+        dataType: ajax.dataType,
+        success: function (data) {
+            $(dom.containerId).append(data);
+        }
+    });
+}
+
+Maido.livescreen.update = function(ajax, dom)
+{
+    $.ajax({
+        type: ajax.type,
+        url: ajax.url,
+        data: ajax.data,
+        dataType: ajax.dataType,
+        success: function (data) {
+            $(dom.objectId).replaceWith(data);
+        }
+    });
+}

@@ -15,19 +15,25 @@ class ProjectManager
      * The client's id
      * @var int 
      */
-    var $_nId = 0;
+    var $_nId;
     
     /**
      * The project manager's name
      * @var string
      */
-    var $_sName = '';
+    var $_sName;
     
     /**
      * The URL of the project manager's avatar
      * @var string
      */
-    var $_sAvatarURL = '';
+    var $_sAvatarURL;
+    
+    /**
+     * The moment of creation
+     * @var datetime
+     */
+    var $_datetimeCreated;
     
     
     
@@ -79,4 +85,19 @@ class ProjectManager
      * @param string $sAvatarURL The URL of the project manager's avatar
      */
     public function setAvatarURL($sAvatarURL) { $this->_sAvatarURL = $sAvatarURL; }
+    
+    
+    /**
+     * Get the moment of creation
+     * 
+     * @return datetime
+     */
+    public function getCreated() { return $this->_datetimeCreated; }
+    
+    /**
+     * Set the moment of creation
+     * 
+     * @param datetime $datetimeCreated The moment of creation
+     */
+    public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
 }

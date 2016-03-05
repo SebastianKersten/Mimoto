@@ -22,7 +22,7 @@ class ProjectManagerServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['ProjectManagerService'] = $app->share(function ($app) {
-            return new ProjectManagerService(new ProjectManagerRepository());
+            return new ProjectManagerService(new ProjectManagerRepository($app['EventService']));
         });
     }
 

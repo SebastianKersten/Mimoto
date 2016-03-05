@@ -4,7 +4,8 @@
 namespace MaidoProjects\Subproject;
 
 // Momkai classes
-use MaidoProjects\Subproject\SubprojectRepositoryCriteria;
+use MaidoProjects\Subproject\SubprojectState;
+use MaidoProjects\Subproject\SubprojectStateException;
 
 
 /**
@@ -136,8 +137,15 @@ class SubprojectService
      */
     public function storeSubprojectState($nId, $sName)
     {
+        // init
+        $subprojectState = new SubprojectState();
+        
+        // register
+        $subprojectState->setId($nId);
+        $subprojectState->setName($sName);
+        
         // store
-        $this->_SubprojectStateRepository->store($nId, $sName);
+        $this->_SubprojectStateRepository->store($subprojectState);
     }
     
 }

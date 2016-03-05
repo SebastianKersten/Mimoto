@@ -4,6 +4,7 @@
 namespace MaidoProjects\Client;
 
 // Momkai classes
+use MaidoProjects\Client\Client;
 use MaidoProjects\Client\ClientException;
 
 
@@ -77,8 +78,16 @@ class ClientService
      */
     public function storeClient($nId, $sName)
     {
+        
+        // init
+        $client = new Client();
+        
+        // register
+        $client->setId($nId);
+        $client->setName($sName);
+        
         // store
-        $this->_ClientRepository->store($nId, $sName);
+        $this->_ClientRepository->store($client);
     }
     
 }

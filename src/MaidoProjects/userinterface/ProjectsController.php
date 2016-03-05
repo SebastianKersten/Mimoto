@@ -42,7 +42,8 @@ class ProjectsController
             // init
             $filterSettings = $defaultFilterSettings = array(
                 self::FILTER_SETTING_REQUEST => true,
-                self::FILTER_SETTING_CURRENTPROJECT => true
+                self::FILTER_SETTING_CURRENTPROJECT => true,
+                self::FILTER_SETTING_ARCHIVED => false
             );
             
             // store
@@ -61,6 +62,7 @@ class ProjectsController
         //print_r($aProjects);
         //echo "</pre>";
         //die();
+        
         
         
         
@@ -222,7 +224,7 @@ class ProjectsController
     public function formSubproject(Application $app, $nProjectId = false, $nId = false)
     {   
         
-        $aData = array();
+        $aFormData = array();
         
         if ($nId !== false && !is_nan($nId))
         {
@@ -233,14 +235,14 @@ class ProjectsController
             
             if ($nItemCount == 1)
             {
-                $aData['id'] = mysql_result($result, 0, 'id');
-                $aData['name'] = mysql_result($result, 0, 'name');
-                $aData['contact_name'] = mysql_result($result, 0, 'contact_name');
-                $aData['phase'] = mysql_result($result, 0, 'phase');
-                $aData['state_id'] = mysql_result($result, 0, 'state_id');
-                $aData['probability'] = mysql_result($result, 0, 'probability');
-                $aData['budget'] = mysql_result($result, 0, 'budget');
-                $aData['payment_type'] = mysql_result($result, 0, 'payment_type');
+                $aFormData['id'] = mysql_result($result, 0, 'id');
+                $aFormData['name'] = mysql_result($result, 0, 'name');
+                $aFormData['contact_name'] = mysql_result($result, 0, 'contact_name');
+                $aFormData['phase'] = mysql_result($result, 0, 'phase');
+                $aFormData['state_id'] = mysql_result($result, 0, 'state_id');
+                $aFormData['probability'] = mysql_result($result, 0, 'probability');
+                $aFormData['budget'] = mysql_result($result, 0, 'budget');
+                $aFormData['payment_type'] = mysql_result($result, 0, 'payment_type');
             }
         }
         
@@ -275,16 +277,22 @@ class ProjectsController
         
         // order by period (toekomstige zaken komen verderop in de lijst
         
+        
+        $twigData = array(
+            'phases' => $aPhases,
+            'states' => $aStates,
+            'probabilities' => $aProbabilities,
+            'payment_types' => $aPaymentTypes,
+            'formdata' => $aFormData
+        );
+        
+        if ($nProjectId !== false) { $twigData['project_id'] = $nProjectId; }
+
+        
+        // output
         return $app['twig']->render(
             'forms/SubprojectForm.twig',
-            array(
-                'project_id' => $nProjectId,
-                'phases' => $aPhases,
-                'states' => $aStates,
-                'probabilities' => $aProbabilities,
-                'payment_types' => $aPaymentTypes,
-                'formdata' => $aData
-            )
+            $twigData
         );
     }
     
@@ -317,7 +325,7 @@ class ProjectsController
                     budget='".$nBudget."',
                     payment_type='".$sPaymentType."'
                 WHERE
-                    id='".$nID."'";
+                    id='".$nId."'";
         
             $result = mysql_query($query) or die('Query failed: ' . mysql_error());
         }

@@ -20,9 +20,12 @@ class SubprojectRepository
     
     // private
     const MYSQL_TABLE_SUBPROJECTS = 'subprojects';
+    const MYSQL_TABLE_SUBPROJECTSTATES = 'subproject_states';
     
     
-    
+    /**
+     * Constructor
+     */
     public function __construct() {}
     
     
@@ -39,16 +42,8 @@ class SubprojectRepository
         }
         else
         {
-            
-            // init
-            $subproject = new Subproject();
-            
-            // register
-            $subproject->setId(mysql_result($result, 0, 'id'));
-            $subproject->setName(mysql_result($result, 0, 'name'));
-            
             // send
-            return $subproject;
+            return $this->createSubprojectFromMySQLResult($result, 0);            
         }
     }
     
@@ -89,21 +84,8 @@ class SubprojectRepository
         // register
         for ($i = 0; $i < $nItemCount; $i++)
         {
-            // init
-            $subproject = new Subproject();
-            
-            // register
-            $subproject->setId(mysql_result($result, $i, 'id'));
-            $subproject->setName(mysql_result($result, $i, 'name'));
-            $subproject->setContactName(mysql_result($result, $i, 'contact_name'));
-            $subproject->setPhase(mysql_result($result, $i, 'phase'));
-            $subproject->setStateId(mysql_result($result, $i, 'state_id'));
-            $subproject->setProbability(mysql_result($result, $i, 'probability'));
-            $subproject->setBudget(mysql_result($result, $i, 'budget'));
-            $subproject->setPaymentType(mysql_result($result, $i, 'payment_type'));
-            
-            // register for data representation
-            $subproject->setStateName('xxx'); //<- memcached (+flush)
+            // create
+            $subproject = $this->createSubprojectFromMySQLResult($result, $i);
             
             // register
             $aSubprojects[$subproject->getPhase()][] = $subproject;
@@ -113,4 +95,43 @@ class SubprojectRepository
         return $aSubprojects;
     }
     
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Create Subproject from MySQL result
+     * @param MySQL query result $mysqlResult
+     * @param int $nIndex
+     * @return Subproject
+     */
+    private function createSubprojectFromMySQLResult($mysqlResult, $nIndex)
+    {
+        // init
+        $subproject = new Subproject();
+
+        // register
+        $subproject->setId(mysql_result($mysqlResult, $nIndex, 'id'));
+        $subproject->setName(mysql_result($mysqlResult, $nIndex, 'name'));
+        $subproject->setContactName(mysql_result($mysqlResult, $nIndex, 'contact_name'));
+        $subproject->setPhase(mysql_result($mysqlResult, $nIndex, 'phase'));
+        $subproject->setStateId(mysql_result($mysqlResult, $nIndex, 'state_id'));
+        $subproject->setProbability(mysql_result($mysqlResult, $nIndex, 'probability'));
+        $subproject->setBudget(mysql_result($mysqlResult, $nIndex, 'budget'));
+        $subproject->setPaymentType(mysql_result($mysqlResult, $nIndex, 'payment_type'));
+
+        // load
+        $sQuery = "SELECT * FROM ".self::MYSQL_TABLE_SUBPROJECTSTATES." WHERE id='".$subproject->getStateId()."'";
+        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+        $nItemCount = mysql_num_rows($result);
+        
+        // register for data representation
+        if ($nItemCount == 1) $subproject->setStateName(mysql_result($result, 0, 'name')); //<- memcached (+flush)
+        
+        // send
+        return $subproject;   
+    }
 }

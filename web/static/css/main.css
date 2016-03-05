@@ -343,7 +343,7 @@ div.project_summary {
     }
     
 div.project_details {
-    display: none;
+    //display: none;
     padding: 0 8px 8px 8px;
     position: relative;
 }
@@ -411,6 +411,10 @@ div.subproject_title {
     margin-bottom: 5px;
 }
 
+div.subproject {
+    margin-bottom: 1px;
+}
+
 div.subproject_container {
     display: -webkit-flex;
     display: flex;
@@ -418,7 +422,6 @@ div.subproject_container {
 
     div.subproject_container>div {
         padding: 10px;
-        margin-bottom: 1px;
     }
 
     div.subproject_header {
@@ -452,6 +455,11 @@ div.subproject_container {
         text-align: right;
     }
 
+div.subproject_details {
+    background-color: #ff0000;
+}
+
+    
     
  /* --- view options --- */
  

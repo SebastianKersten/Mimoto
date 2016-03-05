@@ -23,7 +23,7 @@ class SubprojectServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['SubprojectService'] = $app->share(function ($app) {
-            return new SubprojectService(new SubprojectRepository(), new SubprojectStateRepository());
+            return new SubprojectService(new SubprojectRepository(), new SubprojectStateRepository($app['EventService']));
         });
     }
 

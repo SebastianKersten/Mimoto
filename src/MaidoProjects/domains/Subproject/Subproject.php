@@ -152,7 +152,7 @@ class Subproject
      * 
      * @return int
      */
-    public function getStateId() { return $this->_sStateId; }
+    public function getStateId() { return $this->_nStateId; }
     
     /**
      * Set the subproject's state ID

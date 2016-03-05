@@ -16,19 +16,25 @@ class Client
      * The client's id
      * @var int 
      */
-    var $_nId = 0;
+    var $_nId;
     
     /**
      * The client's name
      * @var string
      */
-    var $_sName = '';
+    var $_sName;
     
     /**
      * The URL of the client's logo
      * @var string
      */
-    var $_sLogoURL = '';
+    var $_sLogoURL;
+    
+    /**
+     * The moment of creation
+     * @var datetime
+     */
+    var $_datetimeCreated;
     
     
     
@@ -37,7 +43,7 @@ class Client
     // ----------------------------------------------------------------------------
     
     
-     /**
+    /**
      * Get the client's id
      * 
      * @return int
@@ -80,5 +86,20 @@ class Client
      * @param string $sLogoURL The URL of the client's logo
      */
     public function setLogoURL($sLogoURL) { $this->_sLogoURL = $sLogoURL; }
+    
+    
+    /**
+     * Get the moment of creation
+     * 
+     * @return datetime
+     */
+    public function getCreated() { return $this->_datetimeCreated; }
+    
+    /**
+     * Set the moment of creation
+     * 
+     * @param datetime $datetimeCreated The moment of creation
+     */
+    public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
     
 }

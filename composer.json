@@ -10,7 +10,10 @@
             "MaidoProjects\\Subproject\\": "./src/MaidoProjects/domains/Subproject",
             "MaidoProjects\\Client\\": "./src/MaidoProjects/domains/Client",
             "MaidoProjects\\ProjectManager\\": "./src/MaidoProjects/domains/ProjectManager",
-            "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency"
+            "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency",
+            "library\\": "./src/MaidoProjects/library",
+            "Momkai\\Event\\": "./src/Momkai/domains/Event",
+            "Momkai\\Mail\\": "./src/Momkai/domains/Mail"
         }
     }
 }

@@ -4,7 +4,7 @@
 namespace MaidoProjects\ProjectManager;
 
 // Momkai classes
-use MaidoProjects\ProjectManager\ProjectManagerRepository;
+use MaidoProjects\ProjectManager\ProjectManager;
 use MaidoProjects\ProjectManager\ProjectManagerException;
 
 
@@ -78,8 +78,15 @@ class ProjectManagerService
      */
     public function storeProjectManager($nId, $sName)
     {
+        // init
+        $projectManager = new ProjectManager();
+        
+        // register
+        $projectManager->setId($nId);
+        $projectManager->setName($sName);
+        
         // store
-        $this->_ProjectManagerRepository->store($nId, $sName);
+        $this->_ProjectManagerRepository->store($projectManager);
     }
     
 }
