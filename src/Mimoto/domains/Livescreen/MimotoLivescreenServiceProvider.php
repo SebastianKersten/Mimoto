@@ -1,10 +1,10 @@
 <?php
 
 // classpath
-namespace Momkai\Event;
+namespace library\Livescreen;
 
 // Momkai classes
-use Momkai\Event\EventService;
+use library\Livescreen\LivescreenService;
 
 // Silex classes
 use Silex\Application;
@@ -12,16 +12,16 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * EventServiceProvider
+ * LivescreenServiceProvider
  *
  * @author Sebastian Kersten
  */
-class EventServiceProvider implements ServiceProviderInterface
+class LivescreenServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app['EventService'] = $app->share(function ($app) {
-            return new EventService($app['dispatcher']);
+        $app['LivescreenService'] = $app->share(function ($app) {
+            return new LivescreenService();
         });
     }
 

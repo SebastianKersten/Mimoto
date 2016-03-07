@@ -12,8 +12,10 @@
             "MaidoProjects\\ProjectManager\\": "./src/MaidoProjects/domains/ProjectManager",
             "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency",
             "library\\": "./src/MaidoProjects/library",
-            "Momkai\\Event\\": "./src/Momkai/domains/Event",
-            "Momkai\\Mail\\": "./src/Momkai/domains/Mail"
+            "Mimoto\\Event\\": "./src/Mimoto/domains/Event",
+            "Mimoto\\Entity\\": "./src/Mimoto/domains/Entity",
+            "Mimoto\\Livescreen\\": "./src/Mimoto/domains/Livescreen",
+            "Mimoto\\Mail\\": "./src/Mimoto/domains/Mail"
         }
     }
 }

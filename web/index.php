@@ -17,7 +17,7 @@ use MaidoProjects\Agency\AgencyEvent;
 use MaidoProjects\Agency\AgencyServiceProvider;
 
 // Momkai classes
-use Momkai\Event\EventServiceProvider;
+use Mimoto\Event\MimotoEventServiceProvider;
 
 
 // init
@@ -47,7 +47,7 @@ $app->register(new ClientServiceProvider());
 $app->register(new AgencyServiceProvider());
 
 // connect platform services
-$app->register(new EventServiceProvider());
+$app->register(new MimotoEventServiceProvider());
 
 
 
@@ -225,6 +225,10 @@ $app['dispatcher']->addListener(SubprojectStateEvent::UPDATED, function($subproj
 
 $app['dispatcher']->addListener(SubprojectStateEvent::CREATED, function($subprojectstateEvent) {
     
+    // move to class to cleanup this file
+    // create LivescreenService
+    //
+    
     $data = (object) array();
     
     $data->type = 'livescreen';
@@ -260,6 +264,12 @@ $app['dispatcher']->addListener(SubprojectStateEvent::CREATED, function($subproj
 
 
 // validate validity of the client monitor (auto-reboot)
+// data event
+// component event
+// page event
+// popup event -> auto popup with message of reboot
+// vraag huidige staat op bij de server (save state zoals de client monitor)
+// State per gebruiker. start waar je was gebleven.
 
 
 

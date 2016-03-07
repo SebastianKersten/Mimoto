@@ -56,13 +56,6 @@ class AbstractSingleMySQLTableRepository
     
     
     /**
-     * Set EventService
-     * 
-     * @param class $EventService
-     */
-    protected function setEventService($EventService) { $this->_EventService = $EventService; }
-    
-    /**
      * Set the class that defines the model
      * 
      * @param class $modelClass
@@ -96,6 +89,23 @@ class AbstractSingleMySQLTableRepository
      * @param array $aModelToMySQLTableMap
      */
     protected function setModelToMySQLTableMap($aModelToMySQLTableMap) { $this->_aModelToMySQLTableMap = $aModelToMySQLTableMap; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     * @param EventService $EventService
+     */
+    public function __construct($EventService)
+    {
+        // register
+        $this->_EventService = $EventService;
+    }
     
     
     

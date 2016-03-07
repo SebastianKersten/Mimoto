@@ -3,13 +3,16 @@
 // classpath
 namespace MaidoProjects\Client;
 
+// Mimoto classes
+use Mimoto\Entity\MimotoEntity;
+
 
 /**
  * The "Client"-model contains the information of a client
  *
  * @author Sebastian Kersten
  */
-class Client
+class Client extends MimotoEntity
 {
     
     /**
@@ -101,5 +104,20 @@ class Client
      * @param datetime $datetimeCreated The moment of creation
      */
     public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setEntityName('client');
+    }
     
 }

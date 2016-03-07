@@ -40,4 +40,14 @@ class MailService
         
     }
     
+    /**
+     * Schedule mail
+     */
+    public function scheduleMail($sTemplate, $aData, $momentToSend)
+    {
+        // opslaan in request/action queue
+        // ScheduleService / TaskService
+        // Sequence / Action
+    }
+    
 }

@@ -3,11 +3,11 @@
 // classpath
 namespace MaidoProjects\Agency;
 
-// Symfony classes
-use Symfony\Component\EventDispatcher\Event;
+// Mimoto classes
+use Mimoto\Event\MimotoEvent;
 
 
-class AgencyEvent extends Event
+class AgencyEvent extends MimotoEvent
 {
     /**
      * xxx

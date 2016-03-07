@@ -21,8 +21,8 @@ class SubprojectStateRepository extends AbstractSingleMySQLTableRepository
     public function __construct($EventService)
     {
         
-        // register
-        $this->setEventService($EventService);
+        // init parent
+        parent::__construct($EventService);
         
         // setup
         $this->setModelClass('MaidoProjects\Subproject\SubprojectState');

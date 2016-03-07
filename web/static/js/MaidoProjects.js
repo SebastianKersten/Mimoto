@@ -276,7 +276,7 @@ Maido.notifications.connectPage = function(sPage)
     
     switch(sPage)
     {
-        case 'clients':
+        case 'clients': // #todo - general channel, niet per Model
             
             var channel = pusher.subscribe('clients');
             
