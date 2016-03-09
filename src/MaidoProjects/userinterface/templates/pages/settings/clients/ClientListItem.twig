@@ -1,0 +1,14 @@
+{%
+    include "components/data/simplelist_item.twig"
+    with 
+    {
+        id                  : client.getId, 
+        label               : client.getName,
+        
+        changeMethod        : changeMethod,
+        
+        mls_id              : client.getEntityType~'.'~client.getId, 
+        mls_value__label    : client.getEntityType~'.'~client.getId~'.name',
+        mls_template        : 'ClientListItem'
+    }
+%}

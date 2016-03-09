@@ -3,19 +3,17 @@
 // classpath
 namespace MaidoProjects\ProjectManager;
 
+// Mimoto classes
+use Mimoto\Entity\MimotoEntity;
+
+
 /**
  * The "ProjectManager"-model contains the information of a project manager
  *
  * @author Sebastian Kersten
  */
-class ProjectManager
+class ProjectManager extends MimotoEntity
 {
-    
-    /**
-     * The client's id
-     * @var int 
-     */
-    var $_nId;
     
     /**
      * The project manager's name
@@ -40,21 +38,6 @@ class ProjectManager
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
-     /**
-     * Get the project manager's id
-     * 
-     * @return int
-     */
-    public function getId() { return $this->_nId; }
-    
-    /**
-     * Set the project manager's id
-     * 
-     * @param int $nId The project manager's id
-     */
-    public function setId($nId) { $this->_nId = $nId; }
     
     
     /**
@@ -100,4 +83,21 @@ class ProjectManager
      * @param datetime $datetimeCreated The moment of creation
      */
     public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // setup
+        parent::__construct('projectmanager');
+    }
+    
 }

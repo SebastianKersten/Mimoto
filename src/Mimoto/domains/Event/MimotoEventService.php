@@ -3,6 +3,12 @@
 // classpath
 namespace Mimoto\Event;
 
+// Mimoto classes
+use Mimoto\Event\MimotoEvent;
+
+// Symfony classes
+use Symfony\Component\EventDispatcher\Event;
+
 
 /**
  * EventService
@@ -12,8 +18,11 @@ namespace Mimoto\Event;
 class MimotoEventService
 {
     
-    // services
+    // utils
     private $_dispatcher;
+    
+    // services
+    private $_aServices;
     
     
     
@@ -25,10 +34,16 @@ class MimotoEventService
     /**
      * Constructor
      */
-    public function __construct($dispatcher)
+    public function __construct($dispatcher, $LivescreenService)
     {
         // register
         $this->_dispatcher = $dispatcher;
+        
+        // register services
+        $this->_aServices = [
+            'LivescreenService' => $LivescreenService//,
+            //'MailService' => $MailService
+        ];
     }
     
     
@@ -43,18 +58,19 @@ class MimotoEventService
      * @param string $sEvent
      * @param event $event
      */
-    public function sendUpdate($sEvent, $data)
+    public function sendUpdate($sEvent, $event)
     {
-        // if ($data == Symfony event) -> forward
-        $event = $data;
+        
         // broadcast to system
-        $this->_dispatcher->dispatch($sEvent, $event);
-        
-        // else if implements/extends MimotoEntity -> check for actions
-        $entity = $data;
+        if ($event instanceof Event) { $this->_dispatcher->dispatch($sEvent, $event); }
         
         
-        $sEntityName = $entity->getEntityName();
+        // validate
+        if (!($event instanceof MimotoEvent)) return;
+        
+        
+        $entity = $event->getEntity();
+        $sEntityType = $entity->getEntityType();
         
         
         // load
@@ -67,65 +83,13 @@ class MimotoEventService
             // register
             $action = $aActions[$i];
             
-            $sService = $action->service; // 'LivescreenService';
-            $sRequest = $action->request; // 'updateUserInterface';
-            //$config
-            
-            
-            
-            
-            
-            // init
-            /*$trigger = (object) array();
-
-            $trigger->event = 'client.updated';
-
-            $trigger->action = (object) array();
-            $trigger->action->service = 'LivescreenService';
-            $trigger->action->entity = 'client'; // get from entity
-            $trigger->action->mapping = [
-                (object) array('property' => 'Name', 'livescreenid' => 'name')
-            ];
-
-            
-            $data = (object) array();
-            
-            $data->type = 'livescreen';
-
-            $data->ajax = (object) array();
-            $data->ajax->url = '/livescreen/'.$sEntityName.'/'.$entity->getId();
-            $data->ajax->method = 'GET';
-            //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-            $data->ajax->dataType = 'html';
-
-            $data->dom = (object) array();
-            $data->dom->containerId = '#simplelist';
-            $data->dom->objectId = '#simplelist_item_'.$agencyEvent->getAgency()->getId();
-
-            
-            
-            
-
-            // #todo - property map Model
-
-            // id = vast gegeven
-            // configs zijn low effort (event -> action, load config gegevens)
-
-
-            
-
-
-            resulteert in:
-
-            $trigger->livescreenid = 'client.id';
-
-
-            entity = 'client'
-            id = extracted from entity
-            property -> get from mapping
-
-            */
-            
+            // verify
+            if (isset($this->_aServices[$action->service]))
+            {
+                
+                // call
+                $this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $action->config);
+            }
             
         }
         
@@ -264,11 +228,13 @@ class MimotoEventService
         $aActions = [];
         
         // for dev puposes, focus on 1 event and action first
-        if ($sEvent != 'client.updated') { return $aActions; }
-        
+        //if ($sEvent != 'client.updated') { return $aActions; }
         
         
         $action = (object) array();
+        
+        $action->trigger = 'client.updated';
+        $action->trigger = ['client.updated', 'agency.updated'];
         
         $action->service = 'LivescreenService';
         $action->request = 'updateUserInterface';
@@ -283,14 +249,11 @@ class MimotoEventService
         
         // register
         $aActions[] = $action;
+        
+        
+        
+        // send
+        return $aActions;
     }
     
 }
-
-
-// track changes array met key values (boolean setter)
-// dispatch pass regular event which extends MimotoEvent
-// met setEntity (via constructor) en getEntity
-// entitynaam uit classnaam halen (getNameOfClass)
-// dispatch forward regular event (ClientEvent extends MimotoEvent etc)
-// handle actions / sequence etc

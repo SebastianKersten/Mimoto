@@ -3,35 +3,24 @@
 // classpath
 namespace MaidoProjects\Client;
 
-// Symfony classes
-use Symfony\Component\EventDispatcher\Event;
+// Momkai classes
+use MaidoProjects\Client\Client;
+
+// Mimoto classes
+use Mimoto\Event\MimotoEvent;
 
 
-class ClientEvent extends Event
-{
-    /**
-     * xxx
-     *
-     * @var string
-     */
-    const CREATED = 'client.created';
+class ClientEvent extends MimotoEvent
+{   
     
     /**
-     * xxx
-     *
-     * @var string
+     * Constructor
+     * @param Client $client
      */
-    const UPDATED = 'client.updated';
-    
-    
-    
-    
-    protected $client;
-    
-    
-    public function __construct(Client $client)
+    public function __construct(Client $client, $sEvent)
     {
-        $this->client = $client;
+        // forward
+        parent::__construct($client, $sEvent);
     }
     
     /**
@@ -39,7 +28,7 @@ class ClientEvent extends Event
      */
     public function getClient()
     {
-        return $this->client;
+        return $this->getEntity();
     }
     
 }

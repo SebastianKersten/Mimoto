@@ -3,20 +3,17 @@
 // classpath
 namespace MaidoProjects\Subproject;
 
+// Mimoto classes
+use Mimoto\Entity\MimotoEntity;
+
 
 /**
  * The "SubprojectState"-model contains the information of a subproject state
  *
  * @author Sebastian Kersten
  */
-class SubprojectState
+class SubprojectState extends MimotoEntity
 {
-    
-    /**
-     * The sub[project state's id
-     * @var int 
-     */
-    var $_nId;
     
     /**
      * The subproject state's name
@@ -35,21 +32,6 @@ class SubprojectState
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
-     /**
-     * Get the subproject state's id
-     * 
-     * @return int
-     */
-    public function getId() { return $this->_nId; }
-    
-    /**
-     * Set the subproject state's id
-     * 
-     * @param int $nId The subproject state's id
-     */
-    public function setId($nId) { $this->_nId = $nId; }
     
     
     /**
@@ -80,5 +62,21 @@ class SubprojectState
      * @param datetime $datetimeCreated The moment of creation
      */
     public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // setup
+        parent::__construct('subprojectstate');
+    }
     
 }

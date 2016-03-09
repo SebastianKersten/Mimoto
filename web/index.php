@@ -16,8 +16,9 @@ use MaidoProjects\Client\ClientServiceProvider;
 use MaidoProjects\Agency\AgencyEvent;
 use MaidoProjects\Agency\AgencyServiceProvider;
 
-// Momkai classes
+// Mimoto classes
 use Mimoto\Event\MimotoEventServiceProvider;
+use Mimoto\Livescreen\MimotoLivescreenServiceProvider;
 
 
 // init
@@ -48,267 +49,32 @@ $app->register(new AgencyServiceProvider());
 
 // connect platform services
 $app->register(new MimotoEventServiceProvider());
+$app->register(new MimotoLivescreenServiceProvider());
+        
+        
+ $app['Livescreen.entities'] = array
+ (
+    'client' => (object) array(
+        'service' => 'ClientService',
+        'method' => 'getClientById',
+        'templates' => array(
+            'listitem' => 'pages/settings/clients/ClientListItem.twig'
+        )
+    ),
+    'agency' => (object) array(
+        'service' => 'AgencyService',
+        'method' => 'getAgencyById',
+        'templates' => array(
+            'listitem' => 'pages/settings/agencies/AgencyListItem.twig'
+        )
+    )
+ );
 
+//->value('pageName', 'index');
 
-
-function sendPusherEvent($sChannel, $sEvent, $data) {
-    
-    require_once('Pusher.php');
-    
-    $options = array(
-        'cluster' => 'eu',
-        'encrypted' => true
-    );
-    
-    $pusher = new Pusher(
-        '55152f70c4cec27de21d',
-        '7e72297e347e339cd241',
-        '185150',
-        $options
-    );
-    
-    //$data['message'] = $sMessage;
-    $pusher->trigger($sChannel, $sEvent, $data);
-}
-
-$app['dispatcher']->addListener(ClientEvent::UPDATED, function($clientEvent) {
-    
-    $data = (object) array();
-    
-    $data->type = 'livescreen';
-    
-    $data->ajax = (object) array();
-    $data->ajax->url = '/livescreen/client/'.$clientEvent->getClient()->getId();
-    $data->ajax->method = 'GET';
-    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-    $data->ajax->dataType = 'html';
-    
-    $data->dom = (object) array();
-    $data->dom->containerId = '#simplelist';
-    $data->dom->objectId = '#simplelist_item_'.$clientEvent->getClient()->getId();
-    
-    // dom, internal template id's direct live update, of replace entire element
-    
-    sendPusherEvent('clients', 'client.updated', $data);
-});
-
-$app['dispatcher']->addListener(ClientEvent::CREATED, function($clientEvent) {
-    
-    $data = (object) array();
-    
-    $data->type = 'livescreen';
-    
-    $data->ajax = (object) array();
-    $data->ajax->url = '/livescreen/client/'.$clientEvent->getClient()->getId();
-    $data->ajax->method = 'GET';
-    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-    $data->ajax->dataType = 'html';
-    
-    $data->dom = (object) array();
-    $data->dom->containerId = '#simplelist';
-    $data->dom->objectId = '#simplelist_item_'.$clientEvent->getClient()->getId();
-    
-    // dom, internal template id's direct live update, of replace entire element
-    
-    sendPusherEvent('clients', 'client.created', $data);
-});
-
-
-
-$app['dispatcher']->addListener(AgencyEvent::UPDATED, function($agencyEvent) {
-    
-    $data = (object) array();
-    
-    $data->type = 'livescreen';
-    
-    $data->ajax = (object) array();
-    $data->ajax->url = '/livescreen/agency/'.$agencyEvent->getAgency()->getId();
-    $data->ajax->method = 'GET';
-    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-    $data->ajax->dataType = 'html';
-    
-    $data->dom = (object) array();
-    $data->dom->containerId = '#simplelist';
-    $data->dom->objectId = '#simplelist_item_'.$agencyEvent->getAgency()->getId();
-    
-    // dom, internal template id's direct live update, of replace entire element
-    
-    sendPusherEvent('agencies', 'agency.updated', $data);
-});
-
-$app['dispatcher']->addListener(AgencyEvent::CREATED, function($agencyEvent) {
-    
-    $data = (object) array();
-    
-    $data->type = 'livescreen';
-    
-    $data->ajax = (object) array();
-    $data->ajax->url = '/livescreen/agency/'.$agencyEvent->getAgency()->getId();
-    $data->ajax->method = 'GET';
-    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-    $data->ajax->dataType = 'html';
-    
-    $data->dom = (object) array();
-    $data->dom->containerId = '#simplelist';
-    $data->dom->objectId = '#simplelist_item_'.$agencyEvent->getAgency()->getId();
-    
-    // dom, internal template id's direct live update, of replace entire element
-    
-    sendPusherEvent('agencies', 'agency.created', $data);
-});
-
-
-
-$app['dispatcher']->addListener(ProjectManagerEvent::UPDATED, function($projectmanagerEvent) {
-    
-    $data = (object) array();
-    
-    $data->type = 'livescreen';
-    
-    $data->ajax = (object) array();
-    $data->ajax->url = '/livescreen/projectmanager/'.$projectmanagerEvent->getProjectManager()->getId();
-    $data->ajax->method = 'GET';
-    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-    $data->ajax->dataType = 'html';
-    
-    $data->dom = (object) array();
-    $data->dom->containerId = '#simplelist';
-    $data->dom->objectId = '#simplelist_item_'.$projectmanagerEvent->getProjectManager()->getId();
-    
-    // dom, internal template id's direct live update, of replace entire element
-    
-    sendPusherEvent('projectmanagers', 'projectmanager.updated', $data);
-});
-
-$app['dispatcher']->addListener(ProjectManagerEvent::CREATED, function($projectmanagerEvent) {
-    
-    $data = (object) array();
-    
-    $data->type = 'livescreen';
-    
-    $data->ajax = (object) array();
-    $data->ajax->url = '/livescreen/projectmanager/'.$projectmanagerEvent->getProjectManager()->getId();
-    $data->ajax->method = 'GET';
-    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-    $data->ajax->dataType = 'html';
-    
-    $data->dom = (object) array();
-    $data->dom->containerId = '#simplelist';
-    $data->dom->objectId = '#simplelist_item_'.$projectmanagerEvent->getProjectManager()->getId();
-    
-    // dom, internal template id's direct live update, of replace entire element
-    
-    sendPusherEvent('projectmanagers', 'projectmanager.created', $data);
-});
-
-
-$app['dispatcher']->addListener(SubprojectStateEvent::UPDATED, function($subprojectstateEvent) {
-    
-    $data = (object) array();
-    
-    $data->type = 'livescreen';
-    
-    $data->ajax = (object) array();
-    $data->ajax->url = '/livescreen/subprojectstate/'.$subprojectstateEvent->getSubprojectState()->getId();
-    $data->ajax->method = 'GET';
-    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-    $data->ajax->dataType = 'html';
-    
-    $data->dom = (object) array();
-    $data->dom->containerId = '#simplelist';
-    $data->dom->objectId = '#simplelist_item_'.$subprojectstateEvent->getSubprojectState()->getId();
-    
-    // dom, internal template id's direct live update, of replace entire element
-    
-    sendPusherEvent('subprojectstates', 'subprojectstate.updated', $data);
-});
-
-$app['dispatcher']->addListener(SubprojectStateEvent::CREATED, function($subprojectstateEvent) {
-    
-    // move to class to cleanup this file
-    // create LivescreenService
-    //
-    
-    $data = (object) array();
-    
-    $data->type = 'livescreen';
-    
-    $data->ajax = (object) array();
-    $data->ajax->url = '/livescreen/subprojectstate/'.$subprojectstateEvent->getSubprojectState()->getId();
-    $data->ajax->method = 'GET';
-    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-    $data->ajax->dataType = 'html';
-    
-    $data->dom = (object) array();
-    $data->dom->containerId = '#simplelist';
-    $data->dom->objectId = '#simplelist_item_'.$subprojectstateEvent->getSubprojectState()->getId();
-    
-    // dom, internal template id's direct live update, of replace entire element
-    
-    sendPusherEvent('subprojectstates', 'subprojectstate.created', $data);
-});
-
-
-
-
-// connect elements from template -> send content, voorzien van meta data
-// auto update, connect field with event -> mapping ->type = component (via url) of field (via direct value)
-
-// ----------> ListComponent
-// gearman -> type-async -> in jobserver
-// listener class -> start van sequence
-// generaliseer PusherEventHandler en pas toe op de 4 pagina's
-// scheduled requests/actions (ActionSequence)
-// Queue met statusupdates, bijwerking en monitoring
-
-
-
-// validate validity of the client monitor (auto-reboot)
-// data event
-// component event
-// page event
-// popup event -> auto popup with message of reboot
-// vraag huidige staat op bij de server (save state zoals de client monitor)
-// State per gebruiker. start waar je was gebleven.
-
-
-
-// #todo listeners
-//$app['dispatcher']->addListener('xxx', 'MaidoProjects\\UserInterface\\ProjectsController::getProjectOverview');
-// 
-// - repositories gooien update events uit
-// - op deze events worden sequences getriggerd
-// - deze sequences kunnen op basis van config worden opgezet
-//      bijv. klaarzetten van diverse mail requests in timed queue -> welkom, eerste handleiding dag later
-//      de request (of command) wordt opgeslagen, niet de feitelijke mail. Zo kan nog op het laatste moment
-//      een update worden meegenomen in die mail
-//      RequestQueue -> wordt aangestuurd door cronjob die kijkt of een request aan de beurt is en gooit deze
-//      weer het systeem in (bijv. via jobserver of direct
-//      Config: ON(user.new) -> sendMail with params (template, User)
-
-/*
- * #todo - EventService
- * sync/async - recipies - action flows
- * sendRequest
- * sendUpdate
- * sendWelcomeMail
- * 
- * -------> sequence ON(event) stap 1, 2, 3 -> register steps, zoals in Mimoto TaskManager
- * 
- * createUser -> UPDATE: user.new
- * send welcome mail
- * wie stelt de mail op? MailService interface -> type, data
- * MailService->sendMail($sTermplate);
- * 
- * commando -> commandHandler (CommandBus pattern)
- * 
-$app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $event) use ($app) {
-    $user = $event->getUser();
-    $app['logger']->info('Created user ' . $user->getId());
-});
-*/
-
-
+// hoe juiste template ophalen? In repository? ViewService model/twig
+// dedicated twigs extenden de base twig
+// component en values werken fundamenteel anders
 
 
 // main pages
@@ -352,13 +118,6 @@ $app->get('/settings/subprojectstates', 'MaidoProjects\\UserInterface\\SettingsC
 $app->get('/settings/subprojectstate/new', 'MaidoProjects\\UserInterface\\SettingsController::formSubprojectState');
 $app->get('/settings/subprojectstate/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formSubprojectState');
 $app->post('/settings/subprojectstate/save', 'MaidoProjects\\UserInterface\\SettingsController::saveSubprojectState');
-
-
-$app->get('/livescreen/client/{nId}', 'MaidoProjects\\UserInterface\\LivescreenController::getClient');
-$app->get('/livescreen/agency/{nId}', 'MaidoProjects\\UserInterface\\LivescreenController::getAgency');
-$app->get('/livescreen/projectmanager/{nId}', 'MaidoProjects\\UserInterface\\LivescreenController::getProjectManager');
-$app->get('/livescreen/subprojectstate/{nId}', 'MaidoProjects\\UserInterface\\LivescreenController::getSubprojectState');
-
 
 // CTFO
 $app->get('/ctfo', 'MaidoProjects\\UserInterface\\CTFOController::analyzeBuckaroo');

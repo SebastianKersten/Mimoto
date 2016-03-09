@@ -1,10 +1,10 @@
 <?php
 
 // classpath
-namespace library\Livescreen;
+namespace Mimoto\Livescreen;
 
-// Momkai classes
-use library\Livescreen\LivescreenService;
+// Mimoto classes
+use Mimoto\Livescreen\MimotoLivescreenService;
 
 // Silex classes
 use Silex\Application;
@@ -12,16 +12,19 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * LivescreenServiceProvider
+ * MimotoLivescreenServiceProvider
  *
  * @author Sebastian Kersten
  */
-class LivescreenServiceProvider implements ServiceProviderInterface
+class MimotoLivescreenServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
-    {
+    {   
+        // register
+        $app->get('/livescreen/{sEntityType}/{nId}/{sTemplate}', 'Mimoto\\Livescreen\\MimotoLivescreenController::getView');
+        
         $app['LivescreenService'] = $app->share(function ($app) {
-            return new LivescreenService();
+            return new MimotoLivescreenService($app['Livescreen.entities']);
         });
     }
 

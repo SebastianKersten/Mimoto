@@ -3,43 +3,32 @@
 // classpath
 namespace MaidoProjects\Subproject;
 
-// Symfony classes
-use Symfony\Component\EventDispatcher\Event;
+// Momkai classes
+use MaidoProjects\Subproject\SubprojectState;
+
+// Mimoto classes
+use Mimoto\Event\MimotoEvent;
 
 
-class SubprojectStateEvent extends Event
-{
-    /**
-     * xxx
-     *
-     * @var string
-     */
-    const CREATED = 'subprojectstate.created';
+class SubprojectStateEvent extends MimotoEvent
+{   
     
     /**
-     * xxx
-     *
-     * @var string
+     * Constructor
+     * @param SubprojectState $subprojectState
      */
-    const UPDATED = 'subprojectstate.updated';
-    
-    
-    
-    
-    protected $subprojectstate;
-    
-    
-    public function __construct(SubprojectState $subprojectstate)
+    public function __construct(SubprojectState $subprojectState, $sEvent)
     {
-        $this->subprojectstate = $subprojectstate;
+        // forward
+        parent::__construct($subprojectState, $sEvent);
     }
     
     /**
-     * @return subprojectState
+     * @return SubprojectState
      */
     public function getSubprojectState()
     {
-        return $this->subprojectstate;
+        return $this->getEntity();
     }
     
 }

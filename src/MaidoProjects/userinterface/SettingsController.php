@@ -51,7 +51,7 @@ class SettingsController
             'interface.twig',
             array(
                 'section' => 'settings',
-                'pagetemplate' => 'pages/settings/ProjectManagersPage.twig',
+                'pagetemplate' => 'pages/settings/projectmanagers/ProjectManagersPage.twig',
                 'simplelist_data' => $aProjectManagers,
                 'changeMethod' => 'changeProjectManager'
             )
@@ -118,8 +118,8 @@ class SettingsController
             'interface.twig',
             array(
                 'section' => 'settings',
-                'pagetemplate' => 'pages/settings/ClientsPage.twig',
-                'simplelist_data' => $aClients,
+                'pagetemplate' => 'pages/settings/clients/ClientsPage.twig',
+                'clients' => $aClients,
                 'changeMethod' => 'changeClient'
             )
         );
@@ -185,7 +185,7 @@ class SettingsController
             'interface.twig',
             array(
                 'section' => 'settings',
-                'pagetemplate' => 'pages/settings/AgenciesPage.twig',
+                'pagetemplate' => 'pages/settings/agencies/AgenciesPage.twig',
                 'simplelist_data' => $aAgencies,
                 'changeMethod' => 'changeAgency'
             )
@@ -257,7 +257,7 @@ class SettingsController
             'interface.twig',
             array(
                 'section' => 'settings',
-                'pagetemplate' => 'pages/settings/SubprojectStatesPage.twig',
+                'pagetemplate' => 'pages/settings/subprojectstates/SubprojectStatesPage.twig',
                 'simplelist_data' => $aSubprojectStates,
                 'changeMethod' => 'changeSubprojectState'
             )

@@ -3,20 +3,17 @@
 // classpath
 namespace MaidoProjects\Agency;
 
+// Mimoto classes
+use Mimoto\Entity\MimotoEntity;
+
 
 /**
  * The "Agency"-model contains the information of an agency
  *
  * @author Sebastian Kersten
  */
-class Agency
+class Agency extends MimotoEntity
 {
-    
-    /**
-     * The agency's id
-     * @var int 
-     */
-    var $_nId;
     
     /**
      * The agency's name
@@ -35,21 +32,6 @@ class Agency
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
-     /**
-     * Get the agency's id
-     * 
-     * @return int
-     */
-    public function getId() { return $this->_nId; }
-    
-    /**
-     * Set the agency's id
-     * 
-     * @param int $nId The agency's id
-     */
-    public function setId($nId) { $this->_nId = $nId; }
     
     
     /**
@@ -80,5 +62,21 @@ class Agency
      * @param datetime $datetimeCreated The moment of creation
      */
     public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // setup
+        parent::__construct('agency');
+    }
     
 }

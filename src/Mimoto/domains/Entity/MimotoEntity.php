@@ -12,11 +12,23 @@ namespace Mimoto\Entity;
 class MimotoEntity
 {
     
+    // #todo - track changes
+    
+    
+    
+    
+    
     /**
-     * The entity's name
+     * The entity's type
      * @var string 
      */
-    var $_sEntityName;
+    var $_sEntityType;
+    
+    /**
+     * The entity's id
+     * @var int 
+     */
+    var $_nId;
     
     
     
@@ -26,17 +38,42 @@ class MimotoEntity
     
     
     /**
-     * Get the entity's name
+     * Get the entity's type
      * 
      * @return string
      */
-    public function getEntityName() { return $this->_sEntityName; }
+    public function getEntityType() { return $this->_sEntityType; }
+    
     
     /**
-     * Set the entity's name
+     * Get the entity's id
      * 
-     * @param string $sEntityName The entity's name
+     * @return int
      */
-    public function setEntityName($sEntityName) { $this->_sEntityName = $sEntityName; }
+    public function getId() { return $this->_nId; }
+    
+    /**
+     * Set the entity's id
+     * 
+     * @param int $nId The entity's id
+     */
+    public function setId($nId) { $this->_nId = $nId; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor-------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     * @param string $sEntityType
+     */
+    public function __construct($sEntityType)
+    {
+        // register
+        $this->_sEntityType = $sEntityType;
+    }
     
 }

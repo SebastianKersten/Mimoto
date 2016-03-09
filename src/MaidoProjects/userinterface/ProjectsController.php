@@ -97,10 +97,10 @@ class ProjectsController
             {
                 $aData['id'] = mysql_result($result, 0, 'id');
                 $aData['name'] = mysql_result($result, 0, 'name');
-                $aData['description'] = mysql_result($result, $i, 'description');
-                $aData['client_id'] = mysql_result($result, $i, 'client_id');
-                $aData['agency_id'] = mysql_result($result, $i, 'agency_id');
-                $aData['projectmanager_id'] = mysql_result($result, $i, 'projectmanager_id');
+                $aData['description'] = mysql_result($result, 0, 'description');
+                $aData['client_id'] = mysql_result($result, 0, 'client_id');
+                $aData['agency_id'] = mysql_result($result, 0, 'agency_id');
+                $aData['projectmanager_id'] = mysql_result($result, 0, 'projectmanager_id');
             }
         }
         

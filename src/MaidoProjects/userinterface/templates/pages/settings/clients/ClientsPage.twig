@@ -1,0 +1,8 @@
+<div class="page_title">Clients</div>
+
+<div id="simplelist" class="simplelist">
+    {% for client in clients %}
+        {% include 'pages/settings/clients/ClientListItem.twig' with { client:client } %}
+    {% endfor %}
+</div>
+<div class="button" onclick="Maido.settings.newClient();">Add new client +</div>

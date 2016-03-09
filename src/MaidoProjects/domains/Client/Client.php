@@ -16,12 +16,6 @@ class Client extends MimotoEntity
 {
     
     /**
-     * The client's id
-     * @var int 
-     */
-    var $_nId;
-    
-    /**
      * The client's name
      * @var string
      */
@@ -44,21 +38,6 @@ class Client extends MimotoEntity
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
-    /**
-     * Get the client's id
-     * 
-     * @return int
-     */
-    public function getId() { return $this->_nId; }
-    
-    /**
-     * Set the client's id
-     * 
-     * @param int $nId The client's id
-     */
-    public function setId($nId) { $this->_nId = $nId; }
     
     
     /**
@@ -117,7 +96,8 @@ class Client extends MimotoEntity
      */
     public function __construct()
     {
-        $this->setEntityName('client');
+        // setup
+        parent::__construct('client');
     }
     
 }

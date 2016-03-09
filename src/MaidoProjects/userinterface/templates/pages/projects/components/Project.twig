@@ -5,8 +5,8 @@
     <div id="{{ project.getId }}" class="project_summary">
         
         <div class="project">
-            <div class="client_name">- {{ project.getClientName }}{% if project.getAgencyName != empty %}<span class="agency_name"> - {{ project.getAgencyName }}</span>{% endif %}</div>
-            <div class="project_name"> {{ project.getName|e }}</div>
+            <div class="client_name">- <span mls_value="client.{{ project.getClientId }}.name">{{ project.getClientName }}</span>{% if project.getAgencyName != empty %}<span class="agency_name"> - <span mls_value="agency.{{ project.getAgencyId }}.name">{{ project.getAgencyName }}</span></span>{% endif %}</div>
+            <div class="project_name" mls_value="project.{{ project.getId }}.name">{{ project.getName|e }}</div>
             <div class="button_small" onClick="Maido.toggleProjectState({{ project.getId }});">View details</div>
             <!--<div class="button_small" onClick="Maido.newSubproject({{ project.getId }});">Add subproject +</div>-->
         </div>
@@ -25,7 +25,7 @@
         </div>
         <div class="project_subinfo">
             <div class="projectmanager_avatar"><img src="/dynamic/avatars/avatar_{{ project.getProjectManagerId }}.jpg"></div>
-            <div class="projectmanager_name">{{ project.getProjectManagerName }}</div>
+            <div class="projectmanager_name"><span livescreenid="projectmanager.{{ project.getProjectManagerId }}.name">{{ project.getProjectManagerName }}</span></div>
         </div>
         
         
@@ -38,7 +38,7 @@
             <div class="project_details_description">
                 <u>Project description</u><br>
                 <br>
-                <i>{{ project.getDescription|e }}</i>
+                <i><span livescreenid="project.{{ project.getId }}.description">{{ project.getDescription|e }}</span></i>
             </div>
             <div class="project_details_subprojects">
                 {% if filter.request and project.getSubprojects.request|length > 0 %}

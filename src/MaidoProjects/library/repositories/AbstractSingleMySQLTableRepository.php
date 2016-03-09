@@ -238,8 +238,12 @@ class AbstractSingleMySQLTableRepository
             $sEvent = constant($this->_modelEventClass.'::CREATED');
         }
         
+        
+        // setup
+        $event = new $this->_modelEventClass($entity, $sEvent);
+        
         // broadcast
-        $this->_EventService->sendUpdate($sEvent, new $this->_modelEventClass($entity));
+        $this->_EventService->sendUpdate($event->getType(), $event);
     }
     
     

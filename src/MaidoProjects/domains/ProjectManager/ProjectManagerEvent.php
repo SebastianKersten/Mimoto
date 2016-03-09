@@ -3,35 +3,24 @@
 // classpath
 namespace MaidoProjects\ProjectManager;
 
-// Symfony classes
-use Symfony\Component\EventDispatcher\Event;
+// Momkai classes
+use MaidoProjects\ProjectManager\ProjectManager;
+
+// Mimoto classes
+use Mimoto\Event\MimotoEvent;
 
 
-class ProjectManagerEvent extends Event
-{
-    /**
-     * xxx
-     *
-     * @var string
-     */
-    const CREATED = 'projectmanager.created';
+class ProjectManagerEvent extends MimotoEvent
+{   
     
     /**
-     * xxx
-     *
-     * @var string
+     * Constructor
+     * @param ProjectManager $projectManager
      */
-    const UPDATED = 'projectmanager.updated';
-    
-    
-    
-    
-    protected $projectmanager;
-    
-    
-    public function __construct(ProjectManager $projectmanager)
+    public function __construct(ProjectManager $projectManager, $sEvent)
     {
-        $this->projectmanager = $projectmanager;
+        // forward
+        parent::__construct($projectManager, $sEvent);
     }
     
     /**
@@ -39,7 +28,7 @@ class ProjectManagerEvent extends Event
      */
     public function getProjectManager()
     {
-        return $this->projectmanager;
+        return $this->getEntity();
     }
     
 }
