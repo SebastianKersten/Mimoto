@@ -1,11 +1,11 @@
 <div class="settings_page_header">
     <hr><br>
     <div class="page_title settings_page_title">Subproject states</div>
-    <div class="button settings_header_alignright" onclick="Maido.data.newEntity('subprojectstate');">Add new subproject state +</div>
+    <div class="button settings_header_alignright" onclick="Maido.data.newEntity('subprojectstate');">Add state +</div>
 </div>
 
 <div id="simplelist" class="simplelist" mls_container="subprojectstate" mls_childtemplate="SubprojectStateListItem">
     {% for subprojectState in subprojectStates %}
-        {% include 'pages/settings/subprojectstates/SubprojectStateListItem.twig' with { subprojectState:subprojectState } %}
+        {% include 'pages/settings/subprojectstates/SubprojectStateListItem.twig' with { subprojectstate:subprojectState } %}
     {% endfor %}
 </div>

@@ -65,6 +65,20 @@ $app->register(new MimotoLivescreenServiceProvider
             'templates' => array(
                 'AgencyListItem' => 'pages/settings/agencies/AgencyListItem.twig'
             )
+        ),
+        'projectmanager' => (object) array(
+            'service' => 'ProjectManagerService',
+            'method' => 'getProjectManagerById',
+            'templates' => array(
+                'ProjectManagerListItem' => 'pages/settings/projectmanagers/ProjectManagerListItem.twig'
+            )
+        ),
+        'subprojectstate' => (object) array(
+            'service' => 'SubprojectService',
+            'method' => 'getSubprojectStateById',
+            'templates' => array(
+                'SubprojectStateListItem' => 'pages/settings/subprojectstates/SubprojectStateListItem.twig'
+            )
         )
     ]
  ));

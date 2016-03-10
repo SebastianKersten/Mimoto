@@ -262,7 +262,6 @@ div.simplelist {
     width: 100%;
     max-width: 600px;
     margin-bottom: 20px;
-    margin-right: 20px;
 }
 
     div.simplelist>div {
@@ -279,7 +278,6 @@ div.simplelist {
         display: flex;
         width: 100%;
         max-width: 600px;
-        padding: 10px;
         background-color: #9ececa;
         cursor: pointer;
     }
@@ -292,6 +290,7 @@ div.simplelist {
         div.simplelist_item_label {
             -webkit-flex: 5;
             flex: 5;
+            margin: 10px;
         }
         
         div.simplelist_item_options {
@@ -485,7 +484,7 @@ div.subproject_details {
     
 div.settings_page_header {
     width: 100%;
-    max-width: 620px;
+    max-width: 600px;
 }
     
 div.settings_page_title {
