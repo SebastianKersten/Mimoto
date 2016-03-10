@@ -71,8 +71,66 @@ class MimotoLivescreenService
         }
     }
     
+    /**
+     * Get entity by type and id
+     * @param string $sEntityType
+     * @param int $nEntityId
+     * @return entity
+     */
+    public function getEntityByTypeAndId($sEntityType, $nEntityId)
+    {
+        // validate
+        if (!isset($this->_aEntities[$sEntityType])) { return; }
+        
+        
+        // register
+        $entityConfig = $this->_aEntities[$sEntityType];
+        $entityService = $this->_app[$entityConfig->service];
+        $entityMethod = $entityConfig->method;
+        
+        // #todo - exception afvangen, etc etc
+        
+        // load
+        $entity = $entityService->$entityMethod($nEntityId);
+        
+        // send
+        return $entity;
+    }
+    
+    /**
+     * Get entity template by type and id
+     * @param string $sEntityType
+     * @param string $sTemplateId
+     * @return string The location to the twig template
+     */
+    public function getEntityTemplateTypeAndId($sEntityType, $sTemplateId)
+    {
+        // validate
+        if (!isset($this->_aEntities[$sEntityType])) { return; }
+        
+        
+        // register
+        $entityConfig = $this->_aEntities[$sEntityType];
+        
+        // load
+        $sTemplate = $entityConfig->templates[$sTemplateId];
+        
+        // send
+        return $sTemplate;
+    }
     
     
+    
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Manage data update
+     * @param MimotoEntity $entity
+     * @param object $config
+     */
     private function dataUpdate(MimotoEntity $entity, $config)
     {
 
@@ -113,13 +171,16 @@ class MimotoLivescreenService
                 $data->values[$map->valueName] = $entity->$getter();
             }
         }
-        
-        // dom, internal template id's direct live update, of replace entire element
 
         $this->sendPusherEvent('livescreen', 'data.update', $data);
         //$this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
     }
-     
+    
+    /**
+     * Manage data create
+     * @param MimotoEntity $entity
+     * @param object $config (unused for now)
+     */
     private function dataCreate(MimotoEntity $entity, $config)
     {
 
@@ -138,50 +199,12 @@ class MimotoLivescreenService
         $this->sendPusherEvent('livescreen', 'data.create', $data);
     }
     
-    
     /**
-     * Get entity by type and id
-     * @param type $sEntityType
-     * @param type $nId
-     * @return entity
+     * Send Pusher event - #todo - async
+     * @param type $sChannel
+     * @param type $sEvent
+     * @param type $data
      */
-    public function getEntityByTypeAndId($sEntityType, $nEntityId)
-    {
-        // validate
-        if (!isset($this->_aEntities[$sEntityType])) { return; }
-        
-        
-        // register
-        $entityConfig = $this->_aEntities[$sEntityType];
-        $entityService = $this->_app[$entityConfig->service];
-        $entityMethod = $entityConfig->method;
-        
-        // #todo - exception afvangen, etc etc
-        
-        // load
-        $entity = $entityService->$entityMethod($nEntityId);
-        
-        // send
-        return $entity;
-    }
-    
-    public function getEntityTemplateTypeAndId($sEntityType, $sTemplateId)
-    {
-        // validate
-        if (!isset($this->_aEntities[$sEntityType])) { return; }
-        
-        
-        // register
-        $entityConfig = $this->_aEntities[$sEntityType];
-        
-        // load
-        $sTemplate = $entityConfig->templates[$sTemplateId];
-        
-        // send
-        return $sTemplate;
-    }
-    
-    
     private function sendPusherEvent($sChannel, $sEvent, $data)
     {
         
