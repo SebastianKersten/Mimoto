@@ -3,6 +3,34 @@ Maido = {};
 Maido._aProjects = Array();
 
 
+Maido.data = {};
+
+Maido.data.newEntity = function(sEntityType)
+{
+    Maido.popup.open('/settings/' + sEntityType + '/new');
+}
+
+Maido.data.changeEntity = function(sEntityType, nId)
+{
+    Maido.popup.open('/settings/' + sEntityType + '/change/' + nId);
+}
+
+Maido.data.saveEntity = function(sEntityType, data)
+{
+    $.ajax({
+        type: 'POST',
+        url: "/settings/" + sEntityType + "/save",
+        data: data,
+        dataType: 'json',
+        success: function (data) {
+            Maido.popup.close();
+        }
+    });
+}
+
+
+
+
 Maido.newProject = function()
 {
     Maido.popup.open('/project/new');   
@@ -81,109 +109,6 @@ Maido.saveSubproject = function(data)
     });
 }
 
-
-
-Maido.settings = {};
-
-Maido.settings.newProjectManager = function()
-{
-    Maido.popup.open('/settings/projectmanager/new');  
-}
-
-Maido.settings.changeProjectManager = function(nID)
-{
-    Maido.popup.open('/settings/projectmanager/change/' + nID);  
-}
-
-Maido.settings.saveProjectManager = function(data)
-{
-    $.ajax({
-        type: 'POST',
-        url: "/settings/projectmanager/save",
-        data: data,
-        dataType: 'json',
-        success: function (data) {
-            Maido.popup.close();
-        }
-    });    
-}
-
-Maido.settings.newClient = function()
-{
-    Maido.popup.open('/settings/client/new');  
-}
-
-Maido.settings.changeClient = function(nID)
-{
-    Maido.popup.open('/settings/client/change/' + nID);  
-}
-
-Maido.settings.saveClient = function(data)
-{    
-    $.ajax({
-        type: 'POST',
-        url: "/settings/client/save",
-        data: data,
-        dataType: 'json',
-        success: function (data) {
-            Maido.popup.close();
-        }
-    });    
-}
-
-
-Maido.settings.newAgency = function()
-{
-    Maido.popup.open('/settings/agency/new');  
-}
-
-Maido.settings.changeAgency = function(nID)
-{
-    Maido.popup.open('/settings/agency/change/' + nID);  
-}
-
-Maido.settings.saveAgency = function(data)
-{
-    $.ajax({
-        type: 'POST',
-        url: "/settings/agency/save",
-        data: data,
-        dataType: 'json',
-        success: function (data) {
-            Maido.popup.close();
-        }
-    });    
-}
-
-
-Maido.settings.newSubprojectState = function()
-{
-    Maido.popup.open('/settings/subprojectstate/new');  
-}
-
-Maido.settings.changeSubprojectState = function(nID)
-{
-    Maido.popup.open('/settings/subprojectstate/change/' + nID);  
-}
-
-Maido.settings.saveSubprojectState = function(data)
-{    
-    $.ajax({
-        type: 'POST',
-        url: "/settings/subprojectstate/save",
-        data: data,
-        dataType: 'json',
-        success: function (data) {
-            document.getElementById('popup_content').innerHTML = data.name;
-            location.reload();
-        },
-    });    
-}
-
-
-
-
-//Maido.addProject();
 
 
 

@@ -14,7 +14,7 @@
         <div class="subproject">
             <div class="subproject_container">
                 <div class="subproject_name subproject_content">{{ subproject.name }}</div>
-                <div class="subproject_status subproject_content" livescreenid="subprojectstate.{{ subproject.getStateId }}.name">{{ subproject.getStateName }}</div>
+                <div class="subproject_status subproject_content" mls_value="subprojectstate.{{ subproject.getStateId }}.name">{{ subproject.getStateName }}</div>
                 <div class="subproject_budget subproject_content">{{ subproject.getBudget/1000 }}k</div>
                 <div class="subproject_chanceofsuccess subproject_content">{{ subproject.getProbability*100 }}%</div>
                 <div class="subproject_edit subproject_content"><div class="button_small" onClick="Maido.changeSubproject({{ subproject.getId }});">Edit</div></div>

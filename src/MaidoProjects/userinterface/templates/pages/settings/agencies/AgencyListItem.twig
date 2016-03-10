@@ -1,0 +1,14 @@
+{%
+    include "components/data/simplelist_item.twig"
+    with 
+    {
+        id                  : agency.getId, 
+        label               : agency.getName,
+        
+        entityType          : agency.getEntityType,
+        
+        mls_id              : agency.getEntityType~'.'~agency.getId, 
+        mls_value__label    : agency.getEntityType~'.'~agency.getId~'.name',
+        mls_template        : 'AgencyListItem'
+    }
+%}

@@ -5,7 +5,7 @@
         id                  : client.getId, 
         label               : client.getName,
         
-        changeMethod        : changeMethod,
+        entityType          : client.getEntityType,
         
         mls_id              : client.getEntityType~'.'~client.getId, 
         mls_value__label    : client.getEntityType~'.'~client.getId~'.name',

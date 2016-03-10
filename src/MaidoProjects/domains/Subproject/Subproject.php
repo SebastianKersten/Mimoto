@@ -3,19 +3,17 @@
 // classpath
 namespace MaidoProjects\Subproject;
 
+// Mimoto classes
+use Mimoto\Entity\MimotoEntity;
+
+
 /**
  * The "Subproject"-model contains the information of a subproject
  *
  * @author Sebastian Kersten
  */
-class Subproject
+class Subproject extends MimotoEntity
 {
-    
-    /**
-     * The subproject's id
-     * @var int 
-     */
-    var $_nId;
     
     /**
      * The subproject's name
@@ -70,21 +68,6 @@ class Subproject
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
-    /**
-     * Get the subproject's id
-     * 
-     * @return int
-     */
-    public function getId() { return $this->_nId; }
-    
-    /**
-     * Set the subproject's id
-     * 
-     * @param int $nId The subproject's id
-     */
-    public function setId($nId) { $this->_nId = $nId; }
     
     
     /**
@@ -205,5 +188,21 @@ class Subproject
      * @param string $sPaymentType The subproject's payment type
      */
     public function setPaymentType($sPaymentType) { $this->_sPaymentType = $sPaymentType; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // setup
+        parent::__construct('subprojectstate');
+    }
     
 }

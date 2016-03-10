@@ -51,9 +51,9 @@ class SettingsController
             'interface.twig',
             array(
                 'section' => 'settings',
-                'pagetemplate' => 'pages/settings/projectmanagers/ProjectManagersPage.twig',
-                'simplelist_data' => $aProjectManagers,
-                'changeMethod' => 'changeProjectManager'
+                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
+                'pageSubTemplate' => 'pages/settings/projectmanagers/ProjectManagersPage.twig',
+                'projectManagers' => $aProjectManagers
             )
         );
     }
@@ -118,9 +118,9 @@ class SettingsController
             'interface.twig',
             array(
                 'section' => 'settings',
-                'pagetemplate' => 'pages/settings/clients/ClientsPage.twig',
-                'clients' => $aClients,
-                'changeMethod' => 'changeClient'
+                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
+                'pageSubTemplate' => 'pages/settings/clients/ClientsPage.twig',
+                'clients' => $aClients
             )
         );
     }
@@ -185,9 +185,9 @@ class SettingsController
             'interface.twig',
             array(
                 'section' => 'settings',
-                'pagetemplate' => 'pages/settings/agencies/AgenciesPage.twig',
-                'simplelist_data' => $aAgencies,
-                'changeMethod' => 'changeAgency'
+                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
+                'pageSubTemplate' => 'pages/settings/agencies/AgenciesPage.twig',
+                'agencies' => $aAgencies
             )
         );
     }
@@ -257,9 +257,9 @@ class SettingsController
             'interface.twig',
             array(
                 'section' => 'settings',
-                'pagetemplate' => 'pages/settings/subprojectstates/SubprojectStatesPage.twig',
-                'simplelist_data' => $aSubprojectStates,
-                'changeMethod' => 'changeSubprojectState'
+                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
+                'pageSubTemplate' => 'pages/settings/subprojectstates/SubprojectStatesPage.twig',
+                'subprojectStates' => $aSubprojectStates
             )
         );
     }

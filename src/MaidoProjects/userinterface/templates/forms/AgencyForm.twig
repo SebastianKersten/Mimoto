@@ -4,6 +4,6 @@
     <div class="form_field"><input id="form_field_name" name="name" type="text" class="textfield" value="{% if data.getName is defined %}{{ data.getName }}{% endif %}" /></div>
     <div class="form_menu">
         <div class="button_text" onClick="Maido.popup.close();">Cancel</div>
-        <div class="button" onClick="Maido.settings.saveAgency({ {% if data.getId is defined %}id:{{ data.getId }},{% endif %} name:document.getElementById('form_field_name').value });">Save</div>
+        <div class="button" onClick="Maido.data.saveEntity('agency', { {% if data.getId is defined %}id:{{ data.getId }},{% endif %} name:document.getElementById('form_field_name').value });">Save</div>
     </div>
 </div>

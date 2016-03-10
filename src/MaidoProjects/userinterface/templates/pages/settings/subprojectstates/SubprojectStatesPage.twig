@@ -1,8 +1,11 @@
-<div class="page_title">Subproject states</div>
+<div class="settings_page_header">
+    <hr><br>
+    <div class="page_title settings_page_title">Subproject states</div>
+    <div class="button settings_header_alignright" onclick="Maido.data.newEntity('subprojectstate');">Add new subproject state +</div>
+</div>
 
 <div id="simplelist" class="simplelist">
-    {% for simplelist_item_data in simplelist_data %}
-        {% include 'components/data/simplelist_item.twig' with { 'changeMethod':changeMethod, 'id':simplelist_item_data.getId, 'label':simplelist_item_data.getName, 'livescreenid__component':'subprojectstate.'~simplelist_item_data.getId, 'livescreenid__component_label':'subprojectstate.'~simplelist_item_data.getId~'.name' } %}
+    {% for subprojectState in subprojectStates %}
+        {% include 'pages/settings/subprojectstates/SubprojectStateListItem.twig' with { subprojectState:subprojectState } %}
     {% endfor %}
 </div>
-<div class="button" onclick="Maido.settings.newSubprojectState();">Add new subproject state +</div>

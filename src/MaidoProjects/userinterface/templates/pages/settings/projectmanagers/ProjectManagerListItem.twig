@@ -1,0 +1,14 @@
+{%
+    include "components/data/simplelist_item.twig"
+    with 
+    {
+        id                  : projectManager.getId, 
+        label               : projectManager.getName,
+        
+        entityType          : projectManager.getEntityType,
+        
+        mls_id              : projectManager.getEntityType~'.'~projectManager.getId, 
+        mls_value__label    : projectManager.getEntityType~'.'~projectManager.getId~'.name',
+        mls_template        : 'ProjectManagerListItem'
+    }
+%}

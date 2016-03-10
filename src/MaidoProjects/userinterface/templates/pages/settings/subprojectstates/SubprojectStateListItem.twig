@@ -1,0 +1,14 @@
+{%
+    include "components/data/simplelist_item.twig"
+    with 
+    {
+        id                  : subprojectState.getId, 
+        label               : subprojectState.getName,
+        
+        entityType          : subprojectState.getEntityType,
+        
+        mls_id              : subprojectState.getEntityType~'.'~subprojectState.getId, 
+        mls_value__label    : subprojectState.getEntityType~'.'~subprojectState.getId~'.name',
+        mls_template        : 'SubprojectStateListItem'
+    }
+%}

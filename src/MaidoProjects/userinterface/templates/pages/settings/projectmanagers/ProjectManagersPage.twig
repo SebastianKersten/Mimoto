@@ -1,8 +1,11 @@
-<div class="page_title">Project Managers</div>
+<div class="settings_page_header">
+    <hr><br>
+    <div class="page_title settings_page_title">Project Managers</div>
+    <div class="button settings_header_alignright" onclick="Maido.data.newEntity('projectmanager');">Add new project manager +</div>
+</div>
 
 <div id="simplelist" class="simplelist">
-    {% for simplelist_item_data in simplelist_data %}
-        {% include 'components/data/simplelist_item.twig' with { 'changeMethod':changeMethod, 'id':simplelist_item_data.getId, 'label':simplelist_item_data.getName, 'livescreenid__component':'projectmanager.'~simplelist_item_data.getId, 'livescreenid__component_label':'projectmanager.'~simplelist_item_data.getId~'.name' } %}
+    {% for projectManager in projectManagers %}
+        {% include 'pages/settings/projectmanagers/ProjectManagerListItem.twig' with { projectManger:projectManager } %}
     {% endfor %}
 </div>
-<div class="button" onclick="Maido.settings.newProjectManager();">Add Project Manager +</div>
