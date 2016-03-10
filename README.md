@@ -1,5 +1,5 @@
-# MaidoProjects
-Project Management Tool
+# Maido.Projects
+A project management tool by _Sebastian Kersten_
 
 This project uses **Aimless**, an _Entity Oriented Programming_ protocol, for creating a live updating interface (with the help of Pusher).
 
