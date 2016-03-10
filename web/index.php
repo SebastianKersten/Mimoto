@@ -49,26 +49,25 @@ $app->register(new AgencyServiceProvider());
 
 // connect platform services
 $app->register(new MimotoEventServiceProvider());
-$app->register(new MimotoLivescreenServiceProvider());
-        
-        
- $app['Livescreen.entities'] = array
- (
-    'client' => (object) array(
-        'service' => 'ClientService',
-        'method' => 'getClientById',
-        'templates' => array(
-            'listitem' => 'pages/settings/clients/ClientListItem.twig'
+$app->register(new MimotoLivescreenServiceProvider
+(
+    [
+        'client' => (object) array(
+            'service' => 'ClientService',
+            'method' => 'getClientById',
+            'templates' => array(
+                'ClientListItem' => 'pages/settings/clients/ClientListItem.twig'
+            )
+        ),
+        'agency' => (object) array(
+            'service' => 'AgencyService',
+            'method' => 'getAgencyById',
+            'templates' => array(
+                'AgencyListItem' => 'pages/settings/agencies/AgencyListItem.twig'
+            )
         )
-    ),
-    'agency' => (object) array(
-        'service' => 'AgencyService',
-        'method' => 'getAgencyById',
-        'templates' => array(
-            'listitem' => 'pages/settings/agencies/AgencyListItem.twig'
-        )
-    )
- );
+    ]
+ ));
 
 //->value('pageName', 'index');
 

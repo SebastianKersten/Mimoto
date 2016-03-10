@@ -15,7 +15,10 @@ use Mimoto\Entity\MimotoEntity;
 class MimotoLivescreenService
 {
     
+    // config
     var $_aEntities;
+    
+    var $_app;
     
     
     // ----------------------------------------------------------------------------
@@ -26,11 +29,14 @@ class MimotoLivescreenService
     /**
      * Constructor
      */
-    public function __construct($aEntities)
+    public function __construct($aEntities, $app)
     {
         
         // register
         $this->_aEntities = $aEntities;
+        
+        // TEMP - register - #todo - FIX THIS!!!
+        $this->_app = $app;
     }
     
     
@@ -48,10 +54,16 @@ class MimotoLivescreenService
         
         switch($sRequest)
         {
-            case 'updateUserInterface':
+            case 'dataUpdate':
                 
-                $this->updateUserInterface($data, $config);
+                $this->dataUpdate($data, $config);
                 break;
+            
+            case 'dataCreate':
+                
+                $this->dataCreate($data, $config);
+                break;
+            
             
             default:
                 
@@ -61,34 +73,17 @@ class MimotoLivescreenService
     
     
     
-    private function updateUserInterface(MimotoEntity $entity, $config)
+    private function dataUpdate(MimotoEntity $entity, $config)
     {
-        
-        //print_r($config);
-        
-        
-        
-        // config geeft info over force object? 
-        
-        // livescreenid='client.5.name'
-        
-        // entity=client
-        // properties=[
-        //  name: 'In store visuals'
-        //],
-        // id: 5,
-        // livescreenid='subproject.5.name'
-        // field:
-        
+
+        // register
         $nEntityId = $entity->getId();
         $sEntityType = $entity->getEntityType();
         
-        $sFieldName = $sEntityType.'.'.$nEntityId;
-        
-        
-        
+        // init
         $data = (object) array();
         
+        // setup
         $data->type = 'livescreen'; // LivescreenMessage apart model)
         $data->entityId = $nEntityId;
         $data->entityType = $sEntityType;
@@ -115,19 +110,77 @@ class MimotoLivescreenService
                 // prepare
                 $getter = 'get'.$map->property;
                 
-                $data->values[$map->livescreenid] = $entity->$getter();
+                $data->values[$map->valueName] = $entity->$getter();
             }
         }
         
-        
-        
         // dom, internal template id's direct live update, of replace entire element
 
-        $this->sendPusherEvent('livescreen', 'updateData', $data);
-        //$this->sendPusherEvent('livescreen', 'showPopup', (object) array('url' => '/project/new'));
-        
+        $this->sendPusherEvent('livescreen', 'data.update', $data);
+        //$this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
     }
+     
+    private function dataCreate(MimotoEntity $entity, $config)
+    {
+
+        // register
+        $nEntityId = $entity->getId();
+        $sEntityType = $entity->getEntityType();
         
+        // init
+        $data = (object) array();
+        
+        // setup
+        $data->entityId = $nEntityId;
+        $data->entityType = $sEntityType;
+        
+        // send
+        $this->sendPusherEvent('livescreen', 'data.create', $data);
+    }
+    
+    
+    /**
+     * Get entity by type and id
+     * @param type $sEntityType
+     * @param type $nId
+     * @return entity
+     */
+    public function getEntityByTypeAndId($sEntityType, $nEntityId)
+    {
+        // validate
+        if (!isset($this->_aEntities[$sEntityType])) { return; }
+        
+        
+        // register
+        $entityConfig = $this->_aEntities[$sEntityType];
+        $entityService = $this->_app[$entityConfig->service];
+        $entityMethod = $entityConfig->method;
+        
+        // #todo - exception afvangen, etc etc
+        
+        // load
+        $entity = $entityService->$entityMethod($nEntityId);
+        
+        // send
+        return $entity;
+    }
+    
+    public function getEntityTemplateTypeAndId($sEntityType, $sTemplateId)
+    {
+        // validate
+        if (!isset($this->_aEntities[$sEntityType])) { return; }
+        
+        
+        // register
+        $entityConfig = $this->_aEntities[$sEntityType];
+        
+        // load
+        $sTemplate = $entityConfig->templates[$sTemplateId];
+        
+        // send
+        return $sTemplate;
+    }
+    
     
     private function sendPusherEvent($sChannel, $sEvent, $data)
     {
@@ -170,53 +223,17 @@ class MimotoLivescreenService
         // #YES: mapping -> url vs welk model, id etc
         // of fields kan directe data zijn
         
-        // $( "input[value='Hot Fuzz']" ).next().text( "Hot Fuzz" );
-        // MimotoLivescreenID=''
-        
-        // query in LivescreenID identifier:
-        // field:client.<id>.value
         
         
-        //To get all the elements starting with "jander" you should use:
-        //$("[id^=jander]")
-        //
-        //To get those that end with "jander"
-        //$("[id$=jander]")
-        //    
-        //http://api.jquery.com/category/selectors/
         
-        // set livescreenid prefix (lsid) shorter than full name -> saves data traffic
-        // 
-        // 
-        // http://api.jquery.com/attribute-contains-selector/
-        //
-        // build selector based on event
-        
-        // entity=subproject
-        // properties=[
-        //  name: 'In store visuals'
-        //],
-        // id: 5,
-        // livescreenid='subproject.5.name'
-        // field:
-        
-        // only broadcast changed ->
+        // only broadcast changed properties ->
         // model set -> save to modified -> track changes, default aan na uitgeven entity
         
         //if has values -> replace values
         //if component && id -> reload component
         //if (componen && new-id -> load and add 
         
-            
-            
-//        
-//        
-//        
-//        
-//        
-//        
-//        
-//        
+
 //            
 //                // entity.getModifiedFields
 //                
@@ -228,38 +245,11 @@ class MimotoLivescreenService
 //            // configs zijn low effort (event -> action, load config gegevens)
 //
 //
-//            
-//
-//
-//            resulteert in:
-//
-//            $trigger->livescreenid = 'client.id';
-//
-//
 //            entity = 'client'
 //            id = extracted from entity
 //            property -> get from mapping
 //        
 //       
-
-
-//$data = (object) array();
-//    
-//    $data->type = 'livescreen';
-//    
-//    $data->ajax = (object) array();
-//    $data->ajax->url = '/livescreen/agency/'.$agencyEvent->getAgency()->getId();
-//    $data->ajax->method = 'GET';
-//    //$data->ajax->data = (object) array('bla' => 'yeahBlaYeah!');
-//    $data->ajax->dataType = 'html';
-//    
-//    $data->dom = (object) array();
-//    $data->dom->containerId = '#simplelist';
-//    $data->dom->objectId = '#simplelist_item_'.$agencyEvent->getAgency()->getId();
-//    
-//    // dom, internal template id's direct live update, of replace entire element
-//    
-//    sendPusherEvent('agencies', 'agency.created', $data);
 
 
 

@@ -18,13 +18,29 @@ use Silex\ServiceProviderInterface;
  */
 class MimotoLivescreenServiceProvider implements ServiceProviderInterface
 {
+    
+    // config
+    var $_aEntities;
+    
+    
+    /**
+     * Constructor
+     * @param array $aEntities
+     */
+    public function __construct($aEntities)
+    {
+        // register
+        $this->_aEntities = $aEntities;
+    }
+    
+    
     public function register(Application $app)
     {   
         // register
-        $app->get('/livescreen/{sEntityType}/{nId}/{sTemplate}', 'Mimoto\\Livescreen\\MimotoLivescreenController::getView');
+        $app->get('/livescreen/{sEntityType}/{nEntityId}/{sTemplateId}', 'Mimoto\\Livescreen\\MimotoLivescreenController::getView');
         
-        $app['LivescreenService'] = $app->share(function ($app) {
-            return new MimotoLivescreenService($app['Livescreen.entities']);
+        $app['LivescreenService'] = $app->share(function($app) {
+            return new MimotoLivescreenService($this->_aEntities, $app); // #todo - fix het doorgeven van de $app
         });
     }
 

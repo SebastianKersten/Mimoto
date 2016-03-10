@@ -13,3 +13,25 @@ This project uses **Aimless**, an _Entity Oriented Programming_ protocol, for cr
 
 * mls_container
 * mls_childtemplate
+
+
+## Actions
+
+```{
+    
+    "trigger": "client.updated", // single event
+    "trigger": ["client.updated", "agency.updated"], // multiple events
+    "trigger": "*.updated", // multiple events with wildcard
+    "service": "LivescreenService",
+    "request": "dataUpdate",
+    "config":
+    {
+        "mapping":  
+        [
+            {
+                "property": "Name",
+                "valueName": "name"
+            }
+        ]
+    }
+}```

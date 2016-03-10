@@ -66,11 +66,7 @@ class MimotoEventService
         
         
         // validate
-        if (!($event instanceof MimotoEvent)) return;
-        
-        
-        $entity = $event->getEntity();
-        $sEntityType = $entity->getEntityType();
+        if (!($event instanceof MimotoEvent)) { return; }
         
         
         // load
@@ -86,27 +82,17 @@ class MimotoEventService
             // verify
             if (isset($this->_aServices[$action->service]))
             {
+                // setup
+                $config = (isset($action->config)) ? $action->config : (object) array();
                 
                 // call
-                $this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $action->config);
+                $this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
             }
             
         }
         
-        /* volg
         
-        $sEvent
-        
-        
-        
-        MimotoEvent->getEntity (volgt MimotoEntity / MimotoModel)
-        
-        
-        // init
-        $aTriggers = array();
-        
-        
-        // --- trigger 1 ---
+        /* 
         
         // init
         $trigger = (object) array();
@@ -129,66 +115,17 @@ class MimotoEventService
         load eventlisteners json-configs in memcache
         aparte classes voor maken
         
+  
         
-        // init
-        $trigger = (object) array();
-        
-        $trigger->event = 'client.created';
-        
-        $trigger->action = (object) array();
-        $trigger->action->service = 'webevent';
-        $trigger->action->mapping = ;
-        
-        $trigger->livescreenid = 'client.id';
-        
-        
-        
-                
-        // store
-        $aTriggers[] = $trigger;
-                
-                
-        
-        // --- trigger 2 ---
-        
-        // init
-        $trigger = (object) array();
-        
-        $trigger->event = 'client.updated';
-        
-        $trigger->action = (object) array();
-        $trigger->action->service = 'webevent';
-        
-        
-        $trigger->action->entity = 'client';
-        
+
         
         // #todo - property map Model
         
         // id = vast gegeven
         // configs zijn low effort (event -> action, load config gegevens)
         
-        
-        $trigger->action->mapping = [
-            (object) array('property' => 'Name', 'livescreenid' => 'name')
-        ];
-        
-        
-        resulteert in:
-        
-        $trigger->livescreenid = 'client.id';
-        
-        
-        entity = 'client'
-        id = extracted from entity
-        property -> get from mapping
-        
-        
-        
         */
                 
-                
-        //$aTriggers[] = $trigger;
         
         
          //generiek data event met types geschikt voor sequence handling
@@ -222,38 +159,92 @@ class MimotoEventService
     private function getActionsByEvent($sEvent)
     {
         
-        // FOR NOW - only respond to client.update
+        // configure
+        $sPathToActionFiles = '../src/MaidoProjects/actions';
+        
         
         // init
-        $aActions = [];
+        $aAllActions = [];
         
-        // for dev puposes, focus on 1 event and action first
-        //if ($sEvent != 'client.updated') { return $aActions; }
-        
-        
-        $action = (object) array();
-        
-        $action->trigger = 'client.updated';
-        $action->trigger = ['client.updated', 'agency.updated'];
-        
-        $action->service = 'LivescreenService';
-        $action->request = 'updateUserInterface';
-        
-        
-        $action->config = (object) array(
-            'mapping' => [
-                (object) array('property' => 'Name', 'livescreenid' => 'name')
-            ]
-        );
+        if ($handle = opendir($sPathToActionFiles))
+        {
+            while (false !== ($entry = readdir($handle))) {
+                if ($entry != "." && $entry != "..") {
+                    
+                    // #todo validate json - later, doe dit in een install-script die alles in een php file laadt
+                    $json = file_get_contents($sPathToActionFiles.'/'.$entry);
+                    $action = json_decode($json);
+                    
+                    // register
+                    $aAllActions[] = $action;
+                }
+            }
+            closedir($handle);
+        }
         
         
-        // register
-        $aActions[] = $action;
+        // --- filter ---
         
+        
+        // prepare
+        $aEventParts = explode('.', $sEvent);
+        
+        
+        // init
+        $aFilteredActions = [];
+        
+        // search
+        $nAllActionsItemCount = count($aAllActions);
+        for ($i = 0; $i < $nAllActionsItemCount; $i++)
+        {
+            
+            // register
+            $action = $aAllActions[$i];
+            
+            // read
+            $aTriggers = (is_array($action->trigger)) ? $action->trigger : [$action->trigger];
+            
+            $nTriggerCount = count($aTriggers);
+            for ($j = 0; $j < $nTriggerCount; $j++)
+            {
+                // register
+                $sTrigger = $aTriggers[$j];
+                
+                // prepare
+                $aTriggerParts = explode('.', $sTrigger);
+                
+                // init
+                $bIsValidTrigger = true;
+                
+                // validate
+                if (count($aTriggerParts) != count($aEventParts))
+                {
+                    $bIsValidTrigger = false;
+                }
+                else
+                {
+                    $nTriggerPartCount = count($aTriggerParts);
+                    for ($k = 0; $k < $nTriggerPartCount; $k++)
+                    {
+                        if ($aTriggerParts[$k] != '*' && $aTriggerParts[$k] !== $aEventParts[$k])
+                        {
+                            $bIsValidTrigger = false;
+                            break;
+                        }
+                    }
+                }
+                
+                // valid trigger found, so stop looking
+                if ($bIsValidTrigger) { break; }
+            }
+            
+            // register
+            if ($bIsValidTrigger) { $aFilteredActions[] = $action; }
+        }
         
         
         // send
-        return $aActions;
+        return $aFilteredActions;
     }
     
 }

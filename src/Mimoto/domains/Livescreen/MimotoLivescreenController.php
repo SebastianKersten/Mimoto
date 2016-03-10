@@ -15,24 +15,25 @@ use Silex\Application;
 class MimotoLivescreenController
 {
     
-    public function getView(Application $app, $sEntityType, $nId, $sTemplate)
+    /**
+     * Get view based on entity type and entity id and formatted by template id
+     * @param Application $app
+     * @param string $sEntityType
+     * @param int $nEntityId
+     * @param string $sTemplateId
+     * @return html Rendered twig template
+     */
+    public function getView(Application $app, $sEntityType, $nEntityId, $sTemplateId)
     {
+        // load
+        $entity = $app['LivescreenService']->getEntityByTypeAndId($sEntityType, $nEntityId);
+        $sEntityTemplate = $app['LivescreenService']->getEntityTemplateTypeAndId($sEntityType, $sTemplateId);
         
-        // connect entity to service and connect template
-        
-        
-        $client = $app['ClientService']->getClientById($nId);
-        
-        
-        
-        //call service en laat die de logicat uitvoeren, niet deze class!!
-        
-        
+        // output
         return $app['twig']->render(
-            'pages/settings/clients/ClientListItem.twig',
+            $sEntityTemplate,
             array(
-                'client' => $client,
-                'changeMethod' => 'changeClient'
+                $sEntityType => $entity
             )
         );
     }

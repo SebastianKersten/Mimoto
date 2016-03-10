@@ -7,6 +7,8 @@
 MimotoLivescreen = {};
 
 
+// #todo - scrollpos correctie!
+
 
 //components,        
 //subcomponents
@@ -28,16 +30,10 @@ MimotoLivescreen.connect = function()
 
     var channel = pusher.subscribe('livescreen');
 
-    channel.bind('updateData', function(data) // update, create, remove (, read?)
+    channel.bind('data.update', function(data) // update, create, remove (, read?)
     {
-        
-        
-        
-        //data.type = 'mls';
-        
-        
+        // compose
         var sEntityIdentifier = data.entityType + '.' + data.entityId;
-        
         
         
         // --- value level ---
@@ -58,14 +54,14 @@ MimotoLivescreen.connect = function()
         // search
         var aComponents = $("[mls_id='" + sEntityIdentifier + "']");
         
-        aComponents.each( function( index, $component)
+        aComponents.each( function(index, $component)
         {
             // init
             var config = [];
             
             // read
-            var mls_config = $($component).attr("mls_config" );
-            var mls_template = $($component).attr("mls_template" );
+            var mls_config = $($component).attr("mls_config");
+            var mls_template = $($component).attr("mls_template");
             
             // verify
             if (mls_config !== undefined)
@@ -83,11 +79,10 @@ MimotoLivescreen.connect = function()
                     config[aConfigParamElements[0].trim().toLowerCase()] = aConfigParamElements[1].trim().toLowerCase();
                 }
             }
-
             
+            // reload component
             if (config['onupdate'] == 'reload') // mls_config="onUpdate:reload"
             {
-                
                 $.ajax({
                     type: 'GET',
                     url: '/livescreen/' + data.entityType + '/' + data.entityId + '/' + mls_template,
@@ -95,51 +90,53 @@ MimotoLivescreen.connect = function()
                     dataType: 'html',
                     success: function (data) {
                         $($component).replaceWith(data);
-                        // find id with correct template
                     }
                 });
                 
                 // return;
             }
             
-            
         });
-        
-        
-        
-        
-        
-        
-        
-        
-        //var config = aComponents.attr('lsconfig');
-            
-        //console.log(config);
-            
-        
-//        for (var i = 0; i < aComponents.length; i++)   
-//        {
-//            $component = aComponents;
-//        
-//            //aComponents.each(function(nIndex, $component) {
-//            
-//            console.log($component);
-//            console.log('nIndex = ' + nIndex + "\n");
-//            
-//            // get config
-//            var config = $component.attr('lsconfig');
-//            
-//            console.log(config);
-//        }
-        
-        
-        // lsid="client.2"
-        // lstpl="ClientListItem"
-        // lsvalue="";
-        // lsconfig=""
     });
     
-    channel.bind('showPopup', function(data)
+    
+    channel.bind('data.create', function(data)
+    {
+        // setup
+        var mls_container = data.entityType;
+        
+
+        // --- component level ---
+
+        // search
+        var aComponents = $("[mls_container='" + mls_container + "']");
+        
+        aComponents.each( function(index, $component)
+        {
+            // read
+            var mls_childtemplate = $($component).attr("mls_childtemplate");
+            var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
+
+            // verify
+            if (mls_childtemplate !== undefined)
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/livescreen/' + data.entityType + '/' + data.entityId + '/' + mls_childtemplate,
+                    data: null,
+                    dataType: 'html',
+                    success: function (data) {
+                        $($component).append(data);
+                    }
+                });
+            }
+
+        });
+
+    });
+    
+    
+    channel.bind('popup.open', function(data)
     {
         
         Maido.popup.open(data.url);
@@ -157,38 +154,5 @@ MimotoLivescreen.updateComponent = function(ajax, dom)
     
 }
 
-
-
-
 MimotoLivescreen.connect();
-
-
-//Maido.livescreen.create = function(ajax, dom)
-//{
-//    $.ajax({
-//        type: ajax.type,
-//        url: ajax.url,
-//        data: ajax.data,
-//        dataType: ajax.dataType,
-//        success: function (data) {
-//            $(dom.containerId).append(data);
-//        }
-//    });
-//}
-//
-
-
-//case 'clients': // #todo - general channel, niet per Model
-//            
-//            var channel = pusher.subscribe('clients');
-//            
-//            channel.bind('client.created', function(data) {
-//                if (data.type == 'livescreen') { Maido.livescreen.create(data.ajax, data.dom); }
-//            });
-//            
-//            channel.bind('client.updated', function(data) {
-//                if (data.type == 'livescreen') { Maido.livescreen.update(data.ajax, data.dom); }
-//            });
-//            
-//            break;
 

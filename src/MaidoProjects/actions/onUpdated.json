@@ -1,0 +1,15 @@
+{
+    "trigger": "*.updated",
+    "service": "LivescreenService",
+    "request": "dataUpdate",
+    "config":
+    {
+        "mapping":  
+        [
+            {
+                "property": "Name",
+                "valueName": "name"
+            }
+        ]
+    }
+}
