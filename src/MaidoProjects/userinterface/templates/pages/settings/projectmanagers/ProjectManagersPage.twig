@@ -4,7 +4,7 @@
     <div class="button settings_header_alignright" onclick="Maido.data.newEntity('projectmanager');">Add new project manager +</div>
 </div>
 
-<div id="simplelist" class="simplelist">
+<div id="simplelist" class="simplelist" mls_container="projectmanager" mls_childtemplate="ProjectManagerListItem">
     {% for projectManager in projectManagers %}
         {% include 'pages/settings/projectmanagers/ProjectManagerListItem.twig' with { projectManger:projectManager } %}
     {% endfor %}

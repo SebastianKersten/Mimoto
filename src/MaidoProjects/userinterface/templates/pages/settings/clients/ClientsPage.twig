@@ -4,7 +4,7 @@
     <div class="button settings_header_alignright" onclick="Maido.data.newEntity('client');">Add new client +</div>
 </div>
 
-<div id="simplelist" class="simplelist">
+<div id="simplelist" class="simplelist" mls_container="client" mls_childtemplate="ClientListItem">
     {% for client in clients %}
         {% include 'pages/settings/clients/ClientListItem.twig' with { client:client } %}
     {% endfor %}

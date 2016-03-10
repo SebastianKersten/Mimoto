@@ -4,7 +4,7 @@
     <div class="button settings_header_alignright" onclick="Maido.data.newEntity('agency');">Add new agency +</div>
 </div>
 
-<div id="simplelist" class="simplelist">
+<div id="simplelist" class="simplelist" mls_container="agency" mls_childtemplate="AgencyListItem">
     {% for agency in agencies %}
         {% include 'pages/settings/agencies/AgencyListItem.twig' with { agency:agency } %}
     {% endfor %}
