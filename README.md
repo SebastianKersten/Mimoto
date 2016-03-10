@@ -1,7 +1,7 @@
 # MaidoProjects
 Project Management Tool
 
-This project uses Aimless, and Entity Oriented Programming protocol, for creating a live updating interface (with the help of Pusher).
+This project uses **Aimless**, an _Entity Oriented Programming protocol_, for creating a live updating interface (with the help of Pusher).
 
 ##### onUpdate
 
