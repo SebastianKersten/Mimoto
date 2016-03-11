@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace MaidoProjects\Subproject;
+namespace MaidoProjects\SubprojectState;
 
 // Momkai classes
 use MaidoProjects\Subproject\SubprojectState;

@@ -4,7 +4,8 @@
 namespace MaidoProjects\Project;
 
 // Momkai classes
-use MaidoProjects\Project\ProjectRepository;
+use MaidoProjects\Project\Project;
+use MaidoProjects\Project\ProjectException;
 
 
 /**
@@ -15,18 +16,8 @@ use MaidoProjects\Project\ProjectRepository;
 class ProjectService
 {
     
-    // services
-    private $_SubprojectService;
-    private $_ProjectManagerService;
-    private $_ClientService;
-    private $_AgencyService;
-    
     // repositories
     private $_ProjectRepository;
-    
-    // mysql tables
-    const MYSQL_TABLE_SUBPROJECT_STATES = 'subproject_states';
-    
     
     
     // ----------------------------------------------------------------------------
@@ -36,16 +27,10 @@ class ProjectService
     
     /**
      * Contructor
-     * @param type $SubprojectService
+     * @param repository $ProjectRepository
      */
-    public function __construct($SubprojectService, $ProjectManagerService, $ClientService, $AgencyService, $ProjectRepository)
-    {
-        // register services
-        $this->_SubprojectService = $SubprojectService;
-        $this->_ProjectManagerService = $ProjectManagerService;
-        $this->_ClientService = $ClientService;
-        $this->_AgencyService = $AgencyService;
-        
+    public function __construct($ProjectRepository)
+    {   
         // register repositories
         $this->_ProjectRepository = $ProjectRepository;
     }
@@ -67,7 +52,7 @@ class ProjectService
         {
             $project = $this->_ProjectRepository->get($nId);
         }
-        catch(ClientException $e)
+        catch(ProjectException $e)
         {
             die($e->getMessage());
         }
@@ -86,6 +71,27 @@ class ProjectService
         
         // send
         return $aProjects;
+    }
+    
+    /**
+     * Store project
+     */
+    public function storeProject($nId, $sName, $sDescription, $nClientId, $nAgencyId, $nProjectManagerId)
+    {
+        
+        // init
+        $project = new Project();
+        
+        // register
+        $project->setId($nId);
+        $project->setName($sName);
+        $project->setDescription($sDescription);
+        $project->setClientId($nClientId);
+        $project->setAgencyId($nAgencyId);
+        $project->setProjectManagerId($nProjectManagerId);
+        
+        // store
+        $this->_ProjectRepository->store($project);
     }
     
 }

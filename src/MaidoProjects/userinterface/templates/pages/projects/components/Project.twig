@@ -1,44 +1,43 @@
-<div class="component_project">
+<div class="component_project" mls_id="project.{{ project.getId }}">
     <div class="project_menu">
-        <div class="button_small" onClick="Maido.changeProject({{ project.getId }});">Edit</div>
+        <div class="button_small" onClick="Maido.data.changeEntity('project', {{ project.getId }});">Edit</div>
     </div>
     <div id="{{ project.getId }}" class="project_summary">
         
         <div class="project">
-            <div class="client_name">- <span mls_value="client.{{ project.getClientId }}.name">{{ project.getClientName }}</span>{% if project.getAgencyName != empty %}<span class="agency_name"> - <span mls_value="agency.{{ project.getAgencyId }}.name">{{ project.getAgencyName }}</span></span>{% endif %}</div>
+            <div class="client_name"><span mls_value="client.{{ project.getClientId }}.name, project.{{ project.getId }}.clientName">{{ project.getClientName }}</span>{% if project.getAgencyName != empty %}<span class="agency_name"> - <span mls_value="agency.{{ project.getAgencyId }}.name, project.{{ project.getId }}.agencyName">{{ project.getAgencyName }}</span></span>{% endif %}</div>
             <div class="project_name" mls_value="project.{{ project.getId }}.name">{{ project.getName|e }}</div>
             <div class="button_small" onClick="Maido.toggleProjectState({{ project.getId }});">View details</div>
-            <!--<div class="button_small" onClick="Maido.newSubproject({{ project.getId }});">Add subproject +</div>-->
         </div>
-        
-        <div class="project_subinfo">
-            <div class="project_subinfo_value">50k</div>
-            <div class="project_subinfo_key">Expected</div>
+        <div class="project_subinfo_container">
+            <div class="project_subinfo">
+                <div class="project_subinfo_value">50k</div>
+                <div class="project_subinfo_key">Expected</div>
+            </div>
+            <div class="project_subinfo">
+                <div class="project_subinfo_value">180k</span></div>
+                <div class="project_subinfo_key">Signed</div>
+            </div>
+            <div class="project_subinfo">
+                <div class="project_subinfo_value">112k</div>
+                <div class="project_subinfo_key">Used</div>
+            </div>
+            <div class="project_subinfo">
+                <div class="projectmanager_avatar"><img src="/dynamic/avatars/avatar_{{ project.getProjectManagerId }}.jpg"></div>
+                <div class="projectmanager_name"><span mls_value="projectmanager.{{ project.getProjectManagerId }}.name, project.{{ project.getId }}.projectManagerName">{{ project.getProjectManagerName }}</span></div>
+            </div>
         </div>
-        <div class="project_subinfo">
-            <div class="project_subinfo_value">180k</span></div>
-            <div class="project_subinfo_key">Signed</div>
-        </div>
-        <div class="project_subinfo">
-            <div class="project_subinfo_value">112k</div>
-            <div class="project_subinfo_key">Used</div>
-        </div>
-        <div class="project_subinfo">
-            <div class="projectmanager_avatar"><img src="/dynamic/avatars/avatar_{{ project.getProjectManagerId }}.jpg"></div>
-            <div class="projectmanager_name"><span mls_value="projectmanager.{{ project.getProjectManagerId }}.name">{{ project.getProjectManagerName }}</span></div>
-        </div>
-        
-        
     </div>
+        
     <div id="project_details_{{ project.getId }}" class="project_details">
         <div class="project_menu">
-            <div class="button_small" onClick="Maido.newSubproject({{ project.getId }});">Add subproject +</div>
+            <div class="button_small" onClick="Maido.data.newSubproject({{ project.getId }});">Add subproject +</div>
         </div>
         <div class="project_details_container">
             <div class="project_details_description">
                 <u>Project description</u><br>
                 <br>
-                <i><span livescreenid="project.{{ project.getId }}.description">{{ project.getDescription|e }}</span></i>
+                <i><span mls_value="project.{{ project.getId }}.description">{{ project.getDescription|e }}</span></i>
             </div>
             <div class="project_details_subprojects">
                 {% if filter.request and project.getSubprojects.request|length > 0 %}

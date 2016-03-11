@@ -24,11 +24,8 @@ class ProjectServiceProvider implements ServiceProviderInterface
         
         $app['ProjectService'] = $app->share(function ($app) {
             return new ProjectService(
-                    $app['SubprojectService'],
-                    $app['ProjectManagerService'],
-                    $app['ClientService'],
-                    $app['AgencyService'],
                     new ProjectRepository(
+                            $app['EventService'],
                             $app['SubprojectService'],
                             $app['ProjectManagerService'],
                             $app['ClientService'],

@@ -4,7 +4,7 @@
 namespace MaidoProjects\Subproject;
 
 // Mimoto classes
-use Mimoto\Entity\MimotoEntity;
+use Mimoto\library\entities\MimotoEntity;
 
 
 /**
@@ -202,7 +202,7 @@ class Subproject extends MimotoEntity
     public function __construct()
     {
         // setup
-        parent::__construct('subprojectstate');
+        parent::__construct('subproject');
     }
     
 }

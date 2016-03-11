@@ -11,11 +11,14 @@
             "MaidoProjects\\Client\\": "./src/MaidoProjects/domains/Client",
             "MaidoProjects\\ProjectManager\\": "./src/MaidoProjects/domains/ProjectManager",
             "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency",
+            "MaidoProjects\\SubprojectState\\": "./src/MaidoProjects/domains/SubprojectState",
+            "MaidoProjects\\SubprojectPart\\": "./src/MaidoProjects/domains/SubprojectPart",
             "library\\": "./src/MaidoProjects/library",
             "Mimoto\\Event\\": "./src/Mimoto/domains/Event",
             "Mimoto\\Entity\\": "./src/Mimoto/domains/Entity",
             "Mimoto\\Livescreen\\": "./src/Mimoto/domains/Livescreen",
-            "Mimoto\\Mail\\": "./src/Mimoto/domains/Mail"
+            "Mimoto\\Mail\\": "./src/Mimoto/domains/Mail",
+            "Mimoto\\library\\": "./src/Mimoto/library"
         }
     }
 }

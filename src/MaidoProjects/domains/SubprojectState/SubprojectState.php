@@ -1,31 +1,31 @@
 <?php
 
 // classpath
-namespace MaidoProjects\Agency;
+namespace MaidoProjects\SubprojectState;
 
 // Mimoto classes
 use Mimoto\library\entities\MimotoEntity;
 
 
 /**
- * The "Agency"-model contains the information of an agency
+ * The "SubprojectState"-model contains the information of a subproject state
  *
  * @author Sebastian Kersten
  */
-class Agency extends MimotoEntity
+class SubprojectState extends MimotoEntity
 {
     
     /**
-     * Get the agency's name
+     * Get the subproject state's name
      * 
      * @return string
      */
     public function getName() { return parent::getValue('name'); }
     
     /**
-     * Set the agency's name
+     * Set the subproject state's name
      * 
-     * @param string $sName The agency's name
+     * @param string $sName The subproject state's name
      */
     public function setName($sName) { parent::setValue('name', $sName); }
     
@@ -42,7 +42,7 @@ class Agency extends MimotoEntity
     public function __construct($bTrackChanges = true)
     {
         // setup
-        parent::__construct('agency', $bTrackChanges);
+        parent::__construct('subprojectstate', $bTrackChanges);
         
         // default
         parent::setValue('name', '');

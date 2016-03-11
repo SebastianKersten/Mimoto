@@ -1,34 +1,22 @@
 <?php
 
 // classpath
-namespace Mimoto\Entity;
+namespace Mimoto\Service;
 
 
 /**
- * MimotoEntity
+ * MimotoService
  *
  * @author Sebastian Kersten
  */
-class MimotoEntity
+class MimotoService
 {
-    
-    // #todo - track changes
-    
-    
-    
-    
     
     /**
      * The entity's type
      * @var string 
      */
     var $_sEntityType;
-    
-    /**
-     * The entity's id
-     * @var int 
-     */
-    var $_nId;
     
     
     
@@ -60,6 +48,21 @@ class MimotoEntity
     public function setId($nId) { $this->_nId = $nId; }
     
     
+    /**
+     * Get the moment of creation
+     * 
+     * @return datetime
+     */
+    public function getCreated() { return $this->_datetimeCreated; }
+    
+    /**
+     * Set the moment of creation
+     * 
+     * @param datetime $datetimeCreated The moment of creation
+     */
+    public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
+    
+    
     
     // ----------------------------------------------------------------------------
     // --- Constructor-------------------------------------------------------------
@@ -76,4 +79,20 @@ class MimotoEntity
         $this->_sEntityType = $sEntityType;
     }
     
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public function --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     * @param string $sEntityType
+     */
+    public function getEntityById($nId)
+    {
+        // register
+        $this->_sEntityType = $sEntityType;
+    }
 }

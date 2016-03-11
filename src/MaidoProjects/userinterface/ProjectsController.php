@@ -171,7 +171,25 @@ class ProjectsController
     public function saveProject(Application $app, Request $request)
     {
         
-        $nID = $request->get('id');
+        // load data
+        $app['ProjectService']->storeProject(
+            $request->get('id'),
+            $request->get('name'),
+            $request->get('description'),
+            $request->get('client_id'),
+            $request->get('agency_id'),
+            $request->get('projectmanager_id')    
+        );
+        
+        // setup
+        $response = (object) array();
+        $response->result = 'Ok!';
+        
+        // send
+        return json_encode($response);
+        
+        
+        /*$nID = $request->get('id');
         $sName = $request->get('name');
         $sDescription = $request->get('description');
         $nClientID = $request->get('client_id');
@@ -216,7 +234,7 @@ class ProjectsController
         $response->result = 'Ok!';
         $response->name = $sName;
         
-        return json_encode($response);
+        return json_encode($response);*/
     }
     
     

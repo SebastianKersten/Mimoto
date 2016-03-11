@@ -4,7 +4,7 @@
 namespace MaidoProjects\Agency;
 
 // Momkai classes
-use library\repositories\AbstractSingleMySQLTableRepository;
+use Mimoto\library\repositories\MimotoSingleMySQLTableRepository;
 
 
 /**
@@ -12,7 +12,7 @@ use library\repositories\AbstractSingleMySQLTableRepository;
  *
  * @author Sebastian Kersten
  */
-class AgencyRepository extends AbstractSingleMySQLTableRepository
+class AgencyRepository extends MimotoSingleMySQLTableRepository
 {      
     
     /**
@@ -33,8 +33,7 @@ class AgencyRepository extends AbstractSingleMySQLTableRepository
         // connect
         $this->setModelToMySQLTableMap(
             [
-                (object) array('property' => 'Id', 'column' => 'id', 'primary' => true),
-                (object) array('property' => 'Name', 'column' => 'name')
+                (object) array('property' => 'name', 'dbcolumn' => 'name')
             ]
         );
     }

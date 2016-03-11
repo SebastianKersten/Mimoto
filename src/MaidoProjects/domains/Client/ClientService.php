@@ -87,7 +87,7 @@ class ClientService
         $client->setName($sName);
         
         // store
-        $this->_ClientRepository->store($client);
+        $this->_ClientRepository->store($client); // #todo - returns new client?
     }
     
 }

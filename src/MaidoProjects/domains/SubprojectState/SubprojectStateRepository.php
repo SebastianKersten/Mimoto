@@ -1,18 +1,18 @@
 <?php
 
 // classpath
-namespace MaidoProjects\Client;
+namespace MaidoProjects\SubprojectState;
 
 // Momkai classes
 use Mimoto\library\repositories\MimotoSingleMySQLTableRepository;
 
 
 /**
- * ClientRepository
+ * SubprojectStateRepository
  *
  * @author Sebastian Kersten
  */
-class ClientRepository extends MimotoSingleMySQLTableRepository
+class SubprojectStateRepository extends MimotoSingleMySQLTableRepository
 {      
     
     /**
@@ -25,10 +25,10 @@ class ClientRepository extends MimotoSingleMySQLTableRepository
         parent::__construct($EventService);
         
         // setup
-        $this->setModelClass('MaidoProjects\Client\Client');
-        $this->setModelExceptionClass('MaidoProjects\Client\ClientException');
-        $this->setModelEventClass('MaidoProjects\Client\ClientEvent');
-        $this->setMySQLTable('clients');
+        $this->setModelClass('MaidoProjects\SubprojectState\SubprojectState');
+        $this->setModelExceptionClass('MaidoProjects\SubprojectState\SubprojectStateException');
+        $this->setModelEventClass('MaidoProjects\SubprojectState\SubprojectStateEvent');
+        $this->setMySQLTable('subproject_states');
         
         // connect
         $this->setModelToMySQLTableMap(

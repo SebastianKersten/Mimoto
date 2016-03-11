@@ -8,8 +8,12 @@ and open the template in the editor.
     Author     : apple
 */
 
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #ffffff;
+    background-color: #f5f5f5;
     font-family: "futura-pt", sans-serif;
     font-size: 17px;
     padding: 0;
@@ -84,9 +88,9 @@ div.layer_popup {
 
 div.menu {
     position: absolute;
-    background-color: #e5e5e5;
+    background-color: #ffffff;
     top: 0;
-    height: 60px;
+    height: 70px;
     right: 0;
     left: 0;
 }
@@ -95,29 +99,54 @@ div.menu {
         position: absolute;
         width: 100%;
         height: 1px;
-        background-color: #c3c3c3;
-        top: 59px;
+        background-color: #d5d5d5;
+        top: 69px;
+    }
+    
+    
+    div.menu_container {
+        position: absolute;
+        display: -webkit-flex;
+        display: flex;
+        width: 100%;
     }
 
     div.tabmenu {
-        position: absolute;
+        -webkit-flex: 5;
+        flex: 5;
         display: inline-block;
-        padding-left: 15px;
-        bottom: 0;
+        padding: 0 20px 0 20px;
+        overflow: scroll;
+        align-items: flex-end;
+        height: 70px;
+        
+        display: -webkit-flex;
+        display: flex;
     }
-
+        
+        div.tabmenu>div.tab {
+            margin-right: 7px;
+        }
+        
+        div.tabmenu > div:last-child {
+            margin-right: 20px; // does not work
+        }
+        
         div.tab {
-            display:inline-block;
+            -webkit-flex: initial;
+            flex: initial;
+            display: inline-block;
             border: solid 1px #c3c3c3;
-            padding: 10px 15px 10px 15px;
-            background-color: #f5f5f5;
+            padding: 10px 20px 10px 20px;
+            background-color: #ffffff;
+            cursor: pointer;
         }
         
             div.tab_settings {
             display:inline-block;
             border: solid 1px #c3c3c3;
             padding: 10px 15px 10px 15px;
-            background-color: #f5f5f5;
+            background-color: #f1f1f1;
         }
         
         div.tab a {
@@ -125,20 +154,24 @@ div.menu {
             text-decoration: none;
         }
         
-        div.tab a:hover {
+        div.tab:hover {
             color: #000000;
             text-decoration: underline;
         }
 
         div.tab.active {
-            border-bottom: solid 1px white;
-            background-color: #ffffff;
+            border-bottom: solid 1px #fafafa;
+            background-color: #fafafa;
         }
 
         div.actionmenu {
-            position: absolute;
-            right: 10px;
-            top: 10px;
+            -webkit-flex: initial;
+            flex: initial;
+            padding: 15px 20px 0 25px;
+            text-align: right;
+            background-color: #fafafa;
+            border-left: 1px solid #d5d5d5;
+            display: inline-block;
         }
         
         div.tab.secondary {
@@ -147,7 +180,6 @@ div.menu {
             padding: 10px 15px 10px 15px;
             background: inherit;
             font-size: 12px;
-            
         }
             
             div.tab.secondary a {
@@ -157,12 +189,12 @@ div.menu {
         
 div.page {
     position: absolute;
-    top: 60px;
+    top: 70px;
     bottom: 0;
     right: 0;
     left: 0;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #fafafa;
     overflow: scroll;
 }
 
@@ -172,15 +204,17 @@ div.button {
     display: inline-block;
     padding: 10px 15px 10px 15px;
     cursor: pointer;
+    white-space:nowrap;
 }
 
 div.button_small {
     font-size: 12px;
     color: #ffffff;
-    background-color: #837dbb;
+    background-color: #06AFEA;
     display: inline-block;
     padding: 3px 6px 3px 6px;
     cursor: pointer;
+    white-space:nowrap;
 }
 
 div.button_text {
@@ -193,7 +227,7 @@ div.button_text {
 
 
 div.component_project {
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     margin-bottom: 10px;
     position: relative;
 }
@@ -213,7 +247,7 @@ div.form_field_name {
     font-weight: bold;
     font-size: 18px;
     margin-bottom: 10px;
-    color: #9ececa
+    color: #06afea
 }
 
 span.optional {
@@ -278,7 +312,7 @@ div.simplelist {
         display: flex;
         width: 100%;
         max-width: 600px;
-        background-color: #9ececa;
+        background-color: #ffffff;
         cursor: pointer;
     }
     
@@ -299,17 +333,57 @@ div.simplelist {
             text-align: right;
         }
 
-        
-div.project_summary {
-    display: -webkit-flex;
-    display: flex;
-    padding: 20px 40px 20px 20px;
+
+div.project_subinfo_container {
+     display: -webkit-flex;
+     display: flex;
+    -webkit-flex: 1;
+    flex: 1;
+    align-items: center;
 }
 
-    div.project_summary div.project {
-        -webkit-flex: 5;
-        flex: 5;
+    @media (max-width: 600px) {
+        
+        div.project_summary {
+            display: block;
+            padding: 20px 20px 20px 20px;
+        }
+        
+        div.project, div.project_subinfo_container
+        {
+            -webkit-flex: none;
+            flex: none;
+            clear: left
+        }
+        
+        div.project_subinfo_container {
+            margin-top: 15px;
+            width: 100%;
+            background-color: #fafafa;
+        }
+        
+        div.project_subinfo {
+            padding: 15px 0 10px 0;
+        }
     }
+    
+    @media (min-width: 601px) {
+        
+        div.project_summary {
+            padding: 20px 40px 20px 20px;
+        }
+        
+        div.project_summary, div.project_subinfo_container {
+            display: -webkit-flex;
+            display: flex;
+        }
+        
+        div.project, div.project_subinfo_container {
+            -webkit-flex: 1;
+            flex: 1;
+        }
+    }
+    
     
     div.project_subinfo {
         -webkit-flex: 1;
@@ -325,10 +399,10 @@ div.project_summary {
     }
     
     div.client_name {
-        font-weight: bold;
+        
         font-size: 14px;
         padding-left: 0px;
-        color: #df5b57;
+        color: #06AFEA;
     }
     
     div.project_name {
@@ -343,7 +417,7 @@ div.project_summary {
     }
     
 div.project_details {
-    //display: none;
+    display: none;
     padding: 0 8px 8px 8px;
     position: relative;
 }
@@ -387,6 +461,8 @@ div.projectmanager_avatar {
 
 div.projectmanager_name {
     margin-top: 5px;
+    color: #858585;
+    font-size: 12px;
 }
 
 div.project_subinfo_value {
@@ -396,6 +472,8 @@ div.project_subinfo_value {
 
 div.project_subinfo_key {
     margin-top: 5px;
+    color: #858585;
+    font-size: 12px;
 }
 
 
@@ -464,14 +542,15 @@ div.subproject_details {
  /* --- view options --- */
  
  div.filter {
-     background-color: #ffffff;
+     //background-color: #fafafa;
+     margin-left: 20px;
  }
  
     div.filter_title {
         display: inline-block;
         margin-right: 10px;
         font-size: 12px;
-        color: #df5b57;
+        color: #06AFEA;
     }
 
     div.filter_option {

@@ -4,8 +4,7 @@
 namespace MaidoProjects\Project;
 
 // Momkai classes
-use MaidoProjects\Project\Project;
-use MaidoProjects\Project\ProjectException;
+use Mimoto\library\repositories\MimotoSingleMySQLTableRepository;
 
 
 /**
@@ -13,7 +12,7 @@ use MaidoProjects\Project\ProjectException;
  *
  * @author Sebastian Kersten
  */
-class ProjectRepository
+class ProjectRepository extends MimotoSingleMySQLTableRepository
 {
     
     // services
@@ -21,9 +20,6 @@ class ProjectRepository
     private $_ProjectManagerService;
     private $_ClientService;
     private $_AgencyService;
-    
-    // mysql tables
-    const MYSQL_TABLE_PROJECTS = 'projects';
     
     
     
@@ -35,13 +31,47 @@ class ProjectRepository
     /**
      * Constructor
      */
-    public function __construct($SubprojectService, $ProjectManagerService, $ClientService, $AgencyService)
+    public function __construct($EventService, $SubprojectService, $ProjectManagerService, $ClientService, $AgencyService)
     {
+        
+        // init parent
+        parent::__construct($EventService);
+        
         // register services
         $this->_SubprojectService = $SubprojectService;
         $this->_ProjectManagerService = $ProjectManagerService;
         $this->_ClientService = $ClientService;
         $this->_AgencyService = $AgencyService;
+        
+        
+        // setup
+        $this->setModelClass('MaidoProjects\Project\Project');
+        $this->setModelExceptionClass('MaidoProjects\Project\ProjectException');
+        $this->setModelEventClass('MaidoProjects\Project\ProjectEvent');
+        $this->setMySQLTable('projects');
+        
+        // connect
+        $this->setModelToMySQLTableMap(
+            [
+                (object) array('property' => 'name', 'dbcolumn' => 'name'),
+                (object) array('property' => 'description', 'dbcolumn' => 'description'),
+                (object) array('property' => 'client_id', 'dbcolumn' => 'client_id', 'entity' => 'client', 'entityService' => $this->_ClientService),
+                (object) array('property' => 'agency_id', 'dbcolumn' => 'agency_id', 'entity' => 'agency', 'entityService' => $this->_AgencyService),
+                (object) array('property' => 'projectmanager_id', 'dbcolumn' => 'projectmanager_id', 'entity' => 'projectmanager', 'entityService' => $this->_ProjectManagerService),
+            ]
+        );
+        
+        // connect
+        /*$this->setPublicMapping(
+            [
+                (object) array('property' => 'Name', 'column' => 'name'),
+                (object) array('property' => 'Description', 'column' => 'description'),
+                (object) array('property' => 'ClientId', 'column' => 'client_id', 'entity' => 'client', 'entityService' => $this->_ClientService),
+                (object) array('property' => 'AgencyId', 'column' => 'agency_id', 'entity' => 'agency', 'entityService' => $this->_AgencyService),
+                (object) array('property' => 'ProjectManagerId', 'column' => 'projectmanager_id', 'entity' => 'projectmanager', 'entityService' => $this->_ProjectManagerService),
+            ]
+        );*/
+        
     }
     
     
@@ -59,20 +89,14 @@ class ProjectRepository
      */
     public function get($nId)
     {
-        // load
-        $sQuery = "SELECT * FROM ".self::MYSQL_TABLE_PROJECTS." WHERE id=".$nId;
-        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        $nItemCount = mysql_num_rows($result);
+        // forward
+        $project = parent::get($nId);
         
-        if ($nItemCount !== 1)
-        {
-             throw new ProjectException('Cannot find project with ID='.$nId);
-        }
-        else
-        {
-            // send
-            return $this->createProjectFromMySQLResult($result, 0);
-        }
+        // complete with data for presentation
+        $project = $this->addPresentationDataToProject($project);
+        
+        // send
+        return $project;
     }
     
     /**
@@ -81,26 +105,28 @@ class ProjectRepository
      */
     public function find()
     {
+        // forward
+        $aProjects = parent::find();
+        $nProjectCount = count($aProjects);
         
-        // init
-        $aProjects = array();
-        
-        // load
-        $sQuery = "SELECT * FROM ".self::MYSQL_TABLE_PROJECTS." ORDER BY name ASC";
-        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        $nItemCount = mysql_num_rows($result);
-        
-        // register
-        for ($i = 0; $i < $nItemCount; $i++)
+        // complete with data for presentation
+        for ($i = 0; $i < $nProjectCount; $i++)
         {
-            // register
-            $aProjects[] = $this->createProjectFromMySQLResult($result, $i);
+            $aProjects[$i] = $this->addPresentationDataToProject($aProjects[$i]);
         }
         
         // send
         return $aProjects;
     }
     
+    public function store($project)
+    {
+        // complete with data for presentation
+        $project = $this->addPresentationDataToProject($project);
+        
+        // forward
+        parent::store($project);
+    }
     
     
     // ----------------------------------------------------------------------------
@@ -109,29 +135,18 @@ class ProjectRepository
     
     
     /**
-     * Create Project from MySQL result
-     * @param MySQL query result $mysqlResult
-     * @param int $nIndex
+     * Add presentation data to project
+     * @param Project $project
      * @return Project
      */
-    private function createProjectFromMySQLResult($mysqlResult, $nIndex)
-    {
-        // init
-        $project = new Project();
-        
-        // register
-        $project->setId(mysql_result($mysqlResult, $nIndex, 'id'));
-        $project->setName(mysql_result($mysqlResult, $nIndex, 'name'));
-        $project->setDescription(mysql_result($mysqlResult, $nIndex, 'description'));
-        $project->setClientId(mysql_result($mysqlResult, $nIndex, 'client_id'));
-        $project->setAgencyId(mysql_result($mysqlResult, $nIndex, 'agency_id'));
-        $project->setProjectManagerId(mysql_result($mysqlResult, $nIndex, 'projectmanager_id'));
-        $project->setSubprojects($this->_SubprojectService->getAllSubprojectsByProjectId($project->getId()));
-
+    private function addPresentationDataToProject($project)
+    {   
         // register data for presentation
         $project->setClientName($this->_ClientService->getClientById($project->getClientId())->getName());
         if (!empty($project->getAgencyId())) { $project->setAgencyName($this->_AgencyService->getAgencyById($project->getAgencyId())->getName()); }
         $project->setProjectManagerName($this->_ProjectManagerService->getProjectManagerById($project->getProjectManagerId())->getName());
+        
+        $project->setSubprojects($this->_SubprojectService->getAllSubprojectsByProjectId($project->getId()));
         
         // send
         return $project;   

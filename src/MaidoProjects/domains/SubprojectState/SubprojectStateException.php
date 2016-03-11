@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace MaidoProjects\Client;
+namespace MaidoProjects\SubprojectState;
 
 
 /**

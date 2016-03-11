@@ -250,7 +250,7 @@ class SettingsController
     {   
         
         // load data
-        $aSubprojectStates = $app['SubprojectService']->getAllSubprojectStates();
+        $aSubprojectStates = $app['SubprojectStateService']->getAllSubprojectStates();
         
         // output
         return $app['twig']->render(
@@ -278,7 +278,7 @@ class SettingsController
         if ($nId !== false && !is_nan($nId))
         { 
             // load data
-            $data['data'] = $app['SubprojectService']->getSubprojectStateById($nId);
+            $data['data'] = $app['SubprojectStateService']->getSubprojectStateById($nId);
         }
         
         // output
@@ -297,7 +297,7 @@ class SettingsController
     public function saveSubprojectState(Application $app, Request $request)
     {
         // load data
-        $app['SubprojectService']->storeSubprojectState($request->get('id'), $request->get('name'));
+        $app['SubprojectStateService']->storeSubprojectState($request->get('id'), $request->get('name'));
         
         // setup
         $response = (object) array();

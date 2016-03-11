@@ -4,8 +4,8 @@
 namespace MaidoProjects\Subproject;
 
 // Momkai classes
-use MaidoProjects\Subproject\SubprojectState;
-use MaidoProjects\Subproject\SubprojectStateException;
+use MaidoProjects\Subproject\Subproject;
+use MaidoProjects\Subproject\SubprojectException;
 
 
 /**
@@ -18,7 +18,6 @@ class SubprojectService
     
      // repositories
     private $_SubprojectRepository;
-    private $_SubprojectStateRepository;
     
     
     
@@ -30,11 +29,10 @@ class SubprojectService
     /**
      * Constructor
      */
-    public function __construct($SubprojectRepository, $SubprojectStateRepository)
+    public function __construct($SubprojectRepository)
     {
         // register
         $this->_SubprojectRepository = $SubprojectRepository;
-        $this->_SubprojectStateRepository = $SubprojectStateRepository;
     }
     
     
@@ -42,9 +40,6 @@ class SubprojectService
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
-    // --- Subprojects ---
     
     
     /**
@@ -92,60 +87,6 @@ class SubprojectService
     {
         // store
         $this->_SubprojectRepository->store($nId, $sName);
-    }
-    
-    
-    
-    // --- SubprojectStates ----
-    
-    
-    /**
-     * Get subproject state by ID
-     * @return SubprojectState
-     */
-    public function getSubprojectStateById($nId)
-    {   
-        // load
-        try
-        {
-            $subprojectState = $this->_SubprojectStateRepository->get($nId);
-        }
-        catch(SubprojectStateException $e)
-        {
-            die($e->getMessage());
-        }
-        
-        // send
-        return $subprojectState;
-    }
-    
-    /**
-     * Get all subprojects states
-     * @return Array containing SubprojectStates
-     */
-    public function getAllSubprojectStates()
-    {   
-         // load
-        $aSubprojectStates = $this->_SubprojectStateRepository->find();
-        
-        // send
-        return $aSubprojectStates;
-    }
-    
-    /**
-     * Store subproject state
-     */
-    public function storeSubprojectState($nId, $sName)
-    {
-        // init
-        $subprojectState = new SubprojectState();
-        
-        // register
-        $subprojectState->setId($nId);
-        $subprojectState->setName($sName);
-        
-        // store
-        $this->_SubprojectStateRepository->store($subprojectState);
     }
     
 }

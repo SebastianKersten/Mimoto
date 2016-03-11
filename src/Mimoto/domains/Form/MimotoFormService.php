@@ -35,7 +35,7 @@ class FormService
     /**
      * Get agency by ID
      */
-    public function createForm($data)
+    public function createForm($sEntityType, $nId) // separate form/forminputs-models met config parameters
     {
         // load
         try

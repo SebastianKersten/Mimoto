@@ -3,37 +3,17 @@
 // classpath
 namespace MaidoProjects\Project;
 
+// Mimoto classes
+use Mimoto\library\entities\MimotoEntity;
+
+
 /**
  * The "Project"-model contains the information of a project
  *
  * @author Sebastian Kersten
  */
-class Project
+class Project extends MimotoEntity
 {
-    
-    /**
-     * The project's id
-     * @var int 
-     */
-    var $_nId;
-    
-    /**
-     * The project's name
-     * @var string
-     */
-    var $_sName;
-    
-    /**
-     * The project's description
-     * @var string
-     */
-    var $_sDescription;
-    
-    /**
-     * The project's client id
-     * @var int 
-     */
-    var $_nClientId;
     
     /**
      * The project's client's name
@@ -42,22 +22,10 @@ class Project
     var $_sClientName;
     
     /**
-     * The project's agency id
-     * @var int 
-     */
-    var $_nAgencyId;
-    
-    /**
      * The project's agency's name
      * @var string
      */
     var $_sAgencyName;
-    
-    /**
-     * The project's project manager id
-     * @var int 
-     */
-    var $_nProjectManagerId;
     
     /**
      * The project's project managers's name
@@ -73,25 +41,9 @@ class Project
     
     
     
-    
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
-    /**
-     * Get the project's id
-     * 
-     * @return int
-     */
-    public function getId() { return $this->_nId; }
-    
-    /**
-     * Set the project's id
-     * 
-     * @param int $nId The project's id
-     */
-    public function setId($nId) { $this->_nId = $nId; }
     
     
     /**
@@ -99,14 +51,14 @@ class Project
      * 
      * @return string
      */
-    public function getName() { return $this->_sName; }
+    public function getName() { return parent::getValue('name'); }
     
     /**
      * Set the project's name
      * 
      * @param string $sName The project's name
      */
-    public function setName($sName) { $this->_sName = $sName; }
+    public function setName($sName) { parent::setValue('name', $sName); }
     
     
     /**
@@ -114,14 +66,14 @@ class Project
      * 
      * @return string
      */
-    public function getDescription() { return $this->_sDescription; }
+    public function getDescription() { return parent::getValue('description'); }
     
     /**
      * Set the project's description
      * 
      * @param string $sDescription The project's description
      */
-    public function setDescription($sDescription) { $this->_sDescription = $sDescription; }
+    public function setDescription($sDescription) { parent::setValue('description', $sDescription); }
     
     
     /**
@@ -129,14 +81,14 @@ class Project
      * 
      * @return int
      */
-    public function getClientId() { return $this->_nClientId; }
+    public function getClientId() { return parent::getValue('client_id'); }
     
     /**
      * Set the project's client id
      * 
      * @param int $nClientId The project's client id
      */
-    public function setClientId($nClientId) { $this->_nClientId = $nClientId; }
+    public function setClientId($nClientId) { parent::setValue('client_id', $nClientId); }
     
     
     /**
@@ -159,14 +111,14 @@ class Project
      * 
      * @return int
      */
-    public function getAgencyId() { return $this->_nAgencyId; }
+    public function getAgencyId() { return parent::getValue('agency_id'); }
     
     /**
      * Set the project's agency id
      * 
      * @param int $nAgencyId The project's agency id
      */
-    public function setAgencyId($nAgencyId) { $this->_nAgencyId = $nAgencyId; }
+    public function setAgencyId($nAgencyId) { parent::setValue('agency_id', $nAgencyId); }
     
     
     /**
@@ -189,14 +141,14 @@ class Project
      * 
      * @return int
      */
-    public function getProjectManagerId() { return $this->_nProjectManagerId; }
+    public function getProjectManagerId() { return parent::getValue('projectmanager_id'); }
     
     /**
      * Set the project's project manager id
      * 
      * @param int $nProjectManagerId The project's project manager id
      */
-    public function setProjectManagerId($nProjectManagerId) { $this->_nProjectManagerId = $nProjectManagerId; }
+    public function setProjectManagerId($nProjectManagerId) { parent::setValue('projectmanager_id', $nProjectManagerId); }
     
     
     /**
@@ -231,5 +183,38 @@ class Project
      * @param array $aSubprojects The project's subprojects
      */
     public function setSubprojects($aSubprojects) { $this->_aSubprojects = $aSubprojects; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct($bTrackChanges = true)
+    {
+        // setup
+        parent::__construct('project', $bTrackChanges);
+        
+        // default
+        parent::setValue('name', '');
+        parent::setValue('description', '');
+        parent::setValue('client_id', 0);// if entity, dan new Entity() met juiste values
+        parent::setValue('agency_id', 0);
+        parent::setValue('projectmanager_id', 0);
+        
+        
+        // ipv setClientId('') setClient 
+        // bij wijziging replace Client1 for Client2
+        
+//        subproperty mapping: 
+//            client.4
+//            client.7
+//        id en created ook wegschrijven in values array, want dat te 
+//        benaderen met simple property selectors als client.id
+    }
     
 }

@@ -7,55 +7,32 @@ Maido.data = {};
 
 Maido.data.newEntity = function(sEntityType)
 {
-    Maido.popup.open('/settings/' + sEntityType + '/new');
+    Maido.popup.open('/' + sEntityType + '/new');
+}
+
+Maido.data.newSubproject = function(nProjectID)
+{
+    Maido.popup.open('/project/' + nProjectID + '/subproject/new');   
 }
 
 Maido.data.changeEntity = function(sEntityType, nId)
 {
-    Maido.popup.open('/settings/' + sEntityType + '/change/' + nId);
+    Maido.popup.open('/' + sEntityType + '/change/' + nId);
 }
 
 Maido.data.saveEntity = function(sEntityType, data)
 {
     $.ajax({
         type: 'POST',
-        url: "/settings/" + sEntityType + "/save",
+        url: "/" + sEntityType + "/save",
         data: data,
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             Maido.popup.close();
         }
     });
 }
 
-
-
-
-Maido.newProject = function()
-{
-    Maido.popup.open('/project/new');   
-}
-
-Maido.changeProject = function(nID)
-{   
-    Maido.popup.open('/project/change/' + nID);
-}
-
-Maido.saveProject = function(data)
-{
-    // show loader
-    $.ajax({
-        type: 'POST',
-        url: "/project/save",
-        data: data,
-        dataType: 'json',
-        success: function (data) {
-            document.getElementById('popup_content').innerHTML = data.name;
-            Maido.popup.close();
-            window.open('/', '_self');
-        }
-    });
-}
 
 
 Maido.toggleProjectState = function(nID)
@@ -85,28 +62,12 @@ Maido.toggleProjectState = function(nID)
     
 }
 
-Maido.newSubproject = function(nProjectID)
-{
-    Maido.popup.open('/project/' + nProjectID + '/subproject/new');   
-}
 
-Maido.changeSubproject = function(nSubprojectId)
-{   
-    Maido.popup.open('/subproject/change/' + nSubprojectId);
-}
+Maido.page = {};
 
-Maido.saveSubproject = function(data)
+Maido.page.change = function(sURL)
 {
-    // show loader
-    $.ajax({
-        type: 'POST',
-        url: "/subproject/save",
-        data: data,
-        dataType: 'json',
-        success: function (data) {
-            Maido.popup.close();
-        }
-    });
+   window.location.href = sURL;
 }
 
 
@@ -144,7 +105,8 @@ Maido.popup.open = function(sURL)
             primaryInput.value = val;
         }
     };
-    r.send("banana=yellow");
+    r.send();
+    //r.send("banana=yellow");
 }
 
 Maido.popup.close = function()

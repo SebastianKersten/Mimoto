@@ -4,7 +4,7 @@
 namespace MaidoProjects\ProjectManager;
 
 // Mimoto classes
-use Mimoto\Entity\MimotoEntity;
+use Mimoto\library\entities\MimotoEntity;
 
 
 /**
@@ -16,43 +16,18 @@ class ProjectManager extends MimotoEntity
 {
     
     /**
-     * The project manager's name
-     * @var string
-     */
-    var $_sName;
-    
-    /**
-     * The URL of the project manager's avatar
-     * @var string
-     */
-    var $_sAvatarURL;
-    
-    /**
-     * The moment of creation
-     * @var datetime
-     */
-    var $_datetimeCreated;
-    
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Properties -------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
-    
-    /**
      * Get the project manager's name
      * 
      * @return string
      */
-    public function getName() { return $this->_sName; }
+    public function getName() { return parent::getValue('name'); }
     
     /**
      * Set the project manager's name
      * 
      * @param string $sName The project manager's name
      */
-    public function setName($sName) { $this->_sName = $sName; }
+    public function setName($sName) { parent::setValue('name', $sName); }
     
     
     /**
@@ -60,29 +35,14 @@ class ProjectManager extends MimotoEntity
      * 
      * @return string
      */
-    public function getAvatarURL() { return $this->_sAvatarURL; }
+    public function getAvatarURL() { return parent::getValue('avatar_url'); }
     
     /**
      * Set the URL of the project manager's avatar
      * 
      * @param string $sAvatarURL The URL of the project manager's avatar
      */
-    public function setAvatarURL($sAvatarURL) { $this->_sAvatarURL = $sAvatarURL; }
-    
-    
-    /**
-     * Get the moment of creation
-     * 
-     * @return datetime
-     */
-    public function getCreated() { return $this->_datetimeCreated; }
-    
-    /**
-     * Set the moment of creation
-     * 
-     * @param datetime $datetimeCreated The moment of creation
-     */
-    public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
+    public function setAvatarURL($sAvatarURL) { parent::setValue('avatar_url', $sAvatarURL); }
     
     
     
@@ -94,10 +54,14 @@ class ProjectManager extends MimotoEntity
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($bTrackChanges = true)
     {
         // setup
-        parent::__construct('projectmanager');
+        parent::__construct('projectmanager', $bTrackChanges);
+        
+        // default
+        parent::setValue('name', '');
+        parent::setValue('avatar_url', '');
     }
     
 }

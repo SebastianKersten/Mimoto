@@ -13,14 +13,16 @@
         <div class="layer_application">
             <div class="menu">
                 <div class="menudivider"></div>
-                <div class="tabmenu">
-                    <div class="tab {% if section=='projects' %}active{% endif %}"><a href="/">Projects</a></div>
-                    <div class="tab {% if section=='forecast' %}active{% endif %}"><a href="/prognose">Forecast</a></div>
-                    <div class="tab {% if section=='result' %}active{% endif %}"><a href="/resultaat">Result</a></div>
-                    <div class="tab {% if section!='settings' %}secondary{% endif %} {% if section=='settings' %}active{% endif %}"><a href="/settings">Settings</a></div>
-                </div>
-                <div class="actionmenu">
-                    <div class="button" onClick="Maido.newProject();">Add project +</div>
+                <div class="menu_container">
+                    <div class="tabmenu">
+                        <div class="tab {% if section=='projects' %}active{% endif %}" onClick="Maido.page.change('/');">Projects</div>
+                        <div class="tab {% if section=='forecast' %}active{% endif %}" onClick="Maido.page.change('/forecast');">Forecast</div>
+                        <div class="tab {% if section=='result' %}active{% endif %}" onClick="Maido.page.change('/result');">Result</div>
+                        <div class="tab {% if section!='settings' %}secondary{% endif %} {% if section=='settings' %}active{% endif %}" onClick="Maido.page.change('/settings');">Settings</div>
+                    </div>
+                    <div class="actionmenu">
+                        <div class="button" onClick="Maido.data.newEntity('project');">Add project +</div>
+                    </div>
                 </div>
             </div>
             <div class="page">

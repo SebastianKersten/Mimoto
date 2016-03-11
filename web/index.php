@@ -7,14 +7,11 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 // Momkai classes
 use MaidoProjects\Project\ProjectServiceProvider;
-use MaidoProjects\Subproject\SubprojectStateEvent;
 use MaidoProjects\Subproject\SubprojectServiceProvider;
-use MaidoProjects\ProjectManager\ProjectManagerEvent;
 use MaidoProjects\ProjectManager\ProjectManagerServiceProvider;
-use MaidoProjects\Client\ClientEvent;
 use MaidoProjects\Client\ClientServiceProvider;
-use MaidoProjects\Agency\AgencyEvent;
 use MaidoProjects\Agency\AgencyServiceProvider;
+use MaidoProjects\SubprojectState\SubprojectStateServiceProvider;
 
 // Mimoto classes
 use Mimoto\Event\MimotoEventServiceProvider;
@@ -46,6 +43,7 @@ $app->register(new SubprojectServiceProvider());
 $app->register(new ProjectManagerServiceProvider());
 $app->register(new ClientServiceProvider());
 $app->register(new AgencyServiceProvider());
+$app->register(new SubprojectStateServiceProvider());
 
 // connect platform services
 $app->register(new MimotoEventServiceProvider());
@@ -79,9 +77,35 @@ $app->register(new MimotoLivescreenServiceProvider
             'templates' => array(
                 'SubprojectStateListItem' => 'pages/settings/subprojectstates/SubprojectStateListItem.twig'
             )
+        ),
+        'project' => (object) array(
+            'service' => 'ProjectService',
+            'method' => 'getProjectById',
+            'templates' => array(
+                'Project' => 'pages/projects/components/Project.twig'
+            )
         )
     ]
  ));
+
+
+//$m = new Memcached();
+//$m->addServer('localhost', 11211);
+//
+//$m->set('int', 99);
+//$m->set('string', 'a simple string');
+//$m->set('array', array(11, 12));
+///* expire 'object' key in 5 minutes */
+//$m->set('object', new stdclass, time() + 300);
+//
+//
+//var_dump($m->get('int'));
+//var_dump($m->get('string'));
+//var_dump($m->get('array'));
+//var_dump($m->get('object'));
+//
+
+
 
 //->value('pageName', 'index');
 
@@ -92,8 +116,8 @@ $app->register(new MimotoLivescreenServiceProvider
 
 // main pages
 $app->get('/', 'MaidoProjects\\UserInterface\\ProjectsController::getProjectOverview');
-$app->get('/prognose', 'MaidoProjects\\UserInterface\\ForecastController::getIndex');
-$app->get('/resultaat', 'MaidoProjects\\UserInterface\\ResultController::getIndex');
+$app->get('/forecast', 'MaidoProjects\\UserInterface\\ForecastController::getIndex');
+$app->get('/result', 'MaidoProjects\\UserInterface\\ResultController::getIndex');
 
 // projects
 $app->get('/project/new', 'MaidoProjects\\UserInterface\\ProjectsController::formProject');
@@ -110,27 +134,27 @@ $app->get('/settings', 'MaidoProjects\\UserInterface\\SettingsController::getSet
 
 // settings/projectmanagers
 $app->get('/settings/projectmanagers', 'MaidoProjects\\UserInterface\\SettingsController::getProjectManagerOverview');
-$app->get('/settings/projectmanager/new', 'MaidoProjects\\UserInterface\\SettingsController::formProjectManager');
-$app->get('/settings/projectmanager/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formProjectManager');
-$app->post('/settings/projectmanager/save', 'MaidoProjects\\UserInterface\\SettingsController::saveProjectManager');
+$app->get('/projectmanager/new', 'MaidoProjects\\UserInterface\\SettingsController::formProjectManager');
+$app->get('/projectmanager/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formProjectManager');
+$app->post('/projectmanager/save', 'MaidoProjects\\UserInterface\\SettingsController::saveProjectManager');
 
 // settings/clients
 $app->get('/settings/clients', 'MaidoProjects\\UserInterface\\SettingsController::getClientOverview');
-$app->get('/settings/client/new', 'MaidoProjects\\UserInterface\\SettingsController::formClient');
-$app->get('/settings/client/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formClient');
-$app->post('/settings/client/save', 'MaidoProjects\\UserInterface\\SettingsController::saveClient');
+$app->get('/client/new', 'MaidoProjects\\UserInterface\\SettingsController::formClient');
+$app->get('/client/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formClient');
+$app->post('/client/save', 'MaidoProjects\\UserInterface\\SettingsController::saveClient');
 
 // settings/agencies
 $app->get('/settings/agencies', 'MaidoProjects\\UserInterface\\SettingsController::getAgencyOverview');
-$app->get('/settings/agency/new', 'MaidoProjects\\UserInterface\\SettingsController::formAgency');
-$app->get('/settings/agency/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formAgency');
-$app->post('/settings/agency/save', 'MaidoProjects\\UserInterface\\SettingsController::saveAgency');
+$app->get('/agency/new', 'MaidoProjects\\UserInterface\\SettingsController::formAgency');
+$app->get('/agency/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formAgency');
+$app->post('/agency/save', 'MaidoProjects\\UserInterface\\SettingsController::saveAgency');
 
 // settings/subprojectstates
 $app->get('/settings/subprojectstates', 'MaidoProjects\\UserInterface\\SettingsController::getSubprojectStatesOverview');
-$app->get('/settings/subprojectstate/new', 'MaidoProjects\\UserInterface\\SettingsController::formSubprojectState');
-$app->get('/settings/subprojectstate/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formSubprojectState');
-$app->post('/settings/subprojectstate/save', 'MaidoProjects\\UserInterface\\SettingsController::saveSubprojectState');
+$app->get('/subprojectstate/new', 'MaidoProjects\\UserInterface\\SettingsController::formSubprojectState');
+$app->get('/subprojectstate/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formSubprojectState');
+$app->post('/subprojectstate/save', 'MaidoProjects\\UserInterface\\SettingsController::saveSubprojectState');
 
 // CTFO
 $app->get('/ctfo', 'MaidoProjects\\UserInterface\\CTFOController::analyzeBuckaroo');

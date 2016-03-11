@@ -1,15 +1,15 @@
 <?php
 
 // classpath
-namespace library\repositories;
+namespace Mimoto\library\repositories;
 
 
 /**
- * ClientRepository
+ * MimotoSingleMySQLTableRepository
  *
  * @author Sebastian Kersten
  */
-class AbstractSingleMySQLTableRepository
+class MimotoSingleMySQLTableRepository
 {
     
     /**
@@ -198,11 +198,8 @@ class AbstractSingleMySQLTableRepository
             // skip primary onCreate
             if (!$bIsExistingEntity && isset($map->primary) && $map->primary) continue;
             
-            // prepare
-            $getter = 'get'.$map->property;
-            
             // compose
-            $sQuery .= $map->column.'="'.$entity->$getter().'"';
+            $sQuery .= $map->dbcolumn.'="'.$entity->getValue($map->property).'"';
             if ($i < count($this->_aModelToMySQLTableMap) - 1) { $sQuery .= ','; }
         }
         
@@ -218,6 +215,11 @@ class AbstractSingleMySQLTableRepository
         
         // execute
         mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+        
+        
+        // update
+        $entity->markModifiedValuesAsPersistent();
+        
         
         
         // --- events ---
@@ -262,7 +264,11 @@ class AbstractSingleMySQLTableRepository
     private function createEntityFromMySQLResult($mysqlResult, $nIndex)
     {
         // init
-        $entity = new $this->_modelClass();
+        $entity = new $this->_modelClass(false);
+        
+        // register
+        $entity->setId(mysql_result($mysqlResult, $nIndex, 'id'));
+        $entity->setCreated(mysql_result($mysqlResult, $nIndex, 'created'));
         
         // load properties
         for ($i = 0; $i < count($this->_aModelToMySQLTableMap); $i++)
@@ -270,13 +276,13 @@ class AbstractSingleMySQLTableRepository
             // read
             $map = $this->_aModelToMySQLTableMap[$i];
             
-            // prepare
-            $setter = 'set'.$map->property;
-            
             // register
-            $entity->$setter(mysql_result($mysqlResult, $nIndex, $map->column));
+            $entity->setValue($map->property, mysql_result($mysqlResult, $nIndex, $map->dbcolumn));
         }
-
+        
+        // start tracking changes
+        $entity->trackChanges();
+        
         // send
         return $entity;
     }

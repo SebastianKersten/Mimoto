@@ -4,7 +4,7 @@
 namespace Mimoto\Livescreen;
 
 // Mimoto classes
-use Mimoto\Entity\MimotoEntity;
+use Mimoto\library\entities\MimotoEntity;
 
 
 /**

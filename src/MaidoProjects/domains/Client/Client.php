@@ -4,7 +4,7 @@
 namespace MaidoProjects\Client;
 
 // Mimoto classes
-use Mimoto\Entity\MimotoEntity;
+use Mimoto\library\entities\MimotoEntity;
 
 
 /**
@@ -16,43 +16,18 @@ class Client extends MimotoEntity
 {
     
     /**
-     * The client's name
-     * @var string
-     */
-    var $_sName;
-    
-    /**
-     * The URL of the client's logo
-     * @var string
-     */
-    var $_sLogoURL;
-    
-    /**
-     * The moment of creation
-     * @var datetime
-     */
-    var $_datetimeCreated;
-    
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Properties -------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
-    
-    /**
      * Get the client's name
      * 
      * @return string
      */
-    public function getName() { return $this->_sName; }
+    public function getName() { return parent::getValue('name'); }
     
     /**
      * Set the client's name
      * 
      * @param string $sName The client's name
      */
-    public function setName($sName) { $this->_sName = $sName; }
+    public function setName($sName) { parent::setValue('name', $sName); }
     
     
     /**
@@ -60,29 +35,14 @@ class Client extends MimotoEntity
      * 
      * @return string
      */
-    public function getLogoURL() { return $this->_sLogoURL; }
+    public function getLogoURL() { return parent::getValue('logo_url'); }
     
     /**
      * Set the URL of the client's logo
      * 
      * @param string $sLogoURL The URL of the client's logo
      */
-    public function setLogoURL($sLogoURL) { $this->_sLogoURL = $sLogoURL; }
-    
-    
-    /**
-     * Get the moment of creation
-     * 
-     * @return datetime
-     */
-    public function getCreated() { return $this->_datetimeCreated; }
-    
-    /**
-     * Set the moment of creation
-     * 
-     * @param datetime $datetimeCreated The moment of creation
-     */
-    public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
+    public function setLogoURL($sLogoURL) { parent::setValue('logo_url', $sLogoURL); }
     
     
     
@@ -94,10 +54,14 @@ class Client extends MimotoEntity
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct($bTrackChanges = true)
     {
         // setup
-        parent::__construct('client');
+        parent::__construct('client', $bTrackChanges);
+        
+        // default
+        parent::setValue('name', '');
+        parent::setValue('logo_url', '');
     }
     
 }
