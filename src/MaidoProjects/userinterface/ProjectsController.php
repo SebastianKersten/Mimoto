@@ -55,19 +55,72 @@ class ProjectsController
         }
         
         
-        echo "<pre>";
-
-        $project = $app['ProjectService']->getEntityById(3);
         
-        $project->setClient(3);
+        // ---- verkapte unittest ----
+        
+//        echo "<pre>";
+//
+//        $project = $app['ProjectService']->getEntityById(3);
+//        
+//        
+//        $client = $project->getValue('client');
+//        
+//        
+//        $clientId = $project->getValue('client', false);
+//        echo 'Current client.id = '.$clientId.'<br>';
+//        
+//        $project->setClient(3);
+//        
+//        
+//        $clientId = $project->getValue('client', false);
+//        echo 'Current client.id = '.$clientId.'<br>';
+//        
+//        
+//        $project = $app['ProjectService']->storeProject(
+//                $project->getId(),
+//                $project->getName(),
+//                $project->getDescription(),
+//                1,
+//                0,
+//                1
+//        );
+//        
+//        
+//        $project = $app['ProjectService']->getEntityById(3);
+//        $clientId = $project->getValue('client', false);
+//        echo 'Current client.id = '.$clientId.'<br>';
+        
+//        
+//        $client = $project->getClient();
+//        echo 'Current client.id = '.$client->getId().'<br>';
+//        
+//        $agency = $project->getAgency();
+//        $projectManager = $project->getProjectManager();
+//        
+//        
+//        print_r($agency);
+        
+        
+//        $nId
+//        $sName
+//        $sDescription
+//        $nClientId
+//        $nAgencyId
+//        $nProjectManagerId
+        
+        //$project->getAgency()->getId() // --> getDirectValue (parameter?)
         
         
         
         
+//        
         
-        echo "</pre>";
         
-        die();
+//        echo "</pre>";
+//        
+//        die();
+        
+        // ---- einde verkapte unittest ----
         
         
         // load data
@@ -195,54 +248,6 @@ class ProjectsController
         
         // send
         return json_encode($response);
-        
-        
-        /*$nID = $request->get('id');
-        $sName = $request->get('name');
-        $sDescription = $request->get('description');
-        $nClientID = $request->get('client_id');
-        $nAgencyID = $request->get('agency_id');
-        $nProjectManagerID = $request->get('projectmanager_id');
-        
-        
-        if (!empty($nID) && !is_nan($nID))
-        {
-            $query = "
-                UPDATE
-                    projects
-                SET
-                    name='".$sName."',
-                    description='".$sDescription."',
-                    client_id='".$nClientID."',
-                    agency_id='".$nAgencyID."',
-                    projectmanager_id='".$nProjectManagerID."'
-                WHERE
-                    id='".$nID."'";
-        
-            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
-        }
-        else
-        {
-            $query = "
-                INSERT INTO
-                    projects
-                SET
-                    name='".$sName."',
-                    description='".$sDescription."',
-                    client_id='".$nClientID."',
-                    agency_id='".$nAgencyID."',
-                    projectmanager_id='".$nProjectManagerID."',
-                    created='".date('YmdHis')."'";
-        
-            $result = mysql_query($query) or die('Query failed: ' . mysql_error());
-        }
-        
-        
-        $response = (object) array();
-        $response->result = 'Ok!';
-        $response->name = $sName;
-        
-        return json_encode($response);*/
     }
     
     

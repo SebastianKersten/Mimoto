@@ -140,15 +140,16 @@ class MimotoEntity
     /**
      * Get value
      * @param string $sPropertyName
+     * @param boolean $bGetEntityInsteadOfRealValue Get entity instead of real value (default = true)
      * @return mixed
      */
-    public function getValue($sPropertyName)
+    public function getValue($sPropertyName, $bGetEntityInsteadOfRealValue = true)
     {
         // verify
         if (!$this->valueRelatesToEntity($sPropertyName)) return $this->_aCurrentValues[$sPropertyName];
         
-        
-        if (!is_nan($this->_aCurrentValues[$sPropertyName]) && $this->_aCurrentValues[$sPropertyName] > 0)
+        // check
+        if ($bGetEntityInsteadOfRealValue && $this->isValidEntityId($this->_aCurrentValues[$sPropertyName]))
         {
             // register
             $service = $this->_aValuesAsEntities[$sPropertyName]->service;
@@ -156,7 +157,7 @@ class MimotoEntity
             // load
             $entity = $service->getEntityById($this->_aCurrentValues[$sPropertyName]);
 
-            // register
+            // store
             $this->setValue($sPropertyName, $entity);
             
             // send
@@ -178,6 +179,7 @@ class MimotoEntity
         // register
         $preparedValue = $value;
         
+        
         // 1. is isEntity -> replace entity, replace ID from entoty in currentvalues
         // 2. if isString / isInt -> drop stored entity
         
@@ -198,14 +200,18 @@ class MimotoEntity
         {
             if ($this->valueRelatesToEntity($sPropertyName))
             {
-                echo "Different! ".$value."<br>";
-                
-                // 1. make sure this is an id!
-                // 2. if (different from currentValue) -> change
-                // 3. drop stroed entty
-                
-                // drop
-                //$this->storeValueAsEntity($sPropertyName, null);
+                if ($this->isValidEntityId($preparedValue))
+                {
+                    // retrieve
+                    $nEntityId = ($this->isEntity($this->_aCurrentValues[$sPropertyName])) ? $this->_aCurrentValues[$sPropertyName]->getId() : $this->_aCurrentValues[$sPropertyName];
+
+                    // check if change
+                    if ($preparedValue != $nEntityId)
+                    {
+                        // drop
+                        $this->storeValueAsEntity($sPropertyName, null);
+                    }
+                }
             }
         }
         
@@ -337,6 +343,11 @@ class MimotoEntity
     private function isEntity($value)
     {
         return ($value instanceof MimotoEntity);
+    }
+    
+    private function isValidEntityId($value)
+    {
+        return (!is_nan($value) && $value > 0);
     }
     
 }

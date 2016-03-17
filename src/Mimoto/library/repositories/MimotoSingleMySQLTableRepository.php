@@ -274,7 +274,7 @@ class MimotoSingleMySQLTableRepository extends MimotoRepository
         foreach ($this->_aProperties as $sPropertyName => $property)
         {
             // compose
-            $aQueryElements[] = $property->dbColumn.'="'.$entity->getValue($property->propertyName).'"';
+            $aQueryElements[] = $property->dbColumn.'="'.$entity->getValue($property->propertyName, false).'"';
         }
         
         // compose
