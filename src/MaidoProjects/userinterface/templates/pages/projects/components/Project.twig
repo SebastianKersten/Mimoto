@@ -1,12 +1,12 @@
-<div class="component_project" mls_id="project.{{ project.getId }}">
+<div class="component_project" mls_id="{{ project.getAimlessId }}">
     <div class="project_menu">
         <div class="button_small" onClick="Maido.data.changeEntity('project', {{ project.getId }});">Edit</div>
     </div>
     <div id="{{ project.getId }}" class="project_summary">
         
         <div class="project">
-            <div class="client_name"><span mls_value="client.{{ project.getClientId }}.name, project.{{ project.getId }}.clientName">{{ project.getClientName }}</span>{% if project.getAgencyName != empty %}<span class="agency_name"> - <span mls_value="agency.{{ project.getAgencyId }}.name, project.{{ project.getId }}.agencyName">{{ project.getAgencyName }}</span></span>{% endif %}</div>
-            <div class="project_name" mls_value="project.{{ project.getId }}.name">{{ project.getName|e }}</div>
+            <div class="client_name"><span mls_value="{{ project.getAimlessValue('client.name') }}">{{ project.getClient().getValue('name') }}</span>{% if project.getAgency() != empty %}<span class="agency_name"> - <span mls_value="agency.{{ project.getAgency().getId() }}.name, project.{{ project.getId }}.agencyName">{{ project.getAgency().getValue('name') }}</span></span>{% endif %}</div>
+            <div class="project_name" mls_value="{{ project.getAimlessValue('name') }}">{{ project.getName }}</div>
             <div class="button_small" onClick="Maido.toggleProjectState({{ project.getId }});">View details</div>
         </div>
         <div class="project_subinfo_container">
@@ -23,8 +23,8 @@
                 <div class="project_subinfo_key">Used</div>
             </div>
             <div class="project_subinfo">
-                <div class="projectmanager_avatar"><img src="/dynamic/avatars/avatar_{{ project.getProjectManagerId }}.jpg"></div>
-                <div class="projectmanager_name"><span mls_value="projectmanager.{{ project.getProjectManagerId }}.name, project.{{ project.getId }}.projectManagerName">{{ project.getProjectManagerName }}</span></div>
+                <div class="projectmanager_avatar"><img src="/dynamic/avatars/avatar_{{ project.getProjectManager.getId }}.jpg"></div>
+                <div class="projectmanager_name"><span mls_value="{{ project.getAimlessValue('projectmanager.name') }}">{{ project.getProjectManager.getName }}</span></div>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
             <div class="project_details_description">
                 <u>Project description</u><br>
                 <br>
-                <i><span mls_value="project.{{ project.getId }}.description">{{ project.getDescription|e }}</span></i>
+                <i><span mls_value="{{ project.getAimlessValue('description') }}">{{ project.getDescription }}</span></i>
             </div>
             <div class="project_details_subprojects">
                 {% if filter.request and project.getSubprojects.request|length > 0 %}

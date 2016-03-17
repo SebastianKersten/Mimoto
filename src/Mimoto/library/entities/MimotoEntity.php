@@ -16,37 +16,43 @@ class MimotoEntity
      * The entity's persistent values
      * @var array
      */
-    var $_aPersistentValues;
+    private $_aPersistentValues;
     
     /**
      * The entity's current values
      * @var array
      */
-    var $_aCurrentValues;
+    private $_aCurrentValues;
+    
+    /**
+     * The entity's values as entities
+     * @var array
+     */
+    private $_aValuesAsEntities;
     
     /**
      * Track change mode
      * @var boolean
      */
-    var $_bTrackChanges;
+    private $_bTrackChanges;
     
     /**
      * The entity's id
      * @var int 
      */
-    var $_nId = 0;
+    private $_nId = 0;
     
     /**
      * The entity's type
      * @var string 
      */
-    var $_sEntityType = '';
+    private $_sEntityType = '';
     
     /**
      * The moment of creation
      * @var datetime
      */
-    var $_datetimeCreated = 0;
+    private $_datetimeCreated = 0;
     
     
     
@@ -112,12 +118,13 @@ class MimotoEntity
         // init
         $this->_aPersistentValues = [];
         $this->_aCurrentValues = [];
+        $this->_aValuesAsEntities = [];
     }
     
     
     
     // ----------------------------------------------------------------------------
-    // --- Constructor-------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
@@ -132,27 +139,98 @@ class MimotoEntity
     
     /**
      * Get value
-     * @param string $sKey
+     * @param string $sPropertyName
      * @return mixed
      */
-    public function getValue($sKey)
+    public function getValue($sPropertyName)
     {
-        // load
-        return $this->_aCurrentValues[$sKey];
+        // verify
+        if (!$this->valueRelatesToEntity($sPropertyName)) return $this->_aCurrentValues[$sPropertyName];
+        
+        
+        if (!is_nan($this->_aCurrentValues[$sPropertyName]) && $this->_aCurrentValues[$sPropertyName] > 0)
+        {
+            // register
+            $service = $this->_aValuesAsEntities[$sPropertyName]->service;
+
+            // load
+            $entity = $service->getEntityById($this->_aCurrentValues[$sPropertyName]);
+
+            // register
+            $this->setValue($sPropertyName, $entity);
+            
+            // send
+            return $entity;
+        }
+        else
+        {
+            return $this->_aCurrentValues[$sPropertyName];
+        }
     }
     
     /**
      * Set value
-     * @param string $sKey
+     * @param string $sPropertyName
      * @param mixed $value
      */
-    public function setValue($sKey, $value)
+    public function setValue($sPropertyName, $value)
     {
-        // store
-        if (!$this->_bTrackChanges) { $this->_aPersistentValues[$sKey] = $value; }
+        // register
+        $preparedValue = $value;
+        
+        // 1. is isEntity -> replace entity, replace ID from entoty in currentvalues
+        // 2. if isString / isInt -> drop stored entity
+        
+        
+        // verify
+        if ($this->isEntity($value) && $this->valueRelatesToEntity($sPropertyName))
+        {
+            // register
+            $entity = $value;
+            
+            // overwrite
+            $preparedValue = $entity->getId();
+            
+            // store
+            $this->storeValueAsEntity($sPropertyName, $entity);
+        }
+        else
+        {
+            if ($this->valueRelatesToEntity($sPropertyName))
+            {
+                echo "Different! ".$value."<br>";
+                
+                // 1. make sure this is an id!
+                // 2. if (different from currentValue) -> change
+                // 3. drop stroed entty
+                
+                // drop
+                //$this->storeValueAsEntity($sPropertyName, null);
+            }
+        }
         
         // store
-        $this->_aCurrentValues[$sKey] = $value; 
+        if (!$this->_bTrackChanges) { $this->_aPersistentValues[$sPropertyName] = $preparedValue; }
+        
+        // store
+        $this->_aCurrentValues[$sPropertyName] = $preparedValue;
+    }
+    
+    /**
+     * Set entity delegate
+     * @param string $sPropertyName
+     * @param MimotoService $service
+     */
+    public function setValueAsEntityService($sPropertyName, $service)
+    {
+        // init
+        $valueAsEntity = (object) array();
+        
+        // setup
+        $valueAsEntity->service = $service;
+        
+        // store        
+        $this->_aValuesAsEntities[$sPropertyName] = $valueAsEntity;
     }
     
     /**
@@ -161,7 +239,6 @@ class MimotoEntity
      */
     public function getModifiedValues()
     {
-        
         // init
         $aModifiedValues = [];
         
@@ -189,6 +266,77 @@ class MimotoEntity
         {
             $this->_aPersistentValues[$sKey] = $this->_aCurrentValues[$sKey];
         }
+    }
+    
+    /**
+     * Get Aimless value of a property or subproperty
+     * @param type $sPropertyName
+     * @return string
+     */
+    public function getAimlessValue($sPropertyName)
+    {
+        // find
+        $nSeperatorPos = strpos($sPropertyName, '.');
+        
+        // separate
+        $sRemainingPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, $nSeperatorPos + 1) : '';
+        $sFirstPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, 0, $nSeperatorPos) : $sPropertyName;
+        
+        // compose
+        $sAimlessValue = $this->getEntityType().'.'.$this->getId().'.'.$sFirstPropertyName;
+        
+        // verify
+        if (!empty($sRemainingPropertyName) && $this->valueRelatesToEntity($sFirstPropertyName))
+        {
+            // load
+            $entity = $this->getValue($sFirstPropertyName);
+            
+            // compose
+            if ($this->isEntity($entity))
+            {
+                $sAimlessValue .= '['.$entity->getAimlessValue($sRemainingPropertyName).']';
+            }
+            else
+            {
+                $sAimlessValue .= '['.$sPropertyName.']';
+            }
+        }
+        
+        // send
+        return $sAimlessValue;
+    }
+    
+    /**
+     * Get Aimless id of an entity
+     * @return string
+     */
+    public function getAimlessId()
+    {
+        return $this->getEntityType().'.'.$this->getId();
+    }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    
+    private function valueRelatesToEntity($sPropertyName)
+    {
+        // verify and send
+        return (isset($this->_aValuesAsEntities[$sPropertyName]));
+    }
+    
+    private function storeValueAsEntity($sPropertyName, $entity)
+    {
+        $this->_aValuesAsEntities[$sPropertyName]->value = $entity;
+    }
+    
+    private function isEntity($value)
+    {
+        return ($value instanceof MimotoEntity);
     }
     
 }

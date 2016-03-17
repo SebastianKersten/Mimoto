@@ -2,30 +2,16 @@
     "trigger": "project.updated",
     "service": "LivescreenService",
     "request": "dataUpdate",
+    "type": "async",
     "config":
     {
-        "mapping":  
+        "properties":
         [
-            {
-                "property": "Name",
-                "valueName": "name"
-            },
-            {
-                "property": "Description",
-                "valueName": "description"
-            },
-            {
-                "property": "ClientName",
-                "valueName": "clientName"
-            },
-            {
-                "property": "AgencyName",
-                "valueName": "agencyName"
-            },
-            {
-                "property": "ProjectManagerName",
-                "valueName": "projectManagerName"
-            }
+            "name", 
+            "description", 
+            "client.name", 
+            "agency.name", 
+            "projectmanager.name"
         ]
     }
 }

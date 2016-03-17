@@ -3,6 +3,11 @@
 // classpath
 namespace MaidoProjects\Project;
 
+// Momkai classes
+use MaidoProjects\Client\Client;
+use MaidoProjects\Agency\Agency;
+use MaidoProjects\ProjectManager\ProjectManager;
+
 // Mimoto classes
 use Mimoto\library\entities\MimotoEntity;
 
@@ -14,32 +19,6 @@ use Mimoto\library\entities\MimotoEntity;
  */
 class Project extends MimotoEntity
 {
-    
-    /**
-     * The project's client's name
-     * @var string
-     */
-    var $_sClientName;
-    
-    /**
-     * The project's agency's name
-     * @var string
-     */
-    var $_sAgencyName;
-    
-    /**
-     * The project's project managers's name
-     * @var string
-     */
-    var $_sProjectManagerName;
-    
-    /**
-     * The project's subprojects
-     * @var array
-     */
-    var $_aSubprojects;
-    
-    
     
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
@@ -77,112 +56,48 @@ class Project extends MimotoEntity
     
     
     /**
-     * Get the project's client id
+     * Get the project's client
      * 
-     * @return int
+     * @return Client
      */
-    public function getClientId() { return parent::getValue('client_id'); }
+    public function getClient() { return parent::getValue('client'); }
     
     /**
-     * Set the project's client id
+     * Set the project's client
      * 
-     * @param int $nClientId The project's client id
+     * @param mixed $client The project's client
      */
-    public function setClientId($nClientId) { parent::setValue('client_id', $nClientId); }
-    
-    
-    /**
-     * Get the project's client's name
-     * 
-     * @return string
-     */
-    public function getClientName() { return $this->_sClientName; }
-    
-    /**
-     * Set the project's client's name
-     * 
-     * @param string $sClientName The project's client's name
-     */
-    public function setClientName($sClientName) { $this->_sClientName = $sClientName; }
+    public function setClient($client) { parent::setValue('client', $client); }
     
     
     /**
-     * Get the project's agency id
+     * Get the project's agency
      * 
-     * @return int
+     * @return Agency
      */
-    public function getAgencyId() { return parent::getValue('agency_id'); }
+    public function getAgency() { return parent::getValue('agency'); }
     
     /**
-     * Set the project's agency id
+     * Set the project's agency
      * 
-     * @param int $nAgencyId The project's agency id
+     * @param mixed $agency The project's agency
      */
-    public function setAgencyId($nAgencyId) { parent::setValue('agency_id', $nAgencyId); }
-    
-    
-    /**
-     * Get the project's agency's name
-     * 
-     * @return string
-     */
-    public function getAgencyName() { return $this->_sAgencyName; }
-    
-    /**
-     * Set the project's agency's name
-     * 
-     * @param string $sAgencyName The project's agency's name
-     */
-    public function setAgencyName($sAgencyName) { $this->_sAgencyName = $sAgencyName; }
+    public function setAgency($agency) { parent::setValue('agency', $agency); }
     
     
     /**
-     * Get the project's project manager id
+     * Get the project's project manager
      * 
-     * @return int
+     * @return ProjectManager
      */
-    public function getProjectManagerId() { return parent::getValue('projectmanager_id'); }
+    public function getProjectManager() { return parent::getValue('projectmanager'); }
     
     /**
-     * Set the project's project manager id
+     * Set the project's project manager
      * 
-     * @param int $nProjectManagerId The project's project manager id
+     * @param mixed $projectManager The project's project manager
      */
-    public function setProjectManagerId($nProjectManagerId) { parent::setValue('projectmanager_id', $nProjectManagerId); }
-    
-    
-    /**
-     * Get the project's project manager's name
-     * 
-     * @return string
-     */
-    public function getProjectManagerName() { return $this->_sProjectManagerName; }
-    
-    /**
-     * Set the project's project manager's name
-     * 
-     * @param string $sProjectManagerName The project's project manager's name
-     */
-    public function setProjectManagerName($sProjectManagerName) { $this->_sProjectManagerName = $sProjectManagerName; }
-    
-    
-    
-    // #todo - delegate
-    
-    
-    /**
-     * Get the project's subprojects
-     * 
-     * @return Array
-     */
-    public function getSubprojects() { return $this->_aSubprojects; }
-    
-     /**
-     * Set the project's subprojects
-     * 
-     * @param array $aSubprojects The project's subprojects
-     */
-    public function setSubprojects($aSubprojects) { $this->_aSubprojects = $aSubprojects; }
+    public function setProjectManager($projectManager) { parent::setValue('projectmanager', $projectManager); }
     
     
     
@@ -198,23 +113,6 @@ class Project extends MimotoEntity
     {
         // setup
         parent::__construct('project', $bTrackChanges);
-        
-        // default
-        parent::setValue('name', '');
-        parent::setValue('description', '');
-        parent::setValue('client_id', 0);// if entity, dan new Entity() met juiste values
-        parent::setValue('agency_id', 0);
-        parent::setValue('projectmanager_id', 0);
-        
-        
-        // ipv setClientId('') setClient 
-        // bij wijziging replace Client1 for Client2
-        
-//        subproperty mapping: 
-//            client.4
-//            client.7
-//        id en created ook wegschrijven in values array, want dat te 
-//        benaderen met simple property selectors als client.id
     }
     
 }

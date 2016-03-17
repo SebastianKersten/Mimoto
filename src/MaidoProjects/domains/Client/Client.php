@@ -30,21 +30,6 @@ class Client extends MimotoEntity
     public function setName($sName) { parent::setValue('name', $sName); }
     
     
-    /**
-     * Get the URL of the client's logo
-     * 
-     * @return string
-     */
-    public function getLogoURL() { return parent::getValue('logo_url'); }
-    
-    /**
-     * Set the URL of the client's logo
-     * 
-     * @param string $sLogoURL The URL of the client's logo
-     */
-    public function setLogoURL($sLogoURL) { parent::setValue('logo_url', $sLogoURL); }
-    
-    
     
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -58,10 +43,6 @@ class Client extends MimotoEntity
     {
         // setup
         parent::__construct('client', $bTrackChanges);
-        
-        // default
-        parent::setValue('name', '');
-        parent::setValue('logo_url', '');
     }
     
 }

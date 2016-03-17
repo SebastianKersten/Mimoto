@@ -27,9 +27,9 @@ class ProjectServiceProvider implements ServiceProviderInterface
                     new ProjectRepository(
                             $app['EventService'],
                             $app['SubprojectService'],
-                            $app['ProjectManagerService'],
                             $app['ClientService'],
-                            $app['AgencyService']
+                            $app['AgencyService'],
+                            $app['ProjectManagerService']
                         )
                 );
         });

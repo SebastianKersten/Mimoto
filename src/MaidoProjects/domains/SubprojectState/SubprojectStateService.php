@@ -7,24 +7,17 @@ namespace MaidoProjects\SubprojectState;
 use MaidoProjects\SubprojectState\SubprojectState;
 use MaidoProjects\SubprojectState\SubprojectStateException;
 
+// Mimoto classes
+use Mimoto\library\services\MimotoService;
+
 
 /**
  * SubprojectService
  *
  * @author Sebastian Kersten
  */
-class SubprojectStateService
+class SubprojectStateService extends MimotoService
 {
-    
-     // repositories
-    private $_SubprojectStateRepository;
-    
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
     
     /**
      * Constructor
@@ -32,7 +25,7 @@ class SubprojectStateService
     public function __construct($SubprojectStateRepository)
     {
         // register
-        $this->_SubprojectStateRepository = $SubprojectStateRepository;
+        $this->setMainRepository($SubprojectStateRepository);
     }
     
     
@@ -40,7 +33,6 @@ class SubprojectStateService
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
     
     
     /**
@@ -52,7 +44,7 @@ class SubprojectStateService
         // load
         try
         {
-            $subprojectState = $this->_SubprojectStateRepository->get($nId);
+            $subprojectState = $this->getMainRepository()->get($nId);
         }
         catch(SubprojectStateException $e)
         {
@@ -70,7 +62,7 @@ class SubprojectStateService
     public function getAllSubprojectStates()
     {   
          // load
-        $aSubprojectStates = $this->_SubprojectStateRepository->find();
+        $aSubprojectStates = $this->getMainRepository()->find();
         
         // send
         return $aSubprojectStates;
@@ -89,7 +81,7 @@ class SubprojectStateService
         $subprojectState->setName($sName);
         
         // store
-        $this->_SubprojectStateRepository->store($subprojectState);
+        $this->getMainRepository()->store($subprojectState);
     }
     
 }

@@ -7,24 +7,17 @@ namespace MaidoProjects\ProjectManager;
 use MaidoProjects\ProjectManager\ProjectManager;
 use MaidoProjects\ProjectManager\ProjectManagerException;
 
+// Mimoto classes
+use Mimoto\library\services\MimotoService;
+
 
 /**
  * ProjectManagerService
  *
  * @author Sebastian Kersten
  */
-class ProjectManagerService
+class ProjectManagerService extends MimotoService
 {
-    
-    // repositories
-    private $_ProjectManagerRepository;
-    
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
     
     /**
      * Constructor
@@ -32,7 +25,7 @@ class ProjectManagerService
     public function __construct($ProjectManagerRepository)
     {
         // register
-        $this->_ProjectManagerRepository = $ProjectManagerRepository;
+        $this->setMainRepository($ProjectManagerRepository);
     }
     
     
@@ -50,7 +43,7 @@ class ProjectManagerService
          // load
         try
         {
-            $projectManager = $this->_ProjectManagerRepository->get($nId);
+            $projectManager = $this->getMainRepository()->get($nId);
         }
         catch(ProjectManagerException $e)
         {
@@ -67,7 +60,7 @@ class ProjectManagerService
     public function getAllProjectManagers()
     {
         // load
-        $aProjectManagers = $this->_ProjectManagerRepository->find();
+        $aProjectManagers = $this->getMainRepository()->find();
         
         // send
         return $aProjectManagers;
@@ -86,7 +79,7 @@ class ProjectManagerService
         $projectManager->setName($sName);
         
         // store
-        $this->_ProjectManagerRepository->store($projectManager);
+        $this->getMainRepository()->store($projectManager);
     }
     
 }

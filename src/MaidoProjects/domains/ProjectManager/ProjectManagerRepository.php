@@ -31,12 +31,7 @@ class ProjectManagerRepository extends MimotoSingleMySQLTableRepository
         $this->setMySQLTable('projectmanagers');
         
         // connect
-        $this->setModelToMySQLTableMap(
-            [
-                (object) array('property' => 'id', 'dbcolumn' => 'id', 'primary' => true),
-                (object) array('property' => 'name', 'dbcolumn' => 'name')
-            ]
-        );
+        $this->setProperty('name', 'name', '');
     }
     
 }

@@ -142,38 +142,45 @@ class MimotoLivescreenService
         $data = (object) array();
         
         // setup
-        $data->type = 'livescreen'; // LivescreenMessage apart model)
         $data->entityId = $nEntityId;
         $data->entityType = $sEntityType;
         
-        
+        // init
         $data->values = array();
-        
+        $aModifiedValues = $entity->getModifiedValues();
         
         // verify
-        if (isset($config->mapping))
+        if (isset($config->properties))
         {
 
             // register
-            $mapping = $config->mapping;
-            $nMappingCount = count($mapping);
+            $aConfigProperties = $config->properties;
+            $nConfigPropertyCount = count($aConfigProperties);
 
-
+            
             // load properties
-            for ($nMappingIndex = 0; $nMappingIndex < $nMappingCount; $nMappingIndex++)
+            for ($nConfigPropertyIndex = 0; $nConfigPropertyIndex < $nConfigPropertyCount; $nConfigPropertyIndex++)
             {
                 // read
-                $map = $mapping[$nMappingIndex];
-
-                // prepare
-                $getter = 'get'.$map->property;
+                $sPropertyName = $aConfigProperties[$nConfigPropertyIndex];
                 
-                $data->values[$map->valueName] = $entity->$getter();
+                // register modified value
+                if (isset($aModifiedValues[$sPropertyName]))
+                {
+                    $data->values[$sPropertyName] = $entity->getValue($sPropertyName);
+                }
             }
         }
-
-        $this->sendPusherEvent('livescreen', 'data.update', $data);
+        
+        
+        // 1. dit gaat via async, het is efficienter om de rest af te handelen via deze directe route (denk aan "modified")
+        // 2. handel eerst alles rondom de nieuwe data af!
+        
+        
+        if (!empty($data->values)) { $this->sendPusherEvent('Aimless', 'data.update', $data); }
+        
         //$this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
+        //$this->sendPusherEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));
     }
     
     /**
@@ -208,22 +215,32 @@ class MimotoLivescreenService
     private function sendPusherEvent($sChannel, $sEvent, $data)
     {
         
-        require_once('pusher.php');
-        
-        $options = array(
-            'cluster' => 'eu',
-            'encrypted' => true
-        );
-
-        $pusher = new \Pusher(
-            '55152f70c4cec27de21d',
-            '7e72297e347e339cd241',
-            '185150',
-            $options
-        );
+//        require_once('pusher.php');
+//        
+//        $options = array(
+//            'cluster' => 'eu',
+//            'encrypted' => true
+//        );
+//
+//        $pusher = new \Pusher(
+//            '55152f70c4cec27de21d',
+//            '7e72297e347e339cd241',
+//            '185150',
+//            $options
+//        );
 
         //$data['message'] = $sMessage;
-        $pusher->trigger($sChannel, $sEvent, $data);
+//        $pusher->trigger($sChannel, $sEvent, $data);
+        
+        
+        $client= new \GearmanClient();
+        $client->addServer();
+        
+        $result = $client->doBackground("sendUpdate", json_encode(array(
+            'sChannel' => $sChannel,
+            'sEvent' => $sEvent,
+            'data' => $data
+        )));
     }
     
 }

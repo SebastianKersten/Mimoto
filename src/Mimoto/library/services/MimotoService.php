@@ -1,7 +1,11 @@
 <?php
 
 // classpath
-namespace Mimoto\Service;
+namespace Mimoto\library\services;
+
+// Mimoto classes
+use Mimoto\library\entities\MimotoEntity;
+use Mimoto\library\repositories\MimotoRepository;
 
 
 /**
@@ -12,87 +16,59 @@ namespace Mimoto\Service;
 class MimotoService
 {
     
-    /**
-     * The entity's type
-     * @var string 
-     */
-    var $_sEntityType;
+    // repositories
+    private $_mainRepository;
     
     
     
     // ----------------------------------------------------------------------------
-    // --- Properties--------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
     /**
-     * Get the entity's type
-     * 
-     * @return string
+     * Set main repository
+     * @param MimotoRepository $repository
      */
-    public function getEntityType() { return $this->_sEntityType; }
-    
-    
-    /**
-     * Get the entity's id
-     * 
-     * @return int
-     */
-    public function getId() { return $this->_nId; }
-    
-    /**
-     * Set the entity's id
-     * 
-     * @param int $nId The entity's id
-     */
-    public function setId($nId) { $this->_nId = $nId; }
-    
-    
-    /**
-     * Get the moment of creation
-     * 
-     * @return datetime
-     */
-    public function getCreated() { return $this->_datetimeCreated; }
-    
-    /**
-     * Set the moment of creation
-     * 
-     * @param datetime $datetimeCreated The moment of creation
-     */
-    public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
-    
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Constructor-------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
-    
-    /**
-     * Constructor
-     * @param string $sEntityType
-     */
-    public function __construct($sEntityType)
+    public function setMainRepository(MimotoRepository $repository)
     {
-        // register
-        $this->_sEntityType = $sEntityType;
+        // store
+        $this->_mainRepository = $repository;
+    }
+    
+    /**
+     * Get main repository
+     * @return MimotoRepository
+     */
+    public function getMainRepository()
+    {
+        return $this->_mainRepository;
     }
     
     
     
     // ----------------------------------------------------------------------------
-    // --- Public function --------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
     /**
-     * Constructor
-     * @param string $sEntityType
+     * Get entity by id from main repository
+     * @param int $nId
+     * @return MimotoEntity The entity
      */
     public function getEntityById($nId)
     {
-        // register
-        $this->_sEntityType = $sEntityType;
+        return $this->_mainRepository->get($nId);
     }
+    
+    /**
+     * Store entity via main repository
+     * @param MimotoEntity $entoty
+     */
+    public function storeEntity(MimotoEntity $entity)
+    {
+        $this->_mainRepository->store($entity);
+    }
+    
 }

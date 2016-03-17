@@ -7,23 +7,17 @@ namespace MaidoProjects\Project;
 use MaidoProjects\Project\Project;
 use MaidoProjects\Project\ProjectException;
 
+// Mimoto classes
+use Mimoto\library\services\MimotoService;
+
 
 /**
  * ProjectService
  *
  * @author Sebastian Kersten
  */
-class ProjectService
+class ProjectService extends MimotoService
 {
-    
-    // repositories
-    private $_ProjectRepository;
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
     
     /**
      * Contructor
@@ -31,8 +25,8 @@ class ProjectService
      */
     public function __construct($ProjectRepository)
     {   
-        // register repositories
-        $this->_ProjectRepository = $ProjectRepository;
+        // register
+        $this->setMainRepository($ProjectRepository);
     }
     
     
@@ -50,7 +44,7 @@ class ProjectService
         // load
         try
         {
-            $project = $this->_ProjectRepository->get($nId);
+            $project = $this->getMainRepository()->get($nId);
         }
         catch(ProjectException $e)
         {
@@ -67,7 +61,7 @@ class ProjectService
     public function getAllProjects()
     {
         // load
-        $aProjects = $this->_ProjectRepository->find();
+        $aProjects = $this->getMainRepository()->find();
         
         // send
         return $aProjects;
@@ -78,20 +72,18 @@ class ProjectService
      */
     public function storeProject($nId, $sName, $sDescription, $nClientId, $nAgencyId, $nProjectManagerId)
     {
-        
-        // init
-        $project = new Project();
+        // load or create
+        $project = (!is_nan($nId) && $nId > 0) ? $this->getMainRepository()->get($nId) : $this->getMainRepository()->create();
         
         // register
-        $project->setId($nId);
         $project->setName($sName);
         $project->setDescription($sDescription);
-        $project->setClientId($nClientId);
-        $project->setAgencyId($nAgencyId);
-        $project->setProjectManagerId($nProjectManagerId);
+        $project->setClient($nClientId);
+        $project->setAgency($nAgencyId);
+        $project->setProjectManager($nProjectManagerId);
         
         // store
-        $this->_ProjectRepository->store($project);
+        $this->getMainRepository()->store($project);
     }
     
 }

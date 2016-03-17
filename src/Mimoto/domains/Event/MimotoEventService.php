@@ -53,12 +53,30 @@ class MimotoEventService
     // ----------------------------------------------------------------------------
     
     
+    public function handleEvent()
+    {
+        
+        // 1. handle async or direct events
+        
+        
+//        $client= new \GearmanClient();
+//        $client->addServer();
+//        
+//        $result = $client->doBackground("sendUpdate", json_encode(array(
+//            'sChannel' => $sChannel,
+//            'sEvent' => $sEvent,
+//            'data' => $data
+//        )));
+    }
+    
+    
+    
     /**
      * Send update
      * @param string $sEvent
      * @param event $event
      */
-    public function sendUpdate($sEvent, $event)
+    public function sendUpdate($sEvent, $event) // 1. rename to async, or rewire
     {
         
         // broadcast to system

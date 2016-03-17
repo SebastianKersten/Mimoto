@@ -1,10 +1,11 @@
 /**
- * Mimoto Livescreen
+ * Mimoto's Aimless - Livescreen protocol
  * 
  * @author Sebastian Kersten
  */
 
-MimotoLivescreen = {};
+if (typeof Mimoto == "undefined") Mimoto = {};
+Mimoto.Aimless = {};
 
 
 // #todo - scrollpos correctie!
@@ -14,7 +15,7 @@ MimotoLivescreen = {};
 //subcomponents
 //values / fields
 
-MimotoLivescreen.connect = function()
+Mimoto.Aimless.connect = function()
 {
     
     // Enable pusher logging - don't include this in production
@@ -28,7 +29,7 @@ MimotoLivescreen.connect = function()
     });
 
 
-    var channel = pusher.subscribe('livescreen');
+    var channel = pusher.subscribe('Aimless');
 
     channel.bind('data.update', function(data) // update, create, remove (, read?)
     {
@@ -37,7 +38,14 @@ MimotoLivescreen.connect = function()
         
         
         // --- value level ---
-        console.log('data.update');
+        
+        
+        console.clear();
+        
+        
+        console.log('Aimless - data.update');
+        console.log(data);
+        
         // check
         if (data.values)
         {
@@ -57,13 +65,14 @@ MimotoLivescreen.connect = function()
                 {
                     // compose
                     var sFieldIdentifier = sEntityIdentifier + '.' + sField;
-
+                    
                     // check
                     var bValueWasFound = false;
                     for (var i = 0; i < nValuePartCount; i++)
                     {
                         
                         console.log(aValueParts[i].trim() + ' === ' + sFieldIdentifier + ' ?');
+                        
                         // verify
                         if (aValueParts[i].trim() === sFieldIdentifier)
                         {
@@ -164,7 +173,7 @@ MimotoLivescreen.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/livescreen/' + data.entityType + '/' + data.entityId + '/' + mls_childtemplate,
+                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_childtemplate,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -202,10 +211,10 @@ MimotoLivescreen.connect = function()
 
 }
 
-MimotoLivescreen.updateComponent = function(ajax, dom)
+Mimoto.Aimless.updateComponent = function(ajax, dom)
 {
     
 }
 
-MimotoLivescreen.connect();
+Mimoto.Aimless.connect();
 

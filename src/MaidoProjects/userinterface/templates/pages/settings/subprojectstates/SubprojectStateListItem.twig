@@ -2,13 +2,13 @@
     include "components/data/simplelist_item.twig"
     with 
     {
-        id                  : subprojectstate.getId, 
-        label               : subprojectstate.getName,
+        id                  : subprojectState.getId, 
+        label               : subprojectState.getName,
         
-        entityType          : subprojectstate.getEntityType,
+        entityType          : subprojectState.getEntityType,
         
-        mls_id              : subprojectstate.getEntityType~'.'~subprojectstate.getId, 
-        mls_value__label    : subprojectstate.getEntityType~'.'~subprojectstate.getId~'.name',
+        mls_id              : subprojectState.getAimlessId(), 
+        mls_value__label    : subprojectState.getAimlessValue('name'),
         mls_template        : 'SubprojectStateListItem'
     }
 %}

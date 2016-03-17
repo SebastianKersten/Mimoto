@@ -1,5 +1,6 @@
 {
     "trigger": "*.created",
     "service": "LivescreenService",
-    "request": "dataCreate"
+    "request": "dataCreate",
+    "type": "async"
 }

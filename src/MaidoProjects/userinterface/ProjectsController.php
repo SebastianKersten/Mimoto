@@ -55,17 +55,25 @@ class ProjectsController
         }
         
         
+        echo "<pre>";
+
+        $project = $app['ProjectService']->getEntityById(3);
+        
+        $project->setClient(3);
+        
+        
+        
+        
+        
+        echo "</pre>";
+        
+        die();
+        
+        
         // load data
         $aProjects = $app['ProjectService']->getAllProjects();
         
-        //echo "<pre>";
-        //print_r($aProjects);
-        //echo "</pre>";
-        //die();
-        
-        
-        
-        
+        // output
         return $app['twig']->render(
             'interface.twig',
             array(

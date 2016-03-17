@@ -30,21 +30,6 @@ class ProjectManager extends MimotoEntity
     public function setName($sName) { parent::setValue('name', $sName); }
     
     
-    /**
-     * Get the URL of the project manager's avatar
-     * 
-     * @return string
-     */
-    public function getAvatarURL() { return parent::getValue('avatar_url'); }
-    
-    /**
-     * Set the URL of the project manager's avatar
-     * 
-     * @param string $sAvatarURL The URL of the project manager's avatar
-     */
-    public function setAvatarURL($sAvatarURL) { parent::setValue('avatar_url', $sAvatarURL); }
-    
-    
     
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -58,10 +43,6 @@ class ProjectManager extends MimotoEntity
     {
         // setup
         parent::__construct('projectmanager', $bTrackChanges);
-        
-        // default
-        parent::setValue('name', '');
-        parent::setValue('avatar_url', '');
     }
     
 }

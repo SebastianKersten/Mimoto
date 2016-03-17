@@ -5,6 +5,8 @@
     <div class="filter_option"><input type="checkbox" value="archived" {% if filter.archived %}checked{% endif %}>Archived</div>
 </div>
 <br>
+<div mls_container="project" mls_childtemplate="Project">
 {% for project in projects %}
     {% include 'pages/projects/components/Project.twig' with { 'project':project } %}
 {% endfor %}
+</div>

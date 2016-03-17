@@ -3,50 +3,65 @@
 // classpath
 namespace Mimoto\library\repositories;
 
+// Mimoto classes
+use Mimoto\library\repositories\MimotoRepository;
+use Mimoto\library\services\MimotoService;
+
 
 /**
  * MimotoSingleMySQLTableRepository
  *
  * @author Sebastian Kersten
  */
-class MimotoSingleMySQLTableRepository
+class MimotoSingleMySQLTableRepository extends MimotoRepository
 {
     
     /**
      * The EventService
      * @var class
      */
-    var $_EventService;
+    protected $_EventService;
     
     /**
      * The class that defines the model
      * @var class
      */
-    var $_modelClass;
+    protected $_modelClass;
     
     /**
      * The class that defines the model's exceptions
      * @var class
      */
-    var $_modelExceptionClass;
+    protected $_modelExceptionClass;
     
     /**
      * The class that defines the model's event
      * @var class
      */
-    var $_modelEventClass;
+    protected $_modelEventClass;
     
     /**
      * The MySQL table
      * @var string
      */
-    var $_sMySQLTable;
+    protected $_sMySQLTable;
     
     /**
      * The 'model to MySQL table' map
      * @var array
      */
-    var $_aModelToMySQLTableMap;
+    protected $_aProperties;
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Constants --------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    // property types
+    const PROPERTY_TYPE_VALUE = 'property.type.value';
+    const PROPERTY_TYPE_ENTITY = 'property.type.entity';
     
     
     
@@ -88,7 +103,7 @@ class MimotoSingleMySQLTableRepository
      * 
      * @param array $aModelToMySQLTableMap
      */
-    protected function setModelToMySQLTableMap($aModelToMySQLTableMap) { $this->_aModelToMySQLTableMap = $aModelToMySQLTableMap; }
+    protected function setModelToMySQLTableMap($aModelToMySQLTableMap) { $this->_aProperties = $aModelToMySQLTableMap; }
     
     
     
@@ -110,9 +125,74 @@ class MimotoSingleMySQLTableRepository
     
     
     // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
+    // --- Protected methods - setup usage ----------------------------------------
     // ----------------------------------------------------------------------------
     
+    
+    /**
+     * Set property
+     * @param string $sPropertyName
+     * @param string $sDBColumn
+     * @param mixed $defaultValue
+     */
+    protected function setProperty($sPropertyName, $sDBColumn, $defaultValue)
+    {
+        // init
+        $property = (object) array();
+            
+        // setup
+        $property->type = self::PROPERTY_TYPE_VALUE;
+        $property->propertyName = $sPropertyName;
+        $property->dbColumn = $sDBColumn;
+        $property->defaultValue = $defaultValue;
+         
+        // store
+        $this->_aProperties[$sPropertyName] = $property;
+    }
+    
+    /**
+     * Set entity as property
+     * @param string $sPropertyName
+     * @param string $sDBColumn
+     * @param mixed $defaultValue
+     * @param string $sEntityAsPropertyName
+     * @param MimotoService $entityService
+     */
+    protected function setEntityAsProperty($sPropertyName, $sDBColumn, $defaultValue, MimotoService $entityService = null)
+    {
+        // init
+        $property = (object) array();
+            
+        // setup
+        $property->type = self::PROPERTY_TYPE_ENTITY;
+        $property->propertyName = $sPropertyName;
+        $property->dbColumn = $sDBColumn;
+        $property->defaultValue = $defaultValue;
+        $property->entityService = $entityService;
+         
+        // store
+        $this->_aProperties[$sPropertyName] = $property;
+    }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods - runtime usage -----------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Create new entity
+     * @return ModelClass
+     */
+    public function create()
+    {
+        // init
+        $entity = new $this->_modelClass();
+        
+        // send
+        return $entity;
+    }
     
     /**
      * Get single entity by id
@@ -190,18 +270,20 @@ class MimotoSingleMySQLTableRepository
         $sQuery .= ' '.$this->_sMySQLTable." SET ";
         
         // load properties
-        for ($i = 0; $i < count($this->_aModelToMySQLTableMap); $i++)
+        $aQueryElements = [];
+        foreach ($this->_aProperties as $sPropertyName => $property)
         {
-            // read
-            $map = $this->_aModelToMySQLTableMap[$i];
-            
-            // skip primary onCreate
-            if (!$bIsExistingEntity && isset($map->primary) && $map->primary) continue;
-            
             // compose
-            $sQuery .= $map->dbcolumn.'="'.$entity->getValue($map->property).'"';
-            if ($i < count($this->_aModelToMySQLTableMap) - 1) { $sQuery .= ','; }
+            $aQueryElements[] = $property->dbColumn.'="'.$entity->getValue($property->propertyName).'"';
         }
+        
+        // compose
+        for ($i = 0; $i < count($aQueryElements); $i++)
+        {
+            $sQuery .= $aQueryElements[$i];
+            if ($i < count($aQueryElements) - 1) { $sQuery .= ','; }
+        }
+        
         
         // compose
         if ($bIsExistingEntity)
@@ -215,10 +297,6 @@ class MimotoSingleMySQLTableRepository
         
         // execute
         mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        
-        
-        // update
-        $entity->markModifiedValuesAsPersistent();
         
         
         
@@ -246,6 +324,14 @@ class MimotoSingleMySQLTableRepository
         
         // broadcast
         $this->_EventService->sendUpdate($event->getType(), $event);
+        
+        
+        
+        // --- finish up ---
+        
+        
+        // update
+        $entity->markModifiedValuesAsPersistent();
     }
     
     
@@ -270,14 +356,42 @@ class MimotoSingleMySQLTableRepository
         $entity->setId(mysql_result($mysqlResult, $nIndex, 'id'));
         $entity->setCreated(mysql_result($mysqlResult, $nIndex, 'created'));
         
+        
         // load properties
-        for ($i = 0; $i < count($this->_aModelToMySQLTableMap); $i++)
+        foreach ($this->_aProperties as $sPropertyName => $property)
         {
-            // read
-            $map = $this->_aModelToMySQLTableMap[$i];
+            // load
+            $value = mysql_result($mysqlResult, $nIndex, $property->dbColumn);
             
-            // register
-            $entity->setValue($map->property, mysql_result($mysqlResult, $nIndex, $map->dbcolumn));
+            
+            switch($property->type)
+            {
+                case self::PROPERTY_TYPE_VALUE:
+                    
+                    // register primary entity data
+                    $entity->setValue($property->propertyName, $value);
+                    break;
+                
+                case self::PROPERTY_TYPE_ENTITY:
+                    
+                    // register primary entity data
+                    $entity->setValue($property->propertyName, $value);
+                    
+                    // register entity delegate
+                    $entity->setValueAsEntityService($property->propertyName, $property->entityService);
+                    
+                    break;
+                
+                default:
+                    
+                    echo 'Property type "'.$property->type.'"unknow in MimotoSingleMySQLTableRepository';
+                    
+                    echo "<pre>";
+                    print_r($this);
+                    echo "</pre>";
+                    
+                    die();
+            }
         }
         
         // start tracking changes

@@ -7,24 +7,17 @@ namespace MaidoProjects\Subproject;
 use MaidoProjects\Subproject\Subproject;
 use MaidoProjects\Subproject\SubprojectException;
 
+// Mimoto classes
+use Mimoto\library\services\MimotoService;
+
 
 /**
  * SubprojectService
  *
  * @author Sebastian Kersten
  */
-class SubprojectService
+class SubprojectService extends MimotoService
 {
-    
-     // repositories
-    private $_SubprojectRepository;
-    
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
     
     /**
      * Constructor
@@ -32,7 +25,7 @@ class SubprojectService
     public function __construct($SubprojectRepository)
     {
         // register
-        $this->_SubprojectRepository = $SubprojectRepository;
+        $this->setMainRepository($SubprojectRepository);
     }
     
     
@@ -51,7 +44,7 @@ class SubprojectService
         // load
         try
         {
-            $subproject = $this->_SubprojectRepository->get($nId);
+            $subproject = $this->getMainRepository()->get($nId);
         }
         catch(SubprojectException $e)
         {
@@ -74,7 +67,7 @@ class SubprojectService
         $criteria->setProjectId($nProjectId);
         
         // load
-        $aSubprojects = $this->_SubprojectRepository->find($criteria);
+        $aSubprojects = $this->getMainRepository()->find($criteria);
         
         // send
         return $aSubprojects;
@@ -86,7 +79,7 @@ class SubprojectService
     public function storeSubproject($nId, $sName)
     {
         // store
-        $this->_SubprojectRepository->store($nId, $sName);
+        $this->getMainRepository()->store($nId, $sName);
     }
     
 }

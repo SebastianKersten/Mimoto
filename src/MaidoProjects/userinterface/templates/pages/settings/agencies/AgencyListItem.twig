@@ -7,8 +7,8 @@
         
         entityType          : agency.getEntityType,
         
-        mls_id              : agency.getEntityType~'.'~agency.getId, 
-        mls_value__label    : agency.getEntityType~'.'~agency.getId~'.name',
+        mls_id              : agency.getAimlessId(), 
+        mls_value__label    : agency.getAimlessValue('name'),
         mls_template        : 'AgencyListItem'
     }
 %}

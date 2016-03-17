@@ -31,11 +31,7 @@ class AgencyRepository extends MimotoSingleMySQLTableRepository
         $this->setMySQLTable('agencies');
         
         // connect
-        $this->setModelToMySQLTableMap(
-            [
-                (object) array('property' => 'name', 'dbcolumn' => 'name')
-            ]
-        );
+        $this->setProperty('name', 'name', '');
     }
     
 }

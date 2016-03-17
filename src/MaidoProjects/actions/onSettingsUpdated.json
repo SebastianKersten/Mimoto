@@ -2,14 +2,12 @@
     "trigger": ["client.updated", "agency.updated", "projectmanager.updated", "subprojectstate.updated"],
     "service": "LivescreenService",
     "request": "dataUpdate",
+    "type": "async",
     "config":
     {
-        "mapping":  
+        "properties":
         [
-            {
-                "property": "Name",
-                "valueName": "name"
-            }
+            "name"
         ]
     }
 }

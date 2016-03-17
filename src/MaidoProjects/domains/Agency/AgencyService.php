@@ -7,24 +7,17 @@ namespace MaidoProjects\Agency;
 use MaidoProjects\Agency\Agency;
 use MaidoProjects\Agency\AgencyException;
 
+// Mimoto classes
+use Mimoto\library\services\MimotoService;
+
 
 /**
  * AgencyService
  *
  * @author Sebastian Kersten
  */
-class AgencyService
+class AgencyService extends MimotoService
 {
-    
-    // repositories
-    private $_AgencyRepository;
-    
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
     
     /**
      * Constructor
@@ -32,7 +25,7 @@ class AgencyService
     public function __construct($AgencyRepository)
     {
         // register
-        $this->_AgencyRepository = $AgencyRepository;
+        $this->setMainRepository($AgencyRepository);
     }
     
     
@@ -50,7 +43,7 @@ class AgencyService
         // load
         try
         {
-            $agency = $this->_AgencyRepository->get($nId);
+            $agency = $this->getMainRepository()->get($nId);
         }
         catch(AgencyException $e)
         {
@@ -67,7 +60,7 @@ class AgencyService
     public function getAllAgencies()
     {
         // load
-        $aAgencies = $this->_AgencyRepository->find();
+        $aAgencies = $this->getMainRepository()->find();
         
         // send
         return $aAgencies;
@@ -87,7 +80,7 @@ class AgencyService
         $agency->setName($sName);
         
         // store
-        $this->_AgencyRepository->store($agency);
+        $this->getMainRepository()->store($agency);
     }
     
 }

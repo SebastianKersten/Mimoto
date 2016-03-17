@@ -7,24 +7,17 @@ namespace MaidoProjects\Client;
 use MaidoProjects\Client\Client;
 use MaidoProjects\Client\ClientException;
 
+// Mimoto classes
+use Mimoto\library\services\MimotoService;
+
 
 /**
  * ClientService
  *
  * @author Sebastian Kersten
  */
-class ClientService
+class ClientService extends MimotoService
 {
-    
-    // repositories
-    private $_ClientRepository;
-    
-    
-    
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-    
     
     /**
      * Constructor
@@ -32,7 +25,7 @@ class ClientService
     public function __construct($ClientRepository)
     {
         // register
-        $this->_ClientRepository = $ClientRepository;
+        $this->setMainRepository($ClientRepository);
     }
     
     
@@ -50,7 +43,7 @@ class ClientService
         // load
         try
         {
-            $client = $this->_ClientRepository->get($nId);
+            $client = $this->getMainRepository()->get($nId);
         }
         catch(ClientException $e)
         {
@@ -67,7 +60,7 @@ class ClientService
     public function getAllClients()
     {
         // load
-        $aClients = $this->_ClientRepository->find();
+        $aClients = $this->getMainRepository()->find();
         
         // send
         return $aClients;
@@ -78,16 +71,14 @@ class ClientService
      */
     public function storeClient($nId, $sName)
     {
-        
-        // init
-        $client = new Client();
+        // load or create
+        $client = (!is_nan($nId) && $nId > 0) ? $this->getMainRepository()->get($nId) : $this->getMainRepository()->create();
         
         // register
-        $client->setId($nId);
         $client->setName($sName);
         
         // store
-        $this->_ClientRepository->store($client); // #todo - returns new client?
+        $this->getMainRepository()->store($client); // #todo - returns new client?
     }
     
 }

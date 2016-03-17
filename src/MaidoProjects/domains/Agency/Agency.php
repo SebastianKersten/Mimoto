@@ -43,9 +43,6 @@ class Agency extends MimotoEntity
     {
         // setup
         parent::__construct('agency', $bTrackChanges);
-        
-        // default
-        parent::setValue('name', '');
     }
     
 }

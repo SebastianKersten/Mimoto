@@ -7,8 +7,8 @@
         
         entityType          : client.getEntityType,
         
-        mls_id              : client.getEntityType~'.'~client.getId, 
-        mls_value__label    : client.getEntityType~'.'~client.getId~'.name',
+        mls_id              : client.getAimlessId(), 
+        mls_value__label    : client.getAimlessValue('name'),
         mls_template        : 'ClientListItem'
     }
 %}
