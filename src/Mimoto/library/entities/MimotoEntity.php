@@ -296,27 +296,27 @@ class MimotoEntity
         $nSeperatorPos = strpos($sPropertyName, '.');
         
         // separate
-        $sRemainingPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, $nSeperatorPos + 1) : '';
-        $sFirstPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, 0, $nSeperatorPos) : $sPropertyName;
+        $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, 0, $nSeperatorPos) : $sPropertyName;
+        $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, $nSeperatorPos + 1) : '';
         
         // compose
-        $sAimlessValue = MimotoLiveScreenUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sFirstPropertyName);
+        $sAimlessValue = MimotoLiveScreenUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sMainPropertyName);
         
         // verify
-        if (!empty($sRemainingPropertyName) && $this->valueRelatesToEntity($sFirstPropertyName))
+        if (!empty($sSubPropertyName) && $this->valueRelatesToEntity($sMainPropertyName))
         {
             // load
-            $entity = $this->getValue($sFirstPropertyName);
+            $entity = $this->getValue($sMainPropertyName);
             
             // compose
             if (MimotoEntityUtils::isEntity($entity))
             {
                 
-                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalue($entity->getEntityType(), $entity->getId(), $sRemainingPropertyName);
+                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalue($sMainPropertyName, $entity->getId(), $sSubPropertyName);
             }
             else
             {
-                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalueWithoutId($entity->getEntityType(), $sRemainingPropertyName);
+                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalueWithoutId($sMainPropertyName, $sSubPropertyName);
             }
         }
         

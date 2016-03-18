@@ -1,14 +1,14 @@
 <?php
 
 // classpath
-namespace Mimoto\Livescreen;
+namespace Mimoto\LiveScreen;
 
 // Silex classes
 use Silex\Application;
 
 
 /**
- * MimotoLivescreenController
+ * MimotoLiveScreenController
  *
  * @author Sebastian Kersten
  */

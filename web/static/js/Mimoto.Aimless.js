@@ -1,5 +1,5 @@
 /**
- * Mimoto's Aimless - Livescreen protocol
+ * Aimless - Mimoto's LiveScreen protocol
  * 
  * @author Sebastian Kersten
  */
@@ -46,6 +46,23 @@ Mimoto.Aimless.connect = function()
         console.log('Aimless - data.update');
         console.log(data);
         
+        
+        // {project.3.client}[client.7.name]
+        // -> client.7.name changes from 'aaa' to 'bbb' - mls_value: blijft gelijk
+        // -> project.3.client changes from '1' to (unset) - mls_value: project.3.client=client.name
+        // 
+        // 
+        // mls_value="project.3.client[client.name]
+        // 
+        // project.3.client[name]
+        // 
+        // subentity.name 
+        // 
+        // {project.3.client}[client.name]
+        
+        
+        
+        
         // check
         if (data.values)
         {
@@ -56,7 +73,9 @@ Mimoto.Aimless.connect = function()
             {
                 // read
                 var mls_value = $($component).attr("mls_value");
-
+                
+                console.log('mls_value = ' + mls_value);
+                
                 // prepare
                 var aValueParts = mls_value.split(',');
                 var nValuePartCount = aValueParts.length;

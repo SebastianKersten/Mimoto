@@ -5,7 +5,7 @@
     <div id="{{ project.getId }}" class="project_summary">
         
         <div class="project">
-            <div class="client_name"><span mls_value="{{ project.getAimlessValue('client.name') }}">{{ project.getClient().getValue('name') }}</span>{% if project.getAgency() != empty %}<span class="agency_name"> - <span mls_value="agency.{{ project.getAgency().getId() }}.name, project.{{ project.getId }}.agencyName">{{ project.getAgency().getValue('name') }}</span></span>{% endif %}</div>
+            <div class="client_name"><span mls_value="{{ project.getAimlessValue('client.name') }}">{{ project.getClient().getValue('name') }}</span>{% if project.getAgency() != empty %}<span class="agency_name"> - <span mls_value="{{ project.getAimlessValue('agency.name') }}">{{ project.getAgency().getValue('name') }}</span></span>{% endif %}</div>
             <div class="project_name" mls_value="{{ project.getAimlessValue('name') }}">{{ project.getName }}</div>
             <div class="button_small" onClick="Maido.toggleProjectState({{ project.getId }});">View details</div>
         </div>
