@@ -148,7 +148,7 @@ class MimotoLiveScreenService
         $data->entityType = $sEntityType;
         
         // init
-        $data->values = array();
+        $data->updated = array();
         $aModifiedValues = $entity->getModifiedValues();        
         
         // verify
@@ -183,7 +183,7 @@ class MimotoLiveScreenService
                 
                 // compose
                 $valueForBroadcast->value = $entity->getValue($sMainPropertyName);
-                $valueForBroadcast->mls_value = MimotoLiveScreenUtils::formatAimlessValue($entity->getEntityType(), $entity->getId(), $sMainPropertyName);
+                $valueForBroadcast->property = $sPropertyName;
                 
 
                 // verify
@@ -192,22 +192,32 @@ class MimotoLiveScreenService
                     // load
                     $subentity = $entity->getValue($sMainPropertyName);
                     
+                    // init
+                    $valueForBroadcast->origin = (object) array();
+                    
                     // validate
                     if (MimotoEntityUtils::isEntity($subentity))
                     {
-                        
                         // check if property exists
                         if ($subentity->hasProperty($sSubPropertyName))
                         {
                             // compose
-                            $valueForBroadcast->value = $subentity->getValue($sSubPropertyName);
-                            $valueForBroadcast->mls_value_entity = MimotoLiveScreenUtils::formatAimlessSubvalue($subentity->getEntityType(), $subentity->getId(), $sSubPropertyName);
+                            $valueForBroadcast->value = $subentity->getValue($sSubPropertyName);   
+                            $valueForBroadcast->origin->entityType = $subentity->getEntityType();
+                            $valueForBroadcast->origin->entityId = $subentity->getId();
+                            $valueForBroadcast->origin->property = $sSubPropertyName;
                         }
+                    }
+                    else
+                    {
+                        // compose
+                        $valueForBroadcast->origin->entityType = $sMainPropertyName;
+                        $valueForBroadcast->origin->property = $sSubPropertyName;
                     }
                 }
                 
                 // store
-                $data->values[] = $valueForBroadcast;
+                $data->updated[] = $valueForBroadcast;
             }
         }
         
@@ -216,7 +226,7 @@ class MimotoLiveScreenService
         // 2. handel eerst alles rondom de nieuwe data af!
         
         
-        if (!empty($data->values)) { $this->sendPusherEvent('Aimless', 'data.update', $data); }
+        if (!empty($data->updated)) { $this->sendPusherEvent('Aimless', 'data.update', $data); }
         
         //$this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
         //$this->sendPusherEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));

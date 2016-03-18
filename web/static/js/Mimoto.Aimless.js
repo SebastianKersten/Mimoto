@@ -47,24 +47,8 @@ Mimoto.Aimless.connect = function()
         console.log(data);
         
         
-        // {project.3.client}[client.7.name]
-        // -> client.7.name changes from 'aaa' to 'bbb' - mls_value: blijft gelijk
-        // -> project.3.client changes from '1' to (unset) - mls_value: project.3.client=client.name
-        // 
-        // 
-        // mls_value="project.3.client[client.name]
-        // 
-        // project.3.client[name]
-        // 
-        // subentity.name 
-        // 
-        // {project.3.client}[client.name]
-        
-        
-        
-        
         // check
-        if (data.values)
+        if (data.updated)
         {
             // search
             var aValues = $("[mls_value]");
@@ -76,40 +60,91 @@ Mimoto.Aimless.connect = function()
                 
                 console.log('mls_value = ' + mls_value);
                 
-                // prepare
-                var aValueParts = mls_value.split(',');
-                var nValuePartCount = aValueParts.length;
                 
-                for (var sField in data.values)
+                // determine
+                var nOriginPos = mls_value.indexOf('[');
+                var bHasOrigin = (nOriginPos !== -1) ;
+                
+                // verify
+                if (bHasOrigin)
                 {
-                    // compose
-                    var sFieldIdentifier = sEntityIdentifier + '.' + sField;
+                    var mls_value_origin = mls_value.substr(nOriginPos + 1, mls_value.length - nOriginPos - 2);
+                    var mls_value = mls_value.substr(0, nOriginPos);
+                }
+                
+                
+                // parse modified values
+                for (var i = 0; i < data.updated.length; i++)
+                {
+                    // register
+                    var update = data.updated[i];
                     
-                    // check
-                    var bValueWasFound = false;
-                    for (var i = 0; i < nValuePartCount; i++)
+                    if (!bHasOrigin)
                     {
+                        // === value ===
                         
-                        //console.log(aValueParts[i].trim() + ' === ' + sFieldIdentifier + ' ?');
+                        // Case 1: "project.3.name"
+                        // Action: change project.3.name
+                        // ------
+                        // 1. find "project.3.name"
+                        // 2. change value
                         
-                        // verify
-                        if (aValueParts[i].trim() === sFieldIdentifier)
+                        if (mls_value === (sEntityIdentifier + '.' + update.property))
                         {
-                            //console.warn('Yes, Found! ' + sFieldIdentifier);
-                            
-                            
-                            
-                            bValueWasFound = true;
-                            break;
+                            // output
+                            $($component).text(update.value);
                         }
                     }
+                    else
+                    {
+                        // === entity ===
 
-                    if (bValueWasFound) {
-                        console.error('Change value into: ' + data.values[sField]);
-                        $($component).text(data.values[sField]);
-                    }
+                        // Case 2: - "project.3.client.name[client.17.name]"
+                        // Action: change client.17.name
+                        // ------
+                        // 1. find "client.17.name" of "[client.17.name]"
+                        // 2. change value
+                        
+                        
+                        if (mls_value_origin ===  (sEntityIdentifier + '.' + update.property))
+                        {
+                            // output
+                            $($component).text(update.value);
+                        }
+                        else
+                        {
+                            
+                            // Case 3: "project.3.client.name[client.17.name]"
+                            // Action: change client to 8
+                            // ------
+                            // 1. find "project.3.client.name"
+                            // 2. change "[client.17.name]" into "[client.8.name]"
+                            // 3. change value
+                            
+                            // Case 4: "project.3.agency.name[agency.name]" (no agency set)
+                            // Action: set agency to 5
+                            // ------
+                            // 1. find "project.3.agency" ------> (ignor rest?)
+                            // 2. change to: "project.3.agency.name[agency.5.name]"
+                            // 3. change value
+                            
+                            if (mls_value ===  (sEntityIdentifier + '.' + update.property))
+                            {
+                                // output
+                                $($component).text(update.value);
+                                
+                                // compose new
+                                var new_mls_value_origin = update.origin.entityType;
+                                if (update.origin.entityId) new_mls_value_origin += '.' + update.origin.entityId;
+                                new_mls_value_origin += '.' + update.origin.property;
+                                
+                                // update dom
+                                $($component).attr('mls_value', mls_value + '[' + new_mls_value_origin + ']');
+                            }
+                        }
+                    }                    
                 }
-            });
+            });  
         }
         
         

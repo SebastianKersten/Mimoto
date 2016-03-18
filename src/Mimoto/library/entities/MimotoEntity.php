@@ -300,7 +300,7 @@ class MimotoEntity
         $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, $nSeperatorPos + 1) : '';
         
         // compose
-        $sAimlessValue = MimotoLiveScreenUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sMainPropertyName);
+        $sAimlessValue = MimotoLiveScreenUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sPropertyName);
         
         // verify
         if (!empty($sSubPropertyName) && $this->valueRelatesToEntity($sMainPropertyName))
