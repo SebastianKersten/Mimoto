@@ -19,7 +19,7 @@
             "library\\": "./src/MaidoProjects/library",
             "Mimoto\\Event\\": "./src/Mimoto/domains/Event",
             "Mimoto\\Entity\\": "./src/Mimoto/domains/Entity",
-            "Mimoto\\Livescreen\\": "./src/Mimoto/domains/Livescreen",
+            "Mimoto\\LiveScreen\\": "./src/Mimoto/domains/LiveScreen",
             "Mimoto\\Mail\\": "./src/Mimoto/domains/Mail",
             "Mimoto\\library\\": "./src/Mimoto/library"
         }

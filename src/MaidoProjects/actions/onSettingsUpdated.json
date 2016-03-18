@@ -1,6 +1,6 @@
 {
     "trigger": ["client.updated", "agency.updated", "projectmanager.updated", "subprojectstate.updated"],
-    "service": "LivescreenService",
+    "service": "LiveScreenService",
     "request": "dataUpdate",
     "type": "async",
     "config":

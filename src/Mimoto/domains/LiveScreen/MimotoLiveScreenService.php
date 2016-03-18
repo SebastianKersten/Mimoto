@@ -1,18 +1,20 @@
 <?php
 
 // classpath
-namespace Mimoto\Livescreen;
+namespace Mimoto\LiveScreen;
 
 // Mimoto classes
+use Mimoto\LiveScreen\MimotoLiveScreenUtils;
 use Mimoto\library\entities\MimotoEntity;
+use Mimoto\library\entities\MimotoEntityUtils;
 
 
 /**
- * MimotoLivescreenService
+ * MimotoLiveScreenService
  *
  * @author Sebastian Kersten
  */
-class MimotoLivescreenService
+class MimotoLiveScreenService
 {
     
     // config
@@ -67,7 +69,7 @@ class MimotoLivescreenService
             
             default:
                 
-                die("MimotoLivescreenService: Unknown request '".$sRequest."'");
+                die("MimotoLiveScreenService: Unknown request '".$sRequest."'");
         }
     }
     
@@ -147,7 +149,7 @@ class MimotoLivescreenService
         
         // init
         $data->values = array();
-        $aModifiedValues = $entity->getModifiedValues();
+        $aModifiedValues = $entity->getModifiedValues();        
         
         // verify
         if (isset($config->properties))
@@ -156,7 +158,6 @@ class MimotoLivescreenService
             // register
             $aConfigProperties = $config->properties;
             $nConfigPropertyCount = count($aConfigProperties);
-
             
             // load properties
             for ($nConfigPropertyIndex = 0; $nConfigPropertyIndex < $nConfigPropertyCount; $nConfigPropertyIndex++)
@@ -164,11 +165,49 @@ class MimotoLivescreenService
                 // read
                 $sPropertyName = $aConfigProperties[$nConfigPropertyIndex];
                 
-                // register modified value
-                if (isset($aModifiedValues[$sPropertyName]))
+                
+                // find
+                $nSeperatorPos = strpos($sPropertyName, '.');
+                
+                // separate
+                $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, 0, $nSeperatorPos) : $sPropertyName;
+                $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, $nSeperatorPos + 1) : '';
+                
+                
+                // check if property exists and value modified
+                if (!$entity->hasProperty($sMainPropertyName) || !isset($aModifiedValues[$sMainPropertyName])) continue;
+                
+                
+                // init
+                $valueForBroadcast = (object) array();
+                
+                // compose
+                $valueForBroadcast->value = $entity->getValue($sMainPropertyName);
+                $valueForBroadcast->mls_value = MimotoLiveScreenUtils::formatAimlessValue($entity->getEntityType(), $entity->getId(), $sMainPropertyName);
+                
+
+                // verify
+                if (!empty($sSubPropertyName))
                 {
-                    $data->values[$sPropertyName] = $entity->getValue($sPropertyName);
+                    // load
+                    $subentity = $entity->getValue($sMainPropertyName);
+                    
+                    // validate
+                    if (MimotoEntityUtils::isEntity($subentity))
+                    {
+                        
+                        // check if property exists
+                        if ($subentity->hasProperty($sSubPropertyName))
+                        {
+                            // compose
+                            $valueForBroadcast->value = $subentity->getValue($sSubPropertyName);
+                            $valueForBroadcast->mls_value_entity = MimotoLiveScreenUtils::formatAimlessSubvalue($subentity->getEntityType(), $subentity->getId(), $sSubPropertyName);
+                        }
+                    }
                 }
+                
+                // store
+                $data->values[] = $valueForBroadcast;
             }
         }
         

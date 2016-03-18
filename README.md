@@ -22,7 +22,7 @@ This project uses **Aimless**, an _Entity Oriented Programming_ protocol, for cr
     "trigger": "client.updated", // single event
     "trigger": ["client.updated", "agency.updated"], // multiple events
     "trigger": "*.updated", // multiple events with wildcard
-    "service": "LivescreenService",
+    "service": "LiveScreenService",
     "request": "dataUpdate",
     "config":
     {

@@ -1,10 +1,10 @@
 <?php
 
 // classpath
-namespace Mimoto\Livescreen;
+namespace Mimoto\LiveScreen;
 
 // Mimoto classes
-use Mimoto\Livescreen\MimotoLivescreenService;
+use Mimoto\LiveScreen\MimotoLiveScreenService;
 
 // Silex classes
 use Silex\Application;
@@ -12,11 +12,11 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * MimotoLivescreenServiceProvider
+ * MimotoLiveScreenServiceProvider
  *
  * @author Sebastian Kersten
  */
-class MimotoLivescreenServiceProvider implements ServiceProviderInterface
+class MimotoLiveScreenServiceProvider implements ServiceProviderInterface
 {
     
     // config
@@ -37,10 +37,10 @@ class MimotoLivescreenServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {   
         // register
-        $app->get('/Mimoto.Aimless/{sEntityType}/{nEntityId}/{sTemplateId}', 'Mimoto\\Livescreen\\MimotoLivescreenController::getView');
+        $app->get('/Mimoto.Aimless/{sEntityType}/{nEntityId}/{sTemplateId}', 'Mimoto\\LiveScreen\\MimotoLiveScreenController::getView');
         
-        $app['LivescreenService'] = $app->share(function($app) {
-            return new MimotoLivescreenService($this->_aEntities, $app);
+        $app['LiveScreenService'] = $app->share(function($app) {
+            return new MimotoLiveScreenService($this->_aEntities, $app);
         });
     }
 

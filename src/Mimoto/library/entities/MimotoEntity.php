@@ -3,6 +3,10 @@
 // classpath
 namespace Mimoto\library\entities;
 
+// Mimoto classes
+use Mimoto\LiveScreen\MimotoLiveScreenUtils;
+use Mimoto\library\entities\MimotoEntityUtils;
+
 
 /**
  * MimotoEntity
@@ -99,6 +103,18 @@ class MimotoEntity
     public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
     
     
+    /**
+     * Check if the entity has a property
+     * 
+     * @param string $sPropertyName The property name to be checked
+     */
+    public function hasProperty($sPropertyName)
+    {
+        return isset($this->_aCurrentValues[$sPropertyName]);
+       
+    }
+    
+    
     
     // ----------------------------------------------------------------------------
     // --- Constructor-------------------------------------------------------------
@@ -149,7 +165,7 @@ class MimotoEntity
         if (!$this->valueRelatesToEntity($sPropertyName)) return $this->_aCurrentValues[$sPropertyName];
         
         // check
-        if ($bGetEntityInsteadOfRealValue && $this->isValidEntityId($this->_aCurrentValues[$sPropertyName]))
+        if ($bGetEntityInsteadOfRealValue && MimotoEntityUtils::isValidEntityId($this->_aCurrentValues[$sPropertyName]))
         {
             // register
             $service = $this->_aValuesAsEntities[$sPropertyName]->service;
@@ -179,13 +195,8 @@ class MimotoEntity
         // register
         $preparedValue = $value;
         
-        
-        // 1. is isEntity -> replace entity, replace ID from entoty in currentvalues
-        // 2. if isString / isInt -> drop stored entity
-        
-        
         // verify
-        if ($this->isEntity($value) && $this->valueRelatesToEntity($sPropertyName))
+        if (MimotoEntityUtils::isEntity($value) && $this->valueRelatesToEntity($sPropertyName))
         {
             // register
             $entity = $value;
@@ -200,10 +211,10 @@ class MimotoEntity
         {
             if ($this->valueRelatesToEntity($sPropertyName))
             {
-                if ($this->isValidEntityId($preparedValue))
+                if (MimotoEntityUtils::isValidEntityId($preparedValue))
                 {
                     // retrieve
-                    $nEntityId = ($this->isEntity($this->_aCurrentValues[$sPropertyName])) ? $this->_aCurrentValues[$sPropertyName]->getId() : $this->_aCurrentValues[$sPropertyName];
+                    $nEntityId = (MimotoEntityUtils::isEntity($this->_aCurrentValues[$sPropertyName])) ? $this->_aCurrentValues[$sPropertyName]->getId() : $this->_aCurrentValues[$sPropertyName];
 
                     // check if change
                     if ($preparedValue != $nEntityId)
@@ -289,7 +300,7 @@ class MimotoEntity
         $sFirstPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, 0, $nSeperatorPos) : $sPropertyName;
         
         // compose
-        $sAimlessValue = $this->getEntityType().'.'.$this->getId().'.'.$sFirstPropertyName;
+        $sAimlessValue = MimotoLiveScreenUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sFirstPropertyName);
         
         // verify
         if (!empty($sRemainingPropertyName) && $this->valueRelatesToEntity($sFirstPropertyName))
@@ -298,13 +309,14 @@ class MimotoEntity
             $entity = $this->getValue($sFirstPropertyName);
             
             // compose
-            if ($this->isEntity($entity))
+            if (MimotoEntityUtils::isEntity($entity))
             {
-                $sAimlessValue .= '['.$entity->getAimlessValue($sRemainingPropertyName).']';
+                
+                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalue($entity->getEntityType(), $entity->getId(), $sRemainingPropertyName);
             }
             else
             {
-                $sAimlessValue .= '['.$sPropertyName.']';
+                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalueWithoutId($entity->getEntityType(), $sRemainingPropertyName);
             }
         }
         
@@ -338,16 +350,6 @@ class MimotoEntity
     private function storeValueAsEntity($sPropertyName, $entity)
     {
         $this->_aValuesAsEntities[$sPropertyName]->value = $entity;
-    }
-    
-    private function isEntity($value)
-    {
-        return ($value instanceof MimotoEntity);
-    }
-    
-    private function isValidEntityId($value)
-    {
-        return (!is_nan($value) && $value > 0);
     }
     
 }

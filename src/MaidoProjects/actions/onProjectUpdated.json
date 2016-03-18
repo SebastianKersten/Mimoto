@@ -1,6 +1,6 @@
 {
     "trigger": "project.updated",
-    "service": "LivescreenService",
+    "service": "LiveScreenService",
     "request": "dataUpdate",
     "type": "async",
     "config":

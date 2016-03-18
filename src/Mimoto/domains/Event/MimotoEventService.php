@@ -34,14 +34,14 @@ class MimotoEventService
     /**
      * Constructor
      */
-    public function __construct($dispatcher, $LivescreenService)
+    public function __construct($dispatcher, $LiveScreenService)
     {
         // register
         $this->_dispatcher = $dispatcher;
         
         // register services
         $this->_aServices = [
-            'LivescreenService' => $LivescreenService//,
+            'LiveScreenService' => $LiveScreenService//,
             //'MailService' => $MailService
         ];
     }

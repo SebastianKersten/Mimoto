@@ -15,7 +15,7 @@ use MaidoProjects\SubprojectState\SubprojectStateServiceProvider;
 
 // Mimoto classes
 use Mimoto\Event\MimotoEventServiceProvider;
-use Mimoto\Livescreen\MimotoLivescreenServiceProvider;
+use Mimoto\LiveScreen\MimotoLiveScreenServiceProvider;
 
 
 // init
@@ -47,7 +47,7 @@ $app->register(new SubprojectStateServiceProvider());
 
 // connect platform services
 $app->register(new MimotoEventServiceProvider());
-$app->register(new MimotoLivescreenServiceProvider
+$app->register(new MimotoLiveScreenServiceProvider // configure ViewModels
 (
     [
         'client' => (object) array(

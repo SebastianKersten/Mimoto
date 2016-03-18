@@ -12,7 +12,7 @@ use Silex\Application;
  *
  * @author Sebastian Kersten
  */
-class MimotoLivescreenController
+class MimotoLiveScreenController
 {
     
     /**
@@ -26,8 +26,8 @@ class MimotoLivescreenController
     public function getView(Application $app, $sEntityType, $nEntityId, $sTemplateId)
     {
         // load
-        $entity = $app['LivescreenService']->getEntityByTypeAndId($sEntityType, $nEntityId);
-        $sEntityTemplate = $app['LivescreenService']->getEntityTemplateTypeAndId($sEntityType, $sTemplateId);
+        $entity = $app['LiveScreenService']->getEntityByTypeAndId($sEntityType, $nEntityId);
+        $sEntityTemplate = $app['LiveScreenService']->getEntityTemplateTypeAndId($sEntityType, $sTemplateId);
         
         // output
         return $app['twig']->render(

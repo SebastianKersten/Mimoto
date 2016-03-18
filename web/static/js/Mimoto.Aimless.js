@@ -71,12 +71,12 @@ Mimoto.Aimless.connect = function()
                     for (var i = 0; i < nValuePartCount; i++)
                     {
                         
-                        console.log(aValueParts[i].trim() + ' === ' + sFieldIdentifier + ' ?');
+                        //console.log(aValueParts[i].trim() + ' === ' + sFieldIdentifier + ' ?');
                         
                         // verify
                         if (aValueParts[i].trim() === sFieldIdentifier)
                         {
-                            console.warn('Yes, Found! ' + sFieldIdentifier);
+                            //console.warn('Yes, Found! ' + sFieldIdentifier);
                             
                             
                             
@@ -136,7 +136,7 @@ Mimoto.Aimless.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/livescreen/' + data.entityType + '/' + data.entityId + '/' + mls_template,
+                    url: '/Mimoto.LiveScreen/' + data.entityType + '/' + data.entityId + '/' + mls_template,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -173,7 +173,7 @@ Mimoto.Aimless.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_childtemplate,
+                    url: '/Mimoto.LiveScreen/' + data.entityType + '/' + data.entityId + '/' + mls_childtemplate,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
