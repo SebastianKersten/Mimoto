@@ -31,7 +31,7 @@ class AgencyRepository extends MimotoSingleMySQLTableRepository
         $this->setMySQLTable('agencies');
         
         // connect
-        $this->setProperty('name', 'name', '');
+        $this->setValueAsProperty('name', 'name');
     }
     
 }

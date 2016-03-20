@@ -254,13 +254,12 @@ Mimoto.Aimless.connect = function()
     
     channel.bind('page.change', function(data)
     {
-        
         Maido.page.change(data.url) ;//, data.config); -> load in iframe
-        // voorzien van URL voor inhoud
-        // use delegate -> MimotoLivescreen.onPopup = delegate(data)
-        // kan form bevatten
-        
-        //call option, zoals popup, met URL van popup-view of form
+    });
+    
+    channel.bind('component.load', function(data)
+    {
+        // o.a. remote dashboard control
     });
 
 }

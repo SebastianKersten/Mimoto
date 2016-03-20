@@ -51,11 +51,12 @@ class ProjectRepository extends MimotoSingleMySQLTableRepository
         $this->setMySQLTable('projects');
         
         // connect
-        $this->setProperty('name', 'name', '');
-        $this->setProperty('description', 'description', '');
-        $this->setEntityAsProperty('client', 'client_id', 0, $this->_ClientService);
-        $this->setEntityAsProperty('agency', 'agency_id', 0, $this->_AgencyService);
-        $this->setEntityAsProperty('projectmanager', 'projectmanager_id', 0, $this->_ProjectManagerService);
+        $this->setValueAsProperty('name', 'name');
+        $this->setValueAsProperty('description', 'description');
+        $this->setEntityAsProperty('client', 'client_id', $this->_ClientService);
+        $this->setEntityAsProperty('agency', 'agency_id', $this->_AgencyService);
+        $this->setEntityAsProperty('projectmanager', 'projectmanager_id', $this->_ProjectManagerService);
+        $this->setCollectionAsProperty('subprojects', 'projects_subprojects', $this->_SubprojectService);
     }
    
 }

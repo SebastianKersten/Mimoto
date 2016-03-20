@@ -8,6 +8,10 @@ use MaidoProjects\Subproject\SubprojectPaymentTypes;
 use MaidoProjects\Subproject\SubprojectPhases;
 use MaidoProjects\Subproject\SubprojectProbabilities;
 
+// Mimoto classes
+use Mimoto\Data\MimotoData;
+use Mimoto\Data\MimotoEntity;
+
 // Silex classes
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,6 +59,126 @@ class ProjectsController
         }
         
         
+        // ------------------
+        // --- MimotoData ---
+        // ------------------
+        
+//        echo "<pre>";
+//        
+//        
+//        $sProjectName = 'Maido.Projects';
+//        $sProjectDescription = 'Lorem ipsum';
+//        $nClientId = 2;
+//        $nAgencyId = '';
+//        $nProjectManagerId = 1;
+//        $aSubprojects = [4,7,22];
+//        
+//        
+//        $before = memory_get_usage();
+//        
+//        
+//        $aProjects = [];
+//        $nEntityCount = 1;
+//        for ($i = 0; $i < $nEntityCount; $i++)
+//        {
+//            
+//            // init
+//            $project = new MimotoData(false);
+//            //MimotoEntityService->getEntity('project', $nId = 0);
+//
+//            // setup structure
+//            $project->setValueAsProperty('name');
+//            $project->setValueAsProperty('description');
+//            $project->setEntityAsProperty('client', 'client'); // type, id
+//            $project->setEntityAsProperty('agency', 'agency');
+//            $project->setEntityAsProperty('projectManager', 'projectManager');
+//            $project->setCollectionAsProperty('subprojects', 'subproject');
+//            $project->setValueAsProperty('options.mailUpdates');
+//            $project->setValueAsProperty('options.sendLiveNotification');
+//
+//            // set data
+//            $project->setValue('name', $sProjectName);
+//            $project->setValue('description', $sProjectDescription);
+//            $project->setValue('client', $nClientId); // zet id, maar pas op get wordt de echte entity (wat een data is) opgehaald
+//            $project->setValue('agency', $nAgencyId);
+//            $project->setValue('projectManager', $nProjectManagerId);
+//            $project->setValue('subprojects', $aSubprojects);
+//            $project->setValue('options.mailUpdates', true);
+//            $project->setValue('options.sendLiveNotification', false);
+//            
+//            // eventlisteners op nodes
+//            // getmodifiedvalues -> als jason (mogelijk hele data opslag als json? met addon voor 
+//            
+//            // store
+//            $aProjects[] = $project;
+//        }
+//        
+//        $after = memory_get_usage();
+//        
+//        echo "<b style='color:#06AFEA'>Memory usage with ".$nEntityCount." ".(($nEntityCount == 1) ? 'entity' : 'entities')." = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb</b><br><br>";
+//        
+//        
+//        
+//        print_r($project);
+//        
+//        
+//        // #todo
+//        // ------------------------------------------------------------------------------
+//        // "Mimoto.EntityService"
+//        // "Mimoto.CollectionService"
+//        // ------------------------------------------------------------------------------
+//        
+//        
+//        
+////        if (subitem->hasChanges())
+////            $this->_sName + $subitem->getName();
+////        
+////        
+////        public function outputAsJSON() {}
+////        
+////        // -------
+////        
+////        $project = MimotoEntity(false);
+////        
+////        $project->setId(3);
+////        $project->setValue('name', 'Maido.Projects');
+////        
+////        $project->trackChanges();
+////        
+////        
+////        $project->setId(7);
+////        
+////        if (id changed) -> flush values (= MimotoData)
+////        
+////        $project->setValue
+////                
+////        
+////        structuur = MimotoData
+////        werkelijke data = MimotoEntity
+////
+////
+////        group = MimotoData en wordt automatisch doorgevoerd, het is geen bewuste stap om
+////                te groeperen anders dan door het data object zo te structureren
+////
+////        project.getValue()
+////
+////
+////
+////        // values gaan vullen
+////        project.setValue('name', $sProjectName);
+////        project.setValue('description', $sProjectDescription);
+////        project.setValue(''$sPropertyName, $sEntityType); // ophalen via EntityService -> type, via config connected
+////        project.setGroupAsProperty($sPropertyName);
+//                
+//                
+//         
+//        // MimotoGroup = MimotoEntity achtig object zonder entity Id
+//        
+//        
+//        
+//        echo "</pre>";
+//        die();
+//        
         
         // ---- verkapte unittest ----
         
@@ -120,6 +244,7 @@ class ProjectsController
 //        
 //        die();
         
+        
         // ---- einde verkapte unittest ----
         
         
@@ -142,82 +267,75 @@ class ProjectsController
         );
     }
     
-    
     public function formProject(Application $app, $nId = false)
     {   
-        
+        // init
         $aData = array();
         
         if ($nId !== false && !is_nan($nId))
-        {   
-            $sQuery = "SELECT * FROM projects WHERE id='".$nId."'";
-            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-            $nItemCount = mysql_num_rows($result);
-            
-            if ($nItemCount == 1)
-            {
-                $aData['id'] = mysql_result($result, 0, 'id');
-                $aData['name'] = mysql_result($result, 0, 'name');
-                $aData['description'] = mysql_result($result, 0, 'description');
-                $aData['client_id'] = mysql_result($result, 0, 'client_id');
-                $aData['agency_id'] = mysql_result($result, 0, 'agency_id');
-                $aData['projectmanager_id'] = mysql_result($result, 0, 'projectmanager_id');
-            }
-        }
-        
-        
-        
-        $sQuery = "SELECT * FROM clients ORDER BY name ASC";
-        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        $nItemCount = mysql_num_rows($result);
-        
-        $aClients = array();
-        
-        for ($i = 0; $i < $nItemCount; $i++)
         {
             
-            $object = (object) array();
+            $project = $app['ProjectService']->getProjectById($nId);
             
-            $object->id = mysql_result($result, $i, 'id');
-            $object->name = mysql_result($result, $i, 'name');
-            
-            $aClients[] = $object;
+            $aData['id'] = $project->getId();
+            $aData['name'] = $project->getName();
+            $aData['description'] = $project->getDescription();
+            $aData['client_id'] = $project->getValue('client', false);
+            $aData['agency_id'] = $project->getValue('agency', false);
+            $aData['projectmanager_id'] = $project->getValue('projectmanager', false);
         }
         
-        $sQuery = "SELECT * FROM agencies ORDER BY name ASC";
-        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        $nItemCount = mysql_num_rows($result);
+        // dropdown data
+        $aClients = $app['ClientService']->getAllClients();
+        $aAgencies = $app['AgencyService']->getAllAgencies();
+        $aProjectManagers = $app['ProjectManagerService']->getAllProjectManagers();
         
-        $aAgencies = array();
         
-        for ($i = 0; $i < $nItemCount; $i++)
-        {
-            
-            $object = (object) array();
-            
-            $object->id = mysql_result($result, $i, 'id');
-            $object->name = mysql_result($result, $i, 'name');
-            
-            $aAgencies[] = $object;
-        }
         
-        $sQuery = "SELECT * FROM projectmanagers ORDER BY name ASC";
-        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        $nItemCount = mysql_num_rows($result);
+        // form config
+    // inputfield->type, options
+    
+    
+    // general loadForm
+    // general saveForm
+    // by config
+    
+//    $form = (object) array();
+//    
+//    $form->name = 'project';
+//    $form->entity = 'project';
+//    $form->addField('name', 'textline', $config);
+//    $form->addField('description', 'textfield', { label:'Project description', autoFocus:true, saveOnEnter:true });
+//    $form->addField('client_id', 'dropdown', { label:'Client', values:[] });
+//    $form->addField('agency_id', 'dropdown', { label:'Agency', optional:true, values:[] });
+//    $form->addField('projectmanager_id', 'dropdown', { label:'Project manager', values:[] });
+//    $form->setValues($entity);
+//    
+//    $form->onSave->connectToEntity(); // add/remove and auto move
+//    $form->onSave->connectToMultipleEntities('client'); // add/remove
+//            
+//    
+//    
+//    $form->name = 'client';
+//    $form->entity = 'client';
+//    $form->addField('name', 'textline', { label:'Name', maxchars:255, autoFocus:true, saveOnEnter:true });
+//    $form->setValues($entity);
+//    
+//    
+//    loadForm($sFormName, $nEntityId);
+    
+    
+    // entityMaker
+    // formMaker
+    
+    
+    // eventlistener op wijziging project.subprojects -> herberekenen budgetten, 
+    // -> broadcast ViewModel.ProjectBudgets (met berkeningen)
         
-        $aProjectManagers = array();
         
-        for ($i = 0; $i < $nItemCount; $i++)
-        {
-            
-            $object = (object) array();
-            
-            $object->id = mysql_result($result, $i, 'id');
-            $object->name = mysql_result($result, $i, 'name');
-            
-            $aProjectManagers[] = $object;
-        }
         
+        
+        // output
         return $app['twig']->render(
             'forms/ProjectForm.twig',
             array(

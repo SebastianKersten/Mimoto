@@ -8,10 +8,14 @@
         "properties":
         [
             "name", 
-            "description", 
+            "description",
+            
             "client.name", 
             "agency.name", 
-            "projectmanager.name"
+            "projectmanager.name",
+            
+            "subprojects",
+            "subprojects.*.phase"
         ]
     }
 }

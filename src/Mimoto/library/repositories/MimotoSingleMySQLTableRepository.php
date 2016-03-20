@@ -62,6 +62,7 @@ class MimotoSingleMySQLTableRepository extends MimotoRepository
     // property types
     const PROPERTY_TYPE_VALUE = 'property.type.value';
     const PROPERTY_TYPE_ENTITY = 'property.type.entity';
+    const PROPERTY_TYPE_COLLECTION = 'property.type.collection';
     
     
     
@@ -130,12 +131,12 @@ class MimotoSingleMySQLTableRepository extends MimotoRepository
     
     
     /**
-     * Set property
-     * @param string $sPropertyName
-     * @param string $sDBColumn
-     * @param mixed $defaultValue
+     * Set value as property
+     * @param string $sPropertyName The name of the property
+     * @param string $sDBColumn The MySQL column containing the value
+     * @param mixed $defaultValue The default value
      */
-    protected function setProperty($sPropertyName, $sDBColumn, $defaultValue)
+    protected function setValueAsProperty($sPropertyName, $sDBColumn, $defaultValue = '')
     {
         // init
         $property = (object) array();
@@ -152,13 +153,11 @@ class MimotoSingleMySQLTableRepository extends MimotoRepository
     
     /**
      * Set entity as property
-     * @param string $sPropertyName
-     * @param string $sDBColumn
-     * @param mixed $defaultValue
-     * @param string $sEntityAsPropertyName
-     * @param MimotoService $entityService
+     * @param string $sPropertyName The name of the property
+     * @param string $sDBColumn The MySQL column containing the entity's id
+     * @param MimotoService $entityService The service that provides the connected entity
      */
-    protected function setEntityAsProperty($sPropertyName, $sDBColumn, $defaultValue, MimotoService $entityService = null)
+    protected function setEntityAsProperty($sPropertyName, $sDBColumn, MimotoService $entityService, $defaultValue = '')
     {
         // init
         $property = (object) array();
@@ -167,8 +166,30 @@ class MimotoSingleMySQLTableRepository extends MimotoRepository
         $property->type = self::PROPERTY_TYPE_ENTITY;
         $property->propertyName = $sPropertyName;
         $property->dbColumn = $sDBColumn;
-        $property->defaultValue = $defaultValue;
         $property->entityService = $entityService;
+        $property->defaultValue = $defaultValue;
+         
+        // store
+        $this->_aProperties[$sPropertyName] = $property;
+    }
+    
+    /**
+     * Set collection as property
+     * @param string $sPropertyName The name of the property
+     * @param string $sDBTableConnections The MySQL table containing the connections
+     * @param MimotoService $entityService The service that provides the connected entities
+     */
+    protected function setCollectionAsProperty($sPropertyName, $sDBTableConnections, MimotoService $entityService, $defaultValue = [])
+    {
+        // init
+        $property = (object) array();
+            
+        // setup
+        $property->type = self::PROPERTY_TYPE_COLLECTION;
+        $property->propertyName = $sPropertyName;
+        $property->dbTableConnections = $sDBTableConnections;
+        $property->entityService = $entityService;
+        $property->defaultValue = $defaultValue;
          
         // store
         $this->_aProperties[$sPropertyName] = $property;
@@ -360,13 +381,12 @@ class MimotoSingleMySQLTableRepository extends MimotoRepository
         // load properties
         foreach ($this->_aProperties as $sPropertyName => $property)
         {
-            // load
-            $value = mysql_result($mysqlResult, $nIndex, $property->dbColumn);
-            
-            
             switch($property->type)
             {
                 case self::PROPERTY_TYPE_VALUE:
+                    
+                    // load
+                    $value = mysql_result($mysqlResult, $nIndex, $property->dbColumn);
                     
                     // register primary entity data
                     $entity->setValue($property->propertyName, $value);
@@ -374,11 +394,53 @@ class MimotoSingleMySQLTableRepository extends MimotoRepository
                 
                 case self::PROPERTY_TYPE_ENTITY:
                     
+                    // load
+                    $nSubentityId = mysql_result($mysqlResult, $nIndex, $property->dbColumn);
+                    
                     // register primary entity data
-                    $entity->setValue($property->propertyName, $value);
+                    $entity->setValue($property->propertyName, $nSubentityId);
                     
                     // register entity delegate
                     $entity->setValueAsEntityService($property->propertyName, $property->entityService);
+                    
+                    // #todo
+                    // 1. setValue -> new MimotoEntity
+                    // 2. getValue support node-chaining
+                    // 3. MimotoData
+                    
+                    break;
+                
+                case self::PROPERTY_TYPE_COLLECTION:
+                    
+                    // init
+                    $aCollection = array();
+
+                    // load
+                    $sQuery = "SELECT child_id FROM ".$property->dbTableConnections.
+                              " WHERE parent_id='".$entity->getId()."' ORDER BY sortindex";
+                    $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                    $nItemCount = mysql_num_rows($result);
+                    
+                    // register
+                    for ($i = 0; $i < $nItemCount; $i++)
+                    {
+                        $aCollection[] = mysql_result($result, $i, 'child_id');
+                    }
+                    
+                    // register collection data
+                    $entity->setValue($property->propertyName, $aCollection);
+                    
+                    
+                    // init
+                    //$collection = new MimotoCollection();
+                    
+//                    MimotoGroup = MimotoEntity achtig object zonder entity Id
+//                            
+//                            
+//                    MimotoData.getValue/setValue
+//                    MimotoGroup = MimotoData
+//                    MimotoEntity.getId / setId
+//                    MimotoCollection = 
                     
                     break;
                 

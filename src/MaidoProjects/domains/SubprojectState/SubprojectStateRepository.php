@@ -31,7 +31,7 @@ class SubprojectStateRepository extends MimotoSingleMySQLTableRepository
         $this->setMySQLTable('subproject_states');
         
         // connect
-        $this->setProperty('name', 'name', '');
+        $this->setValueAsProperty('name', 'name');
     }
     
 }

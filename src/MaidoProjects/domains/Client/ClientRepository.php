@@ -31,7 +31,7 @@ class ClientRepository extends MimotoSingleMySQLTableRepository
         $this->setMySQLTable('clients');
         
         // connect
-        $this->setProperty('name', 'name', '');
+        $this->setValueAsProperty('name', 'name');
     }
     
 }

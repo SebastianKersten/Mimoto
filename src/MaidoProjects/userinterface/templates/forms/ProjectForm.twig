@@ -7,7 +7,7 @@
     <div class="form_field_name">Client</div>
     <div class="form_field">
         <select id="form_field_client_id" name="client_id">
-            {% if client_id is empty %}<option value="0">Select a client ..</option>{% endif %}
+            {% if client_id is empty %}<option value="">Select a client ..</option>{% endif %}
             {% for client in clients %}
                 <option {{ formdata.client_id }} value="{{ client.id }}" {% if client.id == formdata.client_id %}selected{% endif %}>{{ client.name }}</option>
             {% endfor %}
@@ -16,7 +16,7 @@
     <div class="form_field_name">Agency<span class="optional"> - optional</span></div>
     <div class="form_field">
         <select id="form_field_agency_id" name="agency_id">
-            <option value="0"></option>
+            <option value=""></option>
             {% for agency in agencies %}
                 <option value="{{ agency.id }}" {% if agency.id == formdata.agency_id %}selected{% endif %}>{{ agency.name }}</option>
             {% endfor %}
@@ -25,7 +25,7 @@
     <div class="form_field_name">Project manager</div>
     <div class="form_field">
         <select id="form_field_projectmanager_id" name="projectmanager_id">
-            {% if projectmanager_id is empty %}<option value="0" selected>Select a project manager ..</option>{% endif %}
+            {% if projectmanager_id is empty %}<option value="" selected>Select a project manager ..</option>{% endif %}
             {% for projectmanager in projectmanagers %}
                 <option value="{{ projectmanager.id }}" {% if projectmanager.id == formdata.projectmanager_id %}selected{% endif %}>{{ projectmanager.name }}</option>
             {% endfor %}

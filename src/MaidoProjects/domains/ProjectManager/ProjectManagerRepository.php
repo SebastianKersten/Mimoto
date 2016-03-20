@@ -31,7 +31,7 @@ class ProjectManagerRepository extends MimotoSingleMySQLTableRepository
         $this->setMySQLTable('projectmanagers');
         
         // connect
-        $this->setProperty('name', 'name', '');
+        $this->setValueAsProperty('name', 'name');
     }
     
 }

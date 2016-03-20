@@ -17,6 +17,8 @@
             "MaidoProjects\\SubprojectState\\": "./src/MaidoProjects/domains/SubprojectState",
             "MaidoProjects\\SubprojectPart\\": "./src/MaidoProjects/domains/SubprojectPart",
             "library\\": "./src/MaidoProjects/library",
+            "Mimoto\\Config\\": "./src/Mimoto/domains/Config",
+            "Mimoto\\Data\\": "./src/Mimoto/domains/Data",
             "Mimoto\\Event\\": "./src/Mimoto/domains/Event",
             "Mimoto\\Entity\\": "./src/Mimoto/domains/Entity",
             "Mimoto\\LiveScreen\\": "./src/Mimoto/domains/LiveScreen",
