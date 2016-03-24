@@ -111,7 +111,7 @@ class SettingsController
     {   
         
         // load data
-        $aClients = $app['ClientService']->getAllClients();
+        $aClients = $app['Mimoto.EntityService']->getAllEntities();
         
         // output
         return $app['twig']->render(

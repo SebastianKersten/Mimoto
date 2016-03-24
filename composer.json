@@ -9,6 +9,7 @@
     "autoload": {
         "psr-4": {
             "MaidoProjects\\Expertise\\": "./src/MaidoProjects/domains/Expertise",
+            "MaidoProjects\\Config\\": "./src/MaidoProjects/config",
             "MaidoProjects\\UserInterface\\": "./src/MaidoProjects/userinterface",
             "MaidoProjects\\Project\\": "./src/MaidoProjects/domains/Project",
             "MaidoProjects\\Subproject\\": "./src/MaidoProjects/domains/Subproject",

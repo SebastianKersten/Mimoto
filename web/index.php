@@ -5,14 +5,13 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 // web/index.php
 require_once __DIR__.'/../vendor/autoload.php';
 
-// Momkai classes
-use MaidoProjects\Project\ProjectServiceProvider;
-use MaidoProjects\Subproject\SubprojectServiceProvider;
-use MaidoProjects\ProjectManager\ProjectManagerServiceProvider;
-use MaidoProjects\Client\ClientServiceProvider;
-use MaidoProjects\Agency\AgencyServiceProvider;
-use MaidoProjects\SubprojectState\SubprojectStateServiceProvider;
-use MaidoProjects\Expertise\ExpertiseServiceProvider;
+// Entity configurations
+use MaidoProjects\Config\entities\ClientEntityConfig;
+use MaidoProjects\Config\entities\AgencyEntityConfig;
+use MaidoProjects\Config\entities\ProjectManagerEntityConfig;
+use MaidoProjects\Config\entities\ProjectEntityConfig;
+use MaidoProjects\Config\entities\SubprojectEntityConfig;
+use MaidoProjects\Config\entities\SubprojectStateEntityConfig;
 
 // Mimoto classes
 use Mimoto\Event\MimotoEventServiceProvider;
@@ -39,25 +38,17 @@ $app['debug'] = true;
 $app['twig'] = $twig;
 
 
-// connect project services
-$app->register(new ProjectServiceProvider());
-$app->register(new SubprojectServiceProvider());
-$app->register(new ProjectManagerServiceProvider());
-$app->register(new ClientServiceProvider());
-$app->register(new AgencyServiceProvider());
-$app->register(new SubprojectStateServiceProvider());
 
-
-// connect platform services
+// setup entities
 $app->register(new MimotoEntityServiceProvider
 (
     [
-        'ClientEntity',
-        'AgencyEntity',
-        'ProjectManagerEntity',
-        'ProjectEntity',
-        'SubprojectEntity',
-        'SubprojectStateEntity'
+        new ClientEntityConfig(),
+        new AgencyEntityConfig(),
+        new ProjectManagerEntityConfig(),
+        new ProjectEntityConfig(),
+        new SubprojectEntityConfig(),
+        new SubprojectStateEntityConfig()
     ]
 ));
 $app->register(new MimotoEventServiceProvider());

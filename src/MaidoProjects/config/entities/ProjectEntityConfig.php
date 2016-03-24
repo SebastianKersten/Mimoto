@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace MaidoProjects\config\entities;
+namespace MaidoProjects\Config\entities;
 
 // Mimoto classes
 use Mimoto\Config\MimotoEntityConfig;
@@ -11,11 +11,15 @@ use Mimoto\Config\MimotoEntityConfig;
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class ClientEntityConfig extends MimotoEntityConfig
+class ProjectEntityConfig extends MimotoEntityConfig
 {
     
     public function __construct()
     {
+        // init
+        $this->setName('project');
+        
+        
         // data source
         $this->setMySQLTable('projects');
         
@@ -25,7 +29,7 @@ class ClientEntityConfig extends MimotoEntityConfig
         $this->setEntityAsProperty('client', 'client');
         $this->setEntityAsProperty('agency', 'agency');
         $this->setEntityAsProperty('projectManager', 'projectManager');
-        $this->setCollectionAsProperty('subprojects', 'subproject');
+        //$this->setCollectionAsProperty('subprojects', 'subproject');
         $this->setValueAsProperty('options.mailUpdates');
         $this->setValueAsProperty('options.sendLiveNotification');
         

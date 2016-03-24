@@ -5,6 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Data\MimotoEntityService;
+use Mimoto\Data\MimotoEntityRepository;
 
 // Silex classes
 use Silex\Application;
@@ -53,7 +54,14 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
     {
         // register
         $app['Mimoto.EntityService'] = $app->share(function($app) {
-            return new MimotoEntityService($this->_aEntityConfigs, $app);
+            
+            //$newService = new MimotoEntityService($this->_aEntityConfigs, new MimotoEntityRepository($app['Mimoto.EventService']));
+            
+           // singleton::addService('Mimoto.EntityService', $newService);
+            
+            //return $newService;
+            
+            return new MimotoEntityService($this->_aEntityConfigs, new MimotoEntityRepository($app['Mimoto.EventService']));
         });
     }
     

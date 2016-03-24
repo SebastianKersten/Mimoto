@@ -7,23 +7,23 @@ namespace MaidoProjects\Config\entities;
 use Mimoto\Config\MimotoEntityConfig;
 
 /**
- * SubprojectStateEntityConfig
+ * ClientEntityConfig
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class SubprojectStateEntityConfig extends MimotoEntityConfig
+class SubprojectEntityConfig extends MimotoEntityConfig
 {
     
     public function __construct()
     {
         // init
-        $this->setName('subprojectState');
+        $this->setName('subproject');
         
         // setup structure
         $this->setValueAsProperty('name');
         
         // data source
-        $this->setMySQLTable('subproject_states');
+        $this->setMySQLTable('subprojects');
         
         // connect entity to data source
         $this->connectPropertyToMySQLColumn('name', 'name');

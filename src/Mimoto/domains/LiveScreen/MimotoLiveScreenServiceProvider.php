@@ -39,7 +39,7 @@ class MimotoLiveScreenServiceProvider implements ServiceProviderInterface
         // register
         $app->get('/Mimoto.Aimless/{sEntityType}/{nEntityId}/{sTemplateId}', 'Mimoto\\LiveScreen\\MimotoLiveScreenController::getView');
         
-        $app['LiveScreenService'] = $app->share(function($app) {
+        $app['Mimoto.LiveScreenService'] = $app->share(function($app) {
             return new MimotoLiveScreenService($this->_aEntities, $app);
         });
     }

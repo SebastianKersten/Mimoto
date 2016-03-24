@@ -3,6 +3,10 @@
 // classpath
 namespace Mimoto\Config;
 
+// Mimoto classes
+use Mimoto\Config\MimotoEntityConfigException;
+
+
 /**
  * MimotoEntityConfig
  *
@@ -10,7 +14,13 @@ namespace Mimoto\Config;
  */
 class MimotoEntityConfig
 {
-
+    
+    /**
+     * The name of the entity
+     * @var array 
+     */
+    var $_sName = '';
+    
     /**
      * The properties of the entity
      * @var array 
@@ -43,6 +53,25 @@ class MimotoEntityConfig
     
     
     // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Get MySQL table
+     * @return string The MySQL table
+     */
+    public function getName() { return $this->_sName; }
+    
+    /**
+     * Set entity name
+     * @param string $sName
+     */
+    public function setName($sName) { $this->_sName = $sName; }
+    
+    
+    
+    // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
     
@@ -64,40 +93,29 @@ class MimotoEntityConfig
     }
     
     /**
-     * Check if the entity has a property
-     * @param type $sPropertyName The property's name
-     */
-    public function hasProperty($sPropertyName)
-    {
-        // validate and send
-        return isset($this->_aProperties[$sPropertyName]) ? true : false;
-    }
-    
-    /**
-     * Check if the entity has a property value
-     * @param type $sPropertyName The property's name
-     */
-    public function hasPropertyValue($sPropertyName)
-    {
-        // validate and send
-        return isset($this->_aPropertyValues[$sPropertyName]) ? true : false;
-    }
-    
-    /**
      * Get the config of a property
      * @param type $sPropertyName The property's name
      */
     public function getProperty($sPropertyName)
     {
-        if ($this->hasProperty($sPropertyName)
+        // validate
+        if (!$this->hasProperty($sPropertyName)) { throw new MimotoEntityConfigException("( '-' ) - Hmm, I can't seem to find the property '$sPropertyName'"); }
+        
+        // send
+        return $this->_aProperties[$sPropertyName];
     }
     
-    public function getPropertyValue($sPropertyName)
-    {
-        /**
-     * Get the config of a property
+    /**
+     * Get the config of a property value
      * @param type $sPropertyName The property's name
      */
+    public function getPropertyValue($sPropertyName)
+    {
+        // validate
+        if (!$this->hasPropertyValue($sPropertyName)) { throw new MimotoEntityConfigException("( '-' ) - It looks like no value has been connected to property '$sPropertyName'"); }
+        
+        // send
+        return $this->_aPropertyValues[$sPropertyName];
     }
     
     
@@ -162,12 +180,22 @@ class MimotoEntityConfig
     
     /**
      * Set MySQL table
-     * @param type $sMySQLTableName
+     * @param string $sMySQLTableName
      */
     public function setMySQLTable($sMySQLTableName)
     {
         // store
         $this->_sMySQLTableName = $sMySQLTableName;
+    }
+    
+    /**
+     * Get MySQL table
+     * @return string The MySQL table
+     */
+    public function getMySQLTable()
+    {
+        // store
+        return $this->_sMySQLTableName;
     }
     
     /**
@@ -224,4 +252,30 @@ class MimotoEntityConfig
         $this->_aPropertyValues[$sPropertyName] = $propertyValue;
     }
     
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Check if the entity has a property
+     * @param type $sPropertyName The property's name
+     */
+    private function hasProperty($sPropertyName)
+    {
+        // validate and send
+        return isset($this->_aProperties[$sPropertyName]) ? true : false;
+    }
+    
+    /**
+     * Check if the entity has a property value
+     * @param type $sPropertyName The property's name
+     */
+    private function hasPropertyValue($sPropertyName)
+    {
+        // validate and send
+        return isset($this->_aPropertyValues[$sPropertyName]) ? true : false;
+    }
 }

@@ -16,6 +16,12 @@ class MimotoEntityProperty
 {
     
     /**
+     * The entity's type
+     * @var string
+     */
+    private $_sEntityType;
+    
+    /**
      * The persistent values
      * @var array
      */
@@ -42,19 +48,59 @@ class MimotoEntityProperty
     
     public function getValue($sPropertySelector, $bGetEntityInsteadOfRealValue = true)
     {
-        return '<b style="color:red;">Dit moet een entity of id zijn</b><br>';
+        return ($bGetEntityInsteadOfRealValue) ? $this->getEntity($this->_currentValue) : $this->_currentValue;
     }
     
-    public function setValue($value)
+    public function setValue($sPropertySelector, $value)
     {
-        if (MimotoDataUtils::isValidEntityId($value))
-        {
-            
-        }
+        echo 'Entity value = '.$value."<br>";
         
-        if (MimotoDataUtils::isEntity($value))
+        
+        // prepare
+        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
+        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
+        
+        // load
+        //$property = $this->_aProperties[$sPropertyName];
+        
+        
+        // 1. if isset subselector, then forward to entity
+        // 2. is not entity, load entity
+        // 3. store entity separatelijk (soort van cache)
+        // 4. subitems.hasChanges -> store
+        
+        //echo $sPropertySelector
+                
+        
+        if (empty($sSubselector))
         {
+            if (MimotoDataUtils::isValidEntityId($value))
+            {
+                $nEntityId = $value;
+                
+                echo "---> Dit is een entity ID<br>";
+                
+                
+            }
+
+            if (MimotoDataUtils::isEntity($value))
+            {
+                echo "---> Dit is een entity<br>";
+                
+                $nEntityId = $value;
+                
+                // 1. wat als deze nog niet opgeslagen is?
+            }
             
+            // store if change tracking is disabled
+            if (!$this->_bTrackChanges) { $this->_persistentValue = $nEntityId; }
+
+            // store
+            $this->_currentValue = $nEntityId;
+        }
+        else
+        {
+            // forward
         }
     }
     
@@ -71,9 +117,10 @@ class MimotoEntityProperty
      * 
      * @param boolean $bTrackChanges (default changes are tracked)
      */
-    public function __construct($bTrackChanges = true)
+    public function __construct($sEntityType, $bTrackChanges = true)
     {
         // register
+        $this->_sEntityType = $sEntityType;
         $this->_bTrackChanges = $bTrackChanges;
     }
     
@@ -113,6 +160,15 @@ class MimotoEntityProperty
     {
         // update
         $this->_persistentValue = $this->_currentValue;
+    }
+    
+    
+    private function getEntity($nEntityId)
+    {
+      //  $this->_entityService->
+        // hoe deze te breiken?
+        // singleton?
+        return false;
     }
     
 }

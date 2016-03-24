@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace MaidoProjects\config\entities;
+namespace MaidoProjects\Config\entities;
 
 // Mimoto classes
 use Mimoto\Config\MimotoEntityConfig;
@@ -16,6 +16,9 @@ class ClientEntityConfig extends MimotoEntityConfig
     
     public function __construct()
     {
+        // init
+        $this->setName('client');
+        
         // setup structure
         $this->setValueAsProperty('name');
         

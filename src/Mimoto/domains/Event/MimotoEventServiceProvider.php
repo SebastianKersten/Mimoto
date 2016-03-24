@@ -20,8 +20,8 @@ class MimotoEventServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
-        $app['EventService'] = $app->share(function ($app) {
-            return new MimotoEventService($app['dispatcher'], $app['LiveScreenService']);
+        $app['Mimoto.EventService'] = $app->share(function ($app) {
+            return new MimotoEventService($app['dispatcher'], $app['Mimoto.LiveScreenService']);
         });
     }
 

@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\Data;
 
+// Mimoto classes
+use Mimoto\Data\MimotoEntityException;
+
 
 /**
  * MimotoEntityService
@@ -13,7 +16,7 @@ class MimotoEntityService
 {
     
     // config
-    var $_aEntityConfigs;
+    var $_aEntityConfigs = [];
     
     // components
     var $_entityRepository;
@@ -28,13 +31,19 @@ class MimotoEntityService
      * Constructor
      * @param array $aEntityConfigs
      */
-    public function __construct($aEntityConfigs)
+    public function __construct($aEntityConfigs, $entityRepository)
     {
         // store
-        $this->_aEntityConfigs = $aEntityConfigs;
+        $this->_entityRepository = $entityRepository;
         
-        // init
-        $this->_entityRepository = [];
+        for ($i = 0; $i < count($aEntityConfigs); $i++)
+        {
+            // register
+            $entityConfig = $aEntityConfigs[$i];
+            
+            // store
+            $this->_aEntityConfigs[$entityConfig->getName()] = $entityConfig;
+        }
     }
     
     
@@ -44,14 +53,6 @@ class MimotoEntityService
     // ----------------------------------------------------------------------------
     
     
-    // 1. authenticate users
-    // 2. show which user on which part
-    // 3. live diff updates client2client
-    // 4. mls_input
-    // 5. Aimless.registerInput()
-    // 6. focus input when other user active
-    
-    
     /**
      * Get entity by id
      * @param int $nId
@@ -59,20 +60,54 @@ class MimotoEntityService
      */
     public function getEntityById($sEntityType, $nId)
     {
-        // 1. er is maar 1 repository
-        // 2. check if repository exists? er servcie exists, or entity
-        // 3. gooi config in repository en maak entities
+        // verify
+        if (!isset($this->_aEntityConfigs[$sEntityType])) { throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'"); }
         
-        //return $this->_entityRepository->get($nId);
+        try
+        {
+            $entity = $this->_entityRepository->get($this->_aEntityConfigs[$sEntityType], $nId);
+        }
+        catch(MimotoEntityException $e)
+        {
+            die($e->getMessage());
+        }
+        
+        // send
+        return $entity;
     }
+    
+    /**
+     * Get all entities
+     */
+    public function getAllEntities($sEntityType, $criteria = null)
+    {
+        // verify
+        if (!isset($this->_aEntityConfigs[$sEntityType])) { throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'"); }
+        
+        // load
+        $aEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);
+        
+        // send
+        return $aEntities;
+    }
+    
     
     /**
      * Store entity via main repository
      * @param MimotoEntity $entoty
      */
-    public function storeEntity(MimotoEntity $entity)
-    {
-        $this->_mainRepository->store($entity);
-    }
+//    public function storeEntity(array met vars)
+//    {
+//        $this->_mainRepository->store($entity);
+//        
+//        // load or create
+//        $client = (!is_nan($nId) && $nId > 0) ? $this->getMainRepository()->get($nId) : $this->getMainRepository()->create();
+//        
+//        // register
+//        $client->setName($sName);
+//        
+//        // store
+//        $this->getMainRepository()->store($client); // #todo - returns new client?
+//    }
     
 }

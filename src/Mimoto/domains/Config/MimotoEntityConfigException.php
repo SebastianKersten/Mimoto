@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace MaidoProjects\Client;
+namespace Mimoto\Config;
 
 
 /**
@@ -9,7 +9,7 @@ namespace MaidoProjects\Client;
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class ClientException extends \Exception
+class MimotoEntityConfigException extends \Exception
 {
     
 }

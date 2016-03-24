@@ -77,13 +77,52 @@ class ProjectsController
         
         $before = memory_get_usage();
         
-        $client = $app['Mimoto.EntityService']->getEntityById('client', 2);
-        print_r($client);
+//        $client = $app['Mimoto.EntityService']->getEntityById('client', 2);
+//        echo "<pre>";
+//        print_r($client);
+//        echo "</pre>";
+//        
+//        $agency = $app['Mimoto.EntityService']->getEntityById('agency', 1);
+//        echo "<pre>";
+//        print_r($agency);
+//        echo "</pre>";
+//        
+//        $projectManager = $app['Mimoto.EntityService']->getEntityById('projectManager', 4);
+//        echo "<pre>";
+//        print_r($projectManager);
+//        echo "</pre>";
+//        
+//        $subprojectState = $app['Mimoto.EntityService']->getEntityById('subprojectState', 6);
+//        echo "<pre>";
+//        print_r($subprojectState);
+//        echo "</pre>";
         
+        $project = $app['Mimoto.EntityService']->getEntityById('project', 2);
+        echo "<pre>";
+        print_r($project);
+        echo "</pre>";
+        
+        
+        $project->setValue('client', 5);
+        $aChanges = $project->hasChanges();
+        
+        print_r($aChanges);
+        
+        
+//        $clientId = $project->getValue('client', false);
+//        $client = $project->getValue('client');
+//        echo "Client ID = ".$clientId."<br>";
+//        echo "Client:<br>";
+//        print_r($client);
+//        
         
         $after = memory_get_usage();
         
-        echo "<b style='color:#06AFEA'>Memory usage = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes)</b><br><br>";
+        
+        
+        
+        
+        echo "<br><br><hr><b style='color:#06AFEA'>Memory usage = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes)</b><br><br>";
         die();
         
         
