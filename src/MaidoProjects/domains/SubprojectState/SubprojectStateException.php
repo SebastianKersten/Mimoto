@@ -7,7 +7,7 @@ namespace MaidoProjects\SubprojectState;
 /**
  * SubprojectStateException
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectStateException extends \Exception
 {

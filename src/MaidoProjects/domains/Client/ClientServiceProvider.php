@@ -15,7 +15,7 @@ use Silex\ServiceProviderInterface;
 /**
  * ClientServiceProvider
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class ClientServiceProvider implements ServiceProviderInterface
 {

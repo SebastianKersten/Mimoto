@@ -11,7 +11,7 @@ use Mimoto\library\repositories\MimotoRepository;
 /**
  * MimotoService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoService
 {

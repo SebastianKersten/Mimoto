@@ -14,7 +14,7 @@ use Silex\ServiceProviderInterface;
 /**
  * MimotoEventServiceProvider
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoEventServiceProvider implements ServiceProviderInterface
 {

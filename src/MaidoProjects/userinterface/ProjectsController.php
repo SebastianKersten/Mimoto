@@ -7,6 +7,7 @@ namespace MaidoProjects\UserInterface;
 use MaidoProjects\Subproject\SubprojectPaymentTypes;
 use MaidoProjects\Subproject\SubprojectPhases;
 use MaidoProjects\Subproject\SubprojectProbabilities;
+use MaidoProjects\Expertise\Expertise;
 
 // Mimoto classes
 use Mimoto\Data\MimotoData;
@@ -21,7 +22,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 /**
  * ProjectsController
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class ProjectsController
 {
@@ -59,126 +60,163 @@ class ProjectsController
         }
         
         
+        // dashboard -> wat kan er fout gaan: Buckaroo
+        
+        
+        // -----------------------------
+        // --- Text Width Calculator ---
+        // -----------------------------
+        
+        
+        // "abcdefghijklmnopqrstuvwxyz 1234567890.,;'"
+        
+        
+        // ----------------------------
+        // --- Mimoto.EntityService ---
+        // ----------------------------
+        
+        $before = memory_get_usage();
+        
+        $client = $app['Mimoto.EntityService']->getEntityById('client', 2);
+        print_r($client);
+        
+        
+        $after = memory_get_usage();
+        
+        echo "<b style='color:#06AFEA'>Memory usage = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes)</b><br><br>";
+        die();
+        
+        
         // ------------------
         // --- MimotoData ---
         // ------------------
         
-//        echo "<pre>";
+        echo "<pre>";
+        
+        
+        $sProjectName = 'Maido.Projects';
+        $sProjectDescription = 'Lorem ipsum';
+        $nClientId = 2;
+        $nAgencyId = '';
+        $nProjectManagerId = 1;
+        $aSubprojects = [4,7,22];
+        
+        
+        $before = memory_get_usage();
+        
+        
+        $aProjects = [];
+        $nEntityCount = 1;
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            
+            // init
+            $project = new MimotoData(false);
+            //MimotoEntityService->getEntity('project', $nId = 0);
+
+            // setup structure
+            $project->setValueAsProperty('name');
+            $project->setValueAsProperty('description');
+            $project->setEntityAsProperty('client', 'client'); // type, id
+            $project->setEntityAsProperty('agency', 'agency');
+            $project->setEntityAsProperty('projectManager', 'projectManager');
+            $project->setCollectionAsProperty('subprojects', 'subproject');
+            $project->setValueAsProperty('options.mailUpdates');
+            $project->setValueAsProperty('options.sendLiveNotification');
+
+            // set data
+            $project->setValue('name', $sProjectName);
+            $project->setValue('description', $sProjectDescription);
+            $project->setValue('client', $nClientId); // zet id, maar pas op get wordt de echte entity (wat een data is) opgehaald
+            $project->setValue('agency', $nAgencyId);
+            $project->setValue('projectManager', $nProjectManagerId);
+            $project->setValue('subprojects', $aSubprojects);
+            $project->setValue('options.mailUpdates', true);
+            $project->setValue('options.sendLiveNotification', false);
+            
+            // eventlisteners op nodes
+            // getmodifiedvalues -> als jason (mogelijk hele data opslag als json? met addon voor 
+            
+            // store
+            $aProjects[] = $project;
+        }
+        
+        $after = memory_get_usage();
+        
+        echo "<b style='color:#06AFEA'>Memory usage with ".$nEntityCount." ".(($nEntityCount == 1) ? 'entity' : 'entities')." = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes)</b><br><br>";
+        
+        echo "----<br>";
+        
+        echo "name = ".$project->getValue('name')."<br>";
+        echo "description = ".$project->getValue('description')."<br>";
+        echo "client = ".$project->getValue('client')."<br>";
+        print_r($project->getValue('client'));
+        echo "options.mailUpdates = ".$project->getValue('options.mailUpdates')."<br>";
+        echo "options.sendLiveNotification = ".$project->getValue('options.sendLiveNotification')."<br>";
+        //echo "nameNotExist = ".$project->getValue('nameNotExist')."<br>";
+        
+        echo "----<br>";
+        
+        print_r($project);
+        
+        
+        // #todo
+        // ------------------------------------------------------------------------------
+        // "Mimoto.EntityService"
+        // "Mimoto.CollectionService"
+        // ------------------------------------------------------------------------------
+        
+        
+        
+//        if (subitem->hasChanges())
+//            $this->_sName + $subitem->getName();
 //        
 //        
-//        $sProjectName = 'Maido.Projects';
-//        $sProjectDescription = 'Lorem ipsum';
-//        $nClientId = 2;
-//        $nAgencyId = '';
-//        $nProjectManagerId = 1;
-//        $aSubprojects = [4,7,22];
+//        public function outputAsJSON() {}
+//        
+//        // -------
+//        
+//        $project = MimotoEntity(false);
+//        
+//        $project->setId(3);
+//        $project->setValue('name', 'Maido.Projects');
+//        
+//        $project->trackChanges();
 //        
 //        
-//        $before = memory_get_usage();
+//        $project->setId(7);
 //        
+//        if (id changed) -> flush values (= MimotoData)
 //        
-//        $aProjects = [];
-//        $nEntityCount = 1;
-//        for ($i = 0; $i < $nEntityCount; $i++)
-//        {
-//            
-//            // init
-//            $project = new MimotoData(false);
-//            //MimotoEntityService->getEntity('project', $nId = 0);
-//
-//            // setup structure
-//            $project->setValueAsProperty('name');
-//            $project->setValueAsProperty('description');
-//            $project->setEntityAsProperty('client', 'client'); // type, id
-//            $project->setEntityAsProperty('agency', 'agency');
-//            $project->setEntityAsProperty('projectManager', 'projectManager');
-//            $project->setCollectionAsProperty('subprojects', 'subproject');
-//            $project->setValueAsProperty('options.mailUpdates');
-//            $project->setValueAsProperty('options.sendLiveNotification');
-//
-//            // set data
-//            $project->setValue('name', $sProjectName);
-//            $project->setValue('description', $sProjectDescription);
-//            $project->setValue('client', $nClientId); // zet id, maar pas op get wordt de echte entity (wat een data is) opgehaald
-//            $project->setValue('agency', $nAgencyId);
-//            $project->setValue('projectManager', $nProjectManagerId);
-//            $project->setValue('subprojects', $aSubprojects);
-//            $project->setValue('options.mailUpdates', true);
-//            $project->setValue('options.sendLiveNotification', false);
-//            
-//            // eventlisteners op nodes
-//            // getmodifiedvalues -> als jason (mogelijk hele data opslag als json? met addon voor 
-//            
-//            // store
-//            $aProjects[] = $project;
-//        }
-//        
-//        $after = memory_get_usage();
-//        
-//        echo "<b style='color:#06AFEA'>Memory usage with ".$nEntityCount." ".(($nEntityCount == 1) ? 'entity' : 'entities')." = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb</b><br><br>";
-//        
-//        
-//        
-//        print_r($project);
-//        
-//        
-//        // #todo
-//        // ------------------------------------------------------------------------------
-//        // "Mimoto.EntityService"
-//        // "Mimoto.CollectionService"
-//        // ------------------------------------------------------------------------------
-//        
-//        
-//        
-////        if (subitem->hasChanges())
-////            $this->_sName + $subitem->getName();
-////        
-////        
-////        public function outputAsJSON() {}
-////        
-////        // -------
-////        
-////        $project = MimotoEntity(false);
-////        
-////        $project->setId(3);
-////        $project->setValue('name', 'Maido.Projects');
-////        
-////        $project->trackChanges();
-////        
-////        
-////        $project->setId(7);
-////        
-////        if (id changed) -> flush values (= MimotoData)
-////        
-////        $project->setValue
-////                
-////        
-////        structuur = MimotoData
-////        werkelijke data = MimotoEntity
-////
-////
-////        group = MimotoData en wordt automatisch doorgevoerd, het is geen bewuste stap om
-////                te groeperen anders dan door het data object zo te structureren
-////
-////        project.getValue()
-////
-////
-////
-////        // values gaan vullen
-////        project.setValue('name', $sProjectName);
-////        project.setValue('description', $sProjectDescription);
-////        project.setValue(''$sPropertyName, $sEntityType); // ophalen via EntityService -> type, via config connected
-////        project.setGroupAsProperty($sPropertyName);
+//        $project->setValue
 //                
-//                
-//         
-//        // MimotoGroup = MimotoEntity achtig object zonder entity Id
 //        
-//        
-//        
-//        echo "</pre>";
-//        die();
-//        
+//        structuur = MimotoData
+//        werkelijke data = MimotoEntity
+//
+//
+//        group = MimotoData en wordt automatisch doorgevoerd, het is geen bewuste stap om
+//                te groeperen anders dan door het data object zo te structureren
+//
+//        project.getValue()
+//
+//
+//
+//        // values gaan vullen
+//        project.setValue('name', $sProjectName);
+//        project.setValue('description', $sProjectDescription);
+//        project.setValue(''$sPropertyName, $sEntityType); // ophalen via EntityService -> type, via config connected
+//        project.setGroupAsProperty($sPropertyName);
+                
+                
+         
+        // MimotoGroup = MimotoEntity achtig object zonder entity Id
+        
+        
+        
+        echo "</pre>";
+        die();
+        
         
         // ---- verkapte unittest ----
         

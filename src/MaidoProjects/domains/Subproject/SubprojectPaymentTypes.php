@@ -7,7 +7,7 @@ namespace MaidoProjects\Subproject;
 /**
  * SubprojectTypes
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectPaymentTypes
 {    

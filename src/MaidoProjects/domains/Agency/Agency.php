@@ -10,7 +10,7 @@ use Mimoto\library\entities\MimotoEntity;
 /**
  * The "Agency"-model contains the information of an agency
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class Agency extends MimotoEntity
 {

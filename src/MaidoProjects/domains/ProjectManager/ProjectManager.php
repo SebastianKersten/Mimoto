@@ -10,7 +10,7 @@ use Mimoto\library\entities\MimotoEntity;
 /**
  * The "ProjectManager"-model contains the information of a project manager
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class ProjectManager extends MimotoEntity
 {

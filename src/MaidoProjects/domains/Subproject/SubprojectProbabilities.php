@@ -7,7 +7,7 @@ namespace MaidoProjects\Subproject;
 /**
  * SubprojectProbabilities
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectProbabilities
 {    

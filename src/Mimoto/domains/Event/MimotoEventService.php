@@ -13,7 +13,7 @@ use Symfony\Component\EventDispatcher\Event;
 /**
  * EventService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoEventService
 {

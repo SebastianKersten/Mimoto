@@ -7,7 +7,7 @@ namespace Mimoto\LiveScreen;
 /**
  * MimotoLiveScreenUtils
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoLiveScreenUtils
 {

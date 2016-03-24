@@ -7,7 +7,7 @@ namespace Mimoto\library\entities;
 /**
  * MimotoEntityUtils
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoEntityUtils
 {

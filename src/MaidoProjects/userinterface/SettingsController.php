@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * SettingsController
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SettingsController
 {

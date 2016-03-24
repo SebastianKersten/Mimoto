@@ -12,7 +12,7 @@ use Mimoto\library\entities\MimotoEntityUtils;
 /**
  * MimotoLiveScreenService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoLiveScreenService
 {

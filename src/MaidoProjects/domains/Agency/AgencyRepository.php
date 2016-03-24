@@ -10,7 +10,7 @@ use Mimoto\library\repositories\MimotoSingleMySQLTableRepository;
 /**
  * AgencyRepository
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class AgencyRepository extends MimotoSingleMySQLTableRepository
 {      

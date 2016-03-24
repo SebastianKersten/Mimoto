@@ -7,7 +7,7 @@ namespace MaidoProjects\Mail;
 /**
  * MailService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MailService
 {

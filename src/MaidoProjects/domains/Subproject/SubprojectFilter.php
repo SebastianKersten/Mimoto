@@ -6,7 +6,7 @@ namespace MaidoProject\Subproject;
 /**
  * subproject filter
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectFilter {
     

@@ -7,7 +7,7 @@ namespace MaidoProjects\Agency;
 /**
  * AgencyException
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class AgencyException extends \Exception
 {

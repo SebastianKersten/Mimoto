@@ -15,7 +15,7 @@ use Silex\ServiceProviderInterface;
 /**
  * AgencyServiceProvider
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class AgencyServiceProvider implements ServiceProviderInterface
 {

@@ -7,7 +7,7 @@ namespace Mimoto\library\data;
 /**
  * MimotoDataUtils
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoDataUtils
 {

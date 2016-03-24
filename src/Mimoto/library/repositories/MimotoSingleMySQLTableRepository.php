@@ -11,7 +11,7 @@ use Mimoto\library\services\MimotoService;
 /**
  * MimotoSingleMySQLTableRepository
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoSingleMySQLTableRepository extends MimotoRepository
 {

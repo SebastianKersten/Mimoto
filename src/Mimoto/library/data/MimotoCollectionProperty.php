@@ -7,7 +7,7 @@ namespace Mimoto\library\data;
 /**
  * MimotoCollection
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoCollectionProperty
 {

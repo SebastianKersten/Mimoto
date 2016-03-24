@@ -3,7 +3,7 @@
 /**
  * The "SubprojectPart"-model contains the information of a subproject part
  *
- * @author Sebastian Kersten (sebastian@momkai.com)
+ * @author Sebastian Kersten (@supertaboo) (sebastian@momkai.com)
  */
 class SubrojectPart
 {

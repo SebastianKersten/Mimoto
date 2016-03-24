@@ -14,7 +14,7 @@ use Mimoto\library\services\MimotoService;
 /**
  * SubprojectService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectStateService extends MimotoService
 {

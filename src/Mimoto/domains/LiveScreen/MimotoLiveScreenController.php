@@ -10,7 +10,7 @@ use Silex\Application;
 /**
  * MimotoLiveScreenController
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoLiveScreenController
 {

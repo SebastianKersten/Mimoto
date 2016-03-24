@@ -12,10 +12,12 @@ use MaidoProjects\ProjectManager\ProjectManagerServiceProvider;
 use MaidoProjects\Client\ClientServiceProvider;
 use MaidoProjects\Agency\AgencyServiceProvider;
 use MaidoProjects\SubprojectState\SubprojectStateServiceProvider;
+use MaidoProjects\Expertise\ExpertiseServiceProvider;
 
 // Mimoto classes
 use Mimoto\Event\MimotoEventServiceProvider;
 use Mimoto\LiveScreen\MimotoLiveScreenServiceProvider;
+use Mimoto\Data\MimotoEntityServiceProvider;
 
 
 // init
@@ -45,7 +47,19 @@ $app->register(new ClientServiceProvider());
 $app->register(new AgencyServiceProvider());
 $app->register(new SubprojectStateServiceProvider());
 
+
 // connect platform services
+$app->register(new MimotoEntityServiceProvider
+(
+    [
+        'ClientEntity',
+        'AgencyEntity',
+        'ProjectManagerEntity',
+        'ProjectEntity',
+        'SubprojectEntity',
+        'SubprojectStateEntity'
+    ]
+));
 $app->register(new MimotoEventServiceProvider());
 $app->register(new MimotoLiveScreenServiceProvider // configure ViewModels
 (

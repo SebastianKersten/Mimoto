@@ -14,7 +14,7 @@ use Silex\ServiceProviderInterface;
 /**
  * MimotoLiveScreenServiceProvider
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoLiveScreenServiceProvider implements ServiceProviderInterface
 {

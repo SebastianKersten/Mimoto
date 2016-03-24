@@ -15,7 +15,7 @@ use Silex\ServiceProviderInterface;
 /**
  * SubprojectStateServiceProvider
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectStateServiceProvider implements ServiceProviderInterface
 {

@@ -11,7 +11,7 @@ use Mimoto\library\entities\MimotoEntityUtils;
 /**
  * MimotoEntity
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class MimotoEntity
 {

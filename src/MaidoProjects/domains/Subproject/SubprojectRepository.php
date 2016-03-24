@@ -10,7 +10,7 @@ use Mimoto\library\repositories\MimotoSingleMySQLTableRepository;
 /**
  * SubprojectRepository
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectRepository extends MimotoSingleMySQLTableRepository
 {      

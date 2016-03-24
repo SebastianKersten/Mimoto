@@ -15,7 +15,7 @@ use Mimoto\library\entities\MimotoEntity;
 /**
  * The "Project"-model contains the information of a project
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class Project extends MimotoEntity
 {

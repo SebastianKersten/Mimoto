@@ -14,7 +14,7 @@ use Mimoto\library\services\MimotoService;
 /**
  * ProjectService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class ProjectService extends MimotoService
 {

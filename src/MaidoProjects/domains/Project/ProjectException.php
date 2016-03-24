@@ -7,7 +7,7 @@ namespace MaidoProjects\Project;
 /**
  * ProjectException
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class ProjectException extends \Exception
 {

@@ -7,7 +7,7 @@ namespace MaidoProjects\Subproject;
 /**
  * SubprojectPhases
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectPhases 
 {    

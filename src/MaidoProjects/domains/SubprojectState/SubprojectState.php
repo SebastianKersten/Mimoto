@@ -10,7 +10,7 @@ use Mimoto\library\entities\MimotoEntity;
 /**
  * The "SubprojectState"-model contains the information of a subproject state
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectState extends MimotoEntity
 {

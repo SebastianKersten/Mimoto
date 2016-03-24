@@ -7,7 +7,7 @@ namespace MaidoProjects\Subproject;
 /**
  * SubprojectRepositoryCriteria
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SubprojectRepositoryCriteria
 {

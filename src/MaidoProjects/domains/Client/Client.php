@@ -10,7 +10,7 @@ use Mimoto\library\entities\MimotoEntity;
 /**
  * The "Client"-model contains the information of a client
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class Client extends MimotoEntity
 {

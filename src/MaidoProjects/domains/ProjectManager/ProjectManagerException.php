@@ -7,7 +7,7 @@ namespace MaidoProjects\Manager;
 /**
  * ProjectManagerException
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class ProjectManagerException extends \Exception
 {

@@ -10,7 +10,7 @@ use Mimoto\library\entities\MimotoEntity;
 /**
  * The "Subproject"-model contains the information of a subproject
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class Subproject extends MimotoEntity
 {

@@ -15,7 +15,7 @@ use Silex\ServiceProviderInterface;
 /**
  * ProjectServiceProvider
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class ProjectServiceProvider implements ServiceProviderInterface
 {

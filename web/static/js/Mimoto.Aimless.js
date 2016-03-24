@@ -1,7 +1,7 @@
 /**
  * Aimless - Mimoto's LiveScreen protocol
  * 
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 
 if (typeof Mimoto == "undefined") Mimoto = {};

@@ -10,7 +10,7 @@ use MaidoProjects\Agency\AgencyException;
 /**
  * AgencyService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class FormService
 {

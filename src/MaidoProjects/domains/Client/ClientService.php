@@ -14,7 +14,7 @@ use Mimoto\library\services\MimotoService;
 /**
  * ClientService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class ClientService extends MimotoService
 {

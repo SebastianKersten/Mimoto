@@ -14,7 +14,7 @@ use Mimoto\library\services\MimotoService;
 /**
  * AgencyService
  *
- * @author Sebastian Kersten
+ * @author Sebastian Kersten (@supertaboo)
  */
 class AgencyService extends MimotoService
 {
