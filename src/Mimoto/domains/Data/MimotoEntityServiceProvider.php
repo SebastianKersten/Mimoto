@@ -55,13 +55,14 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
         // register
         $app['Mimoto.EntityService'] = $app->share(function($app) {
             
-            //$newService = new MimotoEntityService($this->_aEntityConfigs, new MimotoEntityRepository($app['Mimoto.EventService']));
+            // init
+            $service = new MimotoEntityService($this->_aEntityConfigs, new MimotoEntityRepository($app['Mimoto.EventService']));
             
-           // singleton::addService('Mimoto.EntityService', $newService);
+            // register
+            $GLOBALS['Mimoto.EntityService'] = $service;
             
-            //return $newService;
-            
-            return new MimotoEntityService($this->_aEntityConfigs, new MimotoEntityRepository($app['Mimoto.EventService']));
+            // send
+            return $service;
         });
     }
     

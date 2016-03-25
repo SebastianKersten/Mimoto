@@ -76,6 +76,7 @@ class ProjectsController
         // ----------------------------
         
         $before = memory_get_usage();
+        echo "<pre>";
         
 //        $client = $app['Mimoto.EntityService']->getEntityById('client', 2);
 //        echo "<pre>";
@@ -98,23 +99,68 @@ class ProjectsController
 //        echo "</pre>";
         
         $project = $app['Mimoto.EntityService']->getEntityById('project', 2);
-        echo "<pre>";
-        print_r($project);
-        echo "</pre>";
         
         
-        $project->setValue('client', 5);
-        $aChanges = $project->hasChanges();
+        $project->setValue('name', 'Bla!');
+        $project->setValue('agency', 1);
+        
+        
+        //$project->setValue('options.mailUpdates', 'Hell yes!');
+        $project->setValue('options.sendLiveNotification', 'Oh, certainly not!');
+        
+        echo "<br><hr><br>";
+        
+        $aChanges = $project->getChanges();
         
         print_r($aChanges);
         
+        die();
+        echo "<hr><br>";
         
-//        $clientId = $project->getValue('client', false);
-//        $client = $project->getValue('client');
-//        echo "Client ID = ".$clientId."<br>";
-//        echo "Client:<br>";
-//        print_r($client);
-//        
+        echo $nAgencyId = $project->getValue('agency', true);
+        $agency = $project->getValue('agency');
+        
+        print_r($agency);
+        
+//        getValue('subprojects') -> []
+//                
+//                
+//        $MiSQL->getData('subprojects.{state="archived"}') -> []
+//                
+//                
+//                
+//        $project->getValue("client.name");
+//                
+//        getValue('subprojects.[5]') -> []
+        
+        
+        
+        //ACL in mls_id hash
+        
+        echo "<br><hr>";
+        print_r($project);
+        echo "</pre>";
+        die();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        echo "Client ID = ".$nClientId."<br>";
+        echo "Client:<br>";
+        echo "<pre>";
+        print_r($client);
+        echo "</pre>";
         
         $after = memory_get_usage();
         

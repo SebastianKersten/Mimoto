@@ -181,7 +181,7 @@ class MimotoData implements MimotoDataPropertyInterface
      * @return mixed
      * @throws \Exception
      */
-    public function getValue($sPropertySelector)
+    public function getValue($sPropertySelector, $bGetStorableValue = false)
     {
         // prepare
         $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
@@ -193,10 +193,10 @@ class MimotoData implements MimotoDataPropertyInterface
         $property = $this->_aProperties[$sPropertyName];
         
         // forward
-        if ($property instanceof MimotoData) { return $property->getValue($sSubselector); }
+        if ($property instanceof MimotoData) { return $property->getValue($sSubselector, $bGetStorableValue); }
         if ($property instanceof MimotoValueProperty) { return $property->getValue(); }
-        if ($property instanceof MimotoEntityProperty) { return $property->getValue($sSubselector); }
-        if ($property instanceof MimotoCollectionProperty) { return $property->getValue($sSubselector); }
+        if ($property instanceof MimotoEntityProperty) { return $property->getValue($sSubselector, $bGetStorableValue); }
+        if ($property instanceof MimotoCollectionProperty) { return $property->getValue($sSubselector, $bGetStorableValue); }
         
     }
     
@@ -284,6 +284,57 @@ class MimotoData implements MimotoDataPropertyInterface
     {
         // update
         foreach ($this->_aProperties as $sPropertyName => $property) { $property->acceptChanges(); }
+    }
+    
+    /**
+     * Get modified values
+     * @return array Collection containing all modified values as key/value pair
+     */
+    public function getChanges()
+    {
+        // init
+        $aModifiedValues = [];
+        
+        foreach ($this->_aProperties as $sPropertyName => $property)
+        {
+            
+            // check
+            if ($property->hasChanges())
+            {
+                if ($property instanceof MimotoValueProperty)
+                {
+                    $aModifiedValues[$sPropertyName] = $property->getValue();
+                }
+                else
+                if ($property instanceof MimotoEntityProperty)
+                {
+                    $aModifiedValues[$sPropertyName] = $property->getValue('', true);
+                }
+                else
+                if ($property instanceof MimotoCollectionProperty)
+                {
+                    // 1. check changes, of hele set?
+                    // 2. focus enkel op de changes in array aantal, items, volgorde
+                    // 3. oftwel: de connections
+                    // 4. misschien opvragen: changed items? of afhandelen in Repositori
+                }
+                else
+                if ($property instanceof MimotoData)
+                {
+                    // load
+                    $aModifiedSubvalues = $property->getChanges();
+                    
+                    // compose
+                    foreach($aModifiedSubvalues as $sKey => $value)
+                    {
+                        $aModifiedValues[$sPropertyName.'.'.$sKey] = $value;
+                    }
+                }
+            }
+        }
+        
+        // send
+        return $aModifiedValues;
     }
     
 }
