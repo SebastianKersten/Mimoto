@@ -35,7 +35,6 @@ class MimotoDataUtils
         // 1. Toegestaan: a-zA-Z0-9._[]{}*=
     }
     
-    
     public static function isEntity($value)
     {
         return ($value instanceof MimotoEntity);
@@ -43,7 +42,7 @@ class MimotoDataUtils
     
     public static function isValidEntityId($value)
     {
-        return (!is_nan($value) && $value > 0);
+        return (!is_nan(intval($value)) && $value > 0);
     }
     
 }
