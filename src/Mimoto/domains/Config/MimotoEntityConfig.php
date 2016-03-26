@@ -47,6 +47,7 @@ class MimotoEntityConfig
     
     // property value types
     const PROPERTY_VALUE_MYSQL_COLUMN = 'property_value_mysql_column';
+    const PROPERTY_VALUE_MYSQLCONNECTION_TABLE = 'property_value_mysql_connection_table';
     const PROPERTY_VALUE_DEFAULT = 'property_value_default';
     const PROPERTY_VALUE_DUMMY = 'property_value_dummy';
     
@@ -210,6 +211,24 @@ class MimotoEntityConfig
             'type' => self::PROPERTY_VALUE_MYSQL_COLUMN,
             'name' => $sPropertyName,
             'mysqlColumnName' => $sMySQLColumnName
+        );
+        
+        // store
+        $this->_aPropertyValues[$sPropertyName] = $propertyValue;
+    }
+    
+    /**
+     * Connect property to a MySQL connection table
+     * @param string $sPropertyName The property's name
+     * @param string $sMySQLConnectionTable The MySQL connection table name
+     */
+    public function connectPropertyToMySQLConnectionTable($sPropertyName, $sMySQLConnectionTable)
+    {
+        // compose
+        $propertyValue = (object) array(
+            'type' => self::PROPERTY_VALUE_MYSQLCONNECTION_TABLE,
+            'name' => $sPropertyName,
+            'mysqlConnectionTable' => $sMySQLConnectionTable
         );
         
         // store

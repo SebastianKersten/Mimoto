@@ -12,18 +12,6 @@ namespace Mimoto\library\data;
 class MimotoCollectionProperty
 {
     
-    public function addValue()
-    {
-        // mls_connection="project.subprojects"
-        // Example: Address book: _aAllowedEntities = ['client', 'agency'] (check on add)
-    }
-    
-    public function removeValue()
-    {
-        
-    }
-    
-    
     /**
      * Get the value
      * 
@@ -34,6 +22,8 @@ class MimotoCollectionProperty
         
         // 1. lazy load values op first-request
         // 2. loop door alle items if no specific selector given
+        
+        // 3. load all entities in element
     }
     
     /**
@@ -48,6 +38,22 @@ class MimotoCollectionProperty
         // store
         //$this->_currentValue = $value;
         
+        
+    }
+    
+    
+    public function add($value, $nIndex = null)
+    {
+        // 1. replace indexes and track changes
+        // 2. chec type of value (index, of entity)
+        
+        // mls_connection="project.subprojects"
+        // Example: Address book: _aAllowedEntities = ['client', 'agency'] (check on add)
+        
+    }
+    
+    public function remove()
+    {
         
     }
     

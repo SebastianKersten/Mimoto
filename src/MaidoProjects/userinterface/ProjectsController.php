@@ -75,6 +75,15 @@ class ProjectsController
         // --- Mimoto.EntityService ---
         // ----------------------------
         
+        
+        // 1. store entity
+        // 2. if hasCanges subentity, forward store
+        // 3. connect aimless id generator
+        // 4. broadcast update on entity
+        // 5. connection.add
+        
+        
+        
         $before = memory_get_usage();
         echo "<pre>";
         
@@ -102,10 +111,8 @@ class ProjectsController
         
         
         $project->setValue('name', 'Bla!');
-        $project->setValue('agency', 1);
-        
-        
-        //$project->setValue('options.mailUpdates', 'Hell yes!');
+        $project->setValue('agency', '2');
+        $project->setValue('options.mailUpdates', 'Hell yes!');
         $project->setValue('options.sendLiveNotification', 'Oh, certainly not!');
         
         echo "<br><hr><br>";
@@ -114,53 +121,12 @@ class ProjectsController
         
         print_r($aChanges);
         
-        die();
         echo "<hr><br>";
         
-        echo $nAgencyId = $project->getValue('agency', true);
-        $agency = $project->getValue('agency');
-        
-        print_r($agency);
-        
-//        getValue('subprojects') -> []
-//                
-//                
-//        $MiSQL->getData('subprojects.{state="archived"}') -> []
-//                
-//                
-//                
-//        $project->getValue("client.name");
-//                
-//        getValue('subprojects.[5]') -> []
         
         
+        //$project->add('subprojects', 5);
         
-        //ACL in mls_id hash
-        
-        echo "<br><hr>";
-        print_r($project);
-        echo "</pre>";
-        die();
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        echo "Client ID = ".$nClientId."<br>";
-        echo "Client:<br>";
-        echo "<pre>";
-        print_r($client);
-        echo "</pre>";
         
         $after = memory_get_usage();
         

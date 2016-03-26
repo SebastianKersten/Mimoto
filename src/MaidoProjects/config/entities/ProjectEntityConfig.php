@@ -39,6 +39,7 @@ class ProjectEntityConfig extends MimotoEntityConfig
         $this->connectPropertyToMySQLColumn('client', 'client_id');
         $this->connectPropertyToMySQLColumn('agency', 'agency_id');
         $this->connectPropertyToMySQLColumn('projectManager', 'projectmanager_id');
+        //$this->connectPropertyToMySQLConnectionTable('subprojects', 'projectmanager_id');
         $this->connectPropertyToDummyValue('options.mailUpdates', 'false');
         $this->connectPropertyToDummyValue('options.sendLiveNotification', 'true');
         

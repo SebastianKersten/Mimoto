@@ -9,6 +9,7 @@ use Mimoto\library\data\MimotoEntityProperty;
 use Mimoto\library\data\MimotoCollectionProperty;
 use Mimoto\library\data\MimotoDataUtils;
 use Mimoto\library\data\MimotoDataPropertyInterface;
+use Mimoto\LiveScreen\MimotoLiveScreenUtils;
 
 
 /**
@@ -57,7 +58,7 @@ class MimotoData implements MimotoDataPropertyInterface
     
     
     // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
+    // --- Public methods - setup -------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
@@ -156,30 +157,45 @@ class MimotoData implements MimotoDataPropertyInterface
     
     
     // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
+    // --- Public methods - usage -------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
-    
-    
-    
     /**
-     * Check if the entity has a property
+     * Check if the entity has a certain property
      * 
-     * @param string $sPropertyName The property name to be checked
+     * @param string $sPropertySelector The property name to be checked
      */
-    public function hasProperty($sPropertyName)
+    public function hasProperty($sPropertySelector)
     {
-        // 1. ook met forward support
-                
-        return isset($this->_aProperties[$sPropertyName]);
+        // prepare
+        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
+        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
+        
+        if (!$this->hasProperty($sPropertyName)) { throw new MimotoEntityException("( '-' ) - Sorry, you seem so look for a property '$sPropertyName' that is not here"); }
+        
+        // load
+        $property = $this->_aProperties[$sPropertyName];
+        
+        if (empty($sSubselector) || ($property instanceof MimotoValueProperty))
+        {
+            return isset($this->_aProperties[$sPropertyName]);
+        }
+        else
+        {
+            
+            echo "Subselector=['$sSubselector']";
+            // forward
+            return $property->hasProperty($sSubselector);
+        }
     }
     
     /**
      * Get value of property
-     * @param string $sPropertySelector
+     * 
+     * @param string $sPropertySelector The selector containing the property name and optional subselector
      * @return mixed
-     * @throws \Exception
+     * @throws MimotoEntityException
      */
     public function getValue($sPropertySelector, $bGetStorableValue = false)
     {
@@ -187,19 +203,20 @@ class MimotoData implements MimotoDataPropertyInterface
         $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
         $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
         
-        if (!$this->hasProperty($sPropertyName)) { throw new \Exception("MimotoData.getValue('".$sPropertyName."') - Property '".$sPropertyName."' does not exist", 0, null); } 
+        if (!$this->hasProperty($sPropertyName)) { throw new MimotoEntityException("( '-' ) - Sorry, you seem so look for a property '$sPropertyName' that is not here"); }
         
         // load
         $property = $this->_aProperties[$sPropertyName];
         
         // forward
-        if ($property instanceof MimotoData) { return $property->getValue($sSubselector, $bGetStorableValue); }
-        if ($property instanceof MimotoValueProperty) { return $property->getValue(); }
-        if ($property instanceof MimotoEntityProperty) { return $property->getValue($sSubselector, $bGetStorableValue); }
-        if ($property instanceof MimotoCollectionProperty) { return $property->getValue($sSubselector, $bGetStorableValue); }
-        
+        return ($property instanceof MimotoValueProperty) ? $property->getValue() : $property->getValue($sSubselector, $bGetStorableValue);
     }
     
+    /**
+     * Set value
+     * @param string $sPropertySelector
+     * @param mixed $value
+     */
     public function setValue($sPropertySelector, $value)
     {
         // prepare
@@ -210,31 +227,57 @@ class MimotoData implements MimotoDataPropertyInterface
         $property = $this->_aProperties[$sPropertyName];
         
         // forward
-        if ($property instanceof MimotoData) { $property->setValue($sSubselector, $value); return; }
-        if ($property instanceof MimotoValueProperty) { $property->setValue($value); return; }
-        if ($property instanceof MimotoEntityProperty) { $property->setValue($sSubselector, $value); return; }
-        if ($property instanceof MimotoCollectionProperty) { $property->setValue($sSubselector, $value); return; }
-        
-        
-        
-        
-        // collection query:
-        // "subprojects.{phase='archived'}.name"
-        
-        // selector parser (een collection heeft z'n eigen manier)
-        
-        
-        
-        // config
-    // check type -> validate in form op basis van config zoals opgeslagen in database (by config)
-    
-    
-    // store
-        
-    
-    
-    //stop er json in, verdeel over de verschillende nodes
+        ($property instanceof MimotoValueProperty) ? $property->setValue($value) : $property->setValue($sSubselector, $value);
     }
+    
+    /**
+     * Add an item to a collection
+     * 
+     * @param string $sPropertySelector The selector containing the property name and optional subselector
+     * @param mixed $value The item (id or entity)
+     * @param index $nIndex (Optional) The index on which to add the item
+     * @throws MimotoEntityException
+     */
+    public function add($sPropertySelector, $value, $nIndex = null)
+    {
+        // prepare
+        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
+        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
+        
+        // load
+        //if ($this->hasProperty($sPropertyName)) { $property = $this->_aProperties[$sPropertyName]; }
+        $property = $this->_aProperties[$sPropertyName];
+        
+        // report
+        if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to add an item to value"); }
+        
+        // forward
+        $property->add($sSubselector, $value, $nIndex);
+    }
+    
+    /**
+     * Remove an item from a collection
+     * 
+     * @param string $sPropertySelector The selector containing the property name and optional subselector
+     * @param mixed $value The item (id or entity)
+     * @throws MimotoEntityException
+     */
+    public function remove($sPropertySelector, $value)
+    {
+        // prepare
+        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
+        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
+        
+        // load
+        $property = $this->_aProperties[$sPropertyName];
+        
+        // report
+        if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to remove an item from value"); }
+        
+        // forward
+        $property->from($sSubselector, $value);
+    }
+    
     
     
     // ----------------------------------------------------------------------------
@@ -287,8 +330,8 @@ class MimotoData implements MimotoDataPropertyInterface
     }
     
     /**
-     * Get modified values
-     * @return array Collection containing all modified values as key/value pair
+     * Get Changes
+     * @return array Collection containing of all changed properties as key/value pairs
      */
     public function getChanges()
     {
@@ -335,6 +378,79 @@ class MimotoData implements MimotoDataPropertyInterface
         
         // send
         return $aModifiedValues;
+    }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods - Aimless -----------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Get Aimless value of a property or subproperty
+     * @param string $sPropertySelector
+     * @return string The Aimless value for the supplied property selector
+     */
+    public function getAimlessValue($sPropertySelector)
+    {
+        // prepare
+        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
+        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
+        
+        // compose
+        $sAimlessValue = MimotoLiveScreenUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sPropertyName);
+        
+        // verify
+        if (!empty($sSubselector) && $this->valueRelatesToEntity($sPropertyName))
+        {
+            // load
+            $entity = $this->getValue($sPropertyName);
+            
+            // compose
+            if (MimotoEntityUtils::isEntity($entity))
+            {
+                
+                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalue($sPropertyName, $entity->getId(), $sSubselector);
+            }
+            else
+            {
+                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalueWithoutId($sPropertyName, $sSubselector);
+            }
+        }
+        
+        // send
+        return $sAimlessValue;
+    }
+    
+    /**
+     * Get Aimless id of an entity
+     * @return string The Aimless id for the supplied property selector
+     */
+    public function getAimlessId()
+    {
+        return $this->getEntityType().'.'.$this->getId();
+    }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    // 1. check op type
+    
+    
+    private function valueRelatesToEntity($sPropertyName)
+    {
+        // verify and send
+        return (isset($this->_aValuesAsEntities[$sPropertyName]));
+    }
+    
+    private function storeValueAsEntity($sPropertyName, $entity)
+    {
+        $this->_aValuesAsEntities[$sPropertyName]->value = $entity;
     }
     
 }
