@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\library\data;
 
+// Mimoto classes
+use Mimoto\Data\MimotoEntity;
+
 
 /**
  * MimotoDataUtils
@@ -11,28 +14,21 @@ namespace Mimoto\library\data;
  */
 class MimotoDataUtils
 {
-    
-    public static function getPropertyFromPropertySelector($sPropertySelector)
-    {
-        // find
-        $nSeperatorPos = strpos($sPropertySelector, '.');
         
-        // separate
-        $sPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, 0, $nSeperatorPos) : $sPropertySelector;
-        
-        // send
-        return $sPropertyName;
-    }
-    
-    public static function getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName)
+    public static function validatePropertyName($sPropertyName)
     {
-        // send subselector or false is none present
-        return ($sPropertySelector === $sPropertyName) ? false : substr($sPropertySelector, strlen($sPropertyName) + 1);
+        return preg_match("/^[a-zA-Z][a-zA-Z0-9-_]*(\.[a-zA-Z][a-zA-Z0-9]*)*$/", $sPropertyName);
     }
     
     public static function validatePropertySelector($sPropertySelector)
     {
         // 1. Toegestaan: a-zA-Z0-9._[]{}*=
+        // 2. preg_math op juiste '[a-zA-Z0-9]' // start met a-zA-Z
+        // 3. {xxx='xxx'} of {xxx="xxx"}
+        // 4. [[0-9]] of ["[a-zA-Z0-9]"]
+        
+        return true;
+        
     }
     
     public static function isEntity($value)

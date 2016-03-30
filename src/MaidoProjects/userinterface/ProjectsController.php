@@ -84,15 +84,26 @@ class ProjectsController
         
         
         
-        $before = memory_get_usage();
-        echo "<pre>";
         
-//        $client = $app['Mimoto.EntityService']->getEntityById('client', 2);
+        function output($sTitle, $data)
+        {
+            echo '<div style="background-color:#f5f5f5;border:solid 1px #858585;padding:20px">';
+            echo "<h2>".$sTitle."</h2>";
+            echo "<pre>";
+            print_r($data);
+            echo "</pre>";
+            echo "</div>";
+        }
+        
+        
+        $before = memory_get_usage();
+        
+        //$client = $app['Mimoto.EntityService']->getEntityById('client', 2);
 //        echo "<pre>";
 //        print_r($client);
 //        echo "</pre>";
 //        
-//        $agency = $app['Mimoto.EntityService']->getEntityById('agency', 1);
+        //$agency = $app['Mimoto.EntityService']->getEntityById('agency', 1);
 //        echo "<pre>";
 //        print_r($agency);
 //        echo "</pre>";
@@ -107,21 +118,81 @@ class ProjectsController
 //        print_r($subprojectState);
 //        echo "</pre>";
         
-        $project = $app['Mimoto.EntityService']->getEntityById('project', 2);
+        
+        //  project = {
+        //      name
+        //  }
+        
+        //  "options.mailUpdates" = 
+        //  {
+        //      type: value
+        //      persistentValue: mixed,
+        //      currentValue: mixed
+        //  }
+        
+        // private $_persistentId;
+        // private $_currentId;
         
         
-        $project->setValue('name', 'Bla!');
-        $project->setValue('agency', '2');
-        $project->setValue('options.mailUpdates', 'Hell yes!');
-        $project->setValue('options.sendLiveNotification', 'Oh, certainly not!');
+        // 1. setup unit tests for property selectors
         
-        echo "<br><hr><br>";
         
-        $aChanges = $project->getChanges();
         
-        print_r($aChanges);
+        $project = new MimotoData();
         
-        echo "<hr><br>";
+        $project->setValueAsProperty('name');
+        $project->setEntityAsProperty('client', 'client');
+        $project->setCollectionAsProperty('subprojects', 'subproject');
+        
+        
+        $project->setValue('name', 'VanMoof'); // if not exist!!!!
+        $project->setValue('client', 2);
+        $project->setValue('client.name', 'Yeah!');
+        //$project->setValue('subprojects', []);
+        
+        
+        
+        //$sClientName = $project->getValue('client.name'); // mag falen indien client-not-set (null-client? / "")
+        
+        
+//        echo "<hr>";
+//        $sProjectName = $project->getValue('name');
+//        echo "<br>project.name:<br>";
+//        print_r($sProjectName);
+//        echo "<br><br>";
+        
+//        $nClientId = $project->getValue('client', true);
+//        $storedClient = $project->getValue('client');
+//        echo "Client ID = ".$nClientId."<br>";
+//        print_r($storedClient);
+        
+        
+        output('Project', $project);
+        
+        
+        
+        
+        
+        
+//        $property = getProperty($sPropertySelector, )
+//        
+//        
+//        
+//        $project = $app['Mimoto.EntityService']->getEntityById('project', 2);
+//        
+//        
+//        $project->setValue('name', 'Bla!');
+//        $project->setValue('agency', '2');
+//        $project->setValue('options.mailUpdates', 'Hell yes!');
+//        $project->setValue('options.sendLiveNotification', 'Oh, certainly not!');
+//        
+//        echo "<br><hr><br>";
+//        
+//        $aChanges = $project->getChanges();
+//        
+//        print_r($aChanges);
+//        
+//        echo "<hr><br>";
         
         
         
@@ -135,14 +206,13 @@ class ProjectsController
         
         
         echo "<br><br><hr><b style='color:#06AFEA'>Memory usage = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes)</b><br><br>";
+        
         die();
         
         
         // ------------------
         // --- MimotoData ---
         // ------------------
-        
-        echo "<pre>";
         
         
         $sProjectName = 'Maido.Projects';

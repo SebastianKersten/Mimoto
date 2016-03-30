@@ -11,5 +11,5 @@ namespace Mimoto\Data;
  */
 class MimotoEntityService
 {
-    
+    // 1. deze funcitonaliteit plaatsen in MimotoEntityService
 }

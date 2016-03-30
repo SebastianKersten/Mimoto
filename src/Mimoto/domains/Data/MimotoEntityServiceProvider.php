@@ -58,9 +58,6 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
             // init
             $service = new MimotoEntityService($this->_aEntityConfigs, new MimotoEntityRepository($app['Mimoto.EventService']));
             
-            // register
-            $GLOBALS['Mimoto.EntityService'] = $service;
-            
             // send
             return $service;
         });
@@ -72,7 +69,8 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        // noop
+        // register
+        $GLOBALS['Mimoto.EntityService'] = $app['Mimoto.EntityService'];
     }
     
 }
