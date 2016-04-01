@@ -11,7 +11,15 @@ $GLOBALS['Mimoto.EntityService'] = $app['Mimoto.EntityService'];
  */
 class MimotoDataTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCreateAndSetValueProperyTest()
+    public function testSetUnknonwPropery()
+    {
+        $project = new \Mimoto\Data\MimotoData();
+        
+        $this->expectException($project->setValue('name', 'Bugaboo'));
+        // 1. needs php update?
+    }
+    
+    public function testCreateAndSetValuePropery()
     {
         $project = new \Mimoto\Data\MimotoData();
         
@@ -19,6 +27,18 @@ class MimotoDataTest extends \PHPUnit_Framework_TestCase
         $project->setValue('name', 'VanMoof');
         
         $this->assertEquals('VanMoof', $project->getValue('name'), "Project name should be 'VanMoof'");
+        
+        // 1. shoudl have changes
+    }
+    
+    public function testCreateAndUnsetValuePropery()
+    {
+        $project = new \Mimoto\Data\MimotoData();
+        
+        $project->setValueAsProperty('name');        
+        $project->setValue('name', '');
+        
+        $this->assertEmpty($project->getValue('name'), "Project name should be empty");
     }
     
     public function testCreateAndSetEntityProperty()

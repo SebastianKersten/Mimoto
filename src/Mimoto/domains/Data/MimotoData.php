@@ -465,7 +465,7 @@ class MimotoData
     {
         // forward
         if (!empty($sPropertySelector)) { $this->forwardSetCollectionProperty($property, $sPropertySelector, $value); return; }
-        
+        // 1. in de forward komt de selector-query of [1]
         
         // validate
         if (!is_array($value)) { throw new MimotoEntityException("( '-' ) - The collection property '".$property->name."' can only accept an array"); }
@@ -494,17 +494,39 @@ class MimotoData
                 'entityType' => $property->allowedEntityTypes[0]
             );
             
-            echo "<pre>";
-            print_r($item);
-            echo "</pre>";
             
-            // store value
-            $this->setEntityProperty($subproperty, $item, '');
-            
-            for ($j = 0; $j < $nItemCount; $j++)
+            // validate
+            if (MimotoDataUtils::isEntity($item) && $item->getEntityType() !== $subproperty->entityType) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying set in the collection '$property->name' has type '".$item->getEntityType()."' instead of type '".$property->allowedEntityTypes[0]."'"); }
+
+            if (MimotoDataUtils::isEntity($item) )
             {
-                //$property->currentCollection
+                // store if change tracking is disabled
+                if (!$this->_bTrackChanges) { $subproperty->persistentId = $item->getId(); }
+
+                // store
+                $subproperty->currentId = $item->getId();
+                $subproperty->entityCache = $item;
             }
+            else
+            if (MimotoDataUtils::isValidEntityId($value))
+            {
+                 // store if change tracking is disabled
+                if (!$this->_bTrackChanges) { $subproperty->persistentId = $item; }
+
+                // store
+                $subproperty->currentId = $item;
+            }
+            else
+            {
+                // 1. handle emtpy id, or throw message if not a valid value
+            }
+            
+            
+            
+            //for ($j = 0; $j < $nItemCount; $j++) // check for doubles if options don't allow it
+            //{
+                //$property->currentCollection
+            //}
             
             // store
             if (!$this->_bTrackChanges) { $property->persistentCollection[$i] = $subproperty; }
@@ -529,34 +551,42 @@ class MimotoData
         // 2. if no id set (omdat new entity), dan houd id leeg, maar vul aan onSave
         
         
+        // init
+        $subproperty = (object) array(
+            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION_ITEM,
+            'entityType' => $property->allowedEntityTypes[0]
+        );
+        
+        
         // validate
-        if (MimotoDataUtils::isEntity($value) && $value->getEntityType() !== $property->entityType) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->name' has type '".$value->getEntityType()."' instead of type '$property->entityType'"); }
+        if (MimotoDataUtils::isEntity($value) && $value->getEntityType() !== $subproperty->entityType) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->name' has type '".$value->getEntityType()."' instead of type '".$property->allowedEntityTypes[0]."'"); }
 
         if (MimotoDataUtils::isEntity($value) )
         {
             // store if change tracking is disabled
-            if (!$this->_bTrackChanges) { $property->persistentId = $value->getId(); }
+            if (!$this->_bTrackChanges) { $subproperty->persistentId = $value->getId(); }
 
             // store
-            $property->currentId = $value->getId();
-            $property->entityCache = $value;
-
-            return;
+            $subproperty->currentId = $value->getId();
+            $subproperty->entityCache = $value;
         }
         else
         if (MimotoDataUtils::isValidEntityId($value))
         {
              // store if change tracking is disabled
-            if (!$this->_bTrackChanges) { $property->persistentId = $value; }
+            if (!$this->_bTrackChanges) { $subproperty->persistentId = $value; }
 
             // store
-            $property->currentId = $value;
-
-            return;
+            $subproperty->currentId = $value;
         }
 
+        // store
+        if (!$this->_bTrackChanges) { $property->persistentCollection[$i] = $subproperty; }
+        $property->currentCollection[] = $subproperty;
+        
+        
         // validate
-        throw new MimotoEntityException("( '-' ) - Sorry, the entity or entity id you are trying to set at '$property->name' doesn't seem to be valid");
+        //throw new MimotoEntityException("( '-' ) - Sorry, the entity or entity id you are trying to set at '$property->name' doesn't seem to be valid");
     }
     
     
