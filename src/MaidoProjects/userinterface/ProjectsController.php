@@ -142,14 +142,24 @@ class ProjectsController
         
         $project->setValueAsProperty('name');
         $project->setEntityAsProperty('client', 'client');
-        $project->setCollectionAsProperty('subprojects', 'subproject');
+        //$project->setEntityAsProperty('agency', 'agency');
+        //$project->setCollectionAsProperty('subprojects', 'client');
         
         
-        $project->setValue('name', 'VanMoof'); // if not exist!!!!
+        $project->setValue('name', 'VanMoof');
         $project->setValue('client', 2);
         $project->setValue('client.name', 'Yeah!');
-        //$project->setValue('subprojects', []);
+        //$project->setValue('agency', 1);
         
+        //$client = $project->getValue('client');
+        //$agency = $project->getValue('agency');
+        
+        //$project->setValue('subprojects', []);
+        //$project->setValue('subprojects', [2, $client, $agency]); // check doubles
+        
+        
+        
+        //$project->addValue('subprojects', 3);
         
         
         //$sClientName = $project->getValue('client.name'); // mag falen indien client-not-set (null-client? / "")

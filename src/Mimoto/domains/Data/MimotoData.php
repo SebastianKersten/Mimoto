@@ -167,6 +167,33 @@ class MimotoData
         }
     }
     
+    public function addValue($sPropertySelector, $value)
+    {
+        // load
+        $property = $this->getProperty($sPropertySelector);
+        $sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
+        
+        switch($property->type)
+        {
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+                
+                throw new MimotoEntityException("( '-' ) - Nope, I'm unable to add a value the non-collection '$property->name' which is a value");
+            
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                
+                if (empty($sSubpropertySelector)) { throw new MimotoEntityException("( '-' ) - Nope, I'm unable to add a value the non-collection '$property->name' which is an entity"); }
+                
+                $this->addEntityProperty($property, $value, $sSubpropertySelector);
+                break;
+                
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+                
+                $this->addCollectionProperty($property, $value, $sSubpropertySelector);
+                break;
+        }
+    }
+    
+    
     public function serialize()
     {
         
@@ -241,7 +268,7 @@ class MimotoData
      * Forward set entity property
      * @param object $property
      * @param string $sPropertySelector
-     * @param mixed $value
+     * @param boolean $bGetStorableValue Default is set to false
      * @throws MimotoEntityException
      */
     private function forwardGetEntityProperty($property, $sPropertySelector, $bGetStorableValue = false)
@@ -283,16 +310,23 @@ class MimotoData
      * @param object $property
      * @param mixed $value
      * @param string $sPropertySelector
+     * @return property
      * @throws MimotoEntityException
      */
     private function setEntityProperty($property, $value, $sPropertySelector)
     {
         // forward
-        if (!empty($sPropertySelector)) { $this->forwardsetEntityProperty($property, $sPropertySelector, $value); return; }
+        if (!empty($sPropertySelector)) { $this->forwardSetEntityProperty($property, $sPropertySelector, $value); return; }
         
         
+        // 
+        // 
+        // 
         // 1. is setValue id '' -> remove entityCache
         // 2. if no id set (omdat new entity), dan houd id leeg, maar vul aan onSave
+        //
+        //
+        //
         
         
         // validate
@@ -319,6 +353,10 @@ class MimotoData
             $property->currentId = $value;
 
             return;
+        }
+        else
+        {
+            // 1. is entity is 0 or null or '' ----> clear property
         }
 
         // validate
@@ -426,7 +464,7 @@ class MimotoData
     private function setCollectionProperty($property, $value, $sPropertySelector)
     {
         // forward
-        if (!empty($sPropertySelector)) { $this->forwardsetCollectionProperty($property, $sPropertySelector, $value); return; }
+        if (!empty($sPropertySelector)) { $this->forwardSetCollectionProperty($property, $sPropertySelector, $value); return; }
         
         
         // validate
@@ -435,35 +473,91 @@ class MimotoData
         // 1. validate values in array
         // 2. check if subvalue or expression
         // 3. erzijn geen {} en  [], enkele {} want geen vrij object zoals json/MimotoData
+        // 4. overhevelen waarden
+        
+        
+        // init
+        if (!$this->_bTrackChanges) { $property->persistentCollection = []; }
+        $property->currentCollection = [];
+        
+        //print_r($value);
         
         $nItemCount = count($value);
         for ($i = 0; $i < $nItemCount; $i++)
         {
-            $item = $value($nItemCount);
+            // register
+            $item = $value[$i];
             
-            // _____________
+            // init
+            $subproperty = (object) array(
+                'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION_ITEM,
+                'entityType' => $property->allowedEntityTypes[0]
+            );
             
-            // validate
-            if (MimotoDataUtils::isEntity($item) && in_array($item->getEntityType, $property->allowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->name' has type '".$value->getEntityType()."' instead of type '$property->entityType'"); }
-
-            if (MimotoDataUtils::isEntity($value) )
+            echo "<pre>";
+            print_r($item);
+            echo "</pre>";
+            
+            // store value
+            $this->setEntityProperty($subproperty, $item, '');
+            
+            for ($j = 0; $j < $nItemCount; $j++)
             {
-                // store if change tracking is disabled
-                if (!$this->_bTrackChanges) { $property->persistentId = $value->getId(); }
-
-                // store
-                $property->currentId = $value->getId();
-                $property->entityCache = $value;
-
-                return;
+                //$property->currentCollection
             }
-            else
-            if (MimotoDataUtils::isValidEntityId($value))
-            {
-            }
+            
+            // store
+            if (!$this->_bTrackChanges) { $property->persistentCollection[$i] = $subproperty; }
+            $property->currentCollection[] = $subproperty;
         }
     }
     
+    /**
+     * Add collection property
+     * @param object $property
+     * @param mixed $value
+     * @param string $sPropertySelector
+     * @throws MimotoEntityException
+     */
+    private function addCollectionProperty($property, $value, $sPropertySelector)
+    {
+        // forward
+        if (!empty($sPropertySelector)) { $this->forwardAddEntityProperty($property, $sPropertySelector, $value); return; }
+        
+        
+        // 1. is setValue id '' -> remove entityCache
+        // 2. if no id set (omdat new entity), dan houd id leeg, maar vul aan onSave
+        
+        
+        // validate
+        if (MimotoDataUtils::isEntity($value) && $value->getEntityType() !== $property->entityType) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->name' has type '".$value->getEntityType()."' instead of type '$property->entityType'"); }
+
+        if (MimotoDataUtils::isEntity($value) )
+        {
+            // store if change tracking is disabled
+            if (!$this->_bTrackChanges) { $property->persistentId = $value->getId(); }
+
+            // store
+            $property->currentId = $value->getId();
+            $property->entityCache = $value;
+
+            return;
+        }
+        else
+        if (MimotoDataUtils::isValidEntityId($value))
+        {
+             // store if change tracking is disabled
+            if (!$this->_bTrackChanges) { $property->persistentId = $value; }
+
+            // store
+            $property->currentId = $value;
+
+            return;
+        }
+
+        // validate
+        throw new MimotoEntityException("( '-' ) - Sorry, the entity or entity id you are trying to set at '$property->name' doesn't seem to be valid");
+    }
     
     
     

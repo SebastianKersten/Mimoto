@@ -25,7 +25,8 @@
             "Mimoto\\Entity\\": "./src/Mimoto/domains/Entity",
             "Mimoto\\LiveScreen\\": "./src/Mimoto/domains/LiveScreen",
             "Mimoto\\Mail\\": "./src/Mimoto/domains/Mail",
-            "Mimoto\\library\\": "./src/Mimoto/library"
+            "Mimoto\\library\\": "./src/Mimoto/library",
+            "Mimoto\\tests\\": "./tests"
         }
     }
 }

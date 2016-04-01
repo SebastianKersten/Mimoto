@@ -22,7 +22,13 @@ class MimotoEntityRepository
      * The EventService
      * @var class
      */
-    protected $_EventService;
+    private $_EventService;
+    
+    /**
+     * The requested entities
+     * @var array
+     */
+    private $_aEntities = [];
     
     
     
@@ -233,12 +239,29 @@ class MimotoEntityRepository
      */
     private function createEntityFromMySQLResult(MimotoEntityConfig $entityConfig, $mysqlResult, $nIndex)
     {
-        // init
-        $entity = new MimotoEntity($entityConfig->getName(), false);
         
-        // register
-        $entity->setId(mysql_result($mysqlResult, $nIndex, 'id'));
-        $entity->setCreated(mysql_result($mysqlResult, $nIndex, 'created'));
+        // read
+        $nEntityId = mysql_result($mysqlResult, $nIndex, 'id');
+        
+        // make sure an entity is available only one
+        if (!isset($this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)]))
+        {
+            // init
+            $entity = new MimotoEntity($entityConfig->getName(), false);
+            
+            // register
+            $entity->setId($nEntityId);
+            $entity->setCreated(mysql_result($mysqlResult, $nIndex, 'created'));
+            
+            // store
+            $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $entity;
+        }
+        else
+        {
+            // load
+            $entity = $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)];
+        }
+        
         
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
@@ -375,6 +398,12 @@ class MimotoEntityRepository
         
         // send
         return $entity;
+    }
+    
+    
+    private function getEntityIdentifier($sEntityName, $nEntityId)
+    {
+        return $sEntityName.'.'.$nEntityId;
     }
     
 }
