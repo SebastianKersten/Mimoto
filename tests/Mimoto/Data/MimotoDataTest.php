@@ -2,7 +2,7 @@
 
 
 require __DIR__.'/../../../src/app.php';
-
+$GLOBALS['Mimoto.EntityService'] = $app['Mimoto.EntityService'];
 
 /**
  * MimotoData - Test
@@ -18,7 +18,7 @@ class MimotoDataTest extends \PHPUnit_Framework_TestCase
         $project->setValueAsProperty('name');        
         $project->setValue('name', 'VanMoof');
         
-        $this->assertEquals($project->getValue('name'), 'VanMoof', "Project name should be 'VanMoof'");
+        $this->assertEquals('VanMoof', $project->getValue('name'), "Project name should be 'VanMoof'");
     }
     
     public function testCreateAndSetEntityProperty()
@@ -28,7 +28,7 @@ class MimotoDataTest extends \PHPUnit_Framework_TestCase
         $project->setEntityAsProperty('client', 'client');
         $project->setValue('client', 2);
         
-        $this->assertEquals($project->getValue('client'), 2, "Client id should be '2'");
+        $this->assertEquals(2, $project->getValue('client')->getId(), "Client id should be '2'");
         
         $project->setValue('client.name', 'Yeah!');
         
