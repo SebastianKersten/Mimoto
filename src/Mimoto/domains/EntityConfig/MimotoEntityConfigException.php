@@ -5,7 +5,7 @@ namespace Mimoto\Config;
 
 
 /**
- * ClientException
+ * MimotoEntityConfigException
  *
  * @author Sebastian Kersten (@supertaboo)
  */

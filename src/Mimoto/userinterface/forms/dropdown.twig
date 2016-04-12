@@ -1,0 +1,11 @@
+<div>
+    <div class="form_field_name">Agency<span class="optional"> - optional</span></div>
+    <div class="form_field">
+        <select id="form_field_agency_id" name="agency_id">
+            <option value=""></option>
+            {% for agency in agencies %}
+                <option value="{{ agency.id }}" {% if agency.id == formdata.agency_id %}selected{% endif %}>{{ agency.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

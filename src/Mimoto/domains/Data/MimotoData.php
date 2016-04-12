@@ -346,7 +346,7 @@ class MimotoData
         else
         if (MimotoDataUtils::isValidEntityId($value))
         {
-             // store if change tracking is disabled
+            // store if change tracking is disabled
             if (!$this->_bTrackChanges) { $property->persistentId = $value; }
 
             // store
@@ -355,8 +355,16 @@ class MimotoData
             return;
         }
         else
+        if (empty($value) || $value == 0)
         {
-            // 1. is entity is 0 or null or '' ----> clear property
+            // store if change tracking is disabled
+            if (!$this->_bTrackChanges) { unset($property->persistentId); }
+            
+            // clear
+            unset($property->currentId);
+            unset($property->entityCache);
+            
+            return;
         }
 
         // validate
@@ -515,10 +523,6 @@ class MimotoData
 
                 // store
                 $subproperty->currentId = $item;
-            }
-            else
-            {
-                // 1. handle emtpy id, or throw message if not a valid value
             }
             
             

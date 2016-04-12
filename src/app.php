@@ -17,6 +17,7 @@ use MaidoProjects\Config\entities\SubprojectStateEntityConfig;
 use Mimoto\Event\MimotoEventServiceProvider;
 use Mimoto\LiveScreen\MimotoLiveScreenServiceProvider;
 use Mimoto\Data\MimotoEntityServiceProvider;
+use Mimoto\Config\MimotoEntityConfigServiceProvider;
 
 
 // init
@@ -51,6 +52,7 @@ $app->register(new MimotoEntityServiceProvider
         new SubprojectStateEntityConfig()
     ]
 ));
+$app->register(new MimotoEntityConfigServiceProvider());
 $app->register(new MimotoEventServiceProvider());
 $app->register(new MimotoLiveScreenServiceProvider // configure ViewModels
 (

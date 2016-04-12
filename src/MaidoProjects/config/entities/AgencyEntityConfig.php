@@ -4,7 +4,7 @@
 namespace MaidoProjects\Config\entities;
 
 // Mimoto classes
-use Mimoto\Config\MimotoEntityConfig;
+use Mimoto\EntityConfig\MimotoEntityConfig;
 
 /**
  * AgencyEntityConfig
