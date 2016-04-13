@@ -1,10 +1,10 @@
 <?php
 
 // classpath
-namespace Mimoto\Data;
+namespace Mimoto\EntityConfig;
 
 // Mimoto classes
-use Mimoto\Data\MimotoEntityException;
+use Mimoto\Data\MimotoEntityConfigException;
 
 
 /**
@@ -19,7 +19,7 @@ class MimotoEntityConfigService
     var $_aEntityConfigs = [];
     
     // components
-    var $_entityRepository;
+    var $_entityConfigRepository;
     
     
     // ----------------------------------------------------------------------------
@@ -29,21 +29,12 @@ class MimotoEntityConfigService
     
     /**
      * Constructor
-     * @param array $aEntityConfigs
+     * @param object $entityConfigRepository
      */
-    public function __construct($aEntityConfigs, $entityRepository)
+    public function __construct($entityConfigRepository)
     {
         // store
-        $this->_entityRepository = $entityRepository;
-        
-        for ($i = 0; $i < count($aEntityConfigs); $i++)
-        {
-            // register
-            $entityConfig = $aEntityConfigs[$i];
-            
-            // store
-            $this->_aEntityConfigs[$entityConfig->getName()] = $entityConfig;
-        }
+        $this->_entityConfigRepository = $entityConfigRepository;
         
         
         // 1. load all entity configs
@@ -59,16 +50,13 @@ class MimotoEntityConfigService
     /**
      * Get entity by id
      * @param int $nId
-     * @return MimotoEntity The entity
+     * @return MimotoEntityConfig The requested entity config
      */
-    public function getEntityById($sEntityType, $nId)
+    public function getEntityConfigById($nId)
     {
-        // verify
-        if (!isset($this->_aEntityConfigs[$sEntityType])) { throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'"); }
-        
         try
         {
-            $entity = $this->_entityRepository->get($this->_aEntityConfigs[$sEntityType], $nId);
+            $entityConfig = $this->_entityConfigRepository->get($nId);
         }
         catch(MimotoEntityException $e)
         {
@@ -76,23 +64,33 @@ class MimotoEntityConfigService
         }
         
         // send
-        return $entity;
+        return $entityConfig;
     }
     
     /**
      * Get all entities
      */
-    public function getAllEntities($sEntityType, $criteria = null)
+    public function getAllEntityConfigs($criteria = null)
     {
-        // verify
-        if (!isset($this->_aEntityConfigs[$sEntityType])) { throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'"); }
         
-        // load
-        $aEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);
+        return $this->_entityConfigRepository->getAllEntityConfigs();
         
-        // send
-        return $aEntities;
+        
+//        // verify
+//        if (!isset($this->_aEntityConfigs[$sEntityType])) { throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'"); }
+//        
+//        // load
+//        $aEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);
+//        
+//        // send
+//        return $aEntities;
     }
+    
+    
+    // 1. add node
+    // 2. remove node
+    // 3. store
+    // 4. load all configs
     
     
     /**

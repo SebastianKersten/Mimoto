@@ -16,8 +16,14 @@ class MimotoEntityConfig
 {
     
     /**
+     * The id of the entity config
+     * @var int 
+     */
+    var $_nId = '';
+    
+    /**
      * The name of the entity
-     * @var array 
+     * @var string 
      */
     var $_sName = '';
     
@@ -65,13 +71,26 @@ class MimotoEntityConfig
     
     
     /**
-     * Get MySQL table
-     * @return string The MySQL table
+     * Get entity config id
+     * @return int The id of the entity config
+     */
+    public function getId() { return $this->_nId; }
+    
+    /**
+     * Set entity config id
+     * @param int $nId
+     */
+    public function setId($nId) { $this->_nId = $nId; }
+    
+    
+    /**
+     * Get the name of the entity
+     * @return string The name of the entity
      */
     public function getName() { return $this->_sName; }
     
     /**
-     * Set entity name
+     * Set the name of the entity
      * @param string $sName
      */
     public function setName($sName) { $this->_sName = $sName; }

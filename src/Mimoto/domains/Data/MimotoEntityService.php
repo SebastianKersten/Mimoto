@@ -21,6 +21,10 @@ class MimotoEntityService
     // components
     var $_entityRepository;
     
+    // services
+    var $_EntityConfigService;
+    
+    
     
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -31,18 +35,39 @@ class MimotoEntityService
      * Constructor
      * @param array $aEntityConfigs
      */
-    public function __construct($aEntityConfigs, $entityRepository)
+    public function __construct($aCustomEntityConfigs, $entityRepository, $entityConfigService)
     {
         // store
         $this->_entityRepository = $entityRepository;
+        $this->_EntityConfigService = $entityConfigService;
         
-        for ($i = 0; $i < count($aEntityConfigs); $i++)
+        for ($i = 0; $i < count($aCustomEntityConfigs); $i++)
         {
             // register
-            $entityConfig = $aEntityConfigs[$i];
+            $entityConfig = $aCustomEntityConfigs[$i];
             
             // store
             $this->_aEntityConfigs[$entityConfig->getName()] = $entityConfig;
+        }
+        
+        // 1. load configs here
+        // 2. custom overrules database, want maakt testen met nieuwe entities mogeljk
+        
+        
+        
+        // load
+        $aDatabaseEntityConfigs = $this->_EntityConfigService->getAllEntityConfigs();
+        
+        for ($i = 0; $i < count($aDatabaseEntityConfigs); $i++)
+        {
+            // register
+            $entityConfig = $aDatabaseEntityConfigs[$i];
+            
+            // store if not overrules
+            if (!isset($this->_aEntityConfigs[$entityConfig->getName()]))
+            {
+                $this->_aEntityConfigs[$entityConfig->getName()] = $entityConfig;
+            }
         }
     }
     

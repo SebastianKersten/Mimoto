@@ -17,7 +17,6 @@ use MaidoProjects\Config\entities\SubprojectStateEntityConfig;
 use Mimoto\Event\MimotoEventServiceProvider;
 use Mimoto\LiveScreen\MimotoLiveScreenServiceProvider;
 use Mimoto\Data\MimotoEntityServiceProvider;
-use Mimoto\Config\MimotoEntityConfigServiceProvider;
 
 
 // init
@@ -33,6 +32,8 @@ $twig = new Twig_Environment($loader, array(
 $link = mysql_connect('127.0.0.1', 'root', '');
 mysql_select_db('maidoprojects') or die('Could not select database');
 
+$pdo = new PDO("mysql:host=127.0.0.1;dbname=maidoprojects", 'root', '');
+
 
 // ... definitions
 $app['debug'] = true;
@@ -41,18 +42,17 @@ $app['twig'] = $twig;
 
 
 // setup entities
-$app->register(new MimotoEntityServiceProvider
-(
-    [
-        new ClientEntityConfig(),
-        new AgencyEntityConfig(),
-        new ProjectManagerEntityConfig(),
-        new ProjectEntityConfig(),
-        new SubprojectEntityConfig(),
-        new SubprojectStateEntityConfig()
-    ]
-));
-$app->register(new MimotoEntityConfigServiceProvider());
+$app->register(new MimotoEntityServiceProvider());
+//(
+//    [
+//        new ClientEntityConfig(),
+//        new AgencyEntityConfig(),
+//        new ProjectManagerEntityConfig(),
+//        new ProjectEntityConfig(),
+//        new SubprojectEntityConfig(),
+//        new SubprojectStateEntityConfig()
+//    ]
+//));
 $app->register(new MimotoEventServiceProvider());
 $app->register(new MimotoLiveScreenServiceProvider // configure ViewModels
 (

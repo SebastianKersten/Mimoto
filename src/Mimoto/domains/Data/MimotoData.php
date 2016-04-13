@@ -5,7 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\library\data\MimotoDataUtils;
-use Mimoto\Config\MimotoEntityPropertyTypes;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoCollection;
 
 

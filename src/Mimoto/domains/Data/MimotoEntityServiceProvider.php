@@ -6,6 +6,8 @@ namespace Mimoto\Data;
 // Mimoto classes
 use Mimoto\Data\MimotoEntityService;
 use Mimoto\Data\MimotoEntityRepository;
+use Mimoto\EntityConfig\MimotoEntityConfigRepository;
+use Mimoto\EntityConfig\MimotoEntityConfigService;
 
 // Silex classes
 use Silex\Application;
@@ -33,7 +35,7 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
      * Constructor
      * @param array $aEntityConfigs
      */
-    public function __construct($aEntityConfigs)
+    public function __construct($aEntityConfigs = [])
     {
         // store
         $this->_aEntityConfigs = $aEntityConfigs;
@@ -53,10 +55,25 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         // register
+        $app['Mimoto.EntityConfigService'] = $app->share(function($app) {
+            
+            // init
+            $service = new MimotoEntityConfigService(new MimotoEntityConfigRepository());
+            
+            // send
+            return $service;
+        });
+        
+        
+        // register
         $app['Mimoto.EntityService'] = $app->share(function($app) {
             
             // init
-            $service = new MimotoEntityService($this->_aEntityConfigs, new MimotoEntityRepository($app['Mimoto.EventService']));
+            $service = new MimotoEntityService(
+                $this->_aEntityConfigs, 
+                new MimotoEntityRepository($app['Mimoto.EventService']), 
+                $app['Mimoto.EntityConfigService']
+            );
             
             // send
             return $service;

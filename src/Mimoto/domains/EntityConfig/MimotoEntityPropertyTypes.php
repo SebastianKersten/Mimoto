@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace Mimoto\Config;
+namespace Mimoto\EntityConfig;
 
 
 /**
@@ -12,8 +12,8 @@ namespace Mimoto\Config;
 class MimotoEntityPropertyTypes
 {
     // property types
-    const PROPERTY_TYPE_VALUE = 'property_type_value';
-    const PROPERTY_TYPE_ENTITY = 'property_type_entity';
-    const PROPERTY_TYPE_COLLECTION = 'property_type_collection';
-    const PROPERTY_TYPE_COLLECTION_ITEM = 'property_type_collection_item';
+    const PROPERTY_TYPE_VALUE = 'value';
+    const PROPERTY_TYPE_ENTITY = 'entity';
+    const PROPERTY_TYPE_COLLECTION = 'collection';
+    const PROPERTY_TYPE_COLLECTION_ITEM = 'collection_item';
 }
