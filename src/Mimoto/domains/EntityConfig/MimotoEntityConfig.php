@@ -4,7 +4,8 @@
 namespace Mimoto\EntityConfig;
 
 // Mimoto classes
-use Mimoto\Config\MimotoEntityConfigException;
+use Mimoto\EntityConfig\MimotoEntityConfigException;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
 /**
@@ -51,11 +52,6 @@ class MimotoEntityConfig
     // --- Constants --------------------------------------------------------------
     // ----------------------------------------------------------------------------
     
-    
-    // property types
-    const PROPERTY_TYPE_VALUE = 'property_type_value';
-    const PROPERTY_TYPE_ENTITY = 'property_type_entity';
-    const PROPERTY_TYPE_COLLECTION = 'property_type_collection';
     
     // property value types
     const PROPERTY_VALUE_MYSQL_COLUMN = 'property_value_mysql_column';
@@ -159,7 +155,7 @@ class MimotoEntityConfig
     {
         // compose
         $property = (object) array(
-            'type' => self::PROPERTY_TYPE_VALUE,
+            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
             'name' => $sPropertyName
         );
         
@@ -176,7 +172,7 @@ class MimotoEntityConfig
     {
          // compose
         $property = (object) array(
-            'type' => self::PROPERTY_TYPE_ENTITY,
+            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'name' => $sPropertyName,
             'entityType' => $sEntityType
         );
@@ -194,7 +190,7 @@ class MimotoEntityConfig
     {
          // compose
         $property = (object) array(
-            'type' => self::PROPERTY_TYPE_COLLECTION,
+            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
             'name' => $sPropertyName,
             'allowedEntityType' => $sAllowedEntityType
         );

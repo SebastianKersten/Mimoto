@@ -19,6 +19,7 @@
             "MaidoProjects\\SubprojectState\\": "./src/MaidoProjects/domains/SubprojectState",
             "MaidoProjects\\SubprojectPart\\": "./src/MaidoProjects/domains/SubprojectPart",
             "library\\": "./src/MaidoProjects/library",
+            "Mimoto\\UserInterface\\": "./src/Mimoto/userinterface",
             "Mimoto\\EntityConfig\\": "./src/Mimoto/domains/EntityConfig",
             "Mimoto\\FormConfig\\": "./src/Mimoto/domains/FormConfig",
             "Mimoto\\Data\\": "./src/Mimoto/domains/Data",

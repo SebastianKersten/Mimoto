@@ -1,0 +1,128 @@
+{% include 'Mimoto.CMS/forms/output/title.twig' with { title:'Design your entity', subtitle:'Entity with id = ' ~ entity.id, description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' } %}
+
+
+<div class="form_group">
+
+{% include 'Mimoto.CMS/forms/output/description.twig' with { title:'Campagne beschrijving', description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' } %}
+
+<div class="form_divider"></div>
+
+{% include 'Mimoto.CMS/forms/input/textline.twig' with { label:'Name', name:'name', value:entity.name } %}
+
+
+</div>
+
+
+<table>
+    <tr style="background-color:#d9d9d9;">
+        <td class="header">id</td>
+        <td class="header">Property</td>
+        <td class="header">Type</td>
+        <td class="header">Options</td>
+    </tr>
+    {% for property in entity.properties %}
+    <tr style="background-color:{{ property.bgcolor }};">
+        <td valign="top" class="property">{{ property.id }}</td>
+        <td valign="top" class="property"><input id="formdata_{{ property.id }}" type="text" class="textfield" value="{{ property.name }}" /></td>
+        <td valign="top" class="property">
+            <select id="formdata_propertytype_{{ property.id }}" onchange="Mimoto.entity.property.showPropertyOptions({{ property.id }});">
+                <option value="value" {% if property.type=='value' %}selected{% endif %}>value</option>
+                <option value="entity" {% if property.type=='entity' %}selected{% endif %}>entity</option>
+                <option value="collection" {% if property.type=='collection' %}selected{% endif %}>collection</option>
+            </select>
+        </td>
+        <td valign="top" class="options">
+            <div id="options_value_{{ property.id }}" class="{% if property.type!='value' %}hidden{% endif %}">
+                <table>
+                    <tr>
+                        <td>type</td>
+                        <td valign="">
+                            <select id="form_field_agency_id" name="agency_id">
+                                <option value="textline" {% if property.type=='textline' %}selected{% endif %}>textline</option>
+                                <option value="textblock" {% if property.type=='textblock' %}selected{% endif %}>textblock</option>
+                                <option value="boolean" {% if property.type=='boolean' %}selected{% endif %}>boolean</option>
+                                <option value="number" {% if property.type=='number' %}selected{% endif %}>number</option>
+                                <option value="timestamp" {% if property.type=='timestamp' %}selected{% endif %}>timestamp</option>
+                                <option value="constant" {% if property.type=='constant' %}selected{% endif %}>constant</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="options_entity_{{ property.id }}" class="{% if property.type!='entity' %}hidden{% endif %}">
+                 <table>
+                    <tr>
+                        <td>entityType</td>
+                        <td>
+                            <select id="form_field_agency_id" name="agency_id">
+                                {% for availableEntity in aAvailableEntities %}                                
+                                <option value="{{ availableEntity.id }}" {% if property.type=='value' %}selected{% endif %}>{{ availableEntity.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="options_collection_{{ property.id }}" class="{% if property.type!='collection' %}hidden{% endif %}">
+                <table>
+                    <tr>
+                        <td>allowedEntityType</td>
+                        <td>
+                            <select id="form_field_agency_id" name="agency_id">
+                                {% for availableEntity in aAvailableEntities %}                                
+                                <option value="{{ availableEntity.id }}" {% if property.type=='value' %}selected{% endif %}>{{ availableEntity.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>allowDuplicates</td>
+                        <td>
+                            <select id="form_field_agency_id" name="agency_id">
+                                <option value="false" {% if property.type=='entity' %}selected{% endif %}>false (default)</option>
+                                <option value="true" {% if property.type=='value' %}selected{% endif %}>true</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<script>
+Mimoto = {};
+Mimoto.entity = {};
+Mimoto.entity.property = {};
+Mimoto.entity.property.showPropertyOptions = function(nPropertyId)
+{
+    
+    var sPropertyType = document.getElementById('formdata_propertytype_' + nPropertyId).value;
+    
+    switch(sPropertyType)
+    {
+        case 'value':
+            
+            $('#options_value_' + nPropertyId).removeClass('hidden');
+            $('#options_entity_' + nPropertyId).addClass('hidden');
+            $('#options_collection_' + nPropertyId).addClass('hidden');
+            break;
+            
+        case 'entity':
+            
+            $('#options_value_' + nPropertyId).addClass('hidden');
+            $('#options_entity_' + nPropertyId).removeClass('hidden');
+            $('#options_collection_' + nPropertyId).addClass('hidden');
+            break;
+            
+        case 'collection':
+            
+            $('#options_value_' + nPropertyId).addClass('hidden');
+            $('#options_entity_' + nPropertyId).addClass('hidden');
+            $('#options_collection_' + nPropertyId).removeClass('hidden');
+            break;
+    }
+    
+}
+</script>

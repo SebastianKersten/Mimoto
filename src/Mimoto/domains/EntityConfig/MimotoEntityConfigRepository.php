@@ -23,11 +23,12 @@ class MimotoEntityConfigRepository
      * @var array
      */
     private $_aEntityConfigs = [];
+    private $_aEntities;
     
     
-    const DBTABLE_ENTITYCONFIGS = '_mimoto_entityconfigs';
-    const DBTABLE_ENTITYCONFIGS_PROPERTIES = '_mimoto_entityconfigs_properties';
-    const DBTABLE_ENTITYCONFIGS_PROPERTIES_OPTIONS = '_mimoto_entityconfigs_properties_options';
+    const DBTABLE_ENTITIES = '_mimoto_entities';
+    const DBTABLE_ENTITIES_PROPERTIES = '_mimoto_entities_properties';
+    const DBTABLE_ENTITIES_PROPERTIES_OPTIONS = '_mimoto_entities_properties_options';
     
     
     
@@ -42,7 +43,8 @@ class MimotoEntityConfigRepository
     public function __construct()
     {
         // prepare
-        $this->loadAllEntityConfigs();
+        $this->loadAllEntityConfigData();
+        $this->composeAllEntityConfigs();
     }
     
         
@@ -57,6 +59,10 @@ class MimotoEntityConfigRepository
         return $this->_aEntityConfigs;
     }
     
+    public function getAllEntityConfigData()
+    {
+        return $this->_aEntities;
+    }
     
     
     /**
@@ -80,38 +86,13 @@ class MimotoEntityConfigRepository
         // validate
         if (is_nan($nId) || $nId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity config id '$nId' you passed is not a valid. Should be an integer > 0"); }
         
-        
-        
-//        $pdo->prepare('
-//            SELECT * FROM '".self::DBTABLE_ENTITYCONFIGS."'
-//            WHERE id = :id');
-//
-//        $params = array(':id' => $nId);
-//        
-//        $pdo->execute($params);
-        
-        
-        
-//        
-//        
-//        // load
-//        $sQuery = "SELECT * FROM ".self::DBTABLE_ENTITYCONFIGS." WHERE id=".$nId;
-//        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-//        $nItemCount = mysql_num_rows($result);
-//        
-//        // verify
-//        if ($nItemCount !== 1)
-//        {
-//            throw new MimotoEntityException("( '-' ) - Sorry, I can't find the entity config with id='$nId'");
-//        }
-//        else
-//        {
-//            // setup
-//            $entityConfig = $this->createEntityConfigFromMySQLResult($result, 0);
-//            
-//            // send
-//            return $entityConfig;
-//        }
+        $nItemCount = count($this->_aEntityConfigs);
+        for ($i = 0; $i < $nItemCount; $i++)
+        {
+            $entityConfig = $this->_aEntityConfigs[$i];
+            
+           if ($entityConfig->getId() === $nId) { return $entityConfig; }
+        }
     }
     
     /**
@@ -141,42 +122,103 @@ class MimotoEntityConfigRepository
     
     
     
-    private function loadAllEntityConfigs()
+    private function loadAllEntityConfigData()
     {
-        // load
-        $sQuery = "SELECT * FROM ".self::DBTABLE_ENTITYCONFIGS;
-        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        $nItemCount = mysql_num_rows($result);
         
-        // 1. load 3 tables and add to memory (serializable)
-        // 2. of uit memory
+        // 1. load from cache if present
+        // 2. store in cache onLoad
+        
+        
+        // init
+        $aAllProperties = [];
+        $aAllOptions = [];
+        
+        
+        // load
+        $sQueryEntities = "SELECT * FROM ".self::DBTABLE_ENTITIES;
+        $resultEntities = mysql_query($sQueryEntities) or die('Query failed: ' . mysql_error());
+        $nEntityCount = mysql_num_rows($resultEntities);
         
         // store
-        for ($i = 0; $i < $nItemCount; $i++)
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            $entity = (object) array(
+                'id' => mysql_result($resultEntities, $i, 'id'),
+                'name' => mysql_result($resultEntities, $i, 'name'),
+                'dbtable' => mysql_result($resultEntities, $i, 'dbtable'),
+                'extends_id' => mysql_result($resultEntities, $i, 'extends_id'),
+                'created' => mysql_result($resultEntities, $i, 'created'),
+                'properties' => []
+            );
+            
+            $this->_aEntities[] = $entity;
+        }
+        
+        // load
+        $sQueryProperties = "SELECT * FROM ".self::DBTABLE_ENTITIES_PROPERTIES;
+        $resultProperties = mysql_query($sQueryProperties) or die('Query failed: ' . mysql_error());
+        $nPropertyCount = mysql_num_rows($resultProperties);
+        
+        // store
+        for ($i = 0; $i < $nPropertyCount; $i++)
+        {
+            $property = (object) array(
+                'id' => mysql_result($resultProperties, $i, 'id'),
+                'name' => mysql_result($resultProperties, $i, 'name'),
+                'type' => mysql_result($resultProperties, $i, 'type'),
+                'parent_id' => mysql_result($resultProperties, $i, 'parent_id'),
+                'sortindex' => mysql_result($resultProperties, $i, 'sortindex'),
+                'created' => mysql_result($resultProperties, $i, 'created'),
+                'options' => []
+            );
+            
+            $nEntityConfigId = mysql_result($resultProperties, $i, 'entity_id');
+            
+            $aAllProperties[$nEntityConfigId][] = $property;
+        }
+        
+        // load
+        $sQueryOptions = "SELECT * FROM ".self::DBTABLE_ENTITIES_PROPERTIES_OPTIONS;
+        $resultOptions = mysql_query($sQueryOptions) or die('Query failed: ' . mysql_error());
+        $nOptionCount = mysql_num_rows($resultOptions);
+        
+        
+        // store
+        for ($i = 0; $i < $nOptionCount; $i++)
         {
             // init
-            $entityConfig = new MimotoEntityConfig();
+            $option = (object) array(
+                'id' => mysql_result($resultOptions, $i, 'id'),
+                'name' => mysql_result($resultOptions, $i, 'name'),
+                'value' => mysql_result($resultOptions, $i, 'value'),
+                'created' => mysql_result($resultOptions, $i, 'created')
+            );
             
-            // setup
-            $entityConfig->setId(mysql_result($result, $i, 'id'));
-            $entityConfig->setName(mysql_result($result, $i, 'name'));
-            $entityConfig->setMySQLTable(mysql_result($result, $i, 'dbtable'));
+            $nEntityConfigPropertyId = mysql_result($resultOptions, $i, 'property_id');
             
             // store
-            $this->_aEntityConfigs[] = $entityConfig;
+            $aAllOptions[$nEntityConfigPropertyId][$option->name] = $option;
         }
         
-        $nItemCount = count($this->_aEntityConfigs);
-        for ($i = 0; $i < $nItemCount; $i++)
+        // compose
+        for ($i = 0; $i < count($this->_aEntities); $i++)
         {
-            $entityConfig = $this->_aEntityConfigs[$i];
+            // read
+            $entity = $this->_aEntities[$i];
             
-            $this->composeEntityConfig($entityConfig);
+            // store
+            $entity->properties = $aAllProperties[$entity->id];
+            
+            // store
+            for ($j = 0; $j < count($entity->properties); $j++)
+            {
+                // read
+                $property = $entity->properties[$j];
+                
+                // store
+                $property->options = $aAllOptions[$property->id];
+            }
         }
-        
-        
-        // 1. setup rest of the entityConfigs
-        // 2. prepare data for storage in memory (json)
     }
     
     /**
@@ -185,66 +227,62 @@ class MimotoEntityConfigRepository
      * @param int $nIndex
      * @return entity
      */
-    private function composeEntityConfig($entityConfig)
+    private function composeAllEntityConfigs()
     {
-        // load
-        $sQueryProperties = "SELECT * FROM ".self::DBTABLE_ENTITYCONFIGS_PROPERTIES." WHERE entityconfig_id=".$entityConfig->getId().' ORDER BY sortindex ASC';
-        $resultProperties = mysql_query($sQueryProperties) or die('Query failed: ' . mysql_error());
-        $nPropertyCount = mysql_num_rows($resultProperties);
         
-        // 
-        for ($i = 0; $i < $nPropertyCount; $i++)
-        {
+        // compose
+        for ($i = 0; $i < count($this->_aEntities); $i++)
+        {   
+            // read
+            $entity = $this->_aEntities[$i];
             
-            $nPropertyId = mysql_result($resultProperties, $i, 'id');
-            $sPropertyName = mysql_result($resultProperties, $i, 'name');
-            $sPropertyType = mysql_result($resultProperties, $i, 'type');
+            // init
+            $entityConfig = new MimotoEntityConfig();
             
+            // setup
+            $entityConfig->setId($entity->id);
+            $entityConfig->setName($entity->name);
+            $entityConfig->setMySQLTable($entity->name);
             
-            // load
-            $sQueryOptions = "SELECT * FROM ".self::DBTABLE_ENTITYCONFIGS_PROPERTIES_OPTIONS." WHERE property_id=".$nPropertyId;
-            $resultOptions = mysql_query($sQueryOptions) or die('Query failed: ' . mysql_error());
-            $nOptionCount = mysql_num_rows($resultOptions);
-
-            // 
-            $aPropertyOptions = [];
-            for ($j = 0; $j < $nOptionCount; $j++)
+            // store
+            for ($j = 0; $j < count($entity->properties); $j++)
             {
-                $sOptionName = mysql_result($resultOptions, $j, 'option');
-                $optionValue = mysql_result($resultOptions, $j, 'value');
+                // read
+                $property = $entity->properties[$j];
                 
-                $aPropertyOptions[$sOptionName] = $optionValue;
+                
+                switch($property->type)
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                        $entityConfig->setValueAsProperty($property->name);
+
+                        // connect entity to data source
+                        $entityConfig->connectPropertyToMySQLColumn($property->name, $property->name);
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                        // 1. entity-types opslaan in class root en dan de string meegeven, ipv de id
+
+                        $entityConfig->setEntityAsProperty($property->name, $this->getEntityNameById($property->options['entityType']));
+
+                        // connect entity to data source
+                        $entityConfig->connectPropertyToMySQLColumn($property->name, $property->name.'_id');
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                        // 1. pass options, zoals allowDuplicates en verwerk intern in method
+
+                        $entityConfig->setCollectionAsProperty($property->name, $this->getEntityNameById($property->options['allowedEntityType']), $property->options);
+                        break;
+                }
             }
             
             
-            switch($sPropertyType)
-            {
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-                    
-                    $entityConfig->setValueAsProperty($sPropertyName);
-                    
-                    // connect entity to data source
-                    $entityConfig->connectPropertyToMySQLColumn($sPropertyName, $sPropertyName);
-                    break;
-                    
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                    
-                    // 1. entity-types opslaan in class root en dan de string meegeven, ipv de id
-                    
-                    $entityConfig->setEntityAsProperty($sPropertyName, $this->getEntityNameById($aPropertyOptions['entityType']));
-                    
-                    // connect entity to data source
-                    $entityConfig->connectPropertyToMySQLColumn($sPropertyName, $sPropertyName.'_id');
-                    break;
-                    
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-                    
-                    // 1. pass options, zoals allowDuplicates en verwerk intern in method
-                    
-                    $entityConfig->setEntityAsProperty($sPropertyName, $aPropertyOptions['allowedEntityType']);
-                    break;
-            }
-            
+            // store
+            $this->_aEntityConfigs[] = $entityConfig;
         }
     }
     

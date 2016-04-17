@@ -23,7 +23,12 @@ use Mimoto\Data\MimotoEntityServiceProvider;
 $app = new \Silex\Application();
 
 // setup
-$loader = new \Twig_Loader_Filesystem([__DIR__.'/../src/MaidoProjects/userinterface/templates']);
+$loader = new \Twig_Loader_Filesystem(
+    [
+        __DIR__.'/../src/MaidoProjects/userinterface/templates',
+        __DIR__.'/../src/Mimoto/userinterface/templates'
+    ]
+);
 $twig = new Twig_Environment($loader, array(
     // 'cache' => '../app/cache',
 ));
@@ -43,16 +48,6 @@ $app['twig'] = $twig;
 
 // setup entities
 $app->register(new MimotoEntityServiceProvider());
-//(
-//    [
-//        new ClientEntityConfig(),
-//        new AgencyEntityConfig(),
-//        new ProjectManagerEntityConfig(),
-//        new ProjectEntityConfig(),
-//        new SubprojectEntityConfig(),
-//        new SubprojectStateEntityConfig()
-//    ]
-//));
 $app->register(new MimotoEventServiceProvider());
 $app->register(new MimotoLiveScreenServiceProvider // configure ViewModels
 (

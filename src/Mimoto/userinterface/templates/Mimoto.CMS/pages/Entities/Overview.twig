@@ -1,0 +1,6 @@
+<div class="entityconfig_container">
+{% for entityConfig in aEntityConfigs %}
+    {% include 'Mimoto.CMS/pages/Entities/components/EntityConfig.twig' %}
+{% endfor %}
+</div>
+<div class="button"  onclick="window.open('/mimoto.cms/entity/new', '_self');">Add new entity +</div>
