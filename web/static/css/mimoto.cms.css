@@ -158,10 +158,18 @@ div.button {
     color: #ffffff;
     background-color: #000000;
     display: inline-block;
-    padding: 10px 15px 10px 15px;
+    padding: 11px 18px 13px 18px;
     cursor: pointer;
     white-space:nowrap;
+    font-size: 14px;
+    margin: 15px 0 15px 0;
 }
+
+    div.button>span {
+        color: #06afea;
+        margin-left: 14px;
+        font-size: 14px;
+    }
 
 
 
@@ -227,7 +235,7 @@ div.form_divider {
     height: 1px;
     width: 100%;
     background-color: #d6d6d6;
-    margin: 30px 0 18px 0;
+    margin: 35px 0 18px 0;
 }
 
 
@@ -289,7 +297,7 @@ div.form_output_info_description {
 }
 
 
-div.form_input {
+div.form_field {
     margin-bottom: 8px;
 }
 
@@ -300,7 +308,11 @@ div.form_input_label {
     padding: 10px 0 10px 0;
 }
 
-input {
+span.form_input_optional {
+    color: #979797;
+}
+
+input.textfield {
     border: 1px solid #cac8c9;
     background-color: #f7f7f7;
     padding: 15px 25px 16px 15px;
@@ -311,7 +323,25 @@ input {
     max-width: 500px;
 }
 
-input:focus {
+input.textfield.error, input.textfield:focus.error {
+    border: 1px solid #d1736e;
+}
+
+div.form_errormessage {
+    display: none;
+    font-family: "Helvetica neue", sans-serif;
+    color: #d1736e;
+    font-size: 13px;
+    padding: 10px 0 10px 0;
+    width: 100%;
+    max-width: 500px;
+}
+
+div.form_errormessage.error {
+    display: block;
+}
+
+input.textfield:focus, select:focus {
     outline: 0;
     border: 1px solid #06afea;
     background-color: #ffffff;

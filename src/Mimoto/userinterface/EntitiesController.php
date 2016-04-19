@@ -85,22 +85,135 @@ class EntitiesController
         // 8. add column to table on adding of property
         // 9. check usage when changing a property
         // 10. backup function
+        // 
+        // 11. delete button per property
+        // 12. add empty property
+        // 13. part of group
+        // 14. regex per textinput
+        // 15. option value
         
 //        echo "<pre>";
-//        print_r($entity);
+//        print_r($aAvailableEntities);
 //        echo "</pre>";
 //        die();
+        
+        
         
         
         return $app['twig']->render(
             'Mimoto.CMS/root.twig',
             array(
-                'section' => 'Edit entity with id = '.$nId,
                 'pagetemplate' => 'Mimoto.CMS/pages/Entities/Config.twig',
                 'entity' => $entity,
-                'aAvailableEntities' => $aAvailableEntities
+                'aAvailableEntities' => $this->composeAvailableEntities($aAvailableEntities),
+                'aPropertyTypes' => $this->composePropertyTypes(),
+                'aValueTypes' => $this->composeValueTypes(),
+                'aAllowDuplicatesOptions' => $this->composeAllowDuplicatesOptions(),
+                'aPropertyNameValidation' => json_encode(['regex' => '^[a-zA-Z][a-zA-Z0-9-_]*?$', 'maxchars' => 10, 'api' => 'Mimoto/form/validate']),
+                'aPropertyGroupValidation' => json_encode(['regex' => '^[a-zA-Z]*?[a-zA-Z0-9-_]*?(\.[a-zA-Z][a-zA-Z0-9-_]*?)*$'])
             )
         );
     }
     
+    
+    private function composePropertyTypes()
+    {
+        // init
+        $aOptions = [];
+        
+        // options
+        $aAvailableOptions = ['value', 'entity', 'collection'];
+        
+        // compose
+        for ($i = 0; $i < count($aAvailableOptions); $i++)
+        {
+            // setup
+            $option = (object) array
+            (
+                'value' => $aAvailableOptions[$i],
+                'label' => $aAvailableOptions[$i]
+            );
+            
+            // store
+            $aOptions[] = $option;
+        }
+                
+        // send
+        return $aOptions;
+    }
+    
+    private function composeValueTypes()
+    {
+        // init
+        $aOptions = [];
+        
+        // options
+        $aAvailableOptions = ['textline', 'textblock', 'boolean', 'number', 'timestamp','constant'];
+        
+        // compose
+        for ($i = 0; $i < count($aAvailableOptions); $i++)
+        {
+            // setup
+            $option = (object) array
+            (
+                'value' => $aAvailableOptions[$i],
+                'label' => $aAvailableOptions[$i]
+            );
+            
+            // store
+            $aOptions[] = $option;
+        }
+                
+        // send
+        return $aOptions;
+    }
+    
+    private function composeAvailableEntities($aAvailableEntities)
+    {
+        // init
+        $aOptions = [];
+        
+        // compose
+        for ($i = 0; $i < count($aAvailableEntities); $i++)
+        {
+            // setup
+            $option = (object) array
+            (
+                'value' => $aAvailableEntities[$i]->id,
+                'label' => $aAvailableEntities[$i]->name
+            );
+            
+            // store
+            $aOptions[] = $option;
+        }
+                
+        // send
+        return $aOptions;
+    }
+    
+    private function composeAllowDuplicatesOptions()
+    {
+        // init
+        $aOptions = [];
+        
+        // options
+        $aAvailableOptions = ['false', 'true'];
+        
+        // compose
+        for ($i = 0; $i < count($aAvailableOptions); $i++)
+        {
+            // setup
+            $option = (object) array
+            (
+                'value' => $aAvailableOptions[$i],
+                'label' => $aAvailableOptions[$i]
+            );
+            
+            // store
+            $aOptions[] = $option;
+        }
+                
+        // send
+        return $aOptions;
+    }
 }

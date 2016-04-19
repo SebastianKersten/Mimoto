@@ -1,10 +1,10 @@
-<div>
-    <div class="form_field_name">Type<span class="optional"> - optional</span></div>
-    <div class="form_field">
-        <select id="form_field_agency_id" name="agency_id">
-            <option value=""></option>
-            {% for agency in agencies %}
-                <option value="{{ agency.id }}" {% if agency.id == formdata.agency_id %}selected{% endif %}>{{ agency.name }}</option>
+<div class="form_input"> 
+    <div class="form_input_label">{{ label }}</div>
+    <div>
+        <select id="formdata_{{ name }}"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif%}>
+            {% if value is empty %}<option value=""></option>{% endif %}
+            {% for option in aOptions %}
+                <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
             {% endfor %}
         </select>
     </div>
