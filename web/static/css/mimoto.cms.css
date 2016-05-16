@@ -359,3 +359,11 @@ select {
     height: 50px;
     border-radius: 0;
 }
+
+
+mimoto_list {
+    background-color: #d6d6d6;
+    border: #000000 solid 1px;
+    width: 500px;
+    margin: 20px;
+}

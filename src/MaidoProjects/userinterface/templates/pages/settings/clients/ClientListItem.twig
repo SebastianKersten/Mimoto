@@ -2,13 +2,13 @@
     include "components/data/simplelist_item.twig"
     with 
     {
-        id                  : client.getId, 
-        label               : client.getName,
+        id                  : data.getId(), 
+        label               : data.getValue('name'),
         
-        entityType          : client.getEntityType,
+        entityType          : data.getEntityType(),
         
-        mls_id              : client.getAimlessId(), 
-        mls_value__label    : client.getAimlessValue('name'),
+        mls_id              : data.getAimlessId(), 
+        mls_value__label    : data.getAimlessValue('name'),
         mls_template        : 'ClientListItem'
     }
 %}

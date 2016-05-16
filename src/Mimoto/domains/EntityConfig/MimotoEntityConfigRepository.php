@@ -145,7 +145,6 @@ class MimotoEntityConfigRepository
             $entity = (object) array(
                 'id' => mysql_result($resultEntities, $i, 'id'),
                 'name' => mysql_result($resultEntities, $i, 'name'),
-                'dbtable' => mysql_result($resultEntities, $i, 'dbtable'),
                 'extends_id' => mysql_result($resultEntities, $i, 'extends_id'),
                 'created' => mysql_result($resultEntities, $i, 'created'),
                 'properties' => []

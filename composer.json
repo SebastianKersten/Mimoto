@@ -25,7 +25,7 @@
             "Mimoto\\Data\\": "./src/Mimoto/domains/Data",
             "Mimoto\\Event\\": "./src/Mimoto/domains/Event",
             "Mimoto\\Entity\\": "./src/Mimoto/domains/Entity",
-            "Mimoto\\LiveScreen\\": "./src/Mimoto/domains/LiveScreen",
+            "Mimoto\\Aimless\\": "./src/Mimoto/domains/Aimless",
             "Mimoto\\Mail\\": "./src/Mimoto/domains/Mail",
             "Mimoto\\library\\": "./src/Mimoto/library",
             "Mimoto\\tests\\": "./tests"

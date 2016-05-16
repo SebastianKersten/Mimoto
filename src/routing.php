@@ -42,5 +42,6 @@ $app->get('/subprojectstate/new', 'MaidoProjects\\UserInterface\\SettingsControl
 $app->get('/subprojectstate/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formSubprojectState');
 $app->post('/subprojectstate/save', 'MaidoProjects\\UserInterface\\SettingsController::saveSubprojectState');
 
+
 // CTFO
-$app->get('/ctfo', 'MaidoProjects\\UserInterface\\CTFOController::analyzeBuckaroo');
+$app->get('/silent', 'MaidoProjects\\UserInterface\\SilentController::getIndex');

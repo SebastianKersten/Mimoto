@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\library\controllers;
 
+// Mimoto classes
+use Mimoto\library\thirdparty\
+
 
 /**
  * MimotoController
@@ -11,7 +14,14 @@ namespace Mimoto\library\controllers;
  */
 class MimotoController
 {
-    // 1. general getForm(nformId or string)
-    // 2. ACL check op toegang
-    // 3. permissions / rollen / groepen instellen bij aanmaken entities
+    
+    protected $Mimoto;
+    
+    
+    public function __construct() {
+        
+        $this->Mimoto = new MimotoPublicAPI();
+                
+    }
+    
 }

@@ -3,6 +3,9 @@
 // classpath
 namespace MaidoProjects\UserInterface;
 
+// Mimoto classes
+use Mimoto\library\controllers\MimotoController;
+
 // Silex classes
 use Silex\Application;
 
@@ -16,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class SettingsController
+class SettingsController extends MimotoController
 {
     
     /**
@@ -111,7 +114,60 @@ class SettingsController
     {   
         
         // load data
-        $aClients = $app['Mimoto.EntityService']->getAllEntities();
+        $aClients = $app['Mimoto.EntityService']->getAllEntities('client');
+        
+        //$this->Mimoto->data->find('client');
+        // Aimless project mey MimotoList -> self render tot html
+        // clientList->render()
+        // ---> read-only
+        
+        
+        // init
+        //$clientList = new MimotoList();
+        
+        // 1. kent MimotoList twig
+        // 2. kent app/twig via globals?
+        // 3. krijgt template en data mee per list item
+        // 4. krijgt Aimless info mee (mls_container="client" mls_childtemplate="ClientListItem)
+        // 5. on single template -> get single template
+        // 6. on multiple templates -> get full list?
+        // 7. mls_childtemplate="client:ClientListItem"
+        
+        // 8. Mimoto/.../<entity>/<viewmodel>
+        
+        
+        //MimotoViewModelService
+        
+        // register:
+        //      client - list
+        //      client - list
+        
+        
+        $clientList->setAimlessContainer('client');
+        
+        // load
+        $entity = $app['Mimoto.EntityService']->getEntityById($sEntityType, $nEntityId);
+        
+        // render and send
+        return $app['Mimoto.AimlessService']->renderEntityView($entity, $sTemplateId);
+        
+        
+        // build
+        for ($i = 0; $i < count($aClients); $i++)
+        {
+            // register
+            $client = $aClients[$i];
+            
+            // compose
+            $clientList->add(
+                'pages/settings/clients/ClientListItem.twig',
+                (object) array(
+                    'id' => $client->getid(),
+                    'name' => $client->getValue('name')
+                )
+            );
+        }
+        
         
         // output
         return $app['twig']->render(
@@ -120,7 +176,7 @@ class SettingsController
                 'section' => 'settings',
                 'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
                 'pageSubTemplate' => 'pages/settings/clients/ClientsPage.twig',
-                'clients' => $aClients
+                'clientList' => $clientList
             )
         );
     }

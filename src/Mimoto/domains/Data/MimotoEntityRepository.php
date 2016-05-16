@@ -5,6 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\EntityConfig\MimotoEntityConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
 
@@ -137,7 +138,7 @@ class MimotoEntityRepository
         for ($i = 0; $i < $nItemCount; $i++)
         {
             // register
-            $aEntities[] = $this->createEntityFromMySQLResult($result, $i);
+            $aEntities[] = $this->createEntityFromMySQLResult($entityConfig, $result, $i);
         }
         
         // send
@@ -278,17 +279,17 @@ class MimotoEntityRepository
             // setup property
             switch($property->type)
             {
-                case MimotoEntityConfig::PROPERTY_TYPE_VALUE:
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
                     
                     $entity->setValueAsProperty($property->name);
                     break;
                 
-                case MimotoEntityConfig::PROPERTY_TYPE_ENTITY:
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
                     
                     $entity->setEntityAsProperty($property->name, $property->entityType);
                     break;
                 
-                case MimotoEntityConfig::PROPERTY_TYPE_COLLECTION:
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
                     
                     $entity->setEntityAsProperty($property->name, $property->allowedEntityType);
                     break;

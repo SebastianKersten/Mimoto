@@ -21,8 +21,18 @@ class EntitiesController
     
     public function getOverview(Application $app)
     {   
+        
+        $entities = $app['Mimoto.EntityService']->find('entity');
+        
+        
+        //new MimotoCollection('entity'); extends \Array
+        
+        
         // load
         $aEntityConfigs = $app['Mimoto.EntityConfigService']->getAllEntityConfigs();
+        
+        
+        // block
         
         return $app['twig']->render(
             'Mimoto.CMS/root.twig',
@@ -50,7 +60,7 @@ class EntitiesController
     }
     
     public function getEntity(Application $app, $nId)
-    {   
+    {
         // load
         $aAvailableEntities = $app['Mimoto.EntityConfigService']->getAllEntityConfigData();
 

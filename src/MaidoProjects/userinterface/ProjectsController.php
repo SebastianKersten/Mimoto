@@ -181,6 +181,8 @@ class ProjectsController
 //        print_r($storedClient);
         
         
+        output('Client', $client);
+        
         output('Project', $project);
         
         
