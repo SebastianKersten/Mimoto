@@ -296,7 +296,7 @@ class MimotoData
             if (MimotoDataUtils::isValidEntityId($property->currentId))
             {                    
                 // load
-                $property->entityCache = $GLOBALS['Mimoto.EntityService']->getEntityById($property->entityType, $property->currentId);
+                $property->entityCache = $GLOBALS['Mimoto.Data']->getEntityById($property->entityType, $property->currentId);
             }
         }
         

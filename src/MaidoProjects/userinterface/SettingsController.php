@@ -113,8 +113,20 @@ class SettingsController extends MimotoController
     public function getClientOverview(Application $app)
     {   
         
+        
+        $aClient = $app['Mimoto.Data']->find('client');
+        
+        
+        $page = $app['Mimoto.Aimless']->createComponent('');
+        
+        
+        
+        
+        
+        
+        
         // load data
-        $aClients = $app['Mimoto.EntityService']->getAllEntities('client');
+        $aClients = $app['Mimoto.Data']->getAllEntities('client');
         
         //$this->Mimoto->data->find('client');
         // Aimless project mey MimotoList -> self render tot html
@@ -133,7 +145,7 @@ class SettingsController extends MimotoController
         // 6. on multiple templates -> get full list?
         // 7. mls_childtemplate="client:ClientListItem"
         
-        // 8. Mimoto/.../<entity>/<viewmodel>
+        // 8. Mimoto/.../<entity>/<id>/<viewmodel>
         
         
         //MimotoViewModelService
@@ -143,13 +155,13 @@ class SettingsController extends MimotoController
         //      client - list
         
         
-        $clientList->setAimlessContainer('client');
+        //$clientList->setAimlessContainer('client');
         
         // load
-        $entity = $app['Mimoto.EntityService']->getEntityById($sEntityType, $nEntityId);
+        //$entity = $app['Mimoto.Data']->getEntityById($sEntityType, $nEntityId);
         
         // render and send
-        return $app['Mimoto.AimlessService']->renderEntityView($entity, $sTemplateId);
+        //return $app['Mimoto.Aimless']->renderEntityView($entity, $sTemplateId);
         
         
         // build

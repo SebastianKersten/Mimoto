@@ -5,6 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Data\MimotoData;
+use Mimoto\Aimless\MimotoAimlessUtils;
 
 
 /**
@@ -80,7 +81,7 @@ class MimotoEntity extends MimotoData
     
     
     // ----------------------------------------------------------------------------
-    // --- Constructor-------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
     
     
@@ -98,4 +99,58 @@ class MimotoEntity extends MimotoData
         
     }
     
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
+    
+    /**
+     * Get Aimless value of a property or subproperty
+     * @param type $sPropertyName
+     * @return string
+     */
+    public function getAimlessValue($sPropertyName)
+    {
+        // find
+        $nSeperatorPos = strpos($sPropertyName, '.');
+        
+        // separate
+        $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, 0, $nSeperatorPos) : $sPropertyName;
+        $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, $nSeperatorPos + 1) : '';
+        
+        // compose
+        $sAimlessValue = MimotoAimlessUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sPropertyName);
+        
+        // verify
+        if (!empty($sSubPropertyName) && $this->valueRelatesToEntity($sMainPropertyName))
+        {
+            // load
+            $entity = $this->getValue($sMainPropertyName);
+            
+            // compose
+            if (MimotoEntityUtils::isEntity($entity))
+            {
+                
+                $sAimlessValue .= MimotoAimlessUtils::formatAimlessSubvalue($sMainPropertyName, $entity->getId(), $sSubPropertyName);
+            }
+            else
+            {
+                $sAimlessValue .= MimotoAimlessUtils::formatAimlessSubvalueWithoutId($sMainPropertyName, $sSubPropertyName);
+            }
+        }
+        
+        // send
+        return $sAimlessValue;
+    }
+    
+    /**
+     * Get Aimless id of an entity
+     * @return string
+     */
+    public function getAimlessId()
+    {
+        return $this->getEntityType().'.'.$this->getId();
+    }
 }

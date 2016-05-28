@@ -37,31 +37,11 @@ $app['debug'] = true;
 $app['twig'] = $twig;
 
 
-
-$aViewModels = array(
-    'client' => array(
-        'ClientListItem' => 'pages/settings/clients/ClientListItem.twig'
-    ),
-    'agency' => array(
-        'AgencyListItem' => 'pages/settings/agencies/AgencyListItem.twig'
-    ),
-    'projectmanager' => array(
-        'ProjectManagerListItem' => 'pages/settings/projectmanagers/ProjectManagerListItem.twig'
-    ),
-    'subprojectstate' => array(
-        'SubprojectStateListItem' => 'pages/settings/subprojectstates/SubprojectStateListItem.twig'
-    ),
-    'project' => array(
-        'ProjectListItem' => 'pages/projects/components/Project.twig'
-    )
-);
-
-
-
-// setup entities
+// setup entities - #todo - combine all in MimotoProvider
 $app->register(new MimotoEntityServiceProvider());
+$app->register(new MimotoAimlessServiceProvider());
 $app->register(new MimotoEventServiceProvider());
-$app->register(new MimotoAimlessServiceProvider($aViewModels));
+
 
 
 return $app;

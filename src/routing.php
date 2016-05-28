@@ -43,5 +43,10 @@ $app->get('/subprojectstate/change/{nId}', 'MaidoProjects\\UserInterface\\Settin
 $app->post('/subprojectstate/save', 'MaidoProjects\\UserInterface\\SettingsController::saveSubprojectState');
 
 
-// CTFO
+// Silent Partner Ventures
 $app->get('/silent', 'MaidoProjects\\UserInterface\\SilentController::getIndex');
+
+
+$app->get('/example1', 'MaidoProjects\\UserInterface\\ExampleController::viewExample1');
+$app->get('/example2', 'MaidoProjects\\UserInterface\\ExampleController::viewExample2');
+$app->get('/example3', 'MaidoProjects\\UserInterface\\ExampleController::viewExample3');

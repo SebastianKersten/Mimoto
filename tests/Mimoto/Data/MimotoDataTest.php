@@ -2,7 +2,7 @@
 
 
 require __DIR__.'/../../../src/app.php';
-$GLOBALS['Mimoto.EntityService'] = $app['Mimoto.EntityService'];
+$GLOBALS['Mimoto.Data'] = $app['Mimoto.Data'];
 
 /**
  * MimotoData - Test

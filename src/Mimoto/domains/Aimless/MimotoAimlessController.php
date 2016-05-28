@@ -26,10 +26,10 @@ class MimotoAimlessController
     public function getView(Application $app, $sEntityType, $nEntityId, $sTemplateId)
     {   
         // load
-        $entity = $app['Mimoto.EntityService']->getEntityById($sEntityType, $nEntityId);
+        $entity = $app['Mimoto.Data']->get($sEntityType, $nEntityId);
         
         // render and send
-        return $app['Mimoto.AimlessService']->renderEntityView($entity, $sTemplateId);
+        return $app['Mimoto.Aimless']->renderEntityView($entity, $sTemplateId);
     }
     
 }

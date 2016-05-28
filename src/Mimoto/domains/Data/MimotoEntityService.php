@@ -37,10 +37,12 @@ class MimotoEntityService
      */
     public function __construct($aCustomEntityConfigs, $entityRepository, $entityConfigService)
     {
+        
         // store
         $this->_entityRepository = $entityRepository;
         $this->_EntityConfigService = $entityConfigService;
         
+        // register custom configs
         for ($i = 0; $i < count($aCustomEntityConfigs); $i++)
         {
             // register
@@ -49,11 +51,6 @@ class MimotoEntityService
             // store
             $this->_aEntityConfigs[$entityConfig->getName()] = $entityConfig;
         }
-        
-        // 1. load configs here
-        // 2. custom overrules database, want maakt testen met nieuwe entities mogeljk
-        
-        
         
         // load
         $aDatabaseEntityConfigs = $this->_EntityConfigService->getAllEntityConfigs();
@@ -78,6 +75,16 @@ class MimotoEntityService
     // ----------------------------------------------------------------------------
     
     
+     /**
+     * Get entity by id
+     * @param int $nId
+     * @return MimotoEntity The entity
+     */
+    public function get($sEntityType, $nId)
+    {
+        return $this->getEntityById($sEntityType, $nId);
+    }
+    
     /**
      * Get entity by id
      * @param int $nId
@@ -99,6 +106,15 @@ class MimotoEntityService
         
         // send
         return $entity;
+    }
+    
+    
+    /**
+     * Get all entities
+     */
+    public function find($sEntityType, $criteria = null)
+    {
+        return $this->getAllEntities($sEntityType);
     }
     
     /**

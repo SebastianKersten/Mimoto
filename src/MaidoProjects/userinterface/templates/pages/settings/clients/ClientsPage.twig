@@ -4,9 +4,13 @@
     <div class="button settings_header_alignright" onclick="Maido.data.newEntity('client');">Add client +</div>
 </div>
 
-<% include MimotoList
 <div id="simplelist" class="simplelist" mls_container="client" mls_childtemplate="ClientListItem">
     {% for client in aClients %}
         {% include client.template with { client:client.data } %}
     {% endfor %}
 </div>
+
+
+<!--
+    data | json | template | preview
+-->

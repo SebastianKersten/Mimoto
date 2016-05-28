@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace Mimoto\Config;
+namespace Mimoto\EntityConfig;
 
 
 /**

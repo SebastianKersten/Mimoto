@@ -19,33 +19,18 @@ use Silex\ServiceProviderInterface;
 class MimotoAimlessServiceProvider implements ServiceProviderInterface
 {
     
-    // config
-    var $_aViewModels;
-    
-    
-    /**
-     * Constructor
-     * @param array $aViewModels
-     */
-    public function __construct($aViewModels)
-    {
-        // register
-        $this->_aViewModels = $aViewModels;
-    }
-    
-    
     public function register(Application $app)
-    {   
+    {
         // register
         $app->get('/Mimoto.Aimless/{sEntityType}/{nEntityId}/{sTemplateId}', 'Mimoto\\Aimless\\MimotoAimlessController::getView');
         
-        $app['Mimoto.AimlessService'] = $app->share(function($app) {
-            return new MimotoAimlessService($this->_aViewModels, $app);
+        $app['Mimoto.Aimless'] = $app['Mimoto.AimlessService'] = $app->share(function($app)
+        {
+            return new MimotoAimlessService($app['Mimoto.Data'], $app['twig']);
         });
+        
     }
 
-    public function boot(Application $app)
-    {
-        // noop
-    }
+    public function boot(Application $app) {}
+    
 }

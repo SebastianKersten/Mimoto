@@ -17,10 +17,14 @@ use Mimoto\library\entities\MimotoEntityUtils;
 class MimotoAimlessService
 {
     
-    // config
-    var $_aViewModels;
+    // services
+    private $_MimotoEntityService;
+    private $_MimotoAimlessService;
+    private $_TwigService;
     
-    var $_app;
+    // config
+    var $_aTemplates;
+    
     
     
     // ----------------------------------------------------------------------------
@@ -31,14 +35,15 @@ class MimotoAimlessService
     /**
      * Constructor
      */
-    public function __construct($aViewModels, $app)
+    public function __construct($MimotoEntityService, $TwigService)
     {
-        
         // register
-        $this->_aViewModels = $aViewModels;
+        $this->_MimotoEntityService = $MimotoEntityService;
+        $this->_MimotoAimlessService = $this;
+        $this->_TwigService = $TwigService;
         
-        // TEMP - register - #todo - FIX THIS!!!
-        $this->_app = $app;
+        // load and register
+        $this->_aTemplates = $this->_MimotoEntityService->find('_mimoto_component');
     }
     
     
@@ -48,11 +53,57 @@ class MimotoAimlessService
     // ----------------------------------------------------------------------------
     
     
+    /**
+     * Create 
+     * @param string $sTemplateName The name of the registered template
+     * @param MimotoEntity $entity The data to be combined with the template
+     * @return AimlessComponent
+     */
+    public function createComponent($sTemplateName, $entity)
+    {
+        // init and send
+        return $component = new AimlessComponent($sTemplateName, $entity, $this->_MimotoAimlessService, $this->_TwigService);
+    }
+    
+    
+    public function getTemplate($sTemplateName)
+    {
+        
+        for ($i = 0; $i < count($this->_aTemplates); $i++)
+        {
+            // register
+            $template = $this->_aTemplates[$i];
+            
+            // search
+            if ($template->getValue('name') === $sTemplateName) { return $template->getValue('template'); }
+        }
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function renderEntityView(MimotoEntity $entity, $sTemplateId)
     {
         
+        
+        
+        
         try {
-            $sEntityTemplate = $this->_aViewModels[$entity->getEntityType()][$sTemplateId];
+            $sEntityTemplate = $this->_aTemplates[$entity->getEntityType()][$sTemplateId];
         }
         catch (\Exception $e)
         {

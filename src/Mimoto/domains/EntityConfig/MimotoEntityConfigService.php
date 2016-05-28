@@ -35,9 +35,6 @@ class MimotoEntityConfigService
     {
         // store
         $this->_entityConfigRepository = $entityConfigRepository;
-        
-        
-        // 1. load all entity configs
     }
     
     

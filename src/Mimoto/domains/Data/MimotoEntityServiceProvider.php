@@ -66,11 +66,20 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
         $app->get('/mimoto.cms/content/new', 'Mimoto\\UserInterface\\ContentController::createNew');
         $app->get('/mimoto.cms/content/{nId}', 'Mimoto\\UserInterface\\ContentController::getContent');
         
+        
+        $app->get('/mimoto.cms/viewentity/{sEntityType}/{nId}', 'Mimoto\\UserInterface\\EntitiesController::viewEntity');
+        //$app->get('/mimoto.cms/viewentity/{sEntityType}', 'Mimoto\\UserInterface\\EntitiesController::viewEntity');
+        //$app->get('/mimoto.cms/viewentity/{sEntityType}/{nId}', 'Mimoto\\UserInterface\\EntitiesController::viewEntity');
+        
+        
         // register
         $app['Mimoto.EntityConfigService'] = $app->share(function($app) {
             
             // init
-            $service = new MimotoEntityConfigService(new MimotoEntityConfigRepository());
+            $service = new MimotoEntityConfigService
+            (
+                new MimotoEntityConfigRepository()
+            );
             
             // send
             return $service;
@@ -78,10 +87,12 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
         
         
         // register
-        $app['Mimoto.EntityService'] = $app->share(function($app) {
+        $app['Mimoto.Data'] = $app['Mimoto.EntityService'] = $app->share(function($app) {
             
             // init
-            $service = new MimotoEntityService(
+            
+            $service = new MimotoEntityService
+            (
                 $this->_aEntityConfigs, 
                 new MimotoEntityRepository($app['Mimoto.EventService']), 
                 $app['Mimoto.EntityConfigService']
@@ -99,7 +110,7 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        $GLOBALS['Mimoto.EntityService'] = $app['Mimoto.EntityService'];
+        //$GLOBALS['Mimoto.Data'] = $app['Mimoto.Data'];
     }
     
 }

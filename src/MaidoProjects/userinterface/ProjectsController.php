@@ -72,7 +72,7 @@ class ProjectsController
         
         
         // ----------------------------
-        // --- Mimoto.EntityService ---
+        // --- Mimoto.Data ---
         // ----------------------------
         
         
@@ -98,22 +98,22 @@ class ProjectsController
         
         $before = memory_get_usage();
         
-        //$client = $app['Mimoto.EntityService']->getEntityById('client', 2);
+        //$client = $app['Mimoto.Data']->getEntityById('client', 2);
 //        echo "<pre>";
 //        print_r($client);
 //        echo "</pre>";
 //        
-        //$agency = $app['Mimoto.EntityService']->getEntityById('agency', 1);
+        //$agency = $app['Mimoto.Data']->getEntityById('agency', 1);
 //        echo "<pre>";
 //        print_r($agency);
 //        echo "</pre>";
 //        
-//        $projectManager = $app['Mimoto.EntityService']->getEntityById('projectManager', 4);
+//        $projectManager = $app['Mimoto.Data']->getEntityById('projectManager', 4);
 //        echo "<pre>";
 //        print_r($projectManager);
 //        echo "</pre>";
 //        
-//        $subprojectState = $app['Mimoto.EntityService']->getEntityById('subprojectState', 6);
+//        $subprojectState = $app['Mimoto.Data']->getEntityById('subprojectState', 6);
 //        echo "<pre>";
 //        print_r($subprojectState);
 //        echo "</pre>";
@@ -194,7 +194,7 @@ class ProjectsController
 //        
 //        
 //        
-//        $project = $app['Mimoto.EntityService']->getEntityById('project', 2);
+//        $project = $app['Mimoto.Data']->getEntityById('project', 2);
 //        
 //        
 //        $project->setValue('name', 'Bla!');
@@ -299,7 +299,7 @@ class ProjectsController
         
         // #todo
         // ------------------------------------------------------------------------------
-        // "Mimoto.EntityService"
+        // "Mimoto.Data"
         // "Mimoto.CollectionService"
         // ------------------------------------------------------------------------------
         

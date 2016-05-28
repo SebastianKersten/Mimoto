@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\UserInterface;
 
+// Mimoto classes
+use Mimoto\library\controllers\MimotoController;
+
 // Silex classes
 use Silex\Application;
 
@@ -16,13 +19,49 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class EntitiesController
+class EntitiesController extends MimotoController
 {
+    
+    public function viewEntity(Application $app, $sEntityType, $nId)
+    {
+        // 1. template service
+        // 2. load all templates from database into memory
+        
+        
+        
+        $entity = $app['Mimoto.Data']->get($sEntityType, $nId);
+        
+        $component = $app['Mimoto.Aimless']->createComponent('MimotoCMS_EntityItemItem', $entity);
+        
+        
+        
+        
+        $component->setupCollection('subprojects', 'SubprojectListItem');
+        
+        $component->setupProperty('subprojects.*.client', 'SubprojectListItem');
+        
+        $component->setVar('blabla', 'xxx');
+        
+        
+        return $component->render();
+    }
+    
+    
+    public function editEntity()
+    {
+        
+    }
+    
+    
+    
+    
+    
+    
     
     public function getOverview(Application $app)
     {   
         
-        $entities = $app['Mimoto.EntityService']->find('entity');
+        $entities = $app['Mimoto.Data']->find('entity');
         
         
         //new MimotoCollection('entity'); extends \Array

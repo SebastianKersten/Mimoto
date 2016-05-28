@@ -4,7 +4,7 @@
 namespace Mimoto\library\controllers;
 
 // Mimoto classes
-use Mimoto\library\thirdparty\
+//use Mimoto\library\thirdparty\
 
 
 /**
@@ -17,10 +17,9 @@ class MimotoController
     
     protected $Mimoto;
     
-    
     public function __construct() {
         
-        $this->Mimoto = new MimotoPublicAPI();
+        //$this->Mimoto = new MimotoPublicAPI();
                 
     }
     
