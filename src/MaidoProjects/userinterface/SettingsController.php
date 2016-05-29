@@ -106,91 +106,23 @@ class SettingsController extends MimotoController
     
     
     /**
-     * Get client overview
+     * View clients
      * @param Application $app
      * @return rendered twig
      */
-    public function getClientOverview(Application $app)
+    public function viewClients(Application $app)
     {   
-        
-        
-        $aClient = $app['Mimoto.Data']->find('client');
-        
-        
-        $page = $app['Mimoto.Aimless']->createComponent('');
-        
-        
-        
-        
-        
-        
-        
-        // load data
-        $aClients = $app['Mimoto.Data']->getAllEntities('client');
-        
-        //$this->Mimoto->data->find('client');
-        // Aimless project mey MimotoList -> self render tot html
-        // clientList->render()
-        // ---> read-only
-        
-        
-        // init
-        //$clientList = new MimotoList();
-        
-        // 1. kent MimotoList twig
-        // 2. kent app/twig via globals?
-        // 3. krijgt template en data mee per list item
-        // 4. krijgt Aimless info mee (mls_container="client" mls_childtemplate="ClientListItem)
-        // 5. on single template -> get single template
-        // 6. on multiple templates -> get full list?
-        // 7. mls_childtemplate="client:ClientListItem"
-        
-        // 8. Mimoto/.../<entity>/<id>/<viewmodel>
-        
-        
-        //MimotoViewModelService
-        
-        // register:
-        //      client - list
-        //      client - list
-        
-        
-        //$clientList->setAimlessContainer('client');
-        
         // load
-        //$entity = $app['Mimoto.Data']->getEntityById($sEntityType, $nEntityId);
+        $aClients = $app['Mimoto.Data']->find('client');
+        
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('settingspage');
+        
+        // setup
+        $page->setCollection('clients', 'simplelistitem', $aClients);
         
         // render and send
-        //return $app['Mimoto.Aimless']->renderEntityView($entity, $sTemplateId);
-        
-        
-        // build
-        for ($i = 0; $i < count($aClients); $i++)
-        {
-            // register
-            $client = $aClients[$i];
-            
-            // compose
-            $clientList->add(
-                'pages/settings/clients/ClientListItem.twig',
-                (object) array(
-                    'id' => $client->getid(),
-                    'name' => $client->getValue('name')
-                )
-            );
-        }
-        
-        
-        // output
-        return $app['twig']->render(
-            'interface.twig',
-            array(
-                'section' => 'settings',
-                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
-                'pageSubTemplate' => 'pages/settings/clients/ClientsPage.twig',
-                'clientList' => $clientList
-            )
-        );
+        return $page->render();
     }
     
     /**

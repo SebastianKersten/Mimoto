@@ -1,0 +1,9 @@
+{% extends "examplebase.twig" %}
+
+{% block content %}
+    <h1>Example 2 - Feed</h1>
+    <i>A feed containing previews of articles, all presented with the same feed item template.</i>
+    <div class="example_feed">
+        {{ Aimless.collection('articles') }}
+    </div>
+{% endblock %}

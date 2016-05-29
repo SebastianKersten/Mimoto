@@ -1,0 +1,13 @@
+{% extends "examplebase.twig" %}
+
+{% block content %}
+    <h1>Example 1 - Article</h1>
+    <i>An article presented in the primary article layout</i><br>
+    <br>
+    <br>
+    <div class="example_article" {{ Aimless.live()|raw }}>
+        <i><span {{ Aimless.live('lede')|raw }}>{{ Aimless.data('lede') }}</span></i><br><br>
+        <b><span {{ Aimless.live('name')|raw }}>{{ Aimless.data('title') }}</span></b><br><br>
+        <div {{ Aimless.live('body')|raw }}>{{ Aimless.data('body') }}</div>
+    </div>
+{% endblock %}

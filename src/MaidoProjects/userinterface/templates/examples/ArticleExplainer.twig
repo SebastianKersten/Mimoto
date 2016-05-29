@@ -1,0 +1,13 @@
+{% extends "examplebase.twig" %}
+
+{% block content %}
+    <h1>Example 2 - Article type</h1>
+    <i>An article presented in an article layout based on the article type (either 'regular' or 'explainer')</i><br>
+    <br>
+    <br>
+    <div class="example_article_explainer" {{ Aimless.live()|raw }}>
+        <i><span {{ Aimless.live('lede')|raw }}>{{ Aimless.data('lede') }}</span></i><br><br>
+        <b><u>Explainer</u> - <span {{ Aimless.live('name')|raw }}>{{ Aimless.data('title') }}</span></b><br><br>
+        <div {{ Aimless.live('body')|raw }}>{{ Aimless.data('body') }}</div>
+    </div>
+{% endblock %}

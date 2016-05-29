@@ -1,0 +1,8 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<div class="example_feeditem2" {{ Aimless.live()|raw }}>
+    <i>Client</i><br>
+    <b><span {{ Aimless.live('name')|raw }}>{{ Aimless.data('name') }}</span></b>
+</div>
+{% endblock %}

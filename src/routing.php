@@ -25,7 +25,7 @@ $app->get('/projectmanager/change/{nId}', 'MaidoProjects\\UserInterface\\Setting
 $app->post('/projectmanager/save', 'MaidoProjects\\UserInterface\\SettingsController::saveProjectManager');
 
 // settings/clients
-$app->get('/settings/clients', 'MaidoProjects\\UserInterface\\SettingsController::getClientOverview');
+$app->get('/settings/clients', 'MaidoProjects\\UserInterface\\SettingsController::viewClients');
 $app->get('/client/new', 'MaidoProjects\\UserInterface\\SettingsController::formClient');
 $app->get('/client/change/{nId}', 'MaidoProjects\\UserInterface\\SettingsController::formClient');
 $app->post('/client/save', 'MaidoProjects\\UserInterface\\SettingsController::saveClient');

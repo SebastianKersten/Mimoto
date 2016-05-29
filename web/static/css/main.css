@@ -615,11 +615,51 @@ div.silent_shadow {
 }
 
 
+div.example_page {
+    background-color: #ffffff;
+    padding: 25px;
+}
 
-div.example_listitem
+div.example_article
 {
-    width: 400px;
     border: #c3c3c3 solid 1px;
     background-color: #f1f1f1;
     padding: 8px;
+}
+
+div.example_article_regular
+{
+    border: #c3c3c3 solid 1px;
+    background-color: #ffffff;
+    padding: 8px;
+}
+
+div.example_article_explainer
+{
+    border: #c3c3c3 solid 1px;
+    background-color: #f7ecb5;
+    padding: 8px;
+}
+
+div.example_feeditem1
+{
+    border: #000000 solid 1px;
+    background-color: #06afea;
+    color: #ffffff;
+    padding: 8px;
+}
+
+div.example_feeditem2
+{
+    border: #c3c3c3 solid 1px;
+    background-color: #f1f1f1;
+    padding: 8px;
+}
+
+div.example_author, div.example_authorfeed
+{
+    width: 500px;
+    border: #000000 solid 1px;
+    background-color: #ffffff;
+    padding: 10px;
 }

@@ -16,33 +16,24 @@ class ExampleController
 {
     
     public function viewExample1(Application $app)
-    {
-        $before = memory_get_usage();
-        
+    {        
         // load
-        $entity = $app['Mimoto.Data']->get('client', 2);
+        $article = $app['Mimoto.Data']->get('article', 1);
         
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('example1', $entity);
-        
-        $after = memory_get_usage();
-        
-        echo "<b style='color:#06AFEA'>Memory usage = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes)</b><br><br>";
+        $component = $app['Mimoto.Aimless']->createComponent('article', $article);
         
         // render and send
         return $component->render();
     }
     
     public function viewExample2(Application $app)
-    {
+    {        
         // load
-        $entity = $app['Mimoto.Data']->get('author', 2);
+        $article = $app['Mimoto.Data']->get('article', 1);
         
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('authorpage', $entity);
-        
-        // setup
-        $component->setupProperty('articles', 'feeditem');
+        $component = $app['Mimoto.Aimless']->createComponent('article_type', $article);
         
         // render and send
         return $component->render();
@@ -51,10 +42,28 @@ class ExampleController
     public function viewExample3(Application $app)
     {
         // load
+        $aArticles = $app['Mimoto.Data']->find('article');
+        
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('feed');
+        
+        // setup
+        $page->setCollection('articles', 'feeditem', $aArticles);
+        
+        // render and send
+        return $page->render();
+    }
+    
+    public function viewExample4(Application $app)
+    {
+        // load
         $entity = $app['Mimoto.Data']->get('client', 2);
         
         // create
         $component = $app['Mimoto.Aimless']->createComponent('example3', $entity);
+        
+        // setup
+        $component->setupProperty('articles', 'feeditem');
         
         // compose
         $component->setVar('blabla', 'xxx');

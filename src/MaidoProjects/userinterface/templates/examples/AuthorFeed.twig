@@ -1,0 +1,11 @@
+{% extends "examplebase.twig" %}
+
+{% block content %}
+    <h1>Example 2 - Author feed</h1>
+    
+    <div class="example_authorfeed" {{ Aimless.live()|raw }}>
+        <i><span {{ Aimless.live('lede')|raw }}>{{ Aimless.data('lede') }}</span></i><br><br>
+        <b><span {{ Aimless.live('name')|raw }}>{{ Aimless.data('title') }}</span></b><br><br>
+        <div {{ Aimless.live('body')|raw }}>{{ Aimless.data('body') }}</div>
+    </div>
+{% endblock %}

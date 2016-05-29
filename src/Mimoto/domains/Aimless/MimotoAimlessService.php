@@ -27,6 +27,11 @@ class MimotoAimlessService
     
     
     
+    const DBTABLE_TEMPLATES = '_mimoto_templates';
+    const DBTABLE_TEMPLATES_CONDITIONALS = '_mimoto_templates_conditionals';
+    
+    
+    
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -43,7 +48,7 @@ class MimotoAimlessService
         $this->_TwigService = $TwigService;
         
         // load and register
-        $this->_aTemplates = $this->_MimotoEntityService->find('_mimoto_component');
+        $this->_aTemplates = $this->loadTemplates();
     }
     
     
@@ -59,27 +64,115 @@ class MimotoAimlessService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessComponent
      */
-    public function createComponent($sTemplateName, $entity)
+    public function createComponent($sTemplateName, $entity = null)
     {
         // init and send
         return $component = new AimlessComponent($sTemplateName, $entity, $this->_MimotoAimlessService, $this->_TwigService);
     }
     
     
-    public function getTemplate($sTemplateName)
+    public function getTemplate($sTemplateName, $entity = null)
     {
         
         for ($i = 0; $i < count($this->_aTemplates); $i++)
         {
-            // register
             $template = $this->_aTemplates[$i];
             
-            // search
-            if ($template->getValue('name') === $sTemplateName) { return $template->getValue('template'); }
+            if ($template->name === $sTemplateName)
+            {
+                if (count($template->conditionals) > 0 && $entity !== null)
+                {
+                    $bValidated = true;
+                    for ($j = 0; $j < count($template->conditionals); $j++)
+                    {
+                        $conditional = $template->conditionals[$j];
+                        
+                        if ($entity->getValue($conditional->key) != $conditional->value)
+                        {
+                            $bValidated = false;
+                            break;
+                        }
+                    }
+                    
+                    if ($bValidated) { return $template->file; }
+                }
+                else
+                {
+                    return $template->file;
+                }
+            }
         }
         
+        
+        die("MimotoAimlessService says: Template '$sTemplateName' not found");
+        
+        // 1. broadcast webevent for debugging purposes
+        // 2. standaard report error (error level)
+        
     }
-
+    
+    
+    
+    private function loadTemplates()
+    {
+        
+        // check if in memory, else load from mysql:
+        
+        
+        // init
+        $aTemplates = [];
+        //$aAllConditionals = [];
+        
+        
+        // load
+        $sQueryTemplates = "SELECT * FROM ".self::DBTABLE_TEMPLATES;
+        $resultTemplates = mysql_query($sQueryTemplates) or die('Query failed: ' . mysql_error());
+        $nTemplateCount = mysql_num_rows($resultTemplates);
+        
+        // store
+        for ($i = 0; $i < $nTemplateCount; $i++)
+        {
+            $entity = (object) array(
+                'id' => mysql_result($resultTemplates, $i, 'id'),
+                'name' => mysql_result($resultTemplates, $i, 'name'),
+                'file' => mysql_result($resultTemplates, $i, 'file'),
+                'owner' => mysql_result($resultTemplates, $i, 'owner'),
+                'created' => mysql_result($resultTemplates, $i, 'created'),
+                'conditionals' => []
+            );
+            
+            $aTemplates[] = $entity;
+        }
+        
+        // load
+        $sQueryProperties = "SELECT * FROM ".self::DBTABLE_TEMPLATES_CONDITIONALS;
+        $resultProperties = mysql_query($sQueryProperties) or die('Query failed: ' . mysql_error());
+        $nPropertyCount = mysql_num_rows($resultProperties);
+        
+        // store
+        for ($i = 0; $i < $nPropertyCount; $i++)
+        {
+            $conditional = (object) array(
+                'id' => mysql_result($resultProperties, $i, 'id'),
+                'template_id' => mysql_result($resultProperties, $i, 'template_id'),
+                'key' => mysql_result($resultProperties, $i, 'key'),
+                'value' => mysql_result($resultProperties, $i, 'value'),
+                'created' => mysql_result($resultProperties, $i, 'created')
+            );
+            
+            for ($j = 0; $j < count($aTemplates); $j++)
+            {
+                $template = $aTemplates[$j];
+                
+                if ($template->id === $conditional->template_id)
+                {
+                    $template->conditionals[] = $conditional;
+                }
+            }
+        }
+        
+        return $aTemplates;
+    }
 
 
 

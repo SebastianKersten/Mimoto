@@ -1,3 +1,6 @@
+{% extends "base.twig" %}
+
+{% block content %}
 <div class="settings_page_header">
     <hr><br>
     <div class="page_title settings_page_title">Clients</div>
@@ -9,8 +12,4 @@
         {% include client.template with { client:client.data } %}
     {% endfor %}
 </div>
-
-
-<!--
-    data | json | template | preview
--->
+{% endblock %}

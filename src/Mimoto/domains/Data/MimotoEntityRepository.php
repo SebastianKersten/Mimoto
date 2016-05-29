@@ -130,7 +130,7 @@ class MimotoEntityRepository
         $aEntities = array();
         
         // load
-        $sQuery = "SELECT * FROM ".$entityConfig->getMySQLTable()." ORDER BY name ASC";
+        $sQuery = "SELECT * FROM ".$entityConfig->getMySQLTable();
         $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
         $nItemCount = mysql_num_rows($result);
         

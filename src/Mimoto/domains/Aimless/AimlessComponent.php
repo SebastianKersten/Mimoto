@@ -16,11 +16,16 @@ class AimlessComponent
     var $_AimlessService;
     var $_TwigService;
     
+    // data
+    var $_entity;
     
+    // settings
     var $_sTemplateName;
     
-    
+    // config
     var $_aVars = [];
+    var $_aCollections = [];
+    
     
     
     /**
@@ -48,6 +53,12 @@ class AimlessComponent
     {
         // register
         $this->_aVars[$sKey] = $value;
+    }
+    
+    public function setCollection($sKey, $sTemplateName, $aCollection)
+    {
+        // register
+        //$this->_aCollections[$sKey] = $value;
     }
     
     
@@ -95,14 +106,13 @@ class AimlessComponent
     
     public function render()
     {
-        
         // get te
-        $sTemplate = $this->_AimlessService->getTemplate($this->_sTemplateName);
+        $sTemplateFile = $this->_AimlessService->getTemplate($this->_sTemplateName, $this->_entity);
         
         // compose
         $this->_aVars['Aimless'] = $this;
         
         // output
-        return $this->_TwigService->render($sTemplate, $this->_aVars);
+        return $this->_TwigService->render($sTemplateFile, $this->_aVars);
     }
 }
