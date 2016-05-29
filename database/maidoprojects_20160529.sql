@@ -9,7 +9,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 05/29/2016 16:36:47 PM
+ Date: 05/29/2016 17:25:04 PM
 */
 
 SET NAMES utf8;
@@ -126,13 +126,13 @@ CREATE TABLE `_mimoto_templates` (
   `owner` enum('superuser','admin') DEFAULT 'admin',
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `_mimoto_templates`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_templates` VALUES ('1', 'ClientListItem', 'pages/settings/clients/ClientListItem.twig', 'admin', '2016-05-24 07:39:26'), ('2', 'AgencyListItem', 'pages/settings/agencies/AgencyListItem.twig', 'admin', '2016-05-24 07:42:52'), ('3', 'ProjectManagerListItem', 'pages/settings/projectmanagers/ProjectManagerListItem.twig', 'admin', '2016-05-24 07:43:25'), ('4', 'SubprojectStateListItem', 'pages/settings/subprojectstates/SubprojectStateListItem.twig', 'admin', '2016-05-24 07:44:00'), ('5', 'ProjectListItem', 'pages/projects/components/Project.twig', 'admin', '2016-05-24 07:44:27'), ('6', 'SubprojectListItem', 'pages/projects/components/Subproject.twig', 'admin', '2016-05-24 07:44:51'), ('7', 'AimlessProjectListItem', 'pages/projects/components/AimlessProject.twig', 'admin', '2016-05-25 14:02:28'), ('8', 'article', 'examples/Article.twig', 'admin', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', 'admin', '2016-05-29 15:57:53'), ('10', 'feeditem1', 'examples/FeedItem1.twig', 'admin', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', 'admin', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', 'admin', '2016-05-29 16:03:56');
+INSERT INTO `_mimoto_templates` VALUES ('1', 'ClientListItem', 'pages/settings/clients/ClientListItem.twig', 'admin', '2016-05-24 07:39:26'), ('2', 'AgencyListItem', 'pages/settings/agencies/AgencyListItem.twig', 'admin', '2016-05-24 07:42:52'), ('3', 'ProjectManagerListItem', 'pages/settings/projectmanagers/ProjectManagerListItem.twig', 'admin', '2016-05-24 07:43:25'), ('4', 'SubprojectStateListItem', 'pages/settings/subprojectstates/SubprojectStateListItem.twig', 'admin', '2016-05-24 07:44:00'), ('5', 'ProjectListItem', 'pages/projects/components/Project.twig', 'admin', '2016-05-24 07:44:27'), ('6', 'SubprojectListItem', 'pages/projects/components/Subproject.twig', 'admin', '2016-05-24 07:44:51'), ('7', 'AimlessProjectListItem', 'pages/projects/components/AimlessProject.twig', 'admin', '2016-05-25 14:02:28'), ('8', 'article', 'examples/Article.twig', 'admin', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', 'admin', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', 'admin', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', 'admin', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', 'admin', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', 'admin', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', 'admin', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', 'admin', '2016-05-29 17:20:28');
 COMMIT;
 
 -- ----------------------------
@@ -146,13 +146,13 @@ CREATE TABLE `_mimoto_templates_conditionals` (
   `value` varchar(255) CHARACTER SET latin1 NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_templates_conditionals`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_templates_conditionals` VALUES ('1', '11', 'type', 'regular', '2016-05-29 16:15:26'), ('2', '12', 'type', 'explainer', '2016-05-29 16:15:38');
+INSERT INTO `_mimoto_templates_conditionals` VALUES ('1', '11', 'type', 'regular', '2016-05-29 16:15:26'), ('2', '12', 'type', 'explainer', '2016-05-29 16:15:38'), ('3', '13', 'type', 'regular', '2016-05-29 16:57:43'), ('4', '14', 'type', 'explainer', '2016-05-29 16:58:00');
 COMMIT;
 
 -- ----------------------------

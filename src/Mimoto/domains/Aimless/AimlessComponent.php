@@ -57,8 +57,12 @@ class AimlessComponent
     
     public function setCollection($sKey, $sTemplateName, $aCollection)
     {
-        // register
-        //$this->_aCollections[$sKey] = $value;
+        $collection = (object) array(
+            'template_name' => $sTemplateName,
+            'collection' => $aCollection
+        );
+        
+        $this->_aCollections[$sKey] = $collection;
     }
     
     
@@ -67,6 +71,39 @@ class AimlessComponent
     public function data($sPropertyName)
     {
         return $this->_entity->getValue($sPropertyName);
+    }
+    
+    public function collection($sCollectionName)
+    {
+        if (!isset($this->_aCollections[$sCollectionName]))
+        {
+            die("MimotoAimlessService says: Template '$sTemplateName' not found");
+        
+            // 1. broadcast webevent for debugging purposes
+            // 2. standaard report error (error level)
+        }
+        
+        
+        $collection = $this->_aCollections[$sCollectionName];
+        
+        
+        $sRenderedCollection = '';
+        
+        for ($i = 0; $i < count($collection->collection); $i++)
+        {
+            // register
+            $entity = $collection->collection[$i];
+            
+            // create
+            $component = $this->_AimlessService->createComponent($collection->template_name, $entity);
+            
+            //$component->setVar(); overerven van $this->_aVars ?
+            
+            // output
+            $sRenderedCollection .= $component->render();
+        }
+        
+        return $sRenderedCollection;
     }
     
     public function live($sPropertyName = null)
@@ -80,6 +117,7 @@ class AimlessComponent
             return 'mls_value="'.$this->_entity->getAimlessValue($sPropertyName).'"';
         }
     }
+    
     
     
     /**

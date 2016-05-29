@@ -45,16 +45,35 @@ class ExampleController
         $aArticles = $app['Mimoto.Data']->find('article');
         
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('feed');
+        $component = $app['Mimoto.Aimless']->createComponent('article_overview');
         
         // setup
-        $page->setCollection('articles', 'feeditem', $aArticles);
+        $component->setCollection('articles', 'feeditem', $aArticles);
         
         // render and send
-        return $page->render();
+        return $component->render();
     }
     
     public function viewExample4(Application $app)
+    {
+        // load
+        $aArticles = $app['Mimoto.Data']->find('article');
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('feed');
+        
+        // setup
+        $component->setCollection('articles', 'feeditem_type', $aArticles);
+        
+        // render and send
+        return $component->render();
+    }
+    
+    
+    
+    
+    
+    public function viewExample5(Application $app)
     {
         // load
         $entity = $app['Mimoto.Data']->get('client', 2);

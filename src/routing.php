@@ -50,3 +50,5 @@ $app->get('/silent', 'MaidoProjects\\UserInterface\\SilentController::getIndex')
 $app->get('/example1', 'MaidoProjects\\UserInterface\\ExampleController::viewExample1');
 $app->get('/example2', 'MaidoProjects\\UserInterface\\ExampleController::viewExample2');
 $app->get('/example3', 'MaidoProjects\\UserInterface\\ExampleController::viewExample3');
+$app->get('/example4', 'MaidoProjects\\UserInterface\\ExampleController::viewExample4');
+$app->get('/example5', 'MaidoProjects\\UserInterface\\ExampleController::viewExample5');
