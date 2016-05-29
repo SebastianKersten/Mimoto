@@ -244,7 +244,7 @@ class MimotoEntityRepository
         // read
         $nEntityId = mysql_result($mysqlResult, $nIndex, 'id');
         
-        // make sure an entity is available only one
+        // make sure an entity is available only once
         if (!isset($this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)]))
         {
             // init

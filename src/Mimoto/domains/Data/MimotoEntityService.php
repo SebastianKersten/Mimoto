@@ -92,8 +92,22 @@ class MimotoEntityService
      */
     public function getEntityById($sEntityType, $nId)
     {
+        
         // verify
-        if (!isset($this->_aEntityConfigs[$sEntityType])) { throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'"); }
+        if (!isset($this->_aEntityConfigs[$sEntityType]))
+        {
+            
+            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
+            
+            if ($entityConfig !== false)
+            {
+                $this->_aEntityConfigs[$sEntityType] = $entityConfig;
+            }
+            else
+            {
+                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'");
+            }
+        }
         
         try
         {
@@ -114,16 +128,22 @@ class MimotoEntityService
      */
     public function find($sEntityType, $criteria = null)
     {
-        return $this->getAllEntities($sEntityType);
-    }
-    
-    /**
-     * Get all entities
-     */
-    public function getAllEntities($sEntityType, $criteria = null)
-    {
+        
         // verify
-        if (!isset($this->_aEntityConfigs[$sEntityType])) { throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'"); }
+        if (!isset($this->_aEntityConfigs[$sEntityType]))
+        {
+            
+            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
+            
+            if ($entityConfig !== false)
+            {
+                $this->_aEntityConfigs[$sEntityType] = $entityConfig;
+            }
+            else
+            {
+                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'");
+            }
+        }
         
         // load
         $aEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);

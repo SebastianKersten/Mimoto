@@ -44,7 +44,6 @@ class MimotoEntityConfigRepository
     {
         // prepare
         $this->loadAllEntityConfigData();
-        $this->composeAllEntityConfigs();
     }
     
         
@@ -58,6 +57,16 @@ class MimotoEntityConfigRepository
     {
         return $this->_aEntityConfigs;
     }
+    
+    public function getEntityConfigByName($sEntityConfigName)
+    {
+        // load and send
+        if (isset($this->_aEntityConfigs[$sEntityConfigName])) { return $this->_aEntityConfigs[$sEntityConfigName]; }
+        
+        // build and send
+        return $this->_aEntityConfigs[$sEntityConfigName] = $this->composeEntityConfig($sEntityConfigName);
+    }
+    
     
     public function getAllEntityConfigData()
     {
@@ -226,7 +235,7 @@ class MimotoEntityConfigRepository
      * @param int $nIndex
      * @return entity
      */
-    private function composeAllEntityConfigs()
+    private function composeEntityConfig($sEntityConfigName)
     {
         
         // compose
@@ -234,6 +243,10 @@ class MimotoEntityConfigRepository
         {   
             // read
             $entity = $this->_aEntities[$i];
+            
+            // skip if not the requested one
+            if ($entity->name != $sEntityConfigName) { continue; }
+            
             
             // init
             $entityConfig = new MimotoEntityConfig();
@@ -279,10 +292,12 @@ class MimotoEntityConfigRepository
                 }
             }
             
-            
-            // store
-            $this->_aEntityConfigs[] = $entityConfig;
+            // send
+            return $entityConfig;
         }
+        
+        // send error
+        return false;
     }
     
     

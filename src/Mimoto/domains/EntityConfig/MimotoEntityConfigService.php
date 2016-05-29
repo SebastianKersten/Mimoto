@@ -68,7 +68,16 @@ class MimotoEntityConfigService
     {
         return $this->_entityConfigRepository->getAllEntityConfigData();
     }
-            
+    
+    
+    
+    /**
+     * Get entity config by name
+     */
+    public function getEntityConfigByName($sEntityConfigName)
+    {   
+        return $this->_entityConfigRepository->getEntityConfigByName($sEntityConfigName);
+    }
     
     
     /**
