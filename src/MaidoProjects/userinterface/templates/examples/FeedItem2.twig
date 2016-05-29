@@ -1,6 +1,6 @@
 {% block content %}
-<div class="example_feeditem2" {{ Aimless.live()|raw }} onClick="window.open('/article/{{ Aimless.meta('id') }}', '_self')">
-    <b>Explainer - <span {{ Aimless.live('title')|raw }}>{{ Aimless.data('title') }}</span></b><br>
-    <span {{ Aimless.live('lede')|raw }}>{{ Aimless.data('lede') }}</span>
+<div class="example_feeditem2" {{ Aimless.realtime()|raw }} onClick="window.open('/article/{{ Aimless.meta('id') }}', '_self')">
+    <b>Explainer - <span {{ Aimless.realtime('title')|raw }}>{{ Aimless.data('title') }}</span></b><br>
+    <span {{ Aimless.realtime('lede')|raw }}>{{ Aimless.data('lede') }}</span>
 </div>
 {% endblock %}

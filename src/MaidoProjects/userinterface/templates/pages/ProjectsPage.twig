@@ -1,0 +1,17 @@
+{% extends "base.twig" %}
+
+{% block submenu %}
+    <div class="filter">
+        <div class="filter_title">Show:</div>
+        <div class="filter_option"><input type="checkbox" value="request" {% if filter.request %}checked{% endif %}>Requests</div>
+        <div class="filter_option"><input type="checkbox" value="currentproject" {% if filter.currentproject %}checked{% endif %}>Current projects</div>
+        <div class="filter_option"><input type="checkbox" value="archived" {% if filter.archived %}checked{% endif %}>Archived</div>
+    </div>
+    <br>
+{% endblock %}
+
+{% block page %}
+    <div>
+        {{ Aimless.collection('projects')|raw }}
+    </div>
+{% endblock %}

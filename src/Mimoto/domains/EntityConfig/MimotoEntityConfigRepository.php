@@ -95,8 +95,7 @@ class MimotoEntityConfigRepository
         // validate
         if (is_nan($nId) || $nId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity config id '$nId' you passed is not a valid. Should be an integer > 0"); }
         
-        $nItemCount = count($this->_aEntityConfigs);
-        for ($i = 0; $i < $nItemCount; $i++)
+        for ($i = 0; $i < count($this->_aEntityConfigs); $i++)
         {
             $entityConfig = $this->_aEntityConfigs[$i];
             

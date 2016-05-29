@@ -27,39 +27,101 @@ class SettingsController extends MimotoController
      * @param Application $app
      * @return rendered twig
      */
-    public function getSettingsOverview(Application $app)
-    {   
-        return $app['twig']->render(
-            'interface.twig',
-            array(
-                'section' => 'settings',
-                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig'
-            )
-        );
+    public function viewOverview(Application $app)
+    {
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('page_settings');
+        
+        // render and send
+        return $page->render();
     }
     
     /**
-     * Get project manager overview
+     * View clients
      * @param Application $app
      * @return rendered twig
      */
-    public function getProjectManagerOverview(Application $app)
+    public function viewClients(Application $app)
     {   
+        // load
+        $aClients = $app['Mimoto.Data']->find('client');
         
-        // load data
-        $aProjectManagers = $app['ProjectManagerService']->getAllProjectManagers();
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('page_settings_clients');
         
-        // output
-        return $app['twig']->render(
-            'interface.twig',
-            array(
-                'section' => 'settings',
-                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
-                'pageSubTemplate' => 'pages/settings/projectmanagers/ProjectManagersPage.twig',
-                'projectManagers' => $aProjectManagers
-            )
-        );
+        // setup
+        $component->setCollection('clients', 'settings_listitem', $aClients);
+        
+        // render and send
+        return $component->render();
     }
+    
+    /**
+     * View agencies
+     * @param Application $app
+     * @return rendered twig
+     */
+    public function viewAgencies(Application $app)
+    {   
+        // load
+        $aAgencies = $app['Mimoto.Data']->find('agency');
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('page_settings_agencies');
+        
+        // setup
+        $component->setCollection('agencies', 'settings_listitem', $aAgencies);
+        
+        // render and send
+        return $component->render();
+    }
+    
+    /**
+     * View project managers
+     * @param Application $app
+     * @return rendered twig
+     */
+    public function viewProjectManagers(Application $app)
+    {   
+        // load
+        $aProjectManagers = $app['Mimoto.Data']->find('projectmanager');
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('page_settings_projectmanagers');
+        
+        // setup
+        $component->setCollection('projectmanagers', 'settings_listitem', $aProjectManagers);
+        
+        // render and send
+        return $component->render();
+    }
+    
+    /**
+     * View subproject states
+     * @param Application $app
+     * @return rendered twig
+     */
+    public function viewSubprojectStates(Application $app)
+    {   
+        // load
+        $aSubprojectStates = $app['Mimoto.Data']->find('subprojectstate');
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('page_settings_subprojectstates');
+        
+        // setup
+        $component->setCollection('subprojectstates', 'settings_listitem', $aSubprojectStates);
+        
+        // render and send
+        return $component->render();
+    }
+    
+    
+    
+    
+    
+    
+    
     
     /**
      * Get the form to create or edit a project manager
@@ -105,25 +167,7 @@ class SettingsController extends MimotoController
     }
     
     
-    /**
-     * View clients
-     * @param Application $app
-     * @return rendered twig
-     */
-    public function viewClients(Application $app)
-    {   
-        // load
-        $aClients = $app['Mimoto.Data']->find('client');
-        
-        // create
-        $page = $app['Mimoto.Aimless']->createComponent('settingspage');
-        
-        // setup
-        $page->setCollection('clients', 'simplelistitem', $aClients);
-        
-        // render and send
-        return $page->render();
-    }
+    
     
     /**
      * Get the form to create or edit a client
@@ -168,29 +212,6 @@ class SettingsController extends MimotoController
         return json_encode($response);
     }
     
-    
-    
-    /**
-     * Get client overview
-     * @param Application $app
-     * @return rendered twig
-     */
-    public function getAgencyOverview(Application $app)
-    {    
-        // load data
-        $aAgencies = $app['AgencyService']->getAllAgencies();
-        
-        // output
-        return $app['twig']->render(
-            'interface.twig',
-            array(
-                'section' => 'settings',
-                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
-                'pageSubTemplate' => 'pages/settings/agencies/AgenciesPage.twig',
-                'agencies' => $aAgencies
-            )
-        );
-    }
     
     /**
      * Get the form to create or edit an agency
@@ -240,29 +261,6 @@ class SettingsController extends MimotoController
     // --- Subproject states ---
     // -------------------------
     
-    
-    /**
-     * Get subproject states overview
-     * @param Application $app
-     * @return rendered twig
-     */
-    public function getSubprojectStatesOverview(Application $app)
-    {   
-        
-        // load data
-        $aSubprojectStates = $app['SubprojectStateService']->getAllSubprojectStates();
-        
-        // output
-        return $app['twig']->render(
-            'interface.twig',
-            array(
-                'section' => 'settings',
-                'pagetemplate' => 'pages/settings/SettingsOverviewPage.twig',
-                'pageSubTemplate' => 'pages/settings/subprojectstates/SubprojectStatesPage.twig',
-                'subprojectStates' => $aSubprojectStates
-            )
-        );
-    }
     
     /**
      * Get the form to create or edit a subproject state

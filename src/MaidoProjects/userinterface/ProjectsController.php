@@ -33,7 +33,7 @@ class ProjectsController
     const FILTER_SETTING_ARCHIVED = 'archived';
     
     
-    public function getProjectOverview(Application $app)
+    public function viewProjects(Application $app)
     {   
         
         // clear
@@ -58,6 +58,21 @@ class ProjectsController
         {
             $filterSettings = json_decode($_COOKIE[self::COOKIE_FILTER], true);
         }
+        
+        
+        
+        // load
+        $aProjects = $app['Mimoto.Data']->find('project');
+        
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('page_projects');
+        
+        // setup
+        $page->setCollection('projects', 'project_listitem', $aProjects);
+        
+        // render and send
+        return $page->render();
+        
         
         
         // dashboard -> wat kan er fout gaan: Buckaroo

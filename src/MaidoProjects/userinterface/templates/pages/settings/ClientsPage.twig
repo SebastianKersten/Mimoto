@@ -1,0 +1,13 @@
+{% extends "pages/SettingsPage.twig" %}
+
+{% block page %}
+    <div class="settings_page_header">
+        <hr><br>
+        <div class="page_title settings_page_title">Clients</div>
+        <div class="button settings_header_alignright" onclick="Maido.data.newEntity('client');">Add client +</div>
+    </div>
+
+    <div class="simplelist">
+        {{ Aimless.collection('clients')|raw }}
+    </div>
+{% endblock %}

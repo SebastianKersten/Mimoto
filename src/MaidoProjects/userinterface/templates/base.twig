@@ -25,7 +25,10 @@
                     </div>
                 </div>
             </div>
-            <div class="page">{% block content %}{% endblock %}</div>
+            <div class="page">
+                {% block submenu %}{% endblock %}
+                {% block page %}{% endblock %}
+            </div>
         </div>
         <div id="layer_overlay" class="layer_overlay hidden"></div>
         <div id="layer_popup" class="layer_popup hidden">    

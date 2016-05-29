@@ -107,7 +107,7 @@ class AimlessComponent
         return $sRenderedCollection;
     }
     
-    public function live($sPropertyName = null)
+    public function realtime($sPropertyName = null)
     {
         if ($sPropertyName === null)
         {
@@ -131,6 +131,7 @@ class AimlessComponent
         switch(strtolower($sPropertyName))
         {
             case 'id': return $this->_entity->getId();
+            case 'type': return $this->_entity->getEntityType();
             case 'created': return $this->_entity->getCreated();
         }
     }

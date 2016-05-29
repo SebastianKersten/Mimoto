@@ -1,38 +1,27 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+// classpath
 namespace MaidoProjects\UserInterface;
 
-
+// Silex classes
 use Silex\Application;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 
 /**
- * Description of newPHPClass
+ * ForecastController
  *
- * @author apple
+ * @author Sebastian Kersten (@supertaboo)
  */
-class ForecastController {
-    //put your code here
+class ForecastController
+{
     
-    public function getIndex(Application $app)
+    public function viewForecast(Application $app)
     {
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('page_forecast');
         
-        return $app['twig']->render(
-            'interface.twig',
-            array(
-                'section' => 'forecast',
-                'pagetemplate' => 'pages/forecast/ForecastPage.twig'
-            )
-        );
+        // render and send
+        return $page->render();
     }
     
 }

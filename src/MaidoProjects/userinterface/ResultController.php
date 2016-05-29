@@ -1,38 +1,27 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+// classpath
 namespace MaidoProjects\UserInterface;
 
-
+// Silex classes
 use Silex\Application;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 
 /**
- * Description of newPHPClass
+ * ResultController
  *
- * @author apple
+ * @author Sebastian Kersten (@supertaboo)
  */
-class ResultController {
-    //put your code here
+class ResultController
+{
     
-    public function getIndex(Application $app)
+    public function viewResult(Application $app)
     {   
-
-        return $app['twig']->render(
-            'interface.twig',
-            array(
-                'section' => 'result',
-                'pagetemplate' => 'pages/result/ResultPage.twig'
-            )
-        );
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('page_result');
+        
+        // render and send
+        return $page->render();
     }
     
 }

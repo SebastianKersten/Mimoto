@@ -9,7 +9,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 05/29/2016 17:25:04 PM
+ Date: 05/29/2016 22:36:26 PM
 */
 
 SET NAMES utf8;
@@ -33,7 +33,7 @@ CREATE TABLE `_mimoto_entities` (
 --  Records of `_mimoto_entities`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entities` VALUES ('1', 'client', '0', '0', 'admin', '2016-04-12 07:46:03'), ('2', 'agency', '0', '0', 'admin', '2016-04-12 08:00:54'), ('3', 'projectManager', '0', '0', 'admin', '2016-04-12 08:01:06'), ('4', 'subprojectState', '0', '0', 'admin', '2016-04-12 08:01:19'), ('5', 'project', '0', '0', 'admin', '2016-04-12 08:01:30'), ('6', 'subproject', '0', '0', 'admin', '2016-04-13 13:15:25'), ('7', 'contact', '0', '0', 'admin', '2016-04-13 13:18:13'), ('8', '_mimoto_component', '0', '0', 'superuser', '2016-05-25 16:23:35'), ('9', 'article', '1', '0', 'admin', '2016-05-29 15:07:46');
+INSERT INTO `_mimoto_entities` VALUES ('1', 'client', '0', '0', 'admin', '2016-04-12 07:46:03'), ('2', 'agency', '0', '0', 'admin', '2016-04-12 08:00:54'), ('3', 'projectmanager', '0', '0', 'admin', '2016-04-12 08:01:06'), ('4', 'subprojectstate', '0', '0', 'admin', '2016-04-12 08:01:19'), ('5', 'project', '0', '0', 'admin', '2016-04-12 08:01:30'), ('6', 'subproject', '0', '0', 'admin', '2016-04-13 13:15:25'), ('7', 'contact', '0', '0', 'admin', '2016-04-13 13:18:13'), ('8', 'article', '1', '0', 'admin', '2016-05-29 15:07:46');
 COMMIT;
 
 -- ----------------------------
@@ -56,7 +56,7 @@ CREATE TABLE `_mimoto_entities_properties` (
 --  Records of `_mimoto_entities_properties`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entities_properties` VALUES ('1', '1', 'name', '', 'value', '0', '0', '2016-04-12 07:46:46'), ('2', '2', 'name', '', 'value', '0', '0', '2016-04-12 08:02:25'), ('3', '3', 'name', '', 'value', '0', '0', '2016-04-12 08:02:38'), ('4', '4', 'name', '', 'value', '0', '0', '2016-04-12 08:02:52'), ('5', '5', 'name', '', 'value', '0', '0', '2016-04-12 08:03:14'), ('6', '5', 'description', '', 'value', '0', '1', '2016-04-12 08:03:29'), ('7', '5', 'client', '', 'entity', '0', '2', '2016-04-12 08:03:46'), ('8', '5', 'agency', '', 'entity', '0', '3', '2016-04-12 08:04:10'), ('9', '5', 'projectManager', '', 'entity', '0', '4', '2016-04-12 08:04:27'), ('10', '5', 'subprojects', '', 'collection', '0', '5', '2016-04-13 13:14:04'), ('11', '6', 'name', '', 'value', '0', '0', '2016-04-13 13:15:50'), ('12', '6', 'contact', '', 'entity', '0', '1', '2016-04-13 13:16:38'), ('13', '7', 'name', '', 'value', '0', '0', '2016-04-13 13:18:48'), ('14', '7', 'email', '', 'value', '0', '1', '2016-04-13 13:19:27'), ('15', '7', 'phonenumber', '', 'value', '0', '2', '2016-04-13 13:19:56'), ('16', '8', 'name', '', 'value', '0', '0', '2016-05-25 16:32:41'), ('17', '8', 'template', '', 'value', '0', '1', '2016-05-25 16:33:36'), ('18', '9', 'title', null, 'value', '0', '0', '2016-05-29 15:08:19'), ('19', '9', 'lede', null, 'value', '0', '2', '2016-05-29 15:08:49'), ('20', '9', 'body', null, 'value', '0', '3', '2016-05-29 15:09:18'), ('21', '9', 'type', null, 'value', '0', '1', '2016-05-29 15:35:07');
+INSERT INTO `_mimoto_entities_properties` VALUES ('1', '1', 'name', '', 'value', '0', '0', '2016-04-12 07:46:46'), ('2', '2', 'name', '', 'value', '0', '0', '2016-04-12 08:02:25'), ('3', '3', 'name', '', 'value', '0', '0', '2016-04-12 08:02:38'), ('4', '4', 'name', '', 'value', '0', '0', '2016-04-12 08:02:52'), ('5', '5', 'name', '', 'value', '0', '0', '2016-04-12 08:03:14'), ('6', '5', 'description', '', 'value', '0', '1', '2016-04-12 08:03:29'), ('7', '5', 'client', '', 'entity', '0', '2', '2016-04-12 08:03:46'), ('8', '5', 'agency', '', 'entity', '0', '3', '2016-04-12 08:04:10'), ('9', '5', 'projectManager', '', 'entity', '0', '4', '2016-04-12 08:04:27'), ('10', '0', 'subprojects', '', 'collection', '0', '5', '2016-04-13 13:14:04'), ('11', '6', 'name', '', 'value', '0', '0', '2016-04-13 13:15:50'), ('12', '6', 'contact', '', 'entity', '0', '1', '2016-04-13 13:16:38'), ('13', '7', 'name', '', 'value', '0', '0', '2016-04-13 13:18:48'), ('14', '7', 'email', '', 'value', '0', '1', '2016-04-13 13:19:27'), ('15', '7', 'phonenumber', '', 'value', '0', '2', '2016-04-13 13:19:56'), ('18', '8', 'title', null, 'value', '0', '0', '2016-05-29 15:08:19'), ('19', '8', 'lede', null, 'value', '0', '2', '2016-05-29 15:08:49'), ('20', '8', 'body', null, 'value', '0', '3', '2016-05-29 15:09:18'), ('21', '8', 'type', null, 'value', '0', '1', '2016-05-29 15:35:07');
 COMMIT;
 
 -- ----------------------------
@@ -76,7 +76,7 @@ CREATE TABLE `_mimoto_entities_properties_options` (
 --  Records of `_mimoto_entities_properties_options`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entities_properties_options` VALUES ('1', '1', 'type', 'textline', '2016-04-12 07:47:47'), ('2', '2', 'type', 'textline', '2016-04-12 08:05:05'), ('3', '3', 'type', 'textline', '2016-04-12 08:05:19'), ('4', '4', 'type', 'textline', '2016-04-12 08:05:29'), ('5', '5', 'type', 'textline', '2016-04-12 08:05:40'), ('6', '6', 'type', 'textblock', '2016-04-12 08:05:53'), ('7', '7', 'entityType', '1', '2016-04-12 08:06:16'), ('8', '8', 'entityType', '2', '2016-04-12 08:06:41'), ('9', '9', 'entityType', '3', '2016-04-12 08:06:57'), ('10', '10', 'allowedEntityType', '6', '2016-04-13 13:20:24'), ('11', '11', 'type', 'textline', '2016-04-13 13:20:49'), ('12', '12', 'entityType', '7', '2016-04-13 13:21:15'), ('13', '13', 'type', 'textline', '2016-04-13 13:21:33'), ('14', '14', 'type', 'textline', '2016-04-13 13:21:44'), ('15', '15', 'type', 'textline', '2016-04-13 13:21:56'), ('16', '10', 'allowDuplicates', 'true', '2016-04-17 11:59:16'), ('17', '16', 'type', 'textline', '2016-05-25 16:35:21'), ('18', '17', 'type', 'textline', '2016-05-25 16:35:41'), ('19', '18', 'type', 'textline', '2016-05-29 15:09:46'), ('20', '19', 'type', 'textline', '2016-05-29 15:10:06'), ('21', '20', 'type', 'textblock', '2016-05-29 15:10:22'), ('22', '21', 'type', 'textline', '2016-05-29 15:35:54');
+INSERT INTO `_mimoto_entities_properties_options` VALUES ('1', '1', 'type', 'textline', '2016-04-12 07:47:47'), ('2', '2', 'type', 'textline', '2016-04-12 08:05:05'), ('3', '3', 'type', 'textline', '2016-04-12 08:05:19'), ('4', '4', 'type', 'textline', '2016-04-12 08:05:29'), ('5', '5', 'type', 'textline', '2016-04-12 08:05:40'), ('6', '6', 'type', 'textblock', '2016-04-12 08:05:53'), ('7', '7', 'entityType', '1', '2016-04-12 08:06:16'), ('8', '8', 'entityType', '2', '2016-04-12 08:06:41'), ('9', '9', 'entityType', '3', '2016-04-12 08:06:57'), ('10', '10', 'allowedEntityType', '6', '2016-04-13 13:20:24'), ('11', '11', 'type', 'textline', '2016-04-13 13:20:49'), ('12', '12', 'entityType', '7', '2016-04-13 13:21:15'), ('13', '13', 'type', 'textline', '2016-04-13 13:21:33'), ('14', '14', 'type', 'textline', '2016-04-13 13:21:44'), ('15', '15', 'type', 'textline', '2016-04-13 13:21:56'), ('16', '10', 'allowDuplicates', 'true', '2016-04-17 11:59:16'), ('19', '18', 'type', 'textline', '2016-05-29 15:09:46'), ('20', '19', 'type', 'textline', '2016-05-29 15:10:06'), ('21', '20', 'type', 'textblock', '2016-05-29 15:10:22'), ('22', '21', 'type', 'textline', '2016-05-29 15:35:54');
 COMMIT;
 
 -- ----------------------------
@@ -126,13 +126,13 @@ CREATE TABLE `_mimoto_templates` (
   `owner` enum('superuser','admin') DEFAULT 'admin',
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `_mimoto_templates`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_templates` VALUES ('1', 'ClientListItem', 'pages/settings/clients/ClientListItem.twig', 'admin', '2016-05-24 07:39:26'), ('2', 'AgencyListItem', 'pages/settings/agencies/AgencyListItem.twig', 'admin', '2016-05-24 07:42:52'), ('3', 'ProjectManagerListItem', 'pages/settings/projectmanagers/ProjectManagerListItem.twig', 'admin', '2016-05-24 07:43:25'), ('4', 'SubprojectStateListItem', 'pages/settings/subprojectstates/SubprojectStateListItem.twig', 'admin', '2016-05-24 07:44:00'), ('5', 'ProjectListItem', 'pages/projects/components/Project.twig', 'admin', '2016-05-24 07:44:27'), ('6', 'SubprojectListItem', 'pages/projects/components/Subproject.twig', 'admin', '2016-05-24 07:44:51'), ('7', 'AimlessProjectListItem', 'pages/projects/components/AimlessProject.twig', 'admin', '2016-05-25 14:02:28'), ('8', 'article', 'examples/Article.twig', 'admin', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', 'admin', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', 'admin', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', 'admin', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', 'admin', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', 'admin', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', 'admin', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', 'admin', '2016-05-29 17:20:28');
+INSERT INTO `_mimoto_templates` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', 'admin', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', 'admin', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', 'admin', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', 'admin', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', 'admin', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', 'admin', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', 'admin', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', 'admin', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', 'admin', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', 'admin', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', 'admin', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', 'admin', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', 'admin', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', 'admin', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', 'admin', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', 'admin', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', 'admin', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', 'admin', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', 'admin', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', 'admin', '2016-05-29 22:12:52');
 COMMIT;
 
 -- ----------------------------
@@ -317,10 +317,10 @@ INSERT INTO `subproject` VALUES ('1', '1', 'Specificatiefase', 'Hans van der Vor
 COMMIT;
 
 -- ----------------------------
---  Table structure for `subproject_state`
+--  Table structure for `subprojectstate`
 -- ----------------------------
-DROP TABLE IF EXISTS `subproject_state`;
-CREATE TABLE `subproject_state` (
+DROP TABLE IF EXISTS `subprojectstate`;
+CREATE TABLE `subprojectstate` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET latin1 NOT NULL,
   `created` datetime NOT NULL,
@@ -328,10 +328,10 @@ CREATE TABLE `subproject_state` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
---  Records of `subproject_state`
+--  Records of `subprojectstate`
 -- ----------------------------
 BEGIN;
-INSERT INTO `subproject_state` VALUES ('1', 'Onbehandeld', '2016-02-23 10:03:22'), ('2', 'Wacht op vervolg', '2016-02-23 10:02:02'), ('3', 'Offerte gestuurd', '0000-00-00 00:00:00'), ('4', 'In uitvoering', '0000-00-00 00:00:00'), ('5', 'Vervallen', '0000-00-00 00:00:00'), ('6', 'Afgerond', '0000-00-00 00:00:00');
+INSERT INTO `subprojectstate` VALUES ('1', 'Onbehandeld', '2016-02-23 10:03:22'), ('2', 'Wacht op vervolg', '2016-02-23 10:02:02'), ('3', 'Offerte gestuurd', '0000-00-00 00:00:00'), ('4', 'In uitvoering', '0000-00-00 00:00:00'), ('5', 'Vervallen', '0000-00-00 00:00:00'), ('6', 'Afgerond', '0000-00-00 00:00:00');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

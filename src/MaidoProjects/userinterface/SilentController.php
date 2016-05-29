@@ -1,18 +1,10 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+// classpath
 namespace MaidoProjects\UserInterface;
 
-
+// Silex classes
 use Silex\Application;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 
 /**
@@ -20,19 +12,16 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  *
  * @author Sebastian Kersten (@supertaoo)
  */
-class SilentController {
-    //put your code here
+class SilentController
+{
     
-    public function getIndex(Application $app)
+    public function viewSilent(Application $app)
     {
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('page_silent');
         
-        return $app['twig']->render(
-            'interface.twig',
-            array(
-                'section' => 'silent',
-                'pagetemplate' => 'pages/silent/SilentPage.twig'
-            )
-        );
+        // render and send
+        return $page->render();
     }
     
 }
