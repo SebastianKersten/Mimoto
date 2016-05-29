@@ -91,4 +91,36 @@ class ExampleController
         return $component->render();
     }
     
+    
+    
+    
+    
+    public function viewArticleOverview(Application $app)
+    {
+        // load
+        $aArticles = $app['Mimoto.Data']->find('article');
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('article_overview');
+        
+        // setup
+        $component->setCollection('articles', 'feeditem_type', $aArticles);
+        
+        // render and send
+        return $component->render();
+    }
+    
+    public function viewArticle(Application $app, $nArticleId)
+    {        
+        // load
+        $article = $app['Mimoto.Data']->get('article', $nArticleId);
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('article_type', $article);
+        
+        // render and send
+        return $component->render();
+    }
+    
+    
 }

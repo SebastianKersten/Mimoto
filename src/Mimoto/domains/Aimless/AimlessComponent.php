@@ -97,7 +97,8 @@ class AimlessComponent
             // create
             $component = $this->_AimlessService->createComponent($collection->template_name, $entity);
             
-            //$component->setVar(); overerven van $this->_aVars ?
+            // forward
+            foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
             
             // output
             $sRenderedCollection .= $component->render();

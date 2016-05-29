@@ -641,18 +641,27 @@ div.example_article_explainer
     padding: 8px;
 }
 
-div.example_feeditem1
+
+div.example_feeditem1, div.example_feeditem2
 {
     border: #c3c3c3 solid 1px;
-    background-color: #ffffff;
     padding: 8px;
+    cursor: pointer;
+}
+
+div.example_feeditem1:hover>b, div.example_feeditem2:hover>b
+{
+    text-decoration: underline;
+}
+
+div.example_feeditem1
+{
+    background-color: #ffffff;   
 }
 
 div.example_feeditem2
 {
-    border: #c3c3c3 solid 1px;
     background-color: #f7ecb5;
-    padding: 8px;
 }
 
 div.example_feed

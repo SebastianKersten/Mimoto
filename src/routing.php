@@ -52,3 +52,7 @@ $app->get('/example2', 'MaidoProjects\\UserInterface\\ExampleController::viewExa
 $app->get('/example3', 'MaidoProjects\\UserInterface\\ExampleController::viewExample3');
 $app->get('/example4', 'MaidoProjects\\UserInterface\\ExampleController::viewExample4');
 $app->get('/example5', 'MaidoProjects\\UserInterface\\ExampleController::viewExample5');
+
+
+$app->get('/articles', 'MaidoProjects\\UserInterface\\ExampleController::viewArticleOverview');
+$app->get('/article/{nArticleId}', 'MaidoProjects\\UserInterface\\ExampleController::viewArticle');
