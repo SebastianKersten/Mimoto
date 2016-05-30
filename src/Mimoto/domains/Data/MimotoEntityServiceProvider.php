@@ -110,7 +110,7 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        //$GLOBALS['Mimoto.Data'] = $app['Mimoto.Data'];
+        $GLOBALS['Mimoto.Data'] = $app['Mimoto.Data'];
     }
     
 }

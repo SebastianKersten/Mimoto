@@ -56,3 +56,6 @@ $app->get('/example5', 'MaidoProjects\\UserInterface\\ExampleController::viewExa
 
 $app->get('/articles', 'MaidoProjects\\UserInterface\\ExampleController::viewArticleOverview');
 $app->get('/article/{nArticleId}', 'MaidoProjects\\UserInterface\\ExampleController::viewArticle');
+
+$app->get('/memcache', 'MaidoProjects\\UserInterface\\ExampleController::viewMemcacheExample');
+$app->get('/memcachemonitor/{sEntityType}', 'MaidoProjects\\UserInterface\\ExampleController::viewAllArticlesInMemcache');

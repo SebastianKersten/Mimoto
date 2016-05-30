@@ -9,6 +9,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 use Mimoto\Event\MimotoEventServiceProvider;
 use Mimoto\Aimless\MimotoAimlessServiceProvider;
 use Mimoto\Data\MimotoEntityServiceProvider;
+use Mimoto\Cache\MimotoCacheServiceProvider;
 
 
 // init
@@ -38,6 +39,7 @@ $app['twig'] = $twig;
 
 
 // setup entities - #todo - combine all in MimotoProvider
+$app->register(new MimotoCacheServiceProvider());
 $app->register(new MimotoEntityServiceProvider());
 $app->register(new MimotoAimlessServiceProvider());
 $app->register(new MimotoEventServiceProvider());

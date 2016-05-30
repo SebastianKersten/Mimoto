@@ -296,7 +296,7 @@ class MimotoData
             if (MimotoDataUtils::isValidEntityId($property->currentId))
             {                    
                 // load
-                $property->entityCache = $GLOBALS['Mimoto.Data']->getEntityById($property->entityType, $property->currentId);
+                $property->entityCache = $GLOBALS['Mimoto.Data']->get($property->entityType, $property->currentId);
             }
         }
         
@@ -670,6 +670,13 @@ class MimotoData
         return explode(self::SELECTOR_KEY_SEPARATOR, $sPropertySelector);
     }
 
+    
+    
+    public function valueRelatesToEntity($sPropertyName)
+    {
+        // verify and send
+        return (isset($this->_aValuesAsEntities[$sPropertyName]));
+    }
 
     
     

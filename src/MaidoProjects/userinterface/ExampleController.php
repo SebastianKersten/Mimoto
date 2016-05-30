@@ -122,5 +122,81 @@ class ExampleController
         return $component->render();
     }
     
+    public function viewMemcacheExample(Application $app)
+    {
+        
+        function microtime_float()
+        {
+            list($usec, $sec) = explode(" ", microtime());
+            return ((float)$usec + (float)$sec);
+        }
+        
+        
+        $time_start = microtime_float();
+        $before = memory_get_usage();
+        
+        
+        $article = $app['Mimoto.Cache']->getValue('article.1');
+        
+        
+        if ($article === false)
+        {
+            echo 'article.1 not found!<br>';
+            
+            // load
+            $article = $app['Mimoto.Data']->get('article', 1);
+            
+            
+            $articleCache = (object) array(
+                'title' => $article->getValue('title'),
+                'lede' => $article->getValue('lede'),
+                'body' => $article->getValue('body'),
+                'type' => $article->getValue('type')
+            );
+            
+            $app['Mimoto.Cache']->setValue('article.1', $articleCache, false, 10) or die ("Failed to save data at the server - Silent fail!!");
+        }
+        else
+        {
+            echo 'article.1:';
+            echo '<pre>';
+            print_r($article);
+            echo '</pre>';
+        }
+        
+        
+        $after = memory_get_usage();
+        echo "<br><br><hr><b style='color:#06AFEA'>Memory usage = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes)</b><br><br>";
+        
+        $time_end = microtime_float();
+        $time = $time_end - $time_start;
+        echo "It took $time seconds to load data\n";
+        
+        
+        return '<br>Done!';
+    }
+    
+    
+    
+    public function viewAllArticlesInMemcache(Application $app, $sEntityType)
+    {
+        
+        $aArticles = $app['Mimoto.Data']->find($sEntityType);
+        
+        for ($i = 0; $i < count($aArticles); $i++)
+        {
+            $article = $aArticles[$i];
+            
+            $sEntityId = $sEntityType.'.'.$article->getId();
+            
+            $cachedArticle = $app['Mimoto.Cache']->getValue($sEntityId);
+            
+            echo $sEntityId.' in cache: '.(($cachedArticle === false) ? 'no' : '<b>YES</b>').'<br>';
+            
+                
+        }
+        
+        return '<br>Done!';
+    }
     
 }

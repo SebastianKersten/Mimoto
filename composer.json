@@ -27,6 +27,7 @@
             "Mimoto\\Entity\\": "./src/Mimoto/domains/Entity",
             "Mimoto\\Aimless\\": "./src/Mimoto/domains/Aimless",
             "Mimoto\\Mail\\": "./src/Mimoto/domains/Mail",
+            "Mimoto\\Cache\\": "./src/Mimoto/domains/Cache",
             "Mimoto\\library\\": "./src/Mimoto/library",
             "Mimoto\\tests\\": "./tests"
         }
