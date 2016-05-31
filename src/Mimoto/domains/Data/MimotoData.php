@@ -558,7 +558,7 @@ class MimotoData
         // init
         $subproperty = (object) array(
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION_ITEM,
-            'entityType' => $property->allowedEntityTypes[0]
+            'allowedEntityType' => $property->allowedEntityTypes[0]
         );
         
         
@@ -680,61 +680,61 @@ class MimotoData
 
     
     
-//    
-//    /**
-//     * Add an item to a collection
-//     * 
-//     * @param string $sPropertySelector The selector containing the property name and optional subselector
-//     * @param mixed $value The item (id or entity)
-//     * @param index $nIndex (Optional) The index on which to add the item
-//     * @throws MimotoEntityException
-//     */
-//    public function add($sPropertySelector, $value, $nIndex = null)
-//    {
-//        // prepare
-//        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
-//        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
-//        
-//        // load
-//        //if ($this->hasProperty($sPropertyName)) { $property = $this->_aProperties[$sPropertyName]; }
-//        $property = $this->_aProperties[$sPropertyName];
-//        
-//        // report
-//        if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to add an item to value"); }
-//        
-//        // forward
-//        $property->add($sSubselector, $value, $nIndex);
-//    }
-//    
-//    /**
-//     * Remove an item from a collection
-//     * 
-//     * @param string $sPropertySelector The selector containing the property name and optional subselector
-//     * @param mixed $value The item (id or entity)
-//     * @throws MimotoEntityException
-//     */
-//    public function remove($sPropertySelector, $value)
-//    {
-//        // prepare
-//        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
-//        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
-//        
-//        // load
-//        $property = $this->_aProperties[$sPropertyName];
-//        
-//        // report
-//        if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to remove an item from value"); }
-//        
-//        // forward
-//        $property->from($sSubselector, $value);
-//    }
-//    
-//    
-//    
-//    // ----------------------------------------------------------------------------
-//    // --- Public methods ---------------------------------------------------------
-//    // ----------------------------------------------------------------------------
-//    
+    
+    /**
+     * Add an item to a collection
+     * 
+     * @param string $sPropertySelector The selector containing the property name and optional subselector
+     * @param mixed $value The item (id or entity)
+     * @param index $nIndex (Optional) The index on which to add the item
+     * @throws MimotoEntityException
+     */
+    public function add($sPropertySelector, $value, $nIndex = null)
+    {
+        // prepare
+        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
+        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
+        
+        // load
+        //if ($this->hasProperty($sPropertyName)) { $property = $this->_aProperties[$sPropertyName]; }
+        $property = $this->_aProperties[$sPropertyName];
+        
+        // report
+        if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to add an item to value"); }
+        
+        // forward
+        $property->add($sSubselector, $value, $nIndex);
+    }
+    
+    /**
+     * Remove an item from a collection
+     * 
+     * @param string $sPropertySelector The selector containing the property name and optional subselector
+     * @param mixed $value The item (id or entity)
+     * @throws MimotoEntityException
+     */
+    public function remove($sPropertySelector, $value)
+    {
+        // prepare
+        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
+        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
+        
+        // load
+        $property = $this->_aProperties[$sPropertyName];
+        
+        // report
+        if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to remove an item from value"); }
+        
+        // forward
+        $property->from($sSubselector, $value);
+    }
+    
+    
+    
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+    
 //    
 //    /**
 //     * Start tracking changes
@@ -831,58 +831,6 @@ class MimotoData
 //        
 //        // send
 //        return $aModifiedValues;
-//    }
-//    
-//    
-//    
-//    // ----------------------------------------------------------------------------
-//    // --- Public methods - Aimless -----------------------------------------------
-//    // ----------------------------------------------------------------------------
-//    
-//    
-//    /**
-//     * Get Aimless value of a property or subproperty
-//     * @param string $sPropertySelector
-//     * @return string The Aimless value for the supplied property selector
-//     */
-//    public function getAimlessValue($sPropertySelector)
-//    {
-//        // prepare
-//        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
-//        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
-//        
-//        // compose
-//        $sAimlessValue = MimotoLiveScreenUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sPropertyName);
-//        
-//        // verify
-//        if (!empty($sSubselector) && $this->valueRelatesToEntity($sPropertyName))
-//        {
-//            // load
-//            $entity = $this->getValue($sPropertyName);
-//            
-//            // compose
-//            if (MimotoEntityUtils::isEntity($entity))
-//            {
-//                
-//                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalue($sPropertyName, $entity->getId(), $sSubselector);
-//            }
-//            else
-//            {
-//                $sAimlessValue .= MimotoLiveScreenUtils::formatAimlessSubvalueWithoutId($sPropertyName, $sSubselector);
-//            }
-//        }
-//        
-//        // send
-//        return $sAimlessValue;
-//    }
-//    
-//    /**
-//     * Get Aimless id of an entity
-//     * @return string The Aimless id for the supplied property selector
-//     */
-//    public function getAimlessId()
-//    {
-//        return $this->getEntityType().'.'.$this->getId();
 //    }
 //    
 

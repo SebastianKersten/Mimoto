@@ -1,0 +1,6 @@
+{% block content %}
+<div class="example_feeditem1" {{ Aimless.realtime()|raw }}>
+    <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br>
+    <span {{ Aimless.realtime('contact_name')|raw }}>{{ Aimless.data('contact_name') }}</span>
+</div>
+{% endblock %}

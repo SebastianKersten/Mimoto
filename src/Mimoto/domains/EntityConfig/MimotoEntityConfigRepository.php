@@ -275,8 +275,8 @@ class MimotoEntityConfigRepository
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                         // 1. entity-types opslaan in class root en dan de string meegeven, ipv de id
-
-                        $entityConfig->setEntityAsProperty($property->name, $this->getEntityNameById($property->options['entityType']));
+                        
+                        $entityConfig->setEntityAsProperty($property->name, $property->options);
 
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLColumn($property->name, $property->name.'_id');
@@ -286,7 +286,13 @@ class MimotoEntityConfigRepository
 
                         // 1. pass options, zoals allowDuplicates en verwerk intern in method
 
-                        $entityConfig->setCollectionAsProperty($property->name, $this->getEntityNameById($property->options['allowedEntityType']), $property->options);
+                        $entityConfig->setCollectionAsProperty($property->name, $property->options);
+                        
+                        // compose
+                        $sConnectionTable = $this->getEntityNameById($entity->id).'_'.$this->getEntityNameById($property->options['allowedEntityType']->value);
+                        
+                        // connect entity to data source
+                        $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
                         break;
                 }
             }
@@ -302,13 +308,12 @@ class MimotoEntityConfigRepository
     
     private function getEntityNameById($nId)
     {
-        
-        $nItemCount = count($this->_aEntityConfigs);
+        $nItemCount = count($this->_aEntities);
         for ($i = 0; $i < $nItemCount; $i++)
         {
-            $entityConfig = $this->_aEntityConfigs[$i];
+            $entity = $this->_aEntities[$i];
             
-           if ($entityConfig->getId() === $nId) { return $entityConfig->getName(); }
+            if ($entity->id == $nId) { return $entity->name; }
         }
     }
 }

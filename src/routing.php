@@ -52,6 +52,9 @@ $app->get('/example2', 'MaidoProjects\\UserInterface\\ExampleController::viewExa
 $app->get('/example3', 'MaidoProjects\\UserInterface\\ExampleController::viewExample3');
 $app->get('/example4', 'MaidoProjects\\UserInterface\\ExampleController::viewExample4');
 $app->get('/example5', 'MaidoProjects\\UserInterface\\ExampleController::viewExample5');
+$app->get('/example6', 'MaidoProjects\\UserInterface\\ExampleController::viewExample6');
+$app->get('/example7', 'MaidoProjects\\UserInterface\\ExampleController::viewExample7');
+$app->get('/example8', 'MaidoProjects\\UserInterface\\ExampleController::viewExample8');
 
 
 $app->get('/articles', 'MaidoProjects\\UserInterface\\ExampleController::viewArticleOverview');

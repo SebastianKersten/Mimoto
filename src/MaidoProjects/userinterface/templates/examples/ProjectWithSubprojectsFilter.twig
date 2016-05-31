@@ -1,0 +1,21 @@
+{% extends "examplebase.twig" %}
+
+{% block content %}
+    <h1>Example 7 - Project with subprojects (typed)</h1>
+    <i>This project contains a collection of subprojects and every subproject is presented with the a template based on the "state" property. Also, subprojects are separatedly shown grouped bij "state" using the filter option.</i><br>
+    <br>
+    <br>
+    <div class="example_project" {{ Aimless.realtime()|raw }}>
+        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br><br>
+        <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }}</div>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects', '{state="prospect"}')|raw }}>
+            {{ Aimless.data('subprojects', '{state="prospect"}') }}
+        </div>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects', '{state="active"}')|raw }}>
+            {{ Aimless.data('subprojects', '{state="active"}') }}
+        </div>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects', '{state="archived"}')|raw }}>
+            {{ Aimless.data('subprojects', '{state="archived"}') }}
+        </div>
+    </div>
+{% endblock %}

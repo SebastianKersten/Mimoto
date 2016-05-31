@@ -76,15 +76,78 @@ class ExampleController
     public function viewExample5(Application $app)
     {
         // load
-        $entity = $app['Mimoto.Data']->get('client', 2);
+        $project = $app['Mimoto.Data']->get('project', 3);
+        
+        echo '<pre>';
+        print_r($project);
+        echo '</pre>';
         
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('example3', $entity);
+        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
         
         // setup
-        $component->setupProperty('articles', 'feeditem');
+        $component->setupProperty('subprojects', 'subproject');
         
         // compose
+        //$component->setFormatter('blabla', 'xxx');
+        //$component->setVar('blabla', 'xxx');
+        
+        // render and send
+        return $component->render();
+    }
+    
+    
+    
+    public function viewExample6(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_state', $project);
+        
+        // setup
+        $component->setupProperty('subprojects', 'subproject_state');
+        
+        // compose
+        //$component->setFormatter('blabla', 'xxx');
+        //$component->setVar('blabla', 'xxx');
+        
+        // render and send
+        return $component->render();
+    }
+    
+    
+    
+    public function viewExample7(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_filter', $project);
+        
+        // setup
+        $component->setupProperty('subprojects', 'subproject_state');
+        
+        // compose
+        //$component->setFormatter('blabla', 'xxx');
+        //$component->setVar('blabla', 'xxx');
+        
+        // render and send
+        return $component->render();
+    }
+    
+    public function viewExample8(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('article', 2);
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('article_custom', $project);
+        
+        // compose
+        $component->setFormatter('blabla', 'xxx');
         $component->setVar('blabla', 'xxx');
         
         // render and send

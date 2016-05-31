@@ -168,13 +168,13 @@ class MimotoEntityConfig
      * @param string $sPropertyName The property's name
      * @param string $sEntityType The entity's type
      */
-    public function setEntityAsProperty($sPropertyName, $sEntityType)
-    {
+    public function setEntityAsProperty($sPropertyName, $options)
+    {        
          // compose
         $property = (object) array(
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'name' => $sPropertyName,
-            'entityType' => $sEntityType
+            'entityType' => $options['entityType']->value
         );
         
         // store
@@ -186,13 +186,14 @@ class MimotoEntityConfig
      * @param string $sPropertyName The property's name
      * @param string $sAllowedEntityType The allowed entity type
      */
-    public function setCollectionAsProperty($sPropertyName, $sAllowedEntityType)
+    public function setCollectionAsProperty($sPropertyName, $options)
     {
          // compose
         $property = (object) array(
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
             'name' => $sPropertyName,
-            'allowedEntityType' => $sAllowedEntityType
+            'allowedEntityType' => $options['allowedEntityType']->value,
+            'allowDuplicates' => ($options['allowDuplicates']->value === 'true') ? true : false,
         );
         
         // store

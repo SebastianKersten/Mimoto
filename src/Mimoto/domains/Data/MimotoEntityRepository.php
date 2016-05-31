@@ -291,7 +291,7 @@ class MimotoEntityRepository
                 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
                     
-                    $entity->setEntityAsProperty($property->name, $property->allowedEntityType);
+                    $entity->setCollectionAsProperty($property->name, $property->allowedEntityType);
                     break;
             }
             
@@ -302,13 +302,30 @@ class MimotoEntityRepository
                     
                     // load
                     $entity->setValue($property->name, mysql_result($mysqlResult, $nIndex, $propertyValue->mysqlColumnName));
-                    
-                    
-                    // 1. collection
-                    
-                    
                     break;
                 
+                case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
+                    
+                    // init
+                    $aCollection = array();
+
+                    // load
+                    $sQuery = "SELECT child_id FROM ".$propertyValue->mysqlConnectionTable.
+                              " WHERE parent_id='".$entity->getId()."' ORDER BY sortindex";
+                    $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                    $nItemCount = mysql_num_rows($result);
+                    
+                    // register
+                    for ($j = 0; $j < $nItemCount; $j++)
+                    {
+                        $aCollection[] = mysql_result($result, $j, 'child_id');
+                    }
+                    
+                    // register collection data
+                    $entity->setValue($property->name, $aCollection);
+                    
+                    break;
+                    
                 case MimotoEntityConfig::PROPERTY_VALUE_DEFAULT:
                     
                     $entity->setValue($property->name, $propertyValue->value);
@@ -319,79 +336,6 @@ class MimotoEntityRepository
                     $entity->setValue($property->name, $propertyValue->value);
                     break;
             }
-            
-//            switch($property->type)
-//            {
-//                case self::PROPERTY_TYPE_VALUE:
-//                    
-//                    
-//                    
-//                    // register primary entity data
-//                    $entity->setValue($property->propertyName, $value);
-//                    break;
-//                
-//                case self::PROPERTY_TYPE_ENTITY:
-//                    
-//                    // load
-//                    $nSubentityId = mysql_result($mysqlResult, $nIndex, $property->dbColumn);
-//                    
-//                    // register primary entity data
-//                    $entity->setValue($property->propertyName, $nSubentityId);
-//                    
-//                    // register entity delegate
-//                    $entity->setValueAsEntityService($property->propertyName, $property->entityService);
-//                    
-//                    // #todo
-//                    // 1. setValue -> new MimotoEntity
-//                    // 2. getValue support node-chaining
-//                    // 3. MimotoData
-//                    
-//                    break;
-//                
-//                case self::PROPERTY_TYPE_COLLECTION:
-//                    
-//                    // init
-//                    $aCollection = array();
-//
-//                    // load
-//                    $sQuery = "SELECT child_id FROM ".$property->dbTableConnections.
-//                              " WHERE parent_id='".$entity->getId()."' ORDER BY sortindex";
-//                    $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-//                    $nItemCount = mysql_num_rows($result);
-//                    
-//                    // register
-//                    for ($i = 0; $i < $nItemCount; $i++)
-//                    {
-//                        $aCollection[] = mysql_result($result, $i, 'child_id');
-//                    }
-//                    
-//                    // register collection data
-//                    $entity->setValue($property->propertyName, $aCollection);
-//                    
-//                    
-//                    // init
-//                    //$collection = new MimotoCollection();
-//                    
-////                    MimotoGroup = MimotoEntity achtig object zonder entity Id
-////                            
-////                            
-////                    MimotoData.getValue/setValue
-////                    MimotoGroup = MimotoData
-////                    MimotoEntity.getId / setId
-////                    MimotoCollection = 
-//                    
-//                    break;
-//                
-//                default:
-//                    
-//                    echo 'Property type "'.$property->type.'"unknow in MimotoSingleMySQLTableRepository';
-//                    
-//                    echo "<pre>";
-//                    print_r($this);
-//                    echo "</pre>";
-//                    
-//                    die();
-//            }
         }
         
         // start tracking changes
