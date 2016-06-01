@@ -78,10 +78,7 @@ class MimotoDataUtils
             }
             
             // store
-            $aConditionals[] = (object) array(
-                'key' => $sExpressionKey,
-                'value' => $sExpressionValue
-            );
+            $aConditionals[$sExpressionKey] = $sExpressionValue;
         }
         
         // send

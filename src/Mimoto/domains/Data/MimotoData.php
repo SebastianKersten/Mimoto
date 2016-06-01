@@ -474,20 +474,13 @@ class MimotoData
                 
                 
                 $bVerified = true;
-                if (count($aConditionals) > 0)
+                foreach ($aConditionals as $sKey => $value)
                 {
-                    
-                    for ($j = 0; $j < count($aConditionals); $j++)
+                    // verify
+                    if ($collectionItem->entityCache->getValue($sKey) != $value)
                     {
-                        // register
-                        $conditional = $aConditionals[$j];
-                        
-                        // verify
-                        if ($collectionItem->entityCache->getValue($conditional->key) != $conditional->value)
-                        {
-                            $bVerified = false;
-                            break;
-                        }
+                        $bVerified = false;
+                        break;
                     }
                 }
                                 

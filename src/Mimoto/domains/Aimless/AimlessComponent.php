@@ -181,11 +181,12 @@ class AimlessComponent
             {
                 $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
                 $aConditionals = MimotoDataUtils::getConditionals($sSubpropertySelector);
-
-                // send
-                return "mls_contains='".$this->_entity->getAimlessValue($sPropertyName)."' mls_filter='".json_encode($aConditionals)."'";
                 
-                // 1. json versimpelen (geen key/value)
+                // compose
+                $sFilter = (!empty($aConditionals)) ? " mls_filter='".json_encode($aConditionals)."'" : '';
+                        
+                // send
+                return "mls_contains='".$this->_entity->getAimlessValue($sPropertyName)."'".$sFilter;
             }
         }
         
