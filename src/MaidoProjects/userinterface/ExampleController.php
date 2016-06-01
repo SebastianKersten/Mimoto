@@ -130,32 +130,13 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_filter', $project);
         
         // setup
-        $component->setupProperty('subprojects', 'subproject_state');
-        
-        // compose
-        //$component->setFormatter('blabla', 'xxx');
-        //$component->setVar('blabla', 'xxx');
+        $component->setPropertyTemplate('subprojects', 'subproject_phase');
+        $component->setPropertyFormatter('description', function($sValue) { return substr($sValue, 0, 50).' ..'; });
+        $component->setVar('author', 'Sebastian');
         
         // render and send
         return $component->render();
     }
-    
-    public function viewExample8(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('article', 2);
-        
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('article_custom', $project);
-        
-        // compose
-        $component->setFormatter('blabla', 'xxx');
-        $component->setVar('blabla', 'xxx');
-        
-        // render and send
-        return $component->render();
-    }
-    
     
     
     

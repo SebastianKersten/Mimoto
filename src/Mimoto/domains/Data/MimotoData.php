@@ -422,22 +422,28 @@ class MimotoData
         // 3. dit houdt het management van de collection vrij eenvoudig
         
         
+        //echo "\nsSubpropertySelector=".$sSubpropertySelector."<br>\n\n";
         
+        
+        // init
+        $aConditionals = [];
         
         // 1. if (this is collection and)    
-        if (preg_match("/^{}$/", $sSubpropertySelector))
+        if (preg_match("/^{[a-zA-Z0-9=\"']*?}$/", $sSubpropertySelector))
         {
+            
             // 1. query, with && en || support, comma separated
             // 2. Example: {phase="archived"}
             
             // register
-            $sExpression = substr($sKey, 1, strlen($sKey) - 1);
-            $aExpressionElements = explode(self::EXPRESSION_SEPERATOR, $sExpression);
-
+            $sExpression = substr($sSubpropertySelector, 1, strlen($sSubpropertySelector) - 2);
+            $aExpressionElements = explode('=', $sExpression);
+            
+            
             // update
             $sExpressionKey = trim($aExpressionElements[0]);
             $sExpressionValue = trim($aExpressionElements[1]);
-
+            
             // register
             $sFirstChar = $sExpressionValue[0];
             $sLastChar = $sExpressionValue[strlen($sExpressionValue) - 1];
@@ -445,22 +451,15 @@ class MimotoData
             // cleanup
             if (($sFirstChar === "'" && $sLastChar === "'") || ($sFirstChar == '"' && $sLastChar == '"'))
             {
-                $sExpressionValue = substr($sExpressionValue, 1, strlen($sExpressionValue) - 1);
+                $sExpressionValue = substr($sExpressionValue, 1, strlen($sExpressionValue) - 2);
             }
             
-            // search all objects in collection
-            //if (oData instanceof Array) // 1. of node is (object), dan anders omgaan met subnodes uitlezen
-            {
-                // 1. parent entity meegeven?
-                foreach ($aProperties as $sKey -> $value)
-                {
-                   
-                    
-                    // validate
-                    //if (oData[i][sExpressionKey] == sExpressionValue) {
-                    //}
-                }
-            }
+            // store
+            $aConditionals[] = (object) array(
+                'key' => $sExpressionKey,
+                'value' => $sExpressionValue
+            );
+            
         }
         else
         if (preg_match("/^\[\]$/", $sSubpropertySelector))
@@ -474,40 +473,56 @@ class MimotoData
         if (preg_match("/^\/\/$/", $sSubpropertySelector))
                 {
             /* regexp */
-        } 
-        else
-        {
-            /* regular value */
-            
-            
-            if ($bGetStorableValue)
-            {
-                // 1. de data moet eerst geladen worden
-                // 2. indien geladen, opslaan
-                // 3. indien opgeslagen, gebruik uit geheugen
-                
-                
-                $aCollectionItems = $property->currentCollection;
-                
-                $aCollection = []; 
-                
-                for ($i = 0; $i < count($aCollectionItems); $i++)
-                {
-                    // register
-                    $collectionItem = $aCollectionItems[$i];
-                    
-                    // load
-                    $collectionItem->entityCache = $GLOBALS['Mimoto.Data']->get($collectionItem->entityType, $collectionItem->currentId);
-                    
-                    $aCollection[] = $collectionItem->entityCache;
-                    
-                }
-                
-                return $aCollection;
-            }
         }
         
         
+
+        /* regular value */
+
+
+        if ($bGetStorableValue)
+        {
+            // 1. de data moet eerst geladen worden
+            // 2. indien geladen, opslaan
+            // 3. indien opgeslagen, gebruik uit geheugen
+
+
+            $aCollectionItems = $property->currentCollection;
+
+            $aCollection = []; 
+
+            for ($i = 0; $i < count($aCollectionItems); $i++)
+            {
+                // register
+                $collectionItem = $aCollectionItems[$i];
+
+                // load
+                $collectionItem->entityCache = $GLOBALS['Mimoto.Data']->get($collectionItem->entityType, $collectionItem->currentId);
+                
+                
+                $bVerified = true;
+                if (count($aConditionals) > 0)
+                {
+                    
+                    for ($j = 0; $j < count($aConditionals); $j++)
+                    {
+                        // register
+                        $conditional = $aConditionals[$j];
+                        
+                        // verify
+                        if ($collectionItem->entityCache->getValue($conditional->key) != $conditional->value)
+                        {
+                            $bVerified = false;
+                            break;
+                        }
+                    }
+                }
+                                
+                if ($bVerified) { $aCollection[] = $collectionItem->entityCache; }
+
+            }
+            return $aCollection;
+        }
         
         
         

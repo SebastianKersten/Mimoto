@@ -1,21 +1,27 @@
 {% extends "examplebase.twig" %}
 
 {% block content %}
-    <h1>Example 7 - Project with subprojects (typed)</h1>
-    <i>This project contains a collection of subprojects and every subproject is presented with the a template based on the "phase" property. Also, subprojects are separatedly shown grouped bij "phase" using the filter option.</i><br>
+    <h1>Example 7 - Project with subprojects (typed and grouped)</h1>
+    <i>This project contains a collection of subprojects and every subproject is presented with the a template based on the "phase" property. Also, subprojects are separatedly shown grouped bij "phase" using the filter option. This example also shows the usage of the 'formatter'-feature and the 'custom var'-feature</i><br>
     <br>
     <br>
     <div class="example_project" {{ Aimless.realtime()|raw }}>
         <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br><br>
-        <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }}</div>
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="prospect"}')|raw }}>
-            {{ Aimless.data('subprojects.{phase="prospect"}') }}
+        <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }} <i>[last modified by {{ author }}]</i></div>
+        <br>
+        Requests:
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase=request}')|raw }}>
+            {{ Aimless.data('subprojects.{phase="request"}')|raw }}
         </div>
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="active"}')|raw }}>
-            {{ Aimless.data('subprojects', '{phase="active"}') }}
+        <br>
+        Current projects:
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase=currentproject}')|raw }}>
+            {{ Aimless.data('subprojects.{phase="currentproject"}')|raw }}
         </div>
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects', '{phase="archived"}')|raw }}>
-            {{ Aimless.data('subprojects', '{phase="archived"}') }}
+        <br>
+        Archived:
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase=archived}')|raw }}>
+            {{ Aimless.data('subprojects.{phase="archived"}')|raw }}
         </div>
     </div>
 {% endblock %}

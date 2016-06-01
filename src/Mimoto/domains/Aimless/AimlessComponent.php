@@ -26,6 +26,7 @@ class AimlessComponent
     var $_aVars = [];
     var $_aCollections = [];
     var $_aPropertyTemplates = [];
+    var $_aPropertyFormatters = [];
     
     
     
@@ -55,9 +56,13 @@ class AimlessComponent
     }
     
     
-    public function setPropertyFormatter()
+    public function setPropertyFormatter($sKey, $fDelegate)
     {
+        $propertyFormatter = (object) array(
+            'delegate' => $fDelegate
+        );
         
+        $this->_aPropertyFormatters[$sKey] = $propertyFormatter;
     }
     
     public function setVar($sKey, $value)
@@ -87,9 +92,25 @@ class AimlessComponent
         // read
         $value = $this->_entity->getValue($sPropertyName, true);
         
+        
         // verify
         if (is_array($value))
         {
+            
+            //echo '######';
+            
+            
+            // 5. MimotoData check if collection item already loaded
+            
+            //echo '<pre>';
+            //print_r($value);
+            //echo '</pre>';
+            
+            
+            $nSeparatorPos = strpos($sPropertyName, '.');
+            if ($nSeparatorPos !== false) { $sPropertyName = substr($sPropertyName, 0, $nSeparatorPos); }
+            
+            
             if (!isset($this->_aPropertyTemplates[$sPropertyName]))
             {
                 return "Aimless says: No template set for property '$sPropertyName'. Use AimlessComponent->setPropertyTemplate()";
@@ -98,14 +119,20 @@ class AimlessComponent
                 // 2. standaard report error (error level)
             }
             
-            // echo '######';
-            
-            
             // render and send
             return $this->renderCollection($value, $this->_aPropertyTemplates[$sPropertyName]->template_name);
         }
         else
-        {   
+        {
+            // format
+            if (isset($this->_aPropertyFormatters[$sPropertyName]))
+            {
+                $fDelegate = $this->_aPropertyFormatters[$sPropertyName]->delegate;
+                
+                $value = $fDelegate($value);
+            }
+            
+            // send
             return $value;
         }
     }
