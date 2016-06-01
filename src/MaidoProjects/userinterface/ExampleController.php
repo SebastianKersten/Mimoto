@@ -131,7 +131,7 @@ class ExampleController
         
         // setup
         $component->setPropertyTemplate('subprojects', 'subproject_phase');
-        $component->setPropertyFormatter('description', function($sValue) { return substr($sValue, 0, 50).' ..'; });
+        $component->setPropertyFormatter('description', function($sValue) { return substr($sValue, 0, 72).' ..'; });
         $component->setVar('author', 'Sebastian');
         
         // render and send
