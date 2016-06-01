@@ -3,6 +3,10 @@
 // classpath
 namespace Mimoto\Aimless;
 
+// Mimoto classes
+use Mimoto\library\data\MimotoDataUtils;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+
 
 /**
  * AimlessComponent
@@ -154,28 +158,46 @@ class AimlessComponent
         return $this->renderCollection($collection->collection, $collection->template_name);
     }
     
-    public function realtime($sPropertyName = null)
+    public function realtime($sPropertySelector = null)
     {
-//        echo '<pre>';
-//        print_r($this->_entity);
-//        echo '</pre>';
+        
         
         if (empty($this->_entity))
         {   
-            die("Aimless says: Realtime feature for property '$sPropertyName' not possible if no entity is set");
+            die("Aimless says: Realtime feature for property '$sPropertySelector' not possible if no entity is set");
         
             // 1. broadcast webevent for debugging purposes
             // 2. standaard report error (error level)
         }
         
         
-        if ($sPropertyName === null)
+        if ($sPropertySelector !== null)
         {
-            return 'mls_id="'.$this->_entity->getAimlessId().'"';
+            // cleanup
+            $nSeparatorPos = strpos($sPropertySelector, '.');
+            $sPropertyName = ($nSeparatorPos !== false) ? substr($sPropertySelector, 0, $nSeparatorPos) :  $sPropertySelector;
+            
+            if ($this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+            {
+                $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
+                $aConditionals = MimotoDataUtils::getConditionals($sSubpropertySelector);
+
+                // send
+                return "mls_contains='".$this->_entity->getAimlessValue($sPropertyName)."' mls_filter='".json_encode($aConditionals)."'";
+                
+                // 1. json versimpelen (geen key/value)
+            }
+        }
+        
+        
+        
+        if ($sPropertySelector === null)
+        {
+            return "mls_id='".$this->_entity->getAimlessId()."'";
         }
         else
         {
-            return 'mls_value="'.$this->_entity->getAimlessValue($sPropertyName).'"';
+            return "mls_value='".$this->_entity->getAimlessValue($sPropertySelector)."'";
         }
     }
     

@@ -41,4 +41,51 @@ class MimotoDataUtils
         return (!is_nan(intval($value)) && $value > 0);
     }
     
+    public static function hasExpression($sPropertySelector)
+    {
+        return (preg_match("/^{[a-zA-Z0-9=\"']*?}$/", $sPropertySelector));
+    }
+    
+    public static function getConditionals($sPropertySelector)
+    {
+        // init
+        $aConditionals = [];
+        
+        // verify
+        if (MimotoDataUtils::hasExpression($sPropertySelector))
+        {
+            
+            // 1. query, with && en || support, comma separated
+            // 2. Example: {phase="archived"}
+            
+            // register
+            $sExpression = substr($sPropertySelector, 1, strlen($sPropertySelector) - 2);
+            $aExpressionElements = explode('=', $sExpression);
+            
+            
+            // update
+            $sExpressionKey = trim($aExpressionElements[0]);
+            $sExpressionValue = trim($aExpressionElements[1]);
+            
+            // register
+            $sFirstChar = $sExpressionValue[0];
+            $sLastChar = $sExpressionValue[strlen($sExpressionValue) - 1];
+            
+            // cleanup
+            if (($sFirstChar === "'" && $sLastChar === "'") || ($sFirstChar == '"' && $sLastChar == '"'))
+            {
+                $sExpressionValue = substr($sExpressionValue, 1, strlen($sExpressionValue) - 2);
+            }
+            
+            // store
+            $aConditionals[] = (object) array(
+                'key' => $sExpressionKey,
+                'value' => $sExpressionValue
+            );
+        }
+        
+        // send
+        return $aConditionals;
+    }
+    
 }

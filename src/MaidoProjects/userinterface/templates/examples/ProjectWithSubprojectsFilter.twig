@@ -10,17 +10,17 @@
         <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }} <i>[last modified by {{ author }}]</i></div>
         <br>
         Requests:
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase=request}')|raw }}>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="request"}')|raw }}>
             {{ Aimless.data('subprojects.{phase="request"}')|raw }}
         </div>
         <br>
         Current projects:
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase=currentproject}')|raw }}>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="currentproject"}')|raw }}>
             {{ Aimless.data('subprojects.{phase="currentproject"}')|raw }}
         </div>
         <br>
         Archived:
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase=archived}')|raw }}>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="archived"}')|raw }}>
             {{ Aimless.data('subprojects.{phase="archived"}')|raw }}
         </div>
     </div>
