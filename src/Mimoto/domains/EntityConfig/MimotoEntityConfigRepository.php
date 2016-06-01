@@ -274,8 +274,10 @@ class MimotoEntityConfigRepository
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-                        // 1. entity-types opslaan in class root en dan de string meegeven, ipv de id
+                        // prepare
+                        $property->options['entityType']->value = $this->getEntityNameById($property->options['entityType']->value);
                         
+                        // setup
                         $entityConfig->setEntityAsProperty($property->name, $property->options);
 
                         // connect entity to data source
@@ -284,12 +286,14 @@ class MimotoEntityConfigRepository
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                        // 1. pass options, zoals allowDuplicates en verwerk intern in method
-
+                        // prepare
+                        $property->options['allowedEntityType']->value = $this->getEntityNameById($property->options['allowedEntityType']->value);
+                        
+                        // setup
                         $entityConfig->setCollectionAsProperty($property->name, $property->options);
                         
                         // compose
-                        $sConnectionTable = $this->getEntityNameById($entity->id).'_'.$this->getEntityNameById($property->options['allowedEntityType']->value);
+                        $sConnectionTable = $this->getEntityNameById($entity->id).'_'.$property->options['allowedEntityType']->value;
                         
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);

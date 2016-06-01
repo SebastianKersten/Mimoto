@@ -681,3 +681,46 @@ div.example_feed>div:last-child
 {
     margin-bottom: 0;
 }
+
+
+div.example_project_subprojects
+{
+    width: 500px;
+    border: #000000 solid 1px;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+div.example_project_subprojects>div
+{
+    margin-bottom: 7px;
+}
+
+div.example_project_subprojects>div:last-child
+{
+    margin-bottom: 0;
+}
+
+
+div.example_subproject
+{
+    background-color: #ffffff;
+    border: #c3c3c3 solid 1px;
+    padding: 8px;
+}
+
+div.example_subproject_active
+{
+    background-color: #ffffff;
+    color: #06afea;
+    border: #c3c3c3 solid 1px;
+    padding: 8px;
+}
+
+div.example_subproject_archived
+{
+    background-color: #fafafa;
+    color: #999999;
+    border: #c3c3c3 solid 1px;
+    padding: 8px;
+}

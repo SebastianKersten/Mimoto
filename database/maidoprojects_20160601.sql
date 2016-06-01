@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 06/01/2016 00:05:35 AM
+ Date: 06/01/2016 13:03:05 PM
 */
 
 SET NAMES utf8;
@@ -52,13 +52,13 @@ CREATE TABLE `_mimoto_entities_properties` (
   `sortindex` int(10) unsigned NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entities_properties`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entities_properties` VALUES ('1', '1', 'name', '', 'value', '0', '0', '2016-04-12 07:46:46'), ('2', '2', 'name', '', 'value', '0', '0', '2016-04-12 08:02:25'), ('3', '3', 'name', '', 'value', '0', '0', '2016-04-12 08:02:38'), ('4', '4', 'name', '', 'value', '0', '0', '2016-04-12 08:02:52'), ('5', '5', 'name', '', 'value', '0', '0', '2016-04-12 08:03:14'), ('6', '5', 'description', '', 'value', '0', '1', '2016-04-12 08:03:29'), ('7', '5', 'client', '', 'entity', '0', '2', '2016-04-12 08:03:46'), ('8', '5', 'agency', '', 'entity', '0', '3', '2016-04-12 08:04:10'), ('9', '5', 'projectManager', '', 'entity', '0', '4', '2016-04-12 08:04:27'), ('10', '5', 'subprojects', '', 'collection', '0', '5', '2016-04-13 13:14:04'), ('11', '6', 'name', '', 'value', '0', '0', '2016-04-13 13:15:50'), ('12', '6', 'contact', '', 'entity', '0', '1', '2016-04-13 13:16:38'), ('13', '7', 'name', '', 'value', '0', '0', '2016-04-13 13:18:48'), ('14', '7', 'email', '', 'value', '0', '1', '2016-04-13 13:19:27'), ('15', '7', 'phonenumber', '', 'value', '0', '2', '2016-04-13 13:19:56'), ('18', '8', 'title', null, 'value', '0', '0', '2016-05-29 15:08:19'), ('19', '8', 'lede', null, 'value', '0', '2', '2016-05-29 15:08:49'), ('20', '8', 'body', null, 'value', '0', '3', '2016-05-29 15:09:18'), ('21', '8', 'type', null, 'value', '0', '1', '2016-05-29 15:35:07');
+INSERT INTO `_mimoto_entities_properties` VALUES ('1', '1', 'name', '', 'value', '0', '0', '2016-04-12 07:46:46'), ('2', '2', 'name', '', 'value', '0', '0', '2016-04-12 08:02:25'), ('3', '3', 'name', '', 'value', '0', '0', '2016-04-12 08:02:38'), ('4', '4', 'name', '', 'value', '0', '0', '2016-04-12 08:02:52'), ('5', '5', 'name', '', 'value', '0', '0', '2016-04-12 08:03:14'), ('6', '5', 'description', '', 'value', '0', '1', '2016-04-12 08:03:29'), ('7', '5', 'client', '', 'entity', '0', '2', '2016-04-12 08:03:46'), ('8', '5', 'agency', '', 'entity', '0', '3', '2016-04-12 08:04:10'), ('9', '5', 'projectManager', '', 'entity', '0', '4', '2016-04-12 08:04:27'), ('10', '5', 'subprojects', '', 'collection', '0', '5', '2016-04-13 13:14:04'), ('11', '6', 'name', '', 'value', '0', '0', '2016-04-13 13:15:50'), ('12', '6', 'contact', '', 'entity', '0', '1', '2016-04-13 13:16:38'), ('13', '7', 'name', '', 'value', '0', '0', '2016-04-13 13:18:48'), ('14', '7', 'email', '', 'value', '0', '1', '2016-04-13 13:19:27'), ('15', '7', 'phonenumber', '', 'value', '0', '2', '2016-04-13 13:19:56'), ('18', '8', 'title', null, 'value', '0', '0', '2016-05-29 15:08:19'), ('19', '8', 'lede', null, 'value', '0', '2', '2016-05-29 15:08:49'), ('20', '8', 'body', null, 'value', '0', '3', '2016-05-29 15:09:18'), ('21', '8', 'type', null, 'value', '0', '1', '2016-05-29 15:35:07'), ('22', '6', 'phase', null, 'value', '0', '2', '2016-06-01 12:51:41');
 COMMIT;
 
 -- ----------------------------
@@ -72,13 +72,13 @@ CREATE TABLE `_mimoto_entities_properties_options` (
   `value` varchar(255) CHARACTER SET latin1 NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entities_properties_options`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entities_properties_options` VALUES ('1', '1', 'type', 'textline', '2016-04-12 07:47:47'), ('2', '2', 'type', 'textline', '2016-04-12 08:05:05'), ('3', '3', 'type', 'textline', '2016-04-12 08:05:19'), ('4', '4', 'type', 'textline', '2016-04-12 08:05:29'), ('5', '5', 'type', 'textline', '2016-04-12 08:05:40'), ('6', '6', 'type', 'textblock', '2016-04-12 08:05:53'), ('7', '7', 'entityType', '1', '2016-04-12 08:06:16'), ('8', '8', 'entityType', '2', '2016-04-12 08:06:41'), ('9', '9', 'entityType', '3', '2016-04-12 08:06:57'), ('10', '10', 'allowedEntityType', '6', '2016-04-13 13:20:24'), ('11', '11', 'type', 'textline', '2016-04-13 13:20:49'), ('12', '12', 'entityType', '7', '2016-04-13 13:21:15'), ('13', '13', 'type', 'textline', '2016-04-13 13:21:33'), ('14', '14', 'type', 'textline', '2016-04-13 13:21:44'), ('15', '15', 'type', 'textline', '2016-04-13 13:21:56'), ('16', '10', 'allowDuplicates', 'true', '2016-04-17 11:59:16'), ('19', '18', 'type', 'textline', '2016-05-29 15:09:46'), ('20', '19', 'type', 'textline', '2016-05-29 15:10:06'), ('21', '20', 'type', 'textblock', '2016-05-29 15:10:22'), ('22', '21', 'type', 'textline', '2016-05-29 15:35:54');
+INSERT INTO `_mimoto_entities_properties_options` VALUES ('1', '1', 'type', 'textline', '2016-04-12 07:47:47'), ('2', '2', 'type', 'textline', '2016-04-12 08:05:05'), ('3', '3', 'type', 'textline', '2016-04-12 08:05:19'), ('4', '4', 'type', 'textline', '2016-04-12 08:05:29'), ('5', '5', 'type', 'textline', '2016-04-12 08:05:40'), ('6', '6', 'type', 'textblock', '2016-04-12 08:05:53'), ('7', '7', 'entityType', '1', '2016-04-12 08:06:16'), ('8', '8', 'entityType', '2', '2016-04-12 08:06:41'), ('9', '9', 'entityType', '3', '2016-04-12 08:06:57'), ('10', '10', 'allowedEntityType', '6', '2016-04-13 13:20:24'), ('11', '11', 'type', 'textline', '2016-04-13 13:20:49'), ('12', '12', 'entityType', '7', '2016-04-13 13:21:15'), ('13', '13', 'type', 'textline', '2016-04-13 13:21:33'), ('14', '14', 'type', 'textline', '2016-04-13 13:21:44'), ('15', '15', 'type', 'textline', '2016-04-13 13:21:56'), ('16', '10', 'allowDuplicates', 'true', '2016-04-17 11:59:16'), ('19', '18', 'type', 'textline', '2016-05-29 15:09:46'), ('20', '19', 'type', 'textline', '2016-05-29 15:10:06'), ('21', '20', 'type', 'textblock', '2016-05-29 15:10:22'), ('22', '21', 'type', 'textline', '2016-05-29 15:35:54'), ('23', '22', 'type', 'textline', '2016-06-01 12:53:45');
 COMMIT;
 
 -- ----------------------------
@@ -128,13 +128,13 @@ CREATE TABLE `_mimoto_templates` (
   `owner` enum('superuser','admin') DEFAULT 'admin',
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `_mimoto_templates`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_templates` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', 'admin', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', 'admin', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', 'admin', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', 'admin', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', 'admin', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', 'admin', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', 'admin', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', 'admin', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', 'admin', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', 'admin', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', 'admin', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', 'admin', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', 'admin', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', 'admin', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', 'admin', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', 'admin', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', 'admin', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', 'admin', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', 'admin', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', 'admin', '2016-05-29 22:12:52'), ('26', 'project_withsubprojects', 'examples/ProjectWithSubprojects.twig', 'admin', '2016-05-31 21:48:05'), ('27', 'project_withsubprojects_state', 'examples/ProjectWithSubprojectsState.twig', 'admin', '2016-05-31 21:50:11'), ('28', 'project_withsubprojects_filter', 'examples/ProjectWithSubprojectsFilter.twig', 'admin', '2016-05-31 21:53:49'), ('29', 'subproject', 'examples/Subproject.twig', 'admin', '2016-05-31 22:10:10'), ('30', 'subproject_state', 'examples/SubprojectArchived.twig', 'admin', '2016-05-31 22:10:43');
+INSERT INTO `_mimoto_templates` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', 'admin', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', 'admin', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', 'admin', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', 'admin', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', 'admin', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', 'admin', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', 'admin', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', 'admin', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', 'admin', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', 'admin', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', 'admin', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', 'admin', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', 'admin', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', 'admin', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', 'admin', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', 'admin', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', 'admin', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', 'admin', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', 'admin', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', 'admin', '2016-05-29 22:12:52'), ('26', 'project_withsubprojects', 'examples/ProjectWithSubprojects.twig', 'admin', '2016-05-31 21:48:05'), ('27', 'project_withsubprojects_phase', 'examples/ProjectWithSubprojectsPhase.twig', 'admin', '2016-05-31 21:50:11'), ('28', 'project_withsubprojects_filter', 'examples/ProjectWithSubprojectsFilter.twig', 'admin', '2016-05-31 21:53:49'), ('29', 'subproject', 'examples/Subproject.twig', 'admin', '2016-05-31 22:10:10'), ('30', 'subproject_phase', 'examples/Subproject.twig', 'admin', '2016-05-31 22:10:43'), ('31', 'subproject_phase', 'examples/SubprojectActive.twig', 'admin', '2016-06-01 12:44:08'), ('32', 'subproject_phase', 'examples/SubprojectArchived.twig', 'admin', '2016-06-01 12:45:44');
 COMMIT;
 
 -- ----------------------------
@@ -148,13 +148,13 @@ CREATE TABLE `_mimoto_templates_conditionals` (
   `value` varchar(255) CHARACTER SET latin1 NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_templates_conditionals`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_templates_conditionals` VALUES ('1', '11', 'type', 'regular', '2016-05-29 16:15:26'), ('2', '12', 'type', 'explainer', '2016-05-29 16:15:38'), ('3', '13', 'type', 'regular', '2016-05-29 16:57:43'), ('4', '14', 'type', 'explainer', '2016-05-29 16:58:00');
+INSERT INTO `_mimoto_templates_conditionals` VALUES ('1', '11', 'type', 'regular', '2016-05-29 16:15:26'), ('2', '12', 'type', 'explainer', '2016-05-29 16:15:38'), ('3', '13', 'type', 'regular', '2016-05-29 16:57:43'), ('4', '14', 'type', 'explainer', '2016-05-29 16:58:00'), ('6', '30', 'phase', 'request', '2016-06-01 12:44:34'), ('7', '31', 'phase', 'currentproject', '2016-06-01 12:44:51'), ('8', '32', 'phase', 'archived', '2016-06-01 12:45:05');
 COMMIT;
 
 -- ----------------------------
@@ -215,6 +215,26 @@ INSERT INTO `client` VALUES ('1', 'VanMoof', '2016-02-17 09:57:06'), ('2', 'Buga
 COMMIT;
 
 -- ----------------------------
+--  Table structure for `contact`
+-- ----------------------------
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE `contact` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `phonenumber` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `contact`
+-- ----------------------------
+BEGIN;
+INSERT INTO `contact` VALUES ('1', 'Hans van der Vorst', '', '', '0000-00-00 00:00:00'), ('2', 'Dave Shoemack', '', '', '2016-06-01 12:23:31');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `note`
 -- ----------------------------
 DROP TABLE IF EXISTS `note`;
@@ -253,7 +273,7 @@ CREATE TABLE `project` (
 --  Records of `project`
 -- ----------------------------
 BEGIN;
-INSERT INTO `project` VALUES ('1', 'Bugaboo.com', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2', '1', '4', '2016-02-17 10:16:24'), ('2', 'VanMoof.com', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.', '1', '0', '2', '2016-02-27 12:35:53'), ('3', 'Bugaboo GTS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '4', '2', '3', '2016-03-08 11:40:42');
+INSERT INTO `project` VALUES ('1', 'Bugaboo.com', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2', '1', '4', '2016-02-17 10:16:24'), ('2', 'VanMoof.com', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.', '1', '0', '2', '2016-02-27 12:35:53'), ('3', 'Bugaboo GTS', 'Al ruim 15 jaar inspireert Bugaboo honderdduizenden ouders om eropuit te trekken en samen met hun kinderen de wereld te ontdekken. Tegenwoordig is het een vertrouwd straatbeeld: overal stoere, robuuste en tegelijk stijlvolle kinderwagens. Maar toen Max Barenbrug, nu Chief Design Officer bij Bugaboo, in 1994 zo\'n kinderwagen ontwierp voor zijn afstudeerproject aan de Design Academy in Eindhoven, was het de eerste in zijn soort. De modulaire, multifunctionele kinderwagen, die net zo makkelijk in de stad als in het bos of op het strand kon worden gebruikt, was destijds een compleet nieuw concept.', '4', '2', '3', '2016-03-08 11:40:42');
 COMMIT;
 
 -- ----------------------------
@@ -266,13 +286,13 @@ CREATE TABLE `project_subproject` (
   `child_id` int(10) unsigned NOT NULL,
   `sortindex` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `project_subproject`
 -- ----------------------------
 BEGIN;
-INSERT INTO `project_subproject` VALUES ('1', '3', '1', '0'), ('2', '3', '2', '1');
+INSERT INTO `project_subproject` VALUES ('1', '3', '1', '0'), ('2', '3', '2', '1'), ('3', '3', '3', '2'), ('4', '2', '4', '0'), ('5', '3', '5', '3');
 COMMIT;
 
 -- ----------------------------
@@ -299,23 +319,22 @@ COMMIT;
 DROP TABLE IF EXISTS `subproject`;
 CREATE TABLE `subproject` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `project_id` int(10) unsigned NOT NULL,
   `name` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `contact_name` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `contact_id` int(10) unsigned DEFAULT NULL,
   `phase` enum('request','currentproject','archived') CHARACTER SET latin1 NOT NULL,
-  `state_id` int(10) unsigned NOT NULL,
+  `state` enum('prospect','active','archived') COLLATE utf8_unicode_ci DEFAULT NULL,
   `probability` enum('0.1','0.5','0.9') CHARACTER SET latin1 NOT NULL,
   `budget` int(10) unsigned NOT NULL,
   `payment_type` enum('time_material','fixed') CHARACTER SET latin1 NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `subproject`
 -- ----------------------------
 BEGIN;
-INSERT INTO `subproject` VALUES ('1', '1', 'Specificatiefase', 'Hans van der Vorst', 'request', '1', '0.1', '57850', 'time_material', '2016-02-27 18:02:19'), ('2', '1', 'In-store visuals', 'Hans van der Vorst', 'request', '2', '0.9', '15000', 'fixed', '2016-02-27 18:03:11'), ('3', '1', 'Concept design', 'Hans van der Vorst', 'currentproject', '4', '0.9', '25000', 'time_material', '2016-02-27 18:04:57'), ('4', '2', 'Concept phase', 'Dave Shoemack', 'request', '3', '0.5', '43000', 'time_material', '2016-03-02 14:53:37');
+INSERT INTO `subproject` VALUES ('1', 'Specificatiefase', '1', 'request', 'prospect', '0.1', '57850', 'time_material', '2016-02-27 18:02:19'), ('2', 'In-store visuals', '1', 'currentproject', 'prospect', '0.9', '15000', 'fixed', '2016-02-27 18:03:11'), ('3', 'Concept design', '1', 'currentproject', 'active', '0.9', '25000', 'time_material', '2016-02-27 18:04:57'), ('4', 'Concept phase', '2', 'request', 'archived', '0.5', '43000', 'time_material', '2016-03-02 14:53:37'), ('5', 'Technical realisation', '1', 'archived', 'active', '0.1', '60000', 'time_material', '2016-06-01 12:55:01');
 COMMIT;
 
 -- ----------------------------

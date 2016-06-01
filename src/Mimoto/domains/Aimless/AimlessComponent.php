@@ -25,6 +25,7 @@ class AimlessComponent
     // config
     var $_aVars = [];
     var $_aCollections = [];
+    var $_aPropertyTemplates = [];
     
     
     
@@ -44,9 +45,19 @@ class AimlessComponent
         $this->_TwigService = $TwigService;
     }
     
-    
-    public function setValueFormatter()
+    public function setPropertyTemplate($sKey, $sTemplateName)
     {
+        $propertyTemplate = (object) array(
+            'template_name' => $sTemplateName
+        );
+        
+        $this->_aPropertyTemplates[$sKey] = $propertyTemplate;
+    }
+    
+    
+    public function setPropertyFormatter()
+    {
+        
     }
     
     public function setVar($sKey, $value)
@@ -55,7 +66,7 @@ class AimlessComponent
         $this->_aVars[$sKey] = $value;
     }
     
-    public function setCollection($sKey, $sTemplateName, $aCollection)
+    public function addCollection($sKey, $sTemplateName, $aCollection)
     {
         $collection = (object) array(
             'template_name' => $sTemplateName,
@@ -70,45 +81,67 @@ class AimlessComponent
     
     public function data($sPropertyName)
     {
-        return $this->_entity->getValue($sPropertyName);
+        
+        // 1. subpropertyname (selector-query)
+        
+        // read
+        $value = $this->_entity->getValue($sPropertyName, true);
+        
+        // verify
+        if (is_array($value))
+        {
+            if (!isset($this->_aPropertyTemplates[$sPropertyName]))
+            {
+                return "Aimless says: No template set for property '$sPropertyName'. Use AimlessComponent->setPropertyTemplate()";
+                
+                // 1. broadcast webevent for debugging purposes
+                // 2. standaard report error (error level)
+            }
+            
+            // echo '######';
+            
+            
+            // render and send
+            return $this->renderCollection($value, $this->_aPropertyTemplates[$sPropertyName]->template_name);
+        }
+        else
+        {   
+            return $value;
+        }
     }
     
     public function collection($sCollectionName)
     {
         if (!isset($this->_aCollections[$sCollectionName]))
         {
-            die("MimotoAimlessService says: Template '$sTemplateName' not found");
+            die("Aimless says: Collection '$sCollectionName' not found");
+        
+            // 1. broadcast webevent for debugging purposes
+            // 2. standaard report error (error level)
+        }
+        
+        // load
+        $collection = $this->_aCollections[$sCollectionName];
+        
+        // render and send
+        return $this->renderCollection($collection->collection, $collection->template_name);
+    }
+    
+    public function realtime($sPropertyName = null)
+    {
+//        echo '<pre>';
+//        print_r($this->_entity);
+//        echo '</pre>';
+        
+        if (empty($this->_entity))
+        {   
+            die("Aimless says: Realtime feature for property '$sPropertyName' not possible if no entity is set");
         
             // 1. broadcast webevent for debugging purposes
             // 2. standaard report error (error level)
         }
         
         
-        $collection = $this->_aCollections[$sCollectionName];
-        
-        
-        $sRenderedCollection = '';
-        
-        for ($i = 0; $i < count($collection->collection); $i++)
-        {
-            // register
-            $entity = $collection->collection[$i];
-            
-            // create
-            $component = $this->_AimlessService->createComponent($collection->template_name, $entity);
-            
-            // forward
-            foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
-            
-            // output
-            $sRenderedCollection .= $component->render();
-        }
-        
-        return $sRenderedCollection;
-    }
-    
-    public function realtime($sPropertyName = null)
-    {
         if ($sPropertyName === null)
         {
             return 'mls_id="'.$this->_entity->getAimlessId().'"';
@@ -155,4 +188,37 @@ class AimlessComponent
         // output
         return $this->_TwigService->render($sTemplateFile, $this->_aVars);
     }
+    
+    
+    
+    private function renderCollection($aCollection, $sTemplateName)
+    {
+        // init
+        $sRenderedCollection = '';
+        
+        for ($i = 0; $i < count($aCollection); $i++)
+        {
+            // register
+            $entity = $aCollection[$i];
+            
+//            echo '<pre>';
+//            echo 'Load property. En niet de referentie naar het item';
+//            print_r($entity);
+//            echo '</pre>';
+//          
+            
+            // create
+            $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
+            
+            // forward
+            foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
+            
+            // output
+            $sRenderedCollection .= $component->render();
+        }
+        
+        // send
+        return $sRenderedCollection;
+    }
+    
 }

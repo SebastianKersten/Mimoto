@@ -406,13 +406,26 @@ class MimotoData
      * @return MimotoCollection ----> id's or anders? | array met id's of MimotoCollection
      * @throws MimotoEntityException
      */
-    private function readCollectionProperty($property, $bGetStorableValue)
+    private function getCollectionProperty($property, $bGetStorableValue = false, $sSubpropertySelector = '')
     {
-        //return $aMatchingProperties;
+
+//        echo '<b>MimotoData.getCollectionProperty</b><br>';
+//        
+//        echo '<hr><pre>';
+//        echo 'sSubpropertySelector = '.((!empty($sSubpropertySelector)) ? $sSubpropertySelector : 'EMPTY').'<br>';
+//        print_r($property);
+//        echo '</pre><hr>';
+        
+        
+        // 1. collection gaat alleen over volgorde en referenties, niet om feitelijk inhoud
+        // 2. inhoud draagt eigen changed-status
+        // 3. dit houdt het management van de collection vrij eenvoudig
+        
+        
         
         
         // 1. if (this is collection and)    
-        if (preg_match("/^{}$/", $sKey))
+        if (preg_match("/^{}$/", $sSubpropertySelector))
         {
             // 1. query, with && en || support, comma separated
             // 2. Example: {phase="archived"}
@@ -449,21 +462,65 @@ class MimotoData
                 }
             }
         }
-        
-        if (preg_match("/^\[\]$/", $sKey)) { /* array with comma separated multiple key support */ }
-        
-        
+        else
+        if (preg_match("/^\[\]$/", $sSubpropertySelector))
+        {
+            /* array with comma separated multiple key support */ 
+            
+        }
         // 1. regexp voor alles
         // 2. value voor alles
-        if (preg_match("/^\/\/$/", $sKey)) { /* regexp */ } 
-        //else { regular value }
+        else
+        if (preg_match("/^\/\/$/", $sSubpropertySelector))
+                {
+            /* regexp */
+        } 
+        else
+        {
+            /* regular value */
+            
+            
+            if ($bGetStorableValue)
+            {
+                // 1. de data moet eerst geladen worden
+                // 2. indien geladen, opslaan
+                // 3. indien opgeslagen, gebruik uit geheugen
+                
+                
+                $aCollectionItems = $property->currentCollection;
+                
+                $aCollection = []; 
+                
+                for ($i = 0; $i < count($aCollectionItems); $i++)
+                {
+                    // register
+                    $collectionItem = $aCollectionItems[$i];
+                    
+                    // load
+                    $collectionItem->entityCache = $GLOBALS['Mimoto.Data']->get($collectionItem->entityType, $collectionItem->currentId);
+                    
+                    $aCollection[] = $collectionItem->entityCache;
+                    
+                }
+                
+                return $aCollection;
+            }
+        }
         
         
-        return $value = (object) array
-        (
-            'name' => $property->name,
-            'value' => []
-        );
+        
+        
+        
+        // 1. maak kopie van $property->currentCollection
+        
+        
+        return $property->currentCollection;
+        
+//        return $value = (object) array
+//        (
+//            'name' => $property->name,
+//            'value' => $property->currentCollection
+//        );
     }
     
     
@@ -482,6 +539,7 @@ class MimotoData
         // 2. check if subvalue or expression
         // 3. erzijn geen {} en  [], enkele {} want geen vrij object zoals json/MimotoData
         // 4. overhevelen waarden
+        
         
         
         // init

@@ -166,7 +166,7 @@ class MimotoEntityConfig
     /**
      * Set entity as property
      * @param string $sPropertyName The property's name
-     * @param string $sEntityType The entity's type
+     * @param array $options Array containing the option 'entityType'
      */
     public function setEntityAsProperty($sPropertyName, $options)
     {        
@@ -184,7 +184,7 @@ class MimotoEntityConfig
     /**
      * Set collection as property
      * @param string $sPropertyName The property's name
-     * @param string $sAllowedEntityType The allowed entity type
+     * @param array $options Array containig the options 'allowedEntityType' and 'allowDuplicates'
      */
     public function setCollectionAsProperty($sPropertyName, $options)
     {

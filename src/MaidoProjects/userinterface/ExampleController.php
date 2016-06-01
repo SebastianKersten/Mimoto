@@ -48,7 +48,7 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('article_overview');
         
         // setup
-        $component->setCollection('articles', 'feeditem', $aArticles);
+        $component->addCollection('articles', 'feeditem', $aArticles);
         
         // render and send
         return $component->render();
@@ -63,7 +63,7 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('feed');
         
         // setup
-        $component->setCollection('articles', 'feeditem_type', $aArticles);
+        $component->addCollection('articles', 'feeditem_type', $aArticles);
         
         // render and send
         return $component->render();
@@ -78,19 +78,21 @@ class ExampleController
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
         
-        echo '<pre>';
-        print_r($project);
-        echo '</pre>';
+//        echo '<pre>';
+//        print_r($project);
+//        echo '</pre>';
+        
         
         // create
         $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
         
         // setup
-        $component->setupProperty('subprojects', 'subproject');
+        $component->setPropertyTemplate('subprojects', 'subproject');
+        
         
         // compose
-        //$component->setFormatter('blabla', 'xxx');
-        //$component->setVar('blabla', 'xxx');
+        //$component->setPropertyFormatter('blabla', 'xxx');
+        //$component->addVar('blabla', 'xxx');
         
         // render and send
         return $component->render();
@@ -104,10 +106,10 @@ class ExampleController
         $project = $app['Mimoto.Data']->get('project', 3);
         
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_state', $project);
+        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_phase', $project);
         
         // setup
-        $component->setupProperty('subprojects', 'subproject_state');
+        $component->setPropertyTemplate('subprojects', 'subproject_phase');
         
         // compose
         //$component->setFormatter('blabla', 'xxx');
@@ -167,7 +169,7 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('article_overview');
         
         // setup
-        $component->setCollection('articles', 'feeditem_type', $aArticles);
+        $component->addCollection('articles', 'feeditem_type', $aArticles);
         
         // render and send
         return $component->render();

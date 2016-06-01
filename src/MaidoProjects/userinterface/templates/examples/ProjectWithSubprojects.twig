@@ -8,8 +8,9 @@
     <div class="example_project" {{ Aimless.realtime()|raw }}>
         <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br><br>
         <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }}</div>
+        <br>
         <div class="example_project_subprojects" {{ Aimless.realtime('subprojects')|raw }}>
-            {{ Aimless.data('subprojects') }}
+            {{ Aimless.data('subprojects')|raw }}
         </div>
     </div>
 {% endblock %}
