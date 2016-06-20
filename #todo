@@ -1,0 +1,427 @@
+
+// 1. entityConfig as model is niet hetzelfde als entityConfig as configobject for runtime
+// 2. adopt entity name as dbtable name
+// 3. create table (with id and created)
+// 4. add property with option
+// 5. property adding list
+// 6. MimotoController met data-entry
+// 7. MimotoEntity -> show mapping of properties (met values)
+
+
+// #todo - custom kanalen aanmaken - selectie van (FeedServicex)
+// #todo - inline form - wysiwyg editor
+
+
+================================================================
+
+entities:
+
+mimoto_form
+mimoto_formfield
+mimoto_formfield_option
+
+
+
+#TODO
+
+// 1. Best effort template selection (best match)
+// 2. Render entity in Aimless
+// 3. Mollie account
+
+
+================================================================
+
+
+#todo - input
+// 1. add new entity
+// 2. save new entity
+// 3. show new property fields
+// 4. save new property
+// 5. remove existing property
+// 6. move property up
+// 7. move property down
+
+#todo - database
+// 1. onCreateEntity -> create dbtable
+// 2. onChangeEntity -> rename dbtable
+// 3. onAddProperty -> add column
+// 4. onRenameProperty -> rename column
+// 5. onChangePropertyOptions -> flush colum if relevant (?)
+
+
+Table editing
+http://php.net/manual/en/function.mysql-list-fields.php
+http://stackoverflow.com/questions/1526688/get-table-column-names-in-mysql
+http://stackoverflow.com/questions/16113570/how-to-add-new-column-to-mysql-table
+
+
+https://github.com/filamentgroup/elementary/blob/master/examples/index.html
+
+
+
+
+
+
+
+- elasticListener (and syncer)
+- union server
+- oncreate invoice / make pdf / afterwards dispatch event invoice pdf ready / send mail (action queue)
+- dashboardvoorbeeld aantal updates en nieuw events per dag
+- collection en entity zijn eindnodes voor mimoto, dus forward
+- layout
+- componenten aan datamodels koppelen (input of output)
+- viewmodel config (entity, twig) en oproepbaar via Aimless api
+- notificatieconfig
+- cohortconfig
+- default vars/settings in entity (value)
+- property heeft fixed value (default) ipv editbaar. Dit wordt op formniveau bepaald?
+- popvote app aangeven welke inerresses, wat vrienden belangrijk vinden en grote verplichte stemmingen. Voorkeur van feed zelf instelbaar, volledig
+- config mail indien x en x maar niet y
+- auto create entity table, or change on save
+- enum
+- meerdere mogelijkheden inputs per type value (selecteer bij formconfig)
+
+
+
+#feature
+
+// 1. change filter settings based on mls_query
+
+
+// 1. authenticate users
+// 2. show which user on which part
+// 3. live diff updates client2client
+// 4. mls_input
+// 5. Aimless.registerInput()
+// 6. focus input when other user active
+// 7. Alle exceptions inschieten via Livescreen messages
+
+// 1. ACL in mls_id hash
+// 2. Artikelsysteem herschrijven (publish, unpublish, events, service, editor, live wysiwyg)
+// 3. MailService (config selector van verschillende entity-properties
+// 4. test vase: cohort selector
+// 5. formbuilder
+// 6. plan The Correspondent uitwerken (volledig incl toekomst, zie todoist)
+// 7. comments -> auto send and load (page/user/add, change)
+// 8. Dat zou wel een mooie restrictie zijn. Dat ie kijkt naar de job-log om te checken of 
+//    een 'job-id' al een keer voorkomt: "article/<article-id>/notifypermail/user/<user-id>" 
+//    die op success staat. Waar in ons geval hier, de auteur van het stuk de user is.
+// 9. notificaties en commands zijn verschillend in prioriteit (de eerste mag falen)
+
+
+// 1. UserService -> changePassword
+
+#todo
+-----
+9. handle sequences (type = "action" || "sequence" with actions)
+12. Project.twig geschikt voor kleine schermen (getallen onder projectnaam)
+14. hide dom-element on conditional (bijv. bij agency)
+15. MySQL safe injection
+
+
+#done
+-----
+1. track changes array met key values (boolean setter)
+2. dispatch pass regular event which extends MimotoEvent
+3. met setEntity (via constructor) en getEntity
+4. entitynaam uit classnaam halen (getNameOfClass)
+5. dispatch forward regular event (ClientEvent extends MimotoEvent etc)
+6. handle actions
+7. EntityService / LiveScreenService getEntity templateByEntityType connect models in livescreenprovider - $app["livescreen.entities"]
+8. Connect template to model/entity
+10. add created-get/set to MimotoEntity
+11. Multiple mls identifiers
+13. 'created' property verplaatsen naar MimotoEntity
+
+
+// #notes - getProperty
+// ======
+// return collection of return alles in group
+            
+// getValue('options') geeft niets, want group, en dus geen echte property, dus geen value
+// getValue('options.*') geeft alle subnodes
+
+
+// 1. exact matches needed, anders niet zeker of het een property is of een group
+// 2. replace * with "[a-zA-Z][a-zA-Z0-9\-_]"
+// 3. alleen echte properties retourneren
+
+// a. echte properties hebben volledig paden in de vorm van de propertyName
+// b. alleen * kan gebruikt worden voor bredere searches
+// c. ? aan begin vervangen door [a-zA-Z]
+// d. ? op pos=2+ vervavangen door [a-zA-Z0-9\-_]
+
+// use cases (ook opnemen in docs)
+// 
+// options.receiveDailyMail
+// options.receiveWeeklyMail
+//
+// get - getValue('options') return nothing (throw error)
+// get - getValue('options.*') return values
+//
+// find in collection kan lege array retourneren. Leeg is ook goed, maar op property niveau is leeg fout
+//
+// MimotoCollection
+// altijd maar een single property opvragen, niet meerdere tegelijk
+// check of dit makkelijker kan
+// alleen een collection kan dit sneller
+// get() moet direct uit aray kunnen lezen. Het is er, of het is er niet
+// subproperty (first part), erna query
+//
+// CONCLUSIE: geen * en ? support voor nu. Dit breekt het get-principe
+// onduidelijk of een resultaat een waarde is of een collection
+//
+// getCollection i.p.v. getValue 
+// findValue
+// get()
+// find()
+
+
+// collection.add()
+// collection.remove()
+// collection - single of multiple
+// 1. chekc if requested property is collection, if not -> throw error
+
+// serialize() -> returns json with values, collections etc (associative array)
+
+// 1. check rest of selector
+// 2. determine subselector
+
+// 3. if value -> read
+// 4. if entity -> read, then forward
+// 5. if collection -> read, the forward
+// 6. readValue
+// 7. readCollection
+// 8. readEntity
+
+
+        // load
+        $aProperties = $this->getProperty($sPropertySelector);
+        
+        // init
+        $aPropertyValues = new MimotoCollection();
+        
+        $nPropertyCount = count($aProperties);
+        for ($i = 0; $i < $nPropertyCount; $i++)
+        {
+            // register
+            $property = $aProperties[$i];
+            
+            switch($property->type)
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE: $aPropertyValues[] = $this->readValue($property); break;
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY: $aPropertyValues[] = $this->readEntity($property, $bGetStorableValue); break;
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION: $aPropertyValues[] = $this->readCollection($property); break;
+            }
+        }
+        
+        // send
+        if (count($aPropertyValues) === 1) { return $aPropertyValues[0]->value; }
+        
+        return $aPropertyValues; // as key/value pairs | parsed and everyting, ook na query
+
+
+
+http://code.stephenmorley.org/php/diff-implementation/
+
+
+// 1. image placeholder
+// 2. onSave image -> create other versions
+// 3. on call placeholder -> start parsing of image or push existing job in queue
+
+
+ // collection query:
+        // "subprojects.{phase='archived'}.name"
+        
+        // selector parser (een collection heeft z'n eigen manier)
+        
+        
+        
+        // config
+    // check type -> validate in form op basis van config zoals opgeslagen in database (by config)
+    
+    
+    // store
+        
+    
+    
+    //stop er json in, verdeel over de verschillende nodes
+
+
+
+ #document
+----------
+1. Waarom $sEntityType meegeven aan MimotoEntity constructor en waarvoor wordt deze gebruikt? (generiek dispatchen domain events)
+2. MimotoeventService ondersteunt configurable actions en is verantwoordelijk voor de routing i.c.m. dynamische acties
+
+#notes
+------
+1. Platform geeft update seintjes af. De actionflows regelen de logica erachter. 
+   Centrale eventlistener. 1 event, niet alle want dan niet handig uit te breiden 
+2. Messages: pusher/mail/whatsapp notificationcenter in vaste formats want core 
+   messaging options, parameters zijn configureerbaar (mapping, schedule niet als 
+   optie, maar als mogelijkheid voor delayed scheduleMail scheduleWhatsapp etc 
+   scheduled acties)
+3. NotificationService / MailService / EventService
+4. Sequences, middleware, actions, selectionquery, status, vast interface (execute, 
+    request etc), config
+5. push page update
+6. Entity Oriented Programming - EOP
+7. Mimoto LiveScreen - mls - Aimless (klopt, want het is een vrije broadcast :)
+
+
+
+
+
+        
+        
+        
+        
+        //stuur
+        
+        // gooi in Gearman
+        
+        
+        //LiveScreenMessage (model) #todo
+        
+        
+        // generieke livescreen API ingang, met ID voor object o.i.d.
+        // #YES: mapping -> url vs welk model, id etc
+        // of fields kan directe data zijn
+        
+        
+        
+        
+        // only broadcast changed properties ->
+        // model set -> save to modified -> track changes, default aan na uitgeven entity
+        
+        //if has values -> replace values
+        //if component && id -> reload component
+        //if (componen && new-id -> load and add 
+        
+
+//            
+//                // entity.getModifiedFields
+//                
+//                // if (no poperties changed) -> update, "force component update" als setting
+//                
+//                echo 'eventType = '.$event->getType()."\n";
+//                
+//                
+//            // configs zijn low effort (event -> action, load config gegevens)
+//
+//
+//            entity = 'client'
+//            id = extracted from entity
+//            property -> get from mapping
+//        
+//       
+
+
+
+// connect elements from template -> send content, voorzien van meta data
+// auto update, connect field with event -> mapping ->type = component (via url) of field (via direct value)
+
+// ----------> ListComponent
+// gearman -> type-async -> in jobserver
+// listener class -> start van sequence
+// generaliseer PusherEventHandler en pas toe op de 4 pagina's
+// scheduled requests/actions (ActionSequence)
+// Queue met statusupdates, bijwerking en monitoring
+
+
+
+// validate validity of the client monitor (auto-reboot)
+// data event
+// component event
+// page event
+// popup event -> auto popup with message of reboot
+// vraag huidige staat op bij de server (save state zoals de client monitor)
+// State per gebruiker. start waar je was gebleven.
+
+
+
+// #todo listeners
+//$app['dispatcher']->addListener('xxx', 'MaidoProjects\\UserInterface\\ProjectsController::getProjectOverview');
+// 
+// - repositories gooien update events uit
+// - op deze events worden sequences getriggerd
+// - deze sequences kunnen op basis van config worden opgezet
+//      bijv. klaarzetten van diverse mail requests in timed queue -> welkom, eerste handleiding dag later
+//      de request (of command) wordt opgeslagen, niet de feitelijke mail. Zo kan nog op het laatste moment
+//      een update worden meegenomen in die mail
+//      RequestQueue -> wordt aangestuurd door cronjob die kijkt of een request aan de beurt is en gooit deze
+//      weer het systeem in (bijv. via jobserver of direct
+//      Config: ON(user.new) -> sendMail with params (template, User)
+
+/*
+ * #todo - EventService
+ * sync/async - recipies - action flows
+ * sendRequest
+ * sendUpdate
+ * sendWelcomeMail
+ * 
+ * -------> sequence ON(event) stap 1, 2, 3 -> register steps, zoals in Mimoto TaskManager
+ * 
+ * createUser -> UPDATE: user.new
+ * send welcome mail
+ * wie stelt de mail op? MailService interface -> type, data
+ * MailService->sendMail($sTermplate);
+ * 
+ * commando -> commandHandler (CommandBus pattern)
+ * 
+$app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $event) use ($app) {
+    $user = $event->getUser();
+    $app['logger']->info('Created user ' . $user->getId());
+});
+*/
+
+
+
+
+------------------------------------------------
+
+#todo
+- FormService of FormController
+- onEnter -> save single input form
+- LiveScreenService diffs doorgeven ipv full value
+
+------------------------------------------------
+
+#Mimoto.CMS
+input type = text
+validation type=regexp/url
+
+
+
+
+/config
+/applications
+    /Respondens
+    /DeCorrespondentNL
+
+
+
+
+/RespondensConfig
+/Respondens (submodule)
+    /core
+        /invoice
+        /membership
+        /payment
+
+    - controllers/
+        /PaymentProviderController (PaymentProvider util met afzendervariabele)
+        /MailServiceController -> ???
+
+/YourSite
+    /public
+    /src
+        // domains
+
+// install
+    -> invoerveld voor aanpassing “YourSite"
+
+
+Gits aanmaken
+    
