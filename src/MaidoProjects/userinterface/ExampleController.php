@@ -244,16 +244,24 @@ class ExampleController
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 2);
-        $subproject = $app['Mimoto.Data']->get('subproject', 4);
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+        
+        
+        $project->setValue('name', 'VanMoof.com - '.date("Y:m:d H.i.s"));
+        $project->setValue('projectmanager', ceil(rand(1, 3)));
         
         // setup
+        $project->addValue('subprojects', 3);
         $project->addValue('subprojects', $subproject);
+        
+        //output('$project [AFTER adding subproject]', $project);
+        output('$project changes', $project->getChanges());
         
         // store
         $project = $app['Mimoto.Data']->store($project);
         
         // render and send
-        return "Subproject added to project!";
+        return "Subprojects added to project!";
     }
     
     public function viewExample16(Application $app)

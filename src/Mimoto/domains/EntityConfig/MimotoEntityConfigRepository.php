@@ -28,7 +28,7 @@ class MimotoEntityConfigRepository
     
     const DBTABLE_ENTITIES = '_mimoto_entities';
     const DBTABLE_ENTITIES_PROPERTIES = '_mimoto_entities_properties';
-    const DBTABLE_ENTITIES_PROPERTIES_OPTIONS = '_mimoto_entities_properties_options';
+    const DBTABLE_ENTITIES_PROPERTIES_SETTINGS = '_mimoto_entities_properties_settings';
     
     
     
@@ -139,7 +139,7 @@ class MimotoEntityConfigRepository
         
         // init
         $aAllProperties = [];
-        $aAllOptions = [];
+        $aAllSettings = [];
         
         
         // load
@@ -176,7 +176,7 @@ class MimotoEntityConfigRepository
                 'parent_id' => mysql_result($resultProperties, $i, 'parent_id'),
                 'sortindex' => mysql_result($resultProperties, $i, 'sortindex'),
                 'created' => mysql_result($resultProperties, $i, 'created'),
-                'options' => []
+                'settings' => []
             );
             
             $nEntityConfigId = mysql_result($resultProperties, $i, 'entity_id');
@@ -185,26 +185,26 @@ class MimotoEntityConfigRepository
         }
         
         // load
-        $sQueryOptions = "SELECT * FROM ".self::DBTABLE_ENTITIES_PROPERTIES_OPTIONS;
-        $resultOptions = mysql_query($sQueryOptions) or die('Query failed: ' . mysql_error());
-        $nOptionCount = mysql_num_rows($resultOptions);
+        $sQuerySettings = "SELECT * FROM ".self::DBTABLE_ENTITIES_PROPERTIES_SETTINGS;
+        $resultSettings = mysql_query($sQuerySettings) or die('Query failed: ' . mysql_error());
+        $nSettingCount = mysql_num_rows($resultSettings);
         
         
         // store
-        for ($i = 0; $i < $nOptionCount; $i++)
+        for ($i = 0; $i < $nSettingCount; $i++)
         {
             // init
-            $option = (object) array(
-                'id' => mysql_result($resultOptions, $i, 'id'),
-                'name' => mysql_result($resultOptions, $i, 'name'),
-                'value' => mysql_result($resultOptions, $i, 'value'),
-                'created' => mysql_result($resultOptions, $i, 'created')
+            $setting = (object) array(
+                'id' => mysql_result($resultSettings, $i, 'id'),
+                'name' => mysql_result($resultSettings, $i, 'name'),
+                'value' => mysql_result($resultSettings, $i, 'value'),
+                'created' => mysql_result($resultSettings, $i, 'created')
             );
             
-            $nEntityConfigPropertyId = mysql_result($resultOptions, $i, 'property_id');
+            $nEntityConfigPropertyId = mysql_result($resultSettings, $i, 'property_id');
             
             // store
-            $aAllOptions[$nEntityConfigPropertyId][$option->name] = $option;
+            $aAllSettings[$nEntityConfigPropertyId][$setting->name] = $setting;
         }
         
         // compose
@@ -223,7 +223,7 @@ class MimotoEntityConfigRepository
                 $property = $entity->properties[$j];
                 
                 // store
-                $property->options = $aAllOptions[$property->id];
+                $property->settings = $aAllSettings[$property->id];
             }
         }
     }
@@ -261,12 +261,11 @@ class MimotoEntityConfigRepository
                 // read
                 $property = $entity->properties[$j];
                 
-                
                 switch($property->type)
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
-                        $entityConfig->setValueAsProperty($property->name);
+                        $entityConfig->setValueAsProperty($property->name, $property->id);
 
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLColumn($property->name, $property->name);
@@ -275,10 +274,10 @@ class MimotoEntityConfigRepository
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                         // prepare
-                        $property->options['entityType']->value = $this->getEntityNameById($property->options['entityType']->value);
+                        $property->settings['entityType']->value = $this->getEntityNameById($property->settings['entityType']->value);
                         
                         // setup
-                        $entityConfig->setEntityAsProperty($property->name, $property->options);
+                        $entityConfig->setEntityAsProperty($property->name, $property->id, $property->settings);
 
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLColumn($property->name, $property->name.'_id');
@@ -287,13 +286,16 @@ class MimotoEntityConfigRepository
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                         // prepare
-                        $property->options['allowedEntityType']->value = $this->getEntityNameById($property->options['allowedEntityType']->value);
+                        $property->settings['allowedEntityTypes']->value = json_decode($property->settings['allowedEntityTypes']->value);
+                        for ($k = 0; $k < count($property->settings['allowedEntityTypes']->value); $k++)
+                        {
+                            $property->settings['allowedEntityTypes']->value[$k] = $this->getEntityNameById($property->settings['allowedEntityTypes']->value[$k]);
+                        }
                         
                         // setup
-                        $entityConfig->setCollectionAsProperty($property->name, $property->options);
+                        $entityConfig->setCollectionAsProperty($property->name, $property->id, $property->settings);
                         
                         // compose
-                        //$sConnectionTable = $this->getEntityNameById($entity->id).'_'.$property->options['allowedEntityType']->value;
                         $sConnectionTable = $this->getEntityNameById($entity->id).'_connections';
                         
                         // connect entity to data source
@@ -311,7 +313,7 @@ class MimotoEntityConfigRepository
     }
     
     
-    private function getEntityNameById($nId)
+    public function getEntityNameById($nId)
     {
         $nItemCount = count($this->_aEntities);
         for ($i = 0; $i < $nItemCount; $i++)

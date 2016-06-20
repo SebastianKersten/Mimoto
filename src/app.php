@@ -45,15 +45,16 @@ $app->register(new MimotoAimlessServiceProvider());
 $app->register(new MimotoEventServiceProvider());
 
 
-//$GLOBALS['output'] = function($sTitle, $data)
-//{
-//    echo '<div style="background-color:#f5f5f5;border:solid 1px #858585;padding:20px">';
-//    echo "<h2>".$sTitle."</h2>";
-//    echo "<pre>";
-//    print_r($data);
-//    echo "</pre>";
-//    echo "</div>";
-//}
+function output($sTitle, $data)
+{
+    echo '<div style="background-color:#f5f5f5;border:solid 1px #858585;padding:20px">';
+    echo "<h2><b>".$sTitle."</b></h2><hr>";
+    echo "<pre style='width:100%'>";
+    print_r($data);
+    echo "</pre>";
+    echo "</div>";
+    echo "<br>";
+}
 
 
 return $app;

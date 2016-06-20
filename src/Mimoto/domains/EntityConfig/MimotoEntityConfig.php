@@ -56,8 +56,6 @@ class MimotoEntityConfig
     // property value types
     const PROPERTY_VALUE_MYSQL_COLUMN = 'property_value_mysql_column';
     const PROPERTY_VALUE_MYSQLCONNECTION_TABLE = 'property_value_mysql_connection_table';
-    const PROPERTY_VALUE_DEFAULT = 'property_value_default';
-    const PROPERTY_VALUE_DUMMY = 'property_value_dummy';
     
     
     
@@ -120,7 +118,7 @@ class MimotoEntityConfig
      * @return object config
      * @throws MimotoEntityConfigException
      */
-    public function getProperty($sPropertyName)
+    public function getPropertyConfig($sPropertyName)
     {
         // validate
         if (!$this->hasProperty($sPropertyName)) { throw new MimotoEntityConfigException("( '-' ) - Hmm, I can't seem to find the property '$sPropertyName'"); }
@@ -151,12 +149,13 @@ class MimotoEntityConfig
      * Set value as property
      * @param string $sPropertyName The property's name
      */
-    public function setValueAsProperty($sPropertyName)
+    public function setValueAsProperty($sPropertyName, $nPropertyId)
     {
         // compose
         $property = (object) array(
+            'name' => $sPropertyName,
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
-            'name' => $sPropertyName
+            'id' => $nPropertyId,
         );
         
         // store
@@ -168,13 +167,16 @@ class MimotoEntityConfig
      * @param string $sPropertyName The property's name
      * @param array $options Array containing the option 'entityType'
      */
-    public function setEntityAsProperty($sPropertyName, $options)
+    public function setEntityAsProperty($sPropertyName, $nPropertyId, $options)
     {        
          // compose
         $property = (object) array(
-            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'name' => $sPropertyName,
-            'entityType' => $options['entityType']->value
+            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
+            'id' => $nPropertyId,
+            'settings' => (object) array(
+                'entityType' => $options['entityType']->value
+            )
         );
         
         // store
@@ -186,14 +188,17 @@ class MimotoEntityConfig
      * @param string $sPropertyName The property's name
      * @param array $options Array containig the options 'allowedEntityType' and 'allowDuplicates'
      */
-    public function setCollectionAsProperty($sPropertyName, $options)
+    public function setCollectionAsProperty($sPropertyName, $nPropertyId, $options)
     {
-         // compose
+        // compose
         $property = (object) array(
-            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
             'name' => $sPropertyName,
-            'allowedEntityType' => $options['allowedEntityType']->value,
-            'allowDuplicates' => ($options['allowDuplicates']->value === 'true') ? true : false,
+            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
+            'id' => $nPropertyId,
+            'settings' => (object) array(
+                'allowedEntityTypes' => $options['allowedEntityTypes']->value,
+                'allowDuplicates' => ($options['allowDuplicates']->value === 'true') ? true : false
+            )
         );
         
         // store

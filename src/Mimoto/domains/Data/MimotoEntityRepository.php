@@ -153,12 +153,23 @@ class MimotoEntityRepository
     public function store(MimotoEntityConfig $entityConfig, MimotoEntity $entity)
     {
         
+        // read
+        $aModifiedValues = $entity->getChanges();
+        
+        // save nothing if no changes
+        if (count($aModifiedValues) == 0) { return; }
+        
         // determine
         $bIsExistingEntity = (!empty($entity->getId()) && !is_nan($entity->getId())) ? true : false;
         
         
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
+        
+        // compose
+        $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
+        $sQuery .= ' '.$entityConfig->getMySQLTable()." SET ";
+        
         
         // init
         $aQueryElements = [];
@@ -169,12 +180,13 @@ class MimotoEntityRepository
         {
             // register
             $sPropertyName = $aPropertyNames[$i];
-            $property = $entityConfig->getProperty($sPropertyName);
-            $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
             
-            // compose
-            $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
-            $sQuery .= ' '.$entityConfig->getMySQLTable()." SET ";
+            // skip if no changes
+            if (!isset($aModifiedValues[$sPropertyName])) { continue; }
+            
+            // read
+            $propertyConfig = $entityConfig->getPropertyConfig($sPropertyName);
+            $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
 
             
             // set value
@@ -182,23 +194,16 @@ class MimotoEntityRepository
             {
                 case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
                     
-                    switch($property->type)
+                    switch($propertyConfig->type)
                     {
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
                     
-                            // compose
                             $aQueryElements[] = $propertyValue->mysqlColumnName."='".$entity->getValue($sPropertyName, false)."'";
                             break;
 
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-
-                            // compose
-                            $aQueryElements[] = $propertyValue->mysqlColumnName."='".$entity->getValue($sPropertyName, true)."'";
-                            break;
-
-                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
                             
-                            // #todo
+                            $aQueryElements[] = $propertyValue->mysqlColumnName."='".$entity->getValue($sPropertyName, true)."'";
                             break;
                     }
                     
@@ -206,6 +211,12 @@ class MimotoEntityRepository
 
                 case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
 
+                    //echo '<b>Storing COLLECTION</b><br><br>';
+                    //output('$propertyConfig->name', $propertyConfig->name);
+                    //output('$propertyValue->mysqlConnectionTable', $propertyValue->mysqlConnectionTable);
+                    
+                    
+                    
                     // init
 //                    $aCollection = array();
 //
@@ -224,16 +235,6 @@ class MimotoEntityRepository
                     // register collection data
                     //$entity->setValue($property->name, $aCollection);
 
-                    break;
-
-                case MimotoEntityConfig::PROPERTY_VALUE_DEFAULT:
-
-                    // do nothing
-                    break;
-
-                case MimotoEntityConfig::PROPERTY_VALUE_DUMMY:
-
-                    // do nothing
                     break;
             }
         }
@@ -260,7 +261,6 @@ class MimotoEntityRepository
         
         // execute
         mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        
         
         
         
@@ -356,27 +356,11 @@ class MimotoEntityRepository
         {
             // register
             $sPropertyName = $aPropertyNames[$i];
-            $property = $entityConfig->getProperty($sPropertyName);
+            $propertyConfig = $entityConfig->getPropertyConfig($sPropertyName);
             $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
             
             // setup property
-            switch($property->type)
-            {
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-                    
-                    $entity->setValueAsProperty($property->name);
-                    break;
-                
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                    
-                    $entity->setEntityAsProperty($property->name, $property->entityType);
-                    break;
-                
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-                    
-                    $entity->setCollectionAsProperty($property->name, $property->allowedEntityType);
-                    break;
-            }
+            $entity->setupProperty($propertyConfig);
             
             
             if (!empty($nEntityId))
@@ -387,39 +371,38 @@ class MimotoEntityRepository
                     case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
 
                         // load
-                        $entity->setValue($property->name, mysql_result($mysqlResult, $nIndex, $propertyValue->mysqlColumnName));
+                        $entity->setValue($propertyConfig->name, mysql_result($mysqlResult, $nIndex, $propertyValue->mysqlColumnName));
                         break;
 
                     case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
-
+                        
                         // init
                         $aCollection = array();
 
                         // load
-                        $sQuery = "SELECT child_id FROM ".$propertyValue->mysqlConnectionTable.
-                                  " WHERE parent_id='".$entity->getId()."' ORDER BY sortindex";
+                        $sQuery = "SELECT * FROM ".$propertyValue->mysqlConnectionTable.
+                                  " WHERE parent_id='".$entity->getId()."'".
+                                  " && parent_property_id='".$propertyConfig->id."' ".
+                                  " ORDER BY sortindex";
                         $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
                         $nItemCount = mysql_num_rows($result);
 
+                        
                         // register
                         for ($j = 0; $j < $nItemCount; $j++)
                         {
-                            $aCollection[] = mysql_result($result, $j, 'child_id');
+                            $collectionItem = (object) array(
+                                'child_id' => mysql_result($result, $j, 'child_id'),
+                                'child_entity_type' => mysql_result($result, $j, 'child_entity_type')
+                            );
+                            
+                            
+                            $aCollection[] = $collectionItem;
                         }
-
+                        
                         // register collection data
-                        $entity->setValue($property->name, $aCollection);
+                        $entity->setValue($propertyConfig->name, $aCollection);
 
-                        break;
-
-                    case MimotoEntityConfig::PROPERTY_VALUE_DEFAULT:
-
-                        $entity->setValue($property->name, $propertyValue->value);
-                        break;
-
-                    case MimotoEntityConfig::PROPERTY_VALUE_DUMMY:
-
-                        $entity->setValue($property->name, $propertyValue->value);
                         break;
                 }
             }

@@ -99,6 +99,11 @@ class MimotoEntityConfigService
 //        return $aEntities;
     }
     
+    public function getEntityNameById($nId)
+    {
+        return $this->_entityConfigRepository->getEntityNameById($nId);
+    }
+    
     
     // 1. add node
     // 2. remove node

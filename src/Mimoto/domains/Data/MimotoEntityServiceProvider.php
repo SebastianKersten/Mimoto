@@ -73,7 +73,7 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
         
         
         // register
-        $app['Mimoto.EntityConfigService'] = $app->share(function($app) {
+        $app['Mimoto.Config'] = $app['Mimoto.EntityConfigService'] = $app->share(function($app) {
             
             // init
             $service = new MimotoEntityConfigService
@@ -110,6 +110,7 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
     {
         // register
         $GLOBALS['Mimoto.Data'] = $app['Mimoto.Data'];
+        $GLOBALS['Mimoto.Config'] = $app['Mimoto.Config'];
     }
     
 }
