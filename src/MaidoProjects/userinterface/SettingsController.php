@@ -50,7 +50,7 @@ class SettingsController extends MimotoController
         $component = $app['Mimoto.Aimless']->createComponent('page_settings_clients');
         
         // setup
-        $component->setCollection('clients', 'settings_listitem', $aClients);
+        $component->addSelection('clients', 'settings_listitem', $aClients);
         
         // render and send
         return $component->render();
@@ -70,7 +70,7 @@ class SettingsController extends MimotoController
         $component = $app['Mimoto.Aimless']->createComponent('page_settings_agencies');
         
         // setup
-        $component->setCollection('agencies', 'settings_listitem', $aAgencies);
+        $component->addSelection('agencies', 'settings_listitem', $aAgencies);
         
         // render and send
         return $component->render();
@@ -90,7 +90,7 @@ class SettingsController extends MimotoController
         $component = $app['Mimoto.Aimless']->createComponent('page_settings_projectmanagers');
         
         // setup
-        $component->setCollection('projectmanagers', 'settings_listitem', $aProjectManagers);
+        $component->addSelection('projectmanagers', 'settings_listitem', $aProjectManagers);
         
         // render and send
         return $component->render();
@@ -110,7 +110,7 @@ class SettingsController extends MimotoController
         $component = $app['Mimoto.Aimless']->createComponent('page_settings_subprojectstates');
         
         // setup
-        $component->setCollection('subprojectstates', 'settings_listitem', $aSubprojectStates);
+        $component->addSelection('subprojectstates', 'settings_listitem', $aSubprojectStates);
         
         // render and send
         return $component->render();

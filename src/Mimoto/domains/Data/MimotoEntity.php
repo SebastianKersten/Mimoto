@@ -6,6 +6,7 @@ namespace Mimoto\Data;
 // Mimoto classes
 use Mimoto\Data\MimotoData;
 use Mimoto\Aimless\MimotoAimlessUtils;
+use Mimoto\library\entities\MimotoEntityUtils;
 
 
 /**
@@ -132,7 +133,6 @@ class MimotoEntity extends MimotoData
             // compose
             if (MimotoEntityUtils::isEntity($entity))
             {
-                
                 $sAimlessValue .= MimotoAimlessUtils::formatAimlessSubvalue($sMainPropertyName, $entity->getId(), $sSubPropertyName);
             }
             else

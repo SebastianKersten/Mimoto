@@ -8,6 +8,9 @@ use Mimoto\Aimless\MimotoAimlessUtils;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\library\entities\MimotoEntityUtils;
 
+// Silex classes
+use Silex\Application;
+
 
 /**
  * MimotoAimlessService
@@ -172,55 +175,6 @@ class MimotoAimlessService
         
         return $aTemplates;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function renderEntityView(MimotoEntity $entity, $sTemplateId)
-    {
-        
-        
-        
-        
-        try {
-            $sEntityTemplate = $this->_aTemplates[$entity->getEntityType()][$sTemplateId];
-        }
-        catch (\Exception $e)
-        {
-            // #todo
-        }            
-        
-        //echo $sEntityTemplate;
-        
-        // 1. viewmodels hebben template + platte json data
-        // 2. platte json data = cached
-        // 3. ViewModelService prepareert de data
-        // 4. Aimless is enkel een util die gebruikt wordt
-        // 5. zo read-only data, editable in juiste omgezing, en toch snel heel snel/efficient
-        // 6. Aimless service rendert volledig
-        
-        
-        
-        // output
-        return $this->_app['twig']->render(
-            $sEntityTemplate,
-            array(
-                'data' => $entity
-            )
-        );
-    }
     
     
     // --- events ---
@@ -301,7 +255,7 @@ class MimotoAimlessService
         
         // init
         $data->updated = array();
-        $aModifiedValues = $entity->getModifiedValues();        
+        $aModifiedValues = $entity->getChanges();        
         
         // verify
         if (isset($config->properties))

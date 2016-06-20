@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\library\entities;
 
+// Mimoto classes
+use Mimoto\Data\MimotoEntity;
+
 
 /**
  * MimotoEntityUtils

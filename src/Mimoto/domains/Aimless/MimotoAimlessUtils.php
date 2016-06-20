@@ -12,7 +12,6 @@ namespace Mimoto\Aimless;
 class MimotoAimlessUtils
 {
     
-    
     public static function formatAimlessValue($sEntityType, $nId, $sPropertyName)
     {
         return $sEntityType.'.'.$nId.'.'.$sPropertyName;

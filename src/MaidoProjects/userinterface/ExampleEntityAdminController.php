@@ -12,13 +12,43 @@ use Silex\Application;
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class ExampleController
+class ExampleEntityAdminController
 {
     
-    public function viewExample1(Application $app)
+    public function createEntity(Application $app)
     {
         // load
-        $article = $app['Mimoto.Data']->get('article', 1);
+        $entity = $app['Mimoto.Data']->create('_mimoto_entities');
+        
+        // setup
+        $entity->setValue('name', 'New entity - '.date("Y:m:d H.i.s"));
+        $entity->setValue('hasdraft', 0);
+        $entity->setValue('extends', '2');
+        $entity->setValue('owner', 'admin');
+        
+        // store
+        $entity = $app['Mimoto.Data']->store($entity);
+        
+        
+        // load
+        $aEntities = $app['Mimoto.Data']->find(['type' => 'article']);
+        
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('entity_overview');
+        
+        // setup
+        $component->addSelection('entities', 'entity_preview', $aEntities);
+        
+        
+        // render and send
+        return $component->render();
+    }
+    
+    public function editEntity(Application $app)
+    {
+        // load
+        $article = $app['Mimoto.Data']->create('article', 1);
         
         // create
         $component = $app['Mimoto.Aimless']->createComponent('article', $article);
@@ -26,6 +56,23 @@ class ExampleController
         // render and send
         return $component->render();
     }
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     public function viewExample2(Application $app)
     {        
@@ -167,23 +214,8 @@ class ExampleController
         return $component->render();
     }
     
+    
     public function viewExample11(Application $app)
-    {
-        // load
-        $aSubprojects = $app['Mimoto.Data']->find(['type' => 'subproject']);
-        
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('subproject_overview');
-        
-        // setup
-        $component->addSelection('subprojects', 'subproject_examplelistitem', $aSubprojects);
-        
-        // render and send
-        return $component->render();
-    }
-    
-    
-    public function viewExample12(Application $app)
     {
         // load
         $subproject = $app['Mimoto.Data']->get('subproject', 2);
@@ -195,10 +227,10 @@ class ExampleController
         $subproject = $app['Mimoto.Data']->store($subproject);
         
         // render and send
-        return "Subproject updated to 'archived'. Toggle back to <a href='/example13'>'current project'</a>";
+        return "Subproject updated to 'archived'. Toggle back to <a href='/example12'>'current project'</a>";
     }
     
-    public function viewExample13(Application $app)
+    public function viewExample12(Application $app)
     {
         
         // mls_contains='client' mls_template='client_listitem'
@@ -213,67 +245,8 @@ class ExampleController
         $subproject = $app['Mimoto.Data']->store($subproject);
         
         // render and send
-        return "Subproject updated to 'currentproject'. Toggle to <a href='/example12'>'archived'</a>";
+        return "Subproject updated to 'currentproject'. Toggle to <a href='/example11'>'archived'</a>";
     }
-    
-    
-    
-    // --- adding and removing items to an entity's collection ---
-    // ---> allowDuplicates = playlist
-    // ---> no allowDuplicates = social network (follow users)
-    
-    
-    public function viewExample14(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 2);
-        
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
-        
-        // setup
-        $component->setPropertyTemplate('subprojects', 'subproject');
-        $component->setPropertyFormatter('description', function($sValue) { return substr($sValue, 0, 72).' ..'; });
-        
-        // render and send
-        return $component->render();
-    }
-    
-    
-    public function viewExample15(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 2);
-        $subproject = $app['Mimoto.Data']->get('subproject', 4);
-        
-        // setup
-        $project->addValue('subprojects', $subproject);
-        
-        // store
-        $project = $app['Mimoto.Data']->store($project);
-        
-        // render and send
-        return "Subproject added to project!";
-    }
-    
-    public function viewExample16(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 2);
-        $subproject = $app['Mimoto.Data']->get('subproject', 4);
-        
-        // setup
-        $project->removeValue('subprojects', $subproject);
-        
-        // store
-        $project = $app['Mimoto.Data']->store($project);
-        
-        // render and send
-        return "Subproject removed from project!";
-    }
-    
-    
-    
     
     
     
@@ -365,7 +338,7 @@ class ExampleController
     public function viewAllArticlesInMemcache(Application $app, $sEntityType)
     {
         
-        $aArticles = $app['Mimoto.Data']->find(['type' => $sEntityType]);
+        $aArticles = $app['Mimoto.Data']->find($sEntityType);
         
         for ($i = 0; $i < count($aArticles); $i++)
         {

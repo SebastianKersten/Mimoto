@@ -34,14 +34,14 @@ class MimotoEventService
     /**
      * Constructor
      */
-    public function __construct($dispatcher, $LiveScreenService)
+    public function __construct($dispatcher) //, $MimotoAimlessService)
     {
         // register
         $this->_dispatcher = $dispatcher;
         
         // register services
         $this->_aServices = [
-            'LiveScreenService' => $LiveScreenService//,
+            'AimlessService' => ''//,
             //'MailService' => $MailService
         ];
     }
@@ -82,7 +82,6 @@ class MimotoEventService
         // broadcast to system
         if ($event instanceof Event) { $this->_dispatcher->dispatch($sEvent, $event); }
         
-        
         // validate
         if (!($event instanceof MimotoEvent)) { return; }
         
@@ -98,14 +97,18 @@ class MimotoEventService
             $action = $aActions[$i];
             
             // verify
-            if (isset($this->_aServices[$action->service]))
-            {
+            //if (isset($this->_aServices[$action->service]))
+            //{
                 // setup
                 $config = (isset($action->config)) ? $action->config : (object) array();
                 
-                // call
-                $this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
-            }
+                if ($action->service == 'Aimless')
+                {
+                    // call
+                    //$this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
+                    $GLOBALS['Mimoto.Aimless']->handleRequest($action->request, $event->getEntity(), $config);
+                }
+            //}
             
         }
         
@@ -178,7 +181,7 @@ class MimotoEventService
     {
         
         // configure
-        $sPathToActionFiles = '../src/MaidoProjects/actions';
+        $sPathToActionFiles = '../src/MaidoProjects/config/actions';
         
         
         // init

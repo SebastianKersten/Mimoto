@@ -90,7 +90,6 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
         $app['Mimoto.Data'] = $app['Mimoto.EntityService'] = $app->share(function($app) {
             
             // init
-            
             $service = new MimotoEntityService
             (
                 $this->_aEntityConfigs, 

@@ -1,0 +1,4 @@
+<div class="notification" {{ Aimless.realtime()|raw }}>
+    <b><span {{ Aimless.realtime('category')|raw }}>{{ Aimless.data('category') }}</span></b><br>
+    <span {{ Aimless.realtime('message')|raw }}>{{ Aimless.data('message') }}</span>
+</div>

@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: "futura-pt", sans-serif;
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
+}
+
+div.notifications {
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: auto;
+    padding: 10px;
+}
+
+div.notification {
+    display: inline-block;
+    position: relative;
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 15px 15px 20px 15px;
+}

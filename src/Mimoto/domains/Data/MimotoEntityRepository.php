@@ -6,9 +6,10 @@ namespace Mimoto\Data;
 // Mimoto classes
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+use Mimoto\Data\MimotoCollection;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
-
+use Mimoto\Event\MimotoEvent;
 
 
 /**
@@ -61,11 +62,8 @@ class MimotoEntityRepository
      */
     public function create(MimotoEntityConfig $entityConfig)
     {
-        // init
-        $entity = new $this->_modelClass();
-        
-        // send
-        return $entity;
+        // init and send
+        return $this->createEntity($entityConfig);
     }
     
     /**
@@ -112,7 +110,7 @@ class MimotoEntityRepository
         else
         {
             // setup
-            $entity = $this->createEntityFromMySQLResult($entityConfig, $result, 0);
+            $entity = $this->createEntity($entityConfig, $result, 0);
             
             // send
             return $entity;
@@ -123,11 +121,14 @@ class MimotoEntityRepository
      * Find a collection entities
      * @return Array containing zero or more entities
      */
-    public function find(MimotoEntityConfig $entityConfig, $criteria = null)
+    public function find(MimotoEntityConfig $entityConfig, $criteria)
     {
         
         // init
-        $aEntities = array();
+        $aEntities = new MimotoCollection();
+        
+        // setup
+        $aEntities->setCriteria($criteria);
         
         // load
         $sQuery = "SELECT * FROM ".$entityConfig->getMySQLTable();
@@ -138,7 +139,7 @@ class MimotoEntityRepository
         for ($i = 0; $i < $nItemCount; $i++)
         {
             // register
-            $aEntities[] = $this->createEntityFromMySQLResult($entityConfig, $result, $i);
+            $aEntities[] = $this->createEntity($entityConfig, $result, $i);
         }
         
         // send
@@ -149,24 +150,94 @@ class MimotoEntityRepository
      * Store entity
      * @param entity $entity
      */
-    public function store($entity)
+    public function store(MimotoEntityConfig $entityConfig, MimotoEntity $entity)
     {
         
         // determine
         $bIsExistingEntity = (!empty($entity->getId()) && !is_nan($entity->getId())) ? true : false;
         
         
-        // compose
-        $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
-        $sQuery .= ' '.$this->_sMySQLTable." SET ";
+        // load
+        $aPropertyNames = $entityConfig->getPropertyNames();
+        
+        // init
+        $aQueryElements = [];
         
         // load properties
-        $aQueryElements = [];
-        foreach ($this->_aProperties as $sPropertyName => $property)
+        $nPropertyCount = count($aPropertyNames);
+        for ($i = 0; $i < $nPropertyCount; $i++)
         {
+            // register
+            $sPropertyName = $aPropertyNames[$i];
+            $property = $entityConfig->getProperty($sPropertyName);
+            $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
+            
             // compose
-            $aQueryElements[] = $property->dbColumn.'="'.$entity->getValue($property->propertyName, false).'"';
+            $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
+            $sQuery .= ' '.$entityConfig->getMySQLTable()." SET ";
+
+            
+            // set value
+            switch($propertyValue->type)
+            {
+                case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
+                    
+                    switch($property->type)
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+                    
+                            // compose
+                            $aQueryElements[] = $propertyValue->mysqlColumnName."='".$entity->getValue($sPropertyName, false)."'";
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                            // compose
+                            $aQueryElements[] = $propertyValue->mysqlColumnName."='".$entity->getValue($sPropertyName, true)."'";
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+                            
+                            // #todo
+                            break;
+                    }
+                    
+                    break;
+
+                case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
+
+                    // init
+//                    $aCollection = array();
+//
+//                    // load
+//                    $sQuery = "SELECT child_id FROM ".$propertyValue->mysqlConnectionTable.
+//                              " WHERE parent_id='".$entity->getId()."' ORDER BY sortindex";
+//                    $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+//                    $nItemCount = mysql_num_rows($result);
+//
+//                    // register
+//                    for ($j = 0; $j < $nItemCount; $j++)
+//                    {
+//                        $aCollection[] = mysql_result($result, $j, 'child_id');
+//                    }
+
+                    // register collection data
+                    //$entity->setValue($property->name, $aCollection);
+
+                    break;
+
+                case MimotoEntityConfig::PROPERTY_VALUE_DEFAULT:
+
+                    // do nothing
+                    break;
+
+                case MimotoEntityConfig::PROPERTY_VALUE_DUMMY:
+
+                    // do nothing
+                    break;
+            }
         }
+        
         
         // compose
         for ($i = 0; $i < count($aQueryElements); $i++)
@@ -183,11 +254,13 @@ class MimotoEntityRepository
         }
         else
         {
-            $sQuery .= ",created='".date("YmdHis")."'";
+            $sQuery .= ", created='".date("YmdHis")."'";
         }
+        
         
         // execute
         mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+        
         
         
         
@@ -198,20 +271,20 @@ class MimotoEntityRepository
         if ($bIsExistingEntity)
         {   
             // register
-            $sEvent = constant($this->_modelEventClass.'::UPDATED');
+            $sEvent = MimotoEvent::UPDATED;
         }
         else
         {
             // get entity
-            $entity = $this->get(mysql_insert_id());
+            $entity = $this->get($entityConfig, mysql_insert_id());
             
             // register
-            $sEvent = constant($this->_modelEventClass.'::CREATED');
+            $sEvent = MimotoEvent::CREATED;
         }
         
         
         // setup
-        $event = new $this->_modelEventClass($entity, $sEvent);
+        $event = new MimotoEvent($entity, $sEvent);
         
         // broadcast
         $this->_EventService->sendUpdate($event->getType(), $event);
@@ -222,7 +295,12 @@ class MimotoEntityRepository
         
         
         // update
-        $entity->markModifiedValuesAsPersistent();
+        $entity->acceptChanges();
+        
+        
+        
+        // send
+        return $entity;
     }
     
     
@@ -238,14 +316,19 @@ class MimotoEntityRepository
      * @param int $nIndex
      * @return entity
      */
-    private function createEntityFromMySQLResult(MimotoEntityConfig $entityConfig, $mysqlResult, $nIndex)
+    private function createEntity(MimotoEntityConfig $entityConfig, $mysqlResult = null, $nIndex = null)
     {
         
         // read
-        $nEntityId = mysql_result($mysqlResult, $nIndex, 'id');
+        $nEntityId = (!empty($mysqlResult)) ? mysql_result($mysqlResult, $nIndex, 'id') : null;
         
         // make sure an entity is available only once
-        if (!isset($this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)]))
+        if (empty($nEntityId))
+        {
+            // init
+            $entity = new MimotoEntity($entityConfig->getName(), false);
+        }
+        else if(!isset($this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)]))
         {
             // init
             $entity = new MimotoEntity($entityConfig->getName(), false);
@@ -253,7 +336,7 @@ class MimotoEntityRepository
             // register
             $entity->setId($nEntityId);
             $entity->setCreated(mysql_result($mysqlResult, $nIndex, 'created'));
-            
+
             // store
             $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $entity;
         }
@@ -295,46 +378,50 @@ class MimotoEntityRepository
                     break;
             }
             
-            // set value
-            switch($propertyValue->type)
+            
+            if (!empty($nEntityId))
             {
-                case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
-                    
-                    // load
-                    $entity->setValue($property->name, mysql_result($mysqlResult, $nIndex, $propertyValue->mysqlColumnName));
-                    break;
-                
-                case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
-                    
-                    // init
-                    $aCollection = array();
+                // set value
+                switch($propertyValue->type)
+                {
+                    case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
 
-                    // load
-                    $sQuery = "SELECT child_id FROM ".$propertyValue->mysqlConnectionTable.
-                              " WHERE parent_id='".$entity->getId()."' ORDER BY sortindex";
-                    $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-                    $nItemCount = mysql_num_rows($result);
-                    
-                    // register
-                    for ($j = 0; $j < $nItemCount; $j++)
-                    {
-                        $aCollection[] = mysql_result($result, $j, 'child_id');
-                    }
-                    
-                    // register collection data
-                    $entity->setValue($property->name, $aCollection);
-                    
-                    break;
-                    
-                case MimotoEntityConfig::PROPERTY_VALUE_DEFAULT:
-                    
-                    $entity->setValue($property->name, $propertyValue->value);
-                    break;
-                
-                case MimotoEntityConfig::PROPERTY_VALUE_DUMMY:
-                    
-                    $entity->setValue($property->name, $propertyValue->value);
-                    break;
+                        // load
+                        $entity->setValue($property->name, mysql_result($mysqlResult, $nIndex, $propertyValue->mysqlColumnName));
+                        break;
+
+                    case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
+
+                        // init
+                        $aCollection = array();
+
+                        // load
+                        $sQuery = "SELECT child_id FROM ".$propertyValue->mysqlConnectionTable.
+                                  " WHERE parent_id='".$entity->getId()."' ORDER BY sortindex";
+                        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                        $nItemCount = mysql_num_rows($result);
+
+                        // register
+                        for ($j = 0; $j < $nItemCount; $j++)
+                        {
+                            $aCollection[] = mysql_result($result, $j, 'child_id');
+                        }
+
+                        // register collection data
+                        $entity->setValue($property->name, $aCollection);
+
+                        break;
+
+                    case MimotoEntityConfig::PROPERTY_VALUE_DEFAULT:
+
+                        $entity->setValue($property->name, $propertyValue->value);
+                        break;
+
+                    case MimotoEntityConfig::PROPERTY_VALUE_DUMMY:
+
+                        $entity->setValue($property->name, $propertyValue->value);
+                        break;
+                }
             }
         }
         

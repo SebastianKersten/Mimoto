@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Notification Center</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/css/notificationcenter.css">
+        <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
+        <script src="/static/js/jquery-2.2.0.min.js"></script>
+        <script src="/static/js/Mimoto.Aimless.js"></script>
+    </head>
+    <body>
+        <div class="notificationcenter">{% block content %}{% endblock %}</div>
+        <h1>Notification Center</h1>
+        <i>Notification dashboard component and list with events from decorrespondent.nl zoals new member etc en 3d blocks</i>
+        <br>
+        <br>
+        <div class="notifications">
+            {{ Aimless.collection('notifications')|raw }}
+        </div>
+        
+    </body>
+</html>

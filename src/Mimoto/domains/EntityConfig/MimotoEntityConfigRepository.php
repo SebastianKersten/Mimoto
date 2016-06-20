@@ -293,7 +293,8 @@ class MimotoEntityConfigRepository
                         $entityConfig->setCollectionAsProperty($property->name, $property->options);
                         
                         // compose
-                        $sConnectionTable = $this->getEntityNameById($entity->id).'_'.$property->options['allowedEntityType']->value;
+                        //$sConnectionTable = $this->getEntityNameById($entity->id).'_'.$property->options['allowedEntityType']->value;
+                        $sConnectionTable = $this->getEntityNameById($entity->id).'_connections';
                         
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);

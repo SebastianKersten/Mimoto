@@ -52,14 +52,11 @@ Mimoto.Aimless.connect = function()
         {
             // search
             var aValues = $("[mls_value]");
-
+            
             aValues.each( function(nIndex, $component)
             {
                 // read
                 var mls_value = $($component).attr("mls_value");
-                
-                console.log('mls_value = ' + mls_value);
-                
                 
                 // determine
                 var nOriginPos = mls_value.indexOf('[');
@@ -202,6 +199,58 @@ Mimoto.Aimless.connect = function()
             }
             
         });
+        
+        
+        
+        
+        // --- container level ---
+
+        
+        console.log('Console.update - filtered');
+        
+        // 1. mls_contains="project.3.subprojects" wordt niet meegestuurd bij wie het object hoort
+        // 2. partOf
+        // 3. zoek naar connectietabellen
+        
+        
+        
+        // setup
+        var mls_container = data.entityType;
+        
+        
+        // search
+        var aComponents = $("[mls_contains='" + mls_container + "']");
+        
+        aComponents.each( function(index, $component)
+        {
+            
+            console.log('In mls_contains for updating information');
+            
+            // read
+            var mls_contains = $($component).attr("mls_contains");
+            
+            console.log(mls_contains);
+            
+            var mls_filter = $($component).attr("mls_filter");
+            var mls_template = $($component).attr("mls_template");
+            //var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
+
+            // verify
+            if (mls_template !== undefined)
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_template,
+                    data: null,
+                    dataType: 'html',
+                    success: function (data) {
+                        $($component).append(data);
+                    }
+                });
+            }
+
+        });
+        
     });
     
     
@@ -210,24 +259,30 @@ Mimoto.Aimless.connect = function()
         // setup
         var mls_container = data.entityType;
         
+        
+        console.clear();
+        
+        console.log('Aimless - data.create');
+        console.log(data);
+        
 
         // --- component level ---
 
         // search
-        var aComponents = $("[mls_container='" + mls_container + "']");
+        var aComponents = $("[mls_contains='" + mls_container + "']");
         
         aComponents.each( function(index, $component)
         {
             // read
-            var mls_childtemplate = $($component).attr("mls_childtemplate");
+            var mls_template = $($component).attr("mls_template");
             var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
 
             // verify
-            if (mls_childtemplate !== undefined)
+            if (mls_template !== undefined)
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.LiveScreen/' + data.entityType + '/' + data.entityId + '/' + mls_childtemplate,
+                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_template,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -239,6 +294,17 @@ Mimoto.Aimless.connect = function()
         });
 
     });
+    
+    channel.bind('data.added', function(data) // update, create, remove (, read?)
+    {
+        
+    });
+    
+    channel.bind('data.removed', function(data) // update, create, remove (, read?)
+    {
+        
+    });
+    
     
     
     channel.bind('popup.open', function(data)

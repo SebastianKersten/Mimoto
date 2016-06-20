@@ -28,7 +28,7 @@ class AimlessComponent
     
     // config
     var $_aVars = [];
-    var $_aCollections = [];
+    var $_aSelections = [];
     var $_aPropertyTemplates = [];
     var $_aPropertyFormatters = [];
     
@@ -75,14 +75,14 @@ class AimlessComponent
         $this->_aVars[$sKey] = $value;
     }
     
-    public function addCollection($sKey, $sTemplateName, $aCollection)
+    public function addSelection($sKey, $sTemplateName, $aSelection)
     {
-        $collection = (object) array(
+        $selection = (object) array(
             'template_name' => $sTemplateName,
-            'collection' => $aCollection
+            'selection' => $aSelection
         );
         
-        $this->_aCollections[$sKey] = $collection;
+        $this->_aSelections[$sKey] = $selection;
     }
     
     
@@ -136,40 +136,44 @@ class AimlessComponent
                 $value = $fDelegate($value);
             }
             
-            // send
-            return $value;
+            //if (isset($this->_aPropertyTemplates[$sPropertyName]))
+            //{
+                
+                // 1. check if is entity instanceof MimotoEntity
+                // 2. wrap in template
+                
+                
+                // get te
+            //    $sTemplateFile = $this->_AimlessService->getTemplate($this->_sTemplateName, $this->_entity);
+                
+            //}
+            //else
+            //{
+                // send
+                return $value;
+            //}
         }
     }
     
-    public function collection($sCollectionName)
+    public function selection($sSelectionName)
     {
-        if (!isset($this->_aCollections[$sCollectionName]))
+        if (!isset($this->_aSelections[$sSelectionName]))
         {
-            die("Aimless says: Collection '$sCollectionName' not found");
+            die("Aimless says: Selection '$sSelectionName' not found");
         
             // 1. broadcast webevent for debugging purposes
             // 2. standaard report error (error level)
         }
         
         // load
-        $collection = $this->_aCollections[$sCollectionName];
+        $selection = $this->_aSelections[$sSelectionName];
         
         // render and send
-        return $this->renderCollection($collection->collection, $collection->template_name);
+        return $this->renderCollection($selection->selection, $selection->template_name);
     }
     
     public function realtime($sPropertySelector = null)
     {
-        
-        
-        if (empty($this->_entity))
-        {   
-            die("Aimless says: Realtime feature for property '$sPropertySelector' not possible if no entity is set");
-        
-            // 1. broadcast webevent for debugging purposes
-            // 2. standaard report error (error level)
-        }
-        
         
         if ($sPropertySelector !== null)
         {
@@ -177,21 +181,43 @@ class AimlessComponent
             $nSeparatorPos = strpos($sPropertySelector, '.');
             $sPropertyName = ($nSeparatorPos !== false) ? substr($sPropertySelector, 0, $nSeparatorPos) :  $sPropertySelector;
             
-            if ($this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+            $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
+            $aConditionals = MimotoDataUtils::getConditionals($sSubpropertySelector);
+            
+            // compose
+            $sFilter = (!empty($aConditionals)) ? " mls_filter='".json_encode($aConditionals)."'" : '';
+            
+            
+            if (!empty($this->_entity) && $this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
-                $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
-                $aConditionals = MimotoDataUtils::getConditionals($sSubpropertySelector);
-                
                 // compose
-                $sFilter = (!empty($aConditionals)) ? " mls_filter='".json_encode($aConditionals)."'" : '';
-                        
+                $sTemplate = (!empty($this->_aPropertyTemplates[$sPropertyName]->template_name)) ? " mls_template='".$this->_aPropertyTemplates[$sPropertyName]->template_name."'" : '';
+
                 // send
-                return "mls_contains='".$this->_entity->getAimlessValue($sPropertyName)."'".$sFilter;
+                return "mls_contains='".$this->_entity->getAimlessValue($sPropertyName)."'".$sFilter.$sTemplate;
             }
+            else
+            if (isset($this->_aSelections[$sPropertyName]))
+            {
+                // compose
+                $sTemplate = " mls_template='".$this->_aSelections[$sPropertyName]->template_name."'";
+
+                // send
+                return "mls_contains='".$this->_aSelections[$sPropertyName]->selection->getCriteria()['type']."'".$sFilter.$sTemplate;
+            }
+                
         }
         
         
+        if (empty($this->_entity))
+        {
+            die("Aimless says: Realtime feature for property '$sPropertySelector' not possible if no entity is set");
         
+            // 1. broadcast webevent for debugging purposes
+            // 2. standaard report error (error level)
+        }
+            
+            
         if ($sPropertySelector === null)
         {
             return "mls_id='".$this->_entity->getAimlessId()."'";

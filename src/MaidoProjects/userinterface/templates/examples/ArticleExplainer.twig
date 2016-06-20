@@ -7,7 +7,7 @@
     <br>
     <div class="example_article_explainer" {{ Aimless.realtime()|raw }}>
         <i><span {{ Aimless.live('lede')|raw }}>{{ Aimless.data('lede') }}</span></i><br><br>
-        <b><u>Explainer</u> - <span {{ Aimless.live('name')|raw }}>{{ Aimless.data('title') }}</span></b><br><br>
+        <b><u>Explainer</u> - <span {{ Aimless.live('title')|raw }}>{{ Aimless.data('title') }}</span></b><br><br>
         <div {{ Aimless.live('body')|raw }}>{{ Aimless.data('body') }}</div>
     </div>
 {% endblock %}

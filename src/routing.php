@@ -54,7 +54,24 @@ $app->get('/example4', 'MaidoProjects\\UserInterface\\ExampleController::viewExa
 $app->get('/example5', 'MaidoProjects\\UserInterface\\ExampleController::viewExample5');
 $app->get('/example6', 'MaidoProjects\\UserInterface\\ExampleController::viewExample6');
 $app->get('/example7', 'MaidoProjects\\UserInterface\\ExampleController::viewExample7');
+
 $app->get('/example8', 'MaidoProjects\\UserInterface\\ExampleController::viewExample8');
+$app->get('/example9', 'MaidoProjects\\UserInterface\\ExampleController::viewExample9');
+$app->get('/example10', 'MaidoProjects\\UserInterface\\ExampleController::viewExample10');
+
+$app->get('/example11', 'MaidoProjects\\UserInterface\\ExampleController::viewExample11');
+$app->get('/example12', 'MaidoProjects\\UserInterface\\ExampleController::viewExample12');
+$app->get('/example13', 'MaidoProjects\\UserInterface\\ExampleController::viewExample13');
+
+$app->get('/example14', 'MaidoProjects\\UserInterface\\ExampleController::viewExample14');
+$app->get('/example15', 'MaidoProjects\\UserInterface\\ExampleController::viewExample15');
+$app->get('/example16', 'MaidoProjects\\UserInterface\\ExampleController::viewExample16');
+
+
+
+$app->get('/admin/entity/example1', 'MaidoProjects\\UserInterface\\ExampleEntityAdminController::createEntity');
+$app->get('/admin/entity/example2', 'MaidoProjects\\UserInterface\\ExampleEntityAdminController::editEntity');
+$app->get('/admin/entity/example3', 'MaidoProjects\\UserInterface\\ExampleEntityAdminController::removeEntity');
 
 
 $app->get('/articles', 'MaidoProjects\\UserInterface\\ExampleController::viewArticleOverview');
@@ -62,3 +79,6 @@ $app->get('/article/{nArticleId}', 'MaidoProjects\\UserInterface\\ExampleControl
 
 $app->get('/memcache', 'MaidoProjects\\UserInterface\\ExampleController::viewMemcacheExample');
 $app->get('/memcachemonitor/{sEntityType}', 'MaidoProjects\\UserInterface\\ExampleController::viewAllArticlesInMemcache');
+
+
+$app->get('/notifications', 'MaidoProjects\\UserInterface\\NotificationCenterController::viewNotificationCenter');

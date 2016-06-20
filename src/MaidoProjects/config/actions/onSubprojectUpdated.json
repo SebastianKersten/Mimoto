@@ -1,13 +1,14 @@
 {
-    "trigger": ["client.updated", "agency.updated", "projectmanager.updated", "subprojectstate.updated"],
+    "trigger": "subproject.updated",
     "service": "Aimless",
     "request": "dataUpdate",
     "type": "async",
+    "permission": "loggedin_user",
     "config":
     {
         "properties":
         [
-            "name"
+            "phase"
         ]
     }
 }

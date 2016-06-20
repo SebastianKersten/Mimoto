@@ -597,12 +597,20 @@ class MimotoData
         // init
         $subproperty = (object) array(
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION_ITEM,
-            'allowedEntityType' => $property->allowedEntityTypes[0]
+            'allowedEntityTypes' => $property->allowedEntityTypes
         );
+        
+        $value->getEntityType().'<br>';
+        
+        
+        echo '<pre>';
+        print_r($subproperty);
+        echo '</pre>';
+        
         
         
         // validate
-        if (MimotoDataUtils::isEntity($value) && $value->getEntityType() !== $subproperty->entityType) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->name' has type '".$value->getEntityType()."' instead of type '".$property->allowedEntityTypes[0]."'"); }
+        if (MimotoDataUtils::isEntity($value) && !in_array($value->getEntityType(), $subproperty->allowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->name' has type '".$value->getEntityType()."' instead of type '".$property->allowedEntityTypes[0]."'"); }
 
         if (MimotoDataUtils::isEntity($value) )
         {
@@ -714,7 +722,7 @@ class MimotoData
     public function valueRelatesToEntity($sPropertyName)
     {
         // verify and send
-        return (isset($this->_aValuesAsEntities[$sPropertyName]));
+        return (isset($this->_aProperties[$sPropertyName]) && $this->_aProperties[$sPropertyName]->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY);
     }
 
     
@@ -821,57 +829,47 @@ class MimotoData
 //        }
 //    }
 //    
-//    /**
-//     * Get Changes
-//     * @return array Collection containing of all changed properties as key/value pairs
-//     */
-//    public function getChanges()
-//    {
-//        // init
-//        $aModifiedValues = [];
-//        
-//        foreach ($this->_aProperties as $sPropertyName => $property)
-//        {
-//            
-//            // check
-//            if ($property->hasChanges())
-//            {
-//                if ($property instanceof MimotoValueProperty)
-//                {
-//                    $aModifiedValues[$sPropertyName] = $property->getValue();
-//                }
-//                else
-//                if ($property instanceof MimotoEntityProperty)
-//                {
-//                    $aModifiedValues[$sPropertyName] = $property->getValue('', true);
-//                }
-//                else
-//                if ($property instanceof MimotoCollectionProperty)
-//                {
-//                    // 1. check changes, of hele set?
-//                    // 2. focus enkel op de changes in array aantal, items, volgorde
-//                    // 3. oftwel: de connections
-//                    // 4. misschien opvragen: changed items? of afhandelen in Repositori
-//                }
-//                else
-//                if ($property instanceof MimotoData)
-//                {
-//                    // load
-//                    $aModifiedSubvalues = $property->getChanges();
-//                    
-//                    // compose
-//                    foreach($aModifiedSubvalues as $sKey => $value)
-//                    {
-//                        $aModifiedValues[$sPropertyName.'.'.$sKey] = $value;
-//                    }
-//                }
-//            }
-//        }
-//        
-//        // send
-//        return $aModifiedValues;
-//    }
-//    
+    /**
+     * Get Changes
+     * @return array Collection containing of all changed properties as key/value pairs
+     */
+    public function getChanges()
+    {
+        // init
+        $aModifiedValues = [];
+        
+        foreach ($this->_aProperties as $sPropertyName => $property)
+        {
+            // register
+            $property = $this->_aProperties[$sPropertyName];
+            
+            
+            switch($property->type)
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+                
+                    if ($property->persistentValue !== $property->currentValue)
+                    {
+                        $aModifiedValues[$sPropertyName] = $property->currentValue;
+                    }
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                    // #todo
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+                    
+                    // #todo
+                    break;
+            }
+        }
+        
+        // send
+        return $aModifiedValues;
+    }
+    
 
     
     
@@ -893,7 +891,7 @@ class MimotoData
     public function hasChanges()
     {
         // check and send
-        return (!isset($this->_persistentValue) || $this->_persistentValue !== $this->_currentValue);
+        //return (!isset($this->_persistentValue) || $this->_persistentValue !== $this->_currentValue);
     }
     
     /**
@@ -902,7 +900,19 @@ class MimotoData
     public function acceptChanges()
     {
         // update
-        $this->_persistentValue = $this->_currentValue;
+        //$this->_persistentValue = $this->_currentValue;
+    }
+    
+    
+    
+    /**
+     * Check if the data object has a property
+     * 
+     * @return boolean True if value was changed
+     */
+    public function hasProperty($sProperty)
+    {
+        return isset($this->_aProperties[$sProperty]);
     }
     
 }

@@ -724,3 +724,20 @@ div.example_subproject_archived
     border: #c3c3c3 solid 1px;
     padding: 8px;
 }
+
+div.example_clientlist, div.example_entitylist {
+    width: 500px;
+    border: #000000 solid 1px;
+    background-color: #f5f5f5;
+    padding: 10px;
+}
+
+    div.example_clientlist>div, div.example_entitylist>div
+    {
+        margin-bottom: 7px;
+    }
+
+    div.example_clientlist>div:last-child, div.example_entitylist>div
+    {
+        margin-bottom: 0;
+    }

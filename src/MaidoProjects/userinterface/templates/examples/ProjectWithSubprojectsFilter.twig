@@ -6,7 +6,8 @@
     <br>
     <br>
     <div class="example_project" {{ Aimless.realtime()|raw }}>
-        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br><br>
+        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
+        <i><span {{ Aimless.realtime('client.name')|raw }}>{{ Aimless.data('client.name') }}</span></i><br><br>
         <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }} <i>[last modified by {{ author }}]</i></div>
         <br>
         Requests:
