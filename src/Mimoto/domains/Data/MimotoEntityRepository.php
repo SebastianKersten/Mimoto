@@ -211,9 +211,9 @@ class MimotoEntityRepository
 
                 case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
 
-                    //echo '<b>Storing COLLECTION</b><br><br>';
-                    //output('$propertyConfig->name', $propertyConfig->name);
-                    //output('$propertyValue->mysqlConnectionTable', $propertyValue->mysqlConnectionTable);
+                    echo '<b>Storing COLLECTION</b><br><br>';
+                    output('$propertyConfig->name', $propertyConfig->name);
+                    output('$propertyValue->mysqlConnectionTable', $propertyValue->mysqlConnectionTable);
                     
                     
                     
@@ -392,8 +392,12 @@ class MimotoEntityRepository
                         for ($j = 0; $j < $nItemCount; $j++)
                         {
                             $collectionItem = (object) array(
-                                'child_id' => mysql_result($result, $j, 'child_id'),
-                                'child_entity_type' => mysql_result($result, $j, 'child_entity_type')
+                                'id' => mysql_result($result, $j, 'id'),
+                                'parentId' => mysql_result($result, $j, 'parent_id'),
+                                'parentPropertyId' => mysql_result($result, $j, 'parent_property_id'),
+                                'childId' => mysql_result($result, $j, 'child_id'),
+                                'childEntityType' => mysql_result($result, $j, 'child_entity_type'),
+                                'sortIndex' => mysql_result($result, $j, 'sortindex')
                             );
                             
                             

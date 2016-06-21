@@ -476,66 +476,23 @@ class MimotoData
         // validate
         if (!is_array($value)) { throw new MimotoEntityException("( '-' ) - The collection property '".$property->config->name."' can only accept an array"); }
         
-        // 1. validate values in array
-        // 2. check if subvalue or expression
-        // 3. erzijn geen {} en  [], enkele {} want geen vrij object zoals json/MimotoData
-        // 4. overhevelen waarden
-        
         
         // init
         if (!$this->_bTrackChanges) { $property->data->persistentCollection = []; }
         $property->data->currentCollection = [];
         
-        
+
         $nItemCount = count($value);
         for ($i = 0; $i < $nItemCount; $i++)
         {
             // register
             $item = $value[$i];
             
-            // init
-            $subproperty = (object) array(
-                'config' => (object) array(
-                    'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION_ITEM,
-                    'settings' => (object) array(
-                        'entityType' => $GLOBALS['Mimoto.Config']->getEntityNameById($item->child_entity_type)
-                    )
-                ),
-                'data' => (object) array()
-            );
-            
-            
-            // validate
-            if (MimotoDataUtils::isEntity($item) && $item->getEntityType() !== $subproperty->config->entityType) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying set in the collection '$property->config->name' has type '".$item->getEntityType()."' instead of on of the types ".json_encode($property->config->allowedEntityTypes)); }
-
-            if (MimotoDataUtils::isEntity($item) )
-            {
-                // store if change tracking is disabled
-                if (!$this->_bTrackChanges) { $subproperty->data->persistentId = $item->getId(); }
-
-                // store
-                $subproperty->data->currentId = $item->getId();
-                //$subproperty->entityCache = $item;
-            }
-            else
-            if (MimotoDataUtils::isValidEntityId($value))
-            {
-                 // store if change tracking is disabled
-                if (!$this->_bTrackChanges) { $subproperty->data->persistentId = $item->child_id; }
-
-                // store
-                $subproperty->data->currentId = $item->child_id;
-            }
-            
-            
-            
-            //for ($j = 0; $j < $nItemCount; $j++) // check for doubles if options don't allow it
-            //{
-                //$property->data->currentCollection
-            //}
+            // store
+            $subproperty = $item;
             
             // store
-            if (!$this->_bTrackChanges) { $property->data->persistentCollection[$i] = $subproperty; }
+            if (!$this->_bTrackChanges) { $property->data->persistentCollection[$i] = clone $subproperty; }
             $property->data->currentCollection[] = $subproperty;
         }
     }
@@ -574,38 +531,34 @@ class MimotoData
         }
         
         // init
-        $subproperty = (object) array(
-            'config' => (object) array(
-                'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION_ITEM,
-                'entityType' => $sEntityType
-            ),
-            'data' => (object) array()
-        );
+        $subproperty = (object) array();
+        
+        $subproperty->parentId = $this->getId();
+        $subproperty->parentPropertyId = $property->config->id;
+        
         
         // validate
         if (MimotoDataUtils::isEntity($value) && !in_array($sEntityType, $property->config->settings->allowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$value->getEntityType()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
 
-        if (MimotoDataUtils::isEntity($value) )
+        if (MimotoDataUtils::isEntity($value))
         {
-            // store if change tracking is disabled
-            if (!$this->_bTrackChanges) { $subproperty->data->persistentId = $value->getId(); }
-
             // store
-            $subproperty->data->currentId = $value->getId();
-            //$subproperty->data->entityCache = $value;
+            $subproperty->childId = $value->getId();
         }
         else
         if (MimotoDataUtils::isValidEntityId($value))
         {
-             // store if change tracking is disabled
-            if (!$this->_bTrackChanges) { $subproperty->data->persistentId = $value; }
-
             // store
-            $subproperty->data->currentId = $value;
+            $subproperty->childId = $value;
         }
 
+        $subproperty->childEntityType = $sEntityType;
+        $subproperty->sortIndex = count($property->data->currentCollection);
+        
+        
+        
         // store
-        if (!$this->_bTrackChanges) { $property->data->persistentCollection[$i] = $subproperty; }
+        if (!$this->_bTrackChanges) { $property->data->persistentCollection[$i] = clone $subproperty; }
         $property->data->currentCollection[] = $subproperty;
         
         
@@ -786,6 +739,31 @@ class MimotoData
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
                     
+                    output('$property', $property);
+                    
+                    
+                    if (!empty($property->data->currentCollection))
+                    {
+                        for ($k = 0; $k < count($property->data->currentCollection); $k++)
+                        {
+                            $item = $property->data->currentCollection[$k];
+                            
+                            output('$item', $item);
+                            
+                            
+                            $sCurrentEntityType = $item->config->settings->entityType;
+                            $nCurrentItemId = $item->data->itemId;
+                            
+                            output('values', "sCurrentEntityType=$sCurrentEntityType, nCurrentItemId=$nCurrentItemId");
+                            
+                            if (!empty($property->data->persistentCollection))
+                            {
+                                $property->data->persistentCollection[$k] = clone $property->data->currentCollection[$k];
+                            }
+                        }
+                    }
+                    
+                    
                     // #todo
                     break;
             }
@@ -813,7 +791,7 @@ class MimotoData
     public function hasChanges()
     {
         // check and send
-        //return (!isset($this->_persistentValue) || $this->_persistentValue !== $this->_currentValue);
+        return (count($this->getChanges()) > 0) ? true : false;
     }
     
     /**
@@ -821,11 +799,46 @@ class MimotoData
      */
     public function acceptChanges()
     {
-        // update
-        //$this->_persistentValue = $this->_currentValue;
+        foreach ($this->_aProperties as $sPropertyName => $property)
+        {
+            // register
+            $property = $this->_aProperties[$sPropertyName];
+            
+            switch($property->config->type)
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+                
+                    $property->data->persistentValue = $property->data->currentValue;
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                    
+                    if (!empty($property->data->currentId))
+                    {
+                        $property->data->persistentId = $property->data->currentId;
+                    }
+                    else
+                    {
+                        unset($property->data->persistentId);
+                    }
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+                    
+                    // delete
+                    $property->data->persistentCollection = [];
+                    
+                    if (!empty($property->data->currentCollection))
+                    {
+                        for ($k = 0; $k < count($property->data->currentCollection); $k++)
+                        {
+                            $property->data->persistentCollection[$k] = clone $property->data->currentCollection[$k];
+                        }
+                    }
+                    break;
+            }
+        }
     }
-    
-    
     
     /**
      * Check if the data object has a property
