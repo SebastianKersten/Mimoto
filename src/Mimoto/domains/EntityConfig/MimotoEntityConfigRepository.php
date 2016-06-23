@@ -274,7 +274,10 @@ class MimotoEntityConfigRepository
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                         // prepare
-                        $property->settings['entityType']->value = $this->getEntityNameById($property->settings['entityType']->value);
+                        $property->settings['entityType']->value = (object) array(
+                            'id' => $property->settings['entityType']->value,
+                            'name' => $this->getEntityNameById($property->settings['entityType']->value)
+                        );
                         
                         // setup
                         $entityConfig->setEntityAsProperty($property->name, $property->id, $property->settings);
@@ -289,7 +292,10 @@ class MimotoEntityConfigRepository
                         $property->settings['allowedEntityTypes']->value = json_decode($property->settings['allowedEntityTypes']->value);
                         for ($k = 0; $k < count($property->settings['allowedEntityTypes']->value); $k++)
                         {
-                            $property->settings['allowedEntityTypes']->value[$k] = $this->getEntityNameById($property->settings['allowedEntityTypes']->value[$k]);
+                            $property->settings['allowedEntityTypes']->value[$k] = (object) array(
+                                'id' => $property->settings['allowedEntityTypes']->value[$k],
+                                'name' => $this->getEntityNameById($property->settings['allowedEntityTypes']->value[$k])
+                            );
                         }
                         
                         // setup
@@ -321,6 +327,17 @@ class MimotoEntityConfigRepository
             $entity = $this->_aEntities[$i];
             
             if ($entity->id == $nId) { return $entity->name; }
+        }
+    }
+    
+    public function getEntityIdByName($sName)
+    {
+        $nItemCount = count($this->_aEntities);
+        for ($i = 0; $i < $nItemCount; $i++)
+        {
+            $entity = $this->_aEntities[$i];
+            
+            if ($entity->name == $sName) { return $entity->id; }
         }
     }
 }

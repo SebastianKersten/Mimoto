@@ -166,11 +166,6 @@ class MimotoEntityRepository
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
         
-        // compose
-        $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
-        $sQuery .= ' '.$entityConfig->getMySQLTable()." SET ";
-        
-        
         // init
         $aQueryElements = [];
         
@@ -211,29 +206,57 @@ class MimotoEntityRepository
 
                 case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
 
-                    echo '<b>Storing COLLECTION</b><br><br>';
-                    output('$propertyConfig->name', $propertyConfig->name);
-                    output('$propertyValue->mysqlConnectionTable', $propertyValue->mysqlConnectionTable);
+                    $modifiedCollection = $aModifiedValues[$sPropertyName];
                     
+                    if (count($modifiedCollection->added) > 0)
+                    {
+                        for ($k = 0; $k < count($modifiedCollection->added); $k++)
+                        {
+                            $newItem = $modifiedCollection->added[$k];
+                            
+                            // load
+                            $sQuery =
+                                "INSERT INTO ".$propertyValue->mysqlConnectionTable." SET ".
+                                "parent_id='".$newItem->parentId."', ".
+                                "parent_property_id='".$newItem->parentPropertyId."', ".
+                                "child_entity_type='".$newItem->childEntityType->id."', ".
+                                "child_id='".$newItem->childId."', ".
+                                "sortindex='".$newItem->sortIndex."'";
+                                
+                            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                        }
+                    }
                     
+                    if (count($modifiedCollection->updated) > 0)
+                    {
+                        for ($k = 0; $k < count($modifiedCollection->updated); $k++)
+                        {
+                            $existingItem = $modifiedCollection->updated[$k];
+                            
+                            // load
+                            $sQuery =
+                                "UPDATE ".$propertyValue->mysqlConnectionTable." SET ".
+                                "sortindex='".$existingItem->sortIndex."' ".
+                                "WHERE id='".$existingItem->id."'";
+                                
+                            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                        }
+                    }
                     
-                    // init
-//                    $aCollection = array();
-//
-//                    // load
-//                    $sQuery = "SELECT child_id FROM ".$propertyValue->mysqlConnectionTable.
-//                              " WHERE parent_id='".$entity->getId()."' ORDER BY sortindex";
-//                    $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-//                    $nItemCount = mysql_num_rows($result);
-//
-//                    // register
-//                    for ($j = 0; $j < $nItemCount; $j++)
-//                    {
-//                        $aCollection[] = mysql_result($result, $j, 'child_id');
-//                    }
-
-                    // register collection data
-                    //$entity->setValue($property->name, $aCollection);
+                    if (count($modifiedCollection->removed) > 0)
+                    {
+                        for ($k = 0; $k < count($modifiedCollection->removed); $k++)
+                        {
+                            $existingItem = $modifiedCollection->removed[$k];
+                            
+                            // load
+                            $sQuery =
+                                "DELETE FROM ".$propertyValue->mysqlConnectionTable." ".
+                                "WHERE id='".$existingItem->id."'";
+                                
+                            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                        }
+                    }
 
                     break;
             }
@@ -241,22 +264,19 @@ class MimotoEntityRepository
         
         
         // compose
+        $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
+        $sQuery .= ' '.$entityConfig->getMySQLTable()." SET ";
+        
+        // compose
         for ($i = 0; $i < count($aQueryElements); $i++)
         {
             $sQuery .= $aQueryElements[$i];
-            if ($i < count($aQueryElements) - 1) { $sQuery .= ','; }
+            if ($i < count($aQueryElements) - 1) { $sQuery .= ', '; }
         }
         
         
         // compose
-        if ($bIsExistingEntity)
-        {
-            $sQuery .= " WHERE id='".$entity->getId()."'";
-        }
-        else
-        {
-            $sQuery .= ", created='".date("YmdHis")."'";
-        }
+        $sQuery .=  ($bIsExistingEntity) ? " WHERE id='".$entity->getId()."'" : ", created='".date("YmdHis")."'";
         
         
         // execute
@@ -396,7 +416,10 @@ class MimotoEntityRepository
                                 'parentId' => mysql_result($result, $j, 'parent_id'),
                                 'parentPropertyId' => mysql_result($result, $j, 'parent_property_id'),
                                 'childId' => mysql_result($result, $j, 'child_id'),
-                                'childEntityType' => mysql_result($result, $j, 'child_entity_type'),
+                                'childEntityType' => (object) array(
+                                    'id' => mysql_result($result, $j, 'child_entity_type'),
+                                    'name' => $GLOBALS['Mimoto.Config']->getEntityNameById(mysql_result($result, $j, 'child_entity_type'))
+                                ),
                                 'sortIndex' => mysql_result($result, $j, 'sortindex')
                             );
                             

@@ -254,10 +254,6 @@ class ExampleController
         $project->addValue('subprojects', 3);
         $project->addValue('subprojects', $subproject);
         
-        
-        output('$project [AFTER adding subproject]', $project);
-        output('$project changes', $project->getChanges());
-        
         // store
         $project = $app['Mimoto.Data']->store($project);
         

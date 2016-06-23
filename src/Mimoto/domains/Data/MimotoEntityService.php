@@ -127,6 +127,10 @@ class MimotoEntityService
             
             $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
             
+            
+            //output('$sEntityType', $sEntityType);
+            //output('$entityConfig', $entityConfig);
+            
             if ($entityConfig !== false)
             {
                 $this->_aEntityConfigs[$sEntityType] = $entityConfig;
