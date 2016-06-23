@@ -546,6 +546,24 @@ class MimotoData
         );
         $subproperty->sortIndex = count($property->data->currentCollection);
         
+        
+        
+        
+        // manage duplicates
+        if (!$property->config->settings->allowDuplicates)
+        {
+            $bDuplicateFound = false;
+            for ($i = 0; $i < count($property->data->currentCollection); $i++)
+            {
+                if ($property->data->currentCollection[$i]->childId == $subproperty->childId)
+                {
+                    $bDuplicateFound = true;
+                    return;
+                }
+            }
+        }
+        
+        
         // store
         if (!$this->_bTrackChanges) { $property->data->persistentCollection[$i] = clone $subproperty; }
         $property->data->currentCollection[] = $subproperty;
@@ -779,7 +797,7 @@ class MimotoData
                         }
                     }
                     
-                    if (count($aAddedItems) > 0 || count($aChangedItems) > 0 || count($aRemovedItems) > 0)
+                    if (count($aAddedItems) > 0 || count($aUpdatedItems) > 0 || count($aRemovedItems) > 0)
                     {
                         $aModifiedValues[$sPropertyName] = (object) array(
                             'added' => $aAddedItems,

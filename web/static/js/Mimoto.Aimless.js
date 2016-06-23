@@ -215,41 +215,41 @@ Mimoto.Aimless.connect = function()
         
         
         // setup
-        var mls_container = data.entityType;
-        
-        
-        // search
-        var aComponents = $("[mls_contains='" + mls_container + "']");
-        
-        aComponents.each( function(index, $component)
-        {
-            
-            console.log('In mls_contains for updating information');
-            
-            // read
-            var mls_contains = $($component).attr("mls_contains");
-            
-            console.log(mls_contains);
-            
-            var mls_filter = $($component).attr("mls_filter");
-            var mls_template = $($component).attr("mls_template");
-            //var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
-
-            // verify
-            if (mls_template !== undefined)
-            {
-                $.ajax({
-                    type: 'GET',
-                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_template,
-                    data: null,
-                    dataType: 'html',
-                    success: function (data) {
-                        $($component).append(data);
-                    }
-                });
-            }
-
-        });
+//        var mls_container = data.entityType;
+//        
+//        
+//        // search
+//        var aComponents = $("[mls_contains='" + mls_container + "']");
+//        
+//        aComponents.each( function(index, $component)
+//        {
+//            
+//            console.log('In mls_contains for updating information');
+//            
+//            // read
+//            var mls_contains = $($component).attr("mls_contains");
+//            
+//            console.log(mls_contains);
+//            
+//            var mls_filter = $($component).attr("mls_filter");
+//            var mls_template = $($component).attr("mls_template");
+//            //var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
+//
+//            // verify
+//            if (mls_template !== undefined)
+//            {
+//                $.ajax({
+//                    type: 'GET',
+//                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_template,
+//                    data: null,
+//                    dataType: 'html',
+//                    success: function (data) {
+//                        $($component).append(data);
+//                    }
+//                });
+//            }
+//
+//        });
         
     });
     
