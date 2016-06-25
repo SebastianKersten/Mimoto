@@ -76,6 +76,10 @@ Mimoto.Aimless.connect = function()
                     // register
                     var update = data.updated[i];
                     
+                    // collection
+                    if (update.changes) continue;
+                    
+                    
                     if (!bHasOrigin)
                     {
                         // === value ===
@@ -144,6 +148,58 @@ Mimoto.Aimless.connect = function()
             });  
         }
         
+        
+        // parse modified values
+        for (var i = 0; i < data.updated.length; i++)
+        {
+            // register
+            var update = data.updated[i];
+            
+            // collection
+            if (!update.collection) continue;
+            
+            var aCollections = $("[mls_contains='" + sEntityIdentifier + "." + update.property + "']");
+            
+            
+            aCollections.each(function(nIndex, $component)
+            {
+                // read
+                var mls_contains = $($component).attr("mls_contains");
+                var mls_template = $($component).attr("mls_template");
+                var mls_filter = $($component).attr("mls_filter");
+                
+                //'{"phase":"currentproject"}
+                //
+                // 1. subitem.phase meesturen als data
+
+
+                for (var iAdded = 0; iAdded < update.collection.added.length; iAdded++)
+                {
+
+                    var item = update.collection.added[iAdded];
+
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Mimoto.Aimless/' + item.childEntityType.name + '/' + item.childId + '/' + mls_template,
+                        data: null,
+                        dataType: 'html',
+                        success: function (data) {
+                            $($component).append(data);
+                        }
+                    });
+                }
+                
+                for (var iRemoved = 0; iRemoved < update.collection.removed.length; iRemoved++)
+                {
+
+                    var item = update.collection.removed[iRemoved];
+                    
+                    $item = $("[mls_id='" + item.childEntityType.name + "." + item.childId + "']", $component);
+                    
+                    $item.remove();
+                }
+            });
+        }
         
         
         // --- component level ---
@@ -293,16 +349,6 @@ Mimoto.Aimless.connect = function()
 
         });
 
-    });
-    
-    channel.bind('data.added', function(data) // update, create, remove (, read?)
-    {
-        
-    });
-    
-    channel.bind('data.removed', function(data) // update, create, remove (, read?)
-    {
-        
     });
     
     

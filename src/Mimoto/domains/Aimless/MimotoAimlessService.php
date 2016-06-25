@@ -6,6 +6,7 @@ namespace Mimoto\Aimless;
 // Mimoto classes
 use Mimoto\Aimless\MimotoAimlessUtils;
 use Mimoto\Data\MimotoEntity;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\library\entities\MimotoEntityUtils;
 
 // Silex classes
@@ -186,6 +187,10 @@ class MimotoAimlessService
     public function handleRequest($sRequest, $data, $config)
     {
         
+//        output('$sRequest', $sRequest);
+//        output('$data', $data);
+//        output('$config', $config);
+        
         switch($sRequest)
         {
             case 'dataUpdate':
@@ -255,7 +260,8 @@ class MimotoAimlessService
         
         // init
         $data->updated = array();
-        $aModifiedValues = $entity->getChanges();        
+        $aModifiedValues = $entity->getChanges();
+        
         
         // verify
         if (isset($config->properties))
@@ -284,48 +290,72 @@ class MimotoAimlessService
                 if (!$entity->hasProperty($sMainPropertyName) || !isset($aModifiedValues[$sMainPropertyName])) continue;
                 
                 
+                
                 // init
                 $valueForBroadcast = (object) array();
-                
+
                 // compose
-                $valueForBroadcast->value = $entity->getValue($sMainPropertyName);
                 $valueForBroadcast->property = $sPropertyName;
                 
-
-                // verify
-                if (!empty($sSubPropertyName))
+                
+                // read
+                $sPropertyType = $entity->getPropertyType($sMainPropertyName);
+                
+                
+                switch($sPropertyType)
                 {
-                    // load
-                    $subentity = $entity->getValue($sMainPropertyName);
-                    
-                    // init
-                    $valueForBroadcast->origin = (object) array();
-                    
-                    // validate
-                    if (MimotoEntityUtils::isEntity($subentity))
-                    {
-                        // check if property exists
-                        if ($subentity->hasProperty($sSubPropertyName))
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                        
+                        $valueForBroadcast->value = $entity->getValue($sMainPropertyName);
+                        
+                        // verify
+                        if (!empty($sSubPropertyName))
                         {
-                            // compose
-                            $valueForBroadcast->value = $subentity->getValue($sSubPropertyName);   
-                            $valueForBroadcast->origin->entityType = $subentity->getEntityType();
-                            $valueForBroadcast->origin->entityId = $subentity->getId();
-                            $valueForBroadcast->origin->property = $sSubPropertyName;
+                            // load
+                            $subentity = $entity->getValue($sMainPropertyName);
+
+                            // init
+                            $valueForBroadcast->origin = (object) array();
+
+                            // validate
+                            if (MimotoEntityUtils::isEntity($subentity))
+                            {
+                                // check if property exists
+                                if ($subentity->hasProperty($sSubPropertyName))
+                                {
+                                    // compose
+                                    $valueForBroadcast->value = $subentity->getValue($sSubPropertyName);   
+                                    $valueForBroadcast->origin->entityType = $subentity->getEntityType();
+                                    $valueForBroadcast->origin->entityId = $subentity->getId();
+                                    $valueForBroadcast->origin->property = $sSubPropertyName;
+                                }
+                            }
+                            else
+                            {
+                                // compose
+                                $valueForBroadcast->origin->entityType = $sMainPropertyName;
+                                $valueForBroadcast->origin->property = $sSubPropertyName;
+                            }
                         }
-                    }
-                    else
-                    {
+                        
+                        break;
+                        
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+                        
                         // compose
-                        $valueForBroadcast->origin->entityType = $sMainPropertyName;
-                        $valueForBroadcast->origin->property = $sSubPropertyName;
-                    }
+                        $valueForBroadcast->collection = $aModifiedValues[$sMainPropertyName];
+                        break;
+                        
                 }
                 
                 // store
                 $data->updated[] = $valueForBroadcast;
             }
         }
+        
+        
+        output('Data to broadcast', $data);
         
         
         // 1. dit gaat via async, het is efficienter om de rest af te handelen via deze directe route (denk aan "modified")

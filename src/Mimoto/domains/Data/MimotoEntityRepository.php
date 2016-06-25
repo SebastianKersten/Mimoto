@@ -224,6 +224,10 @@ class MimotoEntityRepository
                                 "sortindex='".$newItem->sortIndex."'";
                                 
                             $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                            
+                            // complete
+                            $newItem->id = mysql_insert_id();
+                            $newItem->bIsNew = true;
                         }
                     }
                     
@@ -253,7 +257,7 @@ class MimotoEntityRepository
                             $sQuery =
                                 "DELETE FROM ".$propertyValue->mysqlConnectionTable." ".
                                 "WHERE id='".$existingItem->id."'";
-                                
+                            
                             $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
                         }
                     }
@@ -263,24 +267,26 @@ class MimotoEntityRepository
         }
         
         
-        // compose
-        $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
-        $sQuery .= ' '.$entityConfig->getMySQLTable()." SET ";
-        
-        // compose
-        for ($i = 0; $i < count($aQueryElements); $i++)
+        if (count($aQueryElements) > 0)
         {
-            $sQuery .= $aQueryElements[$i];
-            if ($i < count($aQueryElements) - 1) { $sQuery .= ', '; }
+            // compose
+            $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
+            $sQuery .= ' '.$entityConfig->getMySQLTable()." SET ";
+
+            // compose
+            for ($i = 0; $i < count($aQueryElements); $i++)
+            {
+                $sQuery .= $aQueryElements[$i];
+                if ($i < count($aQueryElements) - 1) { $sQuery .= ', '; }
+            }
+
+
+            // compose
+            $sQuery .=  ($bIsExistingEntity) ? " WHERE id='".$entity->getId()."'" : ", created='".date("YmdHis")."'";
+            
+            // execute
+            mysql_query($sQuery) or die('Query failed: ' . mysql_error());
         }
-        
-        
-        // compose
-        $sQuery .=  ($bIsExistingEntity) ? " WHERE id='".$entity->getId()."'" : ", created='".date("YmdHis")."'";
-        
-        
-        // execute
-        mysql_query($sQuery) or die('Query failed: ' . mysql_error());
         
         
         

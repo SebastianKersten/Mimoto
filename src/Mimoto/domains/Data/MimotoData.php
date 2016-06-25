@@ -158,6 +158,32 @@ class MimotoData
         }
     }
     
+    public function removeValue($sPropertySelector, $value, $sEntityType = null)
+    {
+        // load
+        $property = $this->getProperty($sPropertySelector);
+        $sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
+        
+        switch($property->config->type)
+        {
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+                
+                throw new MimotoEntityException("( '-' ) - Nope, I'm unable to add a value the non-collection '$property->config->name' which is a value");
+            
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                
+                if (empty($sSubpropertySelector)) { throw new MimotoEntityException("( '-' ) - Nope, I'm unable to add a value the non-collection '$property->config->name' which is an entity"); }
+                
+                $this->removeEntityProperty($property, $value, $sSubpropertySelector);
+                break;
+                
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+                
+                $this->removeCollectionProperty($property, $value, $sEntityType, $sSubpropertySelector);
+                break;
+        }
+    }
+    
     
     public function serialize()
     {
@@ -573,6 +599,100 @@ class MimotoData
         //throw new MimotoEntityException("( '-' ) - Sorry, the entity or entity id you are trying to set at '$property->config->name' doesn't seem to be valid");
     }
     
+    /**
+     * remove collection property
+     * @param object $property
+     * @param mixed $value
+     * @param string $sPropertySelector
+     * @throws MimotoEntityException
+     */
+    private function removeCollectionProperty($property, $value, $sEntityType, $sPropertySelector)
+    {
+        // forward
+        if (!empty($sPropertySelector)) { $this->forwardRemoveEntityProperty($property, $sPropertySelector, $value); return; }
+        
+        
+        // validate input
+        if (!MimotoDataUtils::isEntity($value) && !MimotoDataUtils::isValidEntityId($value)) { throw new MimotoEntityException("( '-' ) - Sorry, the value you are trying to add at to collection '$property->config->name' is not a MimotoEntity"); }
+        
+        
+        if (MimotoDataUtils::isEntity($value))
+        {
+            $sEntityType = $value->getEntityType();
+        }
+        else
+        {
+            if ($sEntityType === null)
+            {
+                // validate
+                if (count($property->config->settings->allowedEntityTypes) != 1) { throw new MimotoEntityException("( '-' ) - Please provide an entity type if you only pass an id when adding an item to the collection '$property->config->name' which allows the types ".json_encode($property->config->allowedEntityTypes)); }
+                
+                // auto define
+                $sEntityType = $property->config->settings->allowedEntityTypes[0]->name;
+            }
+        }
+        
+        // init
+        $subproperty = (object) array();
+        
+        $subproperty->parentId = $this->getId();
+        $subproperty->parentPropertyId = $property->config->id;
+        
+        
+        $aAllowedEntityTypes = [];
+        for ($i = 0; $i < count($property->config->settings->allowedEntityTypes); $i++)
+        {
+            $aAllowedEntityTypes[] = $property->config->settings->allowedEntityTypes[$i]->name;
+        }
+        
+        
+        // validate
+        if (MimotoDataUtils::isEntity($value) && !in_array($sEntityType, $aAllowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$value->getEntityType()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
+
+        if (MimotoDataUtils::isEntity($value))
+        {
+            // store
+            $subproperty->childId = $value->getId();
+        }
+        else
+        if (MimotoDataUtils::isValidEntityId($value))
+        {
+            // store
+            $subproperty->childId = $value;
+        }
+
+        $subproperty->childEntityType = (object) array(
+            'id' => $GLOBALS['Mimoto.Config']->getEntityIdByName($sEntityType),
+            'name' => $sEntityType
+        );
+        $subproperty->sortIndex = count($property->data->currentCollection);
+        
+        
+        // --- HERE --------------------------------------------------------------------------------------------
+        // 1. bij duplicates verwijder allemaal
+        // 2. hoe connection id verwijderen? (sortindex / id en connection id niet aanraken?)
+        
+        
+        // manage duplicates
+        // if (!$property->config->settings->allowDuplicates)
+        
+        
+        for ($i = 0; $i < count($property->data->currentCollection); $i++)
+        {
+            if ($property->data->currentCollection[$i]->childId == $subproperty->childId)
+            {
+                // remove
+                if (!$this->_bTrackChanges) { array_splice($property->data->persistentCollection, $i, 1); }
+                array_splice($property->data->currentCollection, $i, 1);
+            }
+        }
+        
+        
+        
+        // validate
+        //throw new MimotoEntityException("( '-' ) - Sorry, the entity or entity id you are trying to set at '$property->config->name' doesn't seem to be valid");
+    }
+    
     
     
     // ----------------------------------------------------------------------------------
@@ -709,7 +829,7 @@ class MimotoData
         if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to remove an item from value"); }
         
         // forward
-        $property->from($sSubselector, $value);
+        $property->remove($sSubselector, $value);
     }
     
     /**
@@ -729,8 +849,8 @@ class MimotoData
             switch($property->config->type)
             {
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-                
-                    if (!isset($property->data->persistentId) || $property->data->persistentValue != $property->data->currentValue)
+                    
+                    if (!isset($property->data->persistentValue) || $property->data->persistentValue !== $property->data->currentValue)
                     {
                         $aModifiedValues[$sPropertyName] = $property->data->currentValue;
                     }
@@ -762,7 +882,11 @@ class MimotoData
                             $currentItem = $property->data->currentCollection[$c];
                             
                             // add new items
-                            if (!isset($currentItem->id)) { $aAddedItems[] = $currentItem; continue; }
+                            if (!isset($currentItem->id) || (isset($currentItem->bIsNew) && $currentItem->bIsNew == true))
+                            {
+                                $aAddedItems[] = $currentItem;
+                                continue;
+                            }
                             
                             // add updated items
                             if (!empty($property->data->persistentCollection))
@@ -785,15 +909,32 @@ class MimotoData
                             }
                         }
                     }
-                    else
+                    
+                    // add removed items
+                    if (!empty($property->data->persistentCollection))
                     {
-                        // add removed items
-                        if (!empty($property->data->persistentCollection))
+                        for ($p = 0; $p < count($property->data->persistentCollection); $p++)
                         {
-                            for ($k = 0; $k < count($property->data->persistentCollection); $k++)
+                            // register
+                            $persistentItem = $property->data->persistentCollection[$p];
+                            
+                            // init 
+                            $bItemFound = false;
+                            
+                            // search
+                            for ($c = 0; $c < count($property->data->currentCollection); $c++)
                             {
-                                $aRemovedItems[] = $property->data->persistentCollection[$k];
+                                // register
+                                $currentItem = $property->data->currentCollection[$c];
+                                
+                                if ($currentItem->id == $persistentItem->id)
+                                {
+                                    $bItemFound = true;
+                                    break;
+                                }
                             }
+                            
+                            if (!$bItemFound) { $aRemovedItems[] = $persistentItem; }
                         }
                     }
                     
@@ -805,6 +946,7 @@ class MimotoData
                             'removed' => $aRemovedItems,
                         );
                     }
+                    
                     break;
             }
         }

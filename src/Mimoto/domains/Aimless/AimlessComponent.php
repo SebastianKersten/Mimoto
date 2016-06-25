@@ -276,13 +276,7 @@ class AimlessComponent
         {
             // register
             $entity = $aCollection[$i];
-            
-//            echo '<pre>';
-//            echo 'Load property. En niet de referentie naar het item';
-//            print_r($entity);
-//            echo '</pre>';
-//          
-            
+                        
             // create
             $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
             

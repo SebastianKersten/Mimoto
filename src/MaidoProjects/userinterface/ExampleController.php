@@ -265,10 +265,11 @@ class ExampleController
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 2);
-        $subproject = $app['Mimoto.Data']->get('subproject', 4);
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
         
         // setup
-        $project->removeValue('subprojects', $subproject);
+        $project->removeValue('subprojects', 3);
+        //$project->removeValue('subprojects', $subproject);
         
         // store
         $project = $app['Mimoto.Data']->store($project);
@@ -278,6 +279,69 @@ class ExampleController
     }
     
     
+    public function viewExample17(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
+        
+        // setup
+        $component->setPropertyTemplate('subprojects', 'subproject_phase');
+        
+        // render and send
+        return $component->render();
+    }
+    
+    public function viewExample18(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+        
+        // setup
+        $project->addValue('subprojects', $subproject);
+        
+        // store
+        $project = $app['Mimoto.Data']->store($project);
+        
+        // render and send
+        return "subproject.5 added to project.3";
+    }
+    
+    public function viewExample19(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+        
+        // setup
+        $project->removeValue('subprojects', $subproject);
+        
+        // store
+        $project = $app['Mimoto.Data']->store($project);
+        
+        // render and send
+        return "subproject.5 removed from project.3";
+    }
+    
+    public function viewExample20(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+        
+        $project->setValue('description', 'Filtered collections [UNFINISHED]');
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_filter', $project);
+        
+        // setup
+        $component->setPropertyTemplate('subprojects', 'subproject_phase');
+        
+        // render and send
+        return $component->render();
+    }
     
     
     

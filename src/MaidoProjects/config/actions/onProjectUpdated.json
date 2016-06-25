@@ -14,8 +14,7 @@
             "agency.name", 
             "projectmanager.name",
             
-            "subprojects",
-            "subprojects.*.phase"
+            "subprojects"
         ]
     }
 }
