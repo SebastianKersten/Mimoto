@@ -8,6 +8,8 @@ This project uses **Aimless**, an _Entity Oriented Programming_ protocol, for cr
 
 https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 
+> Ask for viewing permission! (expectation management: not nearly close to being finished)
+
 
 ## Projects in development
 
@@ -18,7 +20,9 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 | Speakers agency | A tool for managing speaker requests for De Correspondent |
 
 
-## Some Aimless stuff, to be explained later
+## Some Aimless stuff
+
+> This will be explained later
 
 ##### onUpdate
 
@@ -56,3 +60,16 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
             ]
         }
     }
+
+
+## Configurating Mimoto.Aimless.js
+
+```javascript
+var sEvent = 'project.*.added';
+Mimoto.Aimless.subscribe(sEvent, doSomethingOnAdd
+
+function doSomethingOnAdd(data)
+{
+    // do something custom
+}
+```
