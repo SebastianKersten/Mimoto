@@ -14,7 +14,7 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 ## Projects in development
 
 | Project         | Description   |
-| --------------- |------------- |
+| :--------------- | :------------- |
 | Maido.Projects  | A project management tool |
 | Momkai.com      | Momkai's new portfolio website |
 | Speakers agency | A tool for managing speaker requests for De Correspondent |
