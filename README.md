@@ -38,6 +38,10 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 * **Example 14** - Project entity with subprojects collection, with value formatter - *use with examples 15 and 16 for realtime effect* - [view](http://maidoprojects/example14)
 * **Example 15** - Add subprojects to project's collection - *use with example 14 for realtime effect* - [view](http://maidoprojects/example15)
 * **Example 16** - Remove subproject from project's collection - *use with example 14 for realtime effect* - [view](http://maidoprojects/example16)
+* **Example 17** - Project with subprojects - typed - *use with examples 18 and 19 for realtime effect* - [view](http://maidoprojects/example17)
+* **Example 18** - Add subprojects to project's collection - *use with examples 17 or 20 for realtime effect* - [view](http://maidoprojects/example18)
+* **Example 19** - Remove subproject from project's collection - *use with examples 17 or 20 for realtime effect* - [view](http://maidoprojects/example19)
+* **Example 20** - Project with subprojects - typed and grouped - *use with examples 18 and 19 for realtime effect* - [view](http://maidoprojects/example20)
 
 
 ## Experiments
