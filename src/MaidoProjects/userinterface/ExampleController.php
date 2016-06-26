@@ -121,8 +121,22 @@ class ExampleController
     }
     
     
-    
     public function viewExample8(Application $app)
+    {
+        // load
+        $aClients = $app['Mimoto.Data']->find(['type' => 'client']);
+        
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('client_overview');
+        
+        // setup
+        $component->addSelection('clients', 'client_listitem', $aClients);
+        
+        // render and send
+        return $component->render();
+    }
+    
+    public function viewExample9(Application $app)
     {
         // load
         $client = $app['Mimoto.Data']->get('client', 96);
@@ -137,7 +151,7 @@ class ExampleController
         return 'Client updated';
     }
     
-    public function viewExample9(Application $app)
+    public function viewExample10(Application $app)
     {
         // load
         $client = $app['Mimoto.Data']->create('client');
@@ -152,20 +166,6 @@ class ExampleController
         return 'New client created';
     }
     
-    public function viewExample10(Application $app)
-    {
-        // load
-        $aClients = $app['Mimoto.Data']->find(['type' => 'client']);
-        
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('client_overview');
-        
-        // setup
-        $component->addSelection('clients', 'client_listitem', $aClients);
-        
-        // render and send
-        return $component->render();
-    }
     
     public function viewExample11(Application $app)
     {
