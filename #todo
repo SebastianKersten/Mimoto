@@ -62,6 +62,20 @@ class SubprojectProbabilities
 }
 
 
+projectname
+    folder: config
+    folder: domains
+    folder: externalservices
+    folder: userinterface
+        folder: templates
+            folder: email
+            folder: form
+            folder: pages
+            folder: popups
+        base-twig
+        controllers
+    folder: workers
+
 
 ================================================================
 
