@@ -27,8 +27,11 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 * **Example 3** - Article feed shows list of existing articles - [view](http://maidoprojects/example3)
 * **Example 4** - Article feed shows list of existing articles in template depending on article 'type' - [view](http://maidoprojects/example4)
 * **Example 5** - Show project with all it's subprojects - [view](http://maidoprojects/example5)
-* **Example 6** - Show project with all it's subprojects, each connected to a template bases on subproject 'phase' - [view](http://maidoprojects/example6)
-* **Example 7** - Show project with all it's subprojects, each connected to a template bases on and grouped by subproject 'phase' - [view](http://maidoprojects/example7)
+* **Example 6** - Show project with all it's subprojects, each connected to a template based on subproject 'phase' - [view](http://maidoprojects/example6)
+* **Example 7** - Similar to example 6, but now also grouped by subproject 'phase' - [view](http://maidoprojects/example7)
+* **Example 8** - Changes some values of a client (*use with example 10*) - [view](http://maidoprojects/example8)
+* **Example 9** - Create a new client (*use with example 10*) - [view](http://maidoprojects/example9)
+* **Example 10** - An overview of all clients (*use with examples 8 and 9 *) - [view](http://maidoprojects/example10)
 
 
 ## Experiments
