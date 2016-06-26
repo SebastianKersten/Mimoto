@@ -46,9 +46,8 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 
 ## Experiments
 
-http://maidoprojects/memcache - Cache article
-http://maidoprojects/memcachemonitor/article - View all articles in cache
-
+* [Cache article](http://maidoprojects/memcache)
+* [View all articles in cache](http://maidoprojects/memcachemonitor/article)
 
 
 ## Some Aimless stuff
