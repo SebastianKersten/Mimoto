@@ -345,6 +345,36 @@ class MimotoAimlessService
                         
                         // compose
                         $valueForBroadcast->collection = $aModifiedValues[$sMainPropertyName];
+                        
+                        // add properties for realtime filtered adding
+                        for ($iAdded = 0; $iAdded < count($valueForBroadcast->collection->added); $iAdded++)
+                        {
+                            // register
+                            $addedItem = $valueForBroadcast->collection->added[$iAdded];
+                            
+                            // setup
+                            $addedItem->properties = array();
+                            
+                            // load
+                            $collectionItem = $this->_MimotoEntityService->get($addedItem->childEntityType->name, $addedItem->childId);
+                            
+                            
+                            $aCollectionItemPropertyNames = ['phase'];//$collectionItem->getPropertyNames();
+                            
+                            
+                            for ($iPropertyName = 0; $iPropertyName < count($aCollectionItemPropertyNames); $iPropertyName++)
+                            {
+                                // register
+                                $sCollectionItemPropertyName = $aCollectionItemPropertyNames[$iPropertyName];
+                                
+                                $addedItem->properties[$sCollectionItemPropertyName] = $collectionItem->getValue($sCollectionItemPropertyName);
+                            }
+                            
+                        }
+                        
+                        
+                        
+                        
                         break;
                         
                 }

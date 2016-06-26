@@ -1,7 +1,7 @@
 {% extends "examplebase.twig" %}
 
 {% block content %}
-    <h1>Example 7 - Project with subprojects (typed and grouped)</h1>
+    <h1>Eixample - Project with subprojects - typed and grouped</h1>
     <i>This project contains a collection of subprojects and every subproject is presented with the a template based on the "phase" property. Also, subprojects are separatedly shown grouped bij "phase" using the filter option. This example also shows the usage of the 'formatter'-feature and the 'custom var'-feature</i><br>
     <br>
     <br>
@@ -11,7 +11,7 @@
         <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }} <i>[last modified by {{ author }}]</i></div>
         <br>
         Requests:
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects')|raw }}>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="request"}')|raw }}>
             {{ Aimless.data('subprojects.{phase="request"}')|raw }}
         </div>
         <br>

@@ -328,19 +328,8 @@ class ExampleController
     
     public function viewExample20(Application $app)
     {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 3);
-        
-        $project->setValue('description', 'Filtered collections [UNFINISHED]');
-        
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_filter', $project);
-        
-        // setup
-        $component->setPropertyTemplate('subprojects', 'subproject_phase');
-        
         // render and send
-        return $component->render();
+        return $this->viewExample7($app);
     }
     
     

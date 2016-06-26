@@ -168,25 +168,40 @@ Mimoto.Aimless.connect = function()
                 var mls_template = $($component).attr("mls_template");
                 var mls_filter = $($component).attr("mls_filter");
                 
-                //'{"phase":"currentproject"}
-                //
-                // 1. subitem.phase meesturen als data
+                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 
 
                 for (var iAdded = 0; iAdded < update.collection.added.length; iAdded++)
                 {
 
                     var item = update.collection.added[iAdded];
-
-                    $.ajax({
-                        type: 'GET',
-                        url: '/Mimoto.Aimless/' + item.childEntityType.name + '/' + item.childId + '/' + mls_template,
-                        data: null,
-                        dataType: 'html',
-                        success: function (data) {
-                            $($component).append(data);
+                    
+                    var bFilterApproved = true;
+                    if (mls_filter)
+                    {
+                        for (var s in item.properties)
+                        {
+                            if (mls_filter[s] && item.properties[s] != mls_filter[s])
+                            {
+                                bFilterApproved = false;
+                                break;
+                            }
                         }
-                    });
+                    }
+                    
+                    
+                    if (bFilterApproved)
+                    {
+                        $.ajax({
+                            type: 'GET',
+                            url: '/Mimoto.Aimless/' + item.childEntityType.name + '/' + item.childId + '/' + mls_template,
+                            data: null,
+                            dataType: 'html',
+                            success: function (data) {
+                                $($component).append(data);
+                            }
+                        });
+                    }
                 }
                 
                 for (var iRemoved = 0; iRemoved < update.collection.removed.length; iRemoved++)
