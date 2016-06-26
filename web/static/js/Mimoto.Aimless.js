@@ -179,9 +179,9 @@ Mimoto.Aimless.connect = function()
                     var bFilterApproved = true;
                     if (mls_filter)
                     {
-                        for (var s in item.properties)
+                        for (var s in item.values)
                         {
-                            if (mls_filter[s] && item.properties[s] != mls_filter[s])
+                            if (mls_filter[s] && item.values[s] != mls_filter[s])
                             {
                                 bFilterApproved = false;
                                 break;

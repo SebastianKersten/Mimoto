@@ -69,6 +69,22 @@ class MimotoData
     
     
     /**
+     * Get entity's property names
+     * @return array
+     */
+    public function getPropertyNames()
+    {
+        // init
+        $aPropertyNames = [];
+        
+        // collect
+        foreach ($this->_aProperties as $sPropertyName => $value) { $aPropertyNames[] = $sPropertyName; }
+        
+        // send
+        return $aPropertyNames;
+    }
+    
+    /**
      * Setup property by config
      * 
      * @param object $propertyConfig

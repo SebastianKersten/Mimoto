@@ -353,13 +353,13 @@ class MimotoAimlessService
                             $addedItem = $valueForBroadcast->collection->added[$iAdded];
                             
                             // setup
-                            $addedItem->properties = array();
+                            $addedItem->values = array();
                             
                             // load
                             $collectionItem = $this->_MimotoEntityService->get($addedItem->childEntityType->name, $addedItem->childId);
                             
                             
-                            $aCollectionItemPropertyNames = ['phase'];//$collectionItem->getPropertyNames();
+                            $aCollectionItemPropertyNames = $collectionItem->getPropertyNames();
                             
                             
                             for ($iPropertyName = 0; $iPropertyName < count($aCollectionItemPropertyNames); $iPropertyName++)
@@ -367,7 +367,7 @@ class MimotoAimlessService
                                 // register
                                 $sCollectionItemPropertyName = $aCollectionItemPropertyNames[$iPropertyName];
                                 
-                                $addedItem->properties[$sCollectionItemPropertyName] = $collectionItem->getValue($sCollectionItemPropertyName);
+                                $addedItem->values[$sCollectionItemPropertyName] = $collectionItem->getValue($sCollectionItemPropertyName, true);
                             }
                             
                         }
