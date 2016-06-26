@@ -22,13 +22,13 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 
 ## Examples
 
-* *Example 1* - Show article in single template - [view](http://maidoprojects/example1)
-* Show article in template depending on article 'type' - [view](http://maidoprojects/example2)
-* Article feed shows list of existing articles - [view](http://maidoprojects/example3)
-http://maidoprojects/example4 - Article feed shows list of existing articles in template depending on article 'type'
-http://maidoprojects/example5 - Show project with a list of all it's subprojects
-http://maidoprojects/example6 - Show project with a list of all it's subprojects, each connected to a template bases on subproject 'phase'
-http://maidoprojects/example7 - Show project with a list of all it's subprojects, each connected to a template bases on and grouped by subproject 'phase'
+* _Example 1_ - Show article in single template - [view](http://maidoprojects/example1)
+* _Example 2_ - Show article in template depending on article 'type' - [view](http://maidoprojects/example2)
+* _Example 3_ - Article feed shows list of existing articles - [view](http://maidoprojects/example3)
+* _Example 4_ - Article feed shows list of existing articles in template depending on article 'type' - [view](http://maidoprojects/example4)
+* _Example 5_ - Show project with a list of all it's subprojects - [view](http://maidoprojects/example5)
+* _Example 6_ - Show project with a list of all it's subprojects, each connected to a template bases on subproject 'phase' - [view](http://maidoprojects/example6)
+* _Example 7_ - Show project with a list of all it's subprojects, each connected to a template bases on and grouped by subproject 'phase' - [view](http://maidoprojects/example7)
 
 
 ## Experiments
