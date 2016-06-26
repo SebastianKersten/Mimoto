@@ -20,6 +20,24 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 | Speakers agency | A tool for managing speaker requests for De Correspondent |
 
 
+## Examples
+
+http://maidoprojects/example1 - Show article in single template
+http://maidoprojects/example2 - Show article in template depending on article 'type'
+http://maidoprojects/example3 - Article feed shows list of existing articles
+http://maidoprojects/example4 - Article feed shows list of existing articles in template depending on article 'type'
+http://maidoprojects/example5 - Show project with a list of all it's subprojects
+http://maidoprojects/example6 - Show project with a list of all it's subprojects, each connected to a template bases on subproject 'phase'
+http://maidoprojects/example7 - Show project with a list of all it's subprojects, each connected to a template bases on and grouped by subproject 'phase'
+
+
+## Experiments
+
+http://maidoprojects/memcache - Cache article
+http://maidoprojects/memcachemonitor/article - View all articles in cache
+
+
+
 ## Some Aimless stuff
 
 > This will be explained later
