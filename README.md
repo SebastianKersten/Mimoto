@@ -29,9 +29,9 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 * **Example 5** - Show project with all it's subprojects - [view](http://maidoprojects/example5)
 * **Example 6** - Show project with all it's subprojects, each connected to a template based on subproject 'phase' - [view](http://maidoprojects/example6)
 * **Example 7** - Similar to example 6, but now also grouped by subproject 'phase' - [view](http://maidoprojects/example7)
-* **Example 8** - Changes some values of a client (*use with example 10*) - [view](http://maidoprojects/example8)
-* **Example 9** - Create a new client (*use with example 10*) - [view](http://maidoprojects/example9)
-* **Example 10** - An overview of all clients (*use with examples 8 and 9 *) - [view](http://maidoprojects/example10)
+* **Example 8** - Changes some values of a client (*use with example 10 for realtime effect*) - [view](http://maidoprojects/example8)
+* **Example 9** - Create a new client (*use with example 10 for realtime effect*) - [view](http://maidoprojects/example9)
+* **Example 10** - An overview of all clients (*use with examples 8 and 9 for realtime effect*) - [view](http://maidoprojects/example10)
 
 
 ## Experiments
