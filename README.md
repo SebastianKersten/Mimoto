@@ -35,6 +35,9 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 * **Example 11** - An overview of all subprojects - *use with examples 12 and 13 for realtime effect* - [view](http://maidoprojects/example11)
 * **Example 12** - Toggle subproject phase to 'archived' - *use with example 11 for realtime effect* - [view](http://maidoprojects/example12)
 * **Example 13** - Toggle subproject phase to 'currentproject' - *use with example 11 for realtime effect* - [view](http://maidoprojects/example13)
+* **Example 14** - Project entity with subprojects collection, with value formatter - *use with examples 15 and 16 for realtime effect* - [view](http://maidoprojects/example14)
+* **Example 15** - Add subprojects to project's collection - *use with example 14 for realtime effect* - [view](http://maidoprojects/example15)
+* **Example 16** - Remove subproject from project's collection - *use with example 14 for realtime effect* - [view](http://maidoprojects/example16)
 
 
 ## Experiments
