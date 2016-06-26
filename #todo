@@ -28,6 +28,40 @@ mimoto_formfield_option
 // 2. Render entity in Aimless
 // 3. Mollie account
 
+Subproject fields:
+$this->setModelToMySQLTableMap(
+    [
+        (object) array('property' => 'name', 'dbcolumn' => 'name'),
+        (object) array('property' => 'contact_name', 'dbcolumn' => 'contact_name'),
+        (object) array('property' => 'phase', 'dbcolumn' => 'phase'),
+        (object) array('property' => 'state_id', 'dbcolumn' => 'state_id'),
+        (object) array('property' => 'probability', 'dbcolumn' => 'probability'),
+        (object) array('property' => 'budget', 'dbcolumn' => 'budget'),
+        (object) array('property' => 'payment_type', 'dbcolumn' => 'payment_type'),
+    ]
+);
+
+class SubprojectPaymentTypes
+{    
+    const FIXED = 'fixed';
+    const TIME_MATERIAL = 'time_material';   
+}
+
+class SubprojectPhases 
+{    
+    const REQUEST = 'request';
+    const CURRENTPROJECT = 'currentproject';
+    const ARCHIVED = 'archived';   
+}
+
+class SubprojectProbabilities
+{    
+    const VERY_UNSURE = 0.1;
+    const COULD_GO_EITHER_WAY = 0.5;
+    const PRETTY_SURE = 0.9;
+}
+
+
 
 ================================================================
 
