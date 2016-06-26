@@ -1,5 +1,6 @@
 # Mimoto.Aimless
-Realtime fluid data management by _Sebastian Kersten_
+Realtime fluid data management by _Sebastian Kersten_ 
+
 For documentation: https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 
 In development: Maido.Projects
