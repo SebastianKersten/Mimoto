@@ -23,21 +23,24 @@ This project uses **Aimless**, an _Entity Oriented Programming_ protocol, for cr
 
 ## Actions
 
-```{
-    
-    "trigger": "client.updated", // single event
-    "trigger": ["client.updated", "agency.updated"], // multiple events
-    "trigger": "*.updated", // multiple events with wildcard
-    "service": "LiveScreenService",
-    "request": "dataUpdate",
-    "config":
+
     {
-        "mapping":  
-        [
-            {
-                "property": "Name",
-                "valueName": "name"
-            }
-        ]
+        "trigger": "project.updated",
+        "service": "Aimless",
+        "request": "dataUpdate",
+        "type": "async",
+        "config":
+        {
+            "properties":
+            [
+                "name", 
+                "description",
+
+                "client.name", 
+                "agency.name", 
+                "projectmanager.name",
+
+                "subprojects"
+            ]
+        }
     }
-}```
