@@ -16,8 +16,9 @@ This project uses **Aimless**, an _Entity Oriented Programming_ protocol, for cr
 
 ##### onCreated
 
-* mls_container
-* mls_childtemplate
+* mls_contains
+* mls_filter
+* mls_template
 
 
 ## Actions
