@@ -22,7 +22,7 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 
 ## Examples
 
-* [http://maidoprojects/example1](Show article in single template)
+* Show article in single template [view](http://maidoprojects/example1)
 * http://maidoprojects/example2 - Show article in template depending on article 'type'
 http://maidoprojects/example3 - Article feed shows list of existing articles
 http://maidoprojects/example4 - Article feed shows list of existing articles in template depending on article 'type'
