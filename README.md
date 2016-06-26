@@ -68,7 +68,7 @@ Custom events
 
 ```javascript
 var sEvent = 'project.*.added';
-Mimoto.Aimless.subscribe(sEvent, doSomethingOnAdd
+Mimoto.Aimless.subscribe(sEvent, doSomethingOnAdd);
 
 function doSomethingOnAdd(data)
 {
