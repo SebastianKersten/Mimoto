@@ -64,6 +64,8 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 
 ## Configurating Mimoto.Aimless.js
 
+Custom events
+
 ```javascript
 var sEvent = 'project.*.added';
 Mimoto.Aimless.subscribe(sEvent, doSomethingOnAdd
