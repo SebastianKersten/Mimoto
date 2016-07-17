@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "SebastianKersten/Mimoto.Aimless": "*"
+        "SebastianKersten/Mimoto.Aimless": "dev-master"
     },
     "autoload": {
         "psr-4": {
