@@ -2,13 +2,14 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:SebastianKersten/Mimoto.Aimless.git"
+            "url": "git@github.com:SebastianKersten/Mimoto.Aimless.git",
+            "version": "origin/master"
         }
     ],
     "require": {
         "silex/silex": "~1.3",
         "twig/twig": "~1.0",
-        "SebastianKersten/Mimoto.Aimless": "~1.0.0"
+        "SebastianKersten/Mimoto.Aimless": "*"
     },
     "autoload": {
         "psr-4": {
