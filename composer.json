@@ -21,7 +21,7 @@
             "MaidoProjects\\ProjectManager\\": "./src/MaidoProjects/domains/ProjectManager",
             "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency",
             "MaidoProjects\\SubprojectState\\": "./src/MaidoProjects/domains/SubprojectState",
-            "MaidoProjects\\SubprojectPart\\": "./src/MaidoProjects/domains/SubprojectPart",
+            "MaidoProjects\\SubprojectPart\\": "./src/MaidoProjects/domains/SubprojectPart"
         }
     }
 }
