@@ -18,16 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "MaidoProjects\\Expertise\\": "./src/domains/Expertise",
             "MaidoProjects\\Config\\": "./src/config",
-            "MaidoProjects\\UserInterface\\": "./src/userinterface",
-            "MaidoProjects\\Project\\": "./src/domains/Project",
-            "MaidoProjects\\Subproject\\": "./src/domains/Subproject",
-            "MaidoProjects\\Client\\": "./src/domains/Client",
-            "MaidoProjects\\ProjectManager\\": "./src/domains/ProjectManager",
-            "MaidoProjects\\Agency\\": "./src/domains/Agency",
-            "MaidoProjects\\SubprojectState\\": "./src/domains/SubprojectState",
-            "MaidoProjects\\SubprojectPart\\": "./src/domains/SubprojectPart"
+            "MaidoProjects\\UserInterface\\": "./src/userinterface"
         }
     }
 }
