@@ -1,0 +1,7 @@
+<div id="form_field_{{ name }}" class="form_field">
+    <div class="form_input_label">{{ label }}{% if optional is not empty %}{% if optional==true %}<span class="form_input_optional"> (optional)</span>{% endif %}{% endif %}</div>
+    <div><input id="form_data_{{ name }}" type="text" class="textfield" value="{{ value }}" /></div>
+    <div id="form_errormessage_{{ name }}" class="form_errormessage"></div>
+</div>
+<!-- auto include by AimlessForm -->
+<script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>

@@ -18,13 +18,14 @@ $app = new \Silex\Application();
 // setup
 $loader = new \Twig_Loader_Filesystem(
     [
-        __DIR__ . '/../src/MaidoProjects/userinterface/templates',
-        __DIR__.'/../src/Mimoto/userinterface/templates'
+        __DIR__ . '/../src/userinterface/templates'//,
+        //__DIR__.'/../src/Mimoto/userinterface/templates'
     ]
 );
 $twig = new Twig_Environment($loader, array(
     // 'cache' => '../app/cache',
 ));
+
 
 // connect
 $link = mysql_connect('127.0.0.1', 'root', '');
@@ -36,7 +37,7 @@ $pdo = new PDO("mysql:host=127.0.0.1;dbname=maidoprojects", 'root', '');
 // ... definitions
 $app['debug'] = true;
 $app['twig'] = $twig;
-
+//$app['Mimoto'] = new Mimoto();
 
 // setup entities - #todo - combine all in MimotoProvider
 $app->register(new MimotoCacheServiceProvider());

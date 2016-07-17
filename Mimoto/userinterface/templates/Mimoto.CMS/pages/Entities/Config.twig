@@ -1,0 +1,78 @@
+{% include 'Mimoto.CMS/forms/output/title.twig' with { title:'Design your entity', subtitle:'Entity with id = ' ~ entity.id, description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' } %}
+
+
+<div class="form_group">
+
+    {% include 'Mimoto.CMS/forms/output/description.twig' with { title:'Campagne beschrijving', description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' } %}
+
+    <div class="form_divider"></div>
+
+    {% include 'Mimoto.CMS/forms/input/textline.twig' with { label:'Name', name:'name', value:entity.name, validation:aPropertyNameValidation } %}
+    
+    {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Save', icon:'>', action:"window.open('/mimoto.cms/entity/"~property.id~"/remove', '_self');" } %}
+
+</div>
+
+{% if entity.properties|length > 0 %}
+    <div class="form_group">
+        {% include 'Mimoto.CMS/forms/output/description.twig' with { title:'Properties', description:'The following properties are part of this entity' } %}
+        <div class="form_divider"></div>
+
+        {% for property in entity.properties %}
+            {% include 'Mimoto.CMS/pages/Entities/components/EntityPropertyConfig.twig' with { property:property, aPropertyNameValidation:aPropertyNameValidation, aPropertyGroupValidation:aPropertyGroupValidation } %}
+            {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Remove property', icon:'-', action:"window.open('/mimoto.cms/entity/"~property.id~"/remove', '_self');" } %}
+            
+            {% if not loop.first %}{% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Move up', icon:'&uarr;', action:"" } %}{% endif %}
+            {% if not loop.last %}{% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Move down', icon:'&darr;', action:"" } %}{% endif %}
+            
+            {% if not loop.last %}<div class="form_divider"></div>{% endif %}
+        {% endfor %}
+        
+    </div>
+{% endif %}
+    
+<div class="form_group">
+    {% include 'Mimoto.CMS/forms/output/description.twig' with { title:'New property', description:'Add a new property to this entity' } %}
+    <div class="form_divider"></div>
+    {% include 'Mimoto.CMS/pages/Entities/components/EntityPropertyConfig.twig' with { property:property } %}
+    {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Add property', icon:'+', action:"window.open('/mimoto.cms/entity/"~property.id~"/remove', '_self');" } %}
+</div>
+
+<script>
+    
+// init
+if (typeof Mimoto == "undefined") Mimoto = {};
+
+Mimoto.entity = {};
+Mimoto.entity.property = {};
+Mimoto.entity.property.showPropertyOptions = function(nPropertyId)
+{
+    
+    var sPropertyType = document.getElementById('formdata_property_' + nPropertyId + '_type').value;
+    
+    switch(sPropertyType)
+    {
+        case 'value':
+            
+            $('#options_value_' + nPropertyId).removeClass('hidden');
+            $('#options_entity_' + nPropertyId).addClass('hidden');
+            $('#options_collection_' + nPropertyId).addClass('hidden');
+            break;
+            
+        case 'entity':
+            
+            $('#options_value_' + nPropertyId).addClass('hidden');
+            $('#options_entity_' + nPropertyId).removeClass('hidden');
+            $('#options_collection_' + nPropertyId).addClass('hidden');
+            break;
+            
+        case 'collection':
+            
+            $('#options_value_' + nPropertyId).addClass('hidden');
+            $('#options_entity_' + nPropertyId).addClass('hidden');
+            $('#options_collection_' + nPropertyId).removeClass('hidden');
+            break;
+    }
+    
+}
+</script>

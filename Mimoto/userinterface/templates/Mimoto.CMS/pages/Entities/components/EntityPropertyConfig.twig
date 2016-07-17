@@ -1,0 +1,14 @@
+{% include 'Mimoto.CMS/forms/input/textline.twig' with { label:'Property name (id = '~property.id~')', name:'property_'~property.id~'_name', value:property.name, validation:aPropertyNameValidation } %}
+{% include 'Mimoto.CMS/forms/input/textline.twig' with { label:'Part of group', name:'property_'~property.id~'_group', value:property.partofgroup, optional:true, validation:aPropertyGroupValidation } %}
+{% include 'Mimoto.CMS/forms/input/dropdown.twig' with { label:'Property type', name:'property_'~property.id~'_type', value:property.type, aOptions:aPropertyTypes, onChange:'Mimoto.entity.property.showPropertyOptions('~property.id~');' } %}
+
+<div id="options_value_{{ property.id }}" class="{% if property.type!='value' %}hidden{% endif %}">
+    {% include 'Mimoto.CMS/forms/input/dropdown.twig' with { label:'Property option: type', name:'property_'~property.id~'_option_type', value:property.type, aOptions:aValueTypes } %}
+</div>
+<div id="options_entity_{{ property.id }}" class="{% if property.type!='entity' %}hidden{% endif %}">
+    {% include 'Mimoto.CMS/forms/input/dropdown.twig' with { label:'Property option: entityType', name:'property_'~property.id~'_option_entitytype', value:property.type, aOptions:aAvailableEntities } %}
+</div>
+<div id="options_collection_{{ property.id }}" class="{% if property.type!='collection' %}hidden{% endif %}">
+    {% include 'Mimoto.CMS/forms/input/dropdown.twig' with { label:'Property option: allowedEntityType', name:'property_'~property.id~'_option_allowedentitytype', value:property.type, aOptions:aAvailableEntities } %}
+    {% include 'Mimoto.CMS/forms/input/dropdown.twig' with { label:'Property option: allowDuplicates', name:'property_'~property.id~'_option_allowduplicates', value:property.type, aOptions:aAllowDuplicatesOptions } %}
+</div>
