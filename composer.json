@@ -6,6 +6,8 @@
         }
     ],
     "require": {
+        "silex/silex": "~1.3",
+        "twig/twig": "~1.0",
         "SebastianKersten/Mimoto.Aimless": "~1.0.0"
     },
     "autoload": {
