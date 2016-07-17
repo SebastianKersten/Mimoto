@@ -129,6 +129,6 @@ Maido.popup.close = function()
 
 Maido.projects = {};
 
-//Maido.projects.toggleFilter(); -> auto reload pagina
+//Maido.___projects.toggleFilter(); -> auto reload pagina
 
 // reload after filter-set

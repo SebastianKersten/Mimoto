@@ -18,16 +18,16 @@
     },
     "autoload": {
         "psr-4": {
-            "MaidoProjects\\Expertise\\": "./src/MaidoProjects/domains/Expertise",
-            "MaidoProjects\\Config\\": "./src/MaidoProjects/config",
-            "MaidoProjects\\UserInterface\\": "./src/MaidoProjects/userinterface",
-            "MaidoProjects\\Project\\": "./src/MaidoProjects/domains/Project",
-            "MaidoProjects\\Subproject\\": "./src/MaidoProjects/domains/Subproject",
-            "MaidoProjects\\Client\\": "./src/MaidoProjects/domains/Client",
-            "MaidoProjects\\ProjectManager\\": "./src/MaidoProjects/domains/ProjectManager",
-            "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency",
-            "MaidoProjects\\SubprojectState\\": "./src/MaidoProjects/domains/SubprojectState",
-            "MaidoProjects\\SubprojectPart\\": "./src/MaidoProjects/domains/SubprojectPart"
+            "MaidoProjects\\Expertise\\": "./src/domains/Expertise",
+            "MaidoProjects\\Config\\": "./src/config",
+            "MaidoProjects\\UserInterface\\": "./src/userinterface",
+            "MaidoProjects\\Project\\": "./src/domains/Project",
+            "MaidoProjects\\Subproject\\": "./src/domains/Subproject",
+            "MaidoProjects\\Client\\": "./src/domains/Client",
+            "MaidoProjects\\ProjectManager\\": "./src/domains/ProjectManager",
+            "MaidoProjects\\Agency\\": "./src/domains/Agency",
+            "MaidoProjects\\SubprojectState\\": "./src/domains/SubprojectState",
+            "MaidoProjects\\SubprojectPart\\": "./src/domains/SubprojectPart"
         }
     }
 }

@@ -18,7 +18,7 @@ $app = new \Silex\Application();
 // setup
 $loader = new \Twig_Loader_Filesystem(
     [
-        __DIR__.'/../src/MaidoProjects/userinterface/templates',
+        __DIR__ . '/../src/MaidoProjects/userinterface/templates',
         __DIR__.'/../src/Mimoto/userinterface/templates'
     ]
 );

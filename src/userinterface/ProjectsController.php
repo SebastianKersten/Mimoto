@@ -68,7 +68,7 @@ class ProjectsController
         $page = $app['Mimoto.Aimless']->createComponent('page_projects');
         
         // setup
-        $page->setCollection('projects', 'project_listitem', $aProjects);
+        $page->setCollection('___projects', 'project_listitem', $aProjects);
         
         // render and send
         return $page->render();
@@ -433,9 +433,9 @@ class ProjectsController
         return $app['twig']->render(
             'interface.twig',
             array(
-                'section' => 'projects',
-                'pagetemplate' => 'pages/projects/ProjectsPage.twig',
-                'projects' => $aProjects,
+                'section' => '___projects',
+                'pagetemplate' => 'pages/___projects/ProjectsPage.twig',
+                '___projects' => $aProjects,
                 'filter' => array(
                     self::FILTER_SETTING_REQUEST => $filterSettings[self::FILTER_SETTING_REQUEST] === true,
                     self::FILTER_SETTING_CURRENTPROJECT => $filterSettings[self::FILTER_SETTING_CURRENTPROJECT] === true,

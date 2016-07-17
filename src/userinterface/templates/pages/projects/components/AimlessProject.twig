@@ -1,13 +1,13 @@
-<div class="component_project" {{ Aimless.realtime()|raw }}>
+<div class="component_project" {{ Aimless.meta('id') }}>
     <div class="project_menu">
-        <div class="button_small" onClick="Maido.data.changeEntity('project', {{ Aimless.meta('id') }});">Edit</div>
+        <div class="button_small" onClick="Maido.data.changeEntity('project', {{ id }});">Edit</div>
     </div>
-    <div id="{{ Aimless.meta('id') }}" class="project_summary">
+    <div id="project_{{ id }}" class="project_summary">
         
         <div class="project">
-            <div class="client_name"><span {{ Aimless.realtime('client.name')|raw }}>{{ Aimless.data('client.name') }}</span>{% if project.getAgency() != empty %}<span class="agency_name"> - <span mls_value="{{ project.getAimlessValue('agency.name') }}">{{ project.getAgency().getValue('name') }}</span></span>{% endif %}</div>
-            <div class="project_name" {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</div>
-            <div class="button_small" onClick="Maido.toggleProjectState({{ project.getId }});">View details</div>
+            <div class="client_name"><span {{ aimless.value('client.name') }}>{{ data.value('client.name') }}</span>{% if project.getAgency() != empty %}<span class="agency_name"> - <span mls_value="{{ project.getAimlessValue('agency.name') }}">{{ project.getAgency().getValue('name') }}</span></span>{% endif %}</div>
+            <div class="project_name" {{ aimless.value('name') }}>{{ data.value('name') }}</div>
+            <div class="button_small" onClick="Maido.toggleProjectState({{ id }});">View details</div>
         </div>
         <div class="project_subinfo_container">
             <div class="project_subinfo">
@@ -29,25 +29,25 @@
         </div>
     </div>
         
-    <div id="project_details_{{ project.getId }}" class="project_details">
+    <div id="project_details_{{ id }}" class="project_details">
         <div class="project_menu">
-            <div class="button_small" onClick="Maido.data.newSubproject({{ project.getId }});">Add subproject +</div>
+            <div class="button_small" onClick="Maido.data.newSubproject({{ id }});">Add subproject +</div>
         </div>
         <div class="project_details_container">
             <div class="project_details_description">
                 <u>Project description</u><br>
                 <br>
-                <i><span mls_value="{{ project.getAimlessValue('description') }}">{{ project.getDescription }}</span></i>
+                <i><span {{ aimless.value('description') }}>{{ description }}</span></i>
             </div>
             <div class="project_details_subprojects">
                 {% if filter.request and project.getSubprojects.request|length > 0 %}
-                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Requests", subprojects:project.getSubprojects.request } %}
+                    {% include "pages/___projects/components/SubprojectPhase.twig" with { phase:"Requests", subprojects:project.getSubprojects.request } %}
                 {% endif %}
                 {% if filter.currentproject and project.getSubprojects.currentproject|length > 0 %}
-                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Current projects", subprojects:project.getSubprojects.currentproject } %}
+                    {% include "pages/___projects/components/SubprojectPhase.twig" with { phase:"Current ___projects", subprojects:project.getSubprojects.currentproject } %}
                 {% endif %}
                 {% if filter.archived and project.getSubprojects.archived|length > 0 %}
-                    {% include "pages/projects/components/SubprojectPhase.twig" with { phase:"Archived", subprojects:project.getSubprojects.archived } %}
+                    {% include "pages/___projects/components/SubprojectPhase.twig" with { phase:"Archived", subprojects:project.getSubprojects.archived } %}
                 {% endif %}
             </div>
         </div>
