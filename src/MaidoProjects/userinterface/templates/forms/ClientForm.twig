@@ -1,3 +1,18 @@
+{% extends "examplebase.twig" %}
+
+{% block content %}
+    <h1>Form '{{ Aimless.data('name') }}'</h1>
+    <i>{{ Aimless.data('description') }}</i><br>
+    <br>
+    <br>
+    <div class="example_formfields">
+        {{ Aimless.selection('fields')|raw }}
+    </div>
+{% endblock %}
+
+
+
+<!--
 <div class="popup_title">{% if data.getId is defined %}Change{% else %}New{% endif %} client</div>
 <div class="form">
     <div class="form_field_name">Name</div>
@@ -7,3 +22,4 @@
         <div class="button" onClick="Maido.data.saveEntity('client', { {% if data.getId is defined %}id:{{ data.getId }},{% endif %} name:document.getElementById('form_field_name').value });">Save</div>
     </div>
 </div>
+-->

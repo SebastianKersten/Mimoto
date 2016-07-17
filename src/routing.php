@@ -70,6 +70,7 @@ $app->get('/example17', 'MaidoProjects\\UserInterface\\ExampleController::viewEx
 $app->get('/example18', 'MaidoProjects\\UserInterface\\ExampleController::viewExample18');
 $app->get('/example19', 'MaidoProjects\\UserInterface\\ExampleController::viewExample19');
 $app->get('/example20', 'MaidoProjects\\UserInterface\\ExampleController::viewExample20');
+$app->get('/example21', 'MaidoProjects\\UserInterface\\ExampleController::viewExample21');
 
 
 

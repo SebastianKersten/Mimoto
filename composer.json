@@ -1,10 +1,12 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:SebastianKersten/Mimoto.Aimless.git"
+        }
+    ],
     "require": {
-        "silex/silex": "~1.3",
-        "twig/twig": "~1.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^4.8.24"
+        "SebastianKersten/Mimoto.Aimless": "~1.0.0"
     },
     "autoload": {
         "psr-4": {
@@ -18,18 +20,6 @@
             "MaidoProjects\\Agency\\": "./src/MaidoProjects/domains/Agency",
             "MaidoProjects\\SubprojectState\\": "./src/MaidoProjects/domains/SubprojectState",
             "MaidoProjects\\SubprojectPart\\": "./src/MaidoProjects/domains/SubprojectPart",
-            "library\\": "./src/MaidoProjects/library",
-            "Mimoto\\UserInterface\\": "./src/Mimoto/userinterface",
-            "Mimoto\\EntityConfig\\": "./src/Mimoto/domains/EntityConfig",
-            "Mimoto\\FormConfig\\": "./src/Mimoto/domains/FormConfig",
-            "Mimoto\\Data\\": "./src/Mimoto/domains/Data",
-            "Mimoto\\Event\\": "./src/Mimoto/domains/Event",
-            "Mimoto\\Entity\\": "./src/Mimoto/domains/Entity",
-            "Mimoto\\Aimless\\": "./src/Mimoto/domains/Aimless",
-            "Mimoto\\Mail\\": "./src/Mimoto/domains/Mail",
-            "Mimoto\\Cache\\": "./src/Mimoto/domains/Cache",
-            "Mimoto\\library\\": "./src/Mimoto/library",
-            "Mimoto\\tests\\": "./tests"
         }
     }
 }

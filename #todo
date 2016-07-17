@@ -20,6 +20,12 @@ mimoto_form
 mimoto_formfield
 mimoto_formfield_option
 
+core entities (_mimoto_*) in aparte tabel en join on load
+// alleen laden binnen cms omgeving!
+
+
+// 1. Move Mimoto & Aimless to Vendor folder: https://getcomposer.org/doc/05-repositories.md#custom-vendor-alias
+// 2. first store new subitems, then connect
 
 
 #TODO

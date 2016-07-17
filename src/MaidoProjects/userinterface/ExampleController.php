@@ -334,6 +334,29 @@ class ExampleController
     
     
     
+    public function viewExample21(Application $app)
+    {
+        // load
+        $client = $app['Mimoto.Data']->get('client', 1);
+        
+        // create
+        $form = $app['Mimoto.Aimless']->createForm('client', $client);
+        
+        // 1. page->
+        // 2. component->
+        // 3. form->
+        // 4. stop entity in form en zorg ervoor dat de check daar gedaan wordt. Geen restrictie op veld
+        // 5. alles ontvangen wat onvangen mag worden (multiple of single?)
+        // 6. entity vast gekoppeld aan form
+        // 7. collection ondersteunt verschillende types
+        // 8. dropdowns vullen met data (setupField)
+        // 9. velden voor invoer komen uit config
+        
+        // render and send
+        return $form->render();
+    }
+    
+    
     
     
     

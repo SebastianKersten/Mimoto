@@ -664,7 +664,7 @@ div.example_feeditem2
     background-color: #f7ecb5;
 }
 
-div.example_feed
+div.example_feed, div.example_formfields
 {
     width: 500px;
     border: #000000 solid 1px;
