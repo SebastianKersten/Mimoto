@@ -15,13 +15,18 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 
 /**
- * EntitiesController
+ * EntityController
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class EntitiesController extends MimotoController
+class EntitYController extends MimotoController
 {
-    
+
+    public function viewEntities(Application $app, $sEntityType, $nId)
+    {
+
+    }
+
     public function viewEntity(Application $app, $sEntityType, $nId)
     {
         // 1. template service
@@ -32,8 +37,7 @@ class EntitiesController extends MimotoController
         $entity = $app['Mimoto.Data']->get($sEntityType, $nId);
         
         $component = $app['Mimoto.Aimless']->createComponent('MimotoCMS_EntityItemItem', $entity);
-        
-        
+
         
         
         $component->setupCollection('subprojects', 'SubprojectListItem');

@@ -44,7 +44,7 @@ class SettingsController extends MimotoController
     public function viewClients(Application $app)
     {   
         // load
-        $aClients = $app['Mimoto.Data']->find('client');
+        $aClients = $app['Mimoto.Data']->find(new MimotoSelection('client'));
         
         // create
         $component = $app['Mimoto.Aimless']->createComponent('page_settings_clients');

@@ -20,7 +20,14 @@ class DashboardController
 {
     
     public function getDashboard(Application $app)
-    {   
+    {
+
+        $page = $app['Mimoto.Aimless']->createComponent('MimotoCMS_EntityItemItem', $entity);
+
+        $page->render();
+
+
+
         return $app['twig']->render(
             'Mimoto.CMS/root.twig',
             array(

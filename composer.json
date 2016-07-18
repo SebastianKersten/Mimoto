@@ -33,7 +33,6 @@
             "Mimoto\\Aimless\\": "./Mimoto/domains/Aimless",
             "Mimoto\\Mail\\": "./Mimoto/domains/Mail",
             "Mimoto\\Cache\\": "./Mimoto/domains/Cache",
-            "Mimoto\\library\\": "./Mimoto/library",
             "Mimoto\\tests\\": "./tests"
         }
     }

@@ -236,8 +236,6 @@ class MimotoEntityConfigRepository
                 $property->settings = $aAllSettings[$property->id];
             }
         }
-        
-        error('Oops, this a a fabricated error message in order to create a friendly error me');
     }
     
     /**

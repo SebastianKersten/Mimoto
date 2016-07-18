@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace Mimoto\library\data;
+namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Data\MimotoEntity;
