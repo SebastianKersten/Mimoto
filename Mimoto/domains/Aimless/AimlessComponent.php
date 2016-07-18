@@ -4,7 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
-use Mimoto\library\data\MimotoDataUtils;
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 

@@ -5,8 +5,8 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Data\MimotoData;
+use Mimoto\Data\MimotoEntityUtils;
 use Mimoto\Aimless\MimotoAimlessUtils;
-use Mimoto\library\entities\MimotoEntityUtils;
 
 
 /**

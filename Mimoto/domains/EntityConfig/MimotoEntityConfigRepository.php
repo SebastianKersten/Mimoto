@@ -140,68 +140,61 @@ class MimotoEntityConfigRepository
         // init
         $aAllProperties = [];
         $aAllSettings = [];
-        
-        
-        // load
-        $sQueryEntities = "SELECT * FROM ".self::DBTABLE_ENTITY;
-        $resultEntities = mysql_query($sQueryEntities) or die('Query failed: ' . mysql_error());
-        $nEntityCount = mysql_num_rows($resultEntities);
-        
-        // store
-        for ($i = 0; $i < $nEntityCount; $i++)
+
+
+        // load all entities
+        $sql = 'SELECT * FROM '.self::DBTABLE_ENTITY;
+        foreach ($GLOBALS['database']->query($sql) as $row)
         {
+            // compose
             $entity = (object) array(
-                'id' => mysql_result($resultEntities, $i, 'id'),
-                'name' => mysql_result($resultEntities, $i, 'name'),
-                'extends_id' => mysql_result($resultEntities, $i, 'extends_id'),
-                'created' => mysql_result($resultEntities, $i, 'created'),
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'extends_id' => $row['extends_id'],
+                'created' => $row['created'],
                 'properties' => []
             );
-            
+
+            // store
             $this->_aEntities[] = $entity;
         }
-        
-        // load
-        $sQueryProperties = "SELECT * FROM ".self::DBTABLE_ENTITY_PROPERTY;
-        $resultProperties = mysql_query($sQueryProperties) or die('Query failed: ' . mysql_error());
-        $nPropertyCount = mysql_num_rows($resultProperties);
-        
-        // store
-        for ($i = 0; $i < $nPropertyCount; $i++)
+
+        // load all properties
+        $sql = 'SELECT * FROM '.self::DBTABLE_ENTITY_PROPERTY;
+        foreach ($GLOBALS['database']->query($sql) as $row)
         {
+            // compose
             $property = (object) array(
-                'id' => mysql_result($resultProperties, $i, 'id'),
-                'name' => mysql_result($resultProperties, $i, 'name'),
-                'type' => mysql_result($resultProperties, $i, 'type'),
-                'parent_id' => mysql_result($resultProperties, $i, 'parent_id'),
-                'sortindex' => mysql_result($resultProperties, $i, 'sortindex'),
-                'created' => mysql_result($resultProperties, $i, 'created'),
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'type' => $row['type'],
+                'parent_id' => $row['parent_id'],
+                'sortindex' => $row['sortindex'],
+                'created' => $row['created'],
                 'settings' => []
             );
-            
-            $nEntityConfigId = mysql_result($resultProperties, $i, 'entity_id');
-            
+
+            // load
+            $nEntityConfigId = $row['entity_id'];
+
+            // store
             $aAllProperties[$nEntityConfigId][] = $property;
         }
-        
-        // load
-        $sQuerySettings = "SELECT * FROM ".self::DBTABLE_ENTITY_PROPERTY_SETTINGS;
-        $resultSettings = mysql_query($sQuerySettings) or die('Query failed: ' . mysql_error());
-        $nSettingCount = mysql_num_rows($resultSettings);
-        
-        
-        // store
-        for ($i = 0; $i < $nSettingCount; $i++)
+
+        // load all settings
+        $sql = 'SELECT * FROM '.self::DBTABLE_ENTITY_PROPERTY_SETTINGS;
+        foreach ($GLOBALS['database']->query($sql) as $row)
         {
-            // init
+            // compose
             $setting = (object) array(
-                'id' => mysql_result($resultSettings, $i, 'id'),
-                'name' => mysql_result($resultSettings, $i, 'name'),
-                'value' => mysql_result($resultSettings, $i, 'value'),
-                'created' => mysql_result($resultSettings, $i, 'created')
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'value' => $row['value'],
+                'created' => $row['created']
             );
-            
-            $nEntityConfigPropertyId = mysql_result($resultSettings, $i, 'property_id');
+
+            // load
+            $nEntityConfigPropertyId = $row['property_id'];
             
             // store
             $aAllSettings[$nEntityConfigPropertyId][$setting->name] = $setting;

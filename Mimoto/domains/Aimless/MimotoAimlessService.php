@@ -135,43 +135,36 @@ class MimotoAimlessService
         
         // init
         $aTemplates = [];
-        //$aAllConditionals = [];
-        
-        
-        // load
-        $sQueryTemplates = "SELECT * FROM ".self::DBTABLE_TEMPLATES;
-        $resultTemplates = mysql_query($sQueryTemplates) or die('Query failed: ' . mysql_error());
-        $nTemplateCount = mysql_num_rows($resultTemplates);
-        
-        // store
-        for ($i = 0; $i < $nTemplateCount; $i++)
+
+
+        // load all templates
+        $sql = 'SELECT * FROM '.self::DBTABLE_TEMPLATES;
+        foreach ($GLOBALS['database']->query($sql) as $row)
         {
+            // compose
             $entity = (object) array(
-                'id' => mysql_result($resultTemplates, $i, 'id'),
-                'name' => mysql_result($resultTemplates, $i, 'name'),
-                'file' => mysql_result($resultTemplates, $i, 'file'),
-                'owner' => mysql_result($resultTemplates, $i, 'owner'),
-                'created' => mysql_result($resultTemplates, $i, 'created'),
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'file' => $row['file'],
+                'owner' => $row['owner'],
+                'created' => $row['created'],
                 'conditionals' => []
             );
-            
+
+            // store
             $aTemplates[] = $entity;
         }
-        
-        // load
-        $sQueryConditionals = "SELECT * FROM ".self::DBTABLE_TEMPLATES_CONDITIONALS;
-        $resultConditionals = mysql_query($sQueryConditionals) or die('Query failed: ' . mysql_error());
-        $nConditionalCount = mysql_num_rows($resultConditionals);
-        
-        // store
-        for ($i = 0; $i < $nConditionalCount; $i++)
+
+        // load all conditionals
+        $sql = 'SELECT * FROM '.self::DBTABLE_TEMPLATES_CONDITIONALS;
+        foreach ($GLOBALS['database']->query($sql) as $row)
         {
             $conditional = (object) array(
-                'id' => mysql_result($resultConditionals, $i, 'id'),
-                'template_id' => mysql_result($resultConditionals, $i, 'template_id'),
-                'key' => mysql_result($resultConditionals, $i, 'key'),
-                'value' => mysql_result($resultConditionals, $i, 'value'),
-                'created' => mysql_result($resultConditionals, $i, 'created')
+                'id' => $row['id'],
+                'template_id' => $row['template_id'],
+                'key' => $row['key'],
+                'value' => $row['value'],
+                'created' => $row['created']
             );
             
             for ($j = 0; $j < count($aTemplates); $j++)

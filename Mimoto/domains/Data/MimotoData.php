@@ -4,7 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
-use Mimoto\library\data\MimotoDataUtils;
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoCollection;
 
@@ -221,7 +221,7 @@ class MimotoData
     private function getValueProperty($property)
     {
         // validate
-        if (!isset($property->data->currentValue)) { throw new MimotoEntityException("( '-' ) - Hmm, the property '$property->config->name' you are trying to get doesn't seems to have a value set yet"); }
+        if (!isset($property->data->currentValue)) { throw new MimotoEntityException("( '-' ) - Hmm, the property '".$property->config->name."' you are trying to get doesn't seems to have a value set yet"); }
         
         // send
         return $property->data->currentValue;

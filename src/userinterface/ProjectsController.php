@@ -299,8 +299,7 @@ class ProjectsController
         
         print_r($project);
         
-        
-        // #todo
+
         // ------------------------------------------------------------------------------
         // "Mimoto.Data"
         // "Mimoto.CollectionService"

@@ -76,41 +76,24 @@ class MimotoEntityRepository
     {
         // validate
         if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
-        
-        
-//        $pdo->prepare('
-//            SELECT * FROM users
-//            WHERE username = :username
-//            AND email = :email
-//            AND last_login > :last_login');
-//
-//        $params = array(':username' => 'test', ':email' => $mail, ':last_login' => time() - 3600);
-//        
-//        $pdo->execute($params);
-        
-        
-//        $sql = 'SELECT name, color, calories FROM fruit ORDER BY name';
-//    foreach ($conn->query($sql) as $row) {
-//        print $row['name'] . "\t";
-//        print $row['color'] . "\t";
-//        print $row['calories'] . "\n";
-//    }
-        
-        
+
         // load
-        $sQuery = "SELECT * FROM ".$entityConfig->getMySQLTable()." WHERE id=".$nEntityId;
-        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        $nItemCount = mysql_num_rows($result);
-        
+        $stmt = $GLOBALS['database']->prepare('SELECT * FROM :dbtable WHERE id = :id');
+        $params = array(
+            ':dbtable' => $entityConfig->getMySQLTable(),
+            ':id' => $nEntityId
+        );
+        $aResults = $stmt->execute($params);
+
         // verify
-        if ($nItemCount !== 1)
+        if (count($aResults) !== 1)
         {
             throw new MimotoEntityException("( '-' ) - Sorry, I can't find the the '".$entityConfig->getName()."' entity with id='$nEntityId'");
         }
         else
         {
             // setup
-            $entity = $this->createEntity($entityConfig, $result, 0);
+            $entity = $this->createEntity($entityConfig, $aResults, 0);
             
             // send
             return $entity;
@@ -129,17 +112,18 @@ class MimotoEntityRepository
         
         // setup
         $aEntities->setCriteria($criteria);
-        
+
         // load
-        $sQuery = "SELECT * FROM ".$entityConfig->getMySQLTable();
-        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-        $nItemCount = mysql_num_rows($result);
-        
+        $stmt = $GLOBALS['database']->prepare('SELECT * FROM :dbtable');
+        $params = array(':dbtable' => $entityConfig->getMySQLTable());
+        $aResults = $stmt->execute($params);
+
+
         // register
-        for ($i = 0; $i < $nItemCount; $i++)
+        for ($i = 0; $i < count($aResults); $i++)
         {
             // register
-            $aEntities[] = $this->createEntity($entityConfig, $result, $i);
+            $aEntities[] = $this->createEntity($entityConfig, $aResults, $i);
         }
         
         // send
@@ -193,12 +177,18 @@ class MimotoEntityRepository
                     {
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
                     
-                            $aQueryElements[] = $propertyValue->mysqlColumnName."='".$entity->getValue($sPropertyName, false)."'";
+                            $aQueryElements[] = (object) array(
+                                'key' => $propertyValue->mysqlColumnName,
+                                'value' => $entity->getValue($sPropertyName, false)
+                            );
                             break;
 
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
                             
-                            $aQueryElements[] = $propertyValue->mysqlColumnName."='".$entity->getValue($sPropertyName, true)."'";
+                            $aQueryElements[] = (object) array(
+                                'key' => $propertyValue->mysqlColumnName,
+                                'value' => $entity->getValue($sPropertyName, true)
+                            );
                             break;
                     }
                     
@@ -212,21 +202,30 @@ class MimotoEntityRepository
                     {
                         for ($k = 0; $k < count($modifiedCollection->added); $k++)
                         {
+                            // register
                             $newItem = $modifiedCollection->added[$k];
                             
                             // load
-                            $sQuery =
-                                "INSERT INTO ".$propertyValue->mysqlConnectionTable." SET ".
-                                "parent_id='".$newItem->parentId."', ".
-                                "parent_property_id='".$newItem->parentPropertyId."', ".
-                                "child_entity_type='".$newItem->childEntityType->id."', ".
-                                "child_id='".$newItem->childId."', ".
-                                "sortindex='".$newItem->sortIndex."'";
-                                
-                            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-                            
+                            $stmt = $GLOBALS['database']->prepare(
+                                'INSERT INTO :dbtable SET '.
+                                'parent_id = :parent_id '.
+                                'parent_property_id = :parent_property_id '.
+                                'child_entity_type = :child_entity_type '.
+                                'child_id = :child_id '.
+                                'sortindex = :sortindex'
+                            );
+                            $params = array(
+                                ':dbtable' => $propertyValue->mysqlConnectionTable,
+                                ':parent_id' => $newItem->parentId,
+                                ':parent_property_id' => $newItem->parentPropertyId,
+                                ':child_entity_type' => $newItem->childEntityType->id,
+                                ':child_id' => $newItem->childId,
+                                ':sortindex' => $newItem->sortIndex
+                            );
+                            $stmt->execute($params);
+
                             // complete
-                            $newItem->id = mysql_insert_id();
+                            $newItem->id = $GLOBALS['database']->lastInsertId();
                             $newItem->bIsNew = true;
                         }
                     }
@@ -235,15 +234,21 @@ class MimotoEntityRepository
                     {
                         for ($k = 0; $k < count($modifiedCollection->updated); $k++)
                         {
+                            // register
                             $existingItem = $modifiedCollection->updated[$k];
-                            
+
                             // load
-                            $sQuery =
-                                "UPDATE ".$propertyValue->mysqlConnectionTable." SET ".
-                                "sortindex='".$existingItem->sortIndex."' ".
-                                "WHERE id='".$existingItem->id."'";
-                                
-                            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                            $stmt = $GLOBALS['database']->prepare(
+                                'UPDATE :dbtable SET '.
+                                'sortindex = :sortindex '.
+                                'WHERE id = :id'
+                            );
+                            $params = array(
+                                ':dbtable' => $propertyValue->mysqlConnectionTable,
+                                ':sortindex' => $existingItem->sortIndex,
+                                ':id' => $existingItem->id
+                            );
+                            $stmt->execute($params);
                         }
                     }
                     
@@ -251,14 +256,19 @@ class MimotoEntityRepository
                     {
                         for ($k = 0; $k < count($modifiedCollection->removed); $k++)
                         {
+                            // register
                             $existingItem = $modifiedCollection->removed[$k];
-                            
+
                             // load
-                            $sQuery =
-                                "DELETE FROM ".$propertyValue->mysqlConnectionTable." ".
-                                "WHERE id='".$existingItem->id."'";
-                            
-                            $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+                            $stmt = $GLOBALS['database']->prepare(
+                                'DELETE FROM :dbtable '.
+                                'WHERE id = :id'
+                            );
+                            $params = array(
+                                ':dbtable' => $propertyValue->mysqlConnectionTable,
+                                ':id' => $existingItem->id
+                            );
+                            $stmt->execute($params);
                         }
                     }
 
@@ -270,22 +280,36 @@ class MimotoEntityRepository
         if (count($aQueryElements) > 0)
         {
             // compose
-            $sQuery  = ($bIsExistingEntity) ? "UPDATE" : "INSERT";
-            $sQuery .= ' '.$entityConfig->getMySQLTable()." SET ";
+            $sQuery  = ($bIsExistingEntity) ? 'UPDATE' : 'INSERT';
+            $sQuery .= ' :dbtable SET ';
+
+            $params = array(
+                ':dbtable' => $entityConfig->getMySQLTable()
+            );
 
             // compose
             for ($i = 0; $i < count($aQueryElements); $i++)
             {
-                $sQuery .= $aQueryElements[$i];
+                $sQuery .= $aQueryElements[$i]->key.' = :'.$aQueryElements[$i]->value;
+                $params[':'.$aQueryElements[$i]->key] = $aQueryElements[$i]->value;
                 if ($i < count($aQueryElements) - 1) { $sQuery .= ', '; }
             }
 
-
             // compose
-            $sQuery .=  ($bIsExistingEntity) ? " WHERE id='".$entity->getId()."'" : ", created='".date("YmdHis")."'";
-            
-            // execute
-            mysql_query($sQuery) or die('Query failed: ' . mysql_error());
+            if ($bIsExistingEntity)
+            {
+                $sQuery .= " WHERE id = :id";
+                $params[':id'] = $entity->getId();
+            }
+            else
+            {
+                $sQuery .= ", created = :created";
+                $params[':created'] = date("YmdHis");
+            }
+
+            // load
+            $stmt = $GLOBALS['database']->prepare($sQuery);
+            $stmt->execute($params);
         }
         
         
@@ -302,7 +326,7 @@ class MimotoEntityRepository
         else
         {
             // get entity
-            $entity = $this->get($entityConfig, mysql_insert_id());
+            $entity = $this->get($entityConfig,  $GLOBALS['database']->lastInsertId());
             
             // register
             $sEvent = MimotoEvent::CREATED;
@@ -342,11 +366,15 @@ class MimotoEntityRepository
      * @param int $nIndex
      * @return entity
      */
-    private function createEntity(MimotoEntityConfig $entityConfig, $mysqlResult = null, $nIndex = null)
+    private function createEntity(MimotoEntityConfig $entityConfig, $aResults = null, $nIndex = null)
     {
-        
+        echo '<pre>';
+        var_dump($aResults);
+        echo '</pre>';
+
+
         // read
-        $nEntityId = (!empty($mysqlResult)) ? mysql_result($mysqlResult, $nIndex, 'id') : null;
+        $nEntityId = (!empty($mysqlResult)) ? $aResults[$nIndex]['id'] : null;
         
         // make sure an entity is available only once
         if (empty($nEntityId))
@@ -361,7 +389,7 @@ class MimotoEntityRepository
             
             // register
             $entity->setId($nEntityId);
-            $entity->setCreated(mysql_result($mysqlResult, $nIndex, 'created'));
+            $entity->setCreated($aResults[$nIndex]['created']);
 
             // store
             $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $entity;
@@ -397,7 +425,7 @@ class MimotoEntityRepository
                     case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
 
                         // load
-                        $entity->setValue($propertyConfig->name, mysql_result($mysqlResult, $nIndex, $propertyValue->mysqlColumnName));
+                        $entity->setValue($propertyConfig->name, $aResults[$nIndex][$propertyValue->mysqlColumnName]);
                         break;
 
                     case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
@@ -406,30 +434,34 @@ class MimotoEntityRepository
                         $aCollection = array();
 
                         // load
-                        $sQuery = "SELECT * FROM ".$propertyValue->mysqlConnectionTable.
-                                  " WHERE parent_id='".$entity->getId()."'".
-                                  " && parent_property_id='".$propertyConfig->id."' ".
-                                  " ORDER BY sortindex";
-                        $result = mysql_query($sQuery) or die('Query failed: ' . mysql_error());
-                        $nItemCount = mysql_num_rows($result);
+                        $stmt = $GLOBALS['database']->prepare(
+                            'SELECT * FROM :dbtable'.
+                            ' WHERE parent_id = :parent_id'.
+                            ' && parent_property_id = :parent_property_id'.
+                            ' ORDER BY sortindex'
+                        );
+                        $params = array(
+                            ':dbtable' => $propertyValue->mysqlConnectionTable,
+                            ':parent_id' => $entity->getId(),
+                            ':parent_property_id' => $propertyConfig->id
+                        );
 
-                        
-                        // register
-                        for ($j = 0; $j < $nItemCount; $j++)
+                        foreach ($stmt->execute($params) as $row)
                         {
+                            // compose
                             $collectionItem = (object) array(
-                                'id' => mysql_result($result, $j, 'id'),
-                                'parentId' => mysql_result($result, $j, 'parent_id'),
-                                'parentPropertyId' => mysql_result($result, $j, 'parent_property_id'),
-                                'childId' => mysql_result($result, $j, 'child_id'),
+                                'id' => $row['id'],
+                                'parentId' => $row['parent_id'],
+                                'parentPropertyId' => $row['parent_property_id'],
+                                'childId' => $row['child_id'],
                                 'childEntityType' => (object) array(
-                                    'id' => mysql_result($result, $j, 'child_entity_type'),
-                                    'name' => $GLOBALS['Mimoto.Config']->getEntityNameById(mysql_result($result, $j, 'child_entity_type'))
+                                    'id' => $row['child_entity_type'],
+                                    'name' => $GLOBALS['Mimoto.Config']->getEntityNameById($row['child_entity_type'])
                                 ),
-                                'sortIndex' => mysql_result($result, $j, 'sortindex')
+                                'sortIndex' => $row['sortindex']
                             );
                             
-                            
+                            // store
                             $aCollection[] = $collectionItem;
                         }
                         
@@ -440,7 +472,11 @@ class MimotoEntityRepository
                 }
             }
         }
-        
+
+        echo '<pre>';
+        print_r($entity);
+        echo '</pre>';
+
         // start tracking changes
         $entity->trackChanges();
         
