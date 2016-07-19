@@ -3,15 +3,8 @@
 // classpath
 namespace Mimoto\UserInterface;
 
-// Mimoto classes
-use Mimoto\library\controllers\MimotoController;
-
 // Silex classes
 use Silex\Application;
-
-// Symfony classes
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 
 /**
@@ -19,37 +12,70 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class EntitYController extends MimotoController
+class EntitYController
 {
 
-    public function viewEntities(Application $app, $sEntityType, $nId)
+    public function viewEntityOverview(Application $app)
     {
+        // load
+        $aEntities = $app['Mimoto.Data']->find(['type' => '_mimoto_entity']);
 
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS/entities/Overview');
+
+        // setup
+        $page->addSelection('entities', 'Mimoto.CMS/entities/EntityListItem', $aEntities);
+
+        // output
+        return $page->render();
     }
 
-    public function viewEntity(Application $app, $sEntityType, $nId)
+    public function viewEntity(Application $app, $nId)
     {
-        // 1. template service
-        // 2. load all templates from database into memory
-        
-        
-        
-        $entity = $app['Mimoto.Data']->get($sEntityType, $nId);
-        
-        $component = $app['Mimoto.Aimless']->createComponent('MimotoCMS_EntityItemItem', $entity);
+        // load
+        $entity = $app['Mimoto.Data']->get('_mimoto_entity', $nId);
 
-        
-        
-        $component->setupCollection('subprojects', 'SubprojectListItem');
-        
-        $component->setupProperty('subprojects.*.client', 'SubprojectListItem');
-        
-        $component->setVar('blabla', 'xxx');
-        
-        
-        return $component->render();
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS/entities/Detail', $entity);
+
+        // setup
+        $page->setPropertyTemplate('properties', 'Mimoto.CMS/entities/PropertyListItem');
+
+        // output
+        return $page->render();
     }
-    
+
+
+
+
+//    public function viewEntity(Application $app, $sEntityType, $nId)
+//    {
+//        // 1. template service
+//        // 2. load all templates from database into memory
+//
+//
+//
+//
+//
+//
+//
+//
+//        $entity = $app['Mimoto.Data']->get($sEntityType, $nId);
+//
+//        $component = $app['Mimoto.Aimless']->createComponent('MimotoCMS_EntityItemItem', $entity);
+//
+//
+//
+//        $component->setupCollection('subprojects', 'SubprojectListItem');
+//
+//        $component->setupProperty('subprojects.*.client', 'SubprojectListItem');
+//
+//        $component->setVar('blabla', 'xxx');
+//
+//
+//        return $component->render();
+//    }
+//
     
     public function editEntity()
     {
@@ -78,10 +104,10 @@ class EntitYController extends MimotoController
         // block
         
         return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
+            'Mimoto.CMS/base.twig',
             array(
-                'section' => 'Entities',
-                'pagetemplate' => 'Mimoto.CMS/pages/Entities/Overview.twig',
+                'section' => 'entities',
+                'pagetemplate' => 'Mimoto.CMS/pages/entities/Overview.twig',
                 'aEntityConfigs' => $aEntityConfigs
             )
         );
@@ -94,10 +120,10 @@ class EntitYController extends MimotoController
         //$aEntityConfigs = $app['Mimoto.EntityConfigService']->getAllEntityConfigs();
         
         return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
+            'Mimoto.CMS/base.twig',
             array(
                 'section' => 'Entity - new',
-                'pagetemplate' => 'Mimoto.CMS/pages/Entities/Config.twig'
+                'pagetemplate' => 'Mimoto.CMS/pages/entities/Config.twig'
             )
         );
     }
@@ -154,9 +180,9 @@ class EntitYController extends MimotoController
         
         
         return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
+            'Mimoto.CMS/base.twig',
             array(
-                'pagetemplate' => 'Mimoto.CMS/pages/Entities/Config.twig',
+                'pagetemplate' => 'Mimoto.CMS/pages/entities/Config.twig',
                 'entity' => $entity,
                 'aAvailableEntities' => $this->composeAvailableEntities($aAvailableEntities),
                 'aPropertyTypes' => $this->composePropertyTypes(),

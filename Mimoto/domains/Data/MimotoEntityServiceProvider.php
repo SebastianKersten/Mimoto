@@ -55,10 +55,18 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         // register
-        $app->get('/mimoto.cms', 'Mimoto\\UserInterface\\DashboardController::getDashboard');
-        $app->get('/mimoto.cms/entities', 'Mimoto\\UserInterface\\EntitiesController::getOverview');
-        $app->get('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\EntitiesController::createNew');
-        $app->get('/mimoto.cms/entity/{nId}', 'Mimoto\\UserInterface\\EntitiesController::getEntity');
+        $app->get('/mimoto.cms', 'Mimoto\\UserInterface\\DashboardController::viewDashboard');
+
+
+        $app->get('/mimoto.cms/entities', 'Mimoto\\UserInterface\\EntityController::viewEntityOverview');
+        $app->get('/mimoto.cms/entity/{nId}', 'Mimoto\\UserInterface\\EntityController::viewEntity');
+
+
+
+        $app->get('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\EntityController::createNew');
+
+
+
         $app->get('/mimoto.cms/forms', 'Mimoto\\UserInterface\\FormsController::getOverview');
         $app->get('/mimoto.cms/form/new', 'Mimoto\\UserInterface\\FormsController::createNew');
         $app->get('/mimoto.cms/form/{nId}', 'Mimoto\\UserInterface\\FormsController::getForm');

@@ -19,7 +19,7 @@
         <div class="form_divider"></div>
 
         {% for property in entity.properties %}
-            {% include 'Mimoto.CMS/pages/Entities/components/EntityPropertyConfig.twig' with { property:property, aPropertyNameValidation:aPropertyNameValidation, aPropertyGroupValidation:aPropertyGroupValidation } %}
+            {% include 'Mimoto.CMS/pages/entities/components/EntityPropertyConfig.twig' with { property:property, aPropertyNameValidation:aPropertyNameValidation, aPropertyGroupValidation:aPropertyGroupValidation } %}
             {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Remove property', icon:'-', action:"window.open('/mimoto.cms/entity/"~property.id~"/remove', '_self');" } %}
             
             {% if not loop.first %}{% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Move up', icon:'&uarr;', action:"" } %}{% endif %}
@@ -34,7 +34,7 @@
 <div class="form_group">
     {% include 'Mimoto.CMS/forms/output/description.twig' with { title:'New property', description:'Add a new property to this entity' } %}
     <div class="form_divider"></div>
-    {% include 'Mimoto.CMS/pages/Entities/components/EntityPropertyConfig.twig' with { property:property } %}
+    {% include 'Mimoto.CMS/pages/entities/components/EntityPropertyConfig.twig' with { property:property } %}
     {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Add property', icon:'+', action:"window.open('/mimoto.cms/entity/"~property.id~"/remove', '_self');" } %}
 </div>
 

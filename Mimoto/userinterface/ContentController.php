@@ -25,10 +25,10 @@ class ContentController
         $aEntityConfigs = $app['Mimoto.EntityConfigService']->getAllEntityConfigs();
         
         return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
+            'Mimoto.CMS/base.twig',
             array(
-                'section' => 'Content',
-                'pagetemplate' => 'Mimoto.CMS/pages/Content/Overview.twig',
+                'section' => 'content',
+                'pagetemplate' => 'Mimoto.CMS/pages/content/Overview.twig',
                 'aEntityConfigs' => $aEntityConfigs
             )
         );

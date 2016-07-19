@@ -150,7 +150,6 @@ class MimotoEntityConfigRepository
             $entity = (object) array(
                 'id' => $row['id'],
                 'name' => $row['name'],
-                'extends_id' => $row['extends_id'],
                 'created' => $row['created'],
                 'properties' => []
             );
@@ -168,7 +167,6 @@ class MimotoEntityConfigRepository
                 'id' => $row['id'],
                 'name' => $row['name'],
                 'type' => $row['type'],
-                'parent_id' => $row['parent_id'],
                 'sortindex' => $row['sortindex'],
                 'created' => $row['created'],
                 'settings' => []

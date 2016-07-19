@@ -25,10 +25,10 @@ class FormsController
         $aEntityConfigs = $app['Mimoto.EntityConfigService']->getAllEntityConfigs();
         
         return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
+            'Mimoto.CMS/base.twig',
             array(
-                'section' => 'Forms',
-                'pagetemplate' => 'Mimoto.CMS/pages/Forms/Overview.twig',
+                'section' => 'forms',
+                'pagetemplate' => 'Mimoto.CMS/pages/forms/Overview.twig',
                 'aEntityConfigs' => $aEntityConfigs
             )
         );

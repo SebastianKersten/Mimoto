@@ -1,7 +1,7 @@
 <?php
 
 // Pusher classes
-require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/web/pusher.php');
+require_once(dirname(dirname(dirname(__FILE__))).'/web/pusher.php');
 gearman_version();
 
 // init

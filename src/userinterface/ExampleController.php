@@ -22,7 +22,7 @@ class ExampleController
         
         // create
         $component = $app['Mimoto.Aimless']->createComponent('article', $article);
-        
+
         // render and send
         return $component->render();
     }
@@ -215,12 +215,7 @@ class ExampleController
         // render and send
         return "Subproject updated to 'currentproject'. Toggle to <a href='/example12'>'archived'</a>";
     }
-    
-    
-    
-    // --- adding and removing items to an entity's collection ---
-    // ---> allowDuplicates = playlist
-    // ---> no allowDuplicates = social network (follow users)
+
     
     
     public function viewExample14(Application $app)

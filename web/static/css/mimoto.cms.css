@@ -101,7 +101,6 @@ div.sidemenu {
     bottom: 0;
     width: 80px;
     left: 0;
-    border-right: solid 1px #d5d5d5;
 }
 
     div.sidemenu_logo {
@@ -177,48 +176,36 @@ div.button {
 /* ---------- Pages ---------- */
 
 
-div.entityconfig_container {
+div.entity_container {
     position: relative;
     margin-bottom: 25px;
 }
 
-div.entityconfig {
+div.entity_listitem {
     position: relative;
-    display: inline-block;
+    display: block;
     margin-right: 10px;
-    margin-bottom: 15px;
-    width: 150px;
-    height: 80px;
+    margin-bottom: 5px;
+    padding: 10px;
     background-color: #ffffff;
+    color: #000000;
     cursor: pointer;
 }
-
-    div.entityconfig_inner {
-        position: absolute;
-        display: block;
-        margin: 0;
-        background-color: #000000;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 10px;
-    }
     
-    div.entityconfig_title {
-        font-weight: bold;
+    div.entity_listitem_label {
         font-size: 14px;
-        color: #ffffff;
-        margin-bottom: 3px;
     }
-    
-    div.entityconfig_subtitle {
+
+    div.entity_listitem_sublabel {
+        font-size: 14px;
         font-style: italic;
-        font-size: 12px;
-        color: #06afea;
     }
-    
-    
+
+div.entity_listitem:hover {
+    background-color: #06afea;
+    color: #ffffff;
+}
+
     
     
 /* ---------- forms ---------- */
@@ -360,6 +347,9 @@ select {
     border-radius: 0;
 }
 
+a {
+    color: #06afea;
+}
 
 mimoto_list {
     background-color: #d6d6d6;

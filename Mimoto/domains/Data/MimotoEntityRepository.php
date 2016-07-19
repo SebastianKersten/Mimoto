@@ -438,8 +438,12 @@ class MimotoEntityRepository
                             ':parent_id' => $entity->getId(),
                             ':parent_property_id' => $propertyConfig->id
                         );
+                        $stmt->execute($params);
 
-                        foreach ($stmt->execute($params) as $row)
+                        // load
+                        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+                        foreach ($aResults as $row)
                         {
                             // compose
                             $collectionItem = (object) array(

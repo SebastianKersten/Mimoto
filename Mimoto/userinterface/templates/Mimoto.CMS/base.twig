@@ -23,9 +23,7 @@
                     <div class="menu_item" onclick="window.open('/mimoto.cms/content', '_self');">Content</div>
                 </div>
             </div>
-            <div class="contentpanel">
-                {% include pagetemplate %}
-            </div>
+            <div class="contentpanel">{% block content %}{% endblock %}</div>
         </div>
         <div id="layer_overlay" class="layer_overlay hidden"></div>
         <div id="layer_popup" class="layer_popup hidden">    

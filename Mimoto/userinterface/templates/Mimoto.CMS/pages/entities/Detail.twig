@@ -1,0 +1,14 @@
+{% extends "Mimoto.CMS/base.twig" %}
+
+{% block content %}
+    <h2><a href="/mimoto.cms/entities">entities</a> / entity detail</h2>
+    <br>
+    Name = <b>{{ Aimless.data('name') }}</b><br>
+    <i>Owner = {{ Aimless.data('owner') }}</i><br>
+    <br>
+    Properties:<br>
+    <br>
+    <div class="entity_container" {{ Aimless.realtime('properties')|raw }}>
+        {{ Aimless.data('properties')|raw }}
+    </div>
+{% endblock %}

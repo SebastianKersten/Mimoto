@@ -12,6 +12,12 @@
 // #todo - inline form - wysiwyg editor
 
 
+
+// --- adding and removing items to an entity's collection ---
+    // ---> allowDuplicates = playlist
+    // ---> no allowDuplicates = social network (follow users)
+
+
 ================================================================
 
 entities:

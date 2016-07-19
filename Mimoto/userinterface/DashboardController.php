@@ -6,10 +6,6 @@ namespace Mimoto\UserInterface;
 // Silex classes
 use Silex\Application;
 
-// Symfony classes
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-
 
 /**
  * DashboardController
@@ -19,22 +15,13 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class DashboardController
 {
     
-    public function getDashboard(Application $app)
+    public function viewDashboard(Application $app)
     {
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS/dashboard/Overview');
 
-        $page = $app['Mimoto.Aimless']->createComponent('MimotoCMS_EntityItemItem', $entity);
-
-        $page->render();
-
-
-
-        return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
-            array(
-                'section' => 'Dashboard',
-                'pagetemplate' => 'Mimoto.CMS/pages/Dashboard/Dashboard.twig'
-            )
-        );
+        // output
+        return $page->render();
     }
     
 }

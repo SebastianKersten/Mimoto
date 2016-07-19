@@ -73,10 +73,10 @@ class EntitiesController extends MimotoController
         // block
         
         return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
+            'Mimoto.CMS/base.twig',
             array(
-                'section' => 'Entities',
-                'pagetemplate' => 'Mimoto.CMS/pages/Entities/Overview.twig',
+                'section' => 'entities',
+                'pagetemplate' => 'Mimoto.CMS/pages/entities/Overview.twig',
                 'aEntityConfigs' => $aEntityConfigs
             )
         );
@@ -89,10 +89,10 @@ class EntitiesController extends MimotoController
         //$aEntityConfigs = $app['Mimoto.EntityConfigService']->getAllEntityConfigs();
         
         return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
+            'Mimoto.CMS/base.twig',
             array(
                 'section' => 'Entity - new',
-                'pagetemplate' => 'Mimoto.CMS/pages/Entities/Config.twig'
+                'pagetemplate' => 'Mimoto.CMS/pages/entities/Config.twig'
             )
         );
     }
@@ -149,9 +149,9 @@ class EntitiesController extends MimotoController
         
         
         return $app['twig']->render(
-            'Mimoto.CMS/root.twig',
+            'Mimoto.CMS/base.twig',
             array(
-                'pagetemplate' => 'Mimoto.CMS/pages/Entities/Config.twig',
+                'pagetemplate' => 'Mimoto.CMS/pages/entities/Config.twig',
                 'entity' => $entity,
                 'aAvailableEntities' => $this->composeAvailableEntities($aAvailableEntities),
                 'aPropertyTypes' => $this->composePropertyTypes(),

@@ -224,7 +224,7 @@ class Pusher
 		}
 		# Set cURL opts and execute request
 		curl_setopt( $ch, CURLOPT_URL, $full_url );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, array ( "Content-Type: application/json", "Expect:" ) );
+		curl_setopt( $ch, CURLOPT_HTTPHEADER, array ( "content-Type: application/json", "Expect:" ) );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
 		curl_setopt( $ch, CURLOPT_TIMEOUT, $this->settings['timeout'] );
 		return $ch;
