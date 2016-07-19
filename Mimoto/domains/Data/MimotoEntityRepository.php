@@ -69,8 +69,8 @@ class MimotoEntityRepository
     /**
      * Get single entity by id
      * @param int $nId
-     * @return ModelClass
-     * @throws ModelClassException
+     * @return MimotoEntity
+     * @throws MimotoEntityException
      */
     public function get(MimotoEntityConfig $entityConfig, $nEntityId)
     {
@@ -78,12 +78,14 @@ class MimotoEntityRepository
         if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
 
         // load
-        $stmt = $GLOBALS['database']->prepare('SELECT * FROM :dbtable WHERE id = :id');
+        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
         $params = array(
-            ':dbtable' => $entityConfig->getMySQLTable(),
             ':id' => $nEntityId
         );
-        $aResults = $stmt->execute($params);
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         // verify
         if (count($aResults) !== 1)
@@ -93,8 +95,8 @@ class MimotoEntityRepository
         else
         {
             // setup
-            $entity = $this->createEntity($entityConfig, $aResults, 0);
-            
+            $entity = $this->createEntity($entityConfig, $aResults[0]);
+
             // send
             return $entity;
         }
@@ -114,16 +116,18 @@ class MimotoEntityRepository
         $aEntities->setCriteria($criteria);
 
         // load
-        $stmt = $GLOBALS['database']->prepare('SELECT * FROM :dbtable');
-        $params = array(':dbtable' => $entityConfig->getMySQLTable());
-        $aResults = $stmt->execute($params);
+        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.$entityConfig->getMySQLTable());
+        $stmt->execute();
+
+        // load
+        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
 
         // register
         for ($i = 0; $i < count($aResults); $i++)
         {
             // register
-            $aEntities[] = $this->createEntity($entityConfig, $aResults, $i);
+            $aEntities[] = $this->createEntity($entityConfig, $aResults[$i]);
         }
         
         // send
@@ -207,7 +211,7 @@ class MimotoEntityRepository
                             
                             // load
                             $stmt = $GLOBALS['database']->prepare(
-                                'INSERT INTO :dbtable SET '.
+                                'INSERT INTO '.$propertyValue->mysqlConnectionTable.' SET '.
                                 'parent_id = :parent_id '.
                                 'parent_property_id = :parent_property_id '.
                                 'child_entity_type = :child_entity_type '.
@@ -215,7 +219,6 @@ class MimotoEntityRepository
                                 'sortindex = :sortindex'
                             );
                             $params = array(
-                                ':dbtable' => $propertyValue->mysqlConnectionTable,
                                 ':parent_id' => $newItem->parentId,
                                 ':parent_property_id' => $newItem->parentPropertyId,
                                 ':child_entity_type' => $newItem->childEntityType->id,
@@ -239,12 +242,11 @@ class MimotoEntityRepository
 
                             // load
                             $stmt = $GLOBALS['database']->prepare(
-                                'UPDATE :dbtable SET '.
+                                'UPDATE '.$propertyValue->mysqlConnectionTable.' SET '.
                                 'sortindex = :sortindex '.
                                 'WHERE id = :id'
                             );
                             $params = array(
-                                ':dbtable' => $propertyValue->mysqlConnectionTable,
                                 ':sortindex' => $existingItem->sortIndex,
                                 ':id' => $existingItem->id
                             );
@@ -261,11 +263,9 @@ class MimotoEntityRepository
 
                             // load
                             $stmt = $GLOBALS['database']->prepare(
-                                'DELETE FROM :dbtable '.
-                                'WHERE id = :id'
+                                'DELETE FROM '.$propertyValue->mysqlConnectionTable.' WHERE id = :id'
                             );
                             $params = array(
-                                ':dbtable' => $propertyValue->mysqlConnectionTable,
                                 ':id' => $existingItem->id
                             );
                             $stmt->execute($params);
@@ -281,11 +281,9 @@ class MimotoEntityRepository
         {
             // compose
             $sQuery  = ($bIsExistingEntity) ? 'UPDATE' : 'INSERT';
-            $sQuery .= ' :dbtable SET ';
+            $sQuery .= ' '.$entityConfig->getMySQLTable().' SET ';
 
-            $params = array(
-                ':dbtable' => $entityConfig->getMySQLTable()
-            );
+            $params = array();
 
             // compose
             for ($i = 0; $i < count($aQueryElements); $i++)
@@ -366,16 +364,12 @@ class MimotoEntityRepository
      * @param int $nIndex
      * @return entity
      */
-    private function createEntity(MimotoEntityConfig $entityConfig, $aResults = null, $nIndex = null)
+    private function createEntity(MimotoEntityConfig $entityConfig, $result = null)
     {
-        echo '<pre>';
-        var_dump($aResults);
-        echo '</pre>';
-
-
         // read
-        $nEntityId = (!empty($mysqlResult)) ? $aResults[$nIndex]['id'] : null;
-        
+        $nEntityId = (!empty($result)) ? $result['id'] : null;
+
+
         // make sure an entity is available only once
         if (empty($nEntityId))
         {
@@ -389,7 +383,7 @@ class MimotoEntityRepository
             
             // register
             $entity->setId($nEntityId);
-            $entity->setCreated($aResults[$nIndex]['created']);
+            $entity->setCreated($result['created']);
 
             // store
             $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $entity;
@@ -399,8 +393,8 @@ class MimotoEntityRepository
             // load
             $entity = $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)];
         }
-        
-        
+
+
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
         
@@ -425,7 +419,7 @@ class MimotoEntityRepository
                     case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
 
                         // load
-                        $entity->setValue($propertyConfig->name, $aResults[$nIndex][$propertyValue->mysqlColumnName]);
+                        $entity->setValue($propertyConfig->name, $result[$propertyValue->mysqlColumnName]);
                         break;
 
                     case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
@@ -435,13 +429,12 @@ class MimotoEntityRepository
 
                         // load
                         $stmt = $GLOBALS['database']->prepare(
-                            'SELECT * FROM :dbtable'.
+                            'SELECT * FROM '.$propertyValue->mysqlConnectionTable.
                             ' WHERE parent_id = :parent_id'.
                             ' && parent_property_id = :parent_property_id'.
                             ' ORDER BY sortindex'
                         );
                         $params = array(
-                            ':dbtable' => $propertyValue->mysqlConnectionTable,
                             ':parent_id' => $entity->getId(),
                             ':parent_property_id' => $propertyConfig->id
                         );
@@ -472,10 +465,6 @@ class MimotoEntityRepository
                 }
             }
         }
-
-        echo '<pre>';
-        print_r($entity);
-        echo '</pre>';
 
         // start tracking changes
         $entity->trackChanges();
