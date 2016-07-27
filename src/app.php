@@ -27,7 +27,7 @@ $app['Mimoto'] = new \Mimoto\CMS\Mimoto($app);
 
 function output($sTitle, $data)
 {
-    echo '<div style="background-color:#f5f5f5;border:solid 1px #858585;padding:0 20px 20px 20px">';
+    echo '<div style="background-color:#f5f5f5;border:solid 1px #858585;padding:20px">';
     echo '<h2><b style="color:#06afea">'.$sTitle.'</b></h2><hr>';
     echo '<pre style="width:100%">';
     print_r($data);
@@ -36,12 +36,14 @@ function output($sTitle, $data)
     echo '<br>';
 }
 
-function error($sMessage)
+function error($data, $bDumpVar = false)
 {
     echo '<div style="background-color:#f3f3f3;border:solid 1px #cccccc;padding:0 20px 20px 20px">';
     echo '<div style="display:inline-block;position:relative;">';
     echo '<h2><b style="color:#ff66cc;padding:0 20px 0 0;">Error</b></h2><hr>';
-    echo $sMessage;
+    echo '<pre style="width:100%">';
+    ($bDumpVar) ? var_dump($data) : print_r($data);
+    echo '</pre>';
     echo '</div>';
     echo '<br>';
     die();

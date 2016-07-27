@@ -3,14 +3,8 @@
 {% block content %}
     <h2>entities</h2>
     <br>
-    <u>Admin</u><br><br>
     <div class="entity_container" {{ Aimless.realtime('entities')|raw }}>
         {{ Aimless.selection('entities')|raw }}
     </div>
-    <br>
-    <u>Superuser</u><br><br>
-    {#<div class="entity_container" {{ Aimless.realtime('entities.{owner="superuser"}')|raw }}>
-        {{ Aimless.selection('entities.{owner="superuser"}')|raw }}
-    </div>#}
-    {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Add new entity', icon:'+', action:"window.open('/mimoto.cms/entity/new', '_self');" } %}
+    {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Add new entity', icon:'+', action:"Maido.data.entityNew();" } %}
 {% endblock %}

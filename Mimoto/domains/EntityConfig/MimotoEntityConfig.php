@@ -186,9 +186,9 @@ class MimotoEntityConfig
     /**
      * Set collection as property
      * @param string $sPropertyName The property's name
-     * @param array $options Array containig the options 'allowedEntityType' and 'allowDuplicates'
+     * @param array $settings Array containig the settings 'allowedEntityType' and 'allowDuplicates'
      */
-    public function setCollectionAsProperty($sPropertyName, $nPropertyId, $options)
+    public function setCollectionAsProperty($sPropertyName, $nPropertyId, $settings)
     {
         // compose
         $property = (object) array(
@@ -196,11 +196,11 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                'allowedEntityTypes' => $options['allowedEntityTypes']->value,
-                'allowDuplicates' => ($options['allowDuplicates']->value === 'true') ? true : false
+                'allowedEntityTypes' => $settings['allowedEntityTypes']->value,
+                'allowDuplicates' => ($settings['allowDuplicates']->value === 'true') ? true : false
             )
         );
-        
+
         // store
         $this->_aProperties[$sPropertyName] = $property;
     }

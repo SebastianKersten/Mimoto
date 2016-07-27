@@ -181,7 +181,7 @@ class MimotoEventService
     {
         
         // configure
-        $sPathToActionFiles = '../src/MaidoProjects/config/actions';
+        $sPathToActionFiles = dirname(dirname(dirname(dirname(__FILE__)))).'/src/config/actions';
         
         
         // init

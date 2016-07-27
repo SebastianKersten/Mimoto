@@ -63,7 +63,8 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
 
 
 
-        $app->get('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\EntityController::createNew');
+        $app->get('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\EntityController::entityCreate');
+        $app->post('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\EntityController::entityCreate');
 
 
 

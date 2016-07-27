@@ -63,6 +63,7 @@ div.layer_popup {
         div.popup_content {
             padding: 25px 25px 20px 25px;
             background-color: #ffffff;
+            overflow: scroll;
         }
         
         div.popup_button_close {
@@ -205,6 +206,10 @@ div.button {
     padding: 10px 15px 10px 15px;
     cursor: pointer;
     white-space:nowrap;
+}
+
+div.button.red {
+    background-color: #ff0000;
 }
 
 div.button_small {

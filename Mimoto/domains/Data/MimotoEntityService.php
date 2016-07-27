@@ -127,10 +127,6 @@ class MimotoEntityService
             
             $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
             
-            
-            //output('$sEntityType', $sEntityType);
-            //output('$entityConfig', $entityConfig);
-            
             if ($entityConfig !== false)
             {
                 $this->_aEntityConfigs[$sEntityType] = $entityConfig;
@@ -147,7 +143,7 @@ class MimotoEntityService
         }
         catch(MimotoEntityException $e)
         {
-            die($e->getMessage());
+            return false;
         }
         
         // send
@@ -215,6 +211,35 @@ class MimotoEntityService
         }
         
         return $this->_entityRepository->store($entityConfig, $entity);
+    }
+
+    /**
+     * Delete entity via main repository
+     * @param MimotoEntity $entity
+     */
+    public function delete(MimotoEntity $entity)
+    {
+        // verify
+        if (!isset($this->_aEntityConfigs[$entity->getEntityType()]))
+        {
+
+            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($entity->getEntityType());
+
+            if ($entityConfig !== false)
+            {
+                $this->_aEntityConfigs[$entity->getEntityType()] = $entityConfig;
+            }
+            else
+            {
+                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '".$entity->getEntityType()."'");
+            }
+        }
+        else
+        {
+            $entityConfig = $this->_aEntityConfigs[$entity->getEntityType()];
+        }
+
+        return $this->_entityRepository->delete($entityConfig, $entity);
     }
     
 }

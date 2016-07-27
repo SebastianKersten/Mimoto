@@ -5,34 +5,11 @@ Maido._aProjects = Array();
 
 Maido.data = {};
 
-Maido.data.newEntity = function(sEntityType)
-{
-    Maido.popup.open('/' + sEntityType + '/new');
-}
 
 Maido.data.newSubproject = function(nProjectID)
 {
     Maido.popup.open('/project/' + nProjectID + '/subproject/new');   
 }
-
-Maido.data.changeEntity = function(sEntityType, nId)
-{
-    Maido.popup.open('/' + sEntityType + '/change/' + nId);
-}
-
-Maido.data.saveEntity = function(sEntityType, data)
-{
-    $.ajax({
-        type: 'POST',
-        url: "/" + sEntityType + "/save",
-        data: data,
-        dataType: 'json',
-        success: function(data) {
-            Maido.popup.close();
-        }
-    });
-}
-
 
 
 Maido.toggleProjectState = function(nID)
@@ -81,20 +58,21 @@ Maido.popup.open = function(sURL)
     var layer_overlay = document.getElementById('layer_overlay');
     var layer_popup = document.getElementById('layer_popup');
     var popup_content = document.getElementById('popup_content');
-    
+
     // show
     layer_overlay.classList.remove('hidden');
     layer_popup.classList.remove('hidden');
-    
+
+
     // load
     var r = new XMLHttpRequest();
     r.open("GET", sURL, true);
     r.onreadystatechange = function ()
     {
         if (r.readyState != 4 || r.status != 200) return;
-        
+
         popup_content.innerHTML = r.responseText;
-        
+
         // focus primary input
         var primaryInput = document.getElementById('form_field_name');
         if (primaryInput)

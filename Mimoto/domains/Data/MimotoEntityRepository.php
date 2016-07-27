@@ -201,7 +201,7 @@ class MimotoEntityRepository
                 case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
 
                     $modifiedCollection = $aModifiedValues[$sPropertyName];
-                    
+
                     if (count($modifiedCollection->added) > 0)
                     {
                         for ($k = 0; $k < count($modifiedCollection->added); $k++)
@@ -211,17 +211,17 @@ class MimotoEntityRepository
                             
                             // load
                             $stmt = $GLOBALS['database']->prepare(
-                                'INSERT INTO '.$propertyValue->mysqlConnectionTable.' SET '.
-                                'parent_id = :parent_id '.
-                                'parent_property_id = :parent_property_id '.
-                                'child_entity_type = :child_entity_type '.
-                                'child_id = :child_id '.
-                                'sortindex = :sortindex'
+                                "INSERT INTO ".$propertyValue->mysqlConnectionTable." SET ".
+                                "parent_id = :parent_id, ".
+                                "parent_property_id = :parent_property_id, ".
+                                "child_entity_type_id = :child_entity_type_id, ".
+                                "child_id = :child_id, ".
+                                "sortindex = :sortindex"
                             );
                             $params = array(
                                 ':parent_id' => $newItem->parentId,
                                 ':parent_property_id' => $newItem->parentPropertyId,
-                                ':child_entity_type' => $newItem->childEntityType->id,
+                                ':child_entity_type_id' => $newItem->childEntityType->id,
                                 ':child_id' => $newItem->childId,
                                 ':sortindex' => $newItem->sortIndex
                             );
@@ -288,7 +288,7 @@ class MimotoEntityRepository
             // compose
             for ($i = 0; $i < count($aQueryElements); $i++)
             {
-                $sQuery .= $aQueryElements[$i]->key.' = :'.$aQueryElements[$i]->value;
+                $sQuery .= $aQueryElements[$i]->key.' = :'.$aQueryElements[$i]->key;
                 $params[':'.$aQueryElements[$i]->key] = $aQueryElements[$i]->value;
                 if ($i < count($aQueryElements) - 1) { $sQuery .= ', '; }
             }
@@ -324,8 +324,8 @@ class MimotoEntityRepository
         else
         {
             // get entity
-            $entity = $this->get($entityConfig,  $GLOBALS['database']->lastInsertId());
-            
+            $entity->setId($GLOBALS['database']->lastInsertId());
+
             // register
             $sEvent = MimotoEvent::CREATED;
         }
@@ -346,11 +346,24 @@ class MimotoEntityRepository
         $entity->acceptChanges();
         
         
-        
         // send
         return $entity;
     }
-    
+
+    /**
+     * Delete entity
+     * @param entity $entity
+     */
+    public function delete(MimotoEntityConfig $entityConfig, MimotoEntity $entity)
+    {
+        // load
+        $stmt = $GLOBALS['database']->prepare('DELETE FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
+        $params = array(
+            ':id' => $entity->getId()
+        );
+        return $stmt->execute($params);
+    }
+
     
     
     // ----------------------------------------------------------------------------
@@ -452,8 +465,8 @@ class MimotoEntityRepository
                                 'parentPropertyId' => $row['parent_property_id'],
                                 'childId' => $row['child_id'],
                                 'childEntityType' => (object) array(
-                                    'id' => $row['child_entity_type'],
-                                    'name' => $GLOBALS['Mimoto.Config']->getEntityNameById($row['child_entity_type'])
+                                    'id' => $row['child_entity_type_id'],
+                                    'name' => $GLOBALS['Mimoto.Config']->getEntityNameById($row['child_entity_type_id'])
                                 ),
                                 'sortIndex' => $row['sortindex']
                             );

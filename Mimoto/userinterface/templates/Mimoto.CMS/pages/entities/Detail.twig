@@ -4,11 +4,18 @@
     <h2><a href="/mimoto.cms/entities">entities</a> / entity detail</h2>
     <br>
     Name = <b>{{ Aimless.data('name') }}</b><br>
-    <i>Owner = {{ Aimless.data('owner') }}</i><br>
     <br>
     Properties:<br>
+    {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Add new property', icon:'+', action:"Maido.popup.open('/dev/entity/new');" } %}
     <br>
     <div class="entity_container" {{ Aimless.realtime('properties')|raw }}>
         {{ Aimless.data('properties')|raw }}
     </div>
+    <br>
+    <hr>
+    <br>
+    <b>Danger zone!</b><br>
+    <br>
+    <u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.<br>
+    {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Delete entity', icon:'X', action:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", type:'red' } %}
 {% endblock %}
