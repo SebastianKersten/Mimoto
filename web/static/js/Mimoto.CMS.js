@@ -11,14 +11,31 @@ if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
 
 Maido.data.entityNew = function()
 {
-    Maido.popup.open('/dev/entity/new');
+    Maido.popup.open("/mimoto.cms/entity/new");
 }
 
 Mimoto.CMS.entityCreate = function(data)
 {
     $.ajax({
         type: 'POST',
-        url: "/dev/entity/create",
+        url: "/mimoto.cms/entity/create",
+        data: data,
+        dataType: 'json'
+    }).done(function(data) {
+        Maido.popup.close();
+    });
+}
+
+Mimoto.CMS.entityEdit = function(nEntityId)
+{
+    Maido.popup.open("/mimoto.cms/entity/" + nEntityId + "/edit");
+}
+
+Mimoto.CMS.entityUpdate = function(nEntityId, data)
+{
+    $.ajax({
+        type: 'POST',
+        url: "/mimoto.cms/entity/" + nEntityId + "/update",
         data: data,
         dataType: 'json'
     }).done(function(data) {
@@ -32,7 +49,7 @@ Mimoto.CMS.entityDelete = function(nEntityId, sEntityName)
     if (response == true) {
         $.ajax({
             type: 'GET',
-            url: "/dev/entity/" + nEntityId + "/delete",
+            url: "/mimoto.cms/entity/" + nEntityId + "/delete",
             //data: data,
             dataType: 'json'
         }).done(function(data) {
@@ -41,6 +58,30 @@ Mimoto.CMS.entityDelete = function(nEntityId, sEntityName)
     }
 }
 
+
+
+Mimoto.CMS.entityPropertyNew = function(nEntityId)
+{
+    Maido.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
+}
+
+Mimoto.CMS.entityPropertyCreate = function(nEntityId, data)
+{
+    $.ajax({
+        type: 'POST',
+        url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
+        data: data,
+        dataType: 'json'
+    }).done(function(data) {
+        Maido.popup.close();
+    });
+}
+
+Mimoto.CMS.entityPropertyEdit = function(nEntityPropertyId)
+{
+    Maido.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
+    // TODO - route aanpassen
+}
 
 
 

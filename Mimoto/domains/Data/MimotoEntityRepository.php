@@ -225,6 +225,7 @@ class MimotoEntityRepository
                                 ':child_id' => $newItem->childId,
                                 ':sortindex' => $newItem->sortIndex
                             );
+
                             $stmt->execute($params);
 
                             // complete
@@ -333,7 +334,7 @@ class MimotoEntityRepository
         
         // setup
         $event = new MimotoEvent($entity, $sEvent);
-        
+
         // broadcast
         $this->_EventService->sendUpdate($event->getType(), $event);
         

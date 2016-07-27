@@ -18,7 +18,7 @@ class DashboardController
     public function viewDashboard(Application $app)
     {
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS/dashboard/Overview');
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_dashboard_Overview');
 
         // output
         return $page->render();

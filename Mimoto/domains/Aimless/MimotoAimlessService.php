@@ -384,9 +384,9 @@ class MimotoAimlessService
                 $data->updated[] = $valueForBroadcast;
             }
         }
-        
-        
-        output('Data to broadcast', $data);
+
+
+        //output('Data to broadcast', $data);
         
         
         // 1. dit gaat via async, het is efficienter om de rest af te handelen via deze directe route (denk aan "modified")

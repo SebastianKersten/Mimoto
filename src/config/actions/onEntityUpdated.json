@@ -1,0 +1,13 @@
+{
+    "trigger": ["_mimoto_entity.updated", "_mimoto_entityproperty.updated", "_mimoto_entitypropertysettings.updated"],
+    "service": "Aimless",
+    "request": "dataUpdate",
+    "type": "async",
+    "config":
+    {
+        "properties":
+        [
+            "name"
+        ]
+    }
+}

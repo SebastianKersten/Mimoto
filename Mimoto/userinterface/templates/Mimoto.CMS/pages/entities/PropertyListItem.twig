@@ -1,4 +1,4 @@
-<div class="entity_listitem">
-    <div class="entity_listitem_label" {{ Aimless.realtime('name')|raw }}><b>{{ Aimless.data('name')|raw }}</b></div>
-    <div class="entity_listitem_sublabel" {{ Aimless.realtime('type')|raw }}>{{ Aimless.data('type')|raw }}</div>
+<div class="entity_listitem" onclick="Mimoto.CMS.entityPropertyEdit({{ Aimless.meta('id') }});">
+    <div class="entity_listitem_label" {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</div>
+    <div class="entity_listitem_sublabel" {{ Aimless.realtime('type')|raw }}>{{ Aimless.data('type') }}</div>
 </div>

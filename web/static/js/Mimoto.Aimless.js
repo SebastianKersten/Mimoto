@@ -83,7 +83,7 @@ Mimoto.Aimless.connect = function()
                     if (!bHasOrigin)
                     {
                         // === value ===
-                        
+
                         // Case 1: "project.3.name"
                         // Action: change project.3.name
                         // ------

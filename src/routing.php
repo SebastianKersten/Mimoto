@@ -87,18 +87,3 @@ $app->get('/memcachemonitor/{sEntityType}', 'MaidoProjects\\UserInterface\\Examp
 
 
 $app->get('/notifications', 'MaidoProjects\\UserInterface\\NotificationCenterController::viewNotificationCenter');
-
-
-// Entity
-$app->get('/dev/entity/new', 'Mimoto\\UserInterface\\EntityController::entityNew');
-$app->post('/dev/entity/create', 'Mimoto\\UserInterface\\EntityController::entityCreate');
-//$app->get('/dev/entity/{nEntityId}/edit', 'Mimoto\\UserInterface\\EntityController::entityCreate'); shows form
-$app->get('/dev/entity/{nEntityId}/update', 'Mimoto\\UserInterface\\EntityController::entityUpdate'); // does the change (the action)
-$app->get('/dev/entity/{nEntityId}/delete', 'Mimoto\\UserInterface\\EntityController::entityDelete'); // does the delete (the action)
-
-// EntityProperty
-$app->get('/dev/entity/{nEntityId}/property/new', 'Mimoto\\UserInterface\\EntityController::entityPropertyNew');
-
-
-//$app->get('/dev/entity/{nEntityId}', 'Mimoto\\UserInterface\\EntityController::entityCreate');
-//$app->get('/dev/entityproperty/new', 'Mimoto\\UserInterface\\EntityController::entityCreate');

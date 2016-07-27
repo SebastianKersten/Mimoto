@@ -136,7 +136,7 @@ class MimotoEntityConfigService
         $this->flushEntityConfigCache();
     }
 
-    public function entityChange($nEntityId, $sNewEntityName)
+    public function entityUpdate($nEntityId, $sNewEntityName)
     {
         // 1. validate name (mysql worthy)
         if (!$this->entityNameIsValid($sNewEntityName)) error("New entity name '$sNewEntityName' formatted invalid");

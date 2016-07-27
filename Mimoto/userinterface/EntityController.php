@@ -36,30 +36,10 @@ class EntityController
         return $page->render();
     }
 
-    public function viewEntity(Application $app, $nId)
-    {
-        // load
-        $entity = $app['Mimoto.Data']->get('_mimoto_entity', $nId);
-
-        // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_Detail', $entity);
-
-        // setup
-        $page->setPropertyTemplate('properties', 'Mimoto.CMS_entities_PropertyListItem');
-
-        // output
-        return $page->render();
-    }
-
-
-    // entityNew -> form
-    // entityEdit -> form
-
-
     public function entityNew(Application $app)
     {
         // create
-        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntity');
+        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntityNew');
 
         // output
         return $form->render();
@@ -77,16 +57,49 @@ class EntityController
         return new JsonResponse((object) array('result' => 'Entity created! '.date("Y.m.d H:i:s")), 200);
     }
 
-    public function entityChange(Application $app, Request $request, $nEntityId)
+    public function entityView(Application $app, $nEntityId)
+    {
+        // load
+        $entity = $app['Mimoto.Data']->get('_mimoto_entity', $nEntityId);
+
+        // validate
+        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+
+        // create
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_Detail', $entity);
+
+        // setup
+        $page->setPropertyTemplate('properties', 'Mimoto.CMS_entities_PropertyListItem');
+
+        // output
+        return $page->render();
+    }
+
+    public function entityEdit(Application $app, $nEntityId)
+    {
+        // load
+        $entity = $app['Mimoto.Data']->get('_mimoto_entity', $nEntityId);
+
+        // validate
+        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+
+        // create
+        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntityEdit', $entity);
+
+        // output
+        return $form->render();
+    }
+
+    public function entityUpdate(Application $app, Request $request, $nEntityId)
     {
         // register
-        $sNewEntityName = 'test2'; //$request->get('name'); // INSTALL mysql
+        $sNewEntityName = $request->get('name');
 
         // change
-        $app['Mimoto.Config']->entityChange($nEntityId, $sNewEntityName);
+        $app['Mimoto.Config']->entityUpdate($nEntityId, $sNewEntityName);
 
         // send
-        return new JsonResponse((object) array('result' => 'Entity changed! '.date("Y.m.d H:i:s")), 200);
+        return new JsonResponse((object) array('result' => 'Entity updated! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function entityDelete(Application $app, Request $request, $nEntityId)
@@ -103,10 +116,22 @@ class EntityController
     // --- EntityProperty ---
 
 
+    public function entityPropertyNew(Application $app, $nEntityId)
+    {
+        // create
+        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntityProperty');
+
+        // setup
+        $form->setVar('nEntityId', $nEntityId);
+
+        // output
+        return $form->render();
+    }
+
     public function entityPropertyCreate(Application $app, Request $request, $nEntityId)
     {
         // register
-        $sEntityPropertyName = 'type'; //$request->get('name');
+        $sEntityPropertyName = $request->get('name');
         $sEntityPropertyType = 'value'; //$request->get('type');
 
         // create entity

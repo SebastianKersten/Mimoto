@@ -55,33 +55,6 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         // register
-        $app->get('/mimoto.cms', 'Mimoto\\UserInterface\\DashboardController::viewDashboard');
-
-
-        $app->get('/mimoto.cms/entities', 'Mimoto\\UserInterface\\EntityController::viewEntityOverview');
-        $app->get('/mimoto.cms/entity/{nId}', 'Mimoto\\UserInterface\\EntityController::viewEntity');
-
-
-
-        $app->get('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\EntityController::entityCreate');
-        $app->post('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\EntityController::entityCreate');
-
-
-
-        $app->get('/mimoto.cms/forms', 'Mimoto\\UserInterface\\FormsController::getOverview');
-        $app->get('/mimoto.cms/form/new', 'Mimoto\\UserInterface\\FormsController::createNew');
-        $app->get('/mimoto.cms/form/{nId}', 'Mimoto\\UserInterface\\FormsController::getForm');
-        $app->get('/mimoto.cms/content', 'Mimoto\\UserInterface\\ContentController::getOverview');
-        $app->get('/mimoto.cms/content/new', 'Mimoto\\UserInterface\\ContentController::createNew');
-        $app->get('/mimoto.cms/content/{nId}', 'Mimoto\\UserInterface\\ContentController::getContent');
-        
-        
-        $app->get('/mimoto.cms/viewentity/{sEntityType}/{nId}', 'Mimoto\\UserInterface\\EntitiesController::viewEntity');
-        //$app->get('/mimoto.cms/viewentity/{sEntityType}', 'Mimoto\\UserInterface\\EntitiesController::viewEntity');
-        //$app->get('/mimoto.cms/viewentity/{sEntityType}/{nId}', 'Mimoto\\UserInterface\\EntitiesController::viewEntity');
-        
-        
-        // register
         $app['Mimoto.Config'] = $app['Mimoto.EntityConfigService'] = $app->share(function($app) {
             
             // init

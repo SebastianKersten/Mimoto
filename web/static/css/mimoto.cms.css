@@ -176,7 +176,7 @@ div.button {
 /* ---------- Pages ---------- */
 
 
-div.entity_container {
+div.entity_container, div.entityproperty_container {
     position: relative;
     margin-bottom: 25px;
 }
@@ -194,6 +194,7 @@ div.entity_listitem {
     
     div.entity_listitem_label {
         font-size: 14px;
+        font-weight: bold;
     }
 
     div.entity_listitem_sublabel {
