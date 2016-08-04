@@ -1,6 +1,6 @@
 {% include 'Mimoto.CMS/forms/output/title.twig' with
     {
-        title:'Edit your entity',
+        title:'Design your entity',
         subtitle:'',
         description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
     }
@@ -22,7 +22,16 @@
 
 <div class="form_menu">
     <div class="button_text" onClick="Maido.popup.close();">Cancel</div>
-    <div class="button" onClick="Mimoto.CMS.entityUpdate({{ Aimless.meta('id') }}, {
+    <div class="button" onClick="Mimoto.CMS.entityCreate({
                     name:document.getElementById('form_data_name').value
                 });">Save</div>
+</div>
+
+
+
+<div class="form_menu">
+    <div class="button_text" onClick="Maido.popup.close();">Cancel</div>
+    <div class="button" onClick="Mimoto.CMS.entityUpdate({{ Aimless.meta('id') }}, {
+            name:document.getElementById('form_data_name').value
+            });">Save</div>
 </div>

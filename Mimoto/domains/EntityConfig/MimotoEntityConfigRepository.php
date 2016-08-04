@@ -4,6 +4,7 @@
 namespace Mimoto\EntityConfig;
 
 // Mimoto classes
+use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
@@ -45,7 +46,7 @@ class MimotoEntityConfigRepository
     public function __construct()
     {
         // prepare
-        $this->_aEntities = $this->initCoreConfigurations();
+        $this->_aEntities = CoreConfig::getCoreEntityConfigs();
         $this->loadProjectConfigurations();
     }
     
@@ -405,171 +406,4 @@ class MimotoEntityConfigRepository
         }
     }
 
-
-
-    private function initCoreConfigurations()
-    {
-
-        // setup
-        $aEntities = [
-            (object) array(
-                'id' => 'eid1',
-                'name' => '_mimoto_entity',
-                'created' => '1976-10-19 23:15:00',
-                'properties' => [
-                    (object) array(
-                        'id' => 'pid1',
-                        'name' => 'name',
-                        'type' => 'value',
-                        'created' => '1976-10-19 23:15:00',
-                        'settings' => [
-                             (object) array(
-                                'id' => 'sid1',
-                                 'key' => 'type',
-                                 'type' => 'value',
-                                 'value' => 'textline',
-                                 'created' => '1976-10-19 23:15:00'
-                             )
-                        ]
-                    ),
-                    (object) array(
-                        'id' => 'pid2',
-                        'name' => 'properties',
-                        'type' => 'collection',
-                        'created' => '1976-10-19 23:15:00',
-                        'settings' => [
-                            'allowedEntityTypes' => (object) array(
-                                'id' => 'sid2',
-                                'key' => 'allowedEntityTypes',
-                                'type' => 'array',
-                                'value' => '["eid2"]',
-                                'created' => '1976-10-19 23:15:00'
-                            ),
-                            'allowDuplicates' => (object) array(
-                                'id' => 'sid3',
-                                'key' => 'allowDuplicates',
-                                'type' => 'boolean',
-                                'value' => 'false',
-                                'created' => '1976-10-19 23:15:00'
-                            )
-                        ]
-                    )
-                ]
-            ),
-            (object) array(
-                'id' => 'eid2',
-                'name' => '_mimoto_entityproperty',
-                'created' => '1976-10-19 23:15:00',
-                'properties' => [
-                    (object) array(
-                        'id' => 'pid3',
-                        'name' => 'name',
-                        'type' => 'value',
-                        'created' => '1976-10-19 23:15:00',
-                        'settings' => [
-                            'type' => (object) array(
-                                'id' => 'sid4',
-                                'key' => 'type',
-                                'type' => 'value',
-                                'value' => 'textline',
-                                'created' => '1976-10-19 23:15:00'
-                            )
-                        ]
-                    ),
-                    (object) array(
-                        'id' => 'pid4',
-                        'name' => 'type',
-                        'type' => 'value',
-                        'created' => '1976-10-19 23:15:00',
-                        'settings' => [
-                            'type' => (object) array(
-                                'id' => 'sid5',
-                                'key' => 'type',
-                                'type' => 'value',
-                                'value' => 'textline',
-                                'created' => '1976-10-19 23:15:00'
-                            )
-                        ]
-                    ),
-                    (object) array(
-                        'id' => 'pid5',
-                        'name' => 'settings',
-                        'type' => 'collection',
-                        'created' => '1976-10-19 23:15:00',
-                        'settings' => [
-                            'allowedEntityTypes' => (object) array(
-                                'id' => 'sid6',
-                                'key' => 'allowedEntityTypes',
-                                'type' => 'array',
-                                'value' => '["eid3"]',
-                                'created' => '1976-10-19 23:15:00'
-                            ),
-                            'allowDuplicates' => (object) array(
-                                'id' => 'sid7',
-                                'key' => 'allowDuplicates',
-                                'type' => 'boolean',
-                                'value' => 'false',
-                                'created' => '1976-10-19 23:15:00'
-                            )
-                        ]
-                    )
-                ]
-            ),
-            (object) array(
-                'id' => 'eid3',
-                'name' => '_mimoto_entitypropertysetting',
-                'created' => '1976-10-19 23:15:00',
-                'properties' => [
-                    (object) array(
-                        'id' => 'pid6',
-                        'name' => 'key',
-                        'type' => 'value',
-                        'created' => '1976-10-19 23:15:00',
-                        'settings' => [
-                            'type' => (object) array(
-                                'id' => 'sid8',
-                                'key' => 'type',
-                                'type' => 'value',
-                                'value' => 'textline',
-                                'created' => '1976-10-19 23:15:00'
-                            )
-                        ]
-                    ),
-                    (object) array(
-                        'id' => 'pid7',
-                        'name' => 'type',
-                        'type' => 'value',
-                        'created' => '1976-10-19 23:15:00',
-                        'settings' => [
-                            'type' => (object) array(
-                                'id' => 'sid9',
-                                'key' => 'type',
-                                'type' => 'value',
-                                'value' => 'textline',
-                                'created' => '1976-10-19 23:15:00'
-                            )
-                        ]
-                    ),
-                    (object) array(
-                        'id' => 'pid8',
-                        'name' => 'value',
-                        'type' => 'value',
-                        'created' => '1976-10-19 23:15:00',
-                        'settings' => [
-                            'type' => (object) array(
-                                'id' => 'sid10',
-                                'key' => 'type',
-                                'type' => 'value',
-                                'value' => 'textline',
-                                'created' => '1976-10-19 23:15:00'
-                            )
-                        ]
-                    )
-                ]
-            )
-        ];
-
-        // send
-        return $aEntities;
-    }
 }

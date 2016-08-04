@@ -1,0 +1,15 @@
+<div {{ Aimless.form.field('name') }} class="form_field">
+    <div class="form_input_label">{{ label }}{% if optional is not empty %}{% if optional==true %}<span class="form_input_optional"> (optional)</span>{% endif %}{% endif %}</div>
+    <div><input {{ Aimless.form.input('name') }} type="text" class="textfield" value="{{ value }}" /></div>
+    <div {{ Aimless.form.error('name') }} class="form_errormessage"></div>
+</div>
+<!-- auto include by AimlessForm ( #TODO - include form id for auto connect and reading of values directly from field form.submit() -->
+<script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>
+
+settings blind toevoegen aan register
+
+
+maak checklist
+
+
+settings toevoegen aan properties

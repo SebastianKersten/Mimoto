@@ -39,7 +39,12 @@ class EntityController
     public function entityNew(Application $app)
     {
         // create
-        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntityNew');
+        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntity');
+
+        $form->setVar('aPropertyNameValidation', json_encode(['regex' => '^[a-zA-Z][a-zA-Z0-9-_]*?$', 'maxchars' => 25, 'api' => 'Mimoto/form/validate']));
+
+        // 'aPropertyNameValidation' => json_encode(['regex' => '^[a-zA-Z][a-zA-Z0-9-_]*?$', 'maxchars' => 10, 'api' => 'Mimoto/form/validate']),
+        // 'aPropertyGroupValidation' => json_encode(['regex' => '^[a-zA-Z]*?[a-zA-Z0-9-_]*?(\.[a-zA-Z][a-zA-Z0-9-_]*?)*$'])
 
         // output
         return $form->render();
@@ -84,7 +89,7 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // create
-        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntityEdit', $entity);
+        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntity', $entity);
 
         // output
         return $form->render();

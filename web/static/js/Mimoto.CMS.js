@@ -9,7 +9,7 @@
 if (typeof Mimoto == "undefined") Mimoto = {};
 if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
 
-Maido.data.entityNew = function()
+Mimoto.CMS.entityNew = function()
 {
     Maido.popup.open("/mimoto.cms/entity/new");
 }
@@ -96,7 +96,6 @@ Mimoto.form = {};
 
 Mimoto.form.registerInputField = function(sInputFieldId, validation)
 {
-
     var scope = {};
     scope.validation = validation;
     scope.sInputFieldId = sInputFieldId;

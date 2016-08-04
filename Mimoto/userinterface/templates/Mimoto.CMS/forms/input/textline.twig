@@ -3,5 +3,5 @@
     <div><input id="form_data_{{ name }}" type="text" class="textfield" value="{{ value }}" /></div>
     <div id="form_errormessage_{{ name }}" class="form_errormessage"></div>
 </div>
-<!-- auto include by AimlessForm -->
+<!-- auto include by AimlessForm ( #TODO - include form id for auto connect and reading of values directly from field form.submit() -->
 <script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>

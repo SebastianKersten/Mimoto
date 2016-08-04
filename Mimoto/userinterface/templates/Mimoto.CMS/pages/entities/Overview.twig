@@ -6,5 +6,5 @@
     <div class="entity_container" {{ Aimless.realtime('entities')|raw }}>
         {{ Aimless.selection('entities')|raw }}
     </div>
-    {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Add new entity', icon:'+', action:"Maido.data.entityNew();" } %}
+    {% include 'Mimoto.CMS/forms/input/button.twig' with { label:'Add new entity', icon:'+', action:"Mimoto.CMS.entityNew();" } %}
 {% endblock %}

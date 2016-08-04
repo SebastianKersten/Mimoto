@@ -63,28 +63,30 @@ Maido.popup.open = function(sURL)
     layer_overlay.classList.remove('hidden');
     layer_popup.classList.remove('hidden');
 
+    $.ajax({
+        url: sURL,
+        dataType: 'html',
+        success: function(data, textStatus, jqXHR) {
 
-    // load
-    var r = new XMLHttpRequest();
-    r.open("GET", sURL, true);
-    r.onreadystatechange = function ()
-    {
-        if (r.readyState != 4 || r.status != 200) return;
+            //jQuery(selecteur).html(jqXHR.responseText);
+            var response = jQuery(jqXHR.responseText);
+            //var responseScript = response.filter("script");
+            //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
 
-        popup_content.innerHTML = r.responseText;
+            //popup_content.innerHTML = reponse;
+            $('#popup_content').html(data);
 
-        // focus primary input
-        var primaryInput = document.getElementById('form_field_name');
-        if (primaryInput)
-        {
-            primaryInput.focus();
-            var val = primaryInput.value;
-            primaryInput.value = '';
-            primaryInput.value = val;
+            /*// focus primary input
+            var primaryInput = document.getElementById('form_field_name');
+            if (primaryInput)
+            {
+                primaryInput.focus();
+                var val = primaryInput.value;
+                primaryInput.value = '';
+                primaryInput.value = val;
+            }*/
         }
-    };
-    r.send();
-    //r.send("banana=yellow");
+    });
 }
 
 Maido.popup.close = function()

@@ -312,13 +312,13 @@ input.textfield {
 }
 
 input.textfield.error, input.textfield:focus.error {
-    border: 1px solid #d1736e;
+    border: 1px solid #ff0000;
 }
 
 div.form_errormessage {
     display: none;
     font-family: "Helvetica neue", sans-serif;
-    color: #d1736e;
+    color: #ff0000;
     font-size: 13px;
     padding: 10px 0 10px 0;
     width: 100%;

@@ -90,9 +90,15 @@ class AimlessComponent
     
     public function data($sPropertyName)
     {
-        
+        // validate
+        if (empty($this->_entity)) return;
+
+
+
         // 1. subpropertyname (selector-query)
-        
+
+
+
         // read
         $value = $this->_entity->getValue($sPropertyName, true);
         
@@ -174,7 +180,10 @@ class AimlessComponent
     
     public function realtime($sPropertySelector = null)
     {
-        
+        // validate
+        if (empty($this->_entity)) return;
+
+
         if ($sPropertySelector !== null)
         {
             // cleanup
@@ -237,6 +246,10 @@ class AimlessComponent
      */
     public function meta($sPropertyName)
     {
+        // validate
+        if (empty($this->_entity)) return;
+
+
         switch(strtolower($sPropertyName))
         {
             case 'id': return $this->_entity->getId();

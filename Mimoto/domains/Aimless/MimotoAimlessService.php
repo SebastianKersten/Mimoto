@@ -146,7 +146,6 @@ class MimotoAimlessService
                 'id' => $row['id'],
                 'name' => $row['name'],
                 'file' => $row['file'],
-                'owner' => $row['owner'],
                 'created' => $row['created'],
                 'conditionals' => []
             );

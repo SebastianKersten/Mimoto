@@ -27,6 +27,7 @@
             "Mimoto\\UserInterface\\": "./Mimoto/userinterface",
             "Mimoto\\EntityConfig\\": "./Mimoto/domains/EntityConfig",
             "Mimoto\\FormConfig\\": "./Mimoto/domains/FormConfig",
+            "Mimoto\\Core\\": "./Mimoto/domains/Core",
             "Mimoto\\Data\\": "./Mimoto/domains/Data",
             "Mimoto\\Event\\": "./Mimoto/domains/Event",
             "Mimoto\\Entity\\": "./Mimoto/domains/Entity",
