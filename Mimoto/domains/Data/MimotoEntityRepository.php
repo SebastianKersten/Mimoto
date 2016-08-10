@@ -408,7 +408,6 @@ class MimotoEntityRepository
         // read
         $nEntityId = (!empty($result)) ? $result['id'] : null;
 
-
         // make sure an entity is available only once
         if (empty($nEntityId))
         {

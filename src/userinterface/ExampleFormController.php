@@ -28,7 +28,7 @@ class ExampleFormController
             'name' => $person->getValue('name'),
             'role' => $person->getValue('role')
         ];
-        
+
         // setup
         $component->addForm('form_person', $aValues);
 

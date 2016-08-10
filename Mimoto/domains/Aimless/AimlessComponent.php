@@ -281,6 +281,7 @@ class AimlessComponent
         {
             case 'id': return $this->_entity->getId();
             case 'type': return $this->_entity->getEntityType();
+            case 'group': return $this->_entity->getEntityGroup();
             case 'created': return $this->_entity->getCreated();
         }
     }
@@ -337,12 +338,7 @@ class AimlessComponent
 
 
         // 2. add action to form, retrieved from form-loaded from database
-        // 4. bepaal stijl van fields $sTemplateName = ?
         // 5. add auto-register to each field
-
-
-        $sTemplateName = 'mls_title';
-
 
 
 
@@ -352,12 +348,15 @@ class AimlessComponent
         // load
         $aFields = $form->getValue('fields', true);
 
-        output('fields', $aFields);
+        //output('fields', $aFields);
 
         for ($i = 0; $i < count($aFields); $i++)
         {
             // register
             $field = $aFields[$i];
+
+            // read
+            $sTemplateName = $field->getEntityType();
 
             // create
             $component = $this->_AimlessService->createComponent($sTemplateName, $field);
@@ -368,6 +367,7 @@ class AimlessComponent
             // output
             $sRenderedForm .= $component->render();
 
+            // 1. check by group, add input support, or otherwise skip
 
             //<script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>
         }

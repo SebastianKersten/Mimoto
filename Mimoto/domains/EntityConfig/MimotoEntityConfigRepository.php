@@ -138,6 +138,7 @@ class MimotoEntityConfigRepository
             $entity = (object) array(
                 'id' => $row['id'],
                 'name' => $row['name'],
+                'group' => $row['group'],
                 'created' => $row['created'],
                 'properties' => []
             );
@@ -311,13 +312,13 @@ class MimotoEntityConfigRepository
             // skip if not the requested one
             if ($entity->name != $sEntityConfigName) { continue; }
 
-            
             // init
             $entityConfig = new MimotoEntityConfig();
             
             // setup
             $entityConfig->setId($entity->id);
             $entityConfig->setName($entity->name);
+            $entityConfig->setGroup($entity->group);
             $entityConfig->setMySQLTable($entity->name);
             
             // store

@@ -27,7 +27,13 @@ class MimotoEntityConfig
      * @var string 
      */
     var $_sName = '';
-    
+
+    /**
+     * The group of the entity
+     * @var string
+     */
+    var $_sGroup = '';
+
     /**
      * The properties of the entity
      * @var array 
@@ -88,6 +94,19 @@ class MimotoEntityConfig
      * @param string $sName
      */
     public function setName($sName) { $this->_sName = $sName; }
+
+
+    /**
+     * Get the group of the entity
+     * @return string The group of the entity
+     */
+    public function getGroup() { return $this->_sGroup; }
+
+    /**
+     * Set the group of the entity
+     * @param string $sGroup
+     */
+    public function setGroup($sGroup) { $this->_sGroup = $sGroup; }
     
     
     

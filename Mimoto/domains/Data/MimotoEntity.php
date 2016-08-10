@@ -28,7 +28,13 @@ class MimotoEntity extends MimotoData
      * @var string 
      */
     private $_sEntityType;
-    
+
+    /**
+     * The entity's group
+     * @var string
+     */
+    private $_sEntityGroup;
+
     /**
      * The moment of creation
      * @var datetime
@@ -40,30 +46,46 @@ class MimotoEntity extends MimotoData
     // ----------------------------------------------------------------------------
     // --- Properties--------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
+
+    /**
+     * Get the entity's id
+     *
+     * @return int
+     */
+    public function getId() { return $this->_nId; }
+
+    /**
+     * Set the entity's id
+     *
+     * @param int $nId The entity's id
+     */
+    public function setId($nId) { $this->_nId = $nId; }
+
+
     /**
      * Get the entity's type
      * 
      * @return string
      */
     public function getEntityType() { return $this->_sEntityType; }
-    
-    
+
+
     /**
-     * Get the entity's id
-     * 
-     * @return int
+     * Get the entity's group
+     *
+     * @return string
      */
-    public function getId() { return $this->_nId; }
-    
+    public function getEntityGroup() { return $this->_sEntityGroup; }
+
     /**
-     * Set the entity's id
-     * 
-     * @param int $nId The entity's id
+     * Set the entity's group
+     *
+     * @param string $sEntityGroup The entity's group
      */
-    public function setId($nId) { $this->_nId = $nId; }
-    
+    public function setEntityGroup($sEntityGroup) { $this->_sEntityGroup = $sEntityGroup; }
+
     
     /**
      * Get the moment of creation
