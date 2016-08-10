@@ -158,8 +158,7 @@ class MimotoEntityService
     {
         // read
         $sEntityType = $criteria['type'];
-        
-        
+
         // verify
         if (!isset($this->_aEntityConfigs[$sEntityType]))
         {

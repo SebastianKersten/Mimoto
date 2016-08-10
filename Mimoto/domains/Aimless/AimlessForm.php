@@ -3,10 +3,6 @@
 // classpath
 namespace Mimoto\Aimless;
 
-// Mimoto classes
-use Mimoto\library\data\MimotoDataUtils;
-use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
-
 
 /**
  * AimlessForm
@@ -24,7 +20,7 @@ class AimlessForm
     var $_entity;
     
     // settings
-    var $_sTemplateName;
+    var $_sFormName;
     
     // config
     var $_aVars = [];
@@ -39,24 +35,40 @@ class AimlessForm
      * @param type $sViewmodelName
      * @param type $entity
      */
-    public function __construct($sTemplateName, $entity, $AimlessService, $TwigService)
+    public function __construct($sFormName, $entity, $AimlessService, $TwigService)
     {
+
+        parent::__construct($sFormName, $entity, $AimlessService, $TwigService);
+
         // register
-        $this->_sTemplateName = $sTemplateName;
+        $this->_sFormName = $sFormName;
         $this->_entity = $entity;
-        
+
         // register
         $this->_AimlessService = $AimlessService;
         $this->_TwigService = $TwigService;
     }
-    
-    
+
+//    input
+//    field
+//    value
+//    error
+
+
+//<!-- auto include by AimlessForm ( #TODO - include form id for auto connect and reading of values directly from field form.submit() -->
+//<script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>
+//settings blind toevoegen aan register
+//settings toevoegen aan properties
+
+
+
+
     
     
     public function render()
     {
-        // get te
-        $sTemplateFile = $this->_AimlessService->getTemplate($this->_sTemplateName, $this->_entity);
+        // get form
+        $sTemplateFile = $this->_AimlessService->getComponent($this->_sFormName, $this->_entity);
         
         // compose
         $this->_aVars['Aimless'] = $this;

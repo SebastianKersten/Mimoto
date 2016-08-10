@@ -308,7 +308,7 @@ class CoreConfig
                         ]
                     ),
                     (object) array(
-                        'id' => CoreConfig::MIMOTO_ENTITYPROPERTY_PREFIX.'10',
+                        'id' => 'epid_fields', //CoreConfig::MIMOTO_ENTITYPROPERTY_PREFIX.'10',
                         'created' => CoreConfig::EPOCH,
                         // ---
                         'name' => 'fields',
@@ -461,6 +461,32 @@ class CoreConfig
                                 'key' => 'type',
                                 'type' => CoreConfig::DATA_TYPE_VALUE,
                                 'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
+                            )
+                        ]
+                    )
+                ]
+            ),
+
+            (object) array(
+                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_OUTPUT_GROUP_START_ID,
+                'created' => CoreConfig::EPOCH,
+                // ---
+                'name' => CoreConfig::MIMOTO_FORM_OUTPUT_GROUP_START,
+                'properties' => [
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'title',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
                             )
                         ]
                     )

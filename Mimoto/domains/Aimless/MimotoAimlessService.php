@@ -27,12 +27,12 @@ class MimotoAimlessService
     private $_TwigService;
     
     // config
-    var $_aTemplates;
+    var $_aComponents;
     
     
     
-    const DBTABLE_TEMPLATES = '_mimoto_templates';
-    const DBTABLE_TEMPLATES_CONDITIONALS = '_mimoto_templates_conditionals';
+    const DBTABLE_COMPONENT = '_mimoto_component';
+    const DBTABLE_COMPONENTCONDITIONAL = '_mimoto_componentconditional';
     
     
     
@@ -52,7 +52,7 @@ class MimotoAimlessService
         $this->_TwigService = $TwigService;
         
         // load and register
-        $this->_aTemplates = $this->loadTemplates();
+        $this->_aComponents = $this->loadComponents();
     }
     
     
@@ -64,14 +64,14 @@ class MimotoAimlessService
     
     /**
      * Create component
-     * @param string $sTemplateName The name of the registered template
+     * @param string $sComponentName The name of the registered template
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessComponent
      */
-    public function createComponent($sTemplateName, $entity = null)
+    public function createComponent($sComponentName, $entity = null)
     {
         // init and send
-        return $component = new AimlessComponent($sTemplateName, $entity, $this->_MimotoAimlessService, $this->_TwigService);
+        return $component = new AimlessComponent($sComponentName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
     
     /**
@@ -80,17 +80,22 @@ class MimotoAimlessService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessForm
      */
-    public function createForm($sTemplateName, $entity = null)
+    public function createForm($sFormName, $entity = null)
     {
         // init and send
-        return $form = new AimlessForm($sTemplateName, $entity, $this->_MimotoAimlessService, $this->_TwigService);
+        return $form = new AimlessForm($sFormName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
-    
+
+
+
+
+
+
     public function getTemplate($sTemplateName, $entity = null)
     {
-        for ($i = 0; $i < count($this->_aTemplates); $i++)
+        for ($i = 0; $i < count($this->_aComponents); $i++)
         {
-            $template = $this->_aTemplates[$i];
+            $template = $this->_aComponents[$i];
             
             if ($template->name === $sTemplateName)
             {
@@ -127,7 +132,7 @@ class MimotoAimlessService
     
     
     
-    private function loadTemplates()
+    private function loadComponents()
     {
         
         // check if in memory, else load from mysql:
@@ -138,7 +143,7 @@ class MimotoAimlessService
 
 
         // load all templates
-        $sql = 'SELECT * FROM '.self::DBTABLE_TEMPLATES;
+        $sql = 'SELECT * FROM '.self::DBTABLE_COMPONENT;
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             // compose
@@ -155,7 +160,7 @@ class MimotoAimlessService
         }
 
         // load all conditionals
-        $sql = 'SELECT * FROM '.self::DBTABLE_TEMPLATES_CONDITIONALS;
+        $sql = 'SELECT * FROM '.self::DBTABLE_COMPONENTCONDITIONAL;
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             $conditional = (object) array(

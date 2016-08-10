@@ -74,6 +74,9 @@ $app->get('/example21', 'MaidoProjects\\UserInterface\\ExampleController::viewEx
 
 
 
+$app->get('/exampleform1', 'MaidoProjects\\UserInterface\\ExampleFormController::viewExampleForm1');
+
+
 $app->get('/admin/entity/example1', 'MaidoProjects\\UserInterface\\ExampleEntityAdminController::createEntity');
 $app->get('/admin/entity/example2', 'MaidoProjects\\UserInterface\\ExampleEntityAdminController::editEntity');
 $app->get('/admin/entity/example3', 'MaidoProjects\\UserInterface\\ExampleEntityAdminController::removeEntity');

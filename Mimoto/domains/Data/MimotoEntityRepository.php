@@ -115,9 +115,34 @@ class MimotoEntityRepository
         // setup
         $aEntities->setCriteria($criteria);
 
+
+
+
+        $sEntityType = $criteria['value'];
+
+
+        $sQuery = 'SELECT * FROM '.$entityConfig->getMySQLTable();
+        $params = array();
+
+        if (isset($criteria['value']))
+        {
+            $bFirst = true;
+            foreach($criteria['value'] as $sKey => $value)
+            {
+                // prepare
+                if ($bFirst) { $bFirst = false; $sQuery .= ' WHERE '; } else { $sQuery .= ', '; }
+
+                // compose
+                $sQuery .= $sKey.' = :'.$sKey;
+
+                // add
+                $params[':'.$sKey] = $value;
+            }
+        }
+
         // load
-        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.$entityConfig->getMySQLTable());
-        $stmt->execute();
+        $stmt = $GLOBALS['database']->prepare($sQuery);
+        $stmt->execute($params);
 
         // load
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -129,7 +154,7 @@ class MimotoEntityRepository
             // register
             $aEntities[] = $this->createEntity($entityConfig, $aResults[$i]);
         }
-        
+
         // send
         return $aEntities;
     }

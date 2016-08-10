@@ -49,5 +49,4 @@ function error($data, $bDumpVar = false)
     die();
 }
 
-
 return $app;
