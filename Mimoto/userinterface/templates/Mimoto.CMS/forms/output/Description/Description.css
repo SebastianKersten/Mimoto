@@ -1,0 +1,22 @@
+div.MimotoCMS_forms_output_Description {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+div.MimotoCMS_forms_output_Description__title {
+    font-family: "futura-pt",sans-serif;
+    font-size: 21px;
+    font-weight: bold;
+    color: #303030;
+    margin-bottom: 12px;
+}
+
+div.MimotoCMS_forms_output_Description__description {
+    font-family: "Helvetica neue", sans-serif;
+    font-size: 14px;
+    color: #303030;
+    line-height: 21px;
+    text-align: justify;
+    margin-bottom: 10px;
+}

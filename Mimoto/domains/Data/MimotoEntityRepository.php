@@ -421,6 +421,7 @@ class MimotoEntityRepository
             
             // register
             $entity->setId($nEntityId);
+            $entity->setEntityGroup($entityConfig->getGroup());
             $entity->setCreated($result['created']);
 
             // store

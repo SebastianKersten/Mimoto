@@ -34,8 +34,7 @@ class AimlessComponent
     var $_aFormConfigs = [];
     var $_aPropertyTemplates = [];
     var $_aPropertyFormatters = [];
-    
-    
+
     
     /**
      * Constructor
@@ -205,6 +204,24 @@ class AimlessComponent
         return $this->renderForm($aResults[0], $formConfig->aValues);
     }
 
+    public function field()
+    {
+        return 'mls_form_field='.'';
+    }
+
+    public function error()
+    {
+        return 'mls_form_error="'.'"';
+    }
+
+    public function value()
+    {
+        return $this->_entity->getId();
+        return $this->_entity->getValue('');
+    }
+
+
+
     public function realtime($sPropertySelector = null)
     {
         // validate
@@ -335,13 +352,6 @@ class AimlessComponent
 
     private function renderForm($form, $aValues)
     {
-
-
-        // 2. add action to form, retrieved from form-loaded from database
-        // 5. add auto-register to each field
-
-
-
         // init
         $sRenderedForm = '<form>';
 
@@ -367,9 +377,30 @@ class AimlessComponent
             // output
             $sRenderedForm .= $component->render();
 
-            // 1. check by group, add input support, or otherwise skip
 
-            //<script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>
+            // 1. settings pass blindly: {% if validation is not empty %}, {{ validation|raw }}{% endif %}
+            // 2. hoe validation opslaan? single pass van alle fields? of validation entity table
+
+            // 3. form name / field is unique field-id
+            // 4. hoe koppelen aan values?
+
+            // 5. add action to form, retrieved from form-loaded from database
+            // 6. add auto-register to each field
+
+
+
+//            <script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>
+//
+//            een field heeft settings:
+//
+//            _mimoto_inputfield
+//            _mimoto_inputfieldsetting
+
+
+            if ($field->getEntityGroup() == CoreConfig::GROUP_MIMOTO_FORM_INPUT)
+            {
+                $sRenderedForm .= '<script>Mimoto.form.registerInputField("'.$field->getId().'")</script>';
+            }
         }
 
         // finish

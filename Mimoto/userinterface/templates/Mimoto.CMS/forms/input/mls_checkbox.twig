@@ -1,5 +1,8 @@
 <div {{ Aimless.field()|raw }} class="form_field">
     <div class="form_input_label">{{ Aimless.data('label') }}{% if optional is not empty %}{% if optional==true %}<span class="form_input_optional"> (optional)</span>{% endif %}{% endif %}</div>
-    <div><input {{ Aimless.input()|raw }} type="text" class="textfield" value="{{ Aimless.value() }}" /></div>
+    <div>
+        <input {{ Aimless.input()|raw }} type="checkbox"  id="c1" name="cc" class="checkbox" />
+        <label for="c1">{{ Aimless.data('description') }}</label>
+    </div>
     <div {{ Aimless.error()|raw }} class="form_errormessage"></div>
 </div>

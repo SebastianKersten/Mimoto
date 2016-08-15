@@ -43,8 +43,6 @@ class CoreConfig
     const MIMOTO_FORM = '_mimoto_form';
     const MIMOTO_FORM_ID = 7;
 
-    //const MIMOTO_FORM_INPUT = '_mimoto_form_input';
-    //const MIMOTO_FORM_INPUT_ID = 8;
 
     const MIMOTO_FORM_OUTPUT_TITLE = '_mimoto_form_output_title';
     const MIMOTO_FORM_OUTPUT_TITLE_ID = 100;
@@ -58,14 +56,22 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_TEXTLINE = '_mimoto_form_input_textline';
     const MIMOTO_FORM_INPUT_TEXTLINE_ID = 200;
 
+    const MIMOTO_FORM_INPUT_CHECKBOX = '_mimoto_form_input_checkbox';
+    const MIMOTO_FORM_INPUT_CHECKBOX_ID = 201;
+
+    const MIMOTO_FORM_INPUT_RADIOBUTTON = '_mimoto_form_input_radiobutton';
+    const MIMOTO_FORM_INPUT_RADIOBUTTON_ID = 202;
+
+    const MIMOTO_FORM_INPUT_DROPDOWN = '_mimoto_form_input_dropdown';
+    const MIMOTO_FORM_INPUT_DROPDOWN_ID = 203;
+
+
     // functionality
     const MIMOTO_ACTION = '_mimoto_action';
     const MIMOTO_ACTION_ID = 20;
 
 
 
-    const MIMOTO_FORM_INPUT = '_mimoto_form_input';
-    const MIMOTO_FORM_OUTPUT = '_mimoto_form_output';
 
 
     // property types
@@ -478,6 +484,8 @@ class CoreConfig
             // --------------------------------------------------------------------------------
 
 
+            // ==> Textline
+
             (object) array(
                 'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE_ID,
                 'created' => CoreConfig::EPOCH,
@@ -489,7 +497,7 @@ class CoreConfig
                         'id' => CoreConfig::getUniqueEntityPropertyId(),
                         'created' => CoreConfig::EPOCH,
                         // ---
-                        'name' => 'title',
+                        'name' => 'label',
                         'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                         'settings' => [
                             'type' => (object) array(
@@ -506,7 +514,54 @@ class CoreConfig
                         'id' => CoreConfig::getUniqueEntityPropertyId(),
                         'created' => CoreConfig::EPOCH,
                         // ---
-                        'name' => 'subtitle',
+                        'name' => 'regexp',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            )
+                        ]
+                    ),
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'maxchars',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            )
+                        ]
+                    )
+                ]
+            ),
+
+
+            // ==> Checkbox
+
+            (object) array(
+                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX_ID,
+                'created' => CoreConfig::EPOCH,
+                // ---
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
+                'group' => CoreConfig::GROUP_MIMOTO_FORM_INPUT,
+                'properties' => [
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'label',
                         'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                         'settings' => [
                             'type' => (object) array(
@@ -532,6 +587,53 @@ class CoreConfig
                                 // ---
                                 'key' => 'type',
                                 'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            )
+                        ]
+                    )
+                ]
+            ),
+
+
+            // ==> Radiobutton
+
+            (object) array(
+                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON_ID,
+                'created' => CoreConfig::EPOCH,
+                // ---
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
+                'group' => CoreConfig::GROUP_MIMOTO_FORM_INPUT,
+                'properties' => [
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'label',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            )
+                        ]
+                    ),
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'options',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE, // #todo ---> kan Selection worden
                                 'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
                             )
                         ]
@@ -539,6 +641,51 @@ class CoreConfig
                 ]
             ),
 
+            // ==> Dropdown
+
+            (object) array(
+                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN_ID,
+                'created' => CoreConfig::EPOCH,
+                // ---
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
+                'group' => CoreConfig::GROUP_MIMOTO_FORM_INPUT,
+                'properties' => [
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'label',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            )
+                        ]
+                    ),
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'options',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE, // #todo ---> kan Selection worden
+                                'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
+                            )
+                        ]
+                    )
+                ]
+            ),
 
         ];
 
