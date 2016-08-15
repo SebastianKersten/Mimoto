@@ -1,0 +1,28 @@
+{
+  "name": "MaidoProjects",
+  "version": "1.0.0",
+  "description": "Realtime fluid data management by _Sebastian Kersten_",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SebastianKersten/MaidoProjects.git"
+  },
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/SebastianKersten/MaidoProjects/issues"
+  },
+  "homepage": "https://github.com/SebastianKersten/MaidoProjects",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cli": "^1.2.2",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-watch": "^4.3.9"
+  }
+}
