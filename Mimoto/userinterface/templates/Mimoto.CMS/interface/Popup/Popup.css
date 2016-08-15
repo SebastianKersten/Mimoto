@@ -1,0 +1,55 @@
+div.MimotoCMS_forms_output_Description {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+div.MimotoCMS_forms_output_Description__title {
+    font-family: "futura-pt",sans-serif;
+    font-size: 21px;
+    font-weight: bold;
+    color: #303030;
+    margin-bottom: 12px;
+}
+
+div.MimotoCMS_forms_output_Description__description {
+    font-family: "Helvetica neue", sans-serif;
+    font-size: 14px;
+    color: #303030;
+    line-height: 21px;
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+div.MimotoCMS_interface_Popup {
+    background-color: #f5f5f5;
+    border: 1px solid #eeeeee;
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    left: auto;
+    padding: 5px;
+    margin: 25px auto 30px auto;
+}
+
+div.MimotoCMS_interface_Popup__content {
+    padding: 25px 25px 20px 25px;
+    background-color: #ffffff;
+}
+
+div.MimotoCMS_interface_Popup__button_close {
+    position: absolute;
+    display: inline-block;
+    padding: 3px 8px 3px 8px;
+    background-color: #f5f5f5;
+    right: 0;
+    font-size: 12px;
+    color: #858585;
+    cursor: pointer;
+}
+
+div.MimotoCMS_interface_Popup__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
