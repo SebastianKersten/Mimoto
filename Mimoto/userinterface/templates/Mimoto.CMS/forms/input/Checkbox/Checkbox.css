@@ -1,0 +1,16 @@
+input[type="checkbox"] {
+    /*   display:none; */
+}
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:20px;
+    height:20px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    background:url(/static/img/mls_checkbox.png) left top no-repeat;
+    background-color: #06afea;
+    cursor:pointer;
+}
+input[type="checkbox"]:checked + label span {
+    background:url(/static/img/mls_checkbox_checked.png) -20px top no-repeat;
+}

@@ -1,0 +1,18 @@
+select:focus {
+    outline: 0;
+    border: 1px solid #06afea;
+    background-color: #ffffff;
+}
+
+select {
+    border: 1px solid #cac8c9;
+    background-color: #f7f7f7;
+    padding: 15px 25px 16px 15px;
+    font-family: "Helvetica neue", sans-serif;
+    color: #303030;
+    font-size: 15px;
+    width: 100%;
+    max-width: 500px;
+    height: 50px;
+    border-radius: 0;
+}

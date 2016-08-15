@@ -10,9 +10,9 @@ gulp.task('default', function () {
 
 gulp.task('concatCss', function () {
     return gulp.src(css_src)
-        .pipe(concatCss('_main.css'))
-        .on('error', function () {
-            this.emit('end');
-        })
+        .pipe(concatCss('mimoto.cms.css'))
+        // .on('error', function () {
+        //     this.emit('end');
+        // })
         .pipe(gulp.dest('web/static/css/'));
 });

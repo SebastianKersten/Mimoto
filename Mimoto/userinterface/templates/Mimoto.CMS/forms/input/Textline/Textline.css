@@ -1,0 +1,49 @@
+div.MimotoCMS_forms_input_Textline {
+    margin-bottom: 8px;
+}
+
+div.MimotoCMS_forms_input_Textline__label {
+    font-family: "futura-pt",sans-serif;
+    color: #303030;
+    font-size: 16px;
+    padding: 10px 0 10px 0;
+}
+
+span.MimotoCMS_forms_input_Textline__optional {
+    color: #979797;
+}
+
+input.MimotoCMS_forms_input_Textline__input {
+    border: 1px solid #cac8c9;
+    background-color: #f7f7f7;
+    padding: 15px 25px 16px 15px;
+    font-family: "Helvetica neue", sans-serif;
+    color: #303030;
+    font-size: 15px;
+    width: 100%;
+    max-width: 500px;
+}
+
+input.MimotoCMS_forms_input_Textline__input.error, input.MimotoCMS_forms_input_Textline__input:focus.error {
+    border: 1px solid #ff0000;
+}
+
+div.form_errormessage {
+    display: none;
+    font-family: "Helvetica neue", sans-serif;
+    color: #ff0000;
+    font-size: 13px;
+    padding: 10px 0 10px 0;
+    width: 100%;
+    max-width: 500px;
+}
+
+div.form_errormessage.error {
+    display: block;
+}
+
+input.MimotoCMS_forms_input_Textline__input:focus {
+    outline: 0;
+    border: 1px solid #06afea;
+    background-color: #ffffff;
+}

@@ -1,11 +1,11 @@
-div.MimotoCMS_forms_layout_Title {
+div.MimotoCMS_forms_output_Title {
     width: 100%;
     max-width: 500px;
     margin-bottom: 25px;
     padding: 29px 29px 5px 29px;
 }
 
-div.MimotoCMS_forms_layout_Title__title {
+div.MimotoCMS_forms_output_Title__title {
     width: 100%;
     max-width: 500px;
     font-family: "futura-pt", sans-serif;
@@ -13,7 +13,7 @@ div.MimotoCMS_forms_layout_Title__title {
     margin-left: -3px;
 }
 
-div.MimotoCMS_forms_layout_Title__subtitle {
+div.MimotoCMS_forms_output_Title__subtitle {
     font-family: "futura-pt", sans-serif;
     font-size: 15px;
     width: 100%;
@@ -22,7 +22,7 @@ div.MimotoCMS_forms_layout_Title__subtitle {
     color: #979797;
 }
 
-div.MimotoCMS_forms_layout_Title__description {
+div.MimotoCMS_forms_output_Title__description {
     font-family: "Helvetica neue", sans-serif;
     font-size: 14px;
     color: #303030;
