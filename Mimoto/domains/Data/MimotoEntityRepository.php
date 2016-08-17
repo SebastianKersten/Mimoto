@@ -117,10 +117,6 @@ class MimotoEntityRepository
 
 
 
-
-        $sEntityType = $criteria['value'];
-
-
         $sQuery = 'SELECT * FROM '.$entityConfig->getMySQLTable();
         $params = array();
 

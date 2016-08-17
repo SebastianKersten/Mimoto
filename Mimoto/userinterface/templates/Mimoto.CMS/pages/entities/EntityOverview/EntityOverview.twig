@@ -1,0 +1,10 @@
+{% extends "Mimoto.CMS/base.twig" %}
+
+{% block content %}
+    <h2>entities</h2>
+    <br>
+    <div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Aimless.realtime('entities')|raw }}>
+        {{ Aimless.selection('entities')|raw }}
+    </div>
+    {% include 'Mimoto.CMS/forms/input/Button/Button.twig' with { label:'Add new entity', icon:'+', action:"Mimoto.CMS.entityNew();" } %}
+{% endblock %}

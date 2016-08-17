@@ -27,7 +27,7 @@ class EntityController
         $aEntities = $app['Mimoto.Data']->find(['type' => '_mimoto_entity']);
 
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_Overview');
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityOverview');
 
         // setup
         $page->addSelection('entities', 'Mimoto.CMS_entities_EntityListItem', $aEntities);
@@ -71,7 +71,7 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_Detail', $entity);
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityDetail', $entity);
 
         // setup
         $page->setPropertyTemplate('properties', 'Mimoto.CMS_entities_PropertyListItem');

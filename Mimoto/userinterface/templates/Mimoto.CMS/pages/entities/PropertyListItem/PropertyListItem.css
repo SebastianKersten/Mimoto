@@ -1,0 +1,25 @@
+div.MimotoCMS_pages_entities_PropertyListItem {
+    position: relative;
+    display: block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+}
+
+    div.MimotoCMS_pages_entities_PropertyListItem:hover {
+        background-color: #06afea;
+        color: #ffffff;
+    }
+
+div.MimotoCMS_pages_entities_PropertyListItem__label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+div.MimotoCMS_pages_entities_PropertyListItem__sublabel {
+    font-size: 14px;
+    font-style: italic;
+}

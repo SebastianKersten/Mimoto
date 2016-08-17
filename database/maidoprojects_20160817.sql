@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 07/27/2016 16:09:08 PM
+ Date: 08/17/2016 12:06:36 PM
 */
 
 SET NAMES utf8mb4;
@@ -30,15 +30,62 @@ CREATE TABLE `_mimoto_action` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
+--  Table structure for `_mimoto_component`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_component`;
+CREATE TABLE `_mimoto_component` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `file` varchar(255) DEFAULT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Records of `_mimoto_component`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_component` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', '2016-05-29 22:12:52'), ('26', 'project_withsubprojects', 'examples/ProjectWithSubprojects.twig', '2016-05-31 21:48:05'), ('27', 'project_withsubprojects_phase', 'examples/ProjectWithSubprojectsPhase.twig', '2016-05-31 21:50:11'), ('28', 'project_withsubprojects_filter', 'examples/ProjectWithSubprojectsFilter.twig', '2016-05-31 21:53:49'), ('29', 'subproject', 'examples/Subproject.twig', '2016-05-31 22:10:10'), ('30', 'subproject_phase', 'examples/Subproject.twig', '2016-05-31 22:10:43'), ('31', 'subproject_phase', 'examples/SubprojectActive.twig', '2016-06-01 12:44:08'), ('32', 'subproject_phase', 'examples/SubprojectArchived.twig', '2016-06-01 12:45:44'), ('33', 'notificationcenter', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:51:20'), ('34', 'notification', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:53:50'), ('35', 'client_overview', 'examples/ClientOverview.twig', '2016-06-11 12:21:52'), ('36', 'client_listitem', 'examples/ListItemComponent.twig', '2016-06-11 12:22:54'), ('37', 'entity_overview', 'exampleadmin/EntityOverview.twig', '2016-06-13 10:42:03'), ('38', 'entity_listitem', 'exampleadmin/EntityListItem.twig', '2016-06-13 10:52:12'), ('39', 'subproject_overview', 'examples/SubprojectOverview.twig', '2016-06-13 11:46:46'), ('40', 'subproject_examplelistitem', 'examples/SubprojectListItem.twig', '2016-06-13 11:47:15'), ('41', 'form_client', 'forms/ClientForm.twig', '2016-06-27 14:38:36'), ('42', 'Mimoto.CMS_dashboard_Overview', 'Mimoto.CMS/pages/dashboard/Overview.twig', '2016-07-19 12:27:17'), ('43', 'Mimoto.CMS_entities_EntityOverview', 'Mimoto.CMS/pages/entities/EntityOverview/EntityOverview.twig', '2016-07-19 14:25:22'), ('44', 'Mimoto.CMS_entities_EntityListItem', 'Mimoto.CMS/pages/entities/EntityListItem/EntityListItem.twig', '2016-07-19 14:32:35'), ('45', 'Mimoto.CMS_entities_EntityDetail', 'Mimoto.CMS/pages/entities/EntityDetail/EntityDetail.twig', '2016-07-19 15:17:30'), ('46', 'Mimoto.CMS_entities_PropertyListItem', 'Mimoto.CMS/pages/entities/PropertyListItem/PropertyListItem.twig', '2016-07-19 17:12:38'), ('47', 'Mimoto.CMS_entities_FormEntity', 'Mimoto.CMS/pages/entities/FormEntity.twig', '2016-07-27 13:00:43'), ('48', 'Mimoto.CMS_entities_FormEntityProperty', 'Mimoto.CMS/pages/entities/FormEntityProperty.twig', '2016-07-27 16:40:35'), ('50', 'Mimoto.CMS_general_form_component', 'Mimoto.CMS/forms/form.twig', '2016-08-04 14:22:00'), ('51', '_mimoto_form_output_title', 'Mimoto.CMS/forms/output/Title/Title.twig', '2016-08-10 16:29:20'), ('52', '_mimoto_form_layout_groupstart', 'Mimoto.CMS/forms/layout/GroupStart/GroupStart.twig', '2016-08-10 17:37:30'), ('53', '_mimoto_form_layout_groupend', 'Mimoto.CMS/forms/layout/GroupEnd/GroupEnd.twig', '2016-08-10 17:37:46'), ('54', '_mimoto_form_input_textline', 'Mimoto.CMS/forms/input/Textline/Textline.twig', '2016-08-12 10:07:33'), ('55', '_mimoto_form_input_checkbox', 'Mimoto.CMS/forms/input/Checkbox/Checkbox.twig', '2016-08-15 14:55:03'), ('56', '_mimoto_form_input_radiobutton', 'Mimoto.CMS/forms/input/Radiobutton/Radiobutton.twig', '2016-08-15 14:55:26'), ('57', '_mimoto_form_input_dropdown', 'Mimoto.CMS/forms/input/Dropdown/Dropdown.twig', '2016-08-15 15:00:10'), ('58', '_mimoto_form_layout_divider', 'Mimoto.CMS/forms/layout/Divider/Divider.twig', '2016-08-15 18:16:16');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_componentconditional`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_componentconditional`;
+CREATE TABLE `_mimoto_componentconditional` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `template_id` int(10) unsigned NOT NULL,
+  `key` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `value` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_componentconditional`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_componentconditional` VALUES ('1', '11', 'type', 'regular', '2016-05-29 16:15:26'), ('2', '12', 'type', 'explainer', '2016-05-29 16:15:38'), ('3', '13', 'type', 'regular', '2016-05-29 16:57:43'), ('4', '14', 'type', 'explainer', '2016-05-29 16:58:00'), ('6', '30', 'phase', 'request', '2016-06-01 12:44:34'), ('7', '31', 'phase', 'currentproject', '2016-06-01 12:44:51'), ('8', '32', 'phase', 'archived', '2016-06-01 12:45:05');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `_mimoto_entity`
 -- ----------------------------
 DROP TABLE IF EXISTS `_mimoto_entity`;
 CREATE TABLE `_mimoto_entity` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
+  `group` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Records of `_mimoto_entity`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_entity` VALUES ('1', 'person', '', '2016-07-29 14:13:46'), ('2', 'article', null, '2016-08-17 11:16:09');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `_mimoto_entity_connections`
@@ -47,18 +94,18 @@ DROP TABLE IF EXISTS `_mimoto_entity_connections`;
 CREATE TABLE `_mimoto_entity_connections` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned DEFAULT NULL,
-  `parent_property_id` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `child_entity_type_id` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_property_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `child_entity_type_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entity_connections`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entity_connections` VALUES ('1', '5', 'pid2', 'eid2', '1', '0');
+INSERT INTO `_mimoto_entity_connections` VALUES ('1', '1', 'epid2', 'eid2', '1', '0'), ('2', '1', 'epid2', 'eid2', '2', '1'), ('3', '2', 'epid2', 'eid2', '3', '0'), ('4', '2', 'epid2', 'eid2', '4', '1'), ('5', '2', 'epid2', 'eid2', '5', '2'), ('6', '2', 'epid2', 'eid2', '6', '3');
 COMMIT;
 
 -- ----------------------------
@@ -71,13 +118,13 @@ CREATE TABLE `_mimoto_entityproperty` (
   `type` enum('value','entity','collection') COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entityproperty`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entityproperty` VALUES ('1', 'type', 'value', '2016-07-27 12:24:53');
+INSERT INTO `_mimoto_entityproperty` VALUES ('1', 'name', 'value', '2016-07-27 12:24:53'), ('2', 'role', 'value', '2016-07-27 16:45:01'), ('3', 'type', 'value', '2016-08-17 11:16:38'), ('4', 'title', 'value', '2016-08-17 11:16:49'), ('5', 'lede', 'value', '2016-08-17 11:16:57'), ('6', 'body', 'value', '2016-08-17 11:17:09');
 COMMIT;
 
 -- ----------------------------
@@ -87,12 +134,19 @@ DROP TABLE IF EXISTS `_mimoto_entityproperty_connections`;
 CREATE TABLE `_mimoto_entityproperty_connections` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned DEFAULT NULL,
-  `parent_property_id` int(10) unsigned DEFAULT NULL,
-  `child_entity_type_id` int(10) unsigned DEFAULT NULL,
+  `parent_property_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `child_entity_type_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_entityproperty_connections`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_entityproperty_connections` VALUES ('1', '1', 'epid2', 'eid2', '1', '0'), ('2', '2', 'epid2', 'eid2', '2', '1'), ('3', '3', 'epid2', 'eid2', '3', '0'), ('4', '4', 'epid2', 'eid2', '4', '1'), ('5', '5', 'epid2', 'eid2', '5', '2'), ('6', '6', 'epid2', 'eid2', '6', '3');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `_mimoto_entitypropertysetting`
@@ -105,7 +159,14 @@ CREATE TABLE `_mimoto_entitypropertysetting` (
   `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_entitypropertysetting`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_entitypropertysetting` VALUES ('1', 'type', 'value', 'textline', '2016-08-10 13:54:51'), ('2', 'type', 'value', 'textline', '2016-08-10 13:55:02'), ('3', 'type', 'value', 'textline', '2016-08-17 11:18:40'), ('4', 'type', 'value', 'textline', '2016-08-17 11:18:51'), ('5', 'type', 'value', 'textblock', '2016-08-17 11:19:32'), ('6', 'type', 'value', 'textbloxk', '2016-08-17 11:19:41');
+COMMIT;
 
 -- ----------------------------
 --  Table structure for `_mimoto_form`
@@ -117,13 +178,13 @@ CREATE TABLE `_mimoto_form` (
   `description` text COLLATE utf8_unicode_ci,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_form`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_form` VALUES ('1', 'client', 'A simple form to add and edit clients', '2016-06-27 14:06:17');
+INSERT INTO `_mimoto_form` VALUES ('1', 'client', 'A simple form to add and edit clients', '2016-06-27 14:06:17'), ('2', 'form_person', 'Test', '2016-08-10 14:29:42');
 COMMIT;
 
 -- ----------------------------
@@ -133,51 +194,167 @@ DROP TABLE IF EXISTS `_mimoto_form_connections`;
 CREATE TABLE `_mimoto_form_connections` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned DEFAULT NULL,
-  `parent_property_id` int(10) unsigned DEFAULT NULL,
-  `child_entity_type` int(10) unsigned DEFAULT NULL,
+  `parent_property_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `child_entity_type_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
---  Table structure for `_mimoto_templates`
--- ----------------------------
-DROP TABLE IF EXISTS `_mimoto_templates`;
-CREATE TABLE `_mimoto_templates` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `file` varchar(255) DEFAULT NULL,
-  `owner` enum('superuser','admin') DEFAULT 'admin',
-  `created` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
-
--- ----------------------------
---  Records of `_mimoto_templates`
+--  Records of `_mimoto_form_connections`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_templates` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', 'admin', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', 'admin', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', 'admin', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', 'admin', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', 'admin', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', 'admin', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', 'admin', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', 'admin', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', 'admin', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', 'admin', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', 'admin', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', 'admin', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', 'admin', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', 'admin', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', 'admin', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', 'admin', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', 'admin', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', 'admin', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', 'admin', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', 'admin', '2016-05-29 22:12:52'), ('26', 'project_withsubprojects', 'examples/ProjectWithSubprojects.twig', 'admin', '2016-05-31 21:48:05'), ('27', 'project_withsubprojects_phase', 'examples/ProjectWithSubprojectsPhase.twig', 'admin', '2016-05-31 21:50:11'), ('28', 'project_withsubprojects_filter', 'examples/ProjectWithSubprojectsFilter.twig', 'admin', '2016-05-31 21:53:49'), ('29', 'subproject', 'examples/Subproject.twig', 'admin', '2016-05-31 22:10:10'), ('30', 'subproject_phase', 'examples/Subproject.twig', 'admin', '2016-05-31 22:10:43'), ('31', 'subproject_phase', 'examples/SubprojectActive.twig', 'admin', '2016-06-01 12:44:08'), ('32', 'subproject_phase', 'examples/SubprojectArchived.twig', 'admin', '2016-06-01 12:45:44'), ('33', 'notificationcenter', 'notificationcenter/NotificationCenter.twig', 'admin', '2016-06-07 09:51:20'), ('34', 'notification', 'notificationcenter/NotificationCenter.twig', 'admin', '2016-06-07 09:53:50'), ('35', 'client_overview', 'examples/ClientOverview.twig', 'admin', '2016-06-11 12:21:52'), ('36', 'client_listitem', 'examples/ListItemComponent.twig', 'admin', '2016-06-11 12:22:54'), ('37', 'entity_overview', 'exampleadmin/EntityOverview.twig', 'admin', '2016-06-13 10:42:03'), ('38', 'entity_listitem', 'exampleadmin/EntityListItem.twig', 'admin', '2016-06-13 10:52:12'), ('39', 'subproject_overview', 'examples/SubprojectOverview.twig', 'admin', '2016-06-13 11:46:46'), ('40', 'subproject_examplelistitem', 'examples/SubprojectListItem.twig', 'admin', '2016-06-13 11:47:15'), ('41', 'form_client', 'forms/ClientForm.twig', 'admin', '2016-06-27 14:38:36'), ('42', 'Mimoto.CMS_dashboard_Overview', 'Mimoto.CMS/pages/dashboard/Overview.twig', 'superuser', '2016-07-19 12:27:17'), ('43', 'Mimoto.CMS_entities_Overview', 'Mimoto.CMS/pages/entities/Overview.twig', 'superuser', '2016-07-19 14:25:22'), ('44', 'Mimoto.CMS_entities_EntityListItem', 'Mimoto.CMS/pages/entities/EntityListItem.twig', 'superuser', '2016-07-19 14:32:35'), ('45', 'Mimoto.CMS_entities_Detail', 'Mimoto.CMS/pages/entities/Detail.twig', 'superuser', '2016-07-19 15:17:30'), ('46', 'Mimoto.CMS_entities_PropertyListItem', 'Mimoto.CMS/pages/entities/PropertyListItem.twig', 'superuser', '2016-07-19 17:12:38'), ('47', 'Mimoto.CMS_entities_FormEntity', 'Mimoto.CMS/pages/entities/FormEntity.twig', 'superuser', '2016-07-27 13:00:43');
+INSERT INTO `_mimoto_form_connections` VALUES ('1', '2', 'epid_fields', 'eid100', '1', '0'), ('2', '2', 'epid_fields', 'eid101', '1', '1'), ('3', '2', 'epid_fields', 'eid200', '1', '2'), ('4', '2', 'epid_fields', 'eid103', '1', '3'), ('5', '2', 'epid_fields', 'eid200', '2', '4'), ('6', '2', 'epid_fields', 'eid201', '1', '5'), ('7', '2', 'epid_fields', 'eid102', '1', '6');
 COMMIT;
 
 -- ----------------------------
---  Table structure for `_mimoto_templates_conditionals`
+--  Table structure for `_mimoto_form_input_checkbox`
 -- ----------------------------
-DROP TABLE IF EXISTS `_mimoto_templates_conditionals`;
-CREATE TABLE `_mimoto_templates_conditionals` (
+DROP TABLE IF EXISTS `_mimoto_form_input_checkbox`;
+CREATE TABLE `_mimoto_form_input_checkbox` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `template_id` int(10) unsigned NOT NULL,
-  `key` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `value` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `created` datetime NOT NULL,
+  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
---  Records of `_mimoto_templates_conditionals`
+--  Records of `_mimoto_form_input_checkbox`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_templates_conditionals` VALUES ('1', '11', 'type', 'regular', '2016-05-29 16:15:26'), ('2', '12', 'type', 'explainer', '2016-05-29 16:15:38'), ('3', '13', 'type', 'regular', '2016-05-29 16:57:43'), ('4', '14', 'type', 'explainer', '2016-05-29 16:58:00'), ('6', '30', 'phase', 'request', '2016-06-01 12:44:34'), ('7', '31', 'phase', 'currentproject', '2016-06-01 12:44:51'), ('8', '32', 'phase', 'archived', '2016-06-01 12:45:05');
+INSERT INTO `_mimoto_form_input_checkbox` VALUES ('1', 'State', 'Person is currently active on the project', '2016-08-15 13:47:47');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_form_input_dropdown`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_form_input_dropdown`;
+CREATE TABLE `_mimoto_form_input_dropdown` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `options` text COLLATE utf8_unicode_ci,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_form_input_dropdown`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_form_input_dropdown` VALUES ('1', 'Number of hours', '[\"0-2\", \"0 - 2 hours per day\", \"2-4\", \"2 - 4 hours a day\", \"4-8\", \"4-8 hours a day\"]', '2016-08-15 13:49:42');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_form_input_radiobutton`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_form_input_radiobutton`;
+CREATE TABLE `_mimoto_form_input_radiobutton` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `options` text COLLATE utf8_unicode_ci,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_form_input_radiobutton`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_form_input_radiobutton` VALUES ('1', 'Number of hours', '[\"0-2\", \"0 - 2 hours per day\", \"2-4\", \"2 - 4 hours a day\", \"4-8\", \"4-8 hours a day\"]', '2016-08-15 13:49:42');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_form_input_textline`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_form_input_textline`;
+CREATE TABLE `_mimoto_form_input_textline` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `regexp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `maxchars` int(10) unsigned DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_form_input_textline`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_form_input_textline` VALUES ('1', 'Name', '/[a-zA-Z09-]/', '10', '2016-08-10 16:13:50'), ('2', 'Role', null, null, '2016-08-12 10:24:05');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_form_layout_divider`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_form_layout_divider`;
+CREATE TABLE `_mimoto_form_layout_divider` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_form_layout_divider`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_form_layout_divider` VALUES ('1', '2016-08-17 10:40:01');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_form_layout_groupend`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_form_layout_groupend`;
+CREATE TABLE `_mimoto_form_layout_groupend` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_form_layout_groupend`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_form_layout_groupend` VALUES ('1', '2016-08-04 08:38:28');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_form_layout_groupstart`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_form_layout_groupstart`;
+CREATE TABLE `_mimoto_form_layout_groupstart` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_form_layout_groupstart`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_form_layout_groupstart` VALUES ('1', 'First group', '2016-08-04 08:38:28');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_form_output_title`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_form_output_title`;
+CREATE TABLE `_mimoto_form_output_title` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `subtitle` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_mimoto_form_output_title`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_mimoto_form_output_title` VALUES ('1', 'Hello', 'First output field', 'This is the first output field connected to a genuine form config as port of the Mimoto FormGenerator. Yay!', '2016-08-04 08:38:28'), ('2', 'And welcome', 'Second output field', 'This is the description of the second output field that was connected to this first example form.', '2016-08-10 16:44:36');
 COMMIT;
 
 -- ----------------------------
@@ -286,6 +463,25 @@ CREATE TABLE `notification` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `notification` VALUES ('1', 'templates', 'Template \'client\' missing on page \'client overview\'', '2016-06-07 09:41:46');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `person`
+-- ----------------------------
+DROP TABLE IF EXISTS `person`;
+CREATE TABLE `person` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `role` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `person`
+-- ----------------------------
+BEGIN;
+INSERT INTO `person` VALUES ('1', 'Sebastian', 'Developer', '2016-08-10 13:54:04'), ('2', 'Bart', 'Developer', '2016-08-10 14:04:01'), ('3', 'Alexander', 'DevOps', '2016-08-10 14:04:20');
 COMMIT;
 
 -- ----------------------------

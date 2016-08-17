@@ -14,3 +14,7 @@ div.MimotoCMS_forms_input_Button>span {
     margin-left: 14px;
     font-size: 14px;
 }
+
+div.MimotoCMS_forms_input_Button.red {
+    background-color: #ff0000;
+}

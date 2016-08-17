@@ -47,11 +47,14 @@ class CoreConfig
     const MIMOTO_FORM_OUTPUT_TITLE = '_mimoto_form_output_title';
     const MIMOTO_FORM_OUTPUT_TITLE_ID = 100;
 
-    const MIMOTO_FORM_OUTPUT_GROUP_START = '_mimoto_form_output_group_start';
-    const MIMOTO_FORM_OUTPUT_GROUP_START_ID = 101;
+    const MIMOTO_FORM_LAYOUT_GROUPSTART = '_mimoto_form_layout_groupstart';
+    const MIMOTO_FORM_LAYOUT_GROUPSTART_ID = 101;
 
-    const MIMOTO_FORM_OUTPUT_GROUP_END = '_mimoto_form_output_group_end';
-    const MIMOTO_FORM_OUTPUT_GROUP_END_ID = 102;
+    const MIMOTO_FORM_LAYOUT_GROUPEND = '_mimoto_form_layout_groupend';
+    const MIMOTO_FORM_LAYOUT_GROUPEND_ID = 102;
+
+    const MIMOTO_FORM_LAYOUT_DIVIDER = '_mimoto_form_layout_divider';
+    const MIMOTO_FORM_LAYOUT_DIVIDER_ID = 103;
 
     const MIMOTO_FORM_INPUT_TEXTLINE = '_mimoto_form_input_textline';
     const MIMOTO_FORM_INPUT_TEXTLINE_ID = 200;
@@ -92,8 +95,9 @@ class CoreConfig
 
 
     const GROUP_MIMOTO_CORE = 'Group:Mimoto.Core';
-    const GROUP_MIMOTO_FORM_OUTPUT = 'Group:Mimoto.Form.Output';
     const GROUP_MIMOTO_FORM_INPUT = 'Group:Mimoto.Form.Input';
+    const GROUP_MIMOTO_FORM_OUTPUT = 'Group:Mimoto.Form.Output';
+    const GROUP_MIMOTO_FORM_LAYOUT = 'Group:Mimoto.Form.Layout';
 
 
 
@@ -138,7 +142,7 @@ class CoreConfig
                         ]
                     ),
                     (object) array(
-                        'id' => CoreConfig::MIMOTO_ENTITYPROPERTY_PREFIX.'1',
+                        'id' => CoreConfig::MIMOTO_ENTITYPROPERTY_PREFIX.'1000',
                         'created' => CoreConfig::EPOCH,
                         // ---
                         'name' => 'group',
@@ -441,12 +445,19 @@ class CoreConfig
                 ]
             ),
 
+
+
+            // --------------------------------------------------------------------------------
+            // --- Form layout ----------------------------------------------------------------
+            // --------------------------------------------------------------------------------
+
+
             (object) array(
-                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_OUTPUT_GROUP_START_ID,
+                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART_ID,
                 'created' => CoreConfig::EPOCH,
                 // ---
-                'name' => CoreConfig::MIMOTO_FORM_OUTPUT_GROUP_START,
-                'group' => CoreConfig::GROUP_MIMOTO_FORM_OUTPUT,
+                'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART,
+                'group' => CoreConfig::GROUP_MIMOTO_FORM_LAYOUT,
                 'properties' => [
                     (object) array(
                         'id' => CoreConfig::getUniqueEntityPropertyId(),
@@ -469,11 +480,20 @@ class CoreConfig
             ),
 
             (object) array(
-                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_OUTPUT_GROUP_END_ID,
+                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND_ID,
                 'created' => CoreConfig::EPOCH,
                 // ---
-                'name' => CoreConfig::MIMOTO_FORM_OUTPUT_GROUP_END,
-                'group' => CoreConfig::GROUP_MIMOTO_FORM_OUTPUT,
+                'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND,
+                'group' => CoreConfig::GROUP_MIMOTO_FORM_LAYOUT,
+                'properties' => []
+            ),
+
+            (object) array(
+                'id' => CoreConfig::MIMOTO_ENTITY_PREFIX.CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER_ID,
+                'created' => CoreConfig::EPOCH,
+                // ---
+                'name' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER,
+                'group' => CoreConfig::GROUP_MIMOTO_FORM_LAYOUT,
                 'properties' => []
             ),
 
