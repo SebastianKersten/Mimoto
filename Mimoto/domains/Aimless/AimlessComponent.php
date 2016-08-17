@@ -229,6 +229,11 @@ class AimlessComponent
         return $this->_entity->getValue('');
     }
 
+    public function submit()
+    {
+        return 'mls_form_submit='.'';
+    }
+
 
 
     public function realtime($sPropertySelector = null)

@@ -21,7 +21,7 @@ class ExampleFormController
         $person = $app['Mimoto.Data']->get('person', 2);
 
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_general_form_component');
+        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
 
         // prepare
         $aValues = [
