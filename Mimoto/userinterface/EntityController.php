@@ -4,6 +4,7 @@
 namespace Mimoto\UserInterface;
 
 // Silex classes
+use Mimoto\Core\CoreConfig;
 use Silex\Application;
 
 // Symfony classes
@@ -38,16 +39,27 @@ class EntityController
 
     public function entityNew(Application $app)
     {
-        // create
-        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntity');
 
-        $form->setVar('aPropertyNameValidation', json_encode(['regex' => '^[a-zA-Z][a-zA-Z0-9-_]*?$', 'maxchars' => 25, 'api' => 'Mimoto/form/validate']));
+        //$form->setVar('aPropertyNameValidation', json_encode(['regex' => '^[a-zA-Z][a-zA-Z0-9-_]*?$', 'maxchars' => 25, 'api' => 'Mimoto/form/validate']));
 
         // 'aPropertyNameValidation' => json_encode(['regex' => '^[a-zA-Z][a-zA-Z0-9-_]*?$', 'maxchars' => 10, 'api' => 'Mimoto/form/validate']),
         // 'aPropertyGroupValidation' => json_encode(['regex' => '^[a-zA-Z]*?[a-zA-Z0-9-_]*?(\.[a-zA-Z][a-zA-Z0-9-_]*?)*$'])
 
-        // output
-        return $form->render();
+
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_Form');
+
+        // prepare
+        $aValues = [
+            'name' => '',
+            //'group' => $entity->getValue('group')
+        ];
+
+        // setup
+        $component->addForm('form_entity_create', $aValues);
+
+        // render and send
+        return $component->render();
     }
 
     public function entityCreate(Application $app, Request $request)
@@ -82,17 +94,27 @@ class EntityController
 
     public function entityEdit(Application $app, $nEntityId)
     {
+
         // load
-        $entity = $app['Mimoto.Data']->get('_mimoto_entity', $nEntityId);
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
         // validate
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // create
-        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntity', $entity);
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_Form');
 
-        // output
-        return $form->render();
+        // prepare
+        $aValues = [
+            'name' => $entity->getValue('name'),
+            //'group' => $entity->getValue('group')
+        ];
+
+        // setup
+        $component->addForm('form_entity_edit', $aValues);
+
+        // render and send
+        return $component->render();
     }
 
     public function entityUpdate(Application $app, Request $request, $nEntityId)

@@ -166,6 +166,11 @@ a {
   width: 500px;
   margin: 20px;
 }
+div.MimotoCMS_forms_Form__menu {
+  width: 100%;
+  text-align: right;
+  margin-top: 30px;
+}
 div.MimotoCMS_forms_input_Button {
   color: #ffffff;
   background-color: #000000;
@@ -174,7 +179,7 @@ div.MimotoCMS_forms_input_Button {
   cursor: pointer;
   white-space: nowrap;
   font-size: 14px;
-  margin: 15px 0 15px 0;
+  margin: 0;
 }
 
 div.MimotoCMS_forms_input_Button>span {
@@ -201,6 +206,13 @@ div.MimotoCMS_forms_input_ButtonSmall>span {
   color: #06afea;
   margin-left: 12px;
   font-size: 12px;
+}
+div.MimotoCMS_forms_input_ButtonText {
+  color: #c3c3c3;
+  text-decoration: underline;
+  display: inline-block;
+  padding: 10px 15px 10px 15px;
+  cursor: pointer;
 }
 input[type="checkbox"] {
   /*   display:none; */

@@ -35,6 +35,8 @@ class AimlessComponent
     var $_aPropertyTemplates = [];
     var $_aPropertyFormatters = [];
 
+    const PRIMARY_FORM = 'primary_form';
+
     
     /**
      * Constructor
@@ -86,9 +88,13 @@ class AimlessComponent
         );
     }
 
-    public function addForm($sFormName, $aValues)
+    public function addForm($sFormName, $aValues, $sKey = null)
     {
-        $this->_aFormConfigs[$sFormName] = (object) array(
+        // default
+        if ($sKey === null) $sKey = self::PRIMARY_FORM;
+
+        // store
+        $this->_aFormConfigs[$sKey] = (object) array(
             'sFormName' => $sFormName,
             'aValues' => $aValues
         );
@@ -186,21 +192,24 @@ class AimlessComponent
         return $this->renderCollection($selection->selection, $selection->sTemplateName);
     }
 
-    public function form($sKey)
+    public function form($sKey = null)
     {
-        // 1. validate is form was defined
+        // 1. set default key
+        if ($sKey === null) $sKey = self::PRIMARY_FORM;
+
+        // 2. validate is form was defined
         if (!isset($this->_aFormConfigs[$sKey])) die("Aimless says: Form '$sKey' not defined");
 
-        // 2. load requested config
+        // 3. load requested config
         $formConfig = $this->_aFormConfigs[$sKey];
 
-        // 3. load form from database
+        // 4. load form from database
         $aResults = $this->_DataService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $formConfig->sFormName]]);
 
-        // 4. validate if form exists
+        // 5. validate if form exists
         if (!isset($aResults[0])) die("Aimless says: Form with name '$formConfig->sFormName' not found in database");
 
-        // 5. render and send
+        // 6. render and send
         return $this->renderForm($aResults[0], $formConfig->aValues);
     }
 

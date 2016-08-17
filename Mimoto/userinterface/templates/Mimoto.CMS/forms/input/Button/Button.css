@@ -6,7 +6,7 @@ div.MimotoCMS_forms_input_Button {
     cursor: pointer;
     white-space:nowrap;
     font-size: 14px;
-    margin: 15px 0 15px 0;
+    margin: 0;
 }
 
 div.MimotoCMS_forms_input_Button>span {

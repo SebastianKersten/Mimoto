@@ -7,7 +7,9 @@
     {% include 'Mimoto.CMS/forms/input/ButtonSmall/ButtonSmall.twig' with { label:'Edit', icon:'', action:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');" } %}<br>
     <br>
     Properties:<br>
+    <br>
     {% include 'Mimoto.CMS/forms/input/Button/Button.twig' with { label:'Add new property', icon:'+', action:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}
+    <br>
     <br>
     <div class="MimotoCMS_pages_entities_EntityDetail__container" {{ Aimless.realtime('properties')|raw }}>
         {{ Aimless.data('properties')|raw }}
@@ -18,5 +20,6 @@
     <b>Danger zone!</b><br>
     <br>
     <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
+    <br>
     {% include 'Mimoto.CMS/forms/input/Button/Button.twig' with { label:'Delete entity', icon:'X', action:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", type:'red' } %}
 {% endblock %}

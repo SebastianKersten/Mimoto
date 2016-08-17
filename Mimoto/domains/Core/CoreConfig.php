@@ -75,8 +75,6 @@ class CoreConfig
 
 
 
-
-
     // property types
     const PROPERTY_TYPE_VALUE = 'value';
     const PROPERTY_TYPE_ENTITY = 'entity';
