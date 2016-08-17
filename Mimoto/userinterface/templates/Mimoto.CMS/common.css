@@ -11,6 +11,7 @@ body {
     margin: 0;
 }
 
+
 div.layer_application {
     position: absolute;
     top: 0;
@@ -40,6 +41,12 @@ div.layer_popup {
     padding: 25px;
 }
 
+
+/* -------- cleanup! ---------- */
+
+
+
+
 div.page_title {
     font-size: 24px;
     font-weight: bold;
@@ -62,71 +69,6 @@ td.property {
 td.options {
     padding: 7px;
 }
-
-
-
-/* ---------- interface ---------- */
-
-
-div.sidemenu {
-    position: absolute;
-    background-color: #ffffff;
-    top: 0;
-    bottom: 0;
-    width: 80px;
-    left: 0;
-}
-
-    div.sidemenu_logo {
-        margin-top: 10px;
-        background-image: url('/static/img/mimoto.cms.logo.png');
-        background-repeat: no-repeat;
-        background-position-x: center;
-        width: 79px;
-        height: 50px;
-    }
-    
-    div.sidemenu_appname {
-        width: 79px;
-        font-size: 12px;
-        text-align: center;
-        padding: 8px;
-    }
-    
-    div.menu_items {
-        width: 79px;
-        margin-top: 20px;
-        text-align: center;
-    }
-    
-        div.menu_item {
-            padding: 8px;
-            color: #06afea;
-            font-size: 10px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        div.menu_item:hover {
-            text-decoration: underline;
-        }
-
-div.contentpanel {
-    position: absolute;
-    background-color: #eeeeee;
-    top: 0;
-    bottom: 0;
-    left: 80px;
-    right: 0;
-    padding: 34px;
-    overflow: scroll;
-}
-    
-  
-
-/* ---------- General components ---------- */
-
-
 
 
 

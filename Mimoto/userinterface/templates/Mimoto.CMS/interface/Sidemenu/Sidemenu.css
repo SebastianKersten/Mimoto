@@ -1,0 +1,42 @@
+div.MimotoCMS_interface_Sidemenu__menuitem {
+    position: absolute;
+    background-color: #ffffff;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    left: 0;
+}
+
+div.MimotoCMS_interface_Sidemenu__logo {
+    margin-top: 10px;
+    background-image: url('/static/img/mimoto.cms.logo.png');
+    background-repeat: no-repeat;
+    background-position-x: center;
+    width: 79px;
+    height: 50px;
+}
+
+div.MimotoCMS_interface_Sidemenu__appname {
+    width: 79px;
+    font-size: 12px;
+    text-align: center;
+    padding: 8px;
+}
+
+div.MimotoCMS_interface_Sidemenu__menuitems {
+    width: 79px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+div.MimotoCMS_interface_Sidemenu__menuitem {
+    padding: 8px;
+    color: #06afea;
+    font-size: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+div.MimotoCMS_interface_Sidemenu__menuitem:hover {
+    text-decoration: underline;
+}

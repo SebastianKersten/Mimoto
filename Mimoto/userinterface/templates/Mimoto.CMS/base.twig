@@ -3,7 +3,7 @@
         <title>Mimoto.CMS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+        <!--<link rel="stylesheet" type="text/css" href="/static/css/main.css">-->
         <link rel="stylesheet" type="text/css" href="/static/css/mimoto.cms.css">
         <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
         <script src="/static/js/jquery-3.1.0.min.js"></script>
@@ -15,23 +15,12 @@
     </head>
     <body>
         <div class="layer_application">
-            <div class="sidemenu open">
-                <div class="sidemenu_logo"></div>
-                <div class="sidemenu_appname"><b>mimoto</b><br>cms</div>
-                <div class="menu_items">
-                    <div class="menu_item" onclick="window.open('/mimoto.cms/entities', '_self');">Entities</div>
-                    <div class="menu_item" onclick="window.open('/mimoto.cms/forms', '_self');">Forms</div>
-                    <div class="menu_item" onclick="window.open('/mimoto.cms/content', '_self');">Content</div>
-                </div>
-            </div>
-            <div class="contentpanel">{% block content %}{% endblock %}</div>
+            {% include "Mimoto.CMS/interface/Sidemenu/Sidemenu.twig" %}
+            {% include "Mimoto.CMS/interface/ContentPanel/ContentPanel.twig" %}
         </div>
         <div id="layer_overlay" class="layer_overlay hidden"></div>
-        <div id="layer_popup" class="layer_popup hidden">    
-            <div id="popup" class="popup">
-                <div class="popup_button_close" onClick="Maido.popup.close();">Close</div>
-                <div id="popup_content" class="popup_content"></div>
-            </div>
+        <div id="layer_popup" class="layer_popup hidden">
+            {% include "Mimoto.CMS/interface/Popup/Popup.twig" %}
         </div>
     </body>
 </html>
