@@ -94,8 +94,44 @@ Mimoto.CMS.entityPropertyEdit = function(nEntityPropertyId)
 
 Mimoto.form = {};
 
-Mimoto.form.registerInputField = function(sInputFieldId, validation)
+Mimoto.form.registerForm = function(sFormName, sAction, sMethod)
 {
+    // init
+    if (!Mimoto.form._aForms) Mimoto.form._aForms = [];
+
+    // setup
+    var form = {
+        'sName': sFormName,
+        'sAction': sAction,
+        'sMethod': sMethod,
+        'aFields': []
+    };
+
+    // register
+    Mimoto.form._aForms.push(form);
+
+    console.log(Mimoto.form._aForms);
+};
+
+Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - settings
+{
+    // setup
+    var field = {
+        'sName': sInputFieldId,
+        'sType': 'input', // #todo - const
+        'settings': validation
+    };
+
+
+    // read
+    var currentForm = Mimoto.form._aForms[Mimoto.form._aForms.length - 1]; // #todo - validate if no form set
+
+    currentForm.aFields.push(field);
+
+
+    console.log(Mimoto.form._aForms);
+
+
     var scope = {};
     scope.validation = validation;
     scope.sInputFieldId = sInputFieldId;
@@ -147,4 +183,4 @@ Mimoto.form.registerInputField = function(sInputFieldId, validation)
             console.log('Input = ok!');
         }
     });
-}
+};

@@ -40,8 +40,8 @@ class AimlessComponent
     
     /**
      * Constructor
-     * @param type $sViewmodelName
-     * @param type $entity
+     * @param string $sTemplateName
+     * @param MimotoEntity $entity
      */
     public function __construct($sTemplateName, $entity, $AimlessService, $DataService, $TwigService)
     {
@@ -194,6 +194,10 @@ class AimlessComponent
 
     public function form($sKey = null)
     {
+        // 1. createForm and return (pass form to new component
+
+
+
         // 1. set default key
         if ($sKey === null) $sKey = self::PRIMARY_FORM;
 
@@ -212,29 +216,6 @@ class AimlessComponent
         // 6. render and send
         return $this->renderForm($aResults[0], $formConfig->aValues);
     }
-
-    public function field()
-    {
-        return 'mls_form_field='.'';
-    }
-
-    public function error()
-    {
-        return 'mls_form_error="'.'"';
-    }
-
-    public function value()
-    {
-        return $this->_entity->getId();
-        return $this->_entity->getValue('');
-    }
-
-    public function submit()
-    {
-        return 'mls_form_submit='.'';
-    }
-
-
 
     public function realtime($sPropertySelector = null)
     {
@@ -320,7 +301,7 @@ class AimlessComponent
     
     public function setupProperty()
     {
-        
+        // connect Entity-template to entity
     }
     
     
@@ -363,11 +344,12 @@ class AimlessComponent
         return $sRenderedCollection;
     }
 
-
+// #todo - Verplaats naar AimlessForm
     private function renderForm($form, $aValues)
     {
         // init
         $sRenderedForm = '<form>';
+        $sRenderedForm .= '<script>Mimoto.form.registerForm("'.$form->getValue('name').'", "/mimoto.cms/entity/1/update", "POST");</script>';
 
         // load
         $aFields = $form->getValue('fields', true);
@@ -377,19 +359,32 @@ class AimlessComponent
         for ($i = 0; $i < count($aFields); $i++)
         {
             // register
-            $field = $aFields[$i];
+            $fieldData = $aFields[$i];
 
             // read
-            $sTemplateName = $field->getEntityType();
+            $sTemplateName = $fieldData->getEntityType();
 
             // create
-            $component = $this->_AimlessService->createComponent($sTemplateName, $field);
+            switch($fieldData->getEntityGroup())
+            {
+                case CoreConfig::GROUP_MIMOTO_FORM_INPUT:
+
+                     $value = (isset($aValues[$fieldData->getValue('varname')])) ? $aValues[$fieldData->getValue('varname')] : '';
+
+                    $formFieldComponent = $this->_AimlessService->createInput($sTemplateName, $fieldData, $value);
+                    break;
+
+                default:
+
+                    $formFieldComponent = $this->_AimlessService->createComponent($sTemplateName, $fieldData);
+                    break;
+            }
 
             // forward
-            foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
+            foreach ($this->_aVars as $sKey => $value) { $formFieldComponent->setVar($sKey, $value); }
 
             // output
-            $sRenderedForm .= $component->render();
+            $sRenderedForm .= $formFieldComponent->render();
 
 
             // 1. settings pass blindly: {% if validation is not empty %}, {{ validation|raw }}{% endif %}
@@ -409,12 +404,6 @@ class AimlessComponent
 //
 //            _mimoto_inputfield
 //            _mimoto_inputfieldsetting
-
-
-            if ($field->getEntityGroup() == CoreConfig::GROUP_MIMOTO_FORM_INPUT)
-            {
-                $sRenderedForm .= '<script>Mimoto.form.registerInputField("'.$field->getId().'")</script>';
-            }
         }
 
         // finish

@@ -76,19 +76,19 @@ class EntityController
 
     public function entityView(Application $app, $nEntityId)
     {
-        // load
+        // 1. load requested entity
         $entity = $app['Mimoto.Data']->get('_mimoto_entity', $nEntityId);
 
-        // validate
+        // 2. check if entity exists
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
-        // create
+        // 3. create component
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityDetail', $entity);
 
-        // setup
+        // 4. setup component
         $page->setPropertyTemplate('properties', 'Mimoto.CMS_entities_PropertyListItem');
 
-        // output
+        // 5. output
         return $page->render();
     }
 

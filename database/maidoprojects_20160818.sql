@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 08/17/2016 14:11:42 PM
+ Date: 08/18/2016 12:16:46 PM
 */
 
 SET NAMES utf8mb4;
@@ -45,7 +45,7 @@ CREATE TABLE `_mimoto_component` (
 --  Records of `_mimoto_component`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_component` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', '2016-05-29 22:12:52'), ('26', 'project_withsubprojects', 'examples/ProjectWithSubprojects.twig', '2016-05-31 21:48:05'), ('27', 'project_withsubprojects_phase', 'examples/ProjectWithSubprojectsPhase.twig', '2016-05-31 21:50:11'), ('28', 'project_withsubprojects_filter', 'examples/ProjectWithSubprojectsFilter.twig', '2016-05-31 21:53:49'), ('29', 'subproject', 'examples/Subproject.twig', '2016-05-31 22:10:10'), ('30', 'subproject_phase', 'examples/Subproject.twig', '2016-05-31 22:10:43'), ('31', 'subproject_phase', 'examples/SubprojectActive.twig', '2016-06-01 12:44:08'), ('32', 'subproject_phase', 'examples/SubprojectArchived.twig', '2016-06-01 12:45:44'), ('33', 'notificationcenter', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:51:20'), ('34', 'notification', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:53:50'), ('35', 'client_overview', 'examples/ClientOverview.twig', '2016-06-11 12:21:52'), ('36', 'client_listitem', 'examples/ListItemComponent.twig', '2016-06-11 12:22:54'), ('37', 'entity_overview', 'exampleadmin/EntityOverview.twig', '2016-06-13 10:42:03'), ('38', 'entity_listitem', 'exampleadmin/EntityListItem.twig', '2016-06-13 10:52:12'), ('39', 'subproject_overview', 'examples/SubprojectOverview.twig', '2016-06-13 11:46:46'), ('40', 'subproject_examplelistitem', 'examples/SubprojectListItem.twig', '2016-06-13 11:47:15'), ('41', 'form_client', 'forms/ClientForm.twig', '2016-06-27 14:38:36'), ('42', 'Mimoto.CMS_dashboard_Overview', 'Mimoto.CMS/pages/dashboard/Overview.twig', '2016-07-19 12:27:17'), ('43', 'Mimoto.CMS_entities_EntityOverview', 'Mimoto.CMS/pages/entities/EntityOverview/EntityOverview.twig', '2016-07-19 14:25:22'), ('44', 'Mimoto.CMS_entities_EntityListItem', 'Mimoto.CMS/pages/entities/EntityListItem/EntityListItem.twig', '2016-07-19 14:32:35'), ('45', 'Mimoto.CMS_entities_EntityDetail', 'Mimoto.CMS/pages/entities/EntityDetail/EntityDetail.twig', '2016-07-19 15:17:30'), ('46', 'Mimoto.CMS_entities_PropertyListItem', 'Mimoto.CMS/pages/entities/PropertyListItem/PropertyListItem.twig', '2016-07-19 17:12:38'), ('47', 'Mimoto.CMS_entities_FormEntity', 'Mimoto.CMS/pages/entities/FormEntity.twig', '2016-07-27 13:00:43'), ('48', 'Mimoto.CMS_entities_FormEntityProperty', 'Mimoto.CMS/pages/entities/FormEntityProperty.twig', '2016-07-27 16:40:35'), ('50', 'Mimoto.CMS_general_form_component', 'Mimoto.CMS/forms/form_dev.twig', '2016-08-04 14:22:00'), ('51', '_mimoto_form_output_title', 'Mimoto.CMS/forms/output/Title/Title.twig', '2016-08-10 16:29:20'), ('52', '_mimoto_form_layout_groupstart', 'Mimoto.CMS/forms/layout/GroupStart/GroupStart.twig', '2016-08-10 17:37:30'), ('53', '_mimoto_form_layout_groupend', 'Mimoto.CMS/forms/layout/GroupEnd/GroupEnd.twig', '2016-08-10 17:37:46'), ('54', '_mimoto_form_input_textline', 'Mimoto.CMS/forms/input/Textline/Textline.twig', '2016-08-12 10:07:33'), ('55', '_mimoto_form_input_checkbox', 'Mimoto.CMS/forms/input/Checkbox/Checkbox.twig', '2016-08-15 14:55:03'), ('56', '_mimoto_form_input_radiobutton', 'Mimoto.CMS/forms/input/Radiobutton/Radiobutton.twig', '2016-08-15 14:55:26'), ('57', '_mimoto_form_input_dropdown', 'Mimoto.CMS/forms/input/Dropdown/Dropdown.twig', '2016-08-15 15:00:10'), ('58', '_mimoto_form_layout_divider', 'Mimoto.CMS/forms/layout/Divider/Divider.twig', '2016-08-15 18:16:16'), ('59', 'Mimoto.CMS_forms_Form', 'Mimoto.CMS/forms/Form.twig', '2016-08-17 12:33:35');
+INSERT INTO `_mimoto_component` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', '2016-05-29 22:12:52'), ('26', 'project_withsubprojects', 'examples/ProjectWithSubprojects.twig', '2016-05-31 21:48:05'), ('27', 'project_withsubprojects_phase', 'examples/ProjectWithSubprojectsPhase.twig', '2016-05-31 21:50:11'), ('28', 'project_withsubprojects_filter', 'examples/ProjectWithSubprojectsFilter.twig', '2016-05-31 21:53:49'), ('29', 'subproject', 'examples/Subproject.twig', '2016-05-31 22:10:10'), ('30', 'subproject_phase', 'examples/Subproject.twig', '2016-05-31 22:10:43'), ('31', 'subproject_phase', 'examples/SubprojectActive.twig', '2016-06-01 12:44:08'), ('32', 'subproject_phase', 'examples/SubprojectArchived.twig', '2016-06-01 12:45:44'), ('33', 'notificationcenter', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:51:20'), ('34', 'notification', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:53:50'), ('35', 'client_overview', 'examples/ClientOverview.twig', '2016-06-11 12:21:52'), ('36', 'client_listitem', 'examples/ListItemComponent.twig', '2016-06-11 12:22:54'), ('37', 'entity_overview', 'exampleadmin/EntityOverview.twig', '2016-06-13 10:42:03'), ('38', 'entity_listitem', 'exampleadmin/EntityListItem.twig', '2016-06-13 10:52:12'), ('39', 'subproject_overview', 'examples/SubprojectOverview.twig', '2016-06-13 11:46:46'), ('40', 'subproject_examplelistitem', 'examples/SubprojectListItem.twig', '2016-06-13 11:47:15'), ('41', 'form_client', 'forms/ClientForm.twig', '2016-06-27 14:38:36'), ('42', 'Mimoto.CMS_dashboard_Overview', 'Mimoto.CMS/pages/dashboard/Overview.twig', '2016-07-19 12:27:17'), ('43', 'Mimoto.CMS_entities_EntityOverview', 'Mimoto.CMS/pages/entities/EntityOverview/EntityOverview.twig', '2016-07-19 14:25:22'), ('44', 'Mimoto.CMS_entities_EntityListItem', 'Mimoto.CMS/pages/entities/EntityListItem/EntityListItem.twig', '2016-07-19 14:32:35'), ('45', 'Mimoto.CMS_entities_EntityDetail', 'Mimoto.CMS/pages/entities/EntityDetail/EntityDetail.twig', '2016-07-19 15:17:30'), ('46', 'Mimoto.CMS_entities_PropertyListItem', 'Mimoto.CMS/pages/entities/PropertyListItem/PropertyListItem.twig', '2016-07-19 17:12:38'), ('47', 'Mimoto.CMS_entities_FormEntity', 'Mimoto.CMS/pages/entities/FormEntity.twig', '2016-07-27 13:00:43'), ('48', 'Mimoto.CMS_entities_FormEntityProperty', 'Mimoto.CMS/pages/entities/FormEntityProperty.twig', '2016-07-27 16:40:35'), ('50', 'examplebase_form', 'examplebase_form.twig', '2016-08-04 14:22:00'), ('51', '_mimoto_form_output_title', 'Mimoto.CMS/forms/output/Title/Title.twig', '2016-08-10 16:29:20'), ('52', '_mimoto_form_layout_groupstart', 'Mimoto.CMS/forms/layout/GroupStart/GroupStart.twig', '2016-08-10 17:37:30'), ('53', '_mimoto_form_layout_groupend', 'Mimoto.CMS/forms/layout/GroupEnd/GroupEnd.twig', '2016-08-10 17:37:46'), ('54', '_mimoto_form_input_textline', 'Mimoto.CMS/forms/input/Textline/Textline.twig', '2016-08-12 10:07:33'), ('55', '_mimoto_form_input_checkbox', 'Mimoto.CMS/forms/input/Checkbox/Checkbox.twig', '2016-08-15 14:55:03'), ('56', '_mimoto_form_input_radiobutton', 'Mimoto.CMS/forms/input/Radiobutton/Radiobutton.twig', '2016-08-15 14:55:26'), ('57', '_mimoto_form_input_dropdown', 'Mimoto.CMS/forms/input/Dropdown/Dropdown.twig', '2016-08-15 15:00:10'), ('58', '_mimoto_form_layout_divider', 'Mimoto.CMS/forms/layout/Divider/Divider.twig', '2016-08-15 18:16:16'), ('59', 'Mimoto.CMS_forms_Form', 'Mimoto.CMS/forms/Form.twig', '2016-08-17 12:33:35');
 COMMIT;
 
 -- ----------------------------
@@ -217,6 +217,7 @@ CREATE TABLE `_mimoto_form_input_checkbox` (
   `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
+  `varname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -224,7 +225,7 @@ CREATE TABLE `_mimoto_form_input_checkbox` (
 --  Records of `_mimoto_form_input_checkbox`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_form_input_checkbox` VALUES ('1', 'State', 'Person is currently active on the project', '2016-08-15 13:47:47');
+INSERT INTO `_mimoto_form_input_checkbox` VALUES ('1', 'State', 'Person is currently active on the project', '2016-08-15 13:47:47', 'state');
 COMMIT;
 
 -- ----------------------------
@@ -236,6 +237,7 @@ CREATE TABLE `_mimoto_form_input_dropdown` (
   `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `options` text COLLATE utf8_unicode_ci,
   `created` datetime DEFAULT NULL,
+  `varname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -243,7 +245,7 @@ CREATE TABLE `_mimoto_form_input_dropdown` (
 --  Records of `_mimoto_form_input_dropdown`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_form_input_dropdown` VALUES ('1', 'Number of hours', '[\"0-2\", \"0 - 2 hours per day\", \"2-4\", \"2 - 4 hours a day\", \"4-8\", \"4-8 hours a day\"]', '2016-08-15 13:49:42');
+INSERT INTO `_mimoto_form_input_dropdown` VALUES ('1', 'Number of hours', '[\"0-2\", \"0 - 2 hours per day\", \"2-4\", \"2 - 4 hours a day\", \"4-8\", \"4-8 hours a day\"]', '2016-08-15 13:49:42', 'numberofhours');
 COMMIT;
 
 -- ----------------------------
@@ -255,6 +257,7 @@ CREATE TABLE `_mimoto_form_input_radiobutton` (
   `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `options` text COLLATE utf8_unicode_ci,
   `created` datetime DEFAULT NULL,
+  `varname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -262,7 +265,7 @@ CREATE TABLE `_mimoto_form_input_radiobutton` (
 --  Records of `_mimoto_form_input_radiobutton`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_form_input_radiobutton` VALUES ('1', 'Number of hours', '[\"0-2\", \"0 - 2 hours per day\", \"2-4\", \"2 - 4 hours a day\", \"4-8\", \"4-8 hours a day\"]', '2016-08-15 13:49:42');
+INSERT INTO `_mimoto_form_input_radiobutton` VALUES ('1', 'Number of hours', '[\"0-2\", \"0 - 2 hours per day\", \"2-4\", \"2 - 4 hours a day\", \"4-8\", \"4-8 hours a day\"]', '2016-08-15 13:49:42', 'numberofhours');
 COMMIT;
 
 -- ----------------------------
@@ -275,6 +278,7 @@ CREATE TABLE `_mimoto_form_input_textline` (
   `regexp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `maxchars` int(10) unsigned DEFAULT NULL,
   `created` datetime DEFAULT NULL,
+  `varname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -282,7 +286,7 @@ CREATE TABLE `_mimoto_form_input_textline` (
 --  Records of `_mimoto_form_input_textline`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_form_input_textline` VALUES ('1', 'Name', '/[a-zA-Z09-]/', '10', '2016-08-10 16:13:50'), ('2', 'Role', null, null, '2016-08-12 10:24:05'), ('100', 'Name', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:21'), ('200', 'Name', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:36');
+INSERT INTO `_mimoto_form_input_textline` VALUES ('1', 'Name', '/[a-zA-Z09-]/', '10', '2016-08-10 16:13:50', 'name'), ('2', 'Role', null, null, '2016-08-12 10:24:05', 'role'), ('100', 'Name', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:21', 'name'), ('200', 'Name', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:36', 'name');
 COMMIT;
 
 -- ----------------------------
@@ -356,6 +360,18 @@ CREATE TABLE `_mimoto_form_output_title` (
 BEGIN;
 INSERT INTO `_mimoto_form_output_title` VALUES ('1', 'Hello', 'First output field', 'This is the first output field connected to a genuine form config as port of the Mimoto FormGenerator. Yay!', '2016-08-04 08:38:28'), ('2', 'And welcome', 'Second output field', 'This is the description of the second output field that was connected to this first example form.', '2016-08-10 16:44:36'), ('100', 'Create entity', 'Add a new entity to your project', 'After creation the entity is ready for use in your code.', '2016-08-17 12:23:25'), ('200', 'Edit entity', 'Change an existing entity', 'Be careful - Changes made to this entity whould also be applied in your code!', '2016-08-17 12:25:47');
 COMMIT;
+
+-- ----------------------------
+--  Table structure for `_mimoto_forminput`
+-- ----------------------------
+DROP TABLE IF EXISTS `_mimoto_forminput`;
+CREATE TABLE `_mimoto_forminput` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `agency`

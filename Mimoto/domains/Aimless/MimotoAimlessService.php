@@ -73,6 +73,21 @@ class MimotoAimlessService
         // init and send
         return $component = new AimlessComponent($sComponentName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
+
+    /**
+     * Create input
+     * @param string $sComponentName The name of the registered template
+     * @param MimotoEntity $entity The data to be combined with the template
+     * @return AimlessComponent
+     */
+    public function createInput($sComponentName, $entity = null, $value = null)
+    {
+        // init and send
+        return $input = new AimlessInput($sComponentName, $entity, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
+    }
+
+
+
     
     /**
      * Create form

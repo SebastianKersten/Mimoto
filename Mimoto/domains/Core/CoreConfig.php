@@ -561,6 +561,24 @@ class CoreConfig
                                 'value' => CoreConfig::DATA_VALUE_TEXTLINE
                             )
                         ]
+                    ),
+                    // TEMP - varname
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'varname',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            )
+                        ]
                     )
                 ]
             ),
@@ -597,6 +615,24 @@ class CoreConfig
                         'created' => CoreConfig::EPOCH,
                         // ---
                         'name' => 'description',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            )
+                        ]
+                    ),
+                    // TEMP - varname
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'varname',
                         'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                         'settings' => [
                             'type' => (object) array(
@@ -655,6 +691,24 @@ class CoreConfig
                                 'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
                             )
                         ]
+                    ),
+                    // TEMP - varname
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'varname',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            )
+                        ]
                     )
                 ]
             ),
@@ -699,6 +753,24 @@ class CoreConfig
                                 'key' => 'type',
                                 'type' => CoreConfig::DATA_TYPE_VALUE, // #todo ---> kan Selection worden
                                 'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
+                            )
+                        ]
+                    ),
+                    // TEMP - varname
+                    (object) array(
+                        'id' => CoreConfig::getUniqueEntityPropertyId(),
+                        'created' => CoreConfig::EPOCH,
+                        // ---
+                        'name' => 'varname',
+                        'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                        'settings' => [
+                            'type' => (object) array(
+                                'id' => CoreConfig::getUniqueEntityPropertySettingId(),
+                                'created' => CoreConfig::EPOCH,
+                                // ---
+                                'key' => 'type',
+                                'type' => CoreConfig::DATA_TYPE_VALUE,
+                                'value' => CoreConfig::DATA_VALUE_TEXTLINE
                             )
                         ]
                     )
