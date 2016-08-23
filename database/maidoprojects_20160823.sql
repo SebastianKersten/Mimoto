@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 08/18/2016 12:16:46 PM
+ Date: 08/23/2016 13:54:00 PM
 */
 
 SET NAMES utf8mb4;
@@ -75,16 +75,15 @@ DROP TABLE IF EXISTS `_mimoto_entity`;
 CREATE TABLE `_mimoto_entity` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `group` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `_mimoto_entity`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entity` VALUES ('1', 'person', '', '2016-07-29 14:13:46'), ('2', 'article', null, '2016-08-17 11:16:09');
+INSERT INTO `_mimoto_entity` VALUES ('1', 'person', '2016-07-29 14:13:46'), ('2', 'article', '2016-08-17 11:16:09'), ('3', 'author', '2016-08-22 10:30:30');
 COMMIT;
 
 -- ----------------------------
@@ -99,13 +98,13 @@ CREATE TABLE `_mimoto_entity_connections` (
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entity_connections`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entity_connections` VALUES ('1', '1', 'epid2', 'eid2', '1', '0'), ('2', '1', 'epid2', 'eid2', '2', '1'), ('3', '2', 'epid2', 'eid2', '3', '0'), ('4', '2', 'epid2', 'eid2', '4', '1'), ('5', '2', 'epid2', 'eid2', '5', '2'), ('6', '2', 'epid2', 'eid2', '6', '3');
+INSERT INTO `_mimoto_entity_connections` VALUES ('1', '1', '_mimoto_entity__properties', '_mimoto_entityproperty', '1', '0'), ('2', '1', '_mimoto_entity__properties', '_mimoto_entityproperty', '2', '1'), ('3', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '3', '0'), ('4', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '4', '1'), ('5', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '5', '2'), ('6', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '6', '3'), ('100', '1', '_mimoto_entity__extends', '_mimoto_entity', '2', '0');
 COMMIT;
 
 -- ----------------------------
@@ -145,7 +144,7 @@ CREATE TABLE `_mimoto_entityproperty_connections` (
 --  Records of `_mimoto_entityproperty_connections`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entityproperty_connections` VALUES ('1', '1', 'epid2', 'eid2', '1', '0'), ('2', '2', 'epid2', 'eid2', '2', '1'), ('3', '3', 'epid2', 'eid2', '3', '0'), ('4', '4', 'epid2', 'eid2', '4', '1'), ('5', '5', 'epid2', 'eid2', '5', '2'), ('6', '6', 'epid2', 'eid2', '6', '3');
+INSERT INTO `_mimoto_entityproperty_connections` VALUES ('1', '1', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1', '0'), ('2', '2', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '2', '1'), ('3', '3', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '3', '0'), ('4', '4', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '4', '1'), ('5', '5', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '5', '2'), ('6', '6', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '6', '3');
 COMMIT;
 
 -- ----------------------------
@@ -177,6 +176,7 @@ CREATE TABLE `_mimoto_form` (
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci,
   `created` datetime DEFAULT NULL,
+  `entity_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -184,7 +184,7 @@ CREATE TABLE `_mimoto_form` (
 --  Records of `_mimoto_form`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_form` VALUES ('1', 'client', 'A simple form to add and edit clients', '2016-06-27 14:06:17'), ('2', 'form_person', 'Test', '2016-08-10 14:29:42'), ('100', 'form_entity_create', 'Core form for creating entities', '2016-08-17 12:21:21'), ('200', 'form_entity_edit', 'Core form for changing existing entities', '2016-08-17 12:26:10');
+INSERT INTO `_mimoto_form` VALUES ('1', 'client', 'A simple form to add and edit clients', '2016-06-27 14:06:17', null), ('2', 'form_person', 'Test', '2016-08-10 14:29:42', null), ('100', 'form_entity_create', 'Core form for creating entities', '2016-08-17 12:21:21', null), ('200', 'form_entity_edit', 'Core form for changing existing entities', '2016-08-17 12:26:10', null);
 COMMIT;
 
 -- ----------------------------
@@ -205,7 +205,7 @@ CREATE TABLE `_mimoto_form_connections` (
 --  Records of `_mimoto_form_connections`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_form_connections` VALUES ('1', '2', 'epid_fields', 'eid100', '1', '0'), ('2', '2', 'epid_fields', 'eid101', '1', '1'), ('3', '2', 'epid_fields', 'eid200', '1', '2'), ('4', '2', 'epid_fields', 'eid103', '1', '3'), ('5', '2', 'epid_fields', 'eid200', '2', '4'), ('6', '2', 'epid_fields', 'eid201', '1', '5'), ('7', '2', 'epid_fields', 'eid102', '1', '6'), ('100', '100', 'epid_fields', 'eid100', '100', '0'), ('101', '100', 'epid_fields', 'eid101', '100', '1'), ('102', '100', 'epid_fields', 'eid200', '100', '2'), ('103', '100', 'epid_fields', 'eid102', '100', '3'), ('200', '200', 'epid_fields', 'eid100', '200', '0'), ('201', '200', 'epid_fields', 'eid101', '200', '1'), ('202', '200', 'epid_fields', 'eid200', '200', '2'), ('203', '200', 'epid_fields', 'eid102', '200', '3');
+INSERT INTO `_mimoto_form_connections` VALUES ('1', '2', '_mimoto_form__fields', '_mimoto_form_output_title', '1', '0'), ('2', '2', '_mimoto_form__fields', '_mimoto_form_layout_groupstart', '1', '1'), ('3', '2', '_mimoto_form__fields', '_mimoto_form_input_textline', '1', '2'), ('4', '2', '_mimoto_form__fields', '_mimoto_form_layout_divider', '1', '3'), ('5', '2', '_mimoto_form__fields', '_mimoto_form_input_textline', '2', '4'), ('6', '2', '_mimoto_form__fields', '_mimoto_form_input_checkbox', '1', '5'), ('7', '2', '_mimoto_form__fields', '_mimoto_form_layout_groupend', '1', '6'), ('100', '100', '_mimoto_form__fields', '_mimoto_form_output_title', '100', '0'), ('101', '100', '_mimoto_form__fields', '_mimoto_form_layout_groupstart', '100', '1'), ('102', '100', '_mimoto_form__fields', '_mimoto_form_input_textline', '100', '2'), ('103', '100', '_mimoto_form__fields', '_mimoto_form_layout_groupend', '100', '3'), ('200', '200', '_mimoto_form__fields', '_mimoto_form_output_title', '200', '0'), ('201', '200', '_mimoto_form__fields', '_mimoto_form_layout_groupstart', '200', '1'), ('202', '200', '_mimoto_form__fields', '_mimoto_form_input_textline', '200', '2'), ('203', '200', '_mimoto_form__fields', '_mimoto_form_layout_groupend', '200', '3');
 COMMIT;
 
 -- ----------------------------
@@ -491,13 +491,13 @@ CREATE TABLE `person` (
   `role` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `person`
 -- ----------------------------
 BEGIN;
-INSERT INTO `person` VALUES ('1', 'Sebastian', 'Developer', '2016-08-10 13:54:04'), ('2', 'Bart', 'Developer', '2016-08-10 14:04:01'), ('3', 'Alexander', 'DevOps', '2016-08-10 14:04:20');
+INSERT INTO `person` VALUES ('1', 'Sebastian', 'Developer', '2016-08-10 13:54:04'), ('2', 'Bart', 'Developer (back-end)', '2016-08-10 14:04:01'), ('3', 'Alexander', 'DevOps', '2016-08-10 14:04:20'), ('4', 'Lode', 'Lead developer', '2016-08-22 14:11:44'), ('5', 'Heleen', 'Developer', '2016-08-22 14:11:53'), ('7', 'Jorrit', 'Developer (front-end)', '2016-08-22 14:12:37');
 COMMIT;
 
 -- ----------------------------
