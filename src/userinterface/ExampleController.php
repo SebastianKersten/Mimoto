@@ -350,6 +350,35 @@ class ExampleController
         // render and send
         return $form->render();
     }
+
+
+
+
+    public function viewExample22(Application $app)
+    {
+
+        // 1. Author extends Member extends Person
+
+
+        $_mimoto_entity = $app['Mimoto.Data']->get('_mimoto_entity', 1);
+
+
+        output('_mimoto_entity called "Person"', $_mimoto_entity);
+
+
+        die();
+
+
+        // load
+        $person = $app['Mimoto.Data']->get('person', 1);
+        //$member = $app['Mimoto.Data']->get('member', 1);
+        //$author = $app['Mimoto.Data']->get('author', 1);
+
+        // output
+        output("Author extends person", $person);
+
+        return '';
+    }
     
     
     

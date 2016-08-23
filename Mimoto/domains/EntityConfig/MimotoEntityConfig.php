@@ -29,12 +29,6 @@ class MimotoEntityConfig
     var $_sName = '';
 
     /**
-     * The group of the entity
-     * @var string
-     */
-    var $_sGroup = '';
-
-    /**
      * The properties of the entity
      * @var array 
      */
@@ -94,19 +88,6 @@ class MimotoEntityConfig
      * @param string $sName
      */
     public function setName($sName) { $this->_sName = $sName; }
-
-
-    /**
-     * Get the group of the entity
-     * @return string The group of the entity
-     */
-    public function getGroup() { return $this->_sGroup; }
-
-    /**
-     * Set the group of the entity
-     * @param string $sGroup
-     */
-    public function setGroup($sGroup) { $this->_sGroup = $sGroup; }
     
     
     
@@ -194,7 +175,7 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                'entityType' => $options['entityType']->value
+                'allowedEntityTypes' => $options['allowedEntityTypes']->value
             )
         );
         
@@ -278,42 +259,6 @@ class MimotoEntityConfig
             'type' => self::PROPERTY_VALUE_MYSQLCONNECTION_TABLE,
             'name' => $sPropertyName,
             'mysqlConnectionTable' => $sMySQLConnectionTable
-        );
-        
-        // store
-        $this->_aPropertyValues[$sPropertyName] = $propertyValue;
-    }
-    
-    /**
-     * Connect property to dummy value
-     * @param string $sPropertyName The property's name
-     * @param mixed $value The dummy value
-     */
-    public function connectPropertyToDummyValue($sPropertyName, $value)
-    {
-        // compose
-        $propertyValue = (object) array(
-            'type' => self::PROPERTY_VALUE_DUMMY,
-            'name' => $sPropertyName,
-            'value' => $value
-        );
-        
-        // store
-        $this->_aPropertyValues[$sPropertyName] = $propertyValue;
-    }
-    
-    /**
-     * Connect property to default value
-     * @param string $sPropertyName The property's name
-     * @param mixed $value The default value
-     */
-    public function connectPropertyToDefaultValue($sPropertyName, $value)
-    {
-        // compose
-        $propertyValue = (object) array(
-            'type' => self::PROPERTY_VALUE_DEFAULT,
-            'name' => $sPropertyName,
-            'value' => $value
         );
         
         // store

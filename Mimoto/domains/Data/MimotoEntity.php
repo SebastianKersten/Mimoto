@@ -30,14 +30,8 @@ class MimotoEntity extends MimotoData
     private $_sEntityType;
 
     /**
-     * The entity's group
-     * @var string
-     */
-    private $_sEntityGroup;
-
-    /**
      * The moment of creation
-     * @var datetime
+     * @var \DateTime
      */
     private $_datetimeCreated;
     
@@ -71,33 +65,18 @@ class MimotoEntity extends MimotoData
      */
     public function getEntityType() { return $this->_sEntityType; }
 
-
-    /**
-     * Get the entity's group
-     *
-     * @return string
-     */
-    public function getEntityGroup() { return $this->_sEntityGroup; }
-
-    /**
-     * Set the entity's group
-     *
-     * @param string $sEntityGroup The entity's group
-     */
-    public function setEntityGroup($sEntityGroup) { $this->_sEntityGroup = $sEntityGroup; }
-
     
     /**
      * Get the moment of creation
      * 
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreated() { return $this->_datetimeCreated; }
     
     /**
      * Set the moment of creation
      * 
-     * @param datetime $datetimeCreated The moment of creation
+     * @param \DateTime $datetimeCreated The moment of creation
      */
     public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
     
@@ -114,12 +93,11 @@ class MimotoEntity extends MimotoData
      */
     public function __construct($sEntityType, $bTrackChanges = true)
     {
-        
+        // forward
         parent::__construct($bTrackChanges);
         
         // register
         $this->_sEntityType = $sEntityType;
-        
     }
     
     
@@ -131,7 +109,7 @@ class MimotoEntity extends MimotoData
     
     /**
      * Get Aimless value of a property or subproperty
-     * @param type $sPropertyName
+     * @param string $sPropertyName
      * @return string
      */
     public function getAimlessValue($sPropertyName)

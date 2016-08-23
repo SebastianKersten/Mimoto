@@ -94,7 +94,7 @@ Mimoto.CMS.entityPropertyEdit = function(nEntityPropertyId)
 
 Mimoto.form = {};
 
-Mimoto.form.registerForm = function(sFormName, sAction, sMethod)
+Mimoto.form.openForm = function(sFormName, sAction, sMethod)
 {
     // init
     if (!Mimoto.form._aForms) Mimoto.form._aForms = [];
@@ -112,6 +112,38 @@ Mimoto.form.registerForm = function(sFormName, sAction, sMethod)
 
     console.log(Mimoto.form._aForms);
 };
+
+Mimoto.form.closeForm = function(sFormName)
+{
+
+    console.error('[mls_form_submit="' + sFormName + '"]');
+    // search
+    var aSubmitButtons = $('[mls_form_submit="' + sFormName + '"]');
+
+
+    console.log(aSubmitButtons);
+
+    console.log(aSubmitButtons.length);
+
+
+    // activate
+    aSubmitButtons.each(function(nIndex, $component) {
+
+        // read
+        var currentForm = Mimoto.form._aForms[Mimoto.form._aForms.length - 1]; // #todo - validate if no form set
+
+        // register
+        currentForm.aSubmitButtons.push($component);
+
+        // setup
+        $($component).click(function() { Mimoto.form.submit(sFormName); alert('Submit was connected!'); } );
+    });
+}
+
+Mimoto.form.submit = function(sFormName)
+{
+    alert('Submit for "' + sFormName + '" was clicked!');
+}
 
 Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - settings
 {

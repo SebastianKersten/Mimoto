@@ -71,6 +71,7 @@ $app->get('/example18', 'MaidoProjects\\UserInterface\\ExampleController::viewEx
 $app->get('/example19', 'MaidoProjects\\UserInterface\\ExampleController::viewExample19');
 $app->get('/example20', 'MaidoProjects\\UserInterface\\ExampleController::viewExample20');
 $app->get('/example21', 'MaidoProjects\\UserInterface\\ExampleController::viewExample21');
+$app->get('/example22', 'MaidoProjects\\UserInterface\\ExampleController::viewExample22');
 
 
 

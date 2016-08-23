@@ -104,7 +104,7 @@ class MimotoEntityRepository
     
     /**
      * Find a collection entities
-     * @return Array containing zero or more entities
+     * @return MimotoCollection containing zero or more entities
      */
     public function find(MimotoEntityConfig $entityConfig, $criteria)
     {
@@ -157,7 +157,7 @@ class MimotoEntityRepository
     
     /**
      * Store entity
-     * @param entity $entity
+     * @param MimotoEntity $entity
      */
     public function store(MimotoEntityConfig $entityConfig, MimotoEntity $entity)
     {
@@ -417,7 +417,6 @@ class MimotoEntityRepository
             
             // register
             $entity->setId($nEntityId);
-            $entity->setEntityGroup($entityConfig->getGroup());
             $entity->setCreated($result['created']);
 
             // store
@@ -473,6 +472,7 @@ class MimotoEntityRepository
                             ':parent_id' => $entity->getId(),
                             ':parent_property_id' => $propertyConfig->id
                         );
+
                         $stmt->execute($params);
 
                         // load

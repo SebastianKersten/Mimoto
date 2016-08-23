@@ -4,6 +4,6 @@
     </div>
     <div class="MimotoCMS_forms_Form__menu">
         {% include 'Mimoto.CMS/forms/input/ButtonText/ButtonText.twig' with { label:'Cancel', action:"Maido.popup.close();" } %}
-        <span {{ Aimless.submit()|raw }}>{% include 'Mimoto.CMS/forms/input/Button/Button.twig' with { label:'Save', action:"Mimoto.CMS.entityCreate({ name:document.getElementById('form_data_name').value });" } %}</span>
+        <span {{ Aimless.submit()|raw }}>{% include 'Mimoto.CMS/forms/input/Button/Button.twig' with { label:'Save' } %}</span>
     </div>
 </div>

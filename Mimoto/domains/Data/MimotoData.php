@@ -333,7 +333,7 @@ class MimotoData
             if (!$this->_bTrackChanges) { $property->data->persistentId = $value->getId(); }
 
             // store
-            $property->data->currentId = $value->getId();
+            $property->data->currentEntity = $value->getId(); // #todo - add MimotoDataCollection for managing data internals
             $property->data->entityCache = $value;
 
             return;
@@ -342,10 +342,10 @@ class MimotoData
         if (MimotoDataUtils::isValidEntityId($value))
         {
             // store if change tracking is disabled
-            if (!$this->_bTrackChanges) { $property->data->persistentId = $value; }
+            if (!$this->_bTrackChanges) { $property->data->persistentEntity = $value; }
 
             // store
-            $property->data->currentId = $value;
+            $property->data->currentEntity = $value;
 
             return;
         }
@@ -353,10 +353,10 @@ class MimotoData
         if (empty($value) || $value == 0)
         {
             // store if change tracking is disabled
-            if (!$this->_bTrackChanges) { $property->data->persistentId = 0; }
+            if (!$this->_bTrackChanges) { $property->data->persistentEntity = 0; }
             
             // clear
-            unset($property->data->currentId);
+            unset($property->data->currentEntity);
             unset($property->data->entityCache);
             
             return;

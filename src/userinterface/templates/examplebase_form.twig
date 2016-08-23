@@ -7,7 +7,8 @@
     <br>
     <div class="example_form_fields">
         {{ Aimless.form()|raw }}
-
-        <!--{ { Aimless.data('form.{type="request"}')|raw } }-->
+    </div>
+    <div class="MimotoCMS_forms_Form__menu">
+        <span {{ Aimless.submit()|raw }}>{% include 'Mimoto.CMS/forms/input/Button/Button.twig' with { label:'Save' } %}</span>
     </div>
 {% endblock %}

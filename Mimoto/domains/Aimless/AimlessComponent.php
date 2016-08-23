@@ -103,7 +103,6 @@ class AimlessComponent
 
 
 
-
     // --- Twig usage
 
 
@@ -216,6 +215,23 @@ class AimlessComponent
         // 6. render and send
         return $this->renderForm($aResults[0], $formConfig->aValues);
     }
+
+
+    public function submit($sKey = null)
+    {
+        // 1. set default key
+        if ($sKey === null) $sKey = self::PRIMARY_FORM;
+
+        // 2. validate is form was defined
+        if (!isset($this->_aFormConfigs[$sKey])) die("Aimless says: Form '$sKey' not defined");
+
+        // 3. load requested config
+        $formConfig = $this->_aFormConfigs[$sKey];
+
+        return 'mls_form_submit="'.$formConfig->sFormName.'"';
+    }
+
+
 
     public function realtime($sPropertySelector = null)
     {
@@ -347,9 +363,13 @@ class AimlessComponent
 // #todo - Verplaats naar AimlessForm
     private function renderForm($form, $aValues)
     {
+
+        // 1. form moet eigen template krijgen. Na renderen én afsluiten form, pas close aanroepen
+
+
         // init
-        $sRenderedForm = '<form>';
-        $sRenderedForm .= '<script>Mimoto.form.registerForm("'.$form->getValue('name').'", "/mimoto.cms/entity/1/update", "POST");</script>';
+        $sRenderedForm = '<form name="'.$form->getValue('name').'">';
+        $sRenderedForm .= '<script>Mimoto.form.openForm("'.$form->getValue('name').'", "/mimoto.cms/entity/1/update", "POST");</script>';
 
         // load
         $aFields = $form->getValue('fields', true);
@@ -365,9 +385,9 @@ class AimlessComponent
             $sTemplateName = $fieldData->getEntityType();
 
             // create
-            switch($fieldData->getEntityGroup())
+            switch(1 === 0)
             {
-                case CoreConfig::GROUP_MIMOTO_FORM_INPUT:
+                case 'xxx':
 
                      $value = (isset($aValues[$fieldData->getValue('varname')])) ? $aValues[$fieldData->getValue('varname')] : '';
 
@@ -408,6 +428,7 @@ class AimlessComponent
 
         // finish
         $sRenderedForm .= '</form>';
+        $sRenderedForm .= '<script>Mimoto.form.closeForm("'.$form->getValue('name').'");</script>';
 
         // send
         return $sRenderedForm;
