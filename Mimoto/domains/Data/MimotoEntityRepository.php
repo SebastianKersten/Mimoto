@@ -7,6 +7,7 @@ namespace Mimoto\Data;
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoCollection;
+use Mimoto\Data\MimotoDataConnection;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
 use Mimoto\Event\MimotoEvent;
@@ -480,21 +481,19 @@ class MimotoEntityRepository
 
                         foreach ($aResults as $row)
                         {
+                            // init
+                            $connection = new MimotoDataConnection();
+
                             // compose
-                            $collectionItem = (object) array(
-                                'id' => $row['id'],
-                                'parentId' => $row['parent_id'],
-                                'parentPropertyId' => $row['parent_property_id'],
-                                'childId' => $row['child_id'],
-                                'childEntityType' => (object) array(
-                                    'id' => $row['child_entity_type_id'],
-                                    'name' => $GLOBALS['Mimoto.Config']->getEntityNameById($row['child_entity_type_id'])
-                                ),
-                                'sortIndex' => $row['sortindex']
-                            );
-                            
+                            $connection->setId($row['id']);
+                            $connection->setParentId($row['parent_id']);
+                            $connection->setParentPropertyId($row['parent_property_id']);
+                            $connection->setChildEntityTypeId($row['child_entity_type_id']);
+                            $connection->setChildId($row['child_id']);
+                            $connection->setSortIndex($row['sortindex']);
+
                             // store
-                            $aCollection[] = $collectionItem;
+                            $aCollection[] = $connection;
                         }
                         
                         // register collection data

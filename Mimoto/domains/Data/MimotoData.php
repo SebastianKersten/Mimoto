@@ -450,10 +450,10 @@ class MimotoData
             for ($i = 0; $i < count($aCollectionItems); $i++)
             {
                 // register
-                $collectionItem = $aCollectionItems[$i];
+                $connection = $aCollectionItems[$i];
                 
                 // load
-                $entity = $GLOBALS['Mimoto.Data']->get($collectionItem->childEntityType->name, $collectionItem->childId);
+                $entity = $GLOBALS['Mimoto.Data']->get($connection->getChildEntityTypeName(), $connection->getChildId);
                 
                 
                 $bVerified = true;
