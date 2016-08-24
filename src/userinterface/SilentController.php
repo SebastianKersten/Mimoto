@@ -10,7 +10,7 @@ use Silex\Application;
 /**
  * SilentController
  *
- * @author Sebastian Kersten (@supertaoo)
+ * @author Sebastian Kersten (@supertaboo)
  */
 class SilentController
 {

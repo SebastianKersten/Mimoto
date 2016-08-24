@@ -17,7 +17,7 @@ $twig = new Twig_Environment($loader, array(
 
 
 // connect
-$GLOBALS['database'] = new PDO("mysql:host=127.0.0.1;dbname=maidoprojects", 'root', '');
+$GLOBALS['database'] = new PDO("mysql:host=127.0.0.1;dbname=mimoto.cms", 'root', '');
 
 // setup
 $app['debug'] = true;

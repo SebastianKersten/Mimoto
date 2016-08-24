@@ -1,41 +1,22 @@
 {
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "SebastianKersten/Mimoto.Aimless",
-                "version": "dev-master",
-                "source": {
-                    "url": "git@github.com:SebastianKersten/Mimoto.Aimless.git",
-                    "type": "git",
-                    "reference": "origin/master"
-                }
-            }
-        }
-    ],
-    "require": {
-        "SebastianKersten/Mimoto.Aimless": "dev-master"
-    },
     "require-dev": {
         "silex/silex": "~1.3",
         "twig/twig": "~1.0"
     },
     "autoload": {
         "psr-4": {
-            "MaidoProjects\\Config\\": "./src/config",
-            "MaidoProjects\\UserInterface\\": "./src/userinterface",
-            "Mimoto\\UserInterface\\": "./Mimoto/userinterface",
-            "Mimoto\\EntityConfig\\": "./Mimoto/domains/EntityConfig",
-            "Mimoto\\FormConfig\\": "./Mimoto/domains/FormConfig",
-            "Mimoto\\Core\\": "./Mimoto/domains/Core",
-            "Mimoto\\Data\\": "./Mimoto/domains/Data",
-            "Mimoto\\Event\\": "./Mimoto/domains/Event",
-            "Mimoto\\Entity\\": "./Mimoto/domains/Entity",
-            "Mimoto\\Aimless\\": "./Mimoto/domains/Aimless",
-            "Mimoto\\Mail\\": "./Mimoto/domains/Mail",
-            "Mimoto\\Cache\\": "./Mimoto/domains/Cache",
-            "Mimoto\\tests\\": "./tests",
-            "Mimoto\\CMS\\": "./Mimoto/domains/CMS"
+            "Mimoto\\UserInterface\\": "./src/userinterface",
+            "Mimoto\\EntityConfig\\": "./src/domains/EntityConfig",
+            "Mimoto\\FormConfig\\": "./src/domains/FormConfig",
+            "Mimoto\\Core\\": "./src/domains/Core",
+            "Mimoto\\Data\\": "./src/domains/Data",
+            "Mimoto\\Event\\": "./src/domains/Event",
+            "Mimoto\\Entity\\": "./src/domains/Entity",
+            "Mimoto\\Aimless\\": "./src/domains/Aimless",
+            "Mimoto\\Mail\\": "./src/domains/Mail",
+            "Mimoto\\Cache\\": "./src/domains/Cache",
+            "Mimoto\\CMS\\": "./src/domains/CMS",
+            "Mimoto\\tests\\": "./tests"
         }
     }
 }
