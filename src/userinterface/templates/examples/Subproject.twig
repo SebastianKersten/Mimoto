@@ -1,4 +1,10 @@
 <div class="example_subproject" {{ Aimless.realtime()|raw }}>
     <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br>
-    <span {{ Aimless.realtime('contact.name')|raw }}>{{ Aimless.data('contact.name') }}</span>
+    {% if Aimless.data('contact') is not empty %}
+        <span {{ Aimless.realtime('contact.name')|raw }}>{{ Aimless.data('contact.name') }}</span>&nbsp;|&nbsp;
+        <span {{ Aimless.realtime('contact.email')|raw }}>{{ Aimless.data('contact.email') }}</span>&nbsp;|&nbsp;
+        <span {{ Aimless.realtime('contact.phoneNumber')|raw }}>{{ Aimless.data('contact.phoneNumber') }}</span>&nbsp;<br>
+    {% endif %}
+    <span {{ Aimless.realtime('phase')|raw }}>{{ Aimless.data('phase') }}</span></b> |
+    <span {{ Aimless.realtime('state')|raw }}>{{ Aimless.data('state') }}</span></b>
 </div>

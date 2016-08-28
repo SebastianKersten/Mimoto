@@ -340,7 +340,7 @@ class AimlessComponent
     {
         // init
         $sRenderedCollection = '';
-        
+
         for ($i = 0; $i < count($aCollection); $i++)
         {
             // register

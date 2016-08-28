@@ -175,7 +175,7 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                'allowedEntityTypes' => $options['allowedEntityTypes']->value
+                'allowedEntityType' => $options['allowedEntityType']->value
             )
         );
         
@@ -197,7 +197,7 @@ class MimotoEntityConfig
             'id' => $nPropertyId,
             'settings' => (object) array(
                 'allowedEntityTypes' => $settings['allowedEntityTypes']->value,
-                'allowDuplicates' => ($settings['allowDuplicates']->value === 'true') ? true : false
+                'allowDuplicates' => (isset($settings['allowDuplicates']) && $settings['allowDuplicates']->value === 'true') ? true : false
             )
         );
 

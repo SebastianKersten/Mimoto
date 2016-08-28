@@ -66,7 +66,7 @@ class MimotoEntityConfigRepository
     {
         // load and send
         if (isset($this->_aEntityConfigs[$sEntityConfigName])) { return $this->_aEntityConfigs[$sEntityConfigName]; }
-        
+
         // build and send
         return $this->_aEntityConfigs[$sEntityConfigName] = $this->composeEntityConfig($sEntityConfigName);
     }
@@ -194,7 +194,7 @@ class MimotoEntityConfigRepository
                 'parent_id' => $row['parent_id'],                       // the id of the parent entity
                 'parent_property_id' => $row['parent_property_id'],     // the id of the parent entity's property
                 'child_entity_type_id' => $row['child_entity_type_id'], // the id of the child's entity config
-                'child_id' => $row['child_id'],                // the id of the child entity connected to the parent
+                'child_id' => $row['child_id'],                          // the id of the child entity connected to the parent
                 'sortindex' => $row['sortindex']                        // the sortindex
             );
 
@@ -233,12 +233,11 @@ class MimotoEntityConfigRepository
         {
             // read
             $entity = $aAllEntity[$i];
-            
+
             // validate
             if (!isset($aAllEntity_Connections[$entity->id]))
             {
-                // remove
-                array_splice($aAllEntity, $i, 1);
+                // skip
                 continue;
             }
 
@@ -265,9 +264,9 @@ class MimotoEntityConfigRepository
                 $property = $entity->properties[$j];
                 
                 // validate
-                if (!isset($aAllEntityPropertySettings[$property->id]) || !isset($aAllEntityProperty_Connections[$property->id])) {
-                    // remove
-                    array_splice($aAllEntity, $i, 1);
+                if (!isset($aAllEntityPropertySettings[$property->id]) || !isset($aAllEntityProperty_Connections[$property->id]))
+                {
+                    // skip
                     continue 2;
                 }
 
@@ -343,9 +342,9 @@ class MimotoEntityConfigRepository
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                         // prepare
-                        $property->settings['allowedEntityTypes']->value = (object) array(
-                            'id' => $property->settings['allowedEntityTypes']->value,
-                            'name' => $this->getEntityNameById($property->settings['allowedEntityTypes']->value)
+                        $property->settings['allowedEntityType']->value = (object) array(
+                            'id' => $property->settings['allowedEntityType']->value,
+                            'name' => $this->getEntityNameById($property->settings['allowedEntityType']->value)
                         );
                         
                         // setup

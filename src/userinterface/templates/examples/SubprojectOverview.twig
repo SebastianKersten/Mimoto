@@ -1,9 +1,12 @@
-{% extends "examplebase.twig" %}
+{% extends "examples/examplebase.twig" %}
 
 {% block content %}
-    <h1>Example 11 - Subproject overview</h1>
-    <i>Works together with example 12 (change phase to 'archived') and 12 (change phase to 'currentproject')</i><br>
-    <br>
+    <h1>Example 9 - Subproject overview</h1>
+    <i>Demos on subproject (id = 2):
+    <ul>
+        <li><a href='/example9a'>toggle phase to 'archived'</a></li>
+        <li><a href='/example9b'>toggle phase to 'current project'</a></li>
+    </ul>
     <br>
     <div class="example_clientlist" {{ Aimless.realtime('subprojects')|raw }}>
         {{ Aimless.selection('subprojects')|raw }}

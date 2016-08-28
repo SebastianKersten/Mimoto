@@ -1,9 +1,12 @@
-{% extends "examplebase.twig" %}
+{% extends "examples/examplebase.twig" %}
 
 {% block content %}
-    <h1>Example 10 - Client overview</h1>
-    <i>Works together with example 8 (updating an existing client) and 9 (creating a new client)</i><br>
-    <br>
+    <h1>Example 8 - Client overview</h1>
+    <i>Demos on project (id = 2):</i><br>
+    <ul>
+        <li><a href='/example8a'>Update the name of a client (id = 6)</a></li>
+        <li><a href='/example8b'>Create a new client</a></li>
+    </ul>
     <br>
     <div class="example_clientlist" {{ Aimless.realtime('clients')|raw }}>
         {{ Aimless.selection('clients')|raw }}

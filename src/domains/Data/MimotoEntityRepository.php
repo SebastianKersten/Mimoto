@@ -4,10 +4,10 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Data\MimotoDataConnection;
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoCollection;
-use Mimoto\Data\MimotoDataConnection;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
 use Mimoto\Event\MimotoEvent;
@@ -208,14 +208,6 @@ class MimotoEntityRepository
                                 'value' => $entity->getValue($sPropertyName, false)
                             );
                             break;
-
-                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                            
-                            $aQueryElements[] = (object) array(
-                                'key' => $propertyValue->mysqlColumnName,
-                                'value' => $entity->getValue($sPropertyName, true)
-                            );
-                            break;
                     }
                     
                     break;
@@ -224,76 +216,54 @@ class MimotoEntityRepository
 
                     $modifiedCollection = $aModifiedValues[$sPropertyName];
 
-                    if (count($modifiedCollection->added) > 0)
+
+                    switch($propertyConfig->type)
                     {
-                        for ($k = 0; $k < count($modifiedCollection->added); $k++)
-                        {
-                            // register
-                            $newItem = $modifiedCollection->added[$k];
-                            
-                            // load
-                            $stmt = $GLOBALS['database']->prepare(
-                                "INSERT INTO ".$propertyValue->mysqlConnectionTable." SET ".
-                                "parent_id = :parent_id, ".
-                                "parent_property_id = :parent_property_id, ".
-                                "child_entity_type_id = :child_entity_type_id, ".
-                                "child_id = :child_id, ".
-                                "sortindex = :sortindex"
-                            );
-                            $params = array(
-                                ':parent_id' => $newItem->parentId,
-                                ':parent_property_id' => $newItem->parentPropertyId,
-                                ':child_entity_type_id' => $newItem->childEntityType->id,
-                                ':child_id' => $newItem->childId,
-                                ':sortindex' => $newItem->sortIndex
-                            );
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                            $stmt->execute($params);
+                            if (count($modifiedCollection->added) > 0)
+                            {
+                                for ($k = 0; $k < count($modifiedCollection->added); $k++)
+                                {
+                                    // register
+                                    $newItem = $modifiedCollection->added[$k];
 
-                            // complete
-                            $newItem->id = $GLOBALS['database']->lastInsertId();
-                            $newItem->bIsNew = true;
-                        }
+                                    // add
+                                    $this->addItemToCollection($propertyValue->mysqlConnectionTable, $newItem);
+
+                                    // toggle
+                                    $newItem->setIsNewFlag(true);
+                                }
+                            }
+
+                            if (count($modifiedCollection->updated) > 0)
+                            {
+                                for ($k = 0; $k < count($modifiedCollection->updated); $k++)
+                                {
+                                    // register
+                                    $existingItem = $modifiedCollection->updated[$k];
+
+                                    // alter
+                                    $this->alterExistingItemInCollection($propertyValue->mysqlConnectionTable, $existingItem);
+                                }
+                            }
+
+                            if (count($modifiedCollection->removed) > 0)
+                            {
+                                for ($k = 0; $k < count($modifiedCollection->removed); $k++)
+                                {
+                                    // register
+                                    $existingItem = $modifiedCollection->removed[$k];
+
+                                    // remove
+                                    $this->removeItemFromCollection($propertyValue->mysqlConnectionTable, $existingItem);
+                                }
+                            }
+
+                            break;
                     }
-                    
-                    if (count($modifiedCollection->updated) > 0)
-                    {
-                        for ($k = 0; $k < count($modifiedCollection->updated); $k++)
-                        {
-                            // register
-                            $existingItem = $modifiedCollection->updated[$k];
 
-                            // load
-                            $stmt = $GLOBALS['database']->prepare(
-                                'UPDATE '.$propertyValue->mysqlConnectionTable.' SET '.
-                                'sortindex = :sortindex '.
-                                'WHERE id = :id'
-                            );
-                            $params = array(
-                                ':sortindex' => $existingItem->sortIndex,
-                                ':id' => $existingItem->id
-                            );
-                            $stmt->execute($params);
-                        }
-                    }
-                    
-                    if (count($modifiedCollection->removed) > 0)
-                    {
-                        for ($k = 0; $k < count($modifiedCollection->removed); $k++)
-                        {
-                            // register
-                            $existingItem = $modifiedCollection->removed[$k];
-
-                            // load
-                            $stmt = $GLOBALS['database']->prepare(
-                                'DELETE FROM '.$propertyValue->mysqlConnectionTable.' WHERE id = :id'
-                            );
-                            $params = array(
-                                ':id' => $existingItem->id
-                            );
-                            $stmt->execute($params);
-                        }
-                    }
 
                     break;
             }
@@ -495,9 +465,20 @@ class MimotoEntityRepository
                             // store
                             $aCollection[] = $connection;
                         }
-                        
-                        // register collection data
-                        $entity->setValue($propertyConfig->name, $aCollection);
+
+                        if ($propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY)
+                        {
+                            if (isset($aCollection[0]))
+                            {
+                                // register collection data
+                                $entity->setValue($propertyConfig->name, $aCollection[0]);
+                            }
+                        }
+                        elseif ($propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+                        {
+                            // register collection data
+                            $entity->setValue($propertyConfig->name, $aCollection);
+                        }
 
                         break;
                 }
@@ -516,5 +497,57 @@ class MimotoEntityRepository
     {
         return $sEntityName.'.'.$nEntityId;
     }
-    
+
+
+    private function addItemToCollection($sDBTable, MimotoDataConnection $newItem)
+    {
+        // load
+        $stmt = $GLOBALS['database']->prepare(
+            "INSERT INTO ".$sDBTable." SET ".
+            "parent_id = :parent_id, ".
+            "parent_property_id = :parent_property_id, ".
+            "child_entity_type_id = :child_entity_type_id, ".
+            "child_id = :child_id, ".
+            "sortindex = :sortindex"
+        );
+        $params = array(
+            ':parent_id' => $newItem->getParentId(),
+            ':parent_property_id' => $newItem->getParentPropertyId(),
+            ':child_entity_type_id' => $newItem->getChildEntityTypeId(),
+            ':child_id' => $newItem->getChildId(),
+            ':sortindex' => $newItem->getSortIndex()
+        );
+
+        $stmt->execute($params);
+
+        // complete
+        $newItem->setId($GLOBALS['database']->lastInsertId());
+    }
+
+    private function alterExistingItemInCollection($sDBTable, MimotoDataConnection $existingItem)
+    {
+        // load
+        $stmt = $GLOBALS['database']->prepare(
+            'UPDATE '.$sDBTable.' SET '.
+            'sortindex = :sortindex '.
+            'WHERE id = :id'
+        );
+        $params = array(
+            ':sortindex' => $existingItem->getSortIndex(),
+            ':id' => $existingItem->getId()
+        );
+        $stmt->execute($params);
+    }
+
+    private function removeItemFromCollection($sDBTable, MimotoDataConnection $existingItem)
+    {
+        // load
+        $stmt = $GLOBALS['database']->prepare(
+            'DELETE FROM '.$sDBTable.' WHERE id = :id'
+        );
+        $params = array(
+            ':id' => $existingItem->getId()
+        );
+        $stmt->execute($params);
+    }
 }

@@ -61,6 +61,13 @@ class MimotoDataConnection
      */
     private $_nSortIndex;
 
+    /**
+     * Flag to indicatie if the connection is new and not yet persisted
+     *
+     * @var boolean
+     */
+    private $_bIsNew;
+
 
 
     // ----------------------------------------------------------------------------
@@ -103,7 +110,7 @@ class MimotoDataConnection
      *
      * @return mixed
      */
-    public function getParentPropertyId() { return $this->_xParentId; }
+    public function getParentPropertyId() { return $this->_xParentPropertyId; }
 
     /**
      * Set the id of the parent's EntityProperty to which the item is connected
@@ -118,14 +125,14 @@ class MimotoDataConnection
      *
      * @return mixed
      */
-    public function getChildEntityTypeId() { return $this->_xParentId; }
+    public function getChildEntityTypeId() { return $this->_xChildEntityTypeId; }
 
     /**
      * Get the name of the child's Entity type
      *
      * @return string
      */
-    public function getChildEntityTypeName() { return $this->_xParentId; }
+    public function getChildEntityTypeName() { return $this->_sChildEntityTypeName; }
 
     /**
      * Set the id of the child's Entity type
@@ -167,5 +174,20 @@ class MimotoDataConnection
      * @param int
      */
     public function setSortIndex($nSortIndex) { $this->_nSortIndex = $nSortIndex; }
+
+
+    /**
+     * Check if the connection is new
+     *
+     * @return boolean
+     */
+    public function isNew() { return $this->_bIsNew; }
+
+    /**
+     * Set the new flag of the connection
+     *
+     * @return int
+     */
+    public function setIsNewFlag($bIsNew) { $this->_bIsNew = $bIsNew; }
 
 }

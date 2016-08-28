@@ -379,7 +379,7 @@ class MimotoAimlessService
                             $addedItem->values = array();
                             
                             // load
-                            $collectionItem = $this->_MimotoEntityService->get($addedItem->childEntityType->name, $addedItem->childId);
+                            $collectionItem = $this->_MimotoEntityService->get($addedItem->getChildEntityTypeName(), $addedItem->getChildId());
                             
                             
                             $aCollectionItemPropertyNames = $collectionItem->getPropertyNames();

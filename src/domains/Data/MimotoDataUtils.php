@@ -38,6 +38,8 @@ class MimotoDataUtils
     
     public static function isValidEntityId($value)
     {
+        if (is_object($value)) return false;
+
         return (!is_nan(intval($value)) && $value > 0);
     }
     

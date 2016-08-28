@@ -6,6 +6,9 @@ namespace Mimoto\UserInterface;
 // Silex classes
 use Silex\Application;
 
+// Symfony classes
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 
 /**
  * ExampleController
@@ -73,7 +76,7 @@ class ExampleController
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
-        
+
         // create
         $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
         
@@ -136,38 +139,38 @@ class ExampleController
         return $component->render();
     }
     
-    public function viewExample9(Application $app)
+    public function viewExample8a(Application $app)
     {
         // load
-        $client = $app['Mimoto.Data']->get('client', 96);
+        $client = $app['Mimoto.Data']->get('client', 6);
         
         // setup
         $client->setValue('name', 'IDFA - Modified = '.date("Y:m:d H.i.s"));
         
         // store
-        $client = $app['Mimoto.Data']->store($client);
-        
+        $app['Mimoto.Data']->store($client);
+
         // render and send
-        return 'Client updated';
+        return new RedirectResponse('/example8');
     }
     
-    public function viewExample10(Application $app)
+    public function viewExample8b(Application $app)
     {
         // load
         $client = $app['Mimoto.Data']->create('client');
         
         // setup
-        $client->setValue('name', 'IDFA');
+        $client->setValue('name', 'New client');
         
         // store
-        $client = $app['Mimoto.Data']->store($client);
-        
+        $app['Mimoto.Data']->store($client);
+
         // render and send
-        return 'New client created';
+        return new RedirectResponse('/example8');
     }
     
     
-    public function viewExample11(Application $app)
+    public function viewExample9(Application $app)
     {
         // load
         $aSubprojects = $app['Mimoto.Data']->find(['type' => 'subproject']);
@@ -183,22 +186,22 @@ class ExampleController
     }
     
     
-    public function viewExample12(Application $app)
+    public function viewExample9a(Application $app)
     {
         // load
         $subproject = $app['Mimoto.Data']->get('subproject', 2);
-        
+
         // setup
         $subproject->setValue('phase', 'archived');
-        
+
         // store
-        $subproject = $app['Mimoto.Data']->store($subproject);
+        $app['Mimoto.Data']->store($subproject);
         
         // render and send
-        return "Subproject updated to 'archived'. Toggle back to <a href='/example13'>'current project'</a>";
+        return new RedirectResponse('/example9');
     }
     
-    public function viewExample13(Application $app)
+    public function viewExample9b(Application $app)
     {
         
         // mls_contains='client' mls_template='client_listitem'
@@ -210,15 +213,15 @@ class ExampleController
         $subproject->setValue('phase', 'currentproject');
         
         // store
-        $subproject = $app['Mimoto.Data']->store($subproject);
+        $app['Mimoto.Data']->store($subproject);
         
         // render and send
-        return "Subproject updated to 'currentproject'. Toggle to <a href='/example12'>'archived'</a>";
+        return new RedirectResponse('/example9');
     }
 
     
     
-    public function viewExample14(Application $app)
+    public function viewExample10(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 2);
@@ -235,28 +238,30 @@ class ExampleController
     }
     
     
-    public function viewExample15(Application $app)
+    public function viewExample10a(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 2);
-        $subproject = $app['Mimoto.Data']->get('subproject', 5);
-        
-        
-        $project->setValue('name', 'VanMoof.com - '.date("Y:m:d H.i.s"));
-        $project->setValue('projectmanager', ceil(rand(1, 3)));
-        
+
         // setup
+        $project->setValue('name', 'VanMoof.com - '.date("Y:m:d H.i.s"));
+        $project->setValue('projectManager', ceil(rand(1, 3)));
+
+        // add
         $project->addValue('subprojects', 3);
+
+        // add
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
         $project->addValue('subprojects', $subproject);
         
         // store
-        $project = $app['Mimoto.Data']->store($project);
+        $app['Mimoto.Data']->store($project);
         
         // render and send
-        return "Subprojects added to project!";
+        return new RedirectResponse('/example10');
     }
     
-    public function viewExample16(Application $app)
+    public function viewExample10b(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 2);
@@ -267,14 +272,14 @@ class ExampleController
         //$project->removeValue('subprojects', $subproject);
         
         // store
-        $project = $app['Mimoto.Data']->store($project);
-        
+        $app['Mimoto.Data']->store($project);
+
         // render and send
-        return "Subproject removed from project!";
+        return $this->viewExample10($app);
     }
     
     
-    public function viewExample17(Application $app)
+    public function viewExample11(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
@@ -289,7 +294,7 @@ class ExampleController
         return $component->render();
     }
     
-    public function viewExample18(Application $app)
+    public function viewExample12(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
@@ -305,7 +310,7 @@ class ExampleController
         return "subproject.5 added to project.3";
     }
     
-    public function viewExample19(Application $app)
+    public function viewExample13(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
@@ -321,7 +326,7 @@ class ExampleController
         return "subproject.5 removed from project.3";
     }
     
-    public function viewExample20(Application $app)
+    public function viewExample14(Application $app)
     {
         // render and send
         return $this->viewExample7($app);
@@ -329,7 +334,7 @@ class ExampleController
     
     
     
-    public function viewExample21(Application $app)
+    public function viewExample15(Application $app)
     {
         // load
         $client = $app['Mimoto.Data']->get('client', 1);
@@ -354,7 +359,7 @@ class ExampleController
 
 
 
-    public function viewExample22(Application $app)
+    public function viewExample16(Application $app)
     {
 
         // 1. Author extends Member extends Person

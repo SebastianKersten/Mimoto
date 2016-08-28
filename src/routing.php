@@ -13,22 +13,23 @@ $app->get('/example6', 'Mimoto\\UserInterface\\ExampleController::viewExample6')
 $app->get('/example7', 'Mimoto\\UserInterface\\ExampleController::viewExample7');
 
 $app->get('/example8', 'Mimoto\\UserInterface\\ExampleController::viewExample8');
+$app->get('/example8a', 'Mimoto\\UserInterface\\ExampleController::viewExample8a');
+$app->get('/example8b', 'Mimoto\\UserInterface\\ExampleController::viewExample8b');
+
 $app->get('/example9', 'Mimoto\\UserInterface\\ExampleController::viewExample9');
+$app->get('/example9a', 'Mimoto\\UserInterface\\ExampleController::viewExample9a');
+$app->get('/example9b', 'Mimoto\\UserInterface\\ExampleController::viewExample9b');
+
 $app->get('/example10', 'Mimoto\\UserInterface\\ExampleController::viewExample10');
+$app->get('/example10a', 'Mimoto\\UserInterface\\ExampleController::viewExample10a');
+$app->get('/example10b', 'Mimoto\\UserInterface\\ExampleController::viewExample10b');
 
 $app->get('/example11', 'Mimoto\\UserInterface\\ExampleController::viewExample11');
 $app->get('/example12', 'Mimoto\\UserInterface\\ExampleController::viewExample12');
 $app->get('/example13', 'Mimoto\\UserInterface\\ExampleController::viewExample13');
-
 $app->get('/example14', 'Mimoto\\UserInterface\\ExampleController::viewExample14');
 $app->get('/example15', 'Mimoto\\UserInterface\\ExampleController::viewExample15');
 $app->get('/example16', 'Mimoto\\UserInterface\\ExampleController::viewExample16');
-$app->get('/example17', 'Mimoto\\UserInterface\\ExampleController::viewExample17');
-$app->get('/example18', 'Mimoto\\UserInterface\\ExampleController::viewExample18');
-$app->get('/example19', 'Mimoto\\UserInterface\\ExampleController::viewExample19');
-$app->get('/example20', 'Mimoto\\UserInterface\\ExampleController::viewExample20');
-$app->get('/example21', 'Mimoto\\UserInterface\\ExampleController::viewExample21');
-$app->get('/example22', 'Mimoto\\UserInterface\\ExampleController::viewExample22');
 
 
 
