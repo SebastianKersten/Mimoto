@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 50711
  Source Host           : localhost
- Source Database       : maidoprojects
+ Source Database       : mimoto.cms
 
  Target Server Type    : MySQL
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 08/23/2016 13:54:00 PM
+ Date: 08/28/2016 16:23:18 PM
 */
 
 SET NAMES utf8mb4;
@@ -39,13 +39,13 @@ CREATE TABLE `_mimoto_component` (
   `file` varchar(255) DEFAULT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `_mimoto_component`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_component` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', '2016-05-29 22:12:52'), ('26', 'project_withsubprojects', 'examples/ProjectWithSubprojects.twig', '2016-05-31 21:48:05'), ('27', 'project_withsubprojects_phase', 'examples/ProjectWithSubprojectsPhase.twig', '2016-05-31 21:50:11'), ('28', 'project_withsubprojects_filter', 'examples/ProjectWithSubprojectsFilter.twig', '2016-05-31 21:53:49'), ('29', 'subproject', 'examples/Subproject.twig', '2016-05-31 22:10:10'), ('30', 'subproject_phase', 'examples/Subproject.twig', '2016-05-31 22:10:43'), ('31', 'subproject_phase', 'examples/SubprojectActive.twig', '2016-06-01 12:44:08'), ('32', 'subproject_phase', 'examples/SubprojectArchived.twig', '2016-06-01 12:45:44'), ('33', 'notificationcenter', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:51:20'), ('34', 'notification', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:53:50'), ('35', 'client_overview', 'examples/ClientOverview.twig', '2016-06-11 12:21:52'), ('36', 'client_listitem', 'examples/ListItemComponent.twig', '2016-06-11 12:22:54'), ('37', 'entity_overview', 'exampleadmin/EntityOverview.twig', '2016-06-13 10:42:03'), ('38', 'entity_listitem', 'exampleadmin/EntityListItem.twig', '2016-06-13 10:52:12'), ('39', 'subproject_overview', 'examples/SubprojectOverview.twig', '2016-06-13 11:46:46'), ('40', 'subproject_examplelistitem', 'examples/SubprojectListItem.twig', '2016-06-13 11:47:15'), ('41', 'form_client', 'forms/ClientForm.twig', '2016-06-27 14:38:36'), ('42', 'Mimoto.CMS_dashboard_Overview', 'Mimoto.CMS/pages/dashboard/Overview.twig', '2016-07-19 12:27:17'), ('43', 'Mimoto.CMS_entities_EntityOverview', 'Mimoto.CMS/pages/entities/EntityOverview/EntityOverview.twig', '2016-07-19 14:25:22'), ('44', 'Mimoto.CMS_entities_EntityListItem', 'Mimoto.CMS/pages/entities/EntityListItem/EntityListItem.twig', '2016-07-19 14:32:35'), ('45', 'Mimoto.CMS_entities_EntityDetail', 'Mimoto.CMS/pages/entities/EntityDetail/EntityDetail.twig', '2016-07-19 15:17:30'), ('46', 'Mimoto.CMS_entities_PropertyListItem', 'Mimoto.CMS/pages/entities/PropertyListItem/PropertyListItem.twig', '2016-07-19 17:12:38'), ('47', 'Mimoto.CMS_entities_FormEntity', 'Mimoto.CMS/pages/entities/FormEntity.twig', '2016-07-27 13:00:43'), ('48', 'Mimoto.CMS_entities_FormEntityProperty', 'Mimoto.CMS/pages/entities/FormEntityProperty.twig', '2016-07-27 16:40:35'), ('50', 'examplebase_form', 'examplebase_form.twig', '2016-08-04 14:22:00'), ('51', '_mimoto_form_output_title', 'Mimoto.CMS/forms/output/Title/Title.twig', '2016-08-10 16:29:20'), ('52', '_mimoto_form_layout_groupstart', 'Mimoto.CMS/forms/layout/GroupStart/GroupStart.twig', '2016-08-10 17:37:30'), ('53', '_mimoto_form_layout_groupend', 'Mimoto.CMS/forms/layout/GroupEnd/GroupEnd.twig', '2016-08-10 17:37:46'), ('54', '_mimoto_form_input_textline', 'Mimoto.CMS/forms/input/Textline/Textline.twig', '2016-08-12 10:07:33'), ('55', '_mimoto_form_input_checkbox', 'Mimoto.CMS/forms/input/Checkbox/Checkbox.twig', '2016-08-15 14:55:03'), ('56', '_mimoto_form_input_radiobutton', 'Mimoto.CMS/forms/input/Radiobutton/Radiobutton.twig', '2016-08-15 14:55:26'), ('57', '_mimoto_form_input_dropdown', 'Mimoto.CMS/forms/input/Dropdown/Dropdown.twig', '2016-08-15 15:00:10'), ('58', '_mimoto_form_layout_divider', 'Mimoto.CMS/forms/layout/Divider/Divider.twig', '2016-08-15 18:16:16'), ('59', 'Mimoto.CMS_forms_Form', 'Mimoto.CMS/forms/Form.twig', '2016-08-17 12:33:35');
+INSERT INTO `_mimoto_component` VALUES ('5', 'project_listitem', 'pages/projects/components/Project.twig', '2016-05-24 07:44:27'), ('6', 'subproject_listitem', 'pages/projects/components/Subproject.twig', '2016-05-24 07:44:51'), ('8', 'article', 'examples/Article.twig', '2016-05-25 16:54:30'), ('9', 'feed', 'examples/Feed.twig', '2016-05-29 15:57:53'), ('10', 'feeditem', 'examples/FeedItem1.twig', '2016-05-29 15:58:21'), ('11', 'article_type', 'examples/ArticleRegular.twig', '2016-05-29 16:03:28'), ('12', 'article_type', 'examples/ArticleExplainer.twig', '2016-05-29 16:03:56'), ('13', 'feeditem_type', 'examples/FeedItem1.twig', '2016-05-29 16:56:41'), ('14', 'feeditem_type', 'examples/FeedItem2.twig', '2016-05-29 16:57:07'), ('15', 'article_overview', 'examples/ArticleOverview.twig', '2016-05-29 17:20:28'), ('16', 'page_settings', 'pages/SettingsPage.twig', '2016-05-29 20:46:35'), ('17', 'page_settings_clients', 'pages/settings/ClientsPage.twig', '2016-05-29 20:47:20'), ('18', 'settings_listitem', 'pages/settings/components/ListItemComponent.twig', '2016-05-29 20:55:12'), ('19', 'page_settings_agencies', 'pages/settings/AgenciesPage.twig', '2016-05-29 21:23:04'), ('20', 'page_settings_projectmanagers', 'pages/settings/ProjectManagersPage.twig', '2016-05-29 21:24:27'), ('21', 'page_settings_subprojectstates', 'pages/settings/SubprojectStatesPage.twig', '2016-05-29 21:25:10'), ('22', 'page_forecast', 'pages/ForecastPage.twig', '2016-05-29 22:01:51'), ('23', 'page_result', 'pages/ResultPage.twig', '2016-05-29 22:02:18'), ('24', 'page_projects', 'pages/ProjectsPage.twig', '2016-05-29 22:05:17'), ('25', 'page_silent', 'pages/SilentPage.twig', '2016-05-29 22:12:52'), ('26', 'project_withsubprojects', 'examples/ProjectWithSubprojects.twig', '2016-05-31 21:48:05'), ('27', 'project_withsubprojects_phase', 'examples/ProjectWithSubprojectsPhase.twig', '2016-05-31 21:50:11'), ('28', 'project_withsubprojects_filter', 'examples/ProjectWithSubprojectsFilter.twig', '2016-05-31 21:53:49'), ('29', 'subproject', 'examples/Subproject.twig', '2016-05-31 22:10:10'), ('30', 'subproject_phase', 'examples/Subproject.twig', '2016-05-31 22:10:43'), ('31', 'subproject_phase', 'examples/SubprojectActive.twig', '2016-06-01 12:44:08'), ('32', 'subproject_phase', 'examples/SubprojectArchived.twig', '2016-06-01 12:45:44'), ('33', 'notificationcenter', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:51:20'), ('34', 'notification', 'notificationcenter/NotificationCenter.twig', '2016-06-07 09:53:50'), ('35', 'client_overview', 'examples/ClientOverview.twig', '2016-06-11 12:21:52'), ('36', 'client_listitem', 'examples/ListItemComponent.twig', '2016-06-11 12:22:54'), ('37', 'entity_overview', 'exampleadmin/EntityOverview.twig', '2016-06-13 10:42:03'), ('38', 'entity_listitem', 'exampleadmin/EntityListItem.twig', '2016-06-13 10:52:12'), ('39', 'subproject_overview', 'examples/SubprojectOverview.twig', '2016-06-13 11:46:46'), ('40', 'subproject_examplelistitem', 'examples/SubprojectListItem.twig', '2016-06-13 11:47:15'), ('41', 'form_client', 'forms/ClientForm.twig', '2016-06-27 14:38:36'), ('42', 'Mimoto.CMS_dashboard_Overview', 'Mimoto.CMS/pages/dashboard/Overview.twig', '2016-07-19 12:27:17'), ('43', 'Mimoto.CMS_entities_EntityOverview', 'Mimoto.CMS/pages/entities/EntityOverview/EntityOverview.twig', '2016-07-19 14:25:22'), ('44', 'Mimoto.CMS_entities_EntityListItem', 'Mimoto.CMS/pages/entities/EntityListItem/EntityListItem.twig', '2016-07-19 14:32:35'), ('45', 'Mimoto.CMS_entities_EntityDetail', 'Mimoto.CMS/pages/entities/EntityDetail/EntityDetail.twig', '2016-07-19 15:17:30'), ('46', 'Mimoto.CMS_entities_PropertyListItem', 'Mimoto.CMS/pages/entities/PropertyListItem/PropertyListItem.twig', '2016-07-19 17:12:38'), ('47', 'Mimoto.CMS_entities_FormEntity', 'Mimoto.CMS/pages/entities/FormEntity.twig', '2016-07-27 13:00:43'), ('48', 'Mimoto.CMS_entities_FormEntityProperty', 'Mimoto.CMS/pages/entities/FormEntityProperty.twig', '2016-07-27 16:40:35'), ('50', 'examplebase_form', 'examples/examplebase_form.twig', '2016-08-04 14:22:00'), ('51', '_mimoto_form_output_title', 'Mimoto.CMS/forms/output/Title/Title.twig', '2016-08-10 16:29:20'), ('52', '_mimoto_form_layout_groupstart', 'Mimoto.CMS/forms/layout/GroupStart/GroupStart.twig', '2016-08-10 17:37:30'), ('53', '_mimoto_form_layout_groupend', 'Mimoto.CMS/forms/layout/GroupEnd/GroupEnd.twig', '2016-08-10 17:37:46'), ('54', '_mimoto_form_input_textline', 'Mimoto.CMS/forms/input/Textline/Textline.twig', '2016-08-12 10:07:33'), ('55', '_mimoto_form_input_checkbox', 'Mimoto.CMS/forms/input/Checkbox/Checkbox.twig', '2016-08-15 14:55:03'), ('56', '_mimoto_form_input_radiobutton', 'Mimoto.CMS/forms/input/Radiobutton/Radiobutton.twig', '2016-08-15 14:55:26'), ('57', '_mimoto_form_input_dropdown', 'Mimoto.CMS/forms/input/Dropdown/Dropdown.twig', '2016-08-15 15:00:10'), ('58', '_mimoto_form_layout_divider', 'Mimoto.CMS/forms/layout/Divider/Divider.twig', '2016-08-15 18:16:16'), ('59', 'Mimoto.CMS_forms_Form', 'Mimoto.CMS/forms/Form.twig', '2016-08-17 12:33:35');
 COMMIT;
 
 -- ----------------------------
@@ -77,13 +77,13 @@ CREATE TABLE `_mimoto_entity` (
   `name` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1601 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `_mimoto_entity`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entity` VALUES ('1', 'person', '2016-07-29 14:13:46'), ('2', 'article', '2016-08-17 11:16:09'), ('3', 'author', '2016-08-22 10:30:30');
+INSERT INTO `_mimoto_entity` VALUES ('1', 'person', '2016-07-29 14:13:46'), ('2', 'article', '2016-08-17 11:16:09'), ('3', 'author', '2016-08-22 10:30:30'), ('1000', 'project', '2016-08-24 13:46:00'), ('1100', 'subproject', '2016-08-24 13:49:31'), ('1200', 'client', '2016-08-24 13:49:16'), ('1300', 'agency', '2016-08-24 13:53:03'), ('1400', 'projectManager', '2016-08-24 13:53:13'), ('1500', 'subprojectState', '2016-08-24 13:53:54'), ('1600', 'contact', '2016-08-24 14:10:20');
 COMMIT;
 
 -- ----------------------------
@@ -98,13 +98,13 @@ CREATE TABLE `_mimoto_entity_connections` (
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16034 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entity_connections`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entity_connections` VALUES ('1', '1', '_mimoto_entity__properties', '_mimoto_entityproperty', '1', '0'), ('2', '1', '_mimoto_entity__properties', '_mimoto_entityproperty', '2', '1'), ('3', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '3', '0'), ('4', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '4', '1'), ('5', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '5', '2'), ('6', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '6', '3'), ('100', '1', '_mimoto_entity__extends', '_mimoto_entity', '2', '0');
+INSERT INTO `_mimoto_entity_connections` VALUES ('1', '1', '_mimoto_entity__properties', '_mimoto_entityproperty', '1', '0'), ('2', '1', '_mimoto_entity__properties', '_mimoto_entityproperty', '2', '1'), ('3', '1', '_mimoto_entity__extends', '_mimoto_entity', '2', '2'), ('4', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '3', '0'), ('5', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '4', '1'), ('6', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '5', '2'), ('7', '2', '_mimoto_entity__properties', '_mimoto_entityproperty', '6', '3'), ('1001', '1000', '_mimoto_entity__properties', '_mimoto_entityproperty', '1001', '0'), ('1002', '1000', '_mimoto_entity__properties', '_mimoto_entityproperty', '1002', '1'), ('1003', '1000', '_mimoto_entity__properties', '_mimoto_entityproperty', '1003', '2'), ('1004', '1000', '_mimoto_entity__properties', '_mimoto_entityproperty', '1004', '3'), ('1005', '1000', '_mimoto_entity__properties', '_mimoto_entityproperty', '1005', '4'), ('1006', '1000', '_mimoto_entity__properties', '_mimoto_entityproperty', '1006', '5'), ('1101', '1100', '_mimoto_entity__properties', '_mimoto_entityproperty', '1101', '0'), ('1102', '1100', '_mimoto_entity__properties', '_mimoto_entityproperty', '1102', '1'), ('1103', '1100', '_mimoto_entity__properties', '_mimoto_entityproperty', '1103', '2'), ('1104', '1100', '_mimoto_entity__properties', '_mimoto_entityproperty', '1104', '3'), ('1105', '1100', '_mimoto_entity__properties', '_mimoto_entityproperty', '1105', '4'), ('1106', '1100', '_mimoto_entity__properties', '_mimoto_entityproperty', '1106', '5'), ('1107', '1100', '_mimoto_entity__properties', '_mimoto_entityproperty', '1107', '6'), ('1201', '1200', '_mimoto_entity__properties', '_mimoto_entityproperty', '1201', '0'), ('1301', '1300', '_mimoto_entity__properties', '_mimoto_entityproperty', '1301', '0'), ('1401', '1400', '_mimoto_entity__properties', '_mimoto_entityproperty', '1401', '0'), ('1501', '1500', '_mimoto_entity__properties', '_mimoto_entityproperty', '1501', '0'), ('1601', '1600', '_mimoto_entity__properties', '_mimoto_entityproperty', '1601', '0'), ('1602', '1600', '_mimoto_entity__properties', '_mimoto_entityproperty', '1602', '1'), ('1603', '1600', '_mimoto_entity__properties', '_mimoto_entityproperty', '1603', '2');
 COMMIT;
 
 -- ----------------------------
@@ -117,13 +117,13 @@ CREATE TABLE `_mimoto_entityproperty` (
   `type` enum('value','entity','collection') COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1604 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entityproperty`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entityproperty` VALUES ('1', 'name', 'value', '2016-07-27 12:24:53'), ('2', 'role', 'value', '2016-07-27 16:45:01'), ('3', 'type', 'value', '2016-08-17 11:16:38'), ('4', 'title', 'value', '2016-08-17 11:16:49'), ('5', 'lede', 'value', '2016-08-17 11:16:57'), ('6', 'body', 'value', '2016-08-17 11:17:09');
+INSERT INTO `_mimoto_entityproperty` VALUES ('1', 'name', 'value', '2016-07-27 12:24:53'), ('2', 'role', 'value', '2016-07-27 16:45:01'), ('3', 'type', 'value', '2016-08-17 11:16:38'), ('4', 'title', 'value', '2016-08-17 11:16:49'), ('5', 'lede', 'value', '2016-08-17 11:16:57'), ('6', 'body', 'value', '2016-08-17 11:17:09'), ('1001', 'name', 'value', '2016-08-24 13:46:39'), ('1002', 'description', 'value', '2016-08-24 13:46:51'), ('1003', 'client', 'entity', '2016-08-24 13:47:45'), ('1004', 'agency', 'entity', '2016-08-24 13:47:54'), ('1005', 'projectManager', 'entity', '2016-08-24 13:48:17'), ('1006', 'subprojects', 'collection', '2016-08-25 11:44:24'), ('1101', 'name', 'value', '2016-08-24 13:56:05'), ('1102', 'contact', 'entity', '2016-08-24 13:56:25'), ('1103', 'phase', 'value', '2016-08-24 13:57:06'), ('1104', 'state', 'value', '2016-08-24 13:57:16'), ('1105', 'probability', 'value', '2016-08-24 13:57:26'), ('1106', 'budget', 'value', '2016-08-24 13:57:40'), ('1107', 'paymentType', 'value', '2016-08-24 13:57:55'), ('1201', 'name', 'value', '2016-08-24 13:55:17'), ('1301', 'name', 'value', '2016-08-24 13:55:28'), ('1401', 'name', 'value', '2016-08-24 13:55:37'), ('1501', 'name', 'value', '2016-08-24 13:55:46'), ('1601', 'name', 'value', '2016-08-24 14:10:33'), ('1602', 'email', 'value', '2016-08-24 14:11:23'), ('1603', 'phoneNumber', 'value', '2016-08-24 14:11:36');
 COMMIT;
 
 -- ----------------------------
@@ -138,13 +138,13 @@ CREATE TABLE `_mimoto_entityproperty_connections` (
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1604 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entityproperty_connections`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entityproperty_connections` VALUES ('1', '1', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1', '0'), ('2', '2', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '2', '1'), ('3', '3', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '3', '0'), ('4', '4', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '4', '1'), ('5', '5', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '5', '2'), ('6', '6', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '6', '3');
+INSERT INTO `_mimoto_entityproperty_connections` VALUES ('1', '1', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1', '0'), ('2', '2', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '2', '1'), ('3', '3', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '3', '0'), ('4', '4', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '4', '1'), ('5', '5', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '5', '2'), ('6', '6', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '6', '3'), ('1001', '1001', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1001', '0'), ('1002', '1002', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1002', '0'), ('1003', '1003', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1003', '0'), ('1004', '1004', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1004', '0'), ('1005', '1005', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1005', '0'), ('1006', '1006', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1006', '0'), ('1007', '1006', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1007', '1'), ('1101', '1101', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1101', '0'), ('1102', '1102', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1102', '0'), ('1103', '1103', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1103', '0'), ('1104', '1104', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1104', '0'), ('1105', '1105', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1105', '0'), ('1106', '1106', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1106', '0'), ('1107', '1107', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1107', '0'), ('1201', '1201', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1201', '0'), ('1301', '1301', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1301', '0'), ('1401', '1401', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1401', '0'), ('1501', '1501', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1501', '0'), ('1601', '1601', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1601', '0'), ('1602', '1602', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1602', '0'), ('1603', '1603', '_mimoto_entity__properties', '_mimoto_entitypropertysetting', '1603', '0');
 COMMIT;
 
 -- ----------------------------
@@ -158,13 +158,13 @@ CREATE TABLE `_mimoto_entitypropertysetting` (
   `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1604 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_entitypropertysetting`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_mimoto_entitypropertysetting` VALUES ('1', 'type', 'value', 'textline', '2016-08-10 13:54:51'), ('2', 'type', 'value', 'textline', '2016-08-10 13:55:02'), ('3', 'type', 'value', 'textline', '2016-08-17 11:18:40'), ('4', 'type', 'value', 'textline', '2016-08-17 11:18:51'), ('5', 'type', 'value', 'textblock', '2016-08-17 11:19:32'), ('6', 'type', 'value', 'textbloxk', '2016-08-17 11:19:41');
+INSERT INTO `_mimoto_entitypropertysetting` VALUES ('1', 'type', 'value', 'textline', '2016-08-10 13:54:51'), ('2', 'type', 'value', 'textline', '2016-08-10 13:55:02'), ('3', 'type', 'value', 'textline', '2016-08-17 11:18:40'), ('4', 'type', 'value', 'textline', '2016-08-17 11:18:51'), ('5', 'type', 'value', 'textblock', '2016-08-17 11:19:32'), ('6', 'type', 'value', 'textblock', '2016-08-17 11:19:41'), ('1001', 'type', 'value', 'textline', '2016-08-24 14:07:44'), ('1002', 'type', 'value', 'textblock', '2016-08-24 14:07:56'), ('1003', 'allowedEntityType', 'value', '1200', '2016-08-24 14:08:43'), ('1004', 'allowedEntityType', 'value', '1300', '2016-08-24 14:09:03'), ('1005', 'allowedEntityType', 'value', '1400', '2016-08-24 14:09:17'), ('1006', 'allowedEntityTypes', 'array', '[1100]', '2016-08-25 11:45:26'), ('1007', 'allowDuplicates', 'boolean', 'false', '2016-08-25 11:45:55'), ('1101', 'type', 'value', 'textline', '2016-08-24 14:09:39'), ('1102', 'allowedEntityType', 'value', '1600', '2016-08-24 14:10:03'), ('1103', 'type', 'value', 'textline', '2016-08-24 14:13:21'), ('1104', 'type', 'value', 'textline', '2016-08-24 14:13:17'), ('1105', 'type', 'value', 'textline', '2016-08-24 14:13:32'), ('1106', 'type', 'value', 'textline', '2016-08-24 14:13:42'), ('1107', 'type', 'value', 'textline', '2016-08-24 14:13:51'), ('1201', 'type', 'value', 'textline', '2016-08-24 14:14:01'), ('1301', 'type', 'value', 'textline', '2016-08-24 14:14:48'), ('1401', 'type', 'value', 'textline', '2016-08-24 14:14:51'), ('1501', 'type', 'value', 'textline', '2016-08-24 14:14:53'), ('1601', 'type', 'value', 'textline', '2016-08-24 14:14:55'), ('1602', 'type', 'value', 'textline', '2016-08-24 14:14:58'), ('1603', 'type', 'value', 'textline', '2016-08-24 14:15:00');
 COMMIT;
 
 -- ----------------------------
@@ -178,7 +178,7 @@ CREATE TABLE `_mimoto_form` (
   `created` datetime DEFAULT NULL,
   `entity_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_form`
@@ -352,7 +352,7 @@ CREATE TABLE `_mimoto_form_output_title` (
   `description` text COLLATE utf8_unicode_ci,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `_mimoto_form_output_title`
@@ -421,13 +421,13 @@ CREATE TABLE `client` (
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `client`
 -- ----------------------------
 BEGIN;
-INSERT INTO `client` VALUES ('1', 'VanMoof', '2016-02-17 09:57:06'), ('2', 'Bugaboo', '2016-02-22 17:54:20'), ('3', 'KNVB', '2016-02-22 17:54:29'), ('4', 'De Correspondent', '2016-03-04 22:41:00'), ('5', 'Respondens', '2016-03-04 22:41:11');
+INSERT INTO `client` VALUES ('1', 'VanMoof', '2016-02-17 09:57:06'), ('2', 'Bugaboo', '2016-02-22 17:54:20'), ('3', 'KNVB', '2016-02-22 17:54:29'), ('4', 'De Correspondent', '2016-03-04 22:41:00'), ('5', 'Respondens', '2016-03-04 22:41:11'), ('6', 'IDFA - Modified = 2016:08:26 15.13.57', '2016-08-25 16:01:53');
 COMMIT;
 
 -- ----------------------------
@@ -438,7 +438,7 @@ CREATE TABLE `contact` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `phonenumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phoneNumber` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -447,7 +447,7 @@ CREATE TABLE `contact` (
 --  Records of `contact`
 -- ----------------------------
 BEGIN;
-INSERT INTO `contact` VALUES ('1', 'Hans van der Vorst', '', '', '0000-00-00 00:00:00'), ('2', 'Dave Shoemack', '', '', '2016-06-01 12:23:31');
+INSERT INTO `contact` VALUES ('1', 'Réne', 'rene@decorrespondent.nl', '0612345678', '2016-08-25 12:50:38'), ('2', 'Gwen', 'gwen@decorrespondent.nl', '0612121212', '2016-08-25 13:51:27');
 COMMIT;
 
 -- ----------------------------
@@ -508,27 +508,15 @@ CREATE TABLE `project` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `description` text CHARACTER SET latin1,
-  `client_id` int(10) unsigned DEFAULT NULL,
-  `agency_id` int(10) unsigned DEFAULT NULL,
-  `projectmanager_id` int(10) unsigned DEFAULT NULL,
   `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `projectmanager_id` (`projectmanager_id`),
-  KEY `agency_id` (`agency_id`),
-  KEY `client_id` (`client_id`),
-  KEY `agency_id_2` (`agency_id`),
-  KEY `client_id_2` (`client_id`),
-  KEY `agency_id_3` (`agency_id`),
-  KEY `client_id_3` (`client_id`),
-  KEY `agency_id_4` (`agency_id`),
-  KEY `client_id_4` (`client_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `project`
 -- ----------------------------
 BEGIN;
-INSERT INTO `project` VALUES ('1', 'Bugaboo.com', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2', '1', '4', '2016-02-17 10:16:24'), ('2', 'VanMoof.com - 2016:06:26 14.14.10', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.', '1', '0', '3', '2016-02-27 12:35:53'), ('3', 'Bugaboo GTS', 'Al ruim 15 jaar inspireert Bugaboo honderdduizenden ouders om eropuit te trekken en samen met hun kinderen de wereld te ontdekken. Tegenwoordig is het een vertrouwd straatbeeld: overal stoere, robuuste en tegelijk stijlvolle kinderwagens. Maar toen Max Barenbrug, nu Chief Design Officer bij Bugaboo, in 1994 zo\'n kinderwagen ontwierp voor zijn afstudeerproject aan de Design Academy in Eindhoven, was het de eerste in zijn soort. De modulaire, multifunctionele kinderwagen, die net zo makkelijk in de stad als in het bos of op het strand kon worden gebruikt, was destijds een compleet nieuw concept.', '4', '2', '3', '2016-03-08 11:40:42');
+INSERT INTO `project` VALUES ('1', 'Bugaboo.com', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2016-02-17 10:16:24'), ('2', 'VanMoof.com - 2016:08:28 16.21.58', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.', '2016-02-27 12:35:53'), ('3', 'Bugaboo GTS', 'Al ruim 15 jaar inspireert Bugaboo honderdduizenden ouders om eropuit te trekken en samen met hun kinderen de wereld te ontdekken. Tegenwoordig is het een vertrouwd straatbeeld: overal stoere, robuuste en tegelijk stijlvolle kinderwagens. Maar toen Max Barenbrug, nu Chief Design Officer bij Bugaboo, in 1994 zo\'n kinderwagen ontwierp voor zijn afstudeerproject aan de Design Academy in Eindhoven, was het de eerste in zijn soort. De modulaire, multifunctionele kinderwagen, die net zo makkelijk in de stad als in het bos of op het strand kon worden gebruikt, was destijds een compleet nieuw concept.', '2016-03-08 11:40:42');
 COMMIT;
 
 -- ----------------------------
@@ -539,17 +527,17 @@ CREATE TABLE `project_connections` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_id` int(10) unsigned DEFAULT NULL,
   `parent_property_id` int(10) unsigned DEFAULT NULL,
-  `child_entity_type` int(10) unsigned DEFAULT NULL,
+  `child_entity_type_id` int(10) unsigned DEFAULT NULL,
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=203 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=934 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Records of `project_connections`
 -- ----------------------------
 BEGIN;
-INSERT INTO `project_connections` VALUES ('1', '3', '10', '6', '1', '0'), ('2', '3', '10', '6', '2', '1'), ('3', '3', '10', '6', '3', '2'), ('4', '2', '10', '6', '4', '0'), ('164', '2', '10', '6', '5', '2'), ('190', '2', '10', '6', '3', '2'), ('202', '3', '10', '6', '5', '3');
+INSERT INTO `project_connections` VALUES ('1', '3', '1006', '1100', '1', '0'), ('2', '3', '1006', '1100', '2', '1'), ('3', '3', '1006', '1100', '3', '2'), ('4', '2', '1006', '1100', '4', '0'), ('910', '2', '1006', '1100', '3', '1'), ('911', '2', '1006', '1100', '5', '2'), ('933', '2', '1005', '1400', '3', '0');
 COMMIT;
 
 -- ----------------------------
@@ -577,12 +565,11 @@ DROP TABLE IF EXISTS `subproject`;
 CREATE TABLE `subproject` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `contact_id` int(10) unsigned DEFAULT NULL,
   `phase` enum('request','currentproject','archived') COLLATE utf8_unicode_ci DEFAULT NULL,
   `state` enum('prospect','active','archived') COLLATE utf8_unicode_ci DEFAULT NULL,
   `probability` enum('0.1','0.5','0.9') COLLATE utf8_unicode_ci DEFAULT NULL,
   `budget` int(10) unsigned DEFAULT NULL,
-  `payment_type` enum('time_material','fixed') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `paymentType` enum('time_material','fixed') COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -591,7 +578,28 @@ CREATE TABLE `subproject` (
 --  Records of `subproject`
 -- ----------------------------
 BEGIN;
-INSERT INTO `subproject` VALUES ('1', 'Specificatiefase', '1', 'request', 'prospect', '0.1', '57850', 'time_material', '2016-02-27 18:02:19'), ('2', 'In-store visuals', '1', 'archived', 'prospect', '0.9', '15000', 'fixed', '2016-02-27 18:03:11'), ('3', 'Concept design', '1', 'currentproject', 'active', '0.9', '25000', 'time_material', '2016-02-27 18:04:57'), ('4', 'Concept phase', '2', 'request', 'archived', '0.5', '43000', 'time_material', '2016-03-02 14:53:37'), ('5', 'Technical realisation', '1', 'request', 'active', '0.1', '60000', 'time_material', '2016-06-01 12:55:01');
+INSERT INTO `subproject` VALUES ('1', 'Specificatiefase', 'request', 'prospect', '0.1', '57850', 'time_material', '2016-02-27 18:02:19'), ('2', 'In-store visuals', 'currentproject', 'prospect', '0.9', '15000', 'fixed', '2016-02-27 18:03:11'), ('3', 'Concept design', 'currentproject', 'active', '0.9', '25000', 'time_material', '2016-02-27 18:04:57'), ('4', 'Concept phase', 'request', 'archived', '0.5', '43000', 'time_material', '2016-03-02 14:53:37'), ('5', 'Technical realisation', 'request', 'active', '0.1', '60000', 'time_material', '2016-06-01 12:55:01');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `subproject_connections`
+-- ----------------------------
+DROP TABLE IF EXISTS `subproject_connections`;
+CREATE TABLE `subproject_connections` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(10) unsigned DEFAULT NULL,
+  `parent_property_id` int(10) unsigned DEFAULT NULL,
+  `child_entity_type_id` int(10) unsigned DEFAULT NULL,
+  `child_id` int(10) unsigned DEFAULT NULL,
+  `sortindex` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=203 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `subproject_connections`
+-- ----------------------------
+BEGIN;
+INSERT INTO `subproject_connections` VALUES ('1', '1', '1102', '1600', '2', '0');
 COMMIT;
 
 -- ----------------------------
@@ -603,13 +611,6 @@ CREATE TABLE `subprojectstate` (
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
---  Records of `subprojectstate`
--- ----------------------------
-BEGIN;
-INSERT INTO `subprojectstate` VALUES ('1', 'Onbehandeld', '2016-02-23 10:03:22'), ('2', 'Wacht op vervolg', '2016-02-23 10:02:02'), ('3', 'Offerte gestuurd', '0000-00-00 00:00:00'), ('4', 'In uitvoering', '0000-00-00 00:00:00'), ('5', 'Vervallen', '0000-00-00 00:00:00'), ('6', 'Afgerond', '0000-00-00 00:00:00');
-COMMIT;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
