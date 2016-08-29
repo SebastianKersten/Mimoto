@@ -282,7 +282,7 @@ class MimotoAimlessService
         $data->entityType = $sEntityType;
         
         // init
-        $data->updated = array();
+        $data->changes = array();
         $aModifiedValues = $entity->getChanges();
         
         
@@ -318,7 +318,7 @@ class MimotoAimlessService
                 $valueForBroadcast = (object) array();
 
                 // compose
-                $valueForBroadcast->property = $sPropertyName;
+                $valueForBroadcast->propertyName = $sPropertyName;
                 
                 
                 // read
@@ -328,7 +328,6 @@ class MimotoAimlessService
                 switch($sPropertyType)
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
                         
                         $valueForBroadcast->value = $entity->getValue($sMainPropertyName);
                         
@@ -348,59 +347,114 @@ class MimotoAimlessService
                                 if ($subentity->hasProperty($sSubPropertyName))
                                 {
                                     // compose
-                                    $valueForBroadcast->value = $subentity->getValue($sSubPropertyName);   
+                                    $valueForBroadcast->value = $subentity->getValue($sSubPropertyName);
                                     $valueForBroadcast->origin->entityType = $subentity->getEntityType();
                                     $valueForBroadcast->origin->entityId = $subentity->getId();
-                                    $valueForBroadcast->origin->property = $sSubPropertyName;
+                                    $valueForBroadcast->origin->propertyName = $sSubPropertyName;
                                 }
                             }
                             else
                             {
                                 // compose
                                 $valueForBroadcast->origin->entityType = $sMainPropertyName;
-                                $valueForBroadcast->origin->property = $sSubPropertyName;
+                                $valueForBroadcast->origin->propertyName = $sSubPropertyName;
                             }
                         }
                         
                         break;
-                        
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                        // #todo
+
+                        break;
+
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
                         
                         // compose
-                        $valueForBroadcast->collection = $aModifiedValues[$sMainPropertyName];
-                        
-                        // add properties for realtime filtered adding
-                        for ($iAdded = 0; $iAdded < count($valueForBroadcast->collection->added); $iAdded++)
+                        $valueForBroadcast->collection = (object) array();
+
+
+                        // validate
+                        if (!empty($aModifiedValues[$sMainPropertyName]->added))
                         {
                             // register
-                            $addedItem = $valueForBroadcast->collection->added[$iAdded];
-                            
-                            // setup
-                            $addedItem->values = array();
-                            
-                            // load
-                            $collectionItem = $this->_MimotoEntityService->get($addedItem->getChildEntityTypeName(), $addedItem->getChildId());
-                            
-                            
-                            $aCollectionItemPropertyNames = $collectionItem->getPropertyNames();
-                            
-                            
-                            for ($iPropertyName = 0; $iPropertyName < count($aCollectionItemPropertyNames); $iPropertyName++)
+                            $aConnections = $aModifiedValues[$sMainPropertyName]->added;
+
+                            // init
+                            $valueForBroadcast->collection->added = [];
+
+
+                            // add properties for realtime filtered removal
+                            for ($nAddedIndex = 0; $nAddedIndex < count($aConnections); $nAddedIndex++)
                             {
                                 // register
-                                $sCollectionItemPropertyName = $aCollectionItemPropertyNames[$iPropertyName];
-                                
-                                $addedItem->values[$sCollectionItemPropertyName] = $collectionItem->getValue($sCollectionItemPropertyName, true);
+                                $connection = $aConnections[$nAddedIndex];
+
+                                // setup
+                                $item = (object)array(
+                                    'connection' => $connection->toJSON(),
+                                    'data' => []
+                                );
+
+
+
+                                // load
+                                $entity = $this->_MimotoEntityService->get($connection->getChildEntityTypeName(), $connection->getChildId());
+
+                                // load
+                                $aCollectionItemPropertyNames = $entity->getPropertyNames();
+
+
+                                for ($nPropertyNameIndex = 0; $nPropertyNameIndex < count($aCollectionItemPropertyNames); $nPropertyNameIndex++)
+                                {
+                                    // register
+                                    $sCollectionItemPropertyName = $aCollectionItemPropertyNames[$nPropertyNameIndex];
+
+                                    $item->data[$sCollectionItemPropertyName] = $entity->getValue($sCollectionItemPropertyName, true);
+                                }
+
+
+                                // store
+                                $valueForBroadcast->collection->added[] = $item;
                             }
-                            
                         }
+
+
+
+                        // validate
+                        if (!empty($aModifiedValues[$sMainPropertyName]->removed))
+                        {
+                            // register
+                            $aConnections = $aModifiedValues[$sMainPropertyName]->removed;
+
+                            // init
+                            $valueForBroadcast->collection->removed = [];
+
+
+                            // add properties for realtime filtered removal
+                            for ($nRemovedIndex = 0; $nRemovedIndex < count($aConnections); $nRemovedIndex++)
+                            {
+                                // register
+                                $connection = $aConnections[$nRemovedIndex];
+
+                                // setup
+                                $item = (object) array(
+                                    'connection' => $connection->toJSON()
+                                );
+
+                                // store
+                                $valueForBroadcast->collection->removed[] = $item;
+                            }
+                        };
+
                         
                         break;
                         
                 }
                 
                 // store
-                $data->updated[] = $valueForBroadcast;
+                $data->changes[] = $valueForBroadcast;
             }
         }
 
@@ -412,7 +466,7 @@ class MimotoAimlessService
         // 2. handel eerst alles rondom de nieuwe data af!
         
         
-        if (!empty($data->updated)) { $this->sendPusherEvent('Aimless', 'data.update', $data); }
+        if (!empty($data->changes)) { $this->sendPusherEvent('Aimless', 'data.changed', $data); }
         
         //$this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
         //$this->sendPusherEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));

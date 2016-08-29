@@ -689,19 +689,19 @@ class MimotoData
      * @param string $sPropertySelector
      * @throws MimotoEntityException
      */
-    private function removeCollectionProperty($property, $value, $sEntityType, $sPropertySelector)
+    private function removeCollectionProperty($property, $xValue, $sEntityType, $sPropertySelector)
     {
         // forward
-        if (!empty($sPropertySelector)) { $this->forwardRemoveEntityProperty($property, $sPropertySelector, $value); return; }
+        if (!empty($sPropertySelector)) { $this->forwardRemoveEntityProperty($property, $sPropertySelector, $xValue); return; }
         
         
         // validate input
-        if (!MimotoDataUtils::isEntity($value) && !MimotoDataUtils::isValidEntityId($value)) { throw new MimotoEntityException("( '-' ) - Sorry, the value you are trying to add at to collection '$property->config->name' is not a MimotoEntity"); }
+        if (!MimotoDataUtils::isEntity($xValue) && !MimotoDataUtils::isValidEntityId($xValue)) { throw new MimotoEntityException("( '-' ) - Sorry, the value you are trying to add at to collection '$property->config->name' is not a MimotoEntity"); }
         
         
-        if (MimotoDataUtils::isEntity($value))
+        if (MimotoDataUtils::isEntity($xValue))
         {
-            $sEntityType = $value->getEntityType();
+            $sEntityType = $xValue->getEntityType();
         }
         else
         {
@@ -716,10 +716,10 @@ class MimotoData
         }
         
         // init
-        $subproperty = (object) array();
-        
-        $subproperty->parentId = $this->getId();
-        $subproperty->parentPropertyId = $property->config->id;
+        $connection = new MimotoDataConnection();
+
+        $connection->setParentId($this->getId());
+        $connection->setParentPropertyId($property->config->id);
         
         
         $aAllowedEntityTypes = [];
@@ -730,25 +730,22 @@ class MimotoData
         
         
         // validate
-        if (MimotoDataUtils::isEntity($value) && !in_array($sEntityType, $aAllowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$value->getEntityType()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
+        if (MimotoDataUtils::isEntity($xValue) && !in_array($sEntityType, $aAllowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$xValue->getEntityType()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
 
-        if (MimotoDataUtils::isEntity($value))
+        if (MimotoDataUtils::isEntity($xValue))
         {
             // store
-            $subproperty->childId = $value->getId();
+            $connection->setChildId($xValue->getId());
         }
         else
-        if (MimotoDataUtils::isValidEntityId($value))
+        if (MimotoDataUtils::isValidEntityId($xValue))
         {
             // store
-            $subproperty->childId = $value;
+            $connection->setChildId($xValue);
         }
 
-        $subproperty->childEntityType = (object) array(
-            'id' => $GLOBALS['Mimoto.Config']->getEntityIdByName($sEntityType),
-            'name' => $sEntityType
-        );
-        $subproperty->sortIndex = count($property->data->currentCollection);
+        $connection->setChildEntityTypeId($GLOBALS['Mimoto.Config']->getEntityIdByName($sEntityType));
+        $connection->setSortIndex(count($property->data->currentCollection));
         
         
         // --- HERE --------------------------------------------------------------------------------------------
@@ -762,7 +759,7 @@ class MimotoData
         
         for ($i = 0; $i < count($property->data->currentCollection); $i++)
         {
-            if ($property->data->currentCollection[$i]->childId == $subproperty->childId)
+            if ($property->data->currentCollection[$i]->getChildId() == $connection->getChildId())
             {
                 // remove
                 if (!$this->_bTrackChanges) { array_splice($property->data->persistentCollection, $i, 1); }

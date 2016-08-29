@@ -275,7 +275,7 @@ class ExampleController
         $app['Mimoto.Data']->store($project);
 
         // render and send
-        return $this->viewExample10($app);
+        return new RedirectResponse('/example10');
     }
     
     
@@ -285,7 +285,7 @@ class ExampleController
         $project = $app['Mimoto.Data']->get('project', 3);
         
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
+        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_phase', $project);
         
         // setup
         $component->setPropertyTemplate('subprojects', 'subproject_phase');
@@ -294,7 +294,7 @@ class ExampleController
         return $component->render();
     }
     
-    public function viewExample12(Application $app)
+    public function viewExample11a(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
@@ -304,13 +304,13 @@ class ExampleController
         $project->addValue('subprojects', $subproject);
         
         // store
-        $project = $app['Mimoto.Data']->store($project);
-        
+        $app['Mimoto.Data']->store($project);
+
         // render and send
-        return "subproject.5 added to project.3";
+        return new RedirectResponse('/example11');
     }
     
-    public function viewExample13(Application $app)
+    public function viewExample11b(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
@@ -320,13 +320,43 @@ class ExampleController
         $project->removeValue('subprojects', $subproject);
         
         // store
-        $project = $app['Mimoto.Data']->store($project);
+        $app['Mimoto.Data']->store($project);
         
         // render and send
-        return "subproject.5 removed from project.3";
+        return new RedirectResponse('/example11');
     }
-    
-    public function viewExample14(Application $app)
+
+    public function viewExample11c(Application $app)
+    {
+        // load
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+
+        // setup
+        $subproject->setValue('phase', 'archived');
+
+        // store
+        $app['Mimoto.Data']->store($subproject);
+
+        // render and send
+        return new RedirectResponse('/example11');
+    }
+
+    public function viewExample11d(Application $app)
+    {
+        // load
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+
+        // setup
+        $subproject->setValue('phase', 'request');
+
+        // store
+        $app['Mimoto.Data']->store($subproject);
+
+        // render and send
+        return new RedirectResponse('/example11');
+    }
+
+    public function viewExample12(Application $app)
     {
         // render and send
         return $this->viewExample7($app);
@@ -334,7 +364,7 @@ class ExampleController
     
     
     
-    public function viewExample15(Application $app)
+    public function viewExample13(Application $app)
     {
         // load
         $client = $app['Mimoto.Data']->get('client', 1);
@@ -359,7 +389,7 @@ class ExampleController
 
 
 
-    public function viewExample16(Application $app)
+    public function viewExample14(Application $app)
     {
 
         // 1. Author extends Member extends Person

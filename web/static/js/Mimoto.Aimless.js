@@ -31,7 +31,7 @@ Mimoto.Aimless.connect = function()
 
     var channel = pusher.subscribe('Aimless');
 
-    channel.bind('data.update', function(data) // update, create, remove (, read?)
+    channel.bind('data.changed', function(data) // update, create, remove (, read?)
     {
         // compose
         var sEntityIdentifier = data.entityType + '.' + data.entityId;
@@ -43,12 +43,12 @@ Mimoto.Aimless.connect = function()
         console.clear();
         
         
-        console.log('Aimless - data.update');
+        console.log('Aimless - data.changed');
         console.log(data);
         
         
         // check
-        if (data.updated)
+        if (data.changes)
         {
             // search
             var aValues = $("[mls_value]");
@@ -71,13 +71,13 @@ Mimoto.Aimless.connect = function()
                 
                 
                 // parse modified values
-                for (var i = 0; i < data.updated.length; i++)
+                for (var i = 0; i < data.changes.length; i++)
                 {
                     // register
-                    var update = data.updated[i];
+                    var change = data.changes[i];
                     
                     // collection
-                    if (update.changes) continue;
+                    if (change.changes) continue;
                     
                     
                     if (!bHasOrigin)
@@ -90,10 +90,10 @@ Mimoto.Aimless.connect = function()
                         // 1. find "project.3.name"
                         // 2. change value
                         
-                        if (mls_value === (sEntityIdentifier + '.' + update.property))
+                        if (mls_value === (sEntityIdentifier + '.' + change.propertyName))
                         {
                             // output
-                            $($component).text(update.value);
+                            $($component).text(change.value);
                         }
                     }
                     else
@@ -107,10 +107,10 @@ Mimoto.Aimless.connect = function()
                         // 2. change value
                         
                         
-                        if (mls_value_origin ===  (sEntityIdentifier + '.' + update.property))
+                        if (mls_value_origin ===  (sEntityIdentifier + '.' + change.propertyName))
                         {
                             // output
-                            $($component).text(update.value);
+                            $($component).text(change.value);
                         }
                         else
                         {
@@ -129,15 +129,15 @@ Mimoto.Aimless.connect = function()
                             // 2. change to: "project.3.agency.name[agency.5.name]"
                             // 3. change value
                             
-                            if (mls_value ===  (sEntityIdentifier + '.' + update.property))
+                            if (mls_value ===  (sEntityIdentifier + '.' + change.propertyName))
                             {
                                 // output
-                                $($component).text(update.value);
+                                $($component).text(change.value);
                                 
                                 // compose new
-                                var new_mls_value_origin = update.origin.entityType;
-                                if (update.origin.entityId) new_mls_value_origin += '.' + update.origin.entityId;
-                                new_mls_value_origin += '.' + update.origin.property;
+                                var new_mls_value_origin = change.origin.entityType;
+                                if (change.origin.entityId) new_mls_value_origin += '.' + change.origin.entityId;
+                                new_mls_value_origin += '.' + change.origin.propertyName;
                                 
                                 // update dom
                                 $($component).attr('mls_value', mls_value + '[' + new_mls_value_origin + ']');
@@ -150,18 +150,22 @@ Mimoto.Aimless.connect = function()
         
         
         // parse modified values
-        for (var i = 0; i < data.updated.length; i++)
+        for (var i = 0; i < data.changes.length; i++)
         {
             // register
-            var update = data.updated[i];
-            
+            var change = data.changes[i];
+
             // collection
-            if (!update.collection) continue;
-            
-            var aCollections = $("[mls_contains='" + sEntityIdentifier + "." + update.property + "']");
-            
-            
-            aCollections.each(function(nIndex, $component)
+            if (!change.collection) continue;
+
+
+
+
+
+            var aContainers = $("[mls_contains='" + sEntityIdentifier + "." + change.propertyName + "']");
+
+
+            aContainers.each(function(nIndex, $component)
             {
                 // read
                 var mls_contains = $($component).attr("mls_contains");
@@ -170,49 +174,67 @@ Mimoto.Aimless.connect = function()
                 
                 if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 
+                console.log('mls_filer = ' + mls_filter);
 
-                for (var iAdded = 0; iAdded < update.collection.added.length; iAdded++)
+                if (change)
                 {
 
-                    var item = update.collection.added[iAdded];
-                    
-                    var bFilterApproved = true;
-                    if (mls_filter)
-                    {
-                        for (var s in item.values)
-                        {
-                            if (mls_filter[s] && item.values[s] != mls_filter[s])
-                            {
-                                bFilterApproved = false;
-                                break;
+                }
+
+                // --- handle added items ---
+
+                if (change.collection.added) {
+
+                    for (var iAdded = 0; iAdded < change.collection.added.length; iAdded++) {
+
+                        // register
+                        var item = change.collection.added[iAdded];
+
+                        var bFilterApproved = true;
+                        if (mls_filter) {
+                            for (var s in item.data) {
+                                if (mls_filter[s] && item.data[s] != mls_filter[s]) {
+                                    bFilterApproved = false;
+                                    break;
+                                }
                             }
                         }
-                    }
-                    
-                    
-                    if (bFilterApproved)
-                    {
-                        $.ajax({
-                            type: 'GET',
-                            url: '/Mimoto.Aimless/' + item.childEntityType.name + '/' + item.childId + '/' + mls_template,
-                            data: null,
-                            dataType: 'html',
-                            success: function (data) {
-                                $($component).append(data);
-                            }
-                        });
-                    }
-                }
-                
-                for (var iRemoved = 0; iRemoved < update.collection.removed.length; iRemoved++)
-                {
 
-                    var item = update.collection.removed[iRemoved];
-                    
-                    $item = $("[mls_id='" + item.childEntityType.name + "." + item.childId + "']", $component);
-                    
-                    $item.remove();
+                        if (bFilterApproved)
+                        {
+
+                            console.warn(item);
+
+                            $.ajax({
+                                type: 'GET',
+                                url: '/Mimoto.Aimless/' + item.connection.childEntityTypeName + '/' + item.connection.childId + '/' + mls_template,
+                                data: null,
+                                dataType: 'html',
+                                success: function (data) {
+                                    $($component).append(data);
+                                }
+                            });
+                        }
+                    }
                 }
+
+                if (change.collection.removed)
+                {
+                    for (var iRemoved = 0; iRemoved < change.collection.removed.length; iRemoved++)
+                    {
+
+                        // register
+                        var item = change.collection.removed[iRemoved];
+
+                        // find
+                        $item = $("[mls_id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $component);
+
+                        // delete
+                        $item.remove();
+                    }
+                }
+
+
             });
         }
         
@@ -277,7 +299,7 @@ Mimoto.Aimless.connect = function()
         // --- container level ---
 
         
-        console.log('Console.update - filtered');
+        //console.log('Console.update - filtered');
         
         // 1. mls_contains="project.3.subprojects" wordt niet meegestuurd bij wie het object hoort
         // 2. partOf
@@ -342,6 +364,33 @@ Mimoto.Aimless.connect = function()
         // search
         var aComponents = $("[mls_contains='" + mls_container + "']");
         
+        aComponents.each( function(index, $component)
+        {
+            // read
+            var mls_template = $($component).attr("mls_template");
+            var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
+
+            // verify
+            if (mls_template !== undefined)
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_template,
+                    data: null,
+                    dataType: 'html',
+                    success: function (data) {
+                        $($component).append(data);
+                    }
+                });
+            }
+
+        });
+
+
+        // seection level
+        // search
+        var aComponents = $("[mls_selection='" + mls_container + "']");
+
         aComponents.each( function(index, $component)
         {
             // read

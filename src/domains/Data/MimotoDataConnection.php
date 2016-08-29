@@ -190,4 +190,34 @@ class MimotoDataConnection
      */
     public function setIsNewFlag($bIsNew) { $this->_bIsNew = $bIsNew; }
 
+
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Convert data to JSON-ready object
+     *
+     * @param boolean $bConvertToString Default = false
+     *
+     * @returns object or string
+     */
+    public function toJSON($bConvertToString = false)
+    {
+        // init
+        $connection = (object) array(
+            'id' => $this->_xId,
+            'parentId' => $this->_xParentId,
+            'parentPropertyId' => $this->_xParentPropertyId,
+            'childEntityTypeId' => $this->_xChildEntityTypeId,
+            'childEntityTypeName' => $this->_sChildEntityTypeName,
+            'childId' => $this->_xChildId,
+            'sortIndex' => $this->_nSortIndex
+        );
+
+        // send
+        return ($bConvertToString) ? json_encode($connection) : $connection;
+    }
 }

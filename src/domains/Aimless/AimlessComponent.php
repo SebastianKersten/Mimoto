@@ -183,7 +183,7 @@ class AimlessComponent
     {
         // validate
         if (!isset($this->_aSelections[$sSelectionName])) die("Aimless says: Selection '$sSelectionName' not defined");
-        
+
         // load
         $selection = $this->_aSelections[$sSelectionName];
         
@@ -235,10 +235,6 @@ class AimlessComponent
 
     public function realtime($sPropertySelector = null)
     {
-        // validate
-        if (empty($this->_entity)) return;
-
-
         if ($sPropertySelector !== null)
         {
             // cleanup
@@ -247,11 +243,11 @@ class AimlessComponent
             
             $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
             $aConditionals = MimotoDataUtils::getConditionals($sSubpropertySelector);
-            
+
             // compose
             $sFilter = (!empty($aConditionals)) ? " mls_filter='".json_encode($aConditionals)."'" : '';
-            
-            
+
+
             if (!empty($this->_entity) && $this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
                 // compose
