@@ -11,6 +11,22 @@
         }
     ],
 
+    "type": "package",
+    "package": {
+        "name": "SebastianKersten/Mimoto.Aimless",
+        "version": "1.0.0",
+        "type": "package",
+        "source": {
+            "url": "git@github.com:SebastianKersten/Mimoto.Aimless.git",
+            "type": "git",
+            "reference": "origin/master"
+        }
+    },
+
+    "require": {
+        "SebastianKersten/Mimoto.Aimless": "*"
+    },
+
     "require-dev": {
         "silex/silex": "~1.3",
         "twig/twig": "~1.0"
