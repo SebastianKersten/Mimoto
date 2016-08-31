@@ -381,8 +381,9 @@ class MimotoData
         $connection = new MimotoDataConnection();
 
         // compose
-        $connection->setParentId($this->getId());
+        $connection->setParentEntityTypeId($this->getEntityType());
         $connection->setParentPropertyId($property->config->id);
+        $connection->setParentId($this->getId());
         $connection->setChildEntityTypeId($property->config->settings->allowedEntityType->id);
         $connection->setSortIndex(0);
 
@@ -624,8 +625,9 @@ class MimotoData
         // init
         $connection = new MimotoDataConnection();
 
-        $connection->setParentId($this->getId());
+        $connection->setParentEntityTypeId($this->getEntityType());
         $connection->setParentPropertyId($property->config->id);
+        $connection->setParentId($this->getId());
         
         
         $aAllowedEntityTypes = [];
@@ -716,8 +718,9 @@ class MimotoData
         // init
         $connection = new MimotoDataConnection();
 
-        $connection->setParentId($this->getId());
+        $connection->setParentEntityTypeId($this->getEntityType());
         $connection->setParentPropertyId($property->config->id);
+        $connection->setParentId($this->getId());
         
         
         $aAllowedEntityTypes = [];

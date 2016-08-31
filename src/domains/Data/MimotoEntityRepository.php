@@ -456,8 +456,9 @@ class MimotoEntityRepository
 
                             // compose
                             $connection->setId($row['id']);
-                            $connection->setParentId($row['parent_id']);
+                            $connection->setParentEntityTypeId($row['parent_entity_type_id']);
                             $connection->setParentPropertyId($row['parent_property_id']);
+                            $connection->setParentId($row['parent_id']);
                             $connection->setChildEntityTypeId($row['child_entity_type_id']);
                             $connection->setChildId($row['child_id']);
                             $connection->setSortIndex($row['sortindex']);
@@ -504,15 +505,17 @@ class MimotoEntityRepository
         // load
         $stmt = $GLOBALS['database']->prepare(
             "INSERT INTO ".$sDBTable." SET ".
-            "parent_id = :parent_id, ".
+            "parent_entity_type_id = :parent_entity_type_id, ".
             "parent_property_id = :parent_property_id, ".
+            "parent_id = :parent_id, ".
             "child_entity_type_id = :child_entity_type_id, ".
             "child_id = :child_id, ".
             "sortindex = :sortindex"
         );
         $params = array(
-            ':parent_id' => $newItem->getParentId(),
+            ':parent_entity_type_id' => $GLOBALS['Mimoto.Config']->getEntityIdByName($newItem->getParentEntityTypeId()), // #todo - mixed value = confusing
             ':parent_property_id' => $newItem->getParentPropertyId(),
+            ':parent_id' => $newItem->getParentId(),
             ':child_entity_type_id' => $newItem->getChildEntityTypeId(),
             ':child_id' => $newItem->getChildId(),
             ':sortindex' => $newItem->getSortIndex()

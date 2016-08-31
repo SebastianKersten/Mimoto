@@ -20,11 +20,11 @@ class MimotoDataConnection
     private $_xId;
 
     /**
-     * The id of the parent of the connected item
+     * The id of the parent's Entity type
      *
      * @var mixed
      */
-    private $_xParentId;
+    private $_xParentEntityTypeId;
 
     /**
      * The id of the parent's EntityProperty to which the item is connected
@@ -32,6 +32,13 @@ class MimotoDataConnection
      * @var mixed
      */
     private $_xParentPropertyId;
+
+    /**
+     * The id of the parent of the connected item
+     *
+     * @var mixed
+     */
+    private $_xParentId;
 
     /**
      * The id of the child's Entity type
@@ -91,18 +98,18 @@ class MimotoDataConnection
 
 
     /**
-     * Get the id of the parent of the connected item
+     * Get the id of the parent's Entity type
      *
      * @return mixed
      */
-    public function getParentId() { return $this->_xParentId; }
+    public function getParentEntityTypeId() { return $this->_xParentEntityTypeId; }
 
     /**
-     * Set the id of the parent of the connected item
+     * Set the id of the parent's Entity type
      *
      * @param mixed
      */
-    public function setParentId($xParentId) { $this->_xParentId = $xParentId; }
+    public function setParentEntityTypeId($xParentEntityTypeId) { $this->_xParentEntityTypeId = $xParentEntityTypeId; }
 
 
     /**
@@ -118,6 +125,21 @@ class MimotoDataConnection
      * @param mixed
      */
     public function setParentPropertyId($xParentPropertyId) { $this->_xParentPropertyId = $xParentPropertyId; }
+
+
+    /**
+     * Get the id of the parent of the connected item
+     *
+     * @return mixed
+     */
+    public function getParentId() { return $this->_xParentId; }
+
+    /**
+     * Set the id of the parent of the connected item
+     *
+     * @param mixed
+     */
+    public function setParentId($xParentId) { $this->_xParentId = $xParentId; }
 
 
     /**

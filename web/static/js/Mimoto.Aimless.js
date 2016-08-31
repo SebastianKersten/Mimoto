@@ -242,7 +242,6 @@ Mimoto.Aimless.connect = function()
 
                     if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 
-
                     var bFilterApproved = true;
                     if (mls_filter)
                     {
@@ -276,16 +275,14 @@ Mimoto.Aimless.connect = function()
                     }
                     else
                     {
-                        // 1. check if item exists in container
-                        // 2. add connection id
-                        // 3. check if connection id exists
-
-
+                        // search
                         var aSubitems = $("[mls_id='" + data.entityType + "." + data.entityId + "']", $container);
 
                         aSubitems.each(function(nIndex, $component)
                         {
-                            console.log('Item was found');
+
+                            // 2. add connection id
+                            // 3. check if connection id exists
 
                             // delete
                             $component.remove();
