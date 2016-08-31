@@ -1,5 +1,5 @@
 {
-    "name": "SebastianKersten/Mimoto.Aimless",
+    "name": "mimoto/aimless",
     "description": "A realtime fluid data management microframework",
     "keywords": ["microframework", "realtime", "fluid data"],
     "homepage": "http://momkai.com/aimless",

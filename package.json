@@ -1,5 +1,5 @@
 {
-  "name": "Mimoto.Aimless",
+  "name": "mimoto/aimless",
   "version": "1.0.0",
   "description": "Realtime fluid data management by _Sebastian Kersten_",
   "main": "index.js",
