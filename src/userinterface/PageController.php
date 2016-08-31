@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class EntitiesController extends MimotoController
+class PageController extends MimotoController
 {
     
     public function viewEntity(Application $app, $sEntityType, $nId)

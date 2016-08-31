@@ -3,7 +3,7 @@
     "description": "A realtime fluid data management microframework",
     "keywords": ["microframework", "realtime", "fluid data"],
     "homepage": "http://momkai.com/aimless",
-    "license": "MIT",
+    "license": "Apache License",
     "authors": [
         {
             "name": "Sebastian Kersten",
