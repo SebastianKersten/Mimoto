@@ -341,7 +341,7 @@ class AimlessComponent
         {
             // register
             $entity = $aCollection[$i];
-                        
+
             // create
             $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
             
