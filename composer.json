@@ -10,7 +10,7 @@
             "email": "sebastian@momkai.com"
         }
     ],
-
+    
     "require-dev": {
         "silex/silex": "~1.3",
         "twig/twig": "~1.0"
