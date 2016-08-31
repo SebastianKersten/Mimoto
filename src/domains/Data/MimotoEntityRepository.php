@@ -4,7 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
-use Mimoto\Data\MimotoDataConnection;
+use Mimoto\Data\MimotoEntityConnection;
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoCollection;
@@ -452,7 +452,7 @@ class MimotoEntityRepository
                         foreach ($aResults as $row)
                         {
                             // init
-                            $connection = new MimotoDataConnection();
+                            $connection = new MimotoEntityConnection();
 
                             // compose
                             $connection->setId($row['id']);
@@ -500,7 +500,7 @@ class MimotoEntityRepository
     }
 
 
-    private function addItemToCollection($sDBTable, MimotoDataConnection $newItem)
+    private function addItemToCollection($sDBTable, MimotoEntityConnection $newItem)
     {
         // load
         $stmt = $GLOBALS['database']->prepare(
@@ -527,7 +527,7 @@ class MimotoEntityRepository
         $newItem->setId($GLOBALS['database']->lastInsertId());
     }
 
-    private function alterExistingItemInCollection($sDBTable, MimotoDataConnection $existingItem)
+    private function alterExistingItemInCollection($sDBTable, MimotoEntityConnection $existingItem)
     {
         // load
         $stmt = $GLOBALS['database']->prepare(
@@ -542,7 +542,7 @@ class MimotoEntityRepository
         $stmt->execute($params);
     }
 
-    private function removeItemFromCollection($sDBTable, MimotoDataConnection $existingItem)
+    private function removeItemFromCollection($sDBTable, MimotoEntityConnection $existingItem)
     {
         // load
         $stmt = $GLOBALS['database']->prepare(

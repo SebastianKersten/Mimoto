@@ -5,11 +5,11 @@ namespace Mimoto\Data;
 
 
 /**
- * MimotoDataConnection
+ * MimotoEntityConnection
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoDataConnection
+class MimotoEntityConnection
 {
 
     /**
