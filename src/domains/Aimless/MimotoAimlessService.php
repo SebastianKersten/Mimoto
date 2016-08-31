@@ -4,10 +4,9 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
-use Mimoto\Aimless\MimotoAimlessUtils;
+use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
-use Mimoto\library\entities\MimotoEntityUtils;
 
 // Silex classes
 use Silex\Application;
@@ -29,12 +28,7 @@ class MimotoAimlessService
     // config
     var $_aComponents;
     
-    
-    
-    const DBTABLE_COMPONENT = '_mimoto_component';
-    const DBTABLE_COMPONENTCONDITIONAL = '_mimoto_componentconditional';
-    
-    
+
     
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -158,7 +152,7 @@ class MimotoAimlessService
 
 
         // load all templates
-        $sql = 'SELECT * FROM '.self::DBTABLE_COMPONENT;
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_COMPONENT;
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             // compose
@@ -175,7 +169,7 @@ class MimotoAimlessService
         }
 
         // load all conditionals
-        $sql = 'SELECT * FROM '.self::DBTABLE_COMPONENTCONDITIONAL;
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_COMPONENTCONDITIONAL;
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             $conditional = (object) array(
@@ -319,6 +313,7 @@ class MimotoAimlessService
 
                 // compose
                 $valueForBroadcast->propertyName = $sPropertyName;
+
                 
                 
                 // read
@@ -457,6 +452,39 @@ class MimotoAimlessService
                 $data->changes[] = $valueForBroadcast;
             }
         }
+
+
+        // --- connections
+
+        // init
+        $aConnections = [];
+
+        $xChildEntityTypeId = $GLOBALS['Mimoto.Config']->getEntityIdByName($entity->getEntityType());
+
+
+        // load all connections
+        $sql =
+            'SELECT * FROM '.CoreConfig::MIMOTO_CONNECTIONS_PROJECT.
+            ' WHERE child_entity_type_id="'.$xChildEntityTypeId.'" && child_id="'.$entity->getId().'"'.
+            ' ORDER BY parent_id ASC, sortindex ASC';
+
+
+        foreach ($GLOBALS['database']->query($sql) as $row)
+        {
+            // compose
+            $connection = (object) array(
+                'connectionId' => $row['id'],
+                'parentEntityType' => $GLOBALS['Mimoto.Config']->getEntityNameById($row['parent_entity_type_id']),
+                'parentPropertyName' => $GLOBALS['Mimoto.Config']->getPropertyNameById($row['parent_property_id']),
+                'parentId' => $row['parent_id']
+            );
+
+            // store
+            $aConnections[] = $connection;
+        }
+
+        // connect
+        if (!empty($aConnections)) $data->connections = $aConnections;
 
 
         //output('Data to broadcast', $data);

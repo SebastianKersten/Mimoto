@@ -45,7 +45,9 @@ Mimoto.Aimless.connect = function()
         
         console.log('Aimless - data.changed');
         console.log(data);
-        
+
+
+
         
         // check
         if (data.changes)
@@ -160,8 +162,6 @@ Mimoto.Aimless.connect = function()
 
 
 
-
-
             var aContainers = $("[mls_contains='" + sEntityIdentifier + "." + change.propertyName + "']");
 
 
@@ -174,12 +174,6 @@ Mimoto.Aimless.connect = function()
                 
                 if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 
-                console.log('mls_filer = ' + mls_filter);
-
-                if (change)
-                {
-
-                }
 
                 // --- handle added items ---
 
@@ -200,21 +194,8 @@ Mimoto.Aimless.connect = function()
                             }
                         }
 
-                        if (bFilterApproved)
-                        {
-
-                            console.warn(item);
-
-                            $.ajax({
-                                type: 'GET',
-                                url: '/Mimoto.Aimless/' + item.connection.childEntityTypeName + '/' + item.connection.childId + '/' + mls_template,
-                                data: null,
-                                dataType: 'html',
-                                success: function (data) {
-                                    $($component).append(data);
-                                }
-                            });
-                        }
+                        // load
+                        if (bFilterApproved) Mimoto.Aimless.utils.loadComponent($component, item.connection.childEntityTypeName, item.connection.childId, mls_template);
                     }
                 }
 
@@ -237,9 +218,88 @@ Mimoto.Aimless.connect = function()
 
             });
         }
-        
-        
-        // --- component level ---
+
+
+
+        // parse modified values
+        if (data.connections)
+        {
+
+            for (var i = 0; i < data.connections.length; i++)
+            {
+                // register
+                var connection = data.connections[i];
+
+                // search
+                var aContainers = $("[mls_contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
+
+                aContainers.each(function(nIndex, $container)
+                {
+                    // read
+                    var mls_contains = $($container).attr("mls_contains");
+                    var mls_template = $($container).attr("mls_template");
+                    var mls_filter = $($container).attr("mls_filter");
+
+                    if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
+
+
+                    var bFilterApproved = true;
+                    if (mls_filter)
+                    {
+                        for (var s in mls_filter)
+                        {
+                            var bPropertyFound = false;
+                            for (var j = 0; j < data.changes.length; j++)
+                            {
+                                // register
+                                var property = data.changes[j];
+
+                                if (property.propertyName == s)
+                                {
+                                    bPropertyFound = true;
+                                    break;
+                                }
+                            }
+
+                            if (!(bPropertyFound && property.value == mls_filter[s]))
+                            {
+                                bFilterApproved = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    // load
+                    if (bFilterApproved)
+                    {
+                        Mimoto.Aimless.utils.loadComponent($container, data.entityType, data.entityId, mls_template);
+                    }
+                    else
+                    {
+                        // 1. check if item exists in container
+                        // 2. add connection id
+                        // 3. check if connection id exists
+
+
+                        var aSubitems = $("[mls_id='" + data.entityType + "." + data.entityId + "']", $container);
+
+                        aSubitems.each(function(nIndex, $component)
+                        {
+                            console.log('Item was found');
+
+                            // delete
+                            $component.remove();
+                        });
+                    }
+                });
+            }
+        }
+
+
+
+
+
+                // --- component level ---
         
         // search
         var aComponents = $("[mls_id='" + sEntityIdentifier + "']");
@@ -261,14 +321,14 @@ Mimoto.Aimless.connect = function()
             // verify
             if (mls_config !== undefined)
             {
-                var aConfigParams = mls_config.split(';')
+                var aConfigParams = mls_config.split(';');
                 
                 for (var i = 0; i < aConfigParams.length; i++)
                 {
                     
                     // register
                     var configParam = aConfigParams[i];
-                    var aConfigParamElements = configParam.split(':')
+                    var aConfigParamElements = configParam.split(':');
                     
                     // register
                     config[aConfigParamElements[0].trim().toLowerCase()] = aConfigParamElements[1].trim().toLowerCase();
@@ -440,10 +500,26 @@ Mimoto.Aimless.connect = function()
 
 }
 
+
+Mimoto.Aimless.utils = {};
+Mimoto.Aimless.utils.loadComponent = function($component, sEntityTypeName, nId, sTemplate) {
+    $.ajax({
+        type: 'GET',
+        url: '/Mimoto.Aimless/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+        data: null,
+        dataType: 'html',
+        success: function (data) {
+            $($component).append(data);
+        }
+    });
+};
+
+
+
 Mimoto.Aimless.updateComponent = function(ajax, dom)
 {
     
-}
+};
 
 Mimoto.Aimless.connect();
 

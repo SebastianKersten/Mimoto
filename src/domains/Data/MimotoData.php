@@ -293,8 +293,6 @@ class MimotoData
         if (!empty($sSubpropertySelector)) { return $this->forwardGetValueFromEntityProperty($property, $sSubpropertySelector, $bGetStorableValue); }
 
 
-
-
         // validate
         if (empty($property->data->currentEntity)) return null;
 

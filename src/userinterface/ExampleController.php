@@ -332,7 +332,7 @@ class ExampleController
         $subproject = $app['Mimoto.Data']->get('subproject', 5);
 
         // setup
-        $subproject->setValue('phase', 'archived');
+        $subproject->setValue('phase', 'request');
 
         // store
         $app['Mimoto.Data']->store($subproject);
@@ -347,7 +347,7 @@ class ExampleController
         $subproject = $app['Mimoto.Data']->get('subproject', 5);
 
         // setup
-        $subproject->setValue('phase', 'request');
+        $subproject->setValue('phase', 'archived');
 
         // store
         $app['Mimoto.Data']->store($subproject);

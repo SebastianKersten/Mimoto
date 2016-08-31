@@ -27,34 +27,39 @@ class CoreConfig
 
 
     // core
-    const MIMOTO_ENTITY                         = '_mimoto_entity';
-    const MIMOTO_ENTITYPROPERTY                 = '_mimoto_entityproperty';
-    const MIMOTO_ENTITYPROPERTYSETTING          = '_mimoto_entitypropertysetting';
+    const MIMOTO_ENTITY                         = '_MimotoAimless__core__entity';
+    const MIMOTO_ENTITYPROPERTY                 = '_MimotoAimless__core__entityproperty';
+    const MIMOTO_ENTITYPROPERTYSETTING          = '_MimotoAimless__core__entitypropertysetting';
+
+    // connections
+    const MIMOTO_CONNECTIONS_CORE               = '_MimotoAimless__connections__core';
+    const MIMOTO_CONNECTIONS_PROJECT            = '_MimotoAimless__connections__project';
 
     // views
-    const MIMOTO_TEMPLATE                       = '_mimoto_template';
-    const MIMOTO_COMPONENT                      = '_mimoto_component';
-    const MIMOTO_PAGE                           = '_mimoto_page';
+    //const MIMOTO_TEMPLATE                     = '_mimoto_template';
+    const MIMOTO_COMPONENT                      = '_MimotoAimless__view__component';
+    const MIMOTO_COMPONENTCONDITIONAL           = '_MimotoAimless__view__componentconditional';
+    //const MIMOTO_PAGE                         = '_MimotoAimless__view__page';
 
     // forms
-    const MIMOTO_FORM                           = '_mimoto_form';
+    const MIMOTO_FORM                           = '_MimotoAimless__interaction__form';
 
     // output
-    const MIMOTO_FORM_OUTPUT_TITLE              = '_mimoto_form_output_title';
+    const MIMOTO_FORM_OUTPUT_TITLE              = '_MimotoAimless__interaction__output_title';
 
     // layout
-    const MIMOTO_FORM_LAYOUT_GROUPSTART         = '_mimoto_form_layout_groupstart';
-    const MIMOTO_FORM_LAYOUT_GROUPEND           = '_mimoto_form_layout_groupend';
-    const MIMOTO_FORM_LAYOUT_DIVIDER            = '_mimoto_form_layout_divider';
+    const MIMOTO_FORM_LAYOUT_GROUPSTART         = '_MimotoAimless__interaction__form_layout_groupstart';
+    const MIMOTO_FORM_LAYOUT_GROUPEND           = '_MimotoAimless__interaction__form_layout_groupend';
+    const MIMOTO_FORM_LAYOUT_DIVIDER            = '_MimotoAimless__interaction__form_layout_divider';
 
     // intput
-    const MIMOTO_FORM_INPUT_TEXTLINE            = '_mimoto_form_input_textline';
-    const MIMOTO_FORM_INPUT_CHECKBOX            = '_mimoto_form_input_checkbox';
-    const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_mimoto_form_input_radiobutton';
-    const MIMOTO_FORM_INPUT_DROPDOWN            = '_mimoto_form_input_dropdown';
+    const MIMOTO_FORM_INPUT_TEXTLINE            = '_MimotoAimless__interaction__form_input_textline';
+    const MIMOTO_FORM_INPUT_CHECKBOX            = '_MimotoAimless__interaction__form_input_checkbox';
+    const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_MimotoAimless__interaction__form_input_radiobutton';
+    const MIMOTO_FORM_INPUT_DROPDOWN            = '_MimotoAimless__interaction__form_input_dropdown';
 
     // functionality
-    const MIMOTO_ACTION             = '_mimoto_action';
+    const MIMOTO_ACTION                         = '_MimotoAimless__config__action';
 
 
 

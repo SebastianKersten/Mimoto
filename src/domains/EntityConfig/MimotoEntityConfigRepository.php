@@ -25,13 +25,6 @@ class MimotoEntityConfigRepository
      */
     private $_aEntityConfigs = [];
     private $_aEntities;
-    
-    
-    const DBTABLE_ENTITY = '_mimoto_entity';
-    const DBTABLE_ENTITY_CONNECTIONS = '_mimoto_entity_connections';
-    const DBTABLE_ENTITYPROPERTY = '_mimoto_entityproperty';
-    const DBTABLE_ENTITYPROPERTY_CONNECTIONS = '_mimoto_entityproperty_connections';
-    const DBTABLE_ENTITYPROPERTYSETTING = '_mimoto_entitypropertysetting';
 
     
     
@@ -131,7 +124,7 @@ class MimotoEntityConfigRepository
 
 
         // load all entities
-        $sql = 'SELECT * FROM '.self::DBTABLE_ENTITY;
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITY;
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             // compose
@@ -147,17 +140,18 @@ class MimotoEntityConfigRepository
         }
 
         // load all connections
-        $sql = 'SELECT * FROM '.self::DBTABLE_ENTITY_CONNECTIONS.' ORDER BY parent_id ASC, sortindex ASC';
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_CONNECTIONS_CORE .' WHERE parent_entity_type_id="'.CoreConfig::MIMOTO_ENTITY.'" ORDER BY parent_id ASC, sortindex ASC';
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             // compose
             $connection = (object) array(
-                'id' => $row['id'],                                     // the id of the connection
-                'parent_id' => $row['parent_id'],                       // the id of the parent entity
-                'parent_property_id' => $row['parent_property_id'],     // the id of the parent entity's property
-                'child_entity_type_id' => $row['child_entity_type_id'], // the id of the child's entity config
-                'child_id' => $row['child_id'],                // the id of the child entity connected to the parent
-                'sortindex' => $row['sortindex']                        // the sortindex
+                'id' => $row['id'],                                         // the id of the connection
+                'parent_entity_type_id' => $row['parent_entity_type_id'],   // the id of the parent's entity config
+                'parent_property_id' => $row['parent_property_id'],         // the id of the parent entity's property
+                'parent_id' => $row['parent_id'],                           // the id of the parent entity
+                'child_entity_type_id' => $row['child_entity_type_id'],     // the id of the child's entity config
+                'child_id' => $row['child_id'],                             // the id of the child entity connected to the parent
+                'sortindex' => $row['sortindex']                            // the sortindex
             );
 
             // load
@@ -168,7 +162,7 @@ class MimotoEntityConfigRepository
         }
 
         // load all properties
-        $sql = 'SELECT * FROM '.self::DBTABLE_ENTITYPROPERTY;
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTY;
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             // compose
@@ -185,17 +179,18 @@ class MimotoEntityConfigRepository
         }
 
         // load all connections
-        $sql = 'SELECT * FROM '.self::DBTABLE_ENTITYPROPERTY_CONNECTIONS.' ORDER BY parent_id ASC, sortindex ASC';
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_CONNECTIONS_CORE.' WHERE parent_entity_type_id="'.CoreConfig::MIMOTO_ENTITYPROPERTY.'" ORDER BY parent_id ASC, sortindex ASC';
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             // compose
             $connection = (object) array(
-                'id' => $row['id'],                                     // the id of the connection
-                'parent_id' => $row['parent_id'],                       // the id of the parent entity
-                'parent_property_id' => $row['parent_property_id'],     // the id of the parent entity's property
-                'child_entity_type_id' => $row['child_entity_type_id'], // the id of the child's entity config
-                'child_id' => $row['child_id'],                          // the id of the child entity connected to the parent
-                'sortindex' => $row['sortindex']                        // the sortindex
+                'id' => $row['id'],                                         // the id of the connection
+                'parent_entity_type_id' => $row['parent_entity_type_id'],   // the id of the parent's entity config
+                'parent_property_id' => $row['parent_property_id'],         // the id of the parent entity's property
+                'parent_id' => $row['parent_id'],                           // the id of the parent entity
+                'child_entity_type_id' => $row['child_entity_type_id'],     // the id of the child's entity config
+                'child_id' => $row['child_id'],                             // the id of the child entity connected to the parent
+                'sortindex' => $row['sortindex']                            // the sortindex
             );
 
             // load
@@ -206,7 +201,7 @@ class MimotoEntityConfigRepository
         }
 
         // load all settings
-        $sql = 'SELECT * FROM '.self::DBTABLE_ENTITYPROPERTYSETTING;
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING;
         foreach ($GLOBALS['database']->query($sql) as $row)
         {
             // compose
@@ -318,9 +313,16 @@ class MimotoEntityConfigRepository
             $entityConfig->setName($entity->name);
             $entityConfig->setMySQLTable($entity->name);
 
-
             // compose
-            $sConnectionTable = $this->getEntityNameById($entity->id).'_connections';
+            if (substr($this->getEntityNameById($entity->id), 0, 16) == '_MimotoAimless__')
+            {
+                $sConnectionTable = CoreConfig::MIMOTO_CONNECTIONS_CORE;
+            }
+            else
+            {
+                $sConnectionTable = CoreConfig::MIMOTO_CONNECTIONS_PROJECT;
+            }
+
 
 
             // store
@@ -403,6 +405,23 @@ class MimotoEntityConfigRepository
             $entity = $this->_aEntities[$i];
             
             if ($entity->name == $sName) { return $entity->id; }
+        }
+    }
+
+    public function getPropertyNameById($nId)
+    {
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            $entity = $this->_aEntities[$i];
+
+            $nPropertyCount = count($entity->properties);
+            for ($j = 0; $j < $nPropertyCount; $j++)
+            {
+                $property = $entity->properties[$j];
+
+                if ($property->id == $nId) { return $property->name; }
+            }
         }
     }
 
