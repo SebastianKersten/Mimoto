@@ -20,31 +20,31 @@ class MimotoEntityConfig
      * The id of the entity config
      * @var int 
      */
-    var $_nId = '';
+    private $_nId = '';
     
     /**
      * The name of the entity
      * @var string 
      */
-    var $_sName = '';
+    private $_sName = '';
 
     /**
      * The properties of the entity
      * @var array 
      */
-    var $_aProperties = [];
+    private $_aProperties = [];
     
     /**
      * The property values of the entity
      * @var array 
      */
-    var $_aPropertyValues = [];
+    private $_aPropertyValues = [];
 
     /**
      * The MySQL table name
      * @var string
      */
-    var $_sMySQLTableName;
+    private $_sMySQLTableName;
     
     
     

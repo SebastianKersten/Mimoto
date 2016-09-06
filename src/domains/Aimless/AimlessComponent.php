@@ -18,25 +18,25 @@ class AimlessComponent
 {
     
     // services
-    var $_AimlessService;
-    var $_DataService;
-    var $_TwigService;
+    protected $_AimlessService;
+    protected $_DataService;
+    protected $_TwigService;
     
     // data
-    var $_entity;
+    protected $_entity;
     
     // settings
-    var $_sTemplateName;
+    protected $_sTemplateName;
     
     // config
-    var $_aVars = [];
-    var $_aSelections = [];
-    var $_aFormConfigs = [];
-    var $_aPropertyTemplates = [];
-    var $_aPropertyFormatters = [];
+    protected $_aVars = [];
+    protected $_aSelections = [];
+    protected $_aFormConfigs = [];
+    protected $_aPropertyTemplates = [];
+    protected $_aPropertyFormatters = [];
 
-    var $_nConnectionId;
-    var $_nSortIndex;
+    protected $_nConnectionId;
+    protected $_nSortIndex;
 
 
     const PRIMARY_FORM = 'primary_form'; // #todo - explain

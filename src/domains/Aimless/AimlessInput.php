@@ -19,8 +19,8 @@ class AimlessInput extends AimlessComponent
 {
 
     // config
-    var $_value;
-    var $_sVarName;
+    private $_value;
+    private $_sVarName;
 
     
     /**

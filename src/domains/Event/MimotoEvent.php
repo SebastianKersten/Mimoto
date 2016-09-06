@@ -15,14 +15,14 @@ class MimotoEvent extends Event
      * 
      * @var entity 
      */
-    var $_entity;
+    private $_entity;
     
     /**
      * The event type
      * 
      * @var string 
      */
-    var $_sEvent;
+    private $_sEvent;
     
     
     

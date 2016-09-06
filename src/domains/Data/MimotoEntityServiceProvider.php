@@ -23,7 +23,7 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
 {
     
     // config
-    var $_aEntityConfigs;
+    private $_aEntityConfigs;
     
     
     // ----------------------------------------------------------------------------

@@ -16,13 +16,13 @@ class MimotoEntityService
 {
     
     // config
-    var $_aEntityConfigs = [];
+    private $_aEntityConfigs = [];
     
     // components
-    var $_entityRepository;
+    private $_entityRepository;
     
     // services
-    var $_EntityConfigService;
+    private $_EntityConfigService;
     
     
     

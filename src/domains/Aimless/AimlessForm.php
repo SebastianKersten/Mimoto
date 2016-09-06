@@ -17,24 +17,6 @@ use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
  */
 class AimlessForm extends AimlessComponent
 {
-    
-    // services
-    var $_AimlessService;
-    var $_DataService;
-    var $_TwigService;
-    
-    // data
-    var $_entity;
-    
-    // settings
-    var $_sTemplateName;
-    
-    // config
-    var $_aVars = [];
-    var $_aSelections = [];
-    var $_aFormConfigs = [];
-    var $_aPropertyTemplates = [];
-    var $_aPropertyFormatters = [];
 
     const PRIMARY_FORM = 'primary_form';
 

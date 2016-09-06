@@ -27,7 +27,7 @@ class MimotoAimlessService
     private $_TwigService;
     
     // config
-    var $_aComponents;
+    private $_aComponents;
     
 
     
