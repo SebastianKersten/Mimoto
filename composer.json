@@ -3,20 +3,22 @@
     "description": "A realtime fluid data management microframework",
     "keywords": ["microframework", "realtime", "data", "templating"],
     "homepage": "http://momkai.com/mimoto",
-    "license": "Apache License",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Sebastian Kersten",
             "email": "sebastian@momkai.com"
         }
     ],
-    "requiredev": {
+    "require": {
         "silex/silex": "~1.3",
-        "twig/twig": "~1.0"
+        "twig/twig": "~1.0",
+        "pusher/pusher-php-server": "^2.2"
     },
     "require-dev": {
         "silex/silex": "~1.3",
-        "twig/twig": "~1.0"
+        "twig/twig": "~1.0",
+        "pusher/pusher-php-server": "^2.2"
     },
     "autoload": {
         "psr-4": {

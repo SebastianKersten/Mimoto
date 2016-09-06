@@ -1,8 +1,10 @@
 <?php
 
+
 // Pusher classes
-require_once(dirname(dirname(dirname(__FILE__))).'/web/pusher.php');
-gearman_version();
+require_once(dirname(dirname(dirname(__FILE__))).'/vendor/pusher/pusher-php-server/lib/pusher.php');
+
+//gearman_version();
 
 // init
 $worker= new GearmanWorker();
