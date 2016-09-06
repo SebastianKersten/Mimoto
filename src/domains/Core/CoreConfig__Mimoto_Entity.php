@@ -15,7 +15,7 @@ use Mimoto\Core\CoreConfig;
 class CoreConfig__Mimoto_Entity
 {
 
-    static function getStructure()
+    public static function getStructure()
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_ENTITY,
@@ -87,7 +87,7 @@ class CoreConfig__Mimoto_Entity
         );
     }
 
-    static function getData()
+    public static function getData()
     {
 
     }

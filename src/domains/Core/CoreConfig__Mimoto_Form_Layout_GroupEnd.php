@@ -15,7 +15,7 @@ use Mimoto\Core\CoreConfig;
 class CoreConfig__Mimoto_Form_Layout_GroupEnd
 {
 
-    static function getStructure()
+    public static function getStructure()
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND,
@@ -27,7 +27,7 @@ class CoreConfig__Mimoto_Form_Layout_GroupEnd
         );
     }
 
-    static function getData()
+    public static function getData()
     {
         // hierin komen de velden die nodig zijn voor entity-management etc
     }
