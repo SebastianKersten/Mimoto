@@ -187,9 +187,13 @@ class MimotoEntityConfigRepository
         $aAllEntityPropertySettings = [];
 
 
+
         // load all entities
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITY;
-        foreach ($GLOBALS['database']->query($sql) as $row)
+        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_ENTITY);
+        $params = array();
+        $stmt->execute($params);
+        
+        foreach ($stmt as $row)
         {
             // compose
             $entity = (object) array(
@@ -204,6 +208,11 @@ class MimotoEntityConfigRepository
             // store
             $aAllEntity[] = $entity;
         }
+
+
+
+
+
 
         // load all connections
         $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_CONNECTIONS_CORE .' WHERE parent_entity_type_id="'.CoreConfig::MIMOTO_ENTITY.'" ORDER BY parent_id ASC, sortindex ASC';
