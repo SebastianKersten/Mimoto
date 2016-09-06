@@ -100,7 +100,7 @@ class MimotoAimlessService
 
 
 
-    public function getTemplate($sTemplateName, $entity = null)
+    public function getTemplate($sTemplateName, MimotoEntity $entity = null)
     {
         for ($i = 0; $i < count($this->_aComponents); $i++)
         {

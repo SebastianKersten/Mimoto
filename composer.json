@@ -1,8 +1,8 @@
 {
-    "name": "SebastianKersten/Mimoto.Aimless",
+    "name": "momkai/mimoto",
     "description": "A realtime fluid data management microframework",
     "keywords": ["microframework", "realtime", "data", "templating"],
-    "homepage": "http://momkai.com/aimless",
+    "homepage": "http://momkai.com/mimoto",
     "license": "Apache License",
     "authors": [
         {

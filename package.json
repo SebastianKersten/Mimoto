@@ -1,7 +1,7 @@
 {
-  "name": "MaidoProjects",
+  "name": "momkai/mimoto",
   "version": "1.0.0",
-  "description": "Realtime fluid data management by _Sebastian Kersten_",
+  "description": "A realtime fluid data management microframewor",
   "main": "index.js",
   "directories": {
     "test": "tests"
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SebastianKersten/MaidoProjects.git"
+    "url": "https://github.com/SebastianKersten/Mimoto.Aimless.git"
   },
   "author": "",
   "license": "",
   "bugs": {
-    "url": "https://github.com/SebastianKersten/MaidoProjects/issues"
+    "url": "https://github.com/SebastianKersten/Mimoto.Aimless/issues"
   },
-  "homepage": "https://github.com/SebastianKersten/MaidoProjects",
+  "homepage": "https://github.com/SebastianKersten/Mimoto.Aimless",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-cli": "^1.2.2",

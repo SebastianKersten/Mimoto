@@ -403,7 +403,7 @@ class ExampleController
         $author_entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, 3);
 
 
-        error($person_entity);
+        //error($person_entity);
 
         //output('_mimoto_entity called "person"', $person_entity);
         //output('_mimoto_entity called "author"', $member_entity);
@@ -413,6 +413,10 @@ class ExampleController
         //$person = $app['Mimoto.Data']->get('person', 1);
         //$member = $app['Mimoto.Data']->get('person', 1);
         $author = $app['Mimoto.Data']->get('author', 1);
+
+
+        error($author);
+
 
         error(($author->typeOf('person')) ? 'Yes, entity is of type "person"' : 'No, entity is not of type "person"');
 
