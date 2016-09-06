@@ -1,3 +1,5 @@
+UNDER CONSTRUCTION - Made public for development reasons. Stay tuned!
+
 # Mimoto.Aimless
 Realtime fluid data management by _Sebastian Kersten_ 
 
