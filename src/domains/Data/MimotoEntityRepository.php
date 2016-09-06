@@ -146,7 +146,8 @@ class MimotoEntityRepository
 
 
         // register
-        for ($i = 0; $i < count($aResults); $i++)
+        $nResultCount = count($aResults);
+        for ($i = 0; $i < $nResultCount; $i++)
         {
             // register
             $aEntities[] = $this->createEntity($entityConfig, $aResults[$i]);
@@ -224,7 +225,8 @@ class MimotoEntityRepository
 
                             if (count($modifiedCollection->added) > 0)
                             {
-                                for ($k = 0; $k < count($modifiedCollection->added); $k++)
+                                $nAddedCount = count($modifiedCollection->added);
+                                for ($k = 0; $k < $nAddedCount; $k++)
                                 {
                                     // register
                                     $newItem = $modifiedCollection->added[$k];
@@ -239,7 +241,8 @@ class MimotoEntityRepository
 
                             if (count($modifiedCollection->updated) > 0)
                             {
-                                for ($k = 0; $k < count($modifiedCollection->updated); $k++)
+                                $nUpdatedCount = count($modifiedCollection->updated);
+                                for ($k = 0; $k < $nUpdatedCount; $k++)
                                 {
                                     // register
                                     $existingItem = $modifiedCollection->updated[$k];
@@ -251,7 +254,8 @@ class MimotoEntityRepository
 
                             if (count($modifiedCollection->removed) > 0)
                             {
-                                for ($k = 0; $k < count($modifiedCollection->removed); $k++)
+                                $nRemovedCount = count($modifiedCollection->removed);
+                                for ($k = 0; $k < $nRemovedCount; $k++)
                                 {
                                     // register
                                     $existingItem = $modifiedCollection->removed[$k];
@@ -279,11 +283,12 @@ class MimotoEntityRepository
             $params = array();
 
             // compose
-            for ($i = 0; $i < count($aQueryElements); $i++)
+            $nQueryItemCount = count($aQueryElements);
+            for ($i = 0; $i < $nQueryItemCount; $i++)
             {
                 $sQuery .= $aQueryElements[$i]->key.' = :'.$aQueryElements[$i]->key;
                 $params[':'.$aQueryElements[$i]->key] = $aQueryElements[$i]->value;
-                if ($i < count($aQueryElements) - 1) { $sQuery .= ', '; }
+                if ($i < $nQueryItemCount - 1) { $sQuery .= ', '; }
             }
 
             // compose

@@ -92,8 +92,9 @@ class MimotoEntityConfigRepository
     {
         // validate
         if (is_nan($nId) || $nId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity config id '$nId' you passed is not a valid. Should be an integer > 0"); }
-        
-        for ($i = 0; $i < count($this->_aEntityConfigs); $i++)
+
+        $nEntityConfigCount = count($this->_aEntityConfigs);
+        for ($i = 0; $i < $nEntityConfigCount; $i++)
         {
             $entityConfig = $this->_aEntityConfigs[$i];
             
@@ -143,7 +144,8 @@ class MimotoEntityConfigRepository
     public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)
     {
         // search
-        for ($i = 0; $i < count($this->_aEntities); $i++)
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
         {
             // register
             $entity = $this->_aEntities[$i];
@@ -298,8 +300,8 @@ class MimotoEntityConfigRepository
 
         // --- compose ---
 
-
-        for ($i = 0; $i < count($aAllEntity); $i++)
+        $nAllEntityCount = count($aAllEntity);
+        for ($i = 0; $i < $nAllEntityCount; $i++)
         {
             // read
             $entity = $aAllEntity[$i];
@@ -315,7 +317,8 @@ class MimotoEntityConfigRepository
             $aEntity_Connections = $aAllEntity_Connections[$entity->id];
 
             // store
-            for ($k = 0; $k < count($aEntity_Connections); $k++)
+            $nEntityConnectionCount = count($aEntity_Connections);
+            for ($k = 0; $k < $nEntityConnectionCount; $k++)
             {
                 // register
                 $connection = $aEntity_Connections[$k];
@@ -340,7 +343,8 @@ class MimotoEntityConfigRepository
             }
 
             // store
-            for ($j = 0; $j < count($entity->properties); $j++)
+            $nPropertyCount = count($entity->properties);
+            for ($j = 0; $j < $nPropertyCount; $j++)
             {
                 // read
                 $property = $entity->properties[$j];
@@ -357,7 +361,8 @@ class MimotoEntityConfigRepository
                 $aEntityProperty_Connections = $aAllEntityProperty_Connections[$property->id];
 
                 // store
-                for ($k = 0; $k < count($aEntityProperty_Connections); $k++)
+                $nEntityPropertyConnectionCount = count($aEntityProperty_Connections);
+                for ($k = 0; $k < $nEntityPropertyConnectionCount; $k++)
                 {
                     // register
                     $connection = $aEntityProperty_Connections[$k];
@@ -381,7 +386,8 @@ class MimotoEntityConfigRepository
     private function extendEntityConfigurations()
     {
         // search
-        for ($i = 0; $i < count($this->_aEntities); $i++)
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
         {
             // register
             $entity = $this->_aEntities[$i];
@@ -395,18 +401,21 @@ class MimotoEntityConfigRepository
                 $entity->typeOf = $aExtensions;
 
                 $entity->typeOfAsNames = [];
-                for ($k = 0; $k < count($aExtensions); $k++)
+
+                $nExtensionCount = count($aExtensions);
+                for ($k = 0; $k < $nExtensionCount; $k++)
                 {
                     $entity->typeOfAsNames[$k] = $this->getEntityNameById($aExtensions[$k]);
                 }
 
-                for ($j = count($aExtensions) - 1; $j > 0; $j--)
+                for ($j = $nExtensionCount - 1; $j > 0; $j--)
                 {
                     // find
                     $baseEntity = $this->findEntityById($aExtensions[$j]);
 
                     // combine
-                    array_splice($entity->properties, count($entity->properties) - 1, 0, $baseEntity->properties);
+                    $nPropertyCount = count($entity->properties);
+                    array_splice($entity->properties, $nPropertyCount - 1, 0, $baseEntity->properties);
                 }
             }
         }
@@ -420,7 +429,8 @@ class MimotoEntityConfigRepository
      */
     private function buildExtensionStack($baseId, $aExtensions)
     {
-        for ($i = 0; $i < count($this->_aEntities); $i++)
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
         {
             // register
             $entity = $this->_aEntities[$i];
@@ -447,7 +457,8 @@ class MimotoEntityConfigRepository
     private function findEntityById($xEntityId)
     {
         // compose
-        for ($i = 0; $i < count($this->_aEntities); $i++) {
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++) {
             // read
             $entity = $this->_aEntities[$i];
 
@@ -469,7 +480,8 @@ class MimotoEntityConfigRepository
     private function composeEntityConfig($sEntityConfigName)
     {
         // compose
-        for ($i = 0; $i < count($this->_aEntities); $i++)
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
         {   
             // read
             $entity = $this->_aEntities[$i];
@@ -497,7 +509,8 @@ class MimotoEntityConfigRepository
 
 
             // store
-            for ($j = 0; $j < count($entity->properties); $j++)
+            $nPropertyCount = count($entity->properties);
+            for ($j = 0; $j < $nPropertyCount; $j++)
             {
                 // read
                 $property = $entity->properties[$j];

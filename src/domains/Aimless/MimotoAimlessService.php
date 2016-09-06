@@ -103,7 +103,8 @@ class MimotoAimlessService
 
     public function getTemplate($sTemplateName, MimotoEntity $entity = null)
     {
-        for ($i = 0; $i < count($this->_aComponents); $i++)
+        $nComponentCount = count($this->_aComponents);
+        for ($i = 0; $i < $nComponentCount; $i++)
         {
             $template = $this->_aComponents[$i];
             
@@ -112,7 +113,8 @@ class MimotoAimlessService
                 if (count($template->conditionals) > 0 && $entity !== null)
                 {
                     $bValidated = true;
-                    for ($j = 0; $j < count($template->conditionals); $j++)
+                    $nConditionalCount = count($template->conditionals);
+                    for ($j = 0; $j < $nConditionalCount; $j++)
                     {
                         $conditional = $template->conditionals[$j];
                         
@@ -188,8 +190,9 @@ class MimotoAimlessService
                 'value' => $row['value'],
                 'created' => $row['created']
             );
-            
-            for ($j = 0; $j < count($aTemplates); $j++)
+
+            $nTemplateCount = count($aTemplates);
+            for ($j = 0; $j < $nTemplateCount; $j++)
             {
                 $template = $aTemplates[$j];
                 
@@ -390,7 +393,8 @@ class MimotoAimlessService
 
 
                             // add properties for realtime filtered removal
-                            for ($nAddedIndex = 0; $nAddedIndex < count($aConnections); $nAddedIndex++)
+                            $nConnectionCount = count($aConnections);
+                            for ($nAddedIndex = 0; $nAddedIndex < $nConnectionCount; $nAddedIndex++)
                             {
                                 // register
                                 $connection = $aConnections[$nAddedIndex];
@@ -409,8 +413,8 @@ class MimotoAimlessService
                                 // load
                                 $aCollectionItemPropertyNames = $entity->getPropertyNames();
 
-
-                                for ($nPropertyNameIndex = 0; $nPropertyNameIndex < count($aCollectionItemPropertyNames); $nPropertyNameIndex++)
+                                $aCollectionItemPropertyNameCount = count($aCollectionItemPropertyNames);
+                                for ($nPropertyNameIndex = 0; $nPropertyNameIndex < $aCollectionItemPropertyNameCount; $nPropertyNameIndex++)
                                 {
                                     // register
                                     $sCollectionItemPropertyName = $aCollectionItemPropertyNames[$nPropertyNameIndex];
@@ -437,7 +441,8 @@ class MimotoAimlessService
 
 
                             // add properties for realtime filtered removal
-                            for ($nRemovedIndex = 0; $nRemovedIndex < count($aConnections); $nRemovedIndex++)
+                            $aConnectionCount = count($aConnections);
+                            for ($nRemovedIndex = 0; $nRemovedIndex < $aConnectionCount; $nRemovedIndex++)
                             {
                                 // register
                                 $connection = $aConnections[$nRemovedIndex];
