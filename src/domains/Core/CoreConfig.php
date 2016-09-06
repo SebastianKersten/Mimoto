@@ -89,7 +89,7 @@ class CoreConfig
 
 
 
-    static function getCoreEntityConfigs()
+    public static function getCoreEntityConfigs()
     {
 
         // 1. load into memory in "EntityConfigRepository"
