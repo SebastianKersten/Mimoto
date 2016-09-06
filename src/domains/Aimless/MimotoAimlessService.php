@@ -7,6 +7,7 @@ namespace Mimoto\Aimless;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+use Mimoto\Data\MimotoEntityUtils;
 
 // Silex classes
 use Silex\Application;
@@ -152,8 +153,12 @@ class MimotoAimlessService
 
 
         // load all templates
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_COMPONENT;
-        foreach ($GLOBALS['database']->query($sql) as $row)
+        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_COMPONENT);
+        $params = array();
+        $stmt->execute($params);
+
+
+        foreach ($stmt as $row)
         {
             // compose
             $entity = (object) array(
@@ -168,9 +173,13 @@ class MimotoAimlessService
             $aTemplates[] = $entity;
         }
 
+
         // load all conditionals
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_COMPONENTCONDITIONAL;
-        foreach ($GLOBALS['database']->query($sql) as $row)
+        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_COMPONENTCONDITIONAL);
+        $params = array();
+        $stmt->execute($params);
+
+        foreach ($stmt as $row)
         {
             $conditional = (object) array(
                 'id' => $row['id'],
@@ -190,7 +199,7 @@ class MimotoAimlessService
                 }
             }
         }
-        
+
         return $aTemplates;
     }
     
