@@ -8,6 +8,7 @@ use Mimoto\Core\CoreConfig__Mimoto_Entity;
 use Mimoto\Core\CoreConfig__Mimoto_EntityProperty;
 use Mimoto\Core\CoreConfig__Mimoto_EntityPropertySetting;
 use Mimoto\Core\CoreConfig__Mimoto_Form;
+use Mimoto\Core\CoreConfig__Mimoto_Form_Input;
 use Mimoto\Core\CoreConfig__Mimoto_Form_Output_Title;
 use Mimoto\Core\CoreConfig__Mimoto_Form_Layout_GroupStart;
 use Mimoto\Core\CoreConfig__Mimoto_Form_Layout_GroupEnd;
@@ -43,6 +44,7 @@ class CoreConfig
 
     // forms
     const MIMOTO_FORM                           = '_MimotoAimless__interaction__form';
+    const MIMOTO_FORM_INPUT                     = '_MimotoAimless__interaction__form_input';
 
     // output
     const MIMOTO_FORM_OUTPUT_TITLE              = '_MimotoAimless__interaction__output_title';
@@ -106,6 +108,7 @@ class CoreConfig
 
             // forms
             CoreConfig__Mimoto_Form::getStructure(),
+            CoreConfig__Mimoto_Form_Input::getStructure(),
 
             // output
             CoreConfig__Mimoto_Form_Output_Title::getStructure(),

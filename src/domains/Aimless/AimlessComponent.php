@@ -35,7 +35,11 @@ class AimlessComponent
     var $_aPropertyTemplates = [];
     var $_aPropertyFormatters = [];
 
-    const PRIMARY_FORM = 'primary_form';
+    var $_nConnectionId;
+    var $_nSortIndex;
+
+
+    const PRIMARY_FORM = 'primary_form'; // #todo - explain
 
     
     /**
@@ -103,6 +107,15 @@ class AimlessComponent
 
 
 
+    public function markComponentAsConnectedItem($nConnectionId, $nSortIndex)
+    {
+        $this->_nConnectionId = $nConnectionId;
+        $this->_nSortIndex = $nSortIndex;
+    }
+
+
+
+
     // --- Twig usage
 
 
@@ -124,17 +137,11 @@ class AimlessComponent
         // verify
         if (is_array($value))
         {
-            
-            //echo '######';
-            
-            
-            // 5. MimotoData check if collection item already loaded
-            
-            //echo '<pre>';
-            //print_r($value);
-            //echo '</pre>';
-            
-            
+
+            $aCollection = $value;
+            $aConnections = null;
+            //$aConnections = $this->_entity->getValue($sPropertyName); // #todo - kan niet, filter check wordt gedaan ná ophalen data en op basis van de data
+
             $nSeparatorPos = strpos($sPropertyName, '.');
             if ($nSeparatorPos !== false) { $sPropertyName = substr($sPropertyName, 0, $nSeparatorPos); }
             
@@ -148,7 +155,7 @@ class AimlessComponent
             }
             
             // render and send
-            return $this->renderCollection($value, $this->_aPropertyTemplates[$sPropertyName]->sTemplateName);
+            return $this->renderCollection($aCollection, $aConnections, $this->_aPropertyTemplates[$sPropertyName]->sTemplateName);
         }
         else
         {
@@ -188,7 +195,7 @@ class AimlessComponent
         $selection = $this->_aSelections[$sSelectionName];
         
         // render and send
-        return $this->renderCollection($selection->selection, $selection->sTemplateName);
+        return $this->renderCollection($selection->selection, null, $selection->sTemplateName);
     }
 
     public function form($sKey = null)
@@ -247,23 +254,22 @@ class AimlessComponent
             // compose
             $sFilter = (!empty($aConditionals)) ? " mls_filter='".json_encode($aConditionals)."'" : '';
 
-
             if (!empty($this->_entity) && $this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
                 // compose
-                $sTemplate = (!empty($this->_aPropertyTemplates[$sPropertyName]->sTemplateName)) ? " mls_template='".$this->_aPropertyTemplates[$sPropertyName]->sTemplateName."'" : '';
+                $sTemplate = (!empty($this->_aPropertyTemplates[$sPropertyName]->sTemplateName)) ? ' mls_template="'.$this->_aPropertyTemplates[$sPropertyName]->sTemplateName.'"' : '';
 
                 // send
-                return "mls_contains='".$this->_entity->getAimlessValue($sPropertyName)."'".$sFilter.$sTemplate;
+                return 'mls_contains="'.$this->_entity->getAimlessValue($sPropertyName).'"'.$sFilter.$sTemplate;
             }
             else
             if (isset($this->_aSelections[$sPropertyName]))
             {
                 // compose
-                $sTemplate = " mls_template='".$this->_aSelections[$sPropertyName]->sTemplateName."'";
+                $sTemplate = ' mls_template="'.$this->_aSelections[$sPropertyName]->sTemplateName.'"';
 
                 // send
-                return "mls_contains='".$this->_aSelections[$sPropertyName]->selection->getCriteria()['type']."'".$sFilter.$sTemplate;
+                return 'mls_contains="'.$this->_aSelections[$sPropertyName]->selection->getCriteria()['type'].'"'.$sFilter.$sTemplate;
             }
                 
         }
@@ -280,11 +286,14 @@ class AimlessComponent
             
         if ($sPropertySelector === null)
         {
-            return "mls_id='".$this->_entity->getAimlessId()."'";
+            $sConnection = (!empty($this->_nConnectionId)) ? ' mls_connection="'.$this->_nConnectionId.'"' : '';
+            $sSortIndex = (!empty($this->_nSortIndex)) ? ' mls_sortindex="'.$this->_nSortIndex.'"' : '';
+
+            return 'mls_id="'.$this->_entity->getAimlessId().'"'.$sConnection.$sSortIndex;
         }
         else
         {
-            return "mls_value='".$this->_entity->getAimlessValue($sPropertySelector)."'";
+            return 'mls_value="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
         }
     }
     
@@ -305,7 +314,6 @@ class AimlessComponent
         {
             case 'id': return $this->_entity->getId();
             case 'type': return $this->_entity->getEntityType();
-            case 'group': return $this->_entity->getEntityGroup();
             case 'created': return $this->_entity->getCreated();
         }
     }
@@ -332,7 +340,7 @@ class AimlessComponent
     
     
     
-    private function renderCollection($aCollection, $sTemplateName)
+    private function renderCollection($aCollection, $aConnections, $sTemplateName)
     {
         // init
         $sRenderedCollection = '';
@@ -344,7 +352,13 @@ class AimlessComponent
 
             // create
             $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
-            
+
+            // 1. #todo get info based upon know data
+            // output('Connection '.$i, $aConnections);
+            // output('ID', $aConnections[$i]->getId());
+            // setup
+            //if (!empty($aConnections)) $component->markComponentAsConnectedItem($aConnections[$i]->getId(), $aConnections[$i]->getSortIndex());
+
             // forward
             foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
             
@@ -381,19 +395,15 @@ class AimlessComponent
             $sTemplateName = $fieldData->getEntityType();
 
             // create
-            switch(1 === 0)
+            if ($fieldData->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
             {
-                case 'xxx':
+                $value = (isset($aValues[$fieldData->getValue('varname')])) ? $aValues[$fieldData->getValue('varname')] : '';
 
-                     $value = (isset($aValues[$fieldData->getValue('varname')])) ? $aValues[$fieldData->getValue('varname')] : '';
-
-                    $formFieldComponent = $this->_AimlessService->createInput($sTemplateName, $fieldData, $value);
-                    break;
-
-                default:
-
-                    $formFieldComponent = $this->_AimlessService->createComponent($sTemplateName, $fieldData);
-                    break;
+                $formFieldComponent = $this->_AimlessService->createInput($sTemplateName, $fieldData, $value);
+            }
+            else
+            {
+                $formFieldComponent = $this->_AimlessService->createComponent($sTemplateName, $fieldData);
             }
 
             // forward

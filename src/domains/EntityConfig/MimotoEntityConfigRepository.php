@@ -40,7 +40,8 @@ class MimotoEntityConfigRepository
     {
         // prepare
         $this->_aEntities = CoreConfig::getCoreEntityConfigs();
-        $this->loadProjectConfigurations();
+        $this->loadEntityConfigurations();
+        $this->extendEntityConfigurations();
     }
     
         
@@ -99,16 +100,79 @@ class MimotoEntityConfigRepository
            if ($entityConfig->getId() === $nId) { return $entityConfig; }
         }
     }
-    
+
+    public function getEntityNameById($nId)
+    {
+        $nItemCount = count($this->_aEntities);
+        for ($i = 0; $i < $nItemCount; $i++)
+        {
+            $entity = $this->_aEntities[$i];
+
+            if ($entity->id == $nId) { return $entity->name; }
+        }
+    }
+
+    public function getEntityIdByName($sName)
+    {
+        $nItemCount = count($this->_aEntities);
+        for ($i = 0; $i < $nItemCount; $i++)
+        {
+            $entity = $this->_aEntities[$i];
+
+            if ($entity->name == $sName) { return $entity->id; }
+        }
+    }
+
+    public function getPropertyNameById($nId)
+    {
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            $entity = $this->_aEntities[$i];
+
+            $nPropertyCount = count($entity->properties);
+            for ($j = 0; $j < $nPropertyCount; $j++)
+            {
+                $property = $entity->properties[$j];
+
+                if ($property->id == $nId) { return $property->name; }
+            }
+        }
+    }
+
+    public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)
+    {
+        // search
+        for ($i = 0; $i < count($this->_aEntities); $i++)
+        {
+            // register
+            $entity = $this->_aEntities[$i];
+
+            if ($entity->name == $sTypeOfEntity)
+            {
+                if (!isset($entity->typeOf) || empty($entity->typeOf))
+                {
+                    return ($sTypeOfEntity == $sTypeToCompare);
+                }
+                else
+                {
+                    return in_array($sTypeToCompare, $entity->typeOfAsNames);
+                }
+            }
+        }
+    }
+
     
     
     // ----------------------------------------------------------------------------
     // --- Private methods --------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
-    
-    private function loadProjectConfigurations()
+
+
+    /**
+     * Load entity configurations
+     */
+    private function loadEntityConfigurations()
     {
         
         // 1. load from cache if present
@@ -130,8 +194,10 @@ class MimotoEntityConfigRepository
             // compose
             $entity = (object) array(
                 'id' => $row['id'],
-                'name' => $row['name'],
                 'created' => $row['created'],
+                'name' => $row['name'],
+                'extends' => null,
+                'typeOf' => [],
                 'properties' => []
             );
 
@@ -245,11 +311,23 @@ class MimotoEntityConfigRepository
                 // register
                 $connection = $aEntity_Connections[$k];
 
-                // validate
-                if (!isset($aAllEntityProperties[$connection->child_id])) { error("Oops, the entity config named '$entity->name' seems to miss a property"); };
+                switch($connection->parent_property_id)
+                {
+                    case '_mimoto_entity__extends':
 
-                // register
-                $entity->properties[] = $aAllEntityProperties[$connection->child_id];
+                        $entity->extends = $connection->child_id;
+                        break;
+
+                    case '_mimoto_entity__properties':
+
+                        // validate
+                        if (!isset($aAllEntityProperties[$connection->child_id])) { error("Oops, the entity config named '$entity->name' seems to miss a property"); };
+
+                        // register
+                        $entity->properties[] = $aAllEntityProperties[$connection->child_id];
+
+                        break;
+                }
             }
 
             // store
@@ -287,6 +365,91 @@ class MimotoEntityConfigRepository
             $this->_aEntities[] = $entity;
         }
     }
+
+    /**
+     * Extend entity configurations
+     */
+    private function extendEntityConfigurations()
+    {
+        // search
+        for ($i = 0; $i < count($this->_aEntities); $i++)
+        {
+            // register
+            $entity = $this->_aEntities[$i];
+
+            // check
+            if (!empty($entity->extends))
+            {
+                // build
+                $aExtensions = array_merge([$entity->id], $this->buildExtensionStack($entity->extends, []));
+
+                $entity->typeOf = $aExtensions;
+
+                $entity->typeOfAsNames = [];
+                for ($k = 0; $k < count($aExtensions); $k++)
+                {
+                    $entity->typeOfAsNames[$k] = $this->getEntityNameById($aExtensions[$k]);
+                }
+
+                for ($j = count($aExtensions) - 1; $j > 0; $j--)
+                {
+                    // find
+                    $baseEntity = $this->findEntityById($aExtensions[$j]);
+
+                    // combine
+                    array_splice($entity->properties, count($entity->properties) - 1, 0, $baseEntity->properties);
+                }
+            }
+        }
+    }
+
+    /**
+     * Build extension path
+     * @param $baseId The entity that is being extended
+     * @param $aExtensions An array containing the stack of extensions
+     * @return array
+     */
+    private function buildExtensionStack($baseId, $aExtensions)
+    {
+        for ($i = 0; $i < count($this->_aEntities); $i++)
+        {
+            // register
+            $entity = $this->_aEntities[$i];
+
+            if ($entity->id == $baseId)
+            {
+                if (!empty($entity->extends))
+                {
+                    /// compose
+                    $aExtensions = array_merge($aExtensions, $this->buildExtensionStack($entity->extends, $aExtensions));
+                }
+
+                break;
+            }
+        }
+
+        /// compose
+        array_unshift($aExtensions, $baseId);
+
+        // send
+        return $aExtensions;
+    }
+
+    private function findEntityById($xEntityId)
+    {
+        // compose
+        for ($i = 0; $i < count($this->_aEntities); $i++) {
+            // read
+            $entity = $this->_aEntities[$i];
+
+            // skip if not the requested one
+            if ($entity->id == $xEntityId) return $entity;
+        }
+
+        // oh oh
+        die ("MimotoEntityConfigRepository says: Can't find the entity with id=".$xEntityId);
+    }
+
     
     /**
      * Create entity config from MySQL result
@@ -322,7 +485,6 @@ class MimotoEntityConfigRepository
             {
                 $sConnectionTable = CoreConfig::MIMOTO_CONNECTIONS_PROJECT;
             }
-
 
 
             // store
@@ -383,46 +545,6 @@ class MimotoEntityConfigRepository
         
         // send error
         return false;
-    }
-    
-    
-    public function getEntityNameById($nId)
-    {
-        $nItemCount = count($this->_aEntities);
-        for ($i = 0; $i < $nItemCount; $i++)
-        {
-            $entity = $this->_aEntities[$i];
-            
-            if ($entity->id == $nId) { return $entity->name; }
-        }
-    }
-    
-    public function getEntityIdByName($sName)
-    {
-        $nItemCount = count($this->_aEntities);
-        for ($i = 0; $i < $nItemCount; $i++)
-        {
-            $entity = $this->_aEntities[$i];
-            
-            if ($entity->name == $sName) { return $entity->id; }
-        }
-    }
-
-    public function getPropertyNameById($nId)
-    {
-        $nEntityCount = count($this->_aEntities);
-        for ($i = 0; $i < $nEntityCount; $i++)
-        {
-            $entity = $this->_aEntities[$i];
-
-            $nPropertyCount = count($entity->properties);
-            for ($j = 0; $j < $nPropertyCount; $j++)
-            {
-                $property = $entity->properties[$j];
-
-                if ($property->id == $nId) { return $property->name; }
-            }
-        }
     }
 
 }

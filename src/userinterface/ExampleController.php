@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\UserInterface;
 
+// Mimoto classes
+use Mimoto\Core\CoreConfig;
+
 // Silex classes
 use Silex\Application;
 
@@ -392,13 +395,26 @@ class ExampleController
     public function viewExample14(Application $app)
     {
 
-        // 1. Author extends Member extends Person
+        // 1. Author extends Person
 
 
-        $_mimoto_entity = $app['Mimoto.Data']->get('_mimoto_entity', 1);
+        $person_entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, 1);
+        $member_entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, 4);
+        $author_entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, 3);
 
 
-        output('_mimoto_entity called "Person"', $_mimoto_entity);
+        error($person_entity);
+
+        //output('_mimoto_entity called "person"', $person_entity);
+        //output('_mimoto_entity called "author"', $member_entity);
+        //output('_mimoto_entity called "author"', $author_entity);
+
+
+        //$person = $app['Mimoto.Data']->get('person', 1);
+        //$member = $app['Mimoto.Data']->get('person', 1);
+        $author = $app['Mimoto.Data']->get('author', 1);
+
+        error(($author->typeOf('person')) ? 'Yes, entity is of type "person"' : 'No, entity is not of type "person"');
 
 
         die();
@@ -406,7 +422,6 @@ class ExampleController
 
         // load
         $person = $app['Mimoto.Data']->get('person', 1);
-        //$member = $app['Mimoto.Data']->get('member', 1);
         //$author = $app['Mimoto.Data']->get('author', 1);
 
         // output

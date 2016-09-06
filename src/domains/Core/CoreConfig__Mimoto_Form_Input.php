@@ -8,31 +8,31 @@ use Mimoto\Core\CoreConfig;
 
 
 /**
- * CoreConfig__Mimoto_Form_Layout_GroupStart
+ * CoreConfig__Mimoto_Form_Input
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class CoreConfig__Mimoto_Form_Layout_GroupStart
+class CoreConfig__Mimoto_Form_Input
 {
 
     static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT,
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'__title',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT.'__varname',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'title',
+                    'name' => 'varname',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'__title-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'__varname-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

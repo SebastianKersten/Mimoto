@@ -73,7 +73,7 @@ class MimotoEntityConnection
      *
      * @var boolean
      */
-    private $_bIsNew;
+    private $_bNew;
 
 
 
@@ -203,14 +203,14 @@ class MimotoEntityConnection
      *
      * @return boolean
      */
-    public function isNew() { return $this->_bIsNew; }
+    public function isNew() { return $this->_bNew; }
 
     /**
      * Set the new flag of the connection
      *
      * @return int
      */
-    public function setIsNewFlag($bIsNew) { $this->_bIsNew = $bIsNew; }
+    public function setNewFlag($bNew) { $this->_bNew = $bNew; }
 
 
 

@@ -204,7 +204,17 @@ class MimotoEntity
     {
         return $this->_aProperties[$sPropertySelector]->config->type;
     }
-    
+
+    /**
+     * Check if this entity is of a certain base type entity
+     * @param $sEntityType
+     * @return boolean
+     */
+    public function typeOf($sEntityType)
+    {
+        return $GLOBALS['Mimoto.Config']->entityIsTypeOf($this->_sEntityType, $sEntityType);
+    }
+
     
     // ----------------------------------------------------------------------------
     // --- Public methods - usage -------------------------------------------------

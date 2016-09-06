@@ -233,7 +233,7 @@ class MimotoEntityRepository
                                     $this->addItemToCollection($propertyValue->mysqlConnectionTable, $newItem);
 
                                     // toggle
-                                    $newItem->setIsNewFlag(true);
+                                    $newItem->setNewFlag(true);
                                 }
                             }
 

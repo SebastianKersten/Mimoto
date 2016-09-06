@@ -22,6 +22,7 @@ class CoreConfig__Mimoto_Entity
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_ENTITY,
+            'extends' => null,
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'__name',
@@ -72,13 +73,13 @@ class CoreConfig__Mimoto_Entity
                     'name' => 'extends',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
-                        'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'__extends-allowedEntityTypes',
+                        'allowedEntityType' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'__extends-allowedEntityType',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'allowedEntityTypes',
-                            'type' => 'array',
-                            'value' => '["'.CoreConfig::MIMOTO_ENTITY.'"]'
+                            'key' => 'allowedEntityType',
+                            'type' => 'value',
+                            'value' => CoreConfig::MIMOTO_ENTITY
                         )
                     ]
                 )

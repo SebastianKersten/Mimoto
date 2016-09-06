@@ -22,6 +22,7 @@ class CoreConfig__Mimoto_Form_Layout_GroupEnd
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND,
+            'extends' => null,
             'properties' => []
         );
     }

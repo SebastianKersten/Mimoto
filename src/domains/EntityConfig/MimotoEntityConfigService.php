@@ -208,9 +208,10 @@ class MimotoEntityConfigService
         $this->flushEntityConfigCache();
     }
 
-
-
-
+    public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)
+    {
+        return $this->_entityConfigRepository->entityIsTypeOf($sTypeOfEntity, $sTypeToCompare);
+    }
 
 
 

@@ -22,6 +22,7 @@ class CoreConfig__Mimoto_EntityPropertySetting
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING,
+            'extends' => null,
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'__key',

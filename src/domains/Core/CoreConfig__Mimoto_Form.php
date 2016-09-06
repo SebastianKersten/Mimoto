@@ -22,6 +22,7 @@ class CoreConfig__Mimoto_Form
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM,
+            'extends' => null,
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM.'__name',

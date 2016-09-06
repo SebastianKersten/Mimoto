@@ -22,6 +22,7 @@ class CoreConfig__Mimoto_Form_Output_Title
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
+            'extends' => null,
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title',

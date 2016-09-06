@@ -1,4 +1,4 @@
-{% extends "examplebase.twig" %}
+{% extends "examples/examplebase.twig" %}
 
 {% block content %}
     <h1>Form</h1>
@@ -9,6 +9,6 @@
         {{ Aimless.form()|raw }}
     </div>
     <div class="MimotoCMS_forms_Form__menu">
-        <span {{ Aimless.submit()|raw }}>{% include '../Mimoto.CMS/forms/input/Button/Button.twig' with { label:'Save' } %}</span>
+        <span {{ Aimless.submit()|raw }}>{% include 'Mimoto.CMS/forms/input/Button/Button.twig' with { label:'Save' } %}</span>
     </div>
 {% endblock %}
