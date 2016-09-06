@@ -192,7 +192,7 @@ class MimotoEntityConfigRepository
         $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_ENTITY);
         $params = array();
         $stmt->execute($params);
-        
+
         foreach ($stmt as $row)
         {
             // compose

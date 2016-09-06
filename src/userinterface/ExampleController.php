@@ -415,7 +415,7 @@ class ExampleController
         $author = $app['Mimoto.Data']->get('author', 1);
 
 
-        error($author);
+        //error($author);
 
 
         error(($author->typeOf('person')) ? 'Yes, entity is of type "person"' : 'No, entity is not of type "person"');
