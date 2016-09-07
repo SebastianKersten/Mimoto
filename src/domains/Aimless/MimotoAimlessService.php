@@ -66,7 +66,7 @@ class MimotoAimlessService
     public function createComponent($sComponentName, $entity = null)
     {
         // init and send
-        return $component = new AimlessComponent($sComponentName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
 
     /**
@@ -78,7 +78,7 @@ class MimotoAimlessService
     public function createInput($sComponentName, $entity = null, $value = null)
     {
         // init and send
-        return $input = new AimlessInput($sComponentName, $entity, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
+        return new AimlessInput($sComponentName, $entity, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
 
 
@@ -93,7 +93,7 @@ class MimotoAimlessService
     public function createForm($sFormName, $entity = null)
     {
         // init and send
-        return $form = new AimlessForm($sFormName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
+        return new AimlessForm($sFormName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
 
 
