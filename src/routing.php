@@ -33,6 +33,7 @@ $app->get('/example11d', 'Mimoto\\UserInterface\\ExampleController::viewExample1
 $app->get('/example12', 'Mimoto\\UserInterface\\ExampleController::viewExample12');
 $app->get('/example13', 'Mimoto\\UserInterface\\ExampleController::viewExample13');
 $app->get('/example14', 'Mimoto\\UserInterface\\ExampleController::viewExample14');
+$app->get('/example15', 'Mimoto\\UserInterface\\ExampleController::viewExample15');
 
 
 

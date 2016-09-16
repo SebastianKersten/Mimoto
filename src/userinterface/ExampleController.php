@@ -8,6 +8,9 @@ use Mimoto\Core\CoreConfig;
 
 // Silex classes
 use Silex\Application;
+use SendGrid\Email;
+use SendGrid\Mail;
+use SendGrid\Content;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -410,7 +413,7 @@ class ExampleController
         //output('_mimoto_entity called "author"', $author_entity);
 
 
-        //$person = $app['Mimoto.Data']->get('person', 1);
+        $person = $app['Mimoto.Data']->get('person', 1);
         //$member = $app['Mimoto.Data']->get('person', 1);
         $author = $app['Mimoto.Data']->get('author', 1);
 
@@ -433,7 +436,31 @@ class ExampleController
 
         return '';
     }
-    
+
+
+    public function viewExample15(Application $app)
+    {
+        $from = new Email(null, "sebastiankersten@gmail.com");
+        $subject = "Hello World from the SendGrid PHP Library";
+        $to = new Email(null, "sebastian@decorrespondent.nl");
+        $content = new Content("text/plain", "some text here");
+        $mail = new Mail($from, $subject, $to, $content);
+        $to = new Email(null, "sebastian@decorrespondent.nl");
+        $mail->personalization[0]->addTo($to);
+
+        //echo json_encode($mail, JSON_PRETTY_PRINT), "\n";
+
+
+        $apiKey = getenv('SENDGRID_API_KEY');
+        $sg = new \SendGrid($apiKey);
+
+        $request_body = $mail;
+        $response = $sg->client->mail()->send()->post($request_body);
+
+        echo $response->statusCode();
+        echo $response->body();
+        echo $response->headers();
+    }
     
     
     

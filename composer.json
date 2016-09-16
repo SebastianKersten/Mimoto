@@ -13,7 +13,9 @@
     "require-dev": {
         "silex/silex": "~1.3",
         "twig/twig": "~1.0",
-        "pusher/pusher-php-server": "^2.2"
+        "pusher/pusher-php-server": "^2.2",
+        "sendgrid/sendgrid": "~5.0.7",
+        "filp/whoops": "^2.1"
     },
     "autoload": {
         "psr-4": {

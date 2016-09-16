@@ -45,7 +45,7 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 * **Example 19** - Remove subproject from project's collection - *use with examples 17 or 20 for realtime effect* - [view](http://maidoprojects/example19)
 * **Example 20** - Project with subprojects - typed and grouped - *use with examples 18 and 19 for realtime effect* - [view](http://maidoprojects/example20)
 * **Example 21** - A 'client' form with a basic textfield - [view](http://maidoprojects/example21)
-
+* **Example 15** - SendGrid
 
 ## Experiments
 

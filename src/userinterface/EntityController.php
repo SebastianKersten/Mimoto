@@ -5,12 +5,14 @@ namespace Mimoto\UserInterface;
 
 // Silex classes
 use Mimoto\Core\CoreConfig;
-use Silex\Application;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+
+// Silex classes
+use Silex\Application;
 
 
 
@@ -25,7 +27,7 @@ class EntityController
     public function viewEntityOverview(Application $app)
     {
         // load
-        $aEntities = $app['Mimoto.Data']->find(['type' => '_mimoto_entity']);
+        $aEntities = $app['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_ENTITY]);
 
         // create
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityOverview');
@@ -77,7 +79,7 @@ class EntityController
     public function entityView(Application $app, $nEntityId)
     {
         // 1. load requested entity
-        $entity = $app['Mimoto.Data']->get('_mimoto_entity', $nEntityId);
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
         // 2. check if entity exists
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");

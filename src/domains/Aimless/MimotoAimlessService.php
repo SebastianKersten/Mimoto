@@ -99,8 +99,6 @@ class MimotoAimlessService
 
 
 
-
-
     public function getTemplate($sTemplateName, MimotoEntity $entity = null)
     {
         $nComponentCount = count($this->_aComponents);
