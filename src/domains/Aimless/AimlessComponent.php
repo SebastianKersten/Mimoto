@@ -6,6 +6,7 @@ namespace Mimoto\Aimless;
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoDataUtils;
+use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityService;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 

@@ -270,7 +270,7 @@ class MimotoEntityConfigRepository
             $aAllEntity_Connections[$nEntityId][] = $connection;
         }
 
-        
+
         // load all properties
         $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTY;
         foreach ($GLOBALS['database']->query($sql) as $row)
