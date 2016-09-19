@@ -120,7 +120,7 @@ class AimlessComponent
         $this->_aFormConfigs[$sKey] = (object) array(
             'sFormName' => $sFormName,
             'sComponentName' => $sComponentName,
-            'aData' => $aData
+            'aData' => $entity // #todo - array met entities
         );
     }
 

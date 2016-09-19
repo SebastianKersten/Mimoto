@@ -239,12 +239,18 @@ class MimotoEntityConfigRepository
 
 
 
-
-
-
         // load all connections
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_CONNECTIONS_CORE .' WHERE parent_entity_type_id="'.CoreConfig::MIMOTO_ENTITY.'" ORDER BY parent_id ASC, sortindex ASC';
-        foreach ($GLOBALS['database']->query($sql) as $row)
+        $stmt = $GLOBALS['database']->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id ".
+            "ORDER BY parent_id ASC, sortindex ASC"
+        );
+        $params = array(
+            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITY
+        );
+        $stmt->execute($params);
+
+        foreach ($stmt as $row)
         {
             // compose
             $connection = (object) array(
@@ -264,6 +270,7 @@ class MimotoEntityConfigRepository
             $aAllEntity_Connections[$nEntityId][] = $connection;
         }
 
+        
         // load all properties
         $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTY;
         foreach ($GLOBALS['database']->query($sql) as $row)
@@ -281,9 +288,19 @@ class MimotoEntityConfigRepository
             $aAllEntityProperties[$row['id']] = $property;
         }
 
+
         // load all connections
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_CONNECTIONS_CORE.' WHERE parent_entity_type_id="'.CoreConfig::MIMOTO_ENTITYPROPERTY.'" ORDER BY parent_id ASC, sortindex ASC';
-        foreach ($GLOBALS['database']->query($sql) as $row)
+        $stmt = $GLOBALS['database']->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id ".
+            "ORDER BY parent_id ASC, sortindex ASC"
+        );
+        $params = array(
+            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITYPROPERTY
+        );
+        $stmt->execute($params);
+
+        foreach ($stmt as $row)
         {
             // compose
             $connection = (object) array(
