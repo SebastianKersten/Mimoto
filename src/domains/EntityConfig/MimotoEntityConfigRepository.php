@@ -164,6 +164,32 @@ class MimotoEntityConfigRepository
         }
     }
 
+    public function getEntityNameByPropertyId($nId)
+    {
+        // search
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            // register
+            $entity = $this->_aEntities[$i];
+
+            $nEntityPropertyCount = count($entity->properties);
+            for ($j = 0; $j < $nEntityPropertyCount; $j++)
+            {
+                // register
+                $property = $entity->properties[$j];
+
+                // check
+                if ($property->id == $nId)
+                {
+                    return $entity->name;
+                }
+
+            }
+        }
+
+        error('No entity found which contains property with id='.$nId);
+    }
     
     
     // ----------------------------------------------------------------------------

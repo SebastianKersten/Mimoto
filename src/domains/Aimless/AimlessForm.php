@@ -17,20 +17,26 @@ use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
  */
 class AimlessForm extends AimlessComponent
 {
-
-    const PRIMARY_FORM = 'primary_form';
-
     
     /**
      * Constructor
-     * @param type $sViewmodelName
-     * @param type $entity
+     * @param string $sFormName
+     * @param string $sComponentName
+     * @param MimotoEntity $entity
+     * @param AimlessService $AimlessService
+     * @param MimotoEntityService $DataService
+     * @param Twig $TwigService
      */
-    public function __construct($sTemplateName, $entity, $AimlessService, $DataService, $TwigService)
+    public function __construct($sFormName, $sComponentName, $entity, $AimlessService, $DataService, $TwigService)
     {
         // register
-        $this->_sTemplateName = $sTemplateName;
+        $this->_sFormName = $sFormName;
+        $this->_sComponentName = $sComponentName;
         $this->_entity = $entity;
+
+
+        $this->addForm($sFormName, $sComponentName, $sKey = null);
+
         
         // register
         $this->_AimlessService = $AimlessService;
@@ -38,53 +44,60 @@ class AimlessForm extends AimlessComponent
         $this->_TwigService = $TwigService;
     }
 
-    public function submit()
+
+    public function submit($sKey = null)
     {
-        return 'mls_form_submit='.'';
+        // 1. set default key
+        if ($sKey === null) $sKey = self::PRIMARY_FORM;
+
+        // 2. validate is form was defined
+        if (!isset($this->_aFormConfigs[$sKey])) die("Aimless says: Form '$sKey' not defined");
+
+        // 3. load requested config
+        $formConfig = $this->_aFormConfigs[$sKey];
+
+        return 'mls_form_submit="'.$formConfig->sFormName.'"';
+    }
+
+    public function form($sKey = null)
+    {
+        // 1. createForm and return (pass form to new component
+
+        error($this->_aFormConfigs);
+
+        // 1. set default key
+        if ($sKey === null) $sKey = self::PRIMARY_FORM;
+
+        // 2. validate is form was defined
+        if (!isset($this->_aFormConfigs[$sKey])) die("Aimless says: Form '$sKey' not defined");
+
+        // 3. load requested config
+        $formConfig = $this->_aFormConfigs[$sKey];
+
+        // 4. load form from database
+        $aResults = $this->_DataService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $formConfig->sFormName]]);
+
+        // 5. validate if form exists
+        if (!isset($aResults[0])) die("Aimless says: Form with name '$formConfig->sFormName' not found in database");
+
+        // 6. render and send
+        return $this->renderForm($aResults[0], $formConfig->aValues);
     }
     
     
     public function render()
     {
         // get te
-        $sTemplateFile = $this->_AimlessService->getTemplate($this->_sTemplateName, $this->_entity);
+        $sComponentFile = $this->_AimlessService->getComponent($this->_sComponentName, $this->_entity);
         
         // compose
         $this->_aVars['Aimless'] = $this;
         
         // output
-        return $this->_TwigService->render($sTemplateFile, $this->_aVars);
-    }
-    
-    
-    
-    private function renderCollection($aCollection, $sTemplateName)
-    {
-        // init
-        $sRenderedCollection = '';
-        
-        for ($i = 0; $i < count($aCollection); $i++)
-        {
-            // register
-            $entity = $aCollection[$i];
-                        
-            // create
-            $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
-            
-            // forward
-            foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
-            
-            // output
-            $sRenderedCollection .= $component->render();
-        }
-        
-        // send
-        return $sRenderedCollection;
-    }
+        return $this->_TwigService->render($sComponentFile, $this->_aVars);
 
 
-    private function renderForm($form, $aValues)
-    {
+
         // init
         $sRenderedForm = '<form>';
 
@@ -141,6 +154,38 @@ class AimlessForm extends AimlessComponent
 
         // send
         return $sRenderedForm;
+    }
+    
+    
+    
+    private function renderCollection($aCollection, $sTemplateName)
+    {
+        // init
+        $sRenderedCollection = '';
+        
+        for ($i = 0; $i < count($aCollection); $i++)
+        {
+            // register
+            $entity = $aCollection[$i];
+                        
+            // create
+            $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
+            
+            // forward
+            foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
+            
+            // output
+            $sRenderedCollection .= $component->render();
+        }
+        
+        // send
+        return $sRenderedCollection;
+    }
+
+
+    private function renderForm($form, $aValues)
+    {
+
     }
     
 }

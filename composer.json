@@ -19,6 +19,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Mimoto\\": "./src/domains",
             "Mimoto\\UserInterface\\": "./src/userinterface",
             "Mimoto\\EntityConfig\\": "./src/domains/EntityConfig",
             "Mimoto\\FormConfig\\": "./src/domains/FormConfig",
@@ -29,7 +30,6 @@
             "Mimoto\\Aimless\\": "./src/domains/Aimless",
             "Mimoto\\Mail\\": "./src/domains/Mail",
             "Mimoto\\Cache\\": "./src/domains/Cache",
-            "Mimoto\\CMS\\": "./src/domains/CMS",
             "Mimoto\\tests\\": "./tests"
         }
     }

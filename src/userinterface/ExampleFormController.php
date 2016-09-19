@@ -17,23 +17,46 @@ class ExampleFormController
     
     public function viewExampleForm1(Application $app)
     {
+
+        //$entityId = $app['Mimoto.Config']->getEntityNameByPropertyId(1);
+
+
         // load
         $person = $app['Mimoto.Data']->get('person', 2);
 
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
+        $form = $app['Mimoto.Aimless']->createForm('examplebase_form', 'examplebase_form', $person); // #todo - of array
 
-        // prepare
-        $aValues = [
-            'name' => $person->getValue('name'),
-            'role' => $person->getValue('role')
-        ];
 
-        // setup
-        $component->addForm('form_person', $aValues);
 
         // render and send
-        return $component->render();
+        return $form->render();
+
+
+
+
+
+
+
+
+
+//        // prepare
+//        $aValues = [
+//            'name' => $person->getValue('name'),
+//            'role' => $person->getValue('role')
+//        ];
+
+
+        // 1. get property by id from connection
+
+
+
+        //$component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
+
+        // setup
+        //$component->addForm('form_person', $person); // #todo - of array
+
+
     }
     
 }

@@ -22,7 +22,7 @@ $GLOBALS['database'] = new PDO("mysql:host=127.0.0.1;dbname=mimoto.cms", 'root',
 // setup
 $app['debug'] = true;
 $app['twig'] = $twig;
-$app['Mimoto'] = new \Mimoto\CMS\Mimoto($app);
+$app['Mimoto'] = new \Mimoto\Mimoto($app);
 
 
 function output($sTitle, $data)

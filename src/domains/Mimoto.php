@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace Mimoto\CMS;
+namespace Mimoto;
 
 // Mimoto classes
 use Mimoto\Event\MimotoEventServiceProvider;
@@ -25,7 +25,7 @@ class Mimoto
     public function __construct($app)
     {
         // setup templates
-        $app['twig']->getLoader()->addPath(dirname(dirname(dirname(__FILE__))) . '/userinterface/templates');
+        $app['twig']->getLoader()->addPath(dirname(dirname(__FILE__)) . '/userinterface/templates');
 
         // setup Mimoto services
         $app->register(new MimotoCacheServiceProvider());

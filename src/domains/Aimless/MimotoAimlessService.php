@@ -73,7 +73,7 @@ class MimotoAimlessService
      * Create input
      * @param string $sComponentName The name of the registered template
      * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessComponent
+     * @return AimlessInput
      */
     public function createInput($sComponentName, $entity = null, $value = null)
     {
@@ -81,32 +81,29 @@ class MimotoAimlessService
         return new AimlessInput($sComponentName, $entity, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
 
-
-
-    
     /**
      * Create form
      * @param string $sTemplateName The name of the registered template
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessForm
      */
-    public function createForm($sFormName, $entity = null)
+    public function createForm($sFormName, $sComponentName, $entity = null)
     {
         // init and send
-        return new AimlessForm($sFormName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
+        return new AimlessForm($sFormName, $sComponentName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
 
 
 
 
-    public function getTemplate($sTemplateName, MimotoEntity $entity = null)
+    public function getComponent($sComponentName, MimotoEntity $entity = null)
     {
         $nComponentCount = count($this->_aComponents);
         for ($i = 0; $i < $nComponentCount; $i++)
         {
             $template = $this->_aComponents[$i];
             
-            if ($template->name === $sTemplateName)
+            if ($template->name === $sComponentName)
             {
                 if (count($template->conditionals) > 0 && $entity !== null)
                 {
@@ -133,7 +130,7 @@ class MimotoAimlessService
         }
         
         
-        die("MimotoAimlessService says: Template '$sTemplateName' not found");
+        die("MimotoAimlessService says: Template '$sComponentName' not found");
         
         // 1. broadcast webevent for debugging purposes
         // 2. standaard report error (error level)

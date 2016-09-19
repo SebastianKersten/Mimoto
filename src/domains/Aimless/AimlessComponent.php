@@ -6,6 +6,7 @@ namespace Mimoto\Aimless;
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoDataUtils;
+use Mimoto\Data\MimotoEntityService;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
@@ -26,13 +27,13 @@ class AimlessComponent
     protected $_entity;
     
     // settings
-    protected $_sTemplateName;
+    protected $_sComponentName;
     
     // config
     protected $_aVars = [];
     protected $_aSelections = [];
     protected $_aFormConfigs = [];
-    protected $_aPropertyTemplates = [];
+    protected $_aPropertyComponents = [];
     protected $_aPropertyFormatters = [];
 
     protected $_nConnectionId;
@@ -41,16 +42,25 @@ class AimlessComponent
 
     const PRIMARY_FORM = 'primary_form'; // #todo - explain
 
-    
+
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------s
+    // ----------------------------------------------------------------------------
+
+
     /**
      * Constructor
-     * @param string $sTemplateName
+     * @param string $sComponentName
      * @param MimotoEntity $entity
+     * @param AimlessService $AimlessService
+     * @param MimotoEntityService $DataService
+     * @param Twig $TwigService
      */
-    public function __construct($sTemplateName, $entity, $AimlessService, $DataService, $TwigService)
+    public function __construct($sComponentName, MimotoEntity $entity = null, MimotoAimlessService $AimlessService, MimotoEntityService $DataService, $TwigService)
     {
         // register
-        $this->_sTemplateName = $sTemplateName;
+        $this->_sComponentName = $sComponentName;
         $this->_entity = $entity;
         
         // register
@@ -58,14 +68,21 @@ class AimlessComponent
         $this->_DataService = $DataService;
         $this->_TwigService = $TwigService;
     }
-    
-    public function setPropertyTemplate($sKey, $sTemplateName)
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods - Setup -------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    public function setPropertyComponent($sKey, $sComponentName)
     {
-        $propertyTemplate = (object) array(
-            'sTemplateName' => $sTemplateName
+        $propertyComponent = (object) array(
+            'sComponentName' => $sComponentName
         );
         
-        $this->_aPropertyTemplates[$sKey] = $propertyTemplate;
+        $this->_aPropertyComponents[$sKey] = $propertyComponent;
     }
     
     
@@ -84,23 +101,26 @@ class AimlessComponent
         $this->_aVars[$sKey] = $value;
     }
     
-    public function addSelection($sKey, $sTemplateName, $aSelection)
+    public function addSelection($sKey, $sComponentName, $aSelection)
     {
         $this->_aSelections[$sKey] = (object) array(
-            'sTemplateName' => $sTemplateName,
+            'sComponentName' => $sComponentName,
             'selection' => $aSelection
         );
     }
 
-    public function addForm($sFormName, $aValues, $sKey = null)
+    public function addForm($sFormName, $sComponentName, $entity, $sKey = null)
     {
         // default
         if ($sKey === null) $sKey = self::PRIMARY_FORM;
 
+
+
         // store
         $this->_aFormConfigs[$sKey] = (object) array(
             'sFormName' => $sFormName,
-            'aValues' => $aValues
+            'sComponentName' => $sComponentName,
+            'aData' => $aData
         );
     }
 
@@ -113,6 +133,11 @@ class AimlessComponent
         $this->_nSortIndex = $nSortIndex;
     }
 
+
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods - Aimless -----------------------------------------------
+    // ----------------------------------------------------------------------------
 
 
 
@@ -146,16 +171,16 @@ class AimlessComponent
             if ($nSeparatorPos !== false) { $sPropertyName = substr($sPropertyName, 0, $nSeparatorPos); }
             
             
-            if (!isset($this->_aPropertyTemplates[$sPropertyName]))
+            if (!isset($this->_aPropertyComponents[$sPropertyName]))
             {
-                return "Aimless says: No template set for property '$sPropertyName'. Use AimlessComponent->setPropertyTemplate()";
+                return "Aimless says: No component set for property '$sPropertyName'. Use AimlessComponent->setPropertyComponent()";
                 
                 // 1. broadcast webevent for debugging purposes
                 // 2. standaard report error (error level)
             }
             
             // render and send
-            return $this->renderCollection($aCollection, $aConnections, $this->_aPropertyTemplates[$sPropertyName]->sTemplateName);
+            return $this->renderCollection($aCollection, $aConnections, $this->_aPropertyComponents[$sPropertyName]->sComponentName);
         }
         else
         {
@@ -167,15 +192,15 @@ class AimlessComponent
                 $value = $fDelegate($value);
             }
             
-            //if (isset($this->_aPropertyTemplates[$sPropertyName]))
+            //if (isset($this->_aPropertyComponents[$sPropertyName]))
             //{
                 
                 // 1. check if is entity instanceof MimotoEntity
-                // 2. wrap in template
+                // 2. wrap in component
                 
                 
                 // get te
-            //    $sTemplateFile = $this->_AimlessService->getTemplate($this->_sTemplateName, $this->_entity);
+            //    $sComponentFile = $this->_AimlessService->getComponent($this->_sComponentName, $this->_entity);
                 
             //}
             //else
@@ -195,49 +220,8 @@ class AimlessComponent
         $selection = $this->_aSelections[$sSelectionName];
         
         // render and send
-        return $this->renderCollection($selection->selection, null, $selection->sTemplateName);
+        return $this->renderCollection($selection->selection, null, $selection->sComponentName);
     }
-
-    public function form($sKey = null)
-    {
-        // 1. createForm and return (pass form to new component
-
-
-
-        // 1. set default key
-        if ($sKey === null) $sKey = self::PRIMARY_FORM;
-
-        // 2. validate is form was defined
-        if (!isset($this->_aFormConfigs[$sKey])) die("Aimless says: Form '$sKey' not defined");
-
-        // 3. load requested config
-        $formConfig = $this->_aFormConfigs[$sKey];
-
-        // 4. load form from database
-        $aResults = $this->_DataService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $formConfig->sFormName]]);
-
-        // 5. validate if form exists
-        if (!isset($aResults[0])) die("Aimless says: Form with name '$formConfig->sFormName' not found in database");
-
-        // 6. render and send
-        return $this->renderForm($aResults[0], $formConfig->aValues);
-    }
-
-
-    public function submit($sKey = null)
-    {
-        // 1. set default key
-        if ($sKey === null) $sKey = self::PRIMARY_FORM;
-
-        // 2. validate is form was defined
-        if (!isset($this->_aFormConfigs[$sKey])) die("Aimless says: Form '$sKey' not defined");
-
-        // 3. load requested config
-        $formConfig = $this->_aFormConfigs[$sKey];
-
-        return 'mls_form_submit="'.$formConfig->sFormName.'"';
-    }
-
 
 
     public function realtime($sPropertySelector = null)
@@ -257,19 +241,19 @@ class AimlessComponent
             if (!empty($this->_entity) && $this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
                 // compose
-                $sTemplate = (!empty($this->_aPropertyTemplates[$sPropertyName]->sTemplateName)) ? ' mls_template="'.$this->_aPropertyTemplates[$sPropertyName]->sTemplateName.'"' : '';
+                $sComponent = (!empty($this->_aPropertyComponents[$sPropertyName]->sComponentName)) ? ' mls_component="'.$this->_aPropertyComponents[$sPropertyName]->sComponentName.'"' : '';
 
                 // send
-                return 'mls_contains="'.$this->_entity->getAimlessValue($sPropertyName).'"'.$sFilter.$sTemplate;
+                return 'mls_contains="'.$this->_entity->getAimlessValue($sPropertyName).'"'.$sFilter.$sComponent;
             }
             else
             if (isset($this->_aSelections[$sPropertyName]))
             {
                 // compose
-                $sTemplate = ' mls_template="'.$this->_aSelections[$sPropertyName]->sTemplateName.'"';
+                $sComponent = ' mls_component="'.$this->_aSelections[$sPropertyName]->sComponentName.'"';
 
                 // send
-                return 'mls_contains="'.$this->_aSelections[$sPropertyName]->selection->getCriteria()['type'].'"'.$sFilter.$sTemplate;
+                return 'mls_contains="'.$this->_aSelections[$sPropertyName]->selection->getCriteria()['type'].'"'.$sFilter.$sComponent;
             }
                 
         }
@@ -321,7 +305,7 @@ class AimlessComponent
     
     public function setupProperty()
     {
-        // connect Entity-template to entity
+        // connect Entity-component to entity
     }
     
     
@@ -329,18 +313,18 @@ class AimlessComponent
     public function render()
     {
         // get te
-        $sTemplateFile = $this->_AimlessService->getTemplate($this->_sTemplateName, $this->_entity);
+        $sComponentFile = $this->_AimlessService->getComponent($this->_sComponentName, $this->_entity);
         
         // compose
         $this->_aVars['Aimless'] = $this;
         
         // output
-        return $this->_TwigService->render($sTemplateFile, $this->_aVars);
+        return $this->_TwigService->render($sComponentFile, $this->_aVars);
     }
     
     
     
-    private function renderCollection($aCollection, $aConnections, $sTemplateName)
+    private function renderCollection($aCollection, $aConnections, $sComponentName)
     {
         // init
         $sRenderedCollection = '';
@@ -351,7 +335,7 @@ class AimlessComponent
             $entity = $aCollection[$i];
 
             // create
-            $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
+            $component = $this->_AimlessService->createComponent($sComponentName, $entity);
 
             // 1. #todo get info based upon know data
             // output('Connection '.$i, $aConnections);
@@ -368,76 +352,6 @@ class AimlessComponent
         
         // send
         return $sRenderedCollection;
-    }
-
-// #todo - Verplaats naar AimlessForm
-    private function renderForm($form, $aValues)
-    {
-
-        // 1. form moet eigen template krijgen. Na renderen én afsluiten form, pas close aanroepen
-
-
-        // init
-        $sRenderedForm = '<form name="'.$form->getValue('name').'">';
-        $sRenderedForm .= '<script>Mimoto.form.openForm("'.$form->getValue('name').'", "/mimoto.cms/entity/1/update", "POST");</script>';
-
-        // load
-        $aFields = $form->getValue('fields', true);
-
-        //output('fields', $aFields);
-
-        for ($i = 0; $i < count($aFields); $i++)
-        {
-            // register
-            $fieldData = $aFields[$i];
-
-            // read
-            $sTemplateName = $fieldData->getEntityType();
-
-            // create
-            if ($fieldData->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
-            {
-                $value = (isset($aValues[$fieldData->getValue('varname')])) ? $aValues[$fieldData->getValue('varname')] : '';
-
-                $formFieldComponent = $this->_AimlessService->createInput($sTemplateName, $fieldData, $value);
-            }
-            else
-            {
-                $formFieldComponent = $this->_AimlessService->createComponent($sTemplateName, $fieldData);
-            }
-
-            // forward
-            foreach ($this->_aVars as $sKey => $value) { $formFieldComponent->setVar($sKey, $value); }
-
-            // output
-            $sRenderedForm .= $formFieldComponent->render();
-
-
-            // 1. settings pass blindly: {% if validation is not empty %}, {{ validation|raw }}{% endif %}
-            // 2. hoe validation opslaan? single pass van alle fields? of validation entity table
-
-            // 3. form name / field is unique field-id
-            // 4. hoe koppelen aan values?
-
-            // 5. add action to form, retrieved from form-loaded from database
-            // 6. add auto-register to each field
-
-
-
-//            <script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>
-//
-//            een field heeft settings:
-//
-//            _mimoto_inputfield
-//            _mimoto_inputfieldsetting
-        }
-
-        // finish
-        $sRenderedForm .= '</form>';
-        $sRenderedForm .= '<script>Mimoto.form.closeForm("'.$form->getValue('name').'");</script>';
-
-        // send
-        return $sRenderedForm;
     }
     
 }
