@@ -112,7 +112,7 @@ class AimlessForm extends AimlessComponent
             $field = $aFields[$i];
 
             // read
-            $sTemplateName = $field->getEntityType();
+            $sTemplateName = $field->getEntityTypeName();
 
             // create
             $component = $this->_AimlessService->createComponent($sTemplateName, $field);

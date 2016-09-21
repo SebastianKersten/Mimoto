@@ -7,7 +7,7 @@ namespace Mimoto\Aimless;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
-use Mimoto\Data\MimotoEntityUtils;
+use Mimoto\Data\MimotoDataUtils;
 
 // Silex classes
 use Silex\Application;
@@ -273,7 +273,7 @@ class MimotoAimlessService
 
         // register
         $nEntityId = $entity->getId();
-        $sEntityType = $entity->getEntityType();
+        $sEntityType = $entity->getEntityTypeName();
         
         // init
         $data = (object) array();
@@ -343,14 +343,14 @@ class MimotoAimlessService
                             $valueForBroadcast->origin = (object) array();
 
                             // validate
-                            if (MimotoEntityUtils::isEntity($subentity))
+                            if (MimotoDataUtils::isEntity($subentity))
                             {
                                 // check if property exists
                                 if ($subentity->hasProperty($sSubPropertyName))
                                 {
                                     // compose
                                     $valueForBroadcast->value = $subentity->getValue($sSubPropertyName);
-                                    $valueForBroadcast->origin->entityType = $subentity->getEntityType();
+                                    $valueForBroadcast->origin->entityType = $subentity->getEntityTypeName();
                                     $valueForBroadcast->origin->entityId = $subentity->getId();
                                     $valueForBroadcast->origin->propertyName = $sSubPropertyName;
                                 }
@@ -468,7 +468,7 @@ class MimotoAimlessService
         // init
         $aConnections = [];
 
-        $xChildEntityTypeId = $GLOBALS['Mimoto.Config']->getEntityIdByName($entity->getEntityType());
+        $xChildEntityTypeId = $GLOBALS['Mimoto.Config']->getEntityIdByName($entity->getEntityTypeName());
 
 
         // load all connections
@@ -519,7 +519,7 @@ class MimotoAimlessService
 
         // register
         $nEntityId = $entity->getId();
-        $sEntityType = $entity->getEntityType();
+        $sEntityType = $entity->getEntityTypeName();
         
         // init
         $data = (object) array();

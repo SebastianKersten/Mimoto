@@ -190,23 +190,23 @@ class MimotoEntityService
     public function store(MimotoEntity $entity)
     {
         // verify
-        if (!isset($this->_aEntityConfigs[$entity->getEntityType()]))
+        if (!isset($this->_aEntityConfigs[$entity->getEntityTypeName()]))
         {
             
-            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($entity->getEntityType());
+            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($entity->getEntityTypeName());
             
             if ($entityConfig !== false)
             {
-                $this->_aEntityConfigs[$entity->getEntityType()] = $entityConfig;
+                $this->_aEntityConfigs[$entity->getEntityTypeName()] = $entityConfig;
             }
             else
             {
-                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '".$entity->getEntityType()."'");
+                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '".$entity->getEntityTypeName()."'");
             }
         }
         else
         {
-            $entityConfig = $this->_aEntityConfigs[$entity->getEntityType()];
+            $entityConfig = $this->_aEntityConfigs[$entity->getEntityTypeName()];
         }
         
         return $this->_entityRepository->store($entityConfig, $entity);
@@ -219,23 +219,23 @@ class MimotoEntityService
     public function delete(MimotoEntity $entity)
     {
         // verify
-        if (!isset($this->_aEntityConfigs[$entity->getEntityType()]))
+        if (!isset($this->_aEntityConfigs[$entity->getEntityTypeName()]))
         {
 
-            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($entity->getEntityType());
+            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($entity->getEntityTypeName());
 
             if ($entityConfig !== false)
             {
-                $this->_aEntityConfigs[$entity->getEntityType()] = $entityConfig;
+                $this->_aEntityConfigs[$entity->getEntityTypeName()] = $entityConfig;
             }
             else
             {
-                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '".$entity->getEntityType()."'");
+                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '".$entity->getEntityTypeName()."'");
             }
         }
         else
         {
-            $entityConfig = $this->_aEntityConfigs[$entity->getEntityType()];
+            $entityConfig = $this->_aEntityConfigs[$entity->getEntityTypeName()];
         }
 
         return $this->_entityRepository->delete($entityConfig, $entity);

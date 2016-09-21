@@ -153,13 +153,23 @@ class AimlessComponent
 
 
         // 1. subpropertyname (selector-query)
+        // 2. check property type
+        // 3. switch / case
+        // 4. if entity -> create entity based on component
+        // 5. if no entity, keep empty
+        // 6. example 16
+
 
 
 
         // read
         $value = $this->_entity->getValue($sPropertyName, true);
         
-        
+
+
+
+
+
         // verify
         if (is_array($value))
         {
@@ -298,7 +308,7 @@ class AimlessComponent
         switch(strtolower($sPropertyName))
         {
             case 'id': return $this->_entity->getId();
-            case 'type': return $this->_entity->getEntityType();
+            case 'type': return $this->_entity->getEntityTypeName();
             case 'created': return $this->_entity->getCreated();
         }
     }

@@ -14,7 +14,16 @@ use Mimoto\Data\MimotoEntity;
  */
 class MimotoDataUtils
 {
-        
+
+    // const ENT
+
+    public static function getValueType($xValue)
+    {
+
+    }
+
+
+
     public static function validatePropertyName($sPropertyName)
     {
         return preg_match("/^[a-zA-Z][a-zA-Z0-9-_]*(\.[a-zA-Z][a-zA-Z0-9]*)*$/", $sPropertyName);

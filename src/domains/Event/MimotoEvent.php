@@ -64,7 +64,7 @@ class MimotoEvent extends Event
      * 
      * @return string
      */
-    public function getType() { return $this->_entity->getEntityType().'.'.$this->_sEvent; }
+    public function getType() { return $this->_entity->getEntityTypeName().'.'.$this->_sEvent; }
     
     
     

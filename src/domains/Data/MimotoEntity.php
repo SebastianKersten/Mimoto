@@ -23,10 +23,16 @@ class MimotoEntity
     private $_nId;
 
     /**
-     * The entity's type
+     * The entity's type's id
      * @var string
      */
-    private $_sEntityType;
+    private $_sEntityTypeId;
+
+    /**
+     * The entity's type's name
+     * @var string
+     */
+    private $_sEntityTypeName;
 
     /**
      * The moment of creation
@@ -82,11 +88,18 @@ class MimotoEntity
 
 
     /**
-     * Get the entity's type
+     * Get the entity's type's id
      *
      * @return string
      */
-    public function getEntityType() { return $this->_sEntityType; }
+    public function getEntityTypeId() { return $this->_sEntityTypeId; }
+
+    /**
+     * Get the entity's type's name
+     *
+     * @return string
+     */
+    public function getEntityTypeName() { $this->_sEntityTypeName; }
 
 
     /**
@@ -121,10 +134,11 @@ class MimotoEntity
      * @param string $sEntityType
      * @param boolean $bTrackChanges (default changes are tracked)
      */
-    public function __construct($sEntityType, $bTrackChanges = true)
+    public function __construct($sEntityTypeId, $sEntityTypeName, $bTrackChanges = true)
     {
         // register
-        $this->_sEntityType = $sEntityType;
+        $this->_sEntityTypeId = $sEntityTypeId;
+        $this->_sEntityTypeName = $sEntityTypeName;
         $this->_bTrackChanges = $bTrackChanges;
 
         // init
@@ -334,7 +348,7 @@ class MimotoEntity
         $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, $nSeperatorPos + 1) : '';
 
         // compose
-        $sAimlessValue = MimotoAimlessUtils::formatAimlessValue($this->getEntityType(), $this->getId(), $sPropertyName);
+        $sAimlessValue = MimotoAimlessUtils::formatAimlessValue($this->getEntityTypeName(), $this->getId(), $sPropertyName);
 
         // verify
         if (!empty($sSubPropertyName) && $this->valueRelatesToEntity($sMainPropertyName))
@@ -343,7 +357,7 @@ class MimotoEntity
             $entity = $this->getValue($sMainPropertyName);
 
             // compose
-            if (MimotoEntityUtils::isEntity($entity))
+            if (MimotoDataUtils::isEntity($entity))
             {
                 $sAimlessValue .= MimotoAimlessUtils::formatAimlessSubvalue($sMainPropertyName, $entity->getId(), $sSubPropertyName);
             }
@@ -363,7 +377,7 @@ class MimotoEntity
      */
     public function getAimlessId()
     {
-        return $this->getEntityType().'.'.$this->getId();
+        return $this->getEntityTypeName().'.'.$this->getId();
     }
 
 
@@ -495,8 +509,25 @@ class MimotoEntity
         // forward
         if (!empty($sPropertySelector)) { $this->forwardSetValueOfEntityProperty($property, $sPropertySelector, $xValue); return; }
 
+
+
+
+        //error($xValue->getEntityTypeName());
+        //error($xValue);
+
+
+        // 1. check if type is connection
+        // 2. check if type is entity
+        // 3. check if type is id
+        // 4. central function for checking the above?
+
+
+
         // validate
-        if (MimotoDataUtils::isEntity($xValue) && $xValue->getEntityType() !== $property->config->settings->entityType) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$xValue->getEntityType()."' instead of type '$property->config->settings->entityType'"); }
+        if (MimotoDataUtils::isEntity($xValue) && $xValue->getEntityTypeId() !== $property->config->settings->allowedEntityType->id)
+        {
+            throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '".$property->config->name."' has type '".$xValue->getEntityTypeName()."' instead of type '".$property->config->settings->allowedEntityType->name."'");
+        }
 
 
         if ($xValue instanceof MimotoEntityConnection)
@@ -516,7 +547,7 @@ class MimotoEntity
         $connection = new MimotoEntityConnection();
 
         // compose
-        $connection->setParentEntityTypeId($this->getEntityType());
+        $connection->setParentEntityTypeId($this->getEntityTypeId());
         $connection->setParentPropertyId($property->config->id);
         $connection->setParentId($this->getId());
         $connection->setChildEntityTypeId($property->config->settings->allowedEntityType->id);
@@ -742,7 +773,7 @@ class MimotoEntity
         
         if (MimotoDataUtils::isEntity($value))
         {
-            $sEntityType = $value->getEntityType();
+            $sEntityType = $value->getEntityTypeName();
         }
         else
         {
@@ -760,7 +791,7 @@ class MimotoEntity
         // init
         $connection = new MimotoEntityConnection();
 
-        $connection->setParentEntityTypeId($this->getEntityType());
+        $connection->setParentEntityTypeId($this->getEntityTypeId());
         $connection->setParentPropertyId($property->config->id);
         $connection->setParentId($this->getId());
         
@@ -773,7 +804,7 @@ class MimotoEntity
         
         
         // validate
-        if (MimotoDataUtils::isEntity($value) && !in_array($sEntityType, $aAllowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$value->getEntityType()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
+        if (MimotoDataUtils::isEntity($value) && !in_array($sEntityType, $aAllowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$value->getEntityTypeName()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
 
         if (MimotoDataUtils::isEntity($value))
         {
@@ -836,7 +867,7 @@ class MimotoEntity
         
         if (MimotoDataUtils::isEntity($xValue))
         {
-            $sEntityType = $xValue->getEntityType();
+            $sEntityType = $xValue->getEntityTypeName();
         }
         else
         {
@@ -853,7 +884,7 @@ class MimotoEntity
         // init
         $connection = new MimotoEntityConnection();
 
-        $connection->setParentEntityTypeId($this->getEntityType());
+        $connection->setParentEntityTypeId($this->getEntityTypeId());
         $connection->setParentPropertyId($property->config->id);
         $connection->setParentId($this->getId());
         
@@ -866,7 +897,7 @@ class MimotoEntity
         
         
         // validate
-        if (MimotoDataUtils::isEntity($xValue) && !in_array($sEntityType, $aAllowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$xValue->getEntityType()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
+        if (MimotoDataUtils::isEntity($xValue) && !in_array($sEntityType, $aAllowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$xValue->getEntityTypeName()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
 
         if (MimotoDataUtils::isEntity($xValue))
         {
