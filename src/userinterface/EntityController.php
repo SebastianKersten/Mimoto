@@ -88,7 +88,7 @@ class EntityController
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityDetail', $entity);
 
         // 4. setup component
-        $page->setPropertyTemplate('properties', 'Mimoto.CMS_entities_PropertyListItem');
+        $page->setPropertyComponent('properties', 'Mimoto.CMS_entities_PropertyListItem');
 
         // 5. output
         return $page->render();
