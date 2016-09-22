@@ -6,6 +6,7 @@ var rename = require('gulp-rename');
 var size = require('gulp-size');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
+var browserSync = require('browser-sync');
 
 gulp.task('sass:development', function () {
 
@@ -28,7 +29,8 @@ function sassTasks (env) {
     .pipe(gulp.dest(config.dest))
     .pipe(size({
       title: config.cssName
-    }));
+    }))
+    .pipe(browserSync.reload({stream: true}));
 
 }
 
@@ -43,5 +45,3 @@ var processors = {
   ]
 
 };
-
-
