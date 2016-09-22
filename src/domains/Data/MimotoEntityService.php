@@ -208,7 +208,7 @@ class MimotoEntityService
         {
             $entityConfig = $this->_aEntityConfigs[$entity->getEntityTypeName()];
         }
-        
+
         return $this->_entityRepository->store($entityConfig, $entity);
     }
 

@@ -163,12 +163,11 @@ class MimotoEntityRepository
      */
     public function store(MimotoEntityConfig $entityConfig, MimotoEntity $entity)
     {
-        
         // read
         $aModifiedValues = $entity->getChanges();
         
         // save nothing if no changes
-        if (count($aModifiedValues) == 0) { return; }
+        if (count($aModifiedValues) == 0) { return $entity; }
         
         // determine
         $bIsExistingEntity = (!empty($entity->getId()) && !is_nan($entity->getId())) ? true : false;
@@ -342,8 +341,7 @@ class MimotoEntityRepository
         
         // update
         $entity->acceptChanges();
-        
-        
+
         // send
         return $entity;
     }
@@ -518,7 +516,7 @@ class MimotoEntityRepository
             "sortindex = :sortindex"
         );
         $params = array(
-            ':parent_entity_type_id' => $GLOBALS['Mimoto.Config']->getEntityIdByName($newItem->getParentEntityTypeId()), // #todo - mixed value = confusing
+            ':parent_entity_type_id' => $newItem->getParentEntityTypeId(),
             ':parent_property_id' => $newItem->getParentPropertyId(),
             ':parent_id' => $newItem->getParentId(),
             ':child_entity_type_id' => $newItem->getChildEntityTypeId(),

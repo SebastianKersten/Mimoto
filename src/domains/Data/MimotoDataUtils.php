@@ -5,6 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Data\MimotoEntity;
+use Mimoto\Data\MimotoEntityConnection;
 
 
 /**
@@ -17,10 +18,10 @@ class MimotoDataUtils
 
     // const ENT
 
-    public static function getValueType($xValue)
-    {
-
-    }
+//    public static function getValueType($xValue)
+//    {
+//
+//    }
 
 
 
@@ -95,5 +96,20 @@ class MimotoDataUtils
         // send
         return $aConditionals;
     }
-    
+
+
+    public static function connectionsAreSimilar(MimotoEntityConnection $connection1, MimotoEntityConnection $connection2)
+    {
+        return
+        (
+            $connection1->getId() == $connection2->getId() || empty($connection1->getId() || empty($connection2->getId())) &&
+            $connection1->getParentEntityTypeId() == $connection2->getParentEntityTypeId() &&
+            $connection1->getParentPropertyId() == $connection2->getParentPropertyId() &&
+            $connection1->getParentId() == $connection2->getParentId() &&
+            $connection1->getChildEntityTypeId() == $connection2->getChildEntityTypeId() &&
+            $connection1->getChildId() == $connection2->getChildId() &&
+            $connection1->getSortIndex() == $connection2->getSortIndex()
+        ) ? true : false;
+    }
+
 }

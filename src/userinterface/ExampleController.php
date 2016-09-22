@@ -83,24 +83,23 @@ class ExampleController
 
         $pm = $app['Mimoto.Data']->get('projectManager', 2);
 
-
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
 
 
         $project->setValue('projectManager', $pm);
 
-
-        //error($project);
-
+        
         $project = $app['Mimoto.Data']->store($project);
+
 
         // create
         $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
         
         // setup
         $component->setPropertyComponent('subprojects', 'subproject');
-        
+        $component->setPropertyComponent('projectManager', 'projectManager');
+
         // render and send
         return $component->render();
     }

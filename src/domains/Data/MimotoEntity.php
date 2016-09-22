@@ -23,23 +23,16 @@ class MimotoEntity
     private $_nId;
 
     /**
-     * The entity's type's id
-     * @var string
-     */
-    private $_sEntityTypeId;
-
-    /**
-     * The entity's type's name
-     * @var string
-     */
-    private $_sEntityTypeName;
-
-    /**
      * The moment of creation
      * @var \DateTime
      */
     private $_datetimeCreated;
 
+    /**
+     * The entity's config, containing the entityTypeId and entityTypeName
+     * @var string
+     */
+    private $_config;
 
 
     /**
@@ -90,16 +83,16 @@ class MimotoEntity
     /**
      * Get the entity's type's id
      *
-     * @return string
+     * @return mixed
      */
-    public function getEntityTypeId() { return $this->_sEntityTypeId; }
+    public function getEntityTypeId() { return $this->_config->entityTypeId; }
 
     /**
      * Get the entity's type's name
      *
      * @return string
      */
-    public function getEntityTypeName() { $this->_sEntityTypeName; }
+    public function getEntityTypeName() { return $this->_config->entityTypeName; }
 
 
     /**
@@ -119,12 +112,6 @@ class MimotoEntity
 
 
     // ----------------------------------------------------------------------------
-    // --- Constructor-------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-
-    // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
 
@@ -134,11 +121,14 @@ class MimotoEntity
      * @param string $sEntityType
      * @param boolean $bTrackChanges (default changes are tracked)
      */
-    public function __construct($sEntityTypeId, $sEntityTypeName, $bTrackChanges = true)
+    public function __construct($xEntityTypeId, $sEntityTypeName, $bTrackChanges = true)
     {
+        // init
+        $this->_config = (object) array();
+
         // register
-        $this->_sEntityTypeId = $sEntityTypeId;
-        $this->_sEntityTypeName = $sEntityTypeName;
+        $this->_config->entityTypeId = $xEntityTypeId;
+        $this->_config->entityTypeName = $sEntityTypeName;
         $this->_bTrackChanges = $bTrackChanges;
 
         // init
@@ -523,6 +513,10 @@ class MimotoEntity
 
 
 
+
+
+
+
         // validate
         if (MimotoDataUtils::isEntity($xValue) && $xValue->getEntityTypeId() !== $property->config->settings->allowedEntityType->id)
         {
@@ -542,6 +536,8 @@ class MimotoEntity
             return;
         }
 
+
+        //error($this->getEntityTypeId());
 
         // init
         $connection = new MimotoEntityConnection();
@@ -1117,8 +1113,16 @@ class MimotoEntity
                     }
                     elseif (isset($property->data->currentEntity) && isset($property->data->persistentEntity))
                     {
-                        $aAddedItems[] = $property->data->currentEntity;
-                        $aRemovedItems[] = $property->data->persistentEntity;
+                        // check if similar
+                        if (MimotoDataUtils::connectionsAreSimilar($property->data->currentEntity, $property->data->persistentEntity))
+                        {
+                            $property->data->currentEntity->setId($property->data->persistentEntity->getId());
+                        }
+                        else
+                        {
+                            $aAddedItems[] = $property->data->currentEntity;
+                            $aRemovedItems[] = $property->data->persistentEntity;
+                        }
                     }
 
                     if (count($aAddedItems) > 0 || count($aUpdatedItems) > 0 || count($aRemovedItems) > 0)
