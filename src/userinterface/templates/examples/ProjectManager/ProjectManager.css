@@ -1,4 +1,5 @@
 div.examples__ProjectManager {
+    display: inline-block;
     background-color: #eeeeee;
     border: 1px solid #555555;
     padding: 7px;

@@ -741,3 +741,12 @@ div.example_clientlist, div.example_entitylist {
     {
         margin-bottom: 0;
     }
+
+
+
+div.examples__ProjectManager {
+    display: inline-block;
+    background-color: #eeeeee;
+    border: 1px solid #555555;
+    padding: 7px 10px 7px 7px;
+}

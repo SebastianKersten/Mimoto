@@ -89,7 +89,7 @@ class ExampleController
 
         $project->setValue('projectManager', $pm);
 
-        
+
         $project = $app['Mimoto.Data']->store($project);
 
 

@@ -96,7 +96,7 @@ class MimotoAimlessService
 
 
 
-    public function getComponent($sComponentName, MimotoEntity $entity = null)
+    public function getComponentFile($sComponentName, MimotoEntity $entity = null)
     {
         $nComponentCount = count($this->_aComponents);
         for ($i = 0; $i < $nComponentCount; $i++)

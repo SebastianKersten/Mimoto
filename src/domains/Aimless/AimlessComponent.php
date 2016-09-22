@@ -145,82 +145,98 @@ class AimlessComponent
     // --- Twig usage
 
 
-    public function data($sPropertyName)
+    public function data($sPropertySelector)
     {
         // validate
-        if (empty($this->_entity)) return;
+        if (empty($this->_entity)) error("AimlessComponent says: The entity is not set. Please supply one.");
+
+        // find
+        $nSeperatorPos = strpos($sPropertySelector, '.');
+
+        // separate
+        $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, 0, $nSeperatorPos) : $sPropertySelector;
+        $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, $nSeperatorPos + 1) : '';
 
 
-
-        // 1. subpropertyname (selector-query)
-        // 2. check property type
-        // 3. switch / case
-        // 4. if entity -> create entity based on component
-        // 5. if no entity, keep empty
-        // 6. example 16
-
-
-
-
-        // read
-        $value = $this->_entity->getValue($sPropertyName, true);
-        
-
-
-
-
-
-        // verify
-        if (is_array($value))
+        // render
+        switch($this->_entity->getPropertyType($sMainPropertyName))
         {
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
-            $aCollection = $value;
-            $aConnections = null;
-            //$aConnections = $this->_entity->getValue($sPropertyName); // #todo - kan niet, filter check wordt gedaan ná ophalen data en op basis van de data
+                // read, render and send
+                return $this->renderValueProperty($this->_entity->getValue($sMainPropertyName, true), $sMainPropertyName);
+                break;
 
-            $nSeparatorPos = strpos($sPropertyName, '.');
-            if ($nSeparatorPos !== false) { $sPropertyName = substr($sPropertyName, 0, $nSeparatorPos); }
-            
-            
-            if (!isset($this->_aPropertyComponents[$sPropertyName]))
-            {
-                return "Aimless says: No component set for property '$sPropertyName'. Use AimlessComponent->setPropertyComponent()";
-                
-                // 1. broadcast webevent for debugging purposes
-                // 2. standaard report error (error level)
-            }
-            
-            // render and send
-            return $this->renderCollection($aCollection, $aConnections, $this->_aPropertyComponents[$sPropertyName]->sComponentName);
-        }
-        else
-        {
-            // format
-            if (isset($this->_aPropertyFormatters[$sPropertyName]))
-            {
-                $fDelegate = $this->_aPropertyFormatters[$sPropertyName]->delegate;
-                
-                $value = $fDelegate($value);
-            }
-            
-            //if (isset($this->_aPropertyComponents[$sPropertyName]))
-            //{
-                
-                // 1. check if is entity instanceof MimotoEntity
-                // 2. wrap in component
-                
-                
-                // get te
-            //    $sComponentFile = $this->_AimlessService->getComponent($this->_sComponentName, $this->_entity);
-                
-            //}
-            //else
-            //{
-                // send
-                return $value;
-            //}
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                // read, render and send
+                return $this->renderEntityProperty($this->_entity->getValue($sMainPropertyName), $sMainPropertyName, $sSubPropertyName);
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                // read, render and send
+                return $this->renderCollectionProperty($this->_entity->getValue($sMainPropertyName, true), $sMainPropertyName);
+                break;
         }
     }
+
+    private function renderValueProperty($value, $sPropertyName)
+    {
+        // format
+        if (isset($this->_aPropertyFormatters[$sPropertyName]))
+        {
+            $fDelegate = $this->_aPropertyFormatters[$sPropertyName]->delegate;
+
+            $value = $fDelegate($value);
+        }
+
+        // send
+        return $value;
+    }
+
+    private function renderEntityProperty($entity, $sPropertyName, $sSubpropertySelector)
+    {
+        // validate
+        if (empty($entity)) return;
+
+
+        if (isset($this->_aPropertyComponents[$sPropertyName]) && empty($sSubpropertySelector))
+        {
+            // get te component file
+            $sComponentName = $this->_aPropertyComponents[$sPropertyName]->sComponentName;
+
+            // create
+            $component = $this->_AimlessService->createComponent($sComponentName, $entity);
+
+            // render and send
+            return $component->render();
+        }
+        elseif (!empty($sSubpropertySelector))
+        {
+            return $entity->getValue($sSubpropertySelector);
+        }
+    }
+
+    private function renderCollectionProperty($aCollection, $sPropertyName)
+    {
+        $aConnections = null;
+        //$aConnections = $this->_entity->getValue($sPropertyName); // #todo - kan niet, filter check wordt gedaan ná ophalen data en op basis van de data
+
+        // validate
+        if (!isset($this->_aPropertyComponents[$sPropertyName]))
+        {
+            return "Aimless says: No component set for property '$sPropertyName'. Use AimlessComponent->setPropertyComponent()";
+
+            // 1. broadcast webevent for debugging purposes
+            // 2. standaard report error (error level)
+        }
+
+        // render and send
+        return $this->renderCollection($aCollection, $aConnections, $this->_aPropertyComponents[$sPropertyName]->sComponentName);
+
+    }
+
     
     public function selection($sSelectionName)
     {
@@ -323,8 +339,8 @@ class AimlessComponent
     
     public function render()
     {
-        // get te
-        $sComponentFile = $this->_AimlessService->getComponent($this->_sComponentName, $this->_entity);
+        // get te component file
+        $sComponentFile = $this->_AimlessService->getComponentFile($this->_sComponentName, $this->_entity);
         
         // compose
         $this->_aVars['Aimless'] = $this;

@@ -14,7 +14,7 @@
         <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
 
         {% if Aimless.data('projectManager') is not empty %}
-            &nbsp;-&nbsp;<i>Project manager = <span {{ Aimless.realtime('projectManager')|raw }}>{{ Aimless.data('projectManager') }}</span></i>
+            &nbsp;-&nbsp;<i>Project manager = <span {{ Aimless.realtime('projectManager')|raw }}>{{ Aimless.data('projectManager')|raw }}</span></i>
         {% endif %}
 
         <br><br>

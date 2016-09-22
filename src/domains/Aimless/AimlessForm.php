@@ -88,7 +88,7 @@ class AimlessForm extends AimlessComponent
     public function render()
     {
         // get te
-        $sComponentFile = $this->_AimlessService->getComponent($this->_sComponentName, $this->_entity);
+        $sComponentFile = $this->_AimlessService->getComponentFile($this->_sComponentName, $this->_entity);
         
         // compose
         $this->_aVars['Aimless'] = $this;
