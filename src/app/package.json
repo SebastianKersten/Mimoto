@@ -12,6 +12,7 @@
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
+    "gulp-size": "^2.1.0",
     "require-dir": "^0.3.0",
     "webpack": "^1.13"
   }
