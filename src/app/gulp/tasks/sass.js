@@ -4,13 +4,44 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var rename = require('gulp-rename');
 var size = require('gulp-size');
+var postcss = require('gulp-postcss');
+var autoprefixer = require('autoprefixer');
 
-gulp.task('sass', function () {
+gulp.task('sass:development', function () {
+
+  sassTasks('development');
+
+});
+
+gulp.task('sass:production', function () {
+
+  sassTasks('production');
+
+});
+
+function sassTasks (env) {
 
   return gulp.src(config.src)
     .pipe(sass(config.settings).on('error', sass.logError))
+    .pipe(postcss(processors[env]))
     .pipe(rename(config.cssName))
     .pipe(gulp.dest(config.dest))
-    .pipe(size({title:config.cssName}));
+    .pipe(size({
+      title: config.cssName
+    }));
 
-});
+}
+
+var processors = {
+
+  "development": [
+    autoprefixer({browsers: ['last 10 version']})
+  ],
+
+  "production": [
+    autoprefixer({browsers: ['last 10 version']})
+  ]
+
+};
+
+
