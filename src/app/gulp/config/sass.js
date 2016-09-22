@@ -2,7 +2,7 @@ var config = require('./');
 
 module.exports = {
 
-  destName: 'app.min.css',
+  cssName: 'mimoto.aimless.css',
   src: config.src + "scss/**/*.{sass,scss}",
   dest: config.dest + "/css",
   settings: {
