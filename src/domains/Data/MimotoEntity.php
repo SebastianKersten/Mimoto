@@ -676,8 +676,9 @@ class MimotoEntity
             $aCollectionItems = $property->data->currentCollection;
 
             $aCollection = []; 
-            
-            for ($i = 0; $i < count($aCollectionItems); $i++)
+
+            $nCollectionItemCount = count($aCollectionItems);
+            for ($i = 0; $i < $nCollectionItemCount; $i++)
             {
                 // register
                 $connection = $aCollectionItems[$i];
@@ -793,7 +794,8 @@ class MimotoEntity
         
         
         $aAllowedEntityTypes = [];
-        for ($i = 0; $i < count($property->config->settings->allowedEntityTypes); $i++)
+        $nAllowedEntityTypecount = count($property->config->settings->allowedEntityTypes);
+        for ($i = 0; $i < $nAllowedEntityTypecount; $i++)
         {
             $aAllowedEntityTypes[] = $property->config->settings->allowedEntityTypes[$i]->name;
         }
@@ -823,7 +825,8 @@ class MimotoEntity
         if (!$property->config->settings->allowDuplicates)
         {
             $bDuplicateFound = false;
-            for ($i = 0; $i < count($property->data->currentCollection); $i++)
+            $nCurrentCollectionCount = count($property->data->currentCollection);
+            for ($i = 0; $i < $nCurrentCollectionCount; $i++)
             {
                 if ($property->data->currentCollection[$i]->getChildId() == $connection->getChildId())
                 {
@@ -886,7 +889,8 @@ class MimotoEntity
         
         
         $aAllowedEntityTypes = [];
-        for ($i = 0; $i < count($property->config->settings->allowedEntityTypes); $i++)
+        $nAllowedEntityTypeCount = count($property->config->settings->allowedEntityTypes);
+        for ($i = 0; $i < $nAllowedEntityTypeCount; $i++)
         {
             $aAllowedEntityTypes[] = $property->config->settings->allowedEntityTypes[$i]->name;
         }
@@ -919,8 +923,8 @@ class MimotoEntity
         // manage duplicates
         // if (!$property->config->settings->allowDuplicates)
         
-        
-        for ($i = 0; $i < count($property->data->currentCollection); $i++)
+        $nCurrentCollectionCount = count($property->data->currentCollection);
+        for ($i = 0; $i < $nCurrentCollectionCount; $i++)
         {
             if ($property->data->currentCollection[$i]->getChildId() == $connection->getChildId())
             {
@@ -1153,7 +1157,8 @@ class MimotoEntity
                     
                     if (!empty($property->data->currentCollection))
                     {
-                        for ($c = 0; $c < count($property->data->currentCollection); $c++)
+                        $nCurrentCollectionCount = count($property->data->currentCollection);
+                        for ($c = 0; $c < $nCurrentCollectionCount; $c++)
                         {
                             $currentItem = $property->data->currentCollection[$c];
 
@@ -1167,7 +1172,8 @@ class MimotoEntity
                             // add updated items
                             if (!empty($property->data->persistentCollection))
                             {
-                                for ($p = 0; $p < count($property->data->persistentCollection); $p++)
+                                $nPersistentCollectionCount = count($property->data->persistentCollection);
+                                for ($p = 0; $p < $nPersistentCollectionCount; $p++)
                                 {
                                     $persistentItem = $property->data->persistentCollection[$p];
                                     
@@ -1189,7 +1195,8 @@ class MimotoEntity
                     // add removed items
                     if (!empty($property->data->persistentCollection))
                     {
-                        for ($p = 0; $p < count($property->data->persistentCollection); $p++)
+                        $nPersistentCollectionCount = count($property->data->persistentCollection);
+                        for ($p = 0; $p < $nPersistentCollectionCount; $p++)
                         {
                             // register
                             $persistentItem = $property->data->persistentCollection[$p];
@@ -1198,7 +1205,8 @@ class MimotoEntity
                             $bItemFound = false;
                             
                             // search
-                            for ($c = 0; $c < count($property->data->currentCollection); $c++)
+                            $nCurrentCollectionCount = count($property->data->currentCollection);
+                            for ($c = 0; $c < $nCurrentCollectionCount; $c++)
                             {
                                 // register
                                 $currentItem = $property->data->currentCollection[$c];
@@ -1288,7 +1296,8 @@ class MimotoEntity
                     
                     if (!empty($property->data->currentCollection))
                     {
-                        for ($k = 0; $k < count($property->data->currentCollection); $k++)
+                        $nCurrentCollectionCount = count($property->data->currentCollection);
+                        for ($k = 0; $k < $nCurrentCollectionCount; $k++)
                         {
                             $property->data->persistentCollection[$k] = clone $property->data->currentCollection[$k];
                         }

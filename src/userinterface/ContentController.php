@@ -6,10 +6,6 @@ namespace Mimoto\UserInterface;
 // Silex classes
 use Silex\Application;
 
-// Symfony classes
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-
 
 /**
  * ContentController

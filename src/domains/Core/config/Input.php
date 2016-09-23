@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core;
+namespace Mimoto\Core\config;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * CoreConfig__Mimoto_Form_Layout_GroupStart
+ * Input
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class CoreConfig__Mimoto_Form_Layout_GroupStart
+class Input
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT,
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'__title',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT.'__value',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'title',
+                    'name' => 'varname',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'__title-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'__value-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

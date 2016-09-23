@@ -4,10 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
-use Mimoto\Aimless\AimlessComponent;
 use Mimoto\Core\CoreConfig;
-use Mimoto\Data\MimotoDataUtils;
-use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
 /**
@@ -106,7 +103,8 @@ class AimlessForm extends AimlessComponent
 
         //output('fields', $aFields);
 
-        for ($i = 0; $i < count($aFields); $i++)
+        $nFieldCount = count($aFields);
+        for ($i = 0; $i < $nFieldCount; $i++)
         {
             // register
             $field = $aFields[$i];
@@ -162,8 +160,9 @@ class AimlessForm extends AimlessComponent
     {
         // init
         $sRenderedCollection = '';
-        
-        for ($i = 0; $i < count($aCollection); $i++)
+
+        $nCollectionCount = count($aCollection);
+        for ($i = 0; $i < $nCollectionCount; $i++)
         {
             // register
             $entity = $aCollection[$i];

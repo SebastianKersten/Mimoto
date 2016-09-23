@@ -1,38 +1,56 @@
 <?php
 
 // classpath
-namespace Mimoto\Core;
+namespace Mimoto\Core\config;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * CoreConfig__Mimoto_Form
+ * EntityProperty
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class CoreConfig__Mimoto_Form
+class EntityProperty
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM,
+            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM,
+            'name' => CoreConfig::MIMOTO_ENTITYPROPERTY,
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM.'__name',
+
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__name',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM.'__name-type',
+                            'key' => 'type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__name-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__type',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'type',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__type-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,24 +60,23 @@ class CoreConfig__Mimoto_Form
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM.'__fields',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__settings',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'fields',
+                    'name' => 'settings',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM.'__fields-allowedEntityTypes',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__settings-allowedEntityTypes',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => '[
-                                    "'.CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'"
-                                ]'
+                            'value' => '["'.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'"]'
+
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM.'__fields-allowDuplicates',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__settings-allowDuplicates',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',

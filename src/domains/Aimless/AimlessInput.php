@@ -3,12 +3,6 @@
 // classpath
 namespace Mimoto\Aimless;
 
-// Mimoto classes
-use Mimoto\Aimless\AimlessComponent;
-use Mimoto\Core\CoreConfig;
-use Mimoto\Data\MimotoDataUtils;
-use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
-
 
 /**
  * AimlessInput

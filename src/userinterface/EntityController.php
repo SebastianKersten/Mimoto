@@ -8,7 +8,6 @@ use Mimoto\Core\CoreConfig;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 // Silex classes

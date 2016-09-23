@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core;
+namespace Mimoto\Core\config;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * CoreConfig__Mimoto_Form_Input_Textline
+ * OutputTitle
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class CoreConfig__Mimoto_Form_Input_Textline
+class OutputTitle
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
+            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
-            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'name' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
+            'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__label',
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'label',
+                    'name' => 'title',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class CoreConfig__Mimoto_Form_Input_Textline
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__regexp',
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'regexp',
+                    'name' => 'subtitle',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__regexp-type',
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -59,19 +59,19 @@ class CoreConfig__Mimoto_Form_Input_Textline
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__maxchars',
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'maxchars',
+                    'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__maxchars-type',
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
                         )
                     ]
                 )

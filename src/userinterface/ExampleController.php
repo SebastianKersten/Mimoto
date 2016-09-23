@@ -425,8 +425,6 @@ class ExampleController
         error(($author->typeOf('person')) ? 'Yes, entity is of type "person"' : 'No, entity is not of type "person"');
 
 
-        die();
-
 
         // load
         $person = $app['Mimoto.Data']->get('person', 1);
@@ -553,8 +551,9 @@ class ExampleController
     {
         
         $aArticles = $app['Mimoto.Data']->find(['type' => $sEntityType]);
-        
-        for ($i = 0; $i < count($aArticles); $i++)
+
+        $nArticleCount = count($aArticles);
+        for ($i = 0; $i < $nArticleCount; $i++)
         {
             $article = $aArticles[$i];
             

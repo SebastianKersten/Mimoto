@@ -4,16 +4,20 @@
 namespace Mimoto\Core;
 
 // Mimoto classes
-use Mimoto\Core\CoreConfig__Mimoto_Entity;
-use Mimoto\Core\CoreConfig__Mimoto_EntityProperty;
-use Mimoto\Core\CoreConfig__Mimoto_EntityPropertySetting;
-use Mimoto\Core\CoreConfig__Mimoto_Form;
-use Mimoto\Core\CoreConfig__Mimoto_Form_Input;
-use Mimoto\Core\CoreConfig__Mimoto_Form_InputValue;
-use Mimoto\Core\CoreConfig__Mimoto_Form_Output_Title;
-use Mimoto\Core\CoreConfig__Mimoto_Form_Layout_GroupStart;
-use Mimoto\Core\CoreConfig__Mimoto_Form_Layout_GroupEnd;
-use Mimoto\Core\CoreConfig__Mimoto_Form_Layout_Divider;
+use Mimoto\Core\config\Entity;
+use Mimoto\Core\config\EntityProperty;
+use Mimoto\Core\config\EntityPropertySetting;
+use Mimoto\Core\config\Form;
+use Mimoto\Core\config\Input;
+use Mimoto\Core\config\InputValue;
+use Mimoto\Core\config\OutputTitle;
+use Mimoto\Core\config\LayoutGroupStart;
+use Mimoto\Core\config\LayoutGroupEnd;
+use Mimoto\Core\config\LayoutDivider;
+use Mimoto\Core\config\InputCheckbox;
+use Mimoto\Core\config\InputDropdown;
+use Mimoto\Core\config\InputRadioButton;
+use Mimoto\Core\config\InputTextline;
 
 
 /**
@@ -101,31 +105,31 @@ class CoreConfig
         $aEntities = [
 
             // core
-            CoreConfig__Mimoto_Entity::getStructure(),
-            CoreConfig__Mimoto_EntityProperty::getStructure(),
-            CoreConfig__Mimoto_EntityPropertySetting::getStructure(),
+            Entity::getStructure(),
+            EntityProperty::getStructure(),
+            EntityPropertySetting::getStructure(),
 
             // views
             // ...
 
             // forms
-            CoreConfig__Mimoto_Form::getStructure(),
-            CoreConfig__Mimoto_Form_Input::getStructure(),
-            CoreConfig__Mimoto_Form_InputValue::getStructure(),
+            Form::getStructure(),
+            Input::getStructure(),
+            InputValue::getStructure(),
 
             // output
-            CoreConfig__Mimoto_Form_Output_Title::getStructure(),
+            OutputTitle::getStructure(),
 
             // layout
-            CoreConfig__Mimoto_Form_Layout_GroupStart::getStructure(),
-            CoreConfig__Mimoto_Form_Layout_GroupEnd::getStructure(),
-            CoreConfig__Mimoto_Form_Layout_Divider::getStructure(),
+            LayoutGroupStart::getStructure(),
+            LayoutGroupEnd::getStructure(),
+            LayoutDivider::getStructure(),
 
             // input
-            CoreConfig__Mimoto_Form_Input_Textline::getStructure(),
-            CoreConfig__Mimoto_Form_Input_Checkbox::getStructure(),
-            CoreConfig__Mimoto_Form_Input_Radiobutton::getStructure(),
-            CoreConfig__Mimoto_Form_Input_Dropdown::getStructure()
+            InputTextline::getStructure(),
+            InputCheckbox::getStructure(),
+            InputRadiobutton::getStructure(),
+            InputDropdown::getStructure()
         ];
 
         // send

@@ -9,17 +9,13 @@ use Mimoto\library\controllers\MimotoController;
 // Silex classes
 use Silex\Application;
 
-// Symfony classes
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-
 
 /**
  * EntitiesController
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class PageController extends MimotoController
+class EntitiesController extends MimotoController
 {
     
     public function viewEntity(Application $app, $sEntityType, $nId)
@@ -173,7 +169,8 @@ class PageController extends MimotoController
         $aAvailableOptions = ['value', 'entity', 'collection'];
         
         // compose
-        for ($i = 0; $i < count($aAvailableOptions); $i++)
+        $nAvailableOptionCount = count($aAvailableOptions);
+        for ($i = 0; $i < $nAvailableOptionCount; $i++)
         {
             // setup
             $option = (object) array
@@ -199,7 +196,8 @@ class PageController extends MimotoController
         $aAvailableOptions = ['textline', 'textblock', 'boolean', 'number', 'timestamp','constant'];
         
         // compose
-        for ($i = 0; $i < count($aAvailableOptions); $i++)
+        $nAvailableOptionCount = count($aAvailableOptions);
+        for ($i = 0; $i < $nAvailableOptionCount; $i++)
         {
             // setup
             $option = (object) array
@@ -222,7 +220,8 @@ class PageController extends MimotoController
         $aOptions = [];
         
         // compose
-        for ($i = 0; $i < count($aAvailableEntities); $i++)
+        $nAvailableEntityCount = count($aAvailableEntities);
+        for ($i = 0; $i < $nAvailableEntityCount; $i++)
         {
             // setup
             $option = (object) array
@@ -248,7 +247,8 @@ class PageController extends MimotoController
         $aAvailableOptions = ['false', 'true'];
         
         // compose
-        for ($i = 0; $i < count($aAvailableOptions); $i++)
+        $nAvailableOptionCount = count($aAvailableOptions);
+        for ($i = 0; $i < $nAvailableOptionCount; $i++)
         {
             // setup
             $option = (object) array

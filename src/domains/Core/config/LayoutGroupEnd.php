@@ -1,27 +1,27 @@
 <?php
 
 // classpath
-namespace Mimoto\Core;
+namespace Mimoto\Core\config;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * CoreConfig__Mimoto_Form_Layout_Divider
+ * LayoutGroupEnd
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class CoreConfig__Mimoto_Form_Layout_Divider
+class LayoutGroupEnd
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER,
+            'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER,
+            'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND,
             'extends' => null,
             'properties' => []
         );

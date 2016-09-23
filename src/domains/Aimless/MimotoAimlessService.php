@@ -9,9 +9,6 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoDataUtils;
 
-// Silex classes
-use Silex\Application;
-
 
 /**
  * MimotoAimlessService

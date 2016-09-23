@@ -43,7 +43,8 @@ class MimotoEntityService
         $this->_EntityConfigService = $entityConfigService;
         
         // register custom configs
-        for ($i = 0; $i < count($aCustomEntityConfigs); $i++)
+        $nCustomEntityConfigCount = count($aCustomEntityConfigs);
+        for ($i = 0; $i < $nCustomEntityConfigCount; $i++)
         {
             // register
             $entityConfig = $aCustomEntityConfigs[$i];
@@ -54,8 +55,9 @@ class MimotoEntityService
         
         // load
         $aDatabaseEntityConfigs = $this->_EntityConfigService->getAllEntityConfigs();
-        
-        for ($i = 0; $i < count($aDatabaseEntityConfigs); $i++)
+
+        $nDatabaseEntityConfigCount = count($aDatabaseEntityConfigs);
+        for ($i = 0; $i < $nDatabaseEntityConfigCount; $i++)
         {
             // register
             $entityConfig = $aDatabaseEntityConfigs[$i];

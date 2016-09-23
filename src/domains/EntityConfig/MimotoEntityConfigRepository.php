@@ -587,7 +587,8 @@ class MimotoEntityConfigRepository
 
                         // prepare
                         $property->settings['allowedEntityTypes']->value = json_decode($property->settings['allowedEntityTypes']->value);
-                        for ($k = 0; $k < count($property->settings['allowedEntityTypes']->value); $k++)
+                        $nAllowedEntityTypeCount = count($property->settings['allowedEntityTypes']->value);
+                        for ($k = 0; $k < $nAllowedEntityTypeCount; $k++)
                         {
                             $property->settings['allowedEntityTypes']->value[$k] = (object) array(
                                 'id' => $property->settings['allowedEntityTypes']->value[$k],

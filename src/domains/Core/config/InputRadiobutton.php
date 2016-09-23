@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core;
+namespace Mimoto\Core\config;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * CoreConfig__Mimoto_Form_Input
+ * InputRadiobutton
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class CoreConfig__Mimoto_Form_InputValue
+class InputRadiobutton
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUTVALUE,
-            'extends' => null,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
+            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__varname',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'__label',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'varname',
+                    'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'__varname-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'__label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,19 +42,19 @@ class CoreConfig__Mimoto_Form_InputValue
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__entityproperty',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'__options',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'entityproperty',
-                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'name' => 'options',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
-                        'allowedEntityType' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__entityproperty-allowedEntityType',
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'__options-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'allowedEntityType',
-                            'type' => 'value',
-                            'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE, // #todo ---> kan Selection worden
+                            'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
                         )
                     ]
                 )

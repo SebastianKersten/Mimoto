@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core;
+namespace Mimoto\Core\config;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * CoreConfig__Mimoto_Form_Input_Checkbox
+ * InputTextline
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class CoreConfig__Mimoto_Form_Input_Checkbox
+class InputTextline
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'__label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'__label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,31 @@ class CoreConfig__Mimoto_Form_Input_Checkbox
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'__description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__regexp',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'description',
+                    'name' => 'regexp',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'__description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__regexp-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__maxchars',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'maxchars',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__maxchars-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core;
+namespace Mimoto\Core\config;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * CoreConfig__Mimoto_Form_Output_Title
+ * EntityPropertySetting
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class CoreConfig__Mimoto_Form_Output_Title
+class EntityPropertySetting
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
+            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
+            'name' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING,
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'__key',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'title',
+                    'name' => 'key',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title-type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'__key-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class CoreConfig__Mimoto_Form_Output_Title
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'__type',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'subtitle',
+                    'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle-type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'__type-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -59,19 +59,19 @@ class CoreConfig__Mimoto_Form_Output_Title
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'__value',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'description',
+                    'name' => 'value',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description-type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'__value-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
                 )
@@ -81,7 +81,7 @@ class CoreConfig__Mimoto_Form_Output_Title
 
     public static function getData()
     {
-        // hierin komen de velden die nodig zijn voor entity-management etc
+
     }
 
 }
