@@ -169,7 +169,7 @@ Mimoto.Aimless.connect = function()
             {
                 // read
                 var mls_contains = $($component).attr("mls_contains");
-                var mls_template = $($component).attr("mls_template");
+                var mls_component = $($component).attr("mls_component");
                 var mls_filter = $($component).attr("mls_filter");
                 
                 if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
@@ -195,7 +195,7 @@ Mimoto.Aimless.connect = function()
                         }
 
                         // load
-                        if (bFilterApproved) Mimoto.Aimless.utils.loadComponent($component, item.connection.childEntityTypeName, item.connection.childId, mls_template);
+                        if (bFilterApproved) Mimoto.Aimless.utils.loadComponent($component, item.connection.childEntityTypeName, item.connection.childId, mls_component);
                     }
                 }
 
@@ -219,7 +219,8 @@ Mimoto.Aimless.connect = function()
             });
         }
 
-
+        return; // #todo - reeds uitgevoerde wijzigingen niet meer uitvoeren
+        // first collect changes, then execute
 
         // parse modified values
         if (data.connections)
@@ -237,7 +238,7 @@ Mimoto.Aimless.connect = function()
                 {
                     // read
                     var mls_contains = $($container).attr("mls_contains");
-                    var mls_template = $($container).attr("mls_template");
+                    var mls_component = $($container).attr("mls_component");
                     var mls_filter = $($container).attr("mls_filter");
 
                     if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
@@ -271,7 +272,7 @@ Mimoto.Aimless.connect = function()
                     // load
                     if (bFilterApproved)
                     {
-                        Mimoto.Aimless.utils.loadComponent($container, data.entityType, data.entityId, mls_template);
+                        Mimoto.Aimless.utils.loadComponent($container, data.entityType, data.entityId, mls_component);
                     }
                     else
                     {
@@ -313,7 +314,7 @@ Mimoto.Aimless.connect = function()
             
             // read
             var mls_config = $($component).attr("mls_config");
-            var mls_template = $($component).attr("mls_template");
+            var mls_component = $($component).attr("mls_component");
             
             // verify
             if (mls_config !== undefined)
@@ -337,7 +338,7 @@ Mimoto.Aimless.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.LiveScreen/' + data.entityType + '/' + data.entityId + '/' + mls_template,
+                    url: '/Mimoto.LiveScreen/' + data.entityType + '/' + data.entityId + '/' + mls_component,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -382,15 +383,15 @@ Mimoto.Aimless.connect = function()
 //            console.log(mls_contains);
 //            
 //            var mls_filter = $($component).attr("mls_filter");
-//            var mls_template = $($component).attr("mls_template");
+//            var mls_component = $($component).attr("mls_component");
 //            //var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
 //
 //            // verify
-//            if (mls_template !== undefined)
+//            if (mls_component !== undefined)
 //            {
 //                $.ajax({
 //                    type: 'GET',
-//                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_template,
+//                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_component,
 //                    data: null,
 //                    dataType: 'html',
 //                    success: function (data) {
@@ -424,15 +425,15 @@ Mimoto.Aimless.connect = function()
         aComponents.each( function(index, $component)
         {
             // read
-            var mls_template = $($component).attr("mls_template");
+            var mls_component = $($component).attr("mls_component");
             var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
 
             // verify
-            if (mls_template !== undefined)
+            if (mls_component !== undefined)
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_template,
+                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_component,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -451,15 +452,15 @@ Mimoto.Aimless.connect = function()
         aComponents.each( function(index, $component)
         {
             // read
-            var mls_template = $($component).attr("mls_template");
+            var mls_component = $($component).attr("mls_component");
             var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
 
             // verify
-            if (mls_template !== undefined)
+            if (mls_component !== undefined)
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_template,
+                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_component,
                     data: null,
                     dataType: 'html',
                     success: function (data) {

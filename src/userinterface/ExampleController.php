@@ -80,18 +80,8 @@ class ExampleController
     
     public function viewExample5(Application $app)
     {
-
-        $pm = $app['Mimoto.Data']->get('projectManager', 2);
-
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
-
-
-        $project->setValue('projectManager', $pm);
-
-
-        $project = $app['Mimoto.Data']->store($project);
-
 
         // create
         $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
