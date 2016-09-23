@@ -943,8 +943,11 @@ class MimotoEntity
     // ----------------------------------------------------------------------------------
     // ----------------------------------------------------------------------------------
     // ----------------------------------------------------------------------------------
-    
-    
+
+
+    // #todo - Move to data utils
+
+
     /**
      * Get property
      * @param type $sPropertySelector
@@ -954,11 +957,11 @@ class MimotoEntity
     private function getProperty($sPropertySelector)
     {
         // validate
-        if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) { throw new MimotoEntityException("( '-' ) - The property selector '$sPropertySelector' seems to be malformed"); }        
-        
+        if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) { throw new MimotoEntityException("( '-' ) - The property selector '$sPropertySelector' seems to be malformed"); }
+
         // init
         $aMatchingProperties = [];
-        
+
         // check all properties
         foreach ($this->_aProperties as $sPropertyName => $property)
         {
@@ -970,14 +973,14 @@ class MimotoEntity
                 break;
             }
         }
-        
+
         // verify
-        if (count($aMatchingProperties) === 0) { throw new MimotoEntityException("( '-' ) - The property '$sPropertySelector' you are looking for doesn't seem to be here"); }        
-        
+        if (count($aMatchingProperties) === 0) { throw new MimotoEntityException("( '-' ) - The property '$sPropertySelector' you are looking for doesn't seem to be here"); }
+
         // send
         return $aMatchingProperties[0];
     }
-    
+
     /**
      * Get subproperty selector
      * @param string $sPropertySelector
@@ -988,13 +991,14 @@ class MimotoEntity
     {
         // strip
         $sSubpropertySelector = substr($sPropertySelector, strlen($property->config->name));
-        
+
         // strip more
         if (substr($sSubpropertySelector, 0, 1) === '.') { $sSubpropertySelector = substr($sSubpropertySelector, 1); }
-        
+
         // send
         return $sSubpropertySelector;
     }
+
 
 
 
@@ -1034,19 +1038,22 @@ class MimotoEntity
      */
     public function add($sPropertySelector, $value, $nIndex = null)
     {
-        // prepare
-        $sPropertyName = MimotoDataUtils::getPropertyFromPropertySelector($sPropertySelector);
-        $sSubselector = MimotoDataUtils::getSubselectorFromPropertySelector($sPropertySelector, $sPropertyName);
-        
+        // find
+        $nSeperatorPos = strpos($sPropertySelector, '.');
+
+        // separate
+        $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, 0, $nSeperatorPos) : $sPropertySelector;
+        $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, $nSeperatorPos + 1) : '';
+
         // load
         //if ($this->hasProperty($sPropertyName)) { $property = $this->_aProperties[$sPropertyName]; }
-        $property = $this->_aProperties[$sPropertyName];
-        
+        $property = $this->_aProperties[$sMainPropertyName];
+
         // report
-        if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to add an item to value"); }
+        if ($property->config->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) { throw new MimotoEntityException("( '-' ) - It's not possible to add an item to value"); }
         
         // forward
-        $property->add($sSubselector, $value, $nIndex);
+        $property->add($sSubPropertyName, $value, $nIndex);
     }
     
     /**
@@ -1066,7 +1073,7 @@ class MimotoEntity
         $property = $this->_aProperties[$sPropertyName];
         
         // report
-        if ($property instanceof MimotoValueProperty) { throw new MimotoEntityException("( '-' ) - It's not possible to remove an item from value"); }
+        if ($property->config->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) { throw new MimotoEntityException("( '-' ) - It's not possible to remove an item from value"); }
         
         // forward
         $property->remove($sSubselector, $value);
