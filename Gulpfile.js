@@ -1,18 +1,16 @@
-var gulp = require('gulp');
-var concatCss = require('gulp-concat-css');
-var watch = require('gulp-watch');
+/*
+ gulpfile.js
+ ===========
+ Rather than manage one giant configuration file responsible
+ for creating multiple tasks, each task has been broken out into
+ its own file in gulp/tasks. Any files in that directory get
+ automatically required below.
+ To add a new task, simply add a new task file that directory.
+ gulp/tasks/default.js specifies the default set of tasks to run
+ when you run `gulp`.
+ */
 
-var css_src = 'Mimoto/userinterface/templates/Mimoto.CMS/**/*.css';
+var requireDir = require('require-dir');
 
-gulp.task('default', function () {
-    gulp.watch(css_src, ['concatCss']);
-});
-
-gulp.task('concatCss', function () {
-    return gulp.src(css_src)
-        .pipe(concatCss('mimoto.cms.css'))
-        // .on('error', function () {
-        //     this.emit('end');
-        // })
-        .pipe(gulp.dest('web/static/css/'));
-});
+// Require all tasks in gulp/tasks, including subfolders
+requireDir('./config/gulp/tasks', { recurse: true });

@@ -25,7 +25,7 @@ class Mimoto
     public function __construct($app)
     {
         // setup templates
-        $app['twig']->getLoader()->addPath(dirname(dirname(__FILE__)) . '/userinterface/templates');
+        //$app['twig']->getLoader()->addPath(dirname(dirname(__FILE__)) . '/userinterface/templates');
 
         // setup Mimoto services
         $app->register(new MimotoCacheServiceProvider());

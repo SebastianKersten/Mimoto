@@ -1,8 +1,7 @@
 {
   "name": "momkai/mimoto",
   "version": "1.0.0",
-  "description": "A realtime fluid data management microframewor",
-  "main": "index.js",
+  "description": "A realtime fluid data management microframework",
   "directories": {
     "test": "tests"
   },
@@ -20,9 +19,15 @@
   },
   "homepage": "https://github.com/SebastianKersten/Mimoto.Aimless",
   "devDependencies": {
+    "autoprefixer": "^6.4.1",
+    "browser-sync": "^2.16.0",
     "gulp": "^3.9.1",
-    "gulp-cli": "^1.2.2",
-    "gulp-concat-css": "^2.3.0",
-    "gulp-watch": "^4.3.9"
+    "gulp-postcss": "^6.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-size": "^2.1.0",
+    "gulp-watch": "^4.3.9",
+    "require-dir": "^0.3.0",
+    "webpack": "^1.13"
   }
 }
