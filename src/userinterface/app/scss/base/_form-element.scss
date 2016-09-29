@@ -1,0 +1,10 @@
+.form-element {
+  position: relative;
+}
+
+.form-element-label {
+  color: $jet-stream;
+  font-size: rem-calc(14);
+  font-weight: 500;
+  display: block;
+}

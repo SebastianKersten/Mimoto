@@ -2,10 +2,19 @@
 
 {% block content %}
 
-<div {{ Aimless.field()|raw }} class="MimotoCMS_forms_input_Textline">
+  <div {{ Aimless.field()|raw }} class="MimotoCMS_forms_input_Textline">
     <div class="MimotoCMS_forms_input_Textline__label">{{ Aimless.data('label') }}{% if optional is not empty %}{% if optional==true %}<span class="MimotoCMS_forms_input_Textline__optional"> (optional)</span>{% endif %}{% endif %}</div>
     <div><input {{ Aimless.input()|raw }} type="text" class="MimotoCMS_forms_input_Textline__input" value="{{ Aimless.value() }}" /></div>
     <div {{ Aimless.error()|raw }} class="form_errormessage"></div>
-</div>
+  </div>
+
+  <div class="form-element">
+    <label for="" class="form-element-label">Campagne naam</label>
+    <input type="text" class="form-element-input" >
+
+
+  </div>
+
+
 
 {% endblock %}
