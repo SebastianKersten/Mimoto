@@ -1,3 +1,7 @@
+{% extends "MimotoCMS/components/base.twig" %}
+
+{% block content %}
+
 <div {{ Aimless.field()|raw }} class="form_field">
     <div class="form_input_label">{{ Aimless.data('label') }}{% if optional is not empty %}{% if optional==true %}<span class="form_input_optional"> (optional)</span>{% endif %}{% endif %}</div>
     <div>
@@ -6,3 +10,5 @@
     </div>
     <div {{ Aimless.error()|raw }} class="form_errormessage"></div>
 </div>
+
+{%  endblock %}

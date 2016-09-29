@@ -1,4 +1,8 @@
-<div class="form_input"> 
+{% extends "MimotoCMS/components/base.twig" %}
+
+{% block content %}
+
+<div class="form_input">
     <div class="form_input_label">{{ label }}</div>
     <div>
         <select id="formdata_{{ name }}"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif%}>
@@ -9,3 +13,5 @@
         </select>
     </div>
 </div>
+
+{% endblock %}

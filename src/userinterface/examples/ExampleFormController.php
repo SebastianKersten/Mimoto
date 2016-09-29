@@ -25,7 +25,12 @@ class ExampleFormController
         $person = $app['Mimoto.Data']->get('person', 2);
 
         // create
-        $form = $app['Mimoto.Aimless']->createForm('examplebase_form', $person, 'examplebase_form'); // #todo - of array
+//        $form = $app['Mimoto.Aimless']->createForm('examplebase_form', $person, 'examplebase_form'); // #todo - of array
+//
+//
+//
+//
+//        $form = $app['Mimoto.Aimless']->createForm('examplebase_form', $person, 'examplebase_form'); // #todo - of array
         // 1. laatste template-parameter is optioneel als template voor het form
 
         // 2. create form from nothing? or only als option
@@ -47,9 +52,12 @@ class ExampleFormController
         // a. component settingsPurperen69
 
 
+        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
+        $component->addForm('form_person', $person); // #todo - of array
+
 
         // render and send
-        return $form->render();
+        return $component->render();
 
 
 

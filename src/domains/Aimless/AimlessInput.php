@@ -23,10 +23,10 @@ class AimlessInput extends AimlessComponent
      * @param MimotoEntity $entity
      * @param mixed $value
      */
-    public function __construct($sTemplateName, $entity, $value, $AimlessService, $DataService, $TwigService)
+    public function __construct($sComponentName, $entity, $value, $AimlessService, $DataService, $TwigService)
     {
         // forward
-        parent::__construct($sTemplateName, $entity, $AimlessService, $DataService, $TwigService);
+        parent::__construct($sComponentName, $entity, $AimlessService, $DataService, $TwigService);
 
         // register
         $this->_value = $value;
@@ -59,14 +59,14 @@ class AimlessInput extends AimlessComponent
     
     public function render()
     {
-        // get requested template
-        $sTemplateFile = $this->_AimlessService->getTemplate($this->_sTemplateName, $this->_entity);
+        // get requested component
+        $sComponentFile = $this->_AimlessService->getComponentFile($this->_sComponentName, $this->_entity);
         
         // compose
         $this->_aVars['Aimless'] = $this;
 
         // render
-        $sRenderedField = $this->_TwigService->render($sTemplateFile, $this->_aVars);
+        $sRenderedField = $this->_TwigService->render($sComponentFile, $this->_aVars);
 
         // connect
         $sRenderedField .= '<script>Mimoto.form.registerInputField("'.$this->_sVarName.'")</script>';

@@ -37,6 +37,14 @@ $app->get('/example15', 'Mimoto\\UserInterface\\examples\\ExampleController::vie
 
 
 
+$app->get('/input/textline', 'Mimoto\\UserInterface\\examples\\ExampleController::viewInputTextline');
+$app->get('/input/dropdown', 'Mimoto\\UserInterface\\examples\\ExampleController::viewInputDropdown');
+$app->get('/input/checkbox', 'Mimoto\\UserInterface\\examples\\ExampleController::viewInputCheckbox');
+$app->get('/input/radiobutton', 'Mimoto\\UserInterface\\examples\\ExampleController::viewInputRadiobutton');
+
+
+
+
 $app->get('/exampleform1', 'Mimoto\\UserInterface\\examples\\ExampleFormController::viewExampleForm1');
 
 

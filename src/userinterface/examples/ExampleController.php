@@ -568,5 +568,53 @@ class ExampleController
         
         return '<br>Done!';
     }
-    
+
+
+    public function viewInputTextline(Application $app)
+    {
+        // load
+        $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE, 1);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createInput('_mimoto_form_input_textline', $field);
+
+        // render and send
+        return $component->render();
+    }
+
+    public function viewInputCheckbox(Application $app)
+    {
+        // load
+        $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX, 1);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createInput('_mimoto_form_input_checkbox', $field);
+
+        // render and send
+        return $component->render();
+    }
+
+    public function viewInputDropdown(Application $app)
+    {
+        // load
+        $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, 1);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createInput('_mimoto_form_input_dropdown', $field);
+
+        // render and send
+        return $component->render();
+    }
+
+    public function viewInputRadiobutton(Application $app)
+    {
+        // load
+        $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, 1);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createInput('_mimoto_form_input_radiobutton', $field);
+
+        // render and send
+        return $component->render();
+    }
 }
