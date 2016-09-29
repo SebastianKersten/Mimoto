@@ -37,7 +37,7 @@ $app->get('/example15', 'Mimoto\\UserInterface\\examples\\ExampleController::vie
 
 
 
-$app->get('/exampleform1', 'Mimoto\\UserInterface\\ExampleFormController::viewExampleForm1');
+$app->get('/exampleform1', 'Mimoto\\UserInterface\\examples\\ExampleFormController::viewExampleForm1');
 
 
 $app->get('/admin/entity/example1', 'Mimoto\\UserInterface\\ExampleEntityAdminController::createEntity');
