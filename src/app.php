@@ -10,7 +10,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = new \Silex\Application();
 
 // setup
-$loader = new \Twig_Loader_Filesystem([__DIR__ . '/../src/userinterface/components']);
+$loader = new \Twig_Loader_Filesystem([__DIR__ . '/../src/userinterface']);
 $twig = new Twig_Environment($loader, array(
     // 'cache' => '../app/cache',
 ));
