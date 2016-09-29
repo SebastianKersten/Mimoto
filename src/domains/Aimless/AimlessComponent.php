@@ -109,7 +109,7 @@ class AimlessComponent
         );
     }
 
-    public function addForm($sFormName, $sComponentName, $entity, $sKey = null)
+    public function addForm($sFormName, $data, $sFormLayout = null, $sComponentName = null)
     {
         // default
         if ($sKey === null) $sKey = self::PRIMARY_FORM;
@@ -327,13 +327,6 @@ class AimlessComponent
             case 'created': return $this->_entity->getCreated();
         }
     }
-    
-    
-    public function setupProperty()
-    {
-        // connect Entity-component to entity
-    }
-    
     
     
     public function render()

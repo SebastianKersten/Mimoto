@@ -24,8 +24,27 @@ class AimlessForm extends AimlessComponent
      * @param MimotoEntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sFormName, $sComponentName, $entity, $AimlessService, $DataService, $TwigService)
+    public function __construct($sFormName, $data, $sFormLayout, $sComponentName, $AimlessService, $DataService, $TwigService)
     {
+        // forward
+        parent::__construct($sFormLayout, null, $AimlessService, $DataService, $TwigService);
+
+
+
+        // param 1 - form name
+        // param 2 - data (array/object of single)
+        // param 3 - component name (voorzien van conditionals) (default = default theme)
+        // param 4 - form template/component (default = empty template)
+
+
+        // action 1 - store in aForms array
+        // action 2 - onRender -> render all forms
+
+
+        // note 1 - add form to component -> is gelijk aan AimlessForm aanmaken
+
+
+
         // register
         $this->_sFormName = $sFormName;
         $this->_sComponentName = $sComponentName;
