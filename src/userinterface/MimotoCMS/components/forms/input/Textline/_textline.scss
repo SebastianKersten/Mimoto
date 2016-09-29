@@ -1,0 +1,22 @@
+.form-component-element-input {
+  display: block;
+  outline: none;
+  color: $black;
+  font-size: rem-calc(14px);
+  background: $alabaster;
+  border: 1px solid $pale-slate;
+  height: 50px;
+  line-height: rem-calc(50px);
+  padding: 0 15px;
+  min-width: 500px;
+  width: percentage(2/3);
+  flex: 1 1 auto;
+  margin: 0 0 10px;
+  font-family: $font-family-helvetica;
+
+
+  &:focus {
+    background: $white;
+    border-color: $tower-gray;
+  }
+}
