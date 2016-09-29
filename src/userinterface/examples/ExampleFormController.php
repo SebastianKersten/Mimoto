@@ -17,20 +17,25 @@ class ExampleFormController
     
     public function viewExampleForm1(Application $app)
     {
-
-        //$entityId = $app['Mimoto.Config']->getEntityNameByPropertyId(1);
-
-
         // load
         $person = $app['Mimoto.Data']->get('person', 2);
 
+
+        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
+        $component->addForm('form_person', $person);
+
+
+        // render and send
+        return $component->render();
+
+
+
+
+
         // create
 //        $form = $app['Mimoto.Aimless']->createForm('examplebase_form', $person, 'examplebase_form'); // #todo - of array
-//
-//
-//
-//
-//        $form = $app['Mimoto.Aimless']->createForm('examplebase_form', $person, 'examplebase_form'); // #todo - of array
+
+
         // 1. laatste template-parameter is optioneel als template voor het form
 
         // 2. create form from nothing? or only als option
@@ -49,15 +54,10 @@ class ExampleFormController
 
 
 
-        // a. component settingsPurperen69
+        // a. component settings
 
 
-        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
-        $component->addForm('form_person', $person); // #todo - of array
 
-
-        // render and send
-        return $component->render();
 
 
 
