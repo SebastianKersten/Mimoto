@@ -23,13 +23,14 @@ gulp.task('sass:production', function () {
 function sassTasks (env) {
 
   return gulp.src(config.src)
-    .pipe(sass(config.settings).on('error', sass.logError))
+    .pipe(sass(config.settings)
+    .on('error', sass.logError))
     .pipe(postcss(processors[env]))
-    .pipe(rename(config.cssName))
-    .pipe(gulp.dest(config.dest))
-    .pipe(size({
-      title: config.cssName
+    .pipe(rename({
+      dirname: "",
+      suffix: ".min"
     }))
+    .pipe(gulp.dest(config.dest))
     .pipe(browserSync.reload({stream: true}));
 
 }
