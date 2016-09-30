@@ -1,14 +1,12 @@
 {% extends "examples/components/examplebase.twig" %}
 
 {% block content %}
-    <h1>Form</h1>
-    <i>The first example with an actual form containing a few fields</i><br>
-    <br>
-    <br>
-    <div class="example_form_fields">
-        {{ Aimless.form()|raw }}
-    </div>
-    <div class="MimotoCMS_forms_Form__menu">
-        <span {{ Aimless.submit()|raw }}>{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Save' } %}</span>
+    <div class="form_holder">
+        <div class="example_form_fields">
+            {{ Aimless.form()|raw }}
+        </div>
+        <div class="MimotoCMS_forms_Form__menu">
+            <span {{ Aimless.submit()|raw }}>{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Save' } %}</span>
+        </div>
     </div>
 {% endblock %}
