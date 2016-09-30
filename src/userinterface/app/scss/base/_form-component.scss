@@ -1,39 +1,63 @@
 .form-component {
   position: relative;
-}
 
-.form-component-label {
-  color: $tower-gray;
-  font-size: rem-calc(14);
-  font-weight: 500;
-  display: block;
-  margin: 0 0 10px;
-  font-family: $font-family-futura;
-  position: relative;
-}
-
-.form-component-element {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.form-component-element-description {
-  flex: 1 1 auto;
-  width: percentage(1 / 3);
-  min-width: 200px;
-  padding: 10px 0 0 15px;
-  font-size: rem-calc(13px);
-  color: rgba($black, .5);
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
+  .form-component-title {
+    position: relative;
     display: block;
-    height: 1px;
-    background: rgba($black, .15);
-    width: 100px;
-    left: 15px;
+    margin: 0 0 10px;
+    font-family: $font-family-futura;
+    font-size: rem-calc(14);
+    font-weight: 500;
+    //color: $tower-gray;
+    color: rgba($black, .9);
+
+    .form-component-title-information {
+      font-family: $font-family-helvetica;
+      color: rgba($black, .5);
+    }
+  }
+
+  .form-component-content {
+    display: flex;
+    flex-wrap: wrap;
+
+    &.form-component-content--no-description {
+      padding: 0 percentage(1 / 3) 0 0;
+    }
+
+    .form-component-element {
+      width: percentage(2 / 3);
+      min-width: 400px;
+      flex: 1 1 auto;
+    }
+
+    .form-component-element-description {
+      position: relative;
+      width: percentage(1 / 3);
+      min-width: 200px;
+      padding: 10px 0 0 15px;
+      font-size: rem-calc(13px);
+      color: rgba($black, .5);
+      flex: 1 1 auto;
+    }
+
+    .form-component-element-description::before {
+      position: absolute;
+      top: 0;
+      left: 15px;
+      display: block;
+      width: 100px;
+      height: 1px;
+      content: '';
+      background: rgba($black, .15);
+    }
+  }
+
+  .form-component-element-label {
+    padding: 0 0 0 10px;
+    cursor: pointer;
+    font-size: rem-calc(14px);
+    color: rgba($black, .9);
+    flex: 0 1 auto;
   }
 }
