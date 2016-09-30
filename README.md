@@ -108,3 +108,27 @@ function doSomethingOnAdd(data)
     // do something custom
 }
 ```
+
+
+
+## Using forms
+
+```
+public function addForm($sFormName, $xData = null, $options = null)
+{
+
+    // optional:
+    // $sKey, $sFormName, $data, $sLayout = null, $sComponentName = null
+    
+    // default
+    $sKey = (!empty($options) && !empty($options['key'])) ? $options['key'] : self::PRIMARY_FORM;
+    
+    // store
+    $this->_aFormConfigs[$sKey] = (object) array(
+        'sFormName' => $sFormName,
+        'xData' => $xData,
+        'sLayout' => (!empty($options) && !empty($options['layout'])) ? $options['layout'] : '',
+        'sTheme' => (!empty($options) && !empty($options['theme'])) ? $options['theme'] : '',
+        'options' => $options
+    );
+```
