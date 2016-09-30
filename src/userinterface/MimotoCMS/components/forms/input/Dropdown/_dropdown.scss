@@ -1,5 +1,40 @@
-.form-component-element-select {
-  background-color: $alabaster;
+.form-component-element-select-container {
+  position: relative;
 
+  .form-component-element-select {
+    display: block;
+    width: 100%;
+    max-width: none;
+    height: 50px;
+    margin: 0 0 10px;
+    padding: 0 15px;
+    font-family: $font-family-helvetica;
+    font-size: rem-calc(14px);
+    line-height: rem-calc(50px);
+    color: $black;
+    border: 1px solid $pale-slate;
+    background-color: $alabaster;
+    transition: all 100ms ease-out;
+    -webkit-appearance: none;
+  }
 
+  .form-component-element-select:focus {
+    border-color: $pale-slate;
+    background-color: $bon-jour;
+
+    /*
+    + .form-component-element-select-icon {
+      transform: rotate(180deg);
+    }
+    */
+  }
+
+  .form-component-element-select-icon {
+    position: absolute;
+    top: 22px;
+    right: 15px;
+    width: 10px;
+    height: 5px;
+  }
 }
+

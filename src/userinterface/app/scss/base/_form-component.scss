@@ -1,5 +1,6 @@
 .form-component {
   position: relative;
+  max-width: 1000px;
   margin: 0 0 20px;
 
   &.form-component--validated {
@@ -7,6 +8,17 @@
       color: $tower-gray;
     }
   }
+
+  &.form-component--has-error {
+    .form-component-element-input,
+    .form-component-element-select,
+    .form-component-element-checkbox::after,
+    .form-component-element-radiobutton::after {
+      border-color: $fuzzy-wuzzy-brown;
+    }
+  }
+
+
 
   .form-component-title {
     position: relative;

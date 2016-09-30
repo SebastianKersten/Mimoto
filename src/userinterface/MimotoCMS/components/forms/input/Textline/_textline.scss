@@ -11,16 +11,9 @@
   border: 1px solid $pale-slate;
   background: $alabaster;
   transition: all 100ms ease-out;
-  flex: 1 1 auto;
 
   &:focus {
     border-color: $tower-gray;
     background: $white;
-  }
-}
-
-.form-component.form-component--has-error {
-  .form-component-element-input {
-    border-color: $fuzzy-wuzzy-brown;
   }
 }

@@ -9,34 +9,43 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
-    opacity: 0;
+
+    &::after {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 20px;
+      height: 20px;
+      content: '';
+      cursor: pointer;
+      opacity: 1;
+      border: 1px solid $pale-slate;
+      background: $alabaster;
+    }
   }
 
-  .form-component-element-checkbox:checked + .form-component-element-checkbox-overlay {
-    background: $white;
+  .form-component-element-checkbox:checked {
+    &::after {
+      background: $white;
+    }
 
-    .form-component-element-checkbox-overlay-checkmark {
+    + .form-component-element-checkbox-icon {
       display: block;
     }
   }
 
-  .form-component-element-checkbox-overlay {
+  .form-component-element-checkbox-icon {
     position: absolute;
     z-index: 2;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
+    top: 1px;
+    left: 2px;
+    display: none;
+    width: 13px;
+    height: 12px;
+    margin: 3px 0 0 2px;
     pointer-events: none;
-    border: 1px solid $pale-slate;
-    background: $alabaster;
-
-    .form-component-element-checkbox-overlay-checkmark {
-      display: none;
-      width: 13px;
-      height: 12px;
-      margin: 3px 0 0 2px;
-      fill: $tower-gray;
-    }
+    fill: $tower-gray;
   }
 }

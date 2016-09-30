@@ -1,3 +1,4 @@
+{#
 <div class="form_input">
   <div class="form_input_label">{{ label }}</div>
   <div>
@@ -11,6 +12,7 @@
     </select>
   </div>
 </div>
+#}
 
 <div class="form-component">
   <label for="" class="form-component-title">Periode waar de voucher toegang tot geeft</label>
@@ -26,9 +28,74 @@
             <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
           {% endfor %}
         </select>
-        <svg class="form-component-element-checkbox-triangle"><use xlink:href='#ico-triangle-up'/></svg>
+        <svg class="form-component-element-select-icon"><use xlink:href='#ico-triangle-down'/></svg>
       </div>
     </div>
     <p class="form-component-description">Dit is een mooie beschrijving</p>
   </div>
 </div>
+
+<div class="form-component">
+  <label for="" class="form-component-title">Periode waar de voucher toegang tot geeft <span class="form-component-title-information">(optioneel)</span><span class="form-component-title-icon form-component-title-icon--loading"></span></label>
+
+  <div class="form-component-content">
+    <div class="form-component-element">
+      <div class="form-component-element-select-container">
+        <select name="" id="" class="form-component-element-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+          {% if value is empty %}
+            <option value=""></option>
+          {% endif %}
+          {% for option in aOptions %}
+            <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
+          {% endfor %}
+        </select>
+        <svg class="form-component-element-select-icon"><use xlink:href='#ico-triangle-down'/></svg>
+      </div>
+    </div>
+    <p class="form-component-description">Dit is een mooie beschrijving</p>
+  </div>
+</div>
+
+<div class="form-component form-component--validated">
+  <label for="" class="form-component-title">Periode waar de voucher toegang tot geeft <svg class="form-component-title-icon form-component-title-icon--checkmark"><use xlink:href='#ico-checkmark'/></svg></label>
+
+  <div class="form-component-content">
+    <div class="form-component-element">
+      <div class="form-component-element-select-container">
+        <select name="" id="" class="form-component-element-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+          {% if value is empty %}
+            <option value=""></option>
+          {% endif %}
+          {% for option in aOptions %}
+            <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
+          {% endfor %}
+        </select>
+        <svg class="form-component-element-select-icon"><use xlink:href='#ico-triangle-down'/></svg>
+      </div>
+    </div>
+    <p class="form-component-description">Dit is een mooie beschrijving</p>
+  </div>
+</div>
+
+<div class="form-component form-component--has-error">
+  <label for="" class="form-component-title">Periode waar de voucher toegang tot geeft <svg class="form-component-title-icon form-component-title-icon--warning"><use xlink:href='#ico-warning'/></svg></label>
+
+  <div class="form-component-content">
+    <div class="form-component-element">
+      <div class="form-component-element-select-container">
+        <select name="" id="" class="form-component-element-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+          {% if value is empty %}
+            <option value=""></option>
+          {% endif %}
+          {% for option in aOptions %}
+            <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
+          {% endfor %}
+        </select>
+        <svg class="form-component-element-select-icon"><use xlink:href='#ico-triangle-down'/></svg>
+      </div>
+      <p class="form-component-element-error">Kies een periode.</p>
+    </div>
+    <p class="form-component-description">Dit is een mooie beschrijving</p>
+  </div>
+</div>
+
