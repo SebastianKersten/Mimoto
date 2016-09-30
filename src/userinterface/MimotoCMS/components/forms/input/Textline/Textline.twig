@@ -17,11 +17,9 @@
     </div>
   </div>
 
-  <div class="form-component form-component--validating">
-    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-information">(optioneel)</span><span class="form-component-title-icon form-component-title-icon--loading"></span></label>
+  <div {{ Aimless.field()|raw }} class="form-component form-component--validating">
+    <label for="" class="form-component-title">{{ Aimless.data('label') }} <span class="form-component-title-information">(optioneel)</span><span class="form-component-title-icon form-component-title-icon--loading"></span></label>
 
-  <div {{ Aimless.field()|raw }} class="form-component">
-    <label for="" class="form-component-title">{{ Aimless.data('label') }} <span class="form-component-title-icon"></span></label>
     <div class="form-component-content">
       <div class="form-component-element">
         <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
