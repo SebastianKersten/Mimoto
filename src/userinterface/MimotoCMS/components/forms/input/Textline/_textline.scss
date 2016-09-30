@@ -18,3 +18,9 @@
     background: $white;
   }
 }
+
+.form-component.form-component--has-error {
+  .form-component-element-input {
+    border-color: $fuzzy-wuzzy-brown;
+  }
+}

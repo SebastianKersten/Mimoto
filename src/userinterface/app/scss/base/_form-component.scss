@@ -1,19 +1,58 @@
 .form-component {
   position: relative;
 
+  &.form-component--validating {
+    .form-component-title-icon {
+      background-image: url('/static/img/loader.gif');
+    }
+  }
+
+  &.form-component--validated {
+    .form-component-title {
+      color: $tower-gray;
+    }
+
+    .form-component-title-icon-svg {
+      fill: $tower-gray;
+    }
+  }
+
+  &.form-component--has-error {
+    .form-component-title-icon-svg {
+      fill: $fuzzy-wuzzy-brown;
+    }
+  }
+
   .form-component-title {
     position: relative;
-    display: block;
+    display: inline-block;
     margin: 0 0 10px;
+    padding: 0 20px 0 0;
     font-family: $font-family-futura;
-    font-size: rem-calc(14);
+    font-size: rem-calc(14px);
     font-weight: 500;
-    //color: $tower-gray;
     color: rgba($black, .9);
 
     .form-component-title-information {
       font-family: $font-family-helvetica;
       color: rgba($black, .5);
+    }
+
+    .form-component-title-icon {
+      position: absolute;
+      top: 3px;
+      right: 0;
+      display: block;
+      width: 15px;
+      height: 15px;
+      background-position: center center;
+      background-size: 15px 15px;
+    }
+
+    .form-component-title-icon-svg {
+      display: block;
+      width: 12px;
+      height: 15px;
     }
   }
 
@@ -51,13 +90,18 @@
       content: '';
       background: rgba($black, .15);
     }
-  }
 
-  .form-component-element-label {
-    padding: 0 0 0 10px;
-    cursor: pointer;
-    font-size: rem-calc(14px);
-    color: rgba($black, .9);
-    flex: 0 1 auto;
+    .form-component-element-label {
+      padding: 0 0 0 10px;
+      cursor: pointer;
+      font-size: rem-calc(14px);
+      color: rgba($black, .9);
+      flex: 0 1 auto;
+    }
+
+    .form-component-element-error {
+      font-size: rem-calc(13px);
+      color: $fuzzy-wuzzy-brown;
+    }
   }
 }
