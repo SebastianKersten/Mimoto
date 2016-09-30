@@ -1,25 +1,10 @@
 .form-component {
   position: relative;
-
-  &.form-component--validating {
-    .form-component-title-icon {
-      background-image: url('/static/img/loader.gif');
-    }
-  }
+  margin: 0 0 20px;
 
   &.form-component--validated {
     .form-component-title {
       color: $tower-gray;
-    }
-
-    .form-component-title-icon-svg {
-      fill: $tower-gray;
-    }
-  }
-
-  &.form-component--has-error {
-    .form-component-title-icon-svg {
-      fill: $fuzzy-wuzzy-brown;
     }
   }
 
@@ -40,19 +25,31 @@
 
     .form-component-title-icon {
       position: absolute;
-      top: 3px;
       right: 0;
       display: block;
+    }
+
+    .form-component-title-icon.form-component-title-icon--loading {
+      top: 5px;
       width: 15px;
       height: 15px;
+      background-image: url('/static/img/loader.gif');
       background-position: center center;
       background-size: 15px 15px;
     }
 
-    .form-component-title-icon-svg {
-      display: block;
-      width: 12px;
-      height: 15px;
+    .form-component-title-icon.form-component-title-icon--checkmark {
+      top: 5px;
+      width: 13px;
+      height: 12px;
+      fill: $tower-gray;
+    }
+
+    .form-component-title-icon.form-component-title-icon--warning {
+      top: 5px;
+      width: 14px;
+      height: 12px;
+      fill: $fuzzy-wuzzy-brown;
     }
   }
 
@@ -70,17 +67,18 @@
       flex: 1 1 auto;
     }
 
-    .form-component-element-description {
+    .form-component-description {
       position: relative;
       width: percentage(1 / 3);
       min-width: 200px;
+      margin: 0 0 10px;
       padding: 10px 0 0 15px;
       font-size: rem-calc(13px);
       color: rgba($black, .5);
       flex: 1 1 auto;
     }
 
-    .form-component-element-description::before {
+    .form-component-description::before {
       position: absolute;
       top: 0;
       left: 15px;
@@ -89,6 +87,11 @@
       height: 1px;
       content: '';
       background: rgba($black, .15);
+    }
+
+    .form-component-element-container {
+      display: flex;
+      margin: 0 0 10px;
     }
 
     .form-component-element-label {
@@ -100,6 +103,7 @@
     }
 
     .form-component-element-error {
+      margin: 0 0 10px;
       font-size: rem-calc(13px);
       color: $fuzzy-wuzzy-brown;
     }
