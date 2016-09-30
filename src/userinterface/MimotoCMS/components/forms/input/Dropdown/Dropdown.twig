@@ -1,11 +1,34 @@
 <div class="form_input">
-    <div class="form_input_label">{{ label }}</div>
-    <div>
-        <select id="formdata_{{ name }}"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif%}>
-            {% if value is empty %}<option value=""></option>{% endif %}
-            {% for option in aOptions %}
-                <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
-            {% endfor %}
+  <div class="form_input_label">{{ label }}</div>
+  <div>
+    <select id="formdata_{{ name }}"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+      {% if value is empty %}
+        <option value=""></option>
+      {% endif %}
+      {% for option in aOptions %}
+        <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+<div class="form-component">
+  <label for="" class="form-component-title">Periode waar de voucher toegang tot geeft</label>
+
+  <div class="form-component-content">
+    <div class="form-component-element">
+      <div class="form-component-element-select-container">
+        <select name="" id="" class="form-component-element-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+          {% if value is empty %}
+            <option value=""></option>
+          {% endif %}
+          {% for option in aOptions %}
+            <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
+          {% endfor %}
         </select>
+        <svg class="form-component-element-checkbox-triangle"><use xlink:href='#ico-triangle-up'/></svg>
+      </div>
     </div>
+    <p class="form-component-description">Dit is een mooie beschrijving</p>
+  </div>
 </div>
