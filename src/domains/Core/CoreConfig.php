@@ -18,6 +18,9 @@ use Mimoto\Core\config\InputCheckbox;
 use Mimoto\Core\config\InputDropdown;
 use Mimoto\Core\config\InputRadioButton;
 use Mimoto\Core\config\InputTextline;
+use Mimoto\Core\config\InputList;
+use Mimoto\Core\config\InputImage;
+use Mimoto\Core\config\InputVideo;
 
 
 /**
@@ -65,6 +68,9 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_CHECKBOX            = '_MimotoAimless__interaction__form_input_checkbox';
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_MimotoAimless__interaction__form_input_radiobutton';
     const MIMOTO_FORM_INPUT_DROPDOWN            = '_MimotoAimless__interaction__form_input_dropdown';
+    const MIMOTO_FORM_INPUT_LIST                = '_MimotoAimless__interaction__form_input_list';
+    const MIMOTO_FORM_INPUT_IMAGE               = '_MimotoAimless__interaction__form_input_image';
+    const MIMOTO_FORM_INPUT_VIDEO               = '_MimotoAimless__interaction__form_input_video';
 
     // functionality
     const MIMOTO_ACTION                         = '_MimotoAimless__config__action';
@@ -129,7 +135,10 @@ class CoreConfig
             InputTextline::getStructure(),
             InputCheckbox::getStructure(),
             InputRadiobutton::getStructure(),
-            InputDropdown::getStructure()
+            InputDropdown::getStructure(),
+            InputList::getStructure(),
+            InputImage::getStructure(),
+            InputVideo::getStructure()
         ];
 
         // send

@@ -620,6 +620,11 @@ div.example_page {
   padding: 25px;
 }
 
+div.form_holder {
+  background-color: #f5f5f5;
+  padding: 30px;
+}
+
 div.example_article
 {
   border: #c3c3c3 solid 1px;
