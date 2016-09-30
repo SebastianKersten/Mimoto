@@ -216,7 +216,7 @@ class MimotoEntity
      */
     public function typeOf($sEntityType)
     {
-        return $GLOBALS['Mimoto.Config']->entityIsTypeOf($this->_sEntityType, $sEntityType);
+        return $GLOBALS['Mimoto.Config']->entityIsTypeOf($this->_config->entityTypeName, $sEntityType);
     }
 
     

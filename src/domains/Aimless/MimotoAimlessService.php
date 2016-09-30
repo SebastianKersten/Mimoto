@@ -84,10 +84,10 @@ class MimotoAimlessService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessForm
      */
-    public function createForm($sFormName, $sComponentName, $entity = null)
+    public function createForm($sFormName, $xData, $sLayoutName = null, $sComponentName = null)
     {
         // init and send
-        return new AimlessForm($sFormName, $sComponentName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
+        return new AimlessForm($sFormName, $xData, $sLayoutName, $sComponentName, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
 
 

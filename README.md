@@ -108,3 +108,72 @@ function doSomethingOnAdd(data)
     // do something custom
 }
 ```
+
+
+
+## Using forms
+
+```
+public function addForm($sFormName, $xData = null, $options = null)
+{
+
+    // optional:
+    // $sKey, $sFormName, $data, $sLayout = null, $sComponentName = null
+    
+    // default
+    $sKey = (!empty($options) && !empty($options['key'])) ? $options['key'] : self::PRIMARY_FORM;
+    
+    // store
+    $this->_aFormConfigs[$sKey] = (object) array(
+        'sFormName' => $sFormName,
+        'xData' => $xData,
+        'sLayout' => (!empty($options) && !empty($options['layout'])) ? $options['layout'] : '',
+        'sTheme' => (!empty($options) && !empty($options['theme'])) ? $options['theme'] : '',
+        'options' => $options
+    );
+```
+
+## Textline features
+
+```
+<div class="form-component">
+    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"></span></label>
+    <div class="form-component-content">
+      <div class="form-component-element">
+        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
+      </div>
+      <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
+    </div>
+  </div>
+
+  <div class="form-component form-component--validating">
+    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"></span></label>
+    <div class="form-component-content">
+      <div class="form-component-element">
+        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
+      </div>
+      <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
+    </div>
+  </div>
+
+  <div class="form-component form-component--validated">
+    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"><svg class="form-component-title-icon-svg"><use xlink:href='#checkmark'/></svg></span></label>
+    <div class="form-component-content">
+      <div class="form-component-element">
+        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
+      </div>
+      <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
+    </div>
+  </div>
+
+  <div class="form-component form-component--has-error">
+    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"><span class="form-component-title-icon"><svg class="form-component-title-icon-svg"><use xlink:href='#checkmark'/></svg></span></span></label>
+    <div class="form-component-content">
+      <div class="form-component-element">
+        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
+        <p class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
+      </div>
+      <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
+    </div>
+  </div>
+```

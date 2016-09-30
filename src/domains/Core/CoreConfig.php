@@ -53,7 +53,7 @@ class CoreConfig
     const MIMOTO_FORM_INPUTVALUE                = '_MimotoAimless__interaction__forminputvalue';
 
     // output
-    const MIMOTO_FORM_OUTPUT_TITLE              = '_MimotoAimless__interaction__output_title';
+    const MIMOTO_FORM_OUTPUT_TITLE              = '_MimotoAimless__interaction__form_output_title';
 
     // layout
     const MIMOTO_FORM_LAYOUT_GROUPSTART         = '_MimotoAimless__interaction__form_layout_groupstart';
