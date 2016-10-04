@@ -11,6 +11,7 @@ module.exports = function (env) {
   var webpackConfig = {
 
     context: jsSrc,
+    plugins: [],
     resolve: {
       modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components/'],
       extensions: ['', '.js']
@@ -30,6 +31,31 @@ module.exports = function (env) {
 
     webpackConfig.devtool = 'source-map';
     webpack.debug = true
+
+  }
+
+  if (env === 'production') {
+
+    webpackConfig.plugins.push(
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        output: {comments: false},
+        minimize: true,
+        comments: false,
+        sourceMap:false,
+        compress:{
+          loops: true,
+          booleans: true,
+          dead_code: true,
+          conditionals : true,
+          screw_ie8: true,
+          comparisons: true,
+          warnings: true,
+          drop_console: true,
+          global_defs: { DEBUG: false }
+        }
+      })
+    );
 
   }
 

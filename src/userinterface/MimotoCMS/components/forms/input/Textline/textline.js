@@ -2,6 +2,6 @@
 
 module.exports = function () {
 
-  return console.log("TEXTLINE WHAZZUP");
+  return console.log("TEXTLINE whatsup");
 
 };
