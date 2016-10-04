@@ -2,6 +2,6 @@
 
 module.exports = function () {
 
-  console.log("you did it!");
+  return console.log("you did it!");
 
 };

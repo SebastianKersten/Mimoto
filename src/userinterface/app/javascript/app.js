@@ -2,9 +2,11 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  console.log("test");
+  var Test = require('./views/test');
+  var Textline = require('forms/input/Textline/textline.js'); // You can require from src/userinterface/MimotoCMS/components
 
-  var test = require('test');
+  new Test();
+  new Textline();
 
 
 }, false);
