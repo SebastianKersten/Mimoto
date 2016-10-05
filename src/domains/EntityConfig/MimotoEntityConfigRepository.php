@@ -8,7 +8,7 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
-
+use Mimoto\Mimoto;
 
 
 /**
@@ -368,12 +368,12 @@ class MimotoEntityConfigRepository
 
                 switch($connection->parent_property_id)
                 {
-                    case '_mimoto_entity__extends':
+                    case CoreConfig::MIMOTO_ENTITY.'__extends':
 
                         $entity->extends = $connection->child_id;
                         break;
 
-                    case '_mimoto_entity__properties':
+                    case CoreConfig::MIMOTO_ENTITY.'__properties':
 
                         // validate
                         if (!isset($aAllEntityProperties[$connection->child_id])) { error("Oops, the entity config named '$entity->name' seems to miss a property"); };

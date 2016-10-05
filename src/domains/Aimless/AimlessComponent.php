@@ -9,6 +9,7 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityService;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+use Mimoto\Aimless\AimlessComponentViewModel;
 
 
 /**
@@ -118,7 +119,7 @@ class AimlessComponent
      * @param null $sLayout
      * @param null $sComponentName
      */
-    public function addForm($sFormName, $xData = null, $options = null)
+    public function addForm($sFormName, $xValues = null, $options = null)
     {
         // default
         $sKey = (!empty($options) && !empty($options['key'])) ? $options['key'] : self::PRIMARY_FORM;
@@ -126,7 +127,7 @@ class AimlessComponent
         // store
         $this->_aFormConfigs[$sKey] = (object) array(
             'sFormName' => $sFormName,
-            'xData' => $xData,
+            'xValues' => $xValues,
             'sLayout' => (!empty($options) && !empty($options['layout'])) ? $options['layout'] : '',
             'sTheme' => (!empty($options) && !empty($options['theme'])) ? $options['theme'] : self::DEFAULT_THEME,
             'options' => $options
@@ -340,10 +341,6 @@ class AimlessComponent
 
     public function form($sKey = null)
     {
-        // 1. createForm and return (pass form to new component
-
-        //error($this->_aFormConfigs);
-
         // 1. set default key
         if ($sKey === null) $sKey = self::PRIMARY_FORM;
 
@@ -353,14 +350,8 @@ class AimlessComponent
         // 3. load requested config
         $formConfig = $this->_aFormConfigs[$sKey];
 
-        // 4. load form from database
-        $aResults = $this->_DataService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $formConfig->sFormName]]);
-
-        // 5. validate if form exists
-        if (!isset($aResults[0])) die("Aimless says: Form with name '$formConfig->sFormName' not found in database");
-
-        // 6. render and send
-        return $this->renderForm($aResults[0], $formConfig->xData);
+        // 4. output
+        return $this->renderForm($formConfig->sFormName, $formConfig->xValues);
     }
 
 
@@ -375,6 +366,7 @@ class AimlessComponent
         // 3. load requested config
         $formConfig = $this->_aFormConfigs[$sKey];
 
+        // 4. output
         return 'mls_form_submit="'.$formConfig->sFormName.'"';
     }
 
@@ -386,7 +378,7 @@ class AimlessComponent
         $sComponentFile = $this->_AimlessService->getComponentFile($this->_sComponentName, $this->_entity);
 
         // create
-        $viewModel = new AimlessViewModel($this);
+        $viewModel = new AimlessComponentViewModel($this);
 
         // compose
         $this->_aVars['Aimless'] = $viewModel;
@@ -397,7 +389,7 @@ class AimlessComponent
     
     
     
-    private function renderCollection($aCollection, $aConnections, $sComponentName)
+    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $values = null)
     {
         // init
         $sRenderedCollection = '';
@@ -408,14 +400,18 @@ class AimlessComponent
             // register
             $entity = $aCollection[$i];
 
-            // create
-            $component = $this->_AimlessService->createComponent($sComponentName, $entity);
+            // revert to default
+            $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
 
-            // 1. #todo get info based upon know data
-            // output('Connection '.$i, $aConnections);
-            // output('ID', $aConnections[$i]->getId());
-            // setup
-            //if (!empty($aConnections)) $component->markComponentAsConnectedItem($aConnections[$i]->getId(), $aConnections[$i]->getSortIndex());
+            // create
+            if ($entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
+            {
+                $component = $this->_AimlessService->createInput($sTemplateName, $entity);
+            }
+            else
+            {
+                $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
+            }
 
             // forward
             foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
@@ -428,80 +424,13 @@ class AimlessComponent
         return $sRenderedCollection;
     }
 
-
-
-    private function renderForm($form, $aValues)
+    private function renderForm($sFormName, $xValues)
     {
-        // 1. if form() niet aangeroepen, dan execute once
+        // create
+        $component = $this->_AimlessService->createForm($sFormName, $xValues);
 
-
-        // init
-        $sRenderedForm = '<form>';
-
-
-        // 2. else
-
-
-
-        // load
-        $aFields = $form->getValue('fields', true);
-
-
-
-
-        $nFieldCount = count($aFields);
-        for ($i = 0; $i < $nFieldCount; $i++)
-        {
-            // register
-            $field = $aFields[$i];
-
-            // read
-            $sTemplateName = $field->getEntityTypeName();
-
-
-
-            // 1. add 'type' to component (of name)
-
-            // create
-            $component = $this->_AimlessService->createComponent($sTemplateName, $field);
-
-            // forward
-            foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
-
-            // output
-            $sRenderedForm .= $component->render();
-
-
-            // 1. settings pass blindly: {% if validation is not empty %}, {{ validation|raw }}{% endif %}
-            // 2. hoe validation opslaan? single pass van alle fields? of validation entity table
-
-            // 3. form name / field is unique field-id
-            // 4. hoe koppelen aan values?
-
-            // 5. add action to form, retrieved from form-loaded from database
-            // 6. add auto-register to each field
-
-
-
-//            <script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>
-//
-//            een field heeft settings:
-//
-//            _mimoto_inputfield
-//            _mimoto_inputfieldsetting
-
-
-            if ($field->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
-            {
-                $sRenderedForm .= '<script>Mimoto.form.registerInputField("'.$field->getId().'")</script>';
-            }
-        }
-
-        // finish
-        $sRenderedForm .= '</form>';
-
-        // send
-        return $sRenderedForm;
+        // output
+        return $component->render(); // pass vars for rendering
     }
     
 }

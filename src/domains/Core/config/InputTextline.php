@@ -42,6 +42,57 @@ class InputTextline
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__description',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'description',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__description-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__placeholder',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'placeholder',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__placeholder-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__optional',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'optional',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__optional-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'value' => true
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__regexp',
                     'created' => CoreConfig::EPOCH,
                     // ---

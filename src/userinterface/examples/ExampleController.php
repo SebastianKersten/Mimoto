@@ -28,7 +28,7 @@ class ExampleController
     {
         // load
         $article = $app['Mimoto.Data']->get('article', 1);
-        
+
         // create
         $component = $app['Mimoto.Aimless']->createComponent('article', $article);
 

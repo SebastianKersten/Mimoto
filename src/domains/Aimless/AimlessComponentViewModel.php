@@ -5,11 +5,11 @@ namespace Mimoto\Aimless;
 
 
 /**
- * AimlessViewModel
+ * AimlessComponentViewModel
  *
  * @author Sebastian Kersten (@subertaboo)
  */
-class AimlessViewModel
+class AimlessComponentViewModel
 {
 
     // data
@@ -60,7 +60,17 @@ class AimlessViewModel
 
     public function form($sKey = null)
     {
-        return $this->_component->form();
+        return $this->_component->form($sKey);
+    }
+
+    public function submit($sKey = null)
+    {
+        return $this->_component->submit($sKey);
+    }
+
+    public function input()
+    {
+        return $this->_component->input();
     }
 
     public function render()

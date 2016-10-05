@@ -33,6 +33,10 @@ class AimlessInput extends AimlessComponent
         $this->_sVarName = $entity->getValue('varname');
     }
 
+    public function input()
+    {
+        return 'mls_form_input="'.$this->_sVarName.'"';
+    }
 
     public function field()
     {

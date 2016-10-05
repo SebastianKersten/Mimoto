@@ -15,6 +15,8 @@ use Silex\Application;
 class ExampleFormController
 {
     
+
+
     public function viewExampleForm1(Application $app)
     {
 
@@ -31,8 +33,6 @@ class ExampleFormController
 
 
 
-
-
         // create
         $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
 
@@ -41,8 +41,6 @@ class ExampleFormController
 
         // render and send
         return $component->render();
-
-
 
 
 
@@ -66,10 +64,7 @@ class ExampleFormController
         // 4. add base-twig to component (via sIdentifier)
 
 
-
         // a. component settings
-
-
 
 
         // load
@@ -84,10 +79,6 @@ class ExampleFormController
 //
 //        // render and send
 //        return $component->render();
-
-
-
-
 
 
 //        // prepare
@@ -108,5 +99,21 @@ class ExampleFormController
 
 
     }
-    
+
+
+    public function viewExampleForm2(Application $app)
+    {
+
+        // load
+        $client = $app['Mimoto.Data']->get('client', 1);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
+
+        // setup
+        $component->addForm('client', $client);
+
+        // render and send
+        return $component->render();
+    }
 }

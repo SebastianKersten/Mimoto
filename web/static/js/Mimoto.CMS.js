@@ -121,9 +121,9 @@ Mimoto.form.closeForm = function(sFormName)
     var aSubmitButtons = $('[mls_form_submit="' + sFormName + '"]');
 
 
-    //console.log(aSubmitButtons);
+    console.log(aSubmitButtons);
 
-    //console.log(aSubmitButtons.length);
+    console.log(aSubmitButtons.length);
 
 
     // activate

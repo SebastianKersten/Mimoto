@@ -219,6 +219,7 @@ class MimotoEntity
         return $GLOBALS['Mimoto.Config']->entityIsTypeOf($this->_config->entityTypeName, $sEntityType);
     }
 
+
     
     // ----------------------------------------------------------------------------
     // --- Public methods - usage -------------------------------------------------
@@ -391,8 +392,8 @@ class MimotoEntity
      */
     private function getValueFromValueProperty($property)
     {
-        // validate
-        if (!isset($property->data->currentValue)) { throw new MimotoEntityException("( '-' ) - Hmm, the property '".$property->config->name."' you are trying to get doesn't seems to have a value set yet"); }
+        // validate #todo disabled when value is null in database. Is this an issue? Not really. Opt for deletion
+        //if (!isset($property->data->currentValue)) { throw new MimotoEntityException("( '-' ) - Hmm, the property '".$property->config->name."' you are trying to get doesn't seems to have a value set yet"); }
         
         // send
         return $property->data->currentValue;
