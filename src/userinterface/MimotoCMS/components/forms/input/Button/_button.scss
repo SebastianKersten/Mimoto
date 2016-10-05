@@ -1,24 +1,24 @@
 .button {
   display: inline-flex;
-  flex-wrap: nowrap;
   padding: 10px 20px;
   text-decoration: none;
   background: $black;
+  flex-wrap: nowrap;
   align-items: center;
 
   .button-text {
-    color: $white;
-    font-size: 14px;
-    line-height: 20px;
     font-family: $font-family-futura;
+    font-size: 14px;
     font-weight: 500;
+    line-height: 20px;
+    color: $white;
   }
 
   .button-icon {
+    display: block;
     width: 10px;
     height: 10px;
-    display: block;
-    fill: $tower-gray;
     margin: 0 0 0 20px;
+    fill: $tower-gray;
   }
 }
