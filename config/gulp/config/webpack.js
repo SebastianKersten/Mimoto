@@ -13,7 +13,7 @@ module.exports = function (env) {
     context: jsSrc,
     plugins: [],
     resolve: {
-      modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components/'],
+      modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components/'], // If you want to include modules in app.js you have to use this as the root
       extensions: ['', '.js']
     },
     entry: {
@@ -42,12 +42,12 @@ module.exports = function (env) {
         output: {comments: false},
         minimize: true,
         comments: false,
-        sourceMap:false,
+        sourceMap: false,
         compress:{
           loops: true,
           booleans: true,
           dead_code: true,
-          conditionals : true,
+          conditionals: true,
           screw_ie8: true,
           comparisons: true,
           warnings: true,
