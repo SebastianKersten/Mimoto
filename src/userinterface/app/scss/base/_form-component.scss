@@ -1,5 +1,6 @@
 .form-component {
   position: relative;
+  overflow: hidden;
   max-width: 1000px;
   margin: 0 0 20px;
 
@@ -17,8 +18,6 @@
       border-color: $fuzzy-wuzzy-brown;
     }
   }
-
-
 
   .form-component-title {
     position: relative;
@@ -119,5 +118,9 @@
       font-size: rem-calc(13px);
       color: $fuzzy-wuzzy-brown;
     }
+  }
+
+  .form-component-button {
+    margin: 0 0 10px;
   }
 }
