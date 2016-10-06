@@ -1,9 +1,9 @@
-.form-component-element-checkbox-container {
+.form-checkbox-container {
   position: relative;
   width: 20px;
   height: 20px;
 
-  .form-component-element-checkbox {
+  .form-checkbox {
     position: relative;
     z-index: 1;
     width: 20px;
@@ -26,17 +26,17 @@
     }
   }
 
-  .form-component-element-checkbox:checked {
+  .form-checkbox:checked {
     &::after {
       background: $white;
     }
 
-    + .form-component-element-checkbox-icon {
+    + .form-checkbox-icon {
       display: block;
     }
   }
 
-  .form-component-element-checkbox-icon {
+  .form-checkbox-icon {
     position: absolute;
     z-index: 2;
     top: 1px;
