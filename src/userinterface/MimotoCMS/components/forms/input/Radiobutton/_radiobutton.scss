@@ -1,4 +1,4 @@
-.form-component-element-radiobutton {
+.form-radiobutton {
   position: relative;
   z-index: 0;
   display: block;
@@ -37,7 +37,7 @@
   }
 }
 
-.form-component-element-radiobutton:checked {
+.form-radiobutton:checked {
   &::after {
     background: $white;
   }
