@@ -1,10 +1,10 @@
-.form-component-element-list-item {
+.form-list-item {
   display: flex;
   margin: 0 0 5px;
   padding: 0 20px 0 0;
   border: 1px solid $pale-slate;
 
-  .form-component-element-list-item-figure {
+  .form-list-item-figure {
     width: 72px;
     background-repeat: no-repeat;
     background-position: center center;
@@ -12,26 +12,26 @@
     flex: 0 0 auto;
   }
 
-  .form-component-element-list-item-text {
+  .form-list-item-text {
     padding: 15px 20px;
     flex: 1 1 auto;
 
-    .form-component-element-list-item-title,
-    .form-component-element-list-item-subtitle {
+    .form-list-item-title,
+    .form-list-item-subtitle {
       font-size: rem-calc(14px);
     }
 
-    .form-component-element-list-item-title {
+    .form-list-item-title {
       font-weight: 500;
       color: $black;
     }
 
-    .form-component-element-list-item-subtitle {
+    .form-list-item-subtitle {
       color: $gray;
     }
   }
 
-  .form-component-element-list-item-button {
+  .form-list-item-button {
     display: flex;
     align-items: center;
     flex: 0 0 auto;
