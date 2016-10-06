@@ -19,7 +19,7 @@ module.exports.prototype = {
     if (this.imageUploads.length) {
       this.initImageUploads();
     }
-    
+
   },
 
   setVariables: function () {
@@ -28,15 +28,15 @@ module.exports.prototype = {
     this.showPreviewClass = 'form-image-upload--show-preview';
     this.imageUploads = document.querySelectorAll(this.imageUploadClass);
 
-    // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+  },
+
+  initImageUploads: function () {
+
+    // Get the template HTML and remove it from the document
     var previewNode = document.querySelector(".form-image-upload-preview-template");
     previewNode.id = "";
     this.previewTemplate = previewNode.parentNode.innerHTML;
     previewNode.parentNode.removeChild(previewNode);
-
-  },
-
-  initImageUploads: function () {
 
     for (var i = 0; i < this.imageUploads.length; i++) {
 
