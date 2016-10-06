@@ -21,6 +21,7 @@
   "devDependencies": {
     "autoprefixer": "^6.4.1",
     "browser-sync": "^2.16.0",
+    "dropzone": "^4.3.0",
     "gulp": "^3.9.1",
     "gulp-postcss": "^6.2.0",
     "gulp-rename": "^1.2.2",
