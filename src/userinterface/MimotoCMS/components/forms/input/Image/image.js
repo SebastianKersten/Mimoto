@@ -14,10 +14,12 @@ module.exports.prototype = {
 
   init: function () {
 
-
     this.setVariables();
-    this.initImageUploads();
 
+    if (this.imageUploads.length) {
+      this.initImageUploads();
+    }
+    
   },
 
   setVariables: function () {
