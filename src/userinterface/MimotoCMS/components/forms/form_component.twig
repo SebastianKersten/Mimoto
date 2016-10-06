@@ -1,0 +1,10 @@
+<div class="form-component">
+  <p class="form-component-title"{{ title }} {% if title_information|default('') %}<span class="form-component-title-information">{{ title_information }}</span>{% endif %}</p>
+
+  <div class="form-component-content{% if not description|default('') %} form-component-content--no-description{% endif %}">
+    <div class="form-component-element">
+      {% block form_element %}{% endblock %}
+    </div>
+    {% if description|default('') %}<p class="form-component-description">{{ description }}</p>{% endif %}
+  </div>
+</div>
