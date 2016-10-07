@@ -14,7 +14,7 @@ class AimlessInput extends AimlessComponent
 
     // config
     private $_value;
-    private $_sVarName;
+    private $_sFieldId;
 
     
     /**
@@ -30,22 +30,33 @@ class AimlessInput extends AimlessComponent
 
         // register
         $this->_value = $value;
-        $this->_sVarName = $entity->getValue('varname');
+
+
+
+
+
+        $field = $entity->getValue('value');
+
+
+
+        if (!empty($field->getValue('varname'))) $this->_sFieldId = $field->getValue('varname');
+
+
     }
 
     public function input()
     {
-        return 'mls_form_input="'.$this->_sVarName.'"';
+        return 'mls_form_input="'.$this->_sFieldId.'"';
     }
 
     public function field()
     {
-        return 'mls_form_field="'.$this->_sVarName.'"';
+        return 'mls_form_field="'.$this->_sFieldId.'"';
     }
 
     public function error()
     {
-        return 'mls_form_error="'.$this->_sVarName.'"';
+        return 'mls_form_error="'.$this->_sFieldId.'"';
     }
 
     public function value()
@@ -73,7 +84,7 @@ class AimlessInput extends AimlessComponent
         $sRenderedField = $this->_TwigService->render($sComponentFile, $this->_aVars);
 
         // connect
-        $sRenderedField .= '<script>Mimoto.form.registerInputField("'.$this->_sVarName.'")</script>';
+        $sRenderedField .= '<script>Mimoto.form.registerInputField("'.$this->_sFieldId.'")</script>';
 
         // output
         return $sRenderedField;

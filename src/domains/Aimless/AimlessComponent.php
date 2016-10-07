@@ -389,7 +389,7 @@ class AimlessComponent
     
     
     
-    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $values = null)
+    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $xValues = null)
     {
         // init
         $sRenderedCollection = '';
@@ -406,6 +406,12 @@ class AimlessComponent
             // create
             if ($entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
             {
+
+                if ($xValues instanceof MimotoEntity)
+                {
+
+                }
+
                 $component = $this->_AimlessService->createInput($sTemplateName, $entity);
             }
             else

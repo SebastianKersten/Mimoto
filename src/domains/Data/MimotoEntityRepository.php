@@ -418,7 +418,6 @@ class MimotoEntityRepository
             // setup property
             $entity->setupProperty($propertyConfig);
             
-            
             if (!empty($nEntityId))
             {
                 // set value

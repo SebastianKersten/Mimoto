@@ -541,7 +541,7 @@ class MimotoEntityConfigRepository
             $entityConfig->setMySQLTable($entity->name);
 
             // compose
-            if (substr($this->getEntityNameById($entity->id), 0, 16) == '_MimotoAimless__')
+            if (substr($this->getEntityNameById($entity->id), 0, 16) == CoreConfig::CORE_PREFIX)
             {
                 $sConnectionTable = CoreConfig::MIMOTO_CONNECTIONS_CORE;
             }
@@ -575,7 +575,7 @@ class MimotoEntityConfigRepository
                             'id' => $property->settings['allowedEntityType']->value,
                             'name' => $this->getEntityNameById($property->settings['allowedEntityType']->value)
                         );
-                        
+
                         // setup
                         $entityConfig->setEntityAsProperty($property->name, $property->id, $property->settings);
 

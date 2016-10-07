@@ -35,6 +35,8 @@ class CoreConfig
     const EPOCH = '1976-10-19 23:15:00';
 
 
+    const CORE_PREFIX                           = '_MimotoAimless__';
+
     // core
     const MIMOTO_ENTITY                         = '_MimotoAimless__core__entity';
     const MIMOTO_ENTITYPROPERTY                 = '_MimotoAimless__core__entityproperty';
