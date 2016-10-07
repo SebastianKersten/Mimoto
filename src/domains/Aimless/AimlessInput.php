@@ -2,6 +2,7 @@
 
 // classpath
 namespace Mimoto\Aimless;
+use Mimoto\Data\MimotoEntity;
 
 
 /**
@@ -23,21 +24,18 @@ class AimlessInput extends AimlessComponent
      * @param MimotoEntity $entity
      * @param mixed $value
      */
-    public function __construct($sComponentName, $entity, $value, $AimlessService, $DataService, $TwigService)
+    public function __construct($sComponentName, $entity, $xValues, $AimlessService, $DataService, $TwigService)
     {
         // forward
         parent::__construct($sComponentName, $entity, $AimlessService, $DataService, $TwigService);
 
-        // register
-        $this->_value = $value;
 
-
-
+        // default
+        $this->_sFieldId = '';
+        $this->_value = '';
 
 
         $field = $entity->getValue('value');
-
-        $this->_sFieldId = '';
 
         if (!empty($field))
         {
@@ -45,6 +43,11 @@ class AimlessInput extends AimlessComponent
             if (!empty($field->getValue('varname')))
             {
                 $this->_sFieldId = $field->getValue('varname');
+
+                if ($xValues instanceof MimotoEntity)
+                {
+                    $this->_value = $xValues->getValue($this->_sFieldId);
+                }
             }
         }
 

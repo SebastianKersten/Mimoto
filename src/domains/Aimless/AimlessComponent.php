@@ -406,13 +406,10 @@ class AimlessComponent
             // create
             if ($entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
             {
+                // clarify
+                $field = $entity;
 
-                if ($xValues instanceof MimotoEntity)
-                {
-
-                }
-
-                $component = $this->_AimlessService->createInput($sTemplateName, $entity);
+                $component = $this->_AimlessService->createInput($sTemplateName, $field, $xValues);
             }
             else
             {
