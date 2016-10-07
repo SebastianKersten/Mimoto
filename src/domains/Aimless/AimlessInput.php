@@ -37,10 +37,16 @@ class AimlessInput extends AimlessComponent
 
         $field = $entity->getValue('value');
 
+        $this->_sFieldId = '';
 
+        if (!empty($field))
+        {
 
-        if (!empty($field->getValue('varname'))) $this->_sFieldId = $field->getValue('varname');
-
+            if (!empty($field->getValue('varname')))
+            {
+                $this->_sFieldId = $field->getValue('varname');
+            }
+        }
 
     }
 
