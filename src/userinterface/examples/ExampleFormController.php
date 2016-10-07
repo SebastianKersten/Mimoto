@@ -105,7 +105,7 @@ class ExampleFormController
     public function viewExampleForm2(Application $app)
     {
         // load
-        $client = $app['Mimoto.Data']->get('client', 1);
+        $client = $app['Mimoto.Data']->get('client', 4);
 
         // create
         $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');

@@ -338,7 +338,7 @@ Mimoto.Aimless.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.LiveScreen/' + data.entityType + '/' + data.entityId + '/' + mls_component,
+                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -460,7 +460,7 @@ Mimoto.Aimless.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_component,
+                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component,
                     data: null,
                     dataType: 'html',
                     success: function (data) {

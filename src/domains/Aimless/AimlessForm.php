@@ -61,7 +61,7 @@ class AimlessForm extends AimlessComponent
 
 
         // prepare
-        $sAction = '/Mimoto.Aimless/form/'.$this->_sFormName;
+        $sAction = '/Mimoto.Aimless/form/'.$this->_sFormName; // #todo - replace with custom if present
         $sMethod = 'POST';
 
         // init

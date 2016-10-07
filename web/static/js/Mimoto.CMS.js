@@ -155,6 +155,7 @@ Mimoto.form.submit = function(sFormName)
     var $form = $('form[name="' + sFormName + '"]');
 
     // 4. collect data
+    var aValues = {};
     for (var i = 0; i < nFieldCount; i++)
     {
         // register
@@ -166,15 +167,32 @@ Mimoto.form.submit = function(sFormName)
         // 6. collect value
         aComponents.each( function(index, $component)
         {
-            console.log('value = ' + $($component).val()); // aleen indien field.sType = input
+            var value = $($component).val();
+            console.log('value = ' + value); // aleen indien field.sType = input
+
+            aValues[field.sName] = $($component).val();
         });
     }
 
-    // 2. read values
 
-    // 3. collect values
+    console.log('Sending ' + form.sAction + ' ' + form.sMethod);
+    console.log(aValues);
+    console.log('------');
 
     // 4. send values via ajax -> default API route
+
+    $.ajax({
+        type: form.sMethod,
+        url: form.sAction,
+        data: JSON.stringify({ values: aValues }),
+        dataType: 'json',
+        success: function(resultData, resultStatus, resultSomething)
+        {
+            console.log(resultData);
+            console.log(resultStatus);
+            console.log(resultSomething);
+        }
+    });
 
     // 5. show result
     //console.log();

@@ -22,8 +22,9 @@ class MimotoAimlessServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         // register
-        $app->get('/Mimoto.Aimless/{sEntityType}/{nEntityId}/{sTemplateId}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView');
-        
+        $app->get('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sTemplateId}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView');
+        $app->post('/Mimoto.Aimless/form/{sFormName}', 'Mimoto\\Aimless\\MimotoAimlessController::parseForm');
+
         $app['Mimoto.Aimless'] = $app['Mimoto.AimlessService'] = $app->share(function($app)
         {
             return new MimotoAimlessService($app['Mimoto.Data'], $app['twig']);
