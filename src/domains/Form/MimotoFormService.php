@@ -1,29 +1,37 @@
 <?php
 
 // classpath
-namespace MaidoProjects\Form;
+namespace Mimoto\Form;
 
-// Momkai classes
-use MaidoProjects\Agency\AgencyException;
+// Mimoto classes
+use Mimoto\Core\CoreConfig;
 
 
 /**
- * AgencyService
+ * MimotoFormService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class FormService
+class MimotoFormService
 {
-    
+
+    // services
+    private $_MimotoEntityService;
+
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Constructor
      */
-    public function __construct() {}
+    public function __construct($MimotoEntityService)
+    {
+        // register
+        $this->_MimotoEntityService = $MimotoEntityService;
+    }
     
     
     
@@ -33,43 +41,19 @@ class FormService
     
     
     /**
-     * Get agency by ID
+     * Get form by its name
      */
-    public function createForm($sEntityType, $nId) // separate form/forminputs-models met config parameters
+    public function getFormByName($sFormName)
     {
-        // load
-        try
-        {
-            $agency = $this->_AgencyRepository->get($nId);
-        }
-        catch(AgencyException $e)
-        {
-            die($e->getMessage());
-        }
+        // 1. load form from database
+        $aResults = $this->_MimotoEntityService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $sFormName]]);
+
+        // 2. validate if form exists
+        if (!isset($aResults[0])) error("Aimless says: Form with name '".$sFormName."' not found in database");
+        // #todo - silent fail?
         
         // send
-        return $agency;
-    }
-    
-    /**
-     * Get all agencies
-     */
-    public function getAllAgencies()
-    {
-        // load
-        $aAgencies = $this->_AgencyRepository->find();
-        
-        // send
-        return $aAgencies;
-    }
-    
-    /**
-     * Store agency
-     */
-    public function storeAgency($nId, $sName)
-    {
-        // store
-        $this->_AgencyRepository->store($nId, $sName);
+        return $aResults[0];
     }
     
 }

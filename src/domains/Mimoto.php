@@ -8,6 +8,7 @@ use Mimoto\Event\MimotoEventServiceProvider;
 use Mimoto\Aimless\MimotoAimlessServiceProvider;
 use Mimoto\Data\MimotoEntityServiceProvider;
 use Mimoto\Cache\MimotoCacheServiceProvider;
+use Mimoto\Form\MimotoFormServiceProvider;
 
 
 /**
@@ -32,6 +33,7 @@ class Mimoto
         $app->register(new MimotoEntityServiceProvider());
         $app->register(new MimotoAimlessServiceProvider());
         $app->register(new MimotoEventServiceProvider());
+        $app->register(new MimotoFormServiceProvider());
 
 
 

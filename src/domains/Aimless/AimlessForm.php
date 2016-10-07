@@ -15,8 +15,10 @@ use Mimoto\Core\CoreConfig;
 class AimlessForm extends AimlessComponent
 {
 
+    // services
+    private $_FormService;
 
-
+    // data
     private $_xValues;
 
 
@@ -30,7 +32,7 @@ class AimlessForm extends AimlessComponent
      * @param MimotoEntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sFormName, $xValues, $options, $AimlessService, $DataService, $TwigService)
+    public function __construct($sFormName, $xValues, $options, $AimlessService, $DataService, $FormService, $TwigService)
     {
 
         if (empty($options))
@@ -38,6 +40,7 @@ class AimlessForm extends AimlessComponent
             // register
             $this->_AimlessService = $AimlessService;
             $this->_DataService = $DataService;
+            $this->_FormService = $FormService;
             $this->_TwigService = $TwigService;
 
             // register
@@ -49,14 +52,10 @@ class AimlessForm extends AimlessComponent
 
     public function render()
     {
-        // 1. load form from database
-        $aResults = $this->_DataService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $this->_sFormName]]);
+        // 1. load form
+        $form = $this->_FormService->getFormByName($this->_sFormName);
 
-        // 2. validate if form exists
-        if (!isset($aResults[0])) error("Aimless says: Form with name '".$this->_sFormName."' not found in database");
-
-
-        $form = $aResults[0];
+        // 2. register fields
         $aFields = $form->getValue('fields', true);
 
 

@@ -36,10 +36,11 @@ class MimotoAimlessService
     /**
      * Constructor
      */
-    public function __construct($MimotoEntityService, $TwigService)
+    public function __construct($MimotoEntityService, $MimotoFormService, $TwigService)
     {
         // register
         $this->_MimotoEntityService = $MimotoEntityService;
+        $this->_MimotoFormService = $MimotoFormService;
         $this->_MimotoAimlessService = $this;
         $this->_TwigService = $TwigService;
         
@@ -87,7 +88,7 @@ class MimotoAimlessService
     public function createForm($sFormName, $xData, $options = null)
     {
         // init and send
-        return new AimlessForm($sFormName, $xData, $options, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
+        return new AimlessForm($sFormName, $xData, $options, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoFormService, $this->_TwigService);
     }
 
 

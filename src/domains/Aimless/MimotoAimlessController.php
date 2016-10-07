@@ -57,18 +57,38 @@ class MimotoAimlessController
         // 2. register values
         $aValues = $requestData->values;
         //$sUniqueId = $requestData->uniqueId; #todo - validate user
+        //$aValues = (object) array("name" => "De Correspondent ".date("H:i:s"));
 
-        // 3. load form from database
-        $aResults = $app['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $sFormName]]);
-
-        // 4. validate if form exists
-        if (!isset($aResults[0])) error("Aimless says: Form with name '".$sFormName."' not found in database");
-        // #todo - repackage into json
+        // 3. load form
+        $form = $app['Mimoto.Forms']->getFormByName($sFormName);
 
 
 
-        $form = $aResults[0];
+
         $aFields = $form->getValue('fields', true);
+
+
+        // het weet je welke entity het betreft?
+        // output entityName en entityId in form -> gebruik enkel id (name is slechts een hulpje)
+
+
+        // move to Service (store form) FormService ->
+
+        $nFieldCount = count($aFields);
+        for ($i = 0; $i < $nFieldCount; $i++)
+        {
+            // register
+            $field = $aFields[$i];
+
+            // create
+            if ($field->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
+            {
+                output('Field value', $field->getValue('value'));
+            }
+        }
+
+
+
 
 
         // check if data matches the number of fields

@@ -27,6 +27,7 @@
             "Mimoto\\Data\\": "./src/domains/Data",
             "Mimoto\\Event\\": "./src/domains/Event",
             "Mimoto\\Entity\\": "./src/domains/Entity",
+            "Mimoto\\Form\\": "./src/domains/Form",
             "Mimoto\\Aimless\\": "./src/domains/Aimless",
             "Mimoto\\Mail\\": "./src/domains/Mail",
             "Mimoto\\Cache\\": "./src/domains/Cache",
