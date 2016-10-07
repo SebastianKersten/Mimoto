@@ -10,8 +10,8 @@
   {% set element = 'a' %}
 {% endif %}
 
-{% if data|default([]) %}
-  {% set data_attributes = ' data-' ~ data|join(' data-') %}
+{% if attributes|default([]) %}
+  {% set data_attributes = ' data-' ~ attributes|join(' data-') %}
 {% endif %}
 
 <{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="button{{ classes }}">

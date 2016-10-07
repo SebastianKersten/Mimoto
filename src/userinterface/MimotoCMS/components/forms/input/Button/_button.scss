@@ -1,8 +1,12 @@
 .button {
   display: inline-flex;
   padding: 10px 20px;
+  cursor: pointer;
   text-decoration: none;
+  border: 0;
+  outline: none;
   background: $black;
+  box-shadow: none;
   flex-wrap: nowrap;
   align-items: center;
 
