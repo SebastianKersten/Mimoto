@@ -11,7 +11,11 @@ module.exports = function (env) {
   var webpackConfig = {
 
     context: jsSrc,
-    plugins: [],
+    plugins: [
+        new webpack.ProvidePlugin({
+          'conditioner': './conditioner/conditioner'
+        })
+    ],
     resolve: {
       modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components/'], // If you want to include modules in app.js you have to use this as the root
       extensions: ['', '.js']
