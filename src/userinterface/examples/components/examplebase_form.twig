@@ -1,12 +1,12 @@
 {% extends "examples/components/examplebase.twig" %}
 
 {% block content %}
-  <div class="form_holder">
-    <div class="example_form_fields">
-      {{ Aimless.form()|raw }}
+    <div class="form_holder">
+        <div class="example_form_fields">
+            {{ Aimless.form()|raw }}
+        </div>
+        <div class="MimotoCMS_forms_Form__menu">
+            <span {{ Aimless.submit()|raw }}><div class="MimotoCMS_forms_input_Button" onclick="Mimoto.form.submit('client');">Opslaan</div></span>
+        </div>
     </div>
-    <div class="MimotoCMS_forms_Form__menu">
-      <span {{ Aimless.submit()|raw }}>{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Save' } %}</span>
-    </div>
-  </div>
 {% endblock %}

@@ -168,8 +168,8 @@ class MimotoEntityConfig
      * @param array $options Array containing the option 'entityType'
      */
     public function setEntityAsProperty($sPropertyName, $nPropertyId, $options)
-    {        
-         // compose
+    {
+        // compose
         $property = (object) array(
             'name' => $sPropertyName,
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,

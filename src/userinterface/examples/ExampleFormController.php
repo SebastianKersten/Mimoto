@@ -4,6 +4,7 @@
 namespace Mimoto\UserInterface\examples;
 
 // Silex classes
+use Mimoto\Core\CoreConfig;
 use Silex\Application;
 
 
@@ -103,7 +104,6 @@ class ExampleFormController
 
     public function viewExampleForm2(Application $app)
     {
-
         // load
         $client = $app['Mimoto.Data']->get('client', 1);
 

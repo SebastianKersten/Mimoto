@@ -99,6 +99,9 @@ Mimoto.form.openForm = function(sFormName, sAction, sMethod)
     // init
     if (!Mimoto.form._aForms) Mimoto.form._aForms = [];
 
+    // store
+    Mimoto.form._sCurrentOpenForm = sFormName;
+
     // setup
     var form = {
         'sName': sFormName,
@@ -108,9 +111,7 @@ Mimoto.form.openForm = function(sFormName, sAction, sMethod)
     };
 
     // register
-    Mimoto.form._aForms.push(form);
-
-    console.log(Mimoto.form._aForms);
+    Mimoto.form._aForms[sFormName] = form;
 };
 
 Mimoto.form.closeForm = function(sFormName)
@@ -121,16 +122,16 @@ Mimoto.form.closeForm = function(sFormName)
     var aSubmitButtons = $('[mls_form_submit="' + sFormName + '"]');
 
 
-    console.log(aSubmitButtons);
+    //console.log(aSubmitButtons);
 
-    console.log(aSubmitButtons.length);
+    //console.log(aSubmitButtons.length);
 
 
     // activate
     aSubmitButtons.each(function(nIndex, $component) {
 
         // read
-        var currentForm = Mimoto.form._aForms[Mimoto.form._aForms.length - 1]; // #todo - validate if no form set
+        var currentForm = Mimoto.form._aForms[Mimoto.form._sCurrentOpenForm]; // #todo - validate if no form set
 
         // register
         currentForm.aSubmitButtons.push($component);
@@ -142,7 +143,41 @@ Mimoto.form.closeForm = function(sFormName)
 
 Mimoto.form.submit = function(sFormName)
 {
-    alert('Submit for "' + sFormName + '" was clicked!');
+    // 1. validate
+    if (!Mimoto.form._aForms || !Mimoto.form._aForms[sFormName]) return;
+
+    // 2. register
+    var form = Mimoto.form._aForms[sFormName];
+    var aFields = form.aFields;
+    var nFieldCount = aFields.length;
+
+    // 3. locate form in dom
+    var $form = $('form[name="' + sFormName + '"]');
+
+    // 4. collect data
+    for (var i = 0; i < nFieldCount; i++)
+    {
+        // register
+        var field = aFields[i];
+
+        // 5. find field
+        var aComponents = $("[mls_form_input='" + field.sName + "']", $form);
+
+        // 6. collect value
+        aComponents.each( function(index, $component)
+        {
+            console.log('value = ' + $($component).val()); // aleen indien field.sType = input
+        });
+    }
+
+    // 2. read values
+
+    // 3. collect values
+
+    // 4. send values via ajax -> default API route
+
+    // 5. show result
+    //console.log();
 }
 
 Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - settings
@@ -156,7 +191,7 @@ Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - 
 
 
     // read
-    var currentForm = Mimoto.form._aForms[Mimoto.form._aForms.length - 1]; // #todo - validate if no form set
+    var currentForm = Mimoto.form._aForms[Mimoto.form._sCurrentOpenForm]; // #todo - validate if no form set
 
     currentForm.aFields.push(field);
 

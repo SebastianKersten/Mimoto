@@ -28,16 +28,16 @@ class Input
                     'id' => CoreConfig::MIMOTO_FORM_INPUT.'__value',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'varname',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'name' => 'value',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
-                        'type' => (object) array(
+                        'allowedEntityType' => (object) array(
                             'id' => CoreConfig::MIMOTO_FORM_INPUT.'__value-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            'key' => 'allowedEntityType',
+                            'type' => 'value',
+                            'value' => CoreConfig::MIMOTO_FORM_INPUTVALUE
                         )
                     ]
                 )

@@ -2,6 +2,7 @@
 
 // classpath
 namespace Mimoto\Aimless;
+use Mimoto\Data\MimotoEntity;
 
 
 /**
@@ -14,7 +15,7 @@ class AimlessInput extends AimlessComponent
 
     // config
     private $_value;
-    private $_sVarName;
+    private $_sFieldId;
 
     
     /**
@@ -23,29 +24,48 @@ class AimlessInput extends AimlessComponent
      * @param MimotoEntity $entity
      * @param mixed $value
      */
-    public function __construct($sComponentName, $entity, $value, $AimlessService, $DataService, $TwigService)
+    public function __construct($sComponentName, $entity, $xValues, $AimlessService, $DataService, $TwigService)
     {
         // forward
         parent::__construct($sComponentName, $entity, $AimlessService, $DataService, $TwigService);
 
-        // register
-        $this->_value = $value;
-        $this->_sVarName = $entity->getValue('varname');
+
+        // default
+        $this->_sFieldId = '';
+        $this->_value = '';
+
+
+        $field = $entity->getValue('value');
+
+        if (!empty($field))
+        {
+
+            if (!empty($field->getValue('varname')))
+            {
+                $this->_sFieldId = $field->getValue('varname');
+
+                if ($xValues instanceof MimotoEntity)
+                {
+                    $this->_value = $xValues->getValue($this->_sFieldId);
+                }
+            }
+        }
+
     }
 
     public function input()
     {
-        return 'mls_form_input="'.$this->_sVarName.'"';
+        return 'mls_form_input="'.$this->_sFieldId.'"';
     }
 
     public function field()
     {
-        return 'mls_form_field="'.$this->_sVarName.'"';
+        return 'mls_form_field="'.$this->_sFieldId.'"';
     }
 
     public function error()
     {
-        return 'mls_form_error="'.$this->_sVarName.'"';
+        return 'mls_form_error="'.$this->_sFieldId.'"';
     }
 
     public function value()
@@ -73,7 +93,7 @@ class AimlessInput extends AimlessComponent
         $sRenderedField = $this->_TwigService->render($sComponentFile, $this->_aVars);
 
         // connect
-        $sRenderedField .= '<script>Mimoto.form.registerInputField("'.$this->_sVarName.'")</script>';
+        $sRenderedField .= '<script>Mimoto.form.registerInputField("'.$this->_sFieldId.'")</script>';
 
         // output
         return $sRenderedField;

@@ -32,7 +32,7 @@ class InputValue
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'__varname-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__varname-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
