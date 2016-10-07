@@ -6,6 +6,7 @@ Dropzone.autoDiscover = false;
 module.exports = function (element, options) {
 
   this.el = element;
+  this.options = options;
   this.init();
 
 };
@@ -22,29 +23,31 @@ module.exports.prototype = {
   setVariables: function () {
 
     this.imageUploadClass = '.js-image-upload';
-    this.previewImageClass = '.js-image-upload-preview-image';
+    this.imageUploadTriggerClass = '.js-image-upload-trigger';
+    this.previewClass = '.js-image-upload-preview';
+    this.previewTemplateClass = '.js-image-upload-preview-template';
 
     this.showPreviewClass = 'form-image-upload--show-preview';
-    this.showPreviewImageClass = 'form-image-upload-preview-image--show';
+    this.showPreviewImageClass = 'form-image-upload--show-preview-image';
     this.hideUploadProgressClass = 'form-image-upload--hide-upload-progess';
+
+    this.postURL = this.options.url;
     this.imageUpload = this.el.querySelector(this.imageUploadClass);
+    this.previewTemplate = this.getPreviewTemplate();
 
   },
 
   initDropzones: function () {
 
-    // Get the template HTML and remove it from the document
-    var previewTemplate = this.getPreviewTemplate();
-
     this.dropzone = new Dropzone(this.imageUpload, {
-      url: 'http://httpbin.org/post',
+      url: this.postURL,
       maxFilesize: 1,
       parallelUploads: 20,
-      previewTemplate: previewTemplate,
+      previewTemplate: this.previewTemplate,
       thumbnailWidth: null,
       thumbnailHeight: 500,
-      previewsContainer: '.js-image-upload-preview',
-      clickable: '.js-image-upload-trigger'
+      previewsContainer: this.previewClass,
+      clickable: this.imageUploadTriggerClass
     });
 
     this.addDropzoneEvents();
@@ -53,7 +56,7 @@ module.exports.prototype = {
 
   getPreviewTemplate: function () {
 
-    var previewNode = document.querySelector('.form-image-upload-preview-template');
+    var previewNode = document.querySelector(this.previewTemplateClass);
     var template = previewNode.parentNode.innerHTML;
     previewNode.id = "";
     previewNode.parentNode.removeChild(previewNode);
@@ -63,9 +66,13 @@ module.exports.prototype = {
   },
 
   addDropzoneEvents: function () {
-    
+
     this.dropzone.on('removedfile', function (file) {
+
       this.dropzone.element.classList.remove(this.showPreviewClass);
+      var error = this.el.querySelector('.form-component-element-error');
+      this.el.querySelector('.form-component-element').removeChild(error);
+
     }.bind(this));
 
     this.dropzone.on('addedfile', function (file) {
@@ -73,13 +80,11 @@ module.exports.prototype = {
     }.bind(this));
 
     this.dropzone.on('thumbnail', function (file) {
-      this.dropzone.element.querySelector(this.previewImageClass).classList.add(this.showPreviewImageClass);
+      this.dropzone.element.classList.add(this.showPreviewImageClass);
     }.bind(this));
 
     this.dropzone.on('error', function (file, errorMessage, xhrObject) {
-      console.log(file);
-      console.log(errorMessage);
-      console.log(xhrObject);
+      this.printError(errorMessage);
     }.bind(this));
 
     this.dropzone.on('success', function (file, serverResponse) {
@@ -87,6 +92,15 @@ module.exports.prototype = {
         this.dropzone.element.classList.add(this.hideUploadProgressClass);
       }.bind(this), 100);
     }.bind(this));
+
+  },
+
+  printError: function (message) {
+
+    var error = document.createElement('p');
+    error.classList.add('form-component-element-error');
+    error.innerHTML = message;
+    this.el.querySelector('.form-component-element').appendChild(error);
 
   }
 

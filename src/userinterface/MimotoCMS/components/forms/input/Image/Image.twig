@@ -1,4 +1,4 @@
-<div class="form-component" data-module="views/ImageUpload">
+<div class="form-component" data-module="views/ImageUpload" data-options='{"url": "http://httpbin.org/post"}'>
   <div class="form-component-title">Desktop afbeelding <span class="form-component-title-information">(optioneel)</span></div>
 
   <div class="form-component-content">
@@ -10,8 +10,8 @@
         </div>
 
         <div class="form-image-upload-preview js-image-upload-preview">
-          <div class="form-image-upload-preview-template">
-            <img data-dz-thumbnail class="js-image-upload-preview-image form-image-upload-preview-image" />
+          <div class="form-image-upload-preview-template js-image-upload-preview-template">
+            <img data-dz-thumbnail class="form-image-upload-preview-image" />
             <div class="form-image-upload-preview-upload-progress">
               <div class="form-image-upload-preview-upload-progess-bar" data-dz-uploadprogress></div>
             </div>
@@ -24,8 +24,7 @@
           </div>
         </div>
       </div>
-      <p class="form-component-element-error"></p>
     </div>
-    <p class="form-component-description" data-dz-errormessage>De afbeelding mag max 2MB zijn. Een resolutie van 1400x900px werkt het beste.</p>
+    <p class="form-component-description">De afbeelding mag max 2MB zijn. Een resolutie van 1400x900px werkt het beste.</p>
   </div>
 </div>
