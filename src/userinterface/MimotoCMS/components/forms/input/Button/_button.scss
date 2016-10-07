@@ -5,7 +5,7 @@
   text-decoration: none;
   border: 0;
   outline: none;
-  background: $black;
+  background-color: $black;
   box-shadow: none;
   flex-wrap: nowrap;
   align-items: center;
@@ -25,4 +25,8 @@
     margin: 0 0 0 20px;
     fill: $tower-gray;
   }
+}
+
+.button.button--grey {
+  background-color: $silver;
 }
