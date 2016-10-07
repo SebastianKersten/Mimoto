@@ -4,3 +4,4 @@ composer.lock
 .idea/
 node_modules
 web/static/css
+web/static/js
