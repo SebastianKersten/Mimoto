@@ -24,33 +24,14 @@ class AimlessInput extends AimlessComponent
      * @param MimotoEntity $entity
      * @param mixed $value
      */
-    public function __construct($sComponentName, $entity, $xValues, $AimlessService, $DataService, $TwigService)
+    public function __construct($sComponentName, $entity, $sFieldName, $value, $AimlessService, $DataService, $TwigService)
     {
         // forward
         parent::__construct($sComponentName, $entity, $AimlessService, $DataService, $TwigService);
 
-
-        // default
-        $this->_sFieldId = '';
-        $this->_value = '';
-
-
-        $field = $entity->getValue('value');
-
-        if (!empty($field))
-        {
-
-            if (!empty($field->getValue('varname')))
-            {
-                $this->_sFieldId = $field->getValue('varname');
-
-                if ($xValues instanceof MimotoEntity)
-                {
-                    $this->_value = $xValues->getValue($this->_sFieldId);
-                }
-            }
-        }
-
+        // store
+        $this->_sFieldId = $sFieldName;
+        $this->_value = $value;
     }
 
     public function input()

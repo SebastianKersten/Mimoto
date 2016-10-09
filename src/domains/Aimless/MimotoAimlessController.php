@@ -7,6 +7,7 @@ namespace Mimoto\Aimless;
 use Mimoto\Core\CoreConfig;
 
 // Silex classes
+use Mimoto\Data\MimotoDataUtils;
 use Silex\Application;
 
 // Symfony classes
@@ -55,68 +56,111 @@ class MimotoAimlessController
         $requestData = json_decode($request->getContent());
 
         // 2. register values
-        $aValues = $requestData->values;
-        //$sUniqueId = $requestData->uniqueId; #todo - validate user
-        //$aValues = (object) array("name" => "De Correspondent ".date("H:i:s"));
+        $aRequestValues = $requestData->values;
+        $sPublicKey = $requestData->publicKey;
+
+
+//        $aRequestValues = array(
+//            "project.3.name" => "[".date("H:i:s")."] Bugaboo GTS",
+//            "project.3.description" => "[".date("H:i:s")."] Al ruim 15 jaar inspireert Bugaboo honderdduizenden ouders om eropuit te trekken en samen met hun kinderen de wereld te ontdekken. Tegenwoordig is het een vertrouwd straatbeeld: overal stoere, robuuste en tegelijk stijlvolle kinderwagens. Maar toen Max Barenbrug, nu Chief Design Officer bij Bugaboo, in 1994 zo'n kinderwagen ontwierp voor zijn afstudeerproject aan de Design Academy in Eindhoven, was het de eerste in zijn soort. De modulaire, multifunctionele kinderwagen, die net zo makkelijk in de stad als in het bos of op het strand kon worden gebruikt, was destijds een compleet nieuw concept."
+//        );
+//        $sPublicKey = '11f7d8ac2c8bd9479b39c9d1ad656980';
+
+
+        // get all vars and entities
+
+        $aValues = [];
+        $aEntities = [];
+        foreach ($aRequestValues as $key => $value)
+        {
+            // filter
+            if (strpos($key, '.') !== false)
+            {
+                // prepare
+                $aSelectorElements = explode('.', $key);
+
+                // validate
+                if (count($aSelectorElements) != 3) continue; // #todo - silent fail - possible misabuse
+                if (!MimotoDataUtils::validatePropertyName($aSelectorElements[0])) continue;
+                if (!MimotoDataUtils::isValidEntityId($aSelectorElements[1])) continue;
+                if (!MimotoDataUtils::validatePropertyName($aSelectorElements[2])) continue;
+
+                if (!isset($aEntities['entityType']))
+                {
+                    $aEntities['entityType'] = (object) array(
+                        'entityType' => $aSelectorElements[0],
+                        'entityId' => $aSelectorElements[1],
+                        'properties' => []
+                    );
+                }
+
+                $aEntities['entityType']->properties[] = $aSelectorElements[2];
+            }
+            else
+            {
+                $aValues[$key] = $value;
+            }
+        }
+        
+        error($aEntities);
+
+        // collect
+        foreach ($aEntities as $sEntityType => $entityInfo)
+        {
+            // load
+            $entityInfo->entity = $app['Mimoto.Data']->get($entityInfo->entityType, $entityInfo->entityId);
+
+            // load and store
+            $aValues[$entityInfo->entityType] = $entityInfo->entity;
+        }
+
+
+        error($aValues);
+
 
         // 3. load form
         $form = $app['Mimoto.Forms']->getFormByName($sFormName);
 
+        // 4. prepare
+        $formVars = $GLOBALS['Mimoto.Forms']->getFormVars($form, $aValues);
+        error($formVars->connectedEntities);
+        // 5. authenticate
+        if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities))) error('Public key is incorrect!');
 
 
 
-        $aFields = $form->getValue('fields', true);
-
-
-        // het weet je welke entity het betreft?
-        // output entityName en entityId in form -> gebruik enkel id (name is slechts een hulpje)
-
-
+        // #todo
         // move to Service (store form) FormService ->
 
-        $nFieldCount = count($aFields);
-        for ($i = 0; $i < $nFieldCount; $i++)
-        {
-            // register
-            $field = $aFields[$i];
+        // #question
+        // Hoe omgaan met nieuwe items? wel name/typeid maar geen id -> if no id -> create() i.p.v. get()
 
-            // create
-            if ($field->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
+
+
+        // collect
+        foreach ($aEntities as $sEntityType => $entityInfo)
+        {
+            // parse
+            $nPropertyCount = count($entityInfo->properties);
+            for ($i = 0; $i < $nPropertyCount; $i++)
             {
-                output('Field value', $field->getValue('value'));
+                // register
+                $sPropertyName = $entityInfo->properties[$i];
+
+                // compose
+                $sValueKey = $entityInfo->entityType.'.'.$entityInfo->entityId.'.'.$sPropertyName;
+
+                // update
+                $entityInfo->entity->setValue($sPropertyName, $aRequestValues[$sValueKey]);
             }
+
+            // store
+            $app['Mimoto.Data']->store($entityInfo->entity);
         }
 
-
-
-
-
-        // check if data matches the number of fields
-        //
-
-
-        // 3. get form fields
-
-        // 4. connect form fields to values
-
-        // 5. store item
-
-
-        // a. what if new? create?
-
-
-        // load
-        $client = $app['Mimoto.Data']->get('client', 4);
-
-        $client->setValue('name', $aValues->name);
-
-
-        $app['Mimoto.Data']->store($client);
-
-
-
         // render and send
-        return new Response(json_encode($aValues));
+        return new Response('Success!');
+        //return new Response(json_encode($aValues));
     }
 
 }

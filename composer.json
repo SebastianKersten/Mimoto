@@ -28,6 +28,8 @@
             "Mimoto\\Event\\": "./src/domains/Event",
             "Mimoto\\Entity\\": "./src/domains/Entity",
             "Mimoto\\Form\\": "./src/domains/Form",
+            "Mimoto\\Log\\": "./src/domains/Log",
+            "Mimoto\\User\\": "./src/domains/User",
             "Mimoto\\Aimless\\": "./src/domains/Aimless",
             "Mimoto\\Mail\\": "./src/domains/Mail",
             "Mimoto\\Cache\\": "./src/domains/Cache",

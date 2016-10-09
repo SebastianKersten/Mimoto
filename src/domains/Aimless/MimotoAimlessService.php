@@ -73,10 +73,10 @@ class MimotoAimlessService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessInput
      */
-    public function createInput($sComponentName, $entity = null, $value = null)
+    public function createInput($sComponentName, $entity = null, $sFieldName = null, $value = null)
     {
         // init and send
-        return new AimlessInput($sComponentName, $entity, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
+        return new AimlessInput($sComponentName, $entity, $sFieldName, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_TwigService);
     }
 
     /**

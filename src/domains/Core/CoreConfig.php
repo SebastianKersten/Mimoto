@@ -94,6 +94,11 @@ class CoreConfig
     const DATA_VALUE_TRUE           = 'true';
     const DATA_VALUE_FALSE          = 'false';
 
+    // inputvalue vartypes
+    const INPUTVALUE_VARTYPE                = 'vartype';
+    const INPUTVALUE_VARTYPE_VARNAME        = 'varname';
+    const INPUTVALUE_VARTYPE_ENTITYPROPERTY = 'entityproperty';
+
 
 
     // #todo

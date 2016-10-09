@@ -144,27 +144,38 @@ Mimoto.form.closeForm = function(sFormName)
 Mimoto.form.submit = function(sFormName)
 {
     // 1. validate
-    if (!Mimoto.form._aForms || !Mimoto.form._aForms[sFormName]) return;
+    if (!Mimoto.form._aForms) return;
 
-    // 2. register
+    // 2. set default is no specific form requested
+    if (!sFormName) { for (var s in Mimoto.form._aForms) { sFormName = s; break; } }
+
+    // 3. validate
+    if (!Mimoto.form._aForms[sFormName]) return;
+
+    // 4. register
     var form = Mimoto.form._aForms[sFormName];
     var aFields = form.aFields;
     var nFieldCount = aFields.length;
 
-    // 3. locate form in dom
+    // 5. locate form in dom
     var $form = $('form[name="' + sFormName + '"]');
 
-    // 4. collect data
+    // 6. read public key
+    var sPublicKey = '';
+    var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
+    aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
+
+    // 7. collect data
     var aValues = {};
     for (var i = 0; i < nFieldCount; i++)
     {
         // register
         var field = aFields[i];
 
-        // 5. find field
+        // 8. find field
         var aComponents = $("[mls_form_input='" + field.sName + "']", $form);
 
-        // 6. collect value
+        // 9. collect value
         aComponents.each( function(index, $component)
         {
             var value = $($component).val();
@@ -174,17 +185,22 @@ Mimoto.form.submit = function(sFormName)
         });
     }
 
+    // 10. collect data
+    var requestData = { publicKey: sPublicKey, values: aValues };
+
+
 
     console.log('Sending ' + form.sAction + ' ' + form.sMethod);
     console.log(aValues);
+    console.error(requestData);
     console.log('------');
 
-    // 4. send values via ajax -> default API route
 
+    // 11. send data
     $.ajax({
         type: form.sMethod,
         url: form.sAction,
-        data: JSON.stringify({ values: aValues }),
+        data: JSON.stringify(requestData),
         dataType: 'json',
         success: function(resultData, resultStatus, resultSomething)
         {

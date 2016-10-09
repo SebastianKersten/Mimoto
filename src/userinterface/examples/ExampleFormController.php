@@ -110,8 +110,27 @@ class ExampleFormController
         // create
         $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
 
+        // prepare
+        $values = [$client, 'xxxxxxx' => 'Hilde'];
+
         // setup
-        $component->addForm('client', $client);
+        $component->addForm('client', $values);
+
+        // render and send
+        return $component->render();
+    }
+
+
+    public function viewExampleForm3(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
+
+        // setup
+        $component->addForm('project', $project);
 
         // render and send
         return $component->render();
