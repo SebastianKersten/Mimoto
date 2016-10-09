@@ -101,8 +101,7 @@ class MimotoAimlessController
                 $aValues[$key] = $value;
             }
         }
-        
-        error($aEntities);
+
 
         // collect
         foreach ($aEntities as $sEntityType => $entityInfo)
@@ -115,15 +114,12 @@ class MimotoAimlessController
         }
 
 
-        error($aValues);
-
-
         // 3. load form
         $form = $app['Mimoto.Forms']->getFormByName($sFormName);
 
         // 4. prepare
         $formVars = $GLOBALS['Mimoto.Forms']->getFormVars($form, $aValues);
-        error($formVars->connectedEntities);
+
         // 5. authenticate
         if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities))) error('Public key is incorrect!');
 
@@ -151,7 +147,7 @@ class MimotoAimlessController
                 $sValueKey = $entityInfo->entityType.'.'.$entityInfo->entityId.'.'.$sPropertyName;
 
                 // update
-                $entityInfo->entity->setValue($sPropertyName, $aRequestValues[$sValueKey]);
+                $entityInfo->entity->setValue($sPropertyName, $aRequestValues->$sValueKey);
             }
 
             // store
