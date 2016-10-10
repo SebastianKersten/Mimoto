@@ -31,6 +31,8 @@ module.exports.prototype = {
     this.showPreviewImageClass = 'form-image-upload--show-preview-image';
     this.hideUploadProgressClass = 'form-image-upload--hide-upload-progess';
 
+    this.errorParent = this.el.querySelector('.js-error-parent');
+
     this.postURL = this.options.url;
     this.imageUpload = this.el.querySelector(this.imageUploadClass);
     this.previewTemplate = this.getPreviewTemplate();
@@ -68,11 +70,7 @@ module.exports.prototype = {
   addDropzoneEvents: function () {
 
     this.dropzone.on('removedfile', function (file) {
-
-      this.dropzone.element.classList.remove(this.showPreviewClass);
-      var error = this.el.querySelector('.form-component-element-error');
-      this.el.querySelector('.form-component-element').removeChild(error);
-
+      ErrorHandling.removeError(this.errorParent, this.el);
     }.bind(this));
 
     this.dropzone.on('addedfile', function (file) {
@@ -84,7 +82,7 @@ module.exports.prototype = {
     }.bind(this));
 
     this.dropzone.on('error', function (file, errorMessage, xhrObject) {
-      this.printError(errorMessage);
+      ErrorHandling.addError(errorMessage, this.errorParent, this.el);
     }.bind(this));
 
     this.dropzone.on('success', function (file, serverResponse) {
@@ -92,15 +90,6 @@ module.exports.prototype = {
         this.dropzone.element.classList.add(this.hideUploadProgressClass);
       }.bind(this), 100);
     }.bind(this));
-
-  },
-
-  printError: function (message) {
-
-    var error = document.createElement('p');
-    error.classList.add('form-component-element-error');
-    error.innerHTML = message;
-    this.el.querySelector('.form-component-element').appendChild(error);
 
   }
 

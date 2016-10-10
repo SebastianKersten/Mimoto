@@ -11,10 +11,11 @@
   }
 
   &.form-component--has-error {
-    .form-component-element-input,
-    .form-component-element-select,
-    .form-component-element-checkbox::after,
-    .form-component-element-radiobutton::after {
+    .form-input,
+    .form-select,
+    .form-checkbox::after,
+    .form-radiobutton::after,
+    .form-image-upload {
       border-color: $fuzzy-wuzzy-brown;
     }
   }

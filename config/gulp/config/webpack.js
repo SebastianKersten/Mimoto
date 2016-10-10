@@ -12,12 +12,13 @@ module.exports = function (env) {
 
     context: jsSrc,
     plugins: [
-        new webpack.ProvidePlugin({
-          'conditioner': './conditioner/conditioner'
-        })
+      new webpack.ProvidePlugin({
+        'Conditioner': './conditioner/conditioner',
+        'ErrorHandling': 'ErrorHandling'
+      })
     ],
     resolve: {
-      modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components/'], // If you want to include modules in app.js you have to use this as the root
+      modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components/', 'src/userinterface/app/javascript/utils'],
       extensions: ['', '.js']
     },
     entry: {
