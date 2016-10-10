@@ -86,6 +86,8 @@ class MimotoFormService
             // register
             $fieldValue = $field->getValue('value');
 
+            if (empty($fieldValue)) continue; // #todo - silent fail notification
+
             // register
             $sVarType = $fieldValue->getValue(CoreConfig::INPUTVALUE_VARTYPE);
 
