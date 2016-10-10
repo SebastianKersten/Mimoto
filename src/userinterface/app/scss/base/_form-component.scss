@@ -50,18 +50,16 @@
       background-size: 15px 15px;
     }
 
-    .form-component-title-icon.form-component-title-icon--checkmark {
-      top: 5px;
-      width: 13px;
-      height: 12px;
-      fill: $tower-gray;
+    .form-component-title-icon.icon-checkmark {
+      top: 4px;
+      font-size: rem-calc(14px);
+      color: $tower-gray;
     }
 
-    .form-component-title-icon.form-component-title-icon--warning {
-      top: 5px;
-      width: 14px;
-      height: 12px;
-      fill: $fuzzy-wuzzy-brown;
+    .form-component-title-icon.icon-warning {
+      top: 4px;
+      font-size: rem-calc(14px);
+      color: $fuzzy-wuzzy-brown;
     }
   }
 

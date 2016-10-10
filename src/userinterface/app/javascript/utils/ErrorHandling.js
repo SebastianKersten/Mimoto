@@ -7,6 +7,9 @@ module.exports = {
     // Default options
     this.element = "p";
     this.classes = "error-message";
+    this.errorClass = "error-class";
+    this.iconClass = "icon";
+    this.iconErrorClass = "icon-error";
 
     if (options.element) {
       this.element = options.element;
@@ -20,6 +23,14 @@ module.exports = {
       this.errorClass = options.errorClass;
     }
 
+    if (options.iconClass) {
+      this.iconClass = options.iconClass;
+    }
+
+    if (options.iconErrorClass) {
+      this.iconErrorClass = options.iconErrorClass;
+    }
+
     this.createErrorElement();
 
   },
@@ -27,11 +38,11 @@ module.exports = {
   createErrorElement: function () {
 
     this.error = document.createElement(this.element);
-    this.addClasses();
+    this.addErrorElementClasses();
 
   },
 
-  addClasses: function () {
+  addErrorElementClasses: function () {
 
     for (var i = 0; i < this.classes.length; i++) {
 
@@ -45,7 +56,8 @@ module.exports = {
 
     this.error.innerHTML = message;
 
-    element.classList.add(this.errorClass);
+    this.addErrorClass(element);
+    this.addIconClass(element, this.iconErrorClass);
     parent.appendChild(this.error);
 
   },
@@ -54,8 +66,33 @@ module.exports = {
 
     var error = parent.querySelector('.' + this.classes[0]);
 
-    element.classList.remove(this.errorClass);
+    this.removeErrorClass(element);
+    this.removeIconClass(element, this.iconErrorClass);
     parent.removeChild(error);
+
+  },
+
+  addErrorClass: function (element) {
+
+    element.classList.add(this.errorClass);
+
+  },
+
+  removeErrorClass: function (element) {
+
+    element.classList.remove(this.errorClass);
+
+  },
+
+  addIconClass: function (element, iconClass) {
+
+    element.querySelector('.' + this.iconClass).classList.add(iconClass);
+
+  },
+
+  removeIconClass: function (element, iconClass) {
+
+    element.querySelector('.' + this.iconClass).classList.remove(iconClass);
 
   }
 

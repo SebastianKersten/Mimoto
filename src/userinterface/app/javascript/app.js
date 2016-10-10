@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
   ErrorHandling.init({
     "element": "p",
     "classes": ["form-component-element-error"],
-    "errorClass": "form-component--has-error"
+    "errorClass": "form-component--has-error",
+    "iconClass": "js-form-component-title-icon",
+    "iconErrorClass": "icon-warning"
   });
 
 }, false);
