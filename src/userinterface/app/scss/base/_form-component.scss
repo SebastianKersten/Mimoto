@@ -41,12 +41,10 @@
       display: block;
     }
 
-    .form-component-title-icon.form-component-title-icon--loading {
+    .form-component-title-icon.icon-loading {
       top: 5px;
       width: 15px;
       height: 15px;
-      background-image: url('/static/img/loader.gif');
-      background-position: center center;
       background-size: 15px 15px;
     }
 
