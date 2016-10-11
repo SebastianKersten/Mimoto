@@ -7,8 +7,10 @@ module.exports = {
     // Default options
     this.element = "p";
     this.classes = "error-message";
-    this.errorClass = "error-class";
-    this.iconClass = "icon";
+    this.validatedClass = "is-validated";
+    this.errorClass = "has-error";
+    this.iconSelectorClass = "icon";
+    this.iconValidatedClass = "icon-validated";
     this.iconErrorClass = "icon-error";
 
     if (options.element) {
@@ -19,22 +21,82 @@ module.exports = {
       this.classes = options.classes;
     }
 
-    if (options.errorClass) {
-      this.errorClass = options.errorClass;
+    if (options.iconSelectorClass) {
+      this.iconSelectorClass = options.iconSelectorClass;
     }
 
-    if (options.iconClass) {
-      this.iconClass = options.iconClass;
+    if (options.errorClass) {
+      this.errorClass = options.errorClass;
     }
 
     if (options.iconErrorClass) {
       this.iconErrorClass = options.iconErrorClass;
     }
 
+    if (options.validatedClass) {
+      this.validatedClass = options.validatedClass;
+    }
+
+    if (options.iconValidatedClass) {
+      this.iconValidatedClass = options.iconValidatedClass;
+    }
+
     this.createErrorElement();
 
   },
 
+  // Global functions
+  addIconClass: function (element, iconClass) {
+
+    element.querySelector('.' + this.iconSelectorClass).classList.add(iconClass);
+
+  },
+
+  removeIconClass: function (element, iconClass) {
+
+    element.querySelector('.' + this.iconSelectorClass).classList.remove(iconClass);
+
+  },
+
+  addElementClass: function (element, elementClass) {
+
+    element.classList.add(elementClass);
+
+  },
+
+  removeElementClass: function (element, elementClass) {
+
+    element.classList.remove(elementClass);
+
+  },
+
+  clearState: function (element, parent) {
+
+    if (parent) {
+      var error = parent.querySelector('.' + this.classes[0]);
+      parent.removeChild(error);
+    }
+
+    if (element.classList.contains(this.errorClass)) {
+      this.removeElementClass(element, this.errorClass);
+    } else if (element.classList.contains(this.validatedClass)) {
+      this.removeElementClass(element, this.validatedClass);
+    }
+
+    this.removeIconClass(element, this.iconErrorClass);
+    this.removeIconClass(element, this.iconValidatedClass);
+
+  },
+
+  // Validated functions
+  isValidated: function (element) {
+
+    this.addElementClass(element, this.validatedClass);
+    this.addIconClass(element, this.iconValidatedClass);
+
+  },
+
+  // Error functions
   createErrorElement: function () {
 
     this.error = document.createElement(this.element);
@@ -56,7 +118,7 @@ module.exports = {
 
     this.error.innerHTML = message;
 
-    this.addErrorClass(element);
+    this.addElementClass(element, this.errorClass);
     this.addIconClass(element, this.iconErrorClass);
     parent.appendChild(this.error);
 
@@ -66,33 +128,9 @@ module.exports = {
 
     var error = parent.querySelector('.' + this.classes[0]);
 
-    this.removeErrorClass(element);
+    this.removeElementClass(element, this.errorClass);
     this.removeIconClass(element, this.iconErrorClass);
     parent.removeChild(error);
-
-  },
-
-  addErrorClass: function (element) {
-
-    element.classList.add(this.errorClass);
-
-  },
-
-  removeErrorClass: function (element) {
-
-    element.classList.remove(this.errorClass);
-
-  },
-
-  addIconClass: function (element, iconClass) {
-
-    element.querySelector('.' + this.iconClass).classList.add(iconClass);
-
-  },
-
-  removeIconClass: function (element, iconClass) {
-
-    element.querySelector('.' + this.iconClass).classList.remove(iconClass);
 
   }
 

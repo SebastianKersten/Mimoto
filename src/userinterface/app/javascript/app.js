@@ -8,8 +8,10 @@ document.addEventListener('DOMContentLoaded', function () {
     "element": "p",
     "classes": ["form-component-element-error"],
     "errorClass": "form-component--has-error",
-    "iconClass": "js-form-component-title-icon",
-    "iconErrorClass": "icon-warning"
+    "validatedClass": "form-component--is-validated",
+    "iconSelectorClass": "js-form-component-title-icon",
+    "iconErrorClass": "icon-warning",
+    "iconValidatedClass": "icon-checkmark"
   });
 
 }, false);

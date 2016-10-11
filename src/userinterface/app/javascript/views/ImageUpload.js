@@ -70,7 +70,7 @@ module.exports.prototype = {
   addDropzoneEvents: function () {
 
     this.dropzone.on('removedfile', function (file) {
-      ErrorHandling.removeError(this.errorParent, this.el);
+      ErrorHandling.clearState(this.el, this.errorParent);
     }.bind(this));
 
     this.dropzone.on('addedfile', function (file) {
@@ -88,6 +88,7 @@ module.exports.prototype = {
     this.dropzone.on('success', function (file, serverResponse) {
       setTimeout(function () {
         this.dropzone.element.classList.add(this.hideUploadProgressClass);
+        ErrorHandling.isValidated(this.el);
       }.bind(this), 100);
     }.bind(this));
 
