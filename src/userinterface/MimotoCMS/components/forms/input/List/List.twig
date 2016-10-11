@@ -1,49 +1,35 @@
+{% set list_items = [
+  {
+    "title": "Teju Cole",
+    "subtitle": "Amerika-deskundingen",
+    "removeable": true
+  },
+  {
+    "title": "Taryn Simon - An American Index of the Hidden and Unfamiliar",
+    "subtitle": "Boek"
+  },
+  {
+    "title": "Kobe Bryant",
+    "subtitle": "NBA Superster",
+    "removeable": true,
+    "image": "http://cbssports1.cbsistatic.com/hub/i/2016/01/19/3f35db9e-0917-4362-824b-3beddae2a5a9/resize/600x465/usatsi9044225.jpg?hash=74534a5ba46be35690d9237387db2854"
+  },
+  {
+    "title": "MF DOOM - Mm.. Food",
+    "subtitle": "Album",
+    "image": "https://images.genius.com/5815d7f7ae232dd64ace634964f52448.650x430x1.jpg"
+  }
+] %}
+
 <div class="form-component">
   <p class="form-component-title">Aanbevelingen <span class="form-component-title-icon icon"></span></p>
 
   <div class="form-component-content">
     <div class="form-component-element">
       <div class="form-list">
-        <div class="form-list-item">
-          <div class="form-list-item-text">
-            <p class="form-list-item-title">Teju Cole</p>
-            <p class="form-list-item-subtitle">Amerika-deskundigen</p>
-          </div>
-          <div class="form-list-item-button">
-            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
-              label: 'Verwijderen',
-              link: '#',
-              types: ['grey']
-            } %}
-          </div>
-        </div>
-        <div class="form-list-item">
-          <div class="form-list-item-text">
-            <p class="form-list-item-title">Taryn Simon - An American Index of the Hidden and Unfamiliar</p>
-            <p class="form-list-item-subtitle">Boek</p>
-          </div>
-        </div>
-        <div class="form-list-item">
-          <figure class="form-list-item-figure" style="background-image: url(http://cbssports1.cbsistatic.com/hub/i/2016/01/19/3f35db9e-0917-4362-824b-3beddae2a5a9/resize/600x465/usatsi9044225.jpg?hash=74534a5ba46be35690d9237387db2854);"></figure>
-          <div class="form-list-item-text">
-            <p class="form-list-item-title">Kobe Bryant</p>
-            <p class="form-list-item-subtitle">NBA superster</p>
-          </div>
-          <div class="form-list-item-button">
-            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
-              label: 'Verwijderen',
-              link: '#',
-              types: ['grey']
-            } %}
-          </div>
-        </div>
-        <div class="form-list-item">
-          <figure class="form-list-item-figure" style="background-image: url(https://images.genius.com/5815d7f7ae232dd64ace634964f52448.650x430x1.jpg);"></figure>
-          <div class="form-list-item-text">
-            <p class="form-list-item-title">MF DOOM - An American Index of the Hidden and Unfamiliar</p>
-            <p class="form-list-item-subtitle">Album</p>
-          </div>
-        </div>
+        {% for list_item in list_items %}
+          {% include 'MimotoCMS/components/forms/input/ListItem/ListItem.twig' with {list_item: list_item} only %}
+        {% endfor %}
       </div>
     </div>
     <p class="form-component-description">Dit is een lijst. Een hele mooie lijst.</p>

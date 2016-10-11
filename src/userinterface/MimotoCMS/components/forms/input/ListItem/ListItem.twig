@@ -1,1 +1,18 @@
-[Component:"ListItem"]
+<div class="form-list-item">
+  {% if list_item.image|default('') %}
+    <figure class="form-list-item-figure" style="background-image: url({{ list_item.image }});"></figure>
+  {% endif %}
+  <div class="form-list-item-text">
+    <p class="form-list-item-title">{{ list_item.title }}</p>
+    <p class="form-list-item-subtitle">{{ list_item.subtitle }}</p>
+  </div>
+  {% if list_item.removeable|default(false) %}
+    <div class="form-list-item-button">
+      {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
+      label: 'Verwijderen',
+      link: '#',
+      types: ['grey']
+      } %}
+    </div>
+  {% endif %}
+</div>
