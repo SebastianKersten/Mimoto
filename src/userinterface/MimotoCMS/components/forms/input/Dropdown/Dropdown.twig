@@ -19,8 +19,8 @@
 
   <div class="form-component-content">
     <div class="form-component-element">
-      <div class="form-component-element-select-container">
-        <select name="" id="" class="form-component-element-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+      <div class="form-select-container">
+        <select name="" id="" class="form-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
           {% if value is empty %}
             <option value=""></option>
           {% endif %}
@@ -28,7 +28,7 @@
             <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
           {% endfor %}
         </select>
-        <svg class="form-component-element-select-icon"><use xlink:href='#ico-triangle-down'/></svg>
+        <span class="form-select-icon icon icon-arrow-down"></span>
       </div>
     </div>
     <p class="form-component-description">Dit is een mooie beschrijving</p>
@@ -40,8 +40,8 @@
 
   <div class="form-component-content">
     <div class="form-component-element">
-      <div class="form-component-element-select-container">
-        <select name="" id="" class="form-component-element-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+      <div class="form-select-container">
+        <select name="" id="" class="form-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
           {% if value is empty %}
             <option value=""></option>
           {% endif %}
@@ -49,7 +49,7 @@
             <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
           {% endfor %}
         </select>
-        <svg class="form-component-element-select-icon"><use xlink:href='#ico-triangle-down'/></svg>
+        <span class="form-select-icon icon icon-arrow-down"></span>
       </div>
     </div>
     <p class="form-component-description">Dit is een mooie beschrijving</p>
@@ -61,8 +61,8 @@
 
   <div class="form-component-content">
     <div class="form-component-element">
-      <div class="form-component-element-select-container">
-        <select name="" id="" class="form-component-element-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+      <div class="form-select-container">
+        <select name="" id="" class="form-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
           {% if value is empty %}
             <option value=""></option>
           {% endif %}
@@ -70,7 +70,7 @@
             <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
           {% endfor %}
         </select>
-        <svg class="form-component-element-select-icon"><use xlink:href='#ico-triangle-down'/></svg>
+        <span class="form-select-icon icon icon-arrow-down"></span>
       </div>
     </div>
     <p class="form-component-description">Dit is een mooie beschrijving</p>
@@ -82,8 +82,8 @@
 
   <div class="form-component-content">
     <div class="form-component-element">
-      <div class="form-component-element-select-container">
-        <select name="" id="" class="form-component-element-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
+      <div class="form-select-container">
+        <select name="" id="" class="form-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
           {% if value is empty %}
             <option value=""></option>
           {% endif %}
@@ -91,11 +91,10 @@
             <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
           {% endfor %}
         </select>
-        <svg class="form-component-element-select-icon"><use xlink:href='#ico-triangle-down'/></svg>
+        <span class="form-select-icon icon icon-arrow-down"></span>
       </div>
       <p class="form-component-element-error">Kies een periode.</p>
     </div>
     <p class="form-component-description">Dit is een mooie beschrijving</p>
   </div>
 </div>
-

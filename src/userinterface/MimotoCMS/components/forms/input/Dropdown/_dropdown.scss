@@ -1,7 +1,7 @@
-.form-component-element-select-container {
+.form-select-container {
   position: relative;
 
-  .form-component-element-select {
+  .form-select {
     display: block;
     width: 100%;
     max-width: none;
@@ -18,23 +18,15 @@
     -webkit-appearance: none;
   }
 
-  .form-component-element-select:focus {
+  .form-select:focus {
     border-color: $pale-slate;
     background-color: $bon-jour;
-
-    /*
-    + .form-component-element-select-icon {
-      transform: rotate(180deg);
-    }
-    */
   }
 
-  .form-component-element-select-icon {
+  .form-select-icon {
     position: absolute;
-    top: 22px;
+    top: 20px;
     right: 15px;
-    width: 10px;
-    height: 5px;
+    font-size: rem-calc(10px);
   }
 }
-
