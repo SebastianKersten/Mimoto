@@ -5,6 +5,6 @@ config.dest = 'web/static';
 config.src = './';
 
 config.projectSrc = 'src/userinterface/MimotoCMS';
-config.templates = config.projectSrc + '/**';
+config.templates = config.projectSrc + '/**/*.twig';
 
 module.exports = config;
