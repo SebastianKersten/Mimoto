@@ -37,10 +37,9 @@
 
     .form-image-upload-button-icon {
       display: block;
-      width: 17px;
-      height: 17px;
       margin: 9px;
-      fill: $mercury;
+      font-size: rem-calc(17px);
+      color: $mercury;
     }
   }
 
