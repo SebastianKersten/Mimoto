@@ -11,7 +11,12 @@
 {% endif %}
 
 {% if attributes|default([]) %}
-  {% set data_attributes = ' data-' ~ attributes|join(' data-') %}
+  {% for attribute in attributes %}
+    {% set data_attributes = data_attributes ~ (' data-' ~ attribute.attribute) %}
+    {% if attribute.value %}
+      {% set data_attributes = data_attributes ~ ('="' ~ attribute.value ~ '"') %}
+    {% endif %}
+  {% endfor %}
 {% endif %}
 
 <{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="button{{ classes }}">
@@ -19,7 +24,7 @@
     <span class="button-text">{{ label }}</span>
   {% endif %}
   {% if icon|default('') %}
-    <svg class="button-icon"><use xlink:href='#ico-{{ icon }}'/></svg>
+    <span class="button-icon icon icon-{{ icon }}"></span>
   {% endif %}
 </{{ element }}>
 
