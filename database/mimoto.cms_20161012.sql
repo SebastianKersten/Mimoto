@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 10/09/2016 23:54:25 PM
+ Date: 10/12/2016 10:18:44 AM
 */
 
 SET NAMES utf8mb4;
@@ -138,6 +138,10 @@ CREATE TABLE `_MimotoAimless__interaction__form` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci,
+  `customSubmit` enum('0','1') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `action` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `method` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -146,7 +150,7 @@ CREATE TABLE `_MimotoAimless__interaction__form` (
 --  Records of `_MimotoAimless__interaction__form`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_MimotoAimless__interaction__form` VALUES ('2', 'form_person', 'Test', '2016-08-10 14:29:42'), ('3', 'client', 'A simple form to add and edit clients', '2016-06-27 14:06:17'), ('50', 'project', 'Altering a form', '2016-10-09 16:51:40'), ('100', 'form_entity_create', 'Core form for creating entities', '2016-08-17 12:21:21'), ('200', 'form_entity_edit', 'Core form for changing existing entities', '2016-08-17 12:26:10');
+INSERT INTO `_MimotoAimless__interaction__form` VALUES ('2', 'form_person', 'Test', null, null, null, null, '2016-08-10 14:29:42'), ('3', 'client', 'A simple form to add and edit clients', null, null, null, null, '2016-06-27 14:06:17'), ('50', 'project', 'Altering a form', null, null, null, null, '2016-10-09 16:51:40'), ('100', 'form_entity_create', 'Core form for creating entities', null, null, null, null, '2016-08-17 12:21:21'), ('200', 'form_entity_edit', 'Core form for changing existing entities', null, null, null, null, '2016-08-17 12:26:10');
 COMMIT;
 
 -- ----------------------------
@@ -245,6 +249,29 @@ INSERT INTO `_MimotoAimless__interaction__form_input_radiobutton` VALUES ('1', '
 COMMIT;
 
 -- ----------------------------
+--  Table structure for `_MimotoAimless__interaction__form_input_textblock`
+-- ----------------------------
+DROP TABLE IF EXISTS `_MimotoAimless__interaction__form_input_textblock`;
+CREATE TABLE `_MimotoAimless__interaction__form_input_textblock` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `placeholder` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `optional` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `regexp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `maxchars` int(10) unsigned DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_MimotoAimless__interaction__form_input_textblock`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_MimotoAimless__interaction__form_input_textblock` VALUES ('1', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '10', '2016-08-10 16:13:50'), ('2', 'Role', null, null, 'false', null, null, '2016-08-12 10:24:05'), ('3', 'Name', 'This field is connected to an entity\'s property', 'Enter the client\'s name', 'true', '/[a-zA-Z09-]/', '10', '2016-10-02 13:08:25'), ('4', 'Custom var', 'Dit is een custom var', 'Enter the value of this custom var', 'false', null, null, '2016-10-09 15:25:54'), ('50', 'Name', 'The project\'s name', 'Enter a name', 'false', null, null, '2016-10-09 16:56:43'), ('51', 'Description', 'The project\'s desription', 'Enter a description', 'false', null, null, '2016-10-09 16:57:38'), ('100', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:21'), ('200', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:36');
+COMMIT;
+
+-- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_input_textline`
 -- ----------------------------
 DROP TABLE IF EXISTS `_MimotoAimless__interaction__form_input_textline`;
@@ -265,6 +292,29 @@ CREATE TABLE `_MimotoAimless__interaction__form_input_textline` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `_MimotoAimless__interaction__form_input_textline` VALUES ('1', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '10', '2016-08-10 16:13:50'), ('2', 'Role', null, null, 'false', null, null, '2016-08-12 10:24:05'), ('3', 'Name', 'This field is connected to an entity\'s property', 'Enter the client\'s name', 'true', '/[a-zA-Z09-]/', '10', '2016-10-02 13:08:25'), ('4', 'Custom var', 'Dit is een custom var', 'Enter the value of this custom var', 'false', null, null, '2016-10-09 15:25:54'), ('50', 'Name', 'The project\'s name', 'Enter a name', 'false', null, null, '2016-10-09 16:56:43'), ('51', 'Description', 'The project\'s desription', 'Enter a description', 'false', null, null, '2016-10-09 16:57:38'), ('100', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:21'), ('200', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:36');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_MimotoAimless__interaction__form_input_textrtf`
+-- ----------------------------
+DROP TABLE IF EXISTS `_MimotoAimless__interaction__form_input_textrtf`;
+CREATE TABLE `_MimotoAimless__interaction__form_input_textrtf` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `placeholder` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `optional` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `regexp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `maxchars` int(10) unsigned DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_MimotoAimless__interaction__form_input_textrtf`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_MimotoAimless__interaction__form_input_textrtf` VALUES ('1', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '10', '2016-08-10 16:13:50'), ('2', 'Role', null, null, 'false', null, null, '2016-08-12 10:24:05'), ('3', 'Name', 'This field is connected to an entity\'s property', 'Enter the client\'s name', 'true', '/[a-zA-Z09-]/', '10', '2016-10-02 13:08:25'), ('4', 'Custom var', 'Dit is een custom var', 'Enter the value of this custom var', 'false', null, null, '2016-10-09 15:25:54'), ('50', 'Name', 'The project\'s name', 'Enter a name', 'false', null, null, '2016-10-09 16:56:43'), ('51', 'Description', 'The project\'s desription', 'Enter a description', 'false', null, null, '2016-10-09 16:57:38'), ('100', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:21'), ('200', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:36');
 COMMIT;
 
 -- ----------------------------
@@ -590,7 +640,7 @@ CREATE TABLE `project` (
 --  Records of `project`
 -- ----------------------------
 BEGIN;
-INSERT INTO `project` VALUES ('1', 'Bugaboo.com', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2016-02-17 10:16:24'), ('2', 'VanMoof.com - 2016:09:06 15.10.38', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.', '2016-02-27 12:35:53'), ('3', 'Bugaboo', '[19:19:15] Al ruim 15 jaar inspireert Bugaboo honderdduizenden ouders om eropuit te trekken en samen met hun kinderen de wereld te ontdekken. Tegenwoordig is het een vertrouwd straatbeeld: overal stoere, robuuste en tegelijk stijlvolle kinderwagens. Maar toen Max Barenbrug, nu Chief Design Officer bij Bugaboo, in 1994 zo\'n kinderwagen ontwierp voor zijn afstudeerproject aan de Design Academy in Eindhoven, was het de eerste in zijn soort. De modulaire, multifunctionele kinderwagen, die net zo makkelijk in de stad als in het bos of op het strand kon worden gebruikt, was destijds een compleet nieuw concept.', '2016-03-08 11:40:42');
+INSERT INTO `project` VALUES ('1', 'Bugaboo.com', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2016-02-17 10:16:24'), ('2', 'VanMoof.com - 2016:09:06 15.10.38', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.', '2016-02-27 12:35:53'), ('3', 'Bugaboo GTS', 'Al ruim 15 jaar inspireert Bugaboo honderdduizenden ouders om eropuit te trekken en samen met hun kinderen de wereld te ontdekken. Tegenwoordig is het een vertrouwd straatbeeld: overal stoere, robuuste en tegelijk stijlvolle kinderwagens. Maar toen Max Barenbrug, nu Chief Design Officer bij Bugaboo, in 1994 zo\'n kinderwagen ontwierp voor zijn afstudeerproject aan de Design Academy in Eindhoven, was het de eerste in zijn soort. De modulaire, multifunctionele kinderwagen, die net zo makkelijk in de stad als in het bos of op het strand kon worden gebruikt, was destijds een compleet nieuw concept.', '2016-03-08 11:40:42');
 COMMIT;
 
 -- ----------------------------
