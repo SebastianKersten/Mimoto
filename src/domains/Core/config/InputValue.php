@@ -25,6 +25,23 @@ class InputValue
             'extends' => null,
             'properties' => [
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__vartype',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'vartype',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__vartype-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__varname',
                     'created' => CoreConfig::EPOCH,
                     // ---

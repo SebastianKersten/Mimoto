@@ -386,14 +386,22 @@ class AimlessComponent
         // output
         return $this->_TwigService->render($sComponentFile, $this->_aVars);
     }
-    
-    
-    
-    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $xValues = null)
+
+
+    /**
+     * Render a collection with support for regular components and inputs
+     * @param $aCollection
+     * @param $aConnections #todo - connect id's to subitems
+     * @param string $sComponentName
+     * @param array $aFieldVars
+     * @return string Rendered template
+     */
+    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $aFieldVars = null)
     {
         // init
         $sRenderedCollection = '';
 
+        // render
         $nCollectionCount = count($aCollection);
         for ($i = 0; $i < $nCollectionCount; $i++)
         {
@@ -409,10 +417,18 @@ class AimlessComponent
                 // clarify
                 $field = $entity;
 
-                $component = $this->_AimlessService->createInput($sTemplateName, $field, $xValues);
+                // validate
+                if (!isset($aFieldVars[$field->getId()])) continue; // #todo - log silent fail
+
+                // gerister
+                $fieldVar = $aFieldVars[$field->getId()];
+
+                // create
+                $component = $this->_AimlessService->createInput($sTemplateName, $field, $fieldVar->key, $fieldVar->value);
             }
             else
             {
+                // create
                 $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
             }
 
@@ -427,13 +443,19 @@ class AimlessComponent
         return $sRenderedCollection;
     }
 
+    /**
+     * Render a form
+     * @param $sFormName
+     * @param $xValues
+     * @return string
+     */
     private function renderForm($sFormName, $xValues)
     {
         // create
         $component = $this->_AimlessService->createForm($sFormName, $xValues);
 
         // output
-        return $component->render(); // pass vars for rendering
+        return $component->render(); // #todo - pass vars for rendering
     }
     
 }

@@ -58,17 +58,23 @@ class AimlessForm extends AimlessComponent
         // 2. register fields
         $aFields = $form->getValue('fields', true);
 
+        // 3. prepare
+        $formVars = $this->_FormService->getFormVars($form, $this->_xValues);
+
 
         // prepare
-        $sAction = '/Mimoto.Aimless/form/'.$this->_sFormName; // #todo - replace with custom if present
+        $sAction = '/Mimoto.Aimless/form/'.$this->_sFormName; // #todo - replace with custom if present (expliciet by toggle)
         $sMethod = 'POST';
 
         // init
         $sRenderedForm = '<form name="'.$this->_sFormName.'" action="'.$sAction.'" method="'.$sMethod.'">';
         $sRenderedForm .= '<script>Mimoto.form.openForm("'.$this->_sFormName.'", "'.$sAction.'", "'.$sMethod.'")</script>';
 
+        // add security
+        $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.$GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities)).'">';
+
         // render form
-        $sRenderedForm .= parent::renderCollection($aFields, null, null, $this->_xValues);
+        $sRenderedForm .= parent::renderCollection($aFields, null, null, $formVars->fieldVars);
 
         // finish
         $sRenderedForm .= '</form>';

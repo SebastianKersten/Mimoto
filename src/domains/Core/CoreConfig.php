@@ -18,6 +18,8 @@ use Mimoto\Core\config\InputCheckbox;
 use Mimoto\Core\config\InputDropdown;
 use Mimoto\Core\config\InputRadioButton;
 use Mimoto\Core\config\InputTextline;
+use Mimoto\Core\config\InputTextblock;
+use Mimoto\Core\config\InputTextRTF;
 use Mimoto\Core\config\InputList;
 use Mimoto\Core\config\InputImage;
 use Mimoto\Core\config\InputVideo;
@@ -67,6 +69,8 @@ class CoreConfig
 
     // intput
     const MIMOTO_FORM_INPUT_TEXTLINE            = '_MimotoAimless__interaction__form_input_textline';
+    const MIMOTO_FORM_INPUT_TEXTBLOCK           = '_MimotoAimless__interaction__form_input_textblock';
+    const MIMOTO_FORM_INPUT_TEXTRTF             = '_MimotoAimless__interaction__form_input_textrtf';
     const MIMOTO_FORM_INPUT_CHECKBOX            = '_MimotoAimless__interaction__form_input_checkbox';
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_MimotoAimless__interaction__form_input_radiobutton';
     const MIMOTO_FORM_INPUT_DROPDOWN            = '_MimotoAimless__interaction__form_input_dropdown';
@@ -93,6 +97,11 @@ class CoreConfig
     const DATA_VALUE_TEXTBLOCK      = 'textblock';
     const DATA_VALUE_TRUE           = 'true';
     const DATA_VALUE_FALSE          = 'false';
+
+    // inputvalue vartypes
+    const INPUTVALUE_VARTYPE                = 'vartype';
+    const INPUTVALUE_VARTYPE_VARNAME        = 'varname';
+    const INPUTVALUE_VARTYPE_ENTITYPROPERTY = 'entityproperty';
 
 
 
@@ -135,6 +144,8 @@ class CoreConfig
 
             // input
             InputTextline::getStructure(),
+            InputTextblock::getStructure(),
+            InputTextRTF::getStructure(),
             InputCheckbox::getStructure(),
             InputRadiobutton::getStructure(),
             InputDropdown::getStructure(),
