@@ -72,8 +72,9 @@ module.exports = {
 
   clearState: function (element, parent) {
 
-    if (parent) {
-      var error = parent.querySelector('.' + this.classes[0]);
+    var error = parent.querySelector('.' + this.classes[0]);
+
+    if (error) {
       parent.removeChild(error);
     }
 

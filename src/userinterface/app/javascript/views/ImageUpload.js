@@ -70,6 +70,7 @@ module.exports.prototype = {
   addDropzoneEvents: function () {
 
     this.dropzone.on('removedfile', function (file) {
+      this.dropzone.element.classList.remove(this.showPreviewClass);
       ErrorHandling.clearState(this.el, this.errorParent);
     }.bind(this));
 
