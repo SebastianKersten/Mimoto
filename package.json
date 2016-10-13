@@ -30,5 +30,8 @@
     "gulp-watch": "^4.3.9",
     "require-dir": "^0.3.0",
     "webpack": "^1.13"
+  },
+  "dependencies": {
+    "foundation-sites": "^6.2.4-rc1"
   }
 }

@@ -12,6 +12,7 @@ module.exports = function (env) {
 
     context: jsSrc,
     plugins: [
+      new webpack.IgnorePlugin(/^jquery$/),
       new webpack.ProvidePlugin({
         'Conditioner': './conditioner/conditioner',
         'ErrorHandling': 'ErrorHandling'
