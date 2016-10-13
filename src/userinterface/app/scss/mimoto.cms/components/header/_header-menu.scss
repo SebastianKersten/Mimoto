@@ -1,0 +1,44 @@
+.header-menu {
+  @include clearfix();
+  float: right;
+
+  .header-menu-item {
+    position: relative;
+    float: left;
+    height: 64px;
+  }
+
+  .header-menu-link {
+    text-decoration: none;
+    color: $dusty-gray;
+  }
+
+  .header-menu-link:hover {
+    color: $black;
+  }
+
+  .header-menu-user {
+    display: flex;
+    align-items: center;
+
+    .header-menu-user-text {
+      margin-right: 20px;
+      font-size: rem-calc(17px);
+    }
+
+    .header-menu-user-figure {
+      display: flex;
+      width: 64px;
+      height: 64px;
+      background-color: $sinbad;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-menu-user-image {
+      display: inline-block;
+      max-width: 60px;
+      max-height: 60px;
+    }
+  }
+}

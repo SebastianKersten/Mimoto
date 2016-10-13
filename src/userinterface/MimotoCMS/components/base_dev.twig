@@ -3,7 +3,6 @@
     <title>Mimoto.CMS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link rel="stylesheet" type="text/css" href="/static/css/main.css">-->
     <link rel="stylesheet" type="text/css" href="/static/css/mimoto.cms.css">
     <link rel="stylesheet" type="text/css" href="/static/css/mimoto.cms.min.css">
     <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
@@ -11,32 +10,67 @@
     <script src="/static/js/MaidoProjects.js"></script>
     <script src="/static/js/Mimoto.CMS.js"></script>
     <script src="/static/js/Mimoto.Aimless.js"></script>
-    <!--<script src="https://use.typekit.net/rtu1vra.js"></script>-->
+    <script src="/static/js/app.min.js"></script>
     <script>try {
         Typekit.load({async: true});
       } catch (e) {
       }</script>
   </head>
   <body>
-    <div class="layer_application">
-      <div class="MimotoCMS_interface_Sidemenu open">
-        <div class="MimotoCMS_interface_Sidemenu__logo"></div>
-        <div class="MimotoCMS_interface_Sidemenu__appname"><b>mimoto</b><br>cms</div>
-        <div class="MimotoCMS_interface_Sidemenu__menuitems">
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/entities', '_self');">Entities</div>
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/forms', '_self');">Forms</div>
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/content', '_self');">Content</div>
-        </div>
+
+    <header class="js-header header">
+      <ul class="header-menu">
+        <li class="header-menu-item">
+          <a href="#" class="header-menu-link header-menu-user">
+            <span class="header-menu-user-text">David de Lusenet</span>
+            <figure class="header-menu-user-figure">
+              <img src="/static/img/mimoto.cms/avatar.png" class="header-menu-user-image" />
+            </figure>
+          </a>
+        </li>
+      </ul>
+    </header>
+
+    <aside class="js-sidebar sidebar">
+      <div class="sidebar-logo-container">
+        <a href="/dev">
+          <div class="sidebar-logo-large"></div>
+          <div class="sidebar-logo-small"></div>
+        </a>
       </div>
-      <div class="MimotoCMS_interface_ContentPanel">{% block content %}{% endblock %}</div>
-    </div>
-    <div id="layer_overlay" class="layer_overlay hidden"></div>
-    <div id="layer_popup" class="layer_popup hidden">
-      <div id="popup" class="MimotoCMS_interface_Popup">
-        <div class="MimotoCMS_interface_Popup__closebutton" onClick="Maido.popup.close();">Close</div>
-        <div id="popup_content" class="MimotoCMS_interface_Popup__content"></div>
+
+      <div class="js-sidebar-toggle sidebar-collapse-toggle">
+        <span class="sidebar-collapse-toggle-icon icon icon-arrow-left"></span>
       </div>
-    </div>
+
+      <div class="sidebar-content">
+        <ul class="sidebar-menu">
+          <li class="sidebar-menu-item">
+            <a href="#" class="sidebar-menu-item-link">
+              <span class="sidebar-menu-item-icon icon icon-arrow-down"></span>
+              <span class="sidebar-menu-item-text">Publicaties</span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="sidebar-menu sidebar-menu--last">
+          <li class="sidebar-menu-item">
+            <a href="#" class="sidebar-menu-item-link">
+              <span class="sidebar-menu-item-icon icon icon-checkmark"></span>
+              <span class="sidebar-menu-item-text">Statistieken</span>
+            </a>
+          </li>
+          <li class="sidebar-menu-item">
+            <a href="#" class="sidebar-menu-item-link">
+              <span class="sidebar-menu-item-icon icon icon-plus"></span>
+              <span class="sidebar-menu-item-text">Team</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    {% block content %}{% endblock %}
 
   </body>
 </html>

@@ -1,0 +1,45 @@
+.sidebar-menu {
+  margin: 0 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid $mine-shaft;
+
+  .sidebar-menu-item-link {
+    display: flex;
+    padding: 0 14px;
+    text-decoration: none;
+    transition: padding .25s;
+    flex-wrap: nowrap;
+  }
+
+  .sidebar-menu-item-link:hover,
+  .sidebar-menu-item-link.sidebar-menu-item-link--active {
+    .sidebar-menu-item-text {
+      color: $white;
+    }
+  }
+
+  .sidebar-menu-item-icon {
+    width: 40px;
+    margin-right: 12px;
+    padding: 13px 0;
+    font-size: rem-calc(14px);
+    text-align: center;
+    color: $white;
+    transition: color .05s;
+    flex: 0 0 auto;
+  }
+
+  .sidebar-menu-item-text {
+    padding: 8px 0;
+    font-size: rem-calc(17px);
+    font-weight: 700;
+    line-height: rem-calc(24px);
+    color: $sinbad;
+    transition: color .05s;
+    flex: 1 1 auto;
+  }
+}
+
+.sidebar-menu.sidebar-menu--last {
+  border-bottom: 0;
+}

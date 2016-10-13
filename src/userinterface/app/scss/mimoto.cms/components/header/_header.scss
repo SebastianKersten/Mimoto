@@ -1,0 +1,16 @@
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 230px;
+  height: 64px;
+  border-bottom: 1px solid $alto;
+  background: $white;
+  transition: left .25s;
+}
+
+.header--sidebar-is-collapsed {
+  left: 64px;
+}
+
+@import 'header-menu';
