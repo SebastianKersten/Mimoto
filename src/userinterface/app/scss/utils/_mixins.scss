@@ -18,7 +18,7 @@ $rem-base: 16px !default;
 // If you require to comma separate your list
 // rem-calc((16px, 32px, 48), 8px);
 
-@function convert-to-rem($value, $base-value: $rem-base)  {
+@function convert-to-rem($value, $base-value: $rem-base) {
   $value: strip-unit($value) / strip-unit($base-value) * 1rem;
   @if ($value == 0rem) { $value: 0; } // Turn 0em into 0
   @return $value;
@@ -29,9 +29,21 @@ $rem-base: 16px !default;
 
   @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
 
-  $remValues: ();
+  $rem-values: ();
   @for $i from 1 through $max {
-    $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+    $rem-values: append($rem-values, convert-to-rem(nth($values, $i), $base-value));
   }
-  @return $remValues;
+  @return $rem-values;
+}
+
+@mixin clearfix() {
+  &::before,
+  &::after {
+    display: table;
+    content: '';
+  }
+
+  &::after {
+    clear: both;
+  }
 }
