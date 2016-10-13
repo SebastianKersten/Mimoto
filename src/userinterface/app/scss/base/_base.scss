@@ -4,12 +4,6 @@
   box-sizing: border-box;
 }
 
-.svg-definitions {
-  display: none;
-  visibility: hidden;
-  opacity: 0;
-}
-
 body {
   font-family: $font-family-helvetica;
   font-size: 16px;
@@ -22,8 +16,8 @@ body {
 div.layer_application {
   position: absolute;
   top: 0;
-  bottom: 0;
   right: 0;
+  bottom: 0;
   left: 0;
   overflow: auto;
 }
