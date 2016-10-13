@@ -217,3 +217,95 @@ if ($field->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
                 // _mimoto_inputfieldsetting
             }
 ```
+
+
+## Radiobutton features
+
+```
+
+<div class="form-component">
+  <p class="form-component-title">Is dit een radiobutton? <span class="form-component-title-information">(optioneel)</span></p>
+
+  <div class="form-component-content form-component-content--no-description">
+    <div class="form-component-element">
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
+        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
+      </div>
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
+        <label for="maybe" class="form-component-element-label">Misschien wel</label>
+      </div>
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
+        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-component">
+  <p class="form-component-title">Is dit een radiobutton? <span class="form-component-title-information">(optioneel)</span><span class="js-form-component-title-icon form-component-title-icon icon icon-loading"></span></p>
+
+  <div class="form-component-content">
+    <div class="form-component-element">
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
+        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
+      </div>
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
+        <label for="maybe" class="form-component-element-label">Misschien wel</label>
+      </div>
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
+        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
+      </div>
+    </div>
+    <p class="form-component-description">Kies één van de opties</p>
+  </div>
+</div>
+
+<div class="form-component form-component--is-validated">
+  <p class="form-component-title">Is dit een radiobutton? <span class="form-component-title-information">(optioneel)</span><span class="js-form-component-title-icon form-component-title-icon icon icon-checkmark"></span></p>
+
+  <div class="form-component-content form-component-content--no-description">
+    <div class="form-component-element">
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
+        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
+      </div>
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
+        <label for="maybe" class="form-component-element-label">Misschien wel</label>
+      </div>
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
+        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-component form-component--has-error">
+  <p class="form-component-title">Is dit een radiobutton? <span class="form-component-title-information">(optioneel)</span><span class="js-form-component-title-icon form-component-title-icon icon icon-warning"></span></p>
+
+  <div class="form-component-content form-component-content--no-description">
+    <div class="form-component-element">
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
+        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
+      </div>
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
+        <label for="maybe" class="form-component-element-label">Misschien wel</label>
+      </div>
+      <div class="form-component-element-container">
+        <input type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
+        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
+      </div>
+      <p class="form-component-element-error">U moet één van de waardes kiezen.</p>
+    </div>
+  </div>
+</div>
+```

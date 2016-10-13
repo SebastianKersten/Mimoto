@@ -125,12 +125,16 @@ class ExampleFormController
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
 
         // create
         $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
 
+        // prepare
+        $aValues = [$project, $subproject];
+
         // setup
-        $component->addForm('project', $project);
+        $component->addForm('project', $aValues);
 
         // render and send
         return $component->render();
