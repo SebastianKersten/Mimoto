@@ -9,8 +9,4 @@
   transition: left .25s;
 }
 
-.header.header--sidebar-is-collapsed {
-  left: 64px;
-}
-
 @import 'header-menu';

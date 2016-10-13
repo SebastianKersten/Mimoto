@@ -2,6 +2,11 @@
 
 {% block content %}
     <div class="form_holder">
+        {% include 'MimotoCMS/components/forms/input/Image/Image.twig'  %}
+        {#{% include 'MimotoCMS/components/forms/input/Textline/Textline.twig'  %}#}
+        {% include 'MimotoCMS/components/forms/input/Radiobutton/Radiobutton.twig'  %}
+        {% include 'MimotoCMS/components/forms/input/Checkbox/Checkbox.twig'  %}
+        {% include 'MimotoCMS/components/forms/input/Dropdown/Dropdown.twig'  %}
         <div class="example_form_fields">
             {{ Aimless.form()|raw }}
         </div>

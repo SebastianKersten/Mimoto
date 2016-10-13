@@ -6,11 +6,16 @@
 
 body {
   font-family: $font-family-helvetica;
-  font-size: 16px;
+  font-size: rem-calc(16px);
   line-height: 1.5;
   background-color: #f5f5f5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.pagecontent {
+  padding: 64px 0 0 230px;
+  transition: padding .25s;
 }
 
 div.layer_application {

@@ -1,8 +1,7 @@
 'use strict';
 
-module.exports = function (element) {
+module.exports = function () {
 
-  this.el = element;
   this.init();
 
 };
@@ -20,18 +19,23 @@ module.exports.prototype = {
   setVariables: function () {
 
     this.toggle = this.el.querySelector('.js-sidebar-toggle');
-    this.header = document.querySelector('.js-header');
+    this.body = document.getElementsByTagName('body')[0];
 
   },
 
   addEventListeners: function () {
 
     this.toggle.addEventListener('click', function () {
-      console.error("YEAH");
 
-      this.el.classList.toggle('sidebar--is-collapsed');
-      this.header.classList.toggle('header--sidebar-is-collapsed');
+      this.toggleCollapse();
+
     }.bind(this));
+
+  },
+
+  toggleCollapse: function () {
+
+    this.body.classList.toggle('sidebar-collapsed');
 
   }
 

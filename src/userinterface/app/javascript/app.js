@@ -1,13 +1,12 @@
 'use strict';
 
 var Sidebar = require('./views/Sidebar');
+var sideBar = document.querySelector('.js-sidebar');
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  var sideBar = document.querySelector('.js-sidebar');
-
   if (sideBar) {
-    new Sidebar(sideBar);
+    new Sidebar();
   }
 
   Conditioner.init();

@@ -24,28 +24,28 @@
     height: 64px;
     border-bottom: 1px solid $black;
     background-color: $sinbad;
+  }
 
-    .sidebar-logo-large,
-    .sidebar-logo-small {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-repeat: no-repeat;
-      transition: transform .25s;
-    }
+  .sidebar-logo-large,
+  .sidebar-logo-small {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    transition: transform .25s;
+  }
 
-    .sidebar-logo-large {
-      top: 1px;
-      background-image: url('/static/img/mimoto.cms/logo.png');
-    }
+  .sidebar-logo-large {
+    top: 1px;
+    background-image: url('/static/img/mimoto.cms/logo.png');
+  }
 
-    .sidebar-logo-small {
-      margin-left: 23px;
-      opacity: 0;
-      background-image: url('/static/img/mimoto.cms/logo-folded.png');
-    }
+  .sidebar-logo-small {
+    margin-left: 23px;
+    opacity: 0;
+    background-image: url('/static/img/mimoto.cms/logo-folded.png');
   }
 
   .sidebar-collapse-toggle {
@@ -58,6 +58,7 @@
     padding: 10px;
     cursor: pointer;
     font-size: rem-calc(12px);
+    transition: all .25s;
 
     .sidebar-collapse-toggle-icon {
       color: $white;
@@ -67,54 +68,6 @@
   .sidebar-collapse-toggle:hover {
     .sidebar-collapse-toggle-icon {
       color: $black;
-    }
-  }
-}
-
-.sidebar.sidebar--is-collapsed {
-  width: 64px;
-
-  .sidebar-logo-large {
-    transform: translateX(-23px);
-    opacity: 0;
-  }
-
-  .sidebar-logo-small {
-    transform: translateX(-23px);
-    opacity: 1;
-  }
-
-  .sidebar-collapse-toggle {
-    right: -32px;
-    transform: rotate(180deg);
-
-    .sidebar-collapse-toggle-icon {
-      color: $sinbad;
-    }
-  }
-
-  .sidebar-collapse-toggle:hover {
-    .sidebar-collapse-toggle-icon {
-      color: $black;
-    }
-  }
-
-  .sidebar-menu-item-link {
-    padding: 0;
-
-    .sidebar-menu-item-text {
-      display: none;
-    }
-
-    .sidebar-menu-item-icon {
-      color: $sinbad;
-    }
-  }
-
-  .sidebar-menu-item-link:hover,
-  .sidebar-menu-item-link.sidebar-menu-item-link--active {
-    .sidebar-menu-item-icon {
-      color: $white;
     }
   }
 }
