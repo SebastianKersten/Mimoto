@@ -1,5 +1,8 @@
 @import 'utils/__utils';
 @import 'base/__base';
 
+@import 'foundation';
+@include foundation-everything();
+
 @import 'components/__components';
 @import '../../MimotoCMS/components/components';

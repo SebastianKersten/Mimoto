@@ -3,7 +3,7 @@ var config = require('./');
 module.exports = {
 
   cssName: 'mimoto.aimless.css',
-  src: ["**/*.scss", "!node_modules/**"],
+  src: ["src/**/*.{sass,scss}"],
   dest: config.dest + "/css",
   settings: {
     outputStyle: 'compressed',
