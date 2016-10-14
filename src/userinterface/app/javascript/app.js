@@ -1,12 +1,14 @@
 'use strict';
 
-var Sidebar = require('./views/Sidebar');
-var sideBar = document.querySelector('.js-sidebar');
+var HeaderView = require('./views/Header');
 
 document.addEventListener('DOMContentLoaded', function () {
 
-  if (sideBar) {
-    new Sidebar();
+  var navigation = document.querySelector('.js-navigation');
+  var header = document.querySelector('.js-header');
+
+  if (navigation && header) {
+    new HeaderView(header);
   }
 
   Conditioner.init();
