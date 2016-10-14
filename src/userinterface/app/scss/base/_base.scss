@@ -14,8 +14,12 @@ body {
 }
 
 .pagecontent {
-  padding: 64px 0 0 230px;
-  transition: padding .25s;
+  padding-top: 50px;
+
+  @include breakpoint(large up) {
+    padding: 64px 0 0 230px;
+    transition: padding .25s;
+  }
 }
 
 div.layer_application {

@@ -1,9 +1,9 @@
-.sidebar-menu {
+.navigation-menu {
   margin: 0 12px;
   padding: 16px 0;
   border-bottom: 1px solid $mine-shaft;
 
-  .sidebar-menu-item-link {
+  .navigation-menu-item-link {
     display: flex;
     padding: 0 14px;
     text-decoration: none;
@@ -11,14 +11,14 @@
     flex-wrap: nowrap;
   }
 
-  .sidebar-menu-item-link:hover,
-  .sidebar-menu-item-link.sidebar-menu-item-link--active {
-    .sidebar-menu-item-text {
+  .navigation-menu-item-link:hover,
+  .navigation-menu-item-link.navigation-menu-item-link--active {
+    .navigation-menu-item-text {
       color: $white;
     }
   }
 
-  .sidebar-menu-item-icon {
+  .navigation-menu-item-icon {
     width: 40px;
     margin-right: 12px;
     padding: 13px 0;
@@ -29,7 +29,7 @@
     flex: 0 0 auto;
   }
 
-  .sidebar-menu-item-text {
+  .navigation-menu-item-text {
     padding: 8px 0;
     font-size: rem-calc(17px);
     font-weight: 700;
@@ -40,6 +40,6 @@
   }
 }
 
-.sidebar-menu.sidebar-menu--last {
+.navigation-menu.navigation-menu--last {
   border-bottom: 0;
 }

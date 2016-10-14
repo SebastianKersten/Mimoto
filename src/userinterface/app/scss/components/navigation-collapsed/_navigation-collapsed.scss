@@ -1,0 +1,56 @@
+@include breakpoint(large up) {
+  .navigation-collapsed {
+    .navigation,
+    .header-logo-container {
+      width: $navigation-collapsed-width;
+    }
+
+    .header-logo-large {
+      transform: translateX(-23px);
+      opacity: 0;
+    }
+
+    .header-logo-small {
+      transform: translateX(-23px);
+      opacity: 1;
+    }
+
+    .header-navigation-collapse-toggle {
+      right: -32px;
+      transform: rotate(180deg);
+
+      .header-navigation-collapse-toggle-icon {
+        color: $sinbad;
+      }
+    }
+
+    .header-navigation-collapse-toggle:hover {
+      .header-navigation-collapse-toggle-icon {
+        color: $black;
+      }
+    }
+
+    .navigation-menu-item-link {
+      padding: 0;
+
+      .navigation-menu-item-text {
+        display: none;
+      }
+
+      .navigation-menu-item-icon {
+        color: $sinbad;
+      }
+    }
+
+    .navigation-menu-item-link:hover,
+    .navigation-menu-item-link.navigation-menu-item-link--active {
+      .navigation-menu-item-icon {
+        color: $white;
+      }
+    }
+
+    .pagecontent {
+      padding-left: $navigation-collapsed-width;
+    }
+  }
+}

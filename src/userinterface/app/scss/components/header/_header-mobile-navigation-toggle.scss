@@ -1,0 +1,20 @@
+.header-mobile-navigation-toggle {
+  display: block;
+  float: left;
+  width: 50px;
+  height: 49px;
+  padding: 4px 10px 3px;
+  cursor: pointer;
+  background-color: $white;
+
+  @include breakpoint(large up) {
+    display: none;
+  }
+
+  .header-mobile-navigation-toggle-line {
+    display: block;
+    height: 6px;
+    margin: 6px 0;
+    background-color: $black;
+  }
+}

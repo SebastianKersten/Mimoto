@@ -92,10 +92,7 @@ $breakpoint-classes: (small medium large xlarge xxlarge);
 
 $grid-row-width: $global-width;
 $grid-column-count: 12;
-$grid-column-gutter: (
-        small: 20px,
-        medium: 30px,
-);
+$grid-column-gutter: (small: 20px);
 $grid-column-align-edge: true;
 $block-grid-max: 8;
 
@@ -126,7 +123,7 @@ $header-sizes: (
 );
 $header-color: inherit;
 $header-lineheight: 1.4;
-$header-margin-bottom: 0.5rem;
+$header-margin-bottom: .5rem;
 $header-text-rendering: optimizeLegibility;
 $small-font-size: 80%;
 $header-small-font-color: $medium-gray;
