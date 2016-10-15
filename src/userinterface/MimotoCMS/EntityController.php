@@ -38,6 +38,7 @@ class EntityController
         return $page->render();
     }
 
+
     public function entityNew(Application $app)
     {
 

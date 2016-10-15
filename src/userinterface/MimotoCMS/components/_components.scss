@@ -1,11 +1,20 @@
 @import 'forms/form-component';
 
-@import 'forms/input/Button/button';
-@import 'forms/input/ButtonSmall/buttonsmall';
-@import 'forms/input/Checkbox/checkbox';
-@import 'forms/input/Dropdown/dropdown';
-@import 'forms/input/Image/image';
-@import 'forms/input/List/list';
-@import 'forms/input/ListItem/listitem';
-@import 'forms/input/Radiobutton/radiobutton';
-@import 'forms/input/Textline/textline';
+@import 'forms/input/Button/Button';
+@import 'forms/input/ButtonSmall/Buttonsmall';
+@import 'forms/input/Checkbox/Checkbox';
+@import 'forms/input/Dropdown/Dropdown';
+@import 'forms/input/Image/Image';
+@import 'forms/input/List/List';
+@import 'forms/input/ListItem/Listitem';
+@import 'forms/input/Radiobutton/Radiobutton';
+@import 'forms/input/Textline/Textline';
+
+@import 'pages/entities/EntityOverview/EntityOverview';
+@import 'pages/entities/EntityListItem/EntityListItem';
+@import 'pages/entities/EntityDetail/EntityDetail';
+@import 'pages/entities/PropertyListItem/PropertyListItem';
+@import 'pages/forms/FormOverview/FormOverview';
+@import 'pages/forms/FormListItem/FormListItem';
+@import 'pages/forms/FormDetail/FormDetail';
+@import 'pages/forms/FieldListItem/FieldListItem';

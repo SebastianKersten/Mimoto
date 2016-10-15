@@ -21,7 +21,8 @@ class MimotoEntityConfigService
     
     // components
     private $_entityConfigRepository;
-    
+
+
     
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------

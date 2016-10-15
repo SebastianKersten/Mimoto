@@ -1,0 +1,25 @@
+{% extends "MimotoCMS/components/base.twig" %}
+
+{% block content %}
+    <h2><a href="/mimoto.cms/entities">forms</a> / form detail</h2>
+    <br>
+    Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b> -
+    {% include 'MimotoCMS/components/forms/input/ButtonSmall/ButtonSmall.twig' with { label:'Edit', icon:'', action:"Mimoto.CMS.formEdit('" ~ Aimless.meta('id') ~ "');" } %}<br>
+    <br>
+    Properties:<br>
+    <br>
+    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new field', icon:'+', action:"Mimoto.CMS.formFieldNew('" ~ Aimless.meta('id') ~ "');" } %}
+    <br>
+    <br>
+    <div class="MimotoCMS_pages_forms_FormDetail__container" {{ Aimless.realtime('fields')|raw }}>
+        {{ Aimless.data('fields')|raw }}
+    </div>
+    <br>
+    <hr>
+    <br>
+    <b>Danger zone!</b><br>
+    <br>
+    <i><u>WARNING</u> - Deleting the form will result in the LOSS OF ALL DATA related to this form.</i><br>
+    <br>
+    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Delete entity', icon:'X', action:"Mimoto.CMS.formDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", type:'red' } %}
+{% endblock %}

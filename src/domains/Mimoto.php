@@ -49,7 +49,7 @@ class Mimoto
 
         // main menu
         $app->get('/mimoto.cms/entities', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::viewEntityOverview');
-        $app->get('/mimoto.cms/forms', 'Mimoto\\UserInterface\\MimotoCMS\\FormsController::getOverview');
+        $app->get('/mimoto.cms/forms', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::viewFormOverview');
 
 
         // Entity
@@ -64,6 +64,15 @@ class Mimoto
         $app->get ('/mimoto.cms/entity/{nEntityId}/property/new', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyNew');
         $app->post('/mimoto.cms/entity/{nEntityId}/property/create', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyCreate');
 
+
+
+        // Entity
+        $app->get ('/mimoto.cms/form/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formNew');
+        $app->post('/mimoto.cms/form/create', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formCreate');
+        $app->get ('/mimoto.cms/form/{nFormId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formView');
+        $app->get ('/mimoto.cms/form/{nFormId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formEdit');
+        $app->post('/mimoto.cms/form/{nFormId}/update', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formUpdate');
+        $app->get ('/mimoto.cms/form/{nFormId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formDelete');
 
 
 

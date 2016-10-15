@@ -176,8 +176,8 @@ class MimotoEntity
         {
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
-                $property->data->persistentValue = [];
-                $property->data->currentValue = [];
+                $property->data->persistentValue = null;
+                $property->data->currentValue = null;
 
                 break;
 
@@ -432,7 +432,6 @@ class MimotoEntity
         // forward
         if (!empty($sSubpropertySelector)) { return $this->forwardGetValueFromEntityProperty($property, $sSubpropertySelector, $bGetStorableValue); }
 
-
         // validate
         if (empty($property->data->currentEntity)) return null;
 
@@ -479,8 +478,6 @@ class MimotoEntity
                 $property->data->entityCache = $GLOBALS['Mimoto.Data']->get($property->data->currentEntity->getChildEntityTypeName(), $property->data->currentEntity->getChildId());
             }
         }
-
-
         
         // send
         return (isset($property->data->entityCache)) ? $property->data->entityCache : null;
@@ -641,8 +638,7 @@ class MimotoEntity
         
         
         //echo "\nsSubpropertySelector=".$sSubpropertySelector."<br>\n\n";
-        
-        
+
         
         // init
         $aConditionals = MimotoDataUtils::getConditionals($sSubpropertySelector);
@@ -676,7 +672,7 @@ class MimotoEntity
             
             $aCollectionItems = $property->data->currentCollection;
 
-            $aCollection = []; 
+            $aCollection = [];
 
             $nCollectionItemCount = count($aCollectionItems);
             for ($i = 0; $i < $nCollectionItemCount; $i++)
@@ -686,8 +682,7 @@ class MimotoEntity
                 
                 // load
                 $entity = $GLOBALS['Mimoto.Data']->get($connection->getChildEntityTypeName(), $connection->getChildId());
-                
-                
+
                 $bVerified = true;
                 foreach ($aConditionals as $sKey => $value)
                 {
@@ -700,8 +695,9 @@ class MimotoEntity
                 }
                                 
                 if ($bVerified) { $aCollection[] = $entity; }
-
             }
+
+            // send
             return $aCollection;
         }
         

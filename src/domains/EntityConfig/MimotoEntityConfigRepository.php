@@ -18,13 +18,18 @@ use Mimoto\Mimoto;
  */
 class MimotoEntityConfigRepository
 {
-    
+
+    // services
+    private $_MimotoLogService;
+
     /**
      * The requested entities
      * @var array
      */
     private $_aEntityConfigs = [];
     private $_aEntities;
+
+
 
     
     
@@ -352,6 +357,9 @@ class MimotoEntityConfigRepository
             // validate
             if (!isset($aAllEntity_Connections[$entity->id]))
             {
+                // notify
+                $GLOBALS['Mimoto.Log']->notify('MimotoEntityConfigRepository', "The entity with name '".$entity->name."' has no properties");
+
                 // skip
                 continue;
             }
@@ -395,6 +403,9 @@ class MimotoEntityConfigRepository
                 // validate
                 if (!isset($aAllEntityPropertySettings[$property->id]) || !isset($aAllEntityProperty_Connections[$property->id]))
                 {
+                    // notify
+                    //$GLOBALS['Mimoto.Log']->notify('MimotoEntityConfigRepository', "The entity with name '".$entity->name."' has no properties");
+
                     // skip
                     continue 2;
                 }
@@ -570,14 +581,20 @@ class MimotoEntityConfigRepository
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
+                        // init
+                        $settings = array();
+
+                        // copy
+                        $settings[MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE] = clone $property->settings[MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE];
+
                         // prepare
-                        $property->settings['allowedEntityType']->value = (object) array(
-                            'id' => $property->settings['allowedEntityType']->value,
-                            'name' => $this->getEntityNameById($property->settings['allowedEntityType']->value)
+                        $settings[MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE]->value = (object) array(
+                            'id' => $property->settings[MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE]->value,
+                            'name' => $this->getEntityNameById($property->settings[MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE]->value)
                         );
 
                         // setup
-                        $entityConfig->setEntityAsProperty($property->name, $property->id, $property->settings);
+                        $entityConfig->setEntityAsProperty($property->name, $property->id, $settings);
 
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
@@ -585,19 +602,33 @@ class MimotoEntityConfigRepository
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
+                        // init
+                        $settings = array();
+
+                        // copy
+                        $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES] = clone $property->settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES];
+                        $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES]->value = [];
+
                         // prepare
-                        $property->settings['allowedEntityTypes']->value = json_decode($property->settings['allowedEntityTypes']->value);
-                        $nAllowedEntityTypeCount = count($property->settings['allowedEntityTypes']->value);
+                        $aAllowedEntityTypes = json_decode($property->settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES]->value);
+                        $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
                         for ($k = 0; $k < $nAllowedEntityTypeCount; $k++)
                         {
-                            $property->settings['allowedEntityTypes']->value[$k] = (object) array(
-                                'id' => $property->settings['allowedEntityTypes']->value[$k],
-                                'name' => $this->getEntityNameById($property->settings['allowedEntityTypes']->value[$k])
+                            // register
+                            $xAllowedEntityType = $aAllowedEntityTypes[$k];
+
+                            // prepare
+                            $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES]->value[$k] = (object) array(
+                                'id' => $xAllowedEntityType,
+                                'name' => $this->getEntityNameById($xAllowedEntityType)
                             );
                         }
-                        
+
+                        // prepare
+                        $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWDUPLICATES] = (isset($property->settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWDUPLICATES]) && $property->settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWDUPLICATES]->value === 'true') ? true : false;
+
                         // setup
-                        $entityConfig->setCollectionAsProperty($property->name, $property->id, $property->settings);
+                        $entityConfig->setCollectionAsProperty($property->name, $property->id, $settings);
                         
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);

@@ -25,10 +25,15 @@ $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app);
 
 
-function output($sTitle, $data)
+function output($sTitle, $data, $bScream = false)
 {
-    echo '<div style="background-color:#f5f5f5;border:solid 1px #858585;padding:20px">';
-    echo '<h2><b style="color:#06afea">'.$sTitle.'</b></h2><hr>';
+    // style
+    $sTextColor = ($bScream) ? '#ff0000' : '#06afea';
+    $sBorderColor = ($bScream) ? '#ff0000' : '#858585';
+    $sBackgroundColor = ($bScream) ? '#ffbbbb' : '#f5f5f5';
+
+    echo '<div style="background-color:'.$sBackgroundColor.';border:solid 1px '.$sBorderColor.';padding:20px">';
+    echo '<h2><b style="color:'.$sTextColor.'">'.$sTitle.'</b></h2><hr>';
     echo '<pre style="width:100%">';
     print_r($data);
     echo '</pre>';

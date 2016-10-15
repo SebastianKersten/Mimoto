@@ -59,13 +59,13 @@ class MimotoFormService
         return $aResults[0];
     }
 
-    public function getFormVars($form, $xValues)
+    public function getFormVars($form, $xValues, $aFields = null)
     {
         // 1. prepare
         $orderedValues = $this->orderValues($xValues);
 
         // 2. register fields
-        $aFields = $form->getValue('fields', true);
+        $aFields = (!empty($aFields)) ? $aFields : $form->getValue('fields', true);
 
         // 3. init
         $formVars = (object) array(
@@ -172,7 +172,7 @@ class MimotoFormService
             {
                 if ($value instanceof MimotoEntity)
                 {
-                    $sKey = (!empty($key)) ? $key : $value->getEntityTypeName();
+                    $sKey = (!empty($key) && is_nan($key)) ? $key : $value->getEntityTypeName();
                     $orderedValues->entities[$sKey] = $value;
                 }
                 else

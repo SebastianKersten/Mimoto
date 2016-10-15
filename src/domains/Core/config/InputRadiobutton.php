@@ -25,14 +25,14 @@ class InputRadiobutton
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'__label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'__label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label_type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputRadiobutton
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'__description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--description_type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

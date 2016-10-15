@@ -439,11 +439,13 @@ class MimotoEntityRepository
                             'SELECT * FROM '.$propertyValue->mysqlConnectionTable.
                             ' WHERE parent_id = :parent_id'.
                             ' && parent_property_id = :parent_property_id'.
+                            ' && parent_entity_type_id = :parent_entity_type_id'.
                             ' ORDER BY sortindex'
                         );
                         $params = array(
                             ':parent_id' => $entity->getId(),
-                            ':parent_property_id' => $propertyConfig->id
+                            ':parent_property_id' => $propertyConfig->id,
+                            ':parent_entity_type_id' => $entity->getEntityTypeId()
                         );
 
                         $stmt->execute($params);
@@ -490,7 +492,7 @@ class MimotoEntityRepository
 
         // start tracking changes
         $entity->trackChanges();
-        
+
         // send
         return $entity;
     }

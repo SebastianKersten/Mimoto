@@ -1,0 +1,10 @@
+{% extends "MimotoCMS/components/base.twig" %}
+
+{% block content %}
+    <h2>Forms</h2>
+    <br>
+    <div class="MimotoCMS_pages_forms_FormOverview__container" {{ Aimless.realtime('forms')|raw }}>
+        {{ Aimless.selection('forms')|raw }}
+    </div>
+    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new form', icon:'+', action:"Mimoto.CMS.formNew();" } %}
+{% endblock %}

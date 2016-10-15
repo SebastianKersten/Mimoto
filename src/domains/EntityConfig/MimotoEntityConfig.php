@@ -54,11 +54,16 @@ class MimotoEntityConfig
     
     
     // property value types
-    const PROPERTY_VALUE_MYSQL_COLUMN = 'property_value_mysql_column';
-    const PROPERTY_VALUE_MYSQLCONNECTION_TABLE = 'property_value_mysql_connection_table';
-    
-    
-    
+    const PROPERTY_VALUE_MYSQL_COLUMN           = 'property_value_mysql_column';
+    const PROPERTY_VALUE_MYSQLCONNECTION_TABLE  = 'property_value_mysql_connection_table';
+
+    // special option keys
+    const OPTION_ENTITY_ALLOWEDENTITYTYPE       = 'allowedEntityType';
+    const OPTION_COLLECTION_ALLOWEDENTITYTYPES  = 'allowedEntityTypes';
+    const OPTION_COLLECTION_ALLOWDUPLICATES     = 'allowDuplicates';
+
+
+
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -167,7 +172,7 @@ class MimotoEntityConfig
      * @param string $sPropertyName The property's name
      * @param array $options Array containing the option 'entityType'
      */
-    public function setEntityAsProperty($sPropertyName, $nPropertyId, $options)
+    public function setEntityAsProperty($sPropertyName, $nPropertyId, $settings)
     {
         // compose
         $property = (object) array(
@@ -175,7 +180,7 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                'allowedEntityType' => $options['allowedEntityType']->value
+                MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE => $settings[MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE]->value
             )
         );
         
@@ -196,8 +201,8 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                'allowedEntityTypes' => $settings['allowedEntityTypes']->value,
-                'allowDuplicates' => (isset($settings['allowDuplicates']) && $settings['allowDuplicates']->value === 'true') ? true : false
+                MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES => $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES]->value,
+                MimotoEntityConfig::OPTION_COLLECTION_ALLOWDUPLICATES => $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWDUPLICATES]
             )
         );
 

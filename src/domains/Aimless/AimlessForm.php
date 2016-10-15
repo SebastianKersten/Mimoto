@@ -59,8 +59,7 @@ class AimlessForm extends AimlessComponent
         $aFields = $form->getValue('fields', true);
 
         // 3. prepare
-        $formVars = $this->_FormService->getFormVars($form, $this->_xValues);
-
+        $formVars = $this->_FormService->getFormVars($form, $this->_xValues, $aFields);
 
         // prepare
         $sAction = '/Mimoto.Aimless/form/'.$this->_sFormName; // #todo - replace with custom if present (expliciet by toggle)

@@ -43,8 +43,10 @@ class MimotoLogService
     /**
      * Notify developer
      */
-    public function notify($sMessage)
+    public function notify($sDispatcher, $sMessage)
     {
+        return;
+
         // create
         $notification = $this->_MimotoEntityService->create('notification');
 
