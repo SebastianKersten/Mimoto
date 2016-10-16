@@ -3,7 +3,7 @@
 {% set data_attributes = '' %}
 
 {% if types|default([]) %}
-  {% set classes = ' button--' ~ types|join(' button--') %}
+  {% set classes = ' MimotoCMS_forms_input_Button--' ~ types|join(' MimotoCMS_forms_input_Button--') %}
 {% endif %}
 
 {% if link|default('') %}
@@ -19,15 +19,11 @@
   {% endfor %}
 {% endif %}
 
-<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="button{{ classes }}">
+<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_forms_input_Button{{ classes }}" {% if onclick %}onclick="{{ onclick }}"{%  endif %}>
   {% if label|default('') %}
-    <span class="button-text">{{ label }}</span>
+    <span class="MimotoCMS_forms_input_Button__text">{{ label }}</span>
   {% endif %}
   {% if icon|default('') %}
-    <span class="button-icon icon icon-{{ icon }}"></span>
+    <span class="MimotoCMS_forms_input_Button__icon icon icon-{{ icon }}"></span>
   {% endif %}
 </{{ element }}>
-
-{#
-<div class="MimotoCMS_forms_input_Button {% if type=='red' %} red{% endif %}" {% if action is not empty %} onclick="{{ action|raw }}"{% endif %}>{{ label }}{% if icon is not empty %}<span {% if type=='red' %}style="color:#ffffff;"{% endif %}">{{ icon|raw }}</span>{% endif %}</div>
-#}

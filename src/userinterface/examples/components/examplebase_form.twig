@@ -11,7 +11,9 @@
             {{ Aimless.form()|raw }}
         </div>
         <div class="MimotoCMS_forms_Form__menu">
-            <span {{ Aimless.submit()|raw }}><div class="MimotoCMS_forms_input_Button" onclick="Mimoto.form.submit();">Opslaan</div></span>
+            <span {{ Aimless.submit()|raw }}>
+                {% include "MimotoCMS/components/forms/input/Button/Button.twig" with { label:"Opslaan", onclick:"Mimoto.form.submit();" } %}
+            </span>
         </div>
     </div>
 {% endblock %}

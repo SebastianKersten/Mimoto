@@ -1,4 +1,4 @@
-.button {
+.MimotoCMS_forms_input_Button {
   display: inline-flex;
   padding: 10px 20px;
   cursor: pointer;
@@ -10,7 +10,7 @@
   flex-wrap: nowrap;
   align-items: center;
 
-  .button-text {
+  .MimotoCMS_forms_input_Button__text {
     font-family: $font-family-futura;
     font-size: rem-calc(14px);
     font-weight: 500;
@@ -18,7 +18,7 @@
     color: $white;
   }
 
-  .button-icon {
+  .MimotoCMS_forms_input_Button__icon {
     display: block;
     margin: 5px 0 5px 20px;
     font-size: rem-calc(10px);
@@ -26,6 +26,6 @@
   }
 }
 
-.button.button--grey {
+.MimotoCMS_forms_input_Button.button--grey {
   background-color: $silver;
 }

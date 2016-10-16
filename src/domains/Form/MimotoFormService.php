@@ -129,7 +129,7 @@ class MimotoFormService
                     $sEntitySelector = $sEntityName.'.'.$orderedValues->entities[$sEntityName]->getId();
 
                     // 1. store field var
-                    $formVars->fieldVars[$field->getId()] = (object) array(
+                    $formVars->fieldVars[$field->getEntityTypeName().'.'.$field->getId()] = (object) array(
                         'key' => $sEntitySelector.'.'.$sPropertyName,
                         'value' => $orderedValues->entities[$sEntityName]->getValue($sPropertyName)
                     );
