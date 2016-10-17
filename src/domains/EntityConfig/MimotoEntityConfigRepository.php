@@ -376,12 +376,12 @@ class MimotoEntityConfigRepository
 
                 switch($connection->parent_property_id)
                 {
-                    case CoreConfig::MIMOTO_ENTITY.'__extends':
+                    case CoreConfig::MIMOTO_ENTITY.'--extends':
 
                         $entity->extends = $connection->child_id;
                         break;
 
-                    case CoreConfig::MIMOTO_ENTITY.'__properties':
+                    case CoreConfig::MIMOTO_ENTITY.'--properties':
 
                         // validate
                         if (!isset($aAllEntityProperties[$connection->child_id])) { error("Oops, the entity config named '$entity->name' seems to miss a property"); };

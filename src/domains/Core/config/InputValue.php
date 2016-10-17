@@ -25,14 +25,14 @@ class InputValue
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__vartype',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--vartype',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'vartype',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__vartype-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--vartype-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputValue
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__varname',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--varname',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'varname',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__varname-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--varname-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -59,14 +59,14 @@ class InputValue
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__entityproperty',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--entityproperty',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'entityproperty',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__entityproperty-allowedEntityType',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--entityproperty-allowedEntityType',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityType',
@@ -74,13 +74,74 @@ class InputValue
                             'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--options',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'options',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--options-allowedEntityTypes',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityTypes',
+                            'type' => 'array',
+                            'value' => '["'.CoreConfig::MIMOTO_ENTITY.'"]'
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--options-allowDuplicates',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowDuplicates',
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--validation',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'validation',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--validation-allowedEntityTypes',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityTypes',
+                            'type' => 'array',
+                            'value' => '["'.CoreConfig::MIMOTO_ENTITY.'"]'
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--validation-allowDuplicates',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowDuplicates',
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--optional',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'optional',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--optional-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
                 )
-
-                // 1. validation
-                // 2. values
-                // 3. conditionals
-                // 4. optional
-
             ]
         );
     }

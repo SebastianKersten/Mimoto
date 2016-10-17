@@ -25,14 +25,14 @@ class InputDropdown
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'__label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'__label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputDropdown
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'__options',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--options',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'options',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'__options-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--options-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

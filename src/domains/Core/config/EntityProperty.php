@@ -26,7 +26,7 @@ class EntityProperty
             'properties' => [
                 (object) array(
 
-                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__name',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
@@ -34,7 +34,7 @@ class EntityProperty
                     'settings' => [
                         'type' => (object) array(
                             'key' => 'type',
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__name-type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'type' => CoreConfig::DATA_TYPE_VALUE,
@@ -43,14 +43,14 @@ class EntityProperty
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__type',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__type-type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -60,14 +60,14 @@ class EntityProperty
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__settings',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'settings',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__settings-allowedEntityTypes',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowedEntityTypes',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
@@ -76,7 +76,7 @@ class EntityProperty
 
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'__settings-allowDuplicates',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowDuplicates',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',

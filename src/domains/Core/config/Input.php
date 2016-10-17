@@ -25,14 +25,14 @@ class Input
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT.'__value',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT.'--value',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'value',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'__value-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'--value-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityType',

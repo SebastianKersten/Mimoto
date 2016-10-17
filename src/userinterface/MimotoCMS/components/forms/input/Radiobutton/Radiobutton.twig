@@ -1,20 +1,20 @@
 <div {{ Aimless.field()|raw }} class="form-component">
-  <label for="" class="form-component-title">{{ Aimless.data('label') }} => {{ Aimless.value() }}<span class="form-component-title-information"></label>
+  <label for="" class="form-component-title">{{ Aimless.data('label') }}<span class="form-component-title-information"></span></label>
 
   <div class="form-component-content">
     <div class="form-component-element">
-      <div class="form-component-element-container">
-        <input {{ Aimless.input()|raw }} type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
-        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
-      </div>
-      <div class="form-component-element-container">
-        <input {{ Aimless.input()|raw }} type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
-        <label for="maybe" class="form-component-element-label">Misschien wel</label>
-      </div>
-      <div class="form-component-element-container">
-        <input {{ Aimless.input()|raw }} type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
-        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
-      </div>
+
+      {% set aOptions = Aimless.data('value.options', false) %}
+      {% for option in aOptions %}
+
+        {{ option.id }}
+
+          <div class="form-component-element-container">
+            <input {{ Aimless.input()|raw }} type="radio" name="radiobutton" value="{{ option.key }}" class="MimotoCMS_forms_input_Radiobutton" {% if Aimless.value() == option.key %}checked{% endif %}/>
+            <label for="yes" class="form-component-element-label">{{ option.value }}</label>
+          </div>
+      {% endfor %}
+
     </div>
     {% if Aimless.data('description') is not empty %}<p class="form-component-description">{{ Aimless.data('description') }}</p>{% endif %}
     <p class="form-component-element-error">U moet één van de waardes kiezen.</p>

@@ -190,6 +190,7 @@ class AimlessComponent
         }
     }
 
+
     private function renderValueProperty($value, $sPropertyName)
     {
         // format
@@ -417,19 +418,19 @@ class AimlessComponent
                 // clarify
                 $field = $entity;
 
-
-                /*if ($field->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON)
-                {
-                    error($field);
-                }*/
-
-
-
                 // validate
                 if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()])) continue; // #todo - log silent fail
 
                 // gerister
                 $fieldVar = $aFieldVars[$field->getEntityTypeName().'.'.$field->getId()];
+
+
+                // #######
+                if ($field->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON)
+                {
+                    //error($fieldVar);
+                }
+                // #######
 
                 // create
                 $component = $this->_AimlessService->createInput($sTemplateName, $field, $fieldVar->key, $fieldVar->value);

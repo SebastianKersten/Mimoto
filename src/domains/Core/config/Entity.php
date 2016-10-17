@@ -25,14 +25,14 @@ class Entity
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'__name',
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--name',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'__name-type',
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--name-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class Entity
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'__properties',
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--properties',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'properties',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'__properties-allowedEntityTypes',
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--properties-allowedEntityTypes',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
@@ -57,7 +57,7 @@ class Entity
                             'value' => '["'.CoreConfig::MIMOTO_ENTITY.'"]'
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'__properties-allowDuplicates',
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--properties-allowDuplicates',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',
@@ -67,14 +67,14 @@ class Entity
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'__extends',
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--extends',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'extends',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'__extends-allowedEntityType',
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--extends-allowedEntityType',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityType',

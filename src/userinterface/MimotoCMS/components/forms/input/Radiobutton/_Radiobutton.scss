@@ -1,4 +1,4 @@
-.form-radiobutton {
+.MimotoCMS_forms_input_Radiobutton {
   position: relative;
   z-index: 0;
   display: block;
@@ -37,7 +37,7 @@
   }
 }
 
-.form-radiobutton:checked {
+.MimotoCMS_forms_input_Radiobutton:checked {
   &::after {
     background: $white;
   }

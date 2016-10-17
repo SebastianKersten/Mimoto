@@ -18,21 +18,21 @@ class InputValue
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE,
+            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUTVALUE,
+            'name' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION,
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__vartype',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--key',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'vartype',
+                    'name' => 'key',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__vartype-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--key-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,45 +42,22 @@ class InputValue
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__varname',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--value',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'varname',
+                    'name' => 'value',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__varname-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--value-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => CoreConfig::DATA_TYPE_VALUE,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__entityproperty',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'entityproperty',
-                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
-                    'settings' => [
-                        'allowedEntityType' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'__entityproperty-allowedEntityType',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'allowedEntityType',
-                            'type' => 'value',
-                            'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
                         )
                     ]
                 )
-
-                // 1. validation
-                // 2. values
-                // 3. conditionals
-                // 4. optional
-
             ]
         );
     }

@@ -25,14 +25,14 @@ class LayoutGroupStart
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'__title',
+                    'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'--title',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'title',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'__title-type',
+                            'id' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'--title-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

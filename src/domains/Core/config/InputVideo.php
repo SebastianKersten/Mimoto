@@ -25,14 +25,14 @@ class InputVideo
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'__label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'__label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputVideo
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'__description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'__description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

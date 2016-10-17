@@ -25,14 +25,14 @@ class InputImage
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'__label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'__label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputImage
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'__description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'__description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

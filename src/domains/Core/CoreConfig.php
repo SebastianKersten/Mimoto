@@ -58,6 +58,8 @@ class CoreConfig
     const MIMOTO_FORM                           = '_MimotoAimless__interaction__form';
     const MIMOTO_FORM_INPUT                     = '_MimotoAimless__interaction__forminput';
     const MIMOTO_FORM_INPUTVALUE                = '_MimotoAimless__interaction__forminputvalue';
+    const MIMOTO_FORM_INPUTVALUESETTING         = '_MimotoAimless__interaction__forminputvaluesetting';
+    const MIMOTO_FORM_INPUTVALUEVALIDATION      = '_MimotoAimless__interaction__forminputvaluevalidation';
 
     // output
     const MIMOTO_FORM_OUTPUT_TITLE              = '_MimotoAimless__interaction__form_output_title';

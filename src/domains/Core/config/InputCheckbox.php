@@ -25,14 +25,14 @@ class InputCheckbox
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'__label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'__label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputCheckbox
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'__description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'__description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

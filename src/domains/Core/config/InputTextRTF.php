@@ -25,14 +25,14 @@ class InputTextRTF
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputTextRTF
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -59,65 +59,14 @@ class InputTextRTF
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__placeholder',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--placeholder',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'placeholder',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__placeholder-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__optional',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'optional',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__optional-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
-                            'value' => true
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__regexp',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'regexp',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__regexp-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__maxchars',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'maxchars',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'__maxchars-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--placeholder-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

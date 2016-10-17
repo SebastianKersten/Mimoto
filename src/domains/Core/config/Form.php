@@ -25,14 +25,14 @@ class Form
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM.'__name',
+                    'id' => CoreConfig::MIMOTO_FORM.'--name',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM.'__name-type',
+                            'id' => CoreConfig::MIMOTO_FORM.'--name-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class Form
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM.'__fields',
+                    'id' => CoreConfig::MIMOTO_FORM.'--fields',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'fields',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM.'__fields-allowedEntityTypes',
+                            'id' => CoreConfig::MIMOTO_FORM.'--fields-allowedEntityTypes',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
@@ -59,7 +59,7 @@ class Form
                                 ]'
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM.'__fields-allowDuplicates',
+                            'id' => CoreConfig::MIMOTO_FORM.'--fields-allowDuplicates',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',
@@ -67,12 +67,75 @@ class Form
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM.'--customSubmit',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'customSubmit',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM.'--customSubmit-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE // #todo int(1) van 0 of 1
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM.'--action',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'action',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM.'--action-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM.'--method',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'method',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM.'--method-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM.'--target',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'target',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM.'--target-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
                 )
-
-                // 1. customSubmit y/n
-                // 2. action
-                // 3. method
-                // 4. target
             ]
         );
     }
