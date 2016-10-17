@@ -10,6 +10,8 @@ use Mimoto\Core\config\EntityPropertySetting;
 use Mimoto\Core\config\Form;
 use Mimoto\Core\config\Input;
 use Mimoto\Core\config\InputValue;
+use Mimoto\Core\config\InputValueSetting;
+use Mimoto\Core\config\InputValueValidation;
 use Mimoto\Core\config\OutputTitle;
 use Mimoto\Core\config\LayoutGroupStart;
 use Mimoto\Core\config\LayoutGroupEnd;
@@ -135,6 +137,8 @@ class CoreConfig
             Form::getStructure(),
             Input::getStructure(),
             InputValue::getStructure(),
+            InputValueSetting::getStructure(),
+            InputValueValidation::getStructure(),
 
             // output
             OutputTitle::getStructure(),

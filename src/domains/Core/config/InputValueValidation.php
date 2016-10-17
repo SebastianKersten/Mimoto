@@ -8,11 +8,11 @@ use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputValue
+ * InputValueValidation
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputValue
+class InputValueValidation
 {
 
     public static function getStructure()

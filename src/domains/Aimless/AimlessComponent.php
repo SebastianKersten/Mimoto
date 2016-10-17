@@ -424,14 +424,6 @@ class AimlessComponent
                 // gerister
                 $fieldVar = $aFieldVars[$field->getEntityTypeName().'.'.$field->getId()];
 
-
-                // #######
-                if ($field->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON)
-                {
-                    //error($fieldVar);
-                }
-                // #######
-
                 // create
                 $component = $this->_AimlessService->createInput($sTemplateName, $field, $fieldVar->key, $fieldVar->value);
             }

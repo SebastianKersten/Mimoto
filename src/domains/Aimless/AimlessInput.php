@@ -2,7 +2,10 @@
 
 // classpath
 namespace Mimoto\Aimless;
+
+
 use Mimoto\Data\MimotoEntity;
+use Mimoto\Aimless\AimlessInputViewModel;
 
 
 /**
@@ -36,7 +39,7 @@ class AimlessInput extends AimlessComponent
 
     public function input()
     {
-        return 'mls_form_input="'.$this->_sFieldId.'"';
+        return 'mls_form_input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"';
     }
 
     public function field()
@@ -54,6 +57,43 @@ class AimlessInput extends AimlessComponent
         return $this->_value;
     }
 
+    public function fieldOptions()
+    {
+        // register
+        $fieldValue = $this->_entity->getValue('value');
+
+        // validate
+        if (empty($fieldValue)) { $GLOBALS['Mimoto.Log']->notify('AimlessInput', "No 'value' set on iput field"); return; }
+
+        // register
+        $aFieldValueOptions = $fieldValue->getValue('options', true);
+
+        // collect
+        $aOptions = [];
+        $nOptionCount = count($aFieldValueOptions);
+        for ($i = 0; $i < $nOptionCount; $i++)
+        {
+            // register
+            $fieldValueOption = $aFieldValueOptions[$i];
+
+            // compose
+            $option = (object) array(
+                'key' => $fieldValueOption->getValue('key'),
+                'value' => $fieldValueOption->getValue('value')
+            );
+
+            // store
+            $aOptions[] = $option;
+        }
+
+        // send
+        return $aOptions;
+    }
+
+    public function fieldValidation()
+    {
+
+    }
 
 
 // #todo - support diffs
@@ -67,9 +107,12 @@ class AimlessInput extends AimlessComponent
     {
         // get requested component
         $sComponentFile = $this->_AimlessService->getComponentFile($this->_sComponentName, $this->_entity);
-        
+
+        // create
+        $viewModel = new AimlessInputViewModel($this);
+
         // compose
-        $this->_aVars['Aimless'] = $this;
+        $this->_aVars['Aimless'] = $viewModel;
 
         // render
         $sRenderedField = $this->_TwigService->render($sComponentFile, $this->_aVars);

@@ -58,17 +58,9 @@ class MimotoAimlessController
         // 2. register values
         $aRequestValues = $requestData->values;
         $sPublicKey = $requestData->publicKey;
-
-
-//        $aRequestValues = array(
-//            "project.3.name" => "[".date("H:i:s")."] Bugaboo GTS",
-//            "project.3.description" => "[".date("H:i:s")."] Al ruim 15 jaar inspireert Bugaboo honderdduizenden ouders om eropuit te trekken en samen met hun kinderen de wereld te ontdekken. Tegenwoordig is het een vertrouwd straatbeeld: overal stoere, robuuste en tegelijk stijlvolle kinderwagens. Maar toen Max Barenbrug, nu Chief Design Officer bij Bugaboo, in 1994 zo'n kinderwagen ontwierp voor zijn afstudeerproject aan de Design Academy in Eindhoven, was het de eerste in zijn soort. De modulaire, multifunctionele kinderwagen, die net zo makkelijk in de stad als in het bos of op het strand kon worden gebruikt, was destijds een compleet nieuw concept."
-//        );
-//        $sPublicKey = '11f7d8ac2c8bd9479b39c9d1ad656980';
-
+        $sPublicKey = '906394777c7666665a297969b76415ef';
 
         // get all vars and entities
-
         $aValues = [];
         $aEntities = [];
         foreach ($aRequestValues as $key => $value)
@@ -85,23 +77,27 @@ class MimotoAimlessController
                 if (!MimotoDataUtils::isValidEntityId($aSelectorElements[1])) continue;
                 if (!MimotoDataUtils::validatePropertyName($aSelectorElements[2])) continue;
 
-                if (!isset($aEntities['entityType']))
+                // register
+                $sEntityType = $aSelectorElements[0];
+                $nEntityId = $aSelectorElements[1];
+                $sPropertyName = $aSelectorElements[2];
+
+                if (!isset($aEntities[$sEntityType]))
                 {
-                    $aEntities['entityType'] = (object) array(
-                        'entityType' => $aSelectorElements[0],
-                        'entityId' => $aSelectorElements[1],
+                    $aEntities[$sEntityType] = (object) array(
+                        'entityType' => $sEntityType,
+                        'entityId' => $nEntityId,
                         'properties' => []
                     );
                 }
 
-                $aEntities['entityType']->properties[] = $aSelectorElements[2];
+                $aEntities[$sEntityType]->properties[] = $sPropertyName;
             }
             else
             {
                 $aValues[$key] = $value;
             }
         }
-
 
         // collect
         foreach ($aEntities as $sEntityType => $entityInfo)
@@ -124,6 +120,7 @@ class MimotoAimlessController
         if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities))) error('Public key is incorrect!');
 
 
+        //error($aEntities);
 
         // #todo
         // move to Service (store form) FormService ->
@@ -145,7 +142,7 @@ class MimotoAimlessController
 
                 // compose
                 $sValueKey = $entityInfo->entityType.'.'.$entityInfo->entityId.'.'.$sPropertyName;
-
+                
                 // update
                 $entityInfo->entity->setValue($sPropertyName, $aRequestValues->$sValueKey);
             }

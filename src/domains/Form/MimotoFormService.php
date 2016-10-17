@@ -86,21 +86,7 @@ class MimotoFormService
             // register
             $fieldValue = $field->getValue('value');
 
-
-
-            // ####### #todo
-            // 1. needs to contain a values array
-            // 2. special fetch to flat/simple array
-            if ($field->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON)
-            {
-                //output('Value object', $fieldValue, true);
-            }
-            // #######
-
-
-
-
-
+            // skip if invalid
             if (empty($fieldValue)) continue; // #todo - silent fail notification
 
             // register
@@ -187,7 +173,7 @@ class MimotoFormService
             {
                 if ($value instanceof MimotoEntity)
                 {
-                    $sKey = (!empty($key) && is_nan($key)) ? $key : $value->getEntityTypeName();
+                    $sKey = (!empty($key) && is_nan(intval($key))) ? $key : $value->getEntityTypeName();
                     $orderedValues->entities[$sKey] = $value;
                 }
                 else

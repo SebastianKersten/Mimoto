@@ -88,7 +88,7 @@ class InputValue
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => '["'.CoreConfig::MIMOTO_ENTITY.'"]'
+                            'value' => '["'.CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'"]'
                         ),
                         'allowDuplicates' => (object) array(
                             'id' => CoreConfig::MIMOTO_ENTITY.'--options-allowDuplicates',
@@ -113,7 +113,7 @@ class InputValue
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => '["'.CoreConfig::MIMOTO_ENTITY.'"]'
+                            'value' => '["'.CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'"]'
                         ),
                         'allowDuplicates' => (object) array(
                             'id' => CoreConfig::MIMOTO_ENTITY.'--validation-allowDuplicates',

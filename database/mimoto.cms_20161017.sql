@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 10/17/2016 09:58:54 AM
+ Date: 10/17/2016 23:42:11 PM
 */
 
 SET NAMES utf8mb4;
@@ -291,7 +291,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_input_textline` (
 --  Records of `_MimotoAimless__interaction__form_input_textline`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_MimotoAimless__interaction__form_input_textline` VALUES ('1', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '10', '2016-08-10 16:13:50'), ('2', 'Role', null, null, 'false', null, null, '2016-08-12 10:24:05'), ('3', 'Name', 'This field is connected to an entity\'s property', 'Enter the client\'s name', 'true', '/[a-zA-Z09-]/', '10', '2016-10-02 13:08:25'), ('4', 'Custom var', 'Dit is een custom var', 'Enter the value of this custom var', 'false', null, null, '2016-10-09 15:25:54'), ('50', 'Name', 'The project\'s name', 'Enter a name', 'false', null, null, '2016-10-09 16:56:43'), ('51', 'Description', 'The project\'s desription', 'Enter a description', 'false', null, null, '2016-10-09 16:57:38'), ('100', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:21'), ('200', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:36');
+INSERT INTO `_MimotoAimless__interaction__form_input_textline` VALUES ('1', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '10', '2016-08-10 16:13:50'), ('2', 'Role', null, null, 'false', null, null, '2016-08-12 10:24:05'), ('3', 'Name', 'This field is connected to an entity\'s property', 'Enter the client\'s name', 'true', '/[a-zA-Z09-]/', '10', '2016-10-02 13:08:25'), ('4', 'Custom var', 'Dit is een custom var', 'Enter the value of this custom var', 'false', null, null, '2016-10-09 15:25:54'), ('50', 'Name', 'The project\'s name', 'Enter a name', 'false', null, null, '2016-10-09 16:56:43'), ('51', 'Description', 'The project\'s description', 'Enter a description', 'false', null, null, '2016-10-09 16:57:38'), ('100', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:21'), ('200', 'Name', null, null, 'false', '/[a-zA-Z09-]/', '20', '2016-08-17 13:18:36');
 COMMIT;
 
 -- ----------------------------
@@ -454,7 +454,7 @@ CREATE TABLE `_MimotoAimless__interaction__forminputvaluesetting` (
 --  Records of `_MimotoAimless__interaction__forminputvaluesetting`
 -- ----------------------------
 BEGIN;
-INSERT INTO `_MimotoAimless__interaction__forminputvaluesetting` VALUES ('1', 'request', 'Aanvraag', '2016-10-16 21:16:31'), ('2', 'currentproject', 'Lopend project', '2016-10-16 21:16:43'), ('3', 'archive', 'Archief', '2016-10-16 21:16:53');
+INSERT INTO `_MimotoAimless__interaction__forminputvaluesetting` VALUES ('1', 'request', 'Aanvraag', '2016-10-16 21:16:31'), ('2', 'currentproject', 'Lopend project', '2016-10-16 21:16:43'), ('3', 'archived', 'Archief', '2016-10-16 21:16:53');
 COMMIT;
 
 -- ----------------------------
@@ -720,7 +720,7 @@ CREATE TABLE `subproject` (
 --  Records of `subproject`
 -- ----------------------------
 BEGIN;
-INSERT INTO `subproject` VALUES ('1', 'Specificatiefase', 'request', 'prospect', '0.1', '57850', 'time_material', '2016-02-27 18:02:19'), ('2', 'In-store visuals', 'archived', 'prospect', '0.9', '15000', 'fixed', '2016-02-27 18:03:11'), ('3', 'Concept design', 'currentproject', 'active', '0.9', '25000', 'time_material', '2016-02-27 18:04:57'), ('4', 'Concept phase', 'request', 'archived', '0.5', '43000', 'time_material', '2016-03-02 14:53:37'), ('5', 'Technical realisation', 'request', 'active', '0.1', '60000', 'time_material', '2016-06-01 12:55:01');
+INSERT INTO `subproject` VALUES ('1', 'Specificatiefase', 'request', 'prospect', '0.1', '57850', 'time_material', '2016-02-27 18:02:19'), ('2', 'In-store visuals', 'archived', 'prospect', '0.9', '15000', 'fixed', '2016-02-27 18:03:11'), ('3', 'Concept design', 'currentproject', 'active', '0.9', '25000', 'time_material', '2016-02-27 18:04:57'), ('4', 'Concept phase', 'request', 'archived', '0.5', '43000', 'time_material', '2016-03-02 14:53:37'), ('5', 'Technical realisation', 'currentproject', 'active', '0.1', '60000', 'time_material', '2016-06-01 12:55:01');
 COMMIT;
 
 -- ----------------------------

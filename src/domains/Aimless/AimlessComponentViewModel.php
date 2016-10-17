@@ -13,7 +13,7 @@ class AimlessComponentViewModel
 {
 
     // data
-    private $_component;
+    protected $_component;
 
 
     // ----------------------------------------------------------------------------
@@ -38,9 +38,9 @@ class AimlessComponentViewModel
     // ----------------------------------------------------------------------------
 
 
-    public function data($sPropertySelector)
+    public function data($sPropertySelector, $bDataOnly = false)
     {
-        return $this->_component->data($sPropertySelector);
+        return $this->_component->data($sPropertySelector, $bDataOnly);
     }
     
     public function selection($sSelectionName)
@@ -66,11 +66,6 @@ class AimlessComponentViewModel
     public function submit($sKey = null)
     {
         return $this->_component->submit($sKey);
-    }
-
-    public function input()
-    {
-        return $this->_component->input();
     }
 
     public function render()

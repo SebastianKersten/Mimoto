@@ -121,23 +121,20 @@ Mimoto.form.closeForm = function(sFormName)
     // search
     var aSubmitButtons = $('[mls_form_submit="' + sFormName + '"]');
 
-
-    //console.log(aSubmitButtons);
-
-    //console.log(aSubmitButtons.length);
-
-
     // activate
     aSubmitButtons.each(function(nIndex, $component) {
 
         // read
         var currentForm = Mimoto.form._aForms[Mimoto.form._sCurrentOpenForm]; // #todo - validate if no form set
 
+        // prepare
+        if (!currentForm.aSubmitButtons) currentForm.aSubmitButtons = [];
+
         // register
         currentForm.aSubmitButtons.push($component);
 
         // setup
-        $($component).click(function() { Mimoto.form.submit(sFormName); alert('Submit was connected!'); } );
+        $($component).click(function() { Mimoto.form.submit(sFormName); alert('Submit was auto connected!'); } );
     });
 }
 
@@ -178,10 +175,29 @@ Mimoto.form.submit = function(sFormName)
         // 9. collect value
         aComponents.each( function(index, $component)
         {
-            var value = $($component).val();
-            console.log('value = ' + value); // aleen indien field.sType = input
+            // init
+            var value = null;
 
-            aValues[field.sName] = $($component).val();
+            // validate
+            if ($($component).is("input"))
+            {
+                switch($($component).attr('type'))
+                {
+                    case 'radio':
+
+                        if ($($component).prop("checked") === true) {
+                            value = $($component).val();
+                        }
+                        break;
+
+                    default:
+
+                        value = $($component).val();
+                }
+
+                // store
+                if (value !== null) aValues[field.sName] = value;
+            };
         });
     }
 
