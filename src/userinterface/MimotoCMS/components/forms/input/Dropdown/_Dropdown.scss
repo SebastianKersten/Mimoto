@@ -1,7 +1,7 @@
-.form-select-container {
+.MimotoCMS_forms_input_Dropdown-container {
   position: relative;
 
-  .form-select {
+  .MimotoCMS_forms_input_Dropdown {
     display: block;
     width: 100%;
     max-width: none;
@@ -18,12 +18,12 @@
     -webkit-appearance: none;
   }
 
-  .form-select:focus {
+  .MimotoCMS_forms_input_Dropdown:focus {
     border-color: $pale-slate;
     background-color: $bon-jour;
   }
 
-  .form-select-icon {
+  .MimotoCMS_forms_input_Dropdown-icon {
     position: absolute;
     top: 20px;
     right: 15px;

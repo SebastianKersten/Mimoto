@@ -42,19 +42,19 @@ class InputDropdown
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--options',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'options',
+                    'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--options-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--description_type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE, // #todo ---> kan Selection worden
-                            'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
                 )

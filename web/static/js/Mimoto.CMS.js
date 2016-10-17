@@ -195,9 +195,15 @@ Mimoto.form.submit = function(sFormName)
                         value = $($component).val();
                 }
 
-                // store
-                if (value !== null) aValues[field.sName] = value;
+
             };
+
+            if ($($component).is("select"))
+            {
+                value = $($component).val();
+            }
+            // store
+            if (value !== null) aValues[field.sName] = value;
         });
     }
 

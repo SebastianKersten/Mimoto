@@ -120,8 +120,6 @@ class MimotoAimlessController
         if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities))) error('Public key is incorrect!');
 
 
-        //error($aEntities);
-
         // #todo
         // move to Service (store form) FormService ->
 
@@ -142,7 +140,7 @@ class MimotoAimlessController
 
                 // compose
                 $sValueKey = $entityInfo->entityType.'.'.$entityInfo->entityId.'.'.$sPropertyName;
-                
+
                 // update
                 $entityInfo->entity->setValue($sPropertyName, $aRequestValues->$sValueKey);
             }
