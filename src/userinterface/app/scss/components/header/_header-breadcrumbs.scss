@@ -1,0 +1,29 @@
+.header-breadcrumbs {
+  display: none;
+
+  @include breakpoint(large up) {
+    @include clearfix;
+    display: block;
+    float: left;
+    padding: 22px 0 22px 60px;
+
+    .header-breadcrumbs-list-item {
+      float: left;
+    }
+
+    .header-breadcrumbs-list-item:not(:last-child) {
+      .header-breadcrumbs-list-item-link::after {
+        margin: 0 7px;
+        content: '/';
+      }
+    }
+
+    .header-breadcrumbs-list-item-link {
+      display: block;
+      font-size: rem-calc(17px);
+      line-height: rem-calc(20px);
+      text-decoration: none;
+      color: $dusty-gray;
+    }
+  }
+}
