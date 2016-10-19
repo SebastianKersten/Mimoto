@@ -1,8 +1,9 @@
 @import 'utils/utils';
-@import 'base/base';
 
 @import 'foundation';
 @include foundation-grid;
+
+@import 'base/base';
 
 @import 'components/components';
 @import '../../MimotoCMS/components/components';
