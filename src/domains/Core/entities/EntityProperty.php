@@ -1,38 +1,56 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputTextblock
+ * EntityProperty
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputTextblock
+class EntityProperty
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK,
+            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK,
-            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'name' => CoreConfig::MIMOTO_ENTITYPROPERTY,
+            'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK.'--label',
+
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'label',
+                    'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK.'--label-type',
+                            'key' => 'type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'type',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,36 +60,28 @@ class InputTextblock
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK.'--description',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'description',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'name' => 'settings',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK.'--description-type',
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowedEntityTypes',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK.'--placeholder',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'placeholder',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK.'--placeholder-type',
+                            'key' => 'allowedEntityTypes',
+                            'type' => 'array',
+                            'value' => '["'.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'"]'
+
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowDuplicates',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            'key' => 'allowDuplicates',
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
                 )
@@ -81,7 +91,7 @@ class InputTextblock
 
     public static function getData()
     {
-        // hierin komen de velden die nodig zijn voor entity-management etc
+
     }
 
 }

@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputImage
+ * InputValueSetting
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputImage
+class InputValueSetting
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE,
+            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE,
-            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'name' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING,
+            'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--key',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'label',
+                    'name' => 'key',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--key-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputImage
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--value',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'description',
+                    'name' => 'value',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--value-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

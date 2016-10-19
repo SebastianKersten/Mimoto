@@ -46,11 +46,6 @@ $app->get('/exampleform3', 'Mimoto\\UserInterface\\examples\\ExampleFormControll
 $app->get('/dev', 'Mimoto\\UserInterface\\MimotoCMS\\DevController::viewNewInterface');
 
 
-$app->get('/admin/entity/example1', 'Mimoto\\UserInterface\\ExampleEntityAdminController::createEntity');
-$app->get('/admin/entity/example2', 'Mimoto\\UserInterface\\ExampleEntityAdminController::editEntity');
-$app->get('/admin/entity/example3', 'Mimoto\\UserInterface\\ExampleEntityAdminController::removeEntity');
-
-
 $app->get('/articles', 'Mimoto\\UserInterface\\examples\\ExampleController::viewArticleOverview');
 $app->get('/article/{nArticleId}', 'Mimoto\\UserInterface\\examples\\ExampleController::viewArticle');
 

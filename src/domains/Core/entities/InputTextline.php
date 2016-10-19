@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputValueSetting
+ * InputTextline
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputValueSetting
+class InputTextline
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING,
-            'extends' => null,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
+            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--key',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'key',
+                    'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--key-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,31 @@ class InputValueSetting
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--value',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'value',
+                    'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--value-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'placeholder',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

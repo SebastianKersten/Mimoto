@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputRadiobutton
+ * InputCheckbox
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputRadiobutton
+class InputCheckbox
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label_type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputRadiobutton
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--description_type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

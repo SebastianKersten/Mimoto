@@ -1,56 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * EntityProperty
+ * InputTextRTF
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class EntityProperty
+class InputTextRTF
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_ENTITYPROPERTY,
-            'extends' => null,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF,
+            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-
-                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'name',
+                    'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'key' => 'type',
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'type',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -60,28 +42,36 @@ class EntityProperty
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'settings',
-                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'name' => 'description',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
-                        'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowedEntityTypes',
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'allowedEntityTypes',
-                            'type' => 'array',
-                            'value' => '["'.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'"]'
-
-                        ),
-                        'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowDuplicates',
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--placeholder',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'placeholder',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--placeholder-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'allowDuplicates',
-                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
-                            'value' => CoreConfig::DATA_VALUE_FALSE
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
                 )
@@ -91,7 +81,7 @@ class EntityProperty
 
     public static function getData()
     {
-
+        // hierin komen de velden die nodig zijn voor entity-management etc
     }
 
 }

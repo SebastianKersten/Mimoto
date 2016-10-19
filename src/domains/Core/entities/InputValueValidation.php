@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputVideo
+ * InputValueValidation
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputVideo
+class InputValueValidation
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO,
+            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO,
-            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'name' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION,
+            'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--key',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'label',
+                    'name' => 'key',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--key-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputVideo
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--value',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'description',
+                    'name' => 'value',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--value-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
