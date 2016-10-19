@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;

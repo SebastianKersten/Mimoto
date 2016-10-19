@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputTextline
+ * OutputTitle
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputTextline
+class OutputTitle
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
+            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
-            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'name' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
+            'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label',
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'label',
+                    'name' => 'title',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,36 +42,36 @@ class InputTextline
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description',
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'subtitle',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'placeholder',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
                         )
                     ]
                 )

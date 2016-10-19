@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputValueValidation
+ * InputRadiobutton
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputValueValidation
+class InputRadiobutton
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION,
-            'extends' => null,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
+            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--key',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'key',
+                    'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--key-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label_type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputValueValidation
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--value',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'value',
+                    'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--value-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--description_type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

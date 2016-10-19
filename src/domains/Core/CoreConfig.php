@@ -4,27 +4,28 @@
 namespace Mimoto\Core;
 
 // Mimoto classes
-use Mimoto\Core\config\Entity;
-use Mimoto\Core\config\EntityProperty;
-use Mimoto\Core\config\EntityPropertySetting;
-use Mimoto\Core\config\Form;
-use Mimoto\Core\config\Input;
-use Mimoto\Core\config\InputValue;
-use Mimoto\Core\config\InputValueSetting;
-use Mimoto\Core\config\InputValueValidation;
-use Mimoto\Core\config\OutputTitle;
-use Mimoto\Core\config\LayoutGroupStart;
-use Mimoto\Core\config\LayoutGroupEnd;
-use Mimoto\Core\config\LayoutDivider;
-use Mimoto\Core\config\InputCheckbox;
-use Mimoto\Core\config\InputDropdown;
-use Mimoto\Core\config\InputRadioButton;
-use Mimoto\Core\config\InputTextline;
-use Mimoto\Core\config\InputTextblock;
-use Mimoto\Core\config\InputTextRTF;
-use Mimoto\Core\config\InputList;
-use Mimoto\Core\config\InputImage;
-use Mimoto\Core\config\InputVideo;
+use Mimoto\Core\entities\Entity;
+use Mimoto\Core\entities\EntityProperty;
+use Mimoto\Core\entities\EntityPropertySetting;
+use Mimoto\Core\entities\Component;
+use Mimoto\Core\entities\Form;
+use Mimoto\Core\entities\Input;
+use Mimoto\Core\entities\InputValue;
+use Mimoto\Core\entities\InputValueSetting;
+use Mimoto\Core\entities\InputValueValidation;
+use Mimoto\Core\entities\OutputTitle;
+use Mimoto\Core\entities\LayoutGroupStart;
+use Mimoto\Core\entities\LayoutGroupEnd;
+use Mimoto\Core\entities\LayoutDivider;
+use Mimoto\Core\entities\InputCheckbox;
+use Mimoto\Core\entities\InputDropdown;
+use Mimoto\Core\entities\InputRadioButton;
+use Mimoto\Core\entities\InputTextline;
+use Mimoto\Core\entities\InputTextblock;
+use Mimoto\Core\entities\InputTextRTF;
+use Mimoto\Core\entities\InputList;
+use Mimoto\Core\entities\InputImage;
+use Mimoto\Core\entities\InputVideo;
 
 
 /**
@@ -131,7 +132,7 @@ class CoreConfig
             EntityPropertySetting::getStructure(),
 
             // views
-            // ...
+            Component::getStructure(),
 
             // forms
             Form::getStructure(),

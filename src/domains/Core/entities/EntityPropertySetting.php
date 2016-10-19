@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputCheckbox
+ * EntityPropertySetting
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputCheckbox
+class EntityPropertySetting
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
+            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
-            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'name' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING,
+            'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--label',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--key',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'label',
+                    'name' => 'key',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--label-type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--key-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,31 @@ class InputCheckbox
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--description',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--type',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'description',
+                    'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--description-type',
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--type-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--value',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'value',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--value-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -64,7 +81,7 @@ class InputCheckbox
 
     public static function getData()
     {
-        // hierin komen de velden die nodig zijn voor entity-management etc
+
     }
 
 }

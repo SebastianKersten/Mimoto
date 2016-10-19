@@ -5,6 +5,7 @@ namespace Mimoto\Aimless;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\entities\Component;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoDataUtils;
@@ -196,6 +197,10 @@ class MimotoAimlessService
             }
         }
 
+        // add core components
+        $aTemplates = array_merge($aTemplates, Component::getData());
+
+        // send
         return $aTemplates;
     }
     

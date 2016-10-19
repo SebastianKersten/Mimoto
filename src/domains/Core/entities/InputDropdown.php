@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * OutputTitle
+ * InputDropdown
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class OutputTitle
+class InputDropdown
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
-            'extends' => null,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
+            'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'title',
+                    'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,36 +42,19 @@ class OutputTitle
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'subtitle',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--description_type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => CoreConfig::DATA_TYPE_VALUE,
-                            'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
                 )

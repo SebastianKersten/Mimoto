@@ -1,38 +1,38 @@
 <?php
 
 // classpath
-namespace Mimoto\Core\config;
+namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 
 
 /**
- * InputDropdown
+ * InputImage
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputDropdown
+class InputImage
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE,
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--label',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--label',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--label-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -42,14 +42,14 @@ class InputDropdown
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--description',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--description_type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
