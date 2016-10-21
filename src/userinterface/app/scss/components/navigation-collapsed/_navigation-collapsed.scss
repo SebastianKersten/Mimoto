@@ -20,18 +20,14 @@
       transform: rotate(180deg);
 
       .header-navigation-collapse-toggle-icon {
-        color: $sinbad;
+        fill: $sinbad;
       }
     }
 
     .header-navigation-collapse-toggle:hover {
       .header-navigation-collapse-toggle-icon {
-        color: $black;
+        fill: $black;
       }
-    }
-
-    .navigation-menu {
-      width: 40px;
     }
 
     .navigation-menu-item-link {
@@ -42,14 +38,15 @@
       }
 
       .navigation-menu-item-icon {
-        color: $sinbad;
+        fill: $sinbad;
+        margin: 0 auto;
       }
     }
 
     .navigation-menu-item-link:hover,
     .navigation-menu-item-link.navigation-menu-item-link--active {
       .navigation-menu-item-icon {
-        color: $white;
+        fill: $white;
       }
     }
 
