@@ -382,7 +382,7 @@ class MimotoEntityRepository
         if (empty($nEntityId))
         {
             // init
-            $entity = new MimotoEntity($entityConfig->getName(), false);
+            $entity = new MimotoEntity($entityConfig->getId(), $entityConfig->getName(), false);
         }
         else if(!isset($this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)]))
         {

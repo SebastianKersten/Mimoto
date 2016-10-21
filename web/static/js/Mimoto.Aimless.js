@@ -194,6 +194,8 @@ Mimoto.Aimless.connect = function()
                             }
                         }
 
+                        // 1. #todo check if the component is already there (and duplicate items are allowed OR connection-id's
+
                         // load
                         if (bFilterApproved) Mimoto.Aimless.utils.loadComponent($component, item.connection.childEntityTypeName, item.connection.childId, mls_component);
                     }
@@ -218,6 +220,68 @@ Mimoto.Aimless.connect = function()
 
             });
         }
+
+
+
+
+        /**
+         * Remove any items within a selection that aren't supposed to be shown anymore
+         */
+
+        // parse modified values
+        for (var i = 0; i < data.changes.length; i++)
+        {
+            // register
+            var change = data.changes[i];
+
+
+            var aContainers = $("[mls_selection='" + data.entityType + "']");
+
+
+            aContainers.each(function(nIndex, $container)
+            {
+                // read
+                var mls_selection = $($container).attr("mls_selection");
+                var mls_component = $($container).attr("mls_component");
+                var mls_filter = $($container).attr("mls_filter");
+
+                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
+
+
+                // 1. read mls_id's van items binnen component
+
+
+                var aSubitems = $("[mls_id='" + data.entityType + '.' + data.entityId + "']", $container);
+
+
+                aSubitems.each(function(nIndex, $subitem)
+                {
+                    var bFilterApproved = true;
+                    if (mls_filter)
+                    {
+                        for (s in mls_filter)
+                        {
+                            if (mls_filter[s] && change.value != mls_filter[s]) {
+                                bFilterApproved = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    // load
+                    if (!bFilterApproved) { console.log('Remove item!'); $subitem.remove(); }
+
+                });
+
+            });
+        }
+
+
+
+
+
+
+
 
         return; // #todo - reeds uitgevoerde wijzigingen niet meer uitvoeren
         // first collect changes, then execute
@@ -295,6 +359,15 @@ Mimoto.Aimless.connect = function()
 
 
 
+        var aComponents = $("[mls_selection='" + mls_container + "']");
+
+        // 1. mls_selection
+
+
+
+
+
+
 
 
                 // --- component level ---
@@ -338,7 +411,7 @@ Mimoto.Aimless.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.LiveScreen/' + data.entityType + '/' + data.entityId + '/' + mls_component,
+                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -433,7 +506,7 @@ Mimoto.Aimless.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_component,
+                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -460,7 +533,7 @@ Mimoto.Aimless.connect = function()
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_component,
+                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -503,7 +576,7 @@ Mimoto.Aimless.utils = {};
 Mimoto.Aimless.utils.loadComponent = function($component, sEntityTypeName, nId, sTemplate) {
     $.ajax({
         type: 'GET',
-        url: '/Mimoto.Aimless/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+        url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
         data: null,
         dataType: 'html',
         success: function (data) {

@@ -32,7 +32,7 @@ class AimlessForm extends AimlessComponent
      * @param MimotoEntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sFormName, $xValues, $options, $AimlessService, $DataService, $FormService, $TwigService)
+    public function __construct($sFormName, $xValues, $options, $AimlessService, $DataService, $FormService, $LogService, $TwigService)
     {
 
         if (empty($options))
@@ -41,6 +41,7 @@ class AimlessForm extends AimlessComponent
             $this->_AimlessService = $AimlessService;
             $this->_DataService = $DataService;
             $this->_FormService = $FormService;
+            $this->_LogService = $LogService;
             $this->_TwigService = $TwigService;
 
             // register

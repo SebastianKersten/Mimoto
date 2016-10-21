@@ -85,20 +85,9 @@ class MimotoEntityConfigService
     /**
      * Get all entities
      */
-    public function getAllEntityConfigs($criteria = null)
+    public function getAllEntityConfigs()
     {
-        
         return $this->_entityConfigRepository->getAllEntityConfigs();
-        
-        
-//        // verify
-//        if (!isset($this->_aEntityConfigs[$sEntityType])) { throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'"); }
-//        
-//        // load
-//        $aEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);
-//        
-//        // send
-//        return $aEntities;
     }
     
     public function getEntityNameById($nId)

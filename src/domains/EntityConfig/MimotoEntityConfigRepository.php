@@ -9,6 +9,7 @@ use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
 use Mimoto\Mimoto;
+use Mimoto\Log\MimotoLogService;
 
 
 /**
@@ -43,12 +44,14 @@ class MimotoEntityConfigRepository
      */
     public function __construct()
     {
+        // store
+        //$this->_MimotoLogService = new MimotoLogService($GLOBALS['Mimoto.Data']); // #todo temp
+
         // prepare
         $this->_aEntities = CoreConfig::getCoreEntityConfigs();
         $this->loadEntityConfigurations();
         $this->extendEntityConfigurations();
     }
-    
         
     
     // ----------------------------------------------------------------------------
@@ -358,7 +361,7 @@ class MimotoEntityConfigRepository
             if (!isset($aAllEntity_Connections[$entity->id]))
             {
                 // notify
-                $GLOBALS['Mimoto.Log']->notify('MimotoEntityConfigRepository', "The entity with name '".$entity->name."' has no properties");
+                //$this->_MimotoLogService->silent('Data construction error - properties', "The entity with name '".$entity->name."' has no properties", 'MimotoEntityConfigRepository');
 
                 // skip
                 continue;
@@ -404,7 +407,7 @@ class MimotoEntityConfigRepository
                 if (!isset($aAllEntityPropertySettings[$property->id]) || !isset($aAllEntityProperty_Connections[$property->id]))
                 {
                     // notify
-                    //$GLOBALS['Mimoto.Log']->notify('MimotoEntityConfigRepository', "The entity with name '".$entity->name."' has no properties");
+                    //$this->_MimotoLogService->silent('Data construction error - propertysettings', "The property with name '".$property->name."' has no settings", 'MimotoEntityConfigRepository');
 
                     // skip
                     continue 2;

@@ -307,3 +307,30 @@ Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - 
         }
     });
 };
+
+
+Mimoto.CMS.notificationClose = function(sEntityType, nNotificationId)
+{
+    // 8. find field
+    var aNotifications = $("[mls_id='" + sEntityType + '.' + nNotificationId + "']");
+
+    // 9. collect value
+    aNotifications.each( function(index, $component) {
+        // init
+        $($component).remove();
+    });
+
+    // 11. send data
+    $.ajax({
+        type: 'GET',
+        url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
+        data: null,
+        dataType: 'json',
+        success: function(resultData, resultStatus, resultSomething)
+        {
+            console.log(resultData);
+            console.log(resultStatus);
+            console.log(resultSomething);
+        }
+    });
+}

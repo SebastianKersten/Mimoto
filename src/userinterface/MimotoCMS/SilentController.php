@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace MaidoProjects\UserInterface\MimotoCMS;
+namespace Mimoto\UserInterface\MimotoCMS;
 
 // Silex classes
 use Silex\Application;

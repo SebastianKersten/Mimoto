@@ -27,10 +27,10 @@ class AimlessInput extends AimlessComponent
      * @param MimotoEntity $entity
      * @param mixed $value
      */
-    public function __construct($sComponentName, $entity, $sFieldName, $value, $AimlessService, $DataService, $TwigService)
+    public function __construct($sComponentName, $entity, $sFieldName, $value, $AimlessService, $DataService, $LogService, $TwigService)
     {
         // forward
-        parent::__construct($sComponentName, $entity, $AimlessService, $DataService, $TwigService);
+        parent::__construct($sComponentName, $entity, $AimlessService, $DataService, $LogService, $TwigService);
 
         // store
         $this->_sFieldId = $sFieldName;

@@ -7,6 +7,8 @@ namespace Mimoto\Form;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 
+use Mimoto\Core\forms\EntityNewForm;
+
 
 /**
  * MimotoFormService
@@ -19,6 +21,7 @@ class MimotoFormService
     // services
     private $_MimotoEntityService;
     private $_MimotoEntityConfigService;
+    private $_MimotoLogService;
 
 
     // ----------------------------------------------------------------------------
@@ -29,11 +32,12 @@ class MimotoFormService
     /**
      * Constructor
      */
-    public function __construct($MimotoEntityService, $MimotoEntityConfigService)
+    public function __construct($MimotoEntityService, $MimotoEntityConfigService, $MimotoLogService)
     {
         // register
         $this->_MimotoEntityService = $MimotoEntityService;
         $this->_MimotoEntityConfigService = $MimotoEntityConfigService;
+        $this->_MimotoLogService = $MimotoLogService;
     }
     
     
@@ -48,12 +52,25 @@ class MimotoFormService
      */
     public function getFormByName($sFormName)
     {
-        // 1. load form from database
+        // 1. check if form is part of core
+        if (substr($sFormName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
+        {
+            // load
+            $form = $this->loadCoreForm($sFormName);
+
+            // validate and send
+            if ($form !== false) return $form;
+        }
+
+        // 2. load form from database
         $aResults = $this->_MimotoEntityService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $sFormName]]);
 
-        // 2. validate if form exists
-        if (!isset($aResults[0])) error("Aimless says: Form with name '".$sFormName."' not found in database");
-        // #todo - silent fail?
+        // 3. validate if form exists
+        if (!isset($aResults[0]))
+        {
+            $this->_MimotoLogService->warn('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database", 'MimotoFormService');
+            die();
+        }
         
         // send
         return $aResults[0];
@@ -187,4 +204,12 @@ class MimotoFormService
         return $orderedValues;
     }
 
+
+    private function loadCoreForm($sFormName)
+    {
+        switch($sFormName)
+        {
+            case CoreConfig::COREFORM_ENTITY_NEW: return EntityNewForm::getStructure(); break;
+        }
+    }
 }

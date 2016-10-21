@@ -1,0 +1,13 @@
+{
+    "trigger": "*.updated",
+    "service": "Aimless",
+    "request": "dataUpdate",
+    "type": "async",
+    "config":
+    {
+        "properties":
+        [
+            "state"
+        ]
+    }
+}

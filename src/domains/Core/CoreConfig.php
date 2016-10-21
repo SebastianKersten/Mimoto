@@ -26,6 +26,7 @@ use Mimoto\Core\entities\InputTextRTF;
 use Mimoto\Core\entities\InputList;
 use Mimoto\Core\entities\InputImage;
 use Mimoto\Core\entities\InputVideo;
+use Mimoto\Core\entities\Notification;
 
 
 /**
@@ -87,6 +88,8 @@ class CoreConfig
     const MIMOTO_ACTION                         = '_MimotoAimless__config__action';
 
 
+    const MIMOTO_NOTIFICATION                   = '_MimotoAimless__devtools__notification';
+
 
     // property types
     const PROPERTY_TYPE_VALUE       = 'value';
@@ -108,6 +111,9 @@ class CoreConfig
     const INPUTVALUE_VARTYPE_VARNAME        = 'varname';
     const INPUTVALUE_VARTYPE_ENTITYPROPERTY = 'entityproperty';
 
+
+    // core forms
+    const COREFORM_ENTITY_NEW = '_MimotoAimless__entity_new';
 
 
     // #todo
@@ -158,7 +164,10 @@ class CoreConfig
             InputDropdown::getStructure(),
             InputList::getStructure(),
             InputImage::getStructure(),
-            InputVideo::getStructure()
+            InputVideo::getStructure(),
+
+            // devtools
+            Notification::getStructure()
         ];
 
         // send

@@ -204,16 +204,16 @@ class Component
             ),
 
 
-            // notificationcenter
+            // notification center
 
             (object) array(
-                'name' => 'notificationcenter',
-                'file' => 'notificationcenter/NotificationCenter.twig',
+                'name' => 'Mimoto.CMS_notifications_NotificationOverview',
+                'file' => 'MimotoCMS/components/pages/notifications/NotificationOverview/NotificationOverview.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'notification',
-                'file' => 'notificationcenter/Notification.twig',
+                'name' => 'Mimoto.CMS_notifications_Notification',
+                'file' => 'MimotoCMS/components/pages/notifications/Notification/Notification.twig',
                 'conditionals' => []
             ),
 

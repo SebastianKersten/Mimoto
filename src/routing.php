@@ -1,7 +1,7 @@
 <?php
 
 // Silent Partner Ventures
-$app->get('/silent', 'Mimoto\\UserInterface\\SilentController::viewSilent');
+$app->get('/silent', 'Mimoto\\UserInterface\\MimotoCMS\\SilentController::viewSilent');
 
 
 $app->get('/example1', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample1');
@@ -53,4 +53,4 @@ $app->get('/memcache', 'Mimoto\\UserInterface\\examples\\ExampleController::view
 $app->get('/memcachemonitor/{sEntityType}', 'Mimoto\\UserInterface\\examples\\ExampleController::viewAllArticlesInMemcache');
 
 
-$app->get('/notifications', 'Mimoto\\UserInterface\\MimotoNotificationCenter\\NotificationCenterController::viewNotificationCenter');
+

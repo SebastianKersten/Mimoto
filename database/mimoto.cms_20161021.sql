@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 10/19/2016 14:26:18 PM
+ Date: 10/21/2016 16:34:18 PM
 */
 
 SET NAMES utf8mb4;
@@ -82,7 +82,7 @@ CREATE TABLE `_MimotoAimless__core__entity` (
   `name` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1601 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2001 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Records of `_MimotoAimless__core__entity`
@@ -128,6 +128,28 @@ CREATE TABLE `_MimotoAimless__core__entitypropertysetting` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `_MimotoAimless__core__entitypropertysetting` VALUES ('1', 'type', 'value', 'textline', '2016-08-10 13:54:51'), ('2', 'type', 'value', 'textline', '2016-08-10 13:55:02'), ('3', 'type', 'value', 'textline', '2016-08-17 11:18:40'), ('4', 'type', 'value', 'textline', '2016-08-17 11:18:51'), ('5', 'type', 'value', 'textblock', '2016-08-17 11:19:32'), ('6', 'type', 'value', 'textblock', '2016-08-17 11:19:41'), ('50', 'type', 'value', 'textblock', '2016-09-05 10:06:01'), ('60', 'type', 'value', 'textline', '2016-09-05 13:22:24'), ('1001', 'type', 'value', 'textline', '2016-08-24 14:07:44'), ('1002', 'type', 'value', 'textblock', '2016-08-24 14:07:56'), ('1003', 'allowedEntityType', 'value', '1200', '2016-08-24 14:08:43'), ('1004', 'allowedEntityType', 'value', '1300', '2016-08-24 14:09:03'), ('1005', 'allowedEntityType', 'value', '1400', '2016-08-24 14:09:17'), ('1006', 'allowedEntityTypes', 'array', '[1100]', '2016-08-25 11:45:26'), ('1007', 'allowDuplicates', 'boolean', 'false', '2016-08-25 11:45:55'), ('1101', 'type', 'value', 'textline', '2016-08-24 14:09:39'), ('1102', 'allowedEntityType', 'value', '1600', '2016-08-24 14:10:03'), ('1103', 'type', 'value', 'textline', '2016-08-24 14:13:21'), ('1104', 'type', 'value', 'textline', '2016-08-24 14:13:17'), ('1105', 'type', 'value', 'textline', '2016-08-24 14:13:32'), ('1106', 'type', 'value', 'textline', '2016-08-24 14:13:42'), ('1107', 'type', 'value', 'textline', '2016-08-24 14:13:51'), ('1201', 'type', 'value', 'textline', '2016-08-24 14:14:01'), ('1301', 'type', 'value', 'textline', '2016-08-24 14:14:48'), ('1401', 'type', 'value', 'textline', '2016-08-24 14:14:51'), ('1501', 'type', 'value', 'textline', '2016-08-24 14:14:53'), ('1601', 'type', 'value', 'textline', '2016-08-24 14:14:55'), ('1602', 'type', 'value', 'textline', '2016-08-24 14:14:58'), ('1603', 'type', 'value', 'textline', '2016-08-24 14:15:00');
+COMMIT;
+
+-- ----------------------------
+--  Table structure for `_MimotoAimless__devtools__notification`
+-- ----------------------------
+DROP TABLE IF EXISTS `_MimotoAimless__devtools__notification`;
+CREATE TABLE `_MimotoAimless__devtools__notification` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `message` text COLLATE utf8_unicode_ci,
+  `category` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `dispatcher` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Records of `_MimotoAimless__devtools__notification`
+-- ----------------------------
+BEGIN;
+INSERT INTO `_MimotoAimless__devtools__notification` VALUES ('1', 'Notification 1', 'Somehting went right', '', 'MimotoEntityConfigRepository', 'open', '2016-10-21 11:53:11'), ('16', 'Another test', 'Does it live update?', 'silent', 'viewExampleForm3', 'open', '2016-10-21 15:13:24'), ('17', 'Another test', 'Does it live update?', 'silent', 'viewExampleForm3', 'open', '2016-10-21 15:24:50'), ('18', 'Some warning', 'Something probably needs your attention', 'warning', 'viewExampleForm3', 'open', '2016-10-21 15:24:57'), ('19', 'uh-oh, an error', 'Your code is broken. Please fix', 'error', 'viewExampleForm3', 'open', '2016-10-21 15:25:03'), ('29', 'Form field misses a value definition', 'The field with type=_MimotoAimless__interaction__form_input_textline and <b>id=4</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>.', 'silent', 'AimlessComponent', 'closed', '2016-10-21 16:21:09'), ('30', 'Form field misses a value definition', 'The field with type=_MimotoAimless__interaction__form_input_textline and <b>id=4</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>.', 'silent', 'AimlessComponent', 'open', '2016-10-21 16:21:26'), ('31', 'Unknown form requested', 'I wasn\'t able to find the form with name <b>clientxxx</b> in the database', 'warning', 'MimotoFormService', 'closed', '2016-10-21 16:32:58'), ('32', 'Form field misses a value definition', 'The field with type=_MimotoAimless__interaction__form_input_textline and <b>id=4</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>.', 'silent', 'AimlessComponent', 'closed', '2016-10-21 16:33:34'), ('33', 'Form field misses a value definition', 'The field with type=_MimotoAimless__interaction__form_input_textline and <b>id=4</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>.', 'silent', 'AimlessComponent', 'closed', '2016-10-21 16:33:42');
 COMMIT;
 
 -- ----------------------------
@@ -720,7 +742,7 @@ CREATE TABLE `subproject` (
 --  Records of `subproject`
 -- ----------------------------
 BEGIN;
-INSERT INTO `subproject` VALUES ('1', 'Specificatiefase', 'request', 'prospect', '0.1', '57850', 'time_material', '2016-02-27 18:02:19'), ('2', 'In-store visuals', 'archived', 'prospect', '0.9', '15000', 'fixed', '2016-02-27 18:03:11'), ('3', 'Concept design', 'currentproject', 'active', '0.9', '25000', 'time_material', '2016-02-27 18:04:57'), ('4', 'Concept phase', 'request', 'archived', '0.5', '43000', 'time_material', '2016-03-02 14:53:37'), ('5', 'Technical realisation', 'currentproject', 'active', '0.1', '60000', 'fixed', '2016-06-01 12:55:01');
+INSERT INTO `subproject` VALUES ('1', 'Specificatiefase', 'request', 'prospect', '0.1', '57850', 'time_material', '2016-02-27 18:02:19'), ('2', 'In-store visuals', 'archived', 'prospect', '0.9', '15000', 'fixed', '2016-02-27 18:03:11'), ('3', 'Concept design', 'currentproject', 'active', '0.9', '25000', 'time_material', '2016-02-27 18:04:57'), ('4', 'Concept phase', 'request', 'archived', '0.5', '43000', 'time_material', '2016-03-02 14:53:37'), ('5', 'Technical realisation', 'archived', 'active', '0.1', '60000', 'fixed', '2016-06-01 12:55:01');
 COMMIT;
 
 -- ----------------------------

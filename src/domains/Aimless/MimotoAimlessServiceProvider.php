@@ -26,7 +26,7 @@ class MimotoAimlessServiceProvider implements ServiceProviderInterface
 
         $app['Mimoto.Aimless'] = $app['Mimoto.AimlessService'] = $app->share(function($app)
         {
-            return new MimotoAimlessService($app['Mimoto.Data'], $app['Mimoto.Forms'], $app['twig']);
+            return new MimotoAimlessService($app['Mimoto.Data'], $app['Mimoto.Forms'], $app['Mimoto.Log'], $app['twig']);
         });
     }
 

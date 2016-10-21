@@ -10,6 +10,7 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityService;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Aimless\AimlessComponentViewModel;
+use Mimoto\Log\MimotoLogService;
 
 
 /**
@@ -23,6 +24,7 @@ class AimlessComponent
     // services
     protected $_AimlessService;
     protected $_DataService;
+    protected $_LogService;
     protected $_TwigService;
     
     // data
@@ -60,7 +62,7 @@ class AimlessComponent
      * @param MimotoEntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sComponentName, MimotoEntity $entity = null, MimotoAimlessService $AimlessService, MimotoEntityService $DataService, $TwigService)
+    public function __construct($sComponentName, MimotoEntity $entity = null, MimotoAimlessService $AimlessService, MimotoEntityService $DataService, MimotoLogService $LogService, $TwigService)
     {
         // register
         $this->_sComponentName = $sComponentName;
@@ -69,6 +71,7 @@ class AimlessComponent
         // register
         $this->_AimlessService = $AimlessService;
         $this->_DataService = $DataService;
+        $this->_LogService = $LogService;
         $this->_TwigService = $TwigService;
     }
 
@@ -290,7 +293,7 @@ class AimlessComponent
                 $sComponent = ' mls_component="'.$this->_aSelections[$sPropertyName]->sComponentName.'"';
 
                 // send
-                return 'mls_contains="'.$this->_aSelections[$sPropertyName]->selection->getCriteria()['type'].'"'.$sFilter.$sComponent;
+                return 'mls_selection="'.$this->_aSelections[$sPropertyName]->selection->getCriteria()['type'].'"'.$sFilter.$sComponent;
             }
                 
         }
@@ -419,7 +422,11 @@ class AimlessComponent
                 $field = $entity;
 
                 // validate
-                if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()])) continue; // #todo - log silent fail
+                if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()]))
+                {
+                    $this->_LogService->silent('Form field misses a value definition', "The field with type=".$field->getEntityTypeName()." and <b>id=".$field->getId()."</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>.", 'AimlessComponent');
+                    continue;
+                }
 
                 // gerister
                 $fieldVar = $aFieldVars[$field->getEntityTypeName().'.'.$field->getId()];

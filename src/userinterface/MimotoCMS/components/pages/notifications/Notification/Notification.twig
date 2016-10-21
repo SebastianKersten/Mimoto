@@ -1,0 +1,14 @@
+<div class="MimotoCMS_pages_notifications_Notification {{ Aimless.data('category') }}" {{ Aimless.realtime()|raw }}>
+    <div class="MimotoCMS_pages_notifications_Notification__column">
+        <div class="MimotoCMS_pages_notifications_Notification__title" {{ Aimless.realtime('title')|raw }}>{{ Aimless.data('title') }}</div>
+        <div class="MimotoCMS_pages_notifications_Notification__subtitle">
+            <span class="MimotoCMS_pages_notifications_Notification__timestamp">{{ Aimless.meta('created') }}</span> by
+            <span class="MimotoCMS_pages_notifications_Notification__dispatcher">{{ Aimless.data('dispatcher') }}</span>
+        </div>
+        <div class="MimotoCMS_pages_notifications_Notification__message" {{ Aimless.realtime('message')|raw }}>{{ Aimless.data('message')|raw }}</div>
+        <!--add 'count' as a property -->
+    </div>
+    <div class="MimotoCMS_pages_notifications_Notification__column">
+        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Close', onclick:"Mimoto.CMS.notificationClose('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"');" } %}
+    </div>
+</div>

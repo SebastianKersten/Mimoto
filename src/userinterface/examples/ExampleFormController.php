@@ -123,6 +123,12 @@ class ExampleFormController
 
     public function viewExampleForm3(Application $app)
     {
+
+        //$app['Mimoto.Log']->silent('Another test', 'Does it live update?', 'viewExampleForm3');
+        //$app['Mimoto.Log']->warn('Some warning', 'Something probably needs your attention', 'viewExampleForm3');
+        //$app['Mimoto.Log']->error('uh-oh, an error', 'Your code is broken. Please fix', 'viewExampleForm3');
+
+
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
         $subproject = $app['Mimoto.Data']->get('subproject', 5);
@@ -135,6 +141,7 @@ class ExampleFormController
 
         // setup
         $component->addForm('project', $aValues);
+        //$component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $aValues);
 
         // render and send
         return $component->render();
