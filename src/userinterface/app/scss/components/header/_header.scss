@@ -80,6 +80,7 @@
       padding: 10px;
       cursor: pointer;
       transition: all .25s;
+      transform: rotate(180deg);
 
       .header-navigation-collapse-toggle-icon {
         width: 12px;
