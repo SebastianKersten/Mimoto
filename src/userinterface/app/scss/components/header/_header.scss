@@ -79,18 +79,20 @@
       height: 32px;
       padding: 10px;
       cursor: pointer;
-      font-size: rem-calc(12px);
       transition: all .25s;
+      transform: rotate(180deg);
 
       .header-navigation-collapse-toggle-icon {
-        color: $white;
+        width: 12px;
+        height: 12px;
+        fill: $white;
       }
     }
   }
 
   .header-navigation-collapse-toggle:hover {
     .header-navigation-collapse-toggle-icon {
-      color: $black;
+      fill: $black;
     }
   }
 }

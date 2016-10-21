@@ -9,8 +9,13 @@ body {
   font-size: rem-calc(16px);
   line-height: 1.5;
   background-color: #f5f5f5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  //-webkit-font-smoothing: antialiased;
+  //-moz-osx-font-smoothing: grayscale;
+}
+
+.svg-definitions {
+  display: none;
+  visibility: hidden;
 }
 
 .pagecontent {

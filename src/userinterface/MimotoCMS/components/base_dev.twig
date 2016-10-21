@@ -16,6 +16,7 @@
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </head>
   <body>
+    {% include "MimotoCMS/components/svg.twig" %}
 
     <header class="js-header header">
       <div class="header-logo-container">
@@ -25,7 +26,7 @@
         </a>
 
         <div class="js-navigation-toggle header-navigation-collapse-toggle">
-          <span class="header-navigation-collapse-toggle-icon icon icon-arrow-left"></span>
+          <svg class="header-navigation-collapse-toggle-icon"><use xlink:href='#ico-arrow'/></svg>
         </div>
       </div>
 
@@ -54,11 +55,63 @@
 
     <nav class="js-navigation navigation">
       <div class="navigation-content">
+
         <ul class="navigation-menu">
           <li class="navigation-menu-item">
             <a href="#" class="navigation-menu-item-link">
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-drafts'/></svg>
+              <span class="navigation-menu-item-text">Drafts</span>
+            </a>
+          </li>
+          <li class="navigation-menu-item">
+            <a href="#" class="navigation-menu-item-link">
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-publications'/></svg>
+              <span class="navigation-menu-item-text">Publications</span>
+            </a>
+          </li>
+          <li class="navigation-menu-item">
+            <a href="#" class="navigation-menu-item-link">
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-files'/></svg>
+              <span class="navigation-menu-item-text">Themes</span>
+            </a>
+          </li>
+          <li class="navigation-menu-item">
+            <a href="#" class="navigation-menu-item-link">
               <span class="navigation-menu-item-icon icon icon-arrow-down"></span>
-              <span class="navigation-menu-item-text">Publicaties</span>
+              <span class="navigation-menu-item-text">Oproepen</span>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="navigation-menu">
+          <li class="navigation-menu-item">
+            <a href="#" class="navigation-menu-item-link">
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-schedule'/></svg>
+              <span class="navigation-menu-item-text">Schedule</span>
+            </a>
+          </li>
+          <li class="navigation-menu-item">
+            <a href="#" class="navigation-menu-item-link">
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-featured'/></svg>
+              <span class="navigation-menu-item-text">Featured</span>
+            </a>
+          </li>
+          <li class="navigation-menu-item">
+            <a href="#" class="navigation-menu-item-link">
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-daily-update'/></svg>
+              <span class="navigation-menu-item-text">Daily update</span>
+            </a>
+          </li>
+          <li class="navigation-menu-item">
+            <a href="#" class="navigation-menu-item-link">
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-all-publications'/></svg>
+              <span class="navigation-menu-item-text">All publications</span>
+            </a>
+          </li>
+          <li class="navigation-menu-item">
+            <a href="#" class="navigation-menu-item-link">
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-all-files'/></svg>
+              <span class="navigation-menu-item-text">All dossiers</span>
             </a>
           </li>
         </ul>
@@ -66,53 +119,36 @@
         <ul class="navigation-menu navigation-menu--last">
           <li class="navigation-menu-item">
             <a href="#" class="navigation-menu-item-link">
-              <span class="navigation-menu-item-icon icon icon-checkmark"></span>
-              <span class="navigation-menu-item-text">Statistieken</span>
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-members'/></svg>
+              <span class="navigation-menu-item-text">Members</span>
             </a>
           </li>
           <li class="navigation-menu-item">
             <a href="#" class="navigation-menu-item-link">
-              <span class="navigation-menu-item-icon icon icon-plus"></span>
-              <span class="navigation-menu-item-text">Team</span>
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-stats'/></svg>
+              <span class="navigation-menu-item-text">Stats</span>
             </a>
           </li>
           <li class="navigation-menu-item">
             <a href="#" class="navigation-menu-item-link">
-              <span class="navigation-menu-item-icon icon icon-checkmark"></span>
-              <span class="navigation-menu-item-text">Statistieken</span>
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-preferences'/></svg>
+              <span class="navigation-menu-item-text">Preferences</span>
             </a>
           </li>
           <li class="navigation-menu-item">
             <a href="#" class="navigation-menu-item-link">
-              <span class="navigation-menu-item-icon icon icon-plus"></span>
-              <span class="navigation-menu-item-text">Team</span>
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-tools'/></svg>
+              <span class="navigation-menu-item-text">Tools</span>
             </a>
           </li>
           <li class="navigation-menu-item">
             <a href="#" class="navigation-menu-item-link">
-              <span class="navigation-menu-item-icon icon icon-checkmark"></span>
-              <span class="navigation-menu-item-text">Statistieken</span>
-            </a>
-          </li>
-          <li class="navigation-menu-item">
-            <a href="#" class="navigation-menu-item-link">
-              <span class="navigation-menu-item-icon icon icon-plus"></span>
-              <span class="navigation-menu-item-text">Team</span>
-            </a>
-          </li>
-          <li class="navigation-menu-item">
-            <a href="#" class="navigation-menu-item-link">
-              <span class="navigation-menu-item-icon icon icon-checkmark"></span>
-              <span class="navigation-menu-item-text">Statistieken</span>
-            </a>
-          </li>
-          <li class="navigation-menu-item">
-            <a href="#" class="navigation-menu-item-link">
-              <span class="navigation-menu-item-icon icon icon-plus"></span>
+              <svg class="navigation-menu-item-icon"><use xlink:href='#ico-team'/></svg>
               <span class="navigation-menu-item-text">Team</span>
             </a>
           </li>
         </ul>
+
       </div>
     </nav>
 
