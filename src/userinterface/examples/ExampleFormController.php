@@ -147,4 +147,19 @@ class ExampleFormController
         // render and send
         return $component->render();
     }
+
+    public function viewExampleForm5(Application $app)
+    {
+        // load
+        $entityProperty = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, 1);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
+
+        // setup
+        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entityProperty);
+
+        // render and send
+        return $component->render();
+    }
 }

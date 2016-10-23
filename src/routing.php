@@ -42,6 +42,7 @@ $app->get('/exampleform1', 'Mimoto\\UserInterface\\examples\\ExampleFormControll
 $app->get('/exampleform2', 'Mimoto\\UserInterface\\examples\\ExampleFormController::viewExampleForm2');
 $app->get('/exampleform3', 'Mimoto\\UserInterface\\examples\\ExampleFormController::viewExampleForm3');
 $app->get('/exampleform4', 'Mimoto\\UserInterface\\examples\\ExampleFormController::viewExampleForm4');
+$app->get('/exampleform5', 'Mimoto\\UserInterface\\examples\\ExampleFormController::viewExampleForm5');
 
 
 $app->get('/dev', 'Mimoto\\UserInterface\\MimotoCMS\\DevController::viewNewInterface');

@@ -60,11 +60,11 @@ class EntityNewForm
         $value->setId(CoreConfig::COREFORM_ENTITY_NEW.'--name_value');
         $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
-        $entityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $entityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--name');
+        $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--name');
 
         // add
-        $value->setValue('entityproperty', $entityProperty);
+        $value->setValue('entityproperty', $connectedEntityProperty);
         $field->setValue('value', $value);
         $form->addValue('fields', $field);
 

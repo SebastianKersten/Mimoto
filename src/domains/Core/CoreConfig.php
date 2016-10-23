@@ -114,7 +114,8 @@ class CoreConfig
 
 
     // core forms
-    const COREFORM_ENTITY_NEW = '_MimotoAimless__coreform__entity_new';
+    const COREFORM_ENTITY_NEW                   = '_MimotoAimless__coreform__entity_new';
+    const COREFORM_ENTITYPROPERTY_NEW           = '_MimotoAimless__coreform__entityproperty_new';
 
 
     // #todo

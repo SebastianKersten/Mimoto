@@ -8,6 +8,7 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 
 use Mimoto\Core\forms\EntityNewForm;
+use Mimoto\Core\forms\EntityPropertyNewForm;
 
 
 /**
@@ -219,6 +220,7 @@ class MimotoFormService
         switch($sFormName)
         {
             case CoreConfig::COREFORM_ENTITY_NEW: return EntityNewForm::getStructure(); break;
+            case CoreConfig::COREFORM_ENTITYPROPERTY_NEW: return EntityPropertyNewForm::getStructure(); break;
         }
     }
 }
