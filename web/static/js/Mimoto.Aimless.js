@@ -314,8 +314,27 @@ Mimoto.Aimless.connect = function()
                 {
                     if (mls_form_input === (sEntityIdentifier + '.' + change.propertyName))
                     {
-                        // output
-                        $($component).val(change.value);
+
+                        if ($($component).is("input"))
+                        {
+                            switch($($component).attr('type'))
+                            {
+                                case 'radio':
+
+                                    // output
+                                    $($component).each( function(nIndex, $component)
+                                    {
+                                        $($component).prop('checked', $($component).val() == change.value);
+                                    });
+                                    break;
+
+                                default:
+
+                                    // output
+                                    $($component).val(change.value);
+                            }
+                        };
+
                     }
                 }
             }
