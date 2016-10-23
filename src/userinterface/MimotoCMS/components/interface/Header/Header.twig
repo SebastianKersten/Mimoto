@@ -1,0 +1,35 @@
+<header class="js-header header">
+    <div class="header-logo-container">
+        <a href="/mimoto.cms">
+            <div class="header-logo-large"></div>
+            <div class="header-logo-small"></div>
+        </a>
+
+        <div class="js-navigation-toggle header-navigation-collapse-toggle">
+            <svg class="header-navigation-collapse-toggle-icon"><use xlink:href='#ico-arrow'/></svg>
+        </div>
+    </div>
+
+    <button class="header-mobile-navigation-toggle js-mobile-navigation-toggle">
+        <span class="header-mobile-navigation-toggle-line"></span>
+        <span class="header-mobile-navigation-toggle-line"></span>
+        <span class="header-mobile-navigation-toggle-line"></span>
+    </button>
+
+    <ul class="header-breadcrumbs">
+        {% for element in pageTitle %}
+            <li class="header-breadcrumbs-list-item"><a href="{{ element.url }}" class="header-breadcrumbs-list-item-link">{{ element.label|raw }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <ul class="header-menu">
+        <li class="header-menu-item">
+            <a href="#" class="header-menu-link header-menu-user">
+                <span class="header-menu-user-text">Sebastian Kersten</span>
+                <figure class="header-menu-user-figure">
+                    <img src="/static/img/mimoto.cms/avatar.png" class="header-menu-user-image" />
+                </figure>
+            </a>
+        </li>
+    </ul>
+</header>

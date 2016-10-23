@@ -34,6 +34,15 @@ class EntityController
         // setup
         $page->addSelection('entities', 'Mimoto.CMS_entities_EntityListItem', $aEntities);
 
+        // setup page
+        $page->setVar('pageTitle', array(
+                (object) array(
+                    "label" => 'Entities',
+                    "url" => '/mimoto.cms/entities'
+                )
+            )
+        );
+
         // output
         return $page->render();
     }
@@ -89,6 +98,19 @@ class EntityController
 
         // 4. setup component
         $page->setPropertyComponent('properties', 'Mimoto.CMS_entities_PropertyListItem');
+
+        // setup page
+        $page->setVar('pageTitle', array(
+                (object) array(
+                    "label" => 'Entities',
+                    "url" => '/mimoto.cms/entities'
+                ),
+                (object) array(
+                    "label" => '<span mls_value="'.CoreConfig::MIMOTO_ENTITY.'.'.$entity->getId().'.name">'.$entity->getValue('name').'</span>',
+                    "url" => '/mimoto.cms/entity/'.$entity->getId().'/view'
+                )
+            )
+        );
 
         // 5. output
         return $page->render();

@@ -11,7 +11,7 @@ if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
 
 Mimoto.CMS.entityNew = function()
 {
-    Maido.popup.open("/mimoto.cms/entity/new");
+    Mimoto.popup.open("/mimoto.cms/entity/new");
 }
 
 Mimoto.CMS.entityCreate = function(data)
@@ -22,13 +22,13 @@ Mimoto.CMS.entityCreate = function(data)
         data: data,
         dataType: 'json'
     }).done(function(data) {
-        Maido.popup.close();
+        Mimoto.popup.close();
     });
 }
 
 Mimoto.CMS.entityEdit = function(nEntityId)
 {
-    Maido.popup.open("/mimoto.cms/entity/" + nEntityId + "/edit");
+    Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/edit");
 }
 
 Mimoto.CMS.entityUpdate = function(nEntityId, data)
@@ -39,7 +39,7 @@ Mimoto.CMS.entityUpdate = function(nEntityId, data)
         data: data,
         dataType: 'json'
     }).done(function(data) {
-        Maido.popup.close();
+        Mimoto.popup.close();
     });
 }
 
@@ -62,7 +62,7 @@ Mimoto.CMS.entityDelete = function(nEntityId, sEntityName)
 
 Mimoto.CMS.entityPropertyNew = function(nEntityId)
 {
-    Maido.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
+    Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
 }
 
 Mimoto.CMS.entityPropertyCreate = function(nEntityId, data)
@@ -73,264 +73,14 @@ Mimoto.CMS.entityPropertyCreate = function(nEntityId, data)
         data: data,
         dataType: 'json'
     }).done(function(data) {
-        Maido.popup.close();
+        Mimoto.popup.close();
     });
 }
 
 Mimoto.CMS.entityPropertyEdit = function(nEntityPropertyId)
 {
-    Maido.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
+    Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
     // TODO - route aanpassen
 }
 
 
-
-/**
- * Mimoto.CMS - Form handling
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-Mimoto.form = {};
-
-Mimoto.form.openForm = function(sFormName, sAction, sMethod)
-{
-    // init
-    if (!Mimoto.form._aForms) Mimoto.form._aForms = [];
-
-    // store
-    Mimoto.form._sCurrentOpenForm = sFormName;
-
-    // setup
-    var form = {
-        'sName': sFormName,
-        'sAction': sAction,
-        'sMethod': sMethod,
-        'aFields': []
-    };
-
-    // register
-    Mimoto.form._aForms[sFormName] = form;
-};
-
-Mimoto.form.closeForm = function(sFormName)
-{
-
-    console.error('[mls_form_submit="' + sFormName + '"]');
-    // search
-    var aSubmitButtons = $('[mls_form_submit="' + sFormName + '"]');
-
-    // activate
-    aSubmitButtons.each(function(nIndex, $component) {
-
-        // read
-        var currentForm = Mimoto.form._aForms[Mimoto.form._sCurrentOpenForm]; // #todo - validate if no form set
-
-        // prepare
-        if (!currentForm.aSubmitButtons) currentForm.aSubmitButtons = [];
-
-        // register
-        currentForm.aSubmitButtons.push($component);
-
-        // setup
-        $($component).click(function() { Mimoto.form.submit(sFormName); alert('Submit was auto connected!'); } );
-    });
-}
-
-Mimoto.form.submit = function(sFormName)
-{
-    // 1. validate
-    if (!Mimoto.form._aForms) return;
-
-    // 2. set default is no specific form requested
-    if (!sFormName) { for (var s in Mimoto.form._aForms) { sFormName = s; break; } }
-
-    // 3. validate
-    if (!Mimoto.form._aForms[sFormName]) return;
-
-    // 4. register
-    var form = Mimoto.form._aForms[sFormName];
-    var aFields = form.aFields;
-    var nFieldCount = aFields.length;
-
-    // 5. locate form in dom
-    var $form = $('form[name="' + sFormName + '"]');
-
-    // 6. read public key
-    var sPublicKey = '';
-    var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
-    aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
-
-    // 7. collect data
-    var aValues = {};
-    for (var i = 0; i < nFieldCount; i++)
-    {
-        // register
-        var field = aFields[i];
-
-        // 8. find field
-        var aComponents = $("[mls_form_input='" + field.sName + "']", $form);
-
-        // 9. collect value
-        aComponents.each( function(index, $component)
-        {
-            // init
-            var value = null;
-
-            // validate
-            if ($($component).is("input"))
-            {
-                switch($($component).attr('type'))
-                {
-                    case 'radio':
-
-                        if ($($component).prop("checked") === true) {
-                            value = $($component).val();
-                        }
-                        break;
-
-                    default:
-
-                        value = $($component).val();
-                }
-
-
-            };
-
-            if ($($component).is("select"))
-            {
-                value = $($component).val();
-            }
-            // store
-            if (value !== null) aValues[field.sName] = value;
-        });
-    }
-
-    // 10. collect data
-    var requestData = { publicKey: sPublicKey, values: aValues };
-
-
-
-    console.log('Sending ' + form.sAction + ' ' + form.sMethod);
-    console.log(aValues);
-    console.error(requestData);
-    console.log('------');
-
-
-    // 11. send data
-    $.ajax({
-        type: form.sMethod,
-        url: form.sAction,
-        data: JSON.stringify(requestData),
-        dataType: 'json',
-        success: function(resultData, resultStatus, resultSomething)
-        {
-            console.log(resultData);
-            console.log(resultStatus);
-            console.log(resultSomething);
-        }
-    });
-
-    // 5. show result
-    //console.log();
-}
-
-Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - settings
-{
-    // setup
-    var field = {
-        'sName': sInputFieldId,
-        'sType': 'input', // #todo - const
-        'settings': validation
-    };
-
-
-    // read
-    var currentForm = Mimoto.form._aForms[Mimoto.form._sCurrentOpenForm]; // #todo - validate if no form set
-
-    currentForm.aFields.push(field);
-
-
-    console.log(Mimoto.form._aForms);
-
-
-    var scope = {};
-    scope.validation = validation;
-    scope.sInputFieldId = sInputFieldId;
-
-    if (typeof validation == "undefined") return;
-
-    $('#form_data_' + sInputFieldId).on('input', function(e)
-    {
-        // init
-        var bValidated = true;
-        var sErrorMessage = '';
-
-
-        var value = $(this).val();
-
-
-        if (validation.regex)
-        {
-            var regex = new RegExp(validation.regex, 'g');
-
-            if (!regex.test(value))
-            {
-                var bValidated = false;
-                sErrorMessage += 'Value formatted incorrectly. Allowed format is: ' + validation.regex + '. ';
-            }
-        }
-
-        if (validation.maxchars)
-        {
-            if (value.length > validation.maxchars)
-            {
-                var bValidated = false;
-                sErrorMessage += 'Too many characters (' + value.length + ' of ' + validation.maxchars + ')';
-            }
-        }
-
-        if (!bValidated)
-        {
-            $('#form_errormessage_' + scope.sInputFieldId).addClass('error');
-            $('#form_data_' + scope.sInputFieldId).addClass('error');
-            $('#form_errormessage_' + scope.sInputFieldId).text(sErrorMessage);
-            console.warn(sErrorMessage);
-        }
-        else
-        {
-            $('#form_errormessage_' + scope.sInputFieldId).removeClass('error');
-            $('#form_data_' + scope.sInputFieldId).removeClass('error');
-            $('#form_errormessage_' + scope.sInputFieldId).text('');
-            console.log('Input = ok!');
-        }
-    });
-};
-
-
-Mimoto.CMS.notificationClose = function(sEntityType, nNotificationId)
-{
-    // 8. find field
-    var aNotifications = $("[mls_id='" + sEntityType + '.' + nNotificationId + "']");
-
-    // 9. collect value
-    aNotifications.each( function(index, $component) {
-        // init
-        $($component).remove();
-    });
-
-    // 11. send data
-    $.ajax({
-        type: 'GET',
-        url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
-        data: null,
-        dataType: 'json',
-        success: function(resultData, resultStatus, resultSomething)
-        {
-            console.log(resultData);
-            console.log(resultStatus);
-            console.log(resultSomething);
-        }
-    });
-}

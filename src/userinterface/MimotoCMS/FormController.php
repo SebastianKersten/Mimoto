@@ -29,6 +29,15 @@ class FormController
         // setup
         $page->addSelection('forms', 'Mimoto.CMS_forms_FormListItem', $aEntities);
 
+        // setup page
+        $page->setVar('pageTitle', array(
+                (object) array(
+                    "label" => 'Forms',
+                    "url" => '/mimoto.cms/forms'
+                )
+            )
+        );
+
         // output
         return $page->render();
     }

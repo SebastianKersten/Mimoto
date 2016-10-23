@@ -115,6 +115,33 @@ class Component
             ),
 
 
+            // components
+
+            (object) array(
+                'name' => 'Mimoto.CMS_content_ContentOverview',
+                'file' => 'MimotoCMS/components/pages/content/Overview.twig',
+                'conditionals' => []
+            ),
+
+
+            // actions
+
+            (object) array(
+                'name' => 'Mimoto.CMS_actions_ActionOverview',
+                'file' => 'MimotoCMS/components/pages/actions/Overview.twig',
+                'conditionals' => []
+            ),
+
+
+            // users
+
+            (object) array(
+                'name' => 'Mimoto.CMS_users_UserOverview',
+                'file' => 'MimotoCMS/components/pages/users/Overview.twig',
+                'conditionals' => []
+            ),
+
+
             // forms
 
             (object) array(

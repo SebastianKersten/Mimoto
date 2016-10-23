@@ -1,10 +1,9 @@
 {% extends "MimotoCMS/components/base.twig" %}
 
 {% block content %}
-    <h2><a href="/mimoto.cms/entities">entities</a> / entity detail</h2>
-    <br>
-    Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b> -
-    {% include 'MimotoCMS/components/forms/input/ButtonSmall/ButtonSmall.twig' with { label:'Edit', icon:'', action:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');" } %}<br>
+
+    Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>&nbsp;&nbsp;
+    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', action:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');" } %}<br>
     <br>
     Properties:<br>
     <br>

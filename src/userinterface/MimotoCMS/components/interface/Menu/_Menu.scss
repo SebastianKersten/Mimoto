@@ -1,0 +1,39 @@
+.navigation {
+  position: fixed;
+  z-index: 2;
+  top: 50px;
+  left: 0;
+  display: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  max-height: calc(100% - 50px);
+  background-color: $black;
+
+  @include breakpoint(large up) {
+    top: 64px;
+    bottom: 0;
+    display: block;
+    width: $navigation-width;
+    max-height: none;
+    transform: translate3d(0, 0, 0);
+    transition: width .25s;
+  }
+
+  .navigation-content {
+    @include breakpoint(large up) {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 0 8px;
+    }
+  }
+}
+
+.navigation.navigation--active {
+  display: block;
+}
+
+@import 'Menu-regular';

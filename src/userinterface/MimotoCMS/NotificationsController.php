@@ -29,7 +29,16 @@ class NotificationsController
         
         // setup
         $component->addSelection('notifications', 'Mimoto.CMS_notifications_Notification', $aNotifications);
-        
+
+        // setup page
+        $component->setVar('pageTitle', array(
+                (object) array(
+                    "label" => 'Notification Center',
+                    "url" => '/mimoto.cms/notifications'
+                )
+            )
+        );
+
         // render and send
         return $component->render();
     }

@@ -3,36 +3,31 @@
     <title>Mimoto.CMS</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" type="text/css" href="/static/css/mimoto.cms.min.css">
     <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
     <script src="/static/js/jquery-3.1.0.min.js"></script>
-    <script src="/static/js/MaidoProjects.js"></script>
     <script src="/static/js/Mimoto.CMS.js"></script>
     <script src="/static/js/Mimoto.Aimless.js"></script>
+    <script src="/static/js/app.min.js"></script>
+
+    <script src="//use.typekit.net/utk0rsh.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </head>
   <body>
+
+  {% include "MimotoCMS/components/svg.twig" %}
+
     <div class="layer_application">
-      <div class="MimotoCMS_interface_Sidemenu open">
-        <div class="MimotoCMS_interface_Sidemenu__logo"></div>
-        <div class="MimotoCMS_interface_Sidemenu__appname"><b>mimoto</b><br>cms</div>
-        <div class="MimotoCMS_interface_Sidemenu__menuitems">
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/entities', '_self');">Entities</div>
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/forms', '_self');">Forms</div>
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/content', '_self');">Content</div>
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/components', '_self');">Components</div>
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/notifications', '_self');">Notifications</div>
-          <div class="MimotoCMS_interface_Sidemenu__menuitem" onclick="window.open('/mimoto.cms/actions', '_self');">Actions</div>
-        </div>
-      </div>
-      <div class="MimotoCMS_interface_ContentPanel">{% block content %}{% endblock %}</div>
+
+        {% include "MimotoCMS/components/interface/Header/Header.twig" %}
+        {% include "MimotoCMS/components/interface/Menu/Menu.twig" %}
+
+        <section class="pagecontent">{% block content %}{% endblock %}</section>
+
     </div>
-    <div id="layer_overlay" class="layer_overlay hidden"></div>
-    <div id="layer_popup" class="layer_popup hidden">
-      <div id="popup" class="MimotoCMS_interface_Popup">
-        <div class="MimotoCMS_interface_Popup__closebutton" onClick="Maido.popup.close();">Close</div>
-        <div id="popup_content" class="MimotoCMS_interface_Popup__content"></div>
-      </div>
-    </div>
+
+    {% include "MimotoCMS/components/interface/Popup/Popup.twig" %}
 
   </body>
 </html>

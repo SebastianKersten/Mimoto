@@ -45,9 +45,6 @@ $app->get('/exampleform4', 'Mimoto\\UserInterface\\examples\\ExampleFormControll
 $app->get('/exampleform5', 'Mimoto\\UserInterface\\examples\\ExampleFormController::viewExampleForm5');
 
 
-$app->get('/dev', 'Mimoto\\UserInterface\\MimotoCMS\\DevController::viewNewInterface');
-
-
 $app->get('/articles', 'Mimoto\\UserInterface\\examples\\ExampleController::viewArticleOverview');
 $app->get('/article/{nArticleId}', 'Mimoto\\UserInterface\\examples\\ExampleController::viewArticle');
 

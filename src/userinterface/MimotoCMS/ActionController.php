@@ -11,23 +11,23 @@ use Silex\Application;
 
 
 /**
- * ContentController
+ * ActionController
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class ContentController
+class ActionController
 {
     
-    public function viewContentOverview(Application $app)
+    public function viewActionOverview(Application $app)
     {
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_content_ContentOverview');
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_actions_ActionOverview');
 
         // setup page
         $page->setVar('pageTitle', array(
                 (object) array(
-                    "label" => 'Content',
-                    "url" => '/mimoto.cms/content'
+                    "label" => 'Actions',
+                    "url" => '/mimoto.cms/actions'
                 )
             )
         );

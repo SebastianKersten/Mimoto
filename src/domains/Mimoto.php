@@ -52,6 +52,8 @@ class Mimoto
         $app->get('/mimoto.cms/forms', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::viewFormOverview');
         $app->get('/mimoto.cms/components', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::viewComponentOverview');
         $app->get('/mimoto.cms/content', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::viewContentOverview');
+        $app->get('/mimoto.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview');
+        $app->get('/mimoto.cms/users', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::viewUserOverview');
 
 
         // Entity

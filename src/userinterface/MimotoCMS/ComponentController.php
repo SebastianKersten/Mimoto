@@ -34,6 +34,15 @@ class ComponentController
         // setup
         $page->addSelection('components', 'Mimoto.CMS_components_ComponentListItem', $aComponents);
 
+        // setup page
+        $page->setVar('pageTitle', array(
+                (object) array(
+                    "label" => 'Components',
+                    "url" => '/mimoto.cms/components'
+                )
+            )
+        );
+
         // output
         return $page->render();
     }

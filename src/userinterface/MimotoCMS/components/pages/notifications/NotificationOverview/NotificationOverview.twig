@@ -1,9 +1,11 @@
 {% extends "MimotoCMS/components/base.twig" %}
 
+{% block pagetitle %}Notification Center{% endblock %}
+
 {% block content %}
-    <h2>Notification Center</h2>
-    <br>
+
     <div class="MimotoCMS_pages_notifications_NotificationOverview__container" {{ Aimless.realtime('notifications.{state="open"}')|raw }}>
         {{ Aimless.selection('notifications')|raw }}
     </div>
+
 {% endblock %}

@@ -11,23 +11,23 @@ use Silex\Application;
 
 
 /**
- * ContentController
+ * UserController
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class ContentController
+class UserController
 {
     
-    public function viewContentOverview(Application $app)
+    public function viewUserOverview(Application $app)
     {
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_content_ContentOverview');
+        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_users_UserOverview');
 
         // setup page
         $page->setVar('pageTitle', array(
                 (object) array(
-                    "label" => 'Content',
-                    "url" => '/mimoto.cms/content'
+                    "label" => 'Users',
+                    "url" => '/mimoto.cms/users'
                 )
             )
         );
