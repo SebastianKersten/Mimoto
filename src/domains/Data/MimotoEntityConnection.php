@@ -75,6 +75,13 @@ class MimotoEntityConnection
      */
     private $_bNew;
 
+    /**
+     * The connected entity
+     *
+     * @var Mimotoentity
+     */
+    private $_entity;
+
 
 
     // ----------------------------------------------------------------------------
@@ -211,6 +218,21 @@ class MimotoEntityConnection
      * @return int
      */
     public function setNewFlag($bNew) { $this->_bNew = $bNew; }
+
+
+    /**
+     * Get the connected entity
+     *
+     * @return MimotoEntity
+     */
+    public function getEntity() { return $this->_entity; }
+
+    /**
+     * Set the connected entity
+     *
+     * @param MimotoEntity
+     */
+    public function setEntity($entity) { $this->_entity = $entity; }
 
 
 

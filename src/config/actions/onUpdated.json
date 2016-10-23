@@ -7,7 +7,8 @@
     {
         "properties":
         [
-            "state"
+            "state",
+            "name"
         ]
     }
 }

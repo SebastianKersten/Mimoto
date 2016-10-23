@@ -424,7 +424,7 @@ class AimlessComponent
                 // validate
                 if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()]))
                 {
-                    $this->_LogService->silent('Form field misses a value definition', "The field with type=".$field->getEntityTypeName()." and <b>id=".$field->getId()."</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>.", 'AimlessComponent');
+                    $this->_LogService->warn('Form field misses a value definition', "The field with type=".$field->getEntityTypeName()." and <b>id=".$field->getId()."</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>", 'AimlessComponent');
                     continue;
                 }
 

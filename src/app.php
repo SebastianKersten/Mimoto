@@ -43,10 +43,10 @@ function output($sTitle, $data, $bScream = false)
 
 function error($data, $bDumpVar = false)
 {
-    echo '<div style="background-color:#f3f3f3;border:solid 1px #cccccc;padding:0 20px 20px 20px">';
-    echo '<div style="display:inline-block;position:relative;">';
-    echo '<h2><b style="color:#ff66cc;padding:0 20px 0 0;">Error</b></h2><hr>';
-    echo '<pre style="width:100%">';
+    echo '<div style="background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px; width:100%;">';
+    echo '<div>';
+    echo '<h2><b style="font-size:larger;">Error</b></h2><hr style="border:0;height:1px;background:#ffffff">';
+    echo '<pre style="overflow:scroll">';
     ($bDumpVar) ? var_dump($data) : print_r($data);
     echo '</pre>';
     echo '</div>';

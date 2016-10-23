@@ -58,7 +58,6 @@ class MimotoAimlessController
         // 2. register values
         $aRequestValues = $requestData->values;
         $sPublicKey = $requestData->publicKey;
-        $sPublicKey = '906394777c7666665a297969b76415ef';
 
         // get all vars and entities
         $aValues = [];
@@ -117,7 +116,10 @@ class MimotoAimlessController
         $formVars = $GLOBALS['Mimoto.Forms']->getFormVars($form, $aValues);
 
         // 5. authenticate
-        if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities))) error('Public key is incorrect!');
+        if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities)))
+        {
+            $GLOBALS['Mimoto.Log']->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
+        }
 
 
         // #todo

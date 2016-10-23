@@ -59,7 +59,7 @@ class MimotoEntityRepository
     
     /**
      * Create new entity
-     * @return ModelClass
+     * @return MimotoEntity
      */
     public function create(MimotoEntityConfig $entityConfig)
     {
@@ -193,7 +193,6 @@ class MimotoEntityRepository
             $propertyConfig = $entityConfig->getPropertyConfig($sPropertyName);
             $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
 
-            
             // set value
             switch($propertyValue->type)
             {

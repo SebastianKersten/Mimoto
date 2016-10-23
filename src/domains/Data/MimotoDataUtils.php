@@ -27,7 +27,10 @@ class MimotoDataUtils
 
     public static function validatePropertyName($sPropertyName)
     {
-        return preg_match("/^[a-zA-Z][a-zA-Z0-9-_]*(\.[a-zA-Z][a-zA-Z0-9]*)*$/", $sPropertyName);
+        // check _MimotoAimless__ CoreConfig::CORE_PREFIX
+
+        return preg_match("/^[a-zA-Z-_][a-zA-Z0-9-_]*(\.[a-zA-Z-_][a-zA-Z0-9_-]*)*$/", $sPropertyName);
+        //return preg_match("/^[a-zA-Z][a-zA-Z0-9-_]*(\.[a-zA-Z][a-zA-Z0-9_-]*)*$/", $sPropertyName);
     }
     
     public static function validatePropertySelector($sPropertySelector)
@@ -50,7 +53,7 @@ class MimotoDataUtils
     {
         if (is_object($value)) return false;
 
-        return (!is_nan(intval($value)) && $value > 0);
+        return (preg_match("/^[a-zA-Z0-9_-]*?$/", $value)) ? true : false;
     }
     
     public static function hasExpression($sPropertySelector)

@@ -196,7 +196,7 @@ class MimotoEntityConfigRepository
             }
         }
 
-        error('No entity found which contains property with id='.$nId);
+        $GLOBALS['Mimoto.Log']->error('Incomplete entity config', "No entity found which contains a property with <b>id=".$nId."</b>", true);
     }
     
     

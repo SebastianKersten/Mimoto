@@ -68,7 +68,7 @@ class MimotoFormService
         // 3. validate if form exists
         if (!isset($aResults[0]))
         {
-            $this->_MimotoLogService->warn('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database", 'MimotoFormService');
+            $this->_MimotoLogService->warn('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
             die();
         }
         
@@ -97,17 +97,22 @@ class MimotoFormService
             // register
             $field = $aFields[$i];
 
-            // filter
+            // filter, inputs only
             if (!$field->typeOf(CoreConfig::MIMOTO_FORM_INPUT)) continue;
 
             // register
             $fieldValue = $field->getValue('value');
 
             // skip if invalid
-            if (empty($fieldValue)) continue; // #todo - silent fail notification
+            if (empty($fieldValue))
+            {
+                $GLOBALS['Mimoto.Log']->warn("Input misses a value", "The input with id <b>".$field->getId()."</b> is missing it's value property");
+                continue;
+            }
 
             // register
             $sVarType = $fieldValue->getValue(CoreConfig::INPUTVALUE_VARTYPE);
+            $sFieldSelector = $field->getEntityTypeName().'.'.$field->getId();
 
             // validate
             switch($sVarType)
@@ -121,7 +126,7 @@ class MimotoFormService
                     if (!isset($orderedValues->customvars[$sVarName])) continue;
 
                     // store
-                    $formVars->fieldVars[$field->getId()] = (object) array(
+                    $formVars->fieldVars[$sFieldSelector] = (object) array(
                         'key' => $sVarName,
                         'value' => $orderedValues->customvars[$sVarName]
                     );
@@ -134,7 +139,11 @@ class MimotoFormService
                     $entityPropertyId = $fieldValue->getValue('entityproperty', true);
 
                     // validate
-                    if (is_nan($entityPropertyId)) continue;
+                    if (empty($entityPropertyId))
+                    {
+                        $GLOBALS['Mimoto.Log']->notify('Input not properly connected to a property', "The input with id <b>".$field->getId()."</b> is of type <b>entityproperty</b> but is not actually connected to a property");
+                        continue;
+                    }
 
                     // 1. get entity to which the property is connected
                     $sEntityName = $this->_MimotoEntityConfigService->getEntityNameByPropertyId($entityPropertyId);
@@ -147,7 +156,7 @@ class MimotoFormService
                     $sEntitySelector = $sEntityName.'.'.$orderedValues->entities[$sEntityName]->getId();
 
                     // 1. store field var
-                    $formVars->fieldVars[$field->getEntityTypeName().'.'.$field->getId()] = (object) array(
+                    $formVars->fieldVars[$sFieldSelector] = (object) array(
                         'key' => $sEntitySelector.'.'.$sPropertyName,
                         'value' => $orderedValues->entities[$sEntityName]->getValue($sPropertyName)
                     );

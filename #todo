@@ -1,16 +1,6 @@
 
-// 1. entityConfig as model is niet hetzelfde als entityConfig as configobject for runtime
-// 2. adopt entity name as dbtable name
-// 3. create table (with id and created)
-// 4. add property with option
-// 5. property adding list
-// 6. MimotoController met data-entry
-// 7. MimotoEntity -> show mapping of properties (met values)
-
-
-// #todo - custom kanalen aanmaken - selectie van (FeedServicex)
+// #todo - custom kanalen aanmaken - selectie van (FeedService)
 // #todo - inline form - wysiwyg editor
-
 
 
 // --- adding and removing items to an entity's collection ---
@@ -20,38 +10,15 @@
 
 ================================================================
 
-entities:
-
-mimoto_form
-mimoto_formfield
-mimoto_formfield_option
-
-core entities (_mimoto_*) in aparte tabel en join on load
-// alleen laden binnen cms omgeving!
-
-
-// 1. Move Mimoto & Aimless to Vendor folder: https://getcomposer.org/doc/05-repositories.md#custom-vendor-alias
-// 2. first store new subitems, then connect
-
-
 #TODO
 
-// 1. Best effort template selection (best match)
-// 2. Render entity in Aimless
-// 3. Mollie account
+// 1. first store new subitems, then connect
+// 2. Best effort template selection (best match)
+// 3. Render entity in Aimless
+// 4. Mollie account
+// 5. throw (silent) warnings on unfound entity properties, but return empty value
+// 6. diffs demo (http://code.stephenmorley.org/php/diff-implementation)
 
-Subproject fields:
-$this->setModelToMySQLTableMap(
-    [
-        (object) array('property' => 'name', 'dbcolumn' => 'name'),
-        (object) array('property' => 'contact_name', 'dbcolumn' => 'contact_name'),
-        (object) array('property' => 'phase', 'dbcolumn' => 'phase'),
-        (object) array('property' => 'state_id', 'dbcolumn' => 'state_id'),
-        (object) array('property' => 'probability', 'dbcolumn' => 'probability'),
-        (object) array('property' => 'budget', 'dbcolumn' => 'budget'),
-        (object) array('property' => 'payment_type', 'dbcolumn' => 'payment_type'),
-    ]
-);
 
 class SubprojectPaymentTypes
 {    
@@ -72,21 +39,6 @@ class SubprojectProbabilities
     const COULD_GO_EITHER_WAY = 0.5;
     const PRETTY_SURE = 0.9;
 }
-
-
-projectname
-    folder: config
-    folder: domains
-    folder: externalservices
-    folder: userinterface
-        folder: templates
-            folder: email
-            folder: form
-            folder: pages
-            folder: popups
-        base-twig
-        controllers
-    folder: workers
 
 
 ================================================================
@@ -151,8 +103,6 @@ https://github.com/filamentgroup/elementary/blob/master/examples/index.html
 // 1. authenticate users
 // 2. show which user on which part
 // 3. live diff updates client2client
-// 4. mls_input
-// 5. Aimless.registerInput()
 // 6. focus input when other user active
 // 7. Alle exceptions inschieten via Livescreen messages
 
@@ -177,21 +127,6 @@ https://github.com/filamentgroup/elementary/blob/master/examples/index.html
 12. Project.twig geschikt voor kleine schermen (getallen onder projectnaam)
 14. hide dom-element on conditional (bijv. bij agency)
 15. MySQL safe injection
-
-
-#done
------
-1. track changes array met key values (boolean setter)
-2. dispatch pass regular event which extends MimotoEvent
-3. met setEntity (via constructor) en getEntity
-4. entitynaam uit classnaam halen (getNameOfClass)
-5. dispatch forward regular event (ClientEvent extends MimotoEvent etc)
-6. handle actions
-7. EntityService / LiveScreenService getEntity templateByEntityType connect models in livescreenprovider - $app["livescreen.entities"]
-8. Connect template to model/entity
-10. add created-get/set to MimotoEntity
-11. Multiple mls identifiers
-13. 'created' property verplaatsen naar MimotoEntity
 
 
 // #notes - getProperty
@@ -237,11 +172,6 @@ https://github.com/filamentgroup/elementary/blob/master/examples/index.html
 // find()
 
 
-// collection.add()
-// collection.remove()
-// collection - single of multiple
-// 1. chekc if requested property is collection, if not -> throw error
-
 // serialize() -> returns json with values, collections etc (associative array)
 
 // 1. check rest of selector
@@ -255,34 +185,10 @@ https://github.com/filamentgroup/elementary/blob/master/examples/index.html
 // 8. readEntity
 
 
-        // load
-        $aProperties = $this->getProperty($sPropertySelector);
-        
-        // init
-        $aPropertyValues = new MimotoCollection();
-        
-        $nPropertyCount = count($aProperties);
-        for ($i = 0; $i < $nPropertyCount; $i++)
-        {
-            // register
-            $property = $aProperties[$i];
-            
-            switch($property->type)
-            {
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE: $aPropertyValues[] = $this->readValue($property); break;
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY: $aPropertyValues[] = $this->readEntity($property, $bGetStorableValue); break;
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION: $aPropertyValues[] = $this->readCollection($property); break;
-            }
-        }
-        
-        // send
-        if (count($aPropertyValues) === 1) { return $aPropertyValues[0]->value; }
-        
-        return $aPropertyValues; // as key/value pairs | parsed and everyting, ook na query
 
 
 
-http://code.stephenmorley.org/php/diff-implementation/
+
 
 
 // 1. image placeholder
@@ -332,27 +238,6 @@ http://code.stephenmorley.org/php/diff-implementation/
 
 
 
-
-        
-        
-        
-        
-        //stuur
-        
-        // gooi in Gearman
-        
-        
-        //LiveScreenMessage (model) #todo
-        
-        
-        // generieke livescreen API ingang, met ID voor object o.i.d.
-        // #YES: mapping -> url vs welk model, id etc
-        // of fields kan directe data zijn
-        
-        
-        
-        
-        // only broadcast changed properties ->
         // model set -> save to modified -> track changes, default aan na uitgeven entity
         
         //if has values -> replace values
@@ -439,14 +324,6 @@ $app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $ev
 
 
 
-------------------------------------------------
-
-#todo
-- FormService of FormController
-- onEnter -> save single input form
-- LiveScreenService diffs doorgeven ipv full value
-
-------------------------------------------------
 
 #Mimoto.CMS
 input type = text

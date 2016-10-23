@@ -263,7 +263,7 @@ class MimotoEventService
             if ($bIsValidTrigger) { $aFilteredActions[] = $action; }
         }
         
-        
+
         // send
         return $aFilteredActions;
     }

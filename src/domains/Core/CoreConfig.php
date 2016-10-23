@@ -42,6 +42,7 @@ class CoreConfig
 
 
     const CORE_PREFIX                           = '_MimotoAimless__';
+    const WILDCARD                              = '*';
 
     // core
     const MIMOTO_ENTITY                         = '_MimotoAimless__core__entity';
@@ -113,7 +114,7 @@ class CoreConfig
 
 
     // core forms
-    const COREFORM_ENTITY_NEW = '_MimotoAimless__entity_new';
+    const COREFORM_ENTITY_NEW = '_MimotoAimless__coreform__entity_new';
 
 
     // #todo

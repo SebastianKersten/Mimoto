@@ -43,37 +43,40 @@ class MimotoLogService
     /**
      * Broadcast a silent notification to the developer
      */
-    public function silent($sTitle, $sMessage, $sDispatcher)
+    public function silent($sTitle, $sMessage)
     {
         // forward
-        $this->createNotification($sTitle, $sMessage, $sDispatcher, 'silent');
+        $this->createNotification($sTitle, $sMessage, debug_backtrace()[1].'', 'silent');
     }
 
     /**
      * Broadcast a regular notification to the developer
      */
-    public function notify($sTitle, $sMessage, $sDispatcher)
+    public function notify($sTitle, $sMessage)
     {
         // forward
-        $this->createNotification($sTitle, $sMessage, $sDispatcher, '');
+        $this->createNotification($sTitle, $sMessage, debug_backtrace()[1], '');
     }
 
     /**
      * Broadcast a regular notification to the developer
      */
-    public function warn($sTitle, $sMessage, $sDispatcher)
+    public function warn($sTitle, $sMessage)
     {
         // forward
-        $this->createNotification($sTitle, $sMessage, $sDispatcher, 'warning');
+        $this->createNotification($sTitle, $sMessage, debug_backtrace()[1], 'warning');
     }
 
     /**
      * Broadcast a regular notification to the developer
      */
-    public function error($sTitle, $sMessage, $sDispatcher)
+    public function error($sTitle, $sMessage, $bOutputErrorToUser = false)
     {
         // forward
-        $this->createNotification($sTitle, $sMessage, $sDispatcher, 'error');
+        $this->createNotification($sTitle, $sMessage, debug_backtrace()[1], 'error');
+
+        // outut
+        if ($bOutputErrorToUser) error($sTitle." - ".$sMessage);
     }
 
     /**
@@ -83,10 +86,14 @@ class MimotoLogService
      * @param $sDispatcher
      * @param $sCategory
      */
-    private function createNotification($sTitle, $sMessage, $sDispatcher, $sCategory)
+    private function createNotification($sTitle, $sMessage, $debugBacktrace, $sCategory)
     {
         // create
         $notification = $this->_MimotoEntityService->create(CoreConfig::MIMOTO_NOTIFICATION);
+
+        // prepare
+        $sDispatcher = $debugBacktrace['class'].'::'.$debugBacktrace['function'];
+        if (isset($debugBacktrace['line'])) { $sDispatcher .= ' (called from line #'.$debugBacktrace['line'].')'; }
 
         // setup
         $notification->setValue('title', $sTitle);

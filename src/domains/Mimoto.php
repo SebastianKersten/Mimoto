@@ -82,6 +82,9 @@ class Mimoto
         $app->get('/mimoto.cms/notifications/{nNotificationId}/close', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeNotification');
 
 
+        $app->get('/mimoto.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionsController::viewActionOverview');
+
+
 //        $app->get('/mimoto.cms/form/new', 'Mimoto\\UserInterface\\FormsController::createNew');
 //        $app->get('/mimoto.cms/form/{nId}', 'Mimoto\\UserInterface\\FormsController::getForm');
 //        $app->get('/mimoto.cms/content', 'Mimoto\\UserInterface\\ContentController::getOverview');

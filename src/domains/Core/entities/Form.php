@@ -55,7 +55,7 @@ class Form
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
                             'value' => '[
-                                    "'.CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'"
+                                    "'.CoreConfig::WILDCARD.'"
                                 ]'
                         ),
                         'allowDuplicates' => (object) array(

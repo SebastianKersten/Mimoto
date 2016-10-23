@@ -20,19 +20,8 @@ class ExampleFormController
 
     public function viewExampleForm1(Application $app)
     {
-
         // load
         $person = $app['Mimoto.Data']->get('person', 2);
-
-
-
-        // create
-        //$form = $app['Mimoto.Aimless']->createComponent('examplebase_form', $person, 'examplebase_form'); // #todo - of array
-
-        // render and send
-        //return $form->render();
-
-
 
         // create
         $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
@@ -42,9 +31,6 @@ class ExampleFormController
 
         // render and send
         return $component->render();
-
-
-
 
 
 
@@ -123,12 +109,6 @@ class ExampleFormController
 
     public function viewExampleForm3(Application $app)
     {
-
-        //$app['Mimoto.Log']->silent('Another test', 'Does it live update?', 'viewExampleForm3');
-        //$app['Mimoto.Log']->warn('Some warning', 'Something probably needs your attention', 'viewExampleForm3');
-        //$app['Mimoto.Log']->error('uh-oh, an error', 'Your code is broken. Please fix', 'viewExampleForm3');
-
-
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
         $subproject = $app['Mimoto.Data']->get('subproject', 5);
@@ -141,7 +121,28 @@ class ExampleFormController
 
         // setup
         $component->addForm('project', $aValues);
-        //$component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $aValues);
+
+        // render and send
+        return $component->render();
+    }
+
+    public function viewExampleForm4(Application $app)
+    {
+        //$app['Mimoto.Log']->notify('A notification', "There is something I would like you to be aware of. No rush!");
+        //$app['Mimoto.Log']->silent('Silent notice', "The configuration is missing a paramater, but we'll do without for now");
+        //$app['Mimoto.Log']->silent('Another silent test', "Does it live update?");
+        //$app['Mimoto.Log']->warn('Some warning', "Something probably needs your attention");
+        //$app['Mimoto.Log']->error('uh-oh, an error', "Your code is broken. Please fix");
+
+
+        // load
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, 1);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
+
+        // setup
+        $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
 
         // render and send
         return $component->render();

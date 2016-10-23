@@ -5,6 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Aimless\MimotoAimlessUtils;
+use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
@@ -185,7 +186,7 @@ class MimotoEntity
 
                 $property->data->persistentEntity = null;
                 $property->data->currentEntity = null;
-                $property->data->entityCache = null;
+                //$property->data->entityCache = null; #todo
 
                 break;
 
@@ -274,14 +275,20 @@ class MimotoEntity
         switch($property->config->type)
         {
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-                
-                throw new MimotoEntityException("( '-' ) - Nope, I'm unable to add a value the non-collection '$property->config->name' which is a value");
+
+                $GLOBALS['Mimoto.Log']->warn("Adding value to a non-collection", "Unable to add a value to a value property <b>".$property->config->name);
+                break;
             
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
                 
-                if (empty($sSubpropertySelector)) { throw new MimotoEntityException("( '-' ) - Nope, I'm unable to add a value the non-collection '$property->config->name' which is an entity"); }
-                
-                $this->addEntityProperty($property, $value, $sSubpropertySelector);
+                if (empty($sSubpropertySelector))
+                {
+                    $GLOBALS['Mimoto.Log']->warn("Adding value to a non-collection", "Unable to add a value to an entity property <b>".$property->config->name);
+                }
+                else
+                {
+                    $this->addEntityProperty($property, $value, $sSubpropertySelector);
+                }
                 break;
                 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
@@ -469,18 +476,18 @@ class MimotoEntity
     private function loadEntity($property)
     {
         // check if available
-        if (!isset($property->data->entityCache))
+        if (empty($property->data->currentEntity->getEntity()))
         {
             if (!empty($property->data->currentEntity) &&
                 MimotoDataUtils::isValidEntityId($property->data->currentEntity->getChildId()))
             {
                 // load
-                $property->data->entityCache = $GLOBALS['Mimoto.Data']->get($property->data->currentEntity->getChildEntityTypeName(), $property->data->currentEntity->getChildId());
+                $property->data->currentEntity->setEntity($GLOBALS['Mimoto.Data']->get($property->data->currentEntity->getChildEntityTypeName(), $property->data->currentEntity->getChildId()));
             }
         }
         
         // send
-        return (isset($property->data->entityCache)) ? $property->data->entityCache : null;
+        return (!empty($property->data->currentEntity->getEntity())) ? $property->data->currentEntity->getEntity() : null;
     }
     
     
@@ -549,17 +556,21 @@ class MimotoEntity
 
 
 
+
         if (MimotoDataUtils::isEntity($xValue) )
         {
+
+
             // compose
             $connection->setChildId($xValue->getId());
+            $connection->setEntity($xValue);
 
             // store if change tracking is disabled
             if (!$this->_bTrackChanges) { $property->data->persistentEntity = $connection; }
 
             // store
             $property->data->currentEntity = $connection;
-            $property->data->entityCache = $xValue;
+            //$property->data->entityCache = $xValue;
 
             return;
         }
@@ -581,11 +592,11 @@ class MimotoEntity
         if (empty($xValue) || $xValue == 0)
         {
             // store if change tracking is disabled
-            if (!$this->_bTrackChanges) { $property->data->persistentEntity = 0; }
+            if (!$this->_bTrackChanges) { $property->data->persistentEntity = null; }
             
             // clear
             unset($property->data->currentEntity);
-            unset($property->data->entityCache);
+            //unset($property->data->entityCache);
             
             return;
         }
@@ -679,9 +690,16 @@ class MimotoEntity
             {
                 // register
                 $connection = $aCollectionItems[$i];
-                
+
+                if (empty($connection->getEntity()))
+                {
+                    // load
+                    $connection->setEntity($GLOBALS['Mimoto.Data']->get($connection->getChildEntityTypeName(), $connection->getChildId()));
+                }
+
                 // load
-                $entity = $GLOBALS['Mimoto.Data']->get($connection->getChildEntityTypeName(), $connection->getChildId());
+                $entity = $connection->getEntity();
+
 
                 $bVerified = true;
                 foreach ($aConditionals as $sKey => $value)
@@ -700,19 +718,13 @@ class MimotoEntity
             // send
             return $aCollection;
         }
-        
-        
-        
+
+
+
         // 1. maak kopie van $property->data->currentCollection
-        
-        
+
+
         return $property->data->currentCollection;
-        
-//        return $value = (object) array
-//        (
-//            'name' => $property->config->name,
-//            'value' => $property->data->currentCollection
-//        );
     }
     
     
@@ -757,14 +769,12 @@ class MimotoEntity
      */
     private function addCollectionProperty($property, $value, $sEntityType, $sPropertySelector)
     {
-        // forward
+        // forward #fixme Is this still relevant. Code seems to be missing
         if (!empty($sPropertySelector)) { $this->forwardAddEntityProperty($property, $sPropertySelector, $value); return; }
-        
-        
+
         // validate input
         if (!MimotoDataUtils::isEntity($value) && !MimotoDataUtils::isValidEntityId($value)) { throw new MimotoEntityException("( '-' ) - Sorry, the value you are trying to add at to collection '$property->config->name' is not a MimotoEntity"); }
-        
-        
+
         if (MimotoDataUtils::isEntity($value))
         {
             $sEntityType = $value->getEntityTypeName();
@@ -791,20 +801,33 @@ class MimotoEntity
         
         
         $aAllowedEntityTypes = [];
+        $bAllowAllEntityTypes = false;
         $nAllowedEntityTypecount = count($property->config->settings->allowedEntityTypes);
         for ($i = 0; $i < $nAllowedEntityTypecount; $i++)
         {
+            // check wildcard
+            if ($property->config->settings->allowedEntityTypes[$i]->id == CoreConfig::WILDCARD)
+            {
+                $bAllowAllEntityTypes = true;
+                break;
+            }
+
+            // register
             $aAllowedEntityTypes[] = $property->config->settings->allowedEntityTypes[$i]->name;
         }
-        
-        
+
+
         // validate
-        if (MimotoDataUtils::isEntity($value) && !in_array($sEntityType, $aAllowedEntityTypes)) { throw new MimotoEntityException("( '-' ) - Sorry, the entity you are trying to set at '$property->config->name' has type '".$value->getEntityTypeName()."' instead of on of the types ".json_encode($property->config->settings->allowedEntityTypes)); }
+        if (MimotoDataUtils::isEntity($value) && !$bAllowAllEntityTypes && !in_array($sEntityType, $aAllowedEntityTypes))
+        {
+            $GLOBALS['Mimoto.Log']->error("Collection item not allowed", "The entity you are trying to set at <b>".$property->config->name."</b> has type <b>".$value->getEntityTypeName()."</b> instead of one of the types <b>".json_encode($property->config->settings->allowedEntityTypes)."</b>", true);
+        }
 
         if (MimotoDataUtils::isEntity($value))
         {
             // store
             $connection->setChildId($value->getId());
+            $connection->setEntity($value);
         }
         else
         if (MimotoDataUtils::isValidEntityId($value))
@@ -815,9 +838,8 @@ class MimotoEntity
 
         $connection->setChildEntityTypeId($GLOBALS['Mimoto.Config']->getEntityIdByName($sEntityType));
         $connection->setSortIndex(count($property->data->currentCollection));
-        
 
-        
+
         // manage duplicates
         if (!$property->config->settings->allowDuplicates)
         {
@@ -825,7 +847,7 @@ class MimotoEntity
             $nCurrentCollectionCount = count($property->data->currentCollection);
             for ($i = 0; $i < $nCurrentCollectionCount; $i++)
             {
-                if ($property->data->currentCollection[$i]->getChildId() == $connection->getChildId())
+                if (!empty($connection->getChildId()) && $property->data->currentCollection[$i]->getChildId() == $connection->getChildId())
                 {
                     $bDuplicateFound = true;
                     return;
@@ -837,11 +859,6 @@ class MimotoEntity
         // store
         if (!$this->_bTrackChanges) { $property->data->persistentCollection[$i] = clone $connection; }
         $property->data->currentCollection[] = $connection;
-
-
-        
-        // validate
-        //throw new MimotoEntityException("( '-' ) - Sorry, the entity or entity id you are trying to set at '$property->config->name' doesn't seem to be valid");
     }
     
     /**
@@ -976,7 +993,10 @@ class MimotoEntity
         }
 
         // verify
-        if (count($aMatchingProperties) === 0) { throw new MimotoEntityException("( '-' ) - The property '$sPropertySelector' you are looking for doesn't seem to be here"); }
+        if (count($aMatchingProperties) === 0)
+        {
+            $GLOBALS['Mimoto.Log']->error("Missing property", "The property <b>$sPropertySelector</b> you are looking for doesn't seem to be here", true);
+        }
 
         // send
         return $aMatchingProperties[0];
