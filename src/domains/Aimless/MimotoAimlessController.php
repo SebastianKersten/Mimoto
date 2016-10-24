@@ -161,4 +161,34 @@ class MimotoAimlessController
 
     }
 
+
+    public function authenticateUser(Application $app, Request $request)
+    {
+        // Pusher classes
+        require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/vendor/pusher/pusher-php-server/lib/pusher.php');
+
+
+        if ($app['Mimoto.User']->getUserId())
+        {
+            // configure
+            $options = array(
+                'cluster' => 'eu',
+                'encrypted' => true
+            );
+
+            $pusher = new \Pusher(
+                '55152f70c4cec27de21d',
+                '7e72297e347e339cd241',
+                '185150',
+                $options
+            );
+
+            return $pusher->socket_auth($request->get('channel_name'), $request->get('socket_id'));
+        }
+        else
+        {
+            header('', true, 403);
+            return "Forbidden";
+        }
+    }
 }

@@ -118,26 +118,19 @@ class EntityController
 
     public function entityEdit(Application $app, $nEntityId)
     {
-
-        // load
+        // 1. load
         $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
-        // validate
+        // 2. validate
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_Form');
+        // 3. create
+        $component = $app['Mimoto.Aimless']->createComponent('form_popup');
 
-        // prepare
-        $aValues = [
-            'name' => $entity->getValue('name'),
-            //'group' => $entity->getValue('group')
-        ];
+        // 4. setup
+        $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
 
-        // setup
-        $component->addForm('form_entity_edit', $aValues);
-
-        // render and send
+        // 5. render and send
         return $component->render();
     }
 
@@ -193,8 +186,21 @@ class EntityController
     }
 
 
-    public function entityPropertyChange(Application $app)
+    public function entityPropertyEdit(Application $app, $nEntityPropertyId)
     {
+        // 1. load
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
 
+        // 2. validate
+        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+
+        // 3. create
+        $component = $app['Mimoto.Aimless']->createComponent('form_popup');
+
+        // 4. setup
+        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entity);
+
+        // 5. render and send
+        return $component->render();
     }
 }

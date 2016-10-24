@@ -23,6 +23,7 @@ class MimotoAimlessServiceProvider implements ServiceProviderInterface
     {
         // register
         $app->get('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sTemplateId}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView');
+        $app->post('/Mimoto.Aimless/realtime/co-authorship', 'Mimoto\\Aimless\\MimotoAimlessController::authenticateUser');
 
         $app['Mimoto.Aimless'] = $app['Mimoto.AimlessService'] = $app->share(function($app)
         {

@@ -15,6 +15,8 @@ use Mimoto\Core\CoreConfig;
 class MimotoUserService
 {
 
+    const USER_ID = 69;
+
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -34,7 +36,16 @@ class MimotoUserService
     // ----------------------------------------------------------------------------
     // --- Public methods----------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
+
+
+    /**
+     * Notify developer
+     */
+    public function getUserId()
+    {
+        // send
+        return $sUserId = self::USER_ID;
+    }
     
     /**
      * Notify developer
@@ -42,7 +53,7 @@ class MimotoUserService
     public function getUserPublicKey($sExtraSaltyHashThing)
     {
         // example
-        $sUserId = 69;
+        $sUserId = self::USER_ID;
         $sPublicKey = md5($sExtraSaltyHashThing.md5($sUserId.'#salthashything'));
 
         // send

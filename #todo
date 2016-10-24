@@ -18,6 +18,7 @@
 // 4. Mollie account
 // 5. throw (silent) warnings on unfound entity properties, but return empty value
 // 6. diffs demo (http://code.stephenmorley.org/php/diff-implementation)
+// 7. add example of realtime chat functionality to documentation
 
 
 class SubprojectPaymentTypes

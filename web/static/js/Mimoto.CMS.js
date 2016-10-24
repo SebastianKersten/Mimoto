@@ -28,6 +28,8 @@ Mimoto.CMS.entityCreate = function(data)
 
 Mimoto.CMS.entityEdit = function(nEntityId)
 {
+    console.log('Start editing ...');
+
     Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/edit");
 }
 
@@ -80,7 +82,4 @@ Mimoto.CMS.entityPropertyCreate = function(nEntityId, data)
 Mimoto.CMS.entityPropertyEdit = function(nEntityPropertyId)
 {
     Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
-    // TODO - route aanpassen
 }
-
-

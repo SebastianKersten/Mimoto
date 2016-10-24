@@ -6,7 +6,8 @@
 
 if (typeof Mimoto == "undefined") Mimoto = {};
 Mimoto.Aimless = {};
-
+Mimoto.Aimless.realtime = {}
+if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
 
 // #todo - scrollpos correctie!
 
@@ -23,13 +24,14 @@ Mimoto.Aimless.connect = function()
         if (window.console && window.console.log) { window.console.log(message); }
     };
 
-    var pusher = new Pusher('55152f70c4cec27de21d', {
+    Mimoto.Aimless.pusher = new Pusher('55152f70c4cec27de21d', {
         cluster: 'eu',
-        encrypted: true
+        encrypted: true,
+        authEndpoint: '/Mimoto.Aimless/realtime/co-authorship'
     });
 
 
-    var channel = pusher.subscribe('Aimless');
+    var channel = Mimoto.Aimless.pusher.subscribe('Aimless');
 
     channel.bind('data.changed', function(data) // update, create, remove (, read?)
     {
@@ -707,6 +709,20 @@ Mimoto.form.closeForm = function(sFormName)
         // setup
         $($component).click(function() { Mimoto.form.submit(sFormName); alert('Submit was auto connected!'); } );
     });
+
+
+    Mimoto.Aimless.privateChannel = Mimoto.Aimless.pusher.subscribe('private-' + 'AimlessForm_' + sFormName);
+
+    Mimoto.Aimless.privateChannel.bind('client-Aimless:formfield_update_' + sFormName, function(data)
+    {
+
+        console.log(data.fieldId + ' = ' + data.value);
+
+        var $input = $("input[mls_form_input='" + data.fieldId + "']");
+
+        $($input).val(data.value);
+
+    });
 }
 
 Mimoto.form.submit = function(sFormName)
@@ -823,7 +839,27 @@ Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - 
     currentForm.aFields.push(field);
 
 
-    console.log(Mimoto.form._aForms);
+
+
+
+    var $input = $("input[mls_form_input='" + sInputFieldId + "']");
+
+
+    // store
+    Mimoto.Aimless.realtime.broadcastedValues[sInputFieldId] = {
+        sFormName: currentForm.sFormName,
+        value: $($input).val()
+    };
+
+
+    $input.on('input', function(e)
+    {
+        var sFormName = currentForm.sName;
+        var value = $(this).val();
+
+        Mimoto.Aimless.realtime.registerChange(sFormName, sInputFieldId, value);
+    });
+
 
 
     var scope = {};
@@ -834,6 +870,7 @@ Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - 
 
     $('#form_data_' + sInputFieldId).on('input', function(e)
     {
+
         // init
         var bValidated = true;
         var sErrorMessage = '';
@@ -979,3 +1016,56 @@ Mimoto.popup.close = function()
 }
 
 
+
+Mimoto.Aimless.realtime.broadcastedValues = [];
+Mimoto.Aimless.realtime.changes = [];
+Mimoto.Aimless.realtime.registerChange = function(sFormName, sInputFieldId, value)
+{
+
+    var now = Date.parse(new Date());
+
+    if (!Mimoto.Aimless.realtime.changes[sInputFieldId])
+    {
+        Mimoto.Aimless.realtime.changes[sInputFieldId] = {
+            sFormName: sFormName,
+            newValue: value,
+            created: now,
+            modified: now
+        }
+    }
+    else
+    {
+        Mimoto.Aimless.realtime.changes[sInputFieldId].newValue = value;
+        Mimoto.Aimless.realtime.changes[sInputFieldId].modified = now;
+
+    }
+}
+
+setInterval(function()
+{
+    for (var sInputFieldId in Mimoto.Aimless.realtime.changes)
+    {
+        var field = Mimoto.Aimless.realtime.changes[sInputFieldId];
+
+        //if (field.modified - field.created  > 100)
+        {
+            // calculate new value
+            var changedValue = Mimoto.Aimless.realtime.changes[sInputFieldId].newValue;
+
+            // setup
+            var data = {
+                fieldId: sInputFieldId,
+                value: field.newValue
+            };
+
+            // broadcast update
+            Mimoto.Aimless.privateChannel.trigger('client-Aimless:formfield_update_' + field.sFormName, data);
+
+            // store
+            Mimoto.Aimless.realtime.broadcastedValues[sInputFieldId].value = field.newValue;
+            delete Mimoto.Aimless.realtime.changes[sInputFieldId];
+        }
+
+    }
+
+}, 100); // send every 100 milliseconds if position has changed
