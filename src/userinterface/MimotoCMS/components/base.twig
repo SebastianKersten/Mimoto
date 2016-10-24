@@ -1,33 +1,37 @@
 <html>
-  <head>
-    <title>Mimoto.CMS</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <title>Mimoto.CMS</title>
 
-    <link rel="stylesheet" type="text/css" href="/static/css/mimoto.cms.min.css">
-    <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
-    <script src="/static/js/jquery-3.1.0.min.js"></script>
-    <script src="/static/js/Mimoto.CMS.js"></script>
-    <script src="/static/js/Mimoto.Aimless.js"></script>
-    <script src="/static/js/app.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="//use.typekit.net/utk0rsh.js"></script>
-    <script>try{Typekit.load({ async: true });}catch(e){}</script>
-  </head>
-  <body>
+        <link rel="stylesheet" type="text/css" href="/static/css/mimoto.cms.min.css">
+        <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
+        <script src="/static/js/jquery-3.1.0.min.js"></script>
 
-  {% include "MimotoCMS/components/svg.twig" %}
+        <!--<script src="/static/js/diff_match_patch.js"></script>-->
+        <script src="/static/js/diff_match_patch_uncompressed.js"></script>
+        <script src="/static/js/Mimoto.CMS.js"></script>
+        <script src="/static/js/Mimoto.Aimless.js"></script>
+        <script src="/static/js/app.min.js"></script>
 
-    <div class="layer_application">
+        <script src="//use.typekit.net/utk0rsh.js"></script>
+        <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    </head>
+    <body>
 
-        {% include "MimotoCMS/components/interface/Header/Header.twig" %}
-        {% include "MimotoCMS/components/interface/Menu/Menu.twig" %}
+        {% include "MimotoCMS/components/svg.twig" %}
 
-        <section class="pagecontent">{% block content %}{% endblock %}</section>
+        <div class="layer_application">
 
-    </div>
+            {% include "MimotoCMS/components/interface/Header/Header.twig" %}
+            {% include "MimotoCMS/components/interface/Menu/Menu.twig" %}
 
-    {% include "MimotoCMS/components/interface/Popup/Popup.twig" %}
+            <section class="pagecontent">{% block content %}{% endblock %}</section>
 
-  </body>
+        </div>
+
+        {% include "MimotoCMS/components/interface/Popup/Popup.twig" %}
+
+    </body>
 </html>
