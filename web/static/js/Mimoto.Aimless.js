@@ -685,6 +685,7 @@ Mimoto.Aimless.connect = function()
             // setup
             var data = {
                 fieldId: sInputFieldId,
+                value: modifiedText,
                 diff: patch_text
             };
 
@@ -759,6 +760,7 @@ Mimoto.form.closeForm = function(sFormName)
 {
 
     console.error('[mls_form_submit="' + sFormName + '"]');
+
     // search
     var aSubmitButtons = $('[mls_form_submit="' + sFormName + '"]');
 
@@ -792,6 +794,8 @@ Mimoto.form.closeForm = function(sFormName)
         // 3. get diff patch
 
 
+
+
         var currentValue = $($input).val();
         var patches = Mimoto.Aimless.realtime.dmp.patch_fromText(data.diff);
 
@@ -799,6 +803,8 @@ Mimoto.form.closeForm = function(sFormName)
         var results = Mimoto.Aimless.realtime.dmp.patch_apply(patches, currentValue);
         //var ms_end = (new Date).getTime();
 
+        
+        Mimoto.Aimless.realtime.broadcastedValues[data.fieldId].value = results[0];
         $($input).val(results[0]);
     });
 }
