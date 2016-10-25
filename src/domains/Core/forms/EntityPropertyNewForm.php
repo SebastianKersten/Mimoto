@@ -23,6 +23,7 @@ class EntityPropertyNewForm
         // setup
         $form->setId(CoreConfig::COREFORM_ENTITYPROPERTY_NEW);
         $form->setValue('name', CoreConfig::COREFORM_ENTITYPROPERTY_NEW);
+        $form->setValue('realtimeCollaborationMode', true);
 
 
         // --- title ---

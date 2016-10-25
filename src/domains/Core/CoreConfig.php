@@ -43,6 +43,7 @@ class CoreConfig
 
     const CORE_PREFIX                           = '_MimotoAimless__';
     const WILDCARD                              = '*';
+    const ENTITY_NEW                            = 'TheCakeIsALie';
 
     // core
     const MIMOTO_ENTITY                         = '_MimotoAimless__core__entity';

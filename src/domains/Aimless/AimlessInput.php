@@ -37,19 +37,19 @@ class AimlessInput extends AimlessComponent
         $this->_value = $value;
     }
 
-    public function input()
-    {
-        return 'mls_form_input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"';
-    }
-
     public function field()
     {
         return 'mls_form_field="'.$this->_sFieldId.'"';
     }
 
+    public function input()
+    {
+        return 'mls_form_field_input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"';
+    }
+
     public function error()
     {
-        return 'mls_form_error="'.$this->_sFieldId.'"';
+        return 'mls_form_field_error="'.$this->_sFieldId.'"';
     }
 
     public function value()

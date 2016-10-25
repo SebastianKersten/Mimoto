@@ -10,18 +10,32 @@
 
 ================================================================
 
-#TODO
+#todo
 
-// 1. first store new subitems, then connect
+// 1. first store new subitems, then connect (in mysql transaction) - hoe omgaan met publish?
 // 2. Best effort template selection (best match)
-// 3. Render entity in Aimless
-// 4. Mollie account
-// 5. throw (silent) warnings on unfound entity properties, but return empty value
-// 6. diffs demo (http://code.stephenmorley.org/php/diff-implementation)
-// 7. add example of realtime chat functionality to documentation
+// 3. Mollie account
+// 4. throw (silent) warnings on unfound entity properties, but return empty value
+// 5. add example of realtime chat functionality to documentation
+// 6. differential synchronization https://neil.fraser.name/writing/sync/
+// 7. local storage for offline editing (only on auto-save documents)
+// 8. temp values (common shadow), if (commonShadown.present) then load, else create commonShadow
+// 9. Auto-save: client geeft signaal om cache persistent te maken
+// 10. store collab-versions in mongo
+// 11. php port van diff_match_patch https://github.com/nuxodin/diff_match_patch-php
+// 1. add newly patched version to changeList. If no change -> remove from stack, else broadcast
+// 14. aparte array in memcache om versies bij te houden (timestamp) (propertySelector + '_version_' + TimeStamp)
+// 15. store offline full docs onConnect for manual recovery in case of pathc failure
+// 16. checksum
+// 17. notification api entry point for javascript debugging
+// 18. form has collaboration mode (implements auto-save)
+// 19. Mimoto.Aimless -> getValueFromField
+// 20. show cursor position of other users
+// 21. update changed value only
+// 22. register fields on collaborative form
 
 
-class SubprojectPaymentTypes
+class SubprojectPaymentTypes -> connect to dropdoen/radiobutton via selection
 {    
     const FIXED = 'fixed';
     const TIME_MATERIAL = 'time_material';   

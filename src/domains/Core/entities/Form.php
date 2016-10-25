@@ -69,6 +69,23 @@ class Form
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM.'--realtimeCollaborationMode',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'realtimeCollaborationMode',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM.'--realtimeCollaborationMode-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE // #todo enum "0" of "1"
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_FORM.'--customSubmit',
                     'created' => CoreConfig::EPOCH,
                     // ---

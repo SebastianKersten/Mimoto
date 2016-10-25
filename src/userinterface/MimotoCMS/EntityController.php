@@ -50,26 +50,16 @@ class EntityController
 
     public function entityNew(Application $app)
     {
+        // create dummy
+        $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
 
-        //$form->setVar('aPropertyNameValidation', json_encode(['regex' => '^[a-zA-Z][a-zA-Z0-9-_]*?$', 'maxchars' => 25, 'api' => 'Mimoto/form/validate']));
+        // 1. create
+        $component = $app['Mimoto.Aimless']->createComponent('form_popup');
 
-        // 'aPropertyNameValidation' => json_encode(['regex' => '^[a-zA-Z][a-zA-Z0-9-_]*?$', 'maxchars' => 10, 'api' => 'Mimoto/form/validate']),
-        // 'aPropertyGroupValidation' => json_encode(['regex' => '^[a-zA-Z]*?[a-zA-Z0-9-_]*?(\.[a-zA-Z][a-zA-Z0-9-_]*?)*$'])
+        // 2. setup
+        $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
 
-
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_Form');
-
-        // prepare
-        $aValues = [
-            'name' => '',
-            //'group' => $entity->getValue('group')
-        ];
-
-        // setup
-        $component->addForm('form_entity_create', $aValues);
-
-        // render and send
+        // 3. render and send
         return $component->render();
     }
 

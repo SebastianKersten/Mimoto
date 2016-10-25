@@ -154,7 +154,9 @@ class MimotoFormService
                     if (!isset($orderedValues->entities[$sEntityName])) continue;
 
                     // prepare
-                    $sEntitySelector = $sEntityName.'.'.$orderedValues->entities[$sEntityName]->getId();
+                    $xEntityId = $orderedValues->entities[$sEntityName]->getId();
+                    if (empty($xEntityId)) $xEntityId = CoreConfig::ENTITY_NEW;
+                    $sEntitySelector = $sEntityName.'.'.$xEntityId;
 
                     // 1. store field var
                     $formVars->fieldVars[$sFieldSelector] = (object) array(

@@ -27,7 +27,7 @@ Mimoto.Aimless.connect = function()
     Mimoto.Aimless.pusher = new Pusher('55152f70c4cec27de21d', {
         cluster: 'eu',
         encrypted: true,
-        authEndpoint: '/Mimoto.Aimless/realtime/co-authorship'
+        authEndpoint: '/Mimoto.Aimless/realtime/collaboration'
     });
 
 
@@ -283,22 +283,22 @@ Mimoto.Aimless.connect = function()
         // input fields
 
         // search
-        var aValues = $("[mls_form_input]");
+        var aValues = $("[mls_form_field_input]");
 
         aValues.each( function(nIndex, $component)
         {
             // read
-            var mls_form_input = $($component).attr("mls_form_input");
+            var mls_form_field_input = $($component).attr("mls_form_field_input");
 
             // determine
-            var nOriginPos = mls_form_input.indexOf('[');
+            var nOriginPos = mls_form_field_input.indexOf('[');
             var bHasOrigin = (nOriginPos !== -1) ;
 
             // verify
             if (bHasOrigin)
             {
-                var mls_value_origin = mls_form_input.substr(nOriginPos + 1, mls_form_input.length - nOriginPos - 2);
-                var mls_form_input = mls_form_input.substr(0, nOriginPos);
+                var mls_value_origin = mls_form_field_input.substr(nOriginPos + 1, mls_form_field_input.length - nOriginPos - 2);
+                var mls_form_field_input = mls_form_field_input.substr(0, nOriginPos);
             }
 
 
@@ -314,7 +314,7 @@ Mimoto.Aimless.connect = function()
 
                 if (!bHasOrigin)
                 {
-                    if (mls_form_input === (sEntityIdentifier + '.' + change.propertyName))
+                    if (mls_form_field_input === (sEntityIdentifier + '.' + change.propertyName))
                     {
 
                         if ($($component).is("input"))
@@ -685,7 +685,7 @@ Mimoto.Aimless.connect = function()
             // setup
             var data = {
                 fieldId: sInputFieldId,
-                value: modifiedText,
+                //value: modifiedText,
                 diff: patch_text
             };
 
@@ -736,7 +736,7 @@ Mimoto.Aimless.connect();
 
 Mimoto.form = {};
 
-Mimoto.form.openForm = function(sFormName, sAction, sMethod)
+Mimoto.form.openForm = function(sFormName, sAction, sMethod, bRealtimeCollaborationMode)
 {
     // init
     if (!Mimoto.form._aForms) Mimoto.form._aForms = [];
@@ -749,7 +749,8 @@ Mimoto.form.openForm = function(sFormName, sAction, sMethod)
         'sName': sFormName,
         'sAction': sAction,
         'sMethod': sMethod,
-        'aFields': []
+        'aFields': [],
+        'bRealtimeCollaborationMode': bRealtimeCollaborationMode
     };
 
     // register
@@ -786,7 +787,7 @@ Mimoto.form.closeForm = function(sFormName)
     Mimoto.Aimless.privateChannel.bind('client-Aimless:formfield_update_' + sFormName, function(data)
     {
 
-        var $input = $("input[mls_form_input='" + data.fieldId + "']");
+        var $input = $("input[mls_form_field_input='" + data.fieldId + "']");
 
 
         // 1. check if supports realtime
@@ -794,7 +795,7 @@ Mimoto.form.closeForm = function(sFormName)
         // 3. get diff patch
 
 
-
+        console.log(Mimoto.Aimless.pusher);
 
         var currentValue = $($input).val();
         var patches = Mimoto.Aimless.realtime.dmp.patch_fromText(data.diff);
@@ -803,7 +804,7 @@ Mimoto.form.closeForm = function(sFormName)
         var results = Mimoto.Aimless.realtime.dmp.patch_apply(patches, currentValue);
         //var ms_end = (new Date).getTime();
 
-        
+
         Mimoto.Aimless.realtime.broadcastedValues[data.fieldId].value = results[0];
         $($input).val(results[0]);
     });
@@ -841,7 +842,7 @@ Mimoto.form.submit = function(sFormName)
         var field = aFields[i];
 
         // 8. find field
-        var aComponents = $("[mls_form_input='" + field.sName + "']", $form);
+        var aComponents = $("[mls_form_field_input='" + field.sName + "']", $form);
 
         // 9. collect value
         aComponents.each( function(index, $component)
@@ -926,7 +927,7 @@ Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - 
 
 
 
-    var $input = $("input[mls_form_input='" + sInputFieldId + "']");
+    var $input = $("input[mls_form_field_input='" + sInputFieldId + "']");
 
 
     // store

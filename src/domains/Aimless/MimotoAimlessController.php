@@ -101,8 +101,16 @@ class MimotoAimlessController
         // collect
         foreach ($aEntities as $sEntityType => $entityInfo)
         {
-            // load
-            $entityInfo->entity = $app['Mimoto.Data']->get($entityInfo->entityType, $entityInfo->entityId);
+            if ($entityInfo->entityId == CoreConfig::ENTITY_NEW)
+            {
+                // create
+                $entityInfo->entity = $app['Mimoto.Data']->create($entityInfo->entityType);
+            }
+            else
+            {
+                // load
+                $entityInfo->entity = $app['Mimoto.Data']->get($entityInfo->entityType, $entityInfo->entityId);
+            }
 
             // load and store
             $aValues[$entityInfo->entityType] = $entityInfo->entity;
@@ -123,10 +131,8 @@ class MimotoAimlessController
 
 
         // #todo
-        // move to Service (store form) FormService ->
+        // 1. move to Service (store form) FormService ->
 
-        // #question
-        // Hoe omgaan met nieuwe items? wel name/typeid maar geen id -> if no id -> create() i.p.v. get()
 
 
 
@@ -150,6 +156,12 @@ class MimotoAimlessController
             // store
             $app['Mimoto.Data']->store($entityInfo->entity);
         }
+
+
+        // 1. return new ID
+        // 2. echo new ID
+
+
 
         // render and send
         return new Response('Success!');
