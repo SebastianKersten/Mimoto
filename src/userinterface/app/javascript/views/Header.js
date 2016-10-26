@@ -14,6 +14,7 @@ module.exports.prototype = {
     console.log('Init header');
     this.setVariables();
     this.addEventListeners();
+    this.checkCollapsed();
 
   },
 
@@ -24,6 +25,8 @@ module.exports.prototype = {
 
     this.body = document.getElementsByTagName('body')[0];
     this.navigation = document.querySelector('.js-navigation');
+
+    this.collapsed = false;
 
   },
 
@@ -43,9 +46,24 @@ module.exports.prototype = {
 
   },
 
+  checkCollapsed: function () {
+
+    if (localStorage.getItem('collapsed')) {
+      this.collapsed = JSON.parse(localStorage.getItem('collapsed'));
+    }
+
+    if (this.collapsed) {
+      this.body.classList.add('navigation-collapsed');
+    }
+
+  },
+
   toggleNavigationCollapse: function () {
 
+    this.collapsed = !this.collapsed;
+
     this.body.classList.toggle('navigation-collapsed');
+    localStorage.setItem('collapsed', this.collapsed);
 
   },
 
