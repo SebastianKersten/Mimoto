@@ -1,6 +1,6 @@
 <div {{ Aimless.field()|raw }} class="form-component">
 
-  <label for="" class="form-component-title">{{ Aimless.data('label') }} <span class="form-component-title-information">(optioneel)</span></label>
+  <label for="" class="form-component-title">{{ Aimless.data('label') }} <span class="form-component-title-information">(optioneel)</span><svg class="form-component-title-icon form-component-title-icon--warning"><use xlink:href='#ico-warning'/></svg></label>
 
   <div class="form-component-content{% if not Aimless.data('description')|default('') %} form-component-content--no-description{% endif %}">
 

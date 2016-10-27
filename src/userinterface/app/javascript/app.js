@@ -1,26 +1,22 @@
 'use strict';
 
 var HeaderView = require('./views/Header');
+var TextlineView = require('./views/Textline');
 
 document.addEventListener('DOMContentLoaded', function () {
 
   var navigation = document.querySelector('.js-navigation');
   var header = document.querySelector('.js-header');
+  var textlines = document.querySelectorAll('.js-form-component-textline');
 
   if (navigation && header) {
     new HeaderView(header);
   }
 
-  Conditioner.init();
+  for (var i = 0; i < textlines.length; i++) {
+    new TextlineView(textlines[i]);
+  }
 
-  ErrorHandling.init({
-    "element": "p",
-    "classes": ["form-component-element-error"],
-    "errorClass": "form-component--has-error",
-    "validatedClass": "form-component--is-validated",
-    "iconSelectorClass": "js-form-component-title-icon",
-    "iconErrorClass": "icon-warning",
-    "iconValidatedClass": "icon-checkmark"
-  });
+  Conditioner.init();
 
 }, false);

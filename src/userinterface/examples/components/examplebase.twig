@@ -15,7 +15,9 @@
     <script src="/static/js/app.min.js"></script>
   </head>
   <body>
-    <div class="example_page">
+  {% include "MimotoCMS/components/svg.twig" %}
+
+  <div class="example_page">
       {% block content %}{% endblock %}
     </div>
   </body>
