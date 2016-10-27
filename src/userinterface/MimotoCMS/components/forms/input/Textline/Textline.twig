@@ -1,11 +1,5 @@
-<div {{ Aimless.field()|raw }} class="form-component">
-  <label for="" class="form-component-title">{{ Aimless.data('label') }} <span class="form-component-title-information">(optioneel)</span></label>
-
-  <div class="form-component-content">
-    <div class="form-component-element">
-      <input {{ Aimless.input()|raw }} type="text" class="form-input" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}"/>
-      <p {{ Aimless.error()|raw }} class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
-    </div>
-    <p class="form-component-description">{{ Aimless.data('description') }}</p>
-  </div>
-</div>
+{% embed "MimotoCMS/components/forms/form_component.twig" %}
+  {% block form_component_element %}
+    <input {{ Aimless.input()|raw }} type="text" class="form-input" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}" />
+  {% endblock %}
+{% endembed %}

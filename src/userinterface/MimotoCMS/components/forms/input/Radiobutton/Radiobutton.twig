@@ -1,19 +1,13 @@
-<div {{ Aimless.field()|raw }} class="form-component">
-  <label for="" class="form-component-title">{{ Aimless.data('label') }}<span class="form-component-title-information"></span></label>
+{% embed "MimotoCMS/components/forms/form_component.twig" %}
+  {% block form_component_element %}
 
-  <div class="form-component-content">
-    <div class="form-component-element">
+    {% set aOptions = Aimless.fieldOptions() %}
+    {% for option in aOptions %}
+      <div class="form-component-element-container">
+        <input {{ Aimless.input()|raw }} type="radio" value="{{ option.key }}" class="MimotoCMS_forms_input_Radiobutton" {% if Aimless.value() == option.key %}checked{% endif %}/>
+        <label for="yes" class="form-component-element-label">{{ option.value }}</label>
+      </div>
+    {% endfor %}
 
-      {% set aOptions = Aimless.fieldOptions() %}
-      {% for option in aOptions %}
-          <div class="form-component-element-container">
-            <input {{ Aimless.input()|raw }} type="radio" value="{{ option.key }}" class="MimotoCMS_forms_input_Radiobutton" {% if Aimless.value() == option.key %}checked{% endif %}/>
-            <label for="yes" class="form-component-element-label">{{ option.value }}</label>
-          </div>
-      {% endfor %}
-
-    </div>
-    {% if Aimless.data('description') is not empty %}<p class="form-component-description">{{ Aimless.data('description') }}</p>{% endif %}
-    <p class="form-component-element-error">U moet één van de waardes kiezen.</p>
-  </div>
-</div>
+  {% endblock %}
+{% endembed %}

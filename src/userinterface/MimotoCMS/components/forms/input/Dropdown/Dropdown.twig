@@ -1,24 +1,18 @@
-<div {{ Aimless.field()|raw }} class="form-component">
-  <label for="" class="form-component-title">{{ Aimless.data('label') }}</label>
+{% embed "MimotoCMS/components/forms/form_component.twig" %}
+  {% block form_component_element %}
 
-  {# MimotoCMS_forms_input_Dropdown #}
-
-  <div class="form-component-content">
-    <div class="form-component-element">
-      <div class="MimotoCMS_forms_input_Dropdown-container">
-        <select {{ Aimless.input()|raw }} class="MimotoCMS_forms_input_Dropdown">
-          {% set aOptions = Aimless.fieldOptions() %}
-          {% for option in aOptions %}
-            <option value="{{ option.key }}" {% if Aimless.value() == option.key %}selected{% endif %}>{{ option.value }}</option>
-          {% endfor %}
-        </select>
-        <span class="MimotoCMS_forms_input_Dropdown-icon icon icon-arrow-down"></span>
-      </div>
+    <div class="MimotoCMS_forms_input_Dropdown-container">
+      <select {{ Aimless.input()|raw }} class="MimotoCMS_forms_input_Dropdown">
+        {% set aOptions = Aimless.fieldOptions() %}
+        {% for option in aOptions %}
+          <option value="{{ option.key }}" {% if Aimless.value() == option.key %}selected{% endif %}>{{ option.value }}</option>
+        {% endfor %}
+      </select>
+      <span class="MimotoCMS_forms_input_Dropdown-icon icon icon-arrow-down"></span>
     </div>
-    {% if Aimless.data('description') is not empty %}<p class="form-component-description">{{ Aimless.data('description') }}</p>{% endif %}
-    <p class="form-component-element-error">Kies een optie</p>
-  </div>
-</div>
+
+  {% endblock %}
+{% endembed %}
 
 {#
 <div class="form-component">

@@ -1,10 +1,20 @@
-<div class="form-component">
-  <p class="form-component-title"{{ title }} {% if title_information|default('') %}<span class="form-component-title-information">{{ title_information }}</span>{% endif %}</p>
+<div {{ Aimless.field()|raw }} class="form-component">
 
-  <div class="form-component-content{% if not description|default('') %} form-component-content--no-description{% endif %}">
-    <div class="form-component-element">
-      {% block form_element %}{% endblock %}
+  <label for="" class="form-component-title">{{ Aimless.data('label') }} <span class="form-component-title-information">(optioneel)</span></label>
+
+  <div class="form-component-content{% if not Aimless.data('description')|default('') %} form-component-content--no-description{% endif %}">
+
+    <div class="form-component-element js-error-parent">
+
+      {% block form_component_element %}{% endblock %}
+
+      <p {{ Aimless.error()|raw }} class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
+
     </div>
-    {% if description|default('') %}<p class="form-component-description">{{ description }}</p>{% endif %}
+
+    {% if Aimless.data('description')|default('') %}
+      <p class="form-component-description">{{ Aimless.data('description') }}</p>
+    {% endif %}
+
   </div>
 </div>
