@@ -15,7 +15,8 @@ module.exports = function (env) {
       new webpack.IgnorePlugin(/^jquery$/),
       new webpack.ProvidePlugin({
         'Conditioner': './conditioner/conditioner',
-        'ErrorHandling': 'ErrorHandling'
+        'ErrorHandling': 'ErrorHandling',
+        'Validation': 'Validation'
       })
     ],
     resolve: {
@@ -23,7 +24,8 @@ module.exports = function (env) {
       extensions: ['', '.js']
     },
     entry: {
-      app: [jsSrc + '/app/javascript/app.js']
+      app: [jsSrc + '/app/javascript/app.js'],
+      aimless: [jsSrc + '/app/javascript/mimoto.aimless.js']
     },
     output: {
       path: jsDest,
