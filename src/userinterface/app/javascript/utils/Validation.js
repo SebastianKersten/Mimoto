@@ -10,20 +10,34 @@ module.exports.prototype = {
 
   init: function (options) {
 
-    this.validateMaxLength = true;
-    this.validateMinLength = true;
-
+    this.validateMinLength = false;
+    this.validateMaxLength = false;
+    this.validateNoNumbers = false;
 
     this.minLength = 0;
     this.maxLength = 100;
 
     if (options.minLength) {
       this.minLength = options.minLength;
+      this.validateMinLength = true;
     }
 
     if (options.maxLength) {
       this.maxLength = options.maxLength;
+      this.validateMaxLength = true;
     }
+
+    if (options.noNumbers) {
+      this.validateNoNumbers = true;
+    }
+
+    this.setVariables();
+
+  },
+
+  setVariables: function () {
+
+    this.regExpNumbers = new RegExp("\\d");
 
   },
 
@@ -40,6 +54,13 @@ module.exports.prototype = {
 
     if (this.validateMinLength) {
       result = this.checkMinLength(value);
+      if (!result.passed) {
+        return result;
+      }
+    }
+
+    if (this.validateNoNumbers) {
+      result = this.checkNoNumbers(value);
       if (!result.passed) {
         return result;
       }
@@ -68,10 +89,25 @@ module.exports.prototype = {
 
   checkMaxLength: function (value) {
 
-    if (value.length >= this.maxLength) {
+    if (value.length > this.maxLength) {
       return {
         "passed": false,
         "message": "Input is too long."
+      }
+    }
+
+    return {
+      "passed": true
+    };
+
+  },
+
+  checkNoNumbers: function (value) {
+
+    if (this.regExpNumbers.test(value)) {
+      return {
+        "passed": false,
+        "message": "No numbers allowed."
       }
     }
 
