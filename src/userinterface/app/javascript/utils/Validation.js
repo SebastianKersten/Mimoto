@@ -16,7 +16,6 @@ module.exports.prototype = {
     this.validateMinNumbers = false;
     this.validateMaxNumbers = false;
 
-
     if (options.minLength) {
       this.minLength = options.minLength;
       this.validateMinLength = true;
@@ -52,77 +51,54 @@ module.exports.prototype = {
 
   validateInput: function (value) {
 
-    var result;
     this.value = value;
-
-    if (this.validateMaxLength) {
-      result = this.checkMaxLength();
-      if (!result.passed) {
-        return result;
-      }
-    }
+    this.result = {
+      "passed": true
+    };
 
     if (this.validateMinLength) {
-      result = this.checkMinLength();
-      if (!result.passed) {
-        return result;
-      }
+      this.checkMinLength();
+    }
+
+    if (this.validateMaxLength) {
+      this.checkMaxLength();
     }
 
     if (this.validateNoNumbers) {
-      result = this.checkNoNumbers();
-      if (!result.passed) {
-        return result;
-      }
+      this.checkNoNumbers();
     }
 
     if (this.validateMinNumbers) {
-      result = this.checkMinNumbers(value);
-      if (!result.passed) {
-        return result;
-      }
+      this.checkMinNumbers();
     }
 
     if (this.validateMaxNumbers) {
-      result = this.checkMaxNumbers(value);
-      if (!result.passed) {
-        return result;
-      }
+      this.checkMaxNumbers();
     }
 
-    return {
-      "passed": true
-    };
+    return this.result;
 
   },
 
   checkMinLength: function () {
 
     if (this.value.length < this.minLength) {
-      return {
+      this.result = {
         "passed": false,
         "message": "Input is too short."
       }
     }
-
-    return {
-      "passed": true
-    };
 
   },
 
   checkMaxLength: function () {
 
     if (this.value.length > this.maxLength) {
-      return {
+      this.result = {
         "passed": false,
         "message": "Input is too long."
       }
     }
-
-    return {
-      "passed": true
-    };
 
   },
 
@@ -131,15 +107,11 @@ module.exports.prototype = {
     var regExp = new RegExp("\\d");
 
     if (regExp.test(this.value)) {
-      return {
+      this.result = {
         "passed": false,
         "message": "No numbers allowed."
       }
     }
-
-    return {
-      "passed": true
-    };
 
   },
 
@@ -148,16 +120,11 @@ module.exports.prototype = {
     var regExp = new RegExp("\\d{" + this.minNumbers + "}");
 
     if (!regExp.test(this.value)) {
-      return {
+      this.result = {
         "passed": false,
         "message": "Input should contain a minimum of " + this.minNumbers + " number(s)."
       }
     }
-
-    return {
-      "passed": true
-    };
-
   },
 
   checkMaxNumbers: function () {
@@ -165,15 +132,11 @@ module.exports.prototype = {
     var regExp = new RegExp("([^\\d]*\\d){" + (Number(this.maxNumbers) + 1) + ",}");
 
     if (regExp.test(this.value)) {
-      return {
+      this.result = {
         "passed": false,
         "message": "Input can't contain more than " + this.maxNumbers + " numbers."
       }
     }
-
-    return {
-      "passed": true
-    };
 
   }
 
