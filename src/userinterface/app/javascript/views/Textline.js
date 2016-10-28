@@ -65,16 +65,16 @@ module.exports.prototype = {
 
     } else {
 
-      var validated = this.validation.validate(value);
+      var validated = this.validation.validateInput(value);
 
-      if (validated) {
+      if (validated.passed) {
 
         this.errorHandling.clearState();
-        this.errorHandling.isValidated();
+        this.errorHandling.addValidatedState();
 
       } else {
 
-        this.errorHandling.addError("Too long/short", this.el);
+        this.errorHandling.addErrorState(validated.message, this.el);
 
       }
 
