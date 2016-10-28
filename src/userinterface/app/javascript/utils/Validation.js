@@ -15,6 +15,7 @@ module.exports.prototype = {
     this.validateNoNumbers = false;
     this.validateMinNumbers = false;
     this.validateMaxNumbers = false;
+    this.validateNoSpecialCharacters = false;
 
     if (options.minLength) {
       this.minLength = options.minLength;
@@ -38,6 +39,10 @@ module.exports.prototype = {
     if (options.maxNumbers) {
       this.maxNumbers = options.maxNumbers;
       this.validateMaxNumbers = true;
+    }
+
+    if (options.noSpecialCharacters) {
+      this.validateNoSpecialCharacters = true;
     }
 
     this.setVariables();
@@ -74,6 +79,10 @@ module.exports.prototype = {
 
     if (this.validateMaxNumbers) {
       this.checkMaxNumbers();
+    }
+
+    if (this.validateNoSpecialCharacters) {
+      this.checkNoSpecialCharacters();
     }
 
     return this.result;
@@ -135,6 +144,19 @@ module.exports.prototype = {
       this.result = {
         "passed": false,
         "message": "Input can't contain more than " + this.maxNumbers + " numbers."
+      }
+    }
+
+  },
+
+  checkNoSpecialCharacters: function () {
+
+    var regExp = new RegExp("^[\\w]*$");
+
+    if (!regExp.test(this.value)) {
+      this.result = {
+        "passed": false,
+        "message": "Input can't contain special characters (except for underscore)."
       }
     }
 

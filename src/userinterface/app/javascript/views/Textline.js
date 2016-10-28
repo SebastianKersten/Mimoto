@@ -35,7 +35,8 @@ module.exports.prototype = {
       "minLength": this.minLength,
       "maxLength": this.maxLength,
       "minNumbers": this.minNumbers,
-      "maxNumbers": this.maxNumbers
+      "maxNumbers": this.maxNumbers,
+      "noSpecialCharacters": this.noSpecialCharacters
     });
 
   },
@@ -48,7 +49,9 @@ module.exports.prototype = {
     this.maxLength = this.input.getAttribute('data-max-length');
     this.minNumbers = this.input.getAttribute('data-min-numbers');
     this.maxNumbers = this.input.getAttribute('data-max-numbers');
+    this.noSpecialCharacters = this.input.hasAttribute('data-no-special-characters');
 
+    console.log(this.noSpecialCharacters);
   },
 
   addEventListeners: function () {
