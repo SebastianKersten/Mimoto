@@ -13,6 +13,7 @@ module.exports.prototype = {
     this.validateMinLength = false;
     this.validateMaxLength = false;
     this.validateNoNumbers = false;
+    this.validateNumbers = false;
 
     this.minLength = 0;
     this.maxLength = 100;
@@ -29,6 +30,10 @@ module.exports.prototype = {
 
     if (options.noNumbers) {
       this.validateNoNumbers = true;
+    }
+
+    if (options.numbers) {
+      this.validateNumbers = true;
     }
 
     this.setVariables();
@@ -61,6 +66,13 @@ module.exports.prototype = {
 
     if (this.validateNoNumbers) {
       result = this.checkNoNumbers(value);
+      if (!result.passed) {
+        return result;
+      }
+    }
+
+    if (this.validateNumbers) {
+      result = this.checkNumbers(value);
       if (!result.passed) {
         return result;
       }
@@ -108,6 +120,23 @@ module.exports.prototype = {
       return {
         "passed": false,
         "message": "No numbers allowed."
+      }
+    }
+
+    return {
+      "passed": true
+    };
+
+  },
+
+  checkNumbers: function (value) {
+
+    console.log(this.regExpNumbers.test(value));
+
+    if (!this.regExpNumbers.test(value)) {
+      return {
+        "passed": false,
+        "message": "Input should contain one or more numbers."
       }
     }
 
