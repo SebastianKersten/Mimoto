@@ -145,6 +145,11 @@ module.exports.prototype = {
       this.hasError = true;
     }
 
+    if (this.message != message) {
+      this.updateErrorElement(message);
+      this.message = message;
+    }
+
   },
 
   addErrorElement: function (message) {
@@ -169,6 +174,13 @@ module.exports.prototype = {
     if (error) {
       this.errorParent.removeChild(error);
     }
+
+  },
+
+  updateErrorElement: function (message) {
+
+    var error = this.errorParent.querySelector('.' + this.classes[0]);
+    error.innerHTML = message;
 
   }
 

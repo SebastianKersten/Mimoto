@@ -69,7 +69,6 @@ module.exports.prototype = {
 
       if (validated.passed) {
 
-        this.errorHandling.clearState();
         this.errorHandling.addValidatedState();
 
       } else {
