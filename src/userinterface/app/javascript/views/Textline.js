@@ -34,7 +34,8 @@ module.exports.prototype = {
     this.validation = new Validation({
       "minLength": this.minLength,
       "maxLength": this.maxLength,
-      "numbers": this.numbers
+      "minNumbers": this.minNumbers,
+      "maxNumbers": this.maxNumbers
     });
 
   },
@@ -45,7 +46,8 @@ module.exports.prototype = {
 
     this.minLength = this.input.getAttribute('data-min-length');
     this.maxLength = this.input.getAttribute('data-max-length');
-    this.numbers = this.input.getAttribute('data-numbers');
+    this.minNumbers = this.input.getAttribute('data-min-numbers');
+    this.maxNumbers = this.input.getAttribute('data-max-numbers');
 
   },
 
