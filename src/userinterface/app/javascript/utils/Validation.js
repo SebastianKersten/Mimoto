@@ -197,7 +197,7 @@ module.exports.prototype = {
 
   checkMaxSpecialCharacters: function () {
 
-    var regExp = new RegExp("([\\ww]*\\W){" + (Number(this.maxSpecialCharacters) + 1) + ",}");
+    var regExp = new RegExp("([\\w]*\\W){" + (Number(this.maxSpecialCharacters) + 1) + ",}");
 
     if (regExp.test(this.value)) {
       this.result = {
