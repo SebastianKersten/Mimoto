@@ -33,7 +33,12 @@ module.exports.prototype = {
 
     this.validation = new Validation({
       "minLength": this.minLength,
-      "maxLength": this.maxLength
+      "maxLength": this.maxLength,
+      "minNumbers": this.minNumbers,
+      "maxNumbers": this.maxNumbers,
+      "noSpecialCharacters": this.noSpecialCharacters,
+      "minSpecialCharacters": this.minSpecialCharacters,
+      "maxSpecialCharacters": this.maxSpecialCharacters
     });
 
   },
@@ -44,6 +49,11 @@ module.exports.prototype = {
 
     this.minLength = this.input.getAttribute('data-min-length');
     this.maxLength = this.input.getAttribute('data-max-length');
+    this.minNumbers = this.input.getAttribute('data-min-numbers');
+    this.maxNumbers = this.input.getAttribute('data-max-numbers');
+    this.minSpecialCharacters = this.input.getAttribute('data-min-special-characters');
+    this.maxSpecialCharacters = this.input.getAttribute('data-max-special-characters');
+    this.noSpecialCharacters = this.input.hasAttribute('data-no-special-characters');
 
   },
 
@@ -65,16 +75,15 @@ module.exports.prototype = {
 
     } else {
 
-      var validated = this.validation.validate(value);
+      var validated = this.validation.validateInput(value);
 
-      if (validated) {
+      if (validated.passed) {
 
-        this.errorHandling.clearState();
-        this.errorHandling.isValidated();
+        this.errorHandling.addValidatedState();
 
       } else {
 
-        this.errorHandling.addError("Too long/short", this.el);
+        this.errorHandling.addErrorState(validated.message, this.el);
 
       }
 
