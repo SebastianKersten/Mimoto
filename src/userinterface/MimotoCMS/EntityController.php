@@ -51,10 +51,10 @@ class EntityController
     public function entityNew(Application $app)
     {
         // create dummy
-        $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITY);
 
         // 1. create
-        $component = $app['Mimoto.Aimless']->createComponent('form_popup');
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Page');
 
         // 2. setup
         $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
@@ -115,7 +115,7 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('form_popup');
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
         $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
@@ -185,7 +185,7 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('form_popup');
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
         $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entity);

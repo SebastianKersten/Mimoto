@@ -42,7 +42,7 @@ Mimoto.Aimless.connect = function()
         // --- value level ---
         
         
-        console.clear();
+        //console.clear();
         
         
         console.log('Aimless - data.changed');
@@ -341,205 +341,8 @@ Mimoto.Aimless.connect = function()
                 }
             }
         });
-
-
-
-
-
-        return; // #todo - reeds uitgevoerde wijzigingen niet meer uitvoeren
-        // first collect changes, then execute
-
-        // // parse modified values
-        // if (data.connections)
-        // {
-        //
-        //     for (var i = 0; i < data.connections.length; i++)
-        //     {
-        //         // register
-        //         var connection = data.connections[i];
-        //
-        //         // search
-        //         var aContainers = $("[mls_contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
-        //
-        //         aContainers.each(function(nIndex, $container)
-        //         {
-        //             // read
-        //             var mls_contains = $($container).attr("mls_contains");
-        //             var mls_component = $($container).attr("mls_component");
-        //             var mls_filter = $($container).attr("mls_filter");
-        //
-        //             if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
-        //
-        //             var bFilterApproved = true;
-        //             if (mls_filter)
-        //             {
-        //                 for (var s in mls_filter)
-        //                 {
-        //                     var bPropertyFound = false;
-        //                     for (var j = 0; j < data.changes.length; j++)
-        //                     {
-        //                         // register
-        //                         var property = data.changes[j];
-        //
-        //                         if (property.propertyName == s)
-        //                         {
-        //                             bPropertyFound = true;
-        //                             break;
-        //                         }
-        //                     }
-        //
-        //                     if (!(bPropertyFound && property.value == mls_filter[s]))
-        //                     {
-        //                         bFilterApproved = false;
-        //                         break;
-        //                     }
-        //                 }
-        //             }
-        //
-        //             // load
-        //             if (bFilterApproved)
-        //             {
-        //                 Mimoto.Aimless.utils.loadComponent($container, data.entityType, data.entityId, mls_component);
-        //             }
-        //             else
-        //             {
-        //                 // search
-        //                 var aSubitems = $("[mls_id='" + data.entityType + "." + data.entityId + "']", $container);
-        //
-        //                 aSubitems.each(function(nIndex, $component)
-        //                 {
-        //
-        //                     // 2. add connection id
-        //                     // 3. check if connection id exists
-        //
-        //                     // delete
-        //                     $component.remove();
-        //                 });
-        //             }
-        //         });
-        //     }
-        // }
-        //
-        //
-        //
-        // var aComponents = $("[mls_selection='" + mls_container + "']");
-        //
-        // // 1. mls_selection
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //
-        //         // --- component level ---
-        //
-        // // search
-        // var aComponents = $("[mls_id='" + sEntityIdentifier + "']");
-        // // get all elements with //$('[mls_id]') en check op sEntityIdentifier
-        //
-        // aComponents.each( function(index, $component)
-        // {
-        //
-        //     // read
-        //     //var mls_config = $($component).attr("mls_id");
-        //
-        //     // init
-        //     var config = [];
-        //
-        //     // read
-        //     var mls_config = $($component).attr("mls_config");
-        //     var mls_component = $($component).attr("mls_component");
-        //
-        //     // verify
-        //     if (mls_config !== undefined)
-        //     {
-        //         var aConfigParams = mls_config.split(';');
-        //
-        //         for (var i = 0; i < aConfigParams.length; i++)
-        //         {
-        //
-        //             // register
-        //             var configParam = aConfigParams[i];
-        //             var aConfigParamElements = configParam.split(':');
-        //
-        //             // register
-        //             config[aConfigParamElements[0].trim().toLowerCase()] = aConfigParamElements[1].trim().toLowerCase();
-        //         }
-        //     }
-        //
-        //     // reload component
-        //     if (config['onupdate'] == 'reload') // mls_config="onUpdate:reload"
-        //     {
-        //         $.ajax({
-        //             type: 'GET',
-        //             url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component,
-        //             data: null,
-        //             dataType: 'html',
-        //             success: function (data) {
-        //                 $($component).replaceWith(data);
-        //             }
-        //         });
-        //
-        //         // return;
-        //     }
-        //
-        // });
-        //
-        
-        
-        
-        // --- container level ---
-
-        
-        //console.log('Console.update - filtered');
-        
-        // 1. mls_contains="project.3.subprojects" wordt niet meegestuurd bij wie het object hoort
-        // 2. partOf
-        // 3. zoek naar connectietabellen
-        
-        
-        
-        // setup
-//        var mls_container = data.entityType;
-//        
-//        
-//        // search
-//        var aComponents = $("[mls_contains='" + mls_container + "']");
-//        
-//        aComponents.each( function(index, $component)
-//        {
-//            
-//            console.log('In mls_contains for updating information');
-//            
-//            // read
-//            var mls_contains = $($component).attr("mls_contains");
-//            
-//            console.log(mls_contains);
-//            
-//            var mls_filter = $($component).attr("mls_filter");
-//            var mls_component = $($component).attr("mls_component");
-//            //var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
-//
-//            // verify
-//            if (mls_component !== undefined)
-//            {
-//                $.ajax({
-//                    type: 'GET',
-//                    url: '/Mimoto.Aimless/' + data.entityType + '/' + data.entityId + '/' + mls_component,
-//                    data: null,
-//                    dataType: 'html',
-//                    success: function (data) {
-//                        $($component).append(data);
-//                    }
-//                });
-//            }
-//
-//        });
-        
     });
-    
+
     
     channel.bind('data.create', function(data)
     {
@@ -547,7 +350,7 @@ Mimoto.Aimless.connect = function()
         var mls_container = data.entityType;
         
         
-        console.clear();
+        //console.clear();
         
         console.log('Aimless - data.create');
         console.log(data);
@@ -778,7 +581,7 @@ Mimoto.form.closeForm = function(sFormName)
         currentForm.aSubmitButtons.push($component);
 
         // setup
-        $($component).click(function() { Mimoto.form.submit(sFormName); alert('Submit was auto connected!'); } );
+        $($component).click(function() { Mimoto.form.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
     });
 
 
@@ -901,105 +704,147 @@ Mimoto.form.submit = function(sFormName)
             console.log(resultData);
             console.log(resultStatus);
             console.log(resultSomething);
+
+            if (resultData.newEntities)
+            {
+
+                for (var sEntityType in resultData.newEntities)
+                {
+                    var newEntity = resultData.newEntities[sEntityType];
+
+                    // 1. locate form in dom
+                    var $form = $('form[name="' + resultData.formName + '"]');
+
+
+                    // update dom
+                    var aFields = $('[mls_form_field^="' + newEntity.selector + '"]', $form);
+                    aFields.each( function(index, $component)
+                    {
+                        var mls_form_field = $($component).attr("mls_form_field");
+                        mls_form_field = newEntity.id + mls_form_field.substr(newEntity.selector.length);
+                        $($component).attr("mls_form_field", mls_form_field);
+                    });
+
+                    // update dom
+                    var aFields = $('[mls_form_field_input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
+                    aFields.each( function(index, $component)
+                    {
+                        var sOld_mls_form_field_input = $($component).attr("mls_form_field_input");
+                        var sNew_mls_form_field_input = newEntity.id + sOld_mls_form_field_input.substr(newEntity.selector.length);
+                        $($component).attr("mls_form_field_input", sNew_mls_form_field_input);
+
+                        Mimoto.form.alterRegisteredFieldId(resultData.formName, sOld_mls_form_field_input, sNew_mls_form_field_input);
+
+                        var name = $($component).attr("name");
+                        name = newEntity.id + name.substr(newEntity.selector.length);
+                        $($component).attr("name", name);
+                    });
+
+                    // update dom
+                    var aFields = $('[mls_form_field_error^="' + newEntity.selector + '"]', $form);
+                    aFields.each( function(index, $component)
+                    {
+                        var mls_form_field_error = $($component).attr("mls_form_field_error");
+                        mls_form_field_error = newEntity.id + mls_form_field_error.substr(newEntity.selector.length);
+                        $($component).attr("mls_form_field_error", mls_form_field_error);
+                    });
+                }
+            }
+
+            if (resultData.newPublicKey)
+            {
+                // 6. read public key
+                var sPublicKey = '';
+                var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
+                aPublicKeys.each( function(index, $component)
+                {
+                    sPublicKey = $($component).val(resultData.newPublicKey);
+                });
+            }
         }
     });
 
-    // 5. show result
-    //console.log();
+
 }
 
 Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - settings
 {
-    // setup
-    var field = {
-        'sName': sInputFieldId,
-        'sType': 'input', // #todo - const
-        'settings': validation
-    };
-
-
     // read
     var currentForm = Mimoto.form._aForms[Mimoto.form._sCurrentOpenForm]; // #todo - validate if no form set
 
+    // setup
+    var field = {
+        'sFormId': currentForm,
+        'sName': sInputFieldId,
+        'sType': 'input', // #todo - const
+        'settings': validation,
+        $input: $("input[mls_form_field_input='" + sInputFieldId + "']")
+    };
+
+    // store
     currentForm.aFields.push(field);
-
-
-
-
-
-    var $input = $("input[mls_form_field_input='" + sInputFieldId + "']");
-
 
     // store
     Mimoto.Aimless.realtime.broadcastedValues[sInputFieldId] = {
         sFormName: currentForm.sFormName,
-        value: $($input).val()
+        value: $(field.$input).val()
     };
 
-
-    $input.on('input', function(e)
-    {
-        var sFormName = currentForm.sName;
-        var value = $(this).val();
-
-        Mimoto.Aimless.realtime.registerChange(sFormName, sInputFieldId, value);
-    });
-
-
-
-    var scope = {};
-    scope.validation = validation;
-    scope.sInputFieldId = sInputFieldId;
-
-    if (typeof validation == "undefined") return;
-
-    $('#form_data_' + sInputFieldId).on('input', function(e)
-    {
-
-        // init
-        var bValidated = true;
-        var sErrorMessage = '';
-
-
-        var value = $(this).val();
-
-
-        if (validation.regex)
-        {
-            var regex = new RegExp(validation.regex, 'g');
-
-            if (!regex.test(value))
-            {
-                var bValidated = false;
-                sErrorMessage += 'Value formatted incorrectly. Allowed format is: ' + validation.regex + '. ';
-            }
-        }
-
-        if (validation.maxchars)
-        {
-            if (value.length > validation.maxchars)
-            {
-                var bValidated = false;
-                sErrorMessage += 'Too many characters (' + value.length + ' of ' + validation.maxchars + ')';
-            }
-        }
-
-        if (!bValidated)
-        {
-            $('#form_errormessage_' + scope.sInputFieldId).addClass('error');
-            $('#form_data_' + scope.sInputFieldId).addClass('error');
-            $('#form_errormessage_' + scope.sInputFieldId).text(sErrorMessage);
-            console.warn(sErrorMessage);
-        }
-        else
-        {
-            $('#form_errormessage_' + scope.sInputFieldId).removeClass('error');
-            $('#form_data_' + scope.sInputFieldId).removeClass('error');
-            $('#form_errormessage_' + scope.sInputFieldId).text('');
-            console.log('Input = ok!');
-        }
-    });
+    // connect
+    Mimoto.form.connectInputField(field);
 };
+
+Mimoto.form.unregisterInputField = function(sInputFieldId)
+{
+
+}
+
+Mimoto.form.alterRegisteredFieldId = function(sFormName, sOldInputFieldId, sNewInputFieldId)
+{
+    var form = Mimoto.form._aForms[sFormName];
+
+    var nFieldCount = form.aFields.length;
+    for (var i = 0; i < nFieldCount; i++)
+    {
+        // register
+        var field = form.aFields[i];
+
+        if (field.sName == sOldInputFieldId)
+        {
+            field.$input.off('input');
+
+            field.sName = sNewInputFieldId;
+            field.$input = $("input[mls_form_field_input='" + sNewInputFieldId + "']");
+
+            // store
+            Mimoto.Aimless.realtime.broadcastedValues[sNewInputFieldId] = Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
+            delete Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
+
+            Mimoto.form.connectInputField(field);
+        }
+    }
+}
+
+Mimoto.form.connectInputField = function(field)
+{
+    field.$input.on('input', function(e)
+    {
+        var sFormName = field.sFormId;
+        var value = $(this).val();
+
+        Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
+
+        // #todo change reference to sInputFieldId / addEventListener / removeEventListener
+
+
+    });
+}
+
+
+
+
+
+
 
 
 Mimoto.CMS.notificationClose = function(sEntityType, nNotificationId)
@@ -1027,9 +872,6 @@ Mimoto.CMS.notificationClose = function(sEntityType, nNotificationId)
         }
     });
 }
-
-
-
 
 
 

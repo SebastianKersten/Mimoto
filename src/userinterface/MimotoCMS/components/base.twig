@@ -10,10 +10,12 @@
   <script src="/static/js/jquery-3.1.0.min.js"></script>
 
   <!--<script src="/static/js/diff_match_patch.js"></script>-->
-  {#<script src="/static/js/diff_match_patch_uncompressed.js"></script>#}
-  {#<script src="/static/js/Mimoto.CMS.js"></script>#}
-  {#<script src="/static/js/Mimoto.Aimless.js"></script>#}
-  <script src="/static/js/app.min.js"></script>
+  <script src="/static/js/diff_match_patch_uncompressed.js"></script>
+  <script src="/static/js/Mimoto.CMS.js"></script>
+  <script src="/static/js/Mimoto.Aimless.js"></script>
+
+  <script src="/static/js/mimoto.aimless.min.js"></script>
+  <script src="/static/js/mimoto.cms.min.js"></script>
 
   <script src="//use.typekit.net/utk0rsh.js"></script>
   <script>try {Typekit.load({async: true});} catch (e) {}</script>
@@ -29,7 +31,7 @@
 
     <section class="pagecontent">
 
-      <div class="form-component js-form-component-textline">
+      {#<div class="form-component js-form-component-textline">
         <label for="" class="form-component-title">Name <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
         <div class="form-component-content">
 
@@ -39,7 +41,7 @@
 
           <p class="form-component-description">The property name should be unique</p>
         </div>
-      </div>
+      </div>#}
 
       {% block content %}{% endblock %}
     </section>

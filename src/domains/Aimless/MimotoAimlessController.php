@@ -135,8 +135,15 @@ class MimotoAimlessController
 
 
 
+        $formResponse = (object) array( //new MimotoFormResponse();
+            'status' => '?',
+            'formName' => $sFormName,
+            'errors' => []
+        );
+
 
         // collect
+        $bAnyNewEntity = false;
         foreach ($aEntities as $sEntityType => $entityInfo)
         {
             // parse
@@ -153,8 +160,47 @@ class MimotoAimlessController
                 $entityInfo->entity->setValue($sPropertyName, $aRequestValues->$sValueKey);
             }
 
+
+            // prepare response
+            $bIsNew = (empty($entityInfo->entity->getId())) ? true : false;
+
             // store
             $app['Mimoto.Data']->store($entityInfo->entity);
+
+
+            // compose response
+            if ($bIsNew)
+            {
+                // toggle
+                $bAnyNewEntity = true;
+
+                // init if not yet defined
+                if (!isset($formResponse->newEntities)) $formResponse->newEntities = [];
+
+                // register
+                $formResponse->newEntities[$sEntityType] = (object) array(
+                    'selector' => $sEntityType.'.'.CoreConfig::ENTITY_NEW,
+                    'id' => $sEntityType.'.'.$entityInfo->entity->getId()
+                );
+            }
+        }
+
+
+
+        // in case of change selectors due to a nemly created entity, redetermine public key
+        if ($bAnyNewEntity)
+        {
+            // 1. init
+            $aNewValues = [];
+
+            // 2. collect
+            foreach ($aEntities as $sEntityType => $entityInfo) { $aNewValues[] = $entityInfo->entity; }
+
+            // 3. load
+            $formVars = $GLOBALS['Mimoto.Forms']->getFormVars($form, $aNewValues);
+
+            // 4. define
+            $formResponse->newPublicKey = $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities));
         }
 
 
@@ -164,7 +210,7 @@ class MimotoAimlessController
 
 
         // render and send
-        return new Response('Success!');
+        return new JsonResponse($formResponse);
         //return new Response(json_encode($aValues));
     }
 

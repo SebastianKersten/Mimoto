@@ -166,6 +166,19 @@ class Component
             ),
 
 
+            // forms - page and popup
+
+            (object) array(
+                'name' => 'Mimoto.CMS_form_Popup',
+                'file' => 'MimotoCMS/components/forms/FormPopup.twig',
+                'conditionals' => []
+            ),(object) array(
+                'name' => 'Mimoto.CMS_form_Page',
+                'file' => 'MimotoCMS/components/forms/FormPage.twig',
+                'conditionals' => []
+            ),
+
+
 
             // inputs
 

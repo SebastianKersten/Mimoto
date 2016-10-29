@@ -54,7 +54,7 @@ class MimotoUserService
     {
         // example
         $sUserId = self::USER_ID;
-        $sPublicKey = md5($sExtraSaltyHashThing.md5($sUserId.'#salthashything'));
+        $sPublicKey = md5($sExtraSaltyHashThing.md5($sUserId.'#salthashything')); // #todo get from config file
 
         // send
         return $sPublicKey;

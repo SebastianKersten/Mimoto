@@ -82,6 +82,10 @@ class MimotoFormService
         // 1. prepare
         $orderedValues = $this->orderValues($xValues);
 
+
+        // standaard formulier feedback, met id
+
+
         // 2. register fields
         $aFields = (!empty($aFields)) ? $aFields : $form->getValue('fields', true);
 
@@ -124,7 +128,11 @@ class MimotoFormService
                     $sVarName = $fieldValue->getValue('varname');
 
                     // validate
-                    if (!isset($orderedValues->customvars[$sVarName])) continue;
+                    if (!isset($orderedValues->customvars[$sVarName]))
+                    {
+                        $GLOBALS['Mimoto.Log']->notify('Input has no varname', "The input with id <b>".$field->getId()."</b> is of type <b>varname</b> but the actual varname hasn't been defined");
+                        continue;
+                    }
 
                     // store
                     $formVars->fieldVars[$sFieldSelector] = (object) array(
@@ -150,8 +158,8 @@ class MimotoFormService
                     $sEntityName = $this->_MimotoEntityConfigService->getEntityNameByPropertyId($entityPropertyId);
                     $sPropertyName = $this->_MimotoEntityConfigService->getPropertyNameById($entityPropertyId);
 
-                    // validate
-                    if (!isset($orderedValues->entities[$sEntityName])) continue;
+                    // auto create
+                    if (!isset($orderedValues->entities[$sEntityName])) $orderedValues->entities[$sEntityName] = $GLOBALS['Mimoto.Data']->create($sEntityName);
 
                     // prepare
                     $xEntityId = $orderedValues->entities[$sEntityName]->getId();

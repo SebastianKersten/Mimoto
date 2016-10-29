@@ -24,8 +24,8 @@ module.exports = function (env) {
       extensions: ['', '.js']
     },
     entry: {
-      app: [jsSrc + '/app/javascript/app.js'],
-      aimless: [jsSrc + '/app/javascript/mimoto.aimless.js']
+      'mimoto.cms': [jsSrc + '/app/javascript/mimoto.cms.js'],
+      'mimoto.aimless': [jsSrc + '/app/javascript/mimoto.aimless.js']
     },
     output: {
       path: jsDest,
