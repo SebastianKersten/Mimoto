@@ -1,4 +1,4 @@
-div.MimotoCMS_pages_entities_EntityListItem {
+div.MimotoCMS_pages_components_ComponentListItem {
     position: relative;
     display: block;
     margin-right: 10px;
@@ -9,17 +9,17 @@ div.MimotoCMS_pages_entities_EntityListItem {
     cursor: pointer;
 }
 
-    div.MimotoCMS_pages_entities_EntityListItem:hover {
+    div.MimotoCMS_pages_components_ComponentListItem:hover {
         background-color: #06afea;
         color: #ffffff;
     }
 
-div.MimotoCMS_pages_entities_EntityListItem__label {
+div.MimotoCMS_pages_components_ComponentListItem__label {
     font-size: 14px;
     font-weight: bold;
 }
 
-div.MimotoCMS_pages_entities_EntityListItem__sublabel {
+div.MimotoCMS_pages_components_ComponentListItem__sublabel {
     font-size: 14px;
     font-style: italic;
 }

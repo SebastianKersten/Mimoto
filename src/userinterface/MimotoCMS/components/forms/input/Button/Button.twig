@@ -19,7 +19,7 @@
   {% endfor %}
 {% endif %}
 
-<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_forms_input_Button{{ classes }}" {% if onclick %}onclick="{{ onclick }}"{%  endif %}>
+<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_forms_input_Button{{ classes }} {% if type == "secondary"|default('') %}button--secondary{% endif %}{% if type == "alert"|default('') %}button--alert{% endif %}" {% if onclick %}onclick="{{ onclick }}"{%  endif %}>
   {% if label|default('') %}
     <span class="MimotoCMS_forms_input_Button__text">{{ label }}</span>
   {% endif %}

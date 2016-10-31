@@ -316,27 +316,7 @@ Mimoto.Aimless.connect = function()
                 {
                     if (mls_form_field_input === (sEntityIdentifier + '.' + change.propertyName))
                     {
-
-                        if ($($component).is("input"))
-                        {
-                            switch($($component).attr('type'))
-                            {
-                                case 'radio':
-
-                                    // output
-                                    $($component).each( function(nIndex, $component)
-                                    {
-                                        $($component).prop('checked', $($component).val() == change.value);
-                                    });
-                                    break;
-
-                                default:
-
-                                    // output
-                                    $($component).val(change.value);
-                            }
-                        };
-
+                        Mimoto.form.setInputFieldValue($component, value);
                     }
                 }
             }
@@ -651,32 +631,8 @@ Mimoto.form.submit = function(sFormName)
         aComponents.each( function(index, $component)
         {
             // init
-            var value = null;
+            var value = Mimoto.form.getValueFromInputField($component);
 
-            // validate
-            if ($($component).is("input"))
-            {
-                switch($($component).attr('type'))
-                {
-                    case 'radio':
-
-                        if ($($component).prop("checked") === true) {
-                            value = $($component).val();
-                        }
-                        break;
-
-                    default:
-
-                        value = $($component).val();
-                }
-
-
-            };
-
-            if ($($component).is("select"))
-            {
-                value = $($component).val();
-            }
             // store
             if (value !== null) aValues[field.sName] = value;
         });
@@ -761,10 +717,69 @@ Mimoto.form.submit = function(sFormName)
                     sPublicKey = $($component).val(resultData.newPublicKey);
                 });
             }
+
+            // 1. #todo get input field value in method
+            // 2. collaborationMode
+
         }
     });
 
 
+}
+
+Mimoto.form.getValueFromInputField = function($component)
+{
+    // init
+    var value = null;
+
+    // validate
+    if ($($component).is("input"))
+    {
+        switch($($component).attr('type'))
+        {
+            case 'radio':
+
+                if ($($component).prop("checked") === true) {
+                    value = $($component).val();
+                }
+                break;
+
+            default:
+
+                value = $($component).val();
+        }
+    };
+
+    if ($($component).is("select"))
+    {
+        value = $($component).val();
+    }
+
+    // send
+    return value;
+}
+
+Mimoto.form.setInputFieldValue = function($component, value)
+{
+    if ($($component).is("input"))
+    {
+        switch($($component).attr('type'))
+        {
+            case 'radio':
+
+                // output
+                $($component).each( function(nIndex, $component)
+                {
+                    $($component).prop('checked', $($component).val() == change.value);
+                });
+                break;
+
+            default:
+
+                // output
+                $($component).val(change.value);
+        }
+    };
 }
 
 Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - settings

@@ -26,6 +26,19 @@
   }
 }
 
-.MimotoCMS_forms_input_Button.button--grey {
-  background-color: $silver;
+.MimotoCMS_forms_input_Button.button--secondary {
+  background-color: $tower-gray;
 }
+
+.MimotoCMS_forms_input_Button.button--secondary:hover {
+  background-color: $black;
+}
+
+.MimotoCMS_forms_input_Button.button--alert {
+  background-color: $fuzzy-wuzzy-brown;
+}
+
+.MimotoCMS_forms_input_Button.button--alert:hover {
+  background-color: $black;
+}
+

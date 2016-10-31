@@ -26,11 +26,16 @@ Mimoto.CMS.entityCreate = function(data)
     });
 }
 
+Mimoto.CMS.entityView = function(nEntityId)
+{
+    window.open('/mimoto.cms/entity/' + nEntityId + '/view', '_self');
+}
+
 Mimoto.CMS.entityEdit = function(nEntityId)
 {
     console.log('Start editing ...');
 
-    Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/edit");
+    window.open('/mimoto.cms/entities', '_self');
 }
 
 Mimoto.CMS.entityUpdate = function(nEntityId, data)

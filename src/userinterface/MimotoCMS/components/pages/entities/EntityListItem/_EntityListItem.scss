@@ -1,25 +1,39 @@
 div.MimotoCMS_pages_entities_EntityListItem {
-    position: relative;
-    display: block;
     margin-right: 10px;
     margin-bottom: 5px;
     padding: 10px;
-    background-color: #ffffff;
-    color: #000000;
-    cursor: pointer;
+    background-color: $white;
+    color: $black;
+
+    font-family: $font-family-futura;
+
+    justify-content: center;
+
+    flex-direction: row;
+    align-items: center;
+    flex: 1 300px;
+
+    display: flex;
+    flex-wrap: wrap;
 }
 
-    div.MimotoCMS_pages_entities_EntityListItem:hover {
-        background-color: #06afea;
-        color: #ffffff;
+div.MimotoCMS_pages_entities_EntityListItem__info {
+    flex-grow: 4;
+    align-items: stretch;
+}
+
+    div.MimotoCMS_pages_entities_EntityListItem__label {
+        font-size: 20px;
     }
 
-div.MimotoCMS_pages_entities_EntityListItem__label {
-    font-size: 14px;
-    font-weight: bold;
-}
+    div.MimotoCMS_pages_entities_EntityListItem__sublabel {
+        font-size: 14px;
+        font-style: italic;
+        color: $sinbad;
+    }
 
-div.MimotoCMS_pages_entities_EntityListItem__sublabel {
-    font-size: 14px;
-    font-style: italic;
+div.MimotoCMS_pages_entities_EntityListItem__menu {
+    flex-grow: 1;
+    align-items: stretch;
+    text-align: right;
 }
