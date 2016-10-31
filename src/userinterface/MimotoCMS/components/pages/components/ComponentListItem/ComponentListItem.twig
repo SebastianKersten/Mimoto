@@ -1,4 +1,11 @@
-<div class="MimotoCMS_pages_components_ComponentListItem" onclick="window.open('/mimoto.cms/component/{{ Aimless.meta('id') }}/view', '_self');">
-    <div class="MimotoCMS_pages_components_ComponentListItem__label" {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</div>
-    <div class="MimotoCMS_pages_components_ComponentListItem__sublabel" {{ Aimless.realtime('file')|raw }}>{{ Aimless.data('file') }}</div>
-</div>
+{%
+    include 'MimotoCMS/components/modules/ListItem/ListItem.twig' with {
+        label: Aimless.data('name'),
+        label_realtime: Aimless.realtime('name'),
+        sublabel: Aimless.data('file'),
+        sublabel_realtime: Aimless.realtime('file'),
+        button_label: 'View',
+        button_action: 'Mimoto.CMS.componentView('~Aimless.meta('id')~');',
+        button_type: 'secondary'
+    }
+%}

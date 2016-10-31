@@ -17,10 +17,7 @@
 @import 'forms/layout/GroupEnd/GroupEnd';
 @import 'forms/layout/Divider/Divider';
 
-@import 'pages/entities/EntityOverview/EntityOverview';
-@import 'pages/entities/EntityListItem/EntityListItem';
-@import 'pages/entities/EntityDetail/EntityDetail';
-@import 'pages/entities/PropertyListItem/PropertyListItem';
+@import 'pages/entities/Entities';
 
 @import 'pages/forms/FormOverview/FormOverview';
 @import 'pages/forms/FormListItem/FormListItem';
@@ -32,3 +29,4 @@
 
 @import 'interface/Interface';
 @import 'pages/components/Components';
+@import 'modules/Modules';

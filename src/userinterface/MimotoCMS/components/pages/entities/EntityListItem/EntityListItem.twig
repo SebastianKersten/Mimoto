@@ -1,9 +1,11 @@
-<div class="MimotoCMS_pages_entities_EntityListItem">
-    <div class="MimotoCMS_pages_entities_EntityListItem__info">
-        <div class="MimotoCMS_pages_entities_EntityListItem__label" {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</div>
-        <div class="MimotoCMS_pages_entities_EntityListItem__sublabel">id = {{ Aimless.meta('id') }}</div>
-    </div>
-    <div class="MimotoCMS_pages_entities_EntityListItem__menu">
-        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'View', onclick:"Mimoto.CMS.entityView("~Aimless.meta('id')~");", type:"secondary" } %}
-    </div>
-</div>
+{%
+    include 'MimotoCMS/components/modules/ListItem/ListItem.twig' with
+    {
+        label: Aimless.data('name'),
+        label_realtime: Aimless.realtime('name'),
+        sublabel: 'id = '~Aimless.meta('id'),
+        button_label: 'View',
+        button_action: 'Mimoto.CMS.entityView('~Aimless.meta('id')~');',
+        button_type: 'secondary'
+    }
+%}

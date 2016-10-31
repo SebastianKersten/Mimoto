@@ -1,0 +1,9 @@
+<div class="MimotoCMS_components_ListItem">
+    <div class="MimotoCMS_components_ListItem__info">
+        <div class="MimotoCMS_components_ListItem__label" {{ label_realtime|raw }}>{{ label }}</div>
+        <div class="MimotoCMS_components_ListItem__sublabel" {{ sublabel_realtime|raw }}>{{ sublabel }}</div>
+    </div>
+    <div class="MimotoCMS_components_ListItem__menu">
+        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:button_label, onclick:button_action, type:button_type } %}
+    </div>
+</div>

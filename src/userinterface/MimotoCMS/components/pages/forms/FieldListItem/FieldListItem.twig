@@ -1,4 +1,11 @@
-<div class="MimotoCMS_pages_forms_FieldListItem" onclick="Mimoto.CMS.entityPropertyEdit({{ Aimless.meta('id') }});">
-    <div class="MimotoCMS_pages_forms_FieldListItem__label" {{ Aimless.realtime('value.vartype')|raw }}>{{ Aimless.data('value.vartype') }}</div>
-    <div class="MimotoCMS_pages_forms_FieldListItem__sublabel" {{ Aimless.realtime('type')|raw }}>{{ Aimless.data('type') }}</div>
-</div>
+{%
+    include 'MimotoCMS/components/modules/ListItem/ListItem.twig' with {
+        label: Aimless.data('value.vartype'),
+        label_realtime: Aimless.realtime('value.vartype'),
+        sublabel: Aimless.data('type'),
+        sublabel_realtime: Aimless.realtime('type'),
+        button_label: 'View',
+        button_action: 'Mimoto.CMS.formView('~Aimless.meta('id')~');',
+        button_type: 'secondary'
+    }
+%}

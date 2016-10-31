@@ -33,9 +33,7 @@ Mimoto.CMS.entityView = function(nEntityId)
 
 Mimoto.CMS.entityEdit = function(nEntityId)
 {
-    console.log('Start editing ...');
-
-    window.open('/mimoto.cms/entities', '_self');
+    Mimoto.popup.open('/mimoto.cms/entity/' + nEntityId + '/edit');
 }
 
 Mimoto.CMS.entityUpdate = function(nEntityId, data)
