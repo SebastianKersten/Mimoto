@@ -4,7 +4,7 @@
 
     Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br>
     hasTable = ...<br>
-    extends = ...<br>
+    extends = ...[ #todo ]<br>
     {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');" } %}<br>
     <br>
     Properties:<br>
