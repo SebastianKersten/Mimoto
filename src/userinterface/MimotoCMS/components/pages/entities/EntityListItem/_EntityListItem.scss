@@ -1,5 +1,5 @@
 div.MimotoCMS_pages_entities_EntityListItem {
-    margin-right: 10px;
+    margin-right: 5px;
     margin-bottom: 5px;
     padding: 10px;
     background-color: $white;
@@ -14,7 +14,7 @@ div.MimotoCMS_pages_entities_EntityListItem {
     flex: 1 300px;
 
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 div.MimotoCMS_pages_entities_EntityListItem__info {
@@ -36,4 +36,5 @@ div.MimotoCMS_pages_entities_EntityListItem__menu {
     flex-grow: 1;
     align-items: stretch;
     text-align: right;
+    margin-left: 10px;
 }
