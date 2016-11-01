@@ -54,6 +54,7 @@ class EntityController
         $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITY);
 
         // 1. create
+        //$component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Page');
 
         // 2. setup
@@ -87,7 +88,7 @@ class EntityController
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityDetail', $entity);
 
         // 4. setup component
-        $page->setPropertyComponent('properties', 'Mimoto.CMS_entities_PropertyListItem');
+        $page->setPropertyComponent('properties', 'Mimoto.CMS_entities_EntityPropertyListItem');
 
         // setup page
         $page->setVar('pageTitle', array(

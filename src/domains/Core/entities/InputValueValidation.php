@@ -57,6 +57,23 @@ class InputValueValidation
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--errorMessage',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'errorMessage',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--errorMessage-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
                 )
             ]
         );

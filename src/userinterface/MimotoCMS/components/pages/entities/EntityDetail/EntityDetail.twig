@@ -2,25 +2,53 @@
 
 {% block content %}
 
-    Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br>
-    hasTable = ...<br>
-    extends = ...[ #todo ]<br>
-    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');" } %}<br>
-    <br>
-    Properties:<br>
-    <br>
-    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'+', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}
-    <br>
-    <br>
-    <div class="MimotoCMS_pages_entities_EntityDetail__container" {{ Aimless.realtime('properties')|raw }}>
-        {{ Aimless.data('properties')|raw }}
+    {% set extends = Aimless.data('extends.name') %}
+    {# set extends_id = Aimless.meta('extends.id') #}{# todo #}
+    {% set extends_id = Aimless.meta('id') %}{# todo #}
+
+
+    <div class="MimotoCMS_pages_entities_EntityDetail__meta">
+
+        <div class="MimotoCMS_pages_entities_EntityDetail__meta_info">
+            Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
+            {% if extends is not empty %} extends <b><a href="/mimoto.cms/entity/{{ extends_id }}/view"><span {{ Aimless.realtime('extends.name')|raw }}>{{ extends }}</span></a></b>{% endif %}<br>
+
+            hasTable = ...<br>
+            <br>
+            #todo<br>
+            // 1. show inherited properties<br>
+            // 2. add checkbox<br>
+            // 3. add dropdown with other entities<br>
+            // 4. tab-module<br>
+            // 5. visual representation<br>
+        </div>
+        <div class="MimotoCMS_pages_entities_EntityDetail__meta_menu">
+            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' } %}<br>
+        </div>
+
     </div>
+
+    tabs | action: state-permission -> onCreate (voor welke groep?)<br>
+
+
+    <div class="MimotoCMS_pages_entities_EntityDetail__properties">
+        <br>
+        Properties:<br>
+        <br>
+        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'+', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}
+        <br>
+        <br>
+        <div class="MimotoCMS_pages_entities_EntityDetail__container" {{ Aimless.realtime('properties')|raw }}>
+            {{ Aimless.data('properties')|raw }}
+        </div>
+    </div>
+
     <br>
     <hr>
     <br>
     <b>Danger zone!</b><br>
-    <br>
     <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
     <br>
     {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Delete entity', icon:'X', onclick:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", type:'alert' } %}
+
 {% endblock %}

@@ -117,11 +117,50 @@ class AimlessInput extends AimlessComponent
         // render
         $sRenderedField = $this->_TwigService->render($sComponentFile, $this->_aVars);
 
+        // load and prepare
+        $settings = (object) array(
+            'validation' => $this->getValidationRules()
+        );
+
         // connect
-        $sRenderedField .= '<script>Mimoto.form.registerInputField("'.$this->_sFieldId.'")</script>';
+        $sRenderedField .= '<script>Mimoto.form.registerInputField(\''.$this->_sFieldId.'\', '.json_encode($settings).')</script>';
 
         // output
         return $sRenderedField;
     }
-    
+
+    /**
+     * Get validation rules
+     * @return array Validation rules
+     */
+    private function getValidationRules()
+    {
+        // init
+        $aValidationRules = [];
+
+        // read
+        $value = $this->_entity->getValue('value');
+        $aValueValidationRules = $value->getValue('validation', true);
+
+        // validate
+        if (!empty($aValueValidationRules))
+        {
+            // load
+            $nValidationCount = count($aValueValidationRules);
+            for ($i = 0; $i < $nValidationCount; $i++)
+            {
+                // register
+                $validationRule = $aValueValidationRules[$i];
+
+                $aValidationRules[] = (object) array(
+                    'key' => $validationRule->getValue('key'),
+                    'value' => $validationRule->getValue('value'),
+                    'errorMessage' => $validationRule->getValue('errorMessage')
+                );
+            }
+        }
+
+        // send
+        return $aValidationRules;
+    }
 }

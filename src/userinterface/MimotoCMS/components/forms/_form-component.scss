@@ -126,3 +126,9 @@
     margin: 0 0 10px;
   }
 }
+
+.form-component-title::after {
+  background-color: #06afea;
+  content: ' - Error';
+  color: $fuzzy-wuzzy-brown;
+}

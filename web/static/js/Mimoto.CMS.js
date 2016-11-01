@@ -11,7 +11,9 @@ if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
 
 Mimoto.CMS.entityNew = function()
 {
-    Mimoto.popup.open("/mimoto.cms/entity/new");
+    var popup = Mimoto.popup.open("/mimoto.cms/entity/new");
+
+    //popup.on('success') = popup.close();
 }
 
 Mimoto.CMS.entityCreate = function(data)

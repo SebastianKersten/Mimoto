@@ -782,18 +782,23 @@ Mimoto.form.setInputFieldValue = function($component, value)
     };
 }
 
-Mimoto.form.registerInputField = function(sInputFieldId, validation) // #todo - settings
+Mimoto.form.registerInputField = function(sInputFieldId, settings)
 {
     // read
     var currentForm = Mimoto.form._aForms[Mimoto.form._sCurrentOpenForm]; // #todo - validate if no form set
+
+    // 1. locate form in dom
+    var $form = $('form[name="' + currentForm.sName + '"]');
 
     // setup
     var field = {
         'sFormId': currentForm,
         'sName': sInputFieldId,
         'sType': 'input', // #todo - const
-        'settings': validation,
-        $input: $("input[mls_form_field_input='" + sInputFieldId + "']")
+        'settings': settings,
+        $field: $("[mls_form_field='" + sInputFieldId + "']", $form),
+        $input: $("input[mls_form_field_input='" + sInputFieldId + "']", $form),
+        $error: $("[mls_form_field_error='" + sInputFieldId + "']", $form)
     };
 
     // store
@@ -851,10 +856,86 @@ Mimoto.form.connectInputField = function(field)
 
         // #todo change reference to sInputFieldId / addEventListener / removeEventListener
 
+        Mimoto.form.validateInputField(field);
+
 
     });
 }
 
+Mimoto.form.validateInputField = function(field)
+{
+    // validae
+    if (!field.settings) return;
+    if (!field.settings.validation) return;
+
+    // init
+    var sErrorMessage = '';
+
+    // check rules
+    var nValidationRuleCount = field.settings.validation.length;
+    var bValid = true;
+    for (var i = 0; i < nValidationRuleCount; i++)
+    {
+        // register
+        var validationRule = field.settings.validation[i];
+
+        // read
+        var value = Mimoto.form.getValueFromInputField(field.$input);
+
+        switch(validationRule.key)
+        {
+            case 'maxchars':
+
+                // validate
+                if (value.length > validationRule.value)
+                {
+                    sErrorMessage = validationRule.errorMessage;
+                    bValid = false;
+                }
+                break;
+
+            case 'minchars':
+
+                // validate
+                if (value.length < validationRule.value)
+                {
+                    sErrorMessage = validationRule.errorMessage;
+                    bValid = false;
+                }
+                break;
+
+            case 'regex_custom':
+
+                // init
+                var patt = new RegExp(validationRule.value);
+
+                // validate
+                if (!patt.test(value))
+                {
+                    sErrorMessage = validationRule.errorMessage;
+                    bValid = false;
+                }
+                break;
+        }
+
+        if (!bValid) break;
+    }
+
+    // update interface
+    if (field.$error)
+    {
+        if (sErrorMessage)
+        {
+            field.$error.text(sErrorMessage);
+            // #todo toggle field icon - zie code David
+        }
+        else
+        {
+            field.$error.text('');
+        }
+    }
+
+}
 
 
 

@@ -94,8 +94,8 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_PropertyListItem',
-                'file' => 'MimotoCMS/components/pages/entities/PropertyListItem/PropertyListItem.twig',
+                'name' => 'Mimoto.CMS_entities_EntityPropertyListItem',
+                'file' => 'MimotoCMS/components/pages/entities/EntityPropertyListItem/EntityPropertyListItem.twig',
                 'conditionals' => []
             ),
 
