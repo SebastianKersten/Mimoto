@@ -26,13 +26,16 @@
                 extendedBy:<br>
                 <ul>
                 {% for extension in entityStructure.extendedBy %}
-                    <li><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_id="entity.{{ extension.id }}.name">{{ extension.name }}</span></a></li>
+                    <li><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_value="_MimotoAimless__core__entity.{{ extension.id }}.name">{{ extension.name }}</span></a></li>
                 {% endfor %}
                 </ul>
             {% endif %}
 
             {% if entityStructure.hasTable %}
-                This entity has {{ entityStructure.instanceCount }} {% if entityStructure.instanceCount == 1 %}instance{% else %}instances{% endif %}
+                <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_container">
+                    <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_description">Number&nbsp;of<br>instances</div>
+                    <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_number">{{ entityStructure.instanceCount }}</div>
+                </div>
             {% else %}
                 This entity has no table and is only used for extension purposes
             {% endif %}
@@ -43,12 +46,10 @@
             <br>
             <br>
             #todo<br>
-            // 1. show inherited properties<br>
             // 2. add checkbox<br>
             // 3. add dropdown with other entities<br>
             // 4. tab-module<br>
-            // 5. visual representation<br>
-            // 6. number of entities of this type (stats)<br>
+            // 5. visual representation (collection with small template)<br>
             // 7. used in x connections (stats)<br>
             // 8. properties op aparte pagina<br>
             // 9. edit meta data op aparte pagina<br>
@@ -58,8 +59,6 @@
         </div>
 
     </div>
-
-    tabs | action: state-permission -> onCreate (voor welke groep?)<br>
 
 
     <div class="MimotoCMS_pages_entities_EntityDetail__properties">

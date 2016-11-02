@@ -25,3 +25,22 @@ div.MimotoCMS_pages_entities_EntityDetail__meta_menu {
     text-align: right;
     margin-left: 10px;
 }
+
+div.MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_container {
+    display: inline-block;
+    padding: 0 20px 0 20px;
+    background-color: $sinbad;
+    color: #ffffff;
+}
+
+div.MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_description {
+    display: inline-block;
+    text-align: right;
+    margin-right: 10px;
+}
+
+div.MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_number {
+    display: inline-block;
+    font-size: 50px;
+    font-weight: bold;
+}

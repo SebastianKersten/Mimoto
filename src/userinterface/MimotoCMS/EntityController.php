@@ -275,37 +275,7 @@ class EntityController
         // --- extendedBy ---
 
 
-        // load
-        $stmt = $GLOBALS['database']->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
-            "parent_entity_type_id = :parent_entity_type_id && ".
-            "parent_property_id = :parent_property_id && ".
-            "child_entity_type_id = :child_entity_type_id &&".
-            "child_id = :child_id"
-        );
-        $params = array(
-            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
-            ':parent_property_id' => CoreConfig::MIMOTO_ENTITY.'--extends',
-            ':child_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
-            ':child_id' => $entity->getId()
-        );
-
-        $stmt->execute($params);
-
-        // load
-        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        foreach ($aResults as $row)
-        {
-            // load
-            $offspring = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $row['parent_id']);
-
-            // compose and store
-            $entityStructure->extendedBy[] = (object) array(
-                'id' => $row['parent_id'],
-                'name' => $offspring->getValue('name')
-            );
-        }
+        $entityStructure->extendedBy =$this->getChildExtension($entity->getId());
 
 
 
@@ -354,5 +324,53 @@ class EntityController
 
         // send
         return $entityStructure;
+    }
+
+
+    private function getChildExtension($nEntityId)
+    {
+        // init
+        $aChildExtensions = [];
+
+        // load
+        $stmt = $GLOBALS['database']->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id && ".
+            "parent_property_id = :parent_property_id && ".
+            "child_entity_type_id = :child_entity_type_id &&".
+            "child_id = :child_id"
+        );
+        $params = array(
+            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
+            ':parent_property_id' => CoreConfig::MIMOTO_ENTITY.'--extends',
+            ':child_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
+            ':child_id' => $nEntityId
+        );
+
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($aResults as $row)
+        {
+            // load
+            $offspring = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $row['parent_id']);
+
+            // compose and store
+            $aChildExtensions[] = (object) array(
+                'id' => $row['parent_id'],
+                'name' => $offspring->getValue('name')
+            );
+
+            // check
+            if (!empty($aSubchildExtensions = $this->getChildExtension($row['parent_id'])))
+            {
+                $aChildExtensions = array_merge($aChildExtensions, $aSubchildExtensions);
+            }
+        }
+
+        // send
+        return $aChildExtensions;
     }
 }
