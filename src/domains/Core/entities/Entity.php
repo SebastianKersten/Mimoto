@@ -82,6 +82,23 @@ class Entity
                             'value' => CoreConfig::MIMOTO_ENTITY
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--noTable',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'noTable',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--noTable-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
                 )
             ]
         );

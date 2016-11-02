@@ -5,6 +5,7 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Silex classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\Data\MimotoEntity;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -91,6 +92,7 @@ class EntityController
         $page->setPropertyComponent('properties', 'Mimoto.CMS_entities_EntityPropertyListItem');
 
         // setup page
+        $page->setVar('entityStructure', $this->getEntityStructure($entity));
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => 'Entities',
@@ -193,5 +195,164 @@ class EntityController
 
         // 5. render and send
         return $component->render();
+    }
+
+
+
+
+    private function getEntityStructure(MimotoEntity $entity)
+    {
+        // init
+        $entityStructure = (object) array();
+        $entityStructure->name = $entity->getValue('name');
+        $entityStructure->hasTable = ($entity->getValue('noTable') == 1) ? false : true;
+        $entityStructure->instanceCount = 0;
+        $entityStructure->extends = [];
+        $entityStructure->extendedBy = [];
+        $entityStructure->properties = [];
+
+
+
+        // --- instanceCount ---
+
+
+        if ($entityStructure->hasTable)
+        {
+            // load
+            $stmt = $GLOBALS['database']->prepare('SELECT count(id) FROM ' . $entity->getValue('name'));
+            $params = array();
+            $stmt->execute($params);
+
+            // load
+            $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            // store
+            $entityStructure->instanceCount = $aResults[0]['count(id)'];
+        }
+
+
+        // --- extends ---
+
+
+        // load
+        $entityExtends = $entity->getValue('extends');
+
+        if (!empty($entityExtends))
+        {
+            // compose and store
+            $entityStructure->extends[] = (object) array(
+                'id' => $entityExtends->getId(),
+                'name' => $entityExtends->getValue('name')
+            );
+
+            $bHasParent = true;
+            $nParentId = $entityExtends->getId();
+            while($bHasParent)
+            {
+                // load
+                $parent = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nParentId);
+
+                // load
+                $entityExtends = $parent->getValue('extends');
+
+                if (!empty($entityExtends))
+                {
+                    // compose and store
+                    $entityStructure->extends[] = (object) array(
+                        'id' => $entityExtends->getId(),
+                        'name' => $entityExtends->getValue('name')
+                    );
+                    $nParentId = $entityExtends->getId();
+                }
+                else
+                {
+                    $bHasParent = false;
+                }
+            }
+        }
+
+
+        // --- extendedBy ---
+
+
+        // load
+        $stmt = $GLOBALS['database']->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id && ".
+            "parent_property_id = :parent_property_id && ".
+            "child_entity_type_id = :child_entity_type_id &&".
+            "child_id = :child_id"
+        );
+        $params = array(
+            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
+            ':parent_property_id' => CoreConfig::MIMOTO_ENTITY.'--extends',
+            ':child_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
+            ':child_id' => $entity->getId()
+        );
+
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($aResults as $row)
+        {
+            // load
+            $offspring = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $row['parent_id']);
+
+            // compose and store
+            $entityStructure->extendedBy[] = (object) array(
+                'id' => $row['parent_id'],
+                'name' => $offspring->getValue('name')
+            );
+        }
+
+
+
+        // --- properties ---
+
+
+        // load
+        $aEntityProperties = $entity->getValue('properties', true);
+
+        $nPropertyCount = count($aEntityProperties);
+        for ($i = 0; $i < $nPropertyCount; $i++)
+        {
+            // register
+            $entityProperty = $aEntityProperties[$i];
+
+            // init
+            $aSettings = [];
+
+            // load
+            $aPropertySettings = $entityProperty->getValue('settings', true);
+//error($entityProperty);
+            $nSettingCount = count($aPropertySettings);
+            for ($j = 0; $j < $nSettingCount; $j++)
+            {
+                // register
+                $propertySetting = $aPropertySettings[$j];
+//echo 'j='.$j;
+                $setting = (object) array(
+                    'key' => $propertySetting->getValue('key'),
+                    'type' => $propertySetting->getValue('type'),
+                    'value' => $propertySetting->getValue('value'),
+                );
+
+                // store
+                $aSettings[] = $setting;
+            }
+
+            // store
+            $entityStructure->properties[] = (object) array(
+                'name' => $entityProperty->getValue('name'),
+                'type' => $entityProperty->getValue('type'),
+                'settings' => $aSettings
+            );
+        }
+//error($entityStructure);
+
+        // send
+        return $entityStructure;
     }
 }

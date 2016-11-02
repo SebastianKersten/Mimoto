@@ -10,10 +10,37 @@
     <div class="MimotoCMS_pages_entities_EntityDetail__meta">
 
         <div class="MimotoCMS_pages_entities_EntityDetail__meta_info">
-            Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
-            {% if extends is not empty %} extends <b><a href="/mimoto.cms/entity/{{ extends_id }}/view"><span {{ Aimless.realtime('extends.name')|raw }}>{{ extends }}</span></a></b>{% endif %}<br>
 
-            hasTable = ...<br>
+            Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
+
+            {% if entityStructure.extends is not empty %}
+                {% for extension in entityStructure.extends %}
+                    extends <b><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_id="entity.{{ extension.id }}.name">{{ extension.name }}</span></a></b>
+                {% endfor %}
+                <br>
+            {% endif %}
+
+
+            {% if entityStructure.extendedBy is not empty %}
+                <br>
+                extendedBy:<br>
+                <ul>
+                {% for extension in entityStructure.extendedBy %}
+                    <li><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_id="entity.{{ extension.id }}.name">{{ extension.name }}</span></a></li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if entityStructure.hasTable %}
+                This entity has {{ entityStructure.instanceCount }} {% if entityStructure.instanceCount == 1 %}instance{% else %}instances{% endif %}
+            {% else %}
+                This entity has no table and is only used for extension purposes
+            {% endif %}
+
+
+
+            <br>
+            <br>
             <br>
             #todo<br>
             // 1. show inherited properties<br>
