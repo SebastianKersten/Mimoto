@@ -1,6 +1,6 @@
-<div {{ Aimless.field()|raw }} class="form-component">
+<div {{ Aimless.field()|raw }} class="form-component{% if type|default('') %} js-form-component-{{ type }}{% endif %}">
 
-    <label for="" class="form-component-title">{{ Aimless.data('label') }} {% if Aimless.data('value.optional') %}<span class="form-component-title-information">(optioneel)</span>{% endif %}{#<svg class="form-component-title-icon form-component-title-icon--warning"><use xlink:href='#ico-warning'/></svg>#}</label>
+    <label for="" class="form-component-title">{{ Aimless.data('label') }} {% if Aimless.data('value.optional') %}<span class="form-component-title-information">(optioneel)</span>{% endif %}<svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
 
     <div class="form-component-content {% if not Aimless.data('description')|default('') %}form-component-content--no-description{% endif %}">
 

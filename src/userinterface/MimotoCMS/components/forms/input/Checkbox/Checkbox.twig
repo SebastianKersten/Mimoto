@@ -9,6 +9,27 @@
   </div>
 #}
 
+{#
+{% embed "MimotoCMS/components/forms/form_component.twig" with {"type": "checkbox"} %}
+  {% block form_component_element %}
+    <div class="form-component-element-container">
+      <div class="form-checkbox-container">
+        <input type="checkbox" class="form-checkbox" />
+        <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
+      </div>
+      <label for="" class="form-component-element-label">Afbeeldingen op de site laten zien</label>
+    </div>
+    <div class="form-component-element-container">
+      <div class="form-checkbox-container">
+        <input type="checkbox" class="form-checkbox" />
+        <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
+      </div>
+      <label for="" class="form-component-element-label">Afbeeldingen in de newsletter laten zien</label>
+    </div>
+  {% endblock %}
+{% endembed %}
+#}
+
 <div class="form-component js-form-component-checkbox">
   <p class="form-component-title">Zichtbaarheid <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></p>
 
@@ -25,7 +46,6 @@
         <div class="form-checkbox-container">
           <input type="checkbox" class="form-checkbox" />
           <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
-
         </div>
         <label for="" class="form-component-element-label">Afbeeldingen in de newsletter laten zien</label>
       </div>
