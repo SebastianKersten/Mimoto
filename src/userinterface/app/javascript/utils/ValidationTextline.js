@@ -117,7 +117,7 @@ module.exports.prototype = {
   checkMinLength: function () {
 
     if (this.value.length < this.minLength) {
-      this.setResult(false, "Input is too short.");
+      this.setResult(false, "Input should be minimal " + this.minLength + " characters long.");
     }
 
   },
@@ -125,7 +125,7 @@ module.exports.prototype = {
   checkMaxLength: function () {
 
     if (this.value.length > this.maxLength) {
-      this.setResult(false, "Input is too long.");
+      this.setResult(false, "Input can't be longer than " + this.maxLength + " characters.");
     }
 
   },
