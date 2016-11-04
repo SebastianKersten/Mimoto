@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = function (element) {
+module.exports = function (elements) {
 
-  this.el = element;
+  this.elements = elements;
   this.init();
 
 };
@@ -12,6 +12,7 @@ module.exports.prototype = {
   init: function () {
 
     console.log('Init checkbox');
+
     this.setVariables();
     this.addEventListeners();
 
@@ -21,15 +22,17 @@ module.exports.prototype = {
 
   initErrorhandling: function () {
 
-    this.errorHandling = new ErrorHandling(this.el, {
-      "element": "p",
-      "classes": ["form-component-element-error"],
-      "errorClass": "form-component--has-error",
-      "validatedClass": "form-component--is-validated",
-      "iconSelectorClass": "js-error-icon",
-      "iconErrorClass": "form-component-title-icon--warning",
-      "iconValidatedClass": "form-component-title-icon--checkmark"
-    });
+    for (var i = 0; i < this.elements.length; i++) {
+      this.errorHandling = new ErrorHandling(this.elements[i], {
+        "element": "p",
+        "classes": ["form-component-element-error"],
+        "errorClass": "form-component--has-error",
+        "validatedClass": "form-component--is-validated",
+        "iconSelectorClass": "js-error-icon",
+        "iconErrorClass": "form-component-title-icon--warning",
+        "iconValidatedClass": "form-component-title-icon--checkmark"
+      });
+    }
 
     this.validation = new ValidationCheckbox({
     });
@@ -42,6 +45,20 @@ module.exports.prototype = {
   },
 
   addEventListeners: function () {
+
+    for (var i = 0; i < this.elements.length; i++) {
+
+      var checkbox = this.elements[i];
+
+      checkbox.addEventListener('click', function () {
+
+        (function (e) {
+          console.log(e);
+        })(checkbox);
+
+      }.bind(this));
+
+    }
 
 
   },

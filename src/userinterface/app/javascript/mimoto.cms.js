@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
     new TextlineView(textlines[i]);
   }
 
-  for (i = 0; i < checkboxes.length; i++) {
-    new CheckboxView(checkboxes[i]);
+  if (checkboxes.length > 0) {
+    var checkboxView = new CheckboxView(checkboxes);
   }
 
   Conditioner.init();

@@ -23,13 +23,6 @@ module.exports.prototype = {
 
   validateCheckbox: function (value) {
 
-    this.value = value;
-    this.result = {
-      "passed": true
-    };
-
-
-    return this.result;
 
   }
 
