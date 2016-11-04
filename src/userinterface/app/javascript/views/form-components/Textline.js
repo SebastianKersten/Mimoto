@@ -75,7 +75,7 @@ module.exports.prototype = {
 
     } else {
 
-      var validated = this.validation.validateInput(value);
+      var validated = this.validation.validateTextline(value);
 
       if (validated.passed) {
 

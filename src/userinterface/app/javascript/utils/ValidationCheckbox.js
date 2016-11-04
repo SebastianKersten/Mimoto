@@ -10,7 +10,7 @@ module.exports.prototype = {
 
   init: function (options) {
 
-    console.log('Validate checkbox');
+    console.log('Init checkbox validation');
 
     this.setVariables();
 
