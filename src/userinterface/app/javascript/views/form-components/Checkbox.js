@@ -16,11 +16,11 @@ module.exports.prototype = {
     this.setVariables();
     this.addEventListeners();
 
-    this.initErrorhandling();
+    this.initErrorHandling();
 
   },
 
-  initErrorhandling: function () {
+  initErrorHandling: function () {
 
     for (var i = 0; i < this.elements.length; i++) {
       this.errorHandling = new ErrorHandling(this.elements[i], {
@@ -40,7 +40,7 @@ module.exports.prototype = {
   },
 
   setVariables: function () {
-    
+
   },
 
   addEventListeners: function () {
