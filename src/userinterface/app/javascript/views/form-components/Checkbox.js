@@ -40,26 +40,25 @@ module.exports.prototype = {
   },
 
   setVariables: function () {
-
-
+    
   },
 
   addEventListeners: function () {
 
     for (var i = 0; i < this.elements.length; i++) {
 
-      var checkbox = this.elements[i];
+      (function (e) {
+        var checkbox = this.elements[e];
 
-      checkbox.addEventListener('click', function () {
+        checkbox.addEventListener('click', function () {
 
-        (function (e) {
-          console.log(e);
-        })(checkbox);
+          console.log(checkbox);
 
-      }.bind(this));
+        });
+
+      }.bind(this))(i);
 
     }
-
 
   },
 
