@@ -66,7 +66,7 @@ module.exports.prototype = {
 
   },
 
-  validateInput: function (value) {
+  validateTextline: function (value) {
 
     this.value = value;
     this.result = {

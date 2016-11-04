@@ -16,7 +16,8 @@ module.exports = function (env) {
       new webpack.ProvidePlugin({
         'Conditioner': './conditioner/conditioner',
         'ErrorHandling': 'ErrorHandling',
-        'Validation': 'Validation'
+        'ValidationTextline': 'ValidationTextline',
+        'ValidationCheckbox': 'ValidationCheckbox'
       })
     ],
     resolve: {

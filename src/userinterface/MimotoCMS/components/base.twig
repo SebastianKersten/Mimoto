@@ -26,7 +26,7 @@
 
     <section class="pagecontent">
 
-      {#<div class="form-component js-form-component-textline">
+      <div class="form-component js-form-component-textline">
         <label for="" class="form-component-title">Name <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
         <div class="form-component-content">
 
@@ -36,7 +36,9 @@
 
           <p class="form-component-description">The property name should be unique</p>
         </div>
-      </div>#}
+      </div>
+
+      {% include "MimotoCMS/components/forms/input/Checkbox/Checkbox.twig" %}
 
       {% block content %}{% endblock %}
     </section>

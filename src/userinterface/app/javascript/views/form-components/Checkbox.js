@@ -11,7 +11,7 @@ module.exports.prototype = {
 
   init: function () {
 
-    console.log('Init textline');
+    console.log('Init checkbox');
     this.setVariables();
     this.addEventListeners();
 
@@ -31,39 +31,18 @@ module.exports.prototype = {
       "iconValidatedClass": "form-component-title-icon--checkmark"
     });
 
-    this.validation = new Validation({
-      "minLength": this.minLength,
-      "maxLength": this.maxLength,
-      "minNumbers": this.minNumbers,
-      "maxNumbers": this.maxNumbers,
-      "noSpecialCharacters": this.noSpecialCharacters,
-      "minSpecialCharacters": this.minSpecialCharacters,
-      "maxSpecialCharacters": this.maxSpecialCharacters
+    this.validation = new ValidationCheckbox({
     });
 
   },
 
   setVariables: function () {
 
-    this.input = this.el.querySelector('.js-form-input');
-
-    this.minLength = this.input.getAttribute('data-min-length');
-    this.maxLength = this.input.getAttribute('data-max-length');
-    this.minNumbers = this.input.getAttribute('data-min-numbers');
-    this.maxNumbers = this.input.getAttribute('data-max-numbers');
-    this.minSpecialCharacters = this.input.getAttribute('data-min-special-characters');
-    this.maxSpecialCharacters = this.input.getAttribute('data-max-special-characters');
-    this.noSpecialCharacters = this.input.hasAttribute('data-no-special-characters');
 
   },
 
   addEventListeners: function () {
 
-    this.input.addEventListener('keyup', function () {
-
-      this.handleValidation(this.input.value);
-
-    }.bind(this));
 
   },
 
