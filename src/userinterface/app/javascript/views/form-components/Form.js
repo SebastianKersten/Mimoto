@@ -60,20 +60,11 @@ module.exports.prototype = {
       var type = elements[i].querySelector('input').type;
 
       if (type == 'checkbox') {
-        this.checkIfChecked(elements[i]);
+        var validated = FV.validateCheckbox(elements[i]);
+
       }
     }
 
-  },
-
-  checkIfChecked: function (parent) {
-
-    var checkboxes = parent.querySelectorAll('input');
-
-    for (var i = 0; i < checkboxes.length; i++) {
-      console.log(checkboxes[i].checked);
-    }
-
   }
-  
+
 };

@@ -17,7 +17,8 @@ module.exports = function (env) {
         'Conditioner': './conditioner/conditioner',
         'ErrorHandling': 'ErrorHandling',
         'ValidationTextline': 'ValidationTextline',
-        'ValidationCheckbox': 'ValidationCheckbox'
+        'ValidationCheckbox': 'ValidationCheckbox',
+        'FV': 'FormValidation'
       })
     ],
     resolve: {
