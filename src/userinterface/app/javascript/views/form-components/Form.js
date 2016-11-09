@@ -16,13 +16,14 @@ module.exports.prototype = {
     this.setVariables();
     this.addEventListeners();
 
-    this.initErrorHandling();
+    //this.initErrorHandling();
 
   },
 
 
   setVariables: function () {
 
+    this.validated = false;
     this.submit = this.el.querySelector('.js-form-submit');
 
   },
@@ -39,12 +40,39 @@ module.exports.prototype = {
 
   submitForm: function () {
 
-    var validated = this.validateForm();
+    this.validateForm();
 
   },
 
   validateForm: function () {
 
+    this.getElements();
+
+  },
+
+  getElements: function () {
+
+    var elements = this.el.querySelectorAll('.js-form-component');
+    console.log(elements);
+
+    for (var i = 0; i < elements.length; i++) {
+
+      var type = elements[i].querySelector('input').type;
+
+      if (type == 'checkbox') {
+        this.checkIfChecked(elements[i]);
+      }
+    }
+
+  },
+
+  checkIfChecked: function (parent) {
+
+    var checkboxes = parent.querySelectorAll('input');
+
+    for (var i = 0; i < checkboxes.length; i++) {
+      console.log(checkboxes[i].checked);
+    }
 
   }
   
