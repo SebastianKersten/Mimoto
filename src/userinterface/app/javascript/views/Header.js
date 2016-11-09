@@ -46,7 +46,7 @@ module.exports.prototype = {
 
     this.mobileNavigationToggle.addEventListener('click', function () {
 
-      this.toggleMobileNavigation();
+      this.toggleClass(this.navigation, 'navigation--active');
 
     }.bind(this));
 
@@ -54,7 +54,7 @@ module.exports.prototype = {
 
       this.messageToggle.addEventListener('click', function () {
 
-        this.toggleDropdown(this.messageDropdown, 'header-menu-message-dropdown--active');
+        this.toggleClass(this.messageDropdown, 'header-menu-message-dropdown--active');
 
       }.bind(this));
 
@@ -64,7 +64,7 @@ module.exports.prototype = {
 
       this.chatToggle.addEventListener('click', function () {
 
-        this.toggleDropdown(this.chatDropdown, 'header-menu-chat-dropdown--active');
+        this.toggleClass(this.chatDropdown, 'header-menu-chat-dropdown--active');
 
       }.bind(this));
 
@@ -88,18 +88,12 @@ module.exports.prototype = {
 
     this.collapsed = !this.collapsed;
 
-    this.body.classList.toggle('navigation-collapsed');
+    this.toggleClass(this.body, 'navigation-collapsed');
     localStorage.setItem('collapsed', this.collapsed);
 
   },
 
-  toggleMobileNavigation: function () {
-
-    this.navigation.classList.toggle('navigation--active');
-
-  },
-
-  toggleDropdown: function (element, className) {
+  toggleClass: function (element, className) {
 
     element.classList.toggle(className);
 
