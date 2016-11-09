@@ -1,20 +1,31 @@
 <div {{ Aimless.field()|raw }} class="form-component{% if type|default('') %} js-form-component-{{ type }}{% endif %}">
 
+  <div class="form-component-header">
     <label for="" class="form-component-title">{{ Aimless.data('label') }} {% if Aimless.data('value.optional') %}<span class="form-component-title-information">(optioneel)</span>{% endif %}<svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
+    {% if button|default(true) %}
+      <div class="form-component-button">
+        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
+        label: 'Toevoegen',
+        link: '#',
+        icon: 'plus'
+        } %}
+      </div>
+    {% endif %}
+  </div>
 
-    <div class="form-component-content {% if not Aimless.data('description')|default('') %}form-component-content--no-description{% endif %}">
+  <div class="form-component-content {% if not Aimless.data('description')|default('') %}form-component-content--no-description{% endif %}">
 
-        <div class="form-component-element js-error-parent">
+    <div class="form-component-element js-error-parent">
 
-          {% block form_component_element %}{% endblock %}
+      {% block form_component_element %}{% endblock %}
 
-          <p {{ Aimless.error()|raw }} class="form-component-element-error"></p>
-
-        </div>
-
-        {% if Aimless.data('description')|default('') %}
-          <p class="form-component-description">{{ Aimless.data('description') }}</p>
-        {% endif %}
+      <p {{ Aimless.error()|raw }} class="form-component-element-error"></p>
 
     </div>
+
+    {% if Aimless.data('description')|default('') %}
+      <p class="form-component-description">{{ Aimless.data('description') }}</p>
+    {% endif %}
+
+  </div>
 </div>

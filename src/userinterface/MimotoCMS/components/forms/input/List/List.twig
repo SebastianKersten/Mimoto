@@ -21,8 +21,30 @@
   }
 ] %}
 
+{#
+{% embed "MimotoCMS/components/forms/form_component.twig" with {"type": "list"} %}
+  {% block form_component_element %}
+    <div class="form-list">
+      {% for list_item in list_items %}
+        {% include 'MimotoCMS/components/forms/input/ListItem/ListItem.twig' with {list_item: list_item} only %}
+      {% endfor %}
+    </div>
+  {% endblock %}
+{% endembed %}
+#}
+
+
 <div class="form-component">
-  <p class="form-component-title">Aanbevelingen <span class="form-component-title-icon icon"></span></p>
+  <div class="form-component-header">
+    <p class="form-component-title">Aanbevelingen <span class="form-component-title-icon icon"></span></p>
+    <div class="form-component-button">
+      {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
+      label: 'Toevoegen',
+      link: '#',
+      icon: 'plus'
+      } %}
+    </div>
+  </div>
 
   <div class="form-component-content">
     <div class="form-component-element">
@@ -35,11 +57,4 @@
     <p class="form-component-description">Dit is een lijst. Een hele mooie lijst.</p>
   </div>
 
-  <div class="form-component-button">
-    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
-      label: 'Toevoegen',
-      link: '#',
-      icon: 'plus'
-    } %}
-  </div>
 </div>

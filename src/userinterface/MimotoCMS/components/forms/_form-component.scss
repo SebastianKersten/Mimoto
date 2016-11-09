@@ -20,6 +20,12 @@
     }
   }
 
+  .form-component-header {
+    display: flex;
+    padding-right: percentage(1 / 3);
+    align-items: center;
+  }
+
   .form-component-title {
     position: relative;
     display: inline-block;
@@ -123,7 +129,10 @@
   }
 
   .form-component-button {
+    display: flex;
     margin: 0 0 10px;
+    flex: 1 1 auto;
+    justify-content: flex-end;
   }
 }
 
