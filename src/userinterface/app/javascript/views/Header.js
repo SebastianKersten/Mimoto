@@ -26,6 +26,9 @@ module.exports.prototype = {
     this.body = document.getElementsByTagName('body')[0];
     this.navigation = document.querySelector('.js-navigation');
 
+    this.messageToggle = this.el.querySelector('.js-message-toggle');
+    this.messageDropdown = this.el.querySelector('.js-message-dropdown');
+
     this.collapsed = false;
 
   },
@@ -43,6 +46,16 @@ module.exports.prototype = {
       this.toggleMobileNavigation();
 
     }.bind(this));
+
+    if (this.messageToggle && this.messageDropdown) {
+
+      this.messageToggle.addEventListener('click', function () {
+
+        this.toggleMessageDropdown();
+
+      }.bind(this));
+
+    }
 
   },
 
@@ -70,6 +83,12 @@ module.exports.prototype = {
   toggleMobileNavigation: function () {
 
     this.navigation.classList.toggle('navigation--active');
+
+  },
+
+  toggleMessageDropdown: function () {
+
+    this.messageDropdown.classList.toggle('header-menu-message-dropdown--active');
 
   }
 

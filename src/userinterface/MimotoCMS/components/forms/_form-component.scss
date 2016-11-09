@@ -72,6 +72,13 @@
     }
   }
 
+  .form-component-button {
+    display: flex;
+    margin: 0 0 10px;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+
   .form-component-content {
     display: flex;
     flex-wrap: wrap;
@@ -126,13 +133,6 @@
       font-size: rem-calc(13px);
       color: $fuzzy-wuzzy-brown;
     }
-  }
-
-  .form-component-button {
-    display: flex;
-    margin: 0 0 10px;
-    flex: 1 1 auto;
-    justify-content: flex-end;
   }
 }
 
