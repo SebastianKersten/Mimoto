@@ -26,6 +26,7 @@
 
     <section class="pagecontent">
 
+{#
       <form class="js-form">
 
         <div class="form-component js-form-component js-form-component-textline">
@@ -46,10 +47,11 @@
         <a class="button js-form-submit">Verstuur</a>
 
       </form>
+#}
 
       {#{% include "MimotoCMS/components/forms/input/List/List.twig" %}#}
 
-      {#{% block content %}{% endblock %}#}
+      {% block content %}{% endblock %}
     </section>
 
   </div>
