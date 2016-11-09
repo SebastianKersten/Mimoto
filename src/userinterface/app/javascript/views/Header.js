@@ -26,8 +26,11 @@ module.exports.prototype = {
     this.body = document.getElementsByTagName('body')[0];
     this.navigation = document.querySelector('.js-navigation');
 
-    this.messageToggle = this.el.querySelector('.js-message-toggle');
+    this.messageToggle = this.el.querySelector('.js-message-dropdown-toggle');
     this.messageDropdown = this.el.querySelector('.js-message-dropdown');
+
+    this.chatToggle = this.el.querySelector('.js-chat-dropdown-toggle');
+    this.chatDropdown = this.el.querySelector('.js-chat-dropdown');
 
     this.collapsed = false;
 
@@ -51,7 +54,17 @@ module.exports.prototype = {
 
       this.messageToggle.addEventListener('click', function () {
 
-        this.toggleMessageDropdown();
+        this.toggleDropdown(this.messageDropdown, 'header-menu-message-dropdown--active');
+
+      }.bind(this));
+
+    }
+
+    if (this.chatToggle && this.chatDropdown) {
+
+      this.chatToggle.addEventListener('click', function () {
+
+        this.toggleDropdown(this.chatDropdown, 'header-menu-chat-dropdown--active');
 
       }.bind(this));
 
@@ -86,9 +99,9 @@ module.exports.prototype = {
 
   },
 
-  toggleMessageDropdown: function () {
+  toggleDropdown: function (element, className) {
 
-    this.messageDropdown.classList.toggle('header-menu-message-dropdown--active');
+    element.classList.toggle(className);
 
   }
 
