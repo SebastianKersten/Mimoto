@@ -21,15 +21,15 @@ module.exports.prototype = {
 
   setVariables: function () {
 
-    this.input = this.el.querySelector('.js-form-input');
+    this.textline = this.el.querySelector('.js-textline');
 
   },
 
   addEventListeners: function () {
 
-    this.input.addEventListener('keyup', function () {
+    this.textline.addEventListener('keyup', function () {
 
-      this.handleValidation(this.input.value);
+      this.handleValidation(this.textline.value);
 
     }.bind(this));
 
@@ -43,17 +43,7 @@ module.exports.prototype = {
 
     } else {
 
-      var validated = FV.validateTextline(this.el);
-
-      if (validated.passed) {
-
-        EH.addValidatedState(this.el);
-
-      } else {
-
-        EH.addErrorState(this.el, validated.message);
-
-      }
+      FV.validateTextline(this.el);
 
     }
 

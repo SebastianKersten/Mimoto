@@ -20,8 +20,7 @@ module.exports.prototype = {
 
   setVariables: function () {
 
-    this.checkboxes = this.el.querySelectorAll('.js-form-checkbox');
-    this.checked = 0;
+    this.checkboxes = this.el.querySelectorAll('.js-checkbox');
 
   },
 
@@ -41,38 +40,16 @@ module.exports.prototype = {
 
   handleValidation: function () {
 
-    this.countChecked();
+    var checked = FV.countChecked(this.checkboxes);
 
-    if (this.checked == 0) {
+    if (checked == 0) {
 
       EH.clearState(this.el);
 
     } else {
 
-      var validated = FV.validateCheckbox(this.el);
+      FV.validateCheckbox(this.el);
 
-      if (validated.passed) {
-
-        EH.addValidatedState(this.el);
-
-      } else {
-
-        EH.addErrorState(this.el, validated.message);
-
-      }
-
-    }
-
-  },
-
-  countChecked: function () {
-
-    this.checked = 0;
-
-    for (var i = 0; i < this.checkboxes.length; i++) {
-      if (this.checkboxes[i].checked) {
-        this.checked++;
-      }
     }
 
   }

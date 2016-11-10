@@ -30,24 +30,13 @@ module.exports.prototype = {
 
       this.radioButtons[i].addEventListener('change', function () {
 
-        this.handleValidation();
+        FV.validateRadioButton(this.el);
 
       }.bind(this));
 
     }
 
-  },
-
-  handleValidation: function () {
-
-    var result = FV.validateRadioButton(this.el);
-
-    if (result.passed) {
-
-      EH.addValidatedState(this.el);
-
-    }
-
   }
+
 
 };

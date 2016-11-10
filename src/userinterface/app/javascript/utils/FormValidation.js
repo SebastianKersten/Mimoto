@@ -2,26 +2,38 @@
 
 module.exports = {
 
-  setVariables: function (element) {
+  setTextlineVariables: function (element) {
 
-    this.input = element.querySelector('.js-form-input');
+    this.el = element;
+    this.textline = this.el.querySelector('.js-textline');
 
-    if (this.input) {
-      this.value = this.input.value;
+    if (this.textline) {
+      this.value = this.textline.value;
     }
 
-    this.checkboxes = element.querySelectorAll('.js-form-checkbox');
+  },
+
+  setCheckboxVariables: function (element) {
+
+    this.el = element;
+    this.checkboxes = this.el.querySelectorAll('.js-checkbox');
 
     if (this.checkboxes) {
       this.countChecked();
     }
 
-    this.radioButtons = element.querySelectorAll('.js-radio-button');
+  },
+
+  setRadioButtonVariables: function (element) {
+
+    this.el = element;
+    this.radioButtons = this.el.querySelectorAll('.js-radio-button');
 
   },
 
-  countChecked: function () {
+  countChecked: function (checkboxes) {
 
+    if (checkboxes) this.checkboxes = checkboxes;
     this.checked = 0;
 
     for (var i = 0; i < this.checkboxes.length; i++) {
@@ -30,15 +42,7 @@ module.exports = {
       }
     }
 
-  },
-
-  checkChecked: function () {
-
-    for (var i = 0; i < this.radioButtons.length; i++) {
-      if (this.radioButtons[i].checked) {
-        this.setResult(true);
-      }
-    }
+    return this.checked;
 
   },
 
@@ -74,6 +78,7 @@ module.exports = {
     this.validateMaxSpecialCharacters = false;
     this.validateMinChecked = false;
     this.validateMaxChecked = false;
+    this.validateIfChecked = false;
 
     if (this.minLength) {
       this.validateMinLength = true;
@@ -131,10 +136,11 @@ module.exports = {
 
   validateRadioButton: function (element) {
 
-    this.setVariables(element);
+    this.setRadioButtonVariables(element);
+    this.validateIfChecked = true;
     this.setResult(false, "Please select an option.");
 
-    this.checkChecked();
+    this.handleValidation();
 
     return this.result;
 
@@ -142,7 +148,7 @@ module.exports = {
 
   validateCheckbox: function (element) {
 
-    this.setVariables(element);
+    this.setCheckboxVariables(element);
     this.setInputOptions(this.checkboxes[0]);
     this.setResult(true);
 
@@ -154,8 +160,8 @@ module.exports = {
 
   validateTextline: function (element) {
 
-    this.setVariables(element);
-    this.setInputOptions(this.input);
+    this.setTextlineVariables(element);
+    this.setInputOptions(this.textline);
     this.setResult(true);
 
     this.handleValidation();
@@ -204,6 +210,16 @@ module.exports = {
 
     if (this.validateMaxChecked) {
       this.checkMaxChecked();
+    }
+
+    if (this.validateIfChecked) {
+      this.checkIfChecked();
+    }
+
+    if (this.result.passed) {
+      EH.addValidatedState(this.el);
+    } else {
+      EH.addErrorState(this.el, this.result.message);
     }
 
   },
@@ -295,6 +311,16 @@ module.exports = {
 
     if (this.checked > this.maxChecked) {
       this.setResult(false, "You can't check more than " + this.maxChecked + " checkbox(es).");
+    }
+
+  },
+
+  checkIfChecked: function () {
+
+    for (var i = 0; i < this.radioButtons.length; i++) {
+      if (this.radioButtons[i].checked) {
+        this.setResult(true);
+      }
     }
 
   }

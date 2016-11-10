@@ -36,7 +36,7 @@ module.exports.prototype = {
 
     this.submit.addEventListener('click', function () {
 
-      this.submitForm();
+      this.validateForm();
 
     }.bind(this));
 
@@ -58,16 +58,10 @@ module.exports.prototype = {
 
   },
 
-  submitForm: function () {
-
-    this.validateForm();
-
-  },
-
   validateForm: function () {
 
     this.validated = true;
-    this.getElements();
+    this.validateElements();
 
     if (this.validated) {
       this.el.submit();
@@ -75,26 +69,20 @@ module.exports.prototype = {
 
   },
 
-  getElements: function () {
+  validateElements: function () {
 
     for (var i = 0; i < this.elements.length; i++) {
 
-      this.validateElement(this.elements[i]);
+      var type = this.elements[i].querySelector('input').type;
 
-    }
+      if (type == 'checkbox') {
+        this.handleCheckboxValidation(this.elements[i]);
+      } else if (type == 'text') {
+        this.handleTextlineValidation(this.elements[i]);
+      } else if (type == 'radio') {
+        this.handleRadioButtonValidation(this.elements[i]);
+      }
 
-  },
-
-  validateElement: function (element) {
-
-    var type = element.querySelector('input').type;
-
-    if (type == 'checkbox') {
-      this.handleCheckboxValidation(element);
-    } else if (type == 'text') {
-      this.handleTextlineValidation(element);
-    } else if (type == 'radio') {
-      this.handleRadioButtonValidation(element);
     }
 
   },
@@ -105,7 +93,6 @@ module.exports.prototype = {
 
     if (!result.passed) {
       this.validated = false;
-      EH.addErrorState(element, result.message);
     }
 
   },
@@ -116,7 +103,6 @@ module.exports.prototype = {
 
     if (!result.passed) {
       this.validated = false;
-      EH.addErrorState(element, result.message);
     }
 
   },
@@ -127,7 +113,6 @@ module.exports.prototype = {
 
     if (!result.passed) {
       this.validated = false;
-      EH.addErrorState(element, result.message);
     }
 
   }
