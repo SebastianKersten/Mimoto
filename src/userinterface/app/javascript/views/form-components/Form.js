@@ -1,5 +1,7 @@
 'use strict';
 
+var TextlineView = require('./Textline');
+
 module.exports = function (element) {
 
   this.el = element;
@@ -11,20 +13,20 @@ module.exports.prototype = {
 
   init: function () {
 
-    console.log('Init form ');
+    console.log('Init form');
 
     this.setVariables();
     this.addEventListeners();
 
-    //this.initErrorHandling();
+    this.initFormElements();
 
   },
-
 
   setVariables: function () {
 
     this.validated = true;
     this.submit = this.el.querySelector('.js-form-submit');
+    this.elements = this.el.querySelectorAll('.js-form-component');
 
   },
 
@@ -35,6 +37,18 @@ module.exports.prototype = {
       this.submitForm();
 
     }.bind(this));
+
+  },
+
+  initFormElements: function () {
+
+    for (var i = 0; i < this.elements.length; i++) {
+
+      if (this.elements[i].classList.contains('js-form-component-textline')) {
+        new TextlineView(this.elements[i]);
+      }
+
+    }
 
   },
 
@@ -57,11 +71,9 @@ module.exports.prototype = {
 
   getElements: function () {
 
-    var elements = this.el.querySelectorAll('.js-form-component');
+    for (var i = 0; i < this.elements.length; i++) {
 
-    for (var i = 0; i < elements.length; i++) {
-
-      this.validateElement(elements[i]);
+      this.validateElement(this.elements[i]);
 
     }
 
@@ -72,7 +84,31 @@ module.exports.prototype = {
     var type = element.querySelector('input').type;
 
     if (type == 'checkbox') {
-      if (!FV.validateCheckbox(elements[i]).passed) this.validated = false;
+      this.handleCheckboxValidation(element);
+    } else if (type == 'text') {
+      this.handleTextlineValidation(element);
+    }
+
+  },
+
+  handleCheckboxValidation: function (element) {
+
+    var result = FV.validateCheckbox(element);
+
+    if (!result.passed) {
+      this.validated = false;
+      EH.addErrorState(element, result.message);
+    }
+
+  },
+
+  handleTextlineValidation: function (element) {
+
+    var result = FV.validateTextline(element);
+
+    if (!result.passed) {
+      this.validated = false;
+      EH.addErrorState(element, result.message);
     }
 
   }

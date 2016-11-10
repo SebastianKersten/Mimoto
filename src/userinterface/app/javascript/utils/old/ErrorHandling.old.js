@@ -1,8 +1,16 @@
 'use strict';
 
-module.exports = {
+module.exports = function (element, options) {
 
-  init: function (options) {
+  this.el = element;
+  this.options = options;
+  this.init();
+
+};
+
+module.exports.prototype = {
+
+  init: function () {
 
     // Default options
     this.element = "p";
@@ -15,46 +23,43 @@ module.exports = {
     this.errorIcon = "#ico-warning";
     this.validatedIcon = "#ico-checkmark";
 
-    if (options.element) {
-      this.element = options.element;
+    if (this.options.element) {
+      this.element = this.options.element;
     }
 
-    if (options.classes) {
-      this.classes = options.classes;
+    if (this.options.classes) {
+      this.classes = this.options.classes;
     }
 
-    if (options.iconSelectorClass) {
-      this.iconSelectorClass = options.iconSelectorClass;
+    if (this.options.iconSelectorClass) {
+      this.iconSelectorClass = this.options.iconSelectorClass;
     }
 
-    if (options.errorClass) {
-      this.errorClass = options.errorClass;
+    if (this.options.errorClass) {
+      this.errorClass = this.options.errorClass;
     }
 
-    if (options.iconErrorClass) {
-      this.iconErrorClass = options.iconErrorClass;
+    if (this.options.iconErrorClass) {
+      this.iconErrorClass = this.options.iconErrorClass;
     }
 
-    if (options.validatedClass) {
-      this.validatedClass = options.validatedClass;
+    if (this.options.validatedClass) {
+      this.validatedClass = this.options.validatedClass;
     }
 
-    if (options.iconValidatedClass) {
-      this.iconValidatedClass = options.iconValidatedClass;
+    if (this.options.iconValidatedClass) {
+      this.iconValidatedClass = this.options.iconValidatedClass;
     }
+
+    this.setVariables();
 
   },
 
-  setVariables: function (element) {
-
-    this.el = element;
+  setVariables: function () {
 
     this.errorParent = this.el.querySelector('.js-error-parent');
     this.iconElement = this.el.querySelector('.' + this.iconSelectorClass);
     this.useElement = this.iconElement.getElementsByTagName('use')[0];
-
-    this.hasError = this.el.classList.contains(this.errorClass);
-    this.isValidated = this.el.classList.contains(this.validatedClass);
 
   },
 
@@ -87,48 +92,50 @@ module.exports = {
   // State functions
   clearErrorState: function () {
 
-    if (this.hasError) {
+    if (this.el.classList.contains(this.errorClass)) {
       this.removeElementClass(this.errorClass);
-      this.removeErrorElement();
-      this.removeIcon(this.iconErrorClass);
     }
+
+    this.removeErrorElement();
+    this.removeIcon(this.iconErrorClass);
+    this.hasError = false;
 
   },
 
   clearValidatedState: function () {
 
-    if (this.isValidated) {
+    if (this.el.classList.contains(this.validatedClass)) {
       this.removeElementClass(this.validatedClass);
-      this.removeIcon(this.iconValidatedClass);
     }
+
+    this.removeIcon(this.iconValidatedClass);
+    this.validated = false;
 
   },
 
-  clearState: function (element) {
+  clearState: function () {
 
-    this.setVariables(element);
     this.clearErrorState();
     this.clearValidatedState();
 
   },
 
   // Validated functions
-  addValidatedState: function (element) {
+  addValidatedState: function () {
 
-    this.setVariables(element);
     this.clearErrorState();
 
-    if (!this.isValidated) {
+    if (!this.validated) {
       this.addElementClass(this.validatedClass);
       this.addIcon(this.iconValidatedClass, this.validatedIcon);
+      this.validated = true;
     }
 
   },
 
   // Error functions
-  addErrorState: function (element, message) {
+  addErrorState: function (message) {
 
-    this.setVariables(element);
     this.clearValidatedState();
 
     if (!this.hasError) {
@@ -136,8 +143,11 @@ module.exports = {
       this.addElementClass(this.errorClass);
       this.addIcon(this.iconErrorClass, this.errorIcon);
       this.hasError = true;
-    } else {
+    }
+
+    if (this.message != message) {
       this.updateErrorElement(message);
+      this.message = message;
     }
 
   },
