@@ -16,6 +16,8 @@ module.exports = {
       this.countChecked();
     }
 
+    this.radioButtons = element.querySelectorAll('.js-radio-button');
+
   },
 
   countChecked: function () {
@@ -25,6 +27,16 @@ module.exports = {
     for (var i = 0; i < this.checkboxes.length; i++) {
       if (this.checkboxes[i].checked) {
         this.checked++;
+      }
+    }
+
+  },
+
+  checkChecked: function () {
+
+    for (var i = 0; i < this.radioButtons.length; i++) {
+      if (this.radioButtons[i].checked) {
+        this.setResult(true);
       }
     }
 
@@ -117,6 +129,17 @@ module.exports = {
 
   },
 
+  validateRadioButton: function (element) {
+
+    this.setVariables(element);
+    this.setResult(false, "Please select an option.");
+
+    this.checkChecked();
+
+    return this.result;
+
+  },
+
   validateCheckbox: function (element) {
 
     this.setVariables(element);
@@ -182,24 +205,6 @@ module.exports = {
     if (this.validateMaxChecked) {
       this.checkMaxChecked();
     }
-
-  },
-
-  checkIfChecked: function () {
-
-    var checkboxes = this.el.querySelectorAll('input');
-
-    this.setResult(false, "Select a checkbox.");
-
-    for (var i = 0; i < checkboxes.length; i++) {
-
-      if (checkboxes[i].checked) {
-        this.setResult(true);
-      }
-
-    }
-
-    return this.result;
 
   },
 

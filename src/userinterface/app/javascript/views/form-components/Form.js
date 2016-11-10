@@ -2,6 +2,7 @@
 
 var TextlineView = require('./Textline');
 var CheckboxView = require('./Checkbox');
+var RadioButtonView = require('./RadioButton');
 
 module.exports = function (element) {
 
@@ -49,6 +50,8 @@ module.exports.prototype = {
         new TextlineView(this.elements[i]);
       } else if (this.elements[i].classList.contains('js-form-component-checkbox')) {
         new CheckboxView(this.elements[i]);
+      } else if (this.elements[i].classList.contains('js-form-component-radio-button')) {
+        new RadioButtonView(this.elements[i]);
       }
 
     }
@@ -90,6 +93,8 @@ module.exports.prototype = {
       this.handleCheckboxValidation(element);
     } else if (type == 'text') {
       this.handleTextlineValidation(element);
+    } else if (type == 'radio') {
+      this.handleRadioButtonValidation(element);
     }
 
   },
@@ -108,6 +113,17 @@ module.exports.prototype = {
   handleTextlineValidation: function (element) {
 
     var result = FV.validateTextline(element);
+
+    if (!result.passed) {
+      this.validated = false;
+      EH.addErrorState(element, result.message);
+    }
+
+  },
+
+  handleRadioButtonValidation: function (element) {
+
+    var result = FV.validateRadioButton(element);
 
     if (!result.passed) {
       this.validated = false;
