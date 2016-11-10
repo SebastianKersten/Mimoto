@@ -135,7 +135,6 @@ module.exports = {
       this.addErrorElement(message);
       this.addElementClass(this.errorClass);
       this.addIcon(this.iconErrorClass, this.errorIcon);
-      this.hasError = true;
     } else {
       this.updateErrorElement(message);
     }

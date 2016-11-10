@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = function (elements) {
+module.exports = function (element) {
 
-  this.elements = elements;
+  this.el = element;
   this.init();
 
 };
@@ -11,77 +11,68 @@ module.exports.prototype = {
 
   init: function () {
 
-    console.log('Init checkbox');
+    console.log('Init Checkbox');
 
     this.setVariables();
     this.addEventListeners();
-
-    this.initErrorHandling();
-
-  },
-
-  initErrorHandling: function () {
-
-    for (var i = 0; i < this.elements.length; i++) {
-      this.errorHandling = new ErrorHandling(this.elements[i], {
-        "element": "p",
-        "classes": ["form-component-element-error"],
-        "errorClass": "form-component--has-error",
-        "validatedClass": "form-component--is-validated",
-        "iconSelectorClass": "js-error-icon",
-        "iconErrorClass": "form-component-title-icon--warning",
-        "iconValidatedClass": "form-component-title-icon--checkmark"
-      });
-    }
-
-    this.validation = new ValidationCheckbox({
-    });
 
   },
 
   setVariables: function () {
 
+    this.checkboxes = this.el.querySelectorAll('.js-form-checkbox');
+    this.checked = 0;
+
   },
 
   addEventListeners: function () {
 
-    for (var i = 0; i < this.elements.length; i++) {
+    for (var i = 0; i < this.checkboxes.length; i++) {
 
-      (function (e) {
-        var checkbox = this.elements[e];
+      this.checkboxes[i].addEventListener('change', function () {
 
-        checkbox.addEventListener('click', function () {
+        this.handleValidation();
 
-          console.log(checkbox);
-
-        });
-
-      }.bind(this))(i);
+      }.bind(this));
 
     }
 
   },
 
-  handleValidation: function (value) {
+  handleValidation: function () {
 
-    if (value.length == 0) {
+    this.countChecked();
 
-      this.errorHandling.clearState();
+    if (this.checked == 0) {
+
+      EH.clearState(this.el);
 
     } else {
 
-      var validated = this.validation.validateInput(value);
+      var validated = FV.validateCheckbox(this.el);
 
       if (validated.passed) {
 
-        this.errorHandling.addValidatedState();
+        EH.addValidatedState(this.el);
 
       } else {
 
-        this.errorHandling.addErrorState(validated.message, this.el);
+        EH.addErrorState(this.el, validated.message);
 
       }
 
+    }
+
+  },
+
+  countChecked: function () {
+
+    this.checked = 0;
+
+    for (var i = 0; i < this.checkboxes.length; i++) {
+      if (this.checkboxes[i].checked) {
+        this.checked++;
+      }
     }
 
   }

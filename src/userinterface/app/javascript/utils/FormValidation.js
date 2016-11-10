@@ -2,26 +2,31 @@
 
 module.exports = {
 
-  init: function () {
+  setVariables: function (element) {
 
-    console.log('Init Validation');
+    this.input = element.querySelector('.js-form-input');
 
-    this.setVariables();
+    if (this.input) {
+      this.value = this.input.value;
+    }
+
+    this.checkboxes = element.querySelectorAll('.js-form-checkbox');
+
+    if (this.checkboxes) {
+      this.countChecked();
+    }
 
   },
 
-  setVariables: function () {
+  countChecked: function () {
 
-    this.result = {};
+    this.checked = 0;
 
-    this.validateMinLength = false;
-    this.validateMaxLength = false;
-    this.validateNoNumbers = false;
-    this.validateMinNumbers = false;
-    this.validateMaxNumbers = false;
-    this.validateNoSpecialCharacters = false;
-    this.validateMinSpecialCharacters = false;
-    this.validateMaxSpecialCharacters = false;
+    for (var i = 0; i < this.checkboxes.length; i++) {
+      if (this.checkboxes[i].checked) {
+        this.checked++;
+      }
+    }
 
   },
 
@@ -38,11 +43,25 @@ module.exports = {
     this.minSpecialCharacters = input.getAttribute('data-min-special-characters');
     this.maxSpecialCharacters = input.getAttribute('data-max-special-characters');
 
+    this.minChecked = input.getAttribute('data-min-checked');
+    this.maxChecked = input.getAttribute('data-max-checked');
+
     this.setValidationOptions();
 
   },
 
   setValidationOptions: function () {
+
+    this.validateMinLength = false;
+    this.validateMaxLength = false;
+    this.validateNoNumbers = false;
+    this.validateMinNumbers = false;
+    this.validateMaxNumbers = false;
+    this.validateNoSpecialCharacters = false;
+    this.validateMinSpecialCharacters = false;
+    this.validateMaxSpecialCharacters = false;
+    this.validateMinChecked = false;
+    this.validateMaxChecked = false;
 
     if (this.minLength) {
       this.validateMinLength = true;
@@ -76,6 +95,14 @@ module.exports = {
       this.validateMaxSpecialCharacters = true;
     }
 
+    if (this.minChecked) {
+      this.validateMinChecked = true;
+    }
+
+    if (this.maxChecked) {
+      this.validateMaxChecked = true;
+    }
+
   },
 
   setResult: function (passed, message) {
@@ -92,19 +119,29 @@ module.exports = {
 
   validateCheckbox: function (element) {
 
-    this.el = element;
+    this.setVariables(element);
+    this.setInputOptions(this.checkboxes[0]);
+    this.setResult(true);
 
-    return this.checkIfChecked();
+    this.handleValidation();
+
+    return this.result;
 
   },
 
   validateTextline: function (element) {
 
-    this.input = element.querySelector('.js-form-input');
-    this.value = this.input.value;
-
+    this.setVariables(element);
     this.setInputOptions(this.input);
     this.setResult(true);
+
+    this.handleValidation();
+
+    return this.result;
+
+  },
+
+  handleValidation: function () {
 
     if (this.validateMinLength) {
       this.checkMinLength();
@@ -138,13 +175,15 @@ module.exports = {
       this.checkMaxSpecialCharacters();
     }
 
-    return this.result;
+    if (this.validateMinChecked) {
+      this.checkMinChecked();
+    }
+
+    if (this.validateMaxChecked) {
+      this.checkMaxChecked();
+    }
 
   },
-
-
-
-
 
   checkIfChecked: function () {
 
@@ -224,7 +263,7 @@ module.exports = {
     var regExp = new RegExp("([\\w]*\\W){" + this.minSpecialCharacters + ",}");
 
     if (!regExp.test(this.value)) {
-      this.setResult(false, "Input should contain a minimum of " + this.minSpecialCharacters + " special characters.");
+      this.setResult(false, "Input should contain a minimum of " + this.minSpecialCharacters + " special character(s).");
     }
 
   },
@@ -234,7 +273,23 @@ module.exports = {
     var regExp = new RegExp("([\\w]*\\W){" + (Number(this.maxSpecialCharacters) + 1) + ",}");
 
     if (regExp.test(this.value)) {
-      this.setResult(false, "Input can't contain more than " + this.maxSpecialCharacters + " special characters.");
+      this.setResult(false, "Input can't contain more than " + this.maxSpecialCharacters + " special character(s).");
+    }
+
+  },
+
+  checkMinChecked: function () {
+
+    if (this.checked < this.minChecked) {
+      this.setResult(false, "You need to check at least " + this.minChecked + " checkbox(es).");
+    }
+
+  },
+
+  checkMaxChecked: function () {
+
+    if (this.checked > this.maxChecked) {
+      this.setResult(false, "You can't check more than " + this.maxChecked + " checkbox(es).");
     }
 
   }

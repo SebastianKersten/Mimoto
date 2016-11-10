@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
     "iconValidatedClass": "form-component-title-icon--checkmark"
   });
 
-  FV.init();
-
   Conditioner.init();
 
 }, false);

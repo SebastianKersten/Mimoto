@@ -1,6 +1,7 @@
 'use strict';
 
 var TextlineView = require('./Textline');
+var CheckboxView = require('./Checkbox');
 
 module.exports = function (element) {
 
@@ -13,7 +14,7 @@ module.exports.prototype = {
 
   init: function () {
 
-    console.log('Init form');
+    console.log('Init Form');
 
     this.setVariables();
     this.addEventListeners();
@@ -46,6 +47,8 @@ module.exports.prototype = {
 
       if (this.elements[i].classList.contains('js-form-component-textline')) {
         new TextlineView(this.elements[i]);
+      } else if (this.elements[i].classList.contains('js-form-component-checkbox')) {
+        new CheckboxView(this.elements[i]);
       }
 
     }

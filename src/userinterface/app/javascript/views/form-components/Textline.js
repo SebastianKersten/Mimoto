@@ -11,7 +11,7 @@ module.exports.prototype = {
 
   init: function () {
 
-    console.log('Init textline');
+    console.log('Init Textline');
 
     this.setVariables();
 
