@@ -23,7 +23,7 @@ module.exports.prototype = {
 
   setVariables: function () {
 
-    this.validated = false;
+    this.validated = true;
     this.submit = this.el.querySelector('.js-form-submit');
 
   },
@@ -46,23 +46,33 @@ module.exports.prototype = {
 
   validateForm: function () {
 
+    this.validated = true;
     this.getElements();
+
+    if (this.validated) {
+      this.el.submit();
+    }
 
   },
 
   getElements: function () {
 
     var elements = this.el.querySelectorAll('.js-form-component');
-    console.log(elements);
 
     for (var i = 0; i < elements.length; i++) {
 
-      var type = elements[i].querySelector('input').type;
+      this.validateElement(elements[i]);
 
-      if (type == 'checkbox') {
-        var validated = FV.validateCheckbox(elements[i]);
+    }
 
-      }
+  },
+
+  validateElement: function (element) {
+
+    var type = element.querySelector('input').type;
+
+    if (type == 'checkbox') {
+      if (!FV.validateCheckbox(elements[i]).passed) this.validated = false;
     }
 
   }

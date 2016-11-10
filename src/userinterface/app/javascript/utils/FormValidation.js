@@ -6,14 +6,34 @@ module.exports = {
 
     console.log('Init Validation');
 
+    this.setVariables();
+
+  },
+
+  setVariables: function () {
+
+    this.result = {};
+    this.test = "wow";
+
+  },
+
+  setResult: function (passed, message) {
+
+    this.result = {};
+
+    this.result.passed = passed;
+
+    if (message) {
+      this.result.message = message;
+    }
+
   },
 
   validateCheckbox: function (element) {
 
-    console.log(element);
     this.el = element;
 
-    this.checkIfChecked();
+    return this.checkIfChecked();
 
   },
 
@@ -21,9 +41,17 @@ module.exports = {
 
     var checkboxes = this.el.querySelectorAll('input');
 
+    this.setResult(false, "Select a checkbox.");
+
     for (var i = 0; i < checkboxes.length; i++) {
-      console.log(checkboxes[i].checked);
+
+      if (checkboxes[i].checked) {
+        this.setResult(true);
+      }
+
     }
+
+    return this.result;
 
   }
 
