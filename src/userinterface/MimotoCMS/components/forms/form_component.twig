@@ -2,7 +2,7 @@
 
   <div class="form-component-header">
     <label for="" class="form-component-title">{{ Aimless.data('label') }} {% if Aimless.data('value.optional') %}<span class="form-component-title-information">(optioneel)</span>{% endif %}<svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
-    {% if button|default(true) %}
+    {% if button|default(false) %}
       <div class="form-component-button">
         {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
         label: 'Toevoegen',
