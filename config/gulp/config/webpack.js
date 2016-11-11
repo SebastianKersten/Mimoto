@@ -15,8 +15,8 @@ module.exports = function (env) {
       new webpack.IgnorePlugin(/^jquery$/),
       new webpack.ProvidePlugin({
         'Conditioner': './conditioner/conditioner',
-        'ErrorHandling': 'ErrorHandling',
-        'Validation': 'Validation'
+        'EH': 'ErrorHandling',
+        'FV': 'FormValidation'
       })
     ],
     resolve: {

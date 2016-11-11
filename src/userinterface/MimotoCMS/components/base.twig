@@ -11,8 +11,6 @@
 
   <!--<script src="/static/js/diff_match_patch.js"></script>-->
   <script src="/static/js/diff_match_patch_uncompressed.js"></script>
-  <script src="/static/js/Mimoto.CMS.js"></script>
-  <script src="/static/js/Mimoto.Aimless.js"></script>
 
   <script src="/static/js/mimoto.aimless.min.js"></script>
   <script src="/static/js/mimoto.cms.min.js"></script>
@@ -28,17 +26,30 @@
 
     <section class="pagecontent">
 
-      {#<div class="form-component js-form-component-textline">
-        <label for="" class="form-component-title">Name <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
-        <div class="form-component-content">
+{#
+      <form class="js-form">
 
-          <div class="form-component-element js-error-parent">
-            <input type="text" class="js-form-input form-input" placeholder="Property name" value="name" data-min-length="1" data-max-length="10" data-min-numbers="3" data-max-numbers="6" data-min-special-characters="3" data-max-special-characters="4">
+        <div class="form-component js-form-component js-form-component-textline">
+          <label for="" class="form-component-title">Name <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
+          <div class="form-component-content">
+
+            <div class="form-component-element js-error-parent">
+              <input type="text" class="js-form-input form-input" placeholder="Property name" value="name" data-min-length="5" data-max-length="15" data-min-numbers="2" data-max-numbers="3" data-min-special-characters="1" data-max-special-characters="2">
+            </div>
+
+            <p class="form-component-description">The property name should be unique</p>
           </div>
-
-          <p class="form-component-description">The property name should be unique</p>
         </div>
-      </div>#}
+
+        {% include "MimotoCMS/components/forms/input/Checkbox/Checkbox.twig" %}
+
+
+        <a class="button js-form-submit">Verstuur</a>
+
+      </form>
+#}
+
+      {#{% include "MimotoCMS/components/forms/input/List/List.twig" %}#}
 
       {% block content %}{% endblock %}
     </section>

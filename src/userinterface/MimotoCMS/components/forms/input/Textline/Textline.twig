@@ -1,5 +1,5 @@
-{% embed "MimotoCMS/components/forms/form_component.twig" %}
+{% embed "MimotoCMS/components/forms/form_component.twig" with {"type": "textline"} %}
   {% block form_component_element %}
-    <input {{ Aimless.input()|raw }} type="text" class="form-input" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}" />
+    <input {{ Aimless.input()|raw }} type="text" class="form-input js-textline" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}" />
   {% endblock %}
 {% endembed %}

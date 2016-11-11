@@ -1,20 +1,14 @@
+.form-checkbox-container {
+  position: relative;
+  flex: 0 0 auto;
+}
+
 .form-checkbox {
   position: relative;
   z-index: 1;
   width: 20px;
   height: 20px;
   cursor: pointer;
-
-  &::before {
-    position: absolute;
-    z-index: 2;
-    top: 3px;
-    left: 3px;
-    display: none;
-    font-size: rem-calc(14px);
-    pointer-events: none;
-    color: $tower-gray;
-  }
 
   &::after {
     position: absolute;
@@ -30,6 +24,18 @@
     border: 1px solid $pale-slate;
     background: $alabaster;
   }
+}
+
+.form-checkbox-icon {
+  position: absolute;
+  z-index: 2;
+  top: 4px;
+  left: 3px;
+  display: none;
+  width: 14px;
+  height: 11px;
+  pointer-events: none;
+  fill: $tower-gray;
 }
 
 .form-checkbox:checked {

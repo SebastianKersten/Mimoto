@@ -26,6 +26,12 @@ module.exports.prototype = {
     this.body = document.getElementsByTagName('body')[0];
     this.navigation = document.querySelector('.js-navigation');
 
+    this.messageToggle = this.el.querySelector('.js-message-dropdown-toggle');
+    this.messageDropdown = this.el.querySelector('.js-message-dropdown');
+
+    this.chatToggle = this.el.querySelector('.js-chat-dropdown-toggle');
+    this.chatDropdown = this.el.querySelector('.js-chat-dropdown');
+
     this.collapsed = false;
 
   },
@@ -40,9 +46,29 @@ module.exports.prototype = {
 
     this.mobileNavigationToggle.addEventListener('click', function () {
 
-      this.toggleMobileNavigation();
+      this.toggleClass(this.navigation, 'navigation--active');
 
     }.bind(this));
+
+    if (this.messageToggle && this.messageDropdown) {
+
+      this.messageToggle.addEventListener('click', function () {
+
+        this.toggleClass(this.messageDropdown, 'header-menu-message-dropdown--active');
+
+      }.bind(this));
+
+    }
+
+    if (this.chatToggle && this.chatDropdown) {
+
+      this.chatToggle.addEventListener('click', function () {
+
+        this.toggleClass(this.chatDropdown, 'header-menu-chat-dropdown--active');
+
+      }.bind(this));
+
+    }
 
   },
 
@@ -62,14 +88,14 @@ module.exports.prototype = {
 
     this.collapsed = !this.collapsed;
 
-    this.body.classList.toggle('navigation-collapsed');
+    this.toggleClass(this.body, 'navigation-collapsed');
     localStorage.setItem('collapsed', this.collapsed);
 
   },
 
-  toggleMobileNavigation: function () {
+  toggleClass: function (element, className) {
 
-    this.navigation.classList.toggle('navigation--active');
+    element.classList.toggle(className);
 
   }
 
