@@ -346,7 +346,7 @@ Mimoto.Aimless.connect = function()
                 var bFilterApproved = true;
                 if (mls_filter)
                 {
-                    for (s in mls_filter)
+                    for (var s in mls_filter)
                     {
                         if (mls_filter[s] && change.value != mls_filter[s]) {
                             bFilterApproved = false;
@@ -358,11 +358,35 @@ Mimoto.Aimless.connect = function()
                 // load
                 if (!bFilterApproved)
                 {
+                    var mls_config = $($component).attr("mls_config");
+
+                    if (mls_config) { mls_config = $.parseJSON(mls_config); }
+
+
                     // read
                     var nCurrentCount = parseInt($($component).text());
 
                     // update
-                    $($component).text(Math.max(0, nCurrentCount - 1));
+                    nCurrentCount = Math.max(0, nCurrentCount - 1);
+
+                    // output
+                    $($component).text(nCurrentCount);
+
+
+                    if (mls_config.toggleClasses)
+                    {
+                        for (var sKey in mls_config.toggleClasses)
+                        {
+                            if (sKey == 'onZero' && nCurrentCount == 0)
+                            {
+                                $($component).addClass(mls_config.toggleClasses[sKey]);
+                            }
+                            else
+                            {
+                                $($component).removeClass(mls_config.toggleClasses[sKey]);
+                            }
+                        }
+                    }
                 }
 
             }
@@ -447,11 +471,37 @@ Mimoto.Aimless.connect = function()
 
         aComponents.each( function(index, $component)
         {
+
+            var mls_config = $($component).attr("mls_config");
+
+            if (mls_config) { mls_config = $.parseJSON(mls_config); }
+
+
             // read
             var nCurrentCount = parseInt($($component).text());
 
             // update
-            $($component).text(nCurrentCount + 1);
+            nCurrentCount = nCurrentCount + 1;
+
+            // output
+            $($component).text(nCurrentCount);
+
+
+            if (mls_config.toggleClasses)
+            {
+                for (var sKey in mls_config.toggleClasses)
+                {
+                    if (sKey == 'onZero' && nCurrentCount == 0)
+                    {
+                        $($component).addClass(mls_config.toggleClasses[sKey]);
+                    }
+                    else
+                    {
+                        $($component).removeClass(mls_config.toggleClasses[sKey]);
+                    }
+                }
+            }
+
         });
     });
     

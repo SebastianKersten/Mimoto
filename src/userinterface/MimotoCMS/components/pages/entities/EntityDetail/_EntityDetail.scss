@@ -17,6 +17,27 @@ div.MimotoCMS_pages_entities_EntityDetail__meta a {
 div.MimotoCMS_pages_entities_EntityDetail__meta_info {
     flex-grow: 4;
     align-items: stretch;
+    display: flex;
+    flex-wrap: nowrap;
+
+    div.MimotoCMS_pages_entities_EntityDetail__meta_info-structure {
+        flex-grow: 1;
+        align-items: stretch;
+        padding: 8px 10px 10px 20px;
+        background-color: #fcfcfc;
+
+        span.MimotoCMS_pages_entities_EntityDetail__meta_info-structure-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+    }
+
+    div.MimotoCMS_pages_entities_EntityDetail__meta_info-usage {
+        flex-grow: 1;
+        align-items: stretch;
+        padding: 10px;
+    }
 }
 
 div.MimotoCMS_pages_entities_EntityDetail__meta_menu {

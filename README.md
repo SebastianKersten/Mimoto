@@ -322,3 +322,12 @@ $app['Mimoto.Log']->silent('Another silent test', "Does it live update?");
 $app['Mimoto.Log']->warn('Some warning', "Something probably needs your attention");
 $app['Mimoto.Log']->error('uh-oh, an error', "Your code is broken. Please fix");
 ```
+
+
+## Auto counters
+Aimless has support for aesy to implement counters for for instance new notifications. In the below example when a notification is created, or a notificatin changes it's state from `open` to `closed`, Aimless will automatically update the counter and even update the presentation of the counter (in this case by hiding the counter when the count hits zero) 
+
+Example:
+```
+<div id="header_notification_count" class="hidden" mls_count="_MimotoAimless__devtools__notification" mls_filter='{"state":"open"}' mls_config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
+```

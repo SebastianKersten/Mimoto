@@ -105,8 +105,11 @@ module.exports.prototype = {
             {
                 if (xhr.status === OK)
                 {
-                    classRoot.notificationCount.innerText = xhr.responseText;
-                    classRoot.toggleClass(classRoot.notificationCount, 'hidden');
+                    if (parseInt(xhr.responseText) > 0)
+                    {
+                        classRoot.notificationCount.innerText = xhr.responseText;
+                        classRoot.toggleClass(classRoot.notificationCount, 'hidden');
+                    }
                 }
                 else
                 {
