@@ -321,6 +321,53 @@ Mimoto.Aimless.connect = function()
                 }
             }
         });
+
+
+        // --- mls_count (onUpdate)---
+
+
+        // search
+        var aComponents = $("[mls_count='" + data.entityType + "']");
+
+        aComponents.each( function(index, $component)
+        {
+
+            var mls_filter = $($component).attr("mls_filter");
+
+            if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
+
+
+            // parse modified values
+            for (var i = 0; i < data.changes.length; i++)
+            {
+                // register
+                var change = data.changes[i];
+
+                var bFilterApproved = true;
+                if (mls_filter)
+                {
+                    for (s in mls_filter)
+                    {
+                        if (mls_filter[s] && change.value != mls_filter[s]) {
+                            bFilterApproved = false;
+                            break;
+                        }
+                    }
+                }
+
+                // load
+                if (!bFilterApproved)
+                {
+                    // read
+                    var nCurrentCount = parseInt($($component).text());
+
+                    // update
+                    $($component).text(Math.max(0, nCurrentCount - 1));
+                }
+
+            }
+
+        });
     });
 
     
@@ -390,6 +437,22 @@ Mimoto.Aimless.connect = function()
 
         });
 
+
+
+        // --- mls_count (onCreate) ---
+
+
+        // search
+        var aComponents = $("[mls_count='" + mls_container + "']");
+
+        aComponents.each( function(index, $component)
+        {
+            // read
+            var nCurrentCount = parseInt($($component).text());
+
+            // update
+            $($component).text(nCurrentCount + 1);
+        });
     });
     
     

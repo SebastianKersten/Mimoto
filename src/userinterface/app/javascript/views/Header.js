@@ -1,102 +1,147 @@
 'use strict';
 
-module.exports = function (element) {
+module.exports = function(element) {
 
-  this.el = element;
-  this.init();
-
+    this.el = element;
+    this.init();
 };
 
 module.exports.prototype = {
 
-  init: function () {
+    /**
+     * Constructor
+     */
+    init: function()
+    {
+        this.setVariables();
+        this.addEventListeners();
+        this.checkMenuState();
+        this.initNotificationCount();
+    },
 
-    console.log('Init header');
-    this.setVariables();
-    this.addEventListeners();
-    this.checkCollapsed();
+    /**
+     * Set dom variables
+     */
+    setVariables: function()
+    {
 
-  },
+        this.navigationToggle = this.el.querySelector('.js-navigation-toggle');
+        this.mobileNavigationToggle = this.el.querySelector('.js-mobile-navigation-toggle');
 
-  setVariables: function () {
+        this.body = document.getElementsByTagName('body')[0];
+        this.navigation = document.querySelector('.js-navigation');
 
-    this.navigationToggle = this.el.querySelector('.js-navigation-toggle');
-    this.mobileNavigationToggle = this.el.querySelector('.js-mobile-navigation-toggle');
+        this.messageToggle = this.el.querySelector('.js-message-dropdown-toggle');
+        this.messageDropdown = this.el.querySelector('.js-message-dropdown');
 
-    this.body = document.getElementsByTagName('body')[0];
-    this.navigation = document.querySelector('.js-navigation');
+        this.chatToggle = this.el.querySelector('.js-chat-dropdown-toggle');
+        this.chatDropdown = this.el.querySelector('.js-chat-dropdown');
 
-    this.messageToggle = this.el.querySelector('.js-message-dropdown-toggle');
-    this.messageDropdown = this.el.querySelector('.js-message-dropdown');
+        this.collapsed = false;
 
-    this.chatToggle = this.el.querySelector('.js-chat-dropdown-toggle');
-    this.chatDropdown = this.el.querySelector('.js-chat-dropdown');
+        this.notificationCount = document.getElementById('header_notification_count');
+    },
 
-    this.collapsed = false;
+    /**
+     * Add event listeners
+     */
+    addEventListeners: function()
+    {
 
-  },
+        this.navigationToggle.addEventListener('click', function () {
+            this.toggleMenuState();
+        }.bind(this));
 
-  addEventListeners: function () {
+        this.mobileNavigationToggle.addEventListener('click', function () {
+            this.toggleClass(this.navigation, 'navigation--active');
+        }.bind(this));
 
-    this.navigationToggle.addEventListener('click', function () {
+        if (this.messageToggle && this.messageDropdown)
+        {
+            this.messageToggle.addEventListener('click', function () {
+                this.toggleClass(this.messageDropdown, 'header-menu-message-dropdown--active');
+            }.bind(this));
+        }
 
-      this.toggleNavigationCollapse();
+        if (this.chatToggle && this.chatDropdown)
+        {
+            this.chatToggle.addEventListener('click', function () {
+                this.toggleClass(this.chatDropdown, 'header-menu-chat-dropdown--active');
+            }.bind(this));
+        }
+    },
 
-    }.bind(this));
 
-    this.mobileNavigationToggle.addEventListener('click', function () {
+    /**
+     * Check menu state
+     */
+    checkMenuState: function()
+    {
+        if (localStorage.getItem('collapsed')) { this.collapsed = JSON.parse(localStorage.getItem('collapsed'));}
 
-      this.toggleClass(this.navigation, 'navigation--active');
+        if (this.collapsed) { this.body.classList.add('navigation-collapsed'); }
+    },
 
-    }.bind(this));
+    /**
+     * Init notification count
+     */
+    initNotificationCount: function()
+    {
 
-    if (this.messageToggle && this.messageDropdown) {
+        // setup
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/mimoto.cms/notifications/count');
 
-      this.messageToggle.addEventListener('click', function () {
+        // init
+        var classRoot = this;
 
-        this.toggleClass(this.messageDropdown, 'header-menu-message-dropdown--active');
+        xhr.onreadystatechange = function ()
+        {
+            // init
+            var DONE = 4; // readyState 4 means the request is done.
+            var OK = 200; // status 200 is a successful return.
 
-      }.bind(this));
+            if (xhr.readyState === DONE)
+            {
+                if (xhr.status === OK)
+                {
+                    classRoot.notificationCount.innerText = xhr.responseText;
+                    classRoot.toggleClass(classRoot.notificationCount, 'hidden');
+                }
+                else
+                {
+                    console.log('Error: ' + xhr.status); // An error occurred during the request.
+                }
+            }
+        };
 
+        xhr.send(null);
+    },
+
+    /**
+     * Toggle menu state
+     */
+    toggleMenuState: function()
+    {
+        // toggle
+        this.collapsed = !this.collapsed;
+
+        // update dom
+        this.toggleClass(this.body, 'navigation-collapsed');
+
+        // store
+        localStorage.setItem('collapsed', this.collapsed);
+    },
+
+
+    /**
+     * Toggle dom class
+     * @param element
+     * @param className
+     */
+    toggleClass: function(element, className)
+    {
+        element.classList.toggle(className);
     }
-
-    if (this.chatToggle && this.chatDropdown) {
-
-      this.chatToggle.addEventListener('click', function () {
-
-        this.toggleClass(this.chatDropdown, 'header-menu-chat-dropdown--active');
-
-      }.bind(this));
-
-    }
-
-  },
-
-  checkCollapsed: function () {
-
-    if (localStorage.getItem('collapsed')) {
-      this.collapsed = JSON.parse(localStorage.getItem('collapsed'));
-    }
-
-    if (this.collapsed) {
-      this.body.classList.add('navigation-collapsed');
-    }
-
-  },
-
-  toggleNavigationCollapse: function () {
-
-    this.collapsed = !this.collapsed;
-
-    this.toggleClass(this.body, 'navigation-collapsed');
-    localStorage.setItem('collapsed', this.collapsed);
-
-  },
-
-  toggleClass: function (element, className) {
-
-    element.classList.toggle(className);
-
-  }
 
 };

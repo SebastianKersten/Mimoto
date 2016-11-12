@@ -60,4 +60,13 @@ class NotificationsController
         // send
         return new Response('Notification closed');
     }
+
+    public function getNotificationCount(Application $app)
+    {
+        // load
+        $aNotifications = $app['Mimoto.Data']->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
+
+        // send
+        return count($aNotifications);
+    }
 }

@@ -12,12 +12,12 @@
   <!--<script src="/static/js/diff_match_patch.js"></script>-->
   <script src="/static/js/diff_match_patch_uncompressed.js"></script>
 
-  <script src="/static/js/mimoto.aimless.min.js"></script>
+  <script src="/static/js/Mimoto.Aimless.js"></script>
+  <script src="/static/js/Mimoto.CMS.js"></script>
+  <!--<script src="/static/js/mimoto.aimless.min.js"></script>-->
   <script src="/static/js/mimoto.cms.min.js"></script>
 </head>
 <body>
-
-  {% include "MimotoCMS/components/svg.twig" %}
 
   <div class="layer_application">
 
@@ -57,6 +57,8 @@
   </div>
 
   {% include "MimotoCMS/components/interface/Popup/Popup.twig" %}
+
+  {% include "MimotoCMS/components/svg.twig" %}
 
 </body>
 </html>

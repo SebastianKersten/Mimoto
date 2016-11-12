@@ -11,7 +11,7 @@
 
         <div class="MimotoCMS_pages_entities_EntityDetail__meta_info">
 
-            Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
+            <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
 
             {% if entityStructure.extends is not empty %}
                 {% for extension in entityStructure.extends %}
@@ -41,18 +41,45 @@
             {% endif %}
 
 
+            {#<div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_container">
+                <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_description">Number of connections<br>to other instances</div>
+                <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_number">{{ entityStructure.instanceCount }}</div>
+            </div>
+
+            <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_container">
+                <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_description">Number of instances<br>it's connected to</div>
+                <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_number">{{ entityStructure.instanceCount }}</div>
+            </div>#}
+
 
             <br>
             <br>
             <br>
             #todo<br>
             // 2. add checkbox<br>
-            // 3. add dropdown with other entities<br>
+            // 3. add dropdown with other entities (selection met conditionals via database)<br>
             // 4. tab-module<br>
             // 5. visual representation (collection with small template)<br>
             // 7. used in x connections (stats)<br>
             // 8. properties op aparte pagina<br>
             // 9. edit meta data op aparte pagina<br>
+            <br>
+            <br>
+            <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
+            {% for property in entityStructure.properties %}
+                <li class="MimotoCMS_pages_entities_EntityDetail__property">
+                    <a href="/mimoto.cms/entityproperty/{{ property.id }}/view">
+                        <span mls_value="_MimotoAimless__core__entityproperty.{{ property.id }}.name" class="MimotoCMS_pages_entities_EntityDetail__property-name">
+                            {{ property.name }}
+                        </span>
+                    </a>
+                    <span mls_value="_MimotoAimless__core__entityproperty.{{ property.id }}.type" class="MimotoCMS_pages_entities_EntityDetail__property-type">
+                        {{ property.type }}
+                    </span>
+                </li>
+            {% endfor %}
+
+
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail__meta_menu">
             {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' } %}<br>
@@ -70,6 +97,10 @@
         <br>
         <div class="MimotoCMS_pages_entities_EntityDetail__container" {{ Aimless.realtime('properties')|raw }}>
             {{ Aimless.data('properties')|raw }}
+            for item in Aimless.collection('properties')
+            {
+                of "true" als tweede parameter
+            }
         </div>
     </div>
 

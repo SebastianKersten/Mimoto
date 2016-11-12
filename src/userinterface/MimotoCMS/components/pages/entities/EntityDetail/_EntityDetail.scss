@@ -26,6 +26,23 @@ div.MimotoCMS_pages_entities_EntityDetail__meta_menu {
     margin-left: 10px;
 }
 
+li.MimotoCMS_pages_entities_EntityDetail__property {
+    margin: 5px 0 8px 0;
+}
+
+span.MimotoCMS_pages_entities_EntityDetail__property-name {
+    background-color: $pale-slate;
+    color: #ffffff;
+    padding: 3px 7px 4px 7px;
+}
+
+span.MimotoCMS_pages_entities_EntityDetail__property-type {
+    background-color: $fuzzy-wuzzy-brown;
+    color: #ffffff;
+    padding: 3px 7px 4px 7px;
+    margin-left: 3px;
+}
+
 div.MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_container {
     display: inline-block;
     padding: 0 20px 0 20px;

@@ -46,7 +46,7 @@ class MimotoLogService
     public function silent($sTitle, $sMessage)
     {
         // forward
-        $this->createNotification($sTitle, $sMessage, debug_backtrace()[1].'', 'silent');
+        $this->createNotification($sTitle, $sMessage, debug_backtrace()[1], 'silent');
     }
 
     /**

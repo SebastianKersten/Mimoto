@@ -296,13 +296,13 @@ class EntityController
 
             // load
             $aPropertySettings = $entityProperty->getValue('settings', true);
-//error($entityProperty);
+
             $nSettingCount = count($aPropertySettings);
             for ($j = 0; $j < $nSettingCount; $j++)
             {
                 // register
                 $propertySetting = $aPropertySettings[$j];
-//echo 'j='.$j;
+
                 $setting = (object) array(
                     'key' => $propertySetting->getValue('key'),
                     'type' => $propertySetting->getValue('type'),
@@ -315,12 +315,12 @@ class EntityController
 
             // store
             $entityStructure->properties[] = (object) array(
+                'id' => $entityProperty->getId(),
                 'name' => $entityProperty->getValue('name'),
                 'type' => $entityProperty->getValue('type'),
                 'settings' => $aSettings
             );
         }
-//error($entityStructure);
 
         // send
         return $entityStructure;
@@ -372,5 +372,52 @@ class EntityController
 
         // send
         return $aChildExtensions;
+    }
+
+    private function getChildConnections($nEntityId)
+    {
+        // init
+        $aChildConnection = [];
+
+        // load
+        $stmt = $GLOBALS['database']->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_PROJECT." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id && ".
+            "parent_property_id = :parent_property_id && ".
+            "child_entity_type_id = :child_entity_type_id &&".
+            "child_id = :child_id"
+        );
+        $params = array(
+            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
+            ':parent_property_id' => CoreConfig::MIMOTO_ENTITY.'--extends',
+            ':child_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
+            ':child_id' => $nEntityId
+        );
+
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($aResults as $row)
+        {
+            // load
+            $offspring = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $row['parent_id']);
+
+            // compose and store
+            $aChildConnection[] = (object) array(
+                'id' => $row['parent_id'],
+                'name' => $offspring->getValue('name')
+            );
+
+            // check
+            if (!empty($aSubchildExtensions = $this->getChildExtension($row['parent_id'])))
+            {
+                $aChildExtensions = array_merge($aChildConnection, $aSubchildExtensions);
+            }
+        }
+
+        // send
+        return $aChildConnection;
     }
 }

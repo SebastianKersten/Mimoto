@@ -28,6 +28,10 @@
       color: $black;
       border-radius: 100%;
       background-color: $tower-gray;
+
+      .hidden {
+        display: none;
+      }
     }
   }
 
