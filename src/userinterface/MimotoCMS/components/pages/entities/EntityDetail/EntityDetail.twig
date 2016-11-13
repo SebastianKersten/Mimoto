@@ -50,15 +50,24 @@
                                 {% for property in entityStructure.properties %}
                                     <li class="MimotoCMS_pages_entities_EntityDetail__property">
                                         <a href="/mimoto.cms/entityproperty/{{ property.id }}/view">
-                                        <span mls_value="_MimotoAimless__core__entityproperty.{{ property.id }}.name" class="MimotoCMS_pages_entities_EntityDetail__property-name">
-                                            {{ property.name }}
-                                        </span>
+                                            <span mls_value="_MimotoAimless__core__entityproperty.{{ property.id }}.name" class="MimotoCMS_pages_entities_EntityDetail__property-name">
+                                                {{ property.name }}
+                                            </span>
                                         </a>
                                         <span mls_value="_MimotoAimless__core__entityproperty.{{ property.id }}.type" class="MimotoCMS_pages_entities_EntityDetail__property-type">
-                                        {{ property.type }}
-                                    </span>
+                                            {{ property.type }}
+                                        </span>
+
+                                        {% for setting in property.settings %}
+                                            {{ setting.key }} |
+                                            {{ setting.type }} |
+                                            {{ setting.value }}
+                                        {% endfor %}
                                     </li>
                                 {% endfor %}
+                                // 1. Settings<br>
+                                // 2. Settings zijn leeg
+                                // 3. Aimless.render('properties', 'property_detail')<br>
                             </ul>
                         </div>
 

@@ -305,7 +305,7 @@ class EntityController
         {
             // register
             $entityProperty = $aEntityProperties[$i];
-
+            error($entityProperty);
             // init
             $aSettings = [];
 
@@ -336,7 +336,7 @@ class EntityController
                 'settings' => $aSettings
             );
         }
-
+        error($entityStructure);
         // send
         return $entityStructure;
     }

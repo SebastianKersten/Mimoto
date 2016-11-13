@@ -61,6 +61,12 @@ module.exports.prototype = {
             var rect = this.messageToggle.getBoundingClientRect();
             console.log(rect.top, rect.right, rect.bottom, rect.left);
 
+            // var bodyRect = document.body.getBoundingClientRect(),
+            //     elemRect = element.getBoundingClientRect(),
+            //     offset   = elemRect.top - bodyRect.top;
+            //
+            // alert('Element is ' + offset + ' vertical pixels from <body>');
+
             this.messageToggle.addEventListener('click', function () {
                 this.toggleClass(this.messageDropdown, 'header-menu-message-dropdown--active');
             }.bind(this));
