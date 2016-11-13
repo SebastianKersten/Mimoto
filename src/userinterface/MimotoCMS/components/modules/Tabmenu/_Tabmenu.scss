@@ -1,0 +1,43 @@
+div.MimotoCMS_components_Tabmenu {
+
+}
+
+div.MimotoCMS_components_Tabmenu__menu {
+
+    overflow: scroll;
+
+    &>div {
+        margin-right: 2px;
+    }
+
+    &>div:last-child {
+        margin-right: 0;
+    }
+
+    div.MimotoCMS_components_Tabmenu__menu_tab {
+        display: inline-block;
+        padding: 10px 20px 10px 20px;
+        color: #000000;
+        background-color: #dedede;
+        font-family: $font-family-futura;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &.active {
+            cursor: default;
+            text-decoration: none;
+            background-color: #ffffff;
+        }
+    }
+
+}
+
+div.MimotoCMS_components_Tabmenu__panels {
+
+    &.hidden {
+        display: none;
+    }
+}

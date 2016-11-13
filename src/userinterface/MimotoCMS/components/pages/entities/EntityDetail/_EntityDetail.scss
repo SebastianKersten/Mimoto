@@ -1,8 +1,12 @@
-div.MimotoCMS_pages_entities_EntityDetail__meta {
-    position: relative;
+div.MimotoCMS_pages_entities_EntityDetail__panel {
     margin-bottom: 25px;
     background-color: #ffffff;
     padding: 15px;
+}
+
+div.MimotoCMS_pages_entities_EntityDetail__meta {
+    position: relative;
+    background-color: #ffffff;
 
     justify-content: center;
 
@@ -63,6 +67,12 @@ span.MimotoCMS_pages_entities_EntityDetail__property-type {
     padding: 3px 7px 4px 7px;
     margin-left: 3px;
 }
+
+div.MimotoCMS_pages_entities_EntityDetail__container {
+    background-color: #fcfcfc;
+    padding: 3px;
+}
+
 
 div.MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_container {
     display: inline-block;
