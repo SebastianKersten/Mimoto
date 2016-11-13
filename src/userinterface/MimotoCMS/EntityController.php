@@ -226,8 +226,15 @@ class EntityController
             // load
             $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            // store
-            $entityStructure->instanceCount = $aResults[0]['count(id)'];
+            if (count($aResults) == 0)
+            {
+                $GLOBALS['Mimoto.Log']->error('Entity table issue', "The entity '".$entityStructure->name."' is missing its mysql table");
+            }
+            else
+            {
+                // store
+                $entityStructure->instanceCount = $aResults[0]['count(id)'];
+            }
         }
 
 

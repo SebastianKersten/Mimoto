@@ -5,4 +5,13 @@ div.MimotoCMS_pages_components_ComponentOverview__container {
     position: relative;
     margin-bottom: 25px;
     margin-top: 30px;
+
+    &>div {
+        margin-bottom: 5px;
+        margin-right: 5px;
+    }
+
+    &>div:last-child {
+        margin-bottom: 0;
+    }
 }

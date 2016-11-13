@@ -100,7 +100,7 @@
                     {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'+', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}
                     <br>
                     <br>
-                    <div class="MimotoCMS_pages_entities_EntityDetail__container" {{ Aimless.realtime('properties')|raw }}>
+                    <div class="MimotoCMS_pages_entities_EntityDetail__properties_container" {{ Aimless.realtime('properties')|raw }}>
                         {{ Aimless.data('properties')|raw }}
                     </div>
                 </div>
@@ -116,21 +116,12 @@
             </div>
         {% endblock %}
     {% endembed %}
-    
+
     Aimless.render('properties', 'property_detail')<br>
     Aimless.data('properties')<br>
     <br>
     Only get real data? how about connection id's Aimless.connection()<br>
     <br>
-
-    <br>
-    #todo<br>
-    // 2. add checkbox<br>
-    // 3. add dropdown with other entities (selection met conditionals via database)<br>
-    // 4. properties op aparte pagina<br>
-    // 5. edit meta data op aparte pagina<br>
-
-
 
 
 {% endblock %}
