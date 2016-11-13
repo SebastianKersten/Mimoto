@@ -7,8 +7,8 @@ namespace Mimoto\Form;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 
-use Mimoto\Core\forms\EntityNewForm;
-use Mimoto\Core\forms\EntityPropertyNewForm;
+use Mimoto\Core\forms\EntityForm;
+use Mimoto\Core\forms\EntityPropertyForm;
 
 
 /**
@@ -229,8 +229,10 @@ class MimotoFormService
     {
         switch($sFormName)
         {
-            case CoreConfig::COREFORM_ENTITY_NEW: return EntityNewForm::getStructure(); break;
-            case CoreConfig::COREFORM_ENTITYPROPERTY_NEW: return EntityPropertyNewForm::getStructure(); break;
+            case CoreConfig::COREFORM_ENTITY_NEW: return EntityForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_ENTITY_EDIT: return EntityForm::getStructureEdit(); break;
+            case CoreConfig::COREFORM_ENTITYPROPERTY_NEW: return EntityPropertyForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_ENTITYPROPERTY_EDIT: return EntityPropertyForm::getStructureEdit(); break;
         }
     }
 }

@@ -9,6 +9,7 @@ use Mimoto\Core\CoreConfig;
 // Silex classes
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 /**
@@ -66,7 +67,16 @@ class NotificationsController
         // load
         $aNotifications = $app['Mimoto.Data']->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
 
-        // send
-        return count($aNotifications);
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_notifications_NotificationOverviewSmall');
+
+        // setup
+        $component->addSelection('notifications', 'Mimoto.CMS_notifications_NotificationSmall', $aNotifications);
+
+        // render and send
+        return new JsonResponse((object) array(
+            'count' => count($aNotifications),
+            'notifications' => $component->render()
+        ));
     }
 }

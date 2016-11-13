@@ -252,11 +252,20 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
+                'name' => 'Mimoto.CMS_notifications_NotificationOverviewSmall',
+                'file' => 'MimotoCMS/components/pages/notifications/NotificationOverviewSmall/NotificationOverviewSmall.twig',
+                'conditionals' => []
+            ),
+            (object) array(
                 'name' => 'Mimoto.CMS_notifications_Notification',
                 'file' => 'MimotoCMS/components/pages/notifications/Notification/Notification.twig',
                 'conditionals' => []
             ),
-
+            (object) array(
+                'name' => 'Mimoto.CMS_notifications_NotificationSmall',
+                'file' => 'MimotoCMS/components/pages/notifications/NotificationSmall/NotificationSmall.twig',
+                'conditionals' => []
+            ),
 
         ];
 

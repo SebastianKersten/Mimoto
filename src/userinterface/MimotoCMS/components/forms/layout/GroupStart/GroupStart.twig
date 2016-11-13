@@ -1,2 +1,2 @@
 <div class="MimotoCMS_forms_layout_GroupStart">
-    <div class="MimotoCMS_forms_layout__title">{{ title }}</div>
+    {% if Aimless.data('title') is not empty %}<div class="MimotoCMS_forms_layout_GroupStart__title">{{ Aimless.data('title') }}</div>{% endif %}

@@ -1,0 +1,30 @@
+div.MimotoCMS_pages_notifications_NotificationOverviewSmall {
+
+}
+
+div.MimotoCMS_pages_notifications_NotificationOverviewSmall__container {
+    max-height: 400px;
+    overflow: scroll;
+
+    &>div {
+        margin-bottom: 1px;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+div.MimotoCMS_pages_notifications_NotificationOverviewSmall__viewall {
+    padding: 5px;
+    text-align: center;
+
+    a {
+        text-decoration: none;
+        color: #000000;
+        font-size: 12px;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+}

@@ -96,10 +96,11 @@
       right: 0;
       display: none;
       width: 200px;
-      height: 300px;
+      height: auto;
       border: 1px solid $alto;
       border-top: 0;
       background-color: $white;
+      padding: 1px;
     }
 
     .header-menu-message-dropdown--active,

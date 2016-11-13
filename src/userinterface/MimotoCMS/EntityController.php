@@ -56,7 +56,6 @@ class EntityController
 
         // 1. create
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
-        //$component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Page');
 
         // 2. setup
         $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
@@ -121,7 +120,7 @@ class EntityController
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
+        $component->addForm(CoreConfig::COREFORM_ENTITY_EDIT, $entity);
 
         // 5. render and send
         return $component->render();
@@ -155,14 +154,22 @@ class EntityController
 
     public function entityPropertyNew(Application $app, $nEntityId)
     {
-        // create
-        $form = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_FormEntityProperty');
+        // 1. auto-create entity if new (in plaats van create ooraf)
+        // 2. hidden vars
 
-        // setup
-        $form->setVar('nEntityId', $nEntityId);
 
-        // output
-        return $form->render();
+        // create dummy
+        $entityProperty = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+
+        // 1. create
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+
+        // 2. setup
+        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entityProperty);
+
+        // 3. render and send
+        return $component->render();
+
     }
 
     public function entityPropertyCreate(Application $app, Request $request, $nEntityId)
@@ -188,10 +195,11 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        //$component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Page');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entity);
+        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_EDIT, $entity);
 
         // 5. render and send
         return $component->render();

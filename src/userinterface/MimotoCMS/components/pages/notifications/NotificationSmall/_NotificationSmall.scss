@@ -1,0 +1,32 @@
+div.MimotoCMS_pages_notifications_NotificationSmall {
+  background-color: #9ECECA;
+  color: #ffffff;
+  padding: 10px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+  div.MimotoCMS_pages_notifications_NotificationSmall__title {
+    font-size: 12px;
+  }
+
+
+div.MimotoCMS_pages_notifications_NotificationSmall.silent {
+  background-color: #b5b3b4;
+}
+
+div.MimotoCMS_pages_notifications_NotificationSmall.warning {
+  background-color: #867ADB;
+}
+
+div.MimotoCMS_pages_notifications_NotificationSmall.error {
+  background-color: #DF5B57;
+}

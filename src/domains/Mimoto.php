@@ -68,7 +68,6 @@ class Mimoto
         $app->get ('/mimoto.cms/entity/{nEntityId}/property/new', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyNew');
         $app->post('/mimoto.cms/entity/{nEntityId}/property/create', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyCreate');
 
-        $app->get('/mimoto.cms/entityproperty/{nEntityPropertyId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyView');
         $app->get('/mimoto.cms/entityproperty/{nEntityPropertyId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyEdit');
         $app->post('/mimoto.cms/entityproperty/{nEntityPropertyId}/update', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyUpdate');
         $app->get('/mimoto.cms/entityproperty/{nEntityPropertyId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyDelete');

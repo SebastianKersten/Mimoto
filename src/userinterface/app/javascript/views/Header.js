@@ -58,6 +58,9 @@ module.exports.prototype = {
 
         if (this.messageToggle && this.messageDropdown)
         {
+            var rect = this.messageToggle.getBoundingClientRect();
+            console.log(rect.top, rect.right, rect.bottom, rect.left);
+
             this.messageToggle.addEventListener('click', function () {
                 this.toggleClass(this.messageDropdown, 'header-menu-message-dropdown--active');
             }.bind(this));
@@ -105,10 +108,17 @@ module.exports.prototype = {
             {
                 if (xhr.status === OK)
                 {
-                    if (parseInt(xhr.responseText) > 0)
+                    // convert
+                    var data = JSON.parse(this.responseText);
+
+                    if (parseInt(data.count) > 0)
                     {
-                        classRoot.notificationCount.innerText = xhr.responseText;
-                        classRoot.toggleClass(classRoot.notificationCount, 'hidden');
+                        // update counter
+                        classRoot.notificationCount.innerText = data.count;
+                        classRoot.notificationCount.classList.remove('hidden');
+
+                        // add notifications
+                        classRoot.messageDropdown.innerHTML = data.notifications;
                     }
                 }
                 else
