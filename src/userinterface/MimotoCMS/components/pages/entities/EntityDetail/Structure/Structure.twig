@@ -1,0 +1,73 @@
+<div id="panel_entitydetail_structure" class="MimotoCMS_pages_entities_EntityDetail__panel">
+
+    <div class="MimotoCMS_pages_entities_EntityDetail__meta">
+        <div class="MimotoCMS_pages_entities_EntityDetail__meta_info">
+
+            <div class="MimotoCMS_pages_entities_EntityDetail__meta_info-structure">
+
+                <span class="MimotoCMS_pages_entities_EntityDetail__meta_info-structure-name" {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span>
+
+                {% if entityStructure.extends is not empty %}
+                    {% for extension in entityStructure.extends %}
+                        extends <b><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_id="entity.{{ extension.id }}.name">{{ extension.name }}</span></a></b>
+                    {% endfor %}
+                    <br>
+                {% endif %}
+
+                <hr>
+
+                {% for property in entityStructure.properties %}
+                    <div class="MimotoCMS_pages_entities_EntityDetail__property">
+                        <div mls_value="_MimotoAimless__core__entityproperty.{{ property.id }}.name" class="MimotoCMS_pages_entities_EntityDetail__propertyname">
+                            <span><a href="/mimoto.cms/entityproperty/{{ property.id }}/view">{{ property.name }}</a></span>
+                        </div>
+                        <div class="MimotoCMS_pages_entities_EntityDetail__propertytype">
+                            <div class="MimotoCMS_pages_entities_EntityDetail__propertytype">
+                                <span mls_value="_MimotoAimless__core__entityproperty.{{ property.id }}.type" >{{ property.type }}</span>
+                                <div class="MimotoCMS_pages_entities_EntityDetail__propertysettingcontainer">{% for setting in property.settings %}
+                                        <span class="MimotoCMS_pages_entities_EntityDetail__propertysetting">
+                                            {{ setting.key }} = {{ setting.value|raw }}
+                                        </span>{% if not loop.last %}<br>{% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                {% endfor %}
+
+            </div>
+
+
+            <div class="MimotoCMS_pages_entities_EntityDetail__meta_info-usage">
+
+                {% if entityStructure.extendedBy is not empty %}
+                    <br>
+                    extendedBy:<br>
+                    <ul>
+                        {% for extension in entityStructure.extendedBy %}
+                            <li><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_value="_MimotoAimless__core__entity.{{ extension.id }}.name">{{ extension.name }}</span></a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if entityStructure.hasTable %}
+                    <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_container">
+                        <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_description">Number&nbsp;of<br>instances</div>
+                        <div class="MimotoCMS_pages_entities_EntityDetail__meta_info_instanceCount_number">{{ entityStructure.instanceCount }}</div>
+                    </div>
+                {% else %}
+                    This entity has no table and is only used for extension purposes
+                {% endif %}
+
+            </div>
+
+        </div>
+        <div class="MimotoCMS_pages_entities_EntityDetail__meta_menu">
+            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' } %}<br>
+        </div>
+
+    </div>
+
+</div>

@@ -14,6 +14,7 @@ use SendGrid\Content;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -460,7 +461,47 @@ class ExampleController
         echo $response->body();
         echo $response->headers();
     }
-    
+
+
+
+
+
+    public function viewDebug1(Application $app, $nEntityId)
+    {
+        // load
+        $entityProperty = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, 1);
+
+        error($entityProperty);
+
+
+        // load
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+
+
+        echo "Entity '".$entity->getValue('name')."' with id=".$entity->getId();
+
+        $aProperties = $entity->getValue('properties', true);
+
+
+
+        output('Properties', $aProperties);
+
+
+
+        for ($i = 0; $i < count($aProperties); $i++)
+        {
+            $property = $aProperties[$i];
+
+            output('$property', $property, true);
+
+        }
+
+
+        return 'Done!';
+    }
+
+
+
     
     
     

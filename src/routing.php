@@ -35,6 +35,8 @@ $app->get('/example13', 'Mimoto\\UserInterface\\examples\\ExampleController::vie
 $app->get('/example14', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample14');
 $app->get('/example15', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample15');
 
+$app->get('/debug1/{nEntityId}', 'Mimoto\\UserInterface\\examples\\ExampleController::viewDebug1');
+
 
 
 

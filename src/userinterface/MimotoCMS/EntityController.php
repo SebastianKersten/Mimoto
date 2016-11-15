@@ -6,6 +6,7 @@ namespace Mimoto\UserInterface\MimotoCMS;
 // Silex classes
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
+use Mimoto\EntityConfig\MimotoEntityConfig;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -305,7 +306,7 @@ class EntityController
         {
             // register
             $entityProperty = $aEntityProperties[$i];
-            error($entityProperty);
+
             // init
             $aSettings = [];
 
@@ -318,10 +319,44 @@ class EntityController
                 // register
                 $propertySetting = $aPropertySettings[$j];
 
+                $sKey = $propertySetting->getValue('key');
+                $sType = $propertySetting->getValue('type');
+                $value = $propertySetting->getValue('value');
+
+                switch($sKey)
+                {
+                    case MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE:
+
+                        $value = '<a href="/mimoto.cms/entity/'.$value.'/view">'.$GLOBALS['Mimoto.Config']->getEntityNameById($value).'</a>';
+                        break;
+
+                    case MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES:
+
+                        // convert
+                        $aAllowedEntityTypes = json_decode($value);
+
+                        $value = '[<br>';
+
+                        $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
+                        for ($k = 0; $k < $nAllowedEntityTypeCount; $k++)
+                        {
+                            // register
+                            $nAllowedEntityType = $aAllowedEntityTypes[$k];
+
+                            $value .= '&nbsp;&nbsp;&nbsp;&nbsp;<a href="/mimoto.cms/entity/'.$nAllowedEntityType.'/view">'.$GLOBALS['Mimoto.Config']->getEntityNameById($nAllowedEntityType).'</a>';
+                            if ($k < $nAllowedEntityTypeCount - 1) $value .= ',<br>'; else $value .= '<br>';
+                        }
+
+                        $value .= ' ]';
+
+                        break;
+                }
+
+
                 $setting = (object) array(
-                    'key' => $propertySetting->getValue('key'),
-                    'type' => $propertySetting->getValue('type'),
-                    'value' => $propertySetting->getValue('value'),
+                    'key' => $sKey,
+                    'type' => $sType,
+                    'value' => $value,
                 );
 
                 // store
@@ -336,7 +371,7 @@ class EntityController
                 'settings' => $aSettings
             );
         }
-        error($entityStructure);
+
         // send
         return $entityStructure;
     }

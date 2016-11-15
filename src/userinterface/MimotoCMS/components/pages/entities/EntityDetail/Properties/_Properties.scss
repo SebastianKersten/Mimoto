@@ -1,0 +1,12 @@
+div.MimotoCMS_pages_entities_EntityDetail__properties_container {
+    background-color: #f9f9f9;
+    padding: 3px;
+
+    &>div {
+        margin-bottom: 5px;
+    }
+
+    &>div:last-child {
+        margin-bottom: 0;
+    }
+}

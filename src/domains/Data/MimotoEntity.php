@@ -642,7 +642,6 @@ class MimotoEntity
      */
     private function getValueFromCollectionProperty($property, $bGetStorableValue = false, $sSubpropertySelector = '')
     {
-        
         // 1. collection gaat alleen over volgorde en referenties, niet om feitelijk inhoud
         // 2. inhoud draagt eigen changed-status
         // 3. dit houdt het management van de collection vrij eenvoudig
@@ -680,7 +679,7 @@ class MimotoEntity
             // 2. indien geladen, opslaan
             // 3. indien opgeslagen, gebruik uit geheugen
 
-            
+
             $aCollectionItems = $property->data->currentCollection;
 
             $aCollection = [];
@@ -711,7 +710,7 @@ class MimotoEntity
                         break;
                     }
                 }
-                                
+
                 if ($bVerified) { $aCollection[] = $entity; }
             }
 

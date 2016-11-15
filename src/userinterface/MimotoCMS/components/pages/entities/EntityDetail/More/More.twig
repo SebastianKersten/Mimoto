@@ -1,0 +1,7 @@
+<div id="panel_entitydetail_more" class="MimotoCMS_pages_entities_EntityDetail__panel">
+    <b>Danger zone!</b><br>
+    <br>
+    <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
+    <br>
+    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Delete entity', icon:'X', onclick:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", type:'alert' } %}
+</div>
