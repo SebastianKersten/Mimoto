@@ -2,8 +2,9 @@ div.MimotoCMS_pages_entities_EntityDetail__panel {
     margin-bottom: 25px;
     background-color: #ffffff;
     padding: 15px;
+    max-width: 800px;
 }
 
 @import 'Structure/Structure';
-@import 'Properties/Properties';
+@import 'Instances/Instances';
 @import 'More/More';

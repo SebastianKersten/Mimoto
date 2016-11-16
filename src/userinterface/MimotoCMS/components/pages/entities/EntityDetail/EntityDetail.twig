@@ -16,21 +16,30 @@
                     panel_id: 'panel_entitydetail_structure'
                 },
                 {
-                    label: 'Properties',
-                    panel_id: 'panel_entitydetail_properties'
+                    label: 'Instances',
+                    panel_id: 'panel_entitydetail_instances'
                 },
                 {
                     label: 'More',
-                    panel_id: 'panel_entitydetail_more'
+                    panel_id: 'panel_entitydetail_more',
+                    secondary: true
                 }
             ]
         }
     %}
         {% block panels %}
 
-            {% include "MimotoCMS/components/pages/entities/EntityDetail/Structure/Structure.twig" with { sPanelName:"", Aimless:Aimless }%}
-            {% include "MimotoCMS/components/pages/entities/EntityDetail/Properties/Properties.twig" with { sPanelName:"panel_entitydetail_properties", Aimless:Aimless }%}
-            {% include "MimotoCMS/components/pages/entities/EntityDetail/More/More.twig" with { sPanelName:"panel_entitydetail_more", Aimless:Aimless }%}
+            <div id="panel_entitydetail_structure" class="MimotoCMS_pages_entities_EntityDetail__panel">
+                {% include "MimotoCMS/components/pages/entities/EntityDetail/Structure/Structure.twig" %}
+            </div>
+
+            <div id="panel_entitydetail_instances" class="MimotoCMS_pages_entities_EntityDetail__panel">
+                {% include "MimotoCMS/components/pages/entities/EntityDetail/Instances/Instances.twig" %}
+            </div>
+
+            <div id="panel_entitydetail_more" class="MimotoCMS_pages_entities_EntityDetail__panel">
+                {% include "MimotoCMS/components/pages/entities/EntityDetail/More/More.twig" %}
+            </div>
 
         {% endblock %}
     {% endembed %}

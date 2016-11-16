@@ -1,44 +1,53 @@
 .MimotoCMS_forms_input_Button {
-  display: inline-flex;
-  padding: 10px 20px;
-  cursor: pointer;
-  text-decoration: none;
-  border: 0;
-  outline: none;
-  background-color: $black;
-  box-shadow: none;
-  flex-wrap: nowrap;
-  align-items: center;
+    display: inline-flex;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    border: 0;
+    outline: none;
+    background-color: $black;
+    box-shadow: none;
+    flex-wrap: nowrap;
+    align-items: center;
 
-  .MimotoCMS_forms_input_Button__text {
-    font-family: $font-family-futura;
-    font-size: rem-calc(14px);
-    font-weight: 500;
-    line-height: rem-calc(20px);
-    color: $white;
-  }
+    .MimotoCMS_forms_input_Button__text {
+        font-family: $font-family-futura;
+        font-size: rem-calc(14px);
+        font-weight: 500;
+        line-height: rem-calc(20px);
+        color: $white;
+    }
 
-  .MimotoCMS_forms_input_Button__icon {
-    display: block;
-    margin: 5px 0 5px 20px;
+    .MimotoCMS_forms_input_Button__icon {
+        display: block;
+        margin: 5px 0 5px 15px;
+        font-size: rem-calc(10px);
+        color: $tower-gray;
+    }
+
+}
+
+.MimotoCMS_forms_input_Button--secondary {
+    background-color: $tower-gray;
+}
+
+.MimotoCMS_forms_input_Button--secondary:hover {
+    background-color: $black;
+}
+
+.MimotoCMS_forms_input_Button--alert {
+    background-color: $fuzzy-wuzzy-brown;
+
+    &>.MimotoCMS_forms_input_Button__icon {
+        color: #ffffff;
+    }
+}
+
+.MimotoCMS_forms_input_Button--alert:hover {
+    background-color: $black;
+}
+
+.MimotoCMS_forms_input_Button--small {
+    padding: 6px 10px;
     font-size: rem-calc(10px);
-    color: $tower-gray;
-  }
 }
-
-.MimotoCMS_forms_input_Button.button--secondary {
-  background-color: $tower-gray;
-}
-
-.MimotoCMS_forms_input_Button.button--secondary:hover {
-  background-color: $black;
-}
-
-.MimotoCMS_forms_input_Button.button--alert {
-  background-color: $fuzzy-wuzzy-brown;
-}
-
-.MimotoCMS_forms_input_Button.button--alert:hover {
-  background-color: $black;
-}
-

@@ -31,6 +31,11 @@ div.MimotoCMS_components_Tabmenu__menu {
             text-decoration: none;
             background-color: #ffffff;
         }
+
+        &.secondary {
+            background-color: inherit;
+            color: #ff0000;
+        }
     }
 
 }
