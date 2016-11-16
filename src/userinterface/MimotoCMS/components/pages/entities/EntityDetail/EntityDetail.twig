@@ -29,16 +29,100 @@
     %}
         {% block panels %}
 
+            <!-- structure -->
+
             <div id="panel_entitydetail_structure" class="MimotoCMS_pages_entities_EntityDetail__panel">
-                {% include "MimotoCMS/components/pages/entities/EntityDetail/Structure/Structure.twig" %}
+
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure">
+
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta">
+                        <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_info">
+
+                            <span class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname" {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span>
+
+                            {% if entityStructure.extends is not empty %}
+                                {% for extension in entityStructure.extends %}
+                                    extends <b><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_id="entity.{{ extension.id }}.name" class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname">{{ extension.name }}</span></a></b>
+                                {% endfor %}
+                                <br>
+                            {% endif %}
+
+                            {% if entityStructure.extendedBy is not empty %}
+                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__extendedby">
+                                    Extended by:
+                                    {% for extension in entityStructure.extendedBy %}
+                                    <a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_value="_MimotoAimless__core__entity.{{ extension.id }}.name">{{ extension.name }}</span></a>{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__usage">
+                                {% if entityStructure.hasTable %}
+                                    This entity has {{ entityStructure.instanceCount }} instance{% if entityStructure.instanceCount != 1 %}s{%  endif %}
+                                {% else %}
+                                    This entity has no table of its own and is only used for extension purposes
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                        <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_menu">
+                            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' } %}
+                        </div>
+
+                    </div>
+
+
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties">
+
+                        {% if Aimless.data('properties')|length == 0 %}
+
+                            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty">
+                                <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
+                                <div>{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}</div>
+                            </div>
+                        {% else %}
+
+                            <div>
+                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_container">
+                                    {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty')|raw }}
+                                </div>
+
+                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}</div>
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
             </div>
+
+            <!-- instances -->
 
             <div id="panel_entitydetail_instances" class="MimotoCMS_pages_entities_EntityDetail__panel">
-                {% include "MimotoCMS/components/pages/entities/EntityDetail/Instances/Instances.twig" %}
+
+                <div class="MimotoCMS_pages_entities_EntityDetail_Instances">
+                    [search fields]
+                    <br>
+                    <br>
+                    {#<div class="MimotoCMS_pages_entities_EntityDetail_Properties__container" {{ Aimless.realtime('instances')|raw }}>
+                        {{ Aimless.data('instances')|raw }}
+                    </div>#}
+                </div>
+
             </div>
 
+            <!-- more -->
+
             <div id="panel_entitydetail_more" class="MimotoCMS_pages_entities_EntityDetail__panel">
-                {% include "MimotoCMS/components/pages/entities/EntityDetail/More/More.twig" %}
+
+                <b>Danger zone!</b><br>
+                <br>
+                <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
+                <br>
+                {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Delete entity', icon:'warning', onclick:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", types:['alert'] } %}
+
             </div>
 
         {% endblock %}
@@ -47,10 +131,8 @@
 
     <br>
     <br>
-    // 1. Aimless.render('properties', 'property_detail')<br>
-    // 2. Aimless.data('properties')<br>
-    // 3. Abstract properties tonen<br>
-    // 4. Only get real data? how about connection id's Aimless.connection()<br>
+    // 1. Abstract properties tonen<br>
+    // 2. Only get real data? how about connection id's Aimless.connection()<br>
     <br>
 
 

@@ -157,7 +157,7 @@ class AimlessComponent
     // --- Twig usage
 
 
-    public function data($sPropertySelector)
+    public function data($sPropertySelector, $bGetRealValues = true, $bRenderData = false, $sComponentName = null)
     {
         // validate
         if (empty($this->_entity)) error("AimlessComponent says: The entity is not set. Please supply one.");
@@ -169,6 +169,8 @@ class AimlessComponent
         $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, 0, $nSeperatorPos) : $sPropertySelector;
         $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, $nSeperatorPos + 1) : '';
 
+        // read and send
+        if (!$bRenderData) { return $this->_entity->getValue($sMainPropertyName, $bGetRealValues); }
 
         // render
         switch($this->_entity->getPropertyType($sMainPropertyName))
@@ -182,17 +184,16 @@ class AimlessComponent
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                 // read, render and send
-                return $this->renderEntityProperty($this->_entity->getValue($sMainPropertyName), $sMainPropertyName, $sSubPropertyName);
+                return $this->renderEntityProperty($this->_entity->getValue($sMainPropertyName, true), $sMainPropertyName, $sSubPropertyName, $sComponentName);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                 // read, render and send
-                return $this->renderCollectionProperty($this->_entity->getValue($sMainPropertyName, true), $sMainPropertyName);
+                return $this->renderCollectionProperty($this->_entity->getValue($sMainPropertyName, true), $sMainPropertyName, $sComponentName);
                 break;
         }
     }
-
 
     private function renderValueProperty($value, $sPropertyName)
     {
@@ -208,16 +209,16 @@ class AimlessComponent
         return $value;
     }
 
-    private function renderEntityProperty($entity, $sPropertyName, $sSubpropertySelector)
+    private function renderEntityProperty($entity, $sPropertyName, $sSubpropertySelector, $sComponentName = null)
     {
         // validate
         if (empty($entity)) return;
 
 
-        if (isset($this->_aPropertyComponents[$sPropertyName]) && empty($sSubpropertySelector))
+        if (!empty($sComponentName) || isset($this->_aPropertyComponents[$sPropertyName]) && empty($sSubpropertySelector))
         {
             // get te component file
-            $sComponentName = $this->_aPropertyComponents[$sPropertyName]->sComponentName;
+            $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
 
             // create
             $component = $this->_AimlessService->createComponent($sComponentName, $entity);
@@ -231,22 +232,29 @@ class AimlessComponent
         }
     }
 
-    private function renderCollectionProperty($aCollection, $sPropertyName)
+    private function renderCollectionProperty($aCollection, $sPropertyName, $sComponentName = null)
     {
         $aConnections = null;
         //$aConnections = $this->_entity->getValue($sPropertyName); // #todo - kan niet, filter check wordt gedaan ná ophalen data en op basis van de data
 
         // validate
-        if (!isset($this->_aPropertyComponents[$sPropertyName]))
+        if (empty($sComponentName) && !isset($this->_aPropertyComponents[$sPropertyName]))
         {
+            // #todo - silent fail
+
             return "Aimless says: No component set for property '$sPropertyName'. Use AimlessComponent->setPropertyComponent()";
 
             // 1. broadcast webevent for debugging purposes
             // 2. standaard report error (error level)
         }
+        else
+        {
+            // get te component file
+            $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
+        }
 
         // render and send
-        return $this->renderCollection($aCollection, $aConnections, $this->_aPropertyComponents[$sPropertyName]->sComponentName);
+        return $this->renderCollection($aCollection, $aConnections, $sComponentName);
 
     }
 
@@ -424,7 +432,7 @@ class AimlessComponent
                 // validate
                 if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()]))
                 {
-                    $this->_LogService->warn('Form field misses a value definition', "The field with type=".$field->getEntityTypeName()." and <b>id=".$field->getId()."</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>", 'AimlessComponent');
+                    $this->_LogService->warn('AimlessComponent - Form field misses a value definition', "The field with type=".$field->getEntityTypeName()." and <b>id=".$field->getId()."</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>", 'AimlessComponent');
                     continue;
                 }
 

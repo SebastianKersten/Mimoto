@@ -84,8 +84,8 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityListItem',
-                'file' => 'MimotoCMS/components/pages/entities/EntityListItem/EntityListItem.twig',
+                'name' => 'Mimoto.CMS_entities_EntityOverview_ListItem',
+                'file' => 'MimotoCMS/components/pages/entities/EntityOverview/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
             (object) array(
@@ -94,8 +94,13 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityPropertyListItem',
-                'file' => 'MimotoCMS/components/pages/entities/EntityPropertyListItem/EntityPropertyListItem.twig',
+                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityProperty',
+                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityProperty/EntityProperty.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting',
+                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertySetting/EntityPropertySetting.twig',
                 'conditionals' => []
             ),
 

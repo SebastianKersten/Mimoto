@@ -34,7 +34,7 @@ class EntityController
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityOverview');
 
         // setup
-        $page->addSelection('entities', 'Mimoto.CMS_entities_EntityListItem', $aEntities);
+        $page->addSelection('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem', $aEntities);
 
         // setup page
         $page->setVar('pageTitle', array(
@@ -218,7 +218,7 @@ class EntityController
         $entityStructure->instanceCount = 0;
         $entityStructure->extends = [];
         $entityStructure->extendedBy = [];
-        $entityStructure->properties = [];
+        $entityStructure->entityNames = [];
 
 
 
@@ -295,7 +295,7 @@ class EntityController
 
 
 
-        // --- properties ---
+        // --- entity names ---
 
 
         // load
@@ -307,9 +307,6 @@ class EntityController
             // register
             $entityProperty = $aEntityProperties[$i];
 
-            // init
-            $aSettings = [];
-
             // load
             $aPropertySettings = $entityProperty->getValue('settings', true);
 
@@ -320,14 +317,13 @@ class EntityController
                 $propertySetting = $aPropertySettings[$j];
 
                 $sKey = $propertySetting->getValue('key');
-                $sType = $propertySetting->getValue('type');
                 $value = $propertySetting->getValue('value');
 
                 switch($sKey)
                 {
                     case MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE:
 
-                        $value = '<a href="/mimoto.cms/entity/'.$value.'/view">'.$GLOBALS['Mimoto.Config']->getEntityNameById($value).'</a>';
+                        $entityStructure->entityNames[$value] = $GLOBALS['Mimoto.Config']->getEntityNameById($value);
                         break;
 
                     case MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES:
@@ -335,41 +331,19 @@ class EntityController
                         // convert
                         $aAllowedEntityTypes = json_decode($value);
 
-                        $value = '[<br>';
-
+                        // parse
                         $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
                         for ($k = 0; $k < $nAllowedEntityTypeCount; $k++)
                         {
                             // register
                             $nAllowedEntityType = $aAllowedEntityTypes[$k];
 
-                            $value .= '&nbsp;&nbsp;&nbsp;&nbsp;<a href="/mimoto.cms/entity/'.$nAllowedEntityType.'/view">'.$GLOBALS['Mimoto.Config']->getEntityNameById($nAllowedEntityType).'</a>';
-                            if ($k < $nAllowedEntityTypeCount - 1) $value .= ',<br>'; else $value .= '<br>';
+                            // register
+                            $entityStructure->entityNames[$nAllowedEntityType] = $GLOBALS['Mimoto.Config']->getEntityNameById($nAllowedEntityType);
                         }
-
-                        $value .= ' ]';
-
                         break;
                 }
-
-
-                $setting = (object) array(
-                    'key' => $sKey,
-                    'type' => $sType,
-                    'value' => $value,
-                );
-
-                // store
-                $aSettings[] = $setting;
             }
-
-            // store
-            $entityStructure->properties[] = (object) array(
-                'id' => $entityProperty->getId(),
-                'name' => $entityProperty->getValue('name'),
-                'type' => $entityProperty->getValue('type'),
-                'settings' => $aSettings
-            );
         }
 
         // send

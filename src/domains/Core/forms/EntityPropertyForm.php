@@ -36,7 +36,7 @@ class EntityPropertyForm
 
         // init
         $form = self::getStructureMiddle($form);
-        $form = self::getStructureValue($form);
+        $form = self::getStructureValueType($form);
         $form = self::getStructureEnd($form);
 
         // send
@@ -62,8 +62,8 @@ class EntityPropertyForm
         // init
         $form = self::getStructureMiddle($form);
         $form = self::getStructureEnd($form);
-        //$form = self::getStructureValueSettings($form);
-        //$form = self::getStructureEntitySettings($form);
+        $form = self::getStructureValueSettings($form);
+        $form = self::getStructureEntitySettings($form);
         $form = self::getStructureCollectionSettings($form);
 
         // send
@@ -129,7 +129,7 @@ class EntityPropertyForm
         return $form;
     }
 
-    private static function getStructureValue($form)
+    private static function getStructureValueType($form)
     {
         // --- input - entity property type ---
 

@@ -38,9 +38,14 @@ class AimlessComponentViewModel
     // ----------------------------------------------------------------------------
 
 
-    public function data($sPropertySelector, $bDataOnly = false)
+    public function data($sPropertySelector, $bGetStructure = false)
     {
-        return $this->_component->data($sPropertySelector, $bDataOnly);
+        return $this->_component->data($sPropertySelector, $bGetStructure);
+    }
+
+    public function render($sPropertySelector, $sComponentName = null)
+    {
+        return $this->_component->data($sPropertySelector, false, true, $sComponentName);
     }
     
     public function selection($sSelectionName)
@@ -68,8 +73,8 @@ class AimlessComponentViewModel
         return $this->_component->submit($sKey);
     }
 
-    public function render()
+    /*public function render() #todo - is dit nog nodig?
     {
         return $this->_component->render();
-    }
+    }*/
 }
