@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new entity', onclick:"Mimoto.CMS.entityNew();" } %}
+    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();" } %}
 
     <div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Aimless.realtime('entities')|raw }}>
         {{ Aimless.selection('entities')|raw }}
