@@ -13,18 +13,15 @@ module.exports = {
     if (this.textline) {
       this.input = this.textline;
       this.value = this.input.value;
-    }
-
-    else if (this.checkboxes) {
-      this.input = this.checkboxes;
+    } else if (this.checkboxes.length) {
+      this.input = this.checkboxes[0];
       this.countChecked();
-    }
-
-    else if (this.radioButtons) {
-      this.input = this.radioButtons;
+    } else if (this.radioButtons.length) {
+      this.input = this.radioButtons[0];
     }
 
   },
+
 
   countChecked: function (checkboxes) {
 
@@ -41,28 +38,26 @@ module.exports = {
 
   },
 
-  setInputOptions: function (input) {
+  setInputOptions: function () {
 
-    this.setResult(true);
+    this.minLength = this.input.getAttribute('data-min-length');
+    this.maxLength = this.input.getAttribute('data-max-length');
 
-    this.minLength = input.getAttribute('data-min-length');
-    this.maxLength = input.getAttribute('data-max-length');
+    this.noNumbers = this.input.getAttribute('data-no-numbers');
+    this.minNumbers = this.input.getAttribute('data-min-numbers');
+    this.maxNumbers = this.input.getAttribute('data-max-numbers');
 
-    this.noNumbers = input.getAttribute('data-no-numbers');
-    this.minNumbers = input.getAttribute('data-min-numbers');
-    this.maxNumbers = input.getAttribute('data-max-numbers');
+    this.noSpecialCharacters = this.input.hasAttribute('data-no-special-characters');
+    this.minSpecialCharacters = this.input.getAttribute('data-min-special-characters');
+    this.maxSpecialCharacters = this.input.getAttribute('data-max-special-characters');
 
-    this.noSpecialCharacters = input.hasAttribute('data-no-special-characters');
-    this.minSpecialCharacters = input.getAttribute('data-min-special-characters');
-    this.maxSpecialCharacters = input.getAttribute('data-max-special-characters');
+    this.minChecked = this.input.getAttribute('data-min-checked');
+    this.maxChecked = this.input.getAttribute('data-max-checked');
 
-    this.minChecked = input.getAttribute('data-min-checked');
-    this.maxChecked = input.getAttribute('data-max-checked');
+    this.ifChecked = this.input.type == 'radio';
 
-    this.ifChecked = input.type == 'radio';
-
-    this.regex = input.getAttribute('data-regex');
-    this.errorMessage = input.getAttribute('data-error-message');
+    this.customRegex = this.input.getAttribute('data-regex');
+    this.errorMessage = this.input.getAttribute('data-error-message');
 
     this.setValidationOptions();
 
@@ -81,7 +76,7 @@ module.exports = {
     this.validateMinChecked = this.minChecked ? true : false;
     this.validateMaxChecked = this.maxChecked ? true : false;
     this.validateIfChecked = this.ifChecked ? true : false;
-    this.validateCustomRegex = this.regex ? true : false;
+    this.validateCustomRegex = this.customRegex ? true : false;
 
   },
 
@@ -97,33 +92,11 @@ module.exports = {
 
   },
 
-  validateRadioButton: function (element) {
+  validateInput: function (element) {
 
     this.setVariables(element);
-    this.setInputOptions(this.radioButtons[0]);
-
-    this.handleValidation();
-
-    return this.result;
-
-  },
-
-  validateCheckbox: function (element) {
-
-    this.setVariables(element);
-    this.setInputOptions(this.checkboxes[0]);
-
-    this.handleValidation();
-
-    return this.result;
-
-  },
-
-  validateTextline: function (element) {
-
-    this.setVariables(element);
-    this.setInputOptions(this.textline);
-
+    this.setInputOptions();
+    this.setResult(true);
     this.handleValidation();
 
     return this.result;
@@ -140,41 +113,23 @@ module.exports = {
 
     if (this.validateMinNumbers) this.checkMinNumbers();
 
-    if (this.validateMaxNumbers) {
-      this.checkMaxNumbers();
-    }
+    if (this.validateMaxNumbers) this.checkMaxNumbers();
 
-    if (this.validateNoSpecialCharacters) {
-      this.checkNoSpecialCharacters();
-    }
+    if (this.validateNoSpecialCharacters) this.checkNoSpecialCharacters();
 
-    if (this.validateMinSpecialCharacters) {
-      this.checkMinSpecialCharacters();
-    }
+    if (this.validateMinSpecialCharacters) this.checkMinSpecialCharacters();
 
-    if (this.validateMaxSpecialCharacters) {
-      this.checkMaxSpecialCharacters();
-    }
+    if (this.validateMaxSpecialCharacters) this.checkMaxSpecialCharacters();
 
-    if (this.validateMinChecked) {
-      this.checkMinChecked();
-    }
+    if (this.validateMinChecked) this.checkMinChecked();
 
-    if (this.validateMaxChecked) {
-      this.checkMaxChecked();
-    }
+    if (this.validateMaxChecked) this.checkMaxChecked();
 
-    if (this.validateIfChecked) {
-      this.checkIfChecked();
-    }
+    if (this.validateIfChecked) this.checkIfChecked();
 
     if (this.validateCustomRegex) this.checkCustomRegex();
 
-    if (this.result.passed) {
-      EH.addValidatedState(this.el);
-    } else {
-      EH.addErrorState(this.el, this.result.message);
-    }
+    this.result.passed ? EH.addValidatedState(this.el) : EH.addErrorState(this.el, this.result.message);
 
   },
 
@@ -287,7 +242,7 @@ module.exports = {
 
   checkCustomRegex: function () {
 
-    var regex = new RegExp(this.regex);
+    var regex = new RegExp(this.customRegex);
 
     if (!regex.test(this.value)) {
       this.setResult(false, this.errorMessage);

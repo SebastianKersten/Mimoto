@@ -48,7 +48,7 @@ module.exports.prototype = {
 
     } else {
 
-      FV.validateCheckbox(this.el);
+      FV.validateInput(this.el);
 
     }
 
