@@ -1,5 +1,7 @@
 'use strict';
 
+require('mimoto.aimless/Mimoto.Aimless.js');
+
 /*var MimotoAimless = require('./mimoto.aimless/MimotoAimless');
 
 document.addEventListener('DOMContentLoaded', function () {

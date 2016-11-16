@@ -104,7 +104,7 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
     }
 
 
-## Configurating Mimoto.Aimless.js
+## Configurating Mimoto.Aimless_backup_201611161715.js
 
 Custom events
 

@@ -1,6 +1,6 @@
-//'use strict';
+'use strict';
 
-//require('jquery-ui');
+require('jquery-ui');
 
 var HeaderView = require('./views/Header');
 var FormView = require('./views/form-components/Form');
