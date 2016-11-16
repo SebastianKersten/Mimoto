@@ -89,7 +89,7 @@ module.exports.prototype = {
 
   handleCheckboxValidation: function (element) {
 
-    var result = FV.validateCheckbox(element);
+    var result = FV.validateInput(element);
 
     if (!result.passed) {
       this.validated = false;
@@ -99,7 +99,7 @@ module.exports.prototype = {
 
   handleTextlineValidation: function (element) {
 
-    var result = FV.validateTextline(element);
+    var result = FV.validateInput(element);
 
     if (!result.passed) {
       this.validated = false;
@@ -109,7 +109,7 @@ module.exports.prototype = {
 
   handleRadioButtonValidation: function (element) {
 
-    var result = FV.validateRadioButton(element);
+    var result = FV.validateInput(element);
 
     if (!result.passed) {
       this.validated = false;
