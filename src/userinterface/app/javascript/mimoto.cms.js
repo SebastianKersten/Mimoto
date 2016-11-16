@@ -6,7 +6,7 @@ var FormView = require('./views/form-components/Form');
 
 
 
-if (typeof Mimoto == "undefined") Mimoto = {};
+if (typeof Mimoto == "undefined") var Mimoto = {};
 if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
 if (typeof Mimoto.modules == "undefined") Mimoto.modules = {};
 
