@@ -331,7 +331,7 @@ class EntityPropertyForm
         // create and setup
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--allowedEntityTypes');
-        $field->setValue('label', 'Allowed entity type');
+        $field->setValue('label', 'Allowed entity types');
 
         $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
         $value->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--allowedEntityTypes_value');
@@ -370,7 +370,20 @@ class EntityPropertyForm
         // create and setup
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--allowduplicates');
-        $field->setValue('label', 'Allow duplicates');
+        $field->setValue('label', 'Configuration');
+        $field->setValue('option', 'Allow duplicates');
+        $form->addValue('fields', $field);
+
+        $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+        $value->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--allowDuplicates');
+        $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+
+        $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--type');
+
+        // add
+        $value->setValue('entityproperty', $connectedEntityProperty);
+        $field->setValue('value', $value);
         $form->addValue('fields', $field);
 
 

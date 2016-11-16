@@ -42,6 +42,23 @@ class InputCheckbox
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--option',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'option',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--option_type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---

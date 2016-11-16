@@ -1,61 +1,11 @@
-{#
-  <div {{ Aimless.field()|raw }} class="form_field">
-    <div class="form_input_label">{{ Aimless.data('label') }}{% if optional is not empty %}{% if optional==true %}<span class="form_input_optional"> (optional)</span>{% endif %}{% endif %}</div>
-      <div>
-        <input {{ Aimless.input()|raw }} type="checkbox"  id="c1" name="cc" class="checkbox" />
-        <label for="c1">{{ Aimless.data('description') }}</label>
-      </div>
-    <div {{ Aimless.error()|raw }} class="form_errormessage"></div>
-  </div>
-#}
-
-{#
 {% embed "MimotoCMS/components/forms/form_component.twig" with {"type": "checkbox"} %}
-  {% block form_component_element %}
-    <div class="form-component-element-container">
-      <div class="form-checkbox-container">
-        <input type="checkbox" class="form-checkbox" />
-        <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
-      </div>
-      <label for="" class="form-component-element-label">Afbeeldingen op de site laten zien</label>
-    </div>
-    <div class="form-component-element-container">
-      <div class="form-checkbox-container">
-        <input type="checkbox" class="form-checkbox" />
-        <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
-      </div>
-      <label for="" class="form-component-element-label">Afbeeldingen in de newsletter laten zien</label>
-    </div>
-  {% endblock %}
+    {% block form_component_element %}
+        <div class="form-component-element-container">
+            <div class="form-checkbox-container">
+                <input {{ Aimless.input()|raw }} type="checkbox" class="form-checkbox" {% if Aimless.value() %}checked{% endif %} />
+                <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
+            </div>
+            <label for="" class="form-component-element-label">{{ Aimless.data('option') }}</label>
+        </div>
+    {% endblock %}
 {% endembed %}
-#}
-
-<div class="form-component js-form-component js-form-component-checkbox">
-  <p class="form-component-title">Zichtbaarheid <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></p>
-
-  <div class="form-component-content form-component-content--no-description">
-    <div class="form-component-element js-error-parent">
-      <div class="form-component-element-container">
-        <div class="form-checkbox-container">
-          <input type="checkbox" class="form-checkbox js-checkbox" data-fv-min-checked="1" data-fv-max-checked="2" />
-          <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
-        </div>
-        <label for="" class="form-component-element-label">Afbeeldingen op de site laten zien</label>
-      </div>
-      <div class="form-component-element-container">
-        <div class="form-checkbox-container">
-          <input type="checkbox" class="form-checkbox js-checkbox" data-fv-min-checked="1" data-fv-max-checked="2" />
-          <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
-        </div>
-        <label for="" class="form-component-element-label">Afbeeldingen in de newsletter laten zien</label>
-      </div>
-      <div class="form-component-element-container">
-        <div class="form-checkbox-container">
-          <input type="checkbox" class="form-checkbox js-checkbox" data-fv-min-checked="1" data-fv-max-checked="2" />
-          <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
-        </div>
-        <label for="" class="form-component-element-label">Afbeeldingen op internet laten zien.</label>
-      </div>
-    </div>
-  </div>
-</div>

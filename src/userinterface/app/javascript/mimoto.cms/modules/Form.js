@@ -217,8 +217,10 @@ module.exports.prototype = {
         console.log(aValues);
         console.error(requestData);
         console.log('------');
-
-
+    
+    
+        var classRoot = this;
+        
         // 11. send data
         $.ajax({
             type: form.sMethod,
@@ -227,10 +229,7 @@ module.exports.prototype = {
             dataType: 'json',
             success: function(resultData, resultStatus, resultSomething)
             {
-                console.log(resultData);
-                console.log(resultStatus);
-                console.log(resultSomething);
-
+                
                 if (resultData.newEntities)
                 {
 
@@ -253,7 +252,7 @@ module.exports.prototype = {
 
                         // update dom
                         var aFields = $('[mls_form_field_input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
-                        var classRoot = this;
+                        
                         aFields.each( function(index, $component)
                         {
                             var sOld_mls_form_field_input = $($component).attr("mls_form_field_input");

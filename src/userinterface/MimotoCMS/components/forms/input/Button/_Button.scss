@@ -9,13 +9,14 @@
     box-shadow: none;
     flex-wrap: nowrap;
     align-items: center;
+    color: $white;
 
     .MimotoCMS_forms_input_Button__text {
         font-family: $font-family-futura;
         font-size: rem-calc(14px);
         font-weight: 500;
         line-height: rem-calc(20px);
-        color: $white;
+
     }
 
     .MimotoCMS_forms_input_Button__icon {
@@ -34,6 +35,17 @@
 .MimotoCMS_forms_input_Button--secondary:hover {
     background-color: $black;
 }
+
+.MimotoCMS_forms_input_Button--text {
+    color: #555555;
+    text-decoration: underline;
+    background-color: inherit;
+}
+
+.MimotoCMS_forms_input_Button--text:hover {
+    color: #000000;
+}
+
 
 .MimotoCMS_forms_input_Button--alert {
     background-color: $fuzzy-wuzzy-brown;
