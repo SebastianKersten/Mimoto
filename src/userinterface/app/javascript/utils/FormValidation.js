@@ -2,32 +2,27 @@
 
 module.exports = {
 
-  setTextlineVariables: function (element) {
+  setVariables: function (element) {
 
     this.el = element;
+
     this.textline = this.el.querySelector('.js-textline');
+    this.checkboxes = this.el.querySelectorAll('.js-checkbox');
+    this.radioButtons = this.el.querySelectorAll('.js-radio-button');
 
     if (this.textline) {
-      this.value = this.textline.value;
+      this.input = this.textline;
+      this.value = this.input.value;
     }
 
-  },
-
-  setCheckboxVariables: function (element) {
-
-    this.el = element;
-    this.checkboxes = this.el.querySelectorAll('.js-checkbox');
-
-    if (this.checkboxes) {
+    else if (this.checkboxes) {
+      this.input = this.checkboxes;
       this.countChecked();
     }
 
-  },
-
-  setRadioButtonVariables: function (element) {
-
-    this.el = element;
-    this.radioButtons = this.el.querySelectorAll('.js-radio-button');
+    else if (this.radioButtons) {
+      this.input = this.radioButtons;
+    }
 
   },
 
@@ -66,6 +61,9 @@ module.exports = {
 
     this.ifChecked = input.type == 'radio';
 
+    this.regex = input.getAttribute('data-regex');
+    this.errorMessage = input.getAttribute('data-error-message');
+
     this.setValidationOptions();
 
   },
@@ -83,6 +81,7 @@ module.exports = {
     this.validateMinChecked = this.minChecked ? true : false;
     this.validateMaxChecked = this.maxChecked ? true : false;
     this.validateIfChecked = this.ifChecked ? true : false;
+    this.validateCustomRegex = this.regex ? true : false;
 
   },
 
@@ -100,7 +99,7 @@ module.exports = {
 
   validateRadioButton: function (element) {
 
-    this.setRadioButtonVariables(element);
+    this.setVariables(element);
     this.setInputOptions(this.radioButtons[0]);
 
     this.handleValidation();
@@ -111,7 +110,7 @@ module.exports = {
 
   validateCheckbox: function (element) {
 
-    this.setCheckboxVariables(element);
+    this.setVariables(element);
     this.setInputOptions(this.checkboxes[0]);
 
     this.handleValidation();
@@ -122,7 +121,7 @@ module.exports = {
 
   validateTextline: function (element) {
 
-    this.setTextlineVariables(element);
+    this.setVariables(element);
     this.setInputOptions(this.textline);
 
     this.handleValidation();
@@ -133,21 +132,13 @@ module.exports = {
 
   handleValidation: function () {
 
-    if (this.validateMinLength) {
-      this.checkMinLength();
-    }
+    if (this.validateMinLength) this.checkMinLength();
 
-    if (this.validateMaxLength) {
-      this.checkMaxLength();
-    }
+    if (this.validateMaxLength) this.checkMaxLength();
 
-    if (this.validateNoNumbers) {
-      this.checkNoNumbers();
-    }
+    if (this.validateNoNumbers) this.checkNoNumbers();
 
-    if (this.validateMinNumbers) {
-      this.checkMinNumbers();
-    }
+    if (this.validateMinNumbers) this.checkMinNumbers();
 
     if (this.validateMaxNumbers) {
       this.checkMaxNumbers();
@@ -176,6 +167,8 @@ module.exports = {
     if (this.validateIfChecked) {
       this.checkIfChecked();
     }
+
+    if (this.validateCustomRegex) this.checkCustomRegex();
 
     if (this.result.passed) {
       EH.addValidatedState(this.el);
@@ -288,6 +281,16 @@ module.exports = {
 
     if (!checked) {
       this.setResult(false, "Please select an option.");
+    }
+
+  },
+
+  checkCustomRegex: function () {
+
+    var regex = new RegExp(this.regex);
+
+    if (!regex.test(this.value)) {
+      this.setResult(false, this.errorMessage);
     }
 
   }
