@@ -42,10 +42,22 @@
                 <div class="form-component-content">
 
                     <div class="form-component-element js-error-parent">
-                        <input type="text" class="js-textline form-input" placeholder="Amex Credit Card number" data-fv-regex="[0-9]{4} *[0-9]{6} *[0-9]{5}" data-fv-error-message="Enter a valid Amex Credit Card number.">
+                        <input type="text" class="js-textline form-input" placeholder="Amex credit card number" data-fv-regex="^[0-9]{4} *[0-9]{6} *[0-9]{5}$" data-fv-error-message="Enter a valid Amex Credit Card number.">
                     </div>
 
                     <p class="form-component-description">The requested format is: **** ******* *****</p>
+                </div>
+            </div>
+
+            <div class="form-component js-form-component js-form-component-textline">
+                <label for="" class="form-component-title">Credit card <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
+                <div class="form-component-content">
+
+                    <div class="form-component-element js-error-parent">
+                        <input type="text" class="js-textline form-input" placeholder="Credit card number" data-fv-regex="^[0-9]{13,16}$" data-fv-error-message="Enter a valid Amex Credit Card number.">
+                    </div>
+
+                    <p class="form-component-description">The requested format is a number between 13 and 16 digits in length.</p>
                 </div>
             </div>
 
