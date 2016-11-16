@@ -40,24 +40,24 @@ module.exports = {
 
   setInputOptions: function () {
 
-    this.minLength = this.input.getAttribute('data-min-length');
-    this.maxLength = this.input.getAttribute('data-max-length');
+    this.minLength = this.input.getAttribute('data-fv-min-length');
+    this.maxLength = this.input.getAttribute('data-fv-max-length');
 
-    this.noNumbers = this.input.getAttribute('data-no-numbers');
-    this.minNumbers = this.input.getAttribute('data-min-numbers');
-    this.maxNumbers = this.input.getAttribute('data-max-numbers');
+    this.noNumbers = this.input.getAttribute('data-fv-no-numbers');
+    this.minNumbers = this.input.getAttribute('data-fv-min-numbers');
+    this.maxNumbers = this.input.getAttribute('data-fv-max-numbers');
 
-    this.noSpecialCharacters = this.input.hasAttribute('data-no-special-characters');
-    this.minSpecialCharacters = this.input.getAttribute('data-min-special-characters');
-    this.maxSpecialCharacters = this.input.getAttribute('data-max-special-characters');
+    this.noSpecialCharacters = this.input.hasAttribute('data-fv-no-special-characters');
+    this.minSpecialCharacters = this.input.getAttribute('data-fv-min-special-characters');
+    this.maxSpecialCharacters = this.input.getAttribute('data-fv-max-special-characters');
 
-    this.minChecked = this.input.getAttribute('data-min-checked');
-    this.maxChecked = this.input.getAttribute('data-max-checked');
+    this.minChecked = this.input.getAttribute('data-fv-min-checked');
+    this.maxChecked = this.input.getAttribute('data-fv-max-checked');
 
     this.ifChecked = this.input.type == 'radio';
 
-    this.customRegex = this.input.getAttribute('data-regex');
-    this.errorMessage = this.input.getAttribute('data-error-message');
+    this.customRegex = this.input.getAttribute('data-fv-regex');
+    this.errorMessage = this.input.getAttribute('data-fv-error-message');
 
     this.setValidationOptions();
 
@@ -151,9 +151,9 @@ module.exports = {
 
   checkNoNumbers: function () {
 
-    var regExp = new RegExp("\\d");
+    var regex = new RegExp("\\d");
 
-    if (regExp.test(this.value)) {
+    if (regex.test(this.value)) {
       this.setResult(false, "No numbers allowed.");
     }
 
@@ -161,18 +161,18 @@ module.exports = {
 
   checkMinNumbers: function () {
 
-    var regExp = new RegExp("([^\\d]*\\d){" + this.minNumbers + ",}");
+    var regex = new RegExp("([^\\d]*\\d){" + this.minNumbers + ",}");
 
-    if (!regExp.test(this.value)) {
+    if (!regex.test(this.value)) {
       this.setResult(false, "Input should contain a minimum of " + this.minNumbers + " number(s).");
     }
   },
 
   checkMaxNumbers: function () {
 
-    var regExp = new RegExp("([^\\d]*\\d){" + (Number(this.maxNumbers) + 1) + ",}");
+    var regex = new RegExp("([^\\d]*\\d){" + (Number(this.maxNumbers) + 1) + ",}");
 
-    if (regExp.test(this.value)) {
+    if (regex.test(this.value)) {
       this.setResult(false, "Input can't contain more than " + this.maxNumbers + " numbers.");
     }
 
@@ -180,9 +180,9 @@ module.exports = {
 
   checkNoSpecialCharacters: function () {
 
-    var regExp = new RegExp("^[\\w]*$");
+    var regex = new RegExp("^[\\w]*$");
 
-    if (!regExp.test(this.value)) {
+    if (!regex.test(this.value)) {
       this.setResult(false, "Input can't contain special characters (except for underscores).");
     }
 
@@ -190,9 +190,9 @@ module.exports = {
 
   checkMinSpecialCharacters: function () {
 
-    var regExp = new RegExp("([\\w]*\\W){" + this.minSpecialCharacters + ",}");
+    var regex = new RegExp("([\\w]*\\W){" + this.minSpecialCharacters + ",}");
 
-    if (!regExp.test(this.value)) {
+    if (!regex.test(this.value)) {
       this.setResult(false, "Input should contain a minimum of " + this.minSpecialCharacters + " special character(s).");
     }
 
@@ -200,9 +200,9 @@ module.exports = {
 
   checkMaxSpecialCharacters: function () {
 
-    var regExp = new RegExp("([\\w]*\\W){" + (Number(this.maxSpecialCharacters) + 1) + ",}");
+    var regex = new RegExp("([\\w]*\\W){" + (Number(this.maxSpecialCharacters) + 1) + ",}");
 
-    if (regExp.test(this.value)) {
+    if (regex.test(this.value)) {
       this.setResult(false, "Input can't contain more than " + this.maxSpecialCharacters + " special character(s).");
     }
 

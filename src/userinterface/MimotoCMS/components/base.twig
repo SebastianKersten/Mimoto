@@ -23,14 +23,13 @@
     {% include "MimotoCMS/components/interface/Menu/Menu.twig" %}
 
     <section class="pagecontent">
-{#
         <form class="js-form">
             <div class="form-component js-form-component js-form-component-textline">
               <label for="" class="form-component-title">Name <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
               <div class="form-component-content">
 
                 <div class="form-component-element js-error-parent">
-                  <input type="text" class="js-textline form-input" placeholder="Property name" data-min-length="5" data-max-length="15" data-min-numbers="2" data-max-numbers="3" data-min-special-characters="1" data-max-special-characters="2">
+                  <input type="text" class="js-textline form-input" placeholder="Property name" data-fv-min-length="5" data-fv-max-length="15" data-fv-min-numbers="2" data-fv-max-numbers="3" data-fv-min-special-characters="1" data-fv-max-special-characters="2">
                 </div>
 
                 <p class="form-component-description">The property name should be unique</p>
@@ -42,10 +41,10 @@
                 <div class="form-component-content">
 
                     <div class="form-component-element js-error-parent">
-                        <input type="text" class="js-textline form-input" placeholder="Amex Credit Card number" data-regex="[0-9]{4} *[0-9]{6} *[0-9]{5}" data-error-message="Enter a valid Amex Credit Card number.">
+                        <input type="text" class="js-textline form-input" placeholder="Amex Credit Card number" data-fv-regex="[0-9]{4} *[0-9]{6} *[0-9]{5}" data-fv-error-message="Enter a valid Amex Credit Card number.">
                     </div>
 
-                    <p class="form-component-description">The property name should be unique</p>
+                    <p class="form-component-description">The requested format is: **** ******* *****</p>
                 </div>
             </div>
 
@@ -77,7 +76,6 @@
             <a class="button js-form-submit">Verstuur</a>
 
         </form>
-#}
 
         {#{% include "MimotoCMS/components/forms/input/List/List.twig" %}#}
 
