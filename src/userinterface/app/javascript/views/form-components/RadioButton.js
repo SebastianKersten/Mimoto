@@ -30,7 +30,7 @@ module.exports.prototype = {
 
       this.radioButtons[i].addEventListener('change', function () {
 
-        FV.validateRadioButton(this.el);
+        FV.validateInput(this.el);
 
       }.bind(this));
 

@@ -1,9 +1,9 @@
-'use strict';
+//'use strict';
+
+//require('jquery-ui');
 
 var HeaderView = require('./views/Header');
 var FormView = require('./views/form-components/Form');
-
-
 
 
 if (typeof Mimoto == "undefined") Mimoto = {};
@@ -18,7 +18,6 @@ Mimoto.modules.Popup = require('./mimoto.cms/modules/Popup');
 Mimoto.modules.Page = require('./mimoto.cms/modules/Page');
 Mimoto.modules.Form = require('./mimoto.cms/modules/Form');
 
-
 document.addEventListener('DOMContentLoaded', function () {
 
     // init
@@ -26,8 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     Mimoto.page = new Mimoto.modules.Page();
     Mimoto.popup = new Mimoto.modules.Popup();
     Mimoto.form = new Mimoto.modules.Form();
-
-
 
     var navigation = document.querySelector('.js-navigation');
     var header = document.querySelector('.js-header');

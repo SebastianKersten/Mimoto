@@ -43,7 +43,7 @@ module.exports.prototype = {
 
     } else {
 
-      FV.validateTextline(this.el);
+      FV.validateInput(this.el);
 
     }
 

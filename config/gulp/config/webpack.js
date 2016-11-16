@@ -12,16 +12,21 @@ module.exports = function (env) {
 
     context: jsSrc,
     plugins: [
-      new webpack.IgnorePlugin(/^jquery$/),
       new webpack.ProvidePlugin({
-        'Conditioner': './conditioner/conditioner',
-        'EH': 'ErrorHandling',
-        'FV': 'FormValidation'
+        Conditioner: './conditioner/conditioner',
+        EH: 'ErrorHandling',
+        FV: 'FormValidation',
+        $: "jquery",
+        jQuery: "jquery",
+        "window.jQuery": "jquery"
       })
     ],
     resolve: {
       modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components/', 'src/userinterface/app/javascript/utils'],
-      extensions: ['', '.js']
+      extensions: ['', '.js'],
+      alias: {
+        'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
+      }
     },
     entry: {
       'mimoto.cms': [jsSrc + '/app/javascript/mimoto.cms.js'],
