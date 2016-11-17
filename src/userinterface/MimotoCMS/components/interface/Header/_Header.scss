@@ -84,8 +84,10 @@
             transition: all .25s;
 
             .header-navigation-collapse-toggle-icon {
-                width: 12px;
+                display: block;
+                width: 6px;
                 height: 12px;
+                margin: 0 auto;
                 fill: $white;
             }
         }
