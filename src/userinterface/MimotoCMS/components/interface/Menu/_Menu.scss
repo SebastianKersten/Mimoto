@@ -1,6 +1,6 @@
 .MimotoCMS_interface_Menu {
     position: fixed;
-    z-index: 2;
+    z-index: $z-navigation;
     top: 50px;
     left: 0;
     display: none;
@@ -20,28 +20,28 @@
         transition: width .25s;
     }
 
-  .MimotoCMS_interface_Menu__content {
-      @include breakpoint(large up) {
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          padding: 0 8px;
-      }
+    .MimotoCMS_interface_Menu__content {
+        @include breakpoint(large up) {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 0 8px;
+        }
 
-      &>ul {
-          border-bottom: 1px solid $mine-shaft;
-      }
+        & > ul {
+            border-bottom: 1px solid $mine-shaft;
+        }
 
-      &>ul:first-child {
-          margin-top: 10px;
-      }
+        & > ul:first-child {
+            margin-top: 10px;
+        }
 
-      &>ul:last-child {
-          border-bottom: none;
-      }
-  }
+        & > ul:last-child {
+            border-bottom: 0;
+        }
+    }
 }
 
 .MimotoCMS_interface_Menu.navigation--active {

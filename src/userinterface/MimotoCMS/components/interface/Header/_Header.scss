@@ -1,5 +1,6 @@
 .header {
   position: fixed;
+  z-index: $z-header;
   top: 0;
   right: 0;
   left: 0;

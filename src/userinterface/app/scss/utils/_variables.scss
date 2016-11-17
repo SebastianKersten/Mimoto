@@ -1,6 +1,7 @@
 // Fonts
 $font-family-helvetica:         "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-futura:            "Futura PT W02 Book", sans-serif !default;
+$futura-font-path:              '/static/fonts/futura' !default;
 
 // Colors
 $black:                         #000 !default;
@@ -19,8 +20,8 @@ $offwhite:                      #fcfcfc !default;
 // Mimoto CMS Variables
 $navigation-collapsed-width:    64px !default;
 $navigation-width:              230px !default;
-$header-height-regular: 64px;
-$header-height-collapsed: 50px;
+$header-height-regular:         64px !default;
+$header-height-collapsed:       50px !default;
 
 // Colors
 $alto:                          #e0e0e0 !default;
@@ -30,3 +31,5 @@ $dusty-gray:                    #9f9f9f !default;
 
 // Z-index variables
 $z-header:                      1000 !default;
+$z-pagecontent:                 999 !default;
+$z-navigation:                  1001 !default;
