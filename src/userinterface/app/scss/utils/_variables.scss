@@ -1,18 +1,3 @@
-// Icomoon Variables
-$icomoon-font-path:             '/static/fonts/icomoon' !default;
-$futura-font-path:              '/static/fonts/futura' !default;
-
-$icon-arrow-down:               '\e900' !default;
-$icon-arrow-left:               '\e901' !default;
-$icon-arrow-right:              '\e902' !default;
-$icon-calendar:                 '\e903' !default;
-$icon-checkmark:                '\e904' !default;
-$icon-eyedropper:               '\e905' !default;
-$icon-plus:                     '\e906' !default;
-$icon-pyramid-down:             '\e907' !default;
-$icon-pyramid-up:               '\e908' !default;
-$icon-warning:                  '\e909' !default;
-
 // Fonts
 $font-family-helvetica:         "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-futura:            "Futura PT W02 Book", sans-serif !default;
@@ -32,14 +17,16 @@ $silver-chalice:                #a3a3a3 !default;
 $offwhite:                      #fcfcfc !default;
 
 // Mimoto CMS Variables
-$navigation-collapsed-width:       64px    !default;
-$navigation-width:                 230px    !default;
-
+$navigation-collapsed-width:    64px !default;
+$navigation-width:              230px !default;
 $header-height-regular: 64px;
 $header-height-collapsed: 50px;
 
 // Colors
 $alto:                          #e0e0e0 !default;
 $sinbad:                        #9dceca !default;
-$mine-shaft:                    #333    !default;
+$mine-shaft:                    #333 !default;
 $dusty-gray:                    #9f9f9f !default;
+
+// Z-index variables
+$z-header:                      1000 !default;
