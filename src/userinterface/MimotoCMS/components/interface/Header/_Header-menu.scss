@@ -3,6 +3,7 @@
     float: right;
 
     .header-menu-item {
+        display: flex;
         float: right;
         height: $header-height-collapsed;
         margin-left: 20px;
@@ -71,19 +72,15 @@
 
     .header-menu-dropdown {
         position: relative;
+        display: flex;
+        align-items: center;
 
         .header-menu-dropdown-icon {
             display: block;
-            width: 30px;
-            height: 50px;
-            padding: 15px 0;
+            width: 24px;
+            height: 48px;
             cursor: pointer;
             fill: $dusty-gray;
-
-            @include breakpoint(large up) {
-                height: 64px;
-                padding: 22px 0;
-            }
         }
 
         .header-menu-dropdown-icon:hover {

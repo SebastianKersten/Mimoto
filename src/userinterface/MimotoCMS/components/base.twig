@@ -27,7 +27,6 @@
     {% include "MimotoCMS/components/interface/Menu/Menu.twig" %}
 
     <section class="pagecontent">
-{#
         <form class="js-form">
             <div class="form-component js-form-component js-form-component-textline">
               <label for="" class="form-component-title">Name <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
@@ -88,14 +87,8 @@
                 </div>
             </div>
 
-            {% include "MimotoCMS/components/forms/input/Checkbox/Checkbox.twig" %}
-
             <a class="button js-form-submit">Verstuur</a>
-
         </form>
-#}
-
-        {#{% include "MimotoCMS/components/forms/input/List/List.twig" %}#}
 
         {% block content %}{% endblock %}
     </section>
