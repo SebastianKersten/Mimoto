@@ -19,29 +19,6 @@
         .header-menu-link:hover {
             color: $black;
         }
-
-        .header-menu-notification {
-            position: absolute;
-            top: 3px;
-            right: -5px;
-            min-width: 20px;
-            height: 20px;
-            padding: 0 4px;
-            font-size: rem-calc(12px);
-            line-height: rem-calc(20px);
-            text-align: center;
-            color: $black;
-            border-radius: 10px;
-            background-color: $tower-gray;
-
-            @include breakpoint(large up) {
-                top: 10px;
-            }
-
-            .hidden {
-                display: none;
-            }
-        }
     }
 
     .header-menu-user {
@@ -92,12 +69,10 @@
         }
     }
 
-    .header-menu-message,
-    .header-menu-chat {
+    .header-menu-dropdown {
         position: relative;
 
-        .header-menu-message-icon,
-        .header-menu-chat-icon {
+        .header-menu-dropdown-icon {
             display: block;
             width: 30px;
             height: 50px;
@@ -111,15 +86,37 @@
             }
         }
 
-        .header-menu-message-icon:hover,
-        .header-menu-chat-icon:hover {
+        .header-menu-dropdown-icon:hover {
             fill: $black;
         }
 
-        .header-menu-message-dropdown,
-        .header-menu-chat-dropdown {
+        .header-menu-dropdown-notification {
             position: absolute;
-            top: 63px;
+            top: 3px;
+            right: -5px;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 4px;
+            font-size: rem-calc(12px);
+            line-height: rem-calc(20px);
+            text-align: center;
+            color: $black;
+            border-radius: 10px;
+            background-color: $tower-gray;
+
+            @include breakpoint(large up) {
+                top: 10px;
+            }
+
+            .hidden {
+                display: none;
+            }
+        }
+
+
+        .header-menu-dropdown {
+            position: absolute;
+            top: $header-height-collapsed - 1;
             right: 0;
             display: none;
             width: 200px;
@@ -128,10 +125,13 @@
             border: 1px solid $alto;
             border-top: 0;
             background-color: $white;
+
+            @include breakpoint(large up) {
+                top: $header-height - 1;
+            }
         }
 
-        .header-menu-message-dropdown--active,
-        .header-menu-chat-dropdown--active {
+        .header-menu-dropdown--active {
             display: block;
         }
     }
