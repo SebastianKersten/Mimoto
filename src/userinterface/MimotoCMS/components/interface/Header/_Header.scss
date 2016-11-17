@@ -1,101 +1,101 @@
 .header {
-  position: fixed;
-  z-index: $z-header;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: $header-height-collapsed;
-  border-bottom: 1px solid $alto;
-  background: $white;
-
-  @include breakpoint(large up) {
-    height: $header-height-regular;
-    padding-left: 0;
-  }
-
-  .header-logo-container {
-    position: relative;
-    z-index: 1;
-    float: left;
-    width: $header-height-collapsed;
-    height: $header-height-collapsed;
-    background-color: $sinbad;
-
-    @include breakpoint(large up) {
-      width: $navigation-width;
-      height: $header-height-regular;
-      border-bottom: 1px solid $black;
-      transition: width .25s;
-    }
-  }
-
-  .header-logo-large,
-  .header-logo-small {
-    position: absolute;
+    position: fixed;
+    z-index: $z-header;
     top: 0;
+    right: 0;
     left: 0;
-    width: 50px;
-    height: 50px;
-    background-repeat: no-repeat;
+    height: $header-height-collapsed;
+    border-bottom: 1px solid $alto;
+    background: $white;
 
     @include breakpoint(large up) {
-      width: 100%;
-      height: 100%;
-      transition: transform .25s;
+        height: $header-height;
+        padding-left: 0;
     }
-  }
 
-  .header-logo-large {
-    display: none;
+    .header-logo-container {
+        position: relative;
+        z-index: 1;
+        float: left;
+        width: $header-height-collapsed;
+        height: $header-height-collapsed;
+        background-color: $sinbad;
 
-    @include breakpoint(large up) {
-      top: 1px;
-      display: block;
-      background-image: url('/static/img/mimoto.cms/logo.png');
+        @include breakpoint(large up) {
+            width: $navigation-width;
+            height: $header-height;
+            border-bottom: 1px solid $black;
+            transition: width .25s;
+        }
     }
-  }
 
-  .header-logo-small {
-    background-image: url('/static/img/mimoto.cms/logo-folded.png');
-    background-size: 100% 100%;
+    .header-logo-large,
+    .header-logo-small {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: 50px;
+        background-repeat: no-repeat;
 
-    @include breakpoint(large up) {
-      width: 64px;
-      margin-left: 23px;
-      opacity: 0;
-      background-size: auto;
+        @include breakpoint(large up) {
+            width: 100%;
+            height: 100%;
+            transition: transform .25s;
+        }
     }
-  }
 
-  .header-navigation-collapse-toggle {
-    display: none;
+    .header-logo-large {
+        display: none;
 
-    @include breakpoint(large up) {
-      position: absolute;
-      z-index: 2;
-      top: 16px;
-      right: 0;
-      display: block;
-      width: 32px;
-      height: 32px;
-      padding: 10px;
-      cursor: pointer;
-      transform: rotate(180deg);
-      transition: all .25s;
-
-      .header-navigation-collapse-toggle-icon {
-        width: 12px;
-        height: 12px;
-        fill: $white;
-      }
+        @include breakpoint(large up) {
+            top: 1px;
+            display: block;
+            background-image: url('/static/img/mimoto.cms/logo.png');
+        }
     }
-  }
 
-  .header-navigation-collapse-toggle:hover {
-    .header-navigation-collapse-toggle-icon {
-      fill: $black;
+    .header-logo-small {
+        background-image: url('/static/img/mimoto.cms/logo-folded.png');
+        background-size: 100% 100%;
+
+        @include breakpoint(large up) {
+            width: 64px;
+            margin-left: 23px;
+            opacity: 0;
+            background-size: auto;
+        }
     }
-  }
+
+    .header-navigation-collapse-toggle {
+        display: none;
+
+        @include breakpoint(large up) {
+            position: absolute;
+            z-index: 2;
+            top: 16px;
+            right: 0;
+            display: block;
+            width: 32px;
+            height: 32px;
+            padding: 10px;
+            cursor: pointer;
+            transform: rotate(180deg);
+            transition: all .25s;
+
+            .header-navigation-collapse-toggle-icon {
+                width: 12px;
+                height: 12px;
+                fill: $white;
+            }
+        }
+    }
+
+    .header-navigation-collapse-toggle:hover {
+        .header-navigation-collapse-toggle-icon {
+            fill: $black;
+        }
+    }
 }
 
 @import 'Header-breadcrumbs';

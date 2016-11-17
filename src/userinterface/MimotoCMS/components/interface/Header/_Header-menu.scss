@@ -4,8 +4,12 @@
 
     .header-menu-item {
         float: right;
-        height: 64px;
+        height: $header-height-collapsed;
         margin-left: 20px;
+
+        @include breakpoint(large up) {
+            height: $header-height;
+        }
 
         .header-menu-link {
             text-decoration: none;
@@ -18,7 +22,7 @@
 
         .header-menu-notification {
             position: absolute;
-            top: 10px;
+            top: 3px;
             right: -5px;
             min-width: 20px;
             height: 20px;
@@ -29,6 +33,10 @@
             color: $black;
             border-radius: 10px;
             background-color: $tower-gray;
+
+            @include breakpoint(large up) {
+                top: 10px;
+            }
 
             .hidden {
                 display: none;
@@ -41,8 +49,21 @@
         align-items: center;
 
         .header-menu-user-text {
-            margin-right: 20px;
-            font-size: rem-calc(17px);
+            display: none;
+
+            @include breakpoint(small up) {
+                display: block;
+                margin-right: 20px;
+                font-size: rem-calc(17px);
+            }
+        }
+
+        .header-menu-user-text-last-name {
+            display: none;
+
+            @include breakpoint(medium up) {
+                display: inline;
+            }
         }
 
         .header-menu-user-figure {
@@ -79,10 +100,15 @@
         .header-menu-chat-icon {
             display: block;
             width: 30px;
-            height: 64px;
-            padding: 22px 0;
+            height: 50px;
+            padding: 15px 0;
             cursor: pointer;
             fill: $dusty-gray;
+
+            @include breakpoint(large up) {
+                height: 64px;
+                padding: 22px 0;
+            }
         }
 
         .header-menu-message-icon:hover,
