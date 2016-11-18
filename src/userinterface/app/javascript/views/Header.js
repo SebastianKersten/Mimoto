@@ -13,10 +13,12 @@ module.exports.prototype = {
      */
     init: function()
     {
+
         this.setVariables();
         this.addEventListeners();
         this.checkMenuState();
         this.initNotificationCount();
+
     },
 
     /**
@@ -31,11 +33,9 @@ module.exports.prototype = {
         this.body = document.getElementsByTagName('body')[0];
         this.navigation = document.querySelector('.js-navigation');
 
-        this.messageToggle = this.el.querySelector('.js-message-dropdown-toggle');
-        this.messageDropdown = this.el.querySelector('.js-message-dropdown');
-
-        this.chatToggle = this.el.querySelector('.js-chat-dropdown-toggle');
-        this.chatDropdown = this.el.querySelector('.js-chat-dropdown');
+        this.dropdownToggles = this.el.querySelectorAll('.js-dropdown-toggle');
+        this.dropdownClass = 'js-dropdown';
+        this.dropdownActiveClass = 'header-menu-dropdown--active';
 
         this.collapsed = false;
 
@@ -56,10 +56,12 @@ module.exports.prototype = {
             this.toggleClass(this.navigation, 'navigation--active');
         }.bind(this));
 
-        if (this.messageToggle && this.messageDropdown)
+        if (this.dropdownToggles.length && this.dropdownClass)
         {
-            var rect = this.messageToggle.getBoundingClientRect();
+/*
+            var rect = this.dropdownToggles[0].getBoundingClientRect();
             console.log(rect.top, rect.right, rect.bottom, rect.left);
+*/
 
             // var bodyRect = document.body.getBoundingClientRect(),
             //     elemRect = element.getBoundingClientRect(),
@@ -67,17 +69,15 @@ module.exports.prototype = {
             //
             // alert('Element is ' + offset + ' vertical pixels from <body>');
 
-            this.messageToggle.addEventListener('click', function () {
-                this.toggleClass(this.messageDropdown, 'header-menu-message-dropdown--active');
-            }.bind(this));
+            for (var i = 0; i < this.dropdownToggles.length; i++) {
+
+                this.dropdownToggles[i].addEventListener('click', function (e) {
+                    this.toggleDropdown(e);
+                }.bind(this));
+
+            }
         }
 
-        if (this.chatToggle && this.chatDropdown)
-        {
-            this.chatToggle.addEventListener('click', function () {
-                this.toggleClass(this.chatDropdown, 'header-menu-chat-dropdown--active');
-            }.bind(this));
-        }
     },
 
 
@@ -124,7 +124,7 @@ module.exports.prototype = {
                         classRoot.notificationCount.classList.remove('hidden');
 
                         // add notifications
-                        classRoot.messageDropdown.innerHTML = data.notifications;
+                        classRoot.el.querySelector('.js-messages').innerHTML = data.notifications;
                     }
                 }
                 else
@@ -161,6 +161,14 @@ module.exports.prototype = {
     toggleClass: function(element, className)
     {
         element.classList.toggle(className);
+    },
+
+    toggleDropdown: function (event) {
+
+        var target = event.currentTarget;
+
+        target.nextElementSibling.classList.toggle(this.dropdownActiveClass);
+
     }
 
 };

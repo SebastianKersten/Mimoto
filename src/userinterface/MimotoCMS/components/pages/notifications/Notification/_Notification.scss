@@ -1,3 +1,62 @@
+.notification {
+    padding: 10px;
+    color: $white;
+    background-color: $sinbad;
+
+    @include breakpoint(small up) {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    .notification-content {
+        min-width: 0;
+        padding: 0 0 10px;
+        word-wrap: break-word;
+        flex: 1 1 auto;
+
+        @include breakpoint(small up) {
+            padding: 0 10px 0 0;
+        }
+
+        .notification-title {
+            margin-bottom: 10px;
+            font-size: rem-calc(18px);
+            font-weight: bold;
+        }
+
+        .notification-subtitle {
+            margin-bottom: 10px;
+            font-size: rem-calc(14px);
+            font-style: italic;
+            color: rgba($black, .5);
+        }
+
+        .notification-subtitle-timestamp {
+            padding: 0 4px;
+            color: $white;
+            background-color: rgba($black, .5);
+        }
+    }
+
+    .notification-button {
+        flex: 0 0 auto;
+    }
+}
+
+.notification--silent {
+    background-color: $pink-swan;
+}
+
+.notification--warning {
+    background-color: $true-v;
+}
+
+.notification--error {
+    background-color: $roman;
+}
+
+
+
 div.MimotoCMS_pages_notifications_Notification {
     display: flex;
     justify-content: space-between;

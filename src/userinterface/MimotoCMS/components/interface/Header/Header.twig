@@ -1,52 +1,52 @@
 <header class="js-header header">
-  <div class="header-logo-container">
-    <a href="/mimoto.cms">
-      <div class="header-logo-large"></div>
-      <div class="header-logo-small"></div>
-    </a>
+    <div class="header-logo-container">
+        <a href="/mimoto.cms"><div class="header-logo-large"></div><div class="header-logo-small"></div></a>
 
-    <div class="js-navigation-toggle header-navigation-collapse-toggle">
-      <svg class="header-navigation-collapse-toggle-icon"><use xlink:href='#ico-arrow'/></svg>
-    </div>
-  </div>
-
-  <button class="header-mobile-navigation-toggle js-mobile-navigation-toggle">
-    <span class="header-mobile-navigation-toggle-line"></span>
-    <span class="header-mobile-navigation-toggle-line"></span>
-    <span class="header-mobile-navigation-toggle-line"></span>
-  </button>
-
-  <ul class="header-breadcrumbs">
-    {% for element in pageTitle %}
-      <li class="header-breadcrumbs-list-item"><a href="{{ element.url }}" class="header-breadcrumbs-list-item-link">{{ element.label|raw }}</a></li>
-    {% endfor %}
-  </ul>
-
-  <ul class="header-menu">
-    <li class="header-menu-item">
-      <a href="#" class="header-menu-link header-menu-user">
-        <span class="header-menu-user-text">Sebastian Kersten</span>
-        <figure class="header-menu-user-figure">
-          <img src="/static/img/mimoto.cms/avatar.png" class="header-menu-user-image"/>
-        </figure>
-      </a>
-    </li>
-
-    {#<li class="header-menu-item">
-      <div class="header-menu-message">
-        <svg class="header-menu-chat-icon js-chat-dropdown-toggle"><use xlink:href='#ico-daily-update'/></svg>
-        <div class="header-menu-notification">0</div>
-        <div class="header-menu-chat-dropdown js-chat-dropdown">
-          <p>Hi this is a dropdown</p>
+        <div class="js-navigation-toggle header-navigation-collapse-toggle">
+            <svg class="header-navigation-collapse-toggle-icon"><use xlink:href='#ico-arrow'/></svg>
         </div>
-      </div>
-    </li>#}
-    <li class="header-menu-item">
-      <div class="header-menu-message">
-        <svg class="header-menu-message-icon js-message-dropdown-toggle"><use xlink:href='#ico-daily-update'/></svg>
-        <div id="header_notification_count" class="header-menu-notification hidden" mls_count="_MimotoAimless__devtools__notification" mls_filter='{"state":"open"}' mls_config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
-        <div class="header-menu-message-dropdown js-message-dropdown"></div>
-      </div>
-    </li>
-  </ul>
+    </div>
+
+    <button class="header-mobile-navigation-toggle js-mobile-navigation-toggle">
+        <span class="header-mobile-navigation-toggle-line"></span>
+        <span class="header-mobile-navigation-toggle-line"></span>
+        <span class="header-mobile-navigation-toggle-line"></span>
+    </button>
+
+    <ul class="header-breadcrumbs">
+        {% for element in pageTitle %}
+            <li class="header-breadcrumbs-list-item">
+                <a href="{{ element.url }}" class="header-breadcrumbs-list-item-link">{{ element.label|raw }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <ul class="header-menu">
+        <li class="header-menu-item">
+            <a href="#" class="header-menu-link header-menu-user">
+                <span class="header-menu-user-text">Sebastian <span class="header-menu-user-text-last-name">Kersten</span></span>
+                <figure class="header-menu-user-figure">
+                    <img src="/static/img/mimoto.cms/avatar.png" class="header-menu-user-image"/>
+                </figure>
+            </a>
+        </li>
+
+        <li class="header-menu-item">
+          <div class="header-menu-dropdown">
+            <div class="header-menu-dropdown-notification">0</div>
+              <svg class="header-menu-dropdown-icon js-dropdown-toggle"><use xlink:href='#ico-message'/></svg>
+              <div class="header-menu-dropdown js-dropdown">
+              <p>Hi this is a dropdown</p>
+            </div>
+          </div>
+        </li>
+
+        <li class="header-menu-item">
+            <div class="header-menu-dropdown">
+                <div id="header_notification_count" class="header-menu-dropdown-notification hidden" mls_count="_MimotoAimless__devtools__notification" mls_filter='{"state":"open"}' mls_config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
+                <svg class="header-menu-dropdown-icon js-dropdown-toggle"><use xlink:href='#ico-daily-update'/></svg>
+                <div class="header-menu-dropdown js-dropdown js-messages"></div>
+            </div>
+        </li>
+    </ul>
 </header>

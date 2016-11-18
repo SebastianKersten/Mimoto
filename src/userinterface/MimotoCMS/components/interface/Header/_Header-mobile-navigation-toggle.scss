@@ -1,20 +1,20 @@
 .header-mobile-navigation-toggle {
-  display: block;
-  float: left;
-  width: 50px;
-  height: 49px;
-  padding: 8px 12px;
-  cursor: pointer;
-  background-color: $white;
-
-  @include breakpoint(large up) {
-    display: none;
-  }
-
-  .header-mobile-navigation-toggle-line {
     display: block;
-    height: 3px;
-    margin: 6px 0;
-    background-color: $black;
-  }
+    float: left;
+    width: 50px;
+    height: 49px;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: $white;
+
+    @include breakpoint(large up) {
+        display: none;
+    }
+
+    .header-mobile-navigation-toggle-line {
+        display: block;
+        height: 3px;
+        margin: 6px 0;
+        background-color: $black;
+    }
 }

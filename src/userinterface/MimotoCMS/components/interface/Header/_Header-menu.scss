@@ -1,111 +1,135 @@
 .header-menu {
-  @include clearfix();
-  float: right;
-
-  .header-menu-item {
+    @include clearfix();
     float: right;
-    height: 64px;
-    margin-left: 20px;
 
-    .header-menu-link {
-      text-decoration: none;
-      color: $dusty-gray;
+    .header-menu-item {
+        display: flex;
+        float: right;
+        height: $header-height-collapsed;
+        margin-left: 20px;
+
+        @include breakpoint(large up) {
+            height: $header-height;
+        }
+
+        .header-menu-link {
+            text-decoration: none;
+            color: $dusty-gray;
+        }
+
+        .header-menu-link:hover {
+            color: $black;
+        }
     }
 
-    .header-menu-link:hover {
-      color: $black;
+    .header-menu-user {
+        display: flex;
+        align-items: center;
+
+        .header-menu-user-text {
+            display: none;
+
+            @include breakpoint(small up) {
+                display: block;
+                margin-right: 20px;
+                font-size: rem-calc(17px);
+            }
+        }
+
+        .header-menu-user-text-last-name {
+            display: none;
+
+            @include breakpoint(medium up) {
+                display: inline;
+            }
+        }
+
+        .header-menu-user-figure {
+            display: flex;
+            width: 50px;
+            height: 50px;
+            background-color: $sinbad;
+            align-items: center;
+            justify-content: center;
+
+            @include breakpoint(large up) {
+                width: 64px;
+                height: 64px;
+            }
+        }
+
+        .header-menu-user-image {
+            display: inline-block;
+            max-width: 45px;
+            max-height: 45px;
+
+            @include breakpoint(large up) {
+                max-width: 60px;
+                max-height: 60px;
+            }
+        }
     }
 
-    .header-menu-notification {
-      position: absolute;
-      top: 10px;
-      right: -5px;
-      width: 20px;
-      height: 20px;
-      font-size: rem-calc(12px);
-      line-height: rem-calc(20px);
-      text-align: center;
-      color: $black;
-      border-radius: 100%;
-      background-color: $tower-gray;
+    .header-menu-dropdown {
+        position: relative;
+        display: flex;
+        align-items: center;
 
-      .hidden {
-        display: none;
-      }
+        .header-menu-dropdown-icon {
+            display: block;
+            width: 24px;
+            height: 48px;
+            cursor: pointer;
+            fill: $dusty-gray;
+        }
+
+        .header-menu-dropdown-icon:hover {
+            fill: $black;
+        }
+
+        .header-menu-dropdown-notification {
+            position: absolute;
+            top: 3px;
+            right: -5px;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 4px;
+            font-size: rem-calc(12px);
+            line-height: rem-calc(20px);
+            text-align: center;
+            color: $black;
+            border-radius: 10px;
+            background-color: $tower-gray;
+
+            @include breakpoint(large up) {
+                top: 10px;
+            }
+
+            .hidden {
+                display: none;
+            }
+        }
+
+
+        .header-menu-dropdown {
+            position: absolute;
+            top: $header-height-collapsed - 1;
+            right: 0;
+            display: none;
+            width: 200px;
+            height: auto;
+            padding: 1px;
+            border: 1px solid $alto;
+            border-top: 0;
+            background-color: $white;
+
+            @include breakpoint(large up) {
+                top: $header-height - 1;
+            }
+        }
+
+        .header-menu-dropdown--active {
+            display: block;
+        }
     }
-  }
-
-  .header-menu-user {
-    display: flex;
-    align-items: center;
-
-    .header-menu-user-text {
-      margin-right: 20px;
-      font-size: rem-calc(17px);
-    }
-
-    .header-menu-user-figure {
-      display: flex;
-      width: 50px;
-      height: 50px;
-      background-color: $sinbad;
-      align-items: center;
-      justify-content: center;
-
-      @include breakpoint(large up) {
-        width: 64px;
-        height: 64px;
-      }
-    }
-
-    .header-menu-user-image {
-      display: inline-block;
-      max-width: 45px;
-      max-height: 45px;
-
-      @include breakpoint(large up) {
-        max-width: 60px;
-        max-height: 60px;
-      }
-    }
-  }
-
-  .header-menu-message,
-  .header-menu-chat {
-    position: relative;
-
-    .header-menu-message-icon,
-    .header-menu-chat-icon {
-      display: block;
-      width: 30px;
-      height: 64px;
-      padding: 22px 0;
-      cursor: pointer;
-      fill: $dusty-gray;
-    }
-
-    .header-menu-message-icon:hover,
-    .header-menu-chat-icon:hover {
-      fill: $black;
-    }
-
-    .header-menu-message-dropdown,
-    .header-menu-chat-dropdown {
-      position: absolute;
-      top: 63px;
-      right: 0;
-      display: none;
-      width: 200px;
-      height: auto;
-      border: 1px solid $alto;
-      border-top: 0;
-      background-color: $white;
-      padding: 1px;
-    }
-
-    .header-menu-message-dropdown--active,
-    .header-menu-chat-dropdown--active {
-      display: block;
-    }
-  }
 }

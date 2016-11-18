@@ -1,53 +1,52 @@
 .navigation-menu {
-  display: block;
-  margin: 0 10px;
-  padding: 16px 0;
-
-  @include breakpoint(large up) {
-    margin: 0 auto;
-  }
-
-  .navigation-menu-item-link {
-    display: flex;
-    text-decoration: none;
-    transition: padding .25s;
-    flex-wrap: nowrap;
-    align-items: center;
+    display: block;
+    margin: 0 10px;
+    padding: 16px 0;
 
     @include breakpoint(large up) {
-      padding: 0 14px;
+        margin: 0 auto;
     }
-  }
 
-  .navigation-menu-item-link:hover,
-  .navigation-menu-item-link.navigation-menu-item-link--active {
+    .navigation-menu-item-link {
+        display: flex;
+        text-decoration: none;
+        transition: padding .25s;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        @include breakpoint(large up) {
+            padding: 0 14px;
+        }
+    }
+
+    .navigation-menu-item-link:hover,
+    .navigation-menu-item-link.navigation-menu-item-link--active {
+        .navigation-menu-item-text {
+            color: $white;
+        }
+    }
+
+    .navigation-menu-item-icon {
+        width: 18px;
+        height: 36px;
+        margin-right: 12px;
+        font-size: rem-calc(14px);
+        text-align: center;
+        transition: color .05s;
+        fill: $white;
+        flex: 0 0 auto;
+    }
+
     .navigation-menu-item-text {
-      color: $white;
+        padding: 8px 0;
+        font-size: rem-calc(17px);
+        line-height: rem-calc(24px);
+        color: $sinbad;
+        transition: color .05s;
+        flex: 1 1 auto;
     }
-  }
-
-  .navigation-menu-item-icon {
-    width: 18px;
-    height: 40px;
-    padding: 10px 0;
-    margin-right: 12px;
-    font-size: rem-calc(14px);
-    text-align: center;
-    fill: $white;
-    transition: color .05s;
-    flex: 0 0 auto;
-  }
-
-  .navigation-menu-item-text {
-    padding: 8px 0;
-    font-size: rem-calc(17px);
-    line-height: rem-calc(24px);
-    color: $sinbad;
-    transition: color .05s;
-    flex: 1 1 auto;
-  }
 }
 
 .navigation-menu.navigation-menu--last {
-  border-bottom: 0;
+    border-bottom: 0;
 }

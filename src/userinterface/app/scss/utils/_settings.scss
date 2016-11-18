@@ -79,7 +79,8 @@ $print-transparent-backgrounds: true;
 // --------------
 
 $breakpoints: (
-        small: 0,
+        null: 0,
+        small: 420px,
         medium: 640px,
         large: 750px,
         xlarge: 1200px,
