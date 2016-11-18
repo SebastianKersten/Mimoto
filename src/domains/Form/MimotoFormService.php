@@ -87,7 +87,7 @@ class MimotoFormService
 
 
         // 2. register fields
-        $aFields = (!empty($aFields)) ? $aFields : $form->getValue('fields', true);
+        $aFields = (!empty($aFields)) ? $aFields : $form->getValue('fields');
 
         // 3. init
         $formVars = (object) array(
@@ -145,7 +145,7 @@ class MimotoFormService
                 case CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY:
 
                     // read
-                    $entityPropertyId = $fieldValue->getValue('entityproperty', true);
+                    $entityPropertyId = $fieldValue->getValue('entityproperty');
 
                     // validate
                     if (empty($entityPropertyId))

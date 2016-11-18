@@ -32,8 +32,6 @@ class MimotoEntityConfigRepository
 
 
 
-    
-    
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -213,149 +211,26 @@ class MimotoEntityConfigRepository
         
         // 1. load from cache if present
         // 2. store in cache onLoad
-        
+
+
         
         // init
-        $aAllEntity = [];
-        $aAllEntity_Connections = [];
-        $aAllEntityProperties = [];
-        $aAllEntityProperty_Connections = [];
-        $aAllEntityPropertySettings = [];
+        $aAllEntity = $this->loadRawEntityData();
+        $aAllEntity_Connections = $this->loadRawConnectionData(CoreConfig::MIMOTO_ENTITY);
+        $aAllEntityProperties = $this->loadRawEntityPropertyData();
+        $aAllEntityProperty_Connections = $this->loadRawConnectionData(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $aAllEntityPropertySettings = $this->loadRawEntityPropertySettingData();
+        $aAllEntityPropertySetting_Connections = $this->loadRawConnectionData(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
-
-
-        // load all entities
-        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_ENTITY);
-        $params = array();
-        $stmt->execute($params);
-
-        foreach ($stmt as $row)
-        {
-            // compose
-            $entity = (object) array(
-                'id' => $row['id'],
-                'created' => $row['created'],
-                'name' => $row['name'],
-                'extends' => null,
-                'typeOf' => [],
-                'properties' => []
-            );
-
-            // store
-            $aAllEntity[] = $entity;
-        }
-
-
-
-        // load all connections
-        $stmt = $GLOBALS['database']->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
-            "parent_entity_type_id = :parent_entity_type_id ".
-            "ORDER BY parent_id ASC, sortindex ASC"
-        );
-        $params = array(
-            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITY
-        );
-        $stmt->execute($params);
-
-        foreach ($stmt as $row)
-        {
-            // compose
-            $connection = (object) array(
-                'id' => $row['id'],                                         // the id of the connection
-                'parent_entity_type_id' => $row['parent_entity_type_id'],   // the id of the parent's entity config
-                'parent_property_id' => $row['parent_property_id'],         // the id of the parent entity's property
-                'parent_id' => $row['parent_id'],                           // the id of the parent entity
-                'child_entity_type_id' => $row['child_entity_type_id'],     // the id of the child's entity config
-                'child_id' => $row['child_id'],                             // the id of the child entity connected to the parent
-                'sortindex' => $row['sortindex']                            // the sortindex
-            );
-
-            // load
-            $nEntityId = $row['parent_id'];
-
-            // store
-            $aAllEntity_Connections[$nEntityId][] = $connection;
-        }
-
-
-        // load all properties
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTY;
-        foreach ($GLOBALS['database']->query($sql) as $row)
-        {
-            // compose
-            $property = (object) array(
-                'id' => $row['id'],
-                'name' => $row['name'],
-                'type' => $row['type'],
-                'created' => $row['created'],
-                'settings' => []
-            );
-
-            // store
-            $aAllEntityProperties[$row['id']] = $property;
-        }
-
-
-        // load all connections
-        $stmt = $GLOBALS['database']->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
-            "parent_entity_type_id = :parent_entity_type_id ".
-            "ORDER BY parent_id ASC, sortindex ASC"
-        );
-        $params = array(
-            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITYPROPERTY
-        );
-        $stmt->execute($params);
-
-        foreach ($stmt as $row)
-        {
-            // compose
-            $connection = (object) array(
-                'id' => $row['id'],                                         // the id of the connection
-                'parent_entity_type_id' => $row['parent_entity_type_id'],   // the id of the parent's entity config
-                'parent_property_id' => $row['parent_property_id'],         // the id of the parent entity's property
-                'parent_id' => $row['parent_id'],                           // the id of the parent entity
-                'child_entity_type_id' => $row['child_entity_type_id'],     // the id of the child's entity config
-                'child_id' => $row['child_id'],                             // the id of the child entity connected to the parent
-                'sortindex' => $row['sortindex']                            // the sortindex
-            );
-
-            // load
-            $nPropertyId = $row['parent_id'];
-
-            // store
-            $aAllEntityProperty_Connections[$nPropertyId][] = $connection;
-        }
-
-        // load all settings
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING;
-        foreach ($GLOBALS['database']->query($sql) as $row)
-        {
-            // compose
-            $setting = (object) array(
-                'id' => $row['id'],
-                'key' => $row['key'],
-                'type' => $row['type'],
-                'value' => $row['value'],
-                'created' => $row['created']
-            );
-
-            // load
-            $nEntityPropertySettingId = $row['id'];
-
-            // store
-            $aAllEntityPropertySettings[$nEntityPropertySettingId] = $setting;
-        }
 
 
         // --- compose ---
 
-        $nAllEntityCount = count($aAllEntity);
-        for ($i = 0; $i < $nAllEntityCount; $i++)
+
+        while(count($aAllEntity) > 0)
         {
-            // read
-            $entity = $aAllEntity[$i];
+            // read and cleanup
+            $entity = array_shift($aAllEntity);
 
             // validate
             if (!isset($aAllEntity_Connections[$entity->id]))
@@ -367,15 +242,19 @@ class MimotoEntityConfigRepository
                 continue;
             }
 
+
             // register
             $aEntity_Connections = $aAllEntity_Connections[$entity->id];
 
+            // cleanup
+            unset($aAllEntity_Connections[$entity->id]);
+
+
             // store
-            $nEntityConnectionCount = count($aEntity_Connections);
-            for ($k = 0; $k < $nEntityConnectionCount; $k++)
+            while(count($aEntity_Connections) > 0)
             {
-                // register
-                $connection = $aEntity_Connections[$k];
+                // register and cleanup
+                $connection = array_shift($aEntity_Connections);
 
                 switch($connection->parent_property_id)
                 {
@@ -391,17 +270,16 @@ class MimotoEntityConfigRepository
 
                         // register
                         $entity->properties[] = $aAllEntityProperties[$connection->child_id];
-
                         break;
                 }
             }
 
             // store
             $nPropertyCount = count($entity->properties);
-            for ($j = 0; $j < $nPropertyCount; $j++)
+            for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
             {
                 // read
-                $property = $entity->properties[$j];
+                $property = $entity->properties[$nPropertyIndex];
                 
                 // validate
                 if (!isset($aAllEntityPropertySettings[$property->id]) || !isset($aAllEntityProperty_Connections[$property->id]))
@@ -417,18 +295,94 @@ class MimotoEntityConfigRepository
                 // register
                 $aEntityProperty_Connections = $aAllEntityProperty_Connections[$property->id];
 
+                // cleanup
+                unset($aAllEntityProperty_Connections[$property->id]);
+
+
                 // store
-                $nEntityPropertyConnectionCount = count($aEntityProperty_Connections);
-                for ($k = 0; $k < $nEntityPropertyConnectionCount; $k++)
+                while(count($aEntityProperty_Connections) > 0)
                 {
-                    // register
-                    $connection = $aEntityProperty_Connections[$k];
+                    // register and cleanup
+                    $connection = array_shift($aEntityProperty_Connections);
 
-                    // setting
-                    $setting = $aAllEntityPropertySettings[$connection->child_id];
+                    switch($connection->parent_property_id)
+                    {
+                        case CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings':
 
-                    // store
-                    $property->settings[$setting->key] = $setting;
+                            // setting
+                            $setting = $aAllEntityPropertySettings[$connection->child_id];
+
+                            // cleanup
+                            unset($aAllEntityPropertySettings[$connection->child_id]);
+
+
+                            // filter
+                            if ($setting->key == MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE || $setting->key == MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES)
+                            {
+
+                                // validate
+                                if (!isset($aAllEntityPropertySetting_Connections[$setting->id])) {
+                                    // notify
+                                    //$this->_MimotoLogService->silent('', '');
+
+                                    // skip
+                                    continue 3;
+                                }
+
+                                // register
+                                $aEntityPropertySetting_Connections = $aAllEntityPropertySetting_Connections[$setting->id];
+
+                                // cleanup
+                                unset($aAllEntityPropertySetting_Connections[$setting->id]);
+
+
+                                switch($setting->key)
+                                {
+                                    case MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE:
+
+                                        // store
+                                        while(count($aEntityPropertySetting_Connections) > 0)
+                                        {
+                                            // register and cleanup
+                                            $connection = array_shift($aEntityPropertySetting_Connections);
+
+                                            // validate
+                                            if ($connection->parent_property_id !== CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityType') continue;
+
+                                            // store
+                                            $setting->value = $connection->child_id;
+                                        }
+
+                                        break;
+
+                                    case MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES:
+
+                                        // init
+                                        $setting->value = [];
+
+                                        // store
+                                        while(count($aEntityPropertySetting_Connections) > 0)
+                                        {
+                                            // register and cleanup
+                                            $connection = array_shift($aEntityPropertySetting_Connections);
+
+                                            // validate
+                                            if ($connection->parent_property_id !== CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityTypes') continue;
+
+                                            // store
+                                            $setting->value[] = $connection->child_id;
+                                        }
+                                        break;
+                                }
+                            }
+
+
+
+                            // store
+                            $property->settings[$setting->key] = $setting;
+
+                            break;
+                    }
                 }
             }
 
@@ -613,7 +567,7 @@ class MimotoEntityConfigRepository
                         $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES]->value = [];
 
                         // prepare
-                        $aAllowedEntityTypes = json_decode($property->settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES]->value);
+                        $aAllowedEntityTypes = $property->settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES]->value;
                         $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
                         for ($k = 0; $k < $nAllowedEntityTypeCount; $k++)
                         {
@@ -645,6 +599,160 @@ class MimotoEntityConfigRepository
         
         // send error
         return false;
+    }
+
+
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods - Raw data ---------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Load raw Entity data
+     * @return array Entities
+     */
+    private function loadRawEntityData()
+    {
+        // init
+        $aEntities = [];
+
+        // load all entities
+        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_ENTITY);
+        $params = array();
+        $stmt->execute($params);
+
+        foreach ($stmt as $row)
+        {
+            // compose
+            $entity = (object) array(
+                'id' => $row['id'],
+                'created' => $row['created'],
+                'name' => $row['name'],
+                'extends' => null,
+                'typeOf' => [],
+                'properties' => []
+            );
+
+            // store
+            $aEntities[] = $entity;
+        }
+
+        // send
+        return $aEntities;
+    }
+
+    /**
+     * Load raw EntityProperty data
+     * @return array EntityProperties
+     */
+    private function loadRawEntityPropertyData()
+    {
+        // init
+        $aEntityProperties = [];
+
+        // load all properties
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTY;
+        foreach ($GLOBALS['database']->query($sql) as $row)
+        {
+            // compose
+            $property = (object) array(
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'type' => $row['type'],
+                'created' => $row['created'],
+                'settings' => []
+            );
+
+            // register
+            $nEntityPropertyId = $row['id'];
+
+            // store
+            $aEntityProperties[$nEntityPropertyId] = $property;
+        }
+
+        // send
+        return $aEntityProperties;
+    }
+
+    /**
+     * Load raw EntityPropertySetting data
+     * @return array EntityPropertySettings
+     */
+    private function loadRawEntityPropertySettingData()
+    {
+        // init
+        $aEntityPropertySettings = [];
+
+        // load all settings
+        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING;
+        foreach ($GLOBALS['database']->query($sql) as $row)
+        {
+            // compose
+            $setting = (object) array(
+                'id' => $row['id'],
+                'key' => $row['key'],
+                'type' => $row['type'],
+                'value' => $row['value'],
+                'created' => $row['created']
+            );
+
+            // register
+            $nEntityPropertySettingId = $row['id'];
+
+            // store
+            $aEntityPropertySettings[$nEntityPropertySettingId] = $setting;
+        }
+
+        // send
+        return $aEntityPropertySettings;
+    }
+
+    /**
+     * Load raw connection data
+     * @param string Parent entity type id
+     * @return array Entity connections
+     */
+    private function loadRawConnectionData($sParentEntityTypeId)
+    {
+        // init
+        $aConnections = [];
+
+        // load all connections
+        $stmt = $GLOBALS['database']->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id ".
+            "ORDER BY parent_id ASC, sortindex ASC"
+        );
+        $params = array(
+            ':parent_entity_type_id' => $sParentEntityTypeId
+        );
+        $stmt->execute($params);
+
+        foreach ($stmt as $row)
+        {
+            // compose
+            $connection = (object) array(
+                'id' => $row['id'],                                         // the id of the connection
+                'parent_entity_type_id' => $row['parent_entity_type_id'],   // the id of the parent's entity config
+                'parent_property_id' => $row['parent_property_id'],         // the id of the parent entity's property
+                'parent_id' => $row['parent_id'],                           // the id of the parent entity
+                'child_entity_type_id' => $row['child_entity_type_id'],     // the id of the child's entity config
+                'child_id' => $row['child_id'],                             // the id of the child entity connected to the parent
+                'sortindex' => $row['sortindex']                            // the sortindex
+            );
+
+            // load
+            $nEntityId = $row['parent_id'];
+
+            // store
+            $aConnections[$nEntityId][] = $connection;
+        }
+
+        // send
+        return $aConnections;
     }
 
 }

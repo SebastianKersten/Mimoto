@@ -66,7 +66,7 @@ class AimlessInput extends AimlessComponent
         if (empty($fieldValue)) { $GLOBALS['Mimoto.Log']->notify('AimlessInput', "No 'value' set on iput field"); return; }
 
         // register
-        $aFieldValueOptions = $fieldValue->getValue('options', true);
+        $aFieldValueOptions = $fieldValue->getValue('options');
 
         // collect
         $aOptions = [];

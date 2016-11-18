@@ -1,7 +1,13 @@
 <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting">
     {{ Aimless.render('key') }}:<br>
     {% if Aimless.data('key') == 'allowedEntityType' %}
-        <a href="/mimoto.cms/entity/{{ Aimless.meta('id') }}/view">{{ entityStructure.entityNames[Aimless.data('value')] }}</a>
+        {{ Aimless.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}
+    {% elseif Aimless.data('key') == 'allowedEntityTypes' %}
+        [
+            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes">
+            {{ Aimless.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}
+            </div>
+        ]
     {% else %}
         {{ Aimless.render('value')|raw }}
     {% endif %}

@@ -54,7 +54,7 @@ class Entity
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => '["'.CoreConfig::MIMOTO_ENTITY.'"]'
+                            'value' => [CoreConfig::MIMOTO_ENTITY]
                         ),
                         'allowDuplicates' => (object) array(
                             'id' => CoreConfig::MIMOTO_ENTITY.'--properties-allowDuplicates',

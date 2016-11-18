@@ -421,7 +421,7 @@ class MimotoAimlessService
                                     // register
                                     $sCollectionItemPropertyName = $aCollectionItemPropertyNames[$nPropertyNameIndex];
 
-                                    $item->data[$sCollectionItemPropertyName] = $entity->getValue($sCollectionItemPropertyName, true);
+                                    $item->data[$sCollectionItemPropertyName] = $entity->getValue($sCollectionItemPropertyName);
                                 }
 
 

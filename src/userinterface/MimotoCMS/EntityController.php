@@ -85,6 +85,30 @@ class EntityController
         // 2. check if entity exists
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
+
+//        $aProperties = $entity->getValue('properties');
+//
+//        for ($i = 0; $i < count($aProperties); $i++)
+//        {
+//            $property = $aProperties[$i];
+//
+//            $aSettings = $property->getValue('settings');
+//
+//            for ($j = 0; $j < count($aSettings); $j++)
+//            {
+//                $setting = $aSettings[$j];
+//
+//                output('$setting', $setting->getValue('allowedEntityType'), true);
+//
+//
+//            }
+//        }
+//
+//        die();
+
+
+
+
         // 3. create component
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityDetail', $entity);
 
@@ -299,7 +323,7 @@ class EntityController
 
 
         // load
-        $aEntityProperties = $entity->getValue('properties', true);
+        $aEntityProperties = $entity->getValue('properties');
 
         $nPropertyCount = count($aEntityProperties);
         for ($i = 0; $i < $nPropertyCount; $i++)
@@ -308,7 +332,7 @@ class EntityController
             $entityProperty = $aEntityProperties[$i];
 
             // load
-            $aPropertySettings = $entityProperty->getValue('settings', true);
+            $aPropertySettings = $entityProperty->getValue('settings');
 
             $nSettingCount = count($aPropertySettings);
             for ($j = 0; $j < $nSettingCount; $j++)
@@ -329,7 +353,7 @@ class EntityController
                     case MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES:
 
                         // convert
-                        $aAllowedEntityTypes = json_decode($value);
+                        $aAllowedEntityTypes = (!empty($value)) ? $value : [];
 
                         // parse
                         $nAllowedEntityTypeCount = count($aAllowedEntityTypes);

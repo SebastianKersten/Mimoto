@@ -673,7 +673,7 @@ class MimotoEntity
         /* regular value */
 
         
-        if ($bGetStorableValue)
+        if (!$bGetStorableValue)
         {
             // 1. de data moet eerst geladen worden
             // 2. indien geladen, opslaan

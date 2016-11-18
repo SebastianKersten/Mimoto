@@ -480,7 +480,7 @@ class ExampleController
 
         echo "Entity '".$entity->getValue('name')."' with id=".$entity->getId();
 
-        $aProperties = $entity->getValue('properties', true);
+        $aProperties = $entity->getValue('properties');
 
 
 

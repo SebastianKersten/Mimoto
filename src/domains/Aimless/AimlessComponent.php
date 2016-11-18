@@ -157,7 +157,7 @@ class AimlessComponent
     // --- Twig usage
 
 
-    public function data($sPropertySelector, $bGetRealValues = true, $bRenderData = false, $sComponentName = null)
+    public function data($sPropertySelector, $bGetStorableValue = false, $bRenderData = false, $sComponentName = null)
     {
         // validate
         if (empty($this->_entity)) error("AimlessComponent says: The entity is not set. Please supply one.");
@@ -170,7 +170,14 @@ class AimlessComponent
         $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, $nSeperatorPos + 1) : '';
 
         // read and send
-        if (!$bRenderData) { return $this->_entity->getValue($sMainPropertyName, $bGetRealValues); }
+        if (!$bRenderData)
+        {
+
+            // #todo - in geval van getStructure (connections -> anders oppakken
+            // #todo - connections in ViewModel gooien
+
+            return $this->_entity->getValue($sMainPropertyName, $bGetStorableValue);
+        }
 
         // render
         switch($this->_entity->getPropertyType($sMainPropertyName))
@@ -178,19 +185,19 @@ class AimlessComponent
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
                 // read, render and send
-                return $this->renderValueProperty($this->_entity->getValue($sMainPropertyName, true), $sMainPropertyName);
+                return $this->renderValueProperty($this->_entity->getValue($sMainPropertyName), $sMainPropertyName);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                 // read, render and send
-                return $this->renderEntityProperty($this->_entity->getValue($sMainPropertyName, true), $sMainPropertyName, $sSubPropertyName, $sComponentName);
+                return $this->renderEntityProperty($this->_entity->getValue($sMainPropertyName), $sMainPropertyName, $sSubPropertyName, $sComponentName);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                 // read, render and send
-                return $this->renderCollectionProperty($this->_entity->getValue($sMainPropertyName, true), $sMainPropertyName, $sComponentName);
+                return $this->renderCollectionProperty($this->_entity->getValue($sMainPropertyName), $sMainPropertyName, $sComponentName);
                 break;
         }
     }
@@ -213,7 +220,6 @@ class AimlessComponent
     {
         // validate
         if (empty($entity)) return;
-
 
         if (!empty($sComponentName) || isset($this->_aPropertyComponents[$sPropertyName]) && empty($sSubpropertySelector))
         {

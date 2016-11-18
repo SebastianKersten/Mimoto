@@ -57,7 +57,7 @@ class AimlessForm extends AimlessComponent
         $form = $this->_FormService->getFormByName($this->_sFormName);
 
         // 2. register fields
-        $aFields = $form->getValue('fields', true);
+        $aFields = $form->getValue('fields');
 
         // 3. prepare
         $formVars = $this->_FormService->getFormVars($form, $this->_xValues, $aFields);

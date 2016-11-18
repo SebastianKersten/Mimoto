@@ -4,7 +4,7 @@ div.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting {
     padding: 3px 7px 4px 7px;
     background-color: #ffffff;
 
-    & > a {
-        color: $sinbad;
+    & div.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes {
+        padding-left: 20px;
     }
 }

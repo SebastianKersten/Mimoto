@@ -72,7 +72,7 @@ class EntityProperty
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => '["'.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'"]'
+                            'value' => [CoreConfig::MIMOTO_ENTITYPROPERTYSETTING]
 
                         ),
                         'allowDuplicates' => (object) array(

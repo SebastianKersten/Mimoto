@@ -74,6 +74,48 @@ class EntityPropertySetting
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityType',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'allowedEntityType',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityType-allowedEntityType',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityType',
+                            'type' => '',
+                            'value' => CoreConfig::MIMOTO_ENTITY
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityTypes',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'allowedEntityTypes',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityTypes-allowedEntityTypes',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityTypes',
+                            'type' => 'array',
+                            'value' => [CoreConfig::MIMOTO_ENTITY]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityTypes-allowDuplicates',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowDuplicates',
+                            'value' => CoreConfig::DATA_VALUE_FALSE,
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN
+                        )
+                    ]
                 )
             ]
         );
