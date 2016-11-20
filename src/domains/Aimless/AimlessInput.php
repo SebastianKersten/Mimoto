@@ -140,7 +140,7 @@ class AimlessInput extends AimlessComponent
 
         // read
         $value = $this->_entity->getValue('value');
-        $aValueValidationRules = $value->getValue('validation', true);
+        $aValueValidationRules = $value->getValue('validation');
 
         // validate
         if (!empty($aValueValidationRules))

@@ -80,6 +80,7 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_TEXTBLOCK           = '_MimotoAimless__interaction__form_input_textblock';
     const MIMOTO_FORM_INPUT_TEXTRTF             = '_MimotoAimless__interaction__form_input_textrtf';
     const MIMOTO_FORM_INPUT_CHECKBOX            = '_MimotoAimless__interaction__form_input_checkbox';
+    const MIMOTO_FORM_INPUT_MULTISELECT         = '_MimotoAimless__interaction__form_input_multiselect';
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_MimotoAimless__interaction__form_input_radiobutton';
     const MIMOTO_FORM_INPUT_DROPDOWN            = '_MimotoAimless__interaction__form_input_dropdown';
     const MIMOTO_FORM_INPUT_LIST                = '_MimotoAimless__interaction__form_input_list';

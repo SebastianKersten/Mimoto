@@ -1,81 +1,17 @@
 {% embed "MimotoCMS/components/forms/form_component.twig" %}
-  {% block form_component_element %}
 
-    <div class="MimotoCMS_forms_input_Dropdown-container">
-      <select {{ Aimless.input()|raw }} class="MimotoCMS_forms_input_Dropdown">
-        {% set aOptions = Aimless.fieldOptions() %}
-        {% for option in aOptions %}
-          <option value="{{ option.key }}" {% if Aimless.value() == option.key %}selected{% endif %}>{{ option.value }}</option>
-        {% endfor %}
-      </select>
-      <span class="MimotoCMS_forms_input_Dropdown-icon icon icon-arrow-down"></span>
-    </div>
+    {% block form_component_element %}
 
-  {% endblock %}
+        <div class="MimotoCMS_forms_input_Dropdown-container">
+            <select {{ Aimless.input()|raw }} class="MimotoCMS_forms_input_Dropdown">
+                <option value=""></option> {# check if field is optional, if selection made, disable this null-option #}
+                {% set aOptions = Aimless.fieldOptions() %}
+                {% for option in aOptions %}
+                    <option value="{{ option.key }}" {% if Aimless.value() == option.key %}selected{% endif %}>{{ option.value }}</option>
+                {% endfor %}
+            </select>
+            <span class="MimotoCMS_forms_input_Dropdown-icon icon icon-arrow-down"></span>
+        </div>
+
+    {% endblock %}
 {% endembed %}
-
-{#
-<div class="form-component">
-  <label for="" class="form-component-title">Periode waar de voucher toegang tot geeft <span class="form-component-title-information">(optioneel)</span><span class="js-form-component-title-icon form-component-title-icon icon icon-loading"></span></label>
-
-  <div class="form-component-content">
-    <div class="form-component-element">
-      <div class="form-select-container">
-        <select name="" id="" class="form-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
-          {% if value is empty %}
-            <option value=""></option>
-          {% endif %}
-          {% for option in aOptions %}
-            <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
-          {% endfor %}
-        </select>
-        <span class="form-select-icon icon icon-arrow-down"></span>
-      </div>
-    </div>
-    <p class="form-component-description">Dit is een mooie beschrijving</p>
-  </div>
-</div>
-
-<div class="form-component form-component--is-validated">
-  <label for="" class="form-component-title">Periode waar de voucher toegang tot geeft <span class="js-form-component-title-icon form-component-title-icon icon icon-checkmark"></span></label>
-
-  <div class="form-component-content">
-    <div class="form-component-element">
-      <div class="form-select-container">
-        <select name="" id="" class="form-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
-          {% if value is empty %}
-            <option value=""></option>
-          {% endif %}
-          {% for option in aOptions %}
-            <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
-          {% endfor %}
-        </select>
-        <span class="form-select-icon icon icon-arrow-down"></span>
-      </div>
-    </div>
-    <p class="form-component-description">Dit is een mooie beschrijving</p>
-  </div>
-</div>
-
-<div class="form-component form-component--has-error">
-  <label for="" class="form-component-title">Periode waar de voucher toegang tot geeft <span class="js-form-component-title-icon form-component-title-icon icon icon-warning"></span></label>
-
-  <div class="form-component-content">
-    <div class="form-component-element">
-      <div class="form-select-container">
-        <select name="" id="" class="form-select"{% if onChange is not empty %} onChange="{{ onChange }}"{% endif %}>
-          {% if value is empty %}
-            <option value=""></option>
-          {% endif %}
-          {% for option in aOptions %}
-            <option value="{{ option.value }}" {% if option.value == value %}selected{% endif %}>{{ option.label }}</option>
-          {% endfor %}
-        </select>
-        <span class="form-select-icon icon icon-arrow-down"></span>
-      </div>
-      <p class="form-component-element-error">Kies een periode.</p>
-    </div>
-    <p class="form-component-description">Dit is een mooie beschrijving</p>
-  </div>
-</div>
-#}

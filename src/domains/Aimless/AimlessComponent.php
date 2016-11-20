@@ -426,43 +426,86 @@ class AimlessComponent
             // register
             $entity = $aCollection[$i];
 
-            // revert to default
-            $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
-
-            // create
-            if ($entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
-            {
-                // clarify
-                $field = $entity;
-
-                // validate
-                if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()]))
-                {
-                    $this->_LogService->warn('AimlessComponent - Form field misses a value definition', "The field with type=".$field->getEntityTypeName()." and <b>id=".$field->getId()."</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>", 'AimlessComponent');
-                    continue;
-                }
-
-                // gerister
-                $fieldVar = $aFieldVars[$field->getEntityTypeName().'.'.$field->getId()];
-
-                // create
-                $component = $this->_AimlessService->createInput($sTemplateName, $field, $fieldVar->key, $fieldVar->value);
-            }
-            else
-            {
-                // create
-                $component = $this->_AimlessService->createComponent($sTemplateName, $entity);
-            }
-
-            // forward
-            foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
-            
-            // output
-            $sRenderedCollection .= $component->render();
+            // render
+            $sRenderedCollection .= $this->renderCollectionItem($entity, $aConnections, $sComponentName, $aFieldVars);
         }
         
         // send
         return $sRenderedCollection;
+    }
+
+    /**
+     * Render collection item
+     * @param $aCollection
+     * @param $aConnections
+     * @param null $sComponentName
+     * @param null $aFieldVars
+     * @return string
+     */
+    private function renderCollectionItem($entity, $aConnections, $sComponentName = null, $aFieldVars = null)
+    {
+        // revert to default
+        $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
+
+        // create
+        if ($entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
+        {
+            $component = $this->renderCollectionItemAsInput($sTemplateName, $entity, $aFieldVars);
+        }
+        else
+        {
+            $component = $this->renderCollectionItemAsComponent($sTemplateName, $entity);
+        }
+
+        // forward
+        foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
+
+        // output
+        return $component->render();
+    }
+
+    /**
+     * Render collection item as AimlessComponent
+     * @param $sTemplateName
+     * @param $entity
+     * @return AimlessComponent
+     */
+    private function renderCollectionItemAsComponent($sTemplateName, $entity)
+    {
+        // create and send
+        return $this->_AimlessService->createComponent($sTemplateName, $entity);
+    }
+
+    /**
+     * Render collection item as AimlessInput
+     * @param $sTemplateName
+     * @param $field
+     * @param $aFieldVars
+     * @return AimlessInput
+     */
+    private function renderCollectionItemAsInput($sTemplateName, $field, $aFieldVars)
+    {
+        // validate
+        if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()]))
+        {
+            $this->_LogService->error('AimlessComponent - Form field misses a value definition', "The field with type=".$field->getEntityTypeName()." and <b>id=".$field->getId()."</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>", 'AimlessComponent', true);
+        }
+
+        // gerister
+        $fieldVar = $aFieldVars[$field->getEntityTypeName().'.'.$field->getId()];
+
+        // #todo
+
+        if ($field->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN)
+        {
+            $fieldValue = $field->getValue('value');
+            $aFieldValueOptions = $fieldValue->getValue('options', true);
+
+            error($aFieldValueOptions);
+        }
+
+        // create and send
+        return $this->_AimlessService->createInput($sTemplateName, $field, $fieldVar->key, $fieldVar->value);
     }
 
     /**
@@ -477,7 +520,7 @@ class AimlessComponent
         $component = $this->_AimlessService->createForm($sFormName, $xValues);
 
         // output
-        return $component->render(); // #todo - pass vars for rendering
+        return $component->render(); //$this->_aVars); // #todo - pass vars for rendering
     }
     
 }

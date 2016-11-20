@@ -16,21 +16,22 @@
     </div>
 </div>
 #}
+<div data-mimoto-component="MimotoCMS_pages_notifications_Notification" class="MimotoCMS_pages_notifications_Notification">
+    <a name="notification_{{ Aimless.meta('id') }}"></a>
+    <div class="notification notification--{{ Aimless.data('category') }}" {{ Aimless.realtime()|raw }}>
 
-<a name="notification_{{ Aimless.meta('id') }}"></a>
-<div class="notification notification--{{ Aimless.data('category') }}" {{ Aimless.realtime()|raw }}>
+        <div class="notification-content">
+            <p class="notification-title" {{ Aimless.realtime('title')|raw }}>{{ Aimless.data('title') }}</p>
+            <p class="notification-subtitle">
+                <span class="notification-subtitle-timestamp">{{ Aimless.meta('created') }}</span> by
+                <span class="notification-subtitle-creator">{{ Aimless.data('dispatcher') }}</span>
+            </p>
+            <p class="notification-message" {{ Aimless.realtime('message')|raw }}>{{ Aimless.data('message')|raw }}</p>
+        </div>
 
-    <div class="notification-content">
-        <p class="notification-title" {{ Aimless.realtime('title')|raw }}>{{ Aimless.data('title') }}</p>
-        <p class="notification-subtitle">
-            <span class="notification-subtitle-timestamp">{{ Aimless.meta('created') }}</span> by
-            <span class="notification-subtitle-creator">{{ Aimless.data('dispatcher') }}</span>
-        </p>
-        <p class="notification-message"  {{ Aimless.realtime('message')|raw }}>{{ Aimless.data('message')|raw }}</p>
+        <div class="notification-button">
+            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label: 'Close', onclick: "Mimoto.CMS.notificationClose('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"');" } %}
+        </div>
+
     </div>
-
-    <div class="notification-button">
-        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label: 'Close', onclick: "Mimoto.CMS.notificationClose('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"');" } %}
-    </div>
-
 </div>

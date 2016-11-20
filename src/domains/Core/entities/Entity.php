@@ -84,14 +84,14 @@ class Entity
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--noTable',
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--isAbstract',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'noTable',
+                    'name' => 'isAbstract',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--noTable-type',
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--isAbstract-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

@@ -56,7 +56,8 @@ class EntityController
         $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITY);
 
         // 1. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Page');
+        //$component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
         $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
@@ -142,7 +143,8 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        //$component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Page');
 
         // 4. setup
         $component->addForm(CoreConfig::COREFORM_ENTITY_EDIT, $entity);
@@ -238,7 +240,7 @@ class EntityController
         // init
         $entityStructure = (object) array();
         $entityStructure->name = $entity->getValue('name');
-        $entityStructure->hasTable = (intval($entity->getValue('noTable')) === 1) ? false : true;
+        $entityStructure->hasTable = (intval($entity->getValue('isAbstract')) === 1) ? false : true;
         $entityStructure->instanceCount = 0;
         $entityStructure->extends = [];
         $entityStructure->extendedBy = [];

@@ -15,50 +15,41 @@ use Mimoto\Core\CoreConfig;
 class EntityForm
 {
 
-    const DESCRIPTION = "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>";
-
-
+    /**
+     * Get NEW structure
+     */
     public static function getStructureNew()
     {
         // init
-        $form = self::getStructureStart(CoreConfig::COREFORM_ENTITY_NEW);
+        $form = self::initForm(CoreConfig::COREFORM_ENTITY_NEW);
 
-        // --- title ---
-
-        // create and setup
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
-        $field->setId(CoreConfig::COREFORM_ENTITY.'--title');
-        $field->setValue('title', 'Add new entity');
-        $field->setValue('description', self::DESCRIPTION);
-
-        // add
-        $form->addValue('fields', $field);
-
-        // init
-        $form = self::getStructureEnd($form);
+        // setup
+        $form->addValue('fields', self::getField_title('Add new entity'));
+        $form->addValue('fields', self::getField_groupStart());
+        $form->addValue('fields', self::getField_name());
+        //$form->addValue('fields', self::getField_extends());
+        $form->addValue('fields', self::getField_isAbstract());
+        $form->addValue('fields', self::getField_groupEnd());
 
         // send
         return $form;
     }
 
+    /**
+     * Get EDIT structure
+     */
     public static function getStructureEdit()
     {
         // init
-        $form = self::getStructureStart(CoreConfig::COREFORM_ENTITY_EDIT);
+        $form = self::initForm(CoreConfig::COREFORM_ENTITY_EDIT);
 
-        // --- title ---
-
-        // create and setup
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
-        $field->setId(CoreConfig::COREFORM_ENTITY.'--title');
-        $field->setValue('title', 'Edit entity');
-        $field->setValue('description', self::DESCRIPTION);
-
-        // add
-        $form->addValue('fields', $field);
-
-        // init
-        $form = self::getStructureEnd($form);
+        // setup
+        $form->addValue('fields', self::getField_title('Edit entity'));
+        $form->addValue('fields', self::getField_groupStart());
+        $form->addValue('fields', self::getField_name());
+        $form->addValue('fields', self::getField_extends());
+        $form->addValue('fields', self::getField_isAbstract());
+        $form->addValue('fields', self::getField_groupEnd());
 
         // send
         return $form;
@@ -71,7 +62,10 @@ class EntityForm
     // ----------------------------------------------------------------------------
 
 
-    private static function getStructureStart($sFormName)
+    /**
+     * Init structure
+     */
+    private static function initForm($sFormName)
     {
         // init
         $form = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM);
@@ -79,34 +73,53 @@ class EntityForm
         // setup
         $form->setId($sFormName);
         $form->setValue('name', $sFormName);
-        $form->setValue('realtimeCollaborationMode', true);
-
+        $form->setValue('realtimeCollaborationMode', false);
 
         // send
         return $form;
     }
 
-    private static function getStructureEnd($form)
+    /**
+     * Get field: title
+     */
+    private static function getField_title($sTitle)
     {
+        // create and setup
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+        $field->setId(CoreConfig::COREFORM_ENTITY.'--title');
+        $field->setValue('title', $sTitle);
+        $field->setValue('description', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");
 
-        // --- group start ---
+        // send
+        return $field;
+    }
 
+    /**
+     * Get field: groupStart
+     */
+    private static function getField_groupStart()
+    {
         // create
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
         $field->setId(CoreConfig::COREFORM_ENTITY.'--groupstart');
 
-        // add
-        $form->addValue('fields', $field);
+        // send
+        return $field;
+    }
 
-
-        // --- input - entity name ---
-
+    /**
+     * Get field: name
+     */
+    private static function getField_name()
+    {
         // create and setup
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_ENTITY.'--name');
         $field->setValue('label', 'Name');
         $field->setValue('placeholder', "Entity name");
         $field->setValue('description', "The entity name should be unique");
+
+        // --- InputValue ---
 
         // value
         $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
@@ -144,25 +157,96 @@ class EntityForm
         $validationRule->setValue('errorMessage', 'The name needs to be unique');
         $value->addValue('validation', $validationRule);
 
+        // add
+        $value->setValue('entityproperty', $connectedEntityProperty);
+        $field->setValue('value', $value);
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: extends
+     */
+    private static function getField_extends()
+    {
+        // create and setup
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN);
+        $field->setId(CoreConfig::COREFORM_ENTITY.'--extends');
+        $field->setValue('label', 'Extend other entity');
+        $field->setValue('description', "Inherit that entity's properties");
+
+        // --- InputValue ---
+
+        $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+        $value->setId(CoreConfig::COREFORM_ENTITY.'--extends_value');
+        $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+
+        // load
+        $aEntities = $GLOBALS['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_ENTITY]);
+
+        $nEntityCount = count($aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            // register
+            $entity = $aEntities[$i];
+
+            $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
+            $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--extends_value_options-valuesettings-collection-'.$entity->getId());
+            $option->setValue('key', $entity->getId());
+            $option->setValue('value', $entity->getValue('name'));
+            $value->addValue('options', $option);
+        }
+
+        $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--extends');
 
         // add
         $value->setValue('entityproperty', $connectedEntityProperty);
         $field->setValue('value', $value);
-        $form->addValue('fields', $field);
 
+        // send
+        return $field;
+    }
 
-        // --- group end ---
+    /**
+     * Get field: isAbstract
+     */
+    private static function getField_isAbstract()
+    {
+        // create and setup
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX);
+        $field->setId(CoreConfig::COREFORM_ENTITY.'--isAbstract');
+        $field->setValue('label', 'Configuration');
+        $field->setValue('option', 'Skip dedicated table for this entity');
 
+        // --- InputValue ---
+
+        $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+        $value->setId(CoreConfig::COREFORM_ENTITY.'--isAbstract');
+        $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+
+        $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--isAbstract');
+
+        // add
+        $value->setValue('entityproperty', $connectedEntityProperty);
+        $field->setValue('value', $value);
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: groupEnd
+     */
+    private static function getField_groupEnd()
+    {
         // create
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
         $field->setId(CoreConfig::COREFORM_ENTITY.'--groupend');
 
-        // add
-        $form->addValue('fields', $field);
-
-
         // send
-        return $form;
+        return $field;
     }
-
 }

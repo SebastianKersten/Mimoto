@@ -17,7 +17,9 @@ module.exports.prototype = {
         this.setVariables();
         this.addEventListeners();
         this.checkMenuState();
+        
         this.initNotificationCount();
+        this.initConversationCount();
 
     },
 
@@ -40,6 +42,7 @@ module.exports.prototype = {
         this.collapsed = false;
 
         this.notificationCount = document.getElementById('header_notification_count');
+        this.conversationCount = document.getElementById('header_conversation_count');
     },
 
     /**
@@ -134,6 +137,52 @@ module.exports.prototype = {
             }
         };
 
+        xhr.send(null);
+    },
+    
+    /**
+     * Init conversation count
+     */
+    initConversationCount: function()
+    {
+        
+        // setup
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/mimoto.cms/conversations/count');
+        
+        // init
+        var classRoot = this;
+        
+        xhr.onreadystatechange = function ()
+        {
+            // init
+            var DONE = 4; // readyState 4 means the request is done.
+            var OK = 200; // status 200 is a successful return.
+            
+            if (xhr.readyState === DONE)
+            {
+                if (xhr.status === OK)
+                {
+                    // convert
+                    var data = JSON.parse(this.responseText);
+                    
+                    if (parseInt(data.count) > 0)
+                    {
+                        // update counter
+                        classRoot.conversationCount.innerText = data.count;
+                        classRoot.conversationCount.classList.remove('hidden');
+                        
+                        // add notifications
+                        classRoot.el.querySelector('.js-messages').innerHTML = data.conversations;
+                    }
+                }
+                else
+                {
+                    console.log('Error: ' + xhr.status); // An error occurred during the request.
+                }
+            }
+        };
+        
         xhr.send(null);
     },
 

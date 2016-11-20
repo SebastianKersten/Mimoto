@@ -6,6 +6,7 @@ namespace Mimoto\Form;
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 use Mimoto\Core\forms\EntityForm;
 use Mimoto\Core\forms\EntityPropertyForm;
@@ -145,18 +146,23 @@ class MimotoFormService
                 case CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY:
 
                     // read
-                    $entityPropertyId = $fieldValue->getValue('entityproperty');
+                    $entityProperty = $fieldValue->getValue('entityproperty', true);
 
                     // validate
-                    if (empty($entityPropertyId))
+                    if (empty($entityProperty))
                     {
                         $GLOBALS['Mimoto.Log']->notify('Input not properly connected to a property', "The input with id <b>".$field->getId()."</b> is of type <b>entityproperty</b> but is not actually connected to a property");
                         continue;
                     }
 
+                    // read
+                    $entityPropertyId = $entityProperty->getChildId();
+
+
                     // 1. get entity to which the property is connected
                     $sEntityName = $this->_MimotoEntityConfigService->getEntityNameByPropertyId($entityPropertyId);
                     $sPropertyName = $this->_MimotoEntityConfigService->getPropertyNameById($entityPropertyId);
+                    $sPropertyType = $this->_MimotoEntityConfigService->getPropertyTypeById($entityPropertyId);
 
                     // auto create
                     if (!isset($orderedValues->entities[$sEntityName])) $orderedValues->entities[$sEntityName] = $GLOBALS['Mimoto.Data']->create($sEntityName);
@@ -166,10 +172,50 @@ class MimotoFormService
                     if (empty($xEntityId)) $xEntityId = CoreConfig::ENTITY_NEW;
                     $sEntitySelector = $sEntityName.'.'.$xEntityId;
 
+
+                    // init
+                    $propertyValue = null;
+
+                    // read value
+                    switch($sPropertyType)
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                            $propertyValue = $orderedValues->entities[$sEntityName]->getValue($sPropertyName);
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                            $propertyValueConnection = $orderedValues->entities[$sEntityName]->getValue($sPropertyName, true);
+
+                            if (!empty($propertyValueConnection))
+                            {
+                                $propertyValue = $propertyValueConnection->getChildEntityTypeName().'.'.$propertyValueConnection->getChildId();
+                            }
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                            $propertyValue = [];
+
+                            $aPropertyValueConnections = $orderedValues->entities[$sEntityName]->getValue($sPropertyName, true);
+
+                            $nPropertyValueConnectionCount = count($aPropertyValueConnections);
+                            for ($nPropertyValueConnectionIndex = 0; $nPropertyValueConnectionIndex < $nPropertyValueConnectionCount; $nPropertyValueConnectionIndex++)
+                            {
+                                $propertyValueConnection = $aPropertyValueConnections[$nPropertyValueConnectionIndex];
+
+                                $propertyValue[] = $propertyValueConnection->getChildEntityTypeName().'.'.$propertyValueConnection->getChildId();
+                            }
+                            break;
+                    }
+
+                    output('propertyValue', $propertyValue, true);
+
                     // 1. store field var
                     $formVars->fieldVars[$sFieldSelector] = (object) array(
                         'key' => $sEntitySelector.'.'.$sPropertyName,
-                        'value' => $orderedValues->entities[$sEntityName]->getValue($sPropertyName)
+                        'value' => $propertyValue
                     );
 
                     // 2. store entity

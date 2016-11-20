@@ -147,6 +147,23 @@ class MimotoEntityConfigRepository
         }
     }
 
+    public function getPropertyTypeById($nId)
+    {
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            $entity = $this->_aEntities[$i];
+
+            $nPropertyCount = count($entity->properties);
+            for ($j = 0; $j < $nPropertyCount; $j++)
+            {
+                $property = $entity->properties[$j];
+
+                if ($property->id == $nId) { return $property->type; }
+            }
+        }
+    }
+
     public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)
     {
         // search

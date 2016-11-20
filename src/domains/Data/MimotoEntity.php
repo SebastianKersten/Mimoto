@@ -443,7 +443,7 @@ class MimotoEntity
         if (empty($property->data->currentEntity)) return null;
 
         // send
-        if ($bGetStorableValue) { return $property->data->currentEntity->getChildId(); }
+        if ($bGetStorableValue) { return $property->data->currentEntity; }
 
         // send
         return $this->loadEntity($property);
