@@ -83,7 +83,6 @@ class MimotoFormService
         // 1. prepare
         $orderedValues = $this->orderValues($xValues);
 
-
         // standaard formulier feedback, met id
 
 
@@ -210,7 +209,8 @@ class MimotoFormService
                             break;
                     }
 
-                    output('propertyValue', $propertyValue, true);
+                    // output('propertyValue', $propertyValue, true);
+
 
                     // 1. store field var
                     $formVars->fieldVars[$sFieldSelector] = (object) array(

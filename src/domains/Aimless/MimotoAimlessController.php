@@ -5,9 +5,12 @@ namespace Mimoto\Aimless;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\Data\MimotoDataUtils;
+use Mimoto\Data\MimotoEntityConnection;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 // Silex classes
-use Mimoto\Data\MimotoDataUtils;
+
 use Silex\Application;
 
 // Symfony classes
@@ -146,6 +149,10 @@ class MimotoAimlessController
         $bAnyNewEntity = false;
         foreach ($aEntities as $sEntityType => $entityInfo)
         {
+
+            output($sEntityType, $entityInfo);
+            echo '========================================';
+
             // parse
             $nPropertyCount = count($entityInfo->properties);
             for ($i = 0; $i < $nPropertyCount; $i++)
@@ -156,8 +163,67 @@ class MimotoAimlessController
                 // compose
                 $sValueKey = $entityInfo->entityType.'.'.$entityInfo->entityId.'.'.$sPropertyName;
 
-                // update
-                $entityInfo->entity->setValue($sPropertyName, $aRequestValues->$sValueKey);
+
+                // read
+                $sPropertyType = $entityInfo->entity->getPropertyType($sPropertyName);
+
+                switch($sPropertyType)
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                        echo 'PROPERTY_TYPE_VALUE';
+                        output($sPropertyName, $aRequestValues->$sValueKey);
+
+                        // update
+                        $entityInfo->entity->setValue($sPropertyName, $aRequestValues->$sValueKey);
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                        echo 'PROPERTY_TYPE_VALUE';
+                        output($sPropertyName, $aRequestValues->$sValueKey);
+
+                        // load
+                        $nChildType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($aRequestValues->$sValueKey);
+                        $nChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($aRequestValues->$sValueKey);
+
+
+                        $nParentEntityTypeId = $entityInfo->entity->getEntityTypeId();
+                        $nParentPropertyId = $GLOBALS['Mimoto.Config']->getPropertyIdByName($sPropertyName);
+
+                        //echo $nInstanceId;
+
+                        // init
+                        $connection = new MimotoEntityConnection();
+
+                        // compose
+                        $connection->setParentEntityTypeId($nParentEntityTypeId);
+                        $connection->setParentPropertyId($nParentPropertyId);
+                        //$connection->setParentId(5);
+                        $connection->setChildEntityTypeId($nChildType);
+                        $connection->setChildId($nChildId);
+
+                        output('Entity current value', $entityInfo->entity->getValue($sPropertyName), true);
+
+                        // store
+                        $entityInfo->entity->setValue($sPropertyName, $connection);
+
+
+                        output('Entity current value', $entityInfo->entity, true);
+
+
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                        echo '$aRequestValues->$sValueKey = '.$aRequestValues->$sValueKey."\n";
+
+                        break;
+
+                    default:
+
+                        // 1. log error
+                }
             }
 
 
@@ -165,7 +231,7 @@ class MimotoAimlessController
             $bIsNew = (empty($entityInfo->entity->getId())) ? true : false;
 
             // store
-            $app['Mimoto.Data']->store($entityInfo->entity);
+            //$app['Mimoto.Data']->store($entityInfo->entity);
 
 
             // compose response

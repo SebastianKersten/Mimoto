@@ -1,10 +1,10 @@
 <div class="example_subproject" {{ Aimless.realtime()|raw }}>
-    <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br>
+    <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.render('name') }}</span></b><br>
     {% if Aimless.data('contact') is not empty %}
-        <span {{ Aimless.realtime('contact.name')|raw }}>{{ Aimless.data('contact.name') }}</span>&nbsp;|&nbsp;
-        <span {{ Aimless.realtime('contact.email')|raw }}>{{ Aimless.data('contact.email') }}</span>&nbsp;|&nbsp;
-        <span {{ Aimless.realtime('contact.phoneNumber')|raw }}>{{ Aimless.data('contact.phoneNumber') }}</span>&nbsp;<br>
+        <span {{ Aimless.realtime('contact.name')|raw }}>{{ Aimless.render('contact.name') }}</span>&nbsp;|&nbsp;
+        <span {{ Aimless.realtime('contact.email')|raw }}>{{ Aimless.render('contact.email') }}</span>&nbsp;|&nbsp;
+        <span {{ Aimless.realtime('contact.phoneNumber')|raw }}>{{ Aimless.render('contact.phoneNumber') }}</span>&nbsp;<br>
     {% endif %}
-    <span {{ Aimless.realtime('phase')|raw }}>{{ Aimless.data('phase') }}</span></b> |
-    <span {{ Aimless.realtime('state')|raw }}>{{ Aimless.data('state') }}</span></b>
+    <span {{ Aimless.realtime('phase')|raw }}>{{ Aimless.render('phase') }}</span></b> |
+    <span {{ Aimless.realtime('state')|raw }}>{{ Aimless.render('state') }}</span></b>
 </div>

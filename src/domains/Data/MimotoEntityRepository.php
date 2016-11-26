@@ -76,7 +76,7 @@ class MimotoEntityRepository
     public function get(MimotoEntityConfig $entityConfig, $nEntityId)
     {
         // validate
-        if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
+        //if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
 
         // load
         $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');

@@ -307,10 +307,10 @@ class ExampleController
         // load
         $project = $app['Mimoto.Data']->get('project', 3);
         $subproject = $app['Mimoto.Data']->get('subproject', 5);
-        
+
         // setup
         $project->addValue('subprojects', $subproject);
-        
+
         // store
         $app['Mimoto.Data']->store($project);
 

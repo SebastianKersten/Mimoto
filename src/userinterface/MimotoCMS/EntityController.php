@@ -347,12 +347,12 @@ class EntityController
 
                 switch($sKey)
                 {
-                    case MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE:
+                    case MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
                         $entityStructure->entityNames[$value] = $GLOBALS['Mimoto.Config']->getEntityNameById($value);
                         break;
 
-                    case MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES:
+                    case MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
 
                         // convert
                         $aAllowedEntityTypes = (!empty($value)) ? $value : [];

@@ -76,6 +76,10 @@ class AimlessInput extends AimlessComponent
             // register
             $fieldValueOption = $aFieldValueOptions[$i];
 
+            //echo $sOptionType = $fieldValueOption->getEntityTypeName();
+
+            //output('$fieldValueOption', $fieldValueOption);
+
             // compose
             $option = (object) array(
                 'key' => $fieldValueOption->getValue('key'),

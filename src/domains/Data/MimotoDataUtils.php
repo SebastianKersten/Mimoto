@@ -6,6 +6,7 @@ namespace Mimoto\Data;
 // Mimoto classes
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityConnection;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
@@ -32,7 +33,7 @@ class MimotoDataUtils
         return preg_match("/^[a-zA-Z-_][a-zA-Z0-9-_]*(\.[a-zA-Z-_][a-zA-Z0-9_-]*)*$/", $sPropertyName);
         //return preg_match("/^[a-zA-Z][a-zA-Z0-9-_]*(\.[a-zA-Z][a-zA-Z0-9_-]*)*$/", $sPropertyName);
     }
-    
+
     public static function validatePropertySelector($sPropertySelector)
     {
         // 1. Toegestaan: a-zA-Z0-9._[]{}*=
@@ -55,17 +56,43 @@ class MimotoDataUtils
 
         return (preg_match("/^[a-zA-Z0-9_-]*?$/", $value)) ? true : false;
     }
+
+    /**
+     * Get value type
+     * @param $xValue Mixed value
+     * @return null|string
+     */
+    public static function getValueType($xValue)
+    {
+        // 1. check if value is a connection
+        if ($xValue instanceof MimotoEntityConnection) return MimotoEntityPropertyValueTypes::VALUETYPE_CONNECTION;
+
+        // 2. check if value is an entity
+        if (MimotoDataUtils::isEntity($xValue)) return MimotoEntityPropertyValueTypes::VALUETYPE_ENTITY;
+
+        // 3. check if value is a valid entity
+        if (MimotoDataUtils::isValidEntityId($xValue)) return MimotoEntityPropertyValueTypes::VALUETYPE_ID;
+
+        // 4. check if value is empty
+        if (empty($xValue)) return MimotoEntityPropertyValueTypes::VALUETYPE_EMPTY;
+
+        // 5. no known type found
+        return null;
+    }
     
     public static function hasExpression($sPropertySelector)
     {
         return (preg_match("/^{[a-zA-Z0-9=\"']*?}$/", $sPropertySelector));
     }
     
-    public static function getConditionals($sPropertySelector)
+    public static function getConditionalsAndSubselector($sPropertySelector)
     {
         // init
-        $aConditionals = [];
-        
+        $selector = (object) array(
+            'conditionals' => [],
+            'subpropertyselector' => null
+        );
+
         // verify
         if (MimotoDataUtils::hasExpression($sPropertySelector))
         {
@@ -76,8 +103,7 @@ class MimotoDataUtils
             // register
             $sExpression = substr($sPropertySelector, 1, strlen($sPropertySelector) - 2);
             $aExpressionElements = explode('=', $sExpression);
-            
-            
+
             // update
             $sExpressionKey = trim($aExpressionElements[0]);
             $sExpressionValue = trim($aExpressionElements[1]);
@@ -93,11 +119,11 @@ class MimotoDataUtils
             }
             
             // store
-            $aConditionals[$sExpressionKey] = $sExpressionValue;
+            $selector->conditionals[$sExpressionKey] = $sExpressionValue;
         }
         
         // send
-        return $aConditionals;
+        return $selector;
     }
 
 
@@ -115,4 +141,145 @@ class MimotoDataUtils
         ) ? true : false;
     }
 
+    /**
+     * Get entity type from entityInstance-selector
+     * @param $Selector
+     * @return string
+     */
+    public static function getEntityTypeFromEntityInstanceSelector($Selector)
+    {
+        // split
+        $aParts = explode('.', $Selector);
+
+        // send
+        return $aParts[0];
+    }
+
+    /**
+     * Get entity id from entityInstance-selector
+     * @param $Selector
+     * @return string
+     */
+    public static function getEntityIdFromEntityInstanceSelector($Selector)
+    {
+        // split
+        $aParts = explode('.', $Selector);
+
+        // send
+        return $aParts[1];
+    }
+
+    /**
+     * Create connection
+     * @param mixed $xValue
+     * @param mixed $xParentEntityTypeId
+     * @param mixed $xParentPropertyId
+     * @param int $nParentId
+     * @param array $aAllowedPropertyTypes
+     * @param string $sPropertyName For purpose of error messages
+     * @return MimotoEntityConnection|null
+     */
+    public static function createConnection($xValue, $xParentEntityTypeId, $xParentPropertyId, $nParentId, $aAllowedPropertyTypes, $xEntityTypeId, $sPropertyName)
+    {
+        // init
+        $connection = null;
+
+        // determine
+        $sValueType = MimotoDataUtils::getValueType($xValue);
+
+        // toggle
+        switch($sValueType)
+        {
+            case MimotoEntityPropertyValueTypes::VALUETYPE_CONNECTION:
+            case MimotoEntityPropertyValueTypes::VALUETYPE_ENTITY:
+            case MimotoEntityPropertyValueTypes::VALUETYPE_ID:
+
+                switch ($sValueType)
+                {
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_CONNECTION:
+
+                        // inherit
+                        $connection = $xValue;
+
+                        // compose
+                        $connection->setChildEntityTypeId($xValue->getChildEntityTypeId());
+                        $connection->setChildId($xValue->getChildId());
+                        break;
+
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_ENTITY:
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_ID:
+
+                        // 2. initialize new connection
+                        $connection = new MimotoEntityConnection();
+                        $connection->setParentEntityTypeId($xParentEntityTypeId);
+                        $connection->setParentPropertyId($xParentPropertyId);
+                        $connection->setParentId($nParentId);
+
+                        switch ($sValueType)
+                        {
+                            case MimotoEntityPropertyValueTypes::VALUETYPE_ENTITY:
+
+                                // compose
+                                $connection->setChildEntityTypeId($xValue->getEntityTypeId());
+                                $connection->setChildId($xValue->getId());
+                                $connection->setEntity($xValue);
+                                break;
+
+                            case MimotoEntityPropertyValueTypes::VALUETYPE_ID:
+
+                                // compose
+                                $connection->setChildEntityTypeId($xEntityTypeId);
+                                $connection->setChildId($xValue);
+                                break;
+                        }
+
+                        break;
+                }
+
+                // validate config
+                if (count($aAllowedPropertyTypes) == 0)
+                {
+                    $GLOBALS['Mimoto.Log']->silent("Missing configuration of allowed property types", "Please define which value types are allowed to connect to property '".$sPropertyName."'");
+                    $connection = null;
+                    break;
+                }
+
+                // validate childEntityType
+                if (!in_array($connection->getChildEntityTypeId(), $aAllowedPropertyTypes)) $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property ".$sPropertyName." only allows '".implode($aAllowedPropertyTypes)."'", true);
+
+                // validate childId
+                if (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId())) $GLOBALS['Mimoto.Log']->error("Incorrect value", "Please set a child id for the connection you are trying to set for property " . $sPropertyName, true);
+
+                break;
+
+            default:
+
+                $GLOBALS['Mimoto.Log']->silent("You are trying to set an incorrect value", "The property ".$sPropertyName." only allows values of type '".implode($aAllowedPropertyTypes)."'", true);
+                break;
+        }
+
+        // send
+        return $connection;
+    }
+
+    /**
+     * Flatten allowedEntityTypes
+     * @param $aAllowedEntityTypes
+     * @return array Single array with the id's of the entities
+     */
+    public static function flattenAllowedEntityTypes($aAllowedEntityTypes)
+    {
+        // 1. init
+        $aFlattenedAllowedEntityTypes = [];
+
+        // 2. flatten
+        $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
+        for ($nAllowedEntityTypeIndex = 0; $nAllowedEntityTypeIndex < $nAllowedEntityTypeCount; $nAllowedEntityTypeIndex++)
+        {
+            $aFlattenedAllowedEntityTypes[] = $aAllowedEntityTypes[$nAllowedEntityTypeIndex]->id;
+        }
+
+        // 3. send
+        return $aFlattenedAllowedEntityTypes;
+    }
 }

@@ -11,17 +11,15 @@
     <br>
     <div class="example_project" {{ Aimless.realtime()|raw }}>
 
-        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
+        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.render('name') }}</span></b>
 
-        {% if Aimless.data('projectManager') is not empty %}
-            &nbsp;-&nbsp;<i>Project manager = <span {{ Aimless.realtime('projectManager')|raw }}>{{ Aimless.data('projectManager')|raw }}</span></i>
-        {% endif %}
+        <span {{ Aimless.realtime('projectManager')|raw }}>{{ Aimless.render('projectManager')|raw }}</span>
 
         <br><br>
-        <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }}</div>
+        <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.render('description') }}</div>
         <br>
         <div class="example_project_subprojects" {{ Aimless.realtime('subprojects')|raw }}>
-            {{ Aimless.data('subprojects')|raw }}
+            {{ Aimless.render('subprojects')|raw }}
         </div>
     </div>
 {% endblock %}

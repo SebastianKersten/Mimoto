@@ -1,0 +1,10 @@
+{
+    "trigger": "_MimotoAimless__devtools__notification.created",
+    "service": "Aimless",
+    "request": "sendSlackNotification",
+    "type": "async",
+    "config":
+    {
+        "channel": "mimoto_notifications"
+    }
+}

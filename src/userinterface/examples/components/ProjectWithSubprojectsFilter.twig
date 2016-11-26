@@ -6,23 +6,23 @@
     <br>
     <br>
     <div class="example_project" {{ Aimless.realtime()|raw }}>
-        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b>
-        <i><span {{ Aimless.realtime('client.name')|raw }}>{{ Aimless.data('client.name') }}</span></i><br><br>
-        <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.data('description') }} <i>[last modified by {{ author }}]</i></div>
+        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.render('name') }}</span></b>
+        <i><span {{ Aimless.realtime('client.name')|raw }}>{{ Aimless.render('client.name') }}</span></i><br><br>
+        <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.render('description') }} <i>[last modified by {{ author }}]</i></div>
         <br>
         Requests:
         <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="request"}')|raw }}>
-            {{ Aimless.data('subprojects.{phase="request"}')|raw }}
+            {{ Aimless.render('subprojects.{phase="request"}')|raw }}
         </div>
         <br>
         Current projects:
         <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="currentproject"}')|raw }}>
-            {{ Aimless.data('subprojects.{phase="currentproject"}')|raw }}
+            {{ Aimless.render('subprojects.{phase="currentproject"}')|raw }}
         </div>
         <br>
         Archived:
         <div class="example_project_subprojects" {{ Aimless.realtime('subprojects.{phase="archived"}')|raw }}>
-            {{ Aimless.data('subprojects.{phase="archived"}')|raw }}
+            {{ Aimless.render('subprojects.{phase="archived"}')|raw }}
         </div>
     </div>
 {% endblock %}

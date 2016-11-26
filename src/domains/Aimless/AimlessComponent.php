@@ -67,7 +67,7 @@ class AimlessComponent
         // register
         $this->_sComponentName = $sComponentName;
         $this->_entity = $entity;
-        
+
         // register
         $this->_AimlessService = $AimlessService;
         $this->_DataService = $DataService;
@@ -157,7 +157,7 @@ class AimlessComponent
     // --- Twig usage
 
 
-    public function data($sPropertySelector, $bGetStorableValue = false, $bRenderData = false, $sComponentName = null)
+    public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null)
     {
         // validate
         if (empty($this->_entity)) error("AimlessComponent says: The entity is not set. Please supply one.");
@@ -169,6 +169,11 @@ class AimlessComponent
         $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, 0, $nSeperatorPos) : $sPropertySelector;
         $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, $nSeperatorPos + 1) : '';
 
+
+        //$property = $this->getProperty($sPropertySelector);
+        //$sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
+
+
         // read and send
         if (!$bRenderData)
         {
@@ -176,7 +181,7 @@ class AimlessComponent
             // #todo - in geval van getStructure (connections -> anders oppakken
             // #todo - connections in ViewModel gooien
 
-            return $this->_entity->getValue($sMainPropertyName, $bGetStorableValue);
+            return $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
         }
 
         // render
@@ -185,82 +190,116 @@ class AimlessComponent
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
                 // read, render and send
-                return $this->renderValueProperty($this->_entity->getValue($sMainPropertyName), $sMainPropertyName);
+                return $this->renderValueProperty($sMainPropertyName);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                 // read, render and send
-                return $this->renderEntityProperty($this->_entity->getValue($sMainPropertyName), $sMainPropertyName, $sSubPropertyName, $sComponentName);
+                return $this->renderEntityProperty($sPropertySelector, $sComponentName);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                 // read, render and send
-                return $this->renderCollectionProperty($this->_entity->getValue($sMainPropertyName), $sMainPropertyName, $sComponentName);
+                return $this->renderCollectionProperty($sPropertySelector, $sComponentName);
                 break;
         }
     }
 
-    private function renderValueProperty($value, $sPropertyName)
+    /**
+     * Render value property
+     * @param $sPropertyName
+     * @return mixed
+     */
+    private function renderValueProperty($sPropertyName)
     {
-        // format
+        // 1. read
+        $value = $this->_entity->getValue($sPropertyName);
+
+        // 2. format
         if (isset($this->_aPropertyFormatters[$sPropertyName]))
         {
+            // register
             $fDelegate = $this->_aPropertyFormatters[$sPropertyName]->delegate;
 
+            // execute
             $value = $fDelegate($value);
         }
 
-        // send
+        // 3. send
         return $value;
     }
 
-    private function renderEntityProperty($entity, $sPropertyName, $sSubpropertySelector, $sComponentName = null)
+    /**
+     * Render entity property
+     * @param string $sPropertySelector
+     * @param string $sComponentName
+     * @return mixed|string Either a rendered component or a value
+     */
+    private function renderEntityProperty($sPropertySelector, $sComponentName = null)
     {
-        // validate
-        if (empty($entity)) return;
+        // 1. read
+        $xValue = $this->_entity->getValue($sPropertySelector);
 
-        if (!empty($sComponentName) || isset($this->_aPropertyComponents[$sPropertyName]) && empty($sSubpropertySelector))
+        // 2. output if no entity connected or entity's subproperty is empty
+        if (empty($xValue)) return '';
+
+        // 3. output if entity's subproperty is a value
+        if (!MimotoDataUtils::isEntity($xValue)) return $xValue;
+
+        // 4. determine
+        $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertySelector]->sComponentName;
+
+        // 5. verify
+        if (empty($sComponentName))
         {
-            // get te component file
-            $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
-
-            // create
-            $component = $this->_AimlessService->createComponent($sComponentName, $entity);
-
-            // render and send
-            return $component->render();
+            $GLOBALS['Mimoto.Log']->error("Rendering an entity with a component", "The property <b>$sPropertySelector</b> you are trying to render doens't have a component connected to it.");
+            return '';
         }
-        elseif (!empty($sSubpropertySelector))
-        {
-            return $entity->getValue($sSubpropertySelector);
-        }
+
+        // 6. create component
+        $component = $this->_AimlessService->createComponent($sComponentName, $xValue);
+
+        // 7. render and send
+        return $component->render();
     }
 
-    private function renderCollectionProperty($aCollection, $sPropertyName, $sComponentName = null)
+    /**
+     * Render collection property
+     * @param string $sPropertySelector
+     * @param string $sComponentName
+     * @return mixed|string Either a rendered component or a value
+     */
+    private function renderCollectionProperty($sPropertySelector, $sComponentName = null)
     {
-        $aConnections = null;
-        //$aConnections = $this->_entity->getValue($sPropertyName); // #todo - kan niet, filter check wordt gedaan ná ophalen data en op basis van de data
 
-        // validate
-        if (empty($sComponentName) && !isset($this->_aPropertyComponents[$sPropertyName]))
-        {
-            // #todo - silent fail
+        // #todo - double code om $this->_aPropertyComponents[$sMainPropertyName] te laten werken
+        // #todo
+        // 1. rewrite to function: get propertyname from selector
 
-            return "Aimless says: No component set for property '$sPropertyName'. Use AimlessComponent->setPropertyComponent()";
+        // find
+        $nSeperatorPos = strpos($sPropertySelector, '.');
 
-            // 1. broadcast webevent for debugging purposes
-            // 2. standaard report error (error level)
-        }
-        else
-        {
-            // get te component file
-            $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
-        }
+        // separate
+        $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, 0, $nSeperatorPos) : $sPropertySelector;
+        $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, $nSeperatorPos + 1) : '';
 
-        // render and send
-        return $this->renderCollection($aCollection, $aConnections, $sComponentName);
+        // #todo - end
+
+
+
+        // 1. read
+        $xValue = $this->_entity->getValue($sPropertySelector);
+
+        // 2. output if collection is empty or entity's subproperty is empty
+        if (empty($xValue) || !is_array($xValue)) return '';
+
+        // 3. determine
+        $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sMainPropertyName]->sComponentName;
+
+        // 4. render and send
+        return $this->renderCollection($xValue, null, $sComponentName);
 
     }
 
@@ -287,10 +326,10 @@ class AimlessComponent
             $sPropertyName = ($nSeparatorPos !== false) ? substr($sPropertySelector, 0, $nSeparatorPos) :  $sPropertySelector;
             
             $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
-            $aConditionals = MimotoDataUtils::getConditionals($sSubpropertySelector);
+            $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);
 
             // compose
-            $sFilter = (!empty($aConditionals)) ? " mls_filter='".json_encode($aConditionals)."'" : '';
+            $sFilter = (!empty($selector->conditionals)) ? " mls_filter='".json_encode($selector->conditionals)."'" : '';
 
             if (!empty($this->_entity) && $this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
@@ -501,7 +540,7 @@ class AimlessComponent
             $fieldValue = $field->getValue('value');
             $aFieldValueOptions = $fieldValue->getValue('options', true);
 
-            error($aFieldValueOptions);
+            //error($aFieldValueOptions);
         }
 
         // create and send

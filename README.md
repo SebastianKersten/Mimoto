@@ -18,6 +18,10 @@ https://docs.google.com/document/d/1gQeynyg3Yt-x7OT8Zl4_k40ePzvpf3LInOwLm5uTxdM
 
 > Ask for viewing permission! (expectation management: not nearly close to being finished)
 
+## Features
+
+Mimoto is typecasted
+
 
 ## Projects in development
 

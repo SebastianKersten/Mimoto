@@ -38,9 +38,9 @@ class AimlessComponentViewModel
     // ----------------------------------------------------------------------------
 
 
-    public function data($sPropertySelector, $bGetStructure = false)
+    public function data($sPropertySelector, $bGetConnectionInfo = false)
     {
-        return $this->_component->data($sPropertySelector, $bGetStructure);
+        return $this->_component->data($sPropertySelector, $bGetConnectionInfo);
     }
 
     public function render($sPropertySelector, $sComponentName = null)

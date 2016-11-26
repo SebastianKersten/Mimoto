@@ -13,10 +13,8 @@
     </ul>
     <br>
     <div class="example_project" {{ Aimless.realtime()|raw }}>
-        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b><br><br>
+        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.render('name') }}</span></b><br><br>
         <br>
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects')|raw }}>
-            {{ Aimless.data('subprojects')|raw }}
-        </div>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects')|raw }}>{{ Aimless.render('subprojects')|raw }}</div>
     </div>
 {% endblock %}

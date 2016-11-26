@@ -27,7 +27,7 @@ class EntityForm
         $form->addValue('fields', self::getField_title('Add new entity'));
         $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_name());
-        //$form->addValue('fields', self::getField_extends());
+        $form->addValue('fields', self::getField_extends());
         $form->addValue('fields', self::getField_isAbstract());
         $form->addValue('fields', self::getField_groupEnd());
 
@@ -193,7 +193,7 @@ class EntityForm
 
             $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
             $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--extends_value_options-valuesettings-collection-'.$entity->getId());
-            $option->setValue('key', $entity->getId());
+            $option->setValue('key', $entity->getEntityTypeName().'.'.$entity->getId());
             $option->setValue('value', $entity->getValue('name'));
             $value->addValue('options', $option);
         }

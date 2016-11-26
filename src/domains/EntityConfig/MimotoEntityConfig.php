@@ -57,10 +57,11 @@ class MimotoEntityConfig
     const PROPERTY_VALUE_MYSQL_COLUMN           = 'property_value_mysql_column';
     const PROPERTY_VALUE_MYSQLCONNECTION_TABLE  = 'property_value_mysql_connection_table';
 
-    // special option keys
-    const OPTION_ENTITY_ALLOWEDENTITYTYPE       = 'allowedEntityType';
-    const OPTION_COLLECTION_ALLOWEDENTITYTYPES  = 'allowedEntityTypes';
-    const OPTION_COLLECTION_ALLOWDUPLICATES     = 'allowDuplicates';
+    // property settings keys
+    const SETTING_VALUE_TYPE                    = 'type';
+    const SETTING_ENTITY_ALLOWEDENTITYTYPE      = 'allowedEntityType';
+    const SETTING_COLLECTION_ALLOWEDENTITYTYPES = 'allowedEntityTypes';
+    const SETTING_COLLECTION_ALLOWDUPLICATES    = 'allowDuplicates';
 
 
 
@@ -154,13 +155,16 @@ class MimotoEntityConfig
      * Set value as property
      * @param string $sPropertyName The property's name
      */
-    public function setValueAsProperty($sPropertyName, $nPropertyId)
+    public function setValueAsProperty($sPropertyName, $nPropertyId, $settings)
     {
         // compose
         $property = (object) array(
             'name' => $sPropertyName,
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
             'id' => $nPropertyId,
+            'settings' => (object) array(
+                MimotoEntityConfig::SETTING_VALUE_TYPE => $settings[MimotoEntityConfig::SETTING_VALUE_TYPE]
+            )
         );
         
         // store
@@ -180,7 +184,7 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE => $settings[MimotoEntityConfig::OPTION_ENTITY_ALLOWEDENTITYTYPE]->value
+                MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => $settings[MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value
             )
         );
         
@@ -201,8 +205,8 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES => $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWEDENTITYTYPES]->value,
-                MimotoEntityConfig::OPTION_COLLECTION_ALLOWDUPLICATES => $settings[MimotoEntityConfig::OPTION_COLLECTION_ALLOWDUPLICATES]
+                MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES => $settings[MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES]->value,
+                MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES => $settings[MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]
             )
         );
 

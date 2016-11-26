@@ -233,7 +233,11 @@ class MimotoAimlessService
                 
                 $this->dataCreate($data, $config);
                 break;
-            
+
+            case 'sendSlackNotification':
+
+                $this->sendSlackNotification($data, $config);
+                break;
             
             default:
                 
@@ -561,5 +565,26 @@ class MimotoAimlessService
             'data' => $data
         )));
     }
-    
+
+    /**
+     * Send Pusher event - #todo - async
+     * @param type $sChannel
+     * @param type $sEvent
+     * @param type $data
+     */
+    private function sendSlackNotification($entity, $config)
+    {
+        // init
+        $client= new \GearmanClient();
+
+        // setup
+        $client->addServer();
+
+        // $result =
+        // execute
+        $client->doBackground("sendSlackNotification", json_encode(array(
+            'channel' => $config->channel,
+            'message' => $entity->getValue('title')."\n".$entity->getValue('message')
+        )));
+    }
 }

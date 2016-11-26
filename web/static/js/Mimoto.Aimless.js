@@ -223,8 +223,7 @@ Mimoto.Aimless.connect = function()
             });
         }
 
-
-
+        
 
         /**
          * Remove any items within a selection that aren't supposed to be shown anymore
@@ -311,12 +310,12 @@ Mimoto.Aimless.connect = function()
                 // collection
                 if (change.changes) continue;
 
-
+                
                 if (!bHasOrigin)
                 {
                     if (mls_form_field_input === (sEntityIdentifier + '.' + change.propertyName))
                     {
-                        Mimoto.form.setInputFieldValue($component, value);
+                        Mimoto.form._setInputFieldValue($component, change.value);
                     }
                 }
             }

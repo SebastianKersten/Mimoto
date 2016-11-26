@@ -319,6 +319,11 @@ module.exports.prototype = {
                         value = $($component).val();
                     }
                     break;
+                
+                case 'checkbox':
+                    
+                    value = $($component).prop("checked");
+                    break;
 
                 default:
 
@@ -349,11 +354,20 @@ module.exports.prototype = {
                         $($component).prop('checked', $($component).val() == change.value);
                     });
                     break;
-
+    
+                case 'checkbox':
+        
+                    // output
+                    $($component).each( function(nIndex, $component)
+                    {
+                        $($component).prop('checked', $($component).val() == change.value);
+                    });
+                    break;
+                
                 default:
 
                     // output
-                    $($component).val(change.value);
+                    $($component).val(value);
             }
         };
     },

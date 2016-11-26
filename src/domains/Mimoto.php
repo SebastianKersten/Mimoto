@@ -109,4 +109,5 @@ class Mimoto
 //        $app->get('/mimoto.cms/content/{nId}', 'Mimoto\\UserInterface\\ContentController::getContent');
 
     }
+
 }
