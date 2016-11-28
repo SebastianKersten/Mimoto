@@ -28,20 +28,20 @@ class MimotoAimlessController
 {
     
     /**
-     * Get view based on entity type and entity id and formatted by template id
+     * Get view based on entity type and entity id and formatted by component id
      * @param Application $app
      * @param string $sEntityType
      * @param int $nEntityId
-     * @param string $sTemplateId
+     * @param string $sComponentId
      * @return html Rendered twig template
      */
-    public function renderEntityView(Application $app, $sEntityType, $nEntityId, $sTemplateId)
+    public function renderEntityView(Application $app, $sEntityType, $nEntityId, $sComponentId)
     {
         // load
         $entity = $app['Mimoto.Data']->get($sEntityType, $nEntityId);
         
         // create
-        $component = $app['Mimoto.Aimless']->createComponent($sTemplateId, $entity);
+        $component = $app['Mimoto.Aimless']->createComponent($sComponentId, $entity);
         
         // render and send
         return $component->render();

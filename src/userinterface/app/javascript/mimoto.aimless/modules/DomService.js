@@ -42,131 +42,19 @@ module.exports.prototype = {
      */
     onDataChanged: function(data)
     {
+        // console.log('Aimless - data.changed');
+        // console.log(data);
+        
+        
         // compose
         var sEntityIdentifier = data.entityType + '.' + data.entityId;
         
         // update
-        this._changeValues(sEntityIdentifier, data.changes);
-        this._updateCollections(sEntityIdentifier, data.changes);
-        this._cleanupCollections(data.entityType, data.entityId, data.changes);
-        
-        
-    
-    
-    
-        // input fields
-    
-        // search
-        var aValues = $("[mls_form_field_input]");
-    
-        aValues.each( function(nIndex, $component)
-        {
-            // read
-            var mls_form_field_input = $($component).attr("mls_form_field_input");
-        
-            // determine
-            var nOriginPos = mls_form_field_input.indexOf('[');
-            var bHasOrigin = (nOriginPos !== -1) ;
-        
-            // verify
-            if (bHasOrigin)
-            {
-                var mls_value_origin = mls_form_field_input.substr(nOriginPos + 1, mls_form_field_input.length - nOriginPos - 2);
-                var mls_form_field_input = mls_form_field_input.substr(0, nOriginPos);
-            }
-        
-        
-            // parse modified values
-            for (var i = 0; i < data.changes.length; i++)
-            {
-                // register
-                var change = data.changes[i];
-            
-                // collection
-                if (change.changes) continue;
-            
-            
-                if (!bHasOrigin)
-                {
-                    if (mls_form_field_input === (sEntityIdentifier + '.' + change.propertyName))
-                    {
-                        Mimoto.form._setInputFieldValue($component, change.value);
-                    }
-                }
-            }
-        });
-    
-    
-        // --- mls_count (onUpdate)---
-    
-    
-        // search
-        var aComponents = $("[mls_count='" + data.entityType + "']");
-    
-        aComponents.each( function(index, $component)
-        {
-        
-            var mls_filter = $($component).attr("mls_filter");
-        
-            if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
-        
-        
-            // parse modified values
-            for (var i = 0; i < data.changes.length; i++)
-            {
-                // register
-                var change = data.changes[i];
-            
-                var bFilterApproved = true;
-                if (mls_filter)
-                {
-                    for (var s in mls_filter)
-                    {
-                        if (mls_filter[s] && change.value != mls_filter[s]) {
-                            bFilterApproved = false;
-                            break;
-                        }
-                    }
-                }
-            
-                // load
-                if (!bFilterApproved)
-                {
-                    var mls_config = $($component).attr("mls_config");
-                
-                    if (mls_config) { mls_config = $.parseJSON(mls_config); }
-                
-                
-                    // read
-                    var nCurrentCount = parseInt($($component).text());
-                
-                    // update
-                    nCurrentCount = Math.max(0, nCurrentCount - 1);
-                
-                    // output
-                    $($component).text(nCurrentCount);
-                
-                
-                    if (mls_config.toggleClasses)
-                    {
-                        for (var sKey in mls_config.toggleClasses)
-                        {
-                            if (sKey == 'onZero' && nCurrentCount == 0)
-                            {
-                                $($component).addClass(mls_config.toggleClasses[sKey]);
-                            }
-                            else
-                            {
-                                $($component).removeClass(mls_config.toggleClasses[sKey]);
-                            }
-                        }
-                    }
-                }
-            
-            }
-        
-        });
-
+        module.exports.prototype._changeValues(sEntityIdentifier, data.changes);
+        module.exports.prototype._updateCollections(data.entityType, data.entityId, data.changes, data.connections);
+        module.exports.prototype._updateSelections(data.entityType, data.entityId, data.changes);
+        module.exports.prototype._updateInputFields(data.changes);
+        module.exports.prototype._updateCounters(data.entityType, data.changes);
     },
     
     /**
@@ -177,11 +65,13 @@ module.exports.prototype = {
         // setup
         var mls_container = data.entityType;
     
-    
+        // register
+        var classRoot = this;
+        
         //console.clear();
     
-        console.log('Aimless - data.create');
-        console.log(data);
+        // console.log('Aimless - data.create');
+        // console.log(data);
     
     
         // --- component level ---
@@ -192,7 +82,7 @@ module.exports.prototype = {
         aComponents.each( function(index, $component)
         {
             // read
-            var mls_component = $($component).attr("mls_component");
+            var mls_component = classRoot._getComponentName($($component).attr("mls_component"));
             var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
         
             // verify
@@ -200,7 +90,7 @@ module.exports.prototype = {
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component,
+                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component.name,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -219,15 +109,15 @@ module.exports.prototype = {
         aComponents.each( function(index, $component)
         {
             // read
-            var mls_component = $($component).attr("mls_component");
+            var mls_component = classRoot._getComponentName($($component).attr("mls_component"));
             var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
         
             // verify
-            if (mls_component !== undefined)
+            if (mls_component.name !== undefined)
             {
                 $.ajax({
                     type: 'GET',
-                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component,
+                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component.name,
                     data: null,
                     dataType: 'html',
                     success: function (data) {
@@ -319,9 +209,6 @@ module.exports.prototype = {
     _changeValues: function (sEntityIdentifier, changes)
     {
     
-        console.log('Aimless - data.changed');
-        console.log(data);
-        
         // skip if no changes
         if (!changes) return;
         
@@ -424,29 +311,45 @@ module.exports.prototype = {
         });
     },
     
-    _updateCollections: function (sEntityIdentifier, changes)
+    /**
+     * Update collections
+     * @param string sEntityIdentifier
+     * @param aray changes
+     * @private
+     */
+    _updateCollections: function (sEntityType, nEntityId, aChanges, aConnections)
     {
+        //console.warn(aChanges);
+        //console.warn(aConnections);
+    
+        // register
+        var classRoot = this;
+        
+        
+        // compose
+        var sEntityIdentifier = sEntityType + '.' + nEntityId;
+        
         // parse modified values
-        for (var i = 0; i < changes.length; i++)
+        for (var i = 0; i < aChanges.length; i++)
         {
             // register
-            var change = changes[i];
-        
+            var change = aChanges[i];
+            
             // collection
             if (!change.collection) continue;
-        
-        
-        
+            
+            // collect
             var aContainers = $("[mls_contains='" + sEntityIdentifier + "." + change.propertyName + "']");
         
         
-            aContainers.each(function(nIndex, $component)
+            aContainers.each(function(nIndex, $container)
             {
                 // read
-                var mls_contains = $($component).attr("mls_contains");
-                var mls_component = $($component).attr("mls_component");
-                var mls_filter = $($component).attr("mls_filter");
-            
+                var mls_contains = $($container).attr("mls_contains");
+                var mls_component = classRoot._getComponentName($($container).attr("mls_component"));
+                var mls_filter = $($container).attr("mls_filter");
+                
+                
                 if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
             
             
@@ -468,11 +371,14 @@ module.exports.prototype = {
                                 }
                             }
                         }
-                    
+                        
                         // 1. #todo check if the component is already there (and duplicate items are allowed OR connection-id's
                     
                         // load
-                        if (bFilterApproved) Mimoto.Aimless.utils.loadComponent($component, item.connection.childEntityTypeName, item.connection.childId, mls_component);
+                        if (bFilterApproved)
+                        {
+                            Mimoto.Aimless.utils.loadComponent($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
+                        }
                     }
                 }
             
@@ -485,25 +391,138 @@ module.exports.prototype = {
                         var item = change.collection.removed[iRemoved];
                     
                         // find
-                        var $item = $("[mls_id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $component);
+                        var $item = $("[mls_id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $container);
                     
                         // delete
                         $item.remove();
                     }
                 }
             
-            
             });
+        }
+    
+    
+        // --- Parse modified values ---
+        
+        
+        // verify
+        if (aConnections)
+        {
+            var nConnectionCount = aConnections.length;
+            for (var nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
+            {
+                // register
+                var connection = aConnections[nConnectionIndex];
+
+                // search
+                var aContainers = $("[mls_contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
+                
+                
+                aContainers.each(function(nIndex, $container)
+                {
+                    // read
+                    var mls_contains = $($container).attr("mls_contains");
+                    var mls_component = classRoot._getComponentName($($container).attr("mls_component"));
+                    var mls_filter = $($container).attr("mls_filter");
+                    
+                    
+                    
+                    if (mls_filter)
+                    {
+                        mls_filter = $.parseJSON(mls_filter);
+                        
+                        var bFilterApproved = true;
+                        if (mls_filter) {
+                            for (var s in mls_filter) {
+                                var bPropertyFound = false;
+                                for (var j = 0; j < aChanges.length; j++) {
+                                    // register
+                                    var property = aChanges[j];
+                
+                                    if (property.propertyName == s) {
+                                        bPropertyFound = true;
+                                        break;
+                                    }
+                                }
+            
+                                if (!(bPropertyFound && property.value == mls_filter[s])) {
+                                    bFilterApproved = false;
+                                    break;
+                                }
+                            }
+                        }
+    
+                        // load
+                        if (bFilterApproved)
+                        {
+                            Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+                        }
+                        else {
+                            // search
+                            var aSubitems = $("[mls_id='" + sEntityIdentifier + "']", $container);
+        
+                            aSubitems.each(function (nIndex, $component) {
+            
+                                // 2. add connection id
+                                // 3. check if connection id exists
+            
+                                // delete
+                                $component.remove();
+                            });
+                        }
+                    }
+                    
+                    // change item based on component
+                    if (mls_component.conditionals.length > 0)
+                    {
+                        // verify
+                        var bShouldToggle = false;
+                        var nConditionalCount = mls_component.conditionals.length;
+                        for (var nConditionalIndex = 0; nConditionalIndex < nConditionalCount; nConditionalIndex++)
+                        {
+                            for (var nChangeIndex = 0; nChangeIndex < aChanges.length; nChangeIndex++) {
+                                // register
+                                var property = aChanges[nChangeIndex];
+        
+                                if (property.propertyName == mls_component.conditionals[nConditionalIndex]) {
+                                    bShouldToggle = true;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if (bShouldToggle)
+                        {
+                            // search
+                            var aSubitems = $("[mls_id='" + sEntityIdentifier + "']", $container);
+    
+                            aSubitems.each(function (nIndex, $component)
+                            {
+                                // delete current
+                                $component.remove();
+                                
+                                // reload with new template
+                                Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+                            });
+                        }
+                    }
+                    
+                    
+                });
+            }
         }
     },
     
     /**
-     * Cleanup collections by removing removed items
+     * Update selections collections by moving or removing altered items
      * @param changes
      * @private
      */
-    _cleanupCollections: function (sEntityType, sEntityId, changes)
+    _updateSelections: function (sEntityType, sEntityId, changes)
     {
+        // register
+        var classRoot = this;
+        
         
         // parse modified values
         for (var i = 0; i < changes.length; i++)
@@ -519,7 +538,7 @@ module.exports.prototype = {
             {
                 // read
                 var mls_selection = $($container).attr("mls_selection");
-                var mls_component = $($container).attr("mls_component");
+                var mls_component = classRoot._getComponentName($($container).attr("mls_component"));
                 var mls_filter = $($container).attr("mls_filter");
             
                 if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
@@ -546,13 +565,164 @@ module.exports.prototype = {
                     }
                 
                     // load
-                    if (!bFilterApproved) { console.log('Remove item!'); $subitem.remove(); }
+                    if (!bFilterApproved) { $subitem.remove(); }
                 
                 });
             
             });
         }
-    }
+    },
     
+    /**
+     * Update input fields
+     * @private
+     */
+    _updateInputFields: function (changes)
+    {
+        // search
+        var aValues = $("[mls_form_field_input]");
+        
+        aValues.each( function(nIndex, $component)
+        {
+            // read
+            var mls_form_field_input = $($component).attr("mls_form_field_input");
+        
+            // determine
+            var nOriginPos = mls_form_field_input.indexOf('[');
+            var bHasOrigin = (nOriginPos !== -1) ;
+        
+            // verify
+            if (bHasOrigin)
+            {
+                var mls_value_origin = mls_form_field_input.substr(nOriginPos + 1, mls_form_field_input.length - nOriginPos - 2);
+                var mls_form_field_input = mls_form_field_input.substr(0, nOriginPos);
+            }
+        
+        
+            // parse modified values
+            for (var i = 0; i < changes.length; i++)
+            {
+                // register
+                var change = changes[i];
+            
+                // collection
+                if (change.changes) continue;
+            
+            
+                if (!bHasOrigin)
+                {
+                    if (mls_form_field_input === (sEntityIdentifier + '.' + change.propertyName))
+                    {
+                        Mimoto.form._setInputFieldValue($component, change.value);
+                    }
+                }
+            }
+        });
+    },
+    
+    _updateCounters: function (sEntityType, changes)
+    {
+    
+        // search
+        var aComponents = $("[mls_count='" + sEntityType + "']");
+    
+        aComponents.each( function(index, $component)
+        {
+        
+            var mls_filter = $($component).attr("mls_filter");
+        
+            if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
+        
+        
+            // parse modified values
+            for (var i = 0; i < changes.length; i++)
+            {
+                // register
+                var change = changes[i];
+            
+                var bFilterApproved = true;
+                if (mls_filter)
+                {
+                    for (var s in mls_filter)
+                    {
+                        if (mls_filter[s] && change.value != mls_filter[s]) {
+                            bFilterApproved = false;
+                            break;
+                        }
+                    }
+                }
+            
+                // load
+                if (!bFilterApproved)
+                {
+                    var mls_config = $($component).attr("mls_config");
+                
+                    if (mls_config) { mls_config = $.parseJSON(mls_config); }
+                
+                
+                    // read
+                    var nCurrentCount = parseInt($($component).text());
+                
+                    // update
+                    nCurrentCount = Math.max(0, nCurrentCount - 1);
+                
+                    // output
+                    $($component).text(nCurrentCount);
+                
+                
+                    if (mls_config.toggleClasses)
+                    {
+                        for (var sKey in mls_config.toggleClasses)
+                        {
+                            if (sKey == 'onZero' && nCurrentCount == 0)
+                            {
+                                $($component).addClass(mls_config.toggleClasses[sKey]);
+                            }
+                            else
+                            {
+                                $($component).removeClass(mls_config.toggleClasses[sKey]);
+                            }
+                        }
+                    }
+                }
+            
+            }
+        
+        });
+    },
+    
+    /**
+     * Get component name and conditionals
+     * Format of the value "subproject_phase" or "subproject_phase[phase]"
+     * @param sValue
+     * @private
+     */
+    _getComponentName: function (sComponentInfo)
+    {
+        // init
+        var component = {};
+    
+        // search
+        var nComponentNameConditionalsPos = sComponentInfo.indexOf('[');
+    
+        if (nComponentNameConditionalsPos != -1)
+        {
+            // strip
+            var sComponentConditionals = sComponentInfo.substring(nComponentNameConditionalsPos + 1, sComponentInfo.length - 1);
+            
+            // store
+            component.name = sComponentInfo.substr(0, nComponentNameConditionalsPos);
+            component.conditionals = (sComponentConditionals) ? sComponentConditionals.split(',') : [];
+        }
+        else
+        {
+            // store
+            component.name = sComponentInfo;
+            component.conditionals = [];
+        }
+    
+        // send
+        return component;
+    }
     
 }

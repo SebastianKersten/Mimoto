@@ -288,7 +288,7 @@ class MimotoEntity
         $sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
 
         // forward
-        $property->removeValue($xValue, $sSubpropertySelector, $sEntityType);
+        $property->removeValue($xValue, $sSubpropertySelector);
     }
 
 

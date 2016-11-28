@@ -66,10 +66,10 @@ class MimotoAimlessService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessComponent
      */
-    public function createComponent($sComponentName, $entity = null)
+    public function createComponent($sComponentName, $entity = null, $connection = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
     }
 
     /**
@@ -78,10 +78,10 @@ class MimotoAimlessService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessInput
      */
-    public function createInput($sComponentName, $entity = null, $sFieldName = null, $value = null)
+    public function createInput($sComponentName, $entity = null, $connection = null, $sFieldName = null, $value = null)
     {
         // init and send
-        return new AimlessInput($sComponentName, $entity, $sFieldName, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
     }
 
     /**
@@ -139,9 +139,59 @@ class MimotoAimlessService
         // 2. standaard report error (error level)
         
     }
-    
-    
-    
+
+
+    // --- aimless - dom util
+
+
+
+    public function getComponentConditionalsAsString($sComponentName)
+    {
+        // 1. init
+        $sComponentConditionals = '';
+
+        // 2. find requested component
+        $nComponentCount = count($this->_aComponents);
+        for ($nComponentIndex = 0; $nComponentIndex < $nComponentCount; $nComponentIndex++)
+        {
+            $template = $this->_aComponents[$nComponentIndex];
+
+            if ($template->name === $sComponentName)
+            {
+                if (count($template->conditionals) > 0)
+                {
+                    // init
+                    $sComponentConditionals = '[';
+
+                    // compose
+                    $nConditionalCount = count($template->conditionals);
+                    for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
+                    {
+                        // register
+                        $conditional = $template->conditionals[$nConditionalIndex];
+
+                        // store
+                        $sComponentConditionals .= $conditional->key;
+
+                        // compose
+                        if ($nConditionalIndex < $nConditionalCount - 1) $sComponentConditionals .= ',';
+                    }
+
+                    // compose
+                    $sComponentConditionals .= ']';
+                }
+
+                break;
+            }
+        }
+
+        // send
+        return $sComponentConditionals;
+    }
+
+
+
+
     private function loadComponents()
     {
         
@@ -207,7 +257,8 @@ class MimotoAimlessService
         // send
         return $aTemplates;
     }
-    
+
+
     
     // --- events ---
     
