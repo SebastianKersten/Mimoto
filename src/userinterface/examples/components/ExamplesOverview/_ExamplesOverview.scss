@@ -1,0 +1,14 @@
+div.examples_ExamplesOverview
+{
+    display: inline-block;
+    background-color: #eeeeee;
+    border: 1px solid #555555;
+    padding: 7px 12px 7px 7px;
+
+
+    & div.title {
+        font-family: "futura-pt", sans-serif;
+        font-size: large;
+        font-weight: bold;
+    }
+}

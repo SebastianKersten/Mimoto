@@ -24,7 +24,171 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ExampleController
 {
-    
+
+    public function viewExamples(Application $app)
+    {
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('examples_overview');
+
+        // render and send
+        return $component->render();
+    }
+
+
+    // --- actions ---
+
+
+    public function triggerAction1(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+
+        // setup
+        $project->addValue('subprojects', $subproject);
+
+        // store
+        $app['Mimoto.Data']->store($project);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction2(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 3);
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+
+        // setup
+        $project->removeValue('subprojects', $subproject);
+
+        // store
+        $app['Mimoto.Data']->store($project);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction3(Application $app)
+    {
+        // load
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+
+        // setup
+        $subproject->setValue('phase', 'request');
+
+        // store
+        $app['Mimoto.Data']->store($subproject);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction4(Application $app)
+    {
+        // load
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+
+        // setup
+        $subproject->setValue('phase', 'archived');
+
+        // store
+        $app['Mimoto.Data']->store($subproject);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction5(Application $app)
+    {
+        // load
+        $client = $app['Mimoto.Data']->get('client', 6);
+
+        // setup
+        $client->setValue('name', 'IDFA - Modified = '.date("Y:m:d H.i.s"));
+
+        // store
+        $app['Mimoto.Data']->store($client);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction6(Application $app)
+    {
+        // load
+        $client = $app['Mimoto.Data']->create('client');
+
+        // setup
+        $client->setValue('name', 'New client');
+
+        // store
+        $app['Mimoto.Data']->store($client);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction7(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 2);
+
+        // setup
+        $project->setValue('name', 'VanMoof.com - '.date("Y:m:d H.i.s"));
+        $project->setValue('projectManager', ceil(rand(1, 3)));
+
+        // add
+        $project->addValue('subprojects', 3);
+
+        // add
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+        $project->addValue('subprojects', $subproject);
+
+        // store
+        $app['Mimoto.Data']->store($project);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction8(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 2);
+        $subproject = $app['Mimoto.Data']->get('subproject', 5);
+
+        // setup
+        $project->removeValue('subprojects', $subproject);
+
+        // store
+        $app['Mimoto.Data']->store($project);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction9(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 2);
+
+        // setup
+        $project->removeValue('subprojects', 3);
+
+        // store
+        $app['Mimoto.Data']->store($project);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+
+
+    // --- interface examples ---
+
+
     public function viewExample1(Application $app)
     {
         // load
@@ -112,8 +276,6 @@ class ExampleController
         return $component->render();
     }
     
-    
-    
     public function viewExample7(Application $app)
     {
         // load
@@ -131,7 +293,6 @@ class ExampleController
         return $component->render();
     }
     
-    
     public function viewExample8(Application $app)
     {
         // load
@@ -147,37 +308,6 @@ class ExampleController
         return $component->render();
     }
     
-    public function viewExample8a(Application $app)
-    {
-        // load
-        $client = $app['Mimoto.Data']->get('client', 6);
-        
-        // setup
-        $client->setValue('name', 'IDFA - Modified = '.date("Y:m:d H.i.s"));
-        
-        // store
-        $app['Mimoto.Data']->store($client);
-
-        // render and send
-        return new RedirectResponse('/example8');
-    }
-    
-    public function viewExample8b(Application $app)
-    {
-        // load
-        $client = $app['Mimoto.Data']->create('client');
-        
-        // setup
-        $client->setValue('name', 'New client');
-        
-        // store
-        $app['Mimoto.Data']->store($client);
-
-        // render and send
-        return new RedirectResponse('/example8');
-    }
-    
-    
     public function viewExample9(Application $app)
     {
         // load
@@ -192,187 +322,8 @@ class ExampleController
         // render and send
         return $component->render();
     }
-    
-    
-    public function viewExample9a(Application $app)
-    {
-        // load
-        $subproject = $app['Mimoto.Data']->get('subproject', 2);
 
-        // setup
-        $subproject->setValue('phase', 'archived');
-
-        // store
-        $app['Mimoto.Data']->store($subproject);
-        
-        // render and send
-        return new RedirectResponse('/example9');
-    }
-    
-    public function viewExample9b(Application $app)
-    {
-        
-        // mls_contains='client' mls_template='client_listitem'
-        
-        // load
-        $subproject = $app['Mimoto.Data']->get('subproject', 2);
-        
-        // setup
-        $subproject->setValue('phase', 'currentproject');
-        
-        // store
-        $app['Mimoto.Data']->store($subproject);
-        
-        // render and send
-        return new RedirectResponse('/example9');
-    }
-
-    
-    
     public function viewExample10(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 2);
-        
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
-        
-        // setup
-        $component->setPropertyComponent('subprojects', 'subproject');
-        $component->setPropertyFormatter('description', function($sValue) { return substr($sValue, 0, 72).' ..'; });
-        
-        // render and send
-        return $component->render();
-    }
-    
-    
-    public function viewExample10a(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 2);
-
-        // setup
-        $project->setValue('name', 'VanMoof.com - '.date("Y:m:d H.i.s"));
-        $project->setValue('projectManager', ceil(rand(1, 3)));
-
-        // add
-        $project->addValue('subprojects', 3);
-
-        // add
-        $subproject = $app['Mimoto.Data']->get('subproject', 5);
-        $project->addValue('subprojects', $subproject);
-        
-        // store
-        $app['Mimoto.Data']->store($project);
-        
-        // render and send
-        return new RedirectResponse('/example10');
-    }
-    
-    public function viewExample10b(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 2);
-        $subproject = $app['Mimoto.Data']->get('subproject', 5);
-        
-        // setup
-        $project->removeValue('subprojects', 3);
-        //$project->removeValue('subprojects', $subproject);
-        
-        // store
-        $app['Mimoto.Data']->store($project);
-
-        // render and send
-        return new RedirectResponse('/example10');
-    }
-    
-    
-    public function viewExample11(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 3);
-        
-        // create
-        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_phase', $project);
-        
-        // setup
-        $component->setPropertyComponent('subprojects', 'subproject_phase');
-        
-        // render and send
-        return $component->render();
-    }
-    
-    public function viewExample11a(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 3);
-        $subproject = $app['Mimoto.Data']->get('subproject', 5);
-
-        // setup
-        $project->addValue('subprojects', $subproject);
-
-        // store
-        $app['Mimoto.Data']->store($project);
-
-        // render and send
-        return new RedirectResponse('/example11');
-    }
-    
-    public function viewExample11b(Application $app)
-    {
-        // load
-        $project = $app['Mimoto.Data']->get('project', 3);
-        $subproject = $app['Mimoto.Data']->get('subproject', 5);
-        
-        // setup
-        $project->removeValue('subprojects', $subproject);
-        
-        // store
-        $app['Mimoto.Data']->store($project);
-        
-        // render and send
-        return new RedirectResponse('/example11');
-    }
-
-    public function viewExample11c(Application $app)
-    {
-        // load
-        $subproject = $app['Mimoto.Data']->get('subproject', 5);
-
-        // setup
-        $subproject->setValue('phase', 'request');
-
-        // store
-        $app['Mimoto.Data']->store($subproject);
-
-        // render and send
-        return new RedirectResponse('/example11');
-    }
-
-    public function viewExample11d(Application $app)
-    {
-        // load
-        $subproject = $app['Mimoto.Data']->get('subproject', 5);
-
-        // setup
-        $subproject->setValue('phase', 'archived');
-
-        // store
-        $app['Mimoto.Data']->store($subproject);
-
-        // render and send
-        return new RedirectResponse('/example11');
-    }
-
-    public function viewExample12(Application $app)
-    {
-        // render and send
-        return $this->viewExample7($app);
-    }
-    
-    
-    
-    public function viewExample13(Application $app)
     {
         // load
         $client = $app['Mimoto.Data']->get('client', 1);

@@ -1,0 +1,37 @@
+{% extends "examples/components/examplebase.twig" %}
+
+{% block content %}
+
+    <div class="examples_ExamplesOverview">
+        <div class="title"><b>Mimoto.Aimless</b></div>
+        <i>Example interfaces and actions</i><br>
+        <br>
+        <u>Example actions</u><br>
+        <ol type="A">
+            <li><a href='/action1'>Add subproject (id = 5) to project (id = 3)</a></li>
+            <li><a href='/action2'>Remove subproject (id = 5) from project (id = 3)</a></li>
+            <li><a href='/action3'>Change 'phase' of subproject (id = 5) to 'request'</a></li>
+            <li><a href='/action4'>Change 'phase' of subproject (id = 5) to 'archived'</a></li>
+            <li><a href='/action5'>Update the name of a client (id = 6)</a></li>
+            <li><a href='/action6'>Create a new client</a></li>
+            <li><a href='/action7'>Change project's (id = 2) client name and add subprojects (id = 3 and 5)</a></li>
+            <li><a href='/action8'>Remove subproject (id = 3) from project (id = 2)</a></li>
+            <li><a href='/action9'>Remove subproject (id = 5) from project (id = 2)</a></li>
+        </ol>
+        <br>
+        <u>Example interfaces</u><br>
+        <ol>
+            <li><a href="/example1">Article with basic template</a></li>
+            <li><a href="/example2">Article with template based on article.type</a></li>
+            <li><a href="/example3">Article overview with basic feed items</a></li>
+            <li><a href="/example4">Article overview with feed items based on article.type</a></li>
+            <li><a href="/example5">Project with basic subprojects</a> (A, B, C, D)</li>
+            <li><a href="/example6">Project with subprojects based on subproject.phase</a> (A, B, C, D)</li>
+            <li><a href="/example7">Project with subprojects based on and grouped by subproject.phase</a> (A, B, C, D)</li>
+            <li><a href="/example8">An overview of all clients</a> (E, F)</li>
+            <li><a href="/example9">An overview of all subprojects</a> (C, D)</li>
+            <li><a href="/example10">A basic client form</a></li>
+        </ol>
+    </div>
+
+{% endblock %}

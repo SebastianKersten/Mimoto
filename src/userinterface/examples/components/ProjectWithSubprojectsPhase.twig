@@ -4,13 +4,6 @@
     <i>Mimoto.Aimless - Example</i>
     <h1>Project with subprojects - typed</h1>
     <i>This project contains a collection of subprojects and every subproject is presented with the a template based on the "phase" property</i><br><br>
-    <i>Demos:</i><br>
-    <ul>
-        <li><a href='/example11a'>Add subproject (id = 5) to project (id = 3)</a></li>
-        <li><a href='/example11b'>Remove subproject (id = 5) from project (id = 3)</a></li>
-        <li><a href='/example11c'>Change 'phase' of subproject (id = 5) to 'request'</a></li>
-        <li><a href='/example11d'>Change 'phase' of subproject (id = 5) to 'archived'</a></li>
-    </ul>
     <br>
     <div class="example_project" {{ Aimless.realtime()|raw }}>
         <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.render('name') }}</span></b><br><br>
