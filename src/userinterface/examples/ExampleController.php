@@ -157,6 +157,21 @@ class ExampleController
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 2);
+
+        // add
+        $project->addValue('subprojects', 6);
+
+        // store
+        $app['Mimoto.Data']->store($project);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
+
+    public function triggerAction9(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 2);
         $subproject = $app['Mimoto.Data']->get('subproject', 5);
 
         // setup
@@ -169,7 +184,7 @@ class ExampleController
         return new RedirectResponse('/');
     }
 
-    public function triggerAction9(Application $app)
+    public function triggerAction10(Application $app)
     {
         // load
         $project = $app['Mimoto.Data']->get('project', 2);
@@ -184,6 +199,20 @@ class ExampleController
         return new RedirectResponse('/');
     }
 
+    public function triggerAction11(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 2);
+
+        // setup
+        $project->removeValue('subprojects', 6);
+
+        // store
+        $app['Mimoto.Data']->store($project);
+
+        // render and send
+        return new RedirectResponse('/');
+    }
 
 
     // --- interface examples ---
@@ -255,11 +284,13 @@ class ExampleController
         $component->setPropertyComponent('subprojects', 'subproject');
         $component->setPropertyComponent('projectManager', 'projectManager');
 
+        // explain
+        $component->setVar('title', 'Project with subprojects');
+        $component->setVar('description', 'This project (id = 3) contains a collection of subprojects and every subproject is presented with the same subproject template.');
+
         // render and send
         return $component->render();
     }
-    
-    
     
     public function viewExample6(Application $app)
     {
@@ -345,6 +376,25 @@ class ExampleController
         return $form->render();
     }
 
+    public function viewExample11(Application $app)
+    {
+        // load
+        $project = $app['Mimoto.Data']->get('project', 2);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects', $project);
+
+        // setup
+        $component->setPropertyComponent('subprojects', 'subproject_phase');
+        $component->setPropertyComponent('projectManager', 'projectManager');
+
+        // explain
+        $component->setVar('title', 'Project with subprojects');
+        $component->setVar('description', 'This project (id = 2) contains a collection of subprojects and every subproject is presented with the same subproject template.');
+
+        // render and send
+        return $component->render();
+    }
 
 
 

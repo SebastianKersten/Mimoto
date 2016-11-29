@@ -80,9 +80,9 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         if (!empty($sSubpropertySelector)) { $this->forwardSetValue($sSubpropertySelector, $xValue); return; }
 
 
+
         // 2. validate
         if (!is_array($xValue)) $GLOBALS['Mimoto.Log']->error("Incorrect value for collection property", "The property " . $this->_config->name . " only accepts arrays when using setValue()", true);
-
 
         // 3. init
         if (!$this->_bTrackChanges) { $this->_data->persistentCollection = []; }
@@ -95,13 +95,10 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
             // 4a. register
             $item = $xValue[$nItemIndex];
 
-            // 4b. prepare
-            $aAllowedEntityTypes = MimotoDataUtils::flattenAllowedEntityTypes($this->_config->settings->allowedEntityTypes);
+            // 4b. create connection
+            $connection = MimotoDataUtils::createConnection($item, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $this->_config->settings->allowedEntityTypes, null, $this->_config->name);
 
-            // 4c. create connection
-            $connection = MimotoDataUtils::createConnection($item, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $aAllowedEntityTypes, null, $this->_config->name);
-
-            // 4d. store
+            // 4c. store
             if (!empty($connection))
             {
                 if (!$this->_bTrackChanges) { $this->_data->persistentCollection[$nItemIndex] = clone $connection; }
@@ -122,15 +119,27 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         //if (!empty($sSubpropertySelector)) { $this->forwardAddValue($sSubpropertySelector, $xValue); return; }
 
 
-
         // 1. convert
         $xEntityTypeId = $GLOBALS['Mimoto.Config']->getEntityIdByName($sEntityType);
 
-        // 2. prepare
-        $aAllowedEntityTypes = MimotoDataUtils::flattenAllowedEntityTypes($this->_config->settings->allowedEntityTypes);
+        // 2. assist
+        if (empty($xEntityTypeId))
+        {
+            if (count($this->_config->settings->allowedEntityTypes) == 1)
+            {
+                // 2a. auto select
+                $xEntityTypeId = $this->_config->settings->allowedEntityTypes[0]->id;
+            }
+            else
+            {
+                // 2b. report missing configuration
+                $GLOBALS['Mimoto.Log']->error("Missing entity type on added item", "Please define the type of the item you arring adding to the collection '".$this->_config->name."'", true);
+                return;
+            }
+        }
 
         // 3. create connection
-        $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $aAllowedEntityTypes, $xEntityTypeId, $this->_config->name);
+        $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $this->_config->settings->allowedEntityTypes, $xEntityTypeId, $this->_config->name);
 
         // 4. manage duplicates
         if (!$this->_config->settings->allowDuplicates)
@@ -145,13 +154,13 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
             }
         }
 
-        // 5. define position
+        // 6. define position
         $nSortIndex = count($this->_data->currentCollection);
 
-        // 6. setup
+        // 7. setup
         $connection->setSortIndex($nSortIndex);
 
-        // 7. store
+        // 8. store
         if (!$this->_bTrackChanges) { $this->_data->persistentCollection[$nSortIndex] = clone $connection; }
         $this->_data->currentCollection[$nSortIndex] = $connection;
     }
@@ -172,11 +181,24 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         // 1. convert
         $xEntityTypeId = $GLOBALS['Mimoto.Config']->getEntityIdByName($sEntityType);
 
-        // 2. prepare
-        $aAllowedEntityTypes = MimotoDataUtils::flattenAllowedEntityTypes($this->_config->settings->allowedEntityTypes);
+        // 2. assist
+        if (empty($xEntityTypeId))
+        {
+            if (count($this->_config->settings->allowedEntityTypes) == 1)
+            {
+                // 2a. auto select
+                $xEntityTypeId = $this->_config->settings->allowedEntityTypes[0]->id;
+            }
+            else
+            {
+                // 2b. report missing configuration
+                $GLOBALS['Mimoto.Log']->error("Missing entity type on added item", "Please define the type of the item you arring adding to the collection '".$this->_config->name."'", true);
+                return;
+            }
+        }
 
         // 3. create connection
-        $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $aAllowedEntityTypes, $xEntityTypeId, $this->_config->name);
+        $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $this->_config->settings->allowedEntityTypes, $xEntityTypeId, $this->_config->name);
 
 
 

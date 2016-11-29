@@ -5,6 +5,7 @@ namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
@@ -36,7 +37,7 @@ class Entity
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
@@ -53,7 +54,7 @@ class Entity
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
-                            'type' => 'array',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => [CoreConfig::MIMOTO_ENTITY]
                         ),
                         'allowDuplicates' => (object) array(
@@ -61,7 +62,7 @@ class Entity
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',
-                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
@@ -78,7 +79,7 @@ class Entity
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityType',
-                            'type' => 'value',
+                            'type' => 'value', // #todo - this type no longer exists
                             'value' => CoreConfig::MIMOTO_ENTITY
                         )
                     ]
@@ -95,7 +96,7 @@ class Entity
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]

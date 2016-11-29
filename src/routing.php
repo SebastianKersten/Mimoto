@@ -14,9 +14,11 @@
     $app->get('/action4', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction4');
     $app->get('/action5', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction5');
     $app->get('/action6', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction6');
-    $app->get('/action7', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction6');
-    $app->get('/action8', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction6');
-    $app->get('/action9', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction6');
+    $app->get('/action7', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction7');
+    $app->get('/action8', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction8');
+    $app->get('/action9', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction9');
+    $app->get('/action10', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction10');
+    $app->get('/action11', 'Mimoto\\UserInterface\\examples\\ExampleController::triggerAction11');
 
 
     // --- interface examples ---
@@ -31,6 +33,7 @@
     $app->get('/example8', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample8');
     $app->get('/example9', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample9');
     $app->get('/example10', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample10');
+    $app->get('/example11', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample11');
 
 
 

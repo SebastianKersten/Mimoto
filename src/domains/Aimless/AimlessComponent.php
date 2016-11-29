@@ -248,20 +248,26 @@ class AimlessComponent
         // 3. output if entity's subproperty is a value
         if (!MimotoDataUtils::isEntity($xValue)) return $xValue;
 
-        // 4. determine
-        $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertySelector]->sComponentName;
-
-        // 5. verify
+        // 4. verify component
         if (empty($sComponentName))
         {
-            $GLOBALS['Mimoto.Log']->error("Rendering an entity with a component", "The property <b>$sPropertySelector</b> you are trying to render doens't have a component connected to it.");
-            return '';
+            if (isset($this->_aPropertyComponents[$sPropertySelector]))
+            {
+                // 4a. select from config list
+                $sComponentName = $this->_aPropertyComponents[$sPropertySelector]->sComponentName;
+            }
+            else
+            {
+                // 4b. report missing component
+                $GLOBALS['Mimoto.Log']->silent("Missing component while rendering entity-property", "The property <b>$sPropertySelector</b> you are trying to render doens't have a component connected to it.");
+                return '';
+            }
         }
 
-        // 6. create component
+        // 5. create component
         $component = $this->_AimlessService->createComponent($sComponentName, $xValue);
 
-        // 7. render and send
+        // 6. render and send
         return $component->render();
     }
 
@@ -352,7 +358,7 @@ class AimlessComponent
             if (isset($this->_aSelections[$sPropertyName]))
             {
 
-                $sComponentName = $this->_aPropertyComponents[$sPropertyName]->sComponentName;
+                $sComponentName = $this->_aSelections[$sPropertyName]->sComponentName;
                 $sComponentConditionals = $GLOBALS['Mimoto.Aimless']->getComponentConditionalsAsString($sComponentName);
                 $sComponentName .= $sComponentConditionals;
 

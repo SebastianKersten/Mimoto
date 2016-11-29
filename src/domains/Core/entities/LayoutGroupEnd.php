@@ -5,6 +5,7 @@ namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**

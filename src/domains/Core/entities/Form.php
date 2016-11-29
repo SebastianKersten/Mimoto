@@ -5,6 +5,7 @@ namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
@@ -36,7 +37,7 @@ class Form
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
@@ -53,7 +54,7 @@ class Form
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
-                            'type' => 'array',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => [CoreConfig::WILDCARD]
                         ),
                         'allowDuplicates' => (object) array(
@@ -61,7 +62,7 @@ class Form
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',
-                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
@@ -78,7 +79,7 @@ class Form
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE // #todo enum "0" of "1"
                         )
                     ]
@@ -95,7 +96,7 @@ class Form
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_BOOLEAN,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE // #todo int(1) van 0 of 1
                         )
                     ]
@@ -112,7 +113,7 @@ class Form
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
@@ -129,7 +130,7 @@ class Form
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
@@ -146,7 +147,7 @@ class Form
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]

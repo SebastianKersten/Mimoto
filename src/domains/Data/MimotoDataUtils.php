@@ -181,13 +181,16 @@ class MimotoDataUtils
      */
     public static function createConnection($xValue, $xParentEntityTypeId, $xParentPropertyId, $nParentId, $aAllowedPropertyTypes, $xEntityTypeId, $sPropertyName)
     {
-        // init
+        // 1. init
         $connection = null;
 
-        // determine
+        // 2. determine
         $sValueType = MimotoDataUtils::getValueType($xValue);
 
-        // toggle
+        // 3. prepare
+        $aAllowedEntityTypeIds = MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes);
+
+        // 4. toggle
         switch($sValueType)
         {
             case MimotoEntityPropertyValueTypes::VALUETYPE_CONNECTION:
@@ -237,15 +240,16 @@ class MimotoDataUtils
                 }
 
                 // validate config
-                if (count($aAllowedPropertyTypes) == 0)
+                if (count($aAllowedEntityTypeIds) == 0)
                 {
                     $GLOBALS['Mimoto.Log']->silent("Missing configuration of allowed property types", "Please define which value types are allowed to connect to property '".$sPropertyName."'");
                     $connection = null;
                     break;
                 }
 
+
                 // validate childEntityType
-                if (!in_array($connection->getChildEntityTypeId(), $aAllowedPropertyTypes)) $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property ".$sPropertyName." only allows '".implode($aAllowedPropertyTypes)."'", true);
+                if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds)) $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property ".$sPropertyName." only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
 
                 // validate childId
                 if (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId())) $GLOBALS['Mimoto.Log']->error("Incorrect value", "Please set a child id for the connection you are trying to set for property " . $sPropertyName, true);
@@ -254,7 +258,7 @@ class MimotoDataUtils
 
             default:
 
-                $GLOBALS['Mimoto.Log']->silent("You are trying to set an incorrect value", "The property ".$sPropertyName." only allows values of type '".implode($aAllowedPropertyTypes)."'", true);
+                $GLOBALS['Mimoto.Log']->silent("You are trying to set an incorrect value", "The property ".$sPropertyName." only allows values of type '".implode(',', $aAllowedPropertyTypes)."'", true);
                 break;
         }
 
@@ -264,10 +268,11 @@ class MimotoDataUtils
 
     /**
      * Flatten allowedEntityTypes
-     * @param $aAllowedEntityTypes
+     * @param array $aAllowedEntityTypes
+     * @param bool|null $bGetNamesInsteadOfIds
      * @return array Single array with the id's of the entities
      */
-    public static function flattenAllowedEntityTypes($aAllowedEntityTypes)
+    public static function flattenAllowedEntityTypes($aAllowedEntityTypes, $bGetNamesInsteadOfIds = false)
     {
         // 1. init
         $aFlattenedAllowedEntityTypes = [];
@@ -276,7 +281,7 @@ class MimotoDataUtils
         $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
         for ($nAllowedEntityTypeIndex = 0; $nAllowedEntityTypeIndex < $nAllowedEntityTypeCount; $nAllowedEntityTypeIndex++)
         {
-            $aFlattenedAllowedEntityTypes[] = $aAllowedEntityTypes[$nAllowedEntityTypeIndex]->id;
+            $aFlattenedAllowedEntityTypes[] = (!$bGetNamesInsteadOfIds) ? $aAllowedEntityTypes[$nAllowedEntityTypeIndex]->id : $aAllowedEntityTypes[$nAllowedEntityTypeIndex]->name;
         }
 
         // 3. send

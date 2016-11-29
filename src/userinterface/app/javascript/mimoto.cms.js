@@ -47,100 +47,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     Conditioner.init();
+    
+    
+    // Mimoto.Aimless.realtime.onCreated('_MimotoAimless__devtools__notification', function(sType, nId)
+    // {
+    //     console.log('Custom event listener ' + sType + ', ' + nId);
+    // });
 
 }, false);
-
-
-
-
-
-/**
- * Mimoto.CMS
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-//
-// // init
-// if (typeof Mimoto == "undefined") Mimoto = {};
-// if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
-//
-// Mimoto.CMS.entityNew = function()
-// {
-//     var popup = Mimoto.popup.open("/mimoto.cms/entity/new");
-//
-//     //popup.on('success') = popup.close();
-// }
-//
-// Mimoto.CMS.entityCreate = function(data)
-// {
-//     $.ajax({
-//         type: 'POST',
-//         url: "/mimoto.cms/entity/create",
-//         data: data,
-//         dataType: 'json'
-//     }).done(function(data) {
-//         Mimoto.popup.close();
-//     });
-// }
-//
-// Mimoto.CMS.entityView = function(nEntityId)
-// {
-//     window.open('/mimoto.cms/entity/' + nEntityId + '/view', '_self');
-// }
-//
-// Mimoto.CMS.entityEdit = function(nEntityId)
-// {
-//     Mimoto.popup.open('/mimoto.cms/entity/' + nEntityId + '/edit');
-// }
-//
-// Mimoto.CMS.entityUpdate = function(nEntityId, data)
-// {
-//     $.ajax({
-//         type: 'POST',
-//         url: "/mimoto.cms/entity/" + nEntityId + "/update",
-//         data: data,
-//         dataType: 'json'
-//     }).done(function(data) {
-//         Mimoto.popup.close();
-//     });
-// }
-//
-// Mimoto.CMS.entityDelete = function(nEntityId, sEntityName)
-// {
-//     var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
-//     if (response == true) {
-//         $.ajax({
-//             type: 'GET',
-//             url: "/mimoto.cms/entity/" + nEntityId + "/delete",
-//             //data: data,
-//             dataType: 'json'
-//         }).done(function(data) {
-//             window.open('/mimoto.cms/entities', '_self');
-//         });
-//     }
-// }
-//
-//
-//
-// Mimoto.CMS.entityPropertyNew = function(nEntityId)
-// {
-//     Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
-// }
-//
-// Mimoto.CMS.entityPropertyCreate = function(nEntityId, data)
-// {
-//     $.ajax({
-//         type: 'POST',
-//         url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
-//         data: data,
-//         dataType: 'json'
-//     }).done(function(data) {
-//         Mimoto.popup.close();
-//     });
-// }
-//
-// Mimoto.CMS.entityPropertyEdit = function(nEntityPropertyId)
-// {
-//     Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
-// }

@@ -591,7 +591,7 @@ class MimotoAimlessService
         $data->entityType = $sEntityType;
         
         // send
-        $this->sendPusherEvent('Aimless', 'data.create', $data);
+        $this->sendPusherEvent('Aimless', 'data.created', $data);
     }
     
     /**

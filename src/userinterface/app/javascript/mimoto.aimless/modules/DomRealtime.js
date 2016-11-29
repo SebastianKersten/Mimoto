@@ -17,6 +17,8 @@ module.exports.prototype = {
     
     
     
+    
+    
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -27,7 +29,7 @@ module.exports.prototype = {
      */
     __construct: function()
     {
-        
+        this._aEventHandlers = [];
     },
     
     
@@ -38,17 +40,21 @@ module.exports.prototype = {
     
     
     /**
-     * Load component
+     * Handle CREATED
      */
-    loadComponent: function ($component, sEntityTypeName, nId, sTemplate)
+    onCreated: function (sEntityName, fEventHandler)
     {
         
     },
     
-    updateComponent: function(ajax, dom)
+    /**
+     * Dispatch created
+     */
+    dispatchCreated: function (sEntityName, nEntityId)
     {
         
-    }
+    },
+    
     
     
 //     Mimoto.Aimless.realtime.broadcastedValues = [];

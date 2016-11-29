@@ -64,7 +64,7 @@ module.exports.prototype = {
         
         // setup listeners
         channel.bind('data.changed', this._DomService.onDataChanged);
-        channel.bind('data.create', this._DomService.onDataCreated);
+        channel.bind('data.created', this._DomService.onDataCreated);
         channel.bind('page.change', this._DomService.onPageChange);
         channel.bind('component.load', this._DomService.onComponentLoad);
         channel.bind('popup.open', this._DomService.onPopupOpen);

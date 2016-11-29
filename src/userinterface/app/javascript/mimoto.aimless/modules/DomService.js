@@ -42,8 +42,8 @@ module.exports.prototype = {
      */
     onDataChanged: function(data)
     {
-        // console.log('Aimless - data.changed');
-        // console.log(data);
+        console.log('Aimless - data.changed');
+        console.log(data);
         
         
         // compose
@@ -66,12 +66,16 @@ module.exports.prototype = {
         var mls_container = data.entityType;
     
         // register
-        var classRoot = this;
+        var classRoot = module.exports.prototype;
+    
+        console.log('Aimless - data.created');
+        console.log(data);
+        
+        
         
         //console.clear();
     
-        // console.log('Aimless - data.create');
-        // console.log(data);
+        
     
     
         // --- component level ---
@@ -102,7 +106,7 @@ module.exports.prototype = {
         });
     
     
-        // seection level
+        // section level
         // search
         var aComponents = $("[mls_selection='" + mls_container + "']");
     

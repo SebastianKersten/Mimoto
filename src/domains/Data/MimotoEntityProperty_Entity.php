@@ -77,7 +77,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
         if (!empty($sSubpropertySelector)) { $this->forwardSetValue($sSubpropertySelector, $xValue); return; }
 
         // 2. create connection
-        $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), [$this->_config->settings->allowedEntityType->id], $this->_config->settings->allowedEntityType->id, $this->_config->name);
+        $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), [$this->_config->settings->allowedEntityType], $this->_config->settings->allowedEntityType->id, $this->_config->name);
 
         // 3. store as persistent if change tracking is disabled
         if (!$this->_bTrackChanges) $this->_data->persistentEntity = (!empty($connection)) ? clone $connection : null;

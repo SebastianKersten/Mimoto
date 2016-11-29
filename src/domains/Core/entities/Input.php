@@ -5,6 +5,7 @@ namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
@@ -36,7 +37,7 @@ class Input
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityType',
-                            'type' => 'value',
+                            'type' => 'value', // #todo - fixme
                             'value' => CoreConfig::MIMOTO_FORM_INPUTVALUE
                         )
                     ]

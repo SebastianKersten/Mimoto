@@ -5,6 +5,7 @@ namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
@@ -36,7 +37,7 @@ class LayoutGroupStart
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
-                            'type' => CoreConfig::DATA_TYPE_VALUE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
