@@ -13,7 +13,6 @@ module.exports = function (env) {
     context: jsSrc,
     plugins: [
       new webpack.ProvidePlugin({
-        Conditioner: './conditioner/conditioner',
         EH: 'ErrorHandling',
         FV: 'FormValidation',
         $: "jquery",

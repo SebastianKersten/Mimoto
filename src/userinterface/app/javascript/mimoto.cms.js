@@ -1,9 +1,9 @@
+'use strict';
 
 require('jquery-ui');
 
 var HeaderView = require('./views/Header');
 var FormView = require('./views/form-components/Form');
-
 
 if (typeof Mimoto == "undefined") Mimoto = {};
 if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
@@ -23,9 +23,8 @@ Mimoto.page = new Mimoto.modules.Page();
 Mimoto.popup = new Mimoto.modules.Popup();
 Mimoto.form = new Mimoto.modules.Form();
 
-
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     var navigation = document.querySelector('.js-navigation');
     var header = document.querySelector('.js-header');
     var forms = document.querySelectorAll('.js-form');
@@ -46,9 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
         "iconValidatedClass": "form-component-title-icon--checkmark"
     });
 
-    Conditioner.init();
-    
-    
     // Mimoto.Aimless.realtime.onCreated('_MimotoAimless__devtools__notification', function(sType, nId)
     // {
     //     console.log('Custom event listener ' + sType + ', ' + nId);
