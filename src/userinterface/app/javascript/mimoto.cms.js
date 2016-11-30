@@ -1,4 +1,4 @@
-'use strict';
+//'use strict'; #note - do not uncomment
 
 require('jquery-ui');
 

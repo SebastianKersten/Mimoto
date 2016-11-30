@@ -137,7 +137,7 @@ class ExampleController
 
         // setup
         $project->setValue('name', 'VanMoof.com - '.date("Y:m:d H.i.s"));
-        $project->setValue('projectManager', ceil(rand(1, 3)));
+        $project->setValue('projectManager', (rand(1, 5) == 1) ? null : ceil(rand(1, 3)));
 
         // add
         $project->addValue('subprojects', 3);

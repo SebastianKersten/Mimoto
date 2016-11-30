@@ -42,7 +42,6 @@ module.exports.prototype = {
      */
     connect: function (bDebugMode)
     {
-    
         if (bDebugMode === true) {
             // Enable pusher logging - don't include this in production
             Pusher.log = function (message) {

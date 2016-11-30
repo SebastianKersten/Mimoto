@@ -1,5 +1,5 @@
 {
-    "trigger": "project.updated",
+    "trigger": "project.updated-DISABLED",
     "service": "Aimless",
     "request": "dataUpdate",
     "type": "async",

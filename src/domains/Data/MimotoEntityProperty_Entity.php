@@ -41,6 +41,35 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
 
 
     // ----------------------------------------------------------------------------
+    // --- Public methods - config ------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Get type
+     * @return string
+     */
+    public function getType($sSubpropertySelector = null)
+    {
+        // 1. forward request
+        if (!empty($sSubpropertySelector))
+        {
+            // load
+            $entity = $this->loadEntity();
+
+            // forward and send
+            return (!empty($entity)) ? $entity->getPropertyType($sSubpropertySelector) : null;
+        }
+        else
+        {
+            // send
+            return $this->_config->type;
+        }
+    }
+
+
+
+    // ----------------------------------------------------------------------------
     // --- Public methods - data --------------------------------------------------
     // ----------------------------------------------------------------------------
 
@@ -273,7 +302,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
         }
         
         // send
-        return (!empty($this->_data->currentEntity->getEntity())) ? $this->_data->currentEntity->getEntity() : null;
+        return (!empty($this->_data->currentEntity) && !empty($this->_data->currentEntity->getEntity())) ? $this->_data->currentEntity->getEntity() : null;
     }
 
 }

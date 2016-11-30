@@ -50,12 +50,6 @@ class MimotoEntityProperty
 
 
     /**
-     * Get type
-     * @return string
-     */
-    public function getType() { return $this->_config->type; }
-
-    /**
      * Get name
      * @return string
      */

@@ -14,6 +14,9 @@ interface MimotoEntityPropertyInterface
     // constructor
     public function __construct($propertyConfig, $xParentId, $xParentEntityTypeId);
 
+    // config
+    public function getType($sSubpropertySelector = null);
+
     // data
     public function getValue($bGetConnectionInfo = false, $sSubpropertySelector = null);
     public function setValue($value, $sSubpropertySelector = null);

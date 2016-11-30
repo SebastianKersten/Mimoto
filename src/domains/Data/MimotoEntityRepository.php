@@ -171,8 +171,7 @@ class MimotoEntityRepository
         
         // determine
         $bIsExistingEntity = (!empty($entity->getId()) && !is_nan($entity->getId())) ? true : false;
-        
-        
+
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
         

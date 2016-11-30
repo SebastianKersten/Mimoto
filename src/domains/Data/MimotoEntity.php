@@ -207,9 +207,12 @@ class MimotoEntity
      */
     public function getPropertyType($sPropertySelector)
     {
-        // todo - forward request
+        // load
+        $property = $this->getProperty($sPropertySelector);
+        $sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
 
-        return $this->_aProperties[$sPropertySelector]->getType();
+        // forwand and send
+        return $property->getType($sSubpropertySelector);
     }
 
     /**

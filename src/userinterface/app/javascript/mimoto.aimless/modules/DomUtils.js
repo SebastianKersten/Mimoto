@@ -40,7 +40,7 @@ module.exports.prototype = {
     /**
      * Load component
      */
-    loadComponent: function ($component, sEntityTypeName, nId, sTemplate)
+    loadComponent: function ($container, sEntityTypeName, nId, sTemplate)
     {
         $.ajax({
             type: 'GET',
@@ -48,7 +48,28 @@ module.exports.prototype = {
             data: null,
             dataType: 'html',
             success: function (data) {
-                $($component).append(data);
+                $($container).append(data);
+            }
+        });
+    },
+    
+    /**
+     * Load entity
+     */
+    loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+            data: null,
+            dataType: 'html',
+            success: function (data) {
+    
+                // delete
+                $($container).empty();
+                
+                // output
+                $($container).append(data);
             }
         });
     },

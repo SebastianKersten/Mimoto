@@ -9,7 +9,16 @@
         [
             "state",
             "name",
-            "type"
+            "type",
+
+            "description",
+
+            "client.name",
+            "agency.name",
+            "projectManager",
+            "projectManager.name",
+
+            "subprojects"
         ]
     }
 }

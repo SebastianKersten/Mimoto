@@ -38,6 +38,22 @@ class MimotoEntityProperty_Value extends MimotoEntityProperty implements MimotoE
     }
 
 
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods - config ------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Get type
+     * @return string
+     */
+    public function getType($sSubpropertySelector = null)
+    {
+        return $this->_config->type;
+    }
+
+
     
     // ----------------------------------------------------------------------------
     // --- Public methods - data --------------------------------------------------

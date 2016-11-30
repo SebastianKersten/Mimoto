@@ -347,8 +347,8 @@ class MimotoAimlessService
         // init
         $data->changes = array();
         $aModifiedValues = $entity->getChanges();
-        
-        
+
+
         // verify
         if (isset($config->properties))
         {
@@ -392,7 +392,10 @@ class MimotoAimlessService
                 switch($sPropertyType)
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-                        
+
+                        // init
+                        $valueForBroadcast->type = MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE;
+
                         $valueForBroadcast->value = $entity->getValue($sMainPropertyName);
                         
                         // verify
@@ -429,12 +432,30 @@ class MimotoAimlessService
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-                        // #todo
+                        // init
+                        $valueForBroadcast->type = MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY;
+
+                        // compose
+                        $valueForBroadcast->entity = null;
+
+                        // validate
+                        if (!empty($aModifiedValues[$sMainPropertyName]->added))
+                        {
+                            // register
+                            $valueForBroadcast->entity = (object)array
+                            (
+                                'connection' => $aModifiedValues[$sMainPropertyName]->added[0]->toJSON(),
+                                'data' => []
+                            );
+                        }
 
                         break;
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-                        
+
+                        // init
+                        $valueForBroadcast->type = MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION;
+
                         // compose
                         $valueForBroadcast->collection = (object) array();
 
@@ -557,14 +578,14 @@ class MimotoAimlessService
         // connect
         if (!empty($aConnections)) $data->connections = $aConnections;
 
-
+//error($data);
         //output('Data to broadcast', $data);
         
         
         // 1. dit gaat via async, het is efficienter om de rest af te handelen via deze directe route (denk aan "modified")
         // 2. handel eerst alles rondom de nieuwe data af!
         
-        
+
         if (!empty($data->changes)) { $this->sendPusherEvent('Aimless', 'data.changed', $data); }
         
         //$this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));

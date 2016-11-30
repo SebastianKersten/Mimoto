@@ -380,11 +380,11 @@ class AimlessComponent
             // 2. standaard report error (error level)
         }
             
-            
+
         if ($sPropertySelector === null)
         {
-            $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' mls_connection="'.$this->_connection->getId().'"' : '';
-            $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' mls_sortindex="'.$this->_connection->getSortIndex().'"' : '';
+            $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' data-aimless-connection="'.$this->_connection->getId().'"' : '';
+            $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' data-aimless-sortindex="'.$this->_connection->getSortIndex().'"' : '';
             $sComponentName = (!empty($this->_sComponentName)) ? ' mls_component="'.$this->_sComponentName.'"' : '';
 
 
@@ -392,7 +392,22 @@ class AimlessComponent
         }
         else
         {
-            return 'mls_value="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
+            // compose
+            switch ($this->_entity->getPropertyType($sPropertySelector))
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                    // 1. check if component was set todo
+
+                    $sComponentName = $this->_aPropertyComponents[$sPropertyName]->sComponentName;
+                    $sComponentName = (!empty($sComponentName)) ? ' mls_component="'.$sComponentName.'"' : '';
+                    return 'data-aimless-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sComponentName;
+                    break;
+
+                default:
+
+                    return 'mls_value="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
+            }
         }
     }
     

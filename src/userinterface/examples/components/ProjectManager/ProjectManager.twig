@@ -1,8 +1,8 @@
-<span>
+<span {{ Aimless.realtime()|raw }}>
     -&nbsp;<i>
         Project manager =
         <span>
-            <div class="examples__ProjectManager">
+            <div class="examples__ProjectManager" {{ Aimless.realtime('name')|raw }}>
                 {{ Aimless.render('name') }}
             </div>
         </span>

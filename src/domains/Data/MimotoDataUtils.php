@@ -252,7 +252,10 @@ class MimotoDataUtils
                 if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds)) $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property ".$sPropertyName." only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
 
                 // validate childId
-                if (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId())) $GLOBALS['Mimoto.Log']->error("Incorrect value", "Please set a child id for the connection you are trying to set for property " . $sPropertyName, true);
+                if (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId()))
+                {
+                    $connection = null;
+                }
 
                 break;
 

@@ -50,7 +50,8 @@ module.exports.prototype = {
         var sEntityIdentifier = data.entityType + '.' + data.entityId;
         
         // update
-        module.exports.prototype._changeValues(sEntityIdentifier, data.changes);
+        module.exports.prototype._updateValues(sEntityIdentifier, data.changes);
+        module.exports.prototype._updateEntities(data.entityType, data.entityId, data.changes);
         module.exports.prototype._updateCollections(data.entityType, data.entityId, data.changes, data.connections);
         module.exports.prototype._updateSelections(data.entityType, data.entityId, data.changes);
         module.exports.prototype._updateInputFields(data.changes);
@@ -210,7 +211,7 @@ module.exports.prototype = {
      * Change altered values currently present on the DOM
      * @private
      */
-    _changeValues: function (sEntityIdentifier, changes)
+    _updateValues: function (sEntityIdentifier, changes)
     {
     
         // skip if no changes
@@ -313,6 +314,56 @@ module.exports.prototype = {
                 }
             }
         });
+    },
+    
+    /**
+     * Update entities
+     * @param string sEntityIdentifier
+     * @param aray changes
+     * @private
+     */
+    _updateEntities: function (sEntityType, nEntityId, aChanges)
+    {
+        // register
+        var classRoot = this;
+        
+        
+        // compose
+        var sEntityIdentifier = sEntityType + '.' + nEntityId;
+    
+        // parse modified values
+        for (var i = 0; i < aChanges.length; i++)
+        {
+            // register
+            var change = aChanges[i];
+            
+            
+            if (change.type != 'entity') continue;
+            
+            
+            // collect
+            var aContainers = $("[data-aimless-entity='" + sEntityIdentifier + "." + change.propertyName + "']");
+            
+            aContainers.each(function (nIndex, $container)
+            {
+                // read
+                var mls_entity = $($container).attr("data-aimless-entity");
+                var mls_component = classRoot._getComponentName($($container).attr("mls_component"));
+                
+                // register
+                var item = change.entity;
+                
+                if (!item || !item.connection.id)
+                {
+                    $($container).empty();
+                }
+                else
+                {
+                    // load
+                    Mimoto.Aimless.utils.loadEntity($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
+                }
+            });
+        }
     },
     
     /**

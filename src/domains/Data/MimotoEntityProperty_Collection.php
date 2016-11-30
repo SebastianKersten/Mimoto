@@ -41,6 +41,24 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
 
 
     // ----------------------------------------------------------------------------
+    // --- Public methods - config ------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Get type
+     * @return string
+     */
+    public function getType($sSubpropertySelector = null)
+    {
+        // #todo - support type of individuel subitem
+
+        return $this->_config->type;
+    }
+
+
+
+    // ----------------------------------------------------------------------------
     // --- Public methods - data --------------------------------------------------
     // ----------------------------------------------------------------------------
 
