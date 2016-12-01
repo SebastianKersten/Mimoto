@@ -54,7 +54,7 @@ module.exports.prototype = {
         module.exports.prototype._updateEntities(data.entityType, data.entityId, data.changes);
         module.exports.prototype._updateCollections(data.entityType, data.entityId, data.changes, data.connections);
         module.exports.prototype._updateSelections(data.entityType, data.entityId, data.changes);
-        module.exports.prototype._updateInputFields(data.changes);
+        module.exports.prototype._updateInputFields(sEntityIdentifier, data.changes);
         module.exports.prototype._updateCounters(data.entityType, data.changes);
     },
     
@@ -632,7 +632,7 @@ module.exports.prototype = {
      * Update input fields
      * @private
      */
-    _updateInputFields: function (changes)
+    _updateInputFields: function (sEntityIdentifier, changes)
     {
         // search
         var aValues = $("[mls_form_field_input]");

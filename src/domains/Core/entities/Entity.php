@@ -79,8 +79,8 @@ class Entity
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityType',
-                            'type' => 'value', // #todo - this type no longer exists
-                            'value' => CoreConfig::MIMOTO_ENTITY
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_ENTITY]
                         )
                     ]
                 ),

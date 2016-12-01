@@ -150,8 +150,8 @@ class MimotoAimlessController
         foreach ($aEntities as $sEntityType => $entityInfo)
         {
 
-            output($sEntityType, $entityInfo);
-            echo '========================================';
+            //output($sEntityType, $entityInfo);
+            //echo '========================================';
 
             // parse
             $nPropertyCount = count($entityInfo->properties);
@@ -171,8 +171,8 @@ class MimotoAimlessController
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
-                        echo 'PROPERTY_TYPE_VALUE';
-                        output($sPropertyName, $aRequestValues->$sValueKey);
+//                        echo 'PROPERTY_TYPE_VALUE';
+//                        output($sPropertyName, $aRequestValues->$sValueKey);
 
                         // update
                         $entityInfo->entity->setValue($sPropertyName, $aRequestValues->$sValueKey);
@@ -180,37 +180,33 @@ class MimotoAimlessController
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-                        echo 'PROPERTY_TYPE_VALUE';
-                        output($sPropertyName, $aRequestValues->$sValueKey);
-
-                        // load
-                        $nChildType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($aRequestValues->$sValueKey);
-                        $nChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($aRequestValues->$sValueKey);
-
-
-                        $nParentEntityTypeId = $entityInfo->entity->getEntityTypeId();
-                        $nParentPropertyId = $GLOBALS['Mimoto.Config']->getPropertyIdByName($sPropertyName);
-
-                        //echo $nInstanceId;
+//                        echo 'PROPERTY_TYPE_ENTITY';
+//                        output($sPropertyName, $aRequestValues->$sValueKey);
 
                         // init
-                        $connection = new MimotoEntityConnection();
+                        $connection = null;
 
-                        // compose
-                        $connection->setParentEntityTypeId($nParentEntityTypeId);
-                        $connection->setParentPropertyId($nParentPropertyId);
-                        //$connection->setParentId(5);
-                        $connection->setChildEntityTypeId($nChildType);
-                        $connection->setChildId($nChildId);
+                        // validate
+                        if (!empty($aRequestValues->$sValueKey))
+                        {
+                            // split
+                            $nChildType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($aRequestValues->$sValueKey);
+                            $nChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($aRequestValues->$sValueKey);
 
-                        output('Entity current value', $entityInfo->entity->getValue($sPropertyName), true);
+                            // register
+                            $nParentEntityTypeId = $entityInfo->entity->getEntityTypeId();
+                            $nParentPropertyId = $GLOBALS['Mimoto.Config']->getPropertyIdByName($sPropertyName);
 
+                            output('$nChildType =======', $nChildType, true);
+                            echo 'xxxxxxx';
+                            // create
+                            $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entityInfo->entity->getId(), [$nChildType], $nChildType, $sPropertyName);
+
+                            echo 'yyyyyyy';
+                        }
+                        echo 'zzzzzz';
                         // store
                         $entityInfo->entity->setValue($sPropertyName, $connection);
-
-
-                        output('Entity current value', $entityInfo->entity, true);
-
 
                         break;
 
@@ -231,7 +227,7 @@ class MimotoAimlessController
             $bIsNew = (empty($entityInfo->entity->getId())) ? true : false;
 
             // store
-            //$app['Mimoto.Data']->store($entityInfo->entity);
+            $app['Mimoto.Data']->store($entityInfo->entity);
 
 
             // compose response
