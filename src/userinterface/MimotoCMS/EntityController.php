@@ -387,7 +387,7 @@ class EntityController
             "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
             "parent_entity_type_id = :parent_entity_type_id && ".
             "parent_property_id = :parent_property_id && ".
-            "child_entity_type_id = :child_entity_type_id &&".
+            "child_entity_type_id = :child_entity_type_id && ".
             "child_id = :child_id"
         );
         $params = array(

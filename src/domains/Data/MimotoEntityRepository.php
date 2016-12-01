@@ -10,6 +10,7 @@ use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoCollection;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 use Mimoto\Event\MimotoEvent;
 
 
@@ -203,7 +204,7 @@ class MimotoEntityRepository
                     
                             $aQueryElements[] = (object) array(
                                 'key' => $propertyValue->mysqlColumnName,
-                                'value' => $entity->getValue($sPropertyName, false)
+                                'value' => MimotoDataUtils::convertRuntimeValueToStorableValue($entity->getValue($sPropertyName), $propertyConfig->settings->type->type)
                             );
                             break;
                     }
@@ -423,8 +424,11 @@ class MimotoEntityRepository
                 {
                     case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
 
-                        // load
-                        $entity->setValue($propertyConfig->name, $result[$propertyValue->mysqlColumnName]);
+                        // 1. register
+                        $value = MimotoDataUtils::convertStoredValueToRuntimeValue($result[$propertyValue->mysqlColumnName], $propertyConfig->settings->type->type);
+
+                        // 2. store
+                        $entity->setValue($propertyConfig->name, $value);
                         break;
 
                     case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:

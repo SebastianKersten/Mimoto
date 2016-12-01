@@ -32,7 +32,7 @@ class Entity
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
-                        (object) array(
+                        'type' => (object) array(
                             'id' => CoreConfig::MIMOTO_ENTITY.'--name-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
@@ -55,7 +55,7 @@ class Entity
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_ENTITY]
+                            'value' => [CoreConfig::MIMOTO_ENTITYPROPERTY]
                         ),
                         'allowDuplicates' => (object) array(
                             'id' => CoreConfig::MIMOTO_ENTITY.'--properties-allowDuplicates',

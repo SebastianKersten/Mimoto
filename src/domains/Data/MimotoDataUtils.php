@@ -247,9 +247,8 @@ class MimotoDataUtils
                     break;
                 }
 
-
                 // validate childEntityType
-                if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds)) $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property ".$sPropertyName." only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
+                if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds)) $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
 
                 // validate childId
                 if (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId()))
@@ -289,5 +288,65 @@ class MimotoDataUtils
 
         // 3. send
         return $aFlattenedAllowedEntityTypes;
+    }
+
+    /**
+     * Convert stored value to runtime value
+     * @param mixed $value The value that has one of the types defined in MimotoEntityPropertyValueTypes
+     * @param string $sType The preferred type of the value
+     * @return mixed Runtime usable value
+     */
+    public static function convertStoredValueToRuntimeValue($value, $sType)
+    {
+        // convert
+        switch ($sType)
+        {
+            case MimotoEntityPropertyValueTypes::VALUETYPE_TEXT:
+
+                break;
+
+            case MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN:
+
+                // convert
+                $value = ($value == 1) ? true : false;
+                break;
+
+            default:
+
+                break;
+        }
+
+        // send
+        return $value;
+    }
+
+    /**
+     * Convert runtime value to storable value
+     * @param mixed $value The value that has one of the types defined in MimotoEntityPropertyValueTypes
+     * @param string $sType The preferred type of the value
+     * @return mixed Storable value
+     */
+    public static function convertRuntimeValueToStorableValue($value, $sType)
+    {
+        // convert
+        switch ($sType)
+        {
+            case MimotoEntityPropertyValueTypes::VALUETYPE_TEXT:
+
+                break;
+
+            case MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN:
+
+                // convert
+                $value = ($value === true) ? 1 : 0;
+                break;
+
+            default:
+
+                break;
+        }
+
+        // send
+        return $value;
     }
 }

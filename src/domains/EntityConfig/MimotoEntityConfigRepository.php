@@ -548,6 +548,7 @@ class MimotoEntityConfigRepository
             // skip if not the requested one
             if ($entity->name != $sEntityConfigName) { continue; }
 
+
             // init
             $entityConfig = new MimotoEntityConfig();
             
