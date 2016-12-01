@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityConnection;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
@@ -248,7 +249,7 @@ class MimotoDataUtils
                 }
 
                 // validate childEntityType
-                if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds)) $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
+                if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds) && !in_array(CoreConfig::WILDCARD, $aAllowedEntityTypeIds)) $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
 
                 // validate childId
                 if (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId()))

@@ -159,7 +159,10 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         // 3. create connection
         $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $this->_config->settings->allowedEntityTypes, $xEntityTypeId, $this->_config->name);
 
-        // 4. manage duplicates
+        // 4. validate
+        if (empty($connection)) return;
+
+        // 5. manage duplicates
         if (!$this->_config->settings->allowDuplicates)
         {
             $nCurrentCollectionCount = count($this->_data->currentCollection);
