@@ -197,14 +197,22 @@ class MimotoAimlessController
                             $nParentEntityTypeId = $entityInfo->entity->getEntityTypeId();
                             $nParentPropertyId = $GLOBALS['Mimoto.Config']->getPropertyIdByName($sPropertyName);
 
-                            output('$nChildType =======', $nChildType, true);
-                            echo 'xxxxxxx';
-                            // create
-                            $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entityInfo->entity->getId(), [$nChildType], $nChildType, $sPropertyName);
+                            // convert
+                            $allowedEntityType = (object) array(
+                                'id' => $nChildType,
+                                'name' => $GLOBALS['Mimoto.Config']->getEntityNameById($nChildType)
+                            );
 
-                            echo 'yyyyyyy';
+                            // create
+                            $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entityInfo->entity->getId(), [$allowedEntityType], $nChildType, $sPropertyName);
+
+                            //echo 'xxxxx';
                         }
-                        echo 'zzzzzz';
+
+                        //echo 'yyyyy';
+
+                        // TODO - if no connection, then connect NULL, don't create connection
+
                         // store
                         $entityInfo->entity->setValue($sPropertyName, $connection);
 

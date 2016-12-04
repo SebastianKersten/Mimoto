@@ -112,54 +112,57 @@ class EntityForm
      */
     private static function getField_name()
     {
-        // create and setup
+        // 1. create and setup field
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_ENTITY.'--name');
         $field->setValue('label', 'Name');
         $field->setValue('placeholder', "Entity name");
         $field->setValue('description', "The entity name should be unique");
 
-        // --- InputValue ---
+            // 2. setup value
+            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value->setId(CoreConfig::COREFORM_ENTITY.'--name_value');
+            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
-        // value
-        $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-        $value->setId(CoreConfig::COREFORM_ENTITY.'--name_value');
-        $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+                // 3. connect to property
+                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--name');
+                $value->setValue('entityproperty', $connectedEntityProperty);
 
-        $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--name');
+                // validation rule #1
+                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation1');
+                $validationRule->setValue('key', 'maxchars');
+                $validationRule->setValue('value', 50);
+                $validationRule->setValue('errorMessage', 'No more than 10 characters');
+                $value->addValue('validation', $validationRule);
 
-        // validation rule #1
-        $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-        $validationRule->setValue('key', 'maxchars');
-        $validationRule->setValue('value', 50);
-        $validationRule->setValue('errorMessage', 'No more than 10 characters');
-        $value->addValue('validation', $validationRule);
+                // validation rule #2
+                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation2');
+                $validationRule->setValue('key', 'minchars');
+                $validationRule->setValue('value', 1);
+                $validationRule->setValue('errorMessage', "Value can't be empty");
+                $value->addValue('validation', $validationRule);
 
-        // validation rule #2
-        $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-        $validationRule->setValue('key', 'minchars');
-        $validationRule->setValue('value', 1);
-        $validationRule->setValue('errorMessage', "Value can't be empty");
-        $value->addValue('validation', $validationRule);
+                // validation rule #3
+                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation3');
+                $validationRule->setValue('key', 'regex_custom');
+                $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
+                $validationRule->setValue('errorMessage', 'No characters other than a-z, A-Z and 0-9 allowed');
+                $value->addValue('validation', $validationRule);
 
-        // validation rule #3
-        $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-        $validationRule->setValue('key', 'regex_custom');
-        $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
-        $validationRule->setValue('errorMessage', 'No characters other than a-z, A-Z and 0-9 allowed');
-        $value->addValue('validation', $validationRule);
+                // validation rule #4
+                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation4');
+                $validationRule->setValue('key', 'api');
+                $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
+                $validationRule->setValue('errorMessage', 'The name needs to be unique');
+                $value->addValue('validation', $validationRule);
 
-        // validation rule #4
-        $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-        $validationRule->setValue('key', 'api');
-        $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
-        $validationRule->setValue('errorMessage', 'The name needs to be unique');
-        $value->addValue('validation', $validationRule);
-
-        // add
-        $value->setValue('entityproperty', $connectedEntityProperty);
-        $field->setValue('value', $value);
+            // add value to field
+            $field->setValue('value', $value);
 
         // send
         return $field;
@@ -170,40 +173,41 @@ class EntityForm
      */
     private static function getField_extends()
     {
-        // create and setup
+        // 1. create and setup field
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN);
         $field->setId(CoreConfig::COREFORM_ENTITY.'--extends');
         $field->setValue('label', 'Extend other entity');
         $field->setValue('description', "Inherit that entity's properties");
 
-        // --- InputValue ---
+            // 2. setup value
+            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value->setId(CoreConfig::COREFORM_ENTITY.'--extends_value');
+            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
-        $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-        $value->setId(CoreConfig::COREFORM_ENTITY.'--extends_value');
-        $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+                // 3. connect to property
+                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--extends');
+                $value->setValue('entityproperty', $connectedEntityProperty);
 
-        // load
-        $aEntities = $GLOBALS['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_ENTITY]);
+                // load
+                $aEntities = $GLOBALS['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_ENTITY]);
 
-        $nEntityCount = count($aEntities);
-        for ($i = 0; $i < $nEntityCount; $i++)
-        {
-            // register
-            $entity = $aEntities[$i];
+                $nEntityCount = count($aEntities);
+                for ($i = 0; $i < $nEntityCount; $i++)
+                {
+                    // register
+                    $entity = $aEntities[$i];
 
-            $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-            $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--extends_value_options-valuesettings-collection-'.$entity->getId());
-            $option->setValue('key', $entity->getEntityTypeName().'.'.$entity->getId());
-            $option->setValue('value', $entity->getValue('name'));
-            $value->addValue('options', $option);
-        }
+                    //output('$entity->getValue(\'name\')', $entity->getValue('name'));
+                    $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
+                    $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--extends_value_options-valuesettings-collection-'.$entity->getId());
+                    $option->setValue('key', $entity->getEntityTypeName().'.'.$entity->getId());
+                    $option->setValue('value', $entity->getValue('name'));
+                    $value->addValue('options', $option);
+                }
 
-        $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--extends');
-
-        // add
-        $value->setValue('entityproperty', $connectedEntityProperty);
-        $field->setValue('value', $value);
+            // add
+            $field->setValue('value', $value);
 
         // send
         return $field;

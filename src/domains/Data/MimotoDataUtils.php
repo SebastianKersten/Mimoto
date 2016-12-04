@@ -163,8 +163,6 @@ class MimotoDataUtils
      */
     public static function getEntityIdFromEntityInstanceSelector($sSelector)
     {
-        output('getEntityIdFromEntityInstanceSelector $Selector', $sSelector, true);
-
         // split
         $aParts = explode('.', $sSelector);
 
@@ -220,6 +218,7 @@ class MimotoDataUtils
                         $connection->setParentEntityTypeId($xParentEntityTypeId);
                         $connection->setParentPropertyId($xParentPropertyId);
                         $connection->setParentId($nParentId);
+                        $connection->setSortIndex(0);
 
                         switch ($sValueType)
                         {
@@ -250,8 +249,6 @@ class MimotoDataUtils
                     break;
                 }
 
-                output('$connection', $connection, true);
-
                 // validate childEntityType
                 if (!empty($connection) && empty($connection->getChildId()))
                 {
@@ -262,12 +259,12 @@ class MimotoDataUtils
                     // validate
                     if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds) && !in_array(CoreConfig::WILDCARD, $aAllowedEntityTypeIds))
                     {
-                        output('$aAllowedEntityTypeIds', $aAllowedEntityTypeIds, true);
-                        output('$xValue', $xValue);
-                        output('$xParentEntityTypeId $xParentPropertyId $nParentId', $xParentEntityTypeId.' - '.$xParentPropertyId.' - '.$nParentId);
-                        output('$aAllowedPropertyTypes', $aAllowedPropertyTypes);
-                        output('$xEntityTypeId', $xEntityTypeId);
-                        output('$sPropertyName', $sPropertyName);
+//                        output('$aAllowedEntityTypeIds', $aAllowedEntityTypeIds, true);
+//                        output('$xValue', $xValue);
+//                        output('$xParentEntityTypeId $xParentPropertyId $nParentId', $xParentEntityTypeId.' - '.$xParentPropertyId.' - '.$nParentId);
+//                        output('$aAllowedPropertyTypes', $aAllowedPropertyTypes);
+//                        output('$xEntityTypeId', $xEntityTypeId);
+//                        output('$sPropertyName', $sPropertyName);
 
                         $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
                     }
