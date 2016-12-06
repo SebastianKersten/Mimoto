@@ -250,7 +250,7 @@ class MimotoDataUtils
                 }
 
                 // validate childEntityType
-                if (!empty($connection) && empty($connection->getChildId()))
+                if (!empty($connection) && (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId())))
                 {
                     $connection = null;
                 }
@@ -259,21 +259,8 @@ class MimotoDataUtils
                     // validate
                     if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds) && !in_array(CoreConfig::WILDCARD, $aAllowedEntityTypeIds))
                     {
-//                        output('$aAllowedEntityTypeIds', $aAllowedEntityTypeIds, true);
-//                        output('$xValue', $xValue);
-//                        output('$xParentEntityTypeId $xParentPropertyId $nParentId', $xParentEntityTypeId.' - '.$xParentPropertyId.' - '.$nParentId);
-//                        output('$aAllowedPropertyTypes', $aAllowedPropertyTypes);
-//                        output('$xEntityTypeId', $xEntityTypeId);
-//                        output('$sPropertyName', $sPropertyName);
-
                         $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
                     }
-                }
-
-                // validate childId
-                if (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId()))
-                {
-                    $connection = null;
                 }
 
                 break;

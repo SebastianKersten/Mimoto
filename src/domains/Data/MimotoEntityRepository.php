@@ -178,6 +178,7 @@ class MimotoEntityRepository
         
         // init
         $aQueryElements = [];
+        $aNewConnectionsToStore = [];
         
         // load properties
         $nPropertyCount = count($aPropertyNames);
@@ -230,7 +231,10 @@ class MimotoEntityRepository
                                     $newItem = $modifiedCollection->added[$k];
 
                                     // add
-                                    $this->addItemToCollection($propertyValue->mysqlConnectionTable, $newItem);
+                                    $aNewConnectionsToStore[] = (object) array(
+                                        'dbtable' => $propertyValue->mysqlConnectionTable,
+                                        'connection' => $newItem
+                                    );
 
                                     // toggle
                                     $newItem->setNewFlag(true);
@@ -319,14 +323,33 @@ class MimotoEntityRepository
         }
         else
         {
-            // get entity
-            $entity->setId($GLOBALS['database']->lastInsertId());
-
             // register
             $sEvent = MimotoEvent::CREATED;
+
+            // read and store
+            $entity->setId($GLOBALS['database']->lastInsertId());
         }
         
-        
+
+        // --- store new connections
+
+
+        $nNewConnectionsToStoreCount = count($aNewConnectionsToStore);
+        for ($nNewConnectionsToStoreIndex = 0; $nNewConnectionsToStoreIndex < $nNewConnectionsToStoreCount; $nNewConnectionsToStoreIndex++)
+        {
+            // register
+            $newConnectionsToStore = $aNewConnectionsToStore[$nNewConnectionsToStoreIndex];
+
+            // complete
+            if (empty($newConnectionsToStore->connection->getParentId())) $newConnectionsToStore->connection->setParentId($entity->getId());
+
+            // add
+            $this->addItemToCollection($newConnectionsToStore->dbtable, $newConnectionsToStore->connection);
+        }
+
+
+
+
         // setup
         $event = new MimotoEvent($entity, $sEvent);
 
