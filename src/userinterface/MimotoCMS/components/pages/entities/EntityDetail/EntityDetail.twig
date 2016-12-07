@@ -128,4 +128,19 @@
         {% endblock %}
     {% endembed %}
 
+
+
+
+    <div class="MimotoCMS_pages_entities_EntityDetail__codeexample">
+
+        <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-title">Twig example</div>
+
+        <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-container">
+
+            &lt;div&nbsp;<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Aimless.realtime() }}' }}</span>&gt;
+            <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties">{{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample')|raw }}</div>
+            {% set htmlOutput = "</div>" %}{{ htmlOutput }}
+        </div>
+    </div>
+
 {% endblock %}

@@ -218,24 +218,24 @@ class EntityForm
      */
     private static function getField_isAbstract()
     {
-        // create and setup
+        // 1. create and setup field
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX);
         $field->setId(CoreConfig::COREFORM_ENTITY.'--isAbstract');
         $field->setValue('label', 'Configuration');
         $field->setValue('option', 'Skip dedicated table for this entity');
 
-        // --- InputValue ---
+            // 2. setup value
+            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value->setId(CoreConfig::COREFORM_ENTITY.'--isAbstract');
+            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
-        $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-        $value->setId(CoreConfig::COREFORM_ENTITY.'--isAbstract');
-        $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+                // 3. connect to property
+                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--isAbstract');
+                $value->setValue('entityproperty', $connectedEntityProperty);
 
-        $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--isAbstract');
-
-        // add
-        $value->setValue('entityproperty', $connectedEntityProperty);
-        $field->setValue('value', $value);
+            // add
+            $field->setValue('value', $value);
 
         // send
         return $field;
