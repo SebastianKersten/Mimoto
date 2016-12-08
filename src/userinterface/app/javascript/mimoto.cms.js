@@ -37,12 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     EH.init({
         "element": "p",
-        "classes": ["form-component-element-error"],
-        "errorClass": "form-component--has-error",
-        "validatedClass": "form-component--is-validated",
+        "classes": ["MimotoCMS_forms_FormComponent-element-error"],
+        "errorClass": "MimotoCMS_forms_FormComponent--has-error",
+        "validatedClass": "MimotoCMS_forms_FormComponent--is-validated",
         "iconSelectorClass": "js-error-icon",
-        "iconErrorClass": "form-component-title-icon--warning",
-        "iconValidatedClass": "form-component-title-icon--checkmark"
+        "iconErrorClass": "MimotoCMS_forms_FormComponent-title-icon--warning",
+        "iconValidatedClass": "MimotoCMS_forms_FormComponent-title-icon--checkmark"
     });
 
     // Mimoto.Aimless.realtime.onCreated('_MimotoAimless__devtools__notification', function(sType, nId)
