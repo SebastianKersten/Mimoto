@@ -21,9 +21,9 @@
 
 <{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_forms_input_Button{{ classes }}" {% if onclick %}onclick="{{ onclick }}"{%  endif %}>
   {% if label|default('') %}
-    <span class="MimotoCMS_forms_input_Button__text">{{ label }}</span>
+    <span class="MimotoCMS_forms_input_Button-text">{{ label }}</span>
   {% endif %}
   {% if icon|default('') %}
-    <span class="MimotoCMS_forms_input_Button__icon icon icon-{{ icon }}"></span>
+    <svg class="MimotoCMS_forms_input_Button-icon"><use xlink:href="#{{ icon }}"></use></svg>
   {% endif %}
 </{{ element }}>
