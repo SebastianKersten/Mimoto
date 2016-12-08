@@ -1,65 +1,63 @@
-.MimotoCMS_forms_input_Button {
+#{$pr-input}_Button {
     display: inline-flex;
     padding: 10px 20px;
     cursor: pointer;
     text-decoration: none;
+    color: $white;
     border: 0;
     outline: none;
     background-color: $black;
     box-shadow: none;
     flex-wrap: nowrap;
     align-items: center;
-    color: $white;
+}
 
-    .MimotoCMS_forms_input_Button__text {
+#{$pr-input}_Button--secondary {
+    background-color: $tower-gray;
+
+    &:hover {
+        background-color: $black;
+    }
+}
+
+#{$pr-input}_Button--text {
+    text-decoration: underline;
+    color: #555;
+    background-color: inherit;
+
+    &:hover {
+        color: #000;
+    }
+}
+
+#{$pr-input}_Button--alert {
+    background-color: $fuzzy-wuzzy-brown;
+
+    &:hover {
+        background-color: $black;
+    }
+
+    &>.#{$pr-input}_Button-icon {
+        color: #fff;
+    }
+}
+
+#{$pr-input}_Button--small {
+    padding: 6px 10px;
+    font-size: rem-calc(10px);
+}
+
+    #{$pr-input}_Button-text {
         font-family: $font-family-futura;
         font-size: rem-calc(14px);
         font-weight: 500;
         line-height: rem-calc(20px);
-
     }
 
-    .MimotoCMS_forms_input_Button__icon {
+    #{$pr-input}_Button-icon {
         display: block;
+        width: 10px;
+        height: 10px;
         margin: 5px 0 5px 15px;
-        font-size: rem-calc(10px);
-        color: $tower-gray;
+        fill: $tower-gray;
     }
-
-}
-
-.MimotoCMS_forms_input_Button--secondary {
-    background-color: $tower-gray;
-}
-
-.MimotoCMS_forms_input_Button--secondary:hover {
-    background-color: $black;
-}
-
-.MimotoCMS_forms_input_Button--text {
-    color: #555555;
-    text-decoration: underline;
-    background-color: inherit;
-}
-
-.MimotoCMS_forms_input_Button--text:hover {
-    color: #000000;
-}
-
-
-.MimotoCMS_forms_input_Button--alert {
-    background-color: $fuzzy-wuzzy-brown;
-
-    &>.MimotoCMS_forms_input_Button__icon {
-        color: #ffffff;
-    }
-}
-
-.MimotoCMS_forms_input_Button--alert:hover {
-    background-color: $black;
-}
-
-.MimotoCMS_forms_input_Button--small {
-    padding: 6px 10px;
-    font-size: rem-calc(10px);
-}

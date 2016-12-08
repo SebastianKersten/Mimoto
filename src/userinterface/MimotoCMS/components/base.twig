@@ -17,85 +17,20 @@
 </head>
 <body>
 
-{% include "MimotoCMS/components/svg.twig" %}
+    {% include "MimotoCMS/components/svg.twig" %}
 
-<div class="layer_application">
+    <div class="layer_application">
 
-    {% include "MimotoCMS/components/interface/Header/Header.twig" %}
-    {% include "MimotoCMS/components/interface/Menu/Menu.twig" %}
+        {% include "MimotoCMS/components/interface/Header/Header.twig" %}
+        {% include "MimotoCMS/components/interface/Menu/Menu.twig" %}
 
-    <section class="pagecontent">
-{#
-        <form class="js-form">
-            <div class="form-component js-form-component js-form-component-textline">
-              <label for="" class="form-component-title">Name <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
-              <div class="form-component-content">
+        <section class="pagecontent">
+            {% block content %}{% endblock %}
+        </section>
 
-                <div class="form-component-element js-error-parent">
-                  <input type="text" class="js-textline form-input" placeholder="Property name" data-fv-min-length="5" data-fv-max-length="15" data-fv-min-numbers="2" data-fv-max-numbers="3" data-fv-min-special-characters="1" data-fv-max-special-characters="2">
-                </div>
+    </div>
 
-                <p class="form-component-description">The property name should be unique</p>
-              </div>
-            </div>
-
-            <div class="form-component js-form-component js-form-component-textline">
-                <label for="" class="form-component-title">Amex <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
-                <div class="form-component-content">
-
-                    <div class="form-component-element js-error-parent">
-                        <input type="text" class="js-textline form-input" placeholder="Amex credit card number" data-fv-regex="^[0-9]{4} *[0-9]{6} *[0-9]{5}$" data-fv-error-message="Enter a valid Amex Credit Card number.">
-                    </div>
-
-                    <p class="form-component-description">The requested format is: **** ******* *****</p>
-                </div>
-            </div>
-
-            <div class="form-component js-form-component js-form-component-textline">
-                <label for="" class="form-component-title">Credit card <span class="form-component-title-information">(optioneel)</span><svg class="js-error-icon form-component-title-icon"><use xlink:href=""></use></svg></label>
-                <div class="form-component-content">
-
-                    <div class="form-component-element js-error-parent">
-                        <input type="text" class="js-textline form-input" placeholder="Credit card number" data-fv-regex="^[0-9]{13,16}$" data-fv-error-message="Enter a valid Amex Credit Card number.">
-                    </div>
-
-                    <p class="form-component-description">The requested format is a number between 13 and 16 digits in length.</p>
-                </div>
-            </div>
-
-            <div class="form-component js-form-component js-form-component-radio-button">
-                <div class="form-component-header">
-                    <label for="" class="form-component-title">Project phase <svg class="js-error-icon form-component-title-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href=""></use></svg></label>
-                </div>
-
-                <div class="form-component-content form-component-content--no-description">
-                    <div class="form-component-element js-error-parent">
-                        <div class="form-component-element-container">
-                            <input mls_form_field_input="subproject.5.phase" name="subproject.5.phase" type="radio" value="request" class="form-radiobutton js-radio-button">
-                            <label for="yes" class="form-component-element-label">Aanvraag</label>
-                        </div>
-                        <div class="form-component-element-container">
-                            <input mls_form_field_input="subproject.5.phase" name="subproject.5.phase" type="radio" value="currentproject" class="form-radiobutton js-radio-button">
-                            <label for="yes" class="form-component-element-label">Lopend project</label>
-                        </div>
-                        <div class="form-component-element-container">
-                            <input mls_form_field_input="subproject.5.phase" name="subproject.5.phase" type="radio" value="archived" class="form-radiobutton js-radio-button">
-                            <label for="yes" class="form-component-element-label">Archief</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <a class="button js-form-submit">Verstuur</a>
-        </form>
-#}
-
-        {% block content %}{% endblock %}
-    </section>
-
-</div>
-
-{% include "MimotoCMS/components/interface/Popup/Popup.twig" %}
+    {% include "MimotoCMS/components/interface/Popup/Popup.twig" %}
 
 </body>
 </html>
