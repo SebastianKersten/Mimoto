@@ -5,3 +5,4 @@ composer.lock
 node_modules
 web/static/css
 web/static/js
+src/config.php

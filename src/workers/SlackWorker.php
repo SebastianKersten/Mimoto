@@ -2,6 +2,7 @@
 
 //gearman_version();
 
+
 // init
 $worker= new GearmanWorker();
 
@@ -14,9 +15,13 @@ while ($worker->work());
 
 function sendSlackNotification($job)
 {
+    // load
+    $config = require(dirname(dirname(__FILE__)).'/config.php');
+
     // read
     $workload = json_decode($job->workload());
 
+    // compose
     $data = "payload=".json_encode(array
         (
             "channel"       =>  "#".$workload->channel,
@@ -25,8 +30,9 @@ function sendSlackNotification($job)
             "icon_emoji"    =>  ":ant:"
         ));
 
+
     // You can get your webhook endpoint from your Slack settings
-    $ch = curl_init("https://hooks.slack.com/services/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");
+    $ch = curl_init($config->slack->webhook);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

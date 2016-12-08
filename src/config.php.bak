@@ -1,0 +1,25 @@
+<?php
+
+    $config = (object) array
+    (
+        'mysql' => (object) array
+        (
+            'host' => '',
+            'dbname' => '',
+            'username' => '',
+            'password' => ''
+        ),
+        'pusher' => (object) array
+        (
+            'auth_key' => '',
+            'secret' => '',
+            'app_id' => ''
+        ),
+        'slack' => (object) array
+        (
+            'webhook' => ''
+        )
+    );
+
+    return $config;
+

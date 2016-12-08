@@ -6,6 +6,10 @@ require_once(dirname(dirname(dirname(__FILE__))).'/vendor/pusher/pusher-php-serv
 
 //gearman_version();
 
+
+$config = require_once(dirname(dirname(__FILE__)).'/config.php');
+
+
 // init
 $worker= new GearmanWorker();
 
@@ -22,9 +26,9 @@ $options = array(
 );
 
 $GLOBALS['pusher'] = new \Pusher(
-    '55152f70c4cec27de21d',
-    '7e72297e347e339cd241',
-    '185150',
+    $config->pusher->auth_key,
+    $config->pusher->secret,
+    $config->pusher->app_id,
     $options
 );
 

@@ -8,6 +8,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 // init
 $app = new \Silex\Application();
+$config = require_once(dirname(__FILE__).'/config.php');
 
 // setup
 $loader = new \Twig_Loader_Filesystem([__DIR__ . '/../src/userinterface']);
@@ -17,7 +18,7 @@ $twig = new Twig_Environment($loader, array(
 
 
 // connect
-$GLOBALS['database'] = new PDO("mysql:host=127.0.0.1;dbname=mimoto.cms", 'root', '');
+$GLOBALS['database'] = new PDO("mysql:host=".$config->mysql->host.";dbname=".$config->mysql->dbname, $config->mysql->username, $config->mysql->password);
 
 // setup
 $app['debug'] = true;
