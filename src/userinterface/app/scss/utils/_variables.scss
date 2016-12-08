@@ -1,3 +1,10 @@
+// This is the Mimoto scss variable file
+// CSS class prefix (pr) names
+
+$pr-mimotocms:                  '.MimotoCMS' !default;
+$pr-forms:                      '.MimotoCMS_forms' !default;
+$pr-input:                      '.MimotoCMS_forms_input' !default;
+
 // Fonts
 $font-family-helvetica:         "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-futura:            "Futura PT W02 Book", sans-serif !default;

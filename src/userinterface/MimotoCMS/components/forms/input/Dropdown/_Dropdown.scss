@@ -1,32 +1,37 @@
-.MimotoCMS_forms_input_Dropdown-container {
-  position: relative;
-
-  .MimotoCMS_forms_input_Dropdown {
-    display: block;
-    width: 100%;
-    max-width: none;
-    height: 50px;
-    margin: 0 0 10px;
-    padding: 0 15px;
-    font-family: $font-family-helvetica;
-    font-size: rem-calc(14px);
-    line-height: rem-calc(50px);
-    color: $black;
-    border: 1px solid $pale-slate;
-    background-color: $alabaster;
-    transition: all 100ms ease-out;
-    -webkit-appearance: none;
-  }
-
-  .MimotoCMS_forms_input_Dropdown:focus {
-    border-color: $pale-slate;
-    background-color: $bon-jour;
-  }
-
-  .MimotoCMS_forms_input_Dropdown-icon {
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    font-size: rem-calc(10px);
-  }
+#{$pr-input}_Dropdown-container {
+    position: relative;
 }
+
+    #{$pr-input}_Dropdown {
+        display: block;
+        width: 100%;
+        max-width: none;
+        height: 50px;
+        margin: 0 0 10px;
+        padding: 0 15px;
+        font-family: $font-family-helvetica;
+        font-size: rem-calc(14px);
+        line-height: rem-calc(50px);
+        color: $black;
+        border: 1px solid $pale-slate;
+        border-radius: 0;
+        outline: none;
+        background-color: $alabaster;
+        transition: all 100ms ease-out;
+        -webkit-appearance: none;
+
+        &:focus {
+            border-color: $pale-slate;
+            background-color: $bon-jour;
+        }
+    }
+
+    #{$pr-input}_Dropdown-icon {
+        position: absolute;
+        top: 17px;
+        right: 15px;
+        width: 10px;
+        height: 16px;
+        transform: rotate(90deg);
+        fill: $black;
+    }
