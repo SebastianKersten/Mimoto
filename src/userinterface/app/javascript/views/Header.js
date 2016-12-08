@@ -11,8 +11,7 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    init: function()
-    {
+    init: function () {
 
         this.setVariables();
         this.addEventListeners();
@@ -26,8 +25,7 @@ module.exports.prototype = {
     /**
      * Set dom variables
      */
-    setVariables: function()
-    {
+    setVariables: function () {
 
         this.navigationToggle = this.el.querySelector('.js-navigation-toggle');
         this.mobileNavigationToggle = this.el.querySelector('.js-mobile-navigation-toggle');
@@ -35,21 +33,21 @@ module.exports.prototype = {
         this.body = document.getElementsByTagName('body')[0];
         this.navigation = document.querySelector('.js-navigation');
 
-        this.dropdownToggles = this.el.querySelectorAll('.js-dropdown-toggle');
-        this.dropdownClass = 'js-dropdown';
-        this.dropdownActiveClass = 'header-menu-dropdown--active';
+        this.dropdowns = this.el.querySelectorAll('.js-dropdown');
+        this.dropdownContentClass = 'js-dropdown-content';
+        this.dropdownContentActiveClass = 'header-menu-dropdown-content--active';
 
         this.collapsed = false;
 
         this.notificationCount = document.getElementById('header_notification_count');
         this.conversationCount = document.getElementById('header_conversation_count');
+
     },
 
     /**
      * Add event listeners
      */
-    addEventListeners: function()
-    {
+    addEventListeners: function () {
 
         this.navigationToggle.addEventListener('click', function () {
             this.toggleMenuState();
@@ -59,8 +57,7 @@ module.exports.prototype = {
             this.toggleClass(this.navigation, 'navigation--active');
         }.bind(this));
 
-        if (this.dropdownToggles.length && this.dropdownClass)
-        {
+        if (this.dropdowns.length) {
 /*
             var rect = this.dropdownToggles[0].getBoundingClientRect();
             console.log(rect.top, rect.right, rect.bottom, rect.left);
@@ -72,10 +69,10 @@ module.exports.prototype = {
             //
             // alert('Element is ' + offset + ' vertical pixels from <body>');
 
-            for (var i = 0; i < this.dropdownToggles.length; i++) {
+            for (var i = 0; i < this.dropdowns.length; i++) {
 
-                this.dropdownToggles[i].addEventListener('click', function (e) {
-                    this.toggleDropdown(e);
+                this.dropdowns[i].addEventListener('click', function (e) {
+                    this.toggleDropdownContent(e);
                 }.bind(this));
 
             }
@@ -87,18 +84,18 @@ module.exports.prototype = {
     /**
      * Check menu state
      */
-    checkMenuState: function()
-    {
-        if (localStorage.getItem('collapsed')) { this.collapsed = JSON.parse(localStorage.getItem('collapsed'));}
+    checkMenuState: function () {
 
-        if (this.collapsed) { this.body.classList.add('navigation-collapsed'); }
+        if (localStorage.getItem('collapsed')) this.collapsed = JSON.parse(localStorage.getItem('collapsed'));
+
+        if (this.collapsed) this.body.classList.add('navigation-collapsed');
+
     },
 
     /**
      * Init notification count
      */
-    initNotificationCount: function()
-    {
+    initNotificationCount: function () {
 
         // setup
         var xhr = new XMLHttpRequest();
@@ -143,8 +140,7 @@ module.exports.prototype = {
     /**
      * Init conversation count
      */
-    initConversationCount: function()
-    {
+    initConversationCount: function () {
         
         // setup
         var xhr = new XMLHttpRequest();
@@ -152,9 +148,8 @@ module.exports.prototype = {
         
         // init
         var classRoot = this;
-        
-        xhr.onreadystatechange = function ()
-        {
+
+        xhr.onreadystatechange = function () {
             // init
             var DONE = 4; // readyState 4 means the request is done.
             var OK = 200; // status 200 is a successful return.
@@ -189,8 +184,7 @@ module.exports.prototype = {
     /**
      * Toggle menu state
      */
-    toggleMenuState: function()
-    {
+    toggleMenuState: function () {
         // toggle
         this.collapsed = !this.collapsed;
 
@@ -207,16 +201,19 @@ module.exports.prototype = {
      * @param element
      * @param className
      */
-    toggleClass: function(element, className)
-    {
+    toggleClass: function (element, className) {
+
         element.classList.toggle(className);
+
     },
 
-    toggleDropdown: function (event) {
+    toggleDropdownContent: function (event) {
 
-        var target = event.currentTarget;
+        var currentTarget = event.currentTarget;
+        var target = event.target;
 
-        target.nextElementSibling.classList.toggle(this.dropdownActiveClass);
+        if (!target.classList.contains(this.dropdownContentClass))
+            currentTarget.querySelector('.' + this.dropdownContentClass).classList.toggle(this.dropdownContentActiveClass);
 
     }
 

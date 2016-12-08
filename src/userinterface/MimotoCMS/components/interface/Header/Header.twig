@@ -23,7 +23,7 @@
 
     <ul class="header-menu">
         <li class="header-menu-item">
-            <a href="#" class="header-menu-link header-menu-user">
+            <a href="#" class="header-menu-user">
                 <span class="header-menu-user-text">Sebastian <span class="header-menu-user-text-last-name">Kersten</span></span>
                 <figure class="header-menu-user-figure">
                     <img src="/static/img/mimoto.cms/avatar.png" class="header-menu-user-image"/>
@@ -32,18 +32,18 @@
         </li>
 
         <li class="header-menu-item">
-            <div class="header-menu-dropdown">
-                <div id="header_conversation_count" class="header-menu-dropdown-conversations hidden" class="header-menu-dropdown-conversation hidden" mls_count="_MimotoAimless__devtools__conversation" mls_filter='{"state":"open"}' mls_config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
-                <svg class="header-menu-dropdown-icon js-dropdown-toggle"><use xlink:href='#ico-message'/></svg>
-                <div class="header-menu-dropdown js-dropdown js-conversations"></div>
+            <div class="header-menu-dropdown js-dropdown">
+                <div id="header_conversation_count" class="header-menu-dropdown-notification hidden" mls_count="_MimotoAimless__devtools__conversation" mls_filter='{"state":"open"}' mls_config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
+                <svg class="header-menu-dropdown-icon"><use xlink:href='#ico-header-mail'/></svg>
+                <div class="header-menu-dropdown-content js-dropdown-content js-conversations"></div>
             </div>
         </li>
 
         <li class="header-menu-item">
-            <div class="header-menu-dropdown">
+            <div class="header-menu-dropdown js-dropdown">
                 <div id="header_notification_count" class="header-menu-dropdown-notification hidden" mls_count="_MimotoAimless__devtools__notification" mls_filter='{"state":"open"}' mls_config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
-                <svg class="header-menu-dropdown-icon js-dropdown-toggle"><use xlink:href='#ico-daily-update'/></svg>
-                <div class="header-menu-dropdown js-dropdown js-messages"></div>
+                <svg class="header-menu-dropdown-icon"><use xlink:href='#ico-header-message'/></svg>
+                <div class="header-menu-dropdown-content js-dropdown-content js-messages"></div>
             </div>
         </li>
     </ul>
