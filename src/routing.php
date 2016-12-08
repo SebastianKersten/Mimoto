@@ -5,6 +5,7 @@
 
     $app->get('/', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExamples');
 
+    $app->get('/formvalidation', 'Mimoto\\UserInterface\\examples\\FormValidationController::showForm');
 
     // --- actions ---
 
