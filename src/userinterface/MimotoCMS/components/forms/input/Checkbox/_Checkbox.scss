@@ -1,53 +1,49 @@
-.form-checkbox-container {
+#{$pr-input}_Checkbox-container {
     position: relative;
     flex: 0 0 auto;
 }
 
-.form-checkbox {
-    position: relative;
-    z-index: 1;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-
-    &::after {
-        position: absolute;
+    #{$pr-input}_Checkbox {
+        position: relative;
         z-index: 1;
-        top: 0;
-        left: 0;
-        display: block;
         width: 20px;
         height: 20px;
-        content: '';
         cursor: pointer;
-        opacity: 1;
-        border: 1px solid $pale-slate;
-        background: $alabaster;
-    }
-}
 
-.form-checkbox-icon {
-    position: absolute;
-    z-index: 2;
-    top: -2px;
-    left: 4px;
-    display: none;
-    width: 12px;
-    height: 24px;
-    pointer-events: none;
-    fill: $tower-gray;
-}
+        &:checked {
+            &::after {
+                background-color: $white;
+            }
 
-.form-checkbox:checked {
-    &::before {
-        display: block;
+            + #{$pr-input}_Checkbox-icon {
+                display: block;
+            }
+        }
+
+        &::after {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 20px;
+            height: 20px;
+            content: '';
+            cursor: pointer;
+            opacity: 1;
+            border: 1px solid $pale-slate;
+            background-color: $alabaster;
+        }
     }
 
-    &::after {
-        background: $white;
+    #{$pr-input}_Checkbox-icon {
+        position: absolute;
+        z-index: 2;
+        top: -2px;
+        left: 4px;
+        display: none;
+        width: 12px;
+        height: 24px;
+        pointer-events: none;
+        fill: $tower-gray;
     }
-
-    + .form-checkbox-icon {
-        display: block;
-    }
-}
