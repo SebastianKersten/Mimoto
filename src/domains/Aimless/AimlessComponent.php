@@ -445,7 +445,7 @@ class AimlessComponent
         $formConfig = $this->_aFormConfigs[$sKey];
 
         // 4. output
-        return $this->renderForm($formConfig->sFormName, $formConfig->xValues);
+        return $this->renderForm($formConfig->sFormName, $formConfig->xValues, $formConfig->options);
     }
 
 
@@ -593,10 +593,10 @@ class AimlessComponent
      * @param $xValues
      * @return string
      */
-    private function renderForm($sFormName, $xValues)
+    private function renderForm($sFormName, $xValues, $options)
     {
         // create
-        $component = $this->_AimlessService->createForm($sFormName, $xValues);
+        $component = $this->_AimlessService->createForm($sFormName, $xValues, $options);
 
         // output
         return $component->render(); //$this->_aVars); // #todo - pass vars for rendering

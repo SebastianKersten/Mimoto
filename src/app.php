@@ -24,6 +24,7 @@ $GLOBALS['database'] = new PDO("mysql:host=".$config->mysql->host.";dbname=".$co
 $app['debug'] = true;
 $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app);
+//function Mimoto('data') of als singleton Mimoto::data->create
 
 
 function output($sTitle, $data, $bScream = false)

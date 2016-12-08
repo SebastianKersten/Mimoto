@@ -20,6 +20,7 @@ class AimlessForm extends AimlessComponent
 
     // data
     private $_xValues;
+    private $_aOptions;
 
 
 
@@ -32,7 +33,7 @@ class AimlessForm extends AimlessComponent
      * @param MimotoEntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sFormName, $xValues, $options, $AimlessService, $DataService, $FormService, $LogService, $TwigService)
+    public function __construct($sFormName, $xValues, $aOptions, $AimlessService, $DataService, $FormService, $LogService, $TwigService)
     {
 
         if (empty($options))
@@ -47,6 +48,7 @@ class AimlessForm extends AimlessComponent
             // register
             $this->_sFormName = $sFormName;
             $this->_xValues = $xValues;
+            $this->_aOptions = $aOptions;
         }
     }
 
@@ -72,6 +74,12 @@ class AimlessForm extends AimlessComponent
 
         // add security
         $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.$GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities)).'">';
+
+        // add instructions
+        if (!empty($this->_aOptions) && !empty($this->_aOptions['onCreatedAddTo']))
+        {
+            $sRenderedForm .= '<input type="hidden" name="Mimoto.onCreated:addTo" value="'.$this->_aOptions['onCreatedAddTo'].'">';
+        }
 
         // render form
         $sRenderedForm .= parent::renderCollection($aFields, null, null, $formVars->fieldVars);

@@ -247,11 +247,33 @@ class MimotoAimlessController
                     'id' => $sEntityType.'.'.$entityInfo->entity->getId()
                 );
             }
+
+
+            // auto add to property - #todo - move to separate function
+            $sInstruction = (isset($requestData->onCreatedAddTo)) ? $requestData->onCreatedAddTo : null;
+
+            echo '[sInstruction = '.$sInstruction.']';
+            if (!empty($sInstruction))
+            {
+                echo 'INSTRUCVION-#A';
+
+                // split
+                $aInstructionParts = explode('.', $sInstruction);
+
+                // load
+                $parentEntity = $app['Mimoto.Data']->get($aInstructionParts[0], $aInstructionParts[1]);
+
+                // add
+                $parentEntity->addValue($aInstructionParts[2], $entityInfo->entity);
+
+                // store
+                $app['Mimoto.Data']->store($parentEntity);
+            }
         }
 
 
 
-        // in case of change selectors due to a nemly created entity, redetermine public key
+        // in case of change selectors due to a newly created entity, redetermine public key
         if ($bAnyNewEntity)
         {
             // 1. init

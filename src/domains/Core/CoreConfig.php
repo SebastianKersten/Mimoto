@@ -123,6 +123,10 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTY_NEW   = '_MimotoAimless__coreform__entityproperty_new';
     const COREFORM_ENTITYPROPERTY_EDIT  = '_MimotoAimless__coreform__entityproperty_edit';
 
+    const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE = '_MimotoAimless__coreform__entitypropertysetting_value_type';
+    const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE = '_MimotoAimless__coreform__entitypropertysetting_entity_allowedEntityType';
+    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES = '_MimotoAimless__coreform__entitypropertysetting_value_allowedEntityTypes';
+    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES = '_MimotoAimless__coreform__entitypropertysetting_collection_allowDuplicates';
 
     // #todo
     // 1. noteer hier ook de tables en tableconfigs for installatie

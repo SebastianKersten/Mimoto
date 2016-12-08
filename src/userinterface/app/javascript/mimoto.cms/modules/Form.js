@@ -185,18 +185,23 @@ module.exports.prototype = {
         var sPublicKey = '';
         var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
         aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
-
+    
+        // 6. read instructions
+        var sOnCreatedAddTo = '';
+        var aOnCreatedAddTo = $("input[name='Mimoto.onCreated:addTo']", $form);
+        aOnCreatedAddTo.each( function(index, $component) { sOnCreatedAddTo = $($component).val(); });
+        
         // 7. collect data
         var aValues = {};
         for (var i = 0; i < nFieldCount; i++)
         {
-            // register
+            // 7a. register
             var field = aFields[i];
 
-            // 8. find field
+            // 7b. find field
             var aComponents = $("[mls_form_field_input='" + field.sName + "']", $form);
 
-            // 9. collect value
+            // 7c. collect value
             var classRoot = this;
             aComponents.each( function(index, $component)
             {
@@ -207,9 +212,12 @@ module.exports.prototype = {
                 if (value !== null) aValues[field.sName] = value;
             });
         }
-
+    
+        
+        
         // 10. collect data
         var requestData = { publicKey: sPublicKey, values: aValues };
+        if (sOnCreatedAddTo) requestData.onCreatedAddTo = sOnCreatedAddTo;
 
 
 
@@ -286,6 +294,9 @@ module.exports.prototype = {
                     {
                         sPublicKey = $($component).val(resultData.newPublicKey);
                     });
+                    
+                    // cleanup instructions
+                    $("input[name='Mimoto.onCreated:addTo']", $form).remove();
                 }
 
                 // 1. #todo get input field value in method

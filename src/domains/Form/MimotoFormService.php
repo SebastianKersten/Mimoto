@@ -10,6 +10,10 @@ use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 use Mimoto\Core\forms\EntityForm;
 use Mimoto\Core\forms\EntityPropertyForm;
+use Mimoto\Core\forms\EntityPropertyForm_Value_type;
+use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
+use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
+use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 
 
 /**
@@ -277,8 +281,14 @@ class MimotoFormService
         {
             case CoreConfig::COREFORM_ENTITY_NEW: return EntityForm::getStructureNew(); break;
             case CoreConfig::COREFORM_ENTITY_EDIT: return EntityForm::getStructureEdit(); break;
+
             case CoreConfig::COREFORM_ENTITYPROPERTY_NEW: return EntityPropertyForm::getStructureNew(); break;
             case CoreConfig::COREFORM_ENTITYPROPERTY_EDIT: return EntityPropertyForm::getStructureEdit(); break;
+
+            case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE: return EntityPropertyForm_Value_type::getStructure(); break;
+            case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE: return EntityPropertyForm_Entity_allowedEntityType::getStructure(); break;
+            case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES: return EntityPropertyForm_Collection_allowedEntityTypes::getStructure(); break;
+            case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES: return EntityPropertyForm_Collection_allowDuplicates::getStructure(); break;
         }
     }
 }

@@ -18,7 +18,8 @@
             "projectManager",
             "projectManager.name",
 
-            "subprojects"
+            "subprojects",
+            "properties"
         ]
     }
 }
