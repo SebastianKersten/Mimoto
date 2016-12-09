@@ -3,7 +3,7 @@
         <div class="MimotoCMS_forms_FormComponent-element-container">
             <div class="MimotoCMS_forms_input_Checkbox-container">
                 {% set sInputId = Aimless.meta('type')~'.'~Aimless.meta('id') %}
-                <input {{ Aimless.input()|raw }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_Checkbox" {% if Aimless.value() %}checked{% endif %} />
+                <input {{ Aimless.input()|raw }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_Checkbox js-checkbox" {% if Aimless.value() %}checked{% endif %} />
                 <svg class="MimotoCMS_forms_input_Checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
             </div>
             <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ Aimless.data('option') }}</label>

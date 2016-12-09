@@ -34,13 +34,10 @@ module.exports.prototype = {
 
   addEventListeners: function () {
 
-    if (this.submit) {
-      this.submit.addEventListener('click', function () {
+    if (this.submit)
+      this.submit.addEventListener('click',this.validateForm.bind(this));
 
-        this.validateForm();
-
-      }.bind(this));
-    }
+    this.el.addEventListener('validate', this.validateForm.bind(this));
 
   },
 
@@ -65,9 +62,9 @@ module.exports.prototype = {
     this.validated = true;
     this.validateElements();
 
-    if (this.validated) {
+    if (this.validated)
       this.el.submit();
-    }
+
 
   },
 
