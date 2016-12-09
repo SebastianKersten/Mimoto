@@ -29,12 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var header = document.querySelector('.js-header');
     var forms = document.querySelectorAll('.js-form');
 
-    if (navigation && header) { new HeaderView(header); }
-
-    for (var i = 0; i < forms.length; i++) {
-        new FormView(forms[i]);
-    }
-
     EH.init({
         "element": "p",
         "classes": ["MimotoCMS_forms_FormComponent-element-error"],
@@ -44,6 +38,12 @@ document.addEventListener('DOMContentLoaded', function () {
         "iconErrorClass": "MimotoCMS_forms_FormComponent-title-icon--warning",
         "iconValidatedClass": "MimotoCMS_forms_FormComponent-title-icon--checkmark"
     });
+
+    if (navigation && header) { new HeaderView(header); }
+
+    for (var i = 0; i < forms.length; i++) {
+        new FormView(forms[i]);
+    }
 
     // Mimoto.Aimless.realtime.onCreated('_MimotoAimless__devtools__notification', function(sType, nId)
     // {
