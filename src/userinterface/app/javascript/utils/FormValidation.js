@@ -42,7 +42,7 @@ module.exports = {
     this.minLength = this.input.getAttribute('data-fv-min-length');
     this.maxLength = this.input.getAttribute('data-fv-max-length');
 
-    this.noNumbers = this.input.getAttribute('data-fv-no-numbers');
+    this.noNumbers = this.input.hasAttribute('data-fv-no-numbers');
     this.minNumbers = this.input.getAttribute('data-fv-min-numbers');
     this.maxNumbers = this.input.getAttribute('data-fv-max-numbers');
 
