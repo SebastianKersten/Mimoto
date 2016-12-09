@@ -10,6 +10,10 @@
     box-shadow: none;
     flex-wrap: nowrap;
     align-items: center;
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 #{$pr-input}_Button--secondary {

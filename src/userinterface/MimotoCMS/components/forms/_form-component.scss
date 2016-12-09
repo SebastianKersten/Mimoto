@@ -1,16 +1,16 @@
-.form-component {
+#{$pr-forms}_FormComponent {
     position: relative;
     overflow: hidden;
     max-width: 1000px;
     margin-bottom: 20px;
 
-    &.form-component--is-validated {
-        .form-component-title {
+    &.#{$pr-forms}_FormComponent--is-validated {
+        .#{$pr-forms}_FormComponent-title {
             color: $tower-gray;
         }
     }
 
-    &.form-component--has-error {
+    &.#{$pr-forms}_FormComponent--has-error {
         .mimoto-textline,
         .form-select,
         .form-checkbox::after,
@@ -19,88 +19,90 @@
             border-color: $fuzzy-wuzzy-brown;
         }
     }
+}
 
-    .form-component-header {
+    #{$pr-forms}_FormComponent-header {
         display: flex;
         padding-right: percentage(1 / 3);
         align-items: center;
     }
 
-    .form-component-title {
-        position: relative;
-        display: inline-block;
-        margin: 0 0 10px;
-        padding: 0 20px 0 0;
-        font-family: $font-family-futura;
-        font-size: rem-calc(14px);
-        font-weight: 500;
-        color: rgba($black, .9);
-
-        .form-component-title-information {
-            font-family: $font-family-helvetica;
-            color: rgba($black, .5);
+        #{$pr-forms}_FormComponent-title {
+            position: relative;
+            display: inline-block;
+            margin: 0 0 10px;
+            padding: 0 20px 0 0;
+            font-family: $font-family-futura;
+            font-size: rem-calc(14px);
+            font-weight: 500;
+            color: rgba($black, .9);
         }
 
-        .form-component-title-icon {
-            position: absolute;
-            top: -4px;
-            right: 0;
-            display: none;
-            width: 15px;
-            height: 30px;
+            #{$pr-forms}_FormComponent-title-information {
+                font-family: $font-family-helvetica;
+                color: rgba($black, .5);
+            }
+
+            #{$pr-forms}_FormComponent-title-icon {
+                position: absolute;
+                top: -4px;
+                right: 0;
+                display: none;
+                width: 15px;
+                height: 30px;
+            }
+
+            #{$pr-forms}_FormComponent-title-iconicon-loading {
+                top: 5px;
+                width: 15px;
+                height: 15px;
+                background-size: 15px 15px;
+            }
+
+            #{$pr-forms}_FormComponent-title-icon--checkmark {
+                display: block;
+                fill: $tower-gray;
+            }
+
+            #{$pr-forms}_FormComponent-title-icon--warning {
+                display: block;
+                fill: $fuzzy-wuzzy-brown;
+            }
+
+        #{$pr-forms}_FormComponent-button {
+            display: flex;
+            margin: 0 0 10px;
+            flex: 1 1 auto;
+            justify-content: flex-end;
         }
 
-        .form-component-title-icon.icon-loading {
-            top: 5px;
-            width: 15px;
-            height: 15px;
-            background-size: 15px 15px;
-        }
-
-        .form-component-title-icon--checkmark {
-            display: block;
-            fill: $tower-gray;
-        }
-
-        .form-component-title-icon--warning {
-            display: block;
-            fill: $fuzzy-wuzzy-brown;
-        }
-    }
-
-    .form-component-button {
-        display: flex;
-        margin: 0 0 10px;
-        flex: 1 1 auto;
-        justify-content: flex-end;
-    }
-
-    .form-component-content {
+    #{$pr-forms}_FormComponent-content {
         display: flex;
         flex-wrap: wrap;
 
-        &.form-component-content--no-description {
+        &#{$pr-forms}_FormComponent-content--no-description {
             padding: 0 percentage(1 / 3) 0 0;
         }
+    }
 
-        .form-component-element {
+        #{$pr-forms}_FormComponent-element {
             width: percentage(2 / 3);
             min-width: 400px;
             flex: 1 1 auto;
         }
 
-        .form-component-description {
+        #{$pr-forms}_FormComponent-description {
             position: relative;
             width: percentage(1 / 3);
             min-width: 200px;
             margin: 0 0 10px;
             padding: 10px 0 0 15px;
             font-size: rem-calc(13px);
-            color: rgba($black, .5);
+            color: rgba($black, 5);
             flex: 1 1 auto;
         }
 
-        .form-component-description::before {
+        #{$pr-forms}_FormComponent-description::before {
             position: absolute;
             top: 0;
             left: 15px;
@@ -111,12 +113,12 @@
             background: rgba($black, .15);
         }
 
-        .form-component-element-container {
+        #{$pr-forms}_FormComponent-element-container {
             display: flex;
             margin: 0 0 10px;
         }
 
-        .form-component-element-label {
+        #{$pr-forms}_FormComponent-element-label {
             padding: 0 0 0 10px;
             cursor: pointer;
             font-size: rem-calc(14px);
@@ -124,10 +126,9 @@
             flex: 0 1 auto;
         }
 
-        .form-component-element-error {
+        #{$pr-forms}_FormComponent-element-error {
             margin: 0 0 10px;
             font-size: rem-calc(13px);
             color: $fuzzy-wuzzy-brown;
         }
-    }
-}
+

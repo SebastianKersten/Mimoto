@@ -21,7 +21,7 @@ module.exports.prototype = {
 
   setVariables: function () {
 
-    this.textline = this.el.querySelector('.mimoto-textline');
+    this.textline = this.el.querySelector('.js-textline');
 
   },
 
