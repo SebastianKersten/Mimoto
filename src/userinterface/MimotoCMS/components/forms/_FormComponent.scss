@@ -4,14 +4,14 @@
     max-width: 1000px;
     margin-bottom: 20px;
 
-    &.#{$pr-forms}_FormComponent--is-validated {
+    &#{$pr-forms}_FormComponent--is-validated {
         .#{$pr-forms}_FormComponent-title {
             color: $tower-gray;
         }
     }
 
-    &.#{$pr-forms}_FormComponent--has-error {
-        .mimoto-textline,
+    &#{$pr-forms}_FormComponent--has-error {
+        #{$pr-input}_textline,
         .form-select,
         .form-checkbox::after,
         .form-radiobutton::after,
