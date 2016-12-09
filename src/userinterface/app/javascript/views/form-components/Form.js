@@ -34,11 +34,13 @@ module.exports.prototype = {
 
   addEventListeners: function () {
 
-    this.submit.addEventListener('click', function () {
+    if (this.submit) {
+      this.submit.addEventListener('click', function () {
 
-      this.validateForm();
+        this.validateForm();
 
-    }.bind(this));
+      }.bind(this));
+    }
 
   },
 
