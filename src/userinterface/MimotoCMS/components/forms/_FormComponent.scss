@@ -11,10 +11,10 @@
     }
 
     &#{$pr-forms}_FormComponent--has-error {
-        #{$pr-input}_textline,
-        .form-select,
-        .form-checkbox::after,
-        .form-radiobutton::after,
+        #{$pr-input}_Textline,
+        #{$pr-input}_Dropdown,
+        #{$pr-input}_Checkbox::after,
+        #{$pr-input}_RadioButton::after,
         .form-image-upload {
             border-color: $fuzzy-wuzzy-brown;
         }
