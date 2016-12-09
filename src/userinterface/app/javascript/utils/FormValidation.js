@@ -6,7 +6,7 @@ module.exports = {
 
     this.el = element;
 
-    this.textline = this.el.querySelector('.mimoto-textline');
+    this.textline = this.el.querySelector('.js-textline');
     this.checkboxes = this.el.querySelectorAll('.js-checkbox');
     this.radioButtons = this.el.querySelectorAll('.js-radio-button');
 

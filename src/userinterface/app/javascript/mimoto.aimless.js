@@ -29,4 +29,3 @@ document.addEventListener('DOMContentLoaded', function () {
     Mimoto.Aimless.connect(false);
     
 }, false);
-
