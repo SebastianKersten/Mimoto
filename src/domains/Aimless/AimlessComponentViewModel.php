@@ -53,9 +53,9 @@ class AimlessComponentViewModel
         return $this->_component->selection($sSelectionName);
     }
 
-    public function realtime($sPropertySelector = null)
+    public function realtime($sPropertySelector = null, $sComponentName = null)
     {
-        return $this->_component->realtime($sPropertySelector);
+        return $this->_component->realtime($sPropertySelector, $sComponentName);
     }
 
     public function meta($sPropertyName)

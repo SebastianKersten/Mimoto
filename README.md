@@ -335,3 +335,7 @@ Example:
 ```
 <div id="header_notification_count" class="hidden" mls_count="_MimotoAimless__devtools__notification" mls_filter='{"state":"open"}' mls_config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
 ```
+
+
+## Javascript features
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset

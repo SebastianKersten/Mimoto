@@ -324,7 +324,7 @@ class AimlessComponent
     }
 
 
-    public function realtime($sPropertySelector = null)
+    public function realtime($sPropertySelector = null, $sComponentName = null)
     {
         if ($sPropertySelector !== null)
         {
@@ -344,7 +344,7 @@ class AimlessComponent
             if (!empty($this->_entity) && $this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
 
-                $sComponentName = $this->_aPropertyComponents[$sPropertyName]->sComponentName;
+                $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
                 $sComponentConditionals = $GLOBALS['Mimoto.Aimless']->getComponentConditionalsAsString($sComponentName);
                 $sComponentName .= $sComponentConditionals;
 
@@ -358,7 +358,7 @@ class AimlessComponent
             if (isset($this->_aSelections[$sPropertyName]))
             {
 
-                $sComponentName = $this->_aSelections[$sPropertyName]->sComponentName;
+                $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aSelections[$sPropertyName]->sComponentName;
                 $sComponentConditionals = $GLOBALS['Mimoto.Aimless']->getComponentConditionalsAsString($sComponentName);
                 $sComponentName .= $sComponentConditionals;
 

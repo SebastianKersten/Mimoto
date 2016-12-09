@@ -252,11 +252,9 @@ class MimotoAimlessController
             // auto add to property - #todo - move to separate function
             $sInstruction = (isset($requestData->onCreatedAddTo)) ? $requestData->onCreatedAddTo : null;
 
-            echo '[sInstruction = '.$sInstruction.']';
+
             if (!empty($sInstruction))
             {
-                echo 'INSTRUCVION-#A';
-
                 // split
                 $aInstructionParts = explode('.', $sInstruction);
 
