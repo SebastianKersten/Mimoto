@@ -15,6 +15,9 @@ use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 
+// Symfony classes
+use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * MimotoFormService
@@ -80,6 +83,227 @@ class MimotoFormService
         
         // send
         return $aResults[0];
+    }
+
+    public function parseForm($sFormName, Request $request)
+    {
+        // 1. load request data
+        $requestData = json_decode($request->getContent());
+
+        // 2. register values
+        $aRequestValues = $requestData->values;
+        $sPublicKey = $requestData->publicKey;
+
+        // get all vars and entities
+        $aValues = [];
+        $aEntities = [];
+        foreach ($aRequestValues as $key => $value)
+        {
+            // filter
+            if (strpos($key, '.') !== false)
+            {
+                // prepare
+                $aSelectorElements = explode('.', $key);
+
+                // validate
+                if (count($aSelectorElements) != 3) continue; // #todo - silent fail - possible misabuse
+                if (!MimotoDataUtils::validatePropertyName($aSelectorElements[0])) continue;
+                if (!MimotoDataUtils::isValidEntityId($aSelectorElements[1])) continue;
+                if (!MimotoDataUtils::validatePropertyName($aSelectorElements[2])) continue;
+
+                // register
+                $sEntityType = $aSelectorElements[0];
+                $nEntityId = $aSelectorElements[1];
+                $sPropertyName = $aSelectorElements[2];
+
+                if (!isset($aEntities[$sEntityType]))
+                {
+                    $aEntities[$sEntityType] = (object) array(
+                        'entityType' => $sEntityType,
+                        'entityId' => $nEntityId,
+                        'properties' => []
+                    );
+                }
+
+                $aEntities[$sEntityType]->properties[] = $sPropertyName;
+            }
+            else
+            {
+                $aValues[$key] = $value;
+            }
+        }
+
+        // collect
+        foreach ($aEntities as $sEntityType => $entityInfo)
+        {
+            if ($entityInfo->entityId == CoreConfig::ENTITY_NEW)
+            {
+                // create
+                $entityInfo->entity = $this->_MimotoEntityService->create($entityInfo->entityType);
+            }
+            else
+            {
+                // load
+                $entityInfo->entity = $this->_MimotoEntityService->get($entityInfo->entityType, $entityInfo->entityId);
+            }
+
+            // load and store
+            $aValues[$entityInfo->entityType] = $entityInfo->entity;
+        }
+
+
+        // 3. load form
+        $form = $GLOBALS['Mimoto.Forms']->getFormByName($sFormName);
+
+        // 4. prepare
+        $formVars = $GLOBALS['Mimoto.Forms']->getFormVars($form, $aValues);
+
+        // 5. authenticate
+        if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities)))
+        {
+            $GLOBALS['Mimoto.Log']->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
+        }
+
+
+        $formResponse = (object) array( //new MimotoFormResponse();
+            'status' => '?',
+            'formName' => $sFormName,
+            'errors' => []
+        );
+
+
+        // collect
+        $bAnyNewEntity = false;
+        foreach ($aEntities as $sEntityType => $entityInfo)
+        {
+            // parse
+            $nPropertyCount = count($entityInfo->properties);
+            for ($i = 0; $i < $nPropertyCount; $i++)
+            {
+                // register
+                $sPropertyName = $entityInfo->properties[$i];
+
+                // compose
+                $sValueKey = $entityInfo->entityType.'.'.$entityInfo->entityId.'.'.$sPropertyName;
+
+
+                // read
+                $sPropertyType = $entityInfo->entity->getPropertyType($sPropertyName);
+
+                switch($sPropertyType)
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                        // update
+                        $entityInfo->entity->setValue($sPropertyName, $aRequestValues->$sValueKey);
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                        // init
+                        $connection = null;
+
+                        // validate
+                        if (!empty($aRequestValues->$sValueKey))
+                        {
+                            // split
+                            $nChildType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($aRequestValues->$sValueKey);
+                            $nChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($aRequestValues->$sValueKey);
+
+                            // register
+                            $nParentEntityTypeId = $entityInfo->entity->getEntityTypeId();
+                            $nParentPropertyId = $GLOBALS['Mimoto.Config']->getPropertyIdByName($sPropertyName);
+
+                            // convert
+                            $allowedEntityType = (object) array(
+                                'id' => $nChildType,
+                                'name' => $GLOBALS['Mimoto.Config']->getEntityNameById($nChildType)
+                            );
+
+                            // create
+                            $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entityInfo->entity->getId(), [$allowedEntityType], $nChildType, $sPropertyName);
+                        }
+
+                        // store
+                        $entityInfo->entity->setValue($sPropertyName, $connection);
+
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                        echo '<b>MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION</b><br>';
+                        echo '$aRequestValues->$sValueKey = '.$aRequestValues->$sValueKey."<br>";
+
+                        break;
+
+                    default:
+
+                        // 1. log error
+                }
+            }
+
+
+            // prepare response
+            $bIsNew = (empty($entityInfo->entity->getId())) ? true : false;
+
+            // store
+            $app['Mimoto.Data']->store($entityInfo->entity);
+
+
+            // compose response
+            if ($bIsNew)
+            {
+                // toggle
+                $bAnyNewEntity = true;
+
+                // init if not yet defined
+                if (!isset($formResponse->newEntities)) $formResponse->newEntities = [];
+
+                // register
+                $formResponse->newEntities[$sEntityType] = (object) array(
+                    'selector' => $sEntityType.'.'.CoreConfig::ENTITY_NEW,
+                    'id' => $sEntityType.'.'.$entityInfo->entity->getId()
+                );
+            }
+
+
+            // auto add to property - #todo - move to separate function
+            $sInstruction = (isset($requestData->onCreatedAddTo)) ? $requestData->onCreatedAddTo : null;
+
+
+            if (!empty($sInstruction))
+            {
+                // split
+                $aInstructionParts = explode('.', $sInstruction);
+
+                // load
+                $parentEntity = $app['Mimoto.Data']->get($aInstructionParts[0], $aInstructionParts[1]);
+
+                // add
+                $parentEntity->addValue($aInstructionParts[2], $entityInfo->entity);
+
+                // store
+                $app['Mimoto.Data']->store($parentEntity);
+            }
+        }
+
+
+
+        // in case of change selectors due to a newly created entity, redetermine public key
+        if ($bAnyNewEntity)
+        {
+            // 1. init
+            $aNewValues = [];
+
+            // 2. collect
+            foreach ($aEntities as $sEntityType => $entityInfo) { $aNewValues[] = $entityInfo->entity; }
+
+            // 3. load
+            $formVars = $GLOBALS['Mimoto.Forms']->getFormVars($form, $aNewValues);
+
+            // 4. define
+            $formResponse->newPublicKey = $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities));
+        }
     }
 
     public function getFormVars($form, $xValues, $aFields = null)

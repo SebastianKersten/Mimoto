@@ -21,8 +21,8 @@ $worker->addFunction("sendUpdate", "sendUpdate");
 
 // configure    
 $options = array(
-    'cluster' => 'eu',
-    'encrypted' => true
+    $config->pusher->cluster,
+    $config->pusher->encrypted
 );
 
 $GLOBALS['pusher'] = new \Pusher(

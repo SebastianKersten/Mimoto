@@ -13,7 +13,9 @@
         (
             'auth_key' => '',
             'secret' => '',
-            'app_id' => ''
+            'app_id' => '',
+            'cluster' => 'eu',
+            'encrypted' => true
         ),
         'slack' => (object) array
         (
