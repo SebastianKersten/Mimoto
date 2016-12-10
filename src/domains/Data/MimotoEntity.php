@@ -238,14 +238,14 @@ class MimotoEntity
      * @param boolean $bGetConnectionInformation The storable value, in case of an entity or collection. Default is false
      * @return mixed xValue
      */
-    public function getValue($sPropertySelector, $bGetConnectionInfo = false)
+    public function getValue($sPropertySelector, $bGetConnectionInfo = false, $bGetPersistentValue = false)
     {
         // load
         $property = $this->getProperty($sPropertySelector);
         $sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
 
         // forward and send
-        return $property->getValue($bGetConnectionInfo, $sSubpropertySelector);
+        return $property->getValue($bGetConnectionInfo, $sSubpropertySelector, $bGetPersistentValue);
     }
     
     /**

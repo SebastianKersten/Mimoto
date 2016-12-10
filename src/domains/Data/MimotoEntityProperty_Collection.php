@@ -69,7 +69,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
      * @param string $sSubpropertySelector
      * @return array
      */
-    public function getValue($bGetConnectionInfo = false, $sSubpropertySelector = null)
+    public function getValue($bGetConnectionInfo = false, $sSubpropertySelector = null, $bGetPersistentValue = false)
     {
         // 1. read
         $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);

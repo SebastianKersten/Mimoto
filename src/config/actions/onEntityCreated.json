@@ -1,0 +1,6 @@
+{
+    "trigger": "_MimotoAimless__core__entity.created",
+    "service": "Aimless",
+    "request": "createEntityTable",
+    "type": "sync"
+}

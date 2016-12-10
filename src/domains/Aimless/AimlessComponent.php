@@ -399,7 +399,7 @@ class AimlessComponent
 
                     // 1. check if component was set todo
 
-                    $sComponentName = $this->_aPropertyComponents[$sPropertyName]->sComponentName;
+                    $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
                     $sComponentName = (!empty($sComponentName)) ? ' mls_component="'.$sComponentName.'"' : '';
                     return 'data-aimless-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sComponentName;
                     break;

@@ -1,14 +1,18 @@
 <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting">
-    {{ Aimless.render('key') }}:<br>
+    {{ Aimless.render('key') }} <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu">
+        <a onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Aimless.meta('id', 'type') }}');">edit</a>
+    </span>:<br>
     {% if Aimless.data('key') == 'allowedEntityType' %}
-        {{ Aimless.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}
+        <div {{ Aimless.realtime('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}>
+            {{ Aimless.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}
+        </div>
     {% elseif Aimless.data('key') == 'allowedEntityTypes' %}
         [
-            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes">
-            {{ Aimless.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}
+            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes" {{ Aimless.realtime('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}>
+                {{ Aimless.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}
             </div>
         ]
     {% else %}
-        {{ Aimless.render('value')|raw }}
+        <div {{ Aimless.realtime('value')|raw }}>{{ Aimless.render('value')|raw }}</div>
     {% endif %}
 </div>

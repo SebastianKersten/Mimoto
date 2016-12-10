@@ -114,6 +114,12 @@ module.exports.prototype = {
     {
         Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
     },
+    
+    
+    entityPropertySettingEdit: function(nEntityPropertySettingId)
+    {
+        Mimoto.popup.open('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
+    },
 
 
 

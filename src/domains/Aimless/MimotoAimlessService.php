@@ -275,21 +275,14 @@ class MimotoAimlessService
         
         switch($sRequest)
         {
-            case 'dataUpdate':
-                
-                $this->dataUpdate($data, $config);
-                break;
-            
-            case 'dataCreate':
-                
-                $this->dataCreate($data, $config);
-                break;
+            case 'dataUpdate':              $this->dataUpdate($data, $config); break;
+            case 'dataCreate':              $this->dataCreate($data, $config); break;
+            case 'sendSlackNotification':   $this->sendSlackNotification($data, $config); break;
+            case 'createEntityTable':       $GLOBALS['Mimoto.Config']->entityCreateTable($data); break;
+            case 'updateEntityTable':       $GLOBALS['Mimoto.Config']->entityUpdateTable($data); break;
+            case 'onEntityPropertyCreated': $GLOBALS['Mimoto.Config']->onEntityPropertyCreated($data); break;
+            case 'onEntityPropertyUpdated': $GLOBALS['Mimoto.Config']->onEntityPropertyUpdated($data); break;
 
-            case 'sendSlackNotification':
-
-                $this->sendSlackNotification($data, $config);
-                break;
-            
             default:
                 
                 die("MimotoAimlessService: Unknown request '".$sRequest."'");

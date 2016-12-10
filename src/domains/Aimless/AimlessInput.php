@@ -47,6 +47,11 @@ class AimlessInput extends AimlessComponent
         return 'mls_form_field_input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"';
     }
 
+    public function fieldId()
+    {
+        return $this->_sFieldId;
+    }
+
     public function error()
     {
         return 'mls_form_field_error="'.$this->_sFieldId.'"';

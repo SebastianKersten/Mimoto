@@ -19,7 +19,8 @@
             "projectManager.name",
 
             "subprojects",
-            "properties"
+            "properties",
+            "value"
         ]
     },
     "notes": "voor admin user, send all. Add 'except'"

@@ -66,10 +66,10 @@ class MimotoEntityProperty_Value extends MimotoEntityProperty implements MimotoE
      * @param string $sSubpropertySelector [unused for this type of property]
      * @return mixed
      */
-    public function getValue($bGetConnectionInfo = false, $sSubpropertySelector = null)
+    public function getValue($bGetConnectionInfo = false, $sSubpropertySelector = null, $bGetPersistentValue = false)
     {
         // 1. send
-        return $this->_data->currentValue;
+        return ($bGetPersistentValue) ? $this->_data->persistentValue : $this->_data->currentValue;
     }
 
     /**

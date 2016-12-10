@@ -26,6 +26,7 @@ class EntityPropertyForm_Collection_allowDuplicates
         $form = self::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES);
 
         // setup
+        $form->addValue('fields', self::getField_title('Configure'));
         $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_allowDuplicates());
         $form->addValue('fields', self::getField_groupEnd());
@@ -56,6 +57,20 @@ class EntityPropertyForm_Collection_allowDuplicates
 
         // send
         return $form;
+    }
+
+    /**
+     * Get field: title
+     */
+    private static function getField_title($sTitle)
+    {
+        // create and setup
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--title');
+        $field->setValue('title', $sTitle);
+
+        // send
+        return $field;
     }
 
     /**

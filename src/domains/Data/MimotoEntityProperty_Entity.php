@@ -80,7 +80,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
      * @param null $sSubpropertySelector
      * @return MimotoEntity|mixed|null
      */
-    public function getValue($bGetConnectionInfo = false, $sSubpropertySelector = null)
+    public function getValue($bGetConnectionInfo = false, $sSubpropertySelector = null, $bGetPersistentValue = false)
     {
         // 1. validate
         if (empty($this->_data->currentEntity)) return null;

@@ -25,6 +25,7 @@ class EntityPropertyForm_Value_type
         $form = self::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE);
 
         // setup
+        $form->addValue('fields', self::getField_title('Configure'));
         $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_type());
         $form->addValue('fields', self::getField_groupEnd());
@@ -57,10 +58,19 @@ class EntityPropertyForm_Value_type
         return $form;
     }
 
+    /**
+     * Get field: title
+     */
+    private static function getField_title($sTitle)
+    {
+        // create and setup
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--title');
+        $field->setValue('title', $sTitle);
 
-
-    // --- settings: value ---
-
+        // send
+        return $field;
+    }
 
     /**
      * Get field: groupStart
@@ -97,13 +107,13 @@ class EntityPropertyForm_Value_type
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
                 $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type-value-options-'.CoreConfig::DATA_VALUE_TEXTLINE);
+                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_TEXTLINE);
                 $option->setValue('key', CoreConfig::DATA_VALUE_TEXTLINE);
                 $option->setValue('value', CoreConfig::DATA_VALUE_TEXTLINE);
                 $value->addValue('options', $option);
 
                 $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type-value-options-'.CoreConfig::DATA_VALUE_TEXTBLOCK);
+                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_TEXTBLOCK);
                 $option->setValue('key', CoreConfig::DATA_VALUE_TEXTBLOCK);
                 $option->setValue('value', CoreConfig::DATA_VALUE_TEXTBLOCK);
                 $value->addValue('options', $option);

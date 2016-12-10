@@ -6,6 +6,7 @@ namespace Mimoto\Form;
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 use Mimoto\Core\forms\EntityForm;
@@ -16,7 +17,7 @@ use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 
 // Symfony classes
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -247,7 +248,7 @@ class MimotoFormService
             $bIsNew = (empty($entityInfo->entity->getId())) ? true : false;
 
             // store
-            $app['Mimoto.Data']->store($entityInfo->entity);
+            $GLOBALS['Mimoto.Data']->store($entityInfo->entity);
 
 
             // compose response
@@ -277,13 +278,13 @@ class MimotoFormService
                 $aInstructionParts = explode('.', $sInstruction);
 
                 // load
-                $parentEntity = $app['Mimoto.Data']->get($aInstructionParts[0], $aInstructionParts[1]);
+                $parentEntity = $GLOBALS['Mimoto.Data']->get($aInstructionParts[0], $aInstructionParts[1]);
 
                 // add
                 $parentEntity->addValue($aInstructionParts[2], $entityInfo->entity);
 
                 // store
-                $app['Mimoto.Data']->store($parentEntity);
+                $GLOBALS['Mimoto.Data']->store($parentEntity);
             }
         }
 
@@ -304,6 +305,9 @@ class MimotoFormService
             // 4. define
             $formResponse->newPublicKey = $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities));
         }
+
+        // send
+        return $formResponse;
     }
 
     public function getFormVars($form, $xValues, $aFields = null)

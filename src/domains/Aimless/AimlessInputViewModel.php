@@ -48,6 +48,11 @@ class AimlessInputViewModel extends AimlessComponentViewModel
         return $this->_component->field();
     }
 
+    public function fieldId()
+    {
+        return $this->_component->fieldId();
+    }
+
     public function error()
     {
         return $this->_component->error();

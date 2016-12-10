@@ -5,7 +5,12 @@ namespace Mimoto\EntityConfig;
 
 // Mimoto classes
 use Mimoto\Data\MimotoDataUtils;
+use Mimoto\Core\CoreConfig;
+use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
+use Mimoto\EntityConfig\MimotoEntityConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
@@ -122,95 +127,199 @@ class MimotoEntityConfigService
 
 
 
-    public function entityCreate($sEntityName)
+    public function entityCreateTable($entity)
     {
-        // 1. validate name (mysql worthy)
-        if (!$this->entityNameIsValid($sEntityName)) error("Entity name '$sEntityName' formatted invalid");
-
-        // 2. check if entity name is unique
-        if (!$this->entityNameIsUnique($sEntityName)) error("Entity name '$sEntityName' already exists");
-
-        // 3. check if entity table name is unique
-        if (!$this->tableNameIsUnique($sEntityName)) error("Table '$sEntityName' for new entity already exists");
-
-        // 4. create new entity
-        $entity = $GLOBALS['Mimoto.Data']->create('_mimoto_entity');
-        $entity->setValue('name', $sEntityName);
-        $GLOBALS['Mimoto.Data']->store($entity);
-
-        // 5. create table
-        if (!$this->createEntityTable($sEntityName)) error("Error while creating table for entity '$sEntityName'");
-
-        // 6. cleanup cache
-        $this->flushEntityConfigCache();
-    }
-
-    public function entityUpdate($nEntityId, $sNewEntityName)
-    {
-        // 1. validate name (mysql worthy)
-        if (!$this->entityNameIsValid($sNewEntityName)) error("New entity name '$sNewEntityName' formatted invalid");
-
-        // 2. check if entity name is unique
-        if (!$this->entityNameIsUnique($sNewEntityName)) error("Entity name '$sNewEntityName' already exists");
-
-        // 3. check if entity table name is unique
-        if (!$this->tableNameIsUnique($sNewEntityName)) error("Table '$sNewEntityName' for new entity already exists");
-
-        // 4. load current name
-        $entity = $GLOBALS['Mimoto.Data']->get('_mimoto_entity', $nEntityId);
-        $sCurrentEntityName = $entity->getValue('name');
-
-        // 5. change name
-        $entity->setValue('name', $sNewEntityName);
-        $GLOBALS['Mimoto.Data']->store($entity);
-
-        // 6. rename table
-        if (!$this->renameEntityTable($sCurrentEntityName, $sNewEntityName)) error("Error while renaming entity table from '$sCurrentEntityName' to '$sNewEntityName'");
-
-        // 7. cleanup cache
-        $this->flushEntityConfigCache();
-    }
-
-    public function entityDelete($nEntityId)
-    {
-        // 1. load entity
-        $entity = $GLOBALS['Mimoto.Data']->get('_mimoto_entity', $nEntityId);
+        // 1. read entity name
         $sEntityName = $entity->getValue('name');
 
-        // 2. cleanup
-        $GLOBALS['Mimoto.Data']->delete($entity);
+        // 2. check if entity table name is unique
+        if (!$this->tableNameIsUnique($sEntityName))
+        {
+            $GLOBALS['Mimoto.Log']->error("Duplicate table name", "Table '$sEntityName' for new entity already exists");
+            die();
+        }
 
-        // 3. delete table
-        if (!$this->deleteEntityTable($sEntityName)) error("Error while deleting entity table '$sEntityName'");
+        // 3. create table
+        if (!$this->createEntityTable($sEntityName))
+        {
+            $GLOBALS['Mimoto.Log']->error("Entity table creation issue", "Error while creating table for entity '$sEntityName'");
+            die();
+        }
 
         // 4. cleanup cache
         $this->flushEntityConfigCache();
     }
 
-    public function entityPropertyCreate($nEntityId, $sEntityPropertyName, $sEntityPropertyType)
+    public function entityUpdateTable(MimotoEntity $entity)
     {
-        // 1. validate name
-        if (!MimotoDataUtils::validatePropertyName($sEntityPropertyName)) error("EntityProperty name '$sEntityPropertyName' formatted invalid");
+        // 1. check if changes were made
+        if (!$entity->hasChanges()) return;
 
-        // 2. load the Entity (and check if it actually exists)
-        if (!($entity = $GLOBALS['Mimoto.Data']->get('_mimoto_entity', $nEntityId))) error("I can't find the entity with id='$nEntityId'");
+        // 2. read changes
+        $aChanges = $entity->getChanges();
 
-        // 3. check if EntityProperty name is unique
-        if (!$this->entityPropertyNameIsUnique($nEntityId, $sEntityPropertyName)) error("Entity property name '$sEntityPropertyName' already exists for this entity");
+        // 3. check if name was changed
+        if (!isset($aChanges['name'])) return;
 
-        // 4. create new EntityProperty
-        $entityProperty = $GLOBALS['Mimoto.Data']->create('_mimoto_entityproperty');
-        $entityProperty->setValue('name', $sEntityPropertyName);
-        $entityProperty->setValue('type', $sEntityPropertyType);
-        $GLOBALS['Mimoto.Data']->store($entityProperty);
+        // 4. register
+        $sPreviousEntityName = $entity->getValue('name', false, true);
+        $sNewEntityName = $entity->getValue('name');
 
-        // 5. add new EntityProperty to Entity
-        $entity->addValue('properties', $entityProperty);
-        $GLOBALS['Mimoto.Data']->store($entity);
+        // 5. check if entity table name is unique
+        if (!$this->tableNameIsUnique($sNewEntityName))
+        {
+            $GLOBALS['Mimoto.Log']->error("Duplicate table name", "Table '$sNewEntityName' for entity '$sPreviousEntityName' already exists");
+            die();
+        }
 
-        // 6. cleanup cache
+        // 6. rename table
+        if (!$this->renameEntityTable($sPreviousEntityName, $sNewEntityName))
+        {
+            $GLOBALS['Mimoto.Log']->error("Entity table rename issue", "Error while renaming entity table from '$sPreviousEntityName' to '$sNewEntityName'");
+            die();
+        }
+
+        // 7. cleanup cache
         $this->flushEntityConfigCache();
     }
+
+    public function entityDelete(MimotoEntity $entity)
+    {
+        // 1. read
+        $sEntityName = $entity->getValue('name');
+
+        // 2. delete table
+        if (!$this->deleteEntityTable($sEntityName)) error("Error while deleting entity table '$sEntityName'"); // #todo
+
+        // 3. cleanup cache
+        $this->flushEntityConfigCache();
+    }
+
+    public function onEntityPropertyCreated(MimotoEntity $entityProperty)
+    {
+        // 1. toggle on type
+        switch($entityProperty->getValue('type'))
+        {
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                $this->createValuePropertySettings($entityProperty);
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                $this->createEntityPropertySettings($entityProperty);
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                $this->createCollectionPropertySettings($entityProperty);
+                break;
+        }
+
+        // 2. cleanup cache
+        $this->flushEntityConfigCache();
+    }
+
+    public function onEntityPropertyUpdated(MimotoEntity $entityProperty)
+    {
+//        // 1. toggle on type
+//        switch($entityProperty->getValue('type'))
+//        {
+//            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+//
+//                $this->createValuePropertySettings($entityProperty);
+//                break;
+//
+//            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+//
+//                $this->createEntityPropertySettings($entityProperty);
+//                break;
+//
+//            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+//
+//                $this->createCollectionPropertySettings($entityProperty);
+//                break;
+//        }
+//
+//        // 2. cleanup cache
+//        $this->flushEntityConfigCache();
+    }
+
+    private function createValuePropertySettings(MimotoEntity $entityProperty)
+    {
+        // init
+        $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+        // setup
+        $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_VALUE_TYPE);
+        $entityPropertySetting->setValue('type', MimotoEntityPropertyValueTypes::VALUETYPE_TEXT);
+        $entityPropertySetting->setValue('value', CoreConfig::DATA_VALUE_TEXTLINE);
+
+        // create
+        $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
+
+        // connect
+        $entityProperty->addValue('settings', $entityPropertySetting);
+
+        // store
+        $GLOBALS['Mimoto.Data']->store($entityProperty);
+    }
+
+    private function createEntityPropertySettings(MimotoEntity $entityProperty)
+    {
+        // init
+        $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+        // setup
+        $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
+        $entityPropertySetting->setValue('type', '');
+        $entityPropertySetting->setValue('value', '');
+
+        // create
+        $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
+
+        // connect
+        $entityProperty->addValue('settings', $entityPropertySetting);
+
+        // store
+        $GLOBALS['Mimoto.Data']->store($entityProperty);
+    }
+
+    private function createCollectionPropertySettings(MimotoEntity $entityProperty)
+    {
+        // init
+        $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+        // setup
+        $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES);
+        $entityPropertySetting->setValue('type', '');
+        $entityPropertySetting->setValue('value', '');
+
+        // create
+        $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
+
+        // connect
+        $entityProperty->addValue('settings', $entityPropertySetting);
+
+        // init
+        $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+        // setup
+        $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES);
+        $entityPropertySetting->setValue('type', MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN);
+        $entityPropertySetting->setValue('value', false);
+
+        // create
+        $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
+
+        // connect
+        $entityProperty->addValue('settings', $entityPropertySetting);
+
+        // store
+        $GLOBALS['Mimoto.Data']->store($entityProperty);
+    }
+
+
 
     public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)
     {
@@ -227,7 +336,7 @@ class MimotoEntityConfigService
 
     private function entityNameIsUnique($sEntityName)
     {
-        $stmt = $GLOBALS['database']->prepare("SELECT * FROM _mimoto_entity WHERE name = :name");
+        $stmt = $GLOBALS['database']->prepare("SELECT * FROM ".CoreConfig::MIMOTO_ENTITY." WHERE name = :name");
         $params = array(':name' => $sEntityName);
         if ($stmt->execute($params) === false) error("Error while searching for duplicates of entity name '$sEntityName'");
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -289,11 +398,11 @@ class MimotoEntityConfigService
     private function entityPropertyNameIsUnique($nEntityId, $sEntityPropertyName)
     {
         $stmt = $GLOBALS['database']->prepare(
-            "SELECT * FROM _mimoto_entityproperty LEFT JOIN _mimoto_entity_connections ".
-            "ON _mimoto_entityproperty.id = _mimoto_entity_connections.child_id ".
-            "WHERE _mimoto_entity_connections.parent_id = :parent_id ".
-            "&& _mimoto_entity_connections.parent_property_id = :parent_property_id ".
-            "&& _mimoto_entityproperty.name = :name");
+            "SELECT * FROM ".CoreConfig::MIMOTO_ENTITYPROPERTY." LEFT JOIN ".CoreConfig::MIMOTO_CONNECTIONS_CORE." ".
+            "ON ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".id = ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".child_id ".
+            "WHERE ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_id = :parent_id ".
+            "&& ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_property_id = :parent_property_id ".
+            "&& ".CoreConfig::MIMOTO_ENTITYPROPERTY.".name = :name");
         $params = array(
             "parent_id" => $nEntityId,
             "parent_property_id" => 'pid2',

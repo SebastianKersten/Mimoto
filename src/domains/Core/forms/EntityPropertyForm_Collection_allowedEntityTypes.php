@@ -25,7 +25,7 @@ class EntityPropertyForm_Collection_allowedEntityTypes
         $form = self::initForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW);
 
         // setup
-        $form->addValue('fields', self::getField_title('Add new property'));
+        $form->addValue('fields', self::getField_title('Configure'));
         $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_name());
         $form->addValue('fields', self::getField_type());

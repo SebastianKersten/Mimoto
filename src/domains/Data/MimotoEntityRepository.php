@@ -288,7 +288,7 @@ class MimotoEntityRepository
             $nQueryItemCount = count($aQueryElements);
             for ($i = 0; $i < $nQueryItemCount; $i++)
             {
-                $sQuery .= $aQueryElements[$i]->key.' = :'.$aQueryElements[$i]->key;
+                $sQuery .= '`'.$aQueryElements[$i]->key.'` = :'.$aQueryElements[$i]->key;
                 $params[':'.$aQueryElements[$i]->key] = $aQueryElements[$i]->value;
                 if ($i < $nQueryItemCount - 1) { $sQuery .= ', '; }
             }

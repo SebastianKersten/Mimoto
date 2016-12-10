@@ -164,6 +164,51 @@ class EntityController
     }
 
 
+    // --- EntityPropertySetting ---
+
+    public function entityPropertySettingEdit(Application $app, $nEntityPropertySettingId)
+    {
+        // 1. load
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, $nEntityPropertySettingId);
+
+        // 2. validate
+        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+
+        // 3. create
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+
+        // 4. select form based on type
+        switch ($entity->getValue('key'))
+        {
+            case MimotoEntityConfig::SETTING_VALUE_TYPE:
+
+                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, $entity);
+                break;
+
+            case MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
+
+                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE, $entity);
+                break;
+
+            case MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
+
+                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES, $entity);
+                break;
+
+            case MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES:
+
+                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES, $entity);
+                break;
+        }
+
+        // 5. render and send
+        return $component->render();
+    }
+
+
+
+
+    // --- other ---
 
 
     private function getEntityStructure(MimotoEntity $entity)

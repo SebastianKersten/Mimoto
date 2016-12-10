@@ -1,11 +1,11 @@
-{% embed "MimotoCMS/components/forms/form_component.twig" with {"type": "radio-button"} %}
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "radio-button"} %}
   {% block form_component_element %}
 
     {% set aOptions = Aimless.fieldOptions() %}
     {% for option in aOptions %}
       <div class="MimotoCMS_forms_FormComponent-element-container">
-        <input {{ Aimless.input()|raw }} type="radio" value="{{ option.key }}" class="MimotoCMS_forms_input_RadioButton js-radio-button" {% if Aimless.value() == option.key %}checked{% endif %}/>
-        <label for="yes" class="MimotoCMS_forms_FormComponent-element-label">{{ option.value }}</label>
+        <input {{ Aimless.input()|raw }} id="{{ Aimless.fieldId()~option.key }}" type="radio" value="{{ option.key }}" class="MimotoCMS_forms_input_RadioButton js-radio-button" {% if Aimless.value() == option.key %}checked{% endif %}/>
+        <label for="{{ Aimless.fieldId()~option.key }}" class="MimotoCMS_forms_FormComponent-element-label">{{ option.value }}</label>
       </div>
     {% endfor %}
 

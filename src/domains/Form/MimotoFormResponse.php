@@ -25,14 +25,14 @@ class MimotoFormResponse
 {
 
 
-$formResponse->newPublicKey
-
-
-$formResponse = (object) array(
-'status' => '?',
-'formName' => $sFormName,
-'errors' => []
-);
+//$formResponse->newPublicKey
+//
+//
+//$formResponse = (object) array(
+//'status' => '?',
+//'formName' => $sFormName,
+//'errors' => []
+//);
 
 
 
@@ -41,7 +41,7 @@ $formResponse = (object) array(
     {
     }
 
-    public function setStatus()
+    //public function setStatus()
 
     public function setNewPublicKey() {}
 
@@ -75,6 +75,6 @@ $formResponse = (object) array(
 
     }
 
-    public function
+    //public function
 
 }

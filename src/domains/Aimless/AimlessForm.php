@@ -64,9 +64,19 @@ class AimlessForm extends AimlessComponent
         // 3. prepare
         $formVars = $this->_FormService->getFormVars($form, $this->_xValues, $aFields);
 
-        // prepare
-        $sAction = '/Mimoto.Aimless/form/'.$this->_sFormName; // #todo - replace with custom if present (expliciet by toggle)
-        $sMethod = 'POST';
+
+        if ($form->getValue('customSubmit') === true)
+        {
+            $sAction = $form->getValue('action');
+            $sMethod = $form->getValue('method');
+        }
+        else
+        {
+            // prepare
+            $sAction = '/Mimoto.Aimless/form/'.$this->_sFormName;
+            $sMethod = 'POST';
+        }
+
 
         // init
         $sRenderedForm = '<form name="'.$this->_sFormName.'" action="'.$sAction.'" method="'.$sMethod.'">';

@@ -1,10 +1,29 @@
 div.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting {
 
+    position: relative;
+    
     color: #000000;
     padding: 3px 7px 4px 7px;
     background-color: #ffffff;
 
     & div.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes {
         padding-left: 20px;
+    }
+}
+
+
+
+span.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu {
+    position: absolute;
+    right: 10px;
+
+    & > a {
+        color: $tower-gray;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    & > a:hover {
+        text-decoration: underline;
     }
 }

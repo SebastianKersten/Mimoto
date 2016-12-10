@@ -76,6 +76,9 @@ class Mimoto
         $app->post('/mimoto.cms/entityproperty/{nEntityPropertyId}/update', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyUpdate');
         $app->get('/mimoto.cms/entityproperty/{nEntityPropertyId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyDelete');
 
+        // EntityPropertySetting
+        $app->get('/mimoto.cms/entitypropertysetting/{nEntityPropertySettingId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertySettingEdit');
+
 
 
 
