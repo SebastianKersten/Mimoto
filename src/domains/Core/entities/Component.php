@@ -224,6 +224,11 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
+                'name' => '_MimotoAimless__interaction__form_input_multiselect',
+                'file' => 'MimotoCMS/components/forms/input/MultiSelect/MultiSelect.twig',
+                'conditionals' => []
+            ),
+            (object) array(
                 'name' => '_MimotoAimless__interaction__form_input_radiobutton',
                 'file' => 'MimotoCMS/components/forms/input/Radiobutton/Radiobutton.twig',
                 'conditionals' => []

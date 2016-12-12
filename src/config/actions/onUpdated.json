@@ -21,7 +21,8 @@
             "subprojects",
             "properties",
             "value",
-            "allowedEntityType"
+            "allowedEntityType",
+            "allowedEntityTypes"
         ]
     },
     "notes": "voor admin user, send all. Add 'except'. Wildcard"

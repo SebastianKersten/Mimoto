@@ -1,11 +1,17 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "checkbox"} %}
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "multiselect"} %}
     {% block form_component_element %}
         <div class="MimotoCMS_forms_FormComponent-element-container">
-            <div class="form-checkbox-container">
-                <input {{ Aimless.input()|raw }} type="checkbox" class="form-checkbox" {% if Aimless.value() %}checked{% endif %} />
-                <svg class="form-checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
-            </div>
-            <label for="" class="MimotoCMS_forms_FormComponent-element-label">{{ Aimless.data('option') }}</label>
+
+            {% set aOptions = Aimless.fieldOptions() %}
+            {% for option in aOptions %}
+                {% set sInputId = Aimless.fieldId()~option.key %}
+                <div class="MimotoCMS_forms_input_MultiSelect-container">
+                    <input {{ Aimless.input()|raw }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect js-checkbox" {% if Aimless.value() %}checked{% endif %} />
+                    <svg class="MimotoCMS_forms_input_MultiSelect-icon"><use xlink:href="#ico-checkmark"></use></svg>
+                </div>
+                <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ option.value }}</label>
+            {% endfor %}
+
         </div>
     {% endblock %}
 {% endembed %}

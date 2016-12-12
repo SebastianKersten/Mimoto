@@ -12,6 +12,8 @@
                 {{ Aimless.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType')|raw }}
             </div>
         ]
+    {% elseif Aimless.data('key') == 'allowDuplicates' %}
+        <div {{ Aimless.realtime('value')|raw }}>{% if Aimless.data('value') %}true{% else %}false{% endif %}</div>
     {% else %}
         <div {{ Aimless.realtime('value')|raw }}>{{ Aimless.render('value')|raw }}</div>
     {% endif %}

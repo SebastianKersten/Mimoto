@@ -10,6 +10,7 @@ use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\Component;
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\Input;
+use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputValue;
 use Mimoto\Core\entities\InputValueSetting;
 use Mimoto\Core\entities\InputValueValidation;
@@ -172,6 +173,7 @@ class CoreConfig
             InputTextblock::getStructure(),
             InputTextRTF::getStructure(),
             InputCheckbox::getStructure(),
+            InputMultiSelect::getStructure(),
             InputRadiobutton::getStructure(),
             InputDropdown::getStructure(),
             InputList::getStructure(),
