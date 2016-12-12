@@ -132,13 +132,13 @@ class MimotoDataUtils
     {
         return
         (
-            $connection1->getId() == $connection2->getId() || empty($connection1->getId() || empty($connection2->getId())) &&
+            ($connection1->getId() == $connection2->getId() || empty($connection1->getId()) || empty($connection2->getId())) &&
             $connection1->getParentEntityTypeId() == $connection2->getParentEntityTypeId() &&
             $connection1->getParentPropertyId() == $connection2->getParentPropertyId() &&
             $connection1->getParentId() == $connection2->getParentId() &&
             $connection1->getChildEntityTypeId() == $connection2->getChildEntityTypeId() &&
-            $connection1->getChildId() == $connection2->getChildId() &&
-            $connection1->getSortIndex() == $connection2->getSortIndex()
+            $connection1->getChildId() == $connection2->getChildId() // &&
+            //$connection1->getSortIndex() == $connection2->getSortIndex()
         ) ? true : false;
     }
 

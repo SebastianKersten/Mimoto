@@ -1,3 +1,8 @@
-a.MimotoCMS_pages_entities_EntityDetail-EntityPropertySettingAllowedEntityType {
-    color: $sinbad;
+div.MimotoCMS_pages_entities_EntityDetail-EntityPropertySettingAllowedEntityType {
+
+    & a.MimotoCMS_pages_entities_EntityDetail-EntityPropertySettingAllowedEntityType {
+        color: $sinbad;
+    }
 }
+
+

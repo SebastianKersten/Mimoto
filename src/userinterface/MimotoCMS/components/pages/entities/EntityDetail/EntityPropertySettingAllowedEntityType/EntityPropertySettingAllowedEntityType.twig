@@ -1,1 +1,3 @@
-<a href="/mimoto.cms/entity/{{ Aimless.meta('id') }}/view" class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySettingAllowedEntityType">{{ Aimless.data('name') }}</a>
+<div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySettingAllowedEntityType" {{ Aimless.realtime()|raw }}>
+    <a href="/mimoto.cms/entity/{{ Aimless.meta('id') }}/view" class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySettingAllowedEntityType" {{ Aimless.realtime('name')|raw }}>{{ Aimless.render('name') }}</a>
+</div>

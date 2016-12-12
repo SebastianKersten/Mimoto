@@ -193,23 +193,47 @@ module.exports.prototype = {
         
         // 7. collect data
         var aValues = {};
+        var classRoot = this;
         for (var i = 0; i < nFieldCount; i++)
         {
             // 7a. register
             var field = aFields[i];
-
-            // 7b. find field
-            var aComponents = $("[mls_form_field_input='" + field.sName + "']", $form);
-
-            // 7c. collect value
-            var classRoot = this;
-            aComponents.each( function(index, $component)
+            
+            var aInputFields = $("[mls_form_field='" + field.sName + "']", $form);
+    
+            aInputFields.each( function(index, $inputField)
             {
-                // init
-                var value = classRoot._getValueFromInputField($component);
-
-                // store
-                if (value !== null) aValues[field.sName] = value;
+                // 7b. find field
+                var aInputs = $("[mls_form_field_input='" + field.sName + "']", $inputField);
+                
+                if (aInputs.length > 1 && ($(aInputs[0]).is("input")) && $(aInputs[0]).attr('type') == 'checkbox')
+                {
+                    // init
+                    aValues[field.sName] = [];
+        
+                    // 7c. collect value
+                    aInputs.each( function(index, $input)
+                    {
+                        // init
+                        var value = classRoot._getValueFromInputField($input);
+            
+                        // store
+                        if (value !== null) aValues[field.sName].push(value);
+                    });
+                }
+                else
+                {
+                    // 7c. collect value
+                    aInputs.each( function(index, $input)
+                    {
+                        // init
+                        var value = classRoot._getValueFromInputField($input);
+        
+                        // store
+                        if (value !== null) aValues[field.sName] = value;
+                    });
+                }
+                
             });
         }
     
@@ -226,8 +250,6 @@ module.exports.prototype = {
         console.error(requestData);
         console.log('------');
     
-    
-        var classRoot = this;
         
         // 11. send data
         $.ajax({
@@ -333,7 +355,18 @@ module.exports.prototype = {
                 
                 case 'checkbox':
                     
-                    value = $($component).prop("checked");
+                    if ($($component).attr('value'))
+                    {
+                        if ($($component).prop("checked") === true)
+                        {
+                            value = $($component).val();
+                        }
+                    }
+                    else
+                    {
+                        value = $($component).prop("checked");
+                    }
+                    
                     break;
 
                 default:

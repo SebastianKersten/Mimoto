@@ -574,7 +574,6 @@ class AimlessComponent
         $fieldVar = $aFieldVars[$field->getEntityTypeName().'.'.$field->getId()];
 
         // #todo
-
         if ($field->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN)
         {
             $fieldValue = $field->getValue('value');
