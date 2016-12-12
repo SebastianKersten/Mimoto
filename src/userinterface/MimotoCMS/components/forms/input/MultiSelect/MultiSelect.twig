@@ -4,6 +4,7 @@
 
             {% set aOptions = Aimless.fieldOptions() %}
             {% for option in aOptions %}
+
                 {% set sInputId = Aimless.fieldId()~option.key %}
                 <div class="MimotoCMS_forms_input_MultiSelect-container">
                     <input {{ Aimless.input()|raw }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect js-checkbox" {% if Aimless.value() %}checked{% endif %} />
