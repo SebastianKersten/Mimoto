@@ -62,7 +62,7 @@ class Mimoto
 
         // Entity
         $app->get ('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityNew');
-        $app->post('/mimoto.cms/entity/create', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityCreate');
+        //$app->post('/mimoto.cms/entity/create', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityCreate');
         $app->get ('/mimoto.cms/entity/{nEntityId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityView');
         $app->get ('/mimoto.cms/entity/{nEntityId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityEdit');
         $app->post('/mimoto.cms/entity/{nEntityId}/update', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityUpdate');
@@ -79,7 +79,10 @@ class Mimoto
         // EntityPropertySetting
         $app->get('/mimoto.cms/entitypropertysetting/{nEntityPropertySettingId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertySettingEdit');
 
-
+        // Component
+        $app->get ('/mimoto.cms/component/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentNew');
+        $app->get ('/mimoto.cms/component/{nComponentId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentView');
+        $app->get ('/mimoto.cms/component/{nComponentId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentEdit');
 
 
         // Entity

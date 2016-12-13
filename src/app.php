@@ -25,6 +25,7 @@ $app['debug'] = true;
 $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app);
 //function Mimoto('data') of als singleton Mimoto::data->create
+// add actions folder
 
 
 function output($sTitle, $data, $bScream = false)

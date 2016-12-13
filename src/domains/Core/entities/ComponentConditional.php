@@ -9,11 +9,11 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * Component
+ * ComponentConditional
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class Component
+class ComponentConditional
 {
 
     public static function getStructure()

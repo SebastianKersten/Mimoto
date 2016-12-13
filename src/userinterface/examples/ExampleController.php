@@ -299,10 +299,7 @@ class ExampleController
         
         // create
         $component = $app['Mimoto.Aimless']->createComponent('project_withsubprojects_phase', $project);
-        
-        // setup
-        $component->setPropertyComponent('subprojects', 'subproject_phase');
-        
+
         // render and send
         return $component->render();
     }

@@ -15,6 +15,7 @@ use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
+use Mimoto\Core\forms\ComponentForm;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -605,6 +606,11 @@ class MimotoFormService
             case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE: return EntityPropertyForm_Entity_allowedEntityType::getStructure(); break;
             case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES: return EntityPropertyForm_Collection_allowedEntityTypes::getStructure(); break;
             case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES: return EntityPropertyForm_Collection_allowDuplicates::getStructure(); break;
+
+            case CoreConfig::COREFORM_COMPONENT_NEW: return ComponentForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_COMPONENT_EDIT: return ComponentForm::getStructureEdit(); break;
+
+            default: die("MimotoFormService.loadCoreForm('$sFormName') - Form not found");
         }
     }
 }

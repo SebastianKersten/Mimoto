@@ -1,6 +1,6 @@
 @include breakpoint(large up) {
   .navigation-collapsed {
-    .navigation,
+    .MimotoCMS_interface_Menu,
     .header-logo-container {
       width: $navigation-collapsed-width;
     }
@@ -30,22 +30,22 @@
       }
     }
 
-    .navigation-menu-item-link {
+    .MimotoCMS_interface_Menu--item-link {
       padding: 0;
 
-      .navigation-menu-item-text {
+      .MimotoCMS_interface_Menu--item-text {
         display: none;
       }
 
-      .navigation-menu-item-icon {
+      .MimotoCMS_interface_Menu--item-icon {
         fill: $sinbad;
         margin: 0 auto;
       }
     }
 
-    .navigation-menu-item-link:hover,
-    .navigation-menu-item-link.navigation-menu-item-link--active {
-      .navigation-menu-item-icon {
+    .MimotoCMS_interface_Menu--item-link:hover,
+    .MimotoCMS_interface_Menu--item-link.MimotoCMS_interface_Menu--item-link--active {
+      .MimotoCMS_interface_Menu--item-icon {
         fill: $white;
       }
     }

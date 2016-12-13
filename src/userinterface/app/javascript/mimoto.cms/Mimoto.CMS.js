@@ -30,7 +30,7 @@ module.exports.prototype = {
 
 
     // ----------------------------------------------------------------------------
-    // --- Public methods --------------------------------------------------------
+    // --- Public methods - entity ------------------------------------------------
     // ----------------------------------------------------------------------------
 
 
@@ -44,17 +44,17 @@ module.exports.prototype = {
         //popup.on('success') = popup.close();
     },
 
-    entityCreate: function(data)
-    {
-        $.ajax({
-            type: 'POST',
-            url: "/mimoto.cms/entity/create",
-            data: data,
-            dataType: 'json'
-        }).done(function(data) {
-            Mimoto.popup.close();
-        });
-    },
+    // entityCreate: function(data)
+    // {
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: "/mimoto.cms/entity/create",
+    //         data: data,
+    //         dataType: 'json'
+    //     }).done(function(data) {
+    //         Mimoto.popup.close();
+    //     });
+    // },
 
     entityView: function(nEntityId)
     {
@@ -147,9 +147,29 @@ module.exports.prototype = {
                 console.log(resultSomething);
             }
         });
-    }
-
-
+    },
+    
+    
+    /**
+     * Create new component
+     */
+    componentNew: function()
+    {
+        var popup = Mimoto.popup.open("/mimoto.cms/component/new");
+        
+        //popup.on('success') = popup.close();
+    },
+    
+    componentView: function(nComponentId)
+    {
+        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
+    },
+    
+    componentEdit: function(nComponentId)
+    {
+        Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
+    },
+    
 
     // ----------------------------------------------------------------------------
     // --- Private methods --------------------------------------------------------

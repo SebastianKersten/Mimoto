@@ -5,6 +5,8 @@
  */
 
 
+require('./lib/diff_match_patch');
+
 // init
 if (typeof Mimoto == "undefined") Mimoto = {};
 if (typeof Mimoto.Aimless == "undefined") Mimoto.Aimless = {};

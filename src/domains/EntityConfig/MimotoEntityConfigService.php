@@ -20,7 +20,7 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
  */
 class MimotoEntityConfigService
 {
-    
+
     // config
     private $_aEntityConfigs = [];
     
@@ -133,14 +133,14 @@ class MimotoEntityConfigService
         $sEntityName = $entity->getValue('name');
 
         // 2. check if entity table name is unique
-        if (!$this->tableNameIsUnique($sEntityName))
+        if (!EntityConfigTableUtils::tableNameIsUnique($sEntityName))
         {
             $GLOBALS['Mimoto.Log']->error("Duplicate table name", "Table '$sEntityName' for new entity already exists");
             die();
         }
 
         // 3. create table
-        if (!$this->createEntityTable($sEntityName))
+        if (!EntityConfigTableUtils::createEntityTable($sEntityName))
         {
             $GLOBALS['Mimoto.Log']->error("Entity table creation issue", "Error while creating table for entity '$sEntityName'");
             die();
@@ -159,28 +159,39 @@ class MimotoEntityConfigService
         $aChanges = $entity->getChanges();
 
         // 3. check if name was changed
-        if (!isset($aChanges['name'])) return;
+        if (isset($aChanges['name'])) $this->renameEntityTable($entity);
 
+        // 4. check if any properties were changed
+        if (isset($aChanges['properties']))
+        {
+            // 1. add columns
+            // 2. remove columns
+            // 3. check sortindex
+        }
+
+        // 7. cleanup cache
+        $this->flushEntityConfigCache();
+    }
+
+    private function renameEntityTable(MimotoEntity $entity)
+    {
         // 4. register
         $sPreviousEntityName = $entity->getValue('name', false, true);
         $sNewEntityName = $entity->getValue('name');
 
         // 5. check if entity table name is unique
-        if (!$this->tableNameIsUnique($sNewEntityName))
+        if (!EntityConfigTableUtils::tableNameIsUnique($sNewEntityName))
         {
             $GLOBALS['Mimoto.Log']->error("Duplicate table name", "Table '$sNewEntityName' for entity '$sPreviousEntityName' already exists");
             die();
         }
 
         // 6. rename table
-        if (!$this->renameEntityTable($sPreviousEntityName, $sNewEntityName))
+        if (!EntityConfigTableUtils::renameEntityTable($sPreviousEntityName, $sNewEntityName))
         {
             $GLOBALS['Mimoto.Log']->error("Entity table rename issue", "Error while renaming entity table from '$sPreviousEntityName' to '$sNewEntityName'");
             die();
         }
-
-        // 7. cleanup cache
-        $this->flushEntityConfigCache();
     }
 
     public function entityDelete(MimotoEntity $entity)
@@ -247,21 +258,21 @@ class MimotoEntityConfigService
 
     private function createValuePropertySettings(MimotoEntity $entityProperty)
     {
-        // init
+        // 1. init property setting
         $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
-        // setup
+        // 2. setup property setting
         $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_VALUE_TYPE);
         $entityPropertySetting->setValue('type', MimotoEntityPropertyValueTypes::VALUETYPE_TEXT);
         $entityPropertySetting->setValue('value', CoreConfig::DATA_VALUE_TEXTLINE);
 
-        // create
+        // 3. persist property setting
         $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
 
-        // connect
+        // 4. connect property setting to property
         $entityProperty->addValue('settings', $entityPropertySetting);
 
-        // store
+        // 5. persist connection
         $GLOBALS['Mimoto.Data']->store($entityProperty);
     }
 
@@ -327,96 +338,9 @@ class MimotoEntityConfigService
     }
 
 
-
-    private function entityNameIsValid($sEntityName)
-    {
-        // validate
-        return (preg_match("/[a-zA-Z0-9-_]+/", $sEntityName));
-    }
-
-    private function entityNameIsUnique($sEntityName)
-    {
-        $stmt = $GLOBALS['database']->prepare("SELECT * FROM ".CoreConfig::MIMOTO_ENTITY." WHERE name = :name");
-        $params = array(':name' => $sEntityName);
-        if ($stmt->execute($params) === false) error("Error while searching for duplicates of entity name '$sEntityName'");
-        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return (count($aResults) == 0) ? true : false;
-    }
-
-    private function tableNameIsUnique($sEntityName)
-    {
-        $stmt = $GLOBALS['database']->prepare("SHOW TABLES LIKE '".$sEntityName."'");
-        $params = array();
-        if ($stmt->execute($params) === false) error("Error while checking for duplicate entity table '$sEntityName'");
-        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return (count($aResults) == 0) ? true : false;
-    }
-
-    private function createEntityTable($sEntityName)
-    {
-        $stmt = $GLOBALS['database']->prepare(
-            "CREATE TABLE `".$sEntityName."` (".
-            "   `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ".
-            "   `created` datetime DEFAULT NULL, ".
-            "   PRIMARY KEY (`id`) ".
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci"
-        );
-        $params = array();
-        return $stmt->execute($params);
-    }
-
-    private function renameEntityTable($sCurrentEntityName, $sNewEntityName)
-    {
-        $stmt = $GLOBALS['database']->prepare(
-            "RENAME TABLE `".$sCurrentEntityName."` TO `$sNewEntityName`"
-        );
-        $params = array();
-        return $stmt->execute($params);
-    }
-
-    private function deleteEntityTable($sEntityName)
-    {
-        $stmt = $GLOBALS['database']->prepare("DROP TABLE IF EXISTS `" . $sEntityName . "`");
-        $params = array();
-        return $stmt->execute($params);
-    }
-
-    private function createEntityConnectionTable($sEntityName)
-    {
-        $stmt = $GLOBALS['database']->prepare(
-            "CREATE TABLE `".$sEntityName."_connections` (".
-            "   `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ".
-            "   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL, ".
-            "   `created` datetime DEFAULT NULL, ".
-            "   PRIMARY KEY (`id`) ".
-            ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci"
-        );
-        $params = array();
-        return $stmt->execute($params);
-    }
-
-    private function entityPropertyNameIsUnique($nEntityId, $sEntityPropertyName)
-    {
-        $stmt = $GLOBALS['database']->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_ENTITYPROPERTY." LEFT JOIN ".CoreConfig::MIMOTO_CONNECTIONS_CORE." ".
-            "ON ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".id = ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".child_id ".
-            "WHERE ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_id = :parent_id ".
-            "&& ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_property_id = :parent_property_id ".
-            "&& ".CoreConfig::MIMOTO_ENTITYPROPERTY.".name = :name");
-        $params = array(
-            "parent_id" => $nEntityId,
-            "parent_property_id" => 'pid2',
-            "name" => $sEntityPropertyName
-        );
-        if ($stmt->execute($params) === false) error("Error while checking for duplicate EntityProperty '$sEntityPropertyName'");
-        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return (count($aResults) == 0) ? true : false;
-    }
-
-
     private function flushEntityConfigCache()
     {
         // TODO Flush memcache
     }
-    
+
 }

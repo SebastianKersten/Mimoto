@@ -1,4 +1,4 @@
-.navigation-menu {
+.MimotoCMS_interface_Menu--group {
     display: block;
     margin: 0 10px;
     padding: 16px 0;
@@ -7,7 +7,7 @@
         margin: 0 auto;
     }
 
-    .navigation-menu-item-link {
+    .MimotoCMS_interface_Menu--item-link {
         display: flex;
         text-decoration: none;
         transition: padding .25s;
@@ -19,14 +19,14 @@
         }
     }
 
-    .navigation-menu-item-link:hover,
-    .navigation-menu-item-link.navigation-menu-item-link--active {
-        .navigation-menu-item-text {
+    .MimotoCMS_interface_Menu--item-link:hover,
+    .MimotoCMS_interface_Menu--item-link.MimotoCMS_interface_Menu--item-link--active {
+        .MimotoCMS_interface_Menu--item-text {
             color: $white;
         }
     }
 
-    .navigation-menu-item-icon {
+    .MimotoCMS_interface_Menu--item-icon {
         width: 18px;
         height: 36px;
         margin-right: 12px;
@@ -37,7 +37,7 @@
         flex: 0 0 auto;
     }
 
-    .navigation-menu-item-text {
+    .MimotoCMS_interface_Menu--item-text {
         padding: 8px 0;
         font-size: rem-calc(17px);
         line-height: rem-calc(24px);

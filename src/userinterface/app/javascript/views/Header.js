@@ -54,7 +54,7 @@ module.exports.prototype = {
         }.bind(this));
 
         this.mobileNavigationToggle.addEventListener('click', function () {
-            this.toggleClass(this.navigation, 'navigation--active');
+            this.toggleClass(this.navigation, 'MimotoCMS_interface_Menu--active');
         }.bind(this));
 
         if (this.dropdowns.length) {
