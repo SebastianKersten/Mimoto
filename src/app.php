@@ -10,8 +10,11 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = new \Silex\Application();
 $config = require_once(dirname(__FILE__).'/config.php');
 
+$GLOBALS['Mimoto.ProjectConfig.root'] = __DIR__ . '/../';
+$GLOBALS['Mimoto.ProjectConfig.twigroot'] = 'src/userinterface';
+
 // setup
-$loader = new \Twig_Loader_Filesystem([__DIR__ . '/../src/userinterface']);
+$loader = new \Twig_Loader_Filesystem([$GLOBALS['Mimoto.ProjectConfig.root'].$GLOBALS['Mimoto.ProjectConfig.twigroot']]);
 $twig = new Twig_Environment($loader, array(
     // 'cache' => '../app/cache',
 ));
