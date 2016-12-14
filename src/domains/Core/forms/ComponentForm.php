@@ -174,9 +174,9 @@ class ComponentForm
         // 1. create and setup field
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_COMPONENT.'--file');
-        $field->setValue('label', 'Name');
+        $field->setValue('label', 'Twig file');
         $field->setValue('placeholder', "The twig file");
-        $field->setValue('description', "The root of the files is 'userinterface/components/'");
+        $field->setValue('description', "The root of the files is 'userinterface/components'");
 
             // 2. setup value
             $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);

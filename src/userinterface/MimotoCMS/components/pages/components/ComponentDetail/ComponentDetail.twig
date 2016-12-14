@@ -7,17 +7,8 @@
             id: 'componentdetails',
             tabs: [
                 {
-                    label: 'Information',
+                    label: 'Templates',
                     panel_id: 'panel_componentdetail_info'
-                },
-                {
-                    label: 'Preview',
-                    panel_id: 'panel_componentdetail_preview'
-                },
-                {
-                    label: 'More',
-                    panel_id: 'panel_componentdetail_more',
-                    secondary: true
                 }
             ]
         }
@@ -39,62 +30,12 @@
                         </div>
 
                         <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' } %}
+                            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' } %}
                         </div>
 
                     </div>
 
-
-                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__properties">
-
-                        {% if Aimless.data('conditionals')|length == 0 %}
-
-                            <div class="MimotoCMS_pages_components_ComponentDetail_Structure__properties_empty">
-                                <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
-                                <div>{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}</div>
-                            </div>
-                        {% else %}
-
-                            <div>
-                                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__properties_container" {{ Aimless.realtime('properties')|raw }}>
-                                    {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty')|raw }}
-                                </div>
-
-                                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__properties_menu">{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}</div>
-                            </div>
-
-                        {% endif %}
-
-                    </div>
-
                 </div>
-            </div>
-
-            <!-- instances -->
-
-            <div id="panel_componentdetail_preview" class="MimotoCMS_pages_components_ComponentDetail__panel hidden">
-
-                <div class="MimotoCMS_pages_components_ComponentDetail_Instances">
-                    [search fields]
-                    <br>
-                    <br>
-                    {#<div class="MimotoCMS_pages_components_ComponentDetail_Properties__container" {{ Aimless.realtime('instances')|raw }}>
-                        {{ Aimless.data('instances')|raw }}
-                    </div>#}
-                </div>
-
-            </div>
-
-            <!-- more -->
-
-            <div id="panel_componentdetail_more" class="MimotoCMS_pages_components_ComponentDetail__panel hidden">
-
-                <b>Danger zone!</b><br>
-                <br>
-                <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
-                <br>
-                {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Delete entity', icon:'warning', onclick:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", types:['alert'] } %}
-
             </div>
 
         {% endblock %}
@@ -102,13 +43,13 @@
 
 
 
-    <div class="MimotoCMS_pages_components_ComponentDetail__example">
+    {#<div class="MimotoCMS_pages_components_ComponentDetail__example">
 
         <div class="MimotoCMS_pages_components_ComponentDetail__codeexample-title">Component example</div>
 
         <div class="MimotoCMS_pages_components_ComponentDetail__example-container">
             <iframe src="https://mimoto.nl" class="MimotoCMS_pages_components_ComponentDetail"></iframe>
         </div>
-    </div>
+    </div>#}
 
 {% endblock %}

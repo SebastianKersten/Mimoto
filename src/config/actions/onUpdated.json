@@ -22,7 +22,9 @@
             "properties",
             "value",
             "allowedEntityType",
-            "allowedEntityTypes"
+            "allowedEntityTypes",
+
+            "file"
         ]
     },
     "notes": "voor admin user, send all. Add 'except'. Wildcard"

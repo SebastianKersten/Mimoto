@@ -93,13 +93,13 @@ class ComponentController
         return $page->render();
     }
 
-    public function componentEdit(Application $app, $nEntityId)
+    public function componentEdit(Application $app, $nComponentId)
     {
         // 1. load
-        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_COMPONENT, $nComponentId);
 
         // 2. validate
-        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+        if ($entity === false) return $app->redirect("/mimoto.cms/components");
 
         // 3. create
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
