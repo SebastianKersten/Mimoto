@@ -30,13 +30,15 @@ document.addEventListener('DOMContentLoaded', function () {
     var forms = document.querySelectorAll('.js-form');
 
     EH.init({
-        "element": "p",
+        "errorElement": "p",
         "classes": ["MimotoCMS_forms_FormComponent-element-error"],
-        "errorClass": "MimotoCMS_forms_FormComponent--has-error",
-        "validatedClass": "MimotoCMS_forms_FormComponent--is-validated",
         "iconSelectorClass": "js-error-icon",
-        "iconErrorClass": "MimotoCMS_forms_FormComponent-title-icon--warning",
-        "iconValidatedClass": "MimotoCMS_forms_FormComponent-title-icon--checkmark"
+        "validatedClass": "MimotoCMS_forms_FormComponent--is-validated",
+        "validatedIcon": "#ico-checkmark",
+        "validatedIconClass": "MimotoCMS_forms_FormComponent-title-icon--checkmark",
+        "errorClass": "MimotoCMS_forms_FormComponent--has-error",
+        "errorIcon": "#ico-warning",
+        "errorIconClass": "MimotoCMS_forms_FormComponent-title-icon--warning"
     });
 
     if (navigation && header) { new HeaderView(header); }
