@@ -339,3 +339,13 @@ Example:
 
 ## Javascript features
 https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset
+
+## Some notes for the website
+
+- But what if soemone already has that value on its screen? That person would miss out on the latest changes. Enter Aimless's realtime feature (configure action rule, per user or group, entity, specific value, delayed) broadcast as webevent.
+- Don't program functionality, configure it! Start using actions.
+- It's really easy. See this example.
+- An open platform - build addons tools utils adapters
+- External platforms as services that can be connected / addon
+- Complexe datastructuren worden goedkoop
+- De prijs van complexiteit daalt!
