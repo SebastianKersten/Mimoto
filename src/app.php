@@ -11,7 +11,7 @@ $app = new \Silex\Application();
 $config = require_once(dirname(__FILE__).'/config.php');
 
 $GLOBALS['Mimoto.ProjectConfig.root'] = __DIR__ . '/../';
-$GLOBALS['Mimoto.ProjectConfig.twigroot'] = 'src/userinterface';
+$GLOBALS['Mimoto.ProjectConfig.twigroot'] = 'src/userinterface/';
 
 // setup
 $loader = new \Twig_Loader_Filesystem([$GLOBALS['Mimoto.ProjectConfig.root'].$GLOBALS['Mimoto.ProjectConfig.twigroot']]);
