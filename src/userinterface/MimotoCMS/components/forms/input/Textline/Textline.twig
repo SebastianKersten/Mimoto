@@ -1,5 +1,12 @@
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "textline"} %}
-  {% block form_component_element %}
-    <input {{ Aimless.input()|raw }} type="text" class="MimotoCMS_forms_input_Textline js-textline" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}" />
-  {% endblock %}
+    {% block form_component_element %}
+        {% if Aimless.data('prefix')|default('') %}
+            <div class="MimotoCMS_forms_FormComponent-element-container MimotoCMS_forms_FormComponent-element-container--has-prefix">
+        {% endif %}
+                <input {{ Aimless.input()|raw }} type="text" class="MimotoCMS_forms_input_Textline js-textline" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}"/>
+        {% if Aimless.data('prefix')|default('') %}
+                <span class="MimotoCMS_forms_FormComponent-element-prefix">{{ Aimless.data('prefix') }}</span>
+            </div>
+        {% endif %}
+    {% endblock %}
 {% endembed %}
