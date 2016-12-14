@@ -19,7 +19,7 @@
         float: left;
         width: $header-height-collapsed;
         height: $header-height-collapsed;
-        background-color: $sinbad;
+        background-color: $black;
 
         @include breakpoint(large up) {
             width: $navigation-width;
@@ -37,6 +37,7 @@
         width: 50px;
         height: 50px;
         background-repeat: no-repeat;
+        background-size: 100% 100%;
 
         @include breakpoint(large up) {
             width: 100%;
@@ -51,19 +52,17 @@
         @include breakpoint(large up) {
             top: 1px;
             display: block;
-            background-image: url('/static/img/mimoto.cms/logo.png');
+            background-image: url('/static/img/mimoto.cms/mimoto_logo_big.png');
         }
     }
 
     .header-logo-small {
-        background-image: url('/static/img/mimoto.cms/logo-folded.png');
-        background-size: 100% 100%;
+        background-image: url('/static/img/mimoto.cms/mimoto_logo_small.png');
 
         @include breakpoint(large up) {
             width: 64px;
             margin-left: 23px;
             opacity: 0;
-            background-size: auto;
         }
     }
 
