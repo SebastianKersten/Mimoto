@@ -616,6 +616,10 @@ class MimotoAimlessService
      */
     private function sendPusherEvent($sChannel, $sEvent, $data)
     {
+        // 1. only works if Gearman properly set up
+        if (!class_exists('\GearmanClient')) return;
+
+
         // init
         $client= new \GearmanClient();
         
@@ -639,6 +643,10 @@ class MimotoAimlessService
      */
     private function sendSlackNotification($entity, $config)
     {
+        // 1. only works if Gearman properly set up
+        if (!class_exists('\GearmanClient')) return;
+
+
         // init
         $client= new \GearmanClient();
 
