@@ -8,8 +8,10 @@ use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
-use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+use Mimoto\EntityConfig\EntityConfigTableUtils;
+use Mimoto\EntityConfig\MimotoEntityConfig;
+
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
@@ -164,13 +166,83 @@ class MimotoEntityConfigService
         // 4. check if any properties were changed
         if (isset($aChanges['properties']))
         {
-            // 1. add columns
-            // 2. remove columns
-            // 3. check sortindex
+            // 4a. add columns
+            if (isset($aChanges['properties']->added))
+            {
+                $nConnectionCount = count($aChanges['properties']->added);
+                for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
+                {
+                    // register
+                    $connection = $aChanges['properties']->added[$nConnectionIndex];
+
+                    // load property
+                    $entityProperty = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
+
+                    // get column type
+                    $sColumnType = 'textline';
+
+                    $sColumnOnTheLeft = $this->getColumnOntheLeft($entity, $entityProperty->getValue('name'));
+
+                    // add
+                    EntityConfigTableUtils::addPropertyColumnToEntityTable($entity->getValue('name'), $entityProperty->getValue('name'), $sColumnType, $sColumnOnTheLeft);
+                }
+            }
+
+            // 4b. change sortindex
+            if (isset($aChanges['properties']->changed))
+            {
+
+            }
+
+
+            // 4c. remove columns
+            if (isset($aChanges['properties']->removed))
+            {
+                $nConnectionCount = count($aChanges['properties']->removed);
+                for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
+                {
+                    // register
+                    $connection = $aChanges['properties']->removed[$nConnectionIndex];
+
+                    // load property
+                    $entityProperty = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
+
+                    // add
+                    EntityConfigTableUtils::removePropertyColumnFromEntityTable($entity->getValue('name'), $entityProperty->getValue('name'));
+                }
+            }
         }
 
         // 7. cleanup cache
         $this->flushEntityConfigCache();
+    }
+
+    private function getColumnOntheLeft(MimotoEntity $entity, $sRequestedColumn)
+    {
+        // load
+        $aAllProperties = $entity->getValue('properties');
+
+        // search
+        $sColumnOnTheLeft = 'id';
+        $nPropertyCount = count($aAllProperties);
+        for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
+        {
+            // register
+            $sPropertyName = $aAllProperties[$nPropertyIndex]->getValue('name');
+
+            // verify
+            if ($sPropertyName != $sRequestedColumn)
+            {
+                $sColumnOnTheLeft = $sPropertyName;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        // send
+        return $sColumnOnTheLeft;
     }
 
     private function renameEntityTable(MimotoEntity $entity)
@@ -233,27 +305,100 @@ class MimotoEntityConfigService
 
     public function onEntityPropertyUpdated(MimotoEntity $entityProperty)
     {
-//        // 1. toggle on type
-//        switch($entityProperty->getValue('type'))
-//        {
-//            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-//
-//                $this->createValuePropertySettings($entityProperty);
-//                break;
-//
-//            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-//
-//                $this->createEntityPropertySettings($entityProperty);
-//                break;
-//
-//            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-//
-//                $this->createCollectionPropertySettings($entityProperty);
-//                break;
-//        }
-//
-//        // 2. cleanup cache
-//        $this->flushEntityConfigCache();
+        // 1. verify
+        if ($entityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
+
+        // 2. check if changes were made
+        if (!$entityProperty->hasChanges()) return;
+
+        // 3. read changes
+        $aChanges = $entityProperty->getChanges();
+
+        // 4. check if name was changed
+        if (!isset($aChanges['name'])) return;
+
+        // 5. register
+        $sOldPropertyName = $entityProperty->getValue('name', false, true);
+        $sNewPropertyName = $entityProperty->getValue('name');
+
+        // 6. get parent entity
+        $parentEntity = $this->getParentEntity($entityProperty); // #todo foei!
+
+        // 7. check if parentEntity is known (something to do with store and acceptChanges)
+        if (empty($parentEntity)) return;
+
+        // 7. prepare
+        $sColumnType = 'textline'; //$this->getColumnTypeFromSetting($entityProperty);
+
+        // 8. rename
+        EntityConfigTableUtils::renamePropertyColumn($parentEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
+    }
+
+    private function getParentEntity(MimotoEntity $entityProperty)
+    {
+        // load all connections
+        $stmt = $GLOBALS['database']->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id && ".
+            "parent_property_id = :parent_property_id && ".
+            "child_entity_type_id = :child_entity_type_id && ".
+            "child_id = :child_id ".
+            "ORDER BY parent_id ASC, sortindex ASC"
+        );
+        $params = array(
+            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
+            ':parent_property_id' => CoreConfig::MIMOTO_ENTITY.'--properties',
+            ':child_entity_type_id' => $entityProperty->getEntityTypeId(),
+            ':child_id' => $entityProperty->getId(),
+        );
+        $stmt->execute($params);
+
+        //output('$stmt', $stmt);
+        //output('$params', $params);
+
+        // load
+        $aResults = $stmt->fetchAll();
+
+        // register
+        $nResultCount = count($aResults);
+
+        //output('$nResultCount', $nResultCount);
+
+        // validate
+        if ($nResultCount != 1) return null;
+
+        // load
+        $entity = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $aResults[0]['parent_id']);
+
+        // send
+        return $entity;
+    }
+
+    private function getColumnTypeFromSetting(MimotoEntity $entityProperty)
+    {
+        // init
+        $sColumnType = null;
+
+        // register
+        $aSettings = $entityProperty->getValue('settings');
+
+        // search for type setting
+        $nSettingCount = count($aSettings);
+        for ($nSettingIndex = 0; $nSettingIndex < $nSettingCount; $nSettingIndex++)
+        {
+            // register
+            $setting = $aSettings[$nSettingIndex];
+
+            // verify
+            if ($setting->getValue('name') == MimotoEntityConfig::SETTING_VALUE_TYPE)
+            {
+                $sColumnType = $setting->getValue('value');
+                break;
+            }
+        }
+
+        // send
+        return $sColumnType;
     }
 
     private function createValuePropertySettings(MimotoEntity $entityProperty)

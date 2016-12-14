@@ -88,4 +88,51 @@ class EntityConfigTableUtils
         return (count($aResults) == 0) ? true : false;
     }
 
+
+    public static function addPropertyColumnToEntityTable($sEntityName, $sPropertyName, $sColumnType, $sColumnOnTheLeft)
+    {
+        // 1. convert
+        $sDataType = self::getColumnDataType($sColumnType);
+
+        // 2. add column to table
+        $stmt = $GLOBALS['database']->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN `".$sPropertyName."` ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
+        $params = array();
+        if ($stmt->execute($params) === false) error("Error while adding column '$sPropertyName' to entity table '$sEntityName'");
+    }
+
+    public static function renamePropertyColumn($sEntityName, $sOldPropertyName, $sNewPropertyName, $sColumnType)
+    {
+        // 1. convert
+        $sDataType = self::getColumnDataType($sColumnType);
+
+        // 2. add column to table
+        $stmt = $GLOBALS['database']->prepare("ALTER TABLE `".$sEntityName."` CHANGE COLUMN `".$sOldPropertyName."` `".$sNewPropertyName."` ".$sDataType);
+        $params = array();
+        if ($stmt->execute($params) === false) error("Error while renaming column '$sOldPropertyName' to entity table '$sEntityName'");
+    }
+
+    public static function removePropertyColumnFromEntityTable($sEntityName, $sPropertyName)
+    {
+
+    }
+
+    private static function getColumnDataType($sColumnType)
+    {
+        // 1. determine column specs
+        $sDataType = null;
+        switch($sColumnType)
+        {
+            case 'textline': $sDataType = 'VARCHAR(255)'; break;
+        }
+
+        // 2. verify specs
+        if (empty($sDataType))
+        {
+            $GLOBALS['Mimoto.Log']->error("Unknow mysql table property specs", "An entity table got the request to add an unknown property-column type");
+            die();
+        }
+
+        // send
+        return $sDataType;
+    }
 }
