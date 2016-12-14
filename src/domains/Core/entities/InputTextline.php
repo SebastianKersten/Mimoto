@@ -5,6 +5,7 @@ namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
@@ -36,7 +37,7 @@ class InputTextline
                             'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'type',
+                            'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -53,7 +54,7 @@ class InputTextline
                             'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'type',
+                            'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -70,7 +71,24 @@ class InputTextline
                             'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'type',
+                            'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'prefix',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
