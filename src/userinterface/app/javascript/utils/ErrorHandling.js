@@ -6,7 +6,7 @@ module.exports = {
 
     // Default options
     this.errorElement = "p";
-    this.classes = "error-message";
+    this.errorElementClasses = "error-message";
     this.iconSelectorClass = "icon";
     this.validatedClass = "is-validated";
     this.validatedIcon = "#ico-validated";
@@ -19,8 +19,8 @@ module.exports = {
       this.errorElement = options.errorElement;
     }
 
-    if (options.classes) {
-      this.classes = options.classes;
+    if (options.errorElementClasses) {
+      this.errorElementClasses = options.errorElementClasses;
     }
 
     if (options.iconSelectorClass) {
@@ -153,9 +153,9 @@ module.exports = {
 
     var error = document.createElement(this.errorElement);
 
-    for (var i = 0; i < this.classes.length; i++) {
+    for (var i = 0; i < this.errorElementClasses.length; i++) {
 
-      error.classList.add(this.classes[i]);
+      error.classList.add(this.errorElementClasses[i]);
 
     }
 
@@ -166,7 +166,7 @@ module.exports = {
 
   removeErrorElement: function () {
 
-    var error = this.errorParent.querySelector('.' + this.classes[0]);
+    var error = this.errorParent.querySelector('.' + this.errorElementClasses[0]);
 
     if (error) {
       this.errorParent.removeChild(error);
@@ -176,7 +176,7 @@ module.exports = {
 
   updateErrorElement: function (message) {
 
-    var error = this.errorParent.querySelector('.' + this.classes[0]);
+    var error = this.errorParent.querySelector('.' + this.errorElementClasses[0]);
     error.innerHTML = message;
 
   }

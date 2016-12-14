@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     EH.init({
         "errorElement": "p",
-        "classes": ["MimotoCMS_forms_FormComponent-element-error"],
+        "errorElementClasses": ["MimotoCMS_forms_FormComponent-element-error"],
         "iconSelectorClass": "js-error-icon",
         "validatedClass": "MimotoCMS_forms_FormComponent--is-validated",
         "validatedIcon": "#ico-checkmark",
