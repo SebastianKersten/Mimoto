@@ -11,6 +11,7 @@ module.exports = {
     this.validatedClass = "is-validated";
     this.validatedIcon = "#ico-validated";
     this.validatedIconClass = "icon-validated";
+    this.errorParentClass = "error-parent";
     this.errorClass = "has-error";
     this.errorIcon = "#ico-error";
     this.errorIconClass = "icon-error";
@@ -39,6 +40,10 @@ module.exports = {
       this.validatedIconClass = options.validatedIconClass;
     }
 
+    if (options.errorParentClass) {
+      this.errorParentClass = options.errorParentClass;
+    }
+
     if (options.errorClass) {
       this.errorClass = options.errorClass;
     }
@@ -57,7 +62,7 @@ module.exports = {
 
     this.el = element;
 
-    this.errorParent = this.el.querySelector('.js-error-parent');
+    this.errorParent = this.el.querySelector('.' + this.errorParentClass);
     this.iconElement = this.el.querySelector('.' + this.iconSelectorClass);
     this.useElement = this.iconElement.getElementsByTagName('use')[0];
 

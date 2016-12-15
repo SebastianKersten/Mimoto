@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "validatedClass": "MimotoCMS_forms_FormComponent--is-validated",
         "validatedIcon": "#ico-checkmark",
         "validatedIconClass": "MimotoCMS_forms_FormComponent-title-icon--checkmark",
+        "errorParentClass": "js-error-parent",
         "errorClass": "MimotoCMS_forms_FormComponent--has-error",
         "errorIcon": "#ico-warning",
         "errorIconClass": "MimotoCMS_forms_FormComponent-title-icon--warning"
