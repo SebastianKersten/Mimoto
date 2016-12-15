@@ -45,7 +45,7 @@
             fill: $sinbad;
         }
 
-        .pagecontent {
+        #{$pr-mimoto}_Pagecontent {
             left: $navigation-collapsed-width;
         }
     }
