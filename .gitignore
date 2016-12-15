@@ -3,6 +3,6 @@ composer.phar
 composer.lock
 .idea/
 node_modules
-web/static/css
-web/static/js
+#web/static/css
+#web/static/js
 src/config.php
