@@ -349,3 +349,5 @@ https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset
 - External platforms as services that can be connected / addon
 - Complexe datastructuren worden goedkoop
 - De prijs van complexiteit daalt!
+
+Check ...
