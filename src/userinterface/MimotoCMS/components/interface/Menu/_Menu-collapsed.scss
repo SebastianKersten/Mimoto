@@ -1,48 +1,48 @@
 @include breakpoint(large up) {
     .navigation-collapsed {
-        .MimotoCMS_interface_Menu,
-        .header-logo-container {
+        #{$pr-interface}_Menu,
+        #{$pr-interface}_Header-logo-container {
             width: $navigation-collapsed-width;
         }
 
-        .header-logo {
+        #{$pr-interface}_Header-logo {
             background-image: url('/static/img/mimoto.cms/mimoto_logo_small.png');
             background-size: 64px 64px;
         }
 
-        .header-navigation-collapse-toggle {
+        #{$pr-interface}_Header-navigation-collapse-toggle {
             right: -32px;
             transform: rotate(0deg);
-
-            .header-navigation-collapse-toggle-icon {
-                fill: $sinbad;
-            }
         }
 
-        .header-navigation-collapse-toggle:hover {
-            .header-navigation-collapse-toggle-icon {
+        #{$pr-interface}_Header-navigation-collapse-toggle:hover {
+            #{$pr-interface}_Header-navigation-collapse-toggle-icon {
                 fill: $black;
             }
         }
 
-        .MimotoCMS_interface_Menu--item-link {
+        #{$pr-interface}_Header-navigation-collapse-toggle-icon {
+            fill: $sinbad;
+        }
+
+        #{$pr-interface}_Menu-item-link {
             padding: 0;
+        }
 
-            .MimotoCMS_interface_Menu--item-text {
-                display: none;
-            }
-
-            .MimotoCMS_interface_Menu--item-icon {
-                margin: 0 auto;
-                fill: $sinbad;
+        #{$pr-interface}_Menu-item-link:hover,
+        #{$pr-interface}_Menu-item-link--active {
+            #{$pr-interface}_Menu-item-icon {
+                fill: $white;
             }
         }
 
-        .MimotoCMS_interface_Menu--item-link:hover,
-        .MimotoCMS_interface_Menu--item-link.MimotoCMS_interface_Menu--item-link--active {
-            .MimotoCMS_interface_Menu--item-icon {
-                fill: $white;
-            }
+        #{$pr-interface}_Menu-item-text {
+            display: none;
+        }
+
+        #{$pr-interface}_Menu-item-icon {
+            margin: 0 auto;
+            fill: $sinbad;
         }
 
         .pagecontent {

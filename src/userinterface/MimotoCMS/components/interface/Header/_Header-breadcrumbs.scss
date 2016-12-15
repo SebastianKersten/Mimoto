@@ -1,35 +1,35 @@
-.header-breadcrumbs {
-  display: none;
+#{$pr-interface}_Header-breadcrumbs {
+    display: none;
 
-  @include breakpoint(large up) {
-    @include clearfix;
-    display: block;
-    float: left;
-    padding: 22px 0 22px 40px;
-
-    .header-breadcrumbs-list-item {
-      float: left;
-      color: $dusty-gray;
-
-      &:hover {
-        color: $black;
-      }
+    @include breakpoint(large up) {
+        @include clearfix;
+        display: block;
+        float: left;
+        padding: 22px 0 22px 40px;
     }
-
-    .header-breadcrumbs-list-item:not(:last-child) {
-      .header-breadcrumbs-list-item-link::after {
-        margin: 0 7px;
-        content: '/';
-        color: $dusty-gray;
-      }
-    }
-
-    .header-breadcrumbs-list-item-link {
-      display: block;
-      font-size: rem-calc(17px);
-      line-height: rem-calc(20px);
-      text-decoration: none;
-      color: inherit;
-    }
-  }
 }
+
+    #{$pr-interface}_Header-breadcrumbs-list-item {
+        float: left;
+        color: $dusty-gray;
+
+        &:hover {
+            color: $black;
+        }
+
+        &:not(:last-child) {
+            #{$pr-interface}_Header-breadcrumbs-list-item-link::after {
+                margin: 0 7px;
+                content: '/';
+                color: $dusty-gray;
+            }
+        }
+    }
+
+        #{$pr-interface}_Header-breadcrumbs-list-item-link {
+            display: block;
+            font-size: rem-calc(17px);
+            line-height: rem-calc(20px);
+            text-decoration: none;
+            color: inherit;
+        }
