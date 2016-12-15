@@ -1,4 +1,4 @@
-.MimotoCMS_interface_Header {
+#{$pr-interface}_Header {
     position: fixed;
     z-index: $z-header;
     top: 0;
@@ -14,7 +14,7 @@
     }
 }
 
-    .header-logo-container {
+    #{$pr-interface}_Header-logo-container {
         position: relative;
         z-index: 1;
         float: left;
@@ -29,7 +29,7 @@
         }
     }
 
-        .header-logo {
+        #{$pr-interface}_Header-logo {
             position: absolute;
             top: 0;
             left: 0;
@@ -48,7 +48,7 @@
             }
         }
 
-        .header-navigation-collapse-toggle {
+        #{$pr-interface}_Header-navigation-collapse-toggle {
             display: none;
 
             @include breakpoint(large up) {
@@ -63,8 +63,17 @@
                 cursor: pointer;
                 transform: rotate(180deg);
                 transition: all .25s;
+            }
 
-                .header-navigation-collapse-toggle-icon {
+            &:hover {
+                #{$pr-interface}_Header-navigation-collapse-toggle-icon {
+                    fill: $sinbad;
+                }
+            }
+        }
+
+            #{$pr-interface}_Header-navigation-collapse-toggle-icon {
+                @include breakpoint(large up) {
                     display: block;
                     width: 6px;
                     height: 12px;
@@ -72,13 +81,6 @@
                     fill: $white;
                 }
             }
-        }
-
-        .header-navigation-collapse-toggle:hover {
-            .header-navigation-collapse-toggle-icon {
-                fill: $sinbad;
-            }
-        }
 
 @import 'Header-breadcrumbs';
 @import 'Header-menu';

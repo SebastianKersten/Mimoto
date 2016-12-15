@@ -1,4 +1,4 @@
-.MimotoCMS_interface_Menu {
+#{$pr-interface}_Menu {
     position: fixed;
     z-index: $z-navigation;
     top: 50px;
@@ -8,7 +8,7 @@
     overflow-y: auto;
     width: 100%;
     max-height: calc(100% - 50px);
-    background-color: #151515;
+    background-color: $cod-gray;
 
     @include breakpoint(large up) {
         top: $header-height;
@@ -19,8 +19,13 @@
         transform: translate3d(0, 0, 0);
         transition: width .25s;
     }
+}
 
-    .MimotoCMS_interface_Menu__content {
+#{$pr-interface}_Menu--active {
+    display: block;
+}
+
+    #{$pr-interface}_Menu-content {
         @include breakpoint(large up) {
             position: absolute;
             top: 0;
@@ -29,23 +34,60 @@
             left: 0;
             padding: 0 8px;
         }
-
-        > ul {
-            border-bottom: 1px solid $mine-shaft;
-        }
-
-        > ul:first-child {
-            margin-top: 10px;
-        }
-
-        > ul:last-child {
-            border-bottom: 0;
-        }
     }
-}
 
-.MimotoCMS_interface_Menu--active {
-    display: block;
-}
+        #{$pr-interface}_Menu-group {
+            display: block;
+            margin: 0 10px;
+            padding: 16px 0;
+            border-bottom: 1px solid $mine-shaft;
 
-@import 'Menu-regular';
+            @include breakpoint(large up) {
+                margin: 0 auto;
+            }
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+
+            #{$pr-interface}_Menu-item-link {
+                display: flex;
+                text-decoration: none;
+                transition: padding .25s;
+                flex-wrap: nowrap;
+                align-items: center;
+
+                @include breakpoint(large up) {
+                    padding: 0 14px;
+                }
+
+                &:hover,
+                &#{$pr-interface}_Menu-item-link--active {
+                    text-decoration: none;
+
+                    #{$pr-interface}_Menu-item-text {
+                        color: $white;
+                    }
+                }
+            }
+
+                #{$pr-interface}_Menu-item-icon {
+                    width: 18px;
+                    height: 36px;
+                    margin-right: 12px;
+                    font-size: rem-calc(14px);
+                    text-align: center;
+                    transition: color .05s;
+                    fill: $white;
+                    flex: 0 0 auto;
+                }
+
+                #{$pr-interface}_Menu-item-text {
+                    padding: 8px 0;
+                    font-size: rem-calc(17px);
+                    line-height: rem-calc(24px);
+                    color: $sinbad;
+                    transition: color .05s;
+                    flex: 1 1 auto;
+                }
