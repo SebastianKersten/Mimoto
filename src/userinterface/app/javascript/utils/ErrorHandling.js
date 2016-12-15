@@ -16,45 +16,25 @@ module.exports = {
     this.errorIcon = "#ico-error";
     this.errorIconClass = "icon-error";
 
-    if (options.errorElement) {
-      this.errorElement = options.errorElement;
-    }
+    if (options.errorElement) this.errorElement = options.errorElement;
 
-    if (options.errorElementClasses) {
-      this.errorElementClasses = options.errorElementClasses;
-    }
+    if (options.errorElementClasses) this.errorElementClasses = options.errorElementClasses;
 
-    if (options.iconSelectorClass) {
-      this.iconSelectorClass = options.iconSelectorClass;
-    }
+    if (options.iconSelectorClass) this.iconSelectorClass = options.iconSelectorClass;
 
-    if (options.validatedClass) {
-      this.validatedClass = options.validatedClass;
-    }
+    if (options.validatedClass) this.validatedClass = options.validatedClass;
 
-    if (options.validatedIcon) {
-      this.validatedIcon = options.validatedIcon;
-    }
+    if (options.validatedIcon) this.validatedIcon = options.validatedIcon;
 
-    if (options.validatedIconClass) {
-      this.validatedIconClass = options.validatedIconClass;
-    }
+    if (options.validatedIconClass) this.validatedIconClass = options.validatedIconClass;
 
-    if (options.errorParentClass) {
-      this.errorParentClass = options.errorParentClass;
-    }
+    if (options.errorParentClass) this.errorParentClass = options.errorParentClass;
 
-    if (options.errorClass) {
-      this.errorClass = options.errorClass;
-    }
+    if (options.errorClass) this.errorClass = options.errorClass;
 
-    if (options.errorIcon) {
-      this.errorIcon = options.errorIcon;
-    }
+    if (options.errorIcon) this.errorIcon = options.errorIcon;
 
-    if (options.errorIconClass) {
-      this.errorIconClass = options.errorIconClass;
-    }
+    if (options.errorIconClass) this.errorIconClass = options.errorIconClass;
 
   },
 
