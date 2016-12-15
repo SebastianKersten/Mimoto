@@ -1,57 +1,52 @@
 @include breakpoint(large up) {
-  .navigation-collapsed {
-    .MimotoCMS_interface_Menu,
-    .header-logo-container {
-      width: $navigation-collapsed-width;
+    .navigation-collapsed {
+        .MimotoCMS_interface_Menu,
+        .header-logo-container {
+            width: $navigation-collapsed-width;
+        }
+
+        .header-logo {
+            background-image: url('/static/img/mimoto.cms/mimoto_logo_small.png');
+            background-size: 64px 64px;
+        }
+
+        .header-navigation-collapse-toggle {
+            right: -32px;
+            transform: rotate(0deg);
+
+            .header-navigation-collapse-toggle-icon {
+                fill: $sinbad;
+            }
+        }
+
+        .header-navigation-collapse-toggle:hover {
+            .header-navigation-collapse-toggle-icon {
+                fill: $black;
+            }
+        }
+
+        .MimotoCMS_interface_Menu--item-link {
+            padding: 0;
+
+            .MimotoCMS_interface_Menu--item-text {
+                display: none;
+            }
+
+            .MimotoCMS_interface_Menu--item-icon {
+                margin: 0 auto;
+                fill: $sinbad;
+            }
+        }
+
+        .MimotoCMS_interface_Menu--item-link:hover,
+        .MimotoCMS_interface_Menu--item-link.MimotoCMS_interface_Menu--item-link--active {
+            .MimotoCMS_interface_Menu--item-icon {
+                fill: $white;
+            }
+        }
+
+        .pagecontent {
+            left: $navigation-collapsed-width;
+        }
     }
-
-    .header-logo-large {
-      transform: translateX(-23px);
-      opacity: 0;
-    }
-
-    .header-logo-small {
-      transform: translateX(-23px);
-      opacity: 1;
-    }
-
-    .header-navigation-collapse-toggle {
-      right: -32px;
-      transform: rotate(0deg);
-
-      .header-navigation-collapse-toggle-icon {
-        fill: $sinbad;
-      }
-    }
-
-    .header-navigation-collapse-toggle:hover {
-      .header-navigation-collapse-toggle-icon {
-        fill: $black;
-      }
-    }
-
-    .MimotoCMS_interface_Menu--item-link {
-      padding: 0;
-
-      .MimotoCMS_interface_Menu--item-text {
-        display: none;
-      }
-
-      .MimotoCMS_interface_Menu--item-icon {
-        fill: $sinbad;
-        margin: 0 auto;
-      }
-    }
-
-    .MimotoCMS_interface_Menu--item-link:hover,
-    .MimotoCMS_interface_Menu--item-link.MimotoCMS_interface_Menu--item-link--active {
-      .MimotoCMS_interface_Menu--item-icon {
-        fill: $white;
-      }
-    }
-
-    .pagecontent {
-      left: $navigation-collapsed-width;
-    }
-  }
 }

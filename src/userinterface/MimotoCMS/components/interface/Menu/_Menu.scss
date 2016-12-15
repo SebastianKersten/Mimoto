@@ -30,15 +30,15 @@
             padding: 0 8px;
         }
 
-        & > ul {
+        > ul {
             border-bottom: 1px solid $mine-shaft;
         }
 
-        & > ul:first-child {
+        > ul:first-child {
             margin-top: 10px;
         }
 
-        & > ul:last-child {
+        > ul:last-child {
             border-bottom: 0;
         }
     }
