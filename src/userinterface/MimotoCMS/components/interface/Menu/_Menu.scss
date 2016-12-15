@@ -8,7 +8,7 @@
     overflow-y: auto;
     width: 100%;
     max-height: calc(100% - 50px);
-    background-color: $black;
+    background-color: #151515;
 
     @include breakpoint(large up) {
         top: $header-height;
@@ -30,15 +30,15 @@
             padding: 0 8px;
         }
 
-        & > ul {
+        > ul {
             border-bottom: 1px solid $mine-shaft;
         }
 
-        & > ul:first-child {
+        > ul:first-child {
             margin-top: 10px;
         }
 
-        & > ul:last-child {
+        > ul:last-child {
             border-bottom: 0;
         }
     }
