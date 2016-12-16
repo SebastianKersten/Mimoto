@@ -29273,8 +29273,8 @@
 	
 	        this.collapsed = false;
 	
-	        this.notificationCount = document.getElementById('header_notification_count');
-	        this.conversationCount = document.getElementById('header_conversation_count');
+	        this.notificationCount = document.getElementById('MimotoCMS_interface_Header_notification_count');
+	        this.conversationCount = document.getElementById('MimotoCMS_interface_Header_conversation_count');
 	
 	    },
 	
