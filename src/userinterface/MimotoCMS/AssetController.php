@@ -29,7 +29,7 @@ class AssetController
         $this->setHeaderForJavascript();
 
         // 2. load and send
-        return new Response($this->loadStaticFile('static/js/mimoto.aimless.js'));
+        return new Response($this->loadStaticFile('js/mimoto.aimless.js'));
     }
 
     public function loadJavascriptMimotoCMS(Application $app)
