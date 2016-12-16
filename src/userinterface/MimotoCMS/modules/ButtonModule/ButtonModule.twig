@@ -3,7 +3,7 @@
 {% set data_attributes = '' %}
 
 {% if types|default([]) %}
-  {% set classes = ' MimotoCMS_forms_input_Button--' ~ types|join(' MimotoCMS_forms_input_Button--') %}
+  {% set classes = ' MimotoCMS_ButtonModule--' ~ types|join(' MimotoCMS_ButtonModule--') %}
 {% endif %}
 
 {% if link|default('') %}
@@ -19,11 +19,11 @@
   {% endfor %}
 {% endif %}
 
-<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_forms_input_Button{{ classes }}" {% if onclick %}onclick="{{ onclick }}"{%  endif %}>
+<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_ButtonModule{{ classes }}" {% if onclick %}onclick="{{ onclick }}"{%  endif %}>
   {% if label|default('') %}
-    <span class="MimotoCMS_forms_input_Button-text">{{ label }}</span>
+    <span class="MimotoCMS_ButtonModule-text">{{ label }}</span>
   {% endif %}
   {% if icon|default('') %}
-    <svg class="MimotoCMS_forms_input_Button-icon"><use xlink:href="#{{ icon }}"></use></svg>
+    <svg class="MimotoCMS_ButtonModule-icon"><use xlink:href="#{{ icon }}"></use></svg>
   {% endif %}
 </{{ element }}>

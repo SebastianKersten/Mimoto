@@ -26,5 +26,22 @@ class MimotoAimlessUtils
     {
         return '['.$sEntityType.'.'.$sPropertyName.']';
     }
-    
+
+    public static function getModule($sModuleName, $values = [])
+    {
+        // get module file
+        $sModuleFile = $GLOBALS['Mimoto.Aimless']->getComponentFile($sModuleName);
+
+        // create
+        $viewModel = new AimlessModuleViewModel();
+
+        // init
+        $aVars = $values;
+
+        // compose
+        $aVars['Aimless'] = $viewModel;
+
+        // output
+        return $GLOBALS['twig']->render($sModuleFile, $aVars);
+    }
 }

@@ -484,6 +484,12 @@ class AimlessComponent
         // get module file
         $sModuleFile = $this->_AimlessService->getComponentFile($sModuleName);
 
+        // create
+        $viewModel = new AimlessModuleViewModel($this);
+
+        // compose
+        $this->_aVars['Aimless'] = $viewModel;
+
         // configure
         $this->_aVars = $values;
 

@@ -4,8 +4,8 @@
     </div>
     <div class="MimotoCMS_forms_Form__menu">
         <span {{ Aimless.submit() }}>
-            {% include "MimotoCMS/components/forms/input/Button/Button.twig" with { label:"Cancel", types:['text'] } %}{#, onclick:"Mimoto.form.submit();"#}
-            {% include "MimotoCMS/components/forms/input/Button/Button.twig" with { label:"Save" } %}{#, onclick:"Mimoto.form.submit();"#}
+            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:"Cancel", types:['text'] }) }} {#, onclick:"Mimoto.form.submit();"#}
+            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:"Save" }) }}
         </span>
     </div>
 </div>

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.componentNew();" } %}
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.componentNew();" }) }}
 
     <div class="MimotoCMS_pages_components_ComponentOverview__container" {{ Aimless.realtime('components') }}>
         {{ Aimless.selection('components') }}

@@ -1,4 +1,4 @@
-#{$pr-input}_Button {
+.MimotoCMS_ButtonModule {
     display: inline-flex;
     padding: 10px 20px;
     cursor: pointer;
@@ -16,7 +16,7 @@
     }
 }
 
-#{$pr-input}_Button--secondary {
+.MimotoCMS_ButtonModule--secondary {
     background-color: $tower-gray;
 
     &:hover {
@@ -24,7 +24,7 @@
     }
 }
 
-#{$pr-input}_Button--text {
+.MimotoCMS_ButtonModule--text {
     text-decoration: underline;
     color: #555;
     background-color: inherit;
@@ -34,31 +34,31 @@
     }
 }
 
-#{$pr-input}_Button--alert {
+.MimotoCMS_ButtonModule--alert {
     background-color: $fuzzy-wuzzy-brown;
 
     &:hover {
         background-color: $black;
     }
 
-    &>.#{$pr-input}_Button-icon {
+    &>.MimotoCMS_ButtonModule-icon {
         color: #fff;
     }
 }
 
-#{$pr-input}_Button--small {
+.MimotoCMS_ButtonModule--small {
     padding: 6px 10px;
     font-size: rem-calc(10px);
 }
 
-    #{$pr-input}_Button-text {
+    .MimotoCMS_ButtonModule-text {
         font-family: $font-family-futura;
         font-size: rem-calc(14px);
         font-weight: 500;
         line-height: rem-calc(20px);
     }
 
-    #{$pr-input}_Button-icon {
+    .MimotoCMS_ButtonModule-icon {
         display: block;
         width: 10px;
         height: 10px;

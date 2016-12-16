@@ -29,7 +29,6 @@ $app['debug'] = true;
 $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app);
 
-// #todo - auto-raw http://twig.sensiolabs.org/doc/api.html
 
 //function Mimoto('data') of als singleton Mimoto::data->create
 // add actions folder

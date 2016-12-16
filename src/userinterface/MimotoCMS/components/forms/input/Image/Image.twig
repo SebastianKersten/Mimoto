@@ -1,35 +1,23 @@
-{#<div class="form-component" data-module="views/ImageUpload" data-options='{"url": "http://httpbin.org/post"}'>
-  <div class="form-component-title">Desktop afbeelding <span class="form-component-title-information">(optioneel)</span> <span class="js-form-component-title-icon form-component-title-icon icon"></span></div>
-
-  <div class="form-component-content">
-    <div class="form-component-element js-error-parent">
-    </div>
-    <p class="form-component-description">De afbeelding mag max 2MB zijn. Een resolutie van 1400x900px werkt het beste.</p>
-  </div>
-</div>#}
-
 {% embed "MimotoCMS/components/forms/FormComponent.twig" %}
-  {% block form_component_element %}
-    <div class="form-image-upload js-image-upload">
-      <div class="form-image-upload-trigger js-image-upload-trigger">
-        <div class="form-image-upload-button"><span class="form-image-upload-button-icon icon icon-plus"></span></div>
-        <p class="form-image-upload-text">Klik hier of drop een afbeelding</p>
-      </div>
 
-      <div class="form-image-upload-preview js-image-upload-preview">
-        <div class="form-image-upload-preview-template js-image-upload-preview-template">
-          <img data-dz-thumbnail class="form-image-upload-preview-image" />
-          <div class="form-image-upload-preview-upload-progress">
-            <div class="form-image-upload-preview-upload-progess-bar" data-dz-uploadprogress></div>
-          </div>
-          <div class="form-image-upload-preview-button">
-            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
-            label: 'Verwijderen',
-            attributes: [{"attribute": "dz-remove"}]
-            } %}
-          </div>
+    {% block form_component_element %}
+        <div class="form-image-upload js-image-upload">
+            <div class="form-image-upload-trigger js-image-upload-trigger">
+                <div class="form-image-upload-button"><span class="form-image-upload-button-icon icon icon-plus"></span></div>
+                <p class="form-image-upload-text">Klik hier of drop een afbeelding</p>
+            </div>
+
+            <div class="form-image-upload-preview js-image-upload-preview">
+                 <div class="form-image-upload-preview-template js-image-upload-preview-template">
+                    <img data-dz-thumbnail class="form-image-upload-preview-image" />
+                    <div class="form-image-upload-preview-upload-progress">
+                        <div class="form-image-upload-preview-upload-progess-bar" data-dz-uploadprogress></div>
+                    </div>
+                    <div class="form-image-upload-preview-button">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  {% endblock %}
+    {% endblock %}
 {% endembed %}

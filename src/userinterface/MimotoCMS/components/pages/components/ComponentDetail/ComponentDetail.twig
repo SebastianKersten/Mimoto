@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' } %}
+                            {{ Aimless.module('Button', { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
                         </div>
 
                     </div>

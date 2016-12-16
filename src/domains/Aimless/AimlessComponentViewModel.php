@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\Aimless;
 
+// Mimoto classes
+use Mimoto\Aimless\MimotoAimlessUtils;
+
 
 /**
  * AimlessComponentViewModel
@@ -75,7 +78,7 @@ class AimlessComponentViewModel
 
     public function module($sModuleName, $values = [])
     {
-        return $this->_component->module($sModuleName, $values);
+        return MimotoAimlessUtils::getModule($sModuleName, $values);
     }
 
 }

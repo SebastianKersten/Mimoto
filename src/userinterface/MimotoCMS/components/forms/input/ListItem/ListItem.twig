@@ -8,11 +8,7 @@
   </div>
   {% if list_item.removeable|default(false) %}
     <div class="form-list-item-button">
-      {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with {
-      label: 'Verwijderen',
-      link: '#',
-      types: ['grey']
-      } %}
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', link: '#', types: ['grey'] }) }}
     </div>
   {% endif %}
 </div>

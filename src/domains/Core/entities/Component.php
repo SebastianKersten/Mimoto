@@ -322,8 +322,13 @@ class Component
             // modules
 
             (object) array(
-                'name' => 'ListItemModule',
+                'name' => 'Mimoto.CMS.ListItemModule',
                 'file' => 'MimotoCMS/modules/ListItemModule/ListItemModule.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS.ButtonModule',
+                'file' => 'MimotoCMS/modules/ButtonModule/ButtonModule.twig',
                 'conditionals' => []
             ),
 

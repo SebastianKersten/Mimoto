@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">
-        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Aimless.meta('id') ~ "');" } %}
-        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Move', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyMove('" ~ Aimless.meta('id') ~ "');" } %}
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Aimless.meta('id') ~ "');" }) }}
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Move', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyMove('" ~ Aimless.meta('id') ~ "');" }) }}
     </div>
 </div>

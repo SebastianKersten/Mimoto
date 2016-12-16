@@ -67,7 +67,7 @@
                         </div>
 
                         <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_menu">
-                            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' } %}
+                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
                         </div>
 
                     </div>
@@ -79,7 +79,7 @@
 
                             <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty">
                                 <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
-                                <div>{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}</div>
+                                <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
                             </div>
                         {% else %}
 
@@ -88,7 +88,9 @@
                                     {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
                                 </div>
 
-                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}</div>
+                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
+                                    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                                </div>
                             </div>
 
                         {% endif %}
@@ -121,8 +123,7 @@
                 <br>
                 <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
                 <br>
-                {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Delete entity', icon:'warning', onclick:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", types:['alert'] } %}
-
+                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete entity', icon:'warning', onclick:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", types:['alert'] }) }}
             </div>
 
         {% endblock %}

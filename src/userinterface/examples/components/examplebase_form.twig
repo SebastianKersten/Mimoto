@@ -12,7 +12,7 @@
         </div>
         <div class="MimotoCMS_forms_Form__menu">
             <span {{ Aimless.submit() }}>
-                {% include "MimotoCMS/components/forms/input/Button/Button.twig" with { label:"Opslaan", onclick:"Mimoto.form.submit();" } %}
+                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Save', icon:'plus', onclick:"Mimoto.form.submit();" }) }}
             </span>
         </div>
     </div>

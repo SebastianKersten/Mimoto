@@ -1,7 +1,6 @@
 @import 'forms/FormComponent';
 @import 'forms/form-menu';
 
-@import 'forms/input/Button/Button';
 @import 'forms/input/Checkbox/Checkbox';
 @import 'forms/input/MultiSelect/MultiSelect';
 @import 'forms/input/Dropdown/Dropdown';
@@ -32,3 +31,5 @@
 @import 'interface/Interface';
 @import 'pages/components/Components';
 @import 'modules/Modules';
+
+@import '../modules/modules';

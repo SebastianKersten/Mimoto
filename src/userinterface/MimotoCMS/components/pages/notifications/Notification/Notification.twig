@@ -1,21 +1,3 @@
-{#
-<a name="notification_{{ Aimless.meta('id') }}"></a>
-
-<div class="MimotoCMS_pages_notifications_Notification {{ Aimless.data('category') }}" {{ Aimless.realtime() }}>
-    <div class="MimotoCMS_pages_notifications_Notification__column">
-        <div class="MimotoCMS_pages_notifications_Notification__title" {{ Aimless.realtime('title') }}>{{ Aimless.data('title') }}</div>
-        <div class="MimotoCMS_pages_notifications_Notification__subtitle">
-            <span class="MimotoCMS_pages_notifications_Notification__timestamp">{{ Aimless.meta('created') }}</span> by
-            <span class="MimotoCMS_pages_notifications_Notification__dispatcher">{{ Aimless.data('dispatcher') }}</span>
-        </div>
-        <div class="MimotoCMS_pages_notifications_Notification__message" {{ Aimless.realtime('message') }}>{{ Aimless.data('message') }}</div>
-        <!--add 'count' as a property -->
-    </div>
-    <div class="MimotoCMS_pages_notifications_Notification__column">
-        {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Close', onclick:"Mimoto.CMS.notificationClose('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"');" } %}
-    </div>
-</div>
-#}
 <div data-mimoto-component="MimotoCMS_pages_notifications_Notification" class="MimotoCMS_pages_notifications_Notification">
     <a name="notification_{{ Aimless.meta('id') }}"></a>
     <div class="notification notification--{{ Aimless.data('category') }}" {{ Aimless.realtime() }}>
@@ -30,7 +12,7 @@
         </div>
 
         <div class="notification-button">
-            {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label: 'Close', onclick: "Mimoto.CMS.notificationClose('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"');" } %}
+            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Close', onclick: "Mimoto.CMS.notificationClose('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"');" }) }}
         </div>
 
     </div>
