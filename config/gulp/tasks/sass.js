@@ -28,7 +28,7 @@ function sassTasks (env) {
     .pipe(postcss(processors[env]))
     .pipe(rename({
       dirname: "",
-      suffix: ".min"
+      suffix: ""
     }))
     .pipe(gulp.dest(config.dest))
     .pipe(browserSync.reload({stream: true}));

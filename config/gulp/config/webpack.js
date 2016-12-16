@@ -33,7 +33,7 @@ module.exports = function (env) {
     },
     output: {
       path: jsDest,
-      filename: '[name].min.js',
+      filename: '[name].js',
       publicPath: publicPath
     }
 
