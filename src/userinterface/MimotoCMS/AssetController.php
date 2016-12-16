@@ -7,6 +7,7 @@ namespace Mimoto\UserInterface\MimotoCMS;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 /**
@@ -24,23 +25,92 @@ class AssetController
 
     public function loadJavascriptMimotoAimless(Application $app)
     {
-        $this->setHeaderJavascript();
+        // 1. prepare output
+        $this->setHeaderForJavascript();
 
-        return new Response($this->loadStaticFile('js/mimoto.aimless.js'));
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/js/mimoto.aimless.js'));
     }
 
     public function loadJavascriptMimotoCMS(Application $app)
     {
-        $this->setHeaderJavascript();
+        // 1. prepare output
+        $this->setHeaderForJavascript();
 
-        return new Response($this->loadStaticFile('js/mimoto.cms.js'));
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/js/mimoto.cms.js'));
     }
 
     public function loadStylesheetMimotoCMS(Application $app)
     {
-        $this->setHeaderCSS();
+        // 1. prepare output
+        $this->setHeaderForCSS();
 
-        return new Response($this->loadStaticFile('css/mimoto.cms.css'));
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/css/mimoto.cms.css'));
+    }
+
+    public function loadFontFuturaTtf(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForFont();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/fonts/futura/4d6d50ec-b049-44ba-a001-e847c3e2dc79.ttf'));
+    }
+
+    public function loadFontFuturaEot(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForFont();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/fonts/futura/94fe45a6-9447-4224-aa0f-fa09fe58c702.eot'));
+    }
+
+    public function loadFontFuturaWoff(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForFont();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/fonts/futura/475da8bf-b453-41ee-ab0e-bd9cb250e218.woff'));
+    }
+
+    public function loadFontFuturaWoff2(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForFont();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/fonts/futura/cb9d11fa-bd41-4bd9-8b8f-34ccfc8a80a2.woff2'));
+    }
+
+    public function loadImageLogo(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForImagePNG();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/images/mimoto_logo.png'));
+    }
+
+    public function loadImageLogoCollapsed(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForImagePNG();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('static/images/mimoto_logo_collapsed.png'));
+    }
+
+    public function loadImageAvatar(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForImagePNG();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('dynamic/avatar.png'));
     }
 
 
@@ -50,29 +120,49 @@ class AssetController
     // ----------------------------------------------------------------------------
 
 
-    private function setHeaderJavascript()
+    /**
+     * Set header to match javascript content
+     */
+    private function setHeaderForJavascript()
     {
-        header("Content-type: text/javascript; charset: UTF-8");
+        header("Content-type: application/javascript; charset: UTF-8");
     }
 
-    private function setHeaderCSS()
+    /**
+     * Set header to match stylesheet content
+     */
+    private function setHeaderForCSS()
     {
         header("Content-type: text/css; charset: UTF-8");
     }
 
+    /**
+     * Set header to match font content
+     */
+    private function setHeaderForFont()
+    {
+        header("Content-type: font/opentype");
+    }
+
+    /**
+     * Set header to match png content
+     */
+    private function setHeaderForImagePNG()
+    {
+        header("Content-type: image/png");
+    }
+
+    /**
+     * Load static file
+     * @param $sFile
+     * @return string
+     */
     private function loadStaticFile($sFile)
     {
-        $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/static/'.$sFile;
+        // compose
+        $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/'.$sFile;
 
-        include($sFile);
-
-        if (file_exists($sFile))
-        {
-            return file_get_contents($sFile);
-        }
-        else
-        {
-            die('File not found');
-        }
+        // load and send
+        return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
     }
 }
