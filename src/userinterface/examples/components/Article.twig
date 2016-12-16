@@ -5,9 +5,9 @@
     <i>An article presented in the primary article layout</i><br>
     <br>
     <br>
-    <div class="example_article" {{ Aimless.realtime()|raw }}>
-        <i><span {{ Aimless.realtime('lede')|raw }}>{{ Aimless.render('lede') }}</span></i><br><br>
-        <b><span {{ Aimless.realtime('title')|raw }}>{{ Aimless.render('title') }}</span></b><br><br>
-        <div {{ Aimless.realtime('body')|raw }}>{{ Aimless.render('body') }}</div>
+    <div class="example_article" {{ Aimless.realtime() }}>
+        <i><span {{ Aimless.realtime('lede') }}>{{ Aimless.render('lede') }}</span></i><br><br>
+        <b><span {{ Aimless.realtime('title') }}>{{ Aimless.render('title') }}</span></b><br><br>
+        <div {{ Aimless.realtime('body') }}>{{ Aimless.render('body') }}</div>
     </div>
 {% endblock %}

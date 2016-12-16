@@ -17,6 +17,7 @@ $GLOBALS['Mimoto.ProjectConfig.twigroot'] = 'src/userinterface/';
 $loader = new \Twig_Loader_Filesystem([$GLOBALS['Mimoto.ProjectConfig.root'].$GLOBALS['Mimoto.ProjectConfig.twigroot']]);
 $twig = new Twig_Environment($loader, array(
     // 'cache' => '../app/cache',
+    'autoescape' => false
 ));
 
 
@@ -27,6 +28,9 @@ $GLOBALS['database'] = new PDO("mysql:host=".$config->mysql->host.";dbname=".$co
 $app['debug'] = true;
 $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app);
+
+// #todo - auto-raw http://twig.sensiolabs.org/doc/api.html
+
 //function Mimoto('data') of als singleton Mimoto::data->create
 // add actions folder
 

@@ -38,7 +38,7 @@
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta">
                         <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_info">
 
-                            <span class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname" {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span>
+                            <span class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</span>
 
                             {% if entityStructure.extends is not empty %}
                                 {% for extension in entityStructure.extends %}
@@ -84,8 +84,8 @@
                         {% else %}
 
                             <div>
-                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_container" {{ Aimless.realtime('properties')|raw }}>
-                                    {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty')|raw }}
+                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_container" {{ Aimless.realtime('properties') }}>
+                                    {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
                                 </div>
 
                                 <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">{% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" } %}</div>
@@ -106,8 +106,8 @@
                     [search fields]
                     <br>
                     <br>
-                    {#<div class="MimotoCMS_pages_entities_EntityDetail_Properties__container" {{ Aimless.realtime('instances')|raw }}>
-                        {{ Aimless.data('instances')|raw }}
+                    {#<div class="MimotoCMS_pages_entities_EntityDetail_Properties__container" {{ Aimless.realtime('instances') }}>
+                        {{ Aimless.data('instances') }}
                     </div>#}
                 </div>
 
@@ -135,11 +135,11 @@
         <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-title">Twig example</div>
 
         <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-container">
-            <code>{% set htmlOutput = "<div " %}{{ htmlOutput }}<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Aimless.realtime()|raw }}' }}</span>&gt;</code>
-            <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties" {{ Aimless.realtime('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample')|raw }}>
-                {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample')|raw }}
+            <code>{{ "<div "|escape }}<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Aimless.realtime() }}' }}</span>&gt;</code>
+            <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties" {{ Aimless.realtime('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}>
+                {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}
             </div>
-            <code>{% set htmlOutput = "</div>" %}{{ htmlOutput }}</code>
+            <code>{{ "</div>"|escape }}</code>
         </div>
     </div>
 

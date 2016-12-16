@@ -1,5 +1,5 @@
-{%
-    include 'MimotoCMS/components/modules/ListItemModule/ListItemModule.twig' with
+{{
+    Aimless.module('ListItemModule',
     {
         label: Aimless.data('name'),
         label_realtime: Aimless.realtime('name'),
@@ -7,5 +7,5 @@
         button_label: 'View',
         button_action: 'Mimoto.CMS.entityView('~Aimless.meta('id')~');',
         button_type: 'secondary'
-    }
-%}
+    })
+}}

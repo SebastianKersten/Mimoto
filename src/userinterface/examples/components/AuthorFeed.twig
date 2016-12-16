@@ -3,9 +3,9 @@
 {% block content %}
     <h1>Example 2 - Author feed</h1>
     
-    <div class="example_authorfeed" {{ Aimless.realtime()|raw }}>
-        <i><span {{ Aimless.realtime('lede')|raw }}>{{ Aimless.data('lede') }}</span></i><br><br>
-        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('title') }}</span></b><br><br>
-        <div {{ Aimless.realtime('body')|raw }}>{{ Aimless.data('body') }}</div>
+    <div class="example_authorfeed" {{ Aimless.realtime() }}>
+        <i><span {{ Aimless.realtime('lede') }}>{{ Aimless.data('lede') }}</span></i><br><br>
+        <b><span {{ Aimless.realtime('name') }}>{{ Aimless.data('title') }}</span></b><br><br>
+        <div {{ Aimless.realtime('body') }}>{{ Aimless.data('body') }}</div>
     </div>
 {% endblock %}

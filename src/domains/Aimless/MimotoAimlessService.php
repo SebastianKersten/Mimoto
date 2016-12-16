@@ -140,6 +140,47 @@ class MimotoAimlessService
         
     }
 
+    public function getModuleFile($sModuleName)
+    {
+        $nComponentCount = count($this->_aComponents);
+        for ($i = 0; $i < $nComponentCount; $i++)
+        {
+            $template = $this->_aComponents[$i];
+
+            if ($template->name === $sComponentName)
+            {
+                if (count($template->conditionals) > 0 && $entity !== null)
+                {
+                    $bValidated = true;
+                    $nConditionalCount = count($template->conditionals);
+                    for ($j = 0; $j < $nConditionalCount; $j++)
+                    {
+                        $conditional = $template->conditionals[$j];
+
+                        if ($entity->getValue($conditional->key) !== $conditional->value)
+                        {
+                            $bValidated = false;
+                            break;
+                        }
+                    }
+
+                    if ($bValidated) { return $template->file; }
+                }
+                else
+                {
+                    return $template->file;
+                }
+            }
+        }
+
+
+        die("MimotoAimlessService says: Template '$sComponentName' not found");
+
+        // 1. broadcast webevent for debugging purposes
+        // 2. standaard report error (error level)
+
+    }
+
 
     // --- aimless - dom util
 

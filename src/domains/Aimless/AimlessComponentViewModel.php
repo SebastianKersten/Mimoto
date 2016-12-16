@@ -73,8 +73,9 @@ class AimlessComponentViewModel
         return $this->_component->submit($sKey);
     }
 
-    /*public function render() #todo - is dit nog nodig?
+    public function module($sModuleName, $values = [])
     {
-        return $this->_component->render();
-    }*/
+        return $this->_component->module($sModuleName, $values);
+    }
+
 }

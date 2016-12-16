@@ -1,14 +1,14 @@
 {#
 <a name="notification_{{ Aimless.meta('id') }}"></a>
 
-<div class="MimotoCMS_pages_notifications_Notification {{ Aimless.data('category') }}" {{ Aimless.realtime()|raw }}>
+<div class="MimotoCMS_pages_notifications_Notification {{ Aimless.data('category') }}" {{ Aimless.realtime() }}>
     <div class="MimotoCMS_pages_notifications_Notification__column">
-        <div class="MimotoCMS_pages_notifications_Notification__title" {{ Aimless.realtime('title')|raw }}>{{ Aimless.data('title') }}</div>
+        <div class="MimotoCMS_pages_notifications_Notification__title" {{ Aimless.realtime('title') }}>{{ Aimless.data('title') }}</div>
         <div class="MimotoCMS_pages_notifications_Notification__subtitle">
             <span class="MimotoCMS_pages_notifications_Notification__timestamp">{{ Aimless.meta('created') }}</span> by
             <span class="MimotoCMS_pages_notifications_Notification__dispatcher">{{ Aimless.data('dispatcher') }}</span>
         </div>
-        <div class="MimotoCMS_pages_notifications_Notification__message" {{ Aimless.realtime('message')|raw }}>{{ Aimless.data('message')|raw }}</div>
+        <div class="MimotoCMS_pages_notifications_Notification__message" {{ Aimless.realtime('message') }}>{{ Aimless.data('message') }}</div>
         <!--add 'count' as a property -->
     </div>
     <div class="MimotoCMS_pages_notifications_Notification__column">
@@ -18,15 +18,15 @@
 #}
 <div data-mimoto-component="MimotoCMS_pages_notifications_Notification" class="MimotoCMS_pages_notifications_Notification">
     <a name="notification_{{ Aimless.meta('id') }}"></a>
-    <div class="notification notification--{{ Aimless.data('category') }}" {{ Aimless.realtime()|raw }}>
+    <div class="notification notification--{{ Aimless.data('category') }}" {{ Aimless.realtime() }}>
 
         <div class="notification-content">
-            <p class="notification-title" {{ Aimless.realtime('title')|raw }}>{{ Aimless.data('title') }}</p>
+            <p class="notification-title" {{ Aimless.realtime('title') }}>{{ Aimless.data('title') }}</p>
             <p class="notification-subtitle">
                 <span class="notification-subtitle-timestamp">{{ Aimless.meta('created') }}</span> by
                 <span class="notification-subtitle-creator">{{ Aimless.data('dispatcher') }}</span>
             </p>
-            <p class="notification-message" {{ Aimless.realtime('message')|raw }}>{{ Aimless.data('message')|raw }}</p>
+            <p class="notification-message" {{ Aimless.realtime('message') }}>{{ Aimless.data('message') }}</p>
         </div>
 
         <div class="notification-button">

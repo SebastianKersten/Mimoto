@@ -8,10 +8,10 @@
         {#{% include 'MimotoCMS/components/forms/input/Checkbox/Checkbox.twig'  %}#}
         {#% include 'MimotoCMS/components/forms/input/Dropdown/Dropdown.twig'  %}#}
         <div class="example_form_fields">
-            {{ Aimless.form()|raw }}
+            {{ Aimless.form() }}
         </div>
         <div class="MimotoCMS_forms_Form__menu">
-            <span {{ Aimless.submit()|raw }}>
+            <span {{ Aimless.submit() }}>
                 {% include "MimotoCMS/components/forms/input/Button/Button.twig" with { label:"Opslaan", onclick:"Mimoto.form.submit();" } %}
             </span>
         </div>

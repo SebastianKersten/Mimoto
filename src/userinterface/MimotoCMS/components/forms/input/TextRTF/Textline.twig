@@ -1,10 +1,10 @@
-<div {{ Aimless.field()|raw }} class="form-component">
+<div {{ Aimless.field() }} class="form-component">
   <label for="" class="form-component-title">{{ Aimless.data('label') }} <span class="form-component-title-information">{% if Aimless.data('optional') %}(optioneel){% endif %}</span></label>
 
   <div class="form-component-content">
     <div class="form-component-element">
-      <input {{ Aimless.input()|raw }} type="text" class="form-input" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}"/>
-      <p {{ Aimless.error()|raw }} class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
+      <input {{ Aimless.input() }} type="text" class="form-input" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}"/>
+      <p {{ Aimless.error() }} class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
     </div>
     <p class="form-component-description">{{ Aimless.data('description') }}</p>
   </div>
@@ -39,7 +39,7 @@
     <div class="form-component-content">
       <div class="form-component-element">
         <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
-        <p {{ Aimless.error()|raw }} class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
+        <p {{ Aimless.error() }} class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
       </div>
       <p class="form-component-description">Mag geen scheldwoorden bevatten</p>
     </div>

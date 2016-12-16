@@ -1,9 +1,9 @@
 <div class="form_holder">
     <div class="MimotoCMS_forms_Form__fields">
-        {{ Aimless.form()|raw }}
+        {{ Aimless.form() }}
     </div>
     <div class="MimotoCMS_forms_Form__menu">
-        <span {{ Aimless.submit()|raw }}>
+        <span {{ Aimless.submit() }}>
             {% include "MimotoCMS/components/forms/input/Button/Button.twig" with { label:"Cancel", types:['text'] } %}{#, onclick:"Mimoto.form.submit();"#}
             {% include "MimotoCMS/components/forms/input/Button/Button.twig" with { label:"Save" } %}{#, onclick:"Mimoto.form.submit();"#}
         </span>

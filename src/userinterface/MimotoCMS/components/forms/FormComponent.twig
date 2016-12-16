@@ -1,4 +1,4 @@
-<div {{ Aimless.field()|raw }} class="MimotoCMS_forms_FormComponent js-form-component {% if type|default('') %} js-form-component-{{ type }}{% endif %}">
+<div {{ Aimless.field() }} class="MimotoCMS_forms_FormComponent js-form-component {% if type|default('') %} js-form-component-{{ type }}{% endif %}">
 
   <div class="MimotoCMS_forms_FormComponent-header">
     <label for="" class="MimotoCMS_forms_FormComponent-title">{{ Aimless.data('label') }} {#{% if Aimless.data('value.optional') %}<span class="MimotoCMS_forms_FormComponent-title-information">(optioneel)</span>{% endif %}#}<svg class="js-error-icon MimotoCMS_forms_FormComponent-title-icon"><use xlink:href=""></use></svg></label>
@@ -19,7 +19,7 @@
 
       {% block form_component_element %}{% endblock %}
 
-      <p {{ Aimless.error()|raw }} class="MimotoCMS_forms_FormComponent-element-error"></p>
+      <p {{ Aimless.error() }} class="MimotoCMS_forms_FormComponent-element-error"></p>
 
     </div>
 

@@ -5,9 +5,9 @@
     <h1>Project with subprojects - typed</h1>
     <i>This project contains a collection of subprojects and every subproject is presented with the a template based on the "phase" property</i><br><br>
     <br>
-    <div class="example_project" {{ Aimless.realtime()|raw }}>
-        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.render('name') }}</span></b><br><br>
+    <div class="example_project" {{ Aimless.realtime() }}>
+        <b><span {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</span></b><br><br>
         <br>
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects')|raw }}>{{ Aimless.render('subprojects')|raw }}</div>
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects') }}>{{ Aimless.render('subprojects') }}</div>
     </div>
 {% endblock %}

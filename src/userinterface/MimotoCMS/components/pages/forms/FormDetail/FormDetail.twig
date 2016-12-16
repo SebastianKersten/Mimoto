@@ -3,7 +3,7 @@
 {% block content %}
     <h2><a href="/mimoto.cms/entities">forms</a> / form detail</h2>
     <br>
-    Name = <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.data('name') }}</span></b> -
+    Name = <b><span {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</span></b> -
     {% include 'MimotoCMS/components/forms/input/ButtonSmall/ButtonSmall.twig' with { label:'Edit', icon:'', action:"Mimoto.CMS.formEdit('" ~ Aimless.meta('id') ~ "');" } %}<br>
     <br>
     Properties:<br>
@@ -11,8 +11,8 @@
     {% include 'MimotoCMS/components/forms/input/Button/Button.twig' with { label:'Add new field', icon:'+', action:"Mimoto.CMS.formFieldNew('" ~ Aimless.meta('id') ~ "');" } %}
     <br>
     <br>
-    <div class="MimotoCMS_pages_forms_FormDetail__container" {{ Aimless.realtime('fields')|raw }}>
-        {{ Aimless.data('fields')|raw }}
+    <div class="MimotoCMS_pages_forms_FormDetail__container" {{ Aimless.realtime('fields') }}>
+        {{ Aimless.data('fields') }}
     </div>
     <br>
     <hr>

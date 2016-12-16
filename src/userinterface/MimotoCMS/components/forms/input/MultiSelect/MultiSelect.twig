@@ -8,7 +8,7 @@
             <div class="MimotoCMS_forms_FormComponent-element-container">
                 {% set sInputId = Aimless.fieldId()~'-'~option.key %}
                 <div class="MimotoCMS_forms_input_MultiSelect-container">
-                    <input {{ Aimless.input()|raw }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect js-checkbox" value="{{ option.key }}" {% if option.key in aValues %}checked{% endif %} />
+                    <input {{ Aimless.input() }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect js-checkbox" value="{{ option.key }}" {% if option.key in aValues %}checked{% endif %} />
                     <svg class="MimotoCMS_forms_input_MultiSelect-icon"><use xlink:href="#ico-checkmark"></use></svg>
                 </div>
                 <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ option.value }}</label>

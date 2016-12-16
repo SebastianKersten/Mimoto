@@ -411,8 +411,6 @@ class AimlessComponent
         }
     }
     
-    
-    
     /**
      * Get entity's meta information 'id' or 'created'
      * @param type $sPropertyName The entity's meta information 'id' or 'created'
@@ -468,7 +466,7 @@ class AimlessComponent
     
     public function render()
     {
-        // get te component file
+        // get component file
         $sComponentFile = $this->_AimlessService->getComponentFile($this->_sComponentName, $this->_entity);
 
         // create
@@ -479,6 +477,18 @@ class AimlessComponent
         
         // output
         return $this->_TwigService->render($sComponentFile, $this->_aVars);
+    }
+
+    public function module($sModuleName, $values = [])
+    {
+        // get module file
+        $sModuleFile = $this->_AimlessService->getComponentFile($sModuleName);
+
+        // configure
+        $this->_aVars = $values;
+
+        // output
+        return $this->_TwigService->render($sModuleFile, $this->_aVars);
     }
 
 

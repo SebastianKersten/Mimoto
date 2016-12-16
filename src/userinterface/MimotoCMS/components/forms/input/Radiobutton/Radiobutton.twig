@@ -5,7 +5,7 @@
         {% for option in aOptions %}
             <div class="MimotoCMS_forms_FormComponent-element-container">
                 {% set sInputId = Aimless.fieldId()~'-'~option.key %}
-                <input {{ Aimless.input()|raw }} id="{{ sInputId }}" type="radio" value="{{ option.key }}" class="MimotoCMS_forms_input_RadioButton js-radio-button" {% if Aimless.value() == option.key %}checked{% endif %}/>
+                <input {{ Aimless.input() }} id="{{ sInputId }}" type="radio" value="{{ option.key }}" class="MimotoCMS_forms_input_RadioButton js-radio-button" {% if Aimless.value() == option.key %}checked{% endif %}/>
                 <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ option.value }}</label>
             </div>
         {% endfor %}

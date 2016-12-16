@@ -214,7 +214,7 @@ if ($field->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
             {
                 $sRenderedForm .= '<script>Mimoto.form.registerInputField("'.$field->getAimlessId().'")</script>';
 
-                // <script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation|raw }}{% endif %})</script>
+                // <script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation }}{% endif %})</script>
                 //  een field heeft settings:
 
                 // _mimoto_inputfield

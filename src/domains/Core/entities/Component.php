@@ -318,6 +318,15 @@ class Component
                 'conditionals' => []
             ),
 
+
+            // modules
+
+            (object) array(
+                'name' => 'ListItemModule',
+                'file' => 'MimotoCMS/modules/ListItemModule/ListItemModule.twig',
+                'conditionals' => []
+            ),
+
         ];
 
         // send

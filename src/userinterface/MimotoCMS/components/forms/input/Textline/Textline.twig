@@ -3,7 +3,7 @@
         {% if Aimless.data('prefix')|default('') %}
             <div class="MimotoCMS_forms_FormComponent-element-container MimotoCMS_forms_FormComponent-element-container--has-prefix">
         {% endif %}
-                <input {{ Aimless.input()|raw }} type="text" class="MimotoCMS_forms_input_Textline js-textline" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}"/>
+                <input {{ Aimless.input() }} type="text" class="MimotoCMS_forms_input_Textline js-textline" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}"/>
         {% if Aimless.data('prefix')|default('') %}
                 <span class="MimotoCMS_forms_FormComponent-element-prefix">{{ Aimless.data('prefix') }}</span>
             </div>

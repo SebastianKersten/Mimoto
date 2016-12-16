@@ -4,17 +4,17 @@
     <h1>{{ title }}</h1>
     <i>{{ description }}</i><br>
     <br>
-    <div class="example_project" {{ Aimless.realtime()|raw }}>
+    <div class="example_project" {{ Aimless.realtime() }}>
 
-        <b><span {{ Aimless.realtime('name')|raw }}>{{ Aimless.render('name') }}</span></b>
+        <b><span {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</span></b>
 
-        <span {{ Aimless.realtime('projectManager')|raw }}>{{ Aimless.render('projectManager')|raw }}</span>
+        <span {{ Aimless.realtime('projectManager') }}>{{ Aimless.render('projectManager') }}</span>
 
         <br><br>
-        <div {{ Aimless.realtime('description')|raw }}>{{ Aimless.render('description') }}</div>
+        <div {{ Aimless.realtime('description') }}>{{ Aimless.render('description') }}</div>
         <br>
-        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects')|raw }}>
-            {{ Aimless.render('subprojects')|raw }}
+        <div class="example_project_subprojects" {{ Aimless.realtime('subprojects') }}>
+            {{ Aimless.render('subprojects') }}
         </div>
     </div>
 {% endblock %}

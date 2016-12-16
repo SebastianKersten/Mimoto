@@ -2,13 +2,13 @@
 
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__data">
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__name">
-            <a href="/mimoto.cms/entityproperty/{{ Aimless.meta('id') }}/view" {{ Aimless.realtime('name')|raw }} >{{ Aimless.render('name') }}</a>
+            <a href="/mimoto.cms/entityproperty/{{ Aimless.meta('id') }}/view" {{ Aimless.realtime('name') }} >{{ Aimless.render('name') }}</a>
         </div>
-        <div {{ Aimless.realtime('type')|raw }} class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
+        <div {{ Aimless.realtime('type') }} class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
             {{ Aimless.render('type') }}
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer">
-            {{ Aimless.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting')|raw }}
+            {{ Aimless.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting') }}
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">
