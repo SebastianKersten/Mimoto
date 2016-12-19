@@ -1,0 +1,18 @@
+<div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty">
+
+    <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__data">
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__name">
+            <a href="/mimoto.cms/entityproperty/{{ Aimless.meta('id') }}/view" {{ Aimless.realtime('name') }} >{{ Aimless.render('name') }}</a>
+        </div>
+        <div {{ Aimless.realtime('type') }} class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
+            {{ Aimless.render('type') }}
+        </div>
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer">
+            {{ Aimless.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting') }}
+        </div>
+    </div>
+    <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Aimless.meta('id') ~ "');" }) }}
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Move', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyMove('" ~ Aimless.meta('id') ~ "');" }) }}
+    </div>
+</div>

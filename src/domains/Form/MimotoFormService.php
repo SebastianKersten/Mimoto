@@ -16,6 +16,8 @@ use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 use Mimoto\Core\forms\ComponentForm;
+use Mimoto\Core\forms\FormForm;
+use Mimoto\Core\forms\InputTextlineForm;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -607,8 +609,21 @@ class MimotoFormService
             case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES: return EntityPropertyForm_Collection_allowedEntityTypes::getStructure(); break;
             case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES: return EntityPropertyForm_Collection_allowDuplicates::getStructure(); break;
 
+            // component -----
+
             case CoreConfig::COREFORM_COMPONENT_NEW: return ComponentForm::getStructureNew(); break;
             case CoreConfig::COREFORM_COMPONENT_EDIT: return ComponentForm::getStructureEdit(); break;
+
+            // form ----------
+
+            case CoreConfig::COREFORM_FORM_NEW:  return FormForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_FORM_EDIT:  return FormForm::getStructureEdit(); break;
+
+            // input ---------
+
+            case CoreConfig::COREFORM_INPUT_TEXTLINE_NEW: return InputTextlineForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_INPUT_TEXTLINE_EDIT: return InputTextlineForm::getStructureEdit(); break;
+
 
             default: die("MimotoFormService.loadCoreForm('$sFormName') - Form not found");
         }

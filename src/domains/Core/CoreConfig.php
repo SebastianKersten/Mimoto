@@ -133,6 +133,17 @@ class CoreConfig
     const COREFORM_COMPONENT_NEW         = '_MimotoAimless__coreform__component_new';
     const COREFORM_COMPONENT_EDIT        = '_MimotoAimless__coreform__component_edit';
 
+    const COREFORM_FORM                  = '_MimotoAimless__coreform__form';
+    const COREFORM_FORM_NEW              = '_MimotoAimless__coreform__form_new';
+    const COREFORM_FORM_EDIT             = '_MimotoAimless__coreform__form_edit';
+
+    const COREFORM_INPUT_TEXTLINE        = '_MimotoAimless__coreform__input_textline';
+    const COREFORM_INPUT_TEXTLINE_NEW    = '_MimotoAimless__coreform__input_textline_new';
+    const COREFORM_INPUT_TEXTLINE_EDIT   = '_MimotoAimless__coreform__input_textline_edit';
+
+
+
+
 
     // #todo
     // 1. noteer hier ook de tables en tableconfigs for installatie

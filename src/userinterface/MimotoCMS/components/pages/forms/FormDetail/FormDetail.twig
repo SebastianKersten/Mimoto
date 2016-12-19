@@ -1,25 +1,84 @@
 {% extends "MimotoCMS/components/base.twig" %}
 
 {% block content %}
-    <h2><a href="/mimoto.cms/entities">forms</a> / form detail</h2>
-    <br>
-    Name = <b><span {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</span></b> -
 
-    <br>
-    Properties:<br>
-    <br>
-    {{ Aimless.module('Button', { label:'Add new field', icon:'+', action:"Mimoto.CMS.formFieldNew('" ~ Aimless.meta('id') ~ "');" }) }}
-    <br>
-    <br>
-    <div class="MimotoCMS_pages_forms_FormDetail__container" {{ Aimless.realtime('fields') }}>
-        {{ Aimless.data('fields') }}
-    </div>
-    <br>
-    <hr>
-    <br>
-    <b>Danger zone!</b><br>
-    <br>
-    <i><u>WARNING</u> - Deleting the form will result in the LOSS OF ALL DATA related to this form.</i><br>
-    <br>
-    {{ Aimless.module('Button', { label:'Delete entity', icon:'X', action:"Mimoto.CMS.formDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", type:'red' }) }}
+    {%
+        embed "MimotoCMS/components/modules/Tabmenu/Tabmenu.twig" with {
+            id: 'formdetails',
+            tabs: [
+                {
+                    label: 'Fields',
+                    panel_id: 'panel_formdetail_fields'
+                },
+                {
+                    label: 'More',
+                    panel_id: 'panel_formdetail_more',
+                    secondary: true
+                }
+            ]
+        }
+    %}
+        {% block panels %}
+
+            <!-- structure -->
+
+            <div id="panel_formdetail_fields" class="MimotoCMS_pages_forms_FormDetail__panel">
+
+                <div class="MimotoCMS_pages_forms_FormDetail_Structure">
+
+                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta">
+                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_info">
+
+                            <span class="MimotoCMS_pages_forms_FormDetail_Structure__entityname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</span>
+
+                        </div>
+
+                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_menu">
+                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields">
+
+                        {% if Aimless.data('fields')|length == 0 %}
+
+                            <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty">
+                                <div>This forms has no fields yet.<br>Go ahead, start adding them!</div>
+                                <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                            </div>
+                        {% else %}
+
+                            <div>
+                                <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_container" {{ Aimless.realtime('fields') }}>
+                                    {{ Aimless.render('fields', 'Mimoto.CMS_forms_FormDetail-FormField') }}
+                                </div>
+
+                                <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_menu">
+                                    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                                </div>
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- more -->
+
+            <div id="panel_formdetail_more" class="MimotoCMS_pages_forms_FormDetail__panel hidden">
+
+                <b>Danger zone!</b><br>
+                <br>
+                <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
+                <br>
+                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete entity', icon:'warning', onclick:"Mimoto.CMS.formDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", types:['alert'] }) }}
+            </div>
+
+        {% endblock %}
+    {% endembed %}
+
 {% endblock %}

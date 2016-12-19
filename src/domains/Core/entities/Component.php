@@ -196,8 +196,8 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormListItem',
-                'file' => 'MimotoCMS/components/pages/forms/FormListItem/FormListItem.twig',
+                'name' => 'Mimoto.CMS_forms_FormOverview_ListItem',
+                'file' => 'MimotoCMS/components/pages/forms/FormOverview/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
             (object) array(
@@ -205,11 +205,11 @@ class Component
                 'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormDetail.twig',
                 'conditionals' => []
             ),
-            (object) array(
-                'name' => 'Mimoto.CMS_forms_FieldListItem',
-                'file' => 'MimotoCMS/components/pages/forms/FieldListItem/FieldListItem.twig',
-                'conditionals' => []
-            ),
+//            (object) array(
+//                'name' => 'Mimoto.CMS_forms_FormDetail-FormField',
+//                'file' => 'MimotoCMS/components/pages/forms/FieldListItem/FieldListItem.twig',
+//                'conditionals' => []
+//            ),
 
 
             // forms - page and popup

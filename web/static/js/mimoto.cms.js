@@ -30191,7 +30191,27 @@
 	    // ----------------------------------------------------------------------------
 	    // --- Private methods --------------------------------------------------------
 	    // ----------------------------------------------------------------------------
-	
+	    
+	    
+	    /**
+	     * Create new form
+	     */
+	    formNew: function()
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/form/new");
+	        
+	        //popup.on('success') = popup.close();
+	    },
+	    
+	    formView: function(nFormId)
+	    {
+	        window.open('/mimoto.cms/form/' + nFormId + '/view', '_self');
+	    },
+	    
+	    formEdit: function(nFormId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
+	    },
 	
 	
 	}

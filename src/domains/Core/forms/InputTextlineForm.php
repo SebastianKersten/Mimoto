@@ -1,0 +1,185 @@
+<?php
+
+// classpath
+namespace Mimoto\Core\forms;
+
+// Mimoto classes
+use Mimoto\Core\CoreConfig;
+
+
+/**
+ * InputTextlineForm
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+class InputTextlineForm
+{
+
+    /**
+     * Get NEW structure
+     */
+    public static function getStructureNew()
+    {
+        // init
+        $form = self::initForm(CoreConfig::COREFORM_INPUT_TEXTLINE_NEW);
+
+        // setup
+        $form->addValue('fields', self::getField_title('Add new textline'));
+        $form->addValue('fields', self::getField_label());
+        $form->addValue('fields', self::getField_description());
+        $form->addValue('fields', self::getField_placeholder());
+        $form->addValue('fields', self::getField_prefix());
+        $form->addValue('fields', self::getField_groupEnd());
+
+        // send
+        return $form;
+    }
+
+    /**
+     * Get EDIT structure
+     */
+    public static function getStructureEdit()
+    {
+        // init
+        $form = self::initForm(CoreConfig::COREFORM_INPUT_TEXTLINE_EDIT);
+
+        // setup
+        $form->addValue('fields', self::getField_title('Edit textline'));
+        $form->addValue('fields', self::getField_label());
+        $form->addValue('fields', self::getField_description());
+        $form->addValue('fields', self::getField_placeholder());
+        $form->addValue('fields', self::getField_prefix());
+        $form->addValue('fields', self::getField_groupEnd());
+
+        // send
+        return $form;
+    }
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- private methods---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Init structure
+     */
+    private static function initForm($sFormName)
+    {
+        // init
+        $form = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM);
+
+        // setup
+        $form->setId($sFormName);
+        $form->setValue('name', $sFormName);
+        $form->setValue('realtimeCollaborationMode', false);
+
+        // send
+        return $form;
+    }
+
+    /**
+     * Get field: title
+     */
+    private static function getField_title($sTitle)
+    {
+        // create and setup
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+        $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--title');
+        $field->setValue('title', $sTitle);
+        $field->setValue('description', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: groupStart
+     */
+    private static function getField_groupStart()
+    {
+        // create
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
+        $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--groupstart');
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: name
+     */
+    private static function getField_label()
+    {
+        // 1. create and setup field
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
+        $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label');
+        $field->setValue('label', 'Label');
+        $field->setValue('placeholder', "Enter the input's label");
+        $field->setValue('description', "Clarify what is required from the content editor");
+
+            // 2. setup value
+            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value');
+            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+
+                // 3. connect to property
+                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label');
+                $value->setValue('entityproperty', $connectedEntityProperty);
+
+                // validation rule #1
+                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation1');
+                $validationRule->setValue('key', 'maxchars');
+                $validationRule->setValue('value', 50);
+                $validationRule->setValue('errorMessage', 'No more than 10 characters');
+                $value->addValue('validation', $validationRule);
+
+                // validation rule #2
+                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation2');
+                $validationRule->setValue('key', 'minchars');
+                $validationRule->setValue('value', 1);
+                $validationRule->setValue('errorMessage', "Value can't be empty");
+                $value->addValue('validation', $validationRule);
+
+                // validation rule #3
+                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation3');
+                $validationRule->setValue('key', 'regex_custom');
+                $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
+                $validationRule->setValue('errorMessage', 'No characters other than a-z, A-Z and 0-9 allowed');
+                $value->addValue('validation', $validationRule);
+
+                // validation rule #4
+                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation4');
+                $validationRule->setValue('key', 'api');
+                $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
+                $validationRule->setValue('errorMessage', 'The name needs to be unique');
+                $value->addValue('validation', $validationRule);
+
+            // add value to field
+            $field->setValue('value', $value);
+
+        // send
+        return $field;
+    }
+
+
+
+    /**
+     * Get field: groupEnd
+     */
+    private static function getField_groupEnd()
+    {
+        // create
+        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
+        $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--groupend');
+
+        // send
+        return $field;
+    }
+}

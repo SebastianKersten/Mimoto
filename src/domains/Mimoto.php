@@ -62,10 +62,8 @@ class Mimoto
 
         // Entity
         $app->get ('/mimoto.cms/entity/new', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityNew');
-        //$app->post('/mimoto.cms/entity/create', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityCreate');
         $app->get ('/mimoto.cms/entity/{nEntityId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityView');
         $app->get ('/mimoto.cms/entity/{nEntityId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityEdit');
-        $app->post('/mimoto.cms/entity/{nEntityId}/update', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityUpdate');
         $app->get ('/mimoto.cms/entity/{nEntityId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityDelete');
 
         // EntityProperty
@@ -84,13 +82,10 @@ class Mimoto
         $app->get ('/mimoto.cms/component/{nComponentId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentView');
         $app->get ('/mimoto.cms/component/{nComponentId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentEdit');
 
-
-        // Entity
+        // Form
         $app->get ('/mimoto.cms/form/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formNew');
-        $app->post('/mimoto.cms/form/create', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formCreate');
         $app->get ('/mimoto.cms/form/{nFormId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formView');
         $app->get ('/mimoto.cms/form/{nFormId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formEdit');
-        $app->post('/mimoto.cms/form/{nFormId}/update', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formUpdate');
         $app->get ('/mimoto.cms/form/{nFormId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formDelete');
 
 
