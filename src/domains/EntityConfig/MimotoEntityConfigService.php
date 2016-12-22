@@ -127,6 +127,27 @@ class MimotoEntityConfigService
         return $this->_entityConfigRepository->getEntityNameByPropertyId($nId);
     }
 
+    /**
+     * Get all entities
+     */
+    public function find($criteria)
+    {
+        // init
+        $aEntityConfigs= [];
+
+        if (isset($criteria['typeOf']))
+        {
+            // read
+            $sEntityTypeName = $criteria['typeOf'];
+
+            // load
+            $aEntityConfigs = $this->_entityConfigRepository->getEntityConfigsTypeOf($sEntityTypeName);
+        }
+
+        // send
+        return $aEntityConfigs;
+    }
+
 
 
     public function entityCreateTable($entity)

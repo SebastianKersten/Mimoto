@@ -23,6 +23,7 @@ class InputVideo
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO,
+            'visualName' => 'Video',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(

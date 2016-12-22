@@ -23,6 +23,7 @@ class InputList
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_LIST,
+            'visualName' => 'List',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(

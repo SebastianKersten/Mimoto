@@ -23,6 +23,7 @@ class InputDropdown
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
+            'visualName' => 'Dropdown',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(

@@ -68,15 +68,7 @@ class CoreConfig
     const MIMOTO_FORM_INPUTVALUESETTING         = '_MimotoAimless__interaction__forminputvaluesetting';
     const MIMOTO_FORM_INPUTVALUEVALIDATION      = '_MimotoAimless__interaction__forminputvaluevalidation';
 
-    // output
-    const MIMOTO_FORM_OUTPUT_TITLE              = '_MimotoAimless__interaction__form_output_title';
-
-    // layout
-    const MIMOTO_FORM_LAYOUT_GROUPSTART         = '_MimotoAimless__interaction__form_layout_groupstart';
-    const MIMOTO_FORM_LAYOUT_GROUPEND           = '_MimotoAimless__interaction__form_layout_groupend';
-    const MIMOTO_FORM_LAYOUT_DIVIDER            = '_MimotoAimless__interaction__form_layout_divider';
-
-    // intput
+    // input
     const MIMOTO_FORM_INPUT_TEXTLINE            = '_MimotoAimless__interaction__form_input_textline';
     const MIMOTO_FORM_INPUT_TEXTBLOCK           = '_MimotoAimless__interaction__form_input_textblock';
     const MIMOTO_FORM_INPUT_TEXTRTF             = '_MimotoAimless__interaction__form_input_textrtf';
@@ -87,6 +79,16 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_LIST                = '_MimotoAimless__interaction__form_input_list';
     const MIMOTO_FORM_INPUT_IMAGE               = '_MimotoAimless__interaction__form_input_image';
     const MIMOTO_FORM_INPUT_VIDEO               = '_MimotoAimless__interaction__form_input_video';
+
+    // output
+    const MIMOTO_FORM_OUTPUT_TITLE              = '_MimotoAimless__interaction__form_output_title';
+
+    // layout
+    const MIMOTO_FORM_LAYOUT_GROUPSTART         = '_MimotoAimless__interaction__form_layout_groupstart';
+    const MIMOTO_FORM_LAYOUT_GROUPEND           = '_MimotoAimless__interaction__form_layout_groupend';
+    const MIMOTO_FORM_LAYOUT_DIVIDER            = '_MimotoAimless__interaction__form_layout_divider';
+
+
 
     // functionality
     const MIMOTO_ACTION                         = '_MimotoAimless__config__action';
@@ -137,11 +139,68 @@ class CoreConfig
     const COREFORM_FORM_NEW              = '_MimotoAimless__coreform__form_new';
     const COREFORM_FORM_EDIT             = '_MimotoAimless__coreform__form_edit';
 
-    const COREFORM_INPUT_TEXTLINE        = '_MimotoAimless__coreform__input_textline';
-    const COREFORM_INPUT_TEXTLINE_NEW    = '_MimotoAimless__coreform__input_textline_new';
-    const COREFORM_INPUT_TEXTLINE_EDIT   = '_MimotoAimless__coreform__input_textline_edit';
+
+    // --- input ---
+
+    const COREFORM_INPUT_TEXTLINE           = '_MimotoAimless__coreform__input_textline';
+    const COREFORM_INPUT_TEXTLINE_NEW       = '_MimotoAimless__coreform__input_textline_new';
+    const COREFORM_INPUT_TEXTLINE_EDIT      = '_MimotoAimless__coreform__input_textline_edit';
+
+    const COREFORM_INPUT_TEXTBLOCK          = '_MimotoAimless__coreform_input_textblock';
+    const COREFORM_INPUT_TEXTBLOCK_NEW      = '_MimotoAimless__coreform_input_textblock_new';
+    const COREFORM_INPUT_TEXTBLOCK_EDIT     = '_MimotoAimless__coreform_input_textblock_edit';
+
+    const COREFORM_INPUT_TEXTRTF            = '_MimotoAimless__coreform_input_textrtf';
+    const COREFORM_INPUT_TEXTRTF_NEW        = '_MimotoAimless__coreform_input_textrtf_new';
+    const COREFORM_INPUT_TEXTRTF_EDIT       = '_MimotoAimless__coreform_input_textrtf_edit';
+
+    const COREFORM_INPUT_CHECKBOX           = '_MimotoAimless__coreform_input_checkbox';
+    const COREFORM_INPUT_CHECKBOX_NEW       = '_MimotoAimless__coreform_input_checkbox_new';
+    const COREFORM_INPUT_CHECKBOX_EDIT      = '_MimotoAimless__coreform_input_checkbox_edit';
+
+    const COREFORM_INPUT_MULTISELECT        = '_MimotoAimless__coreform_input_multiselect';
+    const COREFORM_INPUT_MULTISELECT_NEW    = '_MimotoAimless__coreform_input_multiselect_new';
+    const COREFORM_INPUT_MULTISELECT_EDIT   = '_MimotoAimless__coreform_input_multiselect_edit';
+
+    const COREFORM_INPUT_RADIOBUTTON        = '_MimotoAimless__coreform_input_radiobutton';
+    const COREFORM_INPUT_RADIOBUTTON_NEW    = '_MimotoAimless__coreform_input_radiobutton_new';
+    const COREFORM_INPUT_RADIOBUTTON_EDIT   = '_MimotoAimless__coreform_input_radiobutton_Edit';
+
+    const COREFORM_INPUT_DROPDOWN            = '_MimotoAimless__coreform_input_dropdown';
+    const COREFORM_INPUT_DROPDOWN_NEW        = '_MimotoAimless__coreform_input_dropdown_new';
+    const COREFORM_INPUT_DROPDOWN_EDIT       = '_MimotoAimless__coreform_input_dropdown_Edit';
+
+    const COREFORM_INPUT_LIST                = '_MimotoAimless__coreform_input_list';
+    const COREFORM_INPUT_LIST_NEW            = '_MimotoAimless__coreform_input_list_new';
+    const COREFORM_INPUT_LIST_EDIT           = '_MimotoAimless__coreform_input_list_Edit';
+
+    const COREFORM_INPUT_IMAGE               = '_MimotoAimless__coreform_input_image';
+    const COREFORM_INPUT_IMAGE_NEW           = '_MimotoAimless__coreform_input_image_new';
+    const COREFORM_INPUT_IMAGE_EDIT          = '_MimotoAimless__coreform_input_image_Edit';
+
+    const COREFORM_INPUT_VIDEO               = '_MimotoAimless__coreform_input_video';
+    const COREFORM_INPUT_VIDEO_NEW           = '_MimotoAimless__coreform_input_video_new';
+    const COREFORM_INPUT_VIDEO_EDIT          = '_MimotoAimless__coreform_input_video_edit';
 
 
+    // output
+    const COREFORM_OUTPUT_TITLE              = '_MimotoAimless__coreform_output_title';
+    const COREFORM_OUTPUT_TITLE_NEW          = '_MimotoAimless__coreform_output_title_new';
+    const COREFORM_OUTPUT_TITLE_EDIT         = '_MimotoAimless__coreform_output_title_edit';
+
+
+    // layout
+    const COREFORM_LAYOUT_GROUPSTART         = '_MimotoAimless__corewform_layout_groupstart';
+    const COREFORM_LAYOUT_GROUPSTART_NEW     = '_MimotoAimless__corewform_layout_groupstart_new';
+    const COREFORM_LAYOUT_GROUPSTART_EDIT    = '_MimotoAimless__corewform_layout_groupstart_edit';
+
+    const COREFORM_LAYOUT_GROUPEND           = '_MimotoAimless__coreform_layout_groupend';
+    const COREFORM_LAYOUT_GROUPEND_NEW       = '_MimotoAimless__coreform_layout_groupend_new';
+    const COREFORM_LAYOUT_GROUPEND_START     = '_MimotoAimless__coreform_layout_groupend_edit';
+
+    const COREFORM_LAYOUT_DIVIDER            = '_MimotoAimless__coreform_layout_divider';
+    const COREFORM_LAYOUT_DIVIDER_NEW        = '_MimotoAimless__coreform_layout_divider_new';
+    const COREFORM_LAYOUT_DIVIDER_EDIT       = '_MimotoAimless__coreform_layout_divider_edit';
 
 
 

@@ -1,0 +1,14 @@
+<div class="MimotoCMS_pages_forms_FormOverview__entities_container">
+    {% for input in aInputTypes %}
+        {{
+            Aimless.module('Mimoto.CMS.ListItemModule',
+            {
+                label: input.visualName,
+                sublabel: input.id,
+                button_label: 'Select',
+                button_action: "Mimoto.CMS.formFieldNew_FieldForm('"~nFormId~"', '"~input.id~"');",
+                button_type: 'secondary'
+            })
+        }}
+    {% endfor %}
+</div>

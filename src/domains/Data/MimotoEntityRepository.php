@@ -118,7 +118,6 @@ class MimotoEntityRepository
         $aEntities->setCriteria($criteria);
 
 
-
         $sQuery = 'SELECT * FROM '.$entityConfig->getMySQLTable();
         $params = array();
 

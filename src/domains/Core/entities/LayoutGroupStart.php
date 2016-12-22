@@ -23,6 +23,7 @@ class LayoutGroupStart
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART,
+            'visualName' => 'Group start',
             'extends' => null,
             'properties' => [
                 (object) array(

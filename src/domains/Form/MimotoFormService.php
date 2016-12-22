@@ -628,4 +628,30 @@ class MimotoFormService
             default: die("MimotoFormService.loadCoreForm('$sFormName') - Form not found");
         }
     }
+
+    public function getCoreFormByEntityTypeId($sEntitytypeId)
+    {
+        switch($sEntitytypeId)
+        {
+            // input
+            case CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX: return CoreConfig::COREFORM_INPUT_CHECKBOX_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN: return CoreConfig::COREFORM_INPUT_DROPDOWN_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_IMAGE: return CoreConfig::COREFORM_INPUT_IMAGE_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_LIST: return CoreConfig::COREFORM_INPUT_LIST_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT: return CoreConfig::COREFORM_INPUT_MULTISELECT_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON: return CoreConfig::COREFORM_INPUT_RADIOBUTTON_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK: return CoreConfig::COREFORM_INPUT_TEXTBLOCK_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE: return CoreConfig::COREFORM_INPUT_TEXTLINE_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF: return CoreConfig::COREFORM_INPUT_TEXTRTF_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_VIDEO: return CoreConfig::COREFORM_INPUT_VIDEO_NEW; break;
+
+            // output
+            case CoreConfig::MIMOTO_FORM_OUTPUT_TITLE: return CoreConfig::COREFORM_OUTPUT_TITLE_NEW; break;
+
+            // layout
+            case CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER: return CoreConfig::COREFORM_LAYOUT_DIVIDER_NEW; break;
+            case CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART: return CoreConfig::COREFORM_LAYOUT_GROUPSTART_NEW; break;
+            case CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND: return CoreConfig::COREFORM_LAYOUT_GROUPEND_NEW; break;
+        }
+    }
 }

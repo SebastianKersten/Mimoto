@@ -23,6 +23,7 @@ class InputImage
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE,
+            'visualName' => 'Image',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(

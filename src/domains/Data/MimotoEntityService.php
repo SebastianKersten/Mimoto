@@ -158,27 +158,30 @@ class MimotoEntityService
      */
     public function find($criteria)
     {
-        // read
-        $sEntityType = $criteria['type'];
 
-        // verify
-        if (!isset($this->_aEntityConfigs[$sEntityType]))
+        if (isset($criteria['type']))
         {
-            
-            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
-            
-            if ($entityConfig !== false)
+            // read
+            $sEntityType = $criteria['type'];
+
+            // verify
+            if (!isset($this->_aEntityConfigs[$sEntityType]))
             {
-                $this->_aEntityConfigs[$sEntityType] = $entityConfig;
+
+                $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
+
+                if ($entityConfig !== false)
+                {
+                    $this->_aEntityConfigs[$sEntityType] = $entityConfig;
+                } else
+                {
+                    $GLOBALS['Mimoto.Log']->warning("Requested entity type not found", "Sorry, I do not know the entity type $sEntityType'");
+                }
             }
-            else
-            {
-                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'");
-            }
+
+            // load
+            $aEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);
         }
-        
-        // load
-        $aEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);
         
         // send
         return $aEntities;

@@ -24,6 +24,7 @@ class InputTextline
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
+            'visualName' => 'Textline',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(

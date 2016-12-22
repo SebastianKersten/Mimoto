@@ -23,6 +23,7 @@ class InputTextRTF
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF,
+            'visualName' => 'Rich text field',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(

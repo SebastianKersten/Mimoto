@@ -23,6 +23,7 @@ class OutputTitle
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
+            'visualName' => 'Title',
             'extends' => null,
             'properties' => [
                 (object) array(

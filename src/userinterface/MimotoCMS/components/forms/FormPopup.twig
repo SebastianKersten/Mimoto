@@ -4,7 +4,7 @@
     </div>
     <div class="MimotoCMS_forms_Form__menu">
         <span {{ Aimless.submit() }}>
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:"Cancel", types:['text'] }) }} {#, onclick:"Mimoto.form.submit();"#}
+            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:"Cancel", types:['text'], onclick:"Mimoto.popup.close();" }) }}
             {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:"Save" }) }}
         </span>
     </div>

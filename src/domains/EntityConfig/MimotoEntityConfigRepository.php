@@ -244,8 +244,33 @@ class MimotoEntityConfigRepository
 
         $GLOBALS['Mimoto.Log']->error('Incomplete entity config', "No entity found which contains a property with <b>id=".$nId."</b>", true);
     }
-    
-    
+
+    public function getEntityConfigsTypeOf($sEntityTypeName)
+    {
+        // init
+        $aEntityConfigs= [];
+
+        // search
+        $nEntityCount = count($this->_aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            // register
+            $entity = $this->_aEntities[$i];
+
+            if (isset($entity->typeOfAsNames))
+            {
+                if (in_array($sEntityTypeName, $entity->typeOfAsNames))
+                {
+                    $aEntityConfigs[] = clone $entity;
+                }
+            }
+        }
+
+        // send
+        return $aEntityConfigs;
+    }
+
+
     // ----------------------------------------------------------------------------
     // --- Private methods --------------------------------------------------------
     // ----------------------------------------------------------------------------

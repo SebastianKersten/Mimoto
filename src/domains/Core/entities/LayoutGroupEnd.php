@@ -23,6 +23,7 @@ class LayoutGroupEnd
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND,
+            'visualName' => 'Group end',
             'extends' => null,
             'properties' => []
         );

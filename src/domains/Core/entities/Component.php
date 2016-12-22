@@ -205,11 +205,21 @@ class Component
                 'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormDetail.twig',
                 'conditionals' => []
             ),
-//            (object) array(
-//                'name' => 'Mimoto.CMS_forms_FormDetail-FormField',
-//                'file' => 'MimotoCMS/components/pages/forms/FieldListItem/FieldListItem.twig',
-//                'conditionals' => []
-//            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_forms_FormDetail_TypeSelector',
+                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormFieldTypeSelector/FormFieldTypeSelector.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_forms_FormDetail_TypeSelector_ListItem',
+                'file' => 'MimotoCMS/components/pages/forms/FormDetaiFormFieldTypeSelector/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_forms_FormDetail-FormField',
+                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormField.twig',
+                'conditionals' => []
+            ),
 
 
             // forms - page and popup

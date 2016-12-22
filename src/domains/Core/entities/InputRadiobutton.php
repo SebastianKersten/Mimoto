@@ -23,6 +23,7 @@ class InputRadiobutton
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
+            'visualName' => 'Radiobutton',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(

@@ -23,6 +23,7 @@ class InputTextblock
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK,
+            'visualName' => 'Textblock',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
             'properties' => [
                 (object) array(

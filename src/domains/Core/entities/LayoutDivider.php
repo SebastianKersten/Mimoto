@@ -23,6 +23,7 @@ class LayoutDivider
             'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER,
+            'visualName' => 'Divider',
             'extends' => null,
             'properties' => []
         );

@@ -195,6 +195,17 @@ module.exports.prototype = {
     {
         Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
     },
-
-
+    
+    formFieldNew_TypeSelector: function(nFormId)
+    {
+        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/field/new');
+    },
+    
+    formFieldNew_FieldForm: function(nFormId, nFormFieldTypeId)
+    {
+        console.log('formFieldNew_FieldForm: nFormId=' + nFormId + ', nFormFieldTypeId=' + nFormFieldTypeId);
+        
+        Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
+    },
+    
 }
