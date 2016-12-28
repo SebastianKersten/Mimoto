@@ -627,11 +627,17 @@ class AimlessComponent
 
     public function hideOnEmpty($sPropertySelector)
     {
-        return 'data-aimless-hideonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'"';
+        // 1. check value, if empty -> display:none, else display:""
+
+        $sDisplayState = (empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
+
+        return 'data-aimless-hideonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
     }
 
     public function showOnEmpty($sPropertySelector)
     {
-        return 'data-aimless-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'"';
+        $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
+
+        return 'data-aimless-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
     }
 }

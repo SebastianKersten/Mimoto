@@ -177,13 +177,13 @@ module.exports.prototype = {
         });
     
     
-        // search
-        var aComponents = $("[data-aimless-showonempty='" + mls_container + "']");
-    
-        aComponents.each( function(index, $component)
-        {
-            $($component).css({"display": ""});
-        });
+        // // search
+        // var aComponents = $("[data-aimless-showonempty='" + mls_container + "']");
+        //
+        // aComponents.each( function(index, $component)
+        // {
+        //     $($component).css({"display": ""});
+        // });
         
     },
     
@@ -323,6 +323,62 @@ module.exports.prototype = {
                 }
             }
         });
+    
+    
+    
+        // parse modified values
+        for (var i = 0; i < changes.length; i++)
+        {
+            // register
+            var change = changes[i];
+    
+            // validate
+            if (change.type != 'value') continue;
+            
+            console.warn('check value');
+            
+            if (!change.value)
+            {
+                console.warn('empty');
+                
+                // search
+                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+    
+                aComponents.each( function(index, $component)
+                {
+                    $($component).css("display", "none");
+                });
+    
+                // search
+                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+    
+                aComponents.each( function(index, $component)
+                {
+                    $($component).css("display", "");
+                });
+            }
+            else
+            {
+                console.warn('NOT empty');
+                // search
+                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+    
+                aComponents.each( function(index, $component)
+                {
+                    $($component).css("display", "");
+                });
+    
+                // search
+                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+    
+                aComponents.each( function(index, $component)
+                {
+                    $($component).css("display", "none");
+                });
+            }
+            
+            
+        }
     },
     
     /**
