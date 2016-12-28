@@ -92,7 +92,7 @@ class AimlessForm extends AimlessComponent
         }
 
         // render form
-        $sRenderedForm .= parent::renderCollection($aFields, null, null, $formVars->fieldVars);
+        $sRenderedForm .= parent::renderCollection($aFields, null, null, $formVars->fieldVars, true);
 
         // finish
         $sRenderedForm .= '</form>';

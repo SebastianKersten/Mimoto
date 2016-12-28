@@ -8,7 +8,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 // init
 $app = new \Silex\Application();
-$config = require_once(dirname(__FILE__).'/config.php');
+$config = include(dirname(__FILE__).'/config.php');
 
 $GLOBALS['Mimoto.ProjectConfig.root'] = __DIR__ . '/../';
 $GLOBALS['Mimoto.ProjectConfig.twigroot'] = 'src/userinterface/';

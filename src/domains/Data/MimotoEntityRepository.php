@@ -76,6 +76,10 @@ class MimotoEntityRepository
      */
     public function get(MimotoEntityConfig $entityConfig, $nEntityId)
     {
+
+        // #todo - validate entityId (hoort hier, want centraal validatie van input
+
+
         // validate
         //if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
 

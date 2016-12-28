@@ -7,6 +7,7 @@ namespace Mimoto\UserInterface\MimotoCMS;
 use Mimoto\Core\CoreConfig;
 
 // Silex classes
+use Mimoto\Data\MimotoDataUtils;
 use Silex\Application;
 
 
@@ -136,5 +137,27 @@ class FormController
         // 4. render and send
         return $component->render();
     }
-    
+
+    public function formFieldEdit(Application $app, $nFormFieldTypeId, $nFormFieldId)
+    {
+        // 1. load
+        $entity = $app['Mimoto.Data']->get($nFormFieldTypeId, $nFormFieldId);
+
+        // 2. validate
+        if ($entity === false) return $app->redirect("/mimoto.cms/forms");
+
+        // 3. create
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+
+
+        // 1. translate $nFormFieldTypeId to formconfig
+
+
+        // 4. setup
+        $component->addForm(CoreConfig::COREFORM_INPUT_TEXTLINE_EDIT, $entity);
+
+        // 5. render and send
+        return $component->render();
+    }
+
 }

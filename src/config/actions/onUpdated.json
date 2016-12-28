@@ -24,8 +24,11 @@
             "allowedEntityType",
             "allowedEntityTypes",
 
-            "file"
+            "file",
+            "label"
         ]
     },
-    "notes": "voor admin user, send all. Add 'except'. Wildcard"
+    "notes": [
+        "voor admin user, send all. Add 'except'. Wildcard"
+    ]
 }

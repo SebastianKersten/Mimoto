@@ -52,8 +52,9 @@ module.exports.prototype = {
         }
 
         // connect
-        Mimoto.Aimless.pusher = new Pusher('55152f70c4cec27de21d', {
+        Mimoto.Aimless.pusher = new Pusher('19c5b7fbb5340fe48402', {
             cluster: 'eu',
+            host: 'api-eu.pusher.com',
             encrypted: true,
             authEndpoint: '/Mimoto.Aimless/realtime/collaboration'
         });

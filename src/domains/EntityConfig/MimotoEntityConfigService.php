@@ -509,4 +509,28 @@ class MimotoEntityConfigService
         // TODO Flush memcache
     }
 
+
+
+
+
+
+    public function onInputFieldCreated(MimotoEntity $eInput)
+    {
+        // 1. init property setting
+        $eValue = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+
+        // 2. setup property setting
+        $eValue->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+
+        // 3. persist property setting
+        $GLOBALS['Mimoto.Data']->store($eValue);
+
+        // 4. connect property setting to property
+        $eInput->setValue('value', $eValue);
+
+        // 5. persist connection
+        $GLOBALS['Mimoto.Data']->store($eInput);
+
+        output('$eInput', $eInput);
+    }
 }

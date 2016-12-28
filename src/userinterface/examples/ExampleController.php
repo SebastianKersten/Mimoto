@@ -500,6 +500,50 @@ class ExampleController
 
 
 
+    public function testPusher()
+    {
+
+        // Pusher classes
+        require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/vendor/pusher/pusher-php-server/lib/pusher.php');
+
+        $config = include(dirname(dirname(dirname(__FILE__))).'/config.php');
+
+        // configure
+        $options = array(
+            'cluster' => $config->pusher->cluster,
+            'encrypted' => $config->pusher->encrypted,
+            'host' => 'api-eu.pusher.com'
+        );
+
+        $pusher = new \Pusher(
+            $config->pusher->auth_key,
+            $config->pusher->secret,
+            $config->pusher->app_id,
+            $options
+        );
+
+
+        $sChannel = 'Aimless';
+        $sEvent = 'data.changed';
+        $data = (object) array(
+            "entityId" => 56,
+            "entityType" => "_MimotoAimless__interaction__form",
+            "changes" => array(
+                (object) array(
+                    "propertyName" => "name",
+                    "type" => "value",
+                    "value" => "aaaaddddeeessaa"
+                )
+            )
+        );
+
+        // send
+        $result = $pusher->trigger($sChannel, $sEvent, $data);
+
+        //error($result);
+        return 'Event disptached: '.json_encode($data);
+    }
+
     
     
     

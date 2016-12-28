@@ -28,6 +28,6 @@ Mimoto.Aimless.realtime = new Mimoto.classes.DomRealtime();
 document.addEventListener('DOMContentLoaded', function () {
     
     // 1. setup webevents
-    Mimoto.Aimless.connect(false);
+    Mimoto.Aimless.connect(true);
     
 }, false);

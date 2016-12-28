@@ -36,6 +36,9 @@
     $app->get('/example10', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample10');
     $app->get('/example11', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample11');
 
+    // --- service tests ---
+    $app->get('/test/pusher', 'Mimoto\\UserInterface\\examples\\ExampleController::testPusher');
+
 
 
 //    $app->get('/example12', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample12');

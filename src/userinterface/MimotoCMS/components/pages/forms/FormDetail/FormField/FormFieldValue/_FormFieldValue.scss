@@ -1,6 +1,4 @@
-@import 'FormFieldValue/FormFieldValue';
-
-div.MimotoCMS_pages_forms_FormDetail-FormField {
+div.MimotoCMS_pages_forms_FormDetail-FormFieldValue {
 
     display: flex;
     flex-direction: row;
@@ -17,7 +15,7 @@ div.MimotoCMS_pages_forms_FormDetail-FormField {
         padding-right: 0;
     }
 
-    div.MimotoCMS_pages_forms_FormDetail-FormField__data {
+    div.MimotoCMS_pages_entities_EntityDetail-EntityProperty__data {
 
         flex-grow: 10;
         display: flex;
@@ -26,7 +24,7 @@ div.MimotoCMS_pages_forms_FormDetail-FormField {
 
         width: 80%;
 
-        div.MimotoCMS_pages_forms_FormDetail-FormField__name {
+        div.MimotoCMS_pages_entities_EntityDetail-EntityProperty__name {
 
             flex-grow: 2;
 
@@ -46,7 +44,7 @@ div.MimotoCMS_pages_forms_FormDetail-FormField {
             }
         }
 
-        div.MimotoCMS_pages_forms_FormDetail-FormField__type {
+        div.MimotoCMS_pages_entities_EntityDetail-EntityProperty__type {
 
             flex-grow: 0;
 
@@ -57,7 +55,7 @@ div.MimotoCMS_pages_forms_FormDetail-FormField {
             width: 17%;
         }
 
-        div.MimotoCMS_pages_forms_FormDetail-FormField__propertysettingscontainer {
+        div.MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer {
 
             flex-grow: 3;
 
@@ -76,7 +74,7 @@ div.MimotoCMS_pages_forms_FormDetail-FormField {
         }
     }
 
-    div.MimotoCMS_pages_forms_FormDetail-FormField__menu {
+    div.MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu {
         white-space: nowrap;
         padding: 5px;
         flex-grow: 1;

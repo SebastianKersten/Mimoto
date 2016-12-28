@@ -81,4 +81,14 @@ class AimlessComponentViewModel
         return MimotoAimlessUtils::getModule($sModuleName, $values);
     }
 
+    public function hideOnEmpty($sPropertySelector)
+    {
+        return $this->_component->hideOnEmpty($sPropertySelector);
+    }
+
+    public function showOnEmpty($sPropertySelector)
+    {
+        return $this->_component->showOnEmpty($sPropertySelector);
+    }
+
 }

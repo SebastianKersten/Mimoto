@@ -531,7 +531,7 @@ class MimotoEntityConfigRepository
             }
         }
 
-        /// compose
+        // compose
         array_unshift($aExtensions, $baseId);
 
         // send

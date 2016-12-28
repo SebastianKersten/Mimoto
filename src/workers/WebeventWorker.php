@@ -4,7 +4,7 @@
 // Pusher classes
 require_once(dirname(dirname(dirname(__FILE__))).'/vendor/pusher/pusher-php-server/lib/pusher.php');
 
-//gearman_version();
+//echo gearman_version();
 
 
 $config = require_once(dirname(dirname(__FILE__)).'/config.php');
@@ -21,8 +21,9 @@ $worker->addFunction("sendUpdate", "sendUpdate");
 
 // configure    
 $options = array(
-    $config->pusher->cluster,
-    $config->pusher->encrypted
+    'cluster' => $config->pusher->cluster,
+    'encrypted' => $config->pusher->encrypted,
+    'host' => $config->pusher->host
 );
 
 $GLOBALS['pusher'] = new \Pusher(
@@ -40,23 +41,7 @@ function sendUpdate($job)
 {
     // read
     $workload = json_decode($job->workload());
-    
+
     // send
     $GLOBALS['pusher']->trigger($workload->sChannel, $workload->sEvent, $workload->data);
 }
-
-
-
-
-//function membership_mail($job) {
-//    $workload = @unserialize($job->workload());
-//    if ($workload === false || !isset($workload['renewalLogId']) || !is_int($workload['renewalLogId']) || $workload['renewalLogId'] < 1) {
-//        return false;
-//    }
-//    $call = 'renewal/membershipMail/' . $workload['renewalLogId'];
-//    if (isset($workload['test']) && $workload['test'] === true) {
-//        return $call;
-//    }
-//    executeCli($call);
-//    return true;
-//}

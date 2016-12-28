@@ -15,6 +15,7 @@
             'secret' => '',
             'app_id' => '',
             'cluster' => 'eu',
+            'host' => 'api-eu.pusher.com',
             'encrypted' => true
         ),
         'slack' => (object) array

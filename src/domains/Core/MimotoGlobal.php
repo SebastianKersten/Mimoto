@@ -33,6 +33,9 @@ final class MimotoGlobal
      */
     private function __construct()
     {
-
+        //Mimoto::service('data')->get
     }
+
+
+    //public function setService()
 }

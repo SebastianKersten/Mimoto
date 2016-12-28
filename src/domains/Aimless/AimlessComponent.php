@@ -426,6 +426,7 @@ class AimlessComponent
         {
             case 'id': return $this->_entity->getId();
             case 'type': return $this->_entity->getEntityTypeName();
+            case 'typeid': return $this->_entity->getEntityTypeId();
             case 'created': return $this->_entity->getCreated();
         }
     }
@@ -506,7 +507,7 @@ class AimlessComponent
      * @param array $aFieldVars
      * @return string Rendered template
      */
-    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $aFieldVars = null)
+    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false)
     {
         // init
         $sRenderedCollection = '';
@@ -522,7 +523,7 @@ class AimlessComponent
             $connection = (!empty($aConnections)) ? $aConnections[$i] : null;
 
             // render
-            $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars);
+            $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput);
         }
         
         // send
@@ -537,13 +538,13 @@ class AimlessComponent
      * @param null $aFieldVars
      * @return string
      */
-    private function renderCollectionItem($entity, $connection, $sComponentName = null, $aFieldVars = null)
+    private function renderCollectionItem($entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false)
     {
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
 
         // create
-        if ($entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
+        if ($bRenderInputFieldsAsInput && $entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
         {
             $component = $this->renderCollectionItemAsInput($sTemplateName, $entity, $connection, $aFieldVars);
         }
@@ -583,7 +584,7 @@ class AimlessComponent
         // validate
         if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()]))
         {
-            $this->_LogService->error('AimlessComponent - Form field misses a value definition', "The field with type=".$field->getEntityTypeName()." and <b>id=".$field->getId()."</b> is missing a value definition. Please set the value property set a <b>varname</b> or connect an <b>entityProperty</b>", 'AimlessComponent', true);
+            $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please set a <b>varname</b> or connect an <b>entityProperty</b> to the value of field with <b>id=".$field->getId()."</b> and type=".$field->getEntityTypeName(), 'AimlessComponent', true);
         }
 
         // gerister
@@ -616,5 +617,21 @@ class AimlessComponent
         // output
         return $component->render(); //$this->_aVars); // #todo - pass vars for rendering
     }
-    
+
+
+
+
+
+
+
+
+    public function hideOnEmpty($sPropertySelector)
+    {
+        return 'data-aimless-hideonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'"';
+    }
+
+    public function showOnEmpty($sPropertySelector)
+    {
+        return 'data-aimless-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'"';
+    }
 }

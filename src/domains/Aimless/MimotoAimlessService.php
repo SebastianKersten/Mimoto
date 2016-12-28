@@ -324,6 +324,8 @@ class MimotoAimlessService
             case 'onEntityPropertyCreated': $GLOBALS['Mimoto.Config']->onEntityPropertyCreated($data); break;
             case 'onEntityPropertyUpdated': $GLOBALS['Mimoto.Config']->onEntityPropertyUpdated($data); break;
 
+            case 'onInputFieldCreated':     $GLOBALS['Mimoto.Config']->onInputFieldCreated($data); break;
+
             default:
                 
                 die("MimotoAimlessService: Unknown request '".$sRequest."'");
@@ -687,18 +689,31 @@ class MimotoAimlessService
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;
 
-
         // init
         $client= new \GearmanClient();
 
         // setup
         $client->addServer();
 
+
+        // register
+        $sTitle = $entity->getValue('title');
+        $sDispatcher = $entity->getValue('dispatcher');
+        $sMessage = $entity->getValue('message');
+
+        // convert
+        $sMessage = str_replace('<b>', '"', $sMessage);
+        $sMessage = str_replace('</b>', '"', $sMessage);
+
+        // compose
+        $sSlackMessage = ">*$sTitle*\n>```$sMessage```\n>_From: $sDispatcher"."_";
+
+
         // $result =
         // execute
         $client->doBackground("sendSlackNotification", json_encode(array(
             'channel' => $config->channel,
-            'message' => $entity->getValue('title')."\n".$entity->getValue('message')
+            'message' => $sSlackMessage
         )));
     }
 }

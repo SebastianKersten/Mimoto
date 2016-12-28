@@ -30225,6 +30225,10 @@
 	        Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
 	    },
 	    
+	    formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit');
+	    },
 	}
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))

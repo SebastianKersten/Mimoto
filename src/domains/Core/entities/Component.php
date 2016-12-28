@@ -220,6 +220,11 @@ class Component
                 'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormField.twig',
                 'conditionals' => []
             ),
+            (object) array(
+                'name' => 'Mimoto.CMS_forms_FormDetail-FormFieldValue',
+                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormFieldValue/FormFieldValue.twig',
+                'conditionals' => []
+            ),
 
 
             // forms - page and popup

@@ -175,6 +175,15 @@ module.exports.prototype = {
             }
         
         });
+    
+    
+        // search
+        var aComponents = $("[data-aimless-showonempty='" + mls_container + "']");
+    
+        aComponents.each( function(index, $component)
+        {
+            $($component).css({"display": ""});
+        });
         
     },
     
