@@ -405,6 +405,46 @@ class MimotoEntityConfigService
         return $entity;
     }
 
+    public function getParent($sParentEntityTypeId, $sParentPropertyId, MimotoEntity $child)
+    {
+        // load all connections
+        $stmt = $GLOBALS['database']->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id && ".
+            "parent_property_id = :parent_property_id && ".
+            "child_entity_type_id = :child_entity_type_id && ".
+            "child_id = :child_id ".
+            "ORDER BY parent_id ASC, sortindex ASC"
+        );
+        $params = array(
+            ':parent_entity_type_id' => $sParentEntityTypeId,
+            ':parent_property_id' => $sParentPropertyId,
+            ':child_entity_type_id' => $child->getEntityTypeId(),
+            ':child_id' => $child->getId(),
+        );
+        $stmt->execute($params);
+
+        //output('$stmt', $stmt);
+        //output('$params', $params);
+
+        // load
+        $aResults = $stmt->fetchAll();
+
+        // register
+        $nResultCount = count($aResults);
+
+        //output('$nResultCount', $nResultCount);
+
+        // validate
+        if ($nResultCount != 1) return null;
+
+        // load
+        $entity = $GLOBALS['Mimoto.Data']->get($sParentEntityTypeId, $aResults[0]['parent_id']);
+
+        // send
+        return $entity;
+    }
+
     private function getColumnTypeFromSetting(MimotoEntity $entityProperty)
     {
         // init
@@ -540,7 +580,5 @@ class MimotoEntityConfigService
 
         // 5. persist connection
         $GLOBALS['Mimoto.Data']->store($eInput);
-
-        output('$eInput', $eInput);
     }
 }

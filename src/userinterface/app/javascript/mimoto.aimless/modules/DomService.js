@@ -433,13 +433,10 @@ module.exports.prototype = {
         
             // validate
             if (change.type != 'entity') continue;
-        
-            console.warn('check entity');
-        
-            if (!change.value)
-            {
-                console.warn('empty');
             
+        
+            if (!change.entity)
+            {
                 // search
                 var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
             
@@ -458,7 +455,6 @@ module.exports.prototype = {
             }
             else
             {
-                console.warn('NOT empty');
                 // search
                 var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
             

@@ -5,9 +5,12 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\Data\MimotoDataUtils;
+
+// Symfony classes
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 // Silex classes
-use Mimoto\Data\MimotoDataUtils;
 use Silex\Application;
 
 
@@ -18,7 +21,7 @@ use Silex\Application;
  */
 class FormController
 {
-    
+
     public function viewFormOverview(Application $app)
     {
         // load
@@ -32,7 +35,7 @@ class FormController
 
         // setup page
         $page->setVar('pageTitle', array(
-                (object) array(
+                (object)array(
                     "label" => 'Forms',
                     "url" => '/mimoto.cms/forms'
                 )
@@ -74,13 +77,13 @@ class FormController
 
         // setup page
         $page->setVar('pageTitle', array(
-                (object) array(
+                (object)array(
                     "label" => 'Forms',
                     "url" => '/mimoto.cms/forms'
                 ),
-                (object) array(
-                    "label" => '"<span mls_value="'.CoreConfig::MIMOTO_FORM.'.'.$form->getId().'.name">'.$form->getValue('name').'</span>"',
-                    "url" => '/mimoto.cms/form/'.$form->getId().'/view'
+                (object)array(
+                    "label" => '"<span mls_value="' . CoreConfig::MIMOTO_FORM . '.' . $form->getId() . '.name">' . $form->getValue('name') . '</span>"',
+                    "url" => '/mimoto.cms/form/' . $form->getId() . '/view'
                 )
             )
         );
@@ -159,7 +162,7 @@ class FormController
         $sFormConfigId = $app['Mimoto.Forms']->getCoreFormByEntityTypeId($nFormFieldTypeId);
 
         // 3. setup
-        $component->addForm($sFormConfigId, $entity, ['onCreatedAddTo' => CoreConfig::MIMOTO_FORM.'.'.$nFormId.'.fields']);
+        $component->addForm($sFormConfigId, $entity, ['onCreatedAddTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields']);
 
         // 4. render and send
         return $component->render();
@@ -185,6 +188,50 @@ class FormController
 
         // 5. render and send
         return $component->render();
+    }
+
+    public function formFieldDelete(Application $app, $nFormFieldTypeId, $nFormFieldId)
+    {
+        // #todo add transaction
+
+
+        // 1. load
+        $formField = $app['Mimoto.Data']->get($nFormFieldTypeId, $nFormFieldId);
+
+        // 2. read
+        $value = $formField->getValue('value');
+
+        // 3. clear
+        if (!empty($value))
+        {
+            $value->setValue('entityproperty', null);
+
+            // 4. remove connections
+            $app['Mimoto.Data']->store($value);
+
+            // 5. clear
+            $formField->setValue('value', null);
+
+            // 6. remove connections
+            $app['Mimoto.Data']->store($formField);
+
+            // 7. remove value
+            $app['Mimoto.Data']->delete($value);
+        }
+
+        // 8. load
+        $parentForm = $app['Mimoto.Config']->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $formField);
+
+        // 9. remove connection
+        $parentForm->removeValue('fields', $formField);
+        // 10. persist removed
+        $app['Mimoto.Data']->store($parentForm);
+
+        // 11. delete property
+        $app['Mimoto.Data']->delete($formField);
+
+        // 12. send
+        return new JsonResponse((object) array('result' => 'FormField deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 }

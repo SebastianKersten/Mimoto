@@ -30241,6 +30241,18 @@
 	    {
 	        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit');
 	    },
+	    
+	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
+	    {
+	        $.ajax({
+	            type: 'get',
+	            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
 	}
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
