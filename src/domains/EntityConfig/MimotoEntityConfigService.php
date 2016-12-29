@@ -199,13 +199,16 @@ class MimotoEntityConfigService
                     // load property
                     $entityProperty = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
 
-                    // get column type
-                    $sColumnType = 'textline';
+                    if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                    {
+                        // get column type
+                        $sColumnType = 'textline';
 
-                    $sColumnOnTheLeft = $this->getColumnOntheLeft($entity, $entityProperty->getValue('name'));
+                        $sColumnOnTheLeft = $this->getColumnOntheLeft($entity, $entityProperty->getValue('name'));
 
-                    // add
-                    EntityConfigTableUtils::addPropertyColumnToEntityTable($entity->getValue('name'), $entityProperty->getValue('name'), $sColumnType, $sColumnOnTheLeft);
+                        // add
+                        EntityConfigTableUtils::addPropertyColumnToEntityTable($entity->getValue('name'), $entityProperty->getValue('name'), $sColumnType, $sColumnOnTheLeft);
+                    }
                 }
             }
 
@@ -228,8 +231,11 @@ class MimotoEntityConfigService
                     // load property
                     $entityProperty = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
 
-                    // add
-                    EntityConfigTableUtils::removePropertyColumnFromEntityTable($entity->getValue('name'), $entityProperty->getValue('name'));
+                    if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                    {
+                        // remove
+                        EntityConfigTableUtils::removePropertyColumnFromEntityTable($entity->getValue('name'), $entityProperty->getValue('name'));
+                    }
                 }
             }
         }
@@ -348,11 +354,15 @@ class MimotoEntityConfigService
         // 7. check if parentEntity is known (something to do with store and acceptChanges)
         if (empty($parentEntity)) return;
 
-        // 7. prepare
-        $sColumnType = 'textline'; //$this->getColumnTypeFromSetting($entityProperty);
 
-        // 8. rename
-        EntityConfigTableUtils::renamePropertyColumn($parentEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
+        if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+        {
+            // 7. prepare
+            $sColumnType = 'textline'; //$this->getColumnTypeFromSetting($entityProperty);
+
+            // 8. rename
+            EntityConfigTableUtils::renamePropertyColumn($parentEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
+        }
     }
 
     public function getParentEntity(MimotoEntity $entityProperty)

@@ -113,7 +113,10 @@ class EntityConfigTableUtils
 
     public static function removePropertyColumnFromEntityTable($sEntityName, $sPropertyName)
     {
-
+        // 2. add column to table
+        $stmt = $GLOBALS['database']->prepare("ALTER TABLE `".$sEntityName."` DROP COLUMN `".$sPropertyName."`");
+        $params = array();
+        if ($stmt->execute($params) === false) error("Error while removing column '$sPropertyName' to entity table '$sEntityName'");
     }
 
     private static function getColumnDataType($sColumnType)
