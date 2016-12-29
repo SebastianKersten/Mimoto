@@ -25,6 +25,7 @@ class InputTextlineForm
 
         // setup
         $form->addValue('fields', self::getField_title('Add new textline'));
+        $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_label());
         $form->addValue('fields', self::getField_description());
         $form->addValue('fields', self::getField_placeholder());
@@ -45,6 +46,7 @@ class InputTextlineForm
 
         // setup
         $form->addValue('fields', self::getField_title('Edit textline'));
+        $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_label());
         $form->addValue('fields', self::getField_description());
         $form->addValue('fields', self::getField_placeholder());

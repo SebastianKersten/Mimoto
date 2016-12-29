@@ -81,7 +81,7 @@
 	document.addEventListener('DOMContentLoaded', function () {
 	    
 	    // 1. setup webevents
-	    Mimoto.Aimless.connect(true);
+	    Mimoto.Aimless.connect(false);
 	    
 	}, false);
 
@@ -561,12 +561,8 @@
 	            // validate
 	            if (change.type != 'value') continue;
 	            
-	            console.warn('check value');
-	            
 	            if (!change.value)
 	            {
-	                console.warn('empty');
-	                
 	                // search
 	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
@@ -585,7 +581,6 @@
 	            }
 	            else
 	            {
-	                console.warn('NOT empty');
 	                // search
 	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
@@ -654,6 +649,60 @@
 	                    Mimoto.Aimless.utils.loadEntity($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
 	                }
 	            });
+	        }
+	    
+	        // parse modified values
+	        for (var i = 0; i < aChanges.length; i++)
+	        {
+	            // register
+	            var change = aChanges[i];
+	        
+	            // validate
+	            if (change.type != 'entity') continue;
+	        
+	            console.warn('check entity');
+	        
+	            if (!change.value)
+	            {
+	                console.warn('empty');
+	            
+	                // search
+	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            
+	                // search
+	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            }
+	            else
+	            {
+	                console.warn('NOT empty');
+	                // search
+	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            
+	                // search
+	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            }
+	        
+	        
 	        }
 	    },
 	    
@@ -856,6 +905,61 @@
 	                    
 	                });
 	            }
+	        }
+	    
+	    
+	        // parse modified values
+	        for (var i = 0; i < aChanges.length; i++)
+	        {
+	            // register
+	            var change = aChanges[i];
+	        
+	            // validate
+	            if (change.type != 'collection') continue;
+	        
+	            console.warn('check collection');
+	        
+	            if (!change.value)
+	            {
+	                console.warn('empty');
+	            
+	                // search
+	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            
+	                // search
+	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            }
+	            else
+	            {
+	                console.warn('NOT empty');
+	                // search
+	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            
+	                // search
+	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            }
+	        
+	        
 	        }
 	    },
 	    

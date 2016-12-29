@@ -245,10 +245,10 @@ module.exports.prototype = {
 
 
 
-        console.log('Sending ' + form.sAction + ' ' + form.sMethod);
-        console.log(aValues);
-        console.error(requestData);
-        console.log('------');
+        // console.log('Sending ' + form.sAction + ' ' + form.sMethod);
+        // console.log(aValues);
+        // console.error(requestData);
+        // console.log('------');
     
         
         // 11. send data
@@ -323,6 +323,9 @@ module.exports.prototype = {
 
                 // 1. #todo get input field value in method
                 // 2. collaborationMode
+                
+                
+                Mimoto.popup.close();
 
             }
         });
