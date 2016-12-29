@@ -18,6 +18,9 @@ use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 use Mimoto\Core\forms\ComponentForm;
 use Mimoto\Core\forms\FormForm;
 use Mimoto\Core\forms\InputTextlineForm;
+use Mimoto\Core\forms\LayoutDividerForm;
+use Mimoto\Core\forms\LayoutGroupStartForm;
+use Mimoto\Core\forms\LayoutGroupEndForm;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -624,6 +627,17 @@ class MimotoFormService
             case CoreConfig::COREFORM_INPUT_TEXTLINE_NEW: return InputTextlineForm::getStructureNew(); break;
             case CoreConfig::COREFORM_INPUT_TEXTLINE_EDIT: return InputTextlineForm::getStructureEdit(); break;
 
+
+            // layout ---------
+
+            case CoreConfig::COREFORM_LAYOUT_DIVIDER_NEW: return LayoutDividerForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_LAYOUT_DIVIDER_EDIT: return LayoutDividerForm::getStructureEdit(); break;
+
+            case CoreConfig::COREFORM_LAYOUT_GROUPSTART_NEW: return LayoutGroupStartForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_LAYOUT_GROUPSTART_EDIT: return LayoutGroupStartForm::getStructureEdit(); break;
+
+            case CoreConfig::COREFORM_LAYOUT_GROUPEND_NEW: return LayoutGroupEndForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_LAYOUT_GROUPEND_EDIT: return LayoutGroupEndForm::getStructureEdit(); break;
 
             default: die("MimotoFormService.loadCoreForm('$sFormName') - Form not found");
         }

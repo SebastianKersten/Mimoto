@@ -196,7 +196,7 @@ class CoreConfig
 
     const COREFORM_LAYOUT_GROUPEND           = '_MimotoAimless__coreform_layout_groupend';
     const COREFORM_LAYOUT_GROUPEND_NEW       = '_MimotoAimless__coreform_layout_groupend_new';
-    const COREFORM_LAYOUT_GROUPEND_START     = '_MimotoAimless__coreform_layout_groupend_edit';
+    const COREFORM_LAYOUT_GROUPEND_EDIT      = '_MimotoAimless__coreform_layout_groupend_edit';
 
     const COREFORM_LAYOUT_DIVIDER            = '_MimotoAimless__coreform_layout_divider';
     const COREFORM_LAYOUT_DIVIDER_NEW        = '_MimotoAimless__coreform_layout_divider_new';

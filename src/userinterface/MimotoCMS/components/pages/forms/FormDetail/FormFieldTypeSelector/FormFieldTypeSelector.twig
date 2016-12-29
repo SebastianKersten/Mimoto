@@ -1,14 +1,48 @@
-<div class="MimotoCMS_pages_forms_FormOverview__entities_container">
-    {% for input in aInputTypes %}
-        {{
-            Aimless.module('Mimoto.CMS.ListItemModule',
-            {
-                label: input.visualName,
-                sublabel: input.id,
-                button_label: 'Select',
-                button_action: "Mimoto.CMS.formFieldNew_FieldForm('"~nFormId~"', '"~input.id~"');",
-                button_type: 'secondary'
-            })
-        }}
-    {% endfor %}
+<div class="MimotoCMS_pages_forms_FormDetail_FieldTypeSelector">
+
+    <div class="MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__label">Input</div>
+    <div class="MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__container">
+        {% for input in aInputTypes %}
+            {{
+                Aimless.module('Mimoto.CMS.ListItemModule',
+                {
+                    label: input.visualName,
+                    sublabel: input.id,
+                    button_label: 'Select',
+                    button_action: "Mimoto.CMS.formFieldNew_FieldForm('"~nFormId~"', '"~input.id~"');",
+                    button_type: 'secondary'
+                })
+            }}
+        {% endfor %}
+    </div>
+    <div class="MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__label">Output</div>
+    <div class="MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__container">
+        {% for output in aOutputTypes %}
+            {{
+                Aimless.module('Mimoto.CMS.ListItemModule',
+                {
+                    label: output.visualName,
+                    sublabel: output.id,
+                    button_label: 'Select',
+                    button_action: "Mimoto.CMS.formFieldNew_FieldForm('"~nFormId~"', '"~output.id~"');",
+                    button_type: 'secondary'
+                })
+            }}
+        {% endfor %}
+    </div>
+    <div class="MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__label">Layout</div>
+    <div class="MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__container">
+        {% for layout in aLayoutTypes %}
+            {{
+                Aimless.module('Mimoto.CMS.ListItemModule',
+                {
+                    label: layout.visualName,
+                    sublabel: layout.id,
+                    button_label: 'Select',
+                    button_action: "Mimoto.CMS.formFieldNew_FieldForm('"~nFormId~"', '"~layout.id~"');",
+                    button_type: 'secondary'
+                })
+            }}
+        {% endfor %}
+    </div>
 </div>

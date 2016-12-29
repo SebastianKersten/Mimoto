@@ -502,6 +502,11 @@ class MimotoEntityConfigRepository
                     array_splice($entity->properties, $nPropertyCount - 1, 0, $baseEntity->properties);
                 }
             }
+            else
+            {
+                $entity->typeOf = [$entity->id];
+                $entity->typeOfAsNames = [$this->getEntityNameById($entity->id)];
+            }
         }
     }
 

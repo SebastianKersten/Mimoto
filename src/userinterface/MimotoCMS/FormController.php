@@ -125,19 +125,52 @@ class FormController
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_FormDetail_TypeSelector');
 
         // load
-        $aInputTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_INPUT]);
+        $aInputTypesAll = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_INPUT]);
+
+        // filter
+        $aInputTypes = [];
+        $nInputCount = count($aInputTypesAll);
+        for ($nInputIndex = 0; $nInputIndex < $nInputCount; $nInputIndex++)
+        {
+            if ($aInputTypesAll[$nInputIndex]->id != CoreConfig::MIMOTO_FORM_INPUT)
+            {
+                $aInputTypes[] = $aInputTypesAll[$nInputIndex];
+            }
+        }
+
+
+        // load
+        $aOutputTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE]);
+
+        // load
+        $aLayoutTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART]);
+
+        $aMoreLayoutTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND]);
+        $nLayoutCount = count($aMoreLayoutTypes);
+        for($nLayoutIndex = 0; $nLayoutIndex < $nLayoutCount; $nLayoutIndex++)
+        {
+            $aLayoutTypes[] = $aMoreLayoutTypes[$nLayoutIndex];
+        }
+
+        $aMoreLayoutTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER]);
+        $nLayoutCount = count($aMoreLayoutTypes);
+        for($nLayoutIndex = 0; $nLayoutIndex < $nLayoutCount; $nLayoutIndex++)
+        {
+            $aLayoutTypes[] = $aMoreLayoutTypes[$nLayoutIndex];
+        }
+
 
         // register
         $page->setVar('nFormId', $nFormId);
         $page->setVar('aInputTypes', $aInputTypes);
+        $page->setVar('aLayoutTypes', $aLayoutTypes);
+        $page->setVar('aOutputTypes', $aOutputTypes);
+
 
 
         // #todo
         // -----------------------------
         // 1. collect items (fixed set?)
-        // 2. inputs
-        // 3. outputs
-        // 4. layout
         // 5. eigen entities
         // 6. setup item
         // 7. hardcoded (_MimotoAimless__interaction__form_input_textline -> textline-form)
@@ -155,16 +188,13 @@ class FormController
         // 2. create
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
 
-        // COREFORM_INPUT_TEXTLINE_NEW
-
-        // addfield
-
+        // 3. load form id
         $sFormConfigId = $app['Mimoto.Forms']->getCoreFormByEntityTypeId($nFormFieldTypeId);
 
-        // 3. setup
+        // 4. setup
         $component->addForm($sFormConfigId, $entity, ['onCreatedAddTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields']);
 
-        // 4. render and send
+        // 5. render and send
         return $component->render();
     }
 
