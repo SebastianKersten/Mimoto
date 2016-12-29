@@ -494,7 +494,7 @@ class MimotoAimlessService
 
                         // compose
                         $valueForBroadcast->collection = (object) array();
-
+                        $valueForBroadcast->collection->count = $aModifiedValues[$sMainPropertyName]->count;
 
                         // validate
                         if (!empty($aModifiedValues[$sMainPropertyName]->added))

@@ -272,6 +272,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         $aAddedItems = [];
         $aUpdatedItems = [];
         $aRemovedItems = [];
+        $nCurrentItemCount = count($this->_data->currentCollection);
 
 
         if (!empty($this->_data->currentCollection))
@@ -348,6 +349,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
                 'added' => $aAddedItems,
                 'updated' => $aUpdatedItems,
                 'removed' => $aRemovedItems,
+                'count' => $nCurrentItemCount
             );
         }
 

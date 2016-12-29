@@ -488,8 +488,8 @@ module.exports.prototype = {
      */
     _updateCollections: function (sEntityType, nEntityId, aChanges, aConnections)
     {
-        //console.warn(aChanges);
-        //console.warn(aConnections);
+        console.log('DOM - Connections');
+        console.warn(aChanges);
     
         // register
         var classRoot = this;
@@ -691,15 +691,11 @@ module.exports.prototype = {
             // validate
             if (change.type != 'collection') continue;
         
-            console.warn('check collection');
-        
-            if (!change.value)
+            if (change.collection.count == 0)
             {
-                console.warn('empty');
-            
                 // search
                 var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-            
+                
                 aComponents.each( function(index, $component)
                 {
                     $($component).css("display", "none");
@@ -715,7 +711,6 @@ module.exports.prototype = {
             }
             else
             {
-                console.warn('NOT empty');
                 // search
                 var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
             
