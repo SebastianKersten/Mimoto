@@ -89,6 +89,33 @@ class FormController
         return $page->render();
     }
 
+    public function formEdit(Application $app, $nFormId)
+    {
+        // 1. load
+        $form = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM, $nFormId);
+
+        // 2. validate
+        if ($form === false) return $app->redirect("/mimoto.cms/forms");
+
+        // 3. create
+        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+
+        // 4. setup
+        $component->addForm(CoreConfig::COREFORM_FORM_EDIT, $form);
+
+        // 5. render and send
+        return $component->render();
+    }
+
+    public function formDelete(Application $app, Request $request, $nFormId)
+    {
+        // delete
+//        $app['Mimoto.Config']->entityDelete($nEntityId);
+//
+//        // send
+//        return new JsonResponse((object) array('result' => 'Entity deleted! '.date("Y.m.d H:i:s")), 200);
+    }
+
     public function formFieldNew_fieldTypeSelector(Application $app, $nFormId)
     {
         // create
