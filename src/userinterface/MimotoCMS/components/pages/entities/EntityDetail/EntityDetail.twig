@@ -75,25 +75,20 @@
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties">
 
-                        {% if Aimless.data('properties')|length == 0 %}
+                        <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showOnEmpty('properties') }}>
+                            <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
+                            <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                        </div>
 
-                            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty">
-                                <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
-                                <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
-                            </div>
-                        {% else %}
-
-                            <div>
-                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_container" {{ Aimless.realtime('properties') }}>
-                                    {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
-                                </div>
-
-                                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                                    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}
-                                </div>
+                        <div {{ Aimless.hideOnEmpty('properties') }}>
+                            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_container" {{ Aimless.realtime('properties') }}>
+                                {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
                             </div>
 
-                        {% endif %}
+                            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
+                                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                            </div>
+                        </div>
 
                     </div>
 

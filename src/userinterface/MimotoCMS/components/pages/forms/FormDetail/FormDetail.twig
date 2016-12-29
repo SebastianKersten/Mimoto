@@ -43,8 +43,8 @@
 
 
                     <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields">
-                        
-                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Aimless.showOnEmpty('fields') }} >
+
+                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Aimless.showOnEmpty('fields') }}>
                             <div>This forms has no fields yet.<br>Go ahead, start adding them!</div>
                             <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Aimless.meta('id') ~ "');" }) }}</div>
                         </div>

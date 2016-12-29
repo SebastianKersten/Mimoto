@@ -163,6 +163,80 @@ class EntityController
         return $component->render();
     }
 
+    public function entityPropertyDelete(Application $app, $nEntityPropertyId)
+    {
+        // 1. load
+        $entityProperty = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
+
+        // 2. load settings
+        $aEntityPropertySetting = $entityProperty->getValue('settings');
+
+        // 3. delete settings
+        $aSettingCount = count($aEntityPropertySetting);
+        for ($aSettingIndex = 0; $aSettingIndex < $aSettingCount; $aSettingIndex++)
+        {
+            // register
+            $setting = $aEntityPropertySetting[$aSettingIndex];
+
+            // remoe connections from settings
+            switch($setting->getValue('key'))
+            {
+                case MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
+
+                    // unset
+                    $setting->setValue(MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE, null);
+
+                    // persist
+                    $app['Mimoto.Data']->store($setting);
+
+                    break;
+
+                case MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
+
+                    $aAllowedEntityTypes = $setting->getValue(MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES);
+
+                    $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
+                    for ($nAllowedEntityTypeIndex = 0; $nAllowedEntityTypeIndex < $nAllowedEntityTypeCount; $nAllowedEntityTypeIndex++)
+                    {
+                        // register
+                        $allowedEntityType = $aAllowedEntityTypes[$nAllowedEntityTypeIndex];
+
+                        // remove
+                        $setting->removeValue(MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES, $allowedEntityType);
+                    }
+
+                    // persist
+                    $app['Mimoto.Data']->store($setting);
+
+                    break;
+            }
+
+            // remove connection
+            $entityProperty->removeValue('settings', $setting);
+
+            // delete connection
+            $app['Mimoto.Data']->delete($setting);
+        }
+
+        // 4. persist removed connections
+        $app['Mimoto.Data']->store($entityProperty);
+
+        // 5. load
+        $parentEntity = $app['Mimoto.Config']->getParentEntity($entityProperty);
+
+        // 6. remove connection
+        $parentEntity->removeValue('properties', $entityProperty);
+
+        // 7. persist removed
+        $app['Mimoto.Data']->store($parentEntity);
+
+        // 5. delete property
+        $app['Mimoto.Data']->delete($entityProperty);
+
+        // 6. send
+        return new JsonResponse((object) array('result' => 'EntityProperty deleted! '.date("Y.m.d H:i:s")), 200);
+    }
+
 
     // --- EntityPropertySetting ---
 

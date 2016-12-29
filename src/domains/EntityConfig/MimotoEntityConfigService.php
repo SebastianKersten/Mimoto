@@ -355,7 +355,7 @@ class MimotoEntityConfigService
         EntityConfigTableUtils::renamePropertyColumn($parentEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
     }
 
-    private function getParentEntity(MimotoEntity $entityProperty)
+    public function getParentEntity(MimotoEntity $entityProperty)
     {
         // load all connections
         $stmt = $GLOBALS['database']->prepare(

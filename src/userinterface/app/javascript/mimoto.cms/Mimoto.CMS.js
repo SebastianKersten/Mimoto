@@ -115,6 +115,11 @@ module.exports.prototype = {
         Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
     },
     
+    entityPropertyDelete:  function(nEntityPropertyId)
+    {
+        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete");
+    },
+    
     
     entityPropertySettingEdit: function(nEntityPropertySettingId)
     {
