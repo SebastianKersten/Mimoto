@@ -117,7 +117,14 @@ module.exports.prototype = {
     
     entityPropertyDelete:  function(nEntityPropertyId)
     {
-        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete");
+        // 11. send data
+        $.ajax({
+            type: 'get',
+            url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
     },
     
     
