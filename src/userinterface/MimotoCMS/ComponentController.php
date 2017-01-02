@@ -83,7 +83,7 @@ class ComponentController
                     "url" => '/mimoto.cms/components'
                 ),
                 (object) array(
-                    "label" => '"<span mls_value="'.CoreConfig::MIMOTO_COMPONENT.'.'.$entity->getId().'.name">'.$entity->getValue('name').'</span>"',
+                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_COMPONENT.'.'.$entity->getId().'.name">'.$entity->getValue('name').'</span>"',
                     "url" => '/mimoto.cms/component/'.$entity->getId().'/view'
                 )
             )

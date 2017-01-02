@@ -47,6 +47,18 @@ class MimotoAimlessController
         return $component->render();
     }
 
+    public function renderWrapperView(Application $app, $sEntityType, $nEntityId, $sWrapperName, $sComponentName = null)
+    {
+        // load
+        $entity = $app['Mimoto.Data']->get($sEntityType, $nEntityId);
+
+        // create
+        $component = $app['Mimoto.Aimless']->createWrapper($sWrapperName, $sComponentName, $entity);
+
+        // render and send
+        return $component->render();
+    }
+
     /**
      * Parse
      * @param Application $app

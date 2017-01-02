@@ -61,10 +61,10 @@ class AimlessComponentViewModel
         return $this->_component->realtime($sPropertySelector, $sComponentName);
     }
 
-//    public function realtimeWrapper($sWrapperName, $sPropertySelector = null, $sComponentName = null)
-//    {
-//        return $this->_component->realtimeWrapper($sWrapperName, $sPropertySelector, $sComponentName);
-//    }
+    public function realtimeWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
+    {
+        return $this->_component->realtime($sPropertySelector, $sComponentName, $sWrapperName);
+    }
 
     public function selection($sSelectionName)
     {
@@ -99,6 +99,11 @@ class AimlessComponentViewModel
     public function showOnEmpty($sPropertySelector)
     {
         return $this->_component->showOnEmpty($sPropertySelector);
+    }
+
+    public function reloadOnChange()
+    {
+        return $this->_component->reloadOnChange();
     }
 
 }

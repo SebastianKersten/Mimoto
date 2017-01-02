@@ -30155,7 +30155,7 @@
 	    notificationClose: function(sEntityType, nNotificationId)
 	    {
 	        // 8. find field
-	        var aNotifications = $("[mls_id='" + sEntityType + '.' + nNotificationId + "']");
+	        var aNotifications = $("[data-aimless-id='" + sEntityType + '.' + nNotificationId + "']");
 	
 	        // 9. collect value
 	        aNotifications.each( function(index, $component) {

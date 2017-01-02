@@ -78,7 +78,7 @@ class MimotoAimlessService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessComponentWrapper
      */
-    public function createWrapper($sComponentName, $entity = null, $connection = null, $sWrapperName)
+    public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null)
     {
         // init and send
         return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
@@ -144,7 +144,7 @@ class MimotoAimlessService
             }
         }
         
-        
+        throw new \Exception("MimotoAimlessService says: Template '$sComponentName' not found");
         die("MimotoAimlessService says: Template '$sComponentName' not found");
         
         // 1. broadcast webevent for debugging purposes
@@ -152,46 +152,6 @@ class MimotoAimlessService
         
     }
 
-    public function getModuleFile($sModuleName)
-    {
-        $nComponentCount = count($this->_aComponents);
-        for ($i = 0; $i < $nComponentCount; $i++)
-        {
-            $template = $this->_aComponents[$i];
-
-            if ($template->name === $sComponentName)
-            {
-                if (count($template->conditionals) > 0 && $entity !== null)
-                {
-                    $bValidated = true;
-                    $nConditionalCount = count($template->conditionals);
-                    for ($j = 0; $j < $nConditionalCount; $j++)
-                    {
-                        $conditional = $template->conditionals[$j];
-
-                        if ($entity->getValue($conditional->key) !== $conditional->value)
-                        {
-                            $bValidated = false;
-                            break;
-                        }
-                    }
-
-                    if ($bValidated) { return $template->file; }
-                }
-                else
-                {
-                    return $template->file;
-                }
-            }
-        }
-
-
-        die("MimotoAimlessService says: Template '$sComponentName' not found");
-
-        // 1. broadcast webevent for debugging purposes
-        // 2. standaard report error (error level)
-
-    }
 
 
     // --- aimless - dom util

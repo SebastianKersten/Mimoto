@@ -79,7 +79,7 @@ class FormController
                     "url" => '/mimoto.cms/forms'
                 ),
                 (object)array(
-                    "label" => '"<span mls_value="' . CoreConfig::MIMOTO_FORM . '.' . $form->getId() . '.name">' . $form->getValue('name') . '</span>"',
+                    "label" => '"<span data-aimless-value="' . CoreConfig::MIMOTO_FORM . '.' . $form->getId() . '.name">' . $form->getValue('name') . '</span>"',
                     "url" => '/mimoto.cms/form/' . $form->getId() . '/view'
                 )
             )

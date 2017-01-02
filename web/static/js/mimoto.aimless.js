@@ -308,69 +308,67 @@
 	        // --- component level ---
 	    
 	        // search
-	        var aComponents = $("[mls_contains='" + mls_container + "']");
+	        var aComponents = $("[data-aimless-contains='" + mls_container + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
 	            // read
-	            var mls_component = classRoot._getComponentName($($component).attr("mls_component"));
-	            var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
-	        
-	            // verify
-	            if (mls_component !== undefined)
+	            var mls_component = classRoot._getComponentName($($component).attr("data-aimless-component"));
+	            var mls_sortorder = $($component).attr("data-aimless-sortorder"); // #todo
+	            var mls_wrapper = $($component).attr("data-aimless-wrapper");
+	            
+	            if (mls_wrapper)
 	            {
-	                $.ajax({
-	                    type: 'GET',
-	                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component.name,
-	                    data: null,
-	                    dataType: 'html',
-	                    success: function (data) {
-	                        $($component).append(data);
-	                    }
-	                });
+	                Mimoto.Aimless.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
 	            }
-	        
+	            else
+	            {
+	                if (mls_component !== undefined)
+	                {
+	                    Mimoto.Aimless.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
+	                }
+	                    
+	            }
 	        });
 	    
 	    
 	        // section level
 	        // search
-	        var aComponents = $("[mls_selection='" + mls_container + "']");
+	        var aComponents = $("[data-aimless-selection='" + mls_container + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
 	            // read
-	            var mls_component = classRoot._getComponentName($($component).attr("mls_component"));
-	            var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
-	        
-	            // verify
-	            if (mls_component.name !== undefined)
+	            var mls_component = classRoot._getComponentName($($component).attr("data-aimless-component"));
+	            var mls_sortorder = $($component).attr("data-aimless-sortorder"); // #todo
+	            var mls_wrapper = $($component).attr("data-aimless-wrapper");
+	    
+	            if (mls_wrapper)
 	            {
-	                $.ajax({
-	                    type: 'GET',
-	                    url: '/Mimoto.Aimless/data/' + data.entityType + '/' + data.entityId + '/' + mls_component.name,
-	                    data: null,
-	                    dataType: 'html',
-	                    success: function (data) {
-	                        $($component).append(data);
-	                    }
-	                });
+	                Mimoto.Aimless.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
 	            }
+	            else
+	            {
+	                if (mls_component !== undefined)
+	                {
+	                    Mimoto.Aimless.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
+	                }
 	        
+	            }
 	        });
 	    
 	    
 	    
-	        // --- mls_count (onCreate) ---
+	        // --- data-aimless-count (onCreate) ---
 	    
 	    
 	        // search
-	        var aComponents = $("[mls_count='" + mls_container + "']");
+	        var aComponents = $("[data-aimless-count='" + mls_container + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
 	        
-	            var mls_config = $($component).attr("mls_config");
+	            var mls_config = $($component).attr("data-aimless-config");
 	        
 	            if (mls_config) { mls_config = $.parseJSON(mls_config); }
 	        
@@ -454,12 +452,12 @@
 	        
 	        
 	        // search
-	        var aValues = $("[mls_value]");
-	    
+	        var aValues = $("[data-aimless-value]");
+	        
 	        aValues.each( function(nIndex, $component)
 	        {
 	            // read
-	            var mls_value = $($component).attr("mls_value");
+	            var mls_value = $($component).attr("data-aimless-value");
 	        
 	            // determine
 	            var nOriginPos = mls_value.indexOf('[');
@@ -481,7 +479,7 @@
 	            
 	                // collection
 	                if (change.changes) continue;
-	            
+	                
 	            
 	                if (!bHasOrigin)
 	                {
@@ -543,7 +541,7 @@
 	                            new_mls_value_origin += '.' + change.origin.propertyName;
 	                        
 	                            // update dom
-	                            $($component).attr('mls_value', mls_value + '[' + new_mls_value_origin + ']');
+	                            $($component).attr('data-aimless-value', mls_value + '[' + new_mls_value_origin + ']');
 	                        }
 	                    }
 	                }
@@ -613,10 +611,43 @@
 	        // register
 	        var classRoot = this;
 	        
-	        
 	        // compose
 	        var sEntityIdentifier = sEntityType + '.' + nEntityId;
 	    
+	    
+	        // --- force reload components
+	        
+	        var aComponents = $("[data-aimless-id='" + sEntityIdentifier + "']");
+	        aComponents.each(function (nIndex, $component)
+	        {
+	            // read
+	            var mls_reloadOnChange = $($component).attr("data-aimless-reloadonchange");
+	            
+	            
+	            if (mls_reloadOnChange == 'true')
+	            {
+	                var mls_component = classRoot._getComponentName($($component).attr("data-aimless-component"));
+	                var mls_wrapper = $($component).attr("data-aimless-wrapper");
+	    
+	                if (mls_wrapper)
+	                {
+	                    Mimoto.Aimless.utils.updateWrapper($component, sEntityType, nEntityId, mls_wrapper, mls_component.name);
+	                }
+	                else
+	                {
+	                    if (mls_component !== undefined)
+	                    {
+	                        Mimoto.Aimless.utils.updateComponent($component, sEntityType, nEntityId, mls_component.name);
+	                    }
+	                }
+	            }
+	        });
+	        
+	        
+	        
+	        // --- apply entityProperty changes
+	        
+	        
 	        // parse modified values
 	        for (var i = 0; i < aChanges.length; i++)
 	        {
@@ -634,7 +665,7 @@
 	            {
 	                // read
 	                var mls_entity = $($container).attr("data-aimless-entity");
-	                var mls_component = classRoot._getComponentName($($container).attr("mls_component"));
+	                var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
 	                
 	                // register
 	                var item = change.entity;
@@ -710,9 +741,6 @@
 	     */
 	    _updateCollections: function (sEntityType, nEntityId, aChanges, aConnections)
 	    {
-	        console.log('DOM - Connections');
-	        console.warn(aChanges);
-	    
 	        // register
 	        var classRoot = this;
 	        
@@ -730,16 +758,15 @@
 	            if (!change.collection) continue;
 	            
 	            // collect
-	            var aContainers = $("[mls_contains='" + sEntityIdentifier + "." + change.propertyName + "']");
+	            var aContainers = $("[data-aimless-contains='" + sEntityIdentifier + "." + change.propertyName + "']");
 	        
 	        
 	            aContainers.each(function(nIndex, $container)
 	            {
 	                // read
-	                var mls_contains = $($container).attr("mls_contains");
-	                var mls_component = classRoot._getComponentName($($container).attr("mls_component"));
-	                var mls_filter = $($container).attr("mls_filter");
-	                
+	                var mls_contains = $($container).attr("data-aimless-contains");
+	                var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
+	                var mls_filter = $($container).attr("data-aimless-filter");
 	                
 	                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 	            
@@ -768,7 +795,19 @@
 	                        // load
 	                        if (bFilterApproved)
 	                        {
-	                            Mimoto.Aimless.utils.loadComponent($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
+	                            var mls_wrapper = $($container).attr("data-aimless-wrapper");
+	    
+	                            if (mls_wrapper)
+	                            {
+	                                Mimoto.Aimless.utils.loadWrapper($container, item.connection.childEntityTypeName, item.connection.childId, mls_wrapper, mls_component.name);
+	                            }
+	                            else
+	                            {
+	                                if (mls_component !== undefined)
+	                                {
+	                                    Mimoto.Aimless.utils.loadComponent($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
+	                                }
+	                            }
 	                        }
 	                    }
 	                }
@@ -782,7 +821,7 @@
 	                        var item = change.collection.removed[iRemoved];
 	                    
 	                        // find
-	                        var $item = $("[mls_id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $container);
+	                        var $item = $("[data-aimless-id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $container);
 	                    
 	                        // delete
 	                        $item.remove();
@@ -806,15 +845,15 @@
 	                var connection = aConnections[nConnectionIndex];
 	
 	                // search
-	                var aContainers = $("[mls_contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
+	                var aContainers = $("[data-aimless-contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
 	                
 	                
 	                aContainers.each(function(nIndex, $container)
 	                {
 	                    // read
-	                    var mls_contains = $($container).attr("mls_contains");
-	                    var mls_component = classRoot._getComponentName($($container).attr("mls_component"));
-	                    var mls_filter = $($container).attr("mls_filter");
+	                    var mls_contains = $($container).attr("data-aimless-contains");
+	                    var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
+	                    var mls_filter = $($container).attr("data-aimless-filter");
 	                    
 	                    
 	                    
@@ -846,11 +885,23 @@
 	                        // load
 	                        if (bFilterApproved)
 	                        {
-	                            Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+	                            var mls_wrapper = $($container).attr("data-aimless-wrapper");
+	    
+	                            if (mls_wrapper)
+	                            {
+	                                Mimoto.Aimless.utils.loadWrapper($container, sEntityType, nEntityId, mls_wrapper, mls_component.name);
+	                            }
+	                            else
+	                            {
+	                                if (mls_component !== undefined)
+	                                {
+	                                    Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+	                                }
+	                            }
 	                        }
 	                        else {
 	                            // search
-	                            var aSubitems = $("[mls_id='" + sEntityIdentifier + "']", $container);
+	                            var aSubitems = $("[data-aimless-id='" + sEntityIdentifier + "']", $container);
 	        
 	                            aSubitems.each(function (nIndex, $component) {
 	            
@@ -885,7 +936,7 @@
 	                        if (bShouldToggle)
 	                        {
 	                            // search
-	                            var aSubitems = $("[mls_id='" + sEntityIdentifier + "']", $container);
+	                            var aSubitems = $("[data-aimless-id='" + sEntityIdentifier + "']", $container);
 	    
 	                            aSubitems.each(function (nIndex, $component)
 	                            {
@@ -893,7 +944,21 @@
 	                                $component.remove();
 	                                
 	                                // reload with new template
-	                                Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+	                                //Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+	    
+	                                var mls_wrapper = $($container).attr("data-aimless-wrapper");
+	    
+	                                if (mls_wrapper)
+	                                {
+	                                    Mimoto.Aimless.utils.loadWrapper($container, sEntityType, nEntityId, mls_wrapper, mls_component.name);
+	                                }
+	                                else
+	                                {
+	                                    if (mls_component !== undefined)
+	                                    {
+	                                        Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+	                                    }
+	                                }
 	                            });
 	                        }
 	                    }
@@ -972,23 +1037,23 @@
 	            var change = changes[i];
 	        
 	        
-	            var aContainers = $("[mls_selection='" + sEntityType + "']");
+	            var aContainers = $("[data-aimless-selection='" + sEntityType + "']");
 	        
 	        
 	            aContainers.each(function(nIndex, $container)
 	            {
 	                // read
-	                var mls_selection = $($container).attr("mls_selection");
-	                var mls_component = classRoot._getComponentName($($container).attr("mls_component"));
-	                var mls_filter = $($container).attr("mls_filter");
+	                var mls_selection = $($container).attr("data-aimless-selection");
+	                var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
+	                var mls_filter = $($container).attr("data-aimless-filter");
 	            
 	                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 	            
 	            
-	                // 1. read mls_id's van items binnen component
+	                // 1. read data-aimless-id's van items binnen component
 	            
 	            
-	                var aSubitems = $("[mls_id='" + sEntityType + '.' + sEntityId + "']", $container);
+	                var aSubitems = $("[data-aimless-id='" + sEntityType + '.' + sEntityId + "']", $container);
 	            
 	            
 	                aSubitems.each(function(nIndex, $subitem)
@@ -1065,12 +1130,12 @@
 	    {
 	    
 	        // search
-	        var aComponents = $("[mls_count='" + sEntityType + "']");
+	        var aComponents = $("[data-aimless-count='" + sEntityType + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
 	        
-	            var mls_filter = $($component).attr("mls_filter");
+	            var mls_filter = $($component).attr("data-aimless-filter");
 	        
 	            if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 	        
@@ -1096,7 +1161,7 @@
 	                // load
 	                if (!bFilterApproved)
 	                {
-	                    var mls_config = $($component).attr("mls_config");
+	                    var mls_config = $($component).attr("data-aimless-config");
 	                
 	                    if (mls_config) { mls_config = $.parseJSON(mls_config); }
 	                
@@ -1143,23 +1208,32 @@
 	        // init
 	        var component = {};
 	    
-	        // search
-	        var nComponentNameConditionalsPos = sComponentInfo.indexOf('[');
-	    
-	        if (nComponentNameConditionalsPos != -1)
+	        
+	        if (!sComponentInfo)
 	        {
-	            // strip
-	            var sComponentConditionals = sComponentInfo.substring(nComponentNameConditionalsPos + 1, sComponentInfo.length - 1);
-	            
-	            // store
-	            component.name = sComponentInfo.substr(0, nComponentNameConditionalsPos);
-	            component.conditionals = (sComponentConditionals) ? sComponentConditionals.split(',') : [];
+	            component.name = '';
+	            component.conditionals = [];
 	        }
 	        else
 	        {
-	            // store
-	            component.name = sComponentInfo;
-	            component.conditionals = [];
+	            // search
+	            var nComponentNameConditionalsPos = sComponentInfo.indexOf('[');
+	    
+	            if (nComponentNameConditionalsPos != -1)
+	            {
+	                // strip
+	                var sComponentConditionals = sComponentInfo.substring(nComponentNameConditionalsPos + 1, sComponentInfo.length - 1);
+	        
+	                // store
+	                component.name = sComponentInfo.substr(0, nComponentNameConditionalsPos);
+	                component.conditionals = (sComponentConditionals) ? sComponentConditionals.split(',') : [];
+	            }
+	            else
+	            {
+	                // store
+	                component.name = sComponentInfo;
+	                component.conditionals = [];
+	            }
 	        }
 	    
 	        // send
@@ -11456,6 +11530,22 @@
 	    },
 	    
 	    /**
+	     * Load wrapper
+	     */
+	    loadWrapper: function ($container, sEntityTypeName, nId, sWrapper, sComponent)
+	    {
+	        $.ajax({
+	            type: 'GET',
+	            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
+	            data: null,
+	            dataType: 'html',
+	            success: function (data) {
+	                $($container).append(data);
+	            }
+	        });
+	    },
+	    
+	    /**
 	     * Load entity
 	     */
 	    loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
@@ -11466,7 +11556,7 @@
 	            data: null,
 	            dataType: 'html',
 	            success: function (data) {
-	    
+	                
 	                // delete
 	                $($container).empty();
 	                
@@ -11476,9 +11566,37 @@
 	        });
 	    },
 	    
-	    updateComponent: function(ajax, dom)
+	    /**
+	     * Load wrapper
+	     */
+	    updateWrapper: function ($component, sEntityTypeName, nId, sWrapper, sComponent)
 	    {
-	        
+	        $.ajax({
+	            type: 'GET',
+	            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
+	            data: null,
+	            dataType: 'html',
+	            success: function (data)
+	            {
+	                // replace
+	                $($component).replaceWith(data);
+	            }
+	        });
+	    },
+	    
+	    updateComponent: function($component, sEntityTypeName, nId, sTemplate)
+	    {
+	        $.ajax({
+	            type: 'GET',
+	            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+	            data: null,
+	            dataType: 'html',
+	            success: function (data)
+	            {
+	                // replace
+	                $($component).replaceWith(data);
+	            }
+	        });
 	    }
 	    
 	    

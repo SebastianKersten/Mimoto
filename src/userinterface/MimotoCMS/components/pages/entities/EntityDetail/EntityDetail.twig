@@ -42,7 +42,7 @@
 
                             {% if entityStructure.extends is not empty %}
                                 {% for extension in entityStructure.extends %}
-                                    extends <b><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_id="entity.{{ extension.id }}.name" class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname">{{ extension.name }}</span></a></b>
+                                    extends <b><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span data-aimless-id="entity.{{ extension.id }}.name" class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname">{{ extension.name }}</span></a></b>
                                 {% endfor %}
                                 <br>
                             {% endif %}
@@ -51,7 +51,7 @@
                                 <div class="MimotoCMS_pages_entities_EntityDetail_Structure__extendedby">
                                     Extended by:
                                     {% for extension in entityStructure.extendedBy %}
-                                    <a href="/mimoto.cms/entity/{{ extension.id }}/view"><span mls_value="_MimotoAimless__core__entity.{{ extension.id }}.name">{{ extension.name }}</span></a>{% if not loop.last %}, {% endif %}
+                                    <a href="/mimoto.cms/entity/{{ extension.id }}/view"><span data-aimless-value="_MimotoAimless__core__entity.{{ extension.id }}.name">{{ extension.name }}</span></a>{% if not loop.last %}, {% endif %}
                                     {% endfor %}
                                 </div>
                             {% endif %}

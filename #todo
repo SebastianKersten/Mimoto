@@ -121,7 +121,7 @@ https://github.com/filamentgroup/elementary/blob/master/examples/index.html
 // 6. focus input when other user active
 // 7. Alle exceptions inschieten via Livescreen messages
 
-// 1. ACL in mls_id hash
+// 1. ACL in data-aimless-id hash
 // 2. Artikelsysteem herschrijven (publish, unpublish, events, service, editor, live wysiwyg)
 // 3. MailService (config selector van verschillende entity-properties
 // 4. test vase: cohort selector
@@ -345,9 +345,9 @@ $app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $ev
 
 // #todo - archive=================
 
-        // var aComponents = $("[mls_selection='" + mls_container + "']");
+        // var aComponents = $("[data-aimless-selection='" + mls_container + "']");
         //
-        // // 1. mls_selection
+        // // 1. data-aimless-selection
         //
         //
         //
@@ -359,21 +359,21 @@ $app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $ev
         //         // --- component level ---
         //
         // // search
-        // var aComponents = $("[mls_id='" + sEntityIdentifier + "']");
-        // // get all elements with //$('[mls_id]') en check op sEntityIdentifier
+        // var aComponents = $("[data-aimless-id='" + sEntityIdentifier + "']");
+        // // get all elements with //$('[data-aimless-id]') en check op sEntityIdentifier
         //
         // aComponents.each( function(index, $component)
         // {
         //
         //     // read
-        //     //var mls_config = $($component).attr("mls_id");
+        //     //var mls_config = $($component).attr("data-aimless-id");
         //
         //     // init
         //     var config = [];
         //
         //     // read
-        //     var mls_config = $($component).attr("mls_config");
-        //     var mls_component = $($component).attr("mls_component");
+        //     var mls_config = $($component).attr("data-aimless-config");
+        //     var mls_component = $($component).attr("data-aimless-component");
         //
         //     // verify
         //     if (mls_config !== undefined)
@@ -418,7 +418,7 @@ $app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $ev
 
         //console.log('Console.update - filtered');
 
-        // 1. mls_contains="project.3.subprojects" wordt niet meegestuurd bij wie het object hoort
+        // 1. data-aimless-contains="project.3.subprojects" wordt niet meegestuurd bij wie het object hoort
         // 2. partOf
         // 3. zoek naar connectietabellen
 
@@ -429,21 +429,21 @@ $app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $ev
 //
 //
 //        // search
-//        var aComponents = $("[mls_contains='" + mls_container + "']");
+//        var aComponents = $("[data-aimless-contains='" + mls_container + "']");
 //
 //        aComponents.each( function(index, $component)
 //        {
 //
-//            console.log('In mls_contains for updating information');
+//            console.log('In data-aimless-contains for updating information');
 //
 //            // read
-//            var mls_contains = $($component).attr("mls_contains");
+//            var mls_contains = $($component).attr("data-aimless-contains");
 //
 //            console.log(mls_contains);
 //
-//            var mls_filter = $($component).attr("mls_filter");
-//            var mls_component = $($component).attr("mls_component");
-//            //var mls_sortorder = $($component).attr("mls_sortorder"); // #todo
+//            var mls_filter = $($component).attr("data-aimless-filter");
+//            var mls_component = $($component).attr("data-aimless-component");
+//            //var mls_sortorder = $($component).attr("data-aimless-sortorder"); // #todo
 //
 //            // verify
 //            if (mls_component !== undefined)
