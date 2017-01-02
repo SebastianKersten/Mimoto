@@ -30,7 +30,7 @@ class AimlessInput extends AimlessComponent
     public function __construct($sComponentName, $entity, $connection, $sFieldName, $value, $AimlessService, $DataService, $LogService, $TwigService)
     {
         // forward
-        parent::__construct($sComponentName, $entity, $connection, $AimlessService, $DataService, $LogService, $TwigService);
+        parent::__construct($sComponentName, $entity, $connection, null, $AimlessService, $DataService, $LogService, $TwigService);
 
         // store
         $this->_sFieldId = $sFieldName;

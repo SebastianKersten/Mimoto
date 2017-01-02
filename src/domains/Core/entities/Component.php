@@ -216,8 +216,8 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormDetail-FormField',
-                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormField.twig',
+                'name' => 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper',
+                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormFieldWrapper/FormFieldWrapper.twig',
                 'conditionals' => []
             ),
             (object) array(

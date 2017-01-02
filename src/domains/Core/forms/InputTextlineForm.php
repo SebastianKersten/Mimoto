@@ -300,7 +300,7 @@ class InputTextlineForm
         // 1. create and setup field
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix');
-        $field->setValue('label', 'Placeholder');
+        $field->setValue('label', 'Prefix');
         $field->setValue('placeholder', "Enter the input's prefix");
         $field->setValue('description', "Clarify what is required from the content editor");
 

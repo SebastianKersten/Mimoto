@@ -72,9 +72,6 @@ class FormController
         // 3. create component
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_FormDetail', $form);
 
-        // 4. setup component
-        $page->setPropertyComponent('fields', 'Mimoto.CMS_forms_FormDetail-FormField');
-
         // setup page
         $page->setVar('pageTitle', array(
                 (object)array(

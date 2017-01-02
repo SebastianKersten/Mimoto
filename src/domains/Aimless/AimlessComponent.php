@@ -10,6 +10,7 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityService;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Aimless\AimlessComponentViewModel;
+use Mimoto\Aimless\AimlessWrapperViewModel;
 use Mimoto\Log\MimotoLogService;
 
 
@@ -32,6 +33,7 @@ class AimlessComponent
     
     // settings
     protected $_sComponentName;
+    protected $_sWrapperName;
     
     // config
     protected $_aVars = [];
@@ -61,12 +63,13 @@ class AimlessComponent
      * @param MimotoEntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sComponentName, MimotoEntity $entity = null, $connection = null, MimotoAimlessService $AimlessService, MimotoEntityService $DataService, MimotoLogService $LogService, $TwigService)
+    public function __construct($sComponentName, MimotoEntity $entity = null, $connection = null, $sWrapperName = null, MimotoAimlessService $AimlessService, MimotoEntityService $DataService, MimotoLogService $LogService, $TwigService)
     {
         // register
         $this->_sComponentName = $sComponentName;
         $this->_entity = $entity;
         $this->_connection = $connection;
+        $this->_sWrapperName = $sWrapperName;
 
         // register
         $this->_AimlessService = $AimlessService;
@@ -157,7 +160,7 @@ class AimlessComponent
     // --- Twig usage
 
 
-    public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null)
+    public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null, $sWrapperName = null)
     {
         // validate
         if (empty($this->_entity)) error("AimlessComponent says: The entity is not set. Please supply one.");
@@ -196,13 +199,13 @@ class AimlessComponent
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                 // read, render and send
-                return $this->renderEntityProperty($sPropertySelector, $sComponentName);
+                return $this->renderEntityProperty($sPropertySelector, $sComponentName, $sWrapperName);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                 // read, render and send
-                return $this->renderCollectionProperty($sPropertySelector, $sComponentName);
+                return $this->renderCollectionProperty($sPropertySelector, $sComponentName, $sWrapperName);
                 break;
         }
     }
@@ -277,7 +280,7 @@ class AimlessComponent
      * @param string $sComponentName
      * @return mixed|string Either a rendered component or a value
      */
-    private function renderCollectionProperty($sPropertySelector, $sComponentName = null)
+    private function renderCollectionProperty($sPropertySelector, $sComponentName = null, $sWrapperName = null)
     {
 
         // #todo - double code om $this->_aPropertyComponents[$sMainPropertyName] te laten werken
@@ -303,10 +306,16 @@ class AimlessComponent
         if (empty($xValue) || !is_array($xValue) || empty($aConnections) || !is_array($aConnections)) return '';
 
         // 3. determine
-        $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sMainPropertyName]->sComponentName;
+        if (empty($sComponentName))
+        {
+            if (isset($this->_aPropertyComponents[$sMainPropertyName]))
+            {
+                $this->_aPropertyComponents[$sMainPropertyName]->sComponentName;
+            }
+        }
 
         // 4. render and send
-        return $this->renderCollection($xValue, $aConnections, $sComponentName);
+        return $this->renderCollection($xValue, $aConnections, $sComponentName, null, null, $sWrapperName);
 
     }
 
@@ -467,18 +476,46 @@ class AimlessComponent
     
     public function render()
     {
+        if (!empty($this->_sWrapperName))
+        {
+            // get component file
+            $sWrapperFile = $this->_AimlessService->getComponentFile($this->_sWrapperName, $this->_entity);
+
+            // create
+            $viewModel = new AimlessWrapperViewModel($this, $this->_sComponentName);
+
+            // compose
+            $this->_aVars['Aimless'] = $viewModel;
+
+            // output
+            return $this->_TwigService->render($sWrapperFile, $this->_aVars);
+        }
+        else
+        {
+            return $this->renderComponent($this->_sComponentName);
+        }
+    }
+
+    public function wrap($sComponentName)
+    {
+        return $this->renderComponent($sComponentName);
+    }
+
+    private function renderComponent($sComponentName)
+    {
         // get component file
-        $sComponentFile = $this->_AimlessService->getComponentFile($this->_sComponentName, $this->_entity);
+        $sComponentFile = $this->_AimlessService->getComponentFile($sComponentName, $this->_entity);
 
         // create
         $viewModel = new AimlessComponentViewModel($this);
 
         // compose
         $this->_aVars['Aimless'] = $viewModel;
-        
+
         // output
         return $this->_TwigService->render($sComponentFile, $this->_aVars);
     }
+
 
     public function module($sModuleName, $values = [])
     {
@@ -507,7 +544,7 @@ class AimlessComponent
      * @param array $aFieldVars
      * @return string Rendered template
      */
-    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false)
+    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null)
     {
         // init
         $sRenderedCollection = '';
@@ -523,7 +560,7 @@ class AimlessComponent
             $connection = (!empty($aConnections)) ? $aConnections[$i] : null;
 
             // render
-            $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput);
+            $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput, $sWrapperName);
         }
         
         // send
@@ -538,7 +575,7 @@ class AimlessComponent
      * @param null $aFieldVars
      * @return string
      */
-    private function renderCollectionItem($entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false)
+    private function renderCollectionItem($entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null)
     {
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
@@ -550,7 +587,14 @@ class AimlessComponent
         }
         else
         {
-            $component = $this->renderCollectionItemAsComponent($sTemplateName, $entity, $connection);
+            if (!empty($sWrapperName))
+            {
+                $component = $this->renderCollectionItemAsComponentWrapper($sTemplateName, $entity, $connection, $sWrapperName);
+            }
+            else
+            {
+                $component = $this->renderCollectionItemAsComponent($sTemplateName, $entity, $connection);
+            }
         }
 
         // forward
@@ -570,6 +614,18 @@ class AimlessComponent
     {
         // create and send
         return $this->_AimlessService->createComponent($sTemplateName, $entity, $connection);
+    }
+
+    /**
+     * Render collection item as AimlessComponent
+     * @param $sTemplateName
+     * @param $entity
+     * @return AimlessComponent
+     */
+    private function renderCollectionItemAsComponentWrapper($sTemplateName, $entity, $connection, $sWrapperName)
+    {
+        // create and send
+        return $this->_AimlessService->createWrapper($sTemplateName, $entity, $connection, $sWrapperName);
     }
 
     /**
@@ -639,4 +695,8 @@ class AimlessComponent
         return 'data-aimless-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
     }
 
+    public function hasProperty($sPropertyName)
+    {
+        return $this->_entity->hasProperty($sPropertyName);
+    }
 }

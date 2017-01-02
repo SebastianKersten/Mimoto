@@ -69,7 +69,19 @@ class MimotoAimlessService
     public function createComponent($sComponentName, $entity = null, $connection = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
+    }
+
+    /**
+     * Create component wrapper
+     * @param string $sComponentName The name of the registered template
+     * @param MimotoEntity $entity The data to be combined with the template
+     * @return AimlessComponentWrapper
+     */
+    public function createWrapper($sComponentName, $entity = null, $connection = null, $sWrapperName)
+    {
+        // init and send
+        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
     }
 
     /**

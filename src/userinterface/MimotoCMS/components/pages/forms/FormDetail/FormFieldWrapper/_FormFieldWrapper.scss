@@ -1,0 +1,43 @@
+@import 'FormFieldValue/FormFieldValue';
+
+div.MimotoCMS_pages_forms_FormDetail-FormField {
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    background-color: #f5f5f5;
+
+    & > div {
+        overflow: hidden;
+    }
+
+    & > div:last-child {
+        text-align: right;
+        padding-right: 0;
+    }
+
+    div.MimotoCMS_pages_forms_FormDetail-FormField__data {
+
+        flex-grow: 10;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        width: 80%;
+
+        div.MimotoCMS_pages_forms_FormDetail-FormField__wrapper {
+
+            padding: 10px 10px 10px 25px;
+
+        }
+    }
+
+    div.MimotoCMS_pages_forms_FormDetail-FormField__menu {
+        white-space: nowrap;
+        padding: 5px;
+        flex-grow: 1;
+        width: 20%;
+        text-align: right;
+    }
+}
