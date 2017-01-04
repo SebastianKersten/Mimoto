@@ -26,7 +26,10 @@
             "allowedEntityTypes",
 
             "file",
-            "label"
+            "label",
+
+            "placeholder",
+            "prefix"
         ]
     },
     "notes": [

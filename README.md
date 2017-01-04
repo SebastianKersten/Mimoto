@@ -73,15 +73,13 @@ Mimoto is typecasted
 
 ##### onUpdate
 
-* mls_id
-* mls_template
-* mls_value
+* data-aimless-id
+* data-aimless-value
 
 ##### onCreated
 
-* mls_contains
-* mls_filter
-* mls_template
+* data-aimless-contains
+* data-aimless-filter
 
 
 ## Actions
@@ -333,7 +331,7 @@ Aimless has support for aesy to implement counters for for instance new notifica
 
 Example:
 ```
-<div id="header_notification_count" class="hidden" mls_count="_MimotoAimless__devtools__notification" mls_filter='{"state":"open"}' mls_config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
+<div id="header_notification_count" class="hidden" data-aimless-count="_MimotoAimless__devtools__notification" data-aimless-filter='{"state":"open"}' data-aimless-config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
 ```
 
 

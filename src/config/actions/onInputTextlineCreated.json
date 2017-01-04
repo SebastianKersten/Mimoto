@@ -1,5 +1,11 @@
 {
-    "trigger": "_MimotoAimless__interaction__form_input_textline.created",
+    "trigger": [
+        "_MimotoAimless__interaction__form_input_textline.created",
+        "_MimotoAimless__interaction__form_output_title.created",
+        "_MimotoAimless__interaction__form_layout_groupstart.created",
+        "_MimotoAimless__interaction__form_layout_groupend.created",
+        "_MimotoAimless__interaction__form_layout_divider.created"
+    ],
     "service": "Aimless",
     "request": "onInputFieldCreated",
     "type": "sync"

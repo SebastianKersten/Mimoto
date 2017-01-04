@@ -54,6 +54,22 @@ module.exports.prototype = {
     },
     
     /**
+     * Load wrapper
+     */
+    loadWrapper: function ($container, sEntityTypeName, nId, sWrapper, sComponent)
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
+            data: null,
+            dataType: 'html',
+            success: function (data) {
+                $($container).append(data);
+            }
+        });
+    },
+    
+    /**
      * Load entity
      */
     loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
@@ -64,7 +80,7 @@ module.exports.prototype = {
             data: null,
             dataType: 'html',
             success: function (data) {
-    
+                
                 // delete
                 $($container).empty();
                 
@@ -74,9 +90,37 @@ module.exports.prototype = {
         });
     },
     
-    updateComponent: function(ajax, dom)
+    /**
+     * Load wrapper
+     */
+    updateWrapper: function ($component, sEntityTypeName, nId, sWrapper, sComponent)
     {
-        
+        $.ajax({
+            type: 'GET',
+            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
+            data: null,
+            dataType: 'html',
+            success: function (data)
+            {
+                // replace
+                $($component).replaceWith(data);
+            }
+        });
+    },
+    
+    updateComponent: function($component, sEntityTypeName, nId, sTemplate)
+    {
+        $.ajax({
+            type: 'GET',
+            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+            data: null,
+            dataType: 'html',
+            success: function (data)
+            {
+                // replace
+                $($component).replaceWith(data);
+            }
+        });
     }
     
     

@@ -1,18 +1,24 @@
-<div class="MimotoCMS_pages_forms_FormDetail-FormField" {{ Aimless.realtime() }}>
+<div class="MimotoCMS_pages_forms_FormDetail-FormField" {{ Aimless.realtime() }} {{ Aimless.reloadOnChange() }}>
 
     <div class="MimotoCMS_pages_forms_FormDetail-FormField__data">
 
-        <div class="MimotoCMS_pages_forms_FormDetail-FormField__label">
-            <div {{ Aimless.hideOnEmpty('label') }} {{ Aimless.realtime('label') }} >{{ Aimless.render('label') }}</div>
-            <div {{ Aimless.showOnEmpty('label') }}>#{{ Aimless.meta('id') }}</div>
+        <div class="MimotoCMS_pages_forms_FormDetail-FormField__wrapper">
+            {{ Aimless.wrap() }}
         </div>
 
-        <div class="MimotoCMS_pages_forms_FormDetail-FormField__value">
+        {#<div class="MimotoCMS_pages_forms_FormDetail-FormField__label">
+            <div {{ Aimless.hideOnEmpty('label') }} {{ Aimless.realtime('label') }} >{{ Aimless.render('label') }}</div>
+            <div {{ Aimless.showOnEmpty('label') }}>#{{ Aimless.meta('id') }}</div>
+        </div>#}
+
+
+        {#<div class="MimotoCMS_pages_forms_FormDetail-FormField__value">
             <div {{ Aimless.showOnEmpty('value') }}>Add value</div>
             <div {{ Aimless.hideOnEmpty('value') }} {{ Aimless.realtime('value', 'Mimoto.CMS_forms_FormDetail-FormFieldValue') }}>
                 {{ Aimless.render('value', 'Mimoto.CMS_forms_FormDetail-FormFieldValue') }}
             </div>
-        </div>
+        </div>#}
+
     </div>
     <div class="MimotoCMS_pages_forms_FormDetail-FormField__menu">
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Aimless.meta('typeId') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}

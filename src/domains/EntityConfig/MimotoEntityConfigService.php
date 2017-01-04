@@ -127,6 +127,7 @@ class MimotoEntityConfigService
         return $this->_entityConfigRepository->getEntityNameByPropertyId($nId);
     }
 
+
     /**
      * Get all entities
      */
@@ -581,4 +582,5 @@ class MimotoEntityConfigService
         // 5. persist connection
         $GLOBALS['Mimoto.Data']->store($eInput);
     }
+
 }

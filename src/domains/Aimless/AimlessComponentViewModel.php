@@ -50,15 +50,25 @@ class AimlessComponentViewModel
     {
         return $this->_component->data($sPropertySelector, false, true, $sComponentName);
     }
-    
-    public function selection($sSelectionName)
+
+    public function renderWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
     {
-        return $this->_component->selection($sSelectionName);
+        return $this->_component->data($sPropertySelector, false, true, $sComponentName, $sWrapperName);
     }
 
     public function realtime($sPropertySelector = null, $sComponentName = null)
     {
         return $this->_component->realtime($sPropertySelector, $sComponentName);
+    }
+
+    public function realtimeWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
+    {
+        return $this->_component->realtime($sPropertySelector, $sComponentName, $sWrapperName);
+    }
+
+    public function selection($sSelectionName)
+    {
+        return $this->_component->selection($sSelectionName);
     }
 
     public function meta($sPropertyName)
@@ -89,6 +99,11 @@ class AimlessComponentViewModel
     public function showOnEmpty($sPropertySelector)
     {
         return $this->_component->showOnEmpty($sPropertySelector);
+    }
+
+    public function reloadOnChange()
+    {
+        return $this->_component->reloadOnChange();
     }
 
 }
