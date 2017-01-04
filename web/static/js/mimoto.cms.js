@@ -30639,9 +30639,9 @@
 	            'sName': sInputFieldId,
 	            'sType': 'input', // #todo - const
 	            'settings': settings,
-	            $field: $("[mls_form_field='" + sInputFieldId + "']", $form),
-	            $input: $("input[mls_form_field_input='" + sInputFieldId + "']", $form),
-	            $error: $("[mls_form_field_error='" + sInputFieldId + "']", $form)
+	            $field: $("[data-aimless-form-field='" + sInputFieldId + "']", $form),
+	            $input: $("input[data-aimless-form-field-input='" + sInputFieldId + "']", $form),
+	            $error: $("[data-aimless-form-field-error='" + sInputFieldId + "']", $form)
 	        };
 	
 	        // store
@@ -30674,7 +30674,7 @@
 	        var classRoot = this;
 	
 	        // search
-	        var aSubmitButtons = $('[mls_form_submit="' + sFormName + '"]');
+	        var aSubmitButtons = $('[data-aimless-form-submit="' + sFormName + '"]');
 	
 	        // activate
 	        aSubmitButtons.each(function(nIndex, $component) {
@@ -30698,7 +30698,7 @@
 	        // Mimoto.Aimless.privateChannel.bind('client-Aimless:formfield_update_' + sFormName, function(data)
 	        // {
 	        //
-	        //     var $input = $("input[mls_form_field_input='" + data.fieldId + "']");
+	        //     var $input = $("input[data-aimless-form-field-input='" + data.fieldId + "']");
 	        //
 	        //
 	        //     // 1. check if supports realtime
@@ -30761,12 +30761,12 @@
 	            // 7a. register
 	            var field = aFields[i];
 	            
-	            var aInputFields = $("[mls_form_field='" + field.sName + "']", $form);
+	            var aInputFields = $("[data-aimless-form-field='" + field.sName + "']", $form);
 	    
 	            aInputFields.each( function(index, $inputField)
 	            {
 	                // 7b. find field
-	                var aInputs = $("[mls_form_field_input='" + field.sName + "']", $inputField);
+	                var aInputs = $("[data-aimless-form-field-input='" + field.sName + "']", $inputField);
 	                
 	                if (aInputs.length > 1 && ($(aInputs[0]).is("input")) && $(aInputs[0]).attr('type') == 'checkbox')
 	                {
@@ -30834,22 +30834,22 @@
 	
 	
 	                        // update dom
-	                        var aFields = $('[mls_form_field^="' + newEntity.selector + '"]', $form);
+	                        var aFields = $('[data-aimless-form-field^="' + newEntity.selector + '"]', $form);
 	                        aFields.each( function(index, $component)
 	                        {
-	                            var mls_form_field = $($component).attr("mls_form_field");
+	                            var mls_form_field = $($component).attr("data-aimless-form-field");
 	                            mls_form_field = newEntity.id + mls_form_field.substr(newEntity.selector.length);
-	                            $($component).attr("mls_form_field", mls_form_field);
+	                            $($component).attr("data-aimless-form-field", mls_form_field);
 	                        });
 	
 	                        // update dom
-	                        var aFields = $('[mls_form_field_input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
+	                        var aFields = $('[data-aimless-form-field-input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
 	                        
 	                        aFields.each( function(index, $component)
 	                        {
-	                            var sOld_mls_form_field_input = $($component).attr("mls_form_field_input");
+	                            var sOld_mls_form_field_input = $($component).attr("data-aimless-form-field-input");
 	                            var sNew_mls_form_field_input = newEntity.id + sOld_mls_form_field_input.substr(newEntity.selector.length);
-	                            $($component).attr("mls_form_field_input", sNew_mls_form_field_input);
+	                            $($component).attr("data-aimless-form-field-input", sNew_mls_form_field_input);
 	
 	                            classRoot._alterRegisteredFieldId(resultData.formName, sOld_mls_form_field_input, sNew_mls_form_field_input);
 	
@@ -30859,12 +30859,12 @@
 	                        });
 	
 	                        // update dom
-	                        var aFields = $('[mls_form_field_error^="' + newEntity.selector + '"]', $form);
+	                        var aFields = $('[data-aimless-form-field-error^="' + newEntity.selector + '"]', $form);
 	                        aFields.each( function(index, $component)
 	                        {
-	                            var mls_form_field_error = $($component).attr("mls_form_field_error");
+	                            var mls_form_field_error = $($component).attr("data-aimless-form-field-error");
 	                            mls_form_field_error = newEntity.id + mls_form_field_error.substr(newEntity.selector.length);
-	                            $($component).attr("mls_form_field_error", mls_form_field_error);
+	                            $($component).attr("data-aimless-form-field-error", mls_form_field_error);
 	                        });
 	                    }
 	                }
@@ -30996,7 +30996,7 @@
 	                field.$input.off('input');
 	
 	                field.sName = sNewInputFieldId;
-	                field.$input = $("input[mls_form_field_input='" + sNewInputFieldId + "']");
+	                field.$input = $("input[data-aimless-form-field-input='" + sNewInputFieldId + "']");
 	
 	                // store
 	                // Mimoto.Aimless.realtime.broadcastedValues[sNewInputFieldId] = Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];

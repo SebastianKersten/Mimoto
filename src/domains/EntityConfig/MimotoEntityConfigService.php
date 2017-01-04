@@ -262,9 +262,6 @@ class MimotoEntityConfigService
             if ($sPropertyName != $sRequestedColumn)
             {
                 $sColumnOnTheLeft = $sPropertyName;
-            }
-            else
-            {
                 break;
             }
         }

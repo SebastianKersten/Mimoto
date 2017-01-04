@@ -488,7 +488,7 @@ class AimlessComponent
         $formConfig = $this->_aFormConfigs[$sKey];
 
         // 4. output
-        return 'mls_form_submit="'.$formConfig->sFormName.'"';
+        return 'data-aimless-form-submit="'.$formConfig->sFormName.'"';
     }
 
     

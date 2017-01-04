@@ -93,15 +93,16 @@ module.exports.prototype = {
             
             if (mls_wrapper)
             {
+                console.log('wrapper (hoort niet)');
                 Mimoto.Aimless.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
             }
             else
             {
-                if (mls_component !== undefined)
+                console.log('component (goed)');
+                if (mls_component.name)
                 {
                     Mimoto.Aimless.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
                 }
-                    
             }
         });
     
@@ -123,7 +124,7 @@ module.exports.prototype = {
             }
             else
             {
-                if (mls_component !== undefined)
+                if (mls_component.name)
                 {
                     Mimoto.Aimless.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
                 }
@@ -409,7 +410,7 @@ module.exports.prototype = {
                 }
                 else
                 {
-                    if (mls_component !== undefined)
+                    if (mls_component.name)
                     {
                         Mimoto.Aimless.utils.updateComponent($component, sEntityType, nEntityId, mls_component.name);
                     }
@@ -667,7 +668,7 @@ module.exports.prototype = {
                             }
                             else
                             {
-                                if (mls_component !== undefined)
+                                if (mls_component.name)
                                 {
                                     Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
                                 }
@@ -728,7 +729,7 @@ module.exports.prototype = {
                                 }
                                 else
                                 {
-                                    if (mls_component !== undefined)
+                                    if (mls_component.name)
                                     {
                                         Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
                                     }
@@ -860,12 +861,12 @@ module.exports.prototype = {
     _updateInputFields: function (sEntityIdentifier, changes)
     {
         // search
-        var aValues = $("[mls_form_field_input]");
+        var aValues = $("[data-aimless-form-field-input]");
         
         aValues.each( function(nIndex, $component)
         {
             // read
-            var mls_form_field_input = $($component).attr("mls_form_field_input");
+            var mls_form_field_input = $($component).attr("data-aimless-form-field-input");
         
             // determine
             var nOriginPos = mls_form_field_input.indexOf('[');
