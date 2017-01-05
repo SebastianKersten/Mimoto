@@ -175,7 +175,7 @@ class MimotoEntityService
                     $this->_aEntityConfigs[$sEntityType] = $entityConfig;
                 } else
                 {
-                    $GLOBALS['Mimoto.Log']->warning("Requested entity type not found", "Sorry, I do not know the entity type $sEntityType'");
+                    $GLOBALS['Mimoto.Log']->warn("Requested entity type not found", "Sorry, I do not know the entity type $sEntityType'");
                 }
             }
 

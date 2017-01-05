@@ -9,31 +9,31 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * Component
+ * ContentSection
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class Component
+class ContentSection
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_COMPONENT,
+            'id' => CoreConfig::MIMOTO_CONTENT,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_COMPONENT,
+            'name' => CoreConfig::MIMOTO_CONTENT,
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENT.'--name',
+                    'id' => CoreConfig::MIMOTO_CONTENT.'--name',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--name-type',
+                            'id' => CoreConfig::MIMOTO_CONTENT.'--name-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -43,14 +43,14 @@ class Component
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENT.'--file',
+                    'id' => CoreConfig::MIMOTO_CONTENT.'--type',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'file',
+                    'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--file-type',
+                            'id' => CoreConfig::MIMOTO_CONTENT.'--type-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -60,27 +60,19 @@ class Component
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals',
+                    'id' => CoreConfig::MIMOTO_CONTENT.'--form',
                     'created' => CoreConfig::EPOCH,
                     // ---
-                    'name' => 'conditionals',
-                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'name' => 'form',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
-                        'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals-allowedEntityTypes',
+                        'allowedEntityType' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'--form-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
-                            'key' => 'allowedEntityTypes',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_COMPONENTCONDITIONAL]
-                        ),
-                        'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals-allowDuplicates',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'allowDuplicates',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => CoreConfig::DATA_VALUE_FALSE
+                            'key' => 'allowedEntityType',
+                            'type' => 'value',
+                            'value' => CoreConfig::MIMOTO_FORM
                         )
                     ]
                 )
@@ -161,21 +153,11 @@ class Component
             ),
 
 
-            // content sections
+            // content
 
             (object) array(
-                'name' => 'Mimoto.CMS_contentsections_ContentSectionOverview',
-                'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionOverview/ContentSectionOverview.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem',
-                'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionOverview/ListItem/ListItem.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_contentsections_ContentSectionDetail',
-                'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionDetail/ContentSectionDetail.twig',
+                'name' => 'Mimoto.CMS_content_ContentOverview',
+                'file' => 'MimotoCMS/content/pages/content/Overview.twig',
                 'conditionals' => []
             ),
 

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'+', onclick:"Mimoto.CMS.formNew();" }) }}
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.formNew();" }) }}
 
     <div class="MimotoCMS_pages_forms_FormOverview__container" {{ Aimless.realtime('forms') }}>
         {{ Aimless.selection('forms') }}

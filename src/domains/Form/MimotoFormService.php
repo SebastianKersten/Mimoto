@@ -16,6 +16,7 @@ use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 use Mimoto\Core\forms\ComponentForm;
+use Mimoto\Core\forms\ContentSectionForm;
 use Mimoto\Core\forms\FormForm;
 use Mimoto\Core\forms\InputTextlineForm;
 use Mimoto\Core\forms\LayoutDividerForm;
@@ -616,6 +617,11 @@ class MimotoFormService
 
             case CoreConfig::COREFORM_COMPONENT_NEW: return ComponentForm::getStructureNew(); break;
             case CoreConfig::COREFORM_COMPONENT_EDIT: return ComponentForm::getStructureEdit(); break;
+
+            // content -----
+
+            case CoreConfig::COREFORM_CONTENTSECTION_NEW: return ContentSectionForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_CONTENTSECTION_EDIT: return ContentSectionForm::getStructureEdit(); break;
 
             // form ----------
 

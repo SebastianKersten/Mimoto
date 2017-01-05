@@ -79,7 +79,7 @@ class AimlessForm extends AimlessComponent
 
 
         // init
-        $sRenderedForm = '<form name="'.$this->_sFormName.'">'; // action="'.$sAction.'" method="'.$sMethod.'">';
+        $sRenderedForm = '<form name="'.$this->_sFormName.'" action="'.$sAction.'" method="'.$sMethod.'">';
         $sRenderedForm .= '<script>Mimoto.form.open("'.$this->_sFormName.'", "'.$sAction.'", "'.$sMethod.'", '.($form->getValue('realtimeCollaborationMode') ? 'true' : 'false').')</script>';
 
         // add security
