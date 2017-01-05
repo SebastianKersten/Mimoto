@@ -8,8 +8,12 @@
 
 }
 
-#{$pr-input}_ListItem--being-dragged {
+#{$pr-input}_ListItem--drag {
     background-color: $white;
+}
+
+#{$pr-input}_ListItem--ghost {
+    opacity: 0;
 }
 
     #{$pr-input}_ListItem-figure {

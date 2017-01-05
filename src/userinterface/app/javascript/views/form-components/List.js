@@ -34,7 +34,8 @@ module.exports.prototype = {
         this.sortable = new Sortable(this.el, {
             group: "list", // @sebastian dit moet worden veranderd in een unieke waarde, kan jij vast wel meegeven vanuit Aimless
             handle: '.MimotoCMS_forms_input_ListItem-handle',
-            dragClass: 'MimotoCMS_forms_input_ListItem--being-dragged',
+            dragClass: 'MimotoCMS_forms_input_ListItem--drag',
+            ghostClass: 'MimotoCMS_forms_input_ListItem--ghost',
             store: {
                 /**
                  * Get the order of elements. Called once during initialization.
