@@ -32,9 +32,7 @@ module.exports = {
         this.checked = 0;
 
         for (var i = 0; i < this.checkboxes.length; i++) {
-            if (this.checkboxes[i].checked) {
-                this.checked++;
-            }
+            if (this.checkboxes[i].checked) this.checked++;
         }
 
         return this.checked;
@@ -62,7 +60,7 @@ module.exports = {
         this.customRegex = this.input.getAttribute('data-fv-regex');
         this.errorMessage = this.input.getAttribute('data-fv-error-message');
 
-        this.selectionRequired = this.input.hasAttribute('data-fv-selection-required');
+        this.dropdownRequired = this.input.hasAttribute('data-fv-dropdown-required');
 
         this.setValidationOptions();
 
@@ -82,7 +80,7 @@ module.exports = {
         this.validateMaxChecked = this.maxChecked ? true : false;
         this.validateIfChecked = this.ifChecked ? true : false;
         this.validateCustomRegex = this.customRegex ? true : false;
-        this.validateSelectionRequired = this.selectionRequired ? true : false;
+        this.validateDropdown = this.dropdownRequired ? true : false;
 
     },
 
@@ -133,7 +131,7 @@ module.exports = {
 
         if (this.validateCustomRegex) this.checkCustomRegex();
 
-        if (this.validateSelectionRequired) this.checkIfOptionSelected();
+        if (this.validateDropdown) this.checkDropdownValue();
 
         this.result.passed ? EH.addValidatedState(this.el) : EH.addErrorState(this.el, this.result.message);
 
@@ -230,7 +228,7 @@ module.exports = {
 
     },
 
-    checkIfOptionSelected: function () {
+    checkDropdownValue: function () {
 
         if (this.value == '') this.setResult(false, "Please select an option.");
 
