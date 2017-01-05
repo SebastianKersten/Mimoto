@@ -2,52 +2,52 @@
 
 module.exports = function (element) {
 
-  this.el = element;
-  this.init();
+    this.el = element;
+    this.init();
 
 };
 
 module.exports.prototype = {
 
-  init: function () {
+    init: function () {
 
-    console.log('Init Checkbox');
+        console.log('Init Checkbox');
 
-    this.setVariables();
-    this.addEventListeners();
+        this.setVariables();
+        this.addEventListeners();
 
-  },
+    },
 
-  setVariables: function () {
+    setVariables: function () {
 
-    this.checkboxes = this.el.querySelectorAll('.js-checkbox');
+        this.checkboxes = this.el.querySelectorAll('.js-checkbox');
 
-  },
+    },
 
-  addEventListeners: function () {
+    addEventListeners: function () {
 
-    for (var i = 0; i < this.checkboxes.length; i++) {
+        for (var i = 0; i < this.checkboxes.length; i++) {
 
-      this.checkboxes[i].addEventListener('change',  this.handleValidation.bind(this));
+            this.checkboxes[i].addEventListener('change', this.handleValidation.bind(this));
+
+        }
+
+    },
+
+    handleValidation: function () {
+
+        var checked = FV.countChecked(this.checkboxes);
+
+        if (checked == 0) {
+
+            EH.clearState(this.el);
+
+        } else {
+
+            FV.validateInput(this.el);
+
+        }
 
     }
-
-  },
-
-  handleValidation: function () {
-
-    var checked = FV.countChecked(this.checkboxes);
-
-    if (checked == 0) {
-
-      EH.clearState(this.el);
-
-    } else {
-
-      FV.validateInput(this.el);
-
-    }
-
-  }
 
 };

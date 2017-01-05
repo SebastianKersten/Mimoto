@@ -2,41 +2,40 @@
 
 module.exports = function (element) {
 
-  this.el = element;
-  this.init();
+    this.el = element;
+    this.init();
 
 };
 
 module.exports.prototype = {
 
-  init: function () {
+    init: function () {
 
-    console.log('Init Radio Button');
+        console.log('Init Radio Button');
 
-    this.setVariables();
-    this.addEventListeners();
+        this.setVariables();
+        this.addEventListeners();
 
-  },
+    },
 
-  setVariables: function () {
+    setVariables: function () {
 
-    this.radioButtons = this.el.querySelectorAll('.js-radio-button');
+        this.radioButtons = this.el.querySelectorAll('.js-radio-button');
 
-  },
+    },
 
-  addEventListeners: function () {
+    addEventListeners: function () {
 
-    for (var i = 0; i < this.radioButtons.length; i++) {
+        for (var i = 0; i < this.radioButtons.length; i++) {
 
-      this.radioButtons[i].addEventListener('change', function () {
+            this.radioButtons[i].addEventListener('change', function () {
 
-        FV.validateInput(this.el);
+                FV.validateInput(this.el);
 
-      }.bind(this));
+            }.bind(this));
+
+        }
 
     }
-
-  }
-
 
 };

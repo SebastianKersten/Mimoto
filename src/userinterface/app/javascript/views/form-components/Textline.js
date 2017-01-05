@@ -2,51 +2,48 @@
 
 module.exports = function (element) {
 
-  this.el = element;
-  this.init();
+    this.el = element;
+    this.init();
 
 };
 
 module.exports.prototype = {
 
-  init: function () {
+    init: function () {
 
-    console.log('Init Textline');
+        console.log('Init Textline');
 
-    this.setVariables();
+        this.setVariables();
+        this.addEventListeners();
 
-    this.addEventListeners();
+    },
 
-  },
+    setVariables: function () {
 
-  setVariables: function () {
+        this.textline = this.el.querySelector('.js-textline');
 
-    this.textline = this.el.querySelector('.js-textline');
+    },
 
-  },
+    addEventListeners: function () {
 
-  addEventListeners: function () {
+        this.textline.addEventListener('keyup', this.handleValidation.bind(this));
 
-    this.textline.addEventListener('keyup', function () {
+    },
 
-      this.handleValidation(this.textline.value);
+    handleValidation: function () {
 
-    }.bind(this));
+        var value = this.textline.value;
 
-  },
+        if (value == '') {
 
-  handleValidation: function (value) {
+            EH.clearState(this.el);
 
-    if (value.length == 0) {
+        } else {
 
-      EH.clearState(this.el);
+            FV.validateInput(this.el);
 
-    } else {
-
-      FV.validateInput(this.el);
+        }
 
     }
-
-  }
 
 };
