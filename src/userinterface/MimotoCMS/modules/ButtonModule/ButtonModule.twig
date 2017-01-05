@@ -3,27 +3,27 @@
 {% set data_attributes = '' %}
 
 {% if types|default([]) %}
-  {% set classes = ' MimotoCMS_ButtonModule--' ~ types|join(' MimotoCMS_ButtonModule--') %}
+    {% set classes = ' MimotoCMS_ButtonModule--' ~ types|join(' MimotoCMS_ButtonModule--') %}
 {% endif %}
 
 {% if link|default('') %}
-  {% set element = 'a' %}
+    {% set element = 'a' %}
 {% endif %}
 
 {% if attributes|default([]) %}
-  {% for attribute in attributes %}
-    {% set data_attributes = data_attributes ~ (' data-' ~ attribute.attribute) %}
-    {% if attribute.value %}
-      {% set data_attributes = data_attributes ~ ('="' ~ attribute.value ~ '"') %}
-    {% endif %}
-  {% endfor %}
+    {% for attribute in attributes %}
+        {% set data_attributes = data_attributes ~ (' data-' ~ attribute.attribute) %}
+        {% if attribute.value %}
+            {% set data_attributes = data_attributes ~ ('="' ~ attribute.value ~ '"') %}
+        {% endif %}
+    {% endfor %}
 {% endif %}
 
-<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_ButtonModule{{ classes }}" {% if onclick %}onclick="{{ onclick }}"{%  endif %}>
-  {% if label|default('') %}
-    <span class="MimotoCMS_ButtonModule-text">{{ label }}</span>
-  {% endif %}
-  {% if icon|default('') %}
-    <svg class="MimotoCMS_ButtonModule-icon"><use xlink:href="#{{ icon }}"></use></svg>
-  {% endif %}
+<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_ButtonModule{{ classes }}" {% if onclick %}onclick="{{ onclick }}"{% endif %}>
+    {% if label|default('') %}
+        <span class="MimotoCMS_ButtonModule-text">{{ label }}</span>
+    {% endif %}
+    {% if icon|default('') %}
+        <svg class="MimotoCMS_ButtonModule-icon"><use xlink:href="#{{ icon }}"></use></svg>
+    {% endif %}
 </{{ element }}>
