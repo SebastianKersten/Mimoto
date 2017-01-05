@@ -10289,7 +10289,7 @@
 	
 	var HeaderView = __webpack_require__(11);
 	var FormView = __webpack_require__(12);
-	var ListView = __webpack_require__(22);
+	var ListView = __webpack_require__(17);
 	
 	if (typeof Mimoto == "undefined") Mimoto = {};
 	if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
@@ -10297,11 +10297,11 @@
 	
 	//Mimoto = require('./mimoto.cms/Mimoto');
 	
-	Mimoto.CMS = __webpack_require__(17);
-	Mimoto.modules.Tabmenu = __webpack_require__(18);
-	Mimoto.modules.Popup = __webpack_require__(19);
-	Mimoto.modules.Page = __webpack_require__(20);
-	Mimoto.modules.Form = __webpack_require__(21);
+	Mimoto.CMS = __webpack_require__(19);
+	Mimoto.modules.Tabmenu = __webpack_require__(20);
+	Mimoto.modules.Popup = __webpack_require__(21);
+	Mimoto.modules.Page = __webpack_require__(22);
+	Mimoto.modules.Form = __webpack_require__(23);
 	
 	// init
 	Mimoto.CMS = new Mimoto.CMS();
@@ -29464,118 +29464,125 @@
 	var TextlineView = __webpack_require__(14);
 	var CheckboxView = __webpack_require__(15);
 	var RadioButtonView = __webpack_require__(16);
+	var DropdownView = __webpack_require__(24);
 	
 	module.exports = function (element) {
 	
-	  this.el = element;
-	  this.init();
+	    this.el = element;
+	    this.init();
 	
 	};
 	
 	module.exports.prototype = {
 	
-	  init: function () {
+	    init: function () {
 	
-	    console.log('Init Form');
+	        console.log('Init Form');
 	
-	    this.setVariables();
-	    this.addEventListeners();
+	        this.setVariables();
+	        this.addEventListeners();
 	
-	    this.initFormElements();
+	        this.initFormElements();
 	
-	  },
+	    },
 	
-	  setVariables: function () {
+	    setVariables: function () {
 	
-	    this.validated = true;
-	    this.submit = this.el.querySelector('.js-form-submit');
-	    this.elements = this.el.querySelectorAll('.js-form-component');
+	        this.validated = true;
+	        this.submit = this.el.querySelector('.js-form-submit');
+	        this.elements = this.el.querySelectorAll('.js-form-component');
 	
-	  },
+	    },
 	
-	  addEventListeners: function () {
+	    addEventListeners: function () {
 	
-	    if (this.submit)
-	      this.submit.addEventListener('click',this.validateForm.bind(this));
+	        if (this.submit) this.submit.addEventListener('click', this.validateForm.bind(this));
 	
-	    this.el.addEventListener('validate', this.validateForm.bind(this));
+	        this.el.addEventListener('validate', this.validateForm.bind(this));
 	
-	  },
+	    },
 	
-	  initFormElements: function () {
+	    initFormElements: function () {
 	
-	    for (var i = 0; i < this.elements.length; i++) {
+	        for (var i = 0; i < this.elements.length; i++) {
 	
-	      if (this.elements[i].classList.contains('js-form-component-textline')) {
-	        new TextlineView(this.elements[i]);
-	      } else if (this.elements[i].classList.contains('js-form-component-checkbox')) {
-	        new CheckboxView(this.elements[i]);
-	      } else if (this.elements[i].classList.contains('js-form-component-radio-button')) {
-	        new RadioButtonView(this.elements[i]);
-	      }
+	            if (this.elements[i].classList.contains('js-form-component-textline')) {
+	                new TextlineView(this.elements[i]);
+	            } else if (this.elements[i].classList.contains('js-form-component-checkbox')) {
+	                new CheckboxView(this.elements[i]);
+	            } else if (this.elements[i].classList.contains('js-form-component-radio-button')) {
+	                new RadioButtonView(this.elements[i]);
+	            } else if (this.elements[i].classList.contains('js-form-component-dropdown')) {
+	                new DropdownView(this.elements[i]);
+	            }
+	        }
+	
+	    },
+	
+	    validateForm: function () {
+	
+	        this.validated = true;
+	        this.validateElements();
+	
+	        if (this.validated) this.el.submit();
+	
+	    },
+	
+	    validateElements: function () {
+	
+	        for (var i = 0; i < this.elements.length; i++) {
+	
+	            var result = FV.validateInput(this.elements[i]);
+	
+	            if (!result.passed) this.validated = false;
+	
+	            //var type = (this.elements[i].querySelector('input') || this.elements[i].querySelector('select')).type;
+	            //
+	            //if (type == 'checkbox') {
+	            //    this.handleCheckboxValidation(this.elements[i]);
+	            //} else if (type == 'text') {
+	            //    this.handleTextlineValidation(this.elements[i]);
+	            //} else if (type == 'radio') {
+	            //    this.handleRadioButtonValidation(this.elements[i]);
+	            //} else if (type == 'select-one') {
+	            //    this.handleDropdownValidation(this.elements[i]);
+	            //}
+	
+	        }
+	
+	    },
+	
+	    handleCheckboxValidation: function (element) {
+	
+	        var result = FV.validateInput(element);
+	
+	        if (!result.passed) this.validated = false;
+	
+	    },
+	
+	    handleTextlineValidation: function (element) {
+	
+	        var result = FV.validateInput(element);
+	
+	        if (!result.passed) this.validated = false;
+	
+	    },
+	
+	    handleRadioButtonValidation: function (element) {
+	
+	        var result = FV.validateInput(element);
+	
+	        if (!result.passed) this.validated = false;
+	
+	    },
+	
+	    handleDropdownValidation: function (element) {
+	
+	        var result = FV.validateInput(element);
+	
+	        if (!result.passed) this.validated = false;
 	
 	    }
-	
-	  },
-	
-	  validateForm: function () {
-	
-	    this.validated = true;
-	    this.validateElements();
-	
-	    if (this.validated)
-	      this.el.submit();
-	
-	
-	  },
-	
-	  validateElements: function () {
-	
-	    for (var i = 0; i < this.elements.length; i++) {
-	
-	      var type = this.elements[i].querySelector('input').type;
-	
-	      if (type == 'checkbox') {
-	        this.handleCheckboxValidation(this.elements[i]);
-	      } else if (type == 'text') {
-	        this.handleTextlineValidation(this.elements[i]);
-	      } else if (type == 'radio') {
-	        this.handleRadioButtonValidation(this.elements[i]);
-	      }
-	
-	    }
-	
-	  },
-	
-	  handleCheckboxValidation: function (element) {
-	
-	    var result = FV.validateInput(element);
-	
-	    if (!result.passed) {
-	      this.validated = false;
-	    }
-	
-	  },
-	
-	  handleTextlineValidation: function (element) {
-	
-	    var result = FV.validateInput(element);
-	
-	    if (!result.passed) {
-	      this.validated = false;
-	    }
-	
-	  },
-	
-	  handleRadioButtonValidation: function (element) {
-	
-	    var result = FV.validateInput(element);
-	
-	    if (!result.passed) {
-	      this.validated = false;
-	    }
-	
-	  }
 	
 	};
 	
@@ -29589,252 +29596,232 @@
 	
 	module.exports = {
 	
-	  setVariables: function (element) {
+	    setVariables: function (element) {
 	
-	    this.el = element;
+	        this.el = element;
 	
-	    this.textline = this.el.querySelector('.js-textline');
-	    this.checkboxes = this.el.querySelectorAll('.js-checkbox');
-	    this.radioButtons = this.el.querySelectorAll('.js-radio-button');
+	        this.textline = this.el.querySelector('.js-textline');
+	        this.checkboxes = this.el.querySelectorAll('.js-checkbox');
+	        this.radioButtons = this.el.querySelectorAll('.js-radio-button');
+	        this.dropdown = this.el.querySelector('.js-dropdown');
 	
-	    if (this.textline) {
-	      this.input = this.textline;
-	      this.value = this.input.value;
-	    } else if (this.checkboxes.length) {
-	      this.input = this.checkboxes[0];
-	      this.countChecked();
-	    } else if (this.radioButtons.length) {
-	      this.input = this.radioButtons[0];
+	        if (this.textline) {
+	            this.input = this.textline;
+	            this.value = this.input.value;
+	        } else if (this.checkboxes.length) {
+	            this.input = this.checkboxes[0];
+	            this.countChecked();
+	        } else if (this.radioButtons.length) {
+	            this.input = this.radioButtons[0];
+	        } else if (this.dropdown) {
+	            this.input = this.dropdown;
+	            this.value = this.dropdown.value;
+	        }
+	
+	    },
+	
+	    setInputOptions: function () {
+	
+	        this.minLength = this.input.getAttribute('data-fv-min-length');
+	        this.maxLength = this.input.getAttribute('data-fv-max-length');
+	        this.noNumbers = this.input.hasAttribute('data-fv-no-numbers');
+	        this.minNumbers = this.input.getAttribute('data-fv-min-numbers');
+	        this.maxNumbers = this.input.getAttribute('data-fv-max-numbers');
+	        this.noSpecialCharacters = this.input.hasAttribute('data-fv-no-special-characters');
+	        this.minSpecialCharacters = this.input.getAttribute('data-fv-min-special-characters');
+	        this.maxSpecialCharacters = this.input.getAttribute('data-fv-max-special-characters');
+	        this.minChecked = this.input.getAttribute('data-fv-min-checked');
+	        this.maxChecked = this.input.getAttribute('data-fv-max-checked');
+	        this.radioButtonRequired = this.input.hasAttribute('data-fv-radio-button-required');
+	        this.customRegex = this.input.getAttribute('data-fv-regex');
+	        this.errorMessage = this.input.getAttribute('data-fv-error-message');
+	        this.dropdownRequired = this.input.hasAttribute('data-fv-dropdown-required');
+	
+	        this.setValidationOptions();
+	
+	    },
+	
+	    setValidationOptions: function () {
+	
+	        this.validateMinLength = this.minLength ? true : false;
+	        this.validateMaxLength = this.maxLength ? true : false;
+	        this.validateNoNumbers = this.noNumbers ? true : false;
+	        this.validateMinNumbers = this.minNumbers ? true : false;
+	        this.validateMaxNumbers = this.maxNumbers ? true : false;
+	        this.validateNoSpecialCharacters = this.noSpecialCharacters ? true : false;
+	        this.validateMinSpecialCharacters = this.minSpecialCharacters ? true : false;
+	        this.validateMaxSpecialCharacters = this.maxSpecialCharacters ? true : false;
+	        this.validateMinChecked = this.minChecked ? true : false;
+	        this.validateMaxChecked = this.maxChecked ? true : false;
+	        this.validateRadioButton = this.radioButtonRequired ? true : false;
+	        this.validateCustomRegex = this.customRegex ? true : false;
+	        this.validateDropdown = this.dropdownRequired ? true : false;
+	
+	    },
+	
+	    setResult: function (passed, message) {
+	
+	        this.result = {};
+	
+	        this.result.passed = passed;
+	
+	        if (message) this.result.message = message;
+	
+	    },
+	
+	    validateInput: function (element) {
+	
+	        this.setVariables(element);
+	        this.setInputOptions();
+	        this.setResult(true);
+	        this.handleValidation();
+	
+	        return this.result;
+	
+	    },
+	
+	    handleValidation: function () {
+	
+	        if (this.validateMinLength) this.checkMinLength();
+	
+	        if (this.validateMaxLength) this.checkMaxLength();
+	
+	        if (this.validateNoNumbers) this.checkNoNumbers();
+	
+	        if (this.validateMinNumbers) this.checkMinNumbers();
+	
+	        if (this.validateMaxNumbers) this.checkMaxNumbers();
+	
+	        if (this.validateNoSpecialCharacters) this.checkNoSpecialCharacters();
+	
+	        if (this.validateMinSpecialCharacters) this.checkMinSpecialCharacters();
+	
+	        if (this.validateMaxSpecialCharacters) this.checkMaxSpecialCharacters();
+	
+	        if (this.validateMinChecked) this.checkMinChecked();
+	
+	        if (this.validateMaxChecked) this.checkMaxChecked();
+	
+	        if (this.validateRadioButton) this.checkIfRadioButtonChecked();
+	
+	        if (this.validateCustomRegex) this.checkCustomRegex();
+	
+	        if (this.validateDropdown) this.checkDropdownValue();
+	
+	        this.result.passed ? EH.addValidatedState(this.el) : EH.addErrorState(this.el, this.result.message);
+	
+	    },
+	
+	    countChecked: function (checkboxes) {
+	
+	        if (checkboxes) this.checkboxes = checkboxes;
+	        this.checked = 0;
+	
+	        for (var i = 0; i < this.checkboxes.length; i++) {
+	            if (this.checkboxes[i].checked) this.checked++;
+	        }
+	
+	        return this.checked;
+	
+	    },
+	
+	    checkMinLength: function () {
+	
+	        if (this.value.length < this.minLength) this.setResult(false, "Input should be minimal " + this.minLength + " characters long.");
+	
+	    },
+	
+	    checkMaxLength: function () {
+	
+	        if (this.value.length > this.maxLength) this.setResult(false, "Input can't be longer than " + this.maxLength + " characters.");
+	
+	    },
+	
+	    checkNoNumbers: function () {
+	
+	        var regex = new RegExp("\\d");
+	
+	        if (regex.test(this.value)) this.setResult(false, "No numbers allowed.");
+	
+	    },
+	
+	    checkMinNumbers: function () {
+	
+	        var regex = new RegExp("([^\\d]*\\d){" + this.minNumbers + ",}");
+	
+	        if (!regex.test(this.value)) this.setResult(false, "Input should contain a minimum of " + this.minNumbers + " number(s).");
+	
+	    },
+	
+	    checkMaxNumbers: function () {
+	
+	        var regex = new RegExp("([^\\d]*\\d){" + (Number(this.maxNumbers) + 1) + ",}");
+	
+	        if (regex.test(this.value)) this.setResult(false, "Input can't contain more than " + this.maxNumbers + " numbers.");
+	
+	    },
+	
+	    checkNoSpecialCharacters: function () {
+	
+	        var regex = new RegExp("^[\\w]*$");
+	
+	        if (!regex.test(this.value)) this.setResult(false, "Input can't contain special characters (except for underscores).");
+	
+	    },
+	
+	    checkMinSpecialCharacters: function () {
+	
+	        var regex = new RegExp("([\\w]*\\W){" + this.minSpecialCharacters + ",}");
+	
+	        if (!regex.test(this.value)) this.setResult(false, "Input should contain a minimum of " + this.minSpecialCharacters + " special character(s).");
+	
+	    },
+	
+	    checkMaxSpecialCharacters: function () {
+	
+	        var regex = new RegExp("([\\w]*\\W){" + (Number(this.maxSpecialCharacters) + 1) + ",}");
+	
+	        if (regex.test(this.value)) this.setResult(false, "Input can't contain more than " + this.maxSpecialCharacters + " special character(s).");
+	
+	    },
+	
+	    checkMinChecked: function () {
+	
+	        if (this.checked < this.minChecked) this.setResult(false, "You need to check at least " + this.minChecked + " checkbox(es).");
+	
+	    },
+	
+	    checkMaxChecked: function () {
+	
+	        if (this.checked > this.maxChecked) this.setResult(false, "You can't check more than " + this.maxChecked + " checkbox(es).");
+	
+	    },
+	
+	    checkIfRadioButtonChecked: function () {
+	
+	        var checked = false;
+	
+	        for (var i = 0; i < this.radioButtons.length; i++) {
+	            if (this.radioButtons[i].checked) checked = true;
+	        }
+	
+	        if (!checked) this.setResult(false, "Please select an option.");
+	
+	    },
+	
+	    checkCustomRegex: function () {
+	
+	        var regex = new RegExp(this.customRegex);
+	
+	        if (!regex.test(this.value)) this.setResult(false, this.errorMessage);
+	
+	    },
+	
+	    checkDropdownValue: function () {
+	
+	        if (this.value == '') this.setResult(false, "Please select an option.");
+	
 	    }
-	
-	  },
-	
-	  countChecked: function (checkboxes) {
-	
-	    if (checkboxes) this.checkboxes = checkboxes;
-	    this.checked = 0;
-	
-	    for (var i = 0; i < this.checkboxes.length; i++) {
-	      if (this.checkboxes[i].checked) {
-	        this.checked++;
-	      }
-	    }
-	
-	    return this.checked;
-	
-	  },
-	
-	  setInputOptions: function () {
-	
-	    this.minLength = this.input.getAttribute('data-fv-min-length');
-	    this.maxLength = this.input.getAttribute('data-fv-max-length');
-	
-	    this.noNumbers = this.input.hasAttribute('data-fv-no-numbers');
-	    this.minNumbers = this.input.getAttribute('data-fv-min-numbers');
-	    this.maxNumbers = this.input.getAttribute('data-fv-max-numbers');
-	
-	    this.noSpecialCharacters = this.input.hasAttribute('data-fv-no-special-characters');
-	    this.minSpecialCharacters = this.input.getAttribute('data-fv-min-special-characters');
-	    this.maxSpecialCharacters = this.input.getAttribute('data-fv-max-special-characters');
-	
-	    this.minChecked = this.input.getAttribute('data-fv-min-checked');
-	    this.maxChecked = this.input.getAttribute('data-fv-max-checked');
-	
-	    this.ifChecked = this.input.type == 'radio';
-	
-	    this.customRegex = this.input.getAttribute('data-fv-regex');
-	    this.errorMessage = this.input.getAttribute('data-fv-error-message');
-	
-	    this.setValidationOptions();
-	
-	  },
-	
-	  setValidationOptions: function () {
-	
-	    this.validateMinLength = this.minLength ? true : false;
-	    this.validateMaxLength = this.maxLength ? true : false;
-	    this.validateNoNumbers = this.noNumbers ? true : false;
-	    this.validateMinNumbers = this.minNumbers ? true : false;
-	    this.validateMaxNumbers = this.maxNumbers ? true : false;
-	    this.validateNoSpecialCharacters = this.noSpecialCharacters ? true : false;
-	    this.validateMinSpecialCharacters = this.minSpecialCharacters ? true : false;
-	    this.validateMaxSpecialCharacters = this.maxSpecialCharacters ? true : false;
-	    this.validateMinChecked = this.minChecked ? true : false;
-	    this.validateMaxChecked = this.maxChecked ? true : false;
-	    this.validateIfChecked = this.ifChecked ? true : false;
-	    this.validateCustomRegex = this.customRegex ? true : false;
-	
-	  },
-	
-	  setResult: function (passed, message) {
-	
-	    this.result = {};
-	
-	    this.result.passed = passed;
-	
-	    if (message) {
-	      this.result.message = message;
-	    }
-	
-	  },
-	
-	  validateInput: function (element) {
-	
-	    this.setVariables(element);
-	    this.setInputOptions();
-	    this.setResult(true);
-	    this.handleValidation();
-	
-	    return this.result;
-	
-	  },
-	
-	  handleValidation: function () {
-	
-	    if (this.validateMinLength) this.checkMinLength();
-	
-	    if (this.validateMaxLength) this.checkMaxLength();
-	
-	    if (this.validateNoNumbers) this.checkNoNumbers();
-	
-	    if (this.validateMinNumbers) this.checkMinNumbers();
-	
-	    if (this.validateMaxNumbers) this.checkMaxNumbers();
-	
-	    if (this.validateNoSpecialCharacters) this.checkNoSpecialCharacters();
-	
-	    if (this.validateMinSpecialCharacters) this.checkMinSpecialCharacters();
-	
-	    if (this.validateMaxSpecialCharacters) this.checkMaxSpecialCharacters();
-	
-	    if (this.validateMinChecked) this.checkMinChecked();
-	
-	    if (this.validateMaxChecked) this.checkMaxChecked();
-	
-	    if (this.validateIfChecked) this.checkIfChecked();
-	
-	    if (this.validateCustomRegex) this.checkCustomRegex();
-	
-	    this.result.passed ? EH.addValidatedState(this.el) : EH.addErrorState(this.el, this.result.message);
-	
-	  },
-	
-	  checkMinLength: function () {
-	
-	    if (this.value.length < this.minLength) {
-	      this.setResult(false, "Input should be minimal " + this.minLength + " characters long.");
-	    }
-	
-	  },
-	
-	  checkMaxLength: function () {
-	
-	    if (this.value.length > this.maxLength) {
-	      this.setResult(false, "Input can't be longer than " + this.maxLength + " characters.");
-	    }
-	
-	  },
-	
-	  checkNoNumbers: function () {
-	
-	    var regex = new RegExp("\\d");
-	
-	    if (regex.test(this.value)) {
-	      this.setResult(false, "No numbers allowed.");
-	    }
-	
-	  },
-	
-	  checkMinNumbers: function () {
-	
-	    var regex = new RegExp("([^\\d]*\\d){" + this.minNumbers + ",}");
-	
-	    if (!regex.test(this.value)) {
-	      this.setResult(false, "Input should contain a minimum of " + this.minNumbers + " number(s).");
-	    }
-	  },
-	
-	  checkMaxNumbers: function () {
-	
-	    var regex = new RegExp("([^\\d]*\\d){" + (Number(this.maxNumbers) + 1) + ",}");
-	
-	    if (regex.test(this.value)) {
-	      this.setResult(false, "Input can't contain more than " + this.maxNumbers + " numbers.");
-	    }
-	
-	  },
-	
-	  checkNoSpecialCharacters: function () {
-	
-	    var regex = new RegExp("^[\\w]*$");
-	
-	    if (!regex.test(this.value)) {
-	      this.setResult(false, "Input can't contain special characters (except for underscores).");
-	    }
-	
-	  },
-	
-	  checkMinSpecialCharacters: function () {
-	
-	    var regex = new RegExp("([\\w]*\\W){" + this.minSpecialCharacters + ",}");
-	
-	    if (!regex.test(this.value)) {
-	      this.setResult(false, "Input should contain a minimum of " + this.minSpecialCharacters + " special character(s).");
-	    }
-	
-	  },
-	
-	  checkMaxSpecialCharacters: function () {
-	
-	    var regex = new RegExp("([\\w]*\\W){" + (Number(this.maxSpecialCharacters) + 1) + ",}");
-	
-	    if (regex.test(this.value)) {
-	      this.setResult(false, "Input can't contain more than " + this.maxSpecialCharacters + " special character(s).");
-	    }
-	
-	  },
-	
-	  checkMinChecked: function () {
-	
-	    if (this.checked < this.minChecked) {
-	      this.setResult(false, "You need to check at least " + this.minChecked + " checkbox(es).");
-	    }
-	
-	  },
-	
-	  checkMaxChecked: function () {
-	
-	    if (this.checked > this.maxChecked) {
-	      this.setResult(false, "You can't check more than " + this.maxChecked + " checkbox(es).");
-	    }
-	
-	  },
-	
-	  checkIfChecked: function () {
-	
-	    var checked = false;
-	
-	    for (var i = 0; i < this.radioButtons.length; i++) {
-	      if (this.radioButtons[i].checked) {
-	        checked = true;
-	      }
-	    }
-	
-	    if (!checked) {
-	      this.setResult(false, "Please select an option.");
-	    }
-	
-	  },
-	
-	  checkCustomRegex: function () {
-	
-	    var regex = new RegExp(this.customRegex);
-	
-	    if (!regex.test(this.value)) {
-	      this.setResult(false, this.errorMessage);
-	    }
-	
-	  }
 	
 	};
 	
@@ -29848,52 +29835,49 @@
 	
 	module.exports = function (element) {
 	
-	  this.el = element;
-	  this.init();
+	    this.el = element;
+	    this.init();
 	
 	};
 	
 	module.exports.prototype = {
 	
-	  init: function () {
+	    init: function () {
 	
-	    console.log('Init Textline');
+	        console.log('Init Textline');
 	
-	    this.setVariables();
+	        this.setVariables();
+	        this.addEventListeners();
 	
-	    this.addEventListeners();
+	    },
 	
-	  },
+	    setVariables: function () {
 	
-	  setVariables: function () {
+	        this.textline = this.el.querySelector('.js-textline');
 	
-	    this.textline = this.el.querySelector('.js-textline');
+	    },
 	
-	  },
+	    addEventListeners: function () {
 	
-	  addEventListeners: function () {
+	        this.textline.addEventListener('keyup', this.handleValidation.bind(this));
 	
-	    this.textline.addEventListener('keyup', function () {
+	    },
 	
-	      this.handleValidation(this.textline.value);
+	    handleValidation: function () {
 	
-	    }.bind(this));
+	        var value = this.textline.value;
 	
-	  },
+	        if (value == '') {
 	
-	  handleValidation: function (value) {
+	            EH.clearState(this.el);
 	
-	    if (value.length == 0) {
+	        } else {
 	
-	      EH.clearState(this.el);
+	            FV.validateInput(this.el);
 	
-	    } else {
-	
-	      FV.validateInput(this.el);
+	        }
 	
 	    }
-	
-	  }
 	
 	};
 	
@@ -29907,57 +29891,53 @@
 	
 	module.exports = function (element) {
 	
-	  this.el = element;
-	  this.init();
+	    this.el = element;
+	    this.init();
 	
 	};
 	
 	module.exports.prototype = {
 	
-	  init: function () {
+	    init: function () {
 	
-	    console.log('Init Checkbox');
+	        console.log('Init Checkbox');
 	
-	    this.setVariables();
-	    this.addEventListeners();
+	        this.setVariables();
+	        this.addEventListeners();
 	
-	  },
+	    },
 	
-	  setVariables: function () {
+	    setVariables: function () {
 	
-	    this.checkboxes = this.el.querySelectorAll('.js-checkbox');
+	        this.checkboxes = this.el.querySelectorAll('.js-checkbox');
 	
-	  },
+	    },
 	
-	  addEventListeners: function () {
+	    addEventListeners: function () {
 	
-	    for (var i = 0; i < this.checkboxes.length; i++) {
+	        for (var i = 0; i < this.checkboxes.length; i++) {
 	
-	      this.checkboxes[i].addEventListener('change', function () {
+	            this.checkboxes[i].addEventListener('change', this.handleValidation.bind(this));
 	
-	        this.handleValidation();
+	        }
 	
-	      }.bind(this));
+	    },
 	
-	    }
+	    handleValidation: function () {
 	
-	  },
+	        var checked = FV.countChecked(this.checkboxes);
 	
-	  handleValidation: function () {
+	        if (checked == 0) {
 	
-	    var checked = FV.countChecked(this.checkboxes);
+	            EH.clearState(this.el);
 	
-	    if (checked == 0) {
+	        } else {
 	
-	      EH.clearState(this.el);
+	            FV.validateInput(this.el);
 	
-	    } else {
-	
-	      FV.validateInput(this.el);
+	        }
 	
 	    }
-	
-	  }
 	
 	};
 	
@@ -29971,42 +29951,41 @@
 	
 	module.exports = function (element) {
 	
-	  this.el = element;
-	  this.init();
+	    this.el = element;
+	    this.init();
 	
 	};
 	
 	module.exports.prototype = {
 	
-	  init: function () {
+	    init: function () {
 	
-	    console.log('Init Radio Button');
+	        console.log('Init Radio Button');
 	
-	    this.setVariables();
-	    this.addEventListeners();
+	        this.setVariables();
+	        this.addEventListeners();
 	
-	  },
+	    },
 	
-	  setVariables: function () {
+	    setVariables: function () {
 	
-	    this.radioButtons = this.el.querySelectorAll('.js-radio-button');
+	        this.radioButtons = this.el.querySelectorAll('.js-radio-button');
 	
-	  },
+	    },
 	
-	  addEventListeners: function () {
+	    addEventListeners: function () {
 	
-	    for (var i = 0; i < this.radioButtons.length; i++) {
+	        for (var i = 0; i < this.radioButtons.length; i++) {
 	
-	      this.radioButtons[i].addEventListener('change', function () {
+	            this.radioButtons[i].addEventListener('change', function () {
 	
-	        FV.validateInput(this.el);
+	                FV.validateInput(this.el);
 	
-	      }.bind(this));
+	            }.bind(this));
+	
+	        }
 	
 	    }
-	
-	  }
-	
 	
 	};
 	
@@ -30016,1125 +29995,9 @@
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {/**
-	 * Mimoto.CMS
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
 	'use strict';
 	
-	module.exports = function()
-	{
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function ()
-	    {
-	
-	    },
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Public methods - entity ------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Create new entity
-	     */
-	    entityNew: function()
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/entity/new");
-	
-	        //popup.on('success') = popup.close();
-	    },
-	
-	    // entityCreate: function(data)
-	    // {
-	    //     $.ajax({
-	    //         type: 'POST',
-	    //         url: "/mimoto.cms/entity/create",
-	    //         data: data,
-	    //         dataType: 'json'
-	    //     }).done(function(data) {
-	    //         Mimoto.popup.close();
-	    //     });
-	    // },
-	
-	    entityView: function(nEntityId)
-	    {
-	        window.open('/mimoto.cms/entity/' + nEntityId + '/view', '_self');
-	    },
-	
-	    entityEdit: function(nEntityId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/entity/' + nEntityId + '/edit');
-	    },
-	
-	    entityUpdate: function(nEntityId, data)
-	    {
-	        $.ajax({
-	            type: 'POST',
-	            url: "/mimoto.cms/entity/" + nEntityId + "/update",
-	            data: data,
-	            dataType: 'json'
-	        }).done(function(data) {
-	            Mimoto.popup.close();
-	        });
-	    },
-	
-	    entityDelete: function(nEntityId, sEntityName)
-	    {
-	        var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
-	        if (response == true) {
-	            $.ajax({
-	                type: 'GET',
-	                url: "/mimoto.cms/entity/" + nEntityId + "/delete",
-	                //data: data,
-	                dataType: 'json'
-	            }).done(function(data) {
-	                window.open('/mimoto.cms/entities', '_self');
-	            });
-	        }
-	    },
-	
-	    entityPropertyNew: function(nEntityId)
-	    {
-	        Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
-	    },
-	
-	    entityPropertyCreate: function(nEntityId, data)
-	    {
-	        $.ajax({
-	            type: 'POST',
-	            url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
-	            data: data,
-	            dataType: 'json'
-	        }).done(function(data) {
-	            Mimoto.popup.close();
-	        });
-	    },
-	
-	    entityPropertyEdit: function(nEntityPropertyId)
-	    {
-	        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
-	    },
-	    
-	    entityPropertyDelete:  function(nEntityPropertyId)
-	    {
-	        // 11. send data
-	        $.ajax({
-	            type: 'get',
-	            url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	    
-	    entityPropertySettingEdit: function(nEntityPropertySettingId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
-	    },
-	
-	
-	
-	    notificationClose: function(sEntityType, nNotificationId)
-	    {
-	        // 8. find field
-	        var aNotifications = $("[data-aimless-id='" + sEntityType + '.' + nNotificationId + "']");
-	
-	        // 9. collect value
-	        aNotifications.each( function(index, $component) {
-	            // init
-	            $($component).remove();
-	        });
-	
-	        // 11. send data
-	        $.ajax({
-	            type: 'GET',
-	            url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething)
-	            {
-	                console.log(resultData);
-	                console.log(resultStatus);
-	                console.log(resultSomething);
-	            }
-	        });
-	    },
-	    
-	    
-	    /**
-	     * Create new component
-	     */
-	    componentNew: function()
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/component/new");
-	        
-	        //popup.on('success') = popup.close();
-	    },
-	    
-	    componentView: function(nComponentId)
-	    {
-	        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
-	    },
-	    
-	    componentEdit: function(nComponentId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
-	    },
-	    
-	    
-	    
-	    /**
-	     * Content sections
-	     */
-	    contentSectionNew: function()
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/contentsection/new");
-	    },
-	    
-	    contentSectionView: function(nContentId)
-	    {
-	        window.open('/mimoto.cms/contentsection/' + nContentId + '/view', '_self');
-	    },
-	    
-	    contentSectionEdit: function(nContentId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentId + '/edit');
-	    },
-	    
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Private methods --------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	    
-	    
-	    /**
-	     * Create new form
-	     */
-	    formNew: function()
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/form/new");
-	        
-	        //popup.on('success') = popup.close();
-	    },
-	    
-	    formView: function(nFormId)
-	    {
-	        window.open('/mimoto.cms/form/' + nFormId + '/view', '_self');
-	    },
-	    
-	    formEdit: function(nFormId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
-	    },
-	    
-	    formFieldNew_TypeSelector: function(nFormId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/field/new');
-	    },
-	    
-	    formFieldNew_FieldForm: function(nFormId, nFormFieldTypeId)
-	    {
-	        console.log('formFieldNew_FieldForm: nFormId=' + nFormId + ', nFormFieldTypeId=' + nFormFieldTypeId);
-	        
-	        Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
-	    },
-	    
-	    formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit');
-	    },
-	    
-	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
-	    {
-	        $.ajax({
-	            type: 'get',
-	            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 18 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	module.exports = function(sTabmenuId, aTabs) {
-	
-	    // register
-	    this._sTabmenuId = sTabmenuId;
-	    this._aTabs = aTabs;
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function()
-	    {
-	        // setup
-	        this._setupTabs();
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Private methods --------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Setup tabs
-	     */
-	    _setupTabs: function()
-	    {
-	        // init
-	        var classRoot = this;
-	
-	        var nTabCount = this._aTabs.length;
-	        for (var i = 0; i < nTabCount; i++)
-	        {
-	            // register
-	            var tab = this._aTabs[i];
-	
-	            // connect
-	            tab.$tab = document.getElementById(tab.id);
-	            tab.$panel = document.getElementById(tab.panel_id);
-	
-	            // setup
-	            if (i == 0) { this._showPanel(tab.$panel); } else { this._hidePanel(tab.$panel); }
-	
-	            // connect
-	            tab.$tab.addEventListener('click', function(tab) {
-	                this._selectTab(tab);
-	            }.bind(this, tab));
-	        }
-	    },
-	
-	    /**
-	     * Check menu state
-	     */
-	    _selectTab: function(selectedTab)
-	    {
-	        var nTabCount = this._aTabs.length;
-	        for (var i = 0; i < nTabCount; i++)
-	        {
-	            // register
-	            var tab = this._aTabs[i];
-	
-	            if (tab == selectedTab)
-	            {
-	                this._showPanel(tab.$panel);
-	                this._activateTab(tab.$tab);
-	            }
-	            else
-	            {
-	                this._hidePanel(tab.$panel);
-	                this._deactivateTab(tab.$tab);
-	            }
-	        }
-	    },
-	
-	    /**
-	     * Activate tab
-	     */
-	    _activateTab: function($tab)
-	    {
-	        $tab.classList.add("active");
-	    },
-	
-	    /**
-	     * Deactivate tab
-	     */
-	    _deactivateTab: function($tab)
-	    {
-	        $tab.classList.remove("active");
-	    },
-	
-	    /**
-	     * Show panel
-	     */
-	    _showPanel: function($panel)
-	    {
-	        $panel.classList.remove("hidden");
-	    },
-	
-	    /**
-	     * Hide panel
-	     */
-	    _hidePanel: function($panel)
-	    {
-	        $panel.classList.add("hidden");
-	    }
-	
-	};
-
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
-	 * Popup
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	module.exports = function() {
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function()
-	    {
-	
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Public methods ---------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    open: function(sURL)
-	    {
-	        this._showPopup();
-	        this._loadPopupContent(sURL);
-	    },
-	
-	    close: function()
-	    {
-	        this._hidePopup();
-	    },
-	    
-	    replace: function(sURL)
-	    {
-	        this._loadPopupContent(sURL);
-	    },
-	    
-	    _showPopup: function()
-	    {
-	        // register
-	        var layer_overlay = document.getElementById('layer_overlay');
-	        var layer_popup = document.getElementById('layer_popup');
-	    
-	        // show
-	        layer_overlay.classList.remove('hidden');
-	        layer_popup.classList.remove('hidden');
-	    },
-	    
-	    _loadPopupContent: function(sURL)
-	    {
-	        var popup_content = document.getElementById('popup_content');
-	        
-	        $.ajax({
-	            url: sURL,
-	            dataType: 'html',
-	            success: function(data, textStatus, jqXHR) {
-	            
-	                //jQuery(selecteur).html(jqXHR.responseText);
-	                var response = jQuery(jqXHR.responseText);
-	                //var responseScript = response.filter("script");
-	                //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
-	            
-	                //popup_content.innerHTML = reponse;
-	                $('#popup_content').html(data);
-	            
-	                /*// focus primary input
-	                 var primaryInput = document.getElementById('form_field_name');
-	                 if (primaryInput)
-	                 {
-	                 primaryInput.focus();
-	                 var val = primaryInput.value;
-	                 primaryInput.value = '';
-	                 primaryInput.value = val;
-	                 }*/
-	            }
-	        });
-	    },
-	    
-	    _hidePopup: function()
-	    {
-	        // register
-	        var layer_overlay = document.getElementById('layer_overlay');
-	        var layer_popup = document.getElementById('layer_popup');
-	        var popup_content = document.getElementById('popup_content');
-	    
-	        // cleanup
-	        popup_content.innerHTML = '';
-	    
-	        // hide
-	        layer_overlay.classList.add('hidden');
-	        layer_popup.classList.add('hidden');
-	    }
-	
-	};
-	
-	
-	
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(5)))
-
-/***/ },
-/* 20 */
-/***/ function(module, exports) {
-
-	/**
-	 * Page
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	module.exports = function() {
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function()
-	    {
-	
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Private methods --------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    change: function(sURL)
-	    {
-	        window.location.href = sURL;
-	    }
-	
-	};
-
-
-/***/ },
-/* 21 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {/**
-	 * Mimoto.CMS - Form handling
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	
-	module.exports = function() {
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function()
-	    {
-	        // init
-	        this._aForms = [];
-	        this._sCurrentOpenForm = '';
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Public methods ---------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Open new form
-	     */
-	    open: function(sFormName, sAction, sMethod, bRealtimeCollaborationMode)
-	    {
-	        // store
-	        this._sCurrentOpenForm = sFormName;
-	
-	        // setup
-	        var form = {
-	            'sName': sFormName,
-	            'sAction': sAction,
-	            'sMethod': sMethod,
-	            'aFields': [],
-	            'bRealtimeCollaborationMode': bRealtimeCollaborationMode
-	        };
-	
-	        // register
-	        this._aForms[sFormName] = form;
-	    },
-	
-	    /**
-	     * Register input field
-	     */
-	    registerInputField: function(sInputFieldId, settings)
-	    {
-	        // read
-	        var currentForm = this._aForms[this._sCurrentOpenForm]; // #todo - validate if no form set
-	
-	        // 1. locate form in dom
-	        var $form = $('form[name="' + currentForm.sName + '"]');
-	
-	        // setup
-	        var field = {
-	            'sFormId': currentForm,
-	            'sName': sInputFieldId,
-	            'sType': 'input', // #todo - const
-	            'settings': settings,
-	            $field: $("[data-aimless-form-field='" + sInputFieldId + "']", $form),
-	            $input: $("input[data-aimless-form-field-input='" + sInputFieldId + "']", $form),
-	            $error: $("[data-aimless-form-field-error='" + sInputFieldId + "']", $form)
-	        };
-	
-	        // store
-	        currentForm.aFields.push(field);
-	
-	        // store
-	        // Mimoto.Aimless.realtime.broadcastedValues[sInputFieldId] = {
-	        //     sFormName: currentForm.sFormName,
-	        //     value: $(field.$input).val()
-	        // };
-	
-	        // connect
-	        this._connectInputField(field);
-	    },
-	
-	    /**
-	     * Unregister input field
-	     */
-	    unregisterInputField: function(sInputFieldId)
-	    {
-	
-	    },
-	
-	    /**
-	     * Close form
-	     */
-	    close: function(sFormName)
-	    {
-	        // register
-	        var classRoot = this;
-	
-	        // search
-	        var aSubmitButtons = $('[data-aimless-form-submit="' + sFormName + '"]');
-	
-	        // activate
-	        aSubmitButtons.each(function(nIndex, $component) {
-	
-	            // read
-	            var currentForm = classRoot._aForms[classRoot._sCurrentOpenForm]; // #todo - validate if no form set
-	
-	            // prepare
-	            if (!currentForm.aSubmitButtons) currentForm.aSubmitButtons = [];
-	
-	            // register
-	            currentForm.aSubmitButtons.push($component);
-	
-	            // setup
-	            $($component).click(function() { classRoot.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
-	        });
-	
-	
-	        // Mimoto.Aimless.privateChannel = Mimoto.Aimless.pusher.subscribe('private-' + 'AimlessForm_' + sFormName);
-	        //
-	        // Mimoto.Aimless.privateChannel.bind('client-Aimless:formfield_update_' + sFormName, function(data)
-	        // {
-	        //
-	        //     var $input = $("input[data-aimless-form-field-input='" + data.fieldId + "']");
-	        //
-	        //
-	        //     // 1. check if supports realtime
-	        //     // 2. get this text
-	        //     // 3. get diff patch
-	        //
-	        //
-	        //     console.log(Mimoto.Aimless.pusher);
-	        //
-	        //     var currentValue = $($input).val();
-	        //     var patches = Mimoto.Aimless.realtime.dmp.patch_fromText(data.diff);
-	        //
-	        //     //var ms_start = (new Date).getTime();
-	        //     var results = Mimoto.Aimless.realtime.dmp.patch_apply(patches, currentValue);
-	        //     //var ms_end = (new Date).getTime();
-	        //
-	        //
-	        //     Mimoto.Aimless.realtime.broadcastedValues[data.fieldId].value = results[0];
-	        //     $($input).val(results[0]);
-	        // });
-	    },
-	
-	    /**
-	     * Submit form
-	     */
-	    submit: function(sFormName)
-	    {
-	        // 1. validate
-	        if (!this._aForms) return;
-	
-	        // 2. set default is no specific form requested
-	        if (!sFormName) { for (var s in this._aForms) { sFormName = s; break; } }
-	
-	        // 3. validate
-	        if (!this._aForms[sFormName]) return;
-	
-	        // 4. register
-	        var form = this._aForms[sFormName];
-	        var aFields = form.aFields;
-	        var nFieldCount = aFields.length;
-	
-	        // 5. locate form in dom
-	        var $form = $('form[name="' + sFormName + '"]');
-	
-	        // 6. read public key
-	        var sPublicKey = '';
-	        var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
-	        aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
-	    
-	        // 6. read instructions
-	        var sOnCreatedAddTo = '';
-	        var aOnCreatedAddTo = $("input[name='Mimoto.onCreated:addTo']", $form);
-	        aOnCreatedAddTo.each( function(index, $component) { sOnCreatedAddTo = $($component).val(); });
-	        
-	        // 7. collect data
-	        var aValues = {};
-	        var classRoot = this;
-	        for (var i = 0; i < nFieldCount; i++)
-	        {
-	            // 7a. register
-	            var field = aFields[i];
-	            
-	            var aInputFields = $("[data-aimless-form-field='" + field.sName + "']", $form);
-	    
-	            aInputFields.each( function(index, $inputField)
-	            {
-	                // 7b. find field
-	                var aInputs = $("[data-aimless-form-field-input='" + field.sName + "']", $inputField);
-	                
-	                if (aInputs.length > 1 && ($(aInputs[0]).is("input")) && $(aInputs[0]).attr('type') == 'checkbox')
-	                {
-	                    // init
-	                    aValues[field.sName] = [];
-	        
-	                    // 7c. collect value
-	                    aInputs.each( function(index, $input)
-	                    {
-	                        // init
-	                        var value = classRoot._getValueFromInputField($input);
-	            
-	                        // store
-	                        if (value !== null) aValues[field.sName].push(value);
-	                    });
-	                }
-	                else
-	                {
-	                    // 7c. collect value
-	                    aInputs.each( function(index, $input)
-	                    {
-	                        // init
-	                        var value = classRoot._getValueFromInputField($input);
-	        
-	                        // store
-	                        if (value !== null) aValues[field.sName] = value;
-	                    });
-	                }
-	                
-	            });
-	        }
-	    
-	        
-	        
-	        // 10. collect data
-	        var requestData = { publicKey: sPublicKey, values: aValues };
-	        if (sOnCreatedAddTo) requestData.onCreatedAddTo = sOnCreatedAddTo;
-	
-	
-	
-	        // console.log('Sending ' + form.sAction + ' ' + form.sMethod);
-	        // console.log(aValues);
-	        // console.error(requestData);
-	        // console.log('------');
-	    
-	        
-	        // 11. send data
-	        $.ajax({
-	            type: form.sMethod,
-	            url: form.sAction,
-	            data: JSON.stringify(requestData),
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething)
-	            {
-	                
-	                if (resultData.newEntities)
-	                {
-	
-	                    for (var sEntityType in resultData.newEntities)
-	                    {
-	                        var newEntity = resultData.newEntities[sEntityType];
-	
-	                        // 1. locate form in dom
-	                        var $form = $('form[name="' + resultData.formName + '"]');
-	
-	
-	                        // update dom
-	                        var aFields = $('[data-aimless-form-field^="' + newEntity.selector + '"]', $form);
-	                        aFields.each( function(index, $component)
-	                        {
-	                            var mls_form_field = $($component).attr("data-aimless-form-field");
-	                            mls_form_field = newEntity.id + mls_form_field.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field", mls_form_field);
-	                        });
-	
-	                        // update dom
-	                        var aFields = $('[data-aimless-form-field-input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
-	                        
-	                        aFields.each( function(index, $component)
-	                        {
-	                            var sOld_mls_form_field_input = $($component).attr("data-aimless-form-field-input");
-	                            var sNew_mls_form_field_input = newEntity.id + sOld_mls_form_field_input.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field-input", sNew_mls_form_field_input);
-	
-	                            classRoot._alterRegisteredFieldId(resultData.formName, sOld_mls_form_field_input, sNew_mls_form_field_input);
-	
-	                            var name = $($component).attr("name");
-	                            name = newEntity.id + name.substr(newEntity.selector.length);
-	                            $($component).attr("name", name);
-	                        });
-	
-	                        // update dom
-	                        var aFields = $('[data-aimless-form-field-error^="' + newEntity.selector + '"]', $form);
-	                        aFields.each( function(index, $component)
-	                        {
-	                            var mls_form_field_error = $($component).attr("data-aimless-form-field-error");
-	                            mls_form_field_error = newEntity.id + mls_form_field_error.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field-error", mls_form_field_error);
-	                        });
-	                    }
-	                }
-	
-	                if (resultData.newPublicKey)
-	                {
-	                    // 6. read public key
-	                    var sPublicKey = '';
-	                    var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
-	                    aPublicKeys.each( function(index, $component)
-	                    {
-	                        sPublicKey = $($component).val(resultData.newPublicKey);
-	                    });
-	                    
-	                    // cleanup instructions
-	                    $("input[name='Mimoto.onCreated:addTo']", $form).remove();
-	                }
-	
-	                // 1. #todo get input field value in method
-	                // 2. collaborationMode
-	                
-	                
-	                Mimoto.popup.close();
-	
-	            }
-	        });
-	
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Private methods --------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    _getValueFromInputField: function($component)
-	    {
-	        // init
-	        var value = null;
-	
-	        // validate
-	        if ($($component).is("input"))
-	        {
-	            switch($($component).attr('type'))
-	            {
-	                case 'radio':
-	
-	                    if ($($component).prop("checked") === true) {
-	                        value = $($component).val();
-	                    }
-	                    break;
-	                
-	                case 'checkbox':
-	                    
-	                    if ($($component).attr('value'))
-	                    {
-	                        if ($($component).prop("checked") === true)
-	                        {
-	                            value = $($component).val();
-	                        }
-	                    }
-	                    else
-	                    {
-	                        value = $($component).prop("checked");
-	                    }
-	                    
-	                    break;
-	
-	                default:
-	
-	                    value = $($component).val();
-	            }
-	        };
-	
-	        if ($($component).is("select"))
-	        {
-	            value = $($component).val();
-	        }
-	
-	        // send
-	        return value;
-	    },
-	
-	    _setInputFieldValue: function($component, value) // #todo - implement
-	    {
-	        if ($($component).is("input"))
-	        {
-	            switch($($component).attr('type'))
-	            {
-	                case 'radio':
-	
-	                    // output
-	                    $($component).each( function(nIndex, $component)
-	                    {
-	                        $($component).prop('checked', $($component).val() == change.value);
-	                    });
-	                    break;
-	    
-	                case 'checkbox':
-	        
-	                    // output
-	                    $($component).each( function(nIndex, $component)
-	                    {
-	                        $($component).prop('checked', $($component).val() == change.value);
-	                    });
-	                    break;
-	                
-	                default:
-	
-	                    // output
-	                    $($component).val(value);
-	            }
-	        };
-	    },
-	
-	    _alterRegisteredFieldId: function(sFormName, sOldInputFieldId, sNewInputFieldId)
-	    {
-	        var form = this._aForms[sFormName];
-	
-	        var nFieldCount = form.aFields.length;
-	        for (var i = 0; i < nFieldCount; i++)
-	        {
-	            // register
-	            var field = form.aFields[i];
-	
-	            if (field.sName == sOldInputFieldId)
-	            {
-	                field.$input.off('input');
-	
-	                field.sName = sNewInputFieldId;
-	                field.$input = $("input[data-aimless-form-field-input='" + sNewInputFieldId + "']");
-	
-	                // store
-	                // Mimoto.Aimless.realtime.broadcastedValues[sNewInputFieldId] = Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
-	                // delete Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
-	
-	                this._connectInputField(field);
-	            }
-	        }
-	    },
-	
-	    _connectInputField: function(field)
-	    {
-	        // register
-	        var classRoot = this;
-	
-	
-	        field.$input.on('input', function(e)
-	        {
-	            var sFormName = field.sFormId;
-	            var value = $(this).val();
-	
-	            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
-	
-	            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
-	
-	            classRoot._validateInputField(field);
-	
-	        });
-	    },
-	
-	    _validateInputField: function(field)
-	    {
-	        // validae
-	        if (!field.settings) return;
-	        if (!field.settings.validation) return;
-	
-	        // init
-	        var sErrorMessage = '';
-	
-	        // check rules
-	        var nValidationRuleCount = field.settings.validation.length;
-	        var bValid = true;
-	        for (var i = 0; i < nValidationRuleCount; i++)
-	        {
-	            // register
-	            var validationRule = field.settings.validation[i];
-	
-	            // read
-	            var value = this._getValueFromInputField(field.$input);
-	
-	            switch(validationRule.key)
-	            {
-	                case 'maxchars':
-	
-	                    // validate
-	                    if (value.length > validationRule.value)
-	                    {
-	                        sErrorMessage = validationRule.errorMessage;
-	                        bValid = false;
-	                    }
-	                    break;
-	
-	                case 'minchars':
-	
-	                    // validate
-	                    if (value.length < validationRule.value)
-	                    {
-	                        sErrorMessage = validationRule.errorMessage;
-	                        bValid = false;
-	                    }
-	                    break;
-	
-	                case 'regex_custom':
-	
-	                    // init
-	                    var patt = new RegExp(validationRule.value);
-	
-	                    // validate
-	                    if (!patt.test(value))
-	                    {
-	                        sErrorMessage = validationRule.errorMessage;
-	                        bValid = false;
-	                    }
-	                    break;
-	            }
-	
-	            if (!bValid) break;
-	        }
-	
-	        // update interface
-	        if (field.$error)
-	        {
-	            if (sErrorMessage)
-	            {
-	                field.$error.text(sErrorMessage);
-	                // #todo toggle field icon - zie code David
-	            }
-	            else
-	            {
-	                field.$error.text('');
-	            }
-	        }
-	
-	    }
-	
-	
-	};
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Sortable = __webpack_require__(23); // https://github.com/RubaXa/Sortable
+	var Sortable = __webpack_require__(18); // https://github.com/RubaXa/Sortable
 	
 	module.exports = function (element) {
 	
@@ -31151,9 +30014,7 @@
 	
 	        this.setVariables();
 	
-	        if (this.isSortable) {
-	            this.initSortable();
-	        }
+	        if (this.isSortable) this.initSortable();
 	
 	    },
 	
@@ -31168,7 +30029,8 @@
 	        this.sortable = new Sortable(this.el, {
 	            group: "list", // @sebastian dit moet worden veranderd in een unieke waarde, kan jij vast wel meegeven vanuit Aimless
 	            handle: '.MimotoCMS_forms_input_ListItem-handle',
-	            dragClass: 'MimotoCMS_forms_input_ListItem--being-dragged',
+	            dragClass: 'MimotoCMS_forms_input_ListItem--drag',
+	            ghostClass: 'MimotoCMS_forms_input_ListItem--ghost',
 	            store: {
 	                /**
 	                 * Get the order of elements. Called once during initialization.
@@ -31200,7 +30062,7 @@
 
 
 /***/ },
-/* 23 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**!
@@ -32589,6 +31451,1178 @@
 	});
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Mimoto.CMS
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function()
+	{
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function ()
+	    {
+	
+	    },
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods - entity ------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Create new entity
+	     */
+	    entityNew: function()
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/entity/new");
+	
+	        //popup.on('success') = popup.close();
+	    },
+	
+	    // entityCreate: function(data)
+	    // {
+	    //     $.ajax({
+	    //         type: 'POST',
+	    //         url: "/mimoto.cms/entity/create",
+	    //         data: data,
+	    //         dataType: 'json'
+	    //     }).done(function(data) {
+	    //         Mimoto.popup.close();
+	    //     });
+	    // },
+	
+	    entityView: function(nEntityId)
+	    {
+	        window.open('/mimoto.cms/entity/' + nEntityId + '/view', '_self');
+	    },
+	
+	    entityEdit: function(nEntityId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/entity/' + nEntityId + '/edit');
+	    },
+	
+	    entityUpdate: function(nEntityId, data)
+	    {
+	        $.ajax({
+	            type: 'POST',
+	            url: "/mimoto.cms/entity/" + nEntityId + "/update",
+	            data: data,
+	            dataType: 'json'
+	        }).done(function(data) {
+	            Mimoto.popup.close();
+	        });
+	    },
+	
+	    entityDelete: function(nEntityId, sEntityName)
+	    {
+	        var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
+	        if (response == true) {
+	            $.ajax({
+	                type: 'GET',
+	                url: "/mimoto.cms/entity/" + nEntityId + "/delete",
+	                //data: data,
+	                dataType: 'json'
+	            }).done(function(data) {
+	                window.open('/mimoto.cms/entities', '_self');
+	            });
+	        }
+	    },
+	
+	    entityPropertyNew: function(nEntityId)
+	    {
+	        Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
+	    },
+	
+	    entityPropertyCreate: function(nEntityId, data)
+	    {
+	        $.ajax({
+	            type: 'POST',
+	            url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
+	            data: data,
+	            dataType: 'json'
+	        }).done(function(data) {
+	            Mimoto.popup.close();
+	        });
+	    },
+	
+	    entityPropertyEdit: function(nEntityPropertyId)
+	    {
+	        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
+	    },
+	    
+	    entityPropertyDelete:  function(nEntityPropertyId)
+	    {
+	        // 11. send data
+	        $.ajax({
+	            type: 'get',
+	            url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	    
+	    entityPropertySettingEdit: function(nEntityPropertySettingId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
+	    },
+	
+	
+	
+	    notificationClose: function(sEntityType, nNotificationId)
+	    {
+	        // 8. find field
+	        var aNotifications = $("[data-aimless-id='" + sEntityType + '.' + nNotificationId + "']");
+	
+	        // 9. collect value
+	        aNotifications.each( function(index, $component) {
+	            // init
+	            $($component).remove();
+	        });
+	
+	        // 11. send data
+	        $.ajax({
+	            type: 'GET',
+	            url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething)
+	            {
+	                console.log(resultData);
+	                console.log(resultStatus);
+	                console.log(resultSomething);
+	            }
+	        });
+	    },
+	    
+	    
+	    /**
+	     * Create new component
+	     */
+	    componentNew: function()
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/component/new");
+	        
+	        //popup.on('success') = popup.close();
+	    },
+	    
+	    componentView: function(nComponentId)
+	    {
+	        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
+	    },
+	    
+	    componentEdit: function(nComponentId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
+	    },
+	    
+	    
+	    
+	    /**
+	     * Content sections
+	     */
+	    contentSectionNew: function()
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/contentsection/new");
+	    },
+	    
+	    contentSectionView: function(nContentId)
+	    {
+	        window.open('/mimoto.cms/contentsection/' + nContentId + '/view', '_self');
+	    },
+	    
+	    contentSectionEdit: function(nContentId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentId + '/edit');
+	    },
+	    
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	    
+	    
+	    /**
+	     * Create new form
+	     */
+	    formNew: function()
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/form/new");
+	        
+	        //popup.on('success') = popup.close();
+	    },
+	    
+	    formView: function(nFormId)
+	    {
+	        window.open('/mimoto.cms/form/' + nFormId + '/view', '_self');
+	    },
+	    
+	    formEdit: function(nFormId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
+	    },
+	    
+	    formFieldNew_TypeSelector: function(nFormId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/field/new');
+	    },
+	    
+	    formFieldNew_FieldForm: function(nFormId, nFormFieldTypeId)
+	    {
+	        console.log('formFieldNew_FieldForm: nFormId=' + nFormId + ', nFormFieldTypeId=' + nFormFieldTypeId);
+	        
+	        Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
+	    },
+	    
+	    formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit');
+	    },
+	    
+	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
+	    {
+	        $.ajax({
+	            type: 'get',
+	            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = function(sTabmenuId, aTabs) {
+	
+	    // register
+	    this._sTabmenuId = sTabmenuId;
+	    this._aTabs = aTabs;
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	        // setup
+	        this._setupTabs();
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Setup tabs
+	     */
+	    _setupTabs: function()
+	    {
+	        // init
+	        var classRoot = this;
+	
+	        var nTabCount = this._aTabs.length;
+	        for (var i = 0; i < nTabCount; i++)
+	        {
+	            // register
+	            var tab = this._aTabs[i];
+	
+	            // connect
+	            tab.$tab = document.getElementById(tab.id);
+	            tab.$panel = document.getElementById(tab.panel_id);
+	
+	            // setup
+	            if (i == 0) { this._showPanel(tab.$panel); } else { this._hidePanel(tab.$panel); }
+	
+	            // connect
+	            tab.$tab.addEventListener('click', function(tab) {
+	                this._selectTab(tab);
+	            }.bind(this, tab));
+	        }
+	    },
+	
+	    /**
+	     * Check menu state
+	     */
+	    _selectTab: function(selectedTab)
+	    {
+	        var nTabCount = this._aTabs.length;
+	        for (var i = 0; i < nTabCount; i++)
+	        {
+	            // register
+	            var tab = this._aTabs[i];
+	
+	            if (tab == selectedTab)
+	            {
+	                this._showPanel(tab.$panel);
+	                this._activateTab(tab.$tab);
+	            }
+	            else
+	            {
+	                this._hidePanel(tab.$panel);
+	                this._deactivateTab(tab.$tab);
+	            }
+	        }
+	    },
+	
+	    /**
+	     * Activate tab
+	     */
+	    _activateTab: function($tab)
+	    {
+	        $tab.classList.add("active");
+	    },
+	
+	    /**
+	     * Deactivate tab
+	     */
+	    _deactivateTab: function($tab)
+	    {
+	        $tab.classList.remove("active");
+	    },
+	
+	    /**
+	     * Show panel
+	     */
+	    _showPanel: function($panel)
+	    {
+	        $panel.classList.remove("hidden");
+	    },
+	
+	    /**
+	     * Hide panel
+	     */
+	    _hidePanel: function($panel)
+	    {
+	        $panel.classList.add("hidden");
+	    }
+	
+	};
+
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
+	 * Popup
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function() {
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    open: function(sURL)
+	    {
+	        this._showPopup();
+	        this._loadPopupContent(sURL);
+	    },
+	
+	    close: function()
+	    {
+	        this._hidePopup();
+	    },
+	    
+	    replace: function(sURL)
+	    {
+	        this._loadPopupContent(sURL);
+	    },
+	    
+	    _showPopup: function()
+	    {
+	        // register
+	        var layer_overlay = document.getElementById('layer_overlay');
+	        var layer_popup = document.getElementById('layer_popup');
+	    
+	        // show
+	        layer_overlay.classList.remove('hidden');
+	        layer_popup.classList.remove('hidden');
+	    },
+	    
+	    _loadPopupContent: function(sURL)
+	    {
+	        var popup_content = document.getElementById('popup_content');
+	        
+	        $.ajax({
+	            url: sURL,
+	            dataType: 'html',
+	            success: function(data, textStatus, jqXHR) {
+	            
+	                //jQuery(selecteur).html(jqXHR.responseText);
+	                var response = jQuery(jqXHR.responseText);
+	                //var responseScript = response.filter("script");
+	                //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
+	            
+	                //popup_content.innerHTML = reponse;
+	                $('#popup_content').html(data);
+	            
+	                /*// focus primary input
+	                 var primaryInput = document.getElementById('form_field_name');
+	                 if (primaryInput)
+	                 {
+	                 primaryInput.focus();
+	                 var val = primaryInput.value;
+	                 primaryInput.value = '';
+	                 primaryInput.value = val;
+	                 }*/
+	            }
+	        });
+	    },
+	    
+	    _hidePopup: function()
+	    {
+	        // register
+	        var layer_overlay = document.getElementById('layer_overlay');
+	        var layer_popup = document.getElementById('layer_popup');
+	        var popup_content = document.getElementById('popup_content');
+	    
+	        // cleanup
+	        popup_content.innerHTML = '';
+	    
+	        // hide
+	        layer_overlay.classList.add('hidden');
+	        layer_popup.classList.add('hidden');
+	    }
+	
+	};
+	
+	
+	
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(5)))
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	/**
+	 * Page
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function() {
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    change: function(sURL)
+	    {
+	        window.location.href = sURL;
+	    }
+	
+	};
+
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Mimoto.CMS - Form handling
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	module.exports = function() {
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	        // init
+	        this._aForms = [];
+	        this._sCurrentOpenForm = '';
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Open new form
+	     */
+	    open: function(sFormName, sAction, sMethod, bRealtimeCollaborationMode)
+	    {
+	        // store
+	        this._sCurrentOpenForm = sFormName;
+	
+	        // setup
+	        var form = {
+	            'sName': sFormName,
+	            'sAction': sAction,
+	            'sMethod': sMethod,
+	            'aFields': [],
+	            'bRealtimeCollaborationMode': bRealtimeCollaborationMode
+	        };
+	
+	        // register
+	        this._aForms[sFormName] = form;
+	    },
+	
+	    /**
+	     * Register input field
+	     */
+	    registerInputField: function(sInputFieldId, settings)
+	    {
+	        // read
+	        var currentForm = this._aForms[this._sCurrentOpenForm]; // #todo - validate if no form set
+	
+	        // 1. locate form in dom
+	        var $form = $('form[name="' + currentForm.sName + '"]');
+	
+	        // setup
+	        var field = {
+	            'sFormId': currentForm,
+	            'sName': sInputFieldId,
+	            'sType': 'input', // #todo - const
+	            'settings': settings,
+	            $field: $("[data-aimless-form-field='" + sInputFieldId + "']", $form),
+	            $input: $("input[data-aimless-form-field-input='" + sInputFieldId + "']", $form),
+	            $error: $("[data-aimless-form-field-error='" + sInputFieldId + "']", $form)
+	        };
+	
+	        // store
+	        currentForm.aFields.push(field);
+	
+	        // store
+	        // Mimoto.Aimless.realtime.broadcastedValues[sInputFieldId] = {
+	        //     sFormName: currentForm.sFormName,
+	        //     value: $(field.$input).val()
+	        // };
+	
+	        // connect
+	        this._connectInputField(field);
+	    },
+	
+	    /**
+	     * Unregister input field
+	     */
+	    unregisterInputField: function(sInputFieldId)
+	    {
+	
+	    },
+	
+	    /**
+	     * Close form
+	     */
+	    close: function(sFormName)
+	    {
+	        // register
+	        var classRoot = this;
+	
+	        // search
+	        var aSubmitButtons = $('[data-aimless-form-submit="' + sFormName + '"]');
+	
+	        // activate
+	        aSubmitButtons.each(function(nIndex, $component) {
+	
+	            // read
+	            var currentForm = classRoot._aForms[classRoot._sCurrentOpenForm]; // #todo - validate if no form set
+	
+	            // prepare
+	            if (!currentForm.aSubmitButtons) currentForm.aSubmitButtons = [];
+	
+	            // register
+	            currentForm.aSubmitButtons.push($component);
+	
+	            // setup
+	            $($component).click(function() { classRoot.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
+	        });
+	
+	
+	        // Mimoto.Aimless.privateChannel = Mimoto.Aimless.pusher.subscribe('private-' + 'AimlessForm_' + sFormName);
+	        //
+	        // Mimoto.Aimless.privateChannel.bind('client-Aimless:formfield_update_' + sFormName, function(data)
+	        // {
+	        //
+	        //     var $input = $("input[data-aimless-form-field-input='" + data.fieldId + "']");
+	        //
+	        //
+	        //     // 1. check if supports realtime
+	        //     // 2. get this text
+	        //     // 3. get diff patch
+	        //
+	        //
+	        //     console.log(Mimoto.Aimless.pusher);
+	        //
+	        //     var currentValue = $($input).val();
+	        //     var patches = Mimoto.Aimless.realtime.dmp.patch_fromText(data.diff);
+	        //
+	        //     //var ms_start = (new Date).getTime();
+	        //     var results = Mimoto.Aimless.realtime.dmp.patch_apply(patches, currentValue);
+	        //     //var ms_end = (new Date).getTime();
+	        //
+	        //
+	        //     Mimoto.Aimless.realtime.broadcastedValues[data.fieldId].value = results[0];
+	        //     $($input).val(results[0]);
+	        // });
+	    },
+	
+	    /**
+	     * Submit form
+	     */
+	    submit: function(sFormName)
+	    {
+	        // 1. validate
+	        if (!this._aForms) return;
+	
+	        // 2. set default is no specific form requested
+	        if (!sFormName) { for (var s in this._aForms) { sFormName = s; break; } }
+	
+	        // 3. validate
+	        if (!this._aForms[sFormName]) return;
+	
+	        // 4. register
+	        var form = this._aForms[sFormName];
+	        var aFields = form.aFields;
+	        var nFieldCount = aFields.length;
+	
+	        // 5. locate form in dom
+	        var $form = $('form[name="' + sFormName + '"]');
+	
+	        // 6. read public key
+	        var sPublicKey = '';
+	        var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
+	        aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
+	    
+	        // 6. read instructions
+	        var sOnCreatedAddTo = '';
+	        var aOnCreatedAddTo = $("input[name='Mimoto.onCreated:addTo']", $form);
+	        aOnCreatedAddTo.each( function(index, $component) { sOnCreatedAddTo = $($component).val(); });
+	        
+	        // 7. collect data
+	        var aValues = {};
+	        var classRoot = this;
+	        for (var i = 0; i < nFieldCount; i++)
+	        {
+	            // 7a. register
+	            var field = aFields[i];
+	            
+	            var aInputFields = $("[data-aimless-form-field='" + field.sName + "']", $form);
+	    
+	            aInputFields.each( function(index, $inputField)
+	            {
+	                // 7b. find field
+	                var aInputs = $("[data-aimless-form-field-input='" + field.sName + "']", $inputField);
+	                
+	                if (aInputs.length > 1 && ($(aInputs[0]).is("input")) && $(aInputs[0]).attr('type') == 'checkbox')
+	                {
+	                    // init
+	                    aValues[field.sName] = [];
+	        
+	                    // 7c. collect value
+	                    aInputs.each( function(index, $input)
+	                    {
+	                        // init
+	                        var value = classRoot._getValueFromInputField($input);
+	            
+	                        // store
+	                        if (value !== null) aValues[field.sName].push(value);
+	                    });
+	                }
+	                else
+	                {
+	                    // 7c. collect value
+	                    aInputs.each( function(index, $input)
+	                    {
+	                        // init
+	                        var value = classRoot._getValueFromInputField($input);
+	        
+	                        // store
+	                        if (value !== null) aValues[field.sName] = value;
+	                    });
+	                }
+	                
+	            });
+	        }
+	    
+	        
+	        
+	        // 10. collect data
+	        var requestData = { publicKey: sPublicKey, values: aValues };
+	        if (sOnCreatedAddTo) requestData.onCreatedAddTo = sOnCreatedAddTo;
+	
+	
+	
+	        // console.log('Sending ' + form.sAction + ' ' + form.sMethod);
+	        // console.log(aValues);
+	        // console.error(requestData);
+	        // console.log('------');
+	    
+	        
+	        // 11. send data
+	        $.ajax({
+	            type: form.sMethod,
+	            url: form.sAction,
+	            data: JSON.stringify(requestData),
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething)
+	            {
+	                
+	                if (resultData.newEntities)
+	                {
+	
+	                    for (var sEntityType in resultData.newEntities)
+	                    {
+	                        var newEntity = resultData.newEntities[sEntityType];
+	
+	                        // 1. locate form in dom
+	                        var $form = $('form[name="' + resultData.formName + '"]');
+	
+	
+	                        // update dom
+	                        var aFields = $('[data-aimless-form-field^="' + newEntity.selector + '"]', $form);
+	                        aFields.each( function(index, $component)
+	                        {
+	                            var mls_form_field = $($component).attr("data-aimless-form-field");
+	                            mls_form_field = newEntity.id + mls_form_field.substr(newEntity.selector.length);
+	                            $($component).attr("data-aimless-form-field", mls_form_field);
+	                        });
+	
+	                        // update dom
+	                        var aFields = $('[data-aimless-form-field-input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
+	                        
+	                        aFields.each( function(index, $component)
+	                        {
+	                            var sOld_mls_form_field_input = $($component).attr("data-aimless-form-field-input");
+	                            var sNew_mls_form_field_input = newEntity.id + sOld_mls_form_field_input.substr(newEntity.selector.length);
+	                            $($component).attr("data-aimless-form-field-input", sNew_mls_form_field_input);
+	
+	                            classRoot._alterRegisteredFieldId(resultData.formName, sOld_mls_form_field_input, sNew_mls_form_field_input);
+	
+	                            var name = $($component).attr("name");
+	                            name = newEntity.id + name.substr(newEntity.selector.length);
+	                            $($component).attr("name", name);
+	                        });
+	
+	                        // update dom
+	                        var aFields = $('[data-aimless-form-field-error^="' + newEntity.selector + '"]', $form);
+	                        aFields.each( function(index, $component)
+	                        {
+	                            var mls_form_field_error = $($component).attr("data-aimless-form-field-error");
+	                            mls_form_field_error = newEntity.id + mls_form_field_error.substr(newEntity.selector.length);
+	                            $($component).attr("data-aimless-form-field-error", mls_form_field_error);
+	                        });
+	                    }
+	                }
+	
+	                if (resultData.newPublicKey)
+	                {
+	                    // 6. read public key
+	                    var sPublicKey = '';
+	                    var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
+	                    aPublicKeys.each( function(index, $component)
+	                    {
+	                        sPublicKey = $($component).val(resultData.newPublicKey);
+	                    });
+	                    
+	                    // cleanup instructions
+	                    $("input[name='Mimoto.onCreated:addTo']", $form).remove();
+	                }
+	
+	                // 1. #todo get input field value in method
+	                // 2. collaborationMode
+	                
+	                
+	                Mimoto.popup.close();
+	
+	            }
+	        });
+	
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    _getValueFromInputField: function($component)
+	    {
+	        // init
+	        var value = null;
+	
+	        // validate
+	        if ($($component).is("input"))
+	        {
+	            switch($($component).attr('type'))
+	            {
+	                case 'radio':
+	
+	                    if ($($component).prop("checked") === true) {
+	                        value = $($component).val();
+	                    }
+	                    break;
+	                
+	                case 'checkbox':
+	                    
+	                    if ($($component).attr('value'))
+	                    {
+	                        if ($($component).prop("checked") === true)
+	                        {
+	                            value = $($component).val();
+	                        }
+	                    }
+	                    else
+	                    {
+	                        value = $($component).prop("checked");
+	                    }
+	                    
+	                    break;
+	
+	                default:
+	
+	                    value = $($component).val();
+	            }
+	        };
+	
+	        if ($($component).is("select"))
+	        {
+	            value = $($component).val();
+	        }
+	
+	        // send
+	        return value;
+	    },
+	
+	    _setInputFieldValue: function($component, value) // #todo - implement
+	    {
+	        if ($($component).is("input"))
+	        {
+	            switch($($component).attr('type'))
+	            {
+	                case 'radio':
+	
+	                    // output
+	                    $($component).each( function(nIndex, $component)
+	                    {
+	                        $($component).prop('checked', $($component).val() == change.value);
+	                    });
+	                    break;
+	    
+	                case 'checkbox':
+	        
+	                    // output
+	                    $($component).each( function(nIndex, $component)
+	                    {
+	                        $($component).prop('checked', $($component).val() == change.value);
+	                    });
+	                    break;
+	                
+	                default:
+	
+	                    // output
+	                    $($component).val(value);
+	            }
+	        };
+	    },
+	
+	    _alterRegisteredFieldId: function(sFormName, sOldInputFieldId, sNewInputFieldId)
+	    {
+	        var form = this._aForms[sFormName];
+	
+	        var nFieldCount = form.aFields.length;
+	        for (var i = 0; i < nFieldCount; i++)
+	        {
+	            // register
+	            var field = form.aFields[i];
+	
+	            if (field.sName == sOldInputFieldId)
+	            {
+	                field.$input.off('input');
+	
+	                field.sName = sNewInputFieldId;
+	                field.$input = $("input[data-aimless-form-field-input='" + sNewInputFieldId + "']");
+	
+	                // store
+	                // Mimoto.Aimless.realtime.broadcastedValues[sNewInputFieldId] = Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
+	                // delete Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
+	
+	                this._connectInputField(field);
+	            }
+	        }
+	    },
+	
+	    _connectInputField: function(field)
+	    {
+	        // register
+	        var classRoot = this;
+	
+	
+	        field.$input.on('input', function(e)
+	        {
+	            var sFormName = field.sFormId;
+	            var value = $(this).val();
+	
+	            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
+	
+	            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
+	
+	            classRoot._validateInputField(field);
+	
+	        });
+	    },
+	
+	    _validateInputField: function(field)
+	    {
+	        // validae
+	        if (!field.settings) return;
+	        if (!field.settings.validation) return;
+	
+	        // init
+	        var sErrorMessage = '';
+	
+	        // check rules
+	        var nValidationRuleCount = field.settings.validation.length;
+	        var bValid = true;
+	        for (var i = 0; i < nValidationRuleCount; i++)
+	        {
+	            // register
+	            var validationRule = field.settings.validation[i];
+	
+	            // read
+	            var value = this._getValueFromInputField(field.$input);
+	
+	            switch(validationRule.key)
+	            {
+	                case 'maxchars':
+	
+	                    // validate
+	                    if (value.length > validationRule.value)
+	                    {
+	                        sErrorMessage = validationRule.errorMessage;
+	                        bValid = false;
+	                    }
+	                    break;
+	
+	                case 'minchars':
+	
+	                    // validate
+	                    if (value.length < validationRule.value)
+	                    {
+	                        sErrorMessage = validationRule.errorMessage;
+	                        bValid = false;
+	                    }
+	                    break;
+	
+	                case 'regex_custom':
+	
+	                    // init
+	                    var patt = new RegExp(validationRule.value);
+	
+	                    // validate
+	                    if (!patt.test(value))
+	                    {
+	                        sErrorMessage = validationRule.errorMessage;
+	                        bValid = false;
+	                    }
+	                    break;
+	            }
+	
+	            if (!bValid) break;
+	        }
+	
+	        // update interface
+	        if (field.$error)
+	        {
+	            if (sErrorMessage)
+	            {
+	                field.$error.text(sErrorMessage);
+	                // #todo toggle field icon - zie code David
+	            }
+	            else
+	            {
+	                field.$error.text('');
+	            }
+	        }
+	
+	    }
+	
+	
+	};
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(EH, FV) {'use strict';
+	
+	module.exports = function (element) {
+	
+	    this.el = element;
+	    this.init();
+	
+	};
+	
+	module.exports.prototype = {
+	
+	    init: function () {
+	
+	        console.log('Init Dropdown');
+	
+	        this.setVariables();
+	        this.addEventListeners();
+	
+	    },
+	
+	    setVariables: function () {
+	
+	        this.dropdown = this.el.querySelector('.js-dropdown');
+	
+	    },
+	
+	    addEventListeners: function () {
+	
+	        this.dropdown.addEventListener('change', this.handleValidation.bind(this));
+	
+	    },
+	
+	    handleValidation: function () {
+	
+	        var value = this.dropdown.value;
+	
+	        if (value == '') {
+	
+	            EH.clearState(this.el);
+	
+	        } else {
+	
+	            FV.validateInput(this.el);
+	
+	        }
+	
+	    }
+	
+	};
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
 
 /***/ }
 /******/ ]);
