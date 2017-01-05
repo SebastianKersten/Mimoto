@@ -27,7 +27,7 @@
             {% for list_item in list_items %}
                 {% include 'MimotoCMS/components/forms/input/ListItem/ListItem.twig' with {
                     "list_item": list_item,
-                    "draggable": true
+                    "sortable": true
                 } only %}
             {% endfor %}
         </div>
