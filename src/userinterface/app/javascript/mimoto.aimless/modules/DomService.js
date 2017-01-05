@@ -93,12 +93,10 @@ module.exports.prototype = {
             
             if (mls_wrapper)
             {
-                console.log('wrapper (hoort niet)');
                 Mimoto.Aimless.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
             }
             else
             {
-                console.log('component (goed)');
                 if (mls_component.name)
                 {
                     Mimoto.Aimless.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
@@ -106,8 +104,9 @@ module.exports.prototype = {
             }
         });
     
-    
-        // section level
+        
+        // --- selection level ---
+        
         // search
         var aComponents = $("[data-aimless-selection='" + mls_container + "']");
     
