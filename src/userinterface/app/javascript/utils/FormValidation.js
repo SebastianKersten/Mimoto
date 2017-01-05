@@ -26,19 +26,6 @@ module.exports = {
 
     },
 
-    countChecked: function (checkboxes) {
-
-        if (checkboxes) this.checkboxes = checkboxes;
-        this.checked = 0;
-
-        for (var i = 0; i < this.checkboxes.length; i++) {
-            if (this.checkboxes[i].checked) this.checked++;
-        }
-
-        return this.checked;
-
-    },
-
     setInputOptions: function () {
 
         this.minLength = this.input.getAttribute('data-fv-min-length');
@@ -128,6 +115,19 @@ module.exports = {
         if (this.validateDropdown) this.checkDropdownValue();
 
         this.result.passed ? EH.addValidatedState(this.el) : EH.addErrorState(this.el, this.result.message);
+
+    },
+
+    countChecked: function (checkboxes) {
+
+        if (checkboxes) this.checkboxes = checkboxes;
+        this.checked = 0;
+
+        for (var i = 0; i < this.checkboxes.length; i++) {
+            if (this.checkboxes[i].checked) this.checked++;
+        }
+
+        return this.checked;
 
     },
 
