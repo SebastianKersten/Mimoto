@@ -1,0 +1,11 @@
+{% extends "MimotoCMS/components/base.twig" %}
+
+{% block content %}
+
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new content section', icon:'plus', onclick:"Mimoto.CMS.contentSectionNew();" }) }}
+
+    <div class="MimotoCMS_pages_contentsections_ContentSectionOverview__container" {{ Aimless.realtime('contentSections') }}>
+        {{ Aimless.selection('contentSections') }}
+    </div>
+
+{% endblock %}

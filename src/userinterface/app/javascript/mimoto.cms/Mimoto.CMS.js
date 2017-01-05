@@ -182,6 +182,26 @@ module.exports.prototype = {
         Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
     },
     
+    
+    
+    /**
+     * Content sections
+     */
+    contentSectionNew: function()
+    {
+        var popup = Mimoto.popup.open("/mimoto.cms/contentsection/new");
+    },
+    
+    contentSectionView: function(nContentId)
+    {
+        window.open('/mimoto.cms/contentsection/' + nContentId + '/view', '_self');
+    },
+    
+    contentSectionEdit: function(nContentId)
+    {
+        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentId + '/edit');
+    },
+    
 
     // ----------------------------------------------------------------------------
     // --- Private methods --------------------------------------------------------

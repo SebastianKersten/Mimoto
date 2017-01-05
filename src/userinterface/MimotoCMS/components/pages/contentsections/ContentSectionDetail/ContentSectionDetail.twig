@@ -1,0 +1,55 @@
+{% extends "MimotoCMS/components/base.twig" %}
+
+{% block content %}
+
+    {%
+        embed "MimotoCMS/components/modules/Tabmenu/Tabmenu.twig" with {
+            id: 'componentdetails',
+            tabs: [
+                {
+                    label: 'Templates',
+                    panel_id: 'panel_componentdetail_info'
+                }
+            ]
+        }
+    %}
+        {% block panels %}
+
+            <!-- structure -->
+
+            <div id="panel_componentdetail_info" class="MimotoCMS_pages_components_ComponentDetail__panel">
+
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure">
+
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta">
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_info">
+
+                            <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
+                            <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentfile" {{ Aimless.realtime('file') }}>{{ Aimless.data('file') }}</div>
+
+                        </div>
+
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
+                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        {% endblock %}
+    {% endembed %}
+
+
+
+    {#<div class="MimotoCMS_pages_components_ComponentDetail__example">
+
+        <div class="MimotoCMS_pages_components_ComponentDetail__codeexample-title">Component example</div>
+
+        <div class="MimotoCMS_pages_components_ComponentDetail__example-container">
+            <iframe src="https://mimoto.nl" class="MimotoCMS_pages_components_ComponentDetail"></iframe>
+        </div>
+    </div>#}
+
+{% endblock %}

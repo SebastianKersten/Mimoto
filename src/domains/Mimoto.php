@@ -51,7 +51,7 @@ class Mimoto
         $app->get('/mimoto.cms/entities', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::viewEntityOverview');
         $app->get('/mimoto.cms/forms', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::viewFormOverview');
         $app->get('/mimoto.cms/components', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::viewComponentOverview');
-        $app->get('/mimoto.cms/content', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::viewContentOverview');
+        $app->get('/mimoto.cms/contentsections', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::viewContentSectionOverview');
         $app->get('/mimoto.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview');
         $app->get('/mimoto.cms/users', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::viewUserOverview');
 
@@ -80,6 +80,11 @@ class Mimoto
         $app->get ('/mimoto.cms/component/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentNew');
         $app->get ('/mimoto.cms/component/{nComponentId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentView');
         $app->get ('/mimoto.cms/component/{nComponentId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentEdit');
+
+        // Content
+        $app->get ('/mimoto.cms/contentsection/new', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionNew');
+        $app->get ('/mimoto.cms/contentsection/{nContentId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionView');
+        $app->get ('/mimoto.cms/contentsection/{nContentId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionEdit');
 
         // Form
         $app->get ('/mimoto.cms/form/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formNew');

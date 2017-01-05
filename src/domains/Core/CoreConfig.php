@@ -8,6 +8,7 @@ use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\Component;
+use Mimoto\Core\entities\ContentSection;
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\Input;
 use Mimoto\Core\entities\InputMultiSelect;
@@ -60,6 +61,9 @@ class CoreConfig
     const MIMOTO_COMPONENT                      = '_MimotoAimless__view__component';
     const MIMOTO_COMPONENTCONDITIONAL           = '_MimotoAimless__view__componentconditional';
     //const MIMOTO_PAGE                         = '_MimotoAimless__view__page';
+
+    // content
+    const MIMOTO_CONTENT                        = '_MimotoAimless__content';
 
     // forms
     const MIMOTO_FORM                           = '_MimotoAimless__interaction__form';
@@ -134,6 +138,12 @@ class CoreConfig
     const COREFORM_COMPONENT             = '_MimotoAimless__coreform__component';
     const COREFORM_COMPONENT_NEW         = '_MimotoAimless__coreform__component_new';
     const COREFORM_COMPONENT_EDIT        = '_MimotoAimless__coreform__component_edit';
+
+    const COREFORM_CONTENTSECTION               = '_MimotoAimless__coreform__contentsection';
+    const COREFORM_CONTENTSECTION_NEW           = '_MimotoAimless__coreform__contentsection_new';
+    const COREFORM_CONTENTSECTION_EDIT          = '_MimotoAimless__coreform__contentsection_edit';
+
+
 
     const COREFORM_FORM                  = '_MimotoAimless__coreform__form';
     const COREFORM_FORM_NEW              = '_MimotoAimless__coreform__form_new';
@@ -227,6 +237,9 @@ class CoreConfig
 
             // views
             Component::getStructure(),
+
+            // content
+            ContentSection::getStructure(),
 
             // forms
             Form::getStructure(),
