@@ -21,7 +21,7 @@ class ContentSectionController
     public function viewContentSectionOverview(Application $app)
     {
         // load
-        $aContentSections = $app['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_CONTENT]);
+        $aContentSections = $app['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_CONTENTSECTION]);
 
         // create
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_contentsections_ContentSectionOverview');
@@ -45,13 +45,13 @@ class ContentSectionController
     public function contentSectionNew(Application $app)
     {
         // create dummy
-        $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_CONTENT);
+        $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_CONTENTSECTION);
 
         // 1. create
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_CONTENT_NEW, $entity);
+        $component->addForm(CoreConfig::COREFORM_CONTENTSECTION_NEW, $entity);
 
         // 3. render and send
         return $component->render();
@@ -60,7 +60,7 @@ class ContentSectionController
     public function contentSectionView(Application $app, $nEntityId)
     {
         // 1. load requested entity
-        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_CONTENT, $nEntityId);
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_CONTENTSECTION, $nEntityId);
 
         // 2. check if entity exists
         if ($entity === false) return $app->redirect("/mimoto.cms/contentsections");
@@ -75,7 +75,7 @@ class ContentSectionController
                     "url" => '/mimoto.cms/contentsections'
                 ),
                 (object) array(
-                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_CONTENT.'.'.$entity->getId().'.name">'.$entity->getValue('name').'</span>"',
+                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_CONTENTSECTION.'.'.$entity->getId().'.name">'.$entity->getValue('name').'</span>"',
                     "url" => '/mimoto.cms/contentsection/'.$entity->getId().'/view'
                 )
             )
@@ -88,7 +88,7 @@ class ContentSectionController
     public function contentSectionEdit(Application $app, $nEntityId)
     {
         // 1. load
-        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_CONTENT, $nEntityId);
+        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_CONTENTSECTION, $nEntityId);
 
         // 2. validate
         if ($entity === false) return $app->redirect("/mimoto.cms/contentsections");
@@ -97,7 +97,7 @@ class ContentSectionController
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_CONTENT_EDIT, $entity);
+        $component->addForm(CoreConfig::COREFORM_CONTENTSECTION_EDIT, $entity);
 
         // 5. render and send
         return $component->render();

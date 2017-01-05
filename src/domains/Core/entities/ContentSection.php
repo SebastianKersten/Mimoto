@@ -19,21 +19,21 @@ class ContentSection
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_CONTENT,
+            'id' => CoreConfig::MIMOTO_CONTENTSECTION,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_CONTENT,
+            'name' => CoreConfig::MIMOTO_CONTENTSECTION,
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENT.'--name',
+                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--name',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_CONTENT.'--name-type',
+                            'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--name-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -43,14 +43,14 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENT.'--type',
+                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--type',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_CONTENT.'--type-type',
+                            'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--type-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -60,7 +60,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENT.'--form',
+                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--form',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'form',

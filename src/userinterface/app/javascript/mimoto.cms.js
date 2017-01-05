@@ -47,10 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
     for (var i = 0; i < forms.length; i++) {
         new FormView(forms[i]);
     }
-
-    // Mimoto.Aimless.realtime.onCreated('_MimotoAimless__devtools__notification', function(sType, nId)
-    // {
-    //     console.log('Custom event listener ' + sType + ', ' + nId);
-    // });
+    
 
 }, false);
