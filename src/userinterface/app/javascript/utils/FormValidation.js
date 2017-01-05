@@ -9,6 +9,7 @@ module.exports = {
         this.textline = this.el.querySelector('.js-textline');
         this.checkboxes = this.el.querySelectorAll('.js-checkbox');
         this.radioButtons = this.el.querySelectorAll('.js-radio-button');
+        this.dropdown = this.el.querySelector('.js-dropdown');
 
         if (this.textline) {
             this.input = this.textline;
@@ -18,6 +19,9 @@ module.exports = {
             this.countChecked();
         } else if (this.radioButtons.length) {
             this.input = this.radioButtons[0];
+        } else if (this.dropdown) {
+            this.input = this.dropdown;
+            this.value = this.dropdown.value;
         }
 
     },
@@ -58,6 +62,8 @@ module.exports = {
         this.customRegex = this.input.getAttribute('data-fv-regex');
         this.errorMessage = this.input.getAttribute('data-fv-error-message');
 
+        this.selectionRequired = this.input.hasAttribute('data-fv-selection-required');
+
         this.setValidationOptions();
 
     },
@@ -76,6 +82,7 @@ module.exports = {
         this.validateMaxChecked = this.maxChecked ? true : false;
         this.validateIfChecked = this.ifChecked ? true : false;
         this.validateCustomRegex = this.customRegex ? true : false;
+        this.validateSelectionRequired = this.selectionRequired ? true : false;
 
     },
 
@@ -85,9 +92,7 @@ module.exports = {
 
         this.result.passed = passed;
 
-        if (message) {
-            this.result.message = message;
-        }
+        if (message) this.result.message = message;
 
     },
 
@@ -124,9 +129,11 @@ module.exports = {
 
         if (this.validateMaxChecked) this.checkMaxChecked();
 
-        if (this.validateIfChecked) this.checkIfChecked();
+        if (this.validateIfChecked) this.checkIfRadioButtonChecked();
 
         if (this.validateCustomRegex) this.checkCustomRegex();
+
+        if (this.validateSelectionRequired) this.checkIfOptionSelected();
 
         this.result.passed ? EH.addValidatedState(this.el) : EH.addErrorState(this.el, this.result.message);
 
@@ -134,17 +141,13 @@ module.exports = {
 
     checkMinLength: function () {
 
-        if (this.value.length < this.minLength) {
-            this.setResult(false, "Input should be minimal " + this.minLength + " characters long.");
-        }
+        if (this.value.length < this.minLength) this.setResult(false, "Input should be minimal " + this.minLength + " characters long.");
 
     },
 
     checkMaxLength: function () {
 
-        if (this.value.length > this.maxLength) {
-            this.setResult(false, "Input can't be longer than " + this.maxLength + " characters.");
-        }
+        if (this.value.length > this.maxLength) this.setResult(false, "Input can't be longer than " + this.maxLength + " characters.");
 
     },
 
@@ -152,9 +155,7 @@ module.exports = {
 
         var regex = new RegExp("\\d");
 
-        if (regex.test(this.value)) {
-            this.setResult(false, "No numbers allowed.");
-        }
+        if (regex.test(this.value)) this.setResult(false, "No numbers allowed.");
 
     },
 
@@ -162,18 +163,15 @@ module.exports = {
 
         var regex = new RegExp("([^\\d]*\\d){" + this.minNumbers + ",}");
 
-        if (!regex.test(this.value)) {
-            this.setResult(false, "Input should contain a minimum of " + this.minNumbers + " number(s).");
-        }
+        if (!regex.test(this.value)) this.setResult(false, "Input should contain a minimum of " + this.minNumbers + " number(s).");
+
     },
 
     checkMaxNumbers: function () {
 
         var regex = new RegExp("([^\\d]*\\d){" + (Number(this.maxNumbers) + 1) + ",}");
 
-        if (regex.test(this.value)) {
-            this.setResult(false, "Input can't contain more than " + this.maxNumbers + " numbers.");
-        }
+        if (regex.test(this.value)) this.setResult(false, "Input can't contain more than " + this.maxNumbers + " numbers.");
 
     },
 
@@ -181,9 +179,7 @@ module.exports = {
 
         var regex = new RegExp("^[\\w]*$");
 
-        if (!regex.test(this.value)) {
-            this.setResult(false, "Input can't contain special characters (except for underscores).");
-        }
+        if (!regex.test(this.value)) this.setResult(false, "Input can't contain special characters (except for underscores).");
 
     },
 
@@ -191,9 +187,7 @@ module.exports = {
 
         var regex = new RegExp("([\\w]*\\W){" + this.minSpecialCharacters + ",}");
 
-        if (!regex.test(this.value)) {
-            this.setResult(false, "Input should contain a minimum of " + this.minSpecialCharacters + " special character(s).");
-        }
+        if (!regex.test(this.value)) this.setResult(false, "Input should contain a minimum of " + this.minSpecialCharacters + " special character(s).");
 
     },
 
@@ -201,41 +195,30 @@ module.exports = {
 
         var regex = new RegExp("([\\w]*\\W){" + (Number(this.maxSpecialCharacters) + 1) + ",}");
 
-        if (regex.test(this.value)) {
-            this.setResult(false, "Input can't contain more than " + this.maxSpecialCharacters + " special character(s).");
-        }
+        if (regex.test(this.value)) this.setResult(false, "Input can't contain more than " + this.maxSpecialCharacters + " special character(s).");
 
     },
 
     checkMinChecked: function () {
 
-        if (this.checked < this.minChecked) {
-            this.setResult(false, "You need to check at least " + this.minChecked + " checkbox(es).");
-        }
+        if (this.checked < this.minChecked) this.setResult(false, "You need to check at least " + this.minChecked + " checkbox(es).");
 
     },
 
     checkMaxChecked: function () {
 
-        if (this.checked > this.maxChecked) {
-            this.setResult(false, "You can't check more than " + this.maxChecked + " checkbox(es).");
-        }
+        if (this.checked > this.maxChecked) this.setResult(false, "You can't check more than " + this.maxChecked + " checkbox(es).");
 
     },
 
-    checkIfChecked: function () {
+    checkIfRadioButtonChecked: function () {
 
         var checked = false;
 
-        for (var i = 0; i < this.radioButtons.length; i++) {
-            if (this.radioButtons[i].checked) {
-                checked = true;
-            }
-        }
+        for (var i = 0; i < this.radioButtons.length; i++)
+            if (this.radioButtons[i].checked) checked = true;
 
-        if (!checked) {
-            this.setResult(false, "Please select an option.");
-        }
+        if (!checked) this.setResult(false, "Please select an option.");
 
     },
 
@@ -243,9 +226,13 @@ module.exports = {
 
         var regex = new RegExp(this.customRegex);
 
-        if (!regex.test(this.value)) {
-            this.setResult(false, this.errorMessage);
-        }
+        if (!regex.test(this.value)) this.setResult(false, this.errorMessage);
+
+    },
+
+    checkIfOptionSelected: function () {
+
+        if (this.value == '') this.setResult(false, "Please select an option.");
 
     }
 

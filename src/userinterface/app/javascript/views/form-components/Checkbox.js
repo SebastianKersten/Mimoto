@@ -28,11 +28,7 @@ module.exports.prototype = {
 
     for (var i = 0; i < this.checkboxes.length; i++) {
 
-      this.checkboxes[i].addEventListener('change', function () {
-
-        this.handleValidation();
-
-      }.bind(this));
+      this.checkboxes[i].addEventListener('change',  this.handleValidation.bind(this));
 
     }
 
