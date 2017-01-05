@@ -55,7 +55,7 @@ module.exports = {
         this.minChecked = this.input.getAttribute('data-fv-min-checked');
         this.maxChecked = this.input.getAttribute('data-fv-max-checked');
 
-        this.ifChecked = this.input.type == 'radio';
+        this.radioButtonRequired = this.input.hasAttribute('data-fv-radio-button-required');
 
         this.customRegex = this.input.getAttribute('data-fv-regex');
         this.errorMessage = this.input.getAttribute('data-fv-error-message');
@@ -78,7 +78,7 @@ module.exports = {
         this.validateMaxSpecialCharacters = this.maxSpecialCharacters ? true : false;
         this.validateMinChecked = this.minChecked ? true : false;
         this.validateMaxChecked = this.maxChecked ? true : false;
-        this.validateIfChecked = this.ifChecked ? true : false;
+        this.validateRadioButton = this.radioButtonRequired ? true : false;
         this.validateCustomRegex = this.customRegex ? true : false;
         this.validateDropdown = this.dropdownRequired ? true : false;
 
@@ -127,7 +127,7 @@ module.exports = {
 
         if (this.validateMaxChecked) this.checkMaxChecked();
 
-        if (this.validateIfChecked) this.checkIfRadioButtonChecked();
+        if (this.validateRadioButton) this.checkRadioButtonChecked();
 
         if (this.validateCustomRegex) this.checkCustomRegex();
 
@@ -209,7 +209,7 @@ module.exports = {
 
     },
 
-    checkIfRadioButtonChecked: function () {
+    checkRadioButtonChecked: function () {
 
         var checked = false;
 
