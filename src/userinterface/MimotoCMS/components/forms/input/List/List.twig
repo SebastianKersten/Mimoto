@@ -1,44 +1,42 @@
 {% set list_items = [
-  {
-    "title": "Teju Cole",
-    "subtitle": "Amerika-deskundingen",
-    "removeable": true
-  },
-  {
-    "title": "Taryn Simon - An American Index of the Hidden and Unfamiliar",
-    "subtitle": "Boek"
-  },
-  {
-    "title": "Kobe Bryant",
-    "subtitle": "NBA Superster",
-    "removeable": true,
-    "image": "http://cbssports1.cbsistatic.com/hub/i/2016/01/19/3f35db9e-0917-4362-824b-3beddae2a5a9/resize/600x465/usatsi9044225.jpg?hash=74534a5ba46be35690d9237387db2854"
-  },
-  {
-    "title": "MF DOOM - Mm.. Food",
-    "subtitle": "Album",
-    "image": "https://images.genius.com/5815d7f7ae232dd64ace634964f52448.650x430x1.jpg"
-  }
+    {
+        "title": "Teju Cole",
+        "subtitle": "Amerika-deskundingen",
+        "removeable": true
+    },
+    {
+        "title": "Taryn Simon - An American Index of the Hidden and Unfamiliar",
+        "subtitle": "Boek"
+    },
+    {
+        "title": "Kobe Bryant",
+        "subtitle": "NBA Superster",
+        "removeable": true,
+        "image": "http://cbssports1.cbsistatic.com/hub/i/2016/01/19/3f35db9e-0917-4362-824b-3beddae2a5a9/resize/600x465/usatsi9044225.jpg?hash=74534a5ba46be35690d9237387db2854"
+    },
+    {
+        "title": "MF DOOM - Mm.. Food",
+        "subtitle": "Album",
+        "image": "https://images.genius.com/5815d7f7ae232dd64ace634964f52448.650x430x1.jpg"
+    }
 ] %}
 
-
-
-<div class="form-component">
-    <div class="form-component-header">
-        <p class="form-component-title">Aanbevelingen <span class="form-component-title-icon icon"></span></p>
-        <div class="form-component-button">
+<div class="MimotoCMS_forms_FormComponent js-form-component js-form-component-list">
+    <div class="MimotoCMS_forms_FormComponent-header">
+        <p class="MimotoCMS_forms_FormComponent-title">Aanbevelingen <span class="MimotoCMS_forms_FormComponent-title-icon icon"></span></p>
+        <div class="MimotoCMS_forms_FormComponent-button">
             {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Add', link: '#', icon: 'plus' }) }}
         </div>
     </div>
 
-    <div class="form-component-content">
-        <div class="form-component-element">
-            <div class="form-list">
+    <div class="MimotoCMS_forms_FormComponent-content">
+        <div class="MimotoCMS_forms_FormComponent-element">
+            <div class="MimotoCMS_forms_input_List">
                 {% for list_item in list_items %}
                     {% include 'MimotoCMS/components/forms/input/ListItem/ListItem.twig' with {list_item: list_item} only %}
                 {% endfor %}
             </div>
         </div>
-        <p class="form-component-description">Dit is een lijst. Een hele mooie lijst.</p>
+        <p class="MimotoCMS_forms_FormComponent-description">Dit is een lijst. Een hele mooie lijst.</p>
     </div>
 </div>
