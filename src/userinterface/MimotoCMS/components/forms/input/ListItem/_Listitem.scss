@@ -1,39 +1,40 @@
-.form-list-item {
-  display: flex;
-  margin: 0 0 5px;
-  padding: 0 20px 0 0;
-  border: 1px solid $pale-slate;
-
-  .form-list-item-figure {
-    width: 72px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    flex: 0 0 auto;
-  }
-
-  .form-list-item-text {
-    padding: 15px 20px;
-    flex: 1 1 auto;
-
-    .form-list-item-title,
-    .form-list-item-subtitle {
-      font-size: rem-calc(14px);
-    }
-
-    .form-list-item-title {
-      font-weight: 500;
-      color: $black;
-    }
-
-    .form-list-item-subtitle {
-      color: $gray;
-    }
-  }
-
-  .form-list-item-button {
+.MimotoCMS_forms_input_ListItem {
     display: flex;
-    align-items: center;
-    flex: 0 0 auto;
-  }
+    margin: 0 0 5px;
+    padding: 0 20px 0 0;
+    border: 1px solid $pale-slate;
+    background-color: $wild-sand;
 }
+
+    .MimotoCMS_forms_input_ListItem-figure {
+        width: 72px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        flex: 0 0 auto;
+    }
+
+    .MimotoCMS_forms_input_ListItem-text {
+        padding: 15px 20px;
+        flex: 1 1 auto;
+    }
+
+        .MimotoCMS_forms_input_ListItem-title,
+        .MimotoCMS_forms_input_ListItem-subtitle {
+            font-size: rem-calc(14px);
+        }
+
+        .MimotoCMS_forms_input_ListItem-title {
+            font-weight: 500;
+            color: $black;
+        }
+
+        .MimotoCMS_forms_input_ListItem-subtitle {
+            color: $gray;
+        }
+
+    .MimotoCMS_forms_input_ListItem-button {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+    }

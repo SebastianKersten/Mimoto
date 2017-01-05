@@ -1,14 +1,18 @@
-<div class="form-list-item">
-  {% if list_item.image|default('') %}
-    <figure class="form-list-item-figure" style="background-image: url({{ list_item.image }});"></figure>
-  {% endif %}
-  <div class="form-list-item-text">
-    <p class="form-list-item-title">{{ list_item.title }}</p>
-    <p class="form-list-item-subtitle">{{ list_item.subtitle }}</p>
-  </div>
-  {% if list_item.removeable|default(false) %}
-    <div class="form-list-item-button">
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', link: '#', types: ['grey'] }) }}
+<div class="MimotoCMS_forms_input_ListItem">
+
+    {% if list_item.image|default('') %}
+        <figure class="MimotoCMS_forms_input_ListItem-figure" style="background-image: url({{ list_item.image }});"></figure>
+    {% endif %}
+
+    <div class="MimotoCMS_forms_input_ListItem-text">
+        <p class="MimotoCMS_forms_input_ListItem-title">{{ list_item.title }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-subtitle">{{ list_item.subtitle }}</p>
     </div>
-  {% endif %}
+
+    {% if list_item.removeable|default(false) %}
+        <div class="MimotoCMS_forms_input_ListItem-button">
+            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', link: '#', types: ['grey'] }) }}
+        </div>
+    {% endif %}
+
 </div>
