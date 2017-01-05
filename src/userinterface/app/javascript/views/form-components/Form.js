@@ -3,117 +3,119 @@
 var TextlineView = require('./Textline');
 var CheckboxView = require('./Checkbox');
 var RadioButtonView = require('./RadioButton');
+var DropdownView = require('./Dropdown');
 
 module.exports = function (element) {
 
-  this.el = element;
-  this.init();
+    this.el = element;
+    this.init();
 
 };
 
 module.exports.prototype = {
 
-  init: function () {
+    init: function () {
 
-    console.log('Init Form');
+        console.log('Init Form');
 
-    this.setVariables();
-    this.addEventListeners();
+        this.setVariables();
+        this.addEventListeners();
 
-    this.initFormElements();
+        this.initFormElements();
 
-  },
+    },
 
-  setVariables: function () {
+    setVariables: function () {
 
-    this.validated = true;
-    this.submit = this.el.querySelector('.js-form-submit');
-    this.elements = this.el.querySelectorAll('.js-form-component');
+        this.validated = true;
+        this.submit = this.el.querySelector('.js-form-submit');
+        this.elements = this.el.querySelectorAll('.js-form-component');
 
-  },
+    },
 
-  addEventListeners: function () {
+    addEventListeners: function () {
 
-    if (this.submit)
-      this.submit.addEventListener('click',this.validateForm.bind(this));
+        if (this.submit)
+            this.submit.addEventListener('click', this.validateForm.bind(this));
 
-    this.el.addEventListener('validate', this.validateForm.bind(this));
+        this.el.addEventListener('validate', this.validateForm.bind(this));
 
-  },
+    },
 
-  initFormElements: function () {
+    initFormElements: function () {
 
-    for (var i = 0; i < this.elements.length; i++) {
+        for (var i = 0; i < this.elements.length; i++) {
 
-      if (this.elements[i].classList.contains('js-form-component-textline')) {
-        new TextlineView(this.elements[i]);
-      } else if (this.elements[i].classList.contains('js-form-component-checkbox')) {
-        new CheckboxView(this.elements[i]);
-      } else if (this.elements[i].classList.contains('js-form-component-radio-button')) {
-        new RadioButtonView(this.elements[i]);
-      }
+            if (this.elements[i].classList.contains('js-form-component-textline')) {
+                new TextlineView(this.elements[i]);
+            } else if (this.elements[i].classList.contains('js-form-component-checkbox')) {
+                new CheckboxView(this.elements[i]);
+            } else if (this.elements[i].classList.contains('js-form-component-radio-button')) {
+                new RadioButtonView(this.elements[i]);
+            } else if (this.elements[i].classList.contains('js-form-component-dropdown')) {
+                new DropdownView(this.elements[i]);
+            }
+        }
+
+    },
+
+    validateForm: function () {
+
+        this.validated = true;
+        this.validateElements();
+
+        if (this.validated)
+            this.el.submit();
+
+
+    },
+
+    validateElements: function () {
+
+        for (var i = 0; i < this.elements.length; i++) {
+
+            var type = this.elements[i].querySelector('input').type;
+
+            if (type == 'checkbox') {
+                this.handleCheckboxValidation(this.elements[i]);
+            } else if (type == 'text') {
+                this.handleTextlineValidation(this.elements[i]);
+            } else if (type == 'radio') {
+                this.handleRadioButtonValidation(this.elements[i]);
+            }
+
+        }
+
+    },
+
+    handleCheckboxValidation: function (element) {
+
+        var result = FV.validateInput(element);
+
+        if (!result.passed) {
+            this.validated = false;
+        }
+
+    },
+
+    handleTextlineValidation: function (element) {
+
+        var result = FV.validateInput(element);
+
+        if (!result.passed) {
+            this.validated = false;
+        }
+
+    },
+
+    handleRadioButtonValidation: function (element) {
+
+        var result = FV.validateInput(element);
+
+        if (!result.passed) {
+            this.validated = false;
+        }
 
     }
-
-  },
-
-  validateForm: function () {
-
-    this.validated = true;
-    this.validateElements();
-
-    if (this.validated)
-      this.el.submit();
-
-
-  },
-
-  validateElements: function () {
-
-    for (var i = 0; i < this.elements.length; i++) {
-
-      var type = this.elements[i].querySelector('input').type;
-
-      if (type == 'checkbox') {
-        this.handleCheckboxValidation(this.elements[i]);
-      } else if (type == 'text') {
-        this.handleTextlineValidation(this.elements[i]);
-      } else if (type == 'radio') {
-        this.handleRadioButtonValidation(this.elements[i]);
-      }
-
-    }
-
-  },
-
-  handleCheckboxValidation: function (element) {
-
-    var result = FV.validateInput(element);
-
-    if (!result.passed) {
-      this.validated = false;
-    }
-
-  },
-
-  handleTextlineValidation: function (element) {
-
-    var result = FV.validateInput(element);
-
-    if (!result.passed) {
-      this.validated = false;
-    }
-
-  },
-
-  handleRadioButtonValidation: function (element) {
-
-    var result = FV.validateInput(element);
-
-    if (!result.passed) {
-      this.validated = false;
-    }
-
-  }
 
 };
