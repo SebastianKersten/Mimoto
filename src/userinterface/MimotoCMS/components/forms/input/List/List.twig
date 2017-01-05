@@ -21,22 +21,15 @@
     }
 ] %}
 
-<div class="MimotoCMS_forms_FormComponent js-form-component js-form-component-list">
-    <div class="MimotoCMS_forms_FormComponent-header">
-        <p class="MimotoCMS_forms_FormComponent-title">Aanbevelingen <span class="MimotoCMS_forms_FormComponent-title-icon icon"></span></p>
-        <div class="MimotoCMS_forms_FormComponent-button">
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Add', link: '#', icon: 'plus' }) }}
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "list"} %}
+    {% block form_component_element %}
+        <div class="MimotoCMS_forms_input_List js-list js-list-sortable">
+            {% for list_item in list_items %}
+                {% include 'MimotoCMS/components/forms/input/ListItem/ListItem.twig' with {
+                    "list_item": list_item,
+                    "draggable": true
+                } only %}
+            {% endfor %}
         </div>
-    </div>
-
-    <div class="MimotoCMS_forms_FormComponent-content">
-        <div class="MimotoCMS_forms_FormComponent-element">
-            <div class="MimotoCMS_forms_input_List">
-                {% for list_item in list_items %}
-                    {% include 'MimotoCMS/components/forms/input/ListItem/ListItem.twig' with {list_item: list_item} only %}
-                {% endfor %}
-            </div>
-        </div>
-        <p class="MimotoCMS_forms_FormComponent-description">Dit is een lijst. Een hele mooie lijst.</p>
-    </div>
-</div>
+    {% endblock %}
+{% endembed %}
