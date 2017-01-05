@@ -29,7 +29,9 @@
             "label",
 
             "placeholder",
-            "prefix"
+            "prefix",
+
+            "form"
         ]
     },
     "notes": [
