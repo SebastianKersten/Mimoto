@@ -43,23 +43,17 @@ module.exports = {
 
         this.minLength = this.input.getAttribute('data-fv-min-length');
         this.maxLength = this.input.getAttribute('data-fv-max-length');
-
         this.noNumbers = this.input.hasAttribute('data-fv-no-numbers');
         this.minNumbers = this.input.getAttribute('data-fv-min-numbers');
         this.maxNumbers = this.input.getAttribute('data-fv-max-numbers');
-
         this.noSpecialCharacters = this.input.hasAttribute('data-fv-no-special-characters');
         this.minSpecialCharacters = this.input.getAttribute('data-fv-min-special-characters');
         this.maxSpecialCharacters = this.input.getAttribute('data-fv-max-special-characters');
-
         this.minChecked = this.input.getAttribute('data-fv-min-checked');
         this.maxChecked = this.input.getAttribute('data-fv-max-checked');
-
         this.radioButtonRequired = this.input.hasAttribute('data-fv-radio-button-required');
-
         this.customRegex = this.input.getAttribute('data-fv-regex');
         this.errorMessage = this.input.getAttribute('data-fv-error-message');
-
         this.dropdownRequired = this.input.hasAttribute('data-fv-dropdown-required');
 
         this.setValidationOptions();
@@ -127,7 +121,7 @@ module.exports = {
 
         if (this.validateMaxChecked) this.checkMaxChecked();
 
-        if (this.validateRadioButton) this.checkRadioButtonChecked();
+        if (this.validateRadioButton) this.checkIfRadioButtonChecked();
 
         if (this.validateCustomRegex) this.checkCustomRegex();
 
@@ -209,12 +203,13 @@ module.exports = {
 
     },
 
-    checkRadioButtonChecked: function () {
+    checkIfRadioButtonChecked: function () {
 
         var checked = false;
 
-        for (var i = 0; i < this.radioButtons.length; i++)
+        for (var i = 0; i < this.radioButtons.length; i++) {
             if (this.radioButtons[i].checked) checked = true;
+        }
 
         if (!checked) this.setResult(false, "Please select an option.");
 
