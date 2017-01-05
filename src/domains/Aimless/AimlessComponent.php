@@ -352,7 +352,7 @@ class AimlessComponent
 
             if (!empty($this->_entity) && $this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
-                if (!empty($sComponentName))
+                if (empty($sComponentName))
                 {
                     if (isset($this->_aPropertyComponents[$sPropertyName]))
                     {
@@ -373,7 +373,7 @@ class AimlessComponent
             else
             if (isset($this->_aSelections[$sPropertyName]))
             {
-                if (!empty($sComponentName))
+                if (empty($sComponentName))
                 {
                     if (isset($this->_aSelections[$sPropertyName]))
                     {
