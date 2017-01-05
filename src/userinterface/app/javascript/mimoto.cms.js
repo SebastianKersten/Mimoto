@@ -4,6 +4,7 @@ require('jquery-ui');
 
 var HeaderView = require('./views/Header');
 var FormView = require('./views/form-components/Form');
+var ListView = require('./views/form-components/List');
 
 if (typeof Mimoto == "undefined") Mimoto = {};
 if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var navigation = document.querySelector('.js-navigation');
     var header = document.querySelector('.js-header');
     var forms = document.querySelectorAll('.js-form');
+    var lists = document.querySelectorAll('.js-list');
 
     EH.init({
         "errorElement": "p",
@@ -47,6 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
     for (var i = 0; i < forms.length; i++) {
         new FormView(forms[i]);
     }
-    
+
+    for (i = 0; i < lists.length; i++) {
+        new ListView(lists[i]);
+    }
 
 }, false);
