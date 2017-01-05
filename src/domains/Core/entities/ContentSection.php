@@ -75,6 +75,23 @@ class ContentSection
                             'value' => CoreConfig::MIMOTO_FORM
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--isHiddenFromMenu',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'isHiddenFromMenu',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--isHiddenFromMenu-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
                 )
             ]
         );

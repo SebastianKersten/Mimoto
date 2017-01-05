@@ -63,7 +63,7 @@ class CoreConfig
     //const MIMOTO_PAGE                         = '_MimotoAimless__view__page';
 
     // content
-    const MIMOTO_CONTENTSECTION                 = '_MimotoAimless__contentsection';
+    const MIMOTO_CONTENTSECTION                 = '_MimotoAimless__core__contentsection';
 
     // forms
     const MIMOTO_FORM                           = '_MimotoAimless__interaction__form';

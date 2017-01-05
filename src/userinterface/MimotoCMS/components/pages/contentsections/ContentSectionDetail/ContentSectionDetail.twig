@@ -7,8 +7,8 @@
             id: 'componentdetails',
             tabs: [
                 {
-                    label: 'Templates',
-                    panel_id: 'panel_componentdetail_info'
+                    label: 'Options',
+                    panel_id: 'panel_contentsectiondetail_info'
                 }
             ]
         }
@@ -17,20 +17,21 @@
 
             <!-- structure -->
 
-            <div id="panel_componentdetail_info" class="MimotoCMS_pages_components_ComponentDetail__panel">
+            <div id="panel_contentsectiondetail_info" class="MimotoCMS_pages_contentsections_ContentSectionDetail__panel">
 
-                <div class="MimotoCMS_pages_components_ComponentDetail_Structure">
+                <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure">
 
-                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta">
-                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_info">
+                    <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta">
+                        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta_info">
 
-                            <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
-                            <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentfile" {{ Aimless.realtime('file') }}>{{ Aimless.data('file') }}</div>
+                            <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectionname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
+                            <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectiontype" {{ Aimless.realtime('type') }}>{{ Aimless.data('type') }}</div>
+                            <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectionformname" {{ Aimless.realtime('form.name') }}>{{ Aimless.data('form.name') }}</div>
 
                         </div>
 
-                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
+                        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta_menu">
+                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.contentSectionEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
                         </div>
 
                     </div>
@@ -43,12 +44,12 @@
 
 
 
-    {#<div class="MimotoCMS_pages_components_ComponentDetail__example">
+    {#<div class="MimotoCMS_pages_contentsections_ContentSectionDetail__example">
 
-        <div class="MimotoCMS_pages_components_ComponentDetail__codeexample-title">Component example</div>
+        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail__codeexample-title">Component example</div>
 
-        <div class="MimotoCMS_pages_components_ComponentDetail__example-container">
-            <iframe src="https://mimoto.nl" class="MimotoCMS_pages_components_ComponentDetail"></iframe>
+        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail__example-container">
+            <iframe src="https://mimoto.nl" class="MimotoCMS_pages_contentsections_ContentSectionDetail"></iframe>
         </div>
     </div>#}
 

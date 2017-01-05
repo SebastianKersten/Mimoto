@@ -27,9 +27,9 @@ class ContentSectionForm
         $form->addValue('fields', self::getField_title('Add new content section'));
         $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_name());
-        //$form->addValue('fields', self::getField_type());
+        $form->addValue('fields', self::getField_type());
         $form->addValue('fields', self::getField_form());
-        //$form->addValue('fields', self::getField_isHiddenFromMenu());
+        $form->addValue('fields', self::getField_isHiddenFromMenu());
         $form->addValue('fields', self::getField_groupEnd());
 
         // send
@@ -48,10 +48,9 @@ class ContentSectionForm
         $form->addValue('fields', self::getField_title('Edit content section'));
         $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_name());
-        //$form->addValue('fields', self::getField_type());
+        $form->addValue('fields', self::getField_type());
         $form->addValue('fields', self::getField_form());
-
-        //$form->addValue('fields', self::getField_isHiddenFromMenu());
+        $form->addValue('fields', self::getField_isHiddenFromMenu());
         $form->addValue('fields', self::getField_groupEnd());
 
         // send
@@ -91,7 +90,7 @@ class ContentSectionForm
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
         $field->setId(CoreConfig::COREFORM_CONTENTSECTION.'--title');
         $field->setValue('title', $sTitle);
-        $field->setValue('description', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");
+        $field->setValue('description', "With content sections you allow different groups of users to enter actual content via the CMS. Content sections are added to the side menu by default but can be hidden if their only purpose is to use them as centralized helper values.");
 
         // send
         return $field;
@@ -120,7 +119,7 @@ class ContentSectionForm
         $field->setId(CoreConfig::COREFORM_CONTENTSECTION.'--name');
         $field->setValue('label', 'Name');
         $field->setValue('placeholder', "Enter the name");
-        $field->setValue('description', "The entity is preferably unique");
+        $field->setValue('description', "The content name is preferably unique");
 
             // 2. setup value
             $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
@@ -154,28 +153,28 @@ class ContentSectionForm
     {
         // 1. create and setup field
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
-        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type');
+        $field->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type');
         $field->setValue('label', 'Type');
 
             // 2. setup value
             $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-            $value->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value');
+            $value->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3a. connect to property
                 $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--type');
+                $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
                 // 3b. set options
                 $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-value');
+                $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-value');
                 $option->setValue('key', 'single');
                 $option->setValue('value', 'Single');
                 $value->addValue('options', $option);
 
                 $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-entity');
+                $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-entity');
                 $option->setValue('key', 'group');
                 $option->setValue('value', 'Group');
                 $value->addValue('options', $option);
@@ -205,7 +204,7 @@ class ContentSectionForm
 
                 // 3. connect to property
                 $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--form');
+                $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--form');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
                 // load
@@ -219,7 +218,7 @@ class ContentSectionForm
 
                     //output('$entity->getValue(\'name\')', $entity->getValue('name'));
                     $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-                    $option->setId(CoreConfig::COREFORM_CONTENTSECTIONP.'--extends_value_options-valuesettings-collection-'.$entity->getId());
+                    $option->setId(CoreConfig::COREFORM_CONTENTSECTION.'--form_value_options-valuesettings-collection-'.$entity->getId());
                     $option->setValue('key', $entity->getEntityTypeName().'.'.$entity->getId());
                     $option->setValue('value', $entity->getValue('name'));
                     $value->addValue('options', $option);
@@ -233,24 +232,24 @@ class ContentSectionForm
     }
 
     /**
-     * Get field: isAbstract
+     * Get field: isHiddenFromMenu
      */
-    private static function getField_isHidden()
+    private static function getField_isHiddenFromMenu()
     {
         // 1. create and setup field
         $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX);
-        $field->setId(CoreConfig::COREFORM_CONTENTSECTION.'--isHidden');
-        $field->setValue('label', 'Configuration');
-        $field->setValue('option', 'Skip dedicated table for this entity');
+        $field->setId(CoreConfig::COREFORM_CONTENTSECTION.'--isHiddenFromMenu');
+        $field->setValue('label', 'Visibility');
+        $field->setValue('option', 'Hide from menu');
 
             // 2. setup value
             $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-            $value->setId(CoreConfig::COREFORM_CONTENTSECTION.'--isHidden');
+            $value->setId(CoreConfig::COREFORM_CONTENTSECTION.'--isHiddenFromMenu');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3. connect to property
                 $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-                $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--isHidden');
+                $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--isHiddenFromMenu');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
             // add

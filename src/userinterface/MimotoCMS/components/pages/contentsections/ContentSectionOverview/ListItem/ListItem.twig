@@ -1,12 +1,17 @@
+{% if Aimless.data('form') is not empty %}
+    {% set sFormInfo = Aimless.data('form.name') %}
+{% else %}
+    {% set sFormInfo = 'No form selected yet' %}
+{% endif %}
 {{
     Aimless.module('Mimoto.CMS.ListItemModule',
     {
         label: Aimless.data('name'),
         label_realtime: Aimless.realtime('name'),
-        sublabel: Aimless.data('type'),
+        sublabel: 'type='~Aimless.data('type')~', form='~sFormInfo,
         sublabel_realtime:  Aimless.realtime('type'),
         button_label: 'View',
-        button_action: 'Mimoto.CMS.contentView('~Aimless.meta('id')~');',
+        button_action: 'Mimoto.CMS.contentSectionView('~Aimless.meta('id')~');',
         button_type: 'secondary'
     })
 }}
