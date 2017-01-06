@@ -1,47 +1,19 @@
-<div {{ Aimless.field() }} class="form-component">
-  <label for="" class="form-component-title">{{ Aimless.data('label') }} <span class="form-component-title-information">{% if Aimless.data('optional') %}(optioneel){% endif %}</span></label>
-
-  <div class="form-component-content">
-    <div class="form-component-element">
-      <input {{ Aimless.input() }} type="text" class="form-input" placeholder="{{ Aimless.data('placeholder') }}" value="{{ Aimless.value() }}"/>
-      <p {{ Aimless.error() }} class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
-    </div>
-    <p class="form-component-description">{{ Aimless.data('description') }}</p>
-  </div>
-</div>
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "textblock"} %}
+    {% block form_component_element %}
+        <textarea class="MimotoCMS_forms_input_Textblock" name=""></textarea>
+    {% endblock %}
+{% endembed %}
 
 {#
-  <div class="form-component form-component--validating">
-    <label for="" class="form-component-title">Label <span class="form-component-title-information">(optioneel)</span><span class="form-component-title-icon form-component-title-icon--loading"></span></label>
-
-    <div class="form-component-content">
-      <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
-      </div>
-      <p class="form-component-description">Mag geen scheldwoorden bevatten</p>
+<div class="MimotoCMS_forms_FormComponent js-form-component js-form-component-dropdown">
+    <div class="MimotoCMS_forms_FormComponent-header">
+        <label for="food" class="MimotoCMS_forms_FormComponent-title">Schrijf hier een verhaal <svg class="js-error-icon MimotoCMS_forms_FormComponent-title-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href=""></use></svg></label>
     </div>
-  </div>
-
-  <div class="form-component form-component--validated">
-    <label for="" class="form-component-title">Campagne naam <svg class="form-component-title-icon form-component-title-icon--checkmark"><use xlink:href='#ico-checkmark'/></svg></label>
-
-    <div class="form-component-content">
-      <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
-      </div>
-      <p class="form-component-description">Mag geen scheldwoorden bevatten</p>
+    <div class="MimotoCMS_forms_FormComponent-content ">
+        <div class="MimotoCMS_forms_FormComponent-element js-error-parent">
+            <textarea class="MimotoCMS_forms_input_Textblock" name=""></textarea>
+        </div>
+        <p class="MimotoCMS_forms_FormComponent-description">Het plot is erg belangrijk</p>
     </div>
-  </div>
-
-  <div class="form-component form-component--has-error">
-    <label for="" class="form-component-title">Campagne naam <svg class="form-component-title-icon form-component-title-icon--warning"><use xlink:href='#ico-warning'/></svg></label>
-
-    <div class="form-component-content">
-      <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
-        <p {{ Aimless.error() }} class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
-      </div>
-      <p class="form-component-description">Mag geen scheldwoorden bevatten</p>
-    </div>
-  </div>
+</div>
 #}
