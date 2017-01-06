@@ -31,7 +31,7 @@ class FormController
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_FormOverview');
 
         // setup
-        $page->addSelection('forms', 'Mimoto.CMS_forms_FormOverview_ListItem', $aEntities);
+        $page->addSelection('forms', $aEntities, 'Mimoto.CMS_forms_FormOverview_ListItem');
 
         // setup page
         $page->setVar('pageTitle', array(

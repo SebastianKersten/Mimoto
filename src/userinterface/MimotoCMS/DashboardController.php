@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\UserInterface\MimotoCMS;
 
+// Mimoto classes
+use Mimoto\Core\InterfaceUtils;
+
 // Silex classes
 use Silex\Application;
 
@@ -19,6 +22,9 @@ class DashboardController
     {
         // create
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_dashboard_Overview');
+
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
 
         // output
         return $page->render();

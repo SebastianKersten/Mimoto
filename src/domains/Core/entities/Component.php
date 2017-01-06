@@ -93,6 +93,15 @@ class Component
         // define
         $aCoreComponents = [
 
+            // interface
+
+            (object) array(
+                'name' => 'MimotoCMS_interface_Menu_MenuButton',
+                'file' => 'MimotoCMS/components/interface/Menu/MenuButton/MenuButton.twig',
+                'conditionals' => []
+            ),
+
+
             // dashboard
 
             (object) array(

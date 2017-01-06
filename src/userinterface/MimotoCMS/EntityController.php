@@ -34,7 +34,7 @@ class EntityController
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityOverview');
 
         // setup
-        $page->addSelection('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem', $aEntities);
+        $page->addSelection('entities', $aEntities, 'Mimoto.CMS_entities_EntityOverview_ListItem');
 
         // setup page
         $page->setVar('pageTitle', array(

@@ -4,6 +4,7 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
+use Mimoto\Core\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 
 // Silex classes
@@ -27,7 +28,10 @@ class ContentSectionController
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_contentsections_ContentSectionOverview');
 
         // setup
-        $page->addSelection('contentSections', 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem', $aContentSections);
+        $page->addSelection('contentSections', $aContentSections, 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem');
+
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
 
         // setup page
         $page->setVar('pageTitle', array(

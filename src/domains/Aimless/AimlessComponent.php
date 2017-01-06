@@ -110,13 +110,17 @@ class AimlessComponent
         $this->_aVars[$sKey] = $value;
     }
     
-    public function addSelection($sKey, $sComponentName, $aSelection)
+    public function addSelection($sKey, $aEntities, $sComponentName = null)
     {
+        // #todo - check for double property name | or separate selections from collections
+
+
         $this->_aSelections[$sKey] = (object) array(
             'sComponentName' => $sComponentName,
-            'selection' => $aSelection
+            'aEntities' => $aEntities
         );
     }
+
 
     /**
      * @param $sKey For use in general layouts
@@ -162,9 +166,6 @@ class AimlessComponent
 
     public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null, $sWrapperName = null)
     {
-        // validate
-        if (empty($this->_entity)) error("AimlessComponent says: The entity is not set. Please supply one.");
-
         // find
         $nSeperatorPos = strpos($sPropertySelector, '.');
 
@@ -177,37 +178,67 @@ class AimlessComponent
         //$sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
 
 
-        // read and send
-        if (!$bRenderData)
+        if (!empty($this->_entity))
         {
 
-            // #todo - in geval van getStructure (connections -> anders oppakken
-            // #todo - connections in ViewModel gooien
+            // read and send
+            if (!$bRenderData)
+            {
 
-            return $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
+                // #todo - in geval van getStructure (connections -> anders oppakken
+                // #todo - connections in ViewModel gooien
+
+                return $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
+            }
+
+            if ($this->_entity->hasProperty($sMainPropertyName))
+            {
+
+                // render
+                switch ($this->_entity->getPropertyType($sMainPropertyName))
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                        // read, render and send
+                        return $this->renderValueProperty($sMainPropertyName);
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                        // read, render and send
+                        return $this->renderEntityProperty($sPropertySelector, $sComponentName, $sWrapperName);
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                        // read, render and send
+                        return $this->renderCollectionProperty($sPropertySelector, $sComponentName, $sWrapperName);
+                        break;
+                }
+            }
         }
-
-        // render
-        switch($this->_entity->getPropertyType($sMainPropertyName))
+        
+        if (isset($this->_aSelections[$sMainPropertyName]))
         {
-            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+            // load
+            $selection = $this->_aSelections[$sMainPropertyName];
 
-                // read, render and send
-                return $this->renderValueProperty($sMainPropertyName);
-                break;
 
-            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+            if (empty($sComponentName))
+            {
+                if (isset($selection->sComponentName))
+                {
+                    $sComponentName = $selection->sComponentName;
+                }
+            }
 
-                // read, render and send
-                return $this->renderEntityProperty($sPropertySelector, $sComponentName, $sWrapperName);
-                break;
-
-            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-
-                // read, render and send
-                return $this->renderCollectionProperty($sPropertySelector, $sComponentName, $sWrapperName);
-                break;
+            // render and send
+            return $this->renderCollection($selection->aEntities, null, $sComponentName);
         }
+
+        // report missing property
+        $GLOBALS['Mimoto.Log']->silent("Property or selection no found", "The property or selection with name <b>$sMainPropertyName</b> doens't seem to be available.");
+        return '';
     }
 
     /**
@@ -329,7 +360,7 @@ class AimlessComponent
         $selection = $this->_aSelections[$sSelectionName];
         
         // render and send
-        return $this->renderCollection($selection->selection, null, $selection->sComponentName);
+        return $this->renderCollection($selection->aEntities, null, $selection->sComponentName);
     }
 
 
@@ -389,7 +420,7 @@ class AimlessComponent
                 $sWrapper = (!empty($sWrapperName)) ? ' data-aimless-wrapper="'.$sWrapperName.'"' : '';
 
                 // send
-                return 'data-aimless-selection="'.$this->_aSelections[$sPropertyName]->selection->getCriteria()['type'].'"'.$sFilter.$sComponent.$sWrapper;
+                return 'data-aimless-selection="'.$this->_aSelections[$sPropertyName]->aEntities->getCriteria()['type'].'"'.$sFilter.$sComponent.$sWrapper;
             }
                 
         }

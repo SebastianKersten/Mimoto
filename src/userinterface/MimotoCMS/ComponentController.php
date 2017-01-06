@@ -32,7 +32,7 @@ class ComponentController
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_components_ComponentOverview');
 
         // setup
-        $page->addSelection('components', 'Mimoto.CMS_components_ComponentOverview_ListItem', $aComponents);
+        $page->addSelection('components', $aComponents, 'Mimoto.CMS_components_ComponentOverview_ListItem');
 
         // setup page
         $page->setVar('pageTitle', array(

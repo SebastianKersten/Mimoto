@@ -3,18 +3,13 @@
 
         {# #todo - make menu editable, core elements are always there behind 'settings' or 'tools' (1 page with subpages) #}
 
+        {# {{ Aimless.hideOnEmpty('menuContentSections') }} #}
+        <ul class="MimotoCMS_interface_Menu-group" {{ Aimless.realtime('menuContentSections') }}>
+            {{ Aimless.render('menuContentSections', 'MimotoCMS_interface_Menu_MenuButton') }}
+        </ul>
 
-        {#<ul class="MimotoCMS_interface_Menu-group" {{ Aimless.hideOnEmpty('contentSections') }}>
 
-            {# move to MenuButton class
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/contacts" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-team'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Contacts</span>
-                </a>
-            </li># }
-
-        </ul>#}
+        {# addProperty() #}
 
 
 

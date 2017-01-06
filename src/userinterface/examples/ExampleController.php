@@ -251,7 +251,7 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('article_overview');
         
         // setup
-        $component->addSelection('articles', 'feeditem', $aArticles);
+        $component->addSelection('articles', $aArticles, 'feeditem');
         
         // render and send
         return $component->render();
@@ -266,7 +266,7 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('feed');
         
         // setup
-        $component->addSelection('articles', 'feeditem_type', $aArticles);
+        $component->addSelection('articles', $aArticles, 'feeditem_type');
         
         // render and send
         return $component->render();
@@ -330,7 +330,7 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('client_overview');
         
         // setup
-        $component->addSelection('clients', 'client_listitem', $aClients);
+        $component->addSelection('clients', $aClients, 'client_listitem');
         
         // render and send
         return $component->render();
@@ -345,7 +345,7 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('subproject_overview');
         
         // setup
-        $component->addSelection('subprojects', 'subproject_examplelistitem', $aSubprojects);
+        $component->addSelection('subprojects', $aSubprojects, 'subproject_examplelistitem');
         
         // render and send
         return $component->render();
@@ -556,7 +556,7 @@ class ExampleController
         $component = $app['Mimoto.Aimless']->createComponent('article_overview');
         
         // setup
-        $component->addSelection('articles', 'feeditem_type', $aArticles);
+        $component->addSelection('articles', $aArticles, 'feeditem_type');
         
         // render and send
         return $component->render();

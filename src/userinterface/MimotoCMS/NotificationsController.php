@@ -29,7 +29,7 @@ class NotificationsController
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_notifications_NotificationOverview');
         
         // setup
-        $component->addSelection('notifications', 'Mimoto.CMS_notifications_Notification', $aNotifications);
+        $component->addSelection('notifications', $aNotifications, 'Mimoto.CMS_notifications_Notification');
 
         // setup page
         $component->setVar('pageTitle', array(
@@ -71,7 +71,7 @@ class NotificationsController
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_notifications_NotificationOverviewSmall');
 
         // setup
-        $component->addSelection('notifications', 'Mimoto.CMS_notifications_NotificationSmall', $aNotifications);
+        $component->addSelection('notifications', $aNotifications, 'Mimoto.CMS_notifications_NotificationSmall');
 
         // render and send
         return new JsonResponse((object) array(

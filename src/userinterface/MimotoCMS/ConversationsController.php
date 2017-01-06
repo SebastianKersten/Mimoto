@@ -29,7 +29,7 @@ class ConversationsController
 //        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_conversations_ConversationOverview');
 //
 //        // setup
-//        $component->addSelection('conversations', 'Mimoto.CMS_notifications_Notification', $aNotifications);
+//        $component->addSelection('conversations', $aNotifications, 'Mimoto.CMS_notifications_Notification');
 //
 //        // setup page
 //        $component->setVar('pageTitle', array(
@@ -71,7 +71,7 @@ class ConversationsController
         //$component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_conversations_ConversationOverviewSmall');
 
         // setup
-        //$component->addSelection('conversations', 'Mimoto.CMS_conversations_ConversationSmall', $aConversations);
+        //$component->addSelection('conversations', $aConversations, 'Mimoto.CMS_conversations_ConversationSmall');
 
         // render and send
         return new JsonResponse((object) array(
