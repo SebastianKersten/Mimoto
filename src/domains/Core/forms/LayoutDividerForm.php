@@ -4,6 +4,7 @@
 namespace Mimoto\Core\forms;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
 
@@ -58,7 +59,7 @@ class LayoutDividerForm
     private static function initForm($sFormName)
     {
         // init
-        $form = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM);
+        $form = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
 
         // setup
         $form->setId($sFormName);
@@ -75,7 +76,7 @@ class LayoutDividerForm
     private static function getField_title($sTitle)
     {
         // create and setup
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
         $field->setId(CoreConfig::COREFORM_LAYOUT_DIVIDER.'--title');
         $field->setValue('title', $sTitle);
         $field->setValue('description', "Add dividers to make a form more pleasant and scannable for the content editor");

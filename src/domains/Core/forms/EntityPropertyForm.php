@@ -4,6 +4,7 @@
 namespace Mimoto\Core\forms;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
@@ -66,7 +67,7 @@ class EntityPropertyForm
     private static function initForm($sFormName)
     {
         // init
-        $form = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM);
+        $form = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
 
         // setup
         $form->setId($sFormName);
@@ -83,7 +84,7 @@ class EntityPropertyForm
     private static function getField_title($sTitle)
     {
         // create and setup
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--title');
         $field->setValue('title', $sTitle);
         $field->setValue('description', "Entities are composed of 'properties'. Add properties to your entity and decide what type they are. A property can have three types: <i>value</i>, <i>entity</i> or <i>collection</i>");
@@ -98,7 +99,7 @@ class EntityPropertyForm
     private static function getField_groupStart()
     {
         // create
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
         $field->setId(CoreConfig::COREFORM_ENTITY.'--groupstart');
 
         // send
@@ -111,24 +112,24 @@ class EntityPropertyForm
     private static function getField_name()
     {
         // 1. create and setup field
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name');
         $field->setValue('label', 'Name');
         $field->setValue('placeholder', "Property name");
         $field->setValue('description', "The property name should be unique");
 
             // 2. setup value
-            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
             $value->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3. connect to property
-                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--name');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
                 // validation rule #1
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation1');
                 $validationRule->setValue('key', 'maxchars');
                 $validationRule->setValue('value', 50);
@@ -136,7 +137,7 @@ class EntityPropertyForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #2
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation2');
                 $validationRule->setValue('key', 'minchars');
                 $validationRule->setValue('value', 1);
@@ -144,7 +145,7 @@ class EntityPropertyForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #3
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation3');
                 $validationRule->setValue('key', 'regex_custom');
                 $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
@@ -152,7 +153,7 @@ class EntityPropertyForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #4
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation4');
                 $validationRule->setValue('key', 'api');
                 $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
@@ -172,33 +173,33 @@ class EntityPropertyForm
     private static function getField_type()
     {
         // 1. create and setup field
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type');
         $field->setValue('label', 'Type');
 
             // 2. setup value
-            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
             $value->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3. connect to property
-                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--type');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
-                $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-value');
                 $option->setValue('key', MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE);
                 $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE);
                 $value->addValue('options', $option);
 
-                $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-entity');
                 $option->setValue('key', MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY);
                 $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY);
                 $value->addValue('options', $option);
 
-                $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-collection');
                 $option->setValue('key', MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION);
                 $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION);
@@ -217,7 +218,7 @@ class EntityPropertyForm
     private static function getField_groupEnd()
     {
         // create
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--groupend');
 
         // send

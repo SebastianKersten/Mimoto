@@ -1,8 +1,10 @@
 <?php
 
 
+use Mimoto\Mimoto;
+
 require __DIR__.'/../../../src/app.php';
-$GLOBALS['Mimoto.Data'] = $app['Mimoto.Data'];
+Mimoto::setService('data', $app['Mimoto.Data']);
 
 /**
  * MimotoData - Test

@@ -4,6 +4,7 @@
 namespace Mimoto\Form;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoDataUtils;
@@ -343,7 +344,7 @@ class MimotoFormService
             $bIsNew = (empty($entityInfo->entity->getId())) ? true : false;
 
             // store
-            $GLOBALS['Mimoto.Data']->store($entityInfo->entity);
+            Mimoto::service('data')->store($entityInfo->entity);
 
 
             // compose response
@@ -373,13 +374,13 @@ class MimotoFormService
                 $aInstructionParts = explode('.', $sInstruction);
 
                 // load
-                $parentEntity = $GLOBALS['Mimoto.Data']->get($aInstructionParts[0], $aInstructionParts[1]);
+                $parentEntity = Mimoto::service('data')->get($aInstructionParts[0], $aInstructionParts[1]);
 
                 // add
                 $parentEntity->addValue($aInstructionParts[2], $entityInfo->entity);
 
                 // store
-                $GLOBALS['Mimoto.Data']->store($parentEntity);
+                Mimoto::service('data')->store($parentEntity);
             }
         }
 
@@ -491,7 +492,7 @@ class MimotoFormService
                     $sPropertyType = $this->_MimotoEntityConfigService->getPropertyTypeById($entityPropertyId);
 
                     // auto create
-                    if (!isset($orderedValues->entities[$sEntityName])) $orderedValues->entities[$sEntityName] = $GLOBALS['Mimoto.Data']->create($sEntityName);
+                    if (!isset($orderedValues->entities[$sEntityName])) $orderedValues->entities[$sEntityName] = Mimoto::service('data')->create($sEntityName);
 
                     // prepare
                     $xEntityId = $orderedValues->entities[$sEntityName]->getId();

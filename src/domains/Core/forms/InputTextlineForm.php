@@ -4,6 +4,7 @@
 namespace Mimoto\Core\forms;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
 
@@ -70,7 +71,7 @@ class InputTextlineForm
     private static function initForm($sFormName)
     {
         // init
-        $form = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM);
+        $form = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
 
         // setup
         $form->setId($sFormName);
@@ -87,7 +88,7 @@ class InputTextlineForm
     private static function getField_title($sTitle)
     {
         // create and setup
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--title');
         $field->setValue('title', $sTitle);
         $field->setValue('description', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");
@@ -102,7 +103,7 @@ class InputTextlineForm
     private static function getField_groupStart()
     {
         // create
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--groupstart');
 
         // send
@@ -115,24 +116,24 @@ class InputTextlineForm
     private static function getField_label()
     {
         // 1. create and setup field
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label');
         $field->setValue('label', 'Label');
         $field->setValue('placeholder', "Enter the input's label");
         $field->setValue('description', "Clarify what is required from the content editor");
 
             // 2. setup value
-            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
             $value->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3. connect to property
-                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
                 // validation rule #1
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation1');
                 $validationRule->setValue('key', 'maxchars');
                 $validationRule->setValue('value', 50);
@@ -140,7 +141,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #2
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation2');
                 $validationRule->setValue('key', 'minchars');
                 $validationRule->setValue('value', 1);
@@ -148,7 +149,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #3
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation3');
                 $validationRule->setValue('key', 'regex_custom');
                 $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
@@ -156,7 +157,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #4
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation4');
                 $validationRule->setValue('key', 'api');
                 $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
@@ -176,24 +177,24 @@ class InputTextlineForm
     private static function getField_description()
     {
         // 1. create and setup field
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description');
         $field->setValue('label', 'Description');
         $field->setValue('placeholder', "Enter the input's description");
         $field->setValue('description', "Clarify what is required from the content editor");
 
             // 2. setup value
-            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
             $value->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3. connect to property
-                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
                 // validation rule #1
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value_validation1');
                 $validationRule->setValue('key', 'maxchars');
                 $validationRule->setValue('value', 50);
@@ -201,7 +202,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #2
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value_validation2');
                 $validationRule->setValue('key', 'minchars');
                 $validationRule->setValue('value', 1);
@@ -209,7 +210,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #3
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value_validation3');
                 $validationRule->setValue('key', 'regex_custom');
                 $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
@@ -217,7 +218,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #4
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value_validation4');
                 $validationRule->setValue('key', 'api');
                 $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
@@ -237,24 +238,24 @@ class InputTextlineForm
     private static function getField_placeholder()
     {
         // 1. create and setup field
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder');
         $field->setValue('label', 'Placeholder');
         $field->setValue('placeholder', "Enter the input's placeholder");
         $field->setValue('description', "Clarify what is required from the content editor");
 
             // 2. setup value
-            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
             $value->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3. connect to property
-                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
                 // validation rule #1
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value_validation1');
                 $validationRule->setValue('key', 'maxchars');
                 $validationRule->setValue('value', 50);
@@ -262,7 +263,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #2
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value_validation2');
                 $validationRule->setValue('key', 'minchars');
                 $validationRule->setValue('value', 1);
@@ -270,7 +271,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #3
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value_validation3');
                 $validationRule->setValue('key', 'regex_custom');
                 $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
@@ -278,7 +279,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #4
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value_validation4');
                 $validationRule->setValue('key', 'api');
                 $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
@@ -298,24 +299,24 @@ class InputTextlineForm
     private static function getField_prefix()
     {
         // 1. create and setup field
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix');
         $field->setValue('label', 'Prefix');
         $field->setValue('placeholder', "Enter the input's prefix");
         $field->setValue('description', "Clarify what is required from the content editor");
 
             // 2. setup value
-            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
             $value->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3. connect to property
-                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
                 // validation rule #1
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value_validation1');
                 $validationRule->setValue('key', 'maxchars');
                 $validationRule->setValue('value', 50);
@@ -323,7 +324,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #2
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value_validation2');
                 $validationRule->setValue('key', 'minchars');
                 $validationRule->setValue('value', 1);
@@ -331,7 +332,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #3
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value_validation3');
                 $validationRule->setValue('key', 'regex_custom');
                 $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
@@ -339,7 +340,7 @@ class InputTextlineForm
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #4
-                $validationRule = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value_validation4');
                 $validationRule->setValue('key', 'api');
                 $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
@@ -359,27 +360,27 @@ class InputTextlineForm
 //    private static function getField_vartype()
 //    {
 //        // 1. create and setup field
-//        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
+//        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
 //        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype');
 //        $field->setValue('label', 'Var type');
 //
 //            // 2. setup value
-//            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+//            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
 //            $value->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype_value');
 //            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 //
 //                // 3. connect to property
-//                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+//                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
 //                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--vartype');
 //                $value->setValue('entityproperty', $connectedEntityProperty);
 //
-//                $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
+//                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
 //                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype_value_options-value');
 //                $option->setValue('key', CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 //                $option->setValue('value', CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 //                $value->addValue('options', $option);
 //
-//                $option = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
+//                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
 //                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype_value_options-entity');
 //                $option->setValue('key', CoreConfig::INPUTVALUE_VARTYPE_VARNAME);
 //                $option->setValue('value', CoreConfig::INPUTVALUE_VARTYPE_VARNAME);
@@ -398,7 +399,7 @@ class InputTextlineForm
     private static function getField_groupEnd()
     {
         // create
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--groupend');
 
         // send

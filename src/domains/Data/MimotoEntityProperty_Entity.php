@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntityProperty;
 use Mimoto\Data\MimotoEntityPropertyInterface;
 use Mimoto\Data\MimotoDataUtils;
@@ -297,7 +298,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
             if (MimotoDataUtils::isValidEntityId($this->_data->currentEntity->getChildId()))
             {
                 // load
-                $this->_data->currentEntity->setEntity($GLOBALS['Mimoto.Data']->get($this->_data->currentEntity->getChildEntityTypeName(), $this->_data->currentEntity->getChildId()));
+                $this->_data->currentEntity->setEntity(Mimoto::service('data')->get($this->_data->currentEntity->getChildEntityTypeName(), $this->_data->currentEntity->getChildId()));
             }
         }
         

@@ -4,6 +4,7 @@
 namespace Mimoto\EntityConfig;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
@@ -198,7 +199,7 @@ class MimotoEntityConfigService
                     $connection = $aChanges['properties']->added[$nConnectionIndex];
 
                     // load property
-                    $entityProperty = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
+                    $entityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
 
                     if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
                     {
@@ -230,7 +231,7 @@ class MimotoEntityConfigService
                     $connection = $aChanges['properties']->removed[$nConnectionIndex];
 
                     // load property
-                    $entityProperty = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
+                    $entityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
 
                     if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
                     {
@@ -397,7 +398,7 @@ class MimotoEntityConfigService
         if ($nResultCount != 1) return null;
 
         // load
-        $entity = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $aResults[0]['parent_id']);
+        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $aResults[0]['parent_id']);
 
         // send
         return $entity;
@@ -437,7 +438,7 @@ class MimotoEntityConfigService
         if ($nResultCount != 1) return null;
 
         // load
-        $entity = $GLOBALS['Mimoto.Data']->get($sParentEntityTypeId, $aResults[0]['parent_id']);
+        $entity = Mimoto::service('data')->get($sParentEntityTypeId, $aResults[0]['parent_id']);
 
         // send
         return $entity;
@@ -473,7 +474,7 @@ class MimotoEntityConfigService
     private function createValuePropertySettings(MimotoEntity $entityProperty)
     {
         // 1. init property setting
-        $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
         // 2. setup property setting
         $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_VALUE_TYPE);
@@ -481,19 +482,19 @@ class MimotoEntityConfigService
         $entityPropertySetting->setValue('value', CoreConfig::DATA_VALUE_TEXTLINE);
 
         // 3. persist property setting
-        $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
+        Mimoto::service('data')->store($entityPropertySetting);
 
         // 4. connect property setting to property
         $entityProperty->addValue('settings', $entityPropertySetting);
 
         // 5. persist connection
-        $GLOBALS['Mimoto.Data']->store($entityProperty);
+        Mimoto::service('data')->store($entityProperty);
     }
 
     private function createEntityPropertySettings(MimotoEntity $entityProperty)
     {
         // init
-        $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
         // setup
         $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
@@ -501,19 +502,19 @@ class MimotoEntityConfigService
         $entityPropertySetting->setValue('value', '');
 
         // create
-        $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
+        Mimoto::service('data')->store($entityPropertySetting);
 
         // connect
         $entityProperty->addValue('settings', $entityPropertySetting);
 
         // store
-        $GLOBALS['Mimoto.Data']->store($entityProperty);
+        Mimoto::service('data')->store($entityProperty);
     }
 
     private function createCollectionPropertySettings(MimotoEntity $entityProperty)
     {
         // init
-        $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
         // setup
         $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES);
@@ -521,13 +522,13 @@ class MimotoEntityConfigService
         $entityPropertySetting->setValue('value', '');
 
         // create
-        $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
+        Mimoto::service('data')->store($entityPropertySetting);
 
         // connect
         $entityProperty->addValue('settings', $entityPropertySetting);
 
         // init
-        $entityPropertySetting = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
         // setup
         $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES);
@@ -535,13 +536,13 @@ class MimotoEntityConfigService
         $entityPropertySetting->setValue('value', false);
 
         // create
-        $GLOBALS['Mimoto.Data']->store($entityPropertySetting);
+        Mimoto::service('data')->store($entityPropertySetting);
 
         // connect
         $entityProperty->addValue('settings', $entityPropertySetting);
 
         // store
-        $GLOBALS['Mimoto.Data']->store($entityProperty);
+        Mimoto::service('data')->store($entityProperty);
     }
 
 
@@ -565,19 +566,19 @@ class MimotoEntityConfigService
     public function onInputFieldCreated(MimotoEntity $eInput)
     {
         // 1. init property setting
-        $eValue = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+        $eValue = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
 
         // 2. setup property setting
         $eValue->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
         // 3. persist property setting
-        $GLOBALS['Mimoto.Data']->store($eValue);
+        Mimoto::service('data')->store($eValue);
 
         // 4. connect property setting to property
         $eInput->setValue('value', $eValue);
 
         // 5. persist connection
-        $GLOBALS['Mimoto.Data']->store($eInput);
+        Mimoto::service('data')->store($eInput);
     }
 
 }

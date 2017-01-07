@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntityProperty;
 use Mimoto\Data\MimotoEntityPropertyInterface;
@@ -485,7 +486,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
             if (empty($connection->getEntity()))
             {
                 // load and store
-                $connection->setEntity($GLOBALS['Mimoto.Data']->get($connection->getChildEntityTypeName(), $connection->getChildId()));
+                $connection->setEntity(Mimoto::service('data')->get($connection->getChildEntityTypeName(), $connection->getChildId()));
             }
 
             // load

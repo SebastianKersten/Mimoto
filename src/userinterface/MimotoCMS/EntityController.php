@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\UserInterface\MimotoCMS;
 
+// Mimoto classes
+use Mimoto\Mimoto;
+
 // Silex classes
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
@@ -28,7 +31,7 @@ class EntityController
     public function viewEntityOverview(Application $app)
     {
         // load
-        $aEntities = $app['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_ENTITY]);
+        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
 
         // create
         $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityOverview');
@@ -53,7 +56,7 @@ class EntityController
     public function entityNew(Application $app)
     {
         // create dummy
-        $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITY);
+        $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITY);
 
         // 1. create
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
@@ -68,7 +71,7 @@ class EntityController
     public function entityView(Application $app, $nEntityId)
     {
         // 1. load requested entity
-        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
         // 2. check if entity exists
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
@@ -100,7 +103,7 @@ class EntityController
     public function entityEdit(Application $app, $nEntityId)
     {
         // 1. load
-        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
         // 2. validate
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
@@ -132,7 +135,7 @@ class EntityController
     public function entityPropertyNew(Application $app, $nEntityId)
     {
         // create dummy
-        $entityProperty = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $entityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
 
         // 1. create
         $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
@@ -148,7 +151,7 @@ class EntityController
     public function entityPropertyEdit(Application $app, $nEntityPropertyId)
     {
         // 1. load
-        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
+        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
 
         // 2. validate
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
@@ -166,7 +169,7 @@ class EntityController
     public function entityPropertyDelete(Application $app, $nEntityPropertyId)
     {
         // 1. load
-        $entityProperty = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
+        $entityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
 
         // 2. load settings
         $aEntityPropertySetting = $entityProperty->getValue('settings');
@@ -187,7 +190,7 @@ class EntityController
                     $setting->setValue(MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE, null);
 
                     // persist
-                    $app['Mimoto.Data']->store($setting);
+                    Mimoto::service('data')->store($setting);
 
                     break;
 
@@ -206,7 +209,7 @@ class EntityController
                     }
 
                     // persist
-                    $app['Mimoto.Data']->store($setting);
+                    Mimoto::service('data')->store($setting);
 
                     break;
             }
@@ -215,11 +218,11 @@ class EntityController
             $entityProperty->removeValue('settings', $setting);
 
             // delete connection
-            $app['Mimoto.Data']->delete($setting);
+            Mimoto::service('data')->delete($setting);
         }
 
         // 4. persist removed connections
-        $app['Mimoto.Data']->store($entityProperty);
+        Mimoto::service('data')->store($entityProperty);
 
         // 5. load
         $parentEntity = $app['Mimoto.Config']->getParentEntity($entityProperty);
@@ -228,10 +231,10 @@ class EntityController
         $parentEntity->removeValue('properties', $entityProperty);
 
         // 7. persist removed
-        $app['Mimoto.Data']->store($parentEntity);
+        Mimoto::service('data')->store($parentEntity);
 
         // 5. delete property
-        $app['Mimoto.Data']->delete($entityProperty);
+        Mimoto::service('data')->delete($entityProperty);
 
         // 6. send
         return new JsonResponse((object) array('result' => 'EntityProperty deleted! '.date("Y.m.d H:i:s")), 200);
@@ -243,7 +246,7 @@ class EntityController
     public function entityPropertySettingEdit(Application $app, $nEntityPropertySettingId)
     {
         // 1. load
-        $entity = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, $nEntityPropertySettingId);
+        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, $nEntityPropertySettingId);
 
         // 2. validate
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
@@ -342,7 +345,7 @@ class EntityController
             while($bHasParent)
             {
                 // load
-                $parent = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $nParentId);
+                $parent = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nParentId);
 
                 // load
                 $entityExtends = $parent->getValue('extends');
@@ -455,7 +458,7 @@ class EntityController
         foreach ($aResults as $row)
         {
             // load
-            $offspring = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $row['parent_id']);
+            $offspring = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $row['parent_id']);
 
             // compose and store
             $aChildExtensions[] = (object) array(
@@ -502,7 +505,7 @@ class EntityController
         foreach ($aResults as $row)
         {
             // load
-            $offspring = $GLOBALS['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITY, $row['parent_id']);
+            $offspring = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $row['parent_id']);
 
             // compose and store
             $aChildConnection[] = (object) array(

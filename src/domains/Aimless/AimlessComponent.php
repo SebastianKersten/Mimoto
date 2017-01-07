@@ -217,7 +217,7 @@ class AimlessComponent
                 }
             }
         }
-        
+
         if (isset($this->_aSelections[$sMainPropertyName]))
         {
             // load

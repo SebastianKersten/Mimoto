@@ -20,7 +20,14 @@ use Mimoto\User\MimotoUserServiceProvider;
  */
 class Mimoto
 {
-    
+
+    private static $_aServices = [];
+    private static $_aValues = [];
+
+    //Mimoto::service('data')->get
+
+
+
     /**
      * Constructor
      * @param Application $app
@@ -133,4 +140,33 @@ class Mimoto
         $app->get('/mimoto.cms/dynamic/avatar.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageAvatar');
     }
 
+
+    public static function service($sServiceName)
+    {
+        if (isset(self::$_aServices[$sServiceName]))
+        {
+            return self::$_aServices[$sServiceName];
+        }
+    }
+
+    public static function value($sServiceName)
+    {
+        if (isset(self::$_aServices[$sServiceName]))
+        {
+            return self::$_aServices[$sServiceName];
+        }
+    }
+
+
+    public static function setService($sServiceName, $service)
+    {
+        // store
+        self::$_aServices[$sServiceName] = $service;
+    }
+
+    public static function setValue($sValueName, $value)
+    {
+        // store
+        self::$_aValues[$sValueName] = $value;
+    }
 }

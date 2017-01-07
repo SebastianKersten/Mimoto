@@ -43,7 +43,7 @@ class MimotoEntityConfigRepository
     public function __construct()
     {
         // store
-        //$this->_MimotoLogService = new MimotoLogService($GLOBALS['Mimoto.Data']); // #todo temp
+        //$this->_MimotoLogService = new MimotoLogService(Mimoto::service('data')); // #todo temp
 
         // prepare
         $this->_aEntities = CoreConfig::getCoreEntityConfigs();

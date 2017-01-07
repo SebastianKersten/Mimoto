@@ -4,6 +4,7 @@
 namespace Mimoto\Core\forms;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
@@ -48,7 +49,7 @@ class EntityPropertyForm_Collection_allowDuplicates
     private static function initForm($sFormName)
     {
         // init
-        $form = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM);
+        $form = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
 
         // setup
         $form->setId($sFormName);
@@ -65,7 +66,7 @@ class EntityPropertyForm_Collection_allowDuplicates
     private static function getField_title($sTitle)
     {
         // create and setup
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--title');
         $field->setValue('title', $sTitle);
 
@@ -79,7 +80,7 @@ class EntityPropertyForm_Collection_allowDuplicates
     private static function getField_groupStart()
     {
         // create
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES.'--groupstart');
         $field->setValue('title', 'Collection settings');
 
@@ -93,18 +94,18 @@ class EntityPropertyForm_Collection_allowDuplicates
     private static function getField_allowDuplicates()
     {
         // 1. create and setup field
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES.'--allowduplicates');
         $field->setValue('label', 'Configuration');
         $field->setValue('option', 'Allow duplicates');
 
             // 2. setup value
-            $value = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
+            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
             $value->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES.'--allowDuplicates-value');
             $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
 
                 // 3. connect to property
-                $connectedEntityProperty = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--value');
                 $value->setValue('entityproperty', $connectedEntityProperty);
 
@@ -121,7 +122,7 @@ class EntityPropertyForm_Collection_allowDuplicates
     private static function getField_groupEnd()
     {
         // create
-        $field = $GLOBALS['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES.'--groupend');
 
         // send
