@@ -178,7 +178,7 @@ class ComponentForm
         $field->setValue('label', 'Twig file');
         $field->setValue('placeholder', "your_template_file.twig");
         $field->setValue('description', "");
-        $field->setValue('prefix', $GLOBALS['Mimoto.ProjectConfig.twigroot']);
+        $field->setValue('prefix', Mimoto::value('ProjectConfig.twigroot'));
 
             // 2. setup value
             $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);

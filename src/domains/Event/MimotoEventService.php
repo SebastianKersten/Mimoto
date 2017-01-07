@@ -4,6 +4,7 @@
 namespace Mimoto\Event;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Event\MimotoEvent;
 
 // Symfony classes
@@ -106,7 +107,7 @@ class MimotoEventService
                 {
                     // call
                     //$this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
-                    $GLOBALS['Mimoto.Aimless']->handleRequest($action->request, $event->getEntity(), $config);
+                    Mimoto::service('aimless')->handleRequest($action->request, $event->getEntity(), $config);
                 }
             //}
             

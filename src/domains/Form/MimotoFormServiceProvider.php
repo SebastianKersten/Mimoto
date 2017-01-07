@@ -4,6 +4,7 @@
 namespace Mimoto\Form;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Form\MimotoFormService;
 
 // Silex classes
@@ -34,7 +35,7 @@ class MimotoFormServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        $GLOBALS['Mimoto.Forms'] = $app['Mimoto.Forms'];
+        Mimoto::setService('forms', $app['Mimoto.Forms']);
     }
     
 }

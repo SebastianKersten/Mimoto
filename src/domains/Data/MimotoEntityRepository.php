@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntityConnection;
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
@@ -84,7 +85,7 @@ class MimotoEntityRepository
         //if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
 
         // load
-        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
         $params = array(
             ':id' => $nEntityId
         );
@@ -142,7 +143,7 @@ class MimotoEntityRepository
         }
 
         // load
-        $stmt = $GLOBALS['database']->prepare($sQuery);
+        $stmt = Mimoto::service('database')->prepare($sQuery);
         $stmt->execute($params);
 
         // load
@@ -309,7 +310,7 @@ class MimotoEntityRepository
             }
 
             // load
-            $stmt = $GLOBALS['database']->prepare($sQuery);
+            $stmt = Mimoto::service('database')->prepare($sQuery);
             $stmt->execute($params);
         }
         
@@ -330,7 +331,7 @@ class MimotoEntityRepository
             $sEvent = MimotoEvent::CREATED;
 
             // read and store
-            $entity->setId($GLOBALS['database']->lastInsertId());
+            $entity->setId(Mimoto::service('database')->lastInsertId());
         }
         
 
@@ -378,7 +379,7 @@ class MimotoEntityRepository
     public function delete(MimotoEntityConfig $entityConfig, MimotoEntity $entity)
     {
         // load
-        $stmt = $GLOBALS['database']->prepare('DELETE FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
+        $stmt = Mimoto::service('database')->prepare('DELETE FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
         $params = array(
             ':id' => $entity->getId()
         );
@@ -463,7 +464,7 @@ class MimotoEntityRepository
                         $aCollection = array();
 
                         // load
-                        $stmt = $GLOBALS['database']->prepare(
+                        $stmt = Mimoto::service('database')->prepare(
                             'SELECT * FROM '.$propertyValue->mysqlConnectionTable.
                             ' WHERE parent_id = :parent_id'.
                             ' && parent_property_id = :parent_property_id'.
@@ -535,7 +536,7 @@ class MimotoEntityRepository
     private function addItemToCollection($sDBTable, MimotoEntityConnection $newItem)
     {
         // load
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "INSERT INTO ".$sDBTable." SET ".
             "parent_entity_type_id = :parent_entity_type_id, ".
             "parent_property_id = :parent_property_id, ".
@@ -556,13 +557,13 @@ class MimotoEntityRepository
         $stmt->execute($params);
 
         // complete
-        $newItem->setId($GLOBALS['database']->lastInsertId());
+        $newItem->setId(Mimoto::service('database')->lastInsertId());
     }
 
     private function alterExistingItemInCollection($sDBTable, MimotoEntityConnection $existingItem)
     {
         // load
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             'UPDATE '.$sDBTable.' SET '.
             'sortindex = :sortindex '.
             'WHERE id = :id'
@@ -577,7 +578,7 @@ class MimotoEntityRepository
     private function removeItemFromCollection($sDBTable, MimotoEntityConnection $existingItem)
     {
         // load
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             'DELETE FROM '.$sDBTable.' WHERE id = :id'
         );
         $params = array(

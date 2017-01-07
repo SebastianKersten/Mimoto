@@ -24,8 +24,6 @@ class Mimoto
     private static $_aServices = [];
     private static $_aValues = [];
 
-    //Mimoto::service('data')->get
-
 
 
     /**
@@ -151,9 +149,9 @@ class Mimoto
 
     public static function value($sServiceName)
     {
-        if (isset(self::$_aServices[$sServiceName]))
+        if (isset(self::$_aValues[$sServiceName]))
         {
-            return self::$_aServices[$sServiceName];
+            return self::$_aValues[$sServiceName];
         }
     }
 

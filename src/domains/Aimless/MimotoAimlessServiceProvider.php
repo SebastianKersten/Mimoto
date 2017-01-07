@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Aimless\MimotoAimlessService;
 
 // Silex classes
@@ -29,14 +30,14 @@ class MimotoAimlessServiceProvider implements ServiceProviderInterface
 
         $app['Mimoto.Aimless'] = $app['Mimoto.AimlessService'] = $app->share(function($app)
         {
-            return new MimotoAimlessService($app['Mimoto.Data'], $app['Mimoto.Forms'], $app['Mimoto.Log'], $app['twig']);
+            return new MimotoAimlessService($app['Mimoto.Data'], $app['Mimoto.Forms'], $app['Mimoto.Log'], Mimoto::service('twig'));
         });
     }
 
     public function boot(Application $app)
     {
         // register
-        $GLOBALS['Mimoto.Aimless'] = $app['Mimoto.Aimless'];
+        Mimoto::setService('aimless', $app['Mimoto.Aimless']);
     }
     
 }

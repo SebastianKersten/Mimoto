@@ -485,8 +485,8 @@ class ExampleController
         output('Properties', $aProperties);
 
 
-
-        for ($i = 0; $i < count($aProperties); $i++)
+        $nPropertyCount = count($aProperties);
+        for ($i = 0; $i < $nPropertyCount; $i++)
         {
             $property = $aProperties[$i];
 

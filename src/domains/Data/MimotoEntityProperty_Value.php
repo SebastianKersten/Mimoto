@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntityProperty;
 use Mimoto\Data\MimotoEntityPropertyInterface;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
@@ -79,7 +80,7 @@ class MimotoEntityProperty_Value extends MimotoEntityProperty implements MimotoE
     public function setValue($value, $sSubpropertySelector = null)
     {
         // 1. validate
-        if (!$this->validateValueType($value)) $GLOBALS['Mimoto.Log']->warn('Incorrect value', 'The property <b>'.$this->_config->name.'</b> only allows values of type '.$this->_config->settings->type->type);;
+        if (!$this->validateValueType($value)) Mimoto::service('log')->warn('Incorrect value', 'The property <b>'.$this->_config->name.'</b> only allows values of type '.$this->_config->settings->type->type);;
 
         // 2. store if change tracking is disabled
         if (!$this->_bTrackChanges) { $this->_data->persistentValue = $value; }
@@ -95,7 +96,7 @@ class MimotoEntityProperty_Value extends MimotoEntityProperty implements MimotoE
     public function addValue($value, $sSubpropertySelector = null, $sEntityType = null)
     {
         // 1. error - not supported for this property type
-        $GLOBALS['Mimoto.Log']->warn('Adding value to a non-collection', 'Unable to add a value to a value property <b>'.$this->_config->name.'</b>');
+        Mimoto::service('log')->warn('Adding value to a non-collection', 'Unable to add a value to a value property <b>'.$this->_config->name.'</b>');
     }
 
     /**
@@ -105,7 +106,7 @@ class MimotoEntityProperty_Value extends MimotoEntityProperty implements MimotoE
     public function removeValue($value, $sSubpropertySelector = null, $sEntityType = null)
     {
         // 1. error - not supported for this property type
-        $GLOBALS['Mimoto.Log']->warn('Removing value from a non-collection', 'Unable to remove a value from a value property <b>'.$this->_config->name.'</b>');
+        Mimoto::service('log')->warn('Removing value from a non-collection', 'Unable to remove a value from a value property <b>'.$this->_config->name.'</b>');
     }
 
 

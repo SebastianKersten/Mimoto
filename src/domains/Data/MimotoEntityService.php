@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntityException;
 
 
@@ -175,7 +176,7 @@ class MimotoEntityService
                     $this->_aEntityConfigs[$sEntityType] = $entityConfig;
                 } else
                 {
-                    $GLOBALS['Mimoto.Log']->warn("Requested entity type not found", "Sorry, I do not know the entity type $sEntityType'");
+                    Mimoto::service('log')->warn("Requested entity type not found", "Sorry, I do not know the entity type $sEntityType'");
                 }
             }
 

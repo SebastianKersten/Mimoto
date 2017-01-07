@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
@@ -237,7 +238,7 @@ class AimlessComponent
         }
 
         // report missing property
-        $GLOBALS['Mimoto.Log']->silent("Property or selection no found", "The property or selection with name <b>$sMainPropertyName</b> doens't seem to be available.");
+        Mimoto::service('log')->silent("Property or selection no found", "The property or selection with name <b>$sMainPropertyName</b> doens't seem to be available.");
         return '';
     }
 
@@ -293,7 +294,7 @@ class AimlessComponent
             else
             {
                 // 4b. report missing component
-                $GLOBALS['Mimoto.Log']->silent("Missing component while rendering entity-property", "The property <b>$sPropertySelector</b> you are trying to render doens't have a component connected to it.");
+                Mimoto::service('log')->silent("Missing component while rendering entity-property", "The property <b>$sPropertySelector</b> you are trying to render doens't have a component connected to it.");
                 return '';
             }
         }
@@ -391,7 +392,7 @@ class AimlessComponent
                     }
                 }
 
-                $sComponentConditionals = $GLOBALS['Mimoto.Aimless']->getComponentConditionalsAsString($sComponentName);
+                $sComponentConditionals = Mimoto::service('aimless')->getComponentConditionalsAsString($sComponentName);
                 $sComponentName .= $sComponentConditionals;
 
                 // compose
@@ -412,7 +413,7 @@ class AimlessComponent
                     }
                 }
 
-                $sComponentConditionals = $GLOBALS['Mimoto.Aimless']->getComponentConditionalsAsString($sComponentName);
+                $sComponentConditionals = Mimoto::service('aimless')->getComponentConditionalsAsString($sComponentName);
                 $sComponentName .= $sComponentConditionals;
 
                 // compose

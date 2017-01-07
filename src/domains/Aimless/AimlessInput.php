@@ -68,7 +68,7 @@ class AimlessInput extends AimlessComponent
         $fieldValue = $this->_entity->getValue('value');
 
         // validate
-        if (empty($fieldValue)) { $GLOBALS['Mimoto.Log']->notify('AimlessInput', "No 'value' set on iput field"); return; }
+        if (empty($fieldValue)) { Mimoto::service('log')->notify('AimlessInput', "No 'value' set on iput field"); return; }
 
         // register
         $aFieldValueOptions = $fieldValue->getValue('options');

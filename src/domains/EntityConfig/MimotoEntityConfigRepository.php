@@ -4,11 +4,11 @@
 namespace Mimoto\EntityConfig;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
-use Mimoto\Mimoto;
 use Mimoto\Log\MimotoLogService;
 
 
@@ -242,7 +242,7 @@ class MimotoEntityConfigRepository
             }
         }
 
-        $GLOBALS['Mimoto.Log']->error('Incomplete entity config', "No entity found which contains a property with <b>id=".$nId."</b>", true);
+        Mimoto::service('log')->error('Incomplete entity config', "No entity found which contains a property with <b>id=".$nId."</b>", true);
     }
 
     public function getEntityConfigsTypeOf($sEntityTypeName)
@@ -707,7 +707,7 @@ class MimotoEntityConfigRepository
         $aEntities = [];
 
         // load all entities
-        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_ENTITY);
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.CoreConfig::MIMOTO_ENTITY);
         $params = array();
         $stmt->execute($params);
 
@@ -742,7 +742,7 @@ class MimotoEntityConfigRepository
 
         // load all properties
         $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTY;
-        foreach ($GLOBALS['database']->query($sql) as $row)
+        foreach (Mimoto::service('database')->query($sql) as $row)
         {
             // compose
             $property = (object) array(
@@ -775,7 +775,7 @@ class MimotoEntityConfigRepository
 
         // load all settings
         $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING;
-        foreach ($GLOBALS['database']->query($sql) as $row)
+        foreach (Mimoto::service('database')->query($sql) as $row)
         {
             // compose
             $setting = (object) array(
@@ -808,7 +808,7 @@ class MimotoEntityConfigRepository
         $aConnections = [];
 
         // load all connections
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
             "parent_entity_type_id = :parent_entity_type_id ".
             "ORDER BY parent_id ASC, sortindex ASC"

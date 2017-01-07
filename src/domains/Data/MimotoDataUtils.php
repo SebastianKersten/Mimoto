@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityConnection;
@@ -244,7 +245,7 @@ class MimotoDataUtils
                 // validate config
                 if (count($aAllowedEntityTypeIds) == 0)
                 {
-                    $GLOBALS['Mimoto.Log']->silent("Missing configuration of allowed property types", "Please define which value types are allowed to connect to property '".$sPropertyName."'");
+                    Mimoto::service('log')->silent("Missing configuration of allowed property types", "Please define which value types are allowed to connect to property '".$sPropertyName."'");
                     $connection = null;
                     break;
                 }
@@ -259,7 +260,7 @@ class MimotoDataUtils
                     // validate
                     if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds) && !in_array(CoreConfig::WILDCARD, $aAllowedEntityTypeIds))
                     {
-                        $GLOBALS['Mimoto.Log']->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
+                        Mimoto::service('log')->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
                     }
                 }
 
@@ -267,7 +268,7 @@ class MimotoDataUtils
 
             default:
 
-                $GLOBALS['Mimoto.Log']->silent("Unknown connection value", "The property '".$sPropertyName."' only allows values of type '".implode(',', $aAllowedPropertyTypes)."'", true);
+                Mimoto::service('log')->silent("Unknown connection value", "The property '".$sPropertyName."' only allows values of type '".implode(',', $aAllowedPropertyTypes)."'", true);
                 break;
         }
 

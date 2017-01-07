@@ -92,9 +92,6 @@ class MimotoEntityServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        //GLOBALS['Mimoto.Data'] = $app['Mimoto.Data'];
-        $GLOBALS['Mimoto.Config'] = $app['Mimoto.Config'];
-
         Mimoto::setService('data', $app['Mimoto.Data']);
         Mimoto::setService('config', $app['Mimoto.Config']);
     }

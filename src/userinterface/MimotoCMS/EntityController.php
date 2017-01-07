@@ -307,7 +307,7 @@ class EntityController
         if ($entityStructure->hasTable)
         {
             // load
-            $stmt = $GLOBALS['database']->prepare('SELECT count(id) FROM ' . $entity->getValue('name'));
+            $stmt = Mimoto::service('database')->prepare('SELECT count(id) FROM ' . $entity->getValue('name'));
             $params = array();
             $stmt->execute($params);
 
@@ -316,7 +316,7 @@ class EntityController
 
             if (count($aResults) == 0)
             {
-                $GLOBALS['Mimoto.Log']->error('Entity table issue', "The entity '".$entityStructure->name."' is missing its mysql table");
+                Mimoto::service('log')->error('Entity table issue', "The entity '".$entityStructure->name."' is missing its mysql table");
             }
             else
             {
@@ -402,7 +402,7 @@ class EntityController
                 {
                     case MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
-                        $entityStructure->entityNames[$value] = $GLOBALS['Mimoto.Config']->getEntityNameById($value);
+                        $entityStructure->entityNames[$value] = Mimoto::service('config')->getEntityNameById($value);
                         break;
 
                     case MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
@@ -418,7 +418,7 @@ class EntityController
                             $nAllowedEntityType = $aAllowedEntityTypes[$k];
 
                             // register
-                            $entityStructure->entityNames[$nAllowedEntityType] = $GLOBALS['Mimoto.Config']->getEntityNameById($nAllowedEntityType);
+                            $entityStructure->entityNames[$nAllowedEntityType] = Mimoto::service('config')->getEntityNameById($nAllowedEntityType);
                         }
                         break;
                 }
@@ -436,7 +436,7 @@ class EntityController
         $aChildExtensions = [];
 
         // load
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
             "parent_entity_type_id = :parent_entity_type_id && ".
             "parent_property_id = :parent_property_id && ".
@@ -483,7 +483,7 @@ class EntityController
         $aChildConnection = [];
 
         // load
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_PROJECT." WHERE ".
             "parent_entity_type_id = :parent_entity_type_id && ".
             "parent_property_id = :parent_property_id && ".

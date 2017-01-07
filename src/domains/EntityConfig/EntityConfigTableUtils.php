@@ -4,6 +4,7 @@
 namespace Mimoto\EntityConfig;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 
@@ -25,7 +26,7 @@ class EntityConfigTableUtils
 
     public static function entityNameIsUnique($sEntityName)
     {
-        $stmt = $GLOBALS['database']->prepare("SELECT * FROM ".CoreConfig::MIMOTO_ENTITY." WHERE name = :name");
+        $stmt = Mimoto::service('database')->prepare("SELECT * FROM ".CoreConfig::MIMOTO_ENTITY." WHERE name = :name");
         $params = array(':name' => $sEntityName);
         if ($stmt->execute($params) === false) error("Error while searching for duplicates of entity name '$sEntityName'");
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -34,7 +35,7 @@ class EntityConfigTableUtils
 
     public static function tableNameIsUnique($sEntityName)
     {
-        $stmt = $GLOBALS['database']->prepare("SHOW TABLES LIKE '".$sEntityName."'");
+        $stmt = Mimoto::service('database')->prepare("SHOW TABLES LIKE '".$sEntityName."'");
         $params = array();
         if ($stmt->execute($params) === false) error("Error while checking for duplicate entity table '$sEntityName'");
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -43,7 +44,7 @@ class EntityConfigTableUtils
 
     public static function createEntityTable($sEntityName)
     {
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "CREATE TABLE `".$sEntityName."` (".
             "   `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ".
             "   `created` datetime DEFAULT NULL, ".
@@ -56,7 +57,7 @@ class EntityConfigTableUtils
 
     public static function renameEntityTable($sCurrentEntityName, $sNewEntityName)
     {
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "RENAME TABLE `".$sCurrentEntityName."` TO `$sNewEntityName`"
         );
         $params = array();
@@ -65,14 +66,14 @@ class EntityConfigTableUtils
 
     public static function deleteEntityTable($sEntityName)
     {
-        $stmt = $GLOBALS['database']->prepare("DROP TABLE IF EXISTS `" . $sEntityName . "`");
+        $stmt = Mimoto::service('database')->prepare("DROP TABLE IF EXISTS `" . $sEntityName . "`");
         $params = array();
         return $stmt->execute($params);
     }
 
     public static function entityPropertyNameIsUnique($nEntityId, $sEntityPropertyName)
     {
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM ".CoreConfig::MIMOTO_ENTITYPROPERTY." LEFT JOIN ".CoreConfig::MIMOTO_CONNECTIONS_CORE." ".
             "ON ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".id = ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".child_id ".
             "WHERE ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_id = :parent_id ".
@@ -95,7 +96,7 @@ class EntityConfigTableUtils
         $sDataType = self::getColumnDataType($sColumnType);
 
         // 2. add column to table
-        $stmt = $GLOBALS['database']->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN `".$sPropertyName."` ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
+        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN `".$sPropertyName."` ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
         $params = array();
         if ($stmt->execute($params) === false) error("Error while adding column '$sPropertyName' to entity table '$sEntityName'");
     }
@@ -106,7 +107,7 @@ class EntityConfigTableUtils
         $sDataType = self::getColumnDataType($sColumnType);
 
         // 2. add column to table
-        $stmt = $GLOBALS['database']->prepare("ALTER TABLE `".$sEntityName."` CHANGE COLUMN `".$sOldPropertyName."` `".$sNewPropertyName."` ".$sDataType);
+        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` CHANGE COLUMN `".$sOldPropertyName."` `".$sNewPropertyName."` ".$sDataType);
         $params = array();
         if ($stmt->execute($params) === false) error("Error while renaming column '$sOldPropertyName' to entity table '$sEntityName'");
     }
@@ -114,7 +115,7 @@ class EntityConfigTableUtils
     public static function removePropertyColumnFromEntityTable($sEntityName, $sPropertyName)
     {
         // 2. add column to table
-        $stmt = $GLOBALS['database']->prepare("ALTER TABLE `".$sEntityName."` DROP COLUMN `".$sPropertyName."`");
+        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` DROP COLUMN `".$sPropertyName."`");
         $params = array();
         if ($stmt->execute($params) === false) error("Error while removing column '$sPropertyName' to entity table '$sEntityName'");
     }
@@ -131,7 +132,7 @@ class EntityConfigTableUtils
         // 2. verify specs
         if (empty($sDataType))
         {
-            $GLOBALS['Mimoto.Log']->error("Unknow mysql table property specs", "An entity table got the request to add an unknown property-column type");
+            Mimoto::service('log')->error("Unknow mysql table property specs", "An entity table got the request to add an unknown property-column type");
             die();
         }
 

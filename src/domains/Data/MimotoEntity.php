@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Aimless\MimotoAimlessUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
@@ -192,7 +193,7 @@ class MimotoEntity
 
             default:
 
-                $GLOBALS['Mimoto.Log']->error("Adding property of unknonw type", "The entity called ".$this->_config->name." was asked to add a property which has an unknown type", true);
+                Mimoto::service('log')->error("Adding property of unknonw type", "The entity called ".$this->_config->name." was asked to add a property which has an unknown type", true);
                 break;
         }
 
@@ -222,7 +223,7 @@ class MimotoEntity
      */
     public function typeOf($sEntityType)
     {
-        return $GLOBALS['Mimoto.Config']->entityIsTypeOf($this->_config->entityTypeName, $sEntityType);
+        return Mimoto::service('config')->entityIsTypeOf($this->_config->entityTypeName, $sEntityType);
     }
 
 
@@ -452,7 +453,7 @@ class MimotoEntity
     private function getProperty($sPropertySelector)
     {
         // validate
-        if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) $GLOBALS['Mimoto.Log']->error("Incorrect property name", "The property selector '$sPropertySelector' seems to be malformed", true);
+        if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) Mimoto::service('log')->error("Incorrect property name", "The property selector '$sPropertySelector' seems to be malformed", true);
 
         // init
         $aMatchingProperties = [];
@@ -470,7 +471,7 @@ class MimotoEntity
         }
 
         // verify
-        if (count($aMatchingProperties) === 0) $GLOBALS['Mimoto.Log']->error("No such property", "The property <b>$sPropertySelector</b> you are looking for doesn't seem to be here", true);
+        if (count($aMatchingProperties) === 0) Mimoto::service('log')->error("No such property", "The property <b>$sPropertySelector</b> you are looking for doesn't seem to be here", true);
 
         // send
         return $aMatchingProperties[0];

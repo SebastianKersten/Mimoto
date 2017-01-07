@@ -162,15 +162,15 @@ class MimotoFormService
 
 
         // 3. load form
-        $form = $GLOBALS['Mimoto.Forms']->getFormByName($sFormName);
+        $form = Mimoto::service('forms')->getFormByName($sFormName);
 
         // 4. prepare
-        $formVars = $GLOBALS['Mimoto.Forms']->getFormVars($form, $aValues);
+        $formVars = Mimoto::service('forms')->getFormVars($form, $aValues);
 
         // 5. authenticate
         if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities)))
         {
-            $GLOBALS['Mimoto.Log']->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
+            Mimoto::service('log')->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
         }
 
 
@@ -224,12 +224,12 @@ class MimotoFormService
 
                             // register
                             $nParentEntityTypeId = $entityInfo->entity->getEntityTypeId();
-                            $nParentPropertyId = $GLOBALS['Mimoto.Config']->getPropertyIdByName($sPropertyName);
+                            $nParentPropertyId = Mimoto::service('config')->getPropertyIdByName($sPropertyName);
 
                             // convert
                             $allowedEntityType = (object) array(
                                 'id' => $nChildType,
-                                'name' => $GLOBALS['Mimoto.Config']->getEntityNameById($nChildType)
+                                'name' => Mimoto::service('config')->getEntityNameById($nChildType)
                             );
 
                             // create
@@ -255,12 +255,12 @@ class MimotoFormService
 
                             // register
                             $nParentEntityTypeId = $entityInfo->entity->getEntityTypeId();
-                            $nParentPropertyId = $GLOBALS['Mimoto.Config']->getPropertyIdByName($sPropertyName);
+                            $nParentPropertyId = Mimoto::service('config')->getPropertyIdByName($sPropertyName);
 
                             // convert
                             $allowedEntityType = (object) array(
                                 'id' => $nChildType,
-                                'name' => $GLOBALS['Mimoto.Config']->getEntityNameById($nChildType)
+                                'name' => Mimoto::service('config')->getEntityNameById($nChildType)
                             );
 
                             // create
@@ -396,7 +396,7 @@ class MimotoFormService
             foreach ($aEntities as $sEntityType => $entityInfo) { $aNewValues[] = $entityInfo->entity; }
 
             // 3. load
-            $formVars = $GLOBALS['Mimoto.Forms']->getFormVars($form, $aNewValues);
+            $formVars = Mimoto::service('forms')->getFormVars($form, $aNewValues);
 
             // 4. define
             $formResponse->newPublicKey = $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities));
@@ -439,7 +439,7 @@ class MimotoFormService
             // skip if invalid
             if (empty($fieldValue))
             {
-                $GLOBALS['Mimoto.Log']->warn("Input misses a value", "The input with id <b>".$field->getId()."</b> is missing it's value property");
+                Mimoto::service('log')->warn("Input misses a value", "The input with id <b>".$field->getId()."</b> is missing it's value property");
                 continue;
             }
 
@@ -458,7 +458,7 @@ class MimotoFormService
                     // validate
                     if (!isset($orderedValues->customvars[$sVarName]))
                     {
-                        $GLOBALS['Mimoto.Log']->notify('Input has no varname', "The input with id <b>".$field->getId()."</b> is of type <b>varname</b> but the actual varname hasn't been defined");
+                        Mimoto::service('log')->notify('Input has no varname', "The input with id <b>".$field->getId()."</b> is of type <b>varname</b> but the actual varname hasn't been defined");
                         continue;
                     }
 
@@ -478,7 +478,7 @@ class MimotoFormService
                     // validate
                     if (empty($entityProperty))
                     {
-                        $GLOBALS['Mimoto.Log']->notify('Input not properly connected to a property', "The input with id <b>".$field->getId()."</b> is of type <b>entityproperty</b> but is not actually connected to a property");
+                        Mimoto::service('log')->notify('Input not properly connected to a property', "The input with id <b>".$field->getId()."</b> is of type <b>entityproperty</b> but is not actually connected to a property");
                         continue;
                     }
 

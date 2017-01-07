@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\Aimless;
 
+// Mimoto classes
+use Mimoto\Mimoto;
+
 
 /**
  * MimotoAimlessUtils
@@ -30,7 +33,7 @@ class MimotoAimlessUtils
     public static function getModule($sModuleName, $values = [])
     {
         // get module file
-        $sModuleFile = $GLOBALS['Mimoto.Aimless']->getComponentFile($sModuleName);
+        $sModuleFile = Mimoto::service('aimless')->getComponentFile($sModuleName);
 
         // create
         $viewModel = new AimlessModuleViewModel();
@@ -42,6 +45,6 @@ class MimotoAimlessUtils
         $aVars['Aimless'] = $viewModel;
 
         // output
-        return $GLOBALS['twig']->render($sModuleFile, $aVars);
+        return Mimoto::service('twig')->render($sModuleFile, $aVars);
     }
 }

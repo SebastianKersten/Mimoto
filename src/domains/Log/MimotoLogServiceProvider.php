@@ -4,6 +4,7 @@
 namespace Mimoto\Log;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Log\MimotoLogService;
 
 // Silex classes
@@ -30,7 +31,7 @@ class MimotoLogServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        $GLOBALS['Mimoto.Log'] = $app['Mimoto.Log'];
+        Mimoto::setService('log', $app['Mimoto.Log']);
     }
     
 }

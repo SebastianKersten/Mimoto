@@ -50,7 +50,7 @@
 
 
 function membership_mail($job) {
-    $workload = @unserialize($job->workload());
+    $workload = unserialize($job->workload());
     if ($workload === false || !isset($workload['renewalLogId']) || !is_int($workload['renewalLogId']) || $workload['renewalLogId'] < 1) {
         return false;
     }

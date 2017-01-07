@@ -3,6 +3,9 @@
 // classpath
 namespace Mimoto\Data;
 
+// Mimoto classes
+use Mimoto\Mimoto;
+
 
 /**
  * MimotoEntityConnection
@@ -171,7 +174,7 @@ class MimotoEntityConnection
     public function setChildEntityTypeId($xChildEntityTypeId)
     {
         $this->_xChildEntityTypeId = $xChildEntityTypeId;
-        $this->_sChildEntityTypeName = $GLOBALS['Mimoto.Config']->getEntityNameById($xChildEntityTypeId);
+        $this->_sChildEntityTypeName = Mimoto::service('config')->getEntityNameById($xChildEntityTypeId);
     }
 
 

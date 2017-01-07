@@ -6,23 +6,32 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 require_once __DIR__.'/../vendor/autoload.php';
 
 
+// Mimoto classes
+use Mimoto\Mimoto;
+
+// configure
+Mimoto::setValue('config', include(dirname(__FILE__).'/config.php'));
+Mimoto::setValue('ProjectConfig.root', __DIR__ . '/../');
+Mimoto::setValue('ProjectConfig.twigroot', 'src/userinterface/');
+
+
 // init
 $app = new \Silex\Application();
-$config = include(dirname(__FILE__).'/config.php');
 
-$GLOBALS['Mimoto.ProjectConfig.root'] = __DIR__ . '/../';
-$GLOBALS['Mimoto.ProjectConfig.twigroot'] = 'src/userinterface/';
+
 
 // setup
-$loader = new \Twig_Loader_Filesystem([$GLOBALS['Mimoto.ProjectConfig.root'].$GLOBALS['Mimoto.ProjectConfig.twigroot']]);
+$loader = new \Twig_Loader_Filesystem([Mimoto::value('ProjectConfig.root').Mimoto::value('ProjectConfig.twigroot')]);
 $twig = new Twig_Environment($loader, array(
     // 'cache' => '../app/cache',
     'autoescape' => false
 ));
 
 
+
 // connect
-$GLOBALS['database'] = new PDO("mysql:host=".$config->mysql->host.";dbname=".$config->mysql->dbname, $config->mysql->username, $config->mysql->password);
+Mimoto::setService('database', new PDO("mysql:host=".Mimoto::value('config')->mysql->host.";dbname=".Mimoto::value('config')->mysql->dbname, Mimoto::value('config')->mysql->username, Mimoto::value('config')->mysql->password));
+Mimoto::setService('twig', $twig);
 
 // setup
 $app['debug'] = true;

@@ -160,14 +160,14 @@ class MimotoEntityConfigService
         // 2. check if entity table name is unique
         if (!EntityConfigTableUtils::tableNameIsUnique($sEntityName))
         {
-            $GLOBALS['Mimoto.Log']->error("Duplicate table name", "Table '$sEntityName' for new entity already exists");
+            Mimoto::service('log')->error("Duplicate table name", "Table '$sEntityName' for new entity already exists");
             die();
         }
 
         // 3. create table
         if (!EntityConfigTableUtils::createEntityTable($sEntityName))
         {
-            $GLOBALS['Mimoto.Log']->error("Entity table creation issue", "Error while creating table for entity '$sEntityName'");
+            Mimoto::service('log')->error("Entity table creation issue", "Error while creating table for entity '$sEntityName'");
             die();
         }
 
@@ -280,14 +280,14 @@ class MimotoEntityConfigService
         // 5. check if entity table name is unique
         if (!EntityConfigTableUtils::tableNameIsUnique($sNewEntityName))
         {
-            $GLOBALS['Mimoto.Log']->error("Duplicate table name", "Table '$sNewEntityName' for entity '$sPreviousEntityName' already exists");
+            Mimoto::service('log')->error("Duplicate table name", "Table '$sNewEntityName' for entity '$sPreviousEntityName' already exists");
             die();
         }
 
         // 6. rename table
         if (!EntityConfigTableUtils::renameEntityTable($sPreviousEntityName, $sNewEntityName))
         {
-            $GLOBALS['Mimoto.Log']->error("Entity table rename issue", "Error while renaming entity table from '$sPreviousEntityName' to '$sNewEntityName'");
+            Mimoto::service('log')->error("Entity table rename issue", "Error while renaming entity table from '$sPreviousEntityName' to '$sNewEntityName'");
             die();
         }
     }
@@ -367,7 +367,7 @@ class MimotoEntityConfigService
     public function getParentEntity(MimotoEntity $entityProperty)
     {
         // load all connections
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
             "parent_entity_type_id = :parent_entity_type_id && ".
             "parent_property_id = :parent_property_id && ".
@@ -407,7 +407,7 @@ class MimotoEntityConfigService
     public function getParent($sParentEntityTypeId, $sParentPropertyId, MimotoEntity $child)
     {
         // load all connections
-        $stmt = $GLOBALS['database']->prepare(
+        $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
             "parent_entity_type_id = :parent_entity_type_id && ".
             "parent_property_id = :parent_property_id && ".

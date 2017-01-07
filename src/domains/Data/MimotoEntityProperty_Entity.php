@@ -125,7 +125,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
         // validate
         if (empty($sSubpropertySelector))
         {
-            $GLOBALS['Mimoto.Log']->silent("Adding value to a non-collection", "Unable to add a value to an entity property <b>" . $this->_config->name."</b>");
+            Mimoto::service('log')->silent("Adding value to a non-collection", "Unable to add a value to an entity property <b>" . $this->_config->name."</b>");
         }
         else
         {
@@ -139,7 +139,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
             }
             else
             {
-                $GLOBALS['Mimoto.Log']->silent("Attempting to add a value to the property of an empty entity", "Unable to add a value to an empty entity's property <b>".$this->_config->name."</b> that might have a collection property called <b>".$sSubpropertySelector."</b>");
+                Mimoto::service('log')->silent("Attempting to add a value to the property of an empty entity", "Unable to add a value to an empty entity's property <b>".$this->_config->name."</b> that might have a collection property called <b>".$sSubpropertySelector."</b>");
             }
         }
     }
@@ -153,7 +153,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
         // validate
         if (empty($sSubpropertySelector))
         {
-            $GLOBALS['Mimoto.Log']->silent("Removing value from a non-collection", "Unable to remove a value from an entity property <b>" . $this->_config->name."</b>");
+            Mimoto::service('log')->silent("Removing value from a non-collection", "Unable to remove a value from an entity property <b>" . $this->_config->name."</b>");
         }
         else
         {
@@ -167,7 +167,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
             }
             else
             {
-                $GLOBALS['Mimoto.Log']->silent("Attempting to remove a value from the property of an empty entity", "Unable to remove a value from an empty entity's property <b>".$this->_config->name."</b> that might have a collection property called <b>".$sSubpropertySelector."</b>");
+                Mimoto::service('log')->silent("Attempting to remove a value from the property of an empty entity", "Unable to remove a value from an empty entity's property <b>".$this->_config->name."</b> that might have a collection property called <b>".$sSubpropertySelector."</b>");
             }
         }
     }

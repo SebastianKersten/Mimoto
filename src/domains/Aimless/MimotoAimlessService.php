@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\entities\Component;
 use Mimoto\Data\MimotoEntity;
@@ -216,7 +217,7 @@ class MimotoAimlessService
 
 
         // load all templates
-        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_COMPONENT);
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.CoreConfig::MIMOTO_COMPONENT);
         $params = array();
         $stmt->execute($params);
 
@@ -238,7 +239,7 @@ class MimotoAimlessService
 
 
         // load all conditionals
-        $stmt = $GLOBALS['database']->prepare('SELECT * FROM '.CoreConfig::MIMOTO_COMPONENTCONDITIONAL);
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.CoreConfig::MIMOTO_COMPONENTCONDITIONAL);
         $params = array();
         $stmt->execute($params);
 
@@ -291,12 +292,12 @@ class MimotoAimlessService
             case 'dataUpdate':              $this->dataUpdate($data, $config); break;
             case 'dataCreate':              $this->dataCreate($data, $config); break;
             case 'sendSlackNotification':   $this->sendSlackNotification($data, $config); break;
-            case 'createEntityTable':       $GLOBALS['Mimoto.Config']->entityCreateTable($data); break;
-            case 'updateEntityTable':       $GLOBALS['Mimoto.Config']->entityUpdateTable($data); break;
-            case 'onEntityPropertyCreated': $GLOBALS['Mimoto.Config']->onEntityPropertyCreated($data); break;
-            case 'onEntityPropertyUpdated': $GLOBALS['Mimoto.Config']->onEntityPropertyUpdated($data); break;
+            case 'createEntityTable':       Mimoto::service('config')->entityCreateTable($data); break;
+            case 'updateEntityTable':       Mimoto::service('config')->entityUpdateTable($data); break;
+            case 'onEntityPropertyCreated': Mimoto::service('config')->onEntityPropertyCreated($data); break;
+            case 'onEntityPropertyUpdated': Mimoto::service('config')->onEntityPropertyUpdated($data); break;
 
-            case 'onInputFieldCreated':     $GLOBALS['Mimoto.Config']->onInputFieldCreated($data); break;
+            case 'onInputFieldCreated':     Mimoto::service('config')->onInputFieldCreated($data); break;
 
             default:
                 
@@ -559,7 +560,7 @@ class MimotoAimlessService
         // init
         $aConnections = [];
 
-        $xChildEntityTypeId = $GLOBALS['Mimoto.Config']->getEntityIdByName($entity->getEntityTypeName());
+        $xChildEntityTypeId = Mimoto::service('config')->getEntityIdByName($entity->getEntityTypeName());
 
 
         // load all connections
@@ -569,13 +570,13 @@ class MimotoAimlessService
             ' ORDER BY parent_id ASC, sortindex ASC';
 
 
-        foreach ($GLOBALS['database']->query($sql) as $row)
+        foreach (Mimoto::service('database')->query($sql) as $row)
         {
             // compose
             $connection = (object) array(
                 'connectionId' => $row['id'],
-                'parentEntityType' => $GLOBALS['Mimoto.Config']->getEntityNameById($row['parent_entity_type_id']),
-                'parentPropertyName' => $GLOBALS['Mimoto.Config']->getPropertyNameById($row['parent_property_id']),
+                'parentEntityType' => Mimoto::service('config')->getEntityNameById($row['parent_entity_type_id']),
+                'parentPropertyName' => Mimoto::service('config')->getPropertyNameById($row['parent_property_id']),
                 'parentId' => $row['parent_id']
             );
 

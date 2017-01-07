@@ -101,7 +101,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
 
 
         // 2. validate
-        if (!is_array($xValue)) $GLOBALS['Mimoto.Log']->error("Incorrect value for collection property", "The property " . $this->_config->name . " only accepts arrays when using setValue()", true);
+        if (!is_array($xValue)) Mimoto::service('log')->error("Incorrect value for collection property", "The property " . $this->_config->name . " only accepts arrays when using setValue()", true);
 
         // 3. init
         if (!$this->_bTrackChanges) { $this->_data->persistentCollection = []; }
@@ -139,7 +139,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
 
 
         // 1. convert
-        $xEntityTypeId = $GLOBALS['Mimoto.Config']->getEntityIdByName($sEntityType);
+        $xEntityTypeId = Mimoto::service('config')->getEntityIdByName($sEntityType);
 
         // 2. assist
         if (empty($xEntityTypeId))
@@ -152,7 +152,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
             else
             {
                 // 2b. report missing configuration
-                $GLOBALS['Mimoto.Log']->error("Missing entity type on added item", "Please define the type of the item you arring adding to the collection '".$this->_config->name."'", true);
+                Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you arring adding to the collection '".$this->_config->name."'", true);
                 return;
             }
         }
@@ -201,7 +201,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
 
 
         // 1. convert
-        $xEntityTypeId = $GLOBALS['Mimoto.Config']->getEntityIdByName($sEntityType);
+        $xEntityTypeId = Mimoto::service('config')->getEntityIdByName($sEntityType);
 
         // 2. assist
         if (empty($xEntityTypeId))
@@ -214,7 +214,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
             else
             {
                 // 2b. report missing configuration
-                $GLOBALS['Mimoto.Log']->error("Missing entity type on added item", "Please define the type of the item you arring adding to the collection '".$this->_config->name."'", true);
+                Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you arring adding to the collection '".$this->_config->name."'", true);
                 return;
             }
         }
@@ -233,8 +233,8 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         // manage duplicates
         // if (!$property->config->settings->allowDuplicates)
 
-
-        for ($nCurrentCollectionIndex = 0; $nCurrentCollectionIndex < count($this->_data->currentCollection); $nCurrentCollectionIndex++)
+        $nCurrentCollectionCount = count($this->_data->currentCollection);
+        for ($nCurrentCollectionIndex = 0; $nCurrentCollectionIndex < $nCurrentCollectionCount; $nCurrentCollectionIndex++)
         {
             if ($this->_data->currentCollection[$nCurrentCollectionIndex]->getChildId() == $connection->getChildId())
             {
