@@ -3,7 +3,8 @@
 // classpath
 namespace Mimoto\Aimless;
 
-
+// Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Aimless\AimlessInputViewModel;
 
