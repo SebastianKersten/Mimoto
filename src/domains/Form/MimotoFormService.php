@@ -168,7 +168,7 @@ class MimotoFormService
         $formVars = Mimoto::service('forms')->getFormVars($form, $aValues);
 
         // 5. authenticate
-        if ($sPublicKey !== $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities)))
+        if ($sPublicKey !== Mimoto::service('user')->getUserPublicKey(json_encode($formVars->connectedEntities)))
         {
             Mimoto::service('log')->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
         }
@@ -399,7 +399,7 @@ class MimotoFormService
             $formVars = Mimoto::service('forms')->getFormVars($form, $aNewValues);
 
             // 4. define
-            $formResponse->newPublicKey = $GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities));
+            $formResponse->newPublicKey = Mimoto::service('user')->getUserPublicKey(json_encode($formVars->connectedEntities));
         }
 
         // send

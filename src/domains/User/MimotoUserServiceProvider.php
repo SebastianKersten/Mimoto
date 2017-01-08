@@ -4,7 +4,7 @@
 namespace Mimoto\User;
 
 // Mimoto classes
-use Mimoto\Log\MimotoLogService;
+use Mimoto\Mimoto;
 
 // Silex classes
 use Silex\Application;
@@ -30,7 +30,7 @@ class MimotoUserServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        $GLOBALS['Mimoto.User'] = $app['Mimoto.User'];
+        Mimoto::setService('user', $app['Mimoto.User']);
     }
     
 }

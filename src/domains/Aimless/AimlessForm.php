@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
 
@@ -83,7 +84,7 @@ class AimlessForm extends AimlessComponent
         $sRenderedForm .= '<script>Mimoto.form.open("'.$this->_sFormName.'", "'.$sAction.'", "'.$sMethod.'", '.($form->getValue('realtimeCollaborationMode') ? 'true' : 'false').')</script>';
 
         // add security
-        $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.$GLOBALS['Mimoto.User']->getUserPublicKey(json_encode($formVars->connectedEntities)).'">';
+        $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.Mimoto::service('user')->getUserPublicKey(json_encode($formVars->connectedEntities)).'">';
 
         // add instructions
         if (!empty($this->_aOptions) && !empty($this->_aOptions['onCreatedAddTo']))

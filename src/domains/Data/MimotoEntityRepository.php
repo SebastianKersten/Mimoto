@@ -5,13 +5,8 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\Data\MimotoEntityConnection;
 use Mimoto\EntityConfig\MimotoEntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
-use Mimoto\Data\MimotoCollection;
-use Mimoto\Data\MimotoEntity;
-use Mimoto\Data\MimotoEntityException;
-use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 use Mimoto\Event\MimotoEvent;
 
 
