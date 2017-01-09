@@ -224,7 +224,20 @@
         </div>
 #}
 
-        <a class="MimotoCMS_ButtonModule js-form-submit">Verstuur</a>
+        <a class="MimotoCMS_ButtonModule js-form-submit" data-icon="#ico-plus">
+            <span class="MimotoCMS_ButtonModule-text">Verstuur</span>
+            <svg class="MimotoCMS_ButtonModule-icon js-button-icon"><use xlink:href="#ico-plus"></use></svg>
+        </a>
+
+        <a class="MimotoCMS_ButtonModule js-loading-example js-form-submit" data-icon="#ico-plus">
+            <span class="MimotoCMS_ButtonModule-text">Loading example</span>
+            <svg class="MimotoCMS_ButtonModule-icon js-button-icon"><use xlink:href="#ico-plus"></use></svg>
+        </a>
+
+        <a class="MimotoCMS_ButtonModule js-success-example js-form-submit" data-icon="#ico-plus">
+            <span class="MimotoCMS_ButtonModule-text">Success example</span>
+            <svg class="MimotoCMS_ButtonModule-icon js-button-icon"><use xlink:href="#ico-plus"></use></svg>
+        </a>
     </form>
 
 {% endblock %}

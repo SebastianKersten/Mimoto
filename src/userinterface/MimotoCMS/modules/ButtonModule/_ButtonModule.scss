@@ -16,6 +16,11 @@
     }
 }
 
+.MimotoCMS_ButtonModule--loading {
+    pointer-events: none;
+    background-color: rgba($black, .7);
+}
+
 .MimotoCMS_ButtonModule--secondary {
     background-color: $tower-gray;
 
@@ -64,4 +69,14 @@
         height: 10px;
         margin: 5px 0 5px 15px;
         fill: $tower-gray;
+    }
+
+    .MimotoCMS_ButtonModule-icon--loading {
+        width: 12px;
+        height: 12px;
+        margin: 4px 0 4px 13px;
+        stroke: $tower-gray;
+    }
+
+    .MimotoCMS_ButtonModule-icon--success {
     }
