@@ -8,7 +8,7 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Data\MimotoEntityConnection;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
-use Mimoto\Form\MimotoFormService;
+use Mimoto\Form\FormService;
 
 // Silex classes
 use Silex\Application;

@@ -126,7 +126,7 @@ class ContentSection
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_ENTITYPROPERTY]
+                            'value' => [CoreConfig::WILDCARD]
                         ),
                         'allowDuplicates' => (object) array(
                             'id' => CoreConfig::MIMOTO_ENTITY.'--contentItems-allowDuplicates',

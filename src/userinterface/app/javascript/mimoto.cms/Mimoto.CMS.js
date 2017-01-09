@@ -202,10 +202,20 @@ module.exports.prototype = {
         Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentId + '/edit');
     },
     
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
+    
+    /**
+     * Content sections
+     */
+    contentNew: function(nContentId)
+    {
+        window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
+    },
+    
+    contentEdit: function(nContentId, sContentTypeName, nContentItemId)
+    {
+        window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
+    },
+    
     
     
     /**

@@ -79,9 +79,15 @@ class AimlessForm extends AimlessComponent
         }
 
 
+        // prepare
+        $jsonResponseSettings = (isset($this->_aOptions['response'])) ? json_encode($this->_aOptions['response']) : '{}';
+
+
         // init
         $sRenderedForm = '<form name="'.$this->_sFormName.'" action="'.$sAction.'" method="'.$sMethod.'">';
-        $sRenderedForm .= '<script>Mimoto.form.open("'.$this->_sFormName.'", "'.$sAction.'", "'.$sMethod.'", '.($form->getValue('realtimeCollaborationMode') ? 'true' : 'false').')</script>';
+        $sRenderedForm .= '<script>Mimoto.form.open("'.$this->_sFormName.'", "'.$sAction.'", "'.$sMethod.'", '.($form->getValue('realtimeCollaborationMode') ? 'true' : 'false').', \''.$jsonResponseSettings.'\')</script>';
+
+
 
         // add security
         $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.Mimoto::service('user')->getUserPublicKey(json_encode($formVars->connectedEntities)).'">';

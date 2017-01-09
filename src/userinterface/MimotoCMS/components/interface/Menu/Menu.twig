@@ -3,10 +3,10 @@
 
         {# #todo - make menu editable, core elements are always there behind 'settings' or 'tools' (1 page with subpages) #}
 
-        {# {{ Aimless.hideOnEmpty('menuContentSections') }} #}
+        {#  #}
         {#{% if Aimless.data('menuContentSections') is not empty %}#}
         {# {{ Aimless.realtime('menuContentSections') }} #}
-            <ul class="MimotoCMS_interface_Menu-group">
+            <ul class="MimotoCMS_interface_Menu-group" {{ Aimless.hideOnEmpty('menuContentSections') }}>
                 {{ Aimless.render('menuContentSections', 'MimotoCMS_interface_Menu_MenuButton') }}
             </ul>
         {#{% endif %}#}

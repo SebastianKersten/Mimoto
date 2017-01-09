@@ -23,67 +23,51 @@ class ContentController
 
     public function contentEdit(Application $app, $nContentId)
     {
-        // 1. load contentSection
-        // 2. check type
-        // 3. if single -> load form
-        // 4. if group -> show overview
-
-
         // 1. load content section
         $contentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
 
         // 2. check if contentSection exists
-        if ($contentSectionEntity === false) return $app->redirect("/mimoto.cms");
+        if ($contentSectionEntity === false) return $app->redirect("/mimoto.cms/contentsections");
 
-
-
-        // 5. read contentItem
-
-        // 6. read contentItems
-
-
-        // read
+        // 3. read properties
         $sName = $contentSectionEntity->getValue('name');
         $sType = $contentSectionEntity->getValue('type');
         $sFormName = $contentSectionEntity->getValue('form.name');
 
-        // toggle
+        // 4. toggle between contentItem and contentGroup
         switch($sType)
         {
             case ContentSection::TYPE_ITEM:
 
-                // 1. read current value (could also be empty)
+                // 4a. read current value (could also be empty)
                 $contentItem = $contentSectionEntity->getValue('contentItem');
 
-                // 2. create page containing a form
+                // 4b. create page containing a form
                 $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
 
-                // 3. setup form
+                // 4c. setup form
                 $page->addForm($sFormName, $contentItem, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItem']);
 
                 break;
 
             case ContentSection::TYPE_GROUP:
 
-                $aContentItems = $contentSectionEntity->getValue('contentItems');
-
-                // create
-                $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_contentsections_ContentSectionOverview');
-
-                // setup
-                $page->addSelection('contentItems', $aContentItems, 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem');
+                // 4d. create component
+                $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_contents_ContentOverview', $contentSectionEntity);
 
                 break;
 
             default:
 
+                // 4e. report
                 Mimoto::service('log')->warn("ContentSection with invalid type", "A content section id=`$nContentId` requested for edit has an unknown type of value `$sType`");
         }
 
-        // add content menu
+        // 5. add content menu
         $page = InterfaceUtils::addMenuToComponent($page);
 
-        // setup page
+        // 6. setup page
+        $page->setVar('nContentSectionId', $nContentId);
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => $sName,
@@ -92,7 +76,90 @@ class ContentController
             )
         );
 
-        // output
+        // 7. output
+        return $page->render();
+    }
+
+    public function contentGroupItemNew(Application $app, $nContentId)
+    {
+        // 1. load content section
+        $contentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
+
+        // 2. check if contentSection exists
+        if ($contentSectionEntity === false) return $app->redirect("/mimoto.cms/contentsections");
+
+
+        // 3. read properties
+        $sName = $contentSectionEntity->getValue('name');
+        $sFormName = $contentSectionEntity->getValue('form.name');
+
+        // 4b. create page containing a form
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
+
+        // 4c. setup form
+        $page->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems', 'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]]);
+
+        // 5. add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
+
+        // 6. setup page
+        $page->setVar('nContentSectionId', $nContentId);
+        $page->setVar('pageTitle', array(
+                (object) array(
+                    "label" => $sName,
+                    "url" => '/mimoto.cms/content/'.$nContentId
+                ),
+                (object) array(
+                    "label" => '- temp label -',
+                    "url" => '/mimoto.cms/content/'.$nContentId
+                )
+            )
+        );
+
+        // 7. output
+        return $page->render();
+    }
+
+    public function contentGroupItemEdit(Application $app, $nContentId, $sContentTypeName, $nContentItemId)
+    {
+        // 1. load content section
+        $contentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
+
+        // 2. check if contentSection exists
+        if ($contentSectionEntity === false) return $app->redirect("/mimoto.cms/contentsections");
+
+        // 3. read properties
+        $sName = $contentSectionEntity->getValue('name');
+        $sFormName = $contentSectionEntity->getValue('form.name');
+
+
+        $entity = Mimoto::service('data')->get($sContentTypeName, $nContentItemId);
+
+
+        // 4b. create page containing a form
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
+
+        // 4c. setup form
+        $page->addForm($sFormName, $entity, ['response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]]);
+
+        // 5. add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
+
+        // 6. setup page
+        $page->setVar('nContentSectionId', $nContentId);
+        $page->setVar('pageTitle', array(
+                (object) array(
+                    "label" => $sName,
+                    "url" => '/mimoto.cms/content/'.$nContentId
+                ),
+                (object) array(
+                    "label" => '- temp label -',
+                    "url" => '/mimoto.cms/content/'.$nContentId
+                )
+            )
+        );
+
+        // 7. output
         return $page->render();
     }
 

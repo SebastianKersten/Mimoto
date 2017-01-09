@@ -65,7 +65,7 @@ class EntityController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
+        $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 3. render and send
         return $component->render();
@@ -124,7 +124,7 @@ class EntityController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITY_EDIT, $entity);
+        $component->addForm(CoreConfig::COREFORM_ENTITY_EDIT, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 5. render and send
         return $component->render();
@@ -153,7 +153,7 @@ class EntityController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entityProperty, ['onCreatedConnectTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.properties']);
+        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entityProperty, ['onCreatedConnectTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.properties', 'response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 3. render and send
         return $component->render();
@@ -172,7 +172,7 @@ class EntityController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_EDIT, $entity);
+        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_EDIT, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 5. render and send
         return $component->render();
@@ -271,22 +271,22 @@ class EntityController
         {
             case MimotoEntityConfig::SETTING_VALUE_TYPE:
 
-                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, $entity);
+                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
                 break;
 
             case MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
-                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE, $entity);
+                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
                 break;
 
             case MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
 
-                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES, $entity);
+                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
                 break;
 
             case MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES:
 
-                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES, $entity);
+                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
                 break;
         }
 

@@ -17,11 +17,11 @@ use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 
 
 /**
- * MimotoFormResponse
+ * FormResponse
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoFormResponse
+class FormResponse
 {
 
 

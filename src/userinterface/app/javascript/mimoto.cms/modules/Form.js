@@ -42,7 +42,7 @@ module.exports.prototype = {
     /**
      * Open new form
      */
-    open: function(sFormName, sAction, sMethod, bRealtimeCollaborationMode)
+    open: function(sFormName, sAction, sMethod, bRealtimeCollaborationMode, responseSettings)
     {
         // store
         this._sCurrentOpenForm = sFormName;
@@ -53,7 +53,8 @@ module.exports.prototype = {
             'sAction': sAction,
             'sMethod': sMethod,
             'aFields': [],
-            'bRealtimeCollaborationMode': bRealtimeCollaborationMode
+            'bRealtimeCollaborationMode': bRealtimeCollaborationMode,
+            'responseSettings': JSON.parse(responseSettings)
         };
 
         // register
@@ -317,16 +318,28 @@ module.exports.prototype = {
                         sPublicKey = $($component).val(resultData.newPublicKey);
                     });
                     
-                    // cleanup instructions
+                    // cleanup instuctions
                     $("input[name='Mimoto.onCreated:addTo']", $form).remove();
                 }
 
                 // 1. #todo get input field value in method
                 // 2. collaborationMode
+    
                 
-                
-                Mimoto.popup.close();
-
+                if (form.responseSettings)
+                {
+                    if (form.responseSettings.onSuccess)
+                    {
+                        if (form.responseSettings.onSuccess.loadPage)
+                        {
+                            window.open(form.responseSettings.onSuccess.loadPage, '_self');
+                        }
+                        else if (form.responseSettings.onSuccess.closePopup)
+                        {
+                            Mimoto.popup.close();
+                        }
+                    }
+                }
             }
         });
 

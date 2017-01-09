@@ -8,7 +8,7 @@ use Mimoto\Event\MimotoEventServiceProvider;
 use Mimoto\Aimless\AimlessServiceProvider;
 use Mimoto\Data\EntityServiceProvider;
 use Mimoto\Cache\MimotoCacheServiceProvider;
-use Mimoto\Form\MimotoFormServiceProvider;
+use Mimoto\Form\FormServiceProvider;
 use Mimoto\Log\MimotoLogServiceProvider;
 use Mimoto\User\MimotoUserServiceProvider;
 
@@ -44,7 +44,7 @@ class Mimoto
         $app->register(new EntityServiceProvider());
         $app->register(new AimlessServiceProvider());
         $app->register(new MimotoEventServiceProvider());
-        $app->register(new MimotoFormServiceProvider());
+        $app->register(new FormServiceProvider());
         $app->register(new MimotoLogServiceProvider());
         $app->register(new MimotoUserServiceProvider());
 
@@ -96,6 +96,8 @@ class Mimoto
         $app->get ('/mimoto.cms/contentsection/{nContentSectionId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionEdit');
 
         $app->get ('/mimoto.cms/content/{nContentId}', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentEdit');
+        $app->get ('/mimoto.cms/content/{nContentId}/new', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemNew');
+        $app->get ('/mimoto.cms/content/{nContentId}/{sContentTypeName}/{nContentItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemEdit');
 
         // Form
         $app->get ('/mimoto.cms/form/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formNew');

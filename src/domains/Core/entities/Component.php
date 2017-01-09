@@ -189,6 +189,21 @@ class Component
             ),
 
 
+            // content
+
+            (object) array(
+                'name' => 'Mimoto.CMS_contents_ContentOverview',
+                'file' => 'MimotoCMS/components/pages/content/ContentOverview/ContentOverview.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_contents_ContentOverview_ListItem',
+                'file' => 'MimotoCMS/components/pages/content/ContentOverview/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+
+
+
             // actions
 
             (object) array(

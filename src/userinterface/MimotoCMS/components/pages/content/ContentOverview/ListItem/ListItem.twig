@@ -1,0 +1,12 @@
+{{
+    Aimless.module('Mimoto.CMS.ListItemModule',
+    {
+        label: Aimless.data('name'),
+        label_realtime: Aimless.realtime('name'),
+        sublabel: Aimless.meta('id'),
+        sublabel_realtime:  '',
+        button_label: 'Edit',
+        button_action: 'Mimoto.CMS.contentEdit('~nContentSectionId~', \''~Aimless.meta('type')~'\', '~Aimless.meta('id')~');',
+        button_type: 'secondary'
+    })
+}}

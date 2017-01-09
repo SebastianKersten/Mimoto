@@ -56,7 +56,7 @@ class ContentSectionController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_CONTENTSECTION_NEW, $entity);
+        $component->addForm(CoreConfig::COREFORM_CONTENTSECTION_NEW, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 3. render and send
         return $component->render();
@@ -105,7 +105,7 @@ class ContentSectionController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_CONTENTSECTION_EDIT, $contentSection);
+        $component->addForm(CoreConfig::COREFORM_CONTENTSECTION_EDIT, $contentSection, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 5. render and send
         return $component->render();

@@ -59,7 +59,7 @@ class FormController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_FORM_NEW, $entity);
+        $component->addForm(CoreConfig::COREFORM_FORM_NEW, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 3. render and send
         return $component->render();
@@ -108,7 +108,7 @@ class FormController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_FORM_EDIT, $form);
+        $component->addForm(CoreConfig::COREFORM_FORM_EDIT, $form, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 5. render and send
         return $component->render();
@@ -196,7 +196,7 @@ class FormController
         $sFormConfigId = $app['Mimoto.Forms']->getCoreFormByEntityTypeId($nFormFieldTypeId);
 
         // 4. setup
-        $component->addForm($sFormConfigId, $entity, ['onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields']);
+        $component->addForm($sFormConfigId, $entity, ['onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields', 'response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 5. render and send
         return $component->render();
@@ -218,7 +218,7 @@ class FormController
 
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_INPUT_TEXTLINE_EDIT, $entity);
+        $component->addForm(CoreConfig::COREFORM_INPUT_TEXTLINE_EDIT, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 5. render and send
         return $component->render();

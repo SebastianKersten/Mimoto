@@ -10,7 +10,7 @@ use Mimoto\Core\entities\Component;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoDataUtils;
-use Mimoto\Form\MimotoFormService;
+use Mimoto\Form\FormService;
 use Mimoto\Log\MimotoLogService;
 
 
@@ -41,11 +41,11 @@ class AimlessService
     /**
      * Constructor
      */
-    public function __construct($EntityService, MimotoFormService $MimotoFormService, MimotoLogService $MimotoLogService, $TwigService)
+    public function __construct($EntityService, FormService $FormService, MimotoLogService $MimotoLogService, $TwigService)
     {
         // register
         $this->_EntityService = $EntityService;
-        $this->_MimotoFormService = $MimotoFormService;
+        $this->_FormService = $FormService;
         $this->_AimlessService = $this;
         $this->_MimotoLogService = $MimotoLogService;
         $this->_TwigService = $TwigService;
@@ -106,7 +106,7 @@ class AimlessService
     public function createForm($sFormName, $xData, $options = null)
     {
         // init and send
-        return new AimlessForm($sFormName, $xData, $options, $this->_AimlessService, $this->_EntityService, $this->_MimotoFormService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessForm($sFormName, $xData, $options, $this->_AimlessService, $this->_EntityService, $this->_FormService, $this->_MimotoLogService, $this->_TwigService);
     }
 
 

@@ -29,11 +29,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 /**
- * MimotoFormService
+ * FormService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoFormService
+class FormService
 {
 
     // services
@@ -670,7 +670,7 @@ class MimotoFormService
             case CoreConfig::COREFORM_LAYOUT_GROUPEND_NEW: return LayoutGroupEndForm::getStructureNew(); break;
             case CoreConfig::COREFORM_LAYOUT_GROUPEND_EDIT: return LayoutGroupEndForm::getStructureEdit(); break;
 
-            default: die("MimotoFormService.loadCoreForm('$sFormName') - Form not found");
+            default: die("FormService.loadCoreForm('$sFormName') - Form not found");
         }
     }
 

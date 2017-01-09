@@ -738,16 +738,46 @@ class AimlessComponent
 
     public function hideOnEmpty($sPropertySelector)
     {
-        $sDisplayState = (empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
 
-        return 'data-aimless-hideonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+        if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
+        {
+            $sDisplayState = (empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
+
+            return 'data-aimless-hideonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+        }
+        else
+        {
+            if (isset($this->_aSelections[$sPropertySelector]))
+            {
+                $sDisplayState = ($this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
+
+                return 'data-aimless-hideonempty="'.$sPropertySelector.'" '.$sDisplayState;
+            }
+        }
+
+        return '';
     }
 
     public function showOnEmpty($sPropertySelector)
     {
-        $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
 
-        return 'data-aimless-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+        if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
+        {
+            $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
+
+            return 'data-aimless-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+        }
+        else
+        {
+            if (isset($this->_aSelections[$sPropertySelector]))
+            {
+                $sDisplayState = (!$this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
+
+                return 'data-aimless-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
+            }
+        }
+
+        return '';
     }
 
     public function reloadOnChange()

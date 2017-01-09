@@ -13,7 +13,7 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * MimotoFormServiceProvider
+ * LogServiceProvider
  *
  * @author Sebastian Kersten (@supertaboo)
  */

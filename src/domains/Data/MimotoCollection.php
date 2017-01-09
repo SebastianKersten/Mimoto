@@ -24,4 +24,9 @@ class MimotoCollection extends \ArrayObject
     {
         return $this->_criteria;
     }
+
+    public function isEmpty()
+    {
+        return count($this) == 0;
+    }
 }

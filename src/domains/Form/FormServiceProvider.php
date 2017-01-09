@@ -5,7 +5,6 @@ namespace Mimoto\Form;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\Form\MimotoFormService;
 
 // Silex classes
 use Silex\Application;
@@ -13,11 +12,11 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * MimotoFormServiceProvider
+ * FormServiceProvider
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoFormServiceProvider implements ServiceProviderInterface
+class FormServiceProvider implements ServiceProviderInterface
 {
     
     public function register(Application $app)
@@ -28,7 +27,7 @@ class MimotoFormServiceProvider implements ServiceProviderInterface
 
         $app['Mimoto.Forms'] = $app['Mimoto.FormService'] = $app->share(function($app)
         {
-            return new MimotoFormService($app['Mimoto.Data'], $app['Mimoto.Config'], $app['Mimoto.Log']);
+            return new FormService($app['Mimoto.Data'], $app['Mimoto.Config'], $app['Mimoto.Log']);
         });
     }
 
