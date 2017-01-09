@@ -7,6 +7,7 @@ module.exports = {
         this.el = element;
 
         this.textline = this.el.querySelector('.js-textline');
+        this.textblock = this.el.querySelector('.js-textblock');
         this.checkboxes = this.el.querySelectorAll('.js-checkbox');
         this.radioButtons = this.el.querySelectorAll('.js-radio-button');
         this.dropdown = this.el.querySelector('.js-dropdown');
@@ -22,6 +23,9 @@ module.exports = {
         } else if (this.dropdown) {
             this.input = this.dropdown;
             this.value = this.dropdown.value;
+        } else if (this.textblock) {
+            this.input = this.textblock;
+            this.value = this.textblock.value;
         }
 
     },
