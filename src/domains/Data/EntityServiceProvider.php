@@ -5,8 +5,6 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\Data\EntityService;
-use Mimoto\Data\MimotoEntityRepository;
 use Mimoto\EntityConfig\MimotoEntityConfigRepository;
 use Mimoto\EntityConfig\MimotoEntityConfigService;
 
@@ -76,7 +74,7 @@ class EntityServiceProvider implements ServiceProviderInterface
             $service = new EntityService
             (
                 $this->_aEntityConfigs,
-                new MimotoEntityRepository($app['Mimoto.EventService']),
+                new EntityRepository($app['Mimoto.EventService']),
                 $app['Mimoto.EntityConfigService']
             );
 

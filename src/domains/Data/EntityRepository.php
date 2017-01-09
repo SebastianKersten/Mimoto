@@ -11,11 +11,11 @@ use Mimoto\Event\MimotoEvent;
 
 
 /**
- * MimotoEntityRepository
+ * EntityRepository
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoEntityRepository
+class EntityRepository
 {
     
     /**

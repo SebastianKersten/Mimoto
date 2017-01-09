@@ -109,7 +109,7 @@ class ContentSection
                             // ---
                             'key' => 'allowedEntityType',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => CoreConfig::MIMOTO_ENTITY
+                            'value' => CoreConfig::WILDCARD
                         )
                     ]
                 ),
