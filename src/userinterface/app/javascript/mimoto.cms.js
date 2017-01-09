@@ -6,6 +6,8 @@ var HeaderView = require('./views/Header');
 var FormView = require('./views/form-components/Form');
 var ListView = require('./views/form-components/List');
 
+var ButtonUtils = require('./utils/Button');
+
 if (typeof Mimoto == "undefined") Mimoto = {};
 if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
 if (typeof Mimoto.modules == "undefined") Mimoto.modules = {};
@@ -53,5 +55,32 @@ document.addEventListener('DOMContentLoaded', function () {
     for (i = 0; i < lists.length; i++) {
         new ListView(lists[i]);
     }
+
+    var loadingButton = document.querySelector('.js-loading-example');
+    var successButton = document.querySelector('.js-success-example');
+
+    setTimeout(function () {
+
+        ButtonUtils.addLoadingState(loadingButton);
+
+    }.bind(this), 1000);
+
+    setTimeout(function () {
+
+        ButtonUtils.removeLoadingState(loadingButton);
+
+    }.bind(this), 3000);
+
+    setTimeout(function () {
+
+        ButtonUtils.addSuccessState(successButton);
+
+    }.bind(this), 1000);
+
+    setTimeout(function () {
+
+        ButtonUtils.removeSuccessState(successButton);
+
+    }.bind(this), 3000);
 
 }, false);
