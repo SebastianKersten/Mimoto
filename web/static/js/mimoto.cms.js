@@ -29461,10 +29461,11 @@
 
 	/* WEBPACK VAR INJECTION */(function(FV) {'use strict';
 	
-	var TextlineView = __webpack_require__(14);
 	var CheckboxView = __webpack_require__(15);
-	var RadioButtonView = __webpack_require__(16);
 	var DropdownView = __webpack_require__(24);
+	var RadioButtonView = __webpack_require__(16);
+	var TextlineView = __webpack_require__(14);
+	var TextblockView = __webpack_require__(25);
 	
 	module.exports = function (element) {
 	
@@ -29514,7 +29515,10 @@
 	                new RadioButtonView(this.elements[i]);
 	            } else if (this.elements[i].classList.contains('js-form-component-dropdown')) {
 	                new DropdownView(this.elements[i]);
+	            } else if (this.elements[i].classList.contains('js-form-component-textblock')) {
+	                new TextblockView(this.elements[i]);
 	            }
+	
 	        }
 	
 	    },
@@ -29601,6 +29605,7 @@
 	        this.el = element;
 	
 	        this.textline = this.el.querySelector('.js-textline');
+	        this.textblock = this.el.querySelector('.js-textblock');
 	        this.checkboxes = this.el.querySelectorAll('.js-checkbox');
 	        this.radioButtons = this.el.querySelectorAll('.js-radio-button');
 	        this.dropdown = this.el.querySelector('.js-dropdown');
@@ -29616,6 +29621,9 @@
 	        } else if (this.dropdown) {
 	            this.input = this.dropdown;
 	            this.value = this.dropdown.value;
+	        } else if (this.textblock) {
+	            this.input = this.textblock;
+	            this.value = this.textblock.value;
 	        }
 	
 	    },
@@ -32607,6 +32615,62 @@
 	    handleValidation: function () {
 	
 	        var value = this.dropdown.value;
+	
+	        if (value == '') {
+	
+	            EH.clearState(this.el);
+	
+	        } else {
+	
+	            FV.validateInput(this.el);
+	
+	        }
+	
+	    }
+	
+	};
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
+
+/***/ },
+/* 25 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(EH, FV) {'use strict';
+	
+	module.exports = function (element) {
+	
+	    this.el = element;
+	    this.init();
+	
+	};
+	
+	module.exports.prototype = {
+	
+	    init: function () {
+	
+	        console.log('Init Textblock');
+	
+	        this.setVariables();
+	        this.addEventListeners();
+	
+	    },
+	
+	    setVariables: function () {
+	
+	        this.textblock = this.el.querySelector('.js-textblock');
+	
+	    },
+	
+	    addEventListeners: function () {
+	
+	        this.textblock.addEventListener('keyup', this.handleValidation.bind(this));
+	
+	    },
+	
+	    handleValidation: function () {
+	
+	        var value = this.textblock.value;
 	
 	        if (value == '') {
 	
