@@ -10291,6 +10291,8 @@
 	var FormView = __webpack_require__(12);
 	var ListView = __webpack_require__(17);
 	
+	var ButtonUtils = __webpack_require__(26);
+	
 	if (typeof Mimoto == "undefined") Mimoto = {};
 	if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
 	if (typeof Mimoto.modules == "undefined") Mimoto.modules = {};
@@ -10338,6 +10340,33 @@
 	    for (i = 0; i < lists.length; i++) {
 	        new ListView(lists[i]);
 	    }
+	
+	    var loadingButton = document.querySelector('.js-loading-example');
+	    var successButton = document.querySelector('.js-success-example');
+	
+	    setTimeout(function () {
+	
+	        ButtonUtils.addLoadingState(loadingButton);
+	
+	    }.bind(this), 1000);
+	
+	    setTimeout(function () {
+	
+	        ButtonUtils.removeLoadingState(loadingButton);
+	
+	    }.bind(this), 3000);
+	
+	    setTimeout(function () {
+	
+	        ButtonUtils.addSuccessState(successButton);
+	
+	    }.bind(this), 1000);
+	
+	    setTimeout(function () {
+	
+	        ButtonUtils.removeSuccessState(successButton);
+	
+	    }.bind(this), 3000);
 	
 	}, false);
 	
@@ -32710,6 +32739,71 @@
 	};
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = {
+	
+	    loadingClass: 'MimotoCMS_ButtonModule--loading',
+	    loadingIcon: '#ico-loading',
+	    loadingIconClass: 'MimotoCMS_ButtonModule-icon--loading',
+	    successClass: 'MimotoCMS_ButtonModule--success',
+	    successIcon: '#ico-checkmark',
+	    successIconClass: 'MimotoCMS_ButtonModule-icon--success',
+	    iconSelector: '.js-button-icon',
+	
+	    addLoadingState: function (button) {
+	
+	        var useElement = button.getElementsByTagName('use')[0];
+	        var icon = button.querySelector(this.iconSelector);
+	
+	        button.classList.add(this.loadingClass);
+	        icon.classList.add(this.loadingIconClass);
+	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', this.loadingIcon);
+	
+	    },
+	
+	    removeLoadingState: function (button) {
+	
+	        var useElement = button.getElementsByTagName('use')[0];
+	        var icon = button.querySelector(this.iconSelector);
+	        var originalIcon = button.getAttribute('data-icon');
+	
+	        button.classList.remove(this.loadingClass);
+	        icon.classList.remove(this.loadingIconClass);
+	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', originalIcon);
+	
+	    },
+	
+	    addSuccessState: function (button) {
+	
+	        var useElement = button.getElementsByTagName('use')[0];
+	        var icon = button.querySelector(this.iconSelector);
+	
+	        button.classList.add(this.successClass);
+	        icon.classList.add(this.successIconClass);
+	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', this.successIcon);
+	
+	    },
+	
+	    removeSuccessState: function (button) {
+	
+	        var useElement = button.getElementsByTagName('use')[0];
+	        var icon = button.querySelector(this.iconSelector);
+	        var originalIcon = button.getAttribute('data-icon');
+	
+	        button.classList.remove(this.successClass);
+	        icon.classList.remove(this.successIconClass);
+	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', originalIcon);
+	
+	    }
+	
+	};
+
 
 /***/ }
 /******/ ]);
