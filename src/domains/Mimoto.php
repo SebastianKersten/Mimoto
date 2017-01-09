@@ -5,8 +5,8 @@ namespace Mimoto;
 
 // Mimoto classes
 use Mimoto\Event\MimotoEventServiceProvider;
-use Mimoto\Aimless\MimotoAimlessServiceProvider;
-use Mimoto\Data\MimotoEntityServiceProvider;
+use Mimoto\Aimless\AimlessServiceProvider;
+use Mimoto\Data\EntityServiceProvider;
 use Mimoto\Cache\MimotoCacheServiceProvider;
 use Mimoto\Form\MimotoFormServiceProvider;
 use Mimoto\Log\MimotoLogServiceProvider;
@@ -25,6 +25,10 @@ class Mimoto
     private static $_aValues = [];
 
 
+    const DATA = 'data';
+    const CONFIG = 'config';
+    const AIMLESS = 'aimless';
+
 
     /**
      * Constructor
@@ -37,8 +41,8 @@ class Mimoto
 
         // setup Mimoto services
         $app->register(new MimotoCacheServiceProvider());
-        $app->register(new MimotoEntityServiceProvider());
-        $app->register(new MimotoAimlessServiceProvider());
+        $app->register(new EntityServiceProvider());
+        $app->register(new AimlessServiceProvider());
         $app->register(new MimotoEventServiceProvider());
         $app->register(new MimotoFormServiceProvider());
         $app->register(new MimotoLogServiceProvider());
@@ -91,6 +95,8 @@ class Mimoto
         $app->get ('/mimoto.cms/contentsection/{nContentSectionId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionView');
         $app->get ('/mimoto.cms/contentsection/{nContentSectionId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionEdit');
 
+        $app->get ('/mimoto.cms/content/{nContentId}', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentEdit');
+
         // Form
         $app->get ('/mimoto.cms/form/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formNew');
         $app->get ('/mimoto.cms/form/{nFormId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formView');
@@ -137,6 +143,7 @@ class Mimoto
         $app->get('/mimoto.cms/static/images/mimoto_logo_collapsed.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogoCollapsed');
         $app->get('/mimoto.cms/dynamic/avatar.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageAvatar');
     }
+
 
 
     public static function service($sServiceName)

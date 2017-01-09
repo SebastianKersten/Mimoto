@@ -199,6 +199,8 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         //if (!empty($sSubpropertySelector)) { $this->forwardRemoveValue($sSubpropertySelector, $xValue); return; }
 
 
+        echo 'In COLLECTION.remove<br>';
+
 
         // 1. convert
         $xEntityTypeId = Mimoto::service('config')->getEntityIdByName($sEntityType);
@@ -206,6 +208,8 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         // 2. assist
         if (empty($xEntityTypeId))
         {
+
+
             if (count($this->_config->settings->allowedEntityTypes) == 1)
             {
                 // 2a. auto select
@@ -223,8 +227,6 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $this->_config->settings->allowedEntityTypes, $xEntityTypeId, $this->_config->name);
 
 
-
-
         // --- HERE --------------------------------------------------------------------------------------------
         // 1. bij duplicates verwijder allemaal
         // 2. hoe connection id verwijderen? (sortindex / id en connection id niet aanraken?)
@@ -236,7 +238,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         $nCurrentCollectionCount = count($this->_data->currentCollection);
         for ($nCurrentCollectionIndex = 0; $nCurrentCollectionIndex < $nCurrentCollectionCount; $nCurrentCollectionIndex++)
         {
-            if ($this->_data->currentCollection[$nCurrentCollectionIndex]->getChildId() == $connection->getChildId())
+            if (MimotoDataUtils::connectionsAreSimilar($this->_data->currentCollection[$nCurrentCollectionIndex], $connection))
             {
                 // remove
                 if (!$this->_bTrackChanges) { array_splice($this->_data->persistentCollection, $nCurrentCollectionIndex, 1); }
@@ -244,6 +246,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
 
                 // correct
                 $nCurrentCollectionIndex--;
+                $nCurrentCollectionCount--;
             }
         }
     }

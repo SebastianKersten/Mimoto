@@ -187,9 +187,9 @@ module.exports.prototype = {
         aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
     
         // 6. read instructions
-        var sOnCreatedAddTo = '';
-        var aOnCreatedAddTo = $("input[name='Mimoto.onCreated:addTo']", $form);
-        aOnCreatedAddTo.each( function(index, $component) { sOnCreatedAddTo = $($component).val(); });
+        var sOnCreatedConnectTo = '';
+        var aOnCreatedConnectTo = $("input[name='Mimoto.onCreated:connectTo']", $form);
+        aOnCreatedConnectTo.each( function(index, $component) { sOnCreatedConnectTo = $($component).val(); });
         
         // 7. collect data
         var aValues = {};
@@ -241,7 +241,7 @@ module.exports.prototype = {
         
         // 10. collect data
         var requestData = { publicKey: sPublicKey, values: aValues };
-        if (sOnCreatedAddTo) requestData.onCreatedAddTo = sOnCreatedAddTo;
+        if (sOnCreatedConnectTo) requestData.onCreatedConnectTo = sOnCreatedConnectTo;
 
 
 

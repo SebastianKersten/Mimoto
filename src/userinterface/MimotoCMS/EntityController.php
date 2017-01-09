@@ -5,11 +5,11 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-
-// Silex classes
+use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityConfig;
+
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -34,11 +34,14 @@ class EntityController
         $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
 
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityOverview');
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityOverview');
 
         // setup
         $page->addSelection('entities', $aEntities, 'Mimoto.CMS_entities_EntityOverview_ListItem');
 
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
+        
         // setup page
         $page->setVar('pageTitle', array(
                 (object) array(
@@ -59,7 +62,7 @@ class EntityController
         $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITY);
 
         // 1. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
         $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
@@ -77,10 +80,19 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create component
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_entities_EntityDetail', $entity);
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityDetail', $entity);
 
         // 4. setup component
         $page->setPropertyComponent('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty');
+
+        //error($page);
+        $page->addSelection('menuContentSections', []);
+
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
+
+
+        // todo - insert as simple values, add realtime support later
 
         // setup page
         $page->setVar('entityStructure', $this->getEntityStructure($entity));
@@ -109,7 +121,7 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
         $component->addForm(CoreConfig::COREFORM_ENTITY_EDIT, $entity);
@@ -138,10 +150,10 @@ class EntityController
         $entityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
 
         // 1. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entityProperty, ['onCreatedAddTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.properties']);
+        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW, $entityProperty, ['onCreatedConnectTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.properties']);
 
         // 3. render and send
         return $component->render();
@@ -157,7 +169,7 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
         $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY_EDIT, $entity);
@@ -252,7 +264,7 @@ class EntityController
         if ($entity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. select form based on type
         switch ($entity->getValue('key'))

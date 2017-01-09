@@ -16,7 +16,7 @@ class MimotoLogService
 {
 
     // services
-    private $_MimotoEntityService;
+    private $_EntityService;
 
 
     // ----------------------------------------------------------------------------
@@ -27,10 +27,10 @@ class MimotoLogService
     /**
      * Constructor
      */
-    public function __construct($MimotoEntityService)
+    public function __construct($EntityService)
     {
         // register
-        $this->_MimotoEntityService = $MimotoEntityService;
+        $this->_EntityService = $EntityService;
     }
 
 
@@ -89,7 +89,7 @@ class MimotoLogService
     private function createNotification($sTitle, $sMessage, $debugBacktrace, $sCategory)
     {
         // create
-        $notification = $this->_MimotoEntityService->create(CoreConfig::MIMOTO_NOTIFICATION);
+        $notification = $this->_EntityService->create(CoreConfig::MIMOTO_NOTIFICATION);
 
         // prepare
         $sDispatcher = $debugBacktrace['class'].'::'.$debugBacktrace['function'];
@@ -103,7 +103,7 @@ class MimotoLogService
         $notification->setValue('state', 'open');
 
         // store
-        $this->_MimotoEntityService->store($notification);
+        $this->_EntityService->store($notification);
     }
 
 }

@@ -35,7 +35,7 @@ class MimotoEventService
     /**
      * Constructor
      */
-    public function __construct($dispatcher) //, $MimotoAimlessService)
+    public function __construct($dispatcher) //, $AimlessService)
     {
         // register
         $this->_dispatcher = $dispatcher;

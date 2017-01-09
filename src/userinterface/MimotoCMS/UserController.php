@@ -4,6 +4,8 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
+use Mimoto\Mimoto;
+use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 
 // Silex classes
@@ -21,7 +23,10 @@ class UserController
     public function viewUserOverview(Application $app)
     {
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_users_UserOverview');
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_users_UserOverview');
+
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
 
         // setup page
         $page->setVar('pageTitle', array(

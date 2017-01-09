@@ -4,7 +4,7 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
-use Mimoto\Core\InterfaceUtils;
+use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 
 // Silex classes
 use Silex\Application;

@@ -3,16 +3,18 @@
 
         {# #todo - make menu editable, core elements are always there behind 'settings' or 'tools' (1 page with subpages) #}
 
-        {# {{ Aimless.hideOnEmpty('menuContentSections') }} # }
-        <ul class="MimotoCMS_interface_Menu-group" {{ Aimless.realtime('menuContentSections') }}>
-            {{ Aimless.render('menuContentSections', 'MimotoCMS_interface_Menu_MenuButton') }}
-        </ul>
-
+        {# {{ Aimless.hideOnEmpty('menuContentSections') }} #}
+        {#{% if Aimless.data('menuContentSections') is not empty %}#}
+        {# {{ Aimless.realtime('menuContentSections') }} #}
+            <ul class="MimotoCMS_interface_Menu-group">
+                {{ Aimless.render('menuContentSections', 'MimotoCMS_interface_Menu_MenuButton') }}
+            </ul>
+        {#{% endif %}#}
         {# .{type="page"} #}
         {# addProperty() #}
 
 
-
+        {#
         <ul class="MimotoCMS_interface_Menu-group">
             <li class="MimotoCMS_interface_Menu-item">
                 <a href="/mimoto.cms/messages" class="MimotoCMS_interface_Menu-item-link">
@@ -33,6 +35,7 @@
                 </a>
             </li>
         </ul>
+        #}
 
         <ul class="MimotoCMS_interface_Menu-group">
             <li class="MimotoCMS_interface_Menu-item">

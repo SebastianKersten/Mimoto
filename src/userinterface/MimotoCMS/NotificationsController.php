@@ -4,6 +4,8 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
+use Mimoto\Mimoto;
+use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 
 // Silex classes
@@ -23,16 +25,19 @@ class NotificationsController
     public function viewNotificationCenter(Application $app)
     {
         // load
-        $aNotifications = $app['Mimoto.Data']->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
+        $aNotifications = Mimoto::service('data')->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
 
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_notifications_NotificationOverview');
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_notifications_NotificationOverview');
         
         // setup
-        $component->addSelection('notifications', $aNotifications, 'Mimoto.CMS_notifications_Notification');
+        $page->addSelection('notifications', $aNotifications, 'Mimoto.CMS_notifications_Notification');
+
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
 
         // setup page
-        $component->setVar('pageTitle', array(
+        $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => 'Notification Center',
                     "url" => '/mimoto.cms/notifications'
@@ -41,13 +46,13 @@ class NotificationsController
         );
 
         // render and send
-        return $component->render();
+        return $page->render();
     }
 
     public function closeNotification(Application $app, $nNotificationId)
     {
         // load
-        $notification = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_NOTIFICATION, $nNotificationId);
+        $notification = Mimoto::service('data')->get(CoreConfig::MIMOTO_NOTIFICATION, $nNotificationId);
 
         // validate
         if (empty($notification) || $notification->getValue('state') != 'open') return new Response('Notification already closed');;
@@ -56,7 +61,7 @@ class NotificationsController
         $notification->setValue('state', 'closed');
 
         // store
-        $app['Mimoto.Data']->store($notification);
+        Mimoto::service('data')->store($notification);
 
         // send
         return new Response('Notification closed');
@@ -65,10 +70,10 @@ class NotificationsController
     public function getNotificationCount(Application $app)
     {
         // load
-        $aNotifications = $app['Mimoto.Data']->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
+        $aNotifications = Mimoto::service('data')->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
 
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_notifications_NotificationOverviewSmall');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_notifications_NotificationOverviewSmall');
 
         // setup
         $component->addSelection('notifications', $aNotifications, 'Mimoto.CMS_notifications_NotificationSmall');

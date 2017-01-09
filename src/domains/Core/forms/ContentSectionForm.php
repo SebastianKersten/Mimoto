@@ -6,6 +6,7 @@ namespace Mimoto\Core\forms;
 // Mimoto classes
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\entities\ContentSection;
 
 
 /**
@@ -170,13 +171,13 @@ class ContentSectionForm
                 // 3b. set options
                 $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
                 $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-value');
-                $option->setValue('key', 'single');
-                $option->setValue('value', 'Single');
+                $option->setValue('key', ContentSection::TYPE_ITEM);
+                $option->setValue('value', 'Item');
                 $value->addValue('options', $option);
 
                 $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
                 $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-entity');
-                $option->setValue('key', 'group');
+                $option->setValue('key', ContentSection::TYPE_GROUP);
                 $option->setValue('value', 'Group');
                 $value->addValue('options', $option);
 

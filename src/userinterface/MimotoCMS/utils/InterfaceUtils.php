@@ -1,10 +1,11 @@
 <?php
 
 // classpath
-namespace Mimoto\Core;
+namespace Mimoto\UserInterface\MimotoCMS\utils;
 
 // Mimoto classes
 use Mimoto\Mimoto;
+use Mimoto\Core\CoreConfig;
 use Mimoto\Aimless\AimlessComponent;
 
 
@@ -23,6 +24,4 @@ class InterfaceUtils
         return $component;
     }
 
-
-    //public function setService()
 }

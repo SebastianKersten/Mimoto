@@ -8,7 +8,7 @@ use Mimoto\Mimoto;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
-use Mimoto\Data\MimotoEntityService;
+use Mimoto\Data\EntityService;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Aimless\AimlessComponentViewModel;
 use Mimoto\Aimless\AimlessWrapperViewModel;
@@ -61,10 +61,10 @@ class AimlessComponent
      * @param string $sComponentName
      * @param MimotoEntity $entity
      * @param AimlessService $AimlessService
-     * @param MimotoEntityService $DataService
+     * @param EntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sComponentName, MimotoEntity $entity = null, $connection = null, $sWrapperName = null, MimotoAimlessService $AimlessService, MimotoEntityService $DataService, MimotoLogService $LogService, $TwigService)
+    public function __construct($sComponentName, MimotoEntity $entity = null, $connection = null, $sWrapperName = null, AimlessService $AimlessService, EntityService $DataService, MimotoLogService $LogService, $TwigService)
     {
         // register
         $this->_sComponentName = $sComponentName;

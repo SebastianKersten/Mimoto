@@ -9,11 +9,11 @@ use Mimoto\Data\MimotoEntityException;
 
 
 /**
- * MimotoEntityService
+ * EntityService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoEntityService
+class EntityService
 {
     
     // config
@@ -146,7 +146,7 @@ class MimotoEntityService
         }
         catch(MimotoEntityException $e)
         {
-            return false;
+            return null;
         }
         
         // send

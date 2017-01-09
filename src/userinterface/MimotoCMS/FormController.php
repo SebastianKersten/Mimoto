@@ -4,8 +4,9 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
-use Mimoto\Data\MimotoDataUtils;
+use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,13 +26,16 @@ class FormController
     public function viewFormOverview(Application $app)
     {
         // load
-        $aEntities = $app['Mimoto.Data']->find(['type' => CoreConfig::MIMOTO_FORM]);
+        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);
 
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_FormOverview');
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormOverview');
 
         // setup
         $page->addSelection('forms', $aEntities, 'Mimoto.CMS_forms_FormOverview_ListItem');
+
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
 
         // setup page
         $page->setVar('pageTitle', array(
@@ -49,10 +53,10 @@ class FormController
     public function formNew(Application $app)
     {
         // create dummy
-        $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM);
+        $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
 
         // 1. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
         $component->addForm(CoreConfig::COREFORM_FORM_NEW, $entity);
@@ -64,13 +68,16 @@ class FormController
     public function formView(Application $app, $nFormId)
     {
         // 1. load requested entity
-        $form = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM, $nFormId);
+        $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
         // 2. check if entity exists
         if ($form === false) return $app->redirect("/mimoto.cms/forms");
 
         // 3. create component
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_FormDetail', $form);
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail', $form);
+
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
 
         // setup page
         $page->setVar('pageTitle', array(
@@ -92,13 +99,13 @@ class FormController
     public function formEdit(Application $app, $nFormId)
     {
         // 1. load
-        $form = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM, $nFormId);
+        $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
         // 2. validate
         if ($form === false) return $app->redirect("/mimoto.cms/forms");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
         $component->addForm(CoreConfig::COREFORM_FORM_EDIT, $form);
@@ -110,7 +117,7 @@ class FormController
     public function formDelete(Application $app, Request $request, $nFormId)
     {
         // delete
-//        $app['Mimoto.Config']->entityDelete($nEntityId);
+//        Mimoto::service('config')->entityDelete($nEntityId);
 //
 //        // send
 //        return new JsonResponse((object) array('result' => 'Entity deleted! '.date("Y.m.d H:i:s")), 200);
@@ -119,10 +126,10 @@ class FormController
     public function formFieldNew_fieldTypeSelector(Application $app, $nFormId)
     {
         // create
-        $page = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_forms_FormDetail_TypeSelector');
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail_TypeSelector');
 
         // load
-        $aInputTypesAll = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_INPUT]);
+        $aInputTypesAll = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_INPUT]);
 
         // filter
         $aInputTypes = [];
@@ -137,19 +144,19 @@ class FormController
 
 
         // load
-        $aOutputTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE]);
+        $aOutputTypes = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE]);
 
         // load
-        $aLayoutTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART]);
+        $aLayoutTypes = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART]);
 
-        $aMoreLayoutTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND]);
+        $aMoreLayoutTypes = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND]);
         $nLayoutCount = count($aMoreLayoutTypes);
         for($nLayoutIndex = 0; $nLayoutIndex < $nLayoutCount; $nLayoutIndex++)
         {
             $aLayoutTypes[] = $aMoreLayoutTypes[$nLayoutIndex];
         }
 
-        $aMoreLayoutTypes = $app['Mimoto.Config']->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER]);
+        $aMoreLayoutTypes = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER]);
         $nLayoutCount = count($aMoreLayoutTypes);
         for($nLayoutIndex = 0; $nLayoutIndex < $nLayoutCount; $nLayoutIndex++)
         {
@@ -180,16 +187,16 @@ class FormController
     public function formFieldNew_fieldForm(Application $app, $nFormId, $nFormFieldTypeId)
     {
         // 1. create dummy
-        $entity = $app['Mimoto.Data']->create(CoreConfig::MIMOTO_FORM);
+        $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
 
         // 2. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 3. load form id
         $sFormConfigId = $app['Mimoto.Forms']->getCoreFormByEntityTypeId($nFormFieldTypeId);
 
         // 4. setup
-        $component->addForm($sFormConfigId, $entity, ['onCreatedAddTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields']);
+        $component->addForm($sFormConfigId, $entity, ['onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields']);
 
         // 5. render and send
         return $component->render();
@@ -198,13 +205,13 @@ class FormController
     public function formFieldEdit(Application $app, $nFormFieldTypeId, $nFormFieldId)
     {
         // 1. load
-        $entity = $app['Mimoto.Data']->get($nFormFieldTypeId, $nFormFieldId);
+        $entity = Mimoto::service('data')->get($nFormFieldTypeId, $nFormFieldId);
 
         // 2. validate
         if ($entity === false) return $app->redirect("/mimoto.cms/forms");
 
         // 3. create
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
 
         // 1. translate $nFormFieldTypeId to formconfig
@@ -223,7 +230,7 @@ class FormController
 
 
         // 1. load
-        $formField = $app['Mimoto.Data']->get($nFormFieldTypeId, $nFormFieldId);
+        $formField = Mimoto::service('data')->get($nFormFieldTypeId, $nFormFieldId);
 
         // 2. read
         $value = $formField->getValue('value');
@@ -234,28 +241,30 @@ class FormController
             $value->setValue('entityproperty', null);
 
             // 4. remove connections
-            $app['Mimoto.Data']->store($value);
+            Mimoto::service('data')->store($value);
 
             // 5. clear
             $formField->setValue('value', null);
 
             // 6. remove connections
-            $app['Mimoto.Data']->store($formField);
+            Mimoto::service('data')->store($formField);
 
             // 7. remove value
-            $app['Mimoto.Data']->delete($value);
+            Mimoto::service('data')->delete($value);
         }
 
+
         // 8. load
-        $parentForm = $app['Mimoto.Config']->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $formField);
+        $parentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $formField);
 
         // 9. remove connection
         $parentForm->removeValue('fields', $formField);
+
         // 10. persist removed
-        $app['Mimoto.Data']->store($parentForm);
+        Mimoto::service('data')->store($parentForm);
 
         // 11. delete property
-        $app['Mimoto.Data']->delete($formField);
+        Mimoto::service('data')->delete($formField);
 
         // 12. send
         return new JsonResponse((object) array('result' => 'FormField deleted! '.date("Y.m.d H:i:s")), 200);

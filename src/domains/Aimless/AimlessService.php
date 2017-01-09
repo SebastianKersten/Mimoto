@@ -15,16 +15,16 @@ use Mimoto\Log\MimotoLogService;
 
 
 /**
- * MimotoAimlessService
+ * AimlessService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoAimlessService
+class AimlessService
 {
     
     // services
-    private $_MimotoEntityService;
-    private $_MimotoAimlessService;
+    private $_EntityService;
+    private $_AimlessService;
     private $_MimotoLogService;
     private $_TwigService;
     
@@ -41,12 +41,12 @@ class MimotoAimlessService
     /**
      * Constructor
      */
-    public function __construct($MimotoEntityService, MimotoFormService $MimotoFormService, MimotoLogService $MimotoLogService, $TwigService)
+    public function __construct($EntityService, MimotoFormService $MimotoFormService, MimotoLogService $MimotoLogService, $TwigService)
     {
         // register
-        $this->_MimotoEntityService = $MimotoEntityService;
+        $this->_EntityService = $EntityService;
         $this->_MimotoFormService = $MimotoFormService;
-        $this->_MimotoAimlessService = $this;
+        $this->_AimlessService = $this;
         $this->_MimotoLogService = $MimotoLogService;
         $this->_TwigService = $TwigService;
         
@@ -70,7 +70,7 @@ class MimotoAimlessService
     public function createComponent($sComponentName, $entity = null, $connection = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_AimlessService, $this->_EntityService, $this->_MimotoLogService, $this->_TwigService);
     }
 
     /**
@@ -82,7 +82,7 @@ class MimotoAimlessService
     public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_AimlessService, $this->_EntityService, $this->_MimotoLogService, $this->_TwigService);
     }
 
     /**
@@ -94,7 +94,7 @@ class MimotoAimlessService
     public function createInput($sComponentName, $entity = null, $connection = null, $sFieldName = null, $value = null)
     {
         // init and send
-        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $this->_AimlessService, $this->_EntityService, $this->_MimotoLogService, $this->_TwigService);
     }
 
     /**
@@ -106,7 +106,7 @@ class MimotoAimlessService
     public function createForm($sFormName, $xData, $options = null)
     {
         // init and send
-        return new AimlessForm($sFormName, $xData, $options, $this->_MimotoAimlessService, $this->_MimotoEntityService, $this->_MimotoFormService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessForm($sFormName, $xData, $options, $this->_AimlessService, $this->_EntityService, $this->_MimotoFormService, $this->_MimotoLogService, $this->_TwigService);
     }
 
 
@@ -145,8 +145,8 @@ class MimotoAimlessService
             }
         }
         
-        throw new \Exception("MimotoAimlessService says: Template '$sComponentName' not found");
-        die("MimotoAimlessService says: Template '$sComponentName' not found");
+        throw new \Exception("AimlessService says: Template '$sComponentName' not found");
+        die("AimlessService says: Template '$sComponentName' not found");
         
         // 1. broadcast webevent for debugging purposes
         // 2. standaard report error (error level)
@@ -301,7 +301,7 @@ class MimotoAimlessService
 
             default:
                 
-                die("MimotoAimlessService: Unknown request '".$sRequest."'");
+                die("AimlessService: Unknown request '".$sRequest."'");
         }
     }
     
@@ -495,7 +495,7 @@ class MimotoAimlessService
 
 
                                 // load
-                                $entity = $this->_MimotoEntityService->get($connection->getChildEntityTypeName(), $connection->getChildId());
+                                $entity = $this->_EntityService->get($connection->getChildEntityTypeName(), $connection->getChildId());
 
                                 // load
                                 $aCollectionItemPropertyNames = $entity->getPropertyNames();

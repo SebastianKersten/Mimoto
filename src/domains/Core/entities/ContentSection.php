@@ -15,6 +15,9 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
  */
 class ContentSection
 {
+    const TYPE_ITEM = 'item';
+    const TYPE_GROUP = 'group';
+
 
     public static function getStructure()
     {
@@ -34,23 +37,6 @@ class ContentSection
                     'settings' => [
                         'type' => (object) array(
                             'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--name-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--type',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'type',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--type-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -88,6 +74,65 @@ class ContentSection
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--type',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'type',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--type-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--contentItem',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'contentItem',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--contentItem-allowedEntityType',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityType',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => CoreConfig::MIMOTO_ENTITY
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--ContentItems',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'contentItems',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--contentItems-allowedEntityTypes',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_ENTITYPROPERTY]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--contentItems-allowDuplicates',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowDuplicates',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )

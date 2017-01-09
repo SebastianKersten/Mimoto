@@ -37,7 +37,7 @@ class MimotoFormService
 {
 
     // services
-    private $_MimotoEntityService;
+    private $_EntityService;
     private $_MimotoEntityConfigService;
     private $_MimotoLogService;
 
@@ -50,10 +50,10 @@ class MimotoFormService
     /**
      * Constructor
      */
-    public function __construct($MimotoEntityService, $MimotoEntityConfigService, $MimotoLogService)
+    public function __construct($EntityService, $MimotoEntityConfigService, $MimotoLogService)
     {
         // register
-        $this->_MimotoEntityService = $MimotoEntityService;
+        $this->_EntityService = $EntityService;
         $this->_MimotoEntityConfigService = $MimotoEntityConfigService;
         $this->_MimotoLogService = $MimotoLogService;
     }
@@ -81,7 +81,7 @@ class MimotoFormService
         }
 
         // 2. load form from database
-        $aResults = $this->_MimotoEntityService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $sFormName]]);
+        $aResults = $this->_EntityService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $sFormName]]);
 
         // 3. validate if form exists
         if (!isset($aResults[0]))
@@ -148,12 +148,12 @@ class MimotoFormService
             if ($entityInfo->entityId == CoreConfig::ENTITY_NEW)
             {
                 // create
-                $entityInfo->entity = $this->_MimotoEntityService->create($entityInfo->entityType);
+                $entityInfo->entity = $this->_EntityService->create($entityInfo->entityType);
             }
             else
             {
                 // load
-                $entityInfo->entity = $this->_MimotoEntityService->get($entityInfo->entityType, $entityInfo->entityId);
+                $entityInfo->entity = $this->_EntityService->get($entityInfo->entityType, $entityInfo->entityId);
             }
 
             // load and store
@@ -365,7 +365,7 @@ class MimotoFormService
 
 
             // auto add to property - #todo - move to separate function
-            $sInstruction = (isset($requestData->onCreatedAddTo)) ? $requestData->onCreatedAddTo : null;
+            $sInstruction = (isset($requestData->onCreatedConnectTo)) ? $requestData->onCreatedConnectTo : null;
 
 
             if (!empty($sInstruction))
@@ -373,14 +373,38 @@ class MimotoFormService
                 // split
                 $aInstructionParts = explode('.', $sInstruction);
 
+                // register
+                $sInstructionEntityTypeName     = $aInstructionParts[0];
+                $nInstructionEntityId           = $aInstructionParts[1];
+                $sInstructionEntityPropertyName = $aInstructionParts[2];
+
                 // load
-                $parentEntity = Mimoto::service('data')->get($aInstructionParts[0], $aInstructionParts[1]);
+                $parentEntity = Mimoto::service('data')->get($sInstructionEntityTypeName, $nInstructionEntityId);
 
-                // add
-                $parentEntity->addValue($aInstructionParts[2], $entityInfo->entity);
+                // read
+                $sPropertyType = $parentEntity->getPropertyType($sInstructionEntityPropertyName);
 
-                // store
-                Mimoto::service('data')->store($parentEntity);
+                // validate
+                if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY || $sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+                {
+                    switch ($sPropertyType)
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                            // add
+                            $parentEntity->setValue($sInstructionEntityPropertyName, $entityInfo->entity);
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                            // add
+                            $parentEntity->addValue($sInstructionEntityPropertyName, $entityInfo->entity);
+                            break;
+                    }
+
+                    // store
+                    Mimoto::service('data')->store($parentEntity);
+                }
             }
         }
 
