@@ -56,31 +56,31 @@ document.addEventListener('DOMContentLoaded', function () {
         new ListView(lists[i]);
     }
 
-    var loadingButton = document.querySelector('.js-loading-example');
-    var successButton = document.querySelector('.js-success-example');
-
-    setTimeout(function () {
-
-        ButtonUtils.addLoadingState(loadingButton);
-
-    }.bind(this), 1000);
-
-    setTimeout(function () {
-
-        ButtonUtils.removeLoadingState(loadingButton);
-
-    }.bind(this), 3000);
-
-    setTimeout(function () {
-
-        ButtonUtils.addSuccessState(successButton);
-
-    }.bind(this), 1000);
-
-    setTimeout(function () {
-
-        ButtonUtils.removeSuccessState(successButton);
-
-    }.bind(this), 3000);
+    //var loadingButton = document.querySelector('.js-loading-example');
+    //var successButton = document.querySelector('.js-success-example');
+    //
+    //setTimeout(function () {
+    //
+    //    ButtonUtils.addLoadingState(loadingButton);
+    //
+    //}.bind(this), 1000);
+    //
+    //setTimeout(function () {
+    //
+    //    ButtonUtils.removeLoadingState(loadingButton);
+    //
+    //}.bind(this), 3000);
+    //
+    //setTimeout(function () {
+    //
+    //    ButtonUtils.addSuccessState(successButton);
+    //
+    //}.bind(this), 1000);
+    //
+    //setTimeout(function () {
+    //
+    //    ButtonUtils.removeSuccessState(successButton);
+    //
+    //}.bind(this), 3000);
 
 }, false);
