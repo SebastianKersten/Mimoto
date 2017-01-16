@@ -1,14 +1,3 @@
-<div class="MimotoCMS_pages_forms_FormDetail-FormFieldValue" {{ Aimless.realtime() }}>
-
-    <div class="MimotoCMS_pages_forms_FormDetail-FormFieldValue__data">
-        <div class="MimotoCMS_pages_forms_FormDetail-FormFieldValue__name" {{ Aimless.realtime('vartype') }}>
-            {{ Aimless.render('vartype') }}
-        </div>
-
-        <div {{ Aimless.showOnEmpty('entityproperty') }}>Connect property</div>
-        <div {{ Aimless.hideOnEmpty('entityproperty') }} {{ Aimless.realtime('entityproperty', 'Mimoto.CMS_forms_FormDetail-FormFieldValueEntityProperty') }}>
-            {{ Aimless.render('entityproperty', 'Mimoto.CMS_forms_FormDetail-FormFieldValueEntityProperty') }}
-        </div>
-    </div>
-
+<div class="MimotoCMS_pages_forms_FormDetail-FormFieldValue">
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Value', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldValueEdit('" ~ Aimless.meta('id') ~ "');" }) }}
 </div>

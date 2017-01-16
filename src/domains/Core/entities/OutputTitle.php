@@ -27,14 +27,14 @@ class OutputTitle
             'extends' => null,
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title',
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--title',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'title',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__title-type',
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--title-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -44,14 +44,14 @@ class OutputTitle
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle',
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--subtitle',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'subtitle',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__subtitle-type',
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--subtitle-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -61,14 +61,14 @@ class OutputTitle
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description',
+                    'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--description',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'__description-type',
+                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--description-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',

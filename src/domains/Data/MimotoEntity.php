@@ -221,9 +221,9 @@ class MimotoEntity
      * @param $sEntityType
      * @return boolean
      */
-    public function typeOf($sEntityType)
+    public function typeOf($sEntityTypeName)
     {
-        return Mimoto::service('config')->entityIsTypeOf($this->_config->entityTypeName, $sEntityType);
+        return Mimoto::service('config')->entityIsTypeOf($this->_config->entityTypeName, $sEntityTypeName);
     }
 
 

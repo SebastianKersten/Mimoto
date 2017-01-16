@@ -1,0 +1,8 @@
+{
+    "trigger": [
+        "_MimotoAimless__interaction__form_input_textline.created"
+    ],
+    "service": "Aimless",
+    "request": "onInputFieldCreated",
+    "type": "sync"
+}

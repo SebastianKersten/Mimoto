@@ -10289,9 +10289,9 @@
 	
 	var HeaderView = __webpack_require__(11);
 	var FormView = __webpack_require__(12);
-	var ListView = __webpack_require__(17);
+	var ListView = __webpack_require__(19);
 	
-	var ButtonUtils = __webpack_require__(26);
+	var ButtonUtils = __webpack_require__(21);
 	
 	if (typeof Mimoto == "undefined") Mimoto = {};
 	if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
@@ -10299,11 +10299,11 @@
 	
 	//Mimoto = require('./mimoto.cms/Mimoto');
 	
-	Mimoto.CMS = __webpack_require__(19);
-	Mimoto.modules.Tabmenu = __webpack_require__(20);
-	Mimoto.modules.Popup = __webpack_require__(21);
-	Mimoto.modules.Page = __webpack_require__(22);
-	Mimoto.modules.Form = __webpack_require__(23);
+	Mimoto.CMS = __webpack_require__(22);
+	Mimoto.modules.Tabmenu = __webpack_require__(23);
+	Mimoto.modules.Popup = __webpack_require__(24);
+	Mimoto.modules.Page = __webpack_require__(25);
+	Mimoto.modules.Form = __webpack_require__(26);
 	
 	// init
 	Mimoto.CMS = new Mimoto.CMS();
@@ -29490,11 +29490,11 @@
 
 	/* WEBPACK VAR INJECTION */(function(FV) {'use strict';
 	
-	var CheckboxView = __webpack_require__(15);
-	var DropdownView = __webpack_require__(24);
+	var CheckboxView = __webpack_require__(14);
+	var DropdownView = __webpack_require__(15);
 	var RadioButtonView = __webpack_require__(16);
-	var TextlineView = __webpack_require__(14);
-	var TextblockView = __webpack_require__(25);
+	var TextlineView = __webpack_require__(17);
+	var TextblockView = __webpack_require__(18);
 	
 	module.exports = function (element) {
 	
@@ -29868,62 +29868,6 @@
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(EH, FV) {'use strict';
-	
-	module.exports = function (element) {
-	
-	    this.el = element;
-	    this.init();
-	
-	};
-	
-	module.exports.prototype = {
-	
-	    init: function () {
-	
-	        console.log('Init Textline');
-	
-	        this.setVariables();
-	        this.addEventListeners();
-	
-	    },
-	
-	    setVariables: function () {
-	
-	        this.textline = this.el.querySelector('.js-textline');
-	
-	    },
-	
-	    addEventListeners: function () {
-	
-	        this.textline.addEventListener('keyup', this.handleValidation.bind(this));
-	
-	    },
-	
-	    handleValidation: function () {
-	
-	        var value = this.textline.value;
-	
-	        if (value == '') {
-	
-	            EH.clearState(this.el);
-	
-	        } else {
-	
-	            FV.validateInput(this.el);
-	
-	        }
-	
-	    }
-	
-	};
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function(FV, EH) {'use strict';
 	
 	module.exports = function (element) {
@@ -29981,6 +29925,62 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13), __webpack_require__(9)))
 
 /***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(EH, FV) {'use strict';
+	
+	module.exports = function (element) {
+	
+	    this.el = element;
+	    this.init();
+	
+	};
+	
+	module.exports.prototype = {
+	
+	    init: function () {
+	
+	        console.log('Init Dropdown');
+	
+	        this.setVariables();
+	        this.addEventListeners();
+	
+	    },
+	
+	    setVariables: function () {
+	
+	        this.dropdown = this.el.querySelector('.js-dropdown');
+	
+	    },
+	
+	    addEventListeners: function () {
+	
+	        this.dropdown.addEventListener('change', this.handleValidation.bind(this));
+	
+	    },
+	
+	    handleValidation: function () {
+	
+	        var value = this.dropdown.value;
+	
+	        if (value == '') {
+	
+	            EH.clearState(this.el);
+	
+	        } else {
+	
+	            FV.validateInput(this.el);
+	
+	        }
+	
+	    }
+	
+	};
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
+
+/***/ },
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -30032,9 +30032,121 @@
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function(EH, FV) {'use strict';
+	
+	module.exports = function (element) {
+	
+	    this.el = element;
+	    this.init();
+	
+	};
+	
+	module.exports.prototype = {
+	
+	    init: function () {
+	
+	        console.log('Init Textline');
+	
+	        this.setVariables();
+	        this.addEventListeners();
+	
+	    },
+	
+	    setVariables: function () {
+	
+	        this.textline = this.el.querySelector('.js-textline');
+	
+	    },
+	
+	    addEventListeners: function () {
+	
+	        this.textline.addEventListener('keyup', this.handleValidation.bind(this));
+	
+	    },
+	
+	    handleValidation: function () {
+	
+	        var value = this.textline.value;
+	
+	        if (value == '') {
+	
+	            EH.clearState(this.el);
+	
+	        } else {
+	
+	            FV.validateInput(this.el);
+	
+	        }
+	
+	    }
+	
+	};
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(EH, FV) {'use strict';
+	
+	module.exports = function (element) {
+	
+	    this.el = element;
+	    this.init();
+	
+	};
+	
+	module.exports.prototype = {
+	
+	    init: function () {
+	
+	        console.log('Init Textblock');
+	
+	        this.setVariables();
+	        this.addEventListeners();
+	
+	    },
+	
+	    setVariables: function () {
+	
+	        this.textblock = this.el.querySelector('.js-textblock');
+	
+	    },
+	
+	    addEventListeners: function () {
+	
+	        this.textblock.addEventListener('keyup', this.handleValidation.bind(this));
+	
+	    },
+	
+	    handleValidation: function () {
+	
+	        var value = this.textblock.value;
+	
+	        if (value == '') {
+	
+	            EH.clearState(this.el);
+	
+	        } else {
+	
+	            FV.validateInput(this.el);
+	
+	        }
+	
+	    }
+	
+	};
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 	
-	var Sortable = __webpack_require__(18); // https://github.com/RubaXa/Sortable
+	var Sortable = __webpack_require__(20); // https://github.com/RubaXa/Sortable
 	
 	module.exports = function (element) {
 	
@@ -30099,7 +30211,7 @@
 
 
 /***/ },
-/* 18 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**!
@@ -31490,7 +31602,72 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 19 */
+/* 21 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = {
+	
+	    loadingClass: 'MimotoCMS_ButtonModule--loading',
+	    loadingIcon: '#ico-loading',
+	    loadingIconClass: 'MimotoCMS_ButtonModule-icon--loading',
+	    successClass: 'MimotoCMS_ButtonModule--success',
+	    successIcon: '#ico-checkmark',
+	    successIconClass: 'MimotoCMS_ButtonModule-icon--success',
+	    iconSelector: '.js-button-icon',
+	
+	    addLoadingState: function (button) {
+	
+	        var useElement = button.getElementsByTagName('use')[0];
+	        var icon = button.querySelector(this.iconSelector);
+	
+	        button.classList.add(this.loadingClass);
+	        icon.classList.add(this.loadingIconClass);
+	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', this.loadingIcon);
+	
+	    },
+	
+	    removeLoadingState: function (button) {
+	
+	        var useElement = button.getElementsByTagName('use')[0];
+	        var icon = button.querySelector(this.iconSelector);
+	        var originalIcon = button.getAttribute('data-icon');
+	
+	        button.classList.remove(this.loadingClass);
+	        icon.classList.remove(this.loadingIconClass);
+	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', originalIcon);
+	
+	    },
+	
+	    addSuccessState: function (button) {
+	
+	        var useElement = button.getElementsByTagName('use')[0];
+	        var icon = button.querySelector(this.iconSelector);
+	
+	        button.classList.add(this.successClass);
+	        icon.classList.add(this.successIconClass);
+	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', this.successIcon);
+	
+	    },
+	
+	    removeSuccessState: function (button) {
+	
+	        var useElement = button.getElementsByTagName('use')[0];
+	        var icon = button.querySelector(this.iconSelector);
+	        var originalIcon = button.getAttribute('data-icon');
+	
+	        button.classList.remove(this.successClass);
+	        icon.classList.remove(this.successIconClass);
+	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', originalIcon);
+	
+	    }
+	
+	};
+
+
+/***/ },
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -31750,6 +31927,11 @@
 	        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit');
 	    },
 	    
+	    formFieldValueEdit: function(nFormFieldValueId)
+	    {
+	        window.open('/mimoto.cms/formfieldvalue/' + nFormFieldValueId + '/edit', '_self');
+	    },
+	    
 	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
 	    {
 	        $.ajax({
@@ -31766,7 +31948,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31894,7 +32076,7 @@
 
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
@@ -32015,7 +32197,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(5)))
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports) {
 
 	/**
@@ -32065,7 +32247,7 @@
 
 
 /***/ },
-/* 23 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -32627,183 +32809,6 @@
 	};
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(EH, FV) {'use strict';
-	
-	module.exports = function (element) {
-	
-	    this.el = element;
-	    this.init();
-	
-	};
-	
-	module.exports.prototype = {
-	
-	    init: function () {
-	
-	        console.log('Init Dropdown');
-	
-	        this.setVariables();
-	        this.addEventListeners();
-	
-	    },
-	
-	    setVariables: function () {
-	
-	        this.dropdown = this.el.querySelector('.js-dropdown');
-	
-	    },
-	
-	    addEventListeners: function () {
-	
-	        this.dropdown.addEventListener('change', this.handleValidation.bind(this));
-	
-	    },
-	
-	    handleValidation: function () {
-	
-	        var value = this.dropdown.value;
-	
-	        if (value == '') {
-	
-	            EH.clearState(this.el);
-	
-	        } else {
-	
-	            FV.validateInput(this.el);
-	
-	        }
-	
-	    }
-	
-	};
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(EH, FV) {'use strict';
-	
-	module.exports = function (element) {
-	
-	    this.el = element;
-	    this.init();
-	
-	};
-	
-	module.exports.prototype = {
-	
-	    init: function () {
-	
-	        console.log('Init Textblock');
-	
-	        this.setVariables();
-	        this.addEventListeners();
-	
-	    },
-	
-	    setVariables: function () {
-	
-	        this.textblock = this.el.querySelector('.js-textblock');
-	
-	    },
-	
-	    addEventListeners: function () {
-	
-	        this.textblock.addEventListener('keyup', this.handleValidation.bind(this));
-	
-	    },
-	
-	    handleValidation: function () {
-	
-	        var value = this.textblock.value;
-	
-	        if (value == '') {
-	
-	            EH.clearState(this.el);
-	
-	        } else {
-	
-	            FV.validateInput(this.el);
-	
-	        }
-	
-	    }
-	
-	};
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(13)))
-
-/***/ },
-/* 26 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	module.exports = {
-	
-	    loadingClass: 'MimotoCMS_ButtonModule--loading',
-	    loadingIcon: '#ico-loading',
-	    loadingIconClass: 'MimotoCMS_ButtonModule-icon--loading',
-	    successClass: 'MimotoCMS_ButtonModule--success',
-	    successIcon: '#ico-checkmark',
-	    successIconClass: 'MimotoCMS_ButtonModule-icon--success',
-	    iconSelector: '.js-button-icon',
-	
-	    addLoadingState: function (button) {
-	
-	        var useElement = button.getElementsByTagName('use')[0];
-	        var icon = button.querySelector(this.iconSelector);
-	
-	        button.classList.add(this.loadingClass);
-	        icon.classList.add(this.loadingIconClass);
-	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', this.loadingIcon);
-	
-	    },
-	
-	    removeLoadingState: function (button) {
-	
-	        var useElement = button.getElementsByTagName('use')[0];
-	        var icon = button.querySelector(this.iconSelector);
-	        var originalIcon = button.getAttribute('data-icon');
-	
-	        button.classList.remove(this.loadingClass);
-	        icon.classList.remove(this.loadingIconClass);
-	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', originalIcon);
-	
-	    },
-	
-	    addSuccessState: function (button) {
-	
-	        var useElement = button.getElementsByTagName('use')[0];
-	        var icon = button.querySelector(this.iconSelector);
-	
-	        button.classList.add(this.successClass);
-	        icon.classList.add(this.successIconClass);
-	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', this.successIcon);
-	
-	    },
-	
-	    removeSuccessState: function (button) {
-	
-	        var useElement = button.getElementsByTagName('use')[0];
-	        var icon = button.querySelector(this.iconSelector);
-	        var originalIcon = button.getAttribute('data-icon');
-	
-	        button.classList.remove(this.successClass);
-	        icon.classList.remove(this.successIconClass);
-	        useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', originalIcon);
-	
-	    }
-	
-	};
-
 
 /***/ }
 /******/ ]);

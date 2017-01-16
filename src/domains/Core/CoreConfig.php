@@ -149,6 +149,8 @@ class CoreConfig
     const COREFORM_FORM_NEW              = '_MimotoAimless__coreform__form_new';
     const COREFORM_FORM_EDIT             = '_MimotoAimless__coreform__form_edit';
 
+    const COREFORM_FORM_INPUTVALUE          = '_MimotoAimless__coreform__form_inputValue';
+
 
     // --- input ---
 
