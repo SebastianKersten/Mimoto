@@ -1,38 +1,45 @@
-div.MimotoCMS_components_ListItem {
-    padding: 10px 15px 10px 15px;
-    background-color: $white;
-    color: $black;
+.MimotoCMS_ListItemModule {
+    margin: 0 0 10px;
+    padding: 0 5px;
+    list-style: none;
+    flex: 0 0 100%;
 
-    font-family: $font-family-futura;
-
-    justify-content: center;
-
-    flex-direction: row;
-    align-items: center;
-    flex: 1 300px;
-
-    display: flex;
-    flex-wrap: nowrap;
-}
-
-div.MimotoCMS_components_ListItem {
-    flex-grow: 4;
-    align-items: stretch;
-}
-
-    div.MimotoCMS_components_ListItem__label {
-        font-size: 20px;
+    @include breakpoint(medium up) {
+        flex: 0 0 percentage(1 / 2);
     }
 
-    div.MimotoCMS_components_ListItem__sublabel {
-        font-size: 14px;
-        font-style: italic;
-        color: $sinbad;
+    @include breakpoint(xlarge up) {
+        flex: 0 0 percentage(1 / 3);
+    }
+}
+
+    .MimotoCMS_ListItemModule-content {
+        display: flex;
+        font-family: $font-family-futura;
+        color: $black;
+        background-color: $white;
+        align-items: center;
+        flex-wrap: nowrap;
     }
 
-div.MimotoCMS_components_ListItem__menu {
-    flex-grow: 1;
-    align-items: stretch;
-    text-align: right;
-    margin-left: 10px;
-}
+        .MimotoCMS_ListItemModule-info {
+            padding: 8px 5px 8px 10px;
+            flex: 1 1 auto;
+        }
+
+            .MimotoCMS_ListItemModule-label {
+                font-size: rem-calc(18px);
+                line-height: rem-calc(24px);
+            }
+
+            .MimotoCMS_ListItemModule-sublabel {
+                font-size: rem-calc(14px);
+                font-style: italic;
+                line-height: rem-calc(20px);
+                color: $sinbad;
+            }
+
+        .MimotoCMS_ListItemModule-menu {
+            padding: 10px 10px 10px 5px;
+            flex: 0 0 auto;
+        }

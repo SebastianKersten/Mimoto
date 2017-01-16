@@ -1,9 +1,11 @@
-<div class="MimotoCMS_components_ListItem">
-    <div class="MimotoCMS_components_ListItem__info">
-        <div class="MimotoCMS_components_ListItem__label" {{ label_realtime }}>{{ label }}</div>
-        <div class="MimotoCMS_components_ListItem__sublabel" {{ sublabel_realtime }}>{{ sublabel }}</div>
+<li class="MimotoCMS_ListItemModule">
+    <div class="MimotoCMS_ListItemModule-content">
+        <div class="MimotoCMS_ListItemModule-info">
+            <div class="MimotoCMS_ListItemModule-label" {{ label_realtime }}>{{ label }}</div>
+            <div class="MimotoCMS_ListItemModule-sublabel" {{ sublabel_realtime }}>{{ sublabel }}</div>
+        </div>
+        <div class="MimotoCMS_ListItemModule-menu">
+            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, types:[button_type] }) }}
+        </div>
     </div>
-    <div class="MimotoCMS_components_ListItem__menu">
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, types:[button_type] }) }}
-    </div>
-</div>
+</li>
