@@ -1,101 +1,102 @@
-.form-image-upload {
-  position: relative;
-  margin: 0 0 10px;
-  border: 1px solid $pale-slate;
-  background-color: $mercury;
-
-  &.form-image-upload--show-preview {
-    .form-image-upload-preview {
-      display: block;
-    }
-  }
-
-  &.form-image-upload--hide-upload-progess {
-    .form-image-upload-preview-upload-progress {
-      opacity: 0;
-    }
-  }
-
-  &.form-image-upload--show-preview-image {
-    .form-image-upload-preview-image {
-      opacity: 1;
-    }
-  }
-
-  .form-image-upload-trigger {
-    padding: 120px 20px;
-    cursor: pointer;
-  }
-
-  .form-image-upload-button {
-    overflow: hidden;
-    width: 35px;
-    height: 35px;
-    margin: 0 auto 15px;
-    border-radius: 100%;
-    background-color: $silver-chalice;
-
-    .form-image-upload-button-icon {
-      display: block;
-      margin: 9px;
-      font-size: rem-calc(17px);
-      color: $mercury;
-    }
-  }
-
-  .form-image-upload-text {
-    font-size: rem-calc(14px);
-    font-weight: 500;
-    text-align: center;
-    color: rgba($black, .5);
-  }
-
-  .form-image-upload-preview {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: none;
-    width: 100%;
-    height: 100%;
-  }
-
-  .form-image-upload-preview-template {
+#{$pr-input}_ImageUpload {
     position: relative;
-    display: flex;
-  }
-
-  .form-image-upload-preview-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-
-  .form-image-upload-preview-image {
-    display: block;
-    width: auto;
-    height: 100%;
-    margin: 0 auto;
-    opacity: 0;
-    transition: opacity 100ms ease-out;
-  }
-
-  .form-image-upload-preview-upload-progress {
-    position: absolute;
-    z-index: 100;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 20px;
-    margin-top: -5px;
-    padding: 0 120px;
-    transition: opacity 100ms ease-out;
-  }
-
-  .form-image-upload-preview-upload-progess-bar {
-    width: 0;
-    height: 20px;
-    border-radius: 10px;
-    background-color: $tower-gray;
-    transition: width 300ms ease-out;
-  }
+    margin: 0 0 10px;
+    border: 1px solid $pale-slate;
+    background-color: $mercury;
 }
+
+#{$pr-input}_ImageUpload--show-preview {
+    #{$pr-input}_ImageUpload-preview {
+        display: block;
+    }
+}
+
+#{$pr-input}_ImageUpload--hide-upload-progess {
+    #{$pr-input}_ImageUpload-preview-upload-progress {
+        opacity: 0;
+    }
+}
+
+#{$pr-input}_ImageUpload--show-preview-image {
+    #{$pr-input}_ImageUpload-preview-image {
+        opacity: 1;
+    }
+}
+
+    #{$pr-input}_ImageUpload-trigger {
+        padding: 120px 20px;
+        cursor: pointer;
+    }
+
+        #{$pr-input}_ImageUpload-trigger-button {
+            overflow: hidden;
+            width: 35px;
+            height: 35px;
+            margin: 0 auto 15px;
+            border-radius: 100%;
+            background-color: $silver-chalice;
+        }
+
+            #{$pr-input}_ImageUpload-trigger-button-icon {
+                display: block;
+                width: 17px;
+                height: 17px;
+                margin: 9px;
+                fill: $mercury;
+            }
+
+        #{$pr-input}_ImageUpload-trigger-text {
+            font-size: rem-calc(14px);
+            font-weight: 500;
+            text-align: center;
+            color: rgba($black, .5);
+        }
+
+    #{$pr-input}_ImageUpload-preview {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        width: 100%;
+        height: 100%;
+    }
+
+        #{$pr-input}_ImageUpload-preview-template {
+            position: relative;
+            display: flex;
+        }
+
+        #{$pr-input}_ImageUpload-preview-button {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+        #{$pr-input}_ImageUpload-preview-image {
+            display: block;
+            width: auto;
+            height: 100%;
+            margin: 0 auto;
+            opacity: 0;
+            transition: opacity 100ms ease-out;
+        }
+
+        #{$pr-input}_ImageUpload-preview-upload-progress {
+            position: absolute;
+            z-index: 100;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            margin-top: -5px;
+            padding: 0 120px;
+            transition: opacity 100ms ease-out;
+        }
+
+            #{$pr-input}_ImageUpload-preview-upload-progess-bar {
+                width: 0;
+                height: 20px;
+                border-radius: 10px;
+                background-color: $tower-gray;
+                transition: width 300ms ease-out;
+            }

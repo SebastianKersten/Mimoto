@@ -2,6 +2,7 @@
 
 var CheckboxView = require('./Checkbox');
 var DropdownView = require('./Dropdown');
+var ImageUploadView = require('./ImageUpload');
 var RadioButtonView = require('./RadioButton');
 var TextlineView = require('./Textline');
 var TextblockView = require('./Textblock');
@@ -56,6 +57,8 @@ module.exports.prototype = {
                 new DropdownView(this.elements[i]);
             } else if (this.elements[i].classList.contains('js-form-component-textblock')) {
                 new TextblockView(this.elements[i]);
+            } else if (this.elements[i].classList.contains('js-form-component-image')) {
+                new ImageUploadView(this.elements[i]);
             }
 
         }
