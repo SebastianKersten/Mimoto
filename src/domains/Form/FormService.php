@@ -20,9 +20,12 @@ use Mimoto\Core\forms\ComponentForm;
 use Mimoto\Core\forms\ContentSectionForm;
 use Mimoto\Core\forms\FormForm;
 use Mimoto\Core\forms\InputTextlineForm;
+use Mimoto\Core\forms\OutputTitleForm;
 use Mimoto\Core\forms\LayoutDividerForm;
 use Mimoto\Core\forms\LayoutGroupStartForm;
 use Mimoto\Core\forms\LayoutGroupEndForm;
+
+use Mimoto\Core\entities\InputValue;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -653,11 +656,17 @@ class FormService
             case CoreConfig::COREFORM_FORM_NEW:  return FormForm::getStructureNew(); break;
             case CoreConfig::COREFORM_FORM_EDIT:  return FormForm::getStructureEdit(); break;
 
+            case CoreConfig::COREFORM_FORM_INPUTVALUE:  return InputValue::getForm(); break;
+
             // input ---------
 
             case CoreConfig::COREFORM_INPUT_TEXTLINE_NEW: return InputTextlineForm::getStructureNew(); break;
             case CoreConfig::COREFORM_INPUT_TEXTLINE_EDIT: return InputTextlineForm::getStructureEdit(); break;
 
+            // output ---------
+
+            case CoreConfig::COREFORM_OUTPUT_TITLE_NEW: return OutputTitleForm::getStructureNew(); break;
+            case CoreConfig::COREFORM_OUTPUT_TITLE_EDIT: return OutputTitleForm::getStructureEdit(); break;
 
             // layout ---------
 

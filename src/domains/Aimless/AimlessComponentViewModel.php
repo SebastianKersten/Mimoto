@@ -106,4 +106,9 @@ class AimlessComponentViewModel
         return $this->_component->reloadOnChange();
     }
 
+    public function typeOf($sEntityTypeName)
+    {
+        return $this->_component->typeOf($sEntityTypeName);
+    }
+
 }

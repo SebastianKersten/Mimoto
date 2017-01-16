@@ -6,23 +6,23 @@
             {{ Aimless.wrap() }}
         </div>
 
+
         {#<div class="MimotoCMS_pages_forms_FormDetail-FormField__label">
             <div {{ Aimless.hideOnEmpty('label') }} {{ Aimless.realtime('label') }} >{{ Aimless.render('label') }}</div>
             <div {{ Aimless.showOnEmpty('label') }}>#{{ Aimless.meta('id') }}</div>
-        </div>#}
-
-
-        {#<div class="MimotoCMS_pages_forms_FormDetail-FormField__value">
-            <div {{ Aimless.showOnEmpty('value') }}>Add value</div>
-            <div {{ Aimless.hideOnEmpty('value') }} {{ Aimless.realtime('value', 'Mimoto.CMS_forms_FormDetail-FormFieldValue') }}>
-                {{ Aimless.render('value', 'Mimoto.CMS_forms_FormDetail-FormFieldValue') }}
-            </div>
         </div>#}
 
     </div>
     <div class="MimotoCMS_pages_forms_FormDetail-FormField__menu">
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Aimless.meta('typeId') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldDelete('" ~ Aimless.meta('typeId') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}
-        {#{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Move', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldMove('" ~ Aimless.meta('typeId') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}#}
+
+        {% if Aimless.typeOf('_MimotoAimless__interaction__forminput') %}
+
+            <div class="MimotoCMS_pages_forms_FormDetail-FormField__value">
+                {{ Aimless.render('value', 'Mimoto.CMS_forms_FormDetail-FormFieldValue') }}
+            </div>
+
+        {% endif %}
     </div>
 </div>

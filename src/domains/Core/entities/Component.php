@@ -256,7 +256,7 @@ class Component
             ),
             (object) array(
                 'name' => 'Mimoto.CMS_forms_FormDetail-FormFieldValue',
-                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormFieldValue/FormFieldValue.twig',
+                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormFieldWrapper/FormFieldValue/FormFieldValue.twig',
                 'conditionals' => []
             ),
 
@@ -295,6 +295,11 @@ class Component
             (object) array(
                 'name' => '_MimotoAimless__interaction__form_input_textline',
                 'file' => 'MimotoCMS/components/forms/input/Textline/Textline.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => '_MimotoAimless__interaction__form_input_textblock',
+                'file' => 'MimotoCMS/components/forms/input/Textblock/Textblock.twig',
                 'conditionals' => []
             ),
             (object) array(

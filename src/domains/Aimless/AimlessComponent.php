@@ -789,4 +789,10 @@ class AimlessComponent
     {
         return $this->_entity->hasProperty($sPropertyName);
     }
+
+    public function typeOf($sEntityTypeName)
+    {
+        return $this->_entity->typeOf($sEntityTypeName);
+    }
+
 }

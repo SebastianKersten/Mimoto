@@ -4,6 +4,7 @@
 namespace Mimoto\UserInterface\examples;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
 // Silex classes
@@ -221,10 +222,10 @@ class ExampleController
     public function viewExample1(Application $app)
     {
         // load
-        $article = $app['Mimoto.Data']->get('article', 1);
+        $article = Mimoto::service('data')->get('article', 1);
 
         // create
-        $component = $app['Mimoto.Aimless']->createComponent('article', $article);
+        $component = Mimoto::service('aimless')->createComponent('article', $article);
 
         // render and send
         return $component->render();
