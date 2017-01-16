@@ -16,7 +16,7 @@ module.exports.prototype = {
 
         console.log("Init Image Upload");
         this.setVariables();
-        this.initDropzones();
+        this.initDropzone();
 
     },
 
@@ -39,7 +39,7 @@ module.exports.prototype = {
 
     },
 
-    initDropzones: function () {
+    initDropzone: function () {
 
         this.dropzone = new Dropzone(this.imageUpload, {
             url: this.postURL,
