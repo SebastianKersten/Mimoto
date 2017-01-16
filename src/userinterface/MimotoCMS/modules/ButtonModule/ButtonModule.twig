@@ -19,7 +19,7 @@
     {% endfor %}
 {% endif %}
 
-<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_ButtonModule{{ classes }}"{% if onclick %} onclick="{{ onclick }}"{% endif %}{% if icon|default('') %} data-icon="#ico" ~ {{ icon }}{% endif %}>
+<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_ButtonModule{{ classes }}"{% if onclick %} onclick="{{ onclick }}"{% endif %}{% if icon|default('') %} data-icon="#ico-{{ icon }}"{% endif %}>
     {% if label|default('') %}
         <span class="MimotoCMS_ButtonModule-text">{{ label }}</span>
     {% endif %}

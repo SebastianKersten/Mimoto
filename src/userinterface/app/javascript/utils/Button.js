@@ -19,6 +19,8 @@ module.exports = {
         icon.classList.add(this.loadingIconClass);
         useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', this.loadingIcon);
 
+        this.addIcon(this.loadingIcon);
+
     },
 
     removeLoadingState: function (button) {
@@ -53,6 +55,24 @@ module.exports = {
         button.classList.remove(this.successClass);
         icon.classList.remove(this.successIconClass);
         useElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', originalIcon);
+
+    },
+
+    addIcon: function (iconID) {
+
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        var svgns = "http://www.w3.org/2000/svg";
+        var xlinkns = "http://www.w3.org/1999/xlink";
+
+        // Create a <use> element
+        var  use = document.createElementNS(svgns, 'use');
+
+        // Add an 'href' attribute (using the "xlink" namespace)
+        use.setAttributeNS(xlinkns, 'href', iconID);
+
+        svg.appenChild(use);
+
+        console.log(use);
 
     }
 
