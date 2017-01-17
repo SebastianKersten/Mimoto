@@ -82,51 +82,7 @@ module.exports.prototype = {
 
             if (!result.passed) this.validated = false;
 
-            //var type = (this.elements[i].querySelector('input') || this.elements[i].querySelector('select')).type;
-            //
-            //if (type == 'checkbox') {
-            //    this.handleCheckboxValidation(this.elements[i]);
-            //} else if (type == 'text') {
-            //    this.handleTextlineValidation(this.elements[i]);
-            //} else if (type == 'radio') {
-            //    this.handleRadioButtonValidation(this.elements[i]);
-            //} else if (type == 'select-one') {
-            //    this.handleDropdownValidation(this.elements[i]);
-            //}
-
         }
-
-    },
-
-    handleCheckboxValidation: function (element) {
-
-        var result = FV.validateInput(element);
-
-        if (!result.passed) this.validated = false;
-
-    },
-
-    handleTextlineValidation: function (element) {
-
-        var result = FV.validateInput(element);
-
-        if (!result.passed) this.validated = false;
-
-    },
-
-    handleRadioButtonValidation: function (element) {
-
-        var result = FV.validateInput(element);
-
-        if (!result.passed) this.validated = false;
-
-    },
-
-    handleDropdownValidation: function (element) {
-
-        var result = FV.validateInput(element);
-
-        if (!result.passed) this.validated = false;
 
     }
 
