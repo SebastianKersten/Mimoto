@@ -1,19 +1,19 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" %}
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "image"} %}
 
     {% block form_component_element %}
-        <div class="form-image-upload js-image-upload">
-            <div class="form-image-upload-trigger js-image-upload-trigger">
-                <div class="form-image-upload-button"><span class="form-image-upload-button-icon icon icon-plus"></span></div>
-                <p class="form-image-upload-text">Klik hier of drop een afbeelding</p>
+        <div class="MimotoCMS_forms_input_ImageUpload js-image-upload">
+            <div class="MimotoCMS_forms_input_ImageUpload-trigger js-image-upload-trigger">
+                <div class="MimotoCMS_forms_input_ImageUpload-trigger-button"><svg class="MimotoCMS_forms_input_ImageUpload-button-trigger-icon"><use xlink:href="#ico-plus"></use></svg></div>
+                <p class="MimotoCMS_forms_input_ImageUpload-trigger-text">Klik hier of drop een afbeelding</p>
             </div>
 
-            <div class="form-image-upload-preview js-image-upload-preview">
-                 <div class="form-image-upload-preview-template js-image-upload-preview-template">
-                    <img data-dz-thumbnail class="form-image-upload-preview-image" />
-                    <div class="form-image-upload-preview-upload-progress">
-                        <div class="form-image-upload-preview-upload-progess-bar" data-dz-uploadprogress></div>
+            <div class="MimotoCMS_forms_input_ImageUpload-preview js-image-upload-preview">
+                <div class="MimotoCMS_forms_input_ImageUpload-preview-template js-image-upload-preview-template">
+                    <img data-dz-thumbnail class="MimotoCMS_forms_input_ImageUpload-preview-image" />
+                    <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progress">
+                        <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
                     </div>
-                    <div class="form-image-upload-preview-button">
+                    <div class="MimotoCMS_forms_input_ImageUpload-preview-button">
                         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
                     </div>
                 </div>
