@@ -17,23 +17,14 @@ module.exports = {
     this.errorIconClass = "icon-error";
 
     if (options.errorElement) this.errorElement = options.errorElement;
-
     if (options.errorElementClasses) this.errorElementClasses = options.errorElementClasses;
-
     if (options.iconSelectorClass) this.iconSelectorClass = options.iconSelectorClass;
-
     if (options.validatedClass) this.validatedClass = options.validatedClass;
-
     if (options.validatedIcon) this.validatedIcon = options.validatedIcon;
-
     if (options.validatedIconClass) this.validatedIconClass = options.validatedIconClass;
-
     if (options.errorParentClass) this.errorParentClass = options.errorParentClass;
-
     if (options.errorClass) this.errorClass = options.errorClass;
-
     if (options.errorIcon) this.errorIcon = options.errorIcon;
-
     if (options.errorIconClass) this.errorIconClass = options.errorIconClass;
 
   },
