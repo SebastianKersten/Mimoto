@@ -44,23 +44,6 @@ class Form
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM.'--entity',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'entity',
-                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
-                    'settings' => [
-                        'allowedEntityType' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM.'--entity-allowedEntityType',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'allowedEntityType',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => CoreConfig::MIMOTO_ENTITY
-                        )
-                    ]
-                ),
-                (object) array(
                     'id' => CoreConfig::MIMOTO_FORM.'--fields',
                     'created' => CoreConfig::EPOCH,
                     // ---
@@ -198,7 +181,6 @@ class Form
         $form->addValue('fields', self::getField_title('Form'));
         $form->addValue('fields', self::getField_groupStart());
         $form->addValue('fields', self::getField_name());
-        $form->addValue('fields', self::getField_entity());
         $form->addValue('fields', self::getField_groupEnd());
 
         // send
@@ -238,7 +220,7 @@ class Form
         $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
         $field->setId(CoreConfig::COREFORM_FORM.'--title');
         $field->setValue('title', $sTitle);
-        $field->setValue('description', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");
+        $field->setValue('description', "Using the built in form feature allows you to easily create and edit data based upon your entity configurations.");
 
         // send
         return $field;
@@ -313,50 +295,6 @@ class Form
 
             // add value to field
             $field->setValue('value', $value);
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: entity
-     */
-    private static function getField_entity()
-    {
-        // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN);
-        $field->setId(CoreConfig::COREFORM_FORM.'--entity');
-        $field->setValue('label', 'Connect to entity');
-        $field->setValue('description', "Manage this entity");
-
-        // 2. setup value
-        $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-        $value->setId(CoreConfig::COREFORM_FORM.'--entity_value');
-        $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
-
-        // 3. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM.'--entity');
-        $value->setValue('entityproperty', $connectedEntityProperty);
-
-        // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
-
-        $nEntityCount = count($aEntities);
-        for ($i = 0; $i < $nEntityCount; $i++)
-        {
-            // register
-            $entity = $aEntities[$i];
-
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-            $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--extends_value_options-valuesettings-collection-'.$entity->getId());
-            $option->setValue('key', $entity->getEntityTypeName().'.'.$entity->getId());
-            $option->setValue('value', $entity->getValue('name'));
-            $value->addValue('options', $option);
-        }
-
-        // add
-        $field->setValue('value', $value);
 
         // send
         return $field;

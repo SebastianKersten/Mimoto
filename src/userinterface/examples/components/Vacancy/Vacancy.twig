@@ -1,10 +1,6 @@
-<span {{ Aimless.realtime() }}>
-    -&nbsp;<i>
-        Project manager =
-        <span>
-            <div class="examples__ProjectManager" {{ Aimless.realtime('name') }}>
-                {{ Aimless.render('name') }}
-            </div>
-        </span>
-    </i>
-</span>
+<div {{ Aimless.realtime() }}>
+    <div  {{ Aimless.realtime( 'title' ) }}>{{ Aimless.render( 'title') }}</div>
+    <div  {{ Aimless.realtime( 'details' ) }}>{{ Aimless.render( 'details') }}</div>
+    <div  {{ Aimless.realtime( 'description' ) }}>{{ Aimless.render( 'description') }}</div>
+    <div  {{ Aimless.realtime( 'vacancyURL' ) }}>{{ Aimless.render( 'vacancyURL') }}</div>
+</div>

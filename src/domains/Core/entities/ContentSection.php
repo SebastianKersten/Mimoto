@@ -114,7 +114,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--ContentItems',
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--contentItems',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'contentItems',

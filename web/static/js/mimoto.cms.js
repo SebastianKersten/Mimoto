@@ -29956,7 +29956,7 @@
 	            parallelUploads: 20,
 	            previewTemplate: this.previewTemplate,
 	            thumbnailWidth: 500,
-	            thumbnailHeight: 500,
+	            thumbnailHeight: null,
 	            previewsContainer: this.previewClass,
 	            clickable: this.imageUploadTriggerClass
 	        });
@@ -33738,9 +33738,9 @@
 	    /**
 	     * Create new form
 	     */
-	    formNew: function()
+	    entityFormNew: function(nEntityId)
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/form/new");
+	        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/form/new");
 	        
 	        //popup.on('success') = popup.close();
 	    },
@@ -33753,6 +33753,17 @@
 	    formEdit: function(nFormId)
 	    {
 	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
+	    },
+	    
+	    formDelete: function(nFormId)
+	    {
+	        $.ajax({
+	            type: 'get',
+	            url: "/mimoto.cms/form/" + nFormId + "/delete",
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
 	    },
 	    
 	    formFieldNew_TypeSelector: function(nFormId)
@@ -33787,6 +33798,7 @@
 	            }
 	        });
 	    },
+	    
 	    
 	}
 	

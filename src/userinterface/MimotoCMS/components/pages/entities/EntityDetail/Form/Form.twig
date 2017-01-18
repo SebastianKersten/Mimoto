@@ -3,13 +3,11 @@
     {
         label: Aimless.data('name'),
         label_realtime: Aimless.realtime('name'),
-        sublabel: Aimless.data('file'),
-        sublabel_realtime:  Aimless.realtime('file'),
         button_label: 'Edit',
-        button_action: 'Mimoto.CMS.componentEdit('~Aimless.meta('id')~');',
+        button_action: 'Mimoto.CMS.formEdit('~Aimless.meta('id')~');',
         button_type: 'secondary',
         button2_label: 'Delete',
-        button2_action: 'Mimoto.CMS.componentDelete('~Aimless.meta('id')~');',
+        button2_action: 'Mimoto.CMS.formDelete('~Aimless.meta('id')~');',
         button2_type: 'alert'
     })
 }}

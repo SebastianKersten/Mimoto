@@ -154,6 +154,11 @@ class Component
                 'file' => 'MimotoCMS/components/pages/entities/EntityDetail/Component/Component.twig',
                 'conditionals' => []
             ),
+            (object) array(
+                'name' => 'Mimoto.CMS_entities_EntityDetail-Form',
+                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/Form/Form.twig',
+                'conditionals' => []
+            ),
 
 
 
