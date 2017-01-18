@@ -130,7 +130,7 @@ class InputTextlineForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // validation rule #1
                 $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
@@ -191,7 +191,7 @@ class InputTextlineForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // validation rule #1
                 $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
@@ -252,7 +252,7 @@ class InputTextlineForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // validation rule #1
                 $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
@@ -313,7 +313,7 @@ class InputTextlineForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // validation rule #1
                 $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
@@ -372,7 +372,7 @@ class InputTextlineForm
 //                // 3. connect to property
 //                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
 //                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--vartype');
-//                $value->setValue('entityproperty', $connectedEntityProperty);
+//                $value->setValue('entityProperty', $connectedEntityProperty);
 //
 //                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
 //                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype_value_options-value');

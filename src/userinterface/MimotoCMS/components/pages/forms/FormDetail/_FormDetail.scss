@@ -1,16 +1,10 @@
 @import 'FormFieldWrapper/FormFieldWrapper';
 @import 'FormFieldTypeSelector/FormFieldTypeSelector';
 
-div.MimotoCMS_pages_forms_FormDetail__panel {
-    margin-bottom: 25px;
-    background-color: #ffffff;
-    padding: 15px;
-    max-width: 800px;
-}
 
 div.MimotoCMS_pages_forms_FormDetail_Structure {
     position: relative;
-    background-color: #ffffff;
+    background-color: #ff0000;
 }
 
 div.MimotoCMS_pages_forms_FormDetail_Structure__meta {
@@ -38,11 +32,6 @@ div.MimotoCMS_pages_forms_FormDetail_Structure__meta {
     div.MimotoCMS_pages_forms_FormDetail_Structure__formname {
         font-size: 24px;
         font-weight: bold;
-    }
-
-    span.MimotoCMS_pages_forms_FormDetail_Structure__connectedentity {
-        font-style: italic;
-        padding-bottom: 10px;
     }
 }
 

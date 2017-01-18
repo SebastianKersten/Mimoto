@@ -126,7 +126,7 @@ class EntityPropertyForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--name');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // validation rule #1
                 $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
@@ -185,7 +185,7 @@ class EntityPropertyForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--type');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-value');

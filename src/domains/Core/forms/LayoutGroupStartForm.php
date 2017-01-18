@@ -124,7 +124,7 @@ class LayoutGroupStartForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.'--title');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
             // add value to field
             $field->setValue('value', $value);

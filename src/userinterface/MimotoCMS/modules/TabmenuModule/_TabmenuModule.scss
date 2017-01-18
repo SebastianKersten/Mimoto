@@ -1,8 +1,16 @@
-div.MimotoCMS_components_Tabmenu {
-
+div.MimotoCMS_modules_Tabmenu {
+    
 }
 
-div.MimotoCMS_components_Tabmenu__menu {
+div.MimotoCMS_modules_Tabmenu__panel {
+    margin-bottom: 25px;
+    background-color: #ffffff;
+    padding: 15px;
+    max-width: 800px;
+}
+
+
+div.MimotoCMS_modules_Tabmenu__menu {
 
     overflow: scroll;
 
@@ -15,7 +23,7 @@ div.MimotoCMS_components_Tabmenu__menu {
     }
 }
 
-div.MimotoCMS_components_Tabmenu__menu_tab {
+div.MimotoCMS_modules_Tabmenu__menu_tab {
 
     display: inline-block;
     padding: 10px 30px 10px 30px;
@@ -40,7 +48,7 @@ div.MimotoCMS_components_Tabmenu__menu_tab {
     }
 }
 
-div.MimotoCMS_components_Tabmenu__panels {
+div.MimotoCMS_modules_Tabmenu__panels {
 
     &.hidden {
         display: none;

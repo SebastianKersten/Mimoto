@@ -500,7 +500,7 @@ class FormService
                 case CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY:
 
                     // read
-                    $entityProperty = $fieldValue->getValue('entityproperty', true);
+                    $entityProperty = $fieldValue->getValue('entityProperty', true);
 
                     // validate
                     if (empty($entityProperty))

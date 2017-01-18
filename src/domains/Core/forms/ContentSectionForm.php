@@ -131,7 +131,7 @@ class ContentSectionForm
                 // 3a. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--name');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // 3b. validation rule #1
                 $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
@@ -166,7 +166,7 @@ class ContentSectionForm
                 // 3a. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // 3b. set options
                 $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
@@ -207,7 +207,7 @@ class ContentSectionForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--form');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // load
                 $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);
@@ -252,7 +252,7 @@ class ContentSectionForm
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--isHiddenFromMenu');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
             // add
             $field->setValue('value', $value);

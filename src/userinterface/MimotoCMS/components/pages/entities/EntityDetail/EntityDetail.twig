@@ -8,7 +8,7 @@
 
 
     {%
-        embed "MimotoCMS/components/modules/Tabmenu/Tabmenu.twig" with {
+        embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
             id: 'entitydetails',
             tabs: [
                 {
@@ -31,11 +31,12 @@
 
             <!-- structure -->
 
-            <div id="panel_entitydetail_structure" class="MimotoCMS_pages_entities_EntityDetail__panel">
+            <div id="panel_entitydetail_structure" class="MimotoCMS_modules_Tabmenu__panel">
 
                 <div class="MimotoCMS_pages_entities_EntityDetail_Structure">
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta">
+
                         <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_info">
 
                             <span class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</span>
@@ -97,7 +98,7 @@
 
             <!-- instances -->
 
-            <div id="panel_entitydetail_instances" class="MimotoCMS_pages_entities_EntityDetail__panel hidden">
+            <div id="panel_entitydetail_instances" class="MimotoCMS_modules_Tabmenu__panel hidden">
 
                 <div class="MimotoCMS_pages_entities_EntityDetail_Instances">
                     [search fields]
@@ -112,7 +113,7 @@
 
             <!-- more -->
 
-            <div id="panel_entitydetail_more" class="MimotoCMS_pages_entities_EntityDetail__panel hidden">
+            <div id="panel_entitydetail_more" class="MimotoCMS_modules_Tabmenu__panel hidden">
 
                 <b>Danger zone!</b><br>
                 <br>
@@ -126,7 +127,7 @@
 
 
     {%
-        embed "MimotoCMS/components/modules/Tabmenu/Tabmenu.twig" with {
+        embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
             id: 'entityforms',
             tabs: [
                 {
@@ -140,7 +141,7 @@
 
             <!-- forms -->
 
-            <div id="panel_entityforms" class="MimotoCMS_pages_entities_EntityDetail__panel hidden">
+            <div id="panel_entityforms" class="MimotoCMS_modules_Tabmenu__panel hidden">
 
                 <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
@@ -168,7 +169,7 @@
 
 
     {%
-        embed "MimotoCMS/components/modules/Tabmenu/Tabmenu.twig" with {
+        embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
             id: 'entitycomponents',
             tabs: [
                 {
@@ -182,7 +183,7 @@
 
             <!-- components -->
 
-            <div id="panel_entitycomponents" class="MimotoCMS_pages_entities_EntityDetail__panel hidden">
+            <div id="panel_entitycomponents" class="MimotoCMS_modules_Tabmenu__panel hidden">
 
                 <div class="MimotoCMS_pages_entities_EntityDetail__block">
 

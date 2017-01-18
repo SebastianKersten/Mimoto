@@ -377,6 +377,11 @@ class Component
                 'file' => 'MimotoCMS/modules/ButtonModule/ButtonModule.twig',
                 'conditionals' => []
             ),
+            (object) array(
+                'name' => 'Mimoto.CMS.TabmenuModule',
+                'file' => 'MimotoCMS/modules/TabmenuModule/TabmenuModule.twig',
+                'conditionals' => []
+            ),
 
         ];
 
@@ -482,7 +487,7 @@ class Component
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_COMPONENT.'--name');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // validation rule #1
                 $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
@@ -544,7 +549,7 @@ class Component
                 // 3. connect to property
                 $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_COMPONENT.'--file');
-                $value->setValue('entityproperty', $connectedEntityProperty);
+                $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // validation rule #1
                 $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);

@@ -3,17 +3,12 @@
 {% block content %}
 
     {%
-        embed "MimotoCMS/components/modules/Tabmenu/Tabmenu.twig" with {
+        embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
             id: 'formdetails',
             tabs: [
                 {
                     label: 'Fields',
                     panel_id: 'panel_formdetail_fields'
-                },
-                {
-                    label: 'More',
-                    panel_id: 'panel_formdetail_more',
-                    secondary: true
                 }
             ]
         }
@@ -22,57 +17,41 @@
 
             <!-- structure -->
 
-            <div id="panel_formdetail_fields" class="MimotoCMS_pages_forms_FormDetail__panel">
+            <div id="panel_formdetail_fields" class="MimotoCMS_modules_Tabmenu__panel">
 
-                <div class="MimotoCMS_pages_forms_FormDetail_Structure">
+                <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta">
 
-                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta">
-                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_info">
-
-                            <div class="MimotoCMS_pages_forms_FormDetail_Structure__formname" {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</div>
-
-                            Connected to <span class="MimotoCMS_pages_forms_FormDetail_Structure__connectedentity" {{ Aimless.realtime('entity.name') }}>{{ Aimless.render('entity.name') }}</span>
-
-                        </div>
-
-                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_menu">
-                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.formEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
-                        </div>
-
+                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_info">
+                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__formname" {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</div>
                     </div>
 
-
-                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields">
-
-                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Aimless.showOnEmpty('fields') }}>
-                            <div>This forms has no fields yet.<br>Go ahead, start adding them!</div>
-                            <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Aimless.meta('id') ~ "');" }) }}</div>
-                        </div>
-
-                        <div {{ Aimless.hideOnEmpty('fields') }}>
-                            <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_container" {{ Aimless.realtimeWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}>
-                                {{ Aimless.renderWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}
-                            </div>
-
-                            <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_menu">
-                                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Aimless.meta('id') ~ "');" }) }}
-                            </div>
-                        </div>
-
+                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.formEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
                     </div>
 
                 </div>
-            </div>
 
-            <!-- more -->
-
-            <div id="panel_formdetail_more" class="MimotoCMS_pages_forms_FormDetail__panel hidden">
-
-                <b>Danger zone!</b><br>
                 <br>
-                <i><u>WARNING</u> - Deleting the form will result in the LOSS OF ALL DATA related to this entity.</i><br>
-                <br>
-                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete entity', icon:'warning', onclick:"Mimoto.CMS.formDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", types:['alert'] }) }}
+
+                <div class="MimotoCMS_pages_entities_EntityDetail__block">
+
+                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Aimless.showOnEmpty('fields') }}>
+                        <div>This forms has no fields yet.<br>Go ahead, start adding them!</div>
+                        <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                    </div>
+
+                    <div {{ Aimless.hideOnEmpty('fields') }}>
+                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_container" {{ Aimless.realtimeWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}>
+                            {{ Aimless.renderWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}
+                        </div>
+
+                        <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_menu">
+                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Aimless.meta('id') ~ "');" }) }}
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
         {% endblock %}

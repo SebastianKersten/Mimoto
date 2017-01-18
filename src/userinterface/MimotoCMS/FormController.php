@@ -258,7 +258,7 @@ class FormController
         // 3. clear
         if (!empty($value))
         {
-            $value->setValue('entityproperty', null);
+            $value->setValue('entityProperty', null);
 
             // 4. remove connections
             Mimoto::service('data')->store($value);
