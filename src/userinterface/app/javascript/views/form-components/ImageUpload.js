@@ -47,7 +47,7 @@ module.exports.prototype = {
             parallelUploads: 20,
             previewTemplate: this.previewTemplate,
             thumbnailWidth: 500,
-            thumbnailHeight: 500,
+            thumbnailHeight: null,
             previewsContainer: this.previewClass,
             clickable: this.imageUploadTriggerClass
         });
