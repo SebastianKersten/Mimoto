@@ -292,7 +292,7 @@ class InputValue
                 for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
                 {
                     // register
-                    $entity = $aEntities[$nEntityIndex]; 
+                    $entity = $aEntities[$nEntityIndex];
 
                     // read
                     $aEntityProperties = $entity->getValue('properties');

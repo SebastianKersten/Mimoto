@@ -31,7 +31,9 @@
             "placeholder",
             "prefix",
 
-            "form"
+            "form",
+            "forms",
+            "components"
         ]
     },
     "notes": [

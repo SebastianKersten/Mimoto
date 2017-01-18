@@ -29,9 +29,9 @@
                     <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta">
                         <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_info">
 
-                            <span class="MimotoCMS_pages_forms_FormDetail_Structure__entityname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</span>
+                            <div class="MimotoCMS_pages_forms_FormDetail_Structure__formname" {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</div>
 
-                            <br>#todo add connected Content entities
+                            Connected to <span class="MimotoCMS_pages_forms_FormDetail_Structure__connectedentity" {{ Aimless.realtime('entity.name') }}>{{ Aimless.render('entity.name') }}</span>
 
                         </div>
 

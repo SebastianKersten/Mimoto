@@ -199,8 +199,6 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         //if (!empty($sSubpropertySelector)) { $this->forwardRemoveValue($sSubpropertySelector, $xValue); return; }
 
 
-        echo 'In COLLECTION.remove<br>';
-
 
         // 1. convert
         $xEntityTypeId = Mimoto::service('config')->getEntityIdByName($sEntityType);

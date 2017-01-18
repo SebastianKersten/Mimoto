@@ -135,20 +135,14 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_MimotoAimless__coreform__entitypropertysetting_value_allowedEntityTypes';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_MimotoAimless__coreform__entitypropertysetting_collection_allowDuplicates';
 
-    const COREFORM_COMPONENT             = '_MimotoAimless__coreform__component';
-    const COREFORM_COMPONENT_NEW         = '_MimotoAimless__coreform__component_new';
-    const COREFORM_COMPONENT_EDIT        = '_MimotoAimless__coreform__component_edit';
-
     const COREFORM_CONTENTSECTION               = '_MimotoAimless__coreform__contentsection';
     const COREFORM_CONTENTSECTION_NEW           = '_MimotoAimless__coreform__contentsection_new';
     const COREFORM_CONTENTSECTION_EDIT          = '_MimotoAimless__coreform__contentsection_edit';
 
 
 
-    const COREFORM_FORM                  = '_MimotoAimless__coreform__form';
-    const COREFORM_FORM_NEW              = '_MimotoAimless__coreform__form_new';
-    const COREFORM_FORM_EDIT             = '_MimotoAimless__coreform__form_edit';
-
+    const COREFORM_COMPONENT                = '_MimotoAimless__coreform__component';
+    const COREFORM_FORM                     = '_MimotoAimless__coreform__form';
     const COREFORM_FORM_INPUTVALUE          = '_MimotoAimless__coreform__form_inputValue';
 
 
@@ -202,9 +196,9 @@ class CoreConfig
 
 
     // layout
-    const COREFORM_LAYOUT_GROUPSTART         = '_MimotoAimless__corewform_layout_groupstart';
-    const COREFORM_LAYOUT_GROUPSTART_NEW     = '_MimotoAimless__corewform_layout_groupstart_new';
-    const COREFORM_LAYOUT_GROUPSTART_EDIT    = '_MimotoAimless__corewform_layout_groupstart_edit';
+    const COREFORM_LAYOUT_GROUPSTART         = '_MimotoAimless__coreform_layout_groupstart';
+    const COREFORM_LAYOUT_GROUPSTART_NEW     = '_MimotoAimless__coreform_layout_groupstart_new';
+    const COREFORM_LAYOUT_GROUPSTART_EDIT    = '_MimotoAimless__coreform_layout_groupstart_edit';
 
     const COREFORM_LAYOUT_GROUPEND           = '_MimotoAimless__coreform_layout_groupend';
     const COREFORM_LAYOUT_GROUPEND_NEW       = '_MimotoAimless__coreform_layout_groupend_new';

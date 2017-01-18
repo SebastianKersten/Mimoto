@@ -100,6 +100,56 @@ class Entity
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--components',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'components',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--components-allowedEntityTypes',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_COMPONENT]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--components-allowDuplicates',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--forms',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'forms',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--forms-allowedEntityTypes',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_FORM]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--forms-allowDuplicates',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
                 )
             ]
         );
@@ -109,5 +159,7 @@ class Entity
     {
 
     }
+
+
 
 }
