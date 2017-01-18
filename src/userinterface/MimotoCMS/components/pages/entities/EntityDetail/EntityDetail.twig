@@ -125,18 +125,95 @@
     {% endembed %}
 
 
+    {%
+        embed "MimotoCMS/components/modules/Tabmenu/Tabmenu.twig" with {
+            id: 'entityforms',
+            tabs: [
+                {
+                    label: 'Forms',
+                    panel_id: 'panel_entityforms'
+                }
+            ]
+        }
+    %}
+        {% block panels %}
 
-    <div class="MimotoCMS_pages_entities_EntityDetail__codeexample">
+            <!-- forms -->
 
-        <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-title">Twig example</div>
+            <div id="panel_entityforms" class="MimotoCMS_pages_entities_EntityDetail__panel hidden">
 
-        <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-container">
-            <code>{{ "<div "|escape }}<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Aimless.realtime() }}' }}</span>&gt;</code>
-            <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties" {{ Aimless.realtime('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}>
-                {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showOnEmpty('forms') }}>
+                    <div>This entity has no form yet.<br>Go ahead, start adding one!</div>
+                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                </div>
+
+                <div {{ Aimless.hideOnEmpty('forms') }}>
+                    <div class="MimotoCMS_pages_entities_EntityDetail_container" {{ Aimless.realtime('forms', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}>
+                        {{ Aimless.render('forms', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
+                    </div>
+
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                    </div>
+                </div>
+
             </div>
-            <code>{{ "</div>"|escape }}</code>
-        </div>
-    </div>
+
+        {% endblock %}
+    {% endembed %}
+
+
+    {%
+        embed "MimotoCMS/components/modules/Tabmenu/Tabmenu.twig" with {
+            id: 'entitycomponents',
+            tabs: [
+                {
+                    label: 'Components',
+                    panel_id: 'panel_entitycomponents'
+                }
+            ]
+        }
+    %}
+        {% block panels %}
+
+            <!-- components -->
+
+            <div id="panel_entitycomponents" class="MimotoCMS_pages_entities_EntityDetail__panel hidden">
+
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showOnEmpty('components') }}>
+                    <div>This entity has no component yet.<br>Go ahead, start adding one!</div>
+                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.entityComponentNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                </div>
+
+                <div {{ Aimless.hideOnEmpty('components') }}>
+                    <div class="MimotoCMS_pages_entities_EntityDetail_container" {{ Aimless.realtime('components', 'Mimoto.CMS_entities_EntityDetail-Component') }}>
+                        {{ Aimless.render('components', 'Mimoto.CMS_entities_EntityDetail-Component') }}
+                    </div>
+
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.entityComponentNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="MimotoCMS_pages_entities_EntityDetail__codeexample">
+
+                    <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-title">Twig example</div>
+
+                    <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-container">
+                        <code>{{ "<div "|escape }}<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Aimless.realtime() }}' }}</span>&gt;</code>
+                        <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties" {{ Aimless.realtime('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}>
+                            {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}
+                        </div>
+                        <code>{{ "</div>"|escape }}</code>
+                    </div>
+                </div>
+
+            </div>
+
+        {% endblock %}
+    {% endembed %}
+
 
 {% endblock %}

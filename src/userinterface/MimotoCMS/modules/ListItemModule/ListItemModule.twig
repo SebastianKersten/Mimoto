@@ -1,4 +1,4 @@
-<li class="MimotoCMS_ListItemModule">
+<li class="MimotoCMS_ListItemModule" {{ realtime }}>
     <div class="MimotoCMS_ListItemModule-content">
         <div class="MimotoCMS_ListItemModule-info">
             <div class="MimotoCMS_ListItemModule-label" {{ label_realtime }}>{{ label }}</div>
@@ -6,6 +6,9 @@
         </div>
         <div class="MimotoCMS_ListItemModule-menu">
             {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, types:[button_type] }) }}
+            {% if button2_label is not empty %}
+                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:button2_label, onclick:button2_action, types:[button2_type] }) }}
+            {% endif %}
         </div>
     </div>
 </li>

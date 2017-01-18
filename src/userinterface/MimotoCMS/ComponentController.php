@@ -25,34 +25,7 @@ use Silex\Application;
 class ComponentController
 {
 
-    public function viewComponentOverview(Application $app)
-    {
-        // load
-        $aComponents = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_COMPONENT]);
-
-        // create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_components_ComponentOverview');
-
-        // setup
-        $page->addSelection('components', $aComponents, 'Mimoto.CMS_components_ComponentOverview_ListItem');
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
-
-        // setup page
-        $page->setVar('pageTitle', array(
-                (object) array(
-                    "label" => 'Components',
-                    "url" => '/mimoto.cms/components'
-                )
-            )
-        );
-
-        // output
-        return $page->render();
-    }
-
-    public function componentNew(Application $app)
+    public function componentNew(Application $app, $nEntityId)
     {
         // create dummy
         $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_COMPONENT);
@@ -60,8 +33,18 @@ class ComponentController
         // 1. create
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
+
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_COMPONENT_NEW, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $component->addForm(CoreConfig::COREFORM_COMPONENT, $entity,
+            [
+                'onCreatedConnectTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.components',
+                'response' => [
+                    'onSuccess' => [
+                        'closePopup' => true
+                    ]
+                ]
+            ]
+        );
 
         // 3. render and send
         return $component->render();
@@ -113,9 +96,32 @@ class ComponentController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_COMPONENT_EDIT, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $component->addForm(CoreConfig::COREFORM_COMPONENT, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 5. render and send
         return $component->render();
     }
+
+    public function componentDelete(Application $app, $nComponentId)
+    {
+        // 1. load
+        $component = Mimoto::service('data')->get(CoreConfig::MIMOTO_COMPONENT, $nComponentId);
+
+        // 2. load
+        $parentEntity = $app['Mimoto.Config']->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--components', $component);
+
+        // 3. remove connection
+        $parentEntity->removeValue('components', $component);
+
+        // 4. persist removed
+        Mimoto::service('data')->store($parentEntity);
+
+        // 5. delete property
+        Mimoto::service('data')->delete($component);
+
+        // 6. send
+        return new JsonResponse((object) array('result' => 'Component deleted! '.date("Y.m.d H:i:s")), 200);
+
+    }
+
 }

@@ -1,16 +1,16 @@
 <div class="MimotoCMS_pages_forms_FormDetail-FormField" {{ Aimless.realtime() }} {{ Aimless.reloadOnChange() }}>
 
-    <div class="MimotoCMS_pages_forms_FormDetail-FormField__data">
+    <div class="MimotoCMS_pages_forms_FormDetail-FormField__wrapper">
 
-        <div class="MimotoCMS_pages_forms_FormDetail-FormField__wrapper">
+        {% if Aimless.typeOf('_MimotoAimless__interaction__form_layout_groupstart') %}
+            Group start
+        {% elseif Aimless.typeOf('_MimotoAimless__interaction__form_layout_groupend') %}
+            Group end
+        {% elseif Aimless.typeOf('_MimotoAimless__interaction__form_layout_divider') %}
+            Divider
+        {% else %}
             {{ Aimless.wrap() }}
-        </div>
-
-
-        {#<div class="MimotoCMS_pages_forms_FormDetail-FormField__label">
-            <div {{ Aimless.hideOnEmpty('label') }} {{ Aimless.realtime('label') }} >{{ Aimless.render('label') }}</div>
-            <div {{ Aimless.showOnEmpty('label') }}>#{{ Aimless.meta('id') }}</div>
-        </div>#}
+        {% endif %}
 
     </div>
     <div class="MimotoCMS_pages_forms_FormDetail-FormField__menu">

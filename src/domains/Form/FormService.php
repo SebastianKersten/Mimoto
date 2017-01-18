@@ -16,15 +16,15 @@ use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
-use Mimoto\Core\forms\ComponentForm;
 use Mimoto\Core\forms\ContentSectionForm;
-use Mimoto\Core\forms\FormForm;
 use Mimoto\Core\forms\InputTextlineForm;
 use Mimoto\Core\forms\OutputTitleForm;
 use Mimoto\Core\forms\LayoutDividerForm;
 use Mimoto\Core\forms\LayoutGroupStartForm;
 use Mimoto\Core\forms\LayoutGroupEndForm;
 
+use Mimoto\Core\entities\Component;
+use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\InputValue;
 
 // Symfony classes
@@ -643,8 +643,8 @@ class FormService
 
             // component -----
 
-            case CoreConfig::COREFORM_COMPONENT_NEW: return ComponentForm::getStructureNew(); break;
-            case CoreConfig::COREFORM_COMPONENT_EDIT: return ComponentForm::getStructureEdit(); break;
+            case CoreConfig::COREFORM_COMPONENT: return Component::getForm(); break;
+
 
             // content -----
 
@@ -653,9 +653,7 @@ class FormService
 
             // form ----------
 
-            case CoreConfig::COREFORM_FORM_NEW:  return FormForm::getStructureNew(); break;
-            case CoreConfig::COREFORM_FORM_EDIT:  return FormForm::getStructureEdit(); break;
-
+            case CoreConfig::COREFORM_FORM:  return Form::getForm(); break;
             case CoreConfig::COREFORM_FORM_INPUTVALUE:  return InputValue::getForm(); break;
 
             // input ---------

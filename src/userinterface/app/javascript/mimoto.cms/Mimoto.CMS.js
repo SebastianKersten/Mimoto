@@ -165,21 +165,27 @@ module.exports.prototype = {
     /**
      * Create new component
      */
-    componentNew: function()
+    entityComponentNew: function(nEntityId)
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/component/new");
+        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
         
         //popup.on('success') = popup.close();
-    },
-    
-    componentView: function(nComponentId)
-    {
-        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
     },
     
     componentEdit: function(nComponentId)
     {
         Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
+    },
+    
+    componentDelete: function(nComponentId)
+    {
+        $.ajax({
+            type: 'get',
+            url: "/mimoto.cms/component/" + nComponentId + "/delete",
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
     },
     
     
