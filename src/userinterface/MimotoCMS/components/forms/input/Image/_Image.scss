@@ -21,6 +21,10 @@
     #{$pr-input}_ImageUpload-preview-image {
         opacity: 1;
     }
+
+    #{$pr-input}_ImageUpload-trigger {
+        visibility: hidden;
+    }
 }
 
     #{$pr-input}_ImageUpload-trigger {

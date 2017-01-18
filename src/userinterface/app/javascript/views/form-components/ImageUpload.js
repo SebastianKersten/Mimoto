@@ -46,7 +46,7 @@ module.exports.prototype = {
             maxFilesize: 1,
             parallelUploads: 20,
             previewTemplate: this.previewTemplate,
-            thumbnailWidth: null,
+            thumbnailWidth: 500,
             thumbnailHeight: 500,
             previewsContainer: this.previewClass,
             clickable: this.imageUploadTriggerClass
@@ -71,6 +71,7 @@ module.exports.prototype = {
 
         this.dropzone.on('removedfile', function (file) {
             this.dropzone.element.classList.remove(this.showPreviewClass);
+            this.dropzone.element.classList.remove(this.showPreviewImageClass);
             EH.clearState(this.el);
         }.bind(this));
 

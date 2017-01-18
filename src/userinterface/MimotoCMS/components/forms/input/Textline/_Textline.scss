@@ -16,5 +16,10 @@
     &:focus {
         border-color: $tower-gray;
         background: $white;
+
+        + #{$pr-forms}_FormComponent-element-prefix {
+            border-color: $tower-gray;
+            background: $white;
+        }
     }
 }
