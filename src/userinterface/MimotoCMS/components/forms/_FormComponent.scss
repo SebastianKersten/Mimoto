@@ -102,11 +102,6 @@
                     padding-left: 0;
                     border-left: 0;
                     order: 2;
-
-                    &:focus + #{$pr-forms}_FormComponent-element-prefix {
-                        border-color: $tower-gray;
-                        background: $white;
-                    }
                 }
             }
 
