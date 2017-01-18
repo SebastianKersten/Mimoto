@@ -23,34 +23,7 @@ use Silex\Application;
 class FormController
 {
 
-    public function viewFormOverview(Application $app)
-    {
-        // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);
-
-        // create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormOverview');
-
-        // setup
-        $page->addSelection('forms', $aEntities, 'Mimoto.CMS_forms_FormOverview_ListItem');
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
-
-        // setup page
-        $page->setVar('pageTitle', array(
-                (object)array(
-                    "label" => 'Forms',
-                    "url" => '/mimoto.cms/forms'
-                )
-            )
-        );
-
-        // output
-        return $page->render();
-    }
-
-    public function formNew(Application $app)
+    public function formNew(Application $app, $nEntityId)
     {
         // create dummy
         $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
@@ -59,7 +32,16 @@ class FormController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_FORM, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $component->addForm(CoreConfig::COREFORM_FORM, $entity,
+            [
+                'onCreatedConnectTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.forms',
+                'response' => [
+                    'onSuccess' => [
+                        'closePopup' => true
+                    ]
+                ]
+            ]
+        );
 
         // 3. render and send
         return $component->render();
@@ -114,13 +96,25 @@ class FormController
         return $component->render();
     }
 
-    public function formDelete(Application $app, Request $request, $nFormId)
+    public function formDelete(Application $app, $nFormId)
     {
-        // delete
-//        Mimoto::service('config')->entityDelete($nEntityId);
-//
-//        // send
-//        return new JsonResponse((object) array('result' => 'Entity deleted! '.date("Y.m.d H:i:s")), 200);
+        // 1. load
+        $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
+
+        // 2. load
+        $parentEntity = $app['Mimoto.Config']->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+
+        // 3. remove connection
+        $parentEntity->removeValue('forms', $form);
+
+        // 4. persist removed
+        Mimoto::service('data')->store($parentEntity);
+
+        // 5. delete property
+        Mimoto::service('data')->delete($form);
+
+        // 6. send
+        return new JsonResponse((object) array('result' => 'Form deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function formFieldNew_fieldTypeSelector(Application $app, $nFormId)

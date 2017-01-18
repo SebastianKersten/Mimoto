@@ -227,9 +227,9 @@ module.exports.prototype = {
     /**
      * Create new form
      */
-    formNew: function()
+    entityFormNew: function(nEntityId)
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/form/new");
+        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/form/new");
         
         //popup.on('success') = popup.close();
     },
@@ -242,6 +242,17 @@ module.exports.prototype = {
     formEdit: function(nFormId)
     {
         Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
+    },
+    
+    formDelete: function(nFormId)
+    {
+        $.ajax({
+            type: 'get',
+            url: "/mimoto.cms/form/" + nFormId + "/delete",
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
     },
     
     formFieldNew_TypeSelector: function(nFormId)
@@ -276,5 +287,6 @@ module.exports.prototype = {
             }
         });
     },
+    
     
 }
