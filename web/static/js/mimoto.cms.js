@@ -10395,23 +10395,14 @@
 	    this.errorIconClass = "icon-error";
 	
 	    if (options.errorElement) this.errorElement = options.errorElement;
-	
 	    if (options.errorElementClasses) this.errorElementClasses = options.errorElementClasses;
-	
 	    if (options.iconSelectorClass) this.iconSelectorClass = options.iconSelectorClass;
-	
 	    if (options.validatedClass) this.validatedClass = options.validatedClass;
-	
 	    if (options.validatedIcon) this.validatedIcon = options.validatedIcon;
-	
 	    if (options.validatedIconClass) this.validatedIconClass = options.validatedIconClass;
-	
 	    if (options.errorParentClass) this.errorParentClass = options.errorParentClass;
-	
 	    if (options.errorClass) this.errorClass = options.errorClass;
-	
 	    if (options.errorIcon) this.errorIcon = options.errorIcon;
-	
 	    if (options.errorIconClass) this.errorIconClass = options.errorIconClass;
 	
 	  },
@@ -29572,51 +29563,7 @@
 	
 	            if (!result.passed) this.validated = false;
 	
-	            //var type = (this.elements[i].querySelector('input') || this.elements[i].querySelector('select')).type;
-	            //
-	            //if (type == 'checkbox') {
-	            //    this.handleCheckboxValidation(this.elements[i]);
-	            //} else if (type == 'text') {
-	            //    this.handleTextlineValidation(this.elements[i]);
-	            //} else if (type == 'radio') {
-	            //    this.handleRadioButtonValidation(this.elements[i]);
-	            //} else if (type == 'select-one') {
-	            //    this.handleDropdownValidation(this.elements[i]);
-	            //}
-	
 	        }
-	
-	    },
-	
-	    handleCheckboxValidation: function (element) {
-	
-	        var result = FV.validateInput(element);
-	
-	        if (!result.passed) this.validated = false;
-	
-	    },
-	
-	    handleTextlineValidation: function (element) {
-	
-	        var result = FV.validateInput(element);
-	
-	        if (!result.passed) this.validated = false;
-	
-	    },
-	
-	    handleRadioButtonValidation: function (element) {
-	
-	        var result = FV.validateInput(element);
-	
-	        if (!result.passed) this.validated = false;
-	
-	    },
-	
-	    handleDropdownValidation: function (element) {
-	
-	        var result = FV.validateInput(element);
-	
-	        if (!result.passed) this.validated = false;
 	
 	    }
 	
@@ -29635,9 +29582,10 @@
 	    setVariables: function (element) {
 	
 	        this.el = element;
+	        this.value = '';
+	        this.checked = 0;
 	
 	        this.textline = this.el.querySelector('.js-textline');
-	        this.textblock = this.el.querySelector('.js-textblock');
 	        this.checkboxes = this.el.querySelectorAll('.js-checkbox');
 	        this.radioButtons = this.el.querySelectorAll('.js-radio-button');
 	        this.dropdown = this.el.querySelector('.js-dropdown');
@@ -29647,21 +29595,20 @@
 	            this.value = this.input.value;
 	        } else if (this.checkboxes.length) {
 	            this.input = this.checkboxes[0];
-	            this.countChecked();
+	            this.countChecked(this.checkboxes);
 	        } else if (this.radioButtons.length) {
 	            this.input = this.radioButtons[0];
+	            this.countChecked(this.radioButtons);
 	        } else if (this.dropdown) {
 	            this.input = this.dropdown;
 	            this.value = this.dropdown.value;
-	        } else if (this.textblock) {
-	            this.input = this.textblock;
-	            this.value = this.textblock.value;
 	        }
 	
 	    },
 	
 	    setInputOptions: function () {
 	
+	        this.required = this.input.hasAttribute('data-fv-required');
 	        this.minLength = this.input.getAttribute('data-fv-min-length');
 	        this.maxLength = this.input.getAttribute('data-fv-max-length');
 	        this.noNumbers = this.input.hasAttribute('data-fv-no-numbers');
@@ -29672,10 +29619,8 @@
 	        this.maxSpecialCharacters = this.input.getAttribute('data-fv-max-special-characters');
 	        this.minChecked = this.input.getAttribute('data-fv-min-checked');
 	        this.maxChecked = this.input.getAttribute('data-fv-max-checked');
-	        this.radioButtonRequired = this.input.hasAttribute('data-fv-radio-button-required');
 	        this.customRegex = this.input.getAttribute('data-fv-regex');
 	        this.errorMessage = this.input.getAttribute('data-fv-error-message');
-	        this.dropdownRequired = this.input.hasAttribute('data-fv-dropdown-required');
 	
 	        this.setValidationOptions();
 	
@@ -29683,6 +29628,7 @@
 	
 	    setValidationOptions: function () {
 	
+	        this.validateRequired = this.required ? true : false;
 	        this.validateMinLength = this.minLength ? true : false;
 	        this.validateMaxLength = this.maxLength ? true : false;
 	        this.validateNoNumbers = this.noNumbers ? true : false;
@@ -29693,9 +29639,7 @@
 	        this.validateMaxSpecialCharacters = this.maxSpecialCharacters ? true : false;
 	        this.validateMinChecked = this.minChecked ? true : false;
 	        this.validateMaxChecked = this.maxChecked ? true : false;
-	        this.validateRadioButton = this.radioButtonRequired ? true : false;
 	        this.validateCustomRegex = this.customRegex ? true : false;
-	        this.validateDropdown = this.dropdownRequired ? true : false;
 	
 	    },
 	
@@ -29705,7 +29649,9 @@
 	
 	        this.result.passed = passed;
 	
-	        if (message) this.result.message = message;
+	        if (message) {
+	            this.result.message = this.errorMessage ? this.errorMessage : message;
+	        }
 	
 	    },
 	
@@ -29722,46 +29668,38 @@
 	
 	    handleValidation: function () {
 	
+	        if (this.validateRequired) this.checkValue();
 	        if (this.validateMinLength) this.checkMinLength();
-	
 	        if (this.validateMaxLength) this.checkMaxLength();
-	
 	        if (this.validateNoNumbers) this.checkNoNumbers();
-	
 	        if (this.validateMinNumbers) this.checkMinNumbers();
-	
 	        if (this.validateMaxNumbers) this.checkMaxNumbers();
-	
 	        if (this.validateNoSpecialCharacters) this.checkNoSpecialCharacters();
-	
 	        if (this.validateMinSpecialCharacters) this.checkMinSpecialCharacters();
-	
 	        if (this.validateMaxSpecialCharacters) this.checkMaxSpecialCharacters();
-	
 	        if (this.validateMinChecked) this.checkMinChecked();
-	
 	        if (this.validateMaxChecked) this.checkMaxChecked();
-	
-	        if (this.validateRadioButton) this.checkIfRadioButtonChecked();
-	
 	        if (this.validateCustomRegex) this.checkCustomRegex();
-	
-	        if (this.validateDropdown) this.checkDropdownValue();
 	
 	        this.result.passed ? EH.addValidatedState(this.el) : EH.addErrorState(this.el, this.result.message);
 	
 	    },
 	
-	    countChecked: function (checkboxes) {
+	    countChecked: function (inputs) {
 	
-	        if (checkboxes) this.checkboxes = checkboxes;
-	        this.checked = 0;
+	        var checked = 0;
 	
-	        for (var i = 0; i < this.checkboxes.length; i++) {
-	            if (this.checkboxes[i].checked) this.checked++;
+	        for (var i = 0; i < inputs.length; i++) {
+	            if (inputs[i].checked) checked++;
 	        }
 	
-	        return this.checked;
+	        return this.checked = checked;
+	
+	    },
+	
+	    checkValue: function () {
+	
+	        if (this.value == '' && this.checked == 0) this.setResult(false, "This field is required");
 	
 	    },
 	
@@ -29837,29 +29775,11 @@
 	
 	    },
 	
-	    checkIfRadioButtonChecked: function () {
-	
-	        var checked = false;
-	
-	        for (var i = 0; i < this.radioButtons.length; i++) {
-	            if (this.radioButtons[i].checked) checked = true;
-	        }
-	
-	        if (!checked) this.setResult(false, "Please select an option.");
-	
-	    },
-	
 	    checkCustomRegex: function () {
 	
 	        var regex = new RegExp(this.customRegex);
 	
-	        if (!regex.test(this.value)) this.setResult(false, this.errorMessage);
-	
-	    },
-	
-	    checkDropdownValue: function () {
-	
-	        if (this.value == '') this.setResult(false, "Please select an option.");
+	        if (!regex.test(this.value)) this.setResult(false, "Please comply to the requested format.");
 	
 	    }
 	
@@ -30035,7 +29955,7 @@
 	            maxFilesize: 1,
 	            parallelUploads: 20,
 	            previewTemplate: this.previewTemplate,
-	            thumbnailWidth: null,
+	            thumbnailWidth: 500,
 	            thumbnailHeight: 500,
 	            previewsContainer: this.previewClass,
 	            clickable: this.imageUploadTriggerClass
@@ -30060,6 +29980,7 @@
 	
 	        this.dropzone.on('removedfile', function (file) {
 	            this.dropzone.element.classList.remove(this.showPreviewClass);
+	            this.dropzone.element.classList.remove(this.showPreviewImageClass);
 	            EH.clearState(this.el);
 	        }.bind(this));
 	
