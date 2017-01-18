@@ -67,7 +67,9 @@
 
         #{$pr-input}_ImageUpload-preview-template {
             position: relative;
-            display: flex;
+            overflow: hidden;
+            height: 100%;
+            padding: 0 80px;
         }
 
         #{$pr-input}_ImageUpload-preview-button {
@@ -77,10 +79,12 @@
         }
 
         #{$pr-input}_ImageUpload-preview-image {
+            position: relative;
+            top: 50%;
             display: block;
-            width: auto;
-            height: 100%;
+            width: 100%;
             margin: 0 auto;
+            transform: translate3d(0, -50%, 0);
             opacity: 0;
             transition: opacity 100ms ease-out;
         }
