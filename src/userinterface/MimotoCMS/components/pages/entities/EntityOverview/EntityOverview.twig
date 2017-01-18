@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();" }) }}
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();", types:['secondary'] }) }}
 
     <div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Aimless.realtime('entities') }}>
         {% embed "MimotoCMS/modules/ListModule/ListModule.twig" %}
