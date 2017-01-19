@@ -25,6 +25,7 @@ class InputRadiobutton
             'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
             'visualName' => 'Radiobutton',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label',

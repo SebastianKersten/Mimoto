@@ -25,6 +25,7 @@ class InputTextRTF
             'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF,
             'visualName' => 'Rich text field',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF.'--label',

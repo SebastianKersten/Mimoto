@@ -24,6 +24,7 @@ class EntityProperty
             // ---
             'name' => CoreConfig::MIMOTO_ENTITYPROPERTY,
             'extends' => null,
+            'forms' => [CoreConfig::COREFORM_ENTITYPROPERTY],
             'properties' => [
                 (object) array(
 

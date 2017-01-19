@@ -23,6 +23,7 @@ class Notification
             // ---
             'name' => CoreConfig::MIMOTO_NOTIFICATION,
             'extends' => null,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_NOTIFICATION.'--title',

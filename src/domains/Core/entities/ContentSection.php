@@ -27,6 +27,7 @@ class ContentSection
             // ---
             'name' => CoreConfig::MIMOTO_CONTENTSECTION,
             'extends' => null,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--name',

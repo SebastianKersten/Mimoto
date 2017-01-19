@@ -25,6 +25,7 @@ class InputValue
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUTVALUE,
             'extends' => null,
+            'forms' => [CoreConfig::COREFORM_FORM_INPUTVALUE],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUTVALUE.'--vartype',

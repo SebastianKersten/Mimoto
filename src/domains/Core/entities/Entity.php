@@ -24,6 +24,7 @@ class Entity
             // ---
             'name' => CoreConfig::MIMOTO_ENTITY,
             'extends' => null,
+            'forms' => [CoreConfig::COREFORM_ENTITY],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--name',

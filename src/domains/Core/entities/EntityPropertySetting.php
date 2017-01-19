@@ -24,6 +24,7 @@ class EntityPropertySetting
             // ---
             'name' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING,
             'extends' => null,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--key',

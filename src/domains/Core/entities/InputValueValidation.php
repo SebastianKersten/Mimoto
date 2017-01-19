@@ -24,6 +24,7 @@ class InputValueValidation
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION,
             'extends' => null,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION.'--key',

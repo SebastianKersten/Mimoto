@@ -180,19 +180,16 @@ class FormController
 
     public function formFieldNew_fieldForm(Application $app, $nFormId, $nFormFieldTypeId)
     {
-        // 1. create dummy
-        $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
-
-        // 2. create
+        // 1. create
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
-        // 3. load form id
-        $sFormConfigId = $app['Mimoto.Forms']->getCoreFormByEntityTypeId($nFormFieldTypeId);
+        // 4. get form name
+        $sFormName = Mimoto::service('forms')->getCoreFormByEntityTypeId($nFormFieldTypeId);
 
-        // 4. setup
-        $component->addForm($sFormConfigId, $entity, ['onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields', 'response' => ['onSuccess' => ['closePopup' => true]]]);
+        // 3. setup
+        $component->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields', 'response' => ['onSuccess' => ['closePopup' => true]]]);
 
-        // 5. render and send
+        // 4. render and send
         return $component->render();
     }
 
@@ -207,14 +204,13 @@ class FormController
         // 3. create
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
+        // 4. get form name
+        $sFormName = Mimoto::service('forms')->getCoreFormByEntityTypeId($entity->getEntityTypeName());
 
-        // 1. translate $nFormFieldTypeId to formconfig
+        // 5. setup
+        $component->addForm($sFormName, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
-
-        // 4. setup
-        $component->addForm(CoreConfig::COREFORM_INPUT_TEXTLINE_EDIT, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
-
-        // 5. render and send
+        // 6. render and send
         return $component->render();
     }
 
@@ -252,27 +248,29 @@ class FormController
         // 1. load
         $formField = Mimoto::service('data')->get($nFormFieldTypeId, $nFormFieldId);
 
-        // 2. read
-        $value = $formField->getValue('value');
-
-        // 3. clear
-        if (!empty($value))
+        if ($formField->hasProperty('value'))
         {
-            $value->setValue('entityProperty', null);
+            // 2. read
+            $value = $formField->getValue('value');
 
-            // 4. remove connections
-            Mimoto::service('data')->store($value);
+            // 3. clear
+            if (!empty($value))
+            {
+                $value->setValue('entityProperty', null);
 
-            // 5. clear
-            $formField->setValue('value', null);
+                // 4. remove connections
+                Mimoto::service('data')->store($value);
 
-            // 6. remove connections
-            Mimoto::service('data')->store($formField);
+                // 5. clear
+                $formField->setValue('value', null);
 
-            // 7. remove value
-            Mimoto::service('data')->delete($value);
+                // 6. remove connections
+                Mimoto::service('data')->store($formField);
+
+                // 7. remove value
+                Mimoto::service('data')->delete($value);
+            }
         }
-
 
         // 8. load
         $parentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $formField);

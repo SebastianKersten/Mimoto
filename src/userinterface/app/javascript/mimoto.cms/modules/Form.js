@@ -187,6 +187,10 @@ module.exports.prototype = {
         var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
         aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
     
+        var nEntityId = '';
+        var aEntityIds = $("input[name='Mimoto.EntityId']", $form);
+        aEntityIds.each( function(index, $component) { nEntityId = $($component).val(); });
+    
         // 6. read instructions
         var sOnCreatedConnectTo = '';
         var aOnCreatedConnectTo = $("input[name='Mimoto.onCreated:connectTo']", $form);
@@ -241,7 +245,7 @@ module.exports.prototype = {
         
         
         // 10. collect data
-        var requestData = { publicKey: sPublicKey, values: aValues };
+        var requestData = { publicKey: sPublicKey, entityId: nEntityId, values: aValues };
         if (sOnCreatedConnectTo) requestData.onCreatedConnectTo = sOnCreatedConnectTo;
 
 
@@ -321,6 +325,20 @@ module.exports.prototype = {
                     // cleanup instuctions
                     $("input[name='Mimoto.onCreated:addTo']", $form).remove();
                 }
+    
+                if (resultData.newEntityId)
+                {
+                    // 6. read public key
+                    var nEntityId = '';
+                    var aEntityIds = $("input[name='Mimoto.EntityId']", $form);
+                    aEntityIds.each( function(index, $component)
+                    {
+                        nEntityId = $($component).val(resultData.newEntityId);
+                    });
+        
+                    // cleanup instuctions
+                    $("input[name='Mimoto.onCreated:addTo']", $form).remove();
+                }
 
                 // 1. #todo get input field value in method
                 // 2. collaborationMode
@@ -395,7 +413,12 @@ module.exports.prototype = {
         {
             value = $($component).val();
         }
-
+    
+        if ($($component).is("textarea"))
+        {
+            value = $($component).val();
+        }
+        
         // send
         return value;
     },
@@ -430,6 +453,12 @@ module.exports.prototype = {
                     $($component).val(value);
             }
         };
+    
+        if ($($component).is("textarea"))
+        {
+            // output
+            $($component).val(value);
+        }
     },
 
     _alterRegisteredFieldId: function(sFormName, sOldInputFieldId, sNewInputFieldId)

@@ -25,6 +25,7 @@ class InputCheckbox
             'name' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
             'visualName' => 'Checkbox',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX.'--label',

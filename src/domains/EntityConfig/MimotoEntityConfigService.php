@@ -406,42 +406,51 @@ class MimotoEntityConfigService
 
     public function getParent($sParentEntityTypeId, $sParentPropertyId, MimotoEntity $child)
     {
-        // load all connections
-        $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
-            "parent_entity_type_id = :parent_entity_type_id && ".
-            "parent_property_id = :parent_property_id && ".
-            "child_entity_type_id = :child_entity_type_id && ".
-            "child_id = :child_id ".
-            "ORDER BY parent_id ASC, sortindex ASC"
-        );
-        $params = array(
-            ':parent_entity_type_id' => $sParentEntityTypeId,
-            ':parent_property_id' => $sParentPropertyId,
-            ':child_entity_type_id' => $child->getEntityTypeId(),
-            ':child_id' => $child->getId(),
-        );
-        $stmt->execute($params);
+        $xId = $child->getId();
 
-        //output('$stmt', $stmt);
-        //output('$params', $params);
+        if (substr($xId, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
+        {
+            return $this->_entityConfigRepository->getEntityNameByFormId($xId);
+        }
+        else
+        {
+            // load all connections
+            $stmt = Mimoto::service('database')->prepare(
+                "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+                "parent_entity_type_id = :parent_entity_type_id && ".
+                "parent_property_id = :parent_property_id && ".
+                "child_entity_type_id = :child_entity_type_id && ".
+                "child_id = :child_id ".
+                "ORDER BY parent_id ASC, sortindex ASC"
+            );
+            $params = array(
+                ':parent_entity_type_id' => $sParentEntityTypeId,
+                ':parent_property_id' => $sParentPropertyId,
+                ':child_entity_type_id' => $child->getEntityTypeId(),
+                ':child_id' => $child->getId(),
+            );
+            $stmt->execute($params);
 
-        // load
-        $aResults = $stmt->fetchAll();
+//            output('$stmt', $stmt);
+//            output('$params', $params);
 
-        // register
-        $nResultCount = count($aResults);
+            // load
+            $aResults = $stmt->fetchAll();
 
-        //output('$nResultCount', $nResultCount);
+            // register
+            $nResultCount = count($aResults);
 
-        // validate
-        if ($nResultCount != 1) return null;
+            //output('$nResultCount', $nResultCount);
 
-        // load
-        $entity = Mimoto::service('data')->get($sParentEntityTypeId, $aResults[0]['parent_id']);
+            // validate
+            if ($nResultCount != 1) return null;
 
-        // send
-        return $entity;
+            // load
+            $entity = Mimoto::service('data')->get($sParentEntityTypeId, $aResults[0]['parent_id']);
+
+            // send
+            return $entity;
+        }
     }
 
     private function getColumnTypeFromSetting(MimotoEntity $entityProperty)

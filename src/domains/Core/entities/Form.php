@@ -25,6 +25,7 @@ class Form
             // ---
             'name' => CoreConfig::MIMOTO_FORM,
             'extends' => null,
+            'forms' => [CoreConfig::COREFORM_FORM],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM.'--name',

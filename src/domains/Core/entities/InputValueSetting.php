@@ -24,6 +24,7 @@ class InputValueSetting
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING,
             'extends' => null,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--key',

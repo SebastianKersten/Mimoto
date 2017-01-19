@@ -245,6 +245,30 @@ class MimotoEntityConfigRepository
         Mimoto::service('log')->error('Incomplete entity config', "No entity found which contains a property with <b>id=".$nId."</b>", true);
     }
 
+    public function getEntityNameByFormId($sFormId)
+    {
+        // search
+        $nEntityCount = count($this->_aEntities);
+        for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
+        {
+            // register
+            $entity = $this->_aEntities[$nEntityIndex];
+
+            $nFormCount = count($entity->forms);
+            for ($nFormIndex = 0; $nFormIndex < $nFormCount; $nFormIndex++)
+            {
+                // register
+                if ($entity->forms[$nFormIndex] == $sFormId)
+                {
+                    return $entity->name;
+                }
+            }
+        }
+
+        Mimoto::service('log')->error('Entity not found by form id', "No entity found which contains a form with <b>id=".$sFormId."</b>", true);
+    }
+
+
     public function getEntityConfigsTypeOf($sEntityTypeName)
     {
         // init

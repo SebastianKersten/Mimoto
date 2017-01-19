@@ -25,6 +25,7 @@ class InputDropdown
             'name' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
             'visualName' => 'Dropdown',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--label',

@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Data\MimotoEntity;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
@@ -62,8 +63,11 @@ class AimlessForm extends AimlessComponent
         // 2. register fields
         $aFields = $form->getValue('fields');
 
+        // #fixme
+        $nEntityId = ($this->_xValues instanceof MimotoEntity) ? $this->_xValues->getId() : null;
+
         // 3. prepare
-        $formVars = $this->_FormService->getFormVars($form, $this->_xValues, $aFields);
+        $formVars = $this->_FormService->getFormVars($form, $this->_xValues, $aFields, $nEntityId);
 
 
         if ($form->getValue('customSubmit') === true)
@@ -91,6 +95,7 @@ class AimlessForm extends AimlessComponent
 
         // add security
         $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.Mimoto::service('user')->getUserPublicKey(json_encode($formVars->connectedEntities)).'">';
+        $sRenderedForm .= '<input type="hidden" name="Mimoto.EntityId" value="'.$formVars->entityId.'">';
 
         // add instructions
         if (!empty($this->_aOptions) && !empty($this->_aOptions['onCreatedConnectTo']))

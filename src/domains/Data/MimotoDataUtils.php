@@ -56,7 +56,7 @@ class MimotoDataUtils
     {
         if (is_object($value)) return false;
 
-        return (preg_match("/^[a-zA-Z0-9_-]*?$/", $value)) ? true : false;
+        return (preg_match("/^[a-zA-Z0-9_-]{1,}$/", $value)) ? true : false;
     }
 
     /**
@@ -177,11 +177,11 @@ class MimotoDataUtils
      * @param mixed $xParentEntityTypeId
      * @param mixed $xParentPropertyId
      * @param int $nParentId
-     * @param array $aAllowedPropertyTypes
+     * @param array $aAllowedEntityTypes
      * @param string $sPropertyName For purpose of error messages
      * @return MimotoEntityConnection|null
      */
-    public static function createConnection($xValue, $xParentEntityTypeId, $xParentPropertyId, $nParentId, $aAllowedPropertyTypes, $xEntityTypeId, $sPropertyName)
+    public static function createConnection($xValue, $xParentEntityTypeId, $xParentPropertyId, $nParentId, $aAllowedEntityTypes, $xEntityTypeId, $sPropertyName)
     {
         // 1. init
         $connection = null;
@@ -190,7 +190,7 @@ class MimotoDataUtils
         $sValueType = MimotoDataUtils::getValueType($xValue);
 
         // 3. prepare
-        $aAllowedEntityTypeIds = MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes);
+        $aAllowedEntityTypeIds = MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes);
 
         // 4. toggle
         switch($sValueType)
@@ -260,7 +260,7 @@ class MimotoDataUtils
                     // validate
                     if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds) && !in_array(CoreConfig::WILDCARD, $aAllowedEntityTypeIds))
                     {
-                        Mimoto::service('log')->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedPropertyTypes, true))."'", true);
+                        Mimoto::service('log')->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."'", true);
                     }
                 }
 
@@ -268,7 +268,7 @@ class MimotoDataUtils
 
             default:
 
-                Mimoto::service('log')->silent("Unknown connection value", "The property '".$sPropertyName."' only allows values of type '".implode(',', $aAllowedPropertyTypes)."'", true);
+                Mimoto::service('log')->silent("Unknown connection value", "The property '".$sPropertyName."' only allows values of type '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."'", true);
                 break;
         }
 

@@ -25,6 +25,7 @@ class InputVideo
             'name' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO,
             'visualName' => 'Video',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--label',

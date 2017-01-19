@@ -149,8 +149,6 @@ class CoreConfig
     // --- input ---
 
     const COREFORM_INPUT_TEXTLINE           = '_MimotoAimless__coreform__input_textline';
-    const COREFORM_INPUT_TEXTLINE_NEW       = '_MimotoAimless__coreform__input_textline_new';
-    const COREFORM_INPUT_TEXTLINE_EDIT      = '_MimotoAimless__coreform__input_textline_edit';
 
     const COREFORM_INPUT_TEXTBLOCK          = '_MimotoAimless__coreform_input_textblock';
     const COREFORM_INPUT_TEXTBLOCK_NEW      = '_MimotoAimless__coreform_input_textblock_new';
@@ -191,22 +189,12 @@ class CoreConfig
 
     // output
     const COREFORM_OUTPUT_TITLE              = '_MimotoAimless__coreform_output_title';
-    const COREFORM_OUTPUT_TITLE_NEW          = '_MimotoAimless__coreform_output_title_new';
-    const COREFORM_OUTPUT_TITLE_EDIT         = '_MimotoAimless__coreform_output_title_edit';
 
 
     // layout
     const COREFORM_LAYOUT_GROUPSTART         = '_MimotoAimless__coreform_layout_groupstart';
-    const COREFORM_LAYOUT_GROUPSTART_NEW     = '_MimotoAimless__coreform_layout_groupstart_new';
-    const COREFORM_LAYOUT_GROUPSTART_EDIT    = '_MimotoAimless__coreform_layout_groupstart_edit';
-
     const COREFORM_LAYOUT_GROUPEND           = '_MimotoAimless__coreform_layout_groupend';
-    const COREFORM_LAYOUT_GROUPEND_NEW       = '_MimotoAimless__coreform_layout_groupend_new';
-    const COREFORM_LAYOUT_GROUPEND_EDIT      = '_MimotoAimless__coreform_layout_groupend_edit';
-
     const COREFORM_LAYOUT_DIVIDER            = '_MimotoAimless__coreform_layout_divider';
-    const COREFORM_LAYOUT_DIVIDER_NEW        = '_MimotoAimless__coreform_layout_divider_new';
-    const COREFORM_LAYOUT_DIVIDER_EDIT       = '_MimotoAimless__coreform_layout_divider_edit';
 
 
 

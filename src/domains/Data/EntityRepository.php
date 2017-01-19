@@ -165,12 +165,12 @@ class EntityRepository
     {
         // read
         $aModifiedValues = $entity->getChanges();
-        
+
         // save nothing if no changes
-        if (count($aModifiedValues) == 0) { return $entity; }
-        
+        if (count($aModifiedValues) == 0 && MimotoDataUtils::isValidEntityId($entity->getId())) { return $entity; }
+
         // determine
-        $bIsExistingEntity = (!empty($entity->getId()) && !is_nan($entity->getId())) ? true : false;
+        $bIsExistingEntity = (MimotoDataUtils::isValidEntityId($entity->getId())) ? true : false;
 
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
@@ -181,11 +181,11 @@ class EntityRepository
         
         // load properties
         $nPropertyCount = count($aPropertyNames);
-        for ($i = 0; $i < $nPropertyCount; $i++)
+        for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
         {
             // register
-            $sPropertyName = $aPropertyNames[$i];
-            
+            $sPropertyName = $aPropertyNames[$nPropertyIndex];
+
             // skip if no changes
             if (!isset($aModifiedValues[$sPropertyName])) { continue; }
             
@@ -273,23 +273,38 @@ class EntityRepository
                     break;
             }
         }
-        
-        
-        if (count($aQueryElements) > 0)
+
+
+        if ($bIsExistingEntity && count($aQueryElements) > 0 || !$bIsExistingEntity)
         {
-            // compose
-            $sQuery  = ($bIsExistingEntity) ? 'UPDATE' : 'INSERT';
-            $sQuery .= ' '.$entityConfig->getMySQLTable().' SET ';
+
+            $sQuery = '';
+
+            if ($bIsExistingEntity && count($aQueryElements) > 0)
+            {
+                $sQuery = 'UPDATE';
+            }
+            elseif (!$bIsExistingEntity)
+            {
+                $sQuery = 'INSERT';
+            }
+
+
+            $sQuery .= ' ' . $entityConfig->getMySQLTable();
+            $sQuery .= (count($aQueryElements) > 0 || !$bIsExistingEntity) ? ' SET ' : '';
 
             $params = array();
 
             // compose
             $nQueryItemCount = count($aQueryElements);
-            for ($i = 0; $i < $nQueryItemCount; $i++)
+            for ($nQueryItemIndex = 0; $nQueryItemIndex < $nQueryItemCount; $nQueryItemIndex++)
             {
-                $sQuery .= '`'.$aQueryElements[$i]->key.'` = :'.$aQueryElements[$i]->key;
-                $params[':'.$aQueryElements[$i]->key] = $aQueryElements[$i]->value;
-                if ($i < $nQueryItemCount - 1) { $sQuery .= ', '; }
+                $sQuery .= '`' . $aQueryElements[$nQueryItemIndex]->key . '` = :' . $aQueryElements[$nQueryItemIndex]->key;
+                $params[':' . $aQueryElements[$nQueryItemIndex]->key] = $aQueryElements[$nQueryItemIndex]->value;
+                if ($nQueryItemIndex < $nQueryItemCount - 1)
+                {
+                    $sQuery .= ', ';
+                }
             }
 
             // compose
@@ -297,20 +312,27 @@ class EntityRepository
             {
                 $sQuery .= " WHERE id = :id";
                 $params[':id'] = $entity->getId();
-            }
-            else
+            } else
             {
-                $sQuery .= ", created = :created";
+                $sQuery .= ((count($aQueryElements) > 0) ? ', ' : '') . "created = :created";
                 $params[':created'] = date("YmdHis");
             }
 
             // load
             $stmt = Mimoto::service('database')->prepare($sQuery);
             $stmt->execute($params);
+
+
+            // broadcast
+            if (!$bIsExistingEntity)
+            {
+                // read and store
+                $entity->setId(Mimoto::service('database')->lastInsertId());
+            }
+
         }
-        
-        
-        
+
+
         // --- events ---
         
         
@@ -324,14 +346,10 @@ class EntityRepository
         {
             // register
             $sEvent = MimotoEvent::CREATED;
-
-            // read and store
-            $entity->setId(Mimoto::service('database')->lastInsertId());
         }
-        
+
 
         // --- store new connections
-
 
         $nNewConnectionsToStoreCount = count($aNewConnectionsToStore);
         for ($nNewConnectionsToStoreIndex = 0; $nNewConnectionsToStoreIndex < $nNewConnectionsToStoreCount; $nNewConnectionsToStoreIndex++)

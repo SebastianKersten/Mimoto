@@ -638,17 +638,24 @@ class AimlessService
 
         // init
         $client= new \GearmanClient();
-        
-        // setup
-        $client->addServer();
-        
-        // $result =
-        // execute
-        $client->doBackground("sendUpdate", json_encode(array(
-            'sChannel' => $sChannel,
-            'sEvent' => $sEvent,
-            'data' => $data
-        )));
+
+        try
+        {
+            // setup
+            $client->addServer();
+
+            // $result =
+            // execute
+            $client->doBackground("sendUpdate", json_encode(array(
+                'sChannel' => $sChannel,
+                'sEvent' => $sEvent,
+                'data' => $data
+            )));
+        }
+        catch (\Exception $e)
+        {
+            return;
+        }
     }
 
     /**
@@ -665,28 +672,35 @@ class AimlessService
         // init
         $client= new \GearmanClient();
 
-        // setup
-        $client->addServer();
+        try
+        {
+            // setup
+            $client->addServer();
 
 
-        // register
-        $sTitle = $entity->getValue('title');
-        $sDispatcher = $entity->getValue('dispatcher');
-        $sMessage = $entity->getValue('message');
+            // register
+            $sTitle = $entity->getValue('title');
+            $sDispatcher = $entity->getValue('dispatcher');
+            $sMessage = $entity->getValue('message');
 
-        // convert
-        $sMessage = str_replace('<b>', '"', $sMessage);
-        $sMessage = str_replace('</b>', '"', $sMessage);
+            // convert
+            $sMessage = str_replace('<b>', '"', $sMessage);
+            $sMessage = str_replace('</b>', '"', $sMessage);
 
-        // compose
-        $sSlackMessage = ">*$sTitle*\n>```$sMessage```\n>_From: $sDispatcher"."_";
+            // compose
+            $sSlackMessage = ">*$sTitle*\n>```$sMessage```\n>_From: $sDispatcher"."_";
 
 
-        // $result =
-        // execute
-        $client->doBackground("sendSlackNotification", json_encode(array(
-            'channel' => $config->channel,
-            'message' => $sSlackMessage
-        )));
+            // $result =
+            // execute
+            $client->doBackground("sendSlackNotification", json_encode(array(
+                'channel' => $config->channel,
+                'message' => $sSlackMessage
+            )));
+            }
+            catch (\Exception $e)
+            {
+                return;
+            }
     }
 }
