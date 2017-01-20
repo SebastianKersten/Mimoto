@@ -37,7 +37,8 @@
             display: inline-block;
             margin: 0 0 10px;
             padding: 0 20px 0 0;
-            font-family: $font-family-futura;
+            //font-family: $font-family-futura;
+            font-family: Futura, "Trebuchet MS", Arial, sans-serif;
             font-size: rem-calc(14px);
             font-weight: 500;
             color: rgba($black, .9);
@@ -124,9 +125,11 @@
                 }
 
                 #{$pr-forms}_FormComponent-element-label {
+                    display: block;
                     padding: 0 0 0 10px;
                     cursor: pointer;
                     font-size: rem-calc(14px);
+                    line-height: rem-calc(20px);
                     color: rgba($black, .9);
                     flex: 0 1 auto;
                 }
