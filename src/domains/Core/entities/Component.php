@@ -25,7 +25,7 @@ class Component
             // ---
             'name' => CoreConfig::MIMOTO_COMPONENT,
             'extends' => null,
-            'forms' => [],
+            'forms' => [CoreConfig::COREFORM_COMPONENT],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_COMPONENT.'--name',

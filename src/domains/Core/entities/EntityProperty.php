@@ -7,6 +7,7 @@ namespace Mimoto\Core\entities;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
 /**
@@ -25,7 +26,13 @@ class EntityProperty
             // ---
             'name' => CoreConfig::MIMOTO_ENTITYPROPERTY,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_ENTITYPROPERTY],
+            'forms' => [
+                CoreConfig::COREFORM_ENTITYPROPERTY,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES
+            ],
             'properties' => [
                 (object) array(
 
