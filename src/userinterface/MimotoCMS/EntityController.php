@@ -65,7 +65,7 @@ class EntityController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $component->addForm(CoreConfig::COREFORM_ENTITY, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 3. render and send
         return $component->render();
@@ -124,7 +124,7 @@ class EntityController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITY_EDIT, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $component->addForm(CoreConfig::COREFORM_ENTITY, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
 
         // 5. render and send
         return $component->render();

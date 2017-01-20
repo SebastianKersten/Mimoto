@@ -142,7 +142,7 @@ class ExampleFormController
         $component = $app['Mimoto.Aimless']->createComponent('examplebase_form');
 
         // setup
-        $component->addForm(CoreConfig::COREFORM_ENTITY_NEW, $entity);
+        $component->addForm(CoreConfig::COREFORM_ENTITY, $entity);
 
         // render and send
         return $component->render();

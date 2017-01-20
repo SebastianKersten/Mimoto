@@ -22,7 +22,7 @@ class EntityForm
     public static function getStructureNew()
     {
         // init
-        $form = self::initForm(CoreConfig::COREFORM_ENTITY_NEW);
+        $form = self::initForm(CoreConfig::COREFORM_ENTITY);
 
         // setup
         $form->addValue('fields', self::getField_title('Add new entity'));
@@ -42,7 +42,7 @@ class EntityForm
     public static function getStructureEdit()
     {
         // init
-        $form = self::initForm(CoreConfig::COREFORM_ENTITY_EDIT);
+        $form = self::initForm(CoreConfig::COREFORM_ENTITY);
 
         // setup
         $form->addValue('fields', self::getField_title('Edit entity'));

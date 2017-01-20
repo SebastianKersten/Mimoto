@@ -11,16 +11,15 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
-use Mimoto\Core\forms\EntityForm;
 use Mimoto\Core\forms\EntityPropertyForm;
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
-use Mimoto\Core\forms\ContentSectionForm;
-use Mimoto\Core\forms\OutputTitleForm;
 
+use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\Component;
+
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\InputValue;
 use Mimoto\Core\entities\InputTextline;
@@ -30,6 +29,8 @@ use Mimoto\Core\entities\LayoutGroupStart;
 use Mimoto\Core\entities\LayoutDivider;
 
 use Mimoto\Core\entities\OutputTitle;
+
+use Mimoto\Core\entities\ContentSection;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -659,8 +660,7 @@ class FormService
     {
         switch($sFormName)
         {
-            case CoreConfig::COREFORM_ENTITY_NEW: return EntityForm::getStructureNew(); break;
-            case CoreConfig::COREFORM_ENTITY_EDIT: return EntityForm::getStructureEdit(); break;
+            case CoreConfig::COREFORM_ENTITY: return Entity::getForm(); break;
 
             case CoreConfig::COREFORM_ENTITYPROPERTY_NEW: return EntityPropertyForm::getStructureNew(); break;
             case CoreConfig::COREFORM_ENTITYPROPERTY_EDIT: return EntityPropertyForm::getStructureEdit(); break;
@@ -674,16 +674,14 @@ class FormService
 
             case CoreConfig::COREFORM_COMPONENT: return Component::getForm(); break;
 
-
             // content -----
 
-            case CoreConfig::COREFORM_CONTENTSECTION_NEW: return ContentSectionForm::getStructureNew(); break;
-            case CoreConfig::COREFORM_CONTENTSECTION_EDIT: return ContentSectionForm::getStructureEdit(); break;
+            case CoreConfig::COREFORM_CONTENTSECTION: return ContentSection::getForm(); break;
 
             // form ----------
 
-            case CoreConfig::COREFORM_FORM:  return Form::getForm(); break;
-            case CoreConfig::COREFORM_FORM_INPUTVALUE:  return InputValue::getForm(); break;
+            case CoreConfig::COREFORM_FORM: return Form::getForm(); break;
+            case CoreConfig::COREFORM_FORM_INPUTVALUE: return InputValue::getForm(); break;
 
             // input ---------
 
@@ -696,9 +694,7 @@ class FormService
             // layout ---------
 
             case CoreConfig::COREFORM_LAYOUT_DIVIDER: return LayoutDivider::getForm(); break;
-
             case CoreConfig::COREFORM_LAYOUT_GROUPSTART: return LayoutGroupStart::getForm(); break;
-
             case CoreConfig::COREFORM_LAYOUT_GROUPEND: return LayoutGroupEnd::getForm(); break;
 
             default: die("FormService.loadCoreForm('$sFormName') - Form not found");
@@ -710,16 +706,16 @@ class FormService
         switch($sEntitytypeId)
         {
             // input
-            case CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX: return CoreConfig::COREFORM_INPUT_CHECKBOX_NEW; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN: return CoreConfig::COREFORM_INPUT_DROPDOWN_NEW; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_IMAGE: return CoreConfig::COREFORM_INPUT_IMAGE_NEW; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_LIST: return CoreConfig::COREFORM_INPUT_LIST_NEW; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT: return CoreConfig::COREFORM_INPUT_MULTISELECT_NEW; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON: return CoreConfig::COREFORM_INPUT_RADIOBUTTON_NEW; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK: return CoreConfig::COREFORM_INPUT_TEXTBLOCK_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX: return CoreConfig::COREFORM_INPUT_CHECKBOX; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN: return CoreConfig::COREFORM_INPUT_DROPDOWN; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_IMAGE: return CoreConfig::COREFORM_INPUT_IMAGE; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_LIST: return CoreConfig::COREFORM_INPUT_LIST; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT: return CoreConfig::COREFORM_INPUT_MULTISELECT; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON: return CoreConfig::COREFORM_INPUT_RADIOBUTTON; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK: return CoreConfig::COREFORM_INPUT_TEXTBLOCK; break;
             case CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE: return CoreConfig::COREFORM_INPUT_TEXTLINE; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF: return CoreConfig::COREFORM_INPUT_TEXTRTF_NEW; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_VIDEO: return CoreConfig::COREFORM_INPUT_VIDEO_NEW; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF: return CoreConfig::COREFORM_INPUT_TEXTRTF; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_VIDEO: return CoreConfig::COREFORM_INPUT_VIDEO; break;
 
             // output
             case CoreConfig::MIMOTO_FORM_OUTPUT_TITLE: return CoreConfig::COREFORM_OUTPUT_TITLE; break;

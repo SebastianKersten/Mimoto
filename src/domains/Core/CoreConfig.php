@@ -124,8 +124,7 @@ class CoreConfig
 
     // core forms
     const COREFORM_ENTITY               = '_MimotoAimless__coreform__entity';
-    const COREFORM_ENTITY_NEW           = '_MimotoAimless__coreform__entity_new';
-    const COREFORM_ENTITY_EDIT          = '_MimotoAimless__coreform__entity_edit';
+
     const COREFORM_ENTITYPROPERTY       = '_MimotoAimless__coreform__entityproperty';
     const COREFORM_ENTITYPROPERTY_NEW   = '_MimotoAimless__coreform__entityproperty_new';
     const COREFORM_ENTITYPROPERTY_EDIT  = '_MimotoAimless__coreform__entityproperty_edit';
@@ -136,9 +135,6 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_MimotoAimless__coreform__entitypropertysetting_collection_allowDuplicates';
 
     const COREFORM_CONTENTSECTION               = '_MimotoAimless__coreform__contentsection';
-    const COREFORM_CONTENTSECTION_NEW           = '_MimotoAimless__coreform__contentsection_new';
-    const COREFORM_CONTENTSECTION_EDIT          = '_MimotoAimless__coreform__contentsection_edit';
-
 
 
     const COREFORM_COMPONENT                = '_MimotoAimless__coreform__component';
