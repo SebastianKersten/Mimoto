@@ -169,7 +169,6 @@ class InputTextline
         $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
         $field->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--title');
         $field->setValue('title', $sTitle);
-        $field->setValue('description', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");
 
         // send
         return $field;
@@ -431,45 +430,6 @@ class InputTextline
         // send
         return $field;
     }
-
-//    /**
-//     * Get field: type
-//     */
-//    private static function getField_vartype()
-//    {
-//        // 1. create and setup field
-//        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
-//        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype');
-//        $field->setValue('label', 'Var type');
-//
-//            // 2. setup value
-//            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-//            $value->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype_value');
-//            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
-//
-//                // 3. connect to property
-//                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-//                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--vartype');
-//                $value->setValue('entityProperty', $connectedEntityProperty);
-//
-//                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-//                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype_value_options-value');
-//                $option->setValue('key', CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
-//                $option->setValue('value', CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
-//                $value->addValue('options', $option);
-//
-//                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-//                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--vartype_value_options-entity');
-//                $option->setValue('key', CoreConfig::INPUTVALUE_VARTYPE_VARNAME);
-//                $option->setValue('value', CoreConfig::INPUTVALUE_VARTYPE_VARNAME);
-//                $value->addValue('options', $option);
-//
-//            // add
-//            $field->setValue('value', $value);
-//
-//        // send
-//        return $field;
-//    }
 
     /**
      * Get field: groupEnd

@@ -23,7 +23,10 @@ use Mimoto\Core\entities\Component;
 
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\InputValue;
+
 use Mimoto\Core\entities\InputTextline;
+use Mimoto\Core\entities\InputTextBlock;
+use Mimoto\Core\entities\InputTextRTF;
 
 use Mimoto\Core\entities\LayoutGroupEnd;
 use Mimoto\Core\entities\LayoutGroupStart;
@@ -686,6 +689,8 @@ class FormService
             // input ---------
 
             case CoreConfig::COREFORM_INPUT_TEXTLINE: return InputTextline::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_TEXTBLOCK: return InputTextBlock::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_TEXTRTF: return InputTextRTF::getForm(); break;
 
             // output ---------
 

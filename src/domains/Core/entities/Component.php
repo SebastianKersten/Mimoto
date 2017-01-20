@@ -271,72 +271,78 @@ class Component
             // inputs
 
             (object) array(
-                'name' => '_MimotoAimless__interaction__form_output_title',
+                'name' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
                 'file' => 'MimotoCMS/components/forms/output/Title/Title.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => '_MimotoAimless__interaction__form_layout_groupstart',
+                'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART,
                 'file' => 'MimotoCMS/components/forms/layout/GroupStart/GroupStart.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => '_MimotoAimless__interaction__form_layout_groupend',
+                'name' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND,
                 'file' => 'MimotoCMS/components/forms/layout/GroupEnd/GroupEnd.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_textline',
-                'file' => 'MimotoCMS/components/forms/input/Textline/Textline.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_textblock',
-                'file' => 'MimotoCMS/components/forms/input/Textblock/Textblock.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_checkbox',
-                'file' => 'MimotoCMS/components/forms/input/Checkbox/Checkbox.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_multiselect',
-                'file' => 'MimotoCMS/components/forms/input/MultiSelect/MultiSelect.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_radiobutton',
-                'file' => 'MimotoCMS/components/forms/input/Radiobutton/Radiobutton.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_dropdown',
-                'file' => 'MimotoCMS/components/forms/input/Dropdown/Dropdown.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_layout_divider',
+                'name' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER,
                 'file' => 'MimotoCMS/components/forms/layout/Divider/Divider.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_list',
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
+                'file' => 'MimotoCMS/components/forms/input/Textline/Textline.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK,
+                'file' => 'MimotoCMS/components/forms/input/Textblock/Textblock.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF,
+                'file' => 'MimotoCMS/components/forms/input/Textblock/Textblock.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
+                'file' => 'MimotoCMS/components/forms/input/Checkbox/Checkbox.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT,
+                'file' => 'MimotoCMS/components/forms/input/MultiSelect/MultiSelect.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
+                'file' => 'MimotoCMS/components/forms/input/Radiobutton/Radiobutton.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
+                'file' => 'MimotoCMS/components/forms/input/Dropdown/Dropdown.twig',
+                'conditionals' => []
+            ),
+
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_LIST,
                 'file' => 'MimotoCMS/components/forms/input/List/List.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_listItem',
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_LISTITEM,
                 'file' => 'MimotoCMS/components/forms/input/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_image',
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE,
                 'file' => 'MimotoCMS/components/forms/input/Image/Image.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_video',
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO,
                 'file' => 'MimotoCMS/components/forms/input/Video/Video.twig',
                 'conditionals' => []
             ),

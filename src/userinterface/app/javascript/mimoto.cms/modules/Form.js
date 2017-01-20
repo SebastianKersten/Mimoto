@@ -126,9 +126,12 @@ module.exports.prototype = {
 
             // register
             currentForm.aSubmitButtons.push($component);
-
+            
+            console.log('Submit register');
+            
+            
             // setup
-            $($component).click(function() { classRoot.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
+            $($component).click(function() { console.log('Submit pressed'); classRoot.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
         });
 
 

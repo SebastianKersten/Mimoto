@@ -81,6 +81,7 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_MimotoAimless__interaction__form_input_radiobutton';
     const MIMOTO_FORM_INPUT_DROPDOWN            = '_MimotoAimless__interaction__form_input_dropdown';
     const MIMOTO_FORM_INPUT_LIST                = '_MimotoAimless__interaction__form_input_list';
+    const MIMOTO_FORM_INPUT_LISTITEM            = '_MimotoAimless__interaction__form_input_listitem';
     const MIMOTO_FORM_INPUT_IMAGE               = '_MimotoAimless__interaction__form_input_image';
     const MIMOTO_FORM_INPUT_VIDEO               = '_MimotoAimless__interaction__form_input_video';
 
