@@ -1,6 +1,8 @@
 {
     "trigger": [
-        "_MimotoAimless__interaction__form_input_textline.created"
+        "_MimotoAimless__interaction__form_input_textline.created",
+        "_MimotoAimless__interaction__form_input_textblock.created",
+        "_MimotoAimless__interaction__form_input_textrtf.created"
     ],
     "service": "Aimless",
     "request": "onInputFieldCreated",
