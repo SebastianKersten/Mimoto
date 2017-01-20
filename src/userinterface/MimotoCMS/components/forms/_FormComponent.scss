@@ -124,9 +124,11 @@
                 }
 
                 #{$pr-forms}_FormComponent-element-label {
+                    display: block;
                     padding: 0 0 0 10px;
                     cursor: pointer;
                     font-size: rem-calc(14px);
+                    line-height: rem-calc(20px);
                     color: rgba($black, .9);
                     flex: 0 1 auto;
                 }
