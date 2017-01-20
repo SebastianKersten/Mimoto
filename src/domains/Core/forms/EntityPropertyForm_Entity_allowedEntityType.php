@@ -23,7 +23,7 @@ class EntityPropertyForm_Entity_allowedEntityType
     public static function getStructure()
     {
         // init
-        $form = self::initForm(CoreConfig::COREFORM_ENTITYPROPERTY_NEW);
+        $form = self::initForm(CoreConfig::COREFORM_ENTITYPROPERTY);
 
         // setup
         $form->addValue('fields', self::getField_title('Configure'));

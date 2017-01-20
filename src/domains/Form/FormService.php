@@ -11,13 +11,14 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
-use Mimoto\Core\forms\EntityPropertyForm;
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 
 use Mimoto\Core\entities\Entity;
+use Mimoto\Core\entities\EntityProperty;
+
 use Mimoto\Core\entities\Component;
 
 use Mimoto\Core\entities\Form;
@@ -662,8 +663,7 @@ class FormService
         {
             case CoreConfig::COREFORM_ENTITY: return Entity::getForm(); break;
 
-            case CoreConfig::COREFORM_ENTITYPROPERTY_NEW: return EntityPropertyForm::getStructureNew(); break;
-            case CoreConfig::COREFORM_ENTITYPROPERTY_EDIT: return EntityPropertyForm::getStructureEdit(); break;
+            case CoreConfig::COREFORM_ENTITYPROPERTY: return EntityProperty::getForm(); break;
 
             case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE: return EntityPropertyForm_Value_type::getStructure(); break;
             case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE: return EntityPropertyForm_Entity_allowedEntityType::getStructure(); break;

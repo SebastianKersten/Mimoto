@@ -124,10 +124,7 @@ class CoreConfig
 
     // core forms
     const COREFORM_ENTITY               = '_MimotoAimless__coreform__entity';
-
     const COREFORM_ENTITYPROPERTY       = '_MimotoAimless__coreform__entityproperty';
-    const COREFORM_ENTITYPROPERTY_NEW   = '_MimotoAimless__coreform__entityproperty_new';
-    const COREFORM_ENTITYPROPERTY_EDIT  = '_MimotoAimless__coreform__entityproperty_edit';
 
     const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE                     = '_MimotoAimless__coreform__entitypropertysetting_value_type';
     const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE       = '_MimotoAimless__coreform__entitypropertysetting_entity_allowedEntityType';
