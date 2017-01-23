@@ -2,7 +2,14 @@
     "trigger": [
         "_MimotoAimless__interaction__form_input_textline.created",
         "_MimotoAimless__interaction__form_input_textblock.created",
-        "_MimotoAimless__interaction__form_input_textrtf.created"
+        "_MimotoAimless__interaction__form_input_textrtf.created",
+        "_MimotoAimless__interaction__form_input_radiobutton.created",
+        "_MimotoAimless__interaction__form_input_checkbox.created",
+        "_MimotoAimless__interaction__form_input_dropdown.created",
+        "_MimotoAimless__interaction__form_input_multiselect.created",
+        "_MimotoAimless__interaction__form_input_list.created",
+        "_MimotoAimless__interaction__form_input_image.created",
+        "_MimotoAimless__interaction__form_input_video.created"
     ],
     "service": "Aimless",
     "request": "onInputFieldCreated",

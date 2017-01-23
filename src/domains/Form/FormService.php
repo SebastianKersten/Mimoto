@@ -4,7 +4,6 @@
 namespace Mimoto\Form;
 
 // Mimoto classes
-
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
@@ -27,6 +26,8 @@ use Mimoto\Core\entities\InputValue;
 use Mimoto\Core\entities\InputTextline;
 use Mimoto\Core\entities\InputTextBlock;
 use Mimoto\Core\entities\InputTextRTF;
+use Mimoto\Core\entities\InputRadiobutton;
+use Mimoto\Core\entities\InputCheckbox;
 
 use Mimoto\Core\entities\LayoutGroupEnd;
 use Mimoto\Core\entities\LayoutGroupStart;
@@ -691,6 +692,8 @@ class FormService
             case CoreConfig::COREFORM_INPUT_TEXTLINE: return InputTextline::getForm(); break;
             case CoreConfig::COREFORM_INPUT_TEXTBLOCK: return InputTextBlock::getForm(); break;
             case CoreConfig::COREFORM_INPUT_TEXTRTF: return InputTextRTF::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_RADIOBUTTON: return InputRadiobutton::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_CHECKBOX: return InputCheckbox::getForm(); break;
 
             // output ---------
 

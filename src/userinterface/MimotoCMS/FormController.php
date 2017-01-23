@@ -231,6 +231,9 @@ class FormController
 
         // 1. translate $nFormFieldTypeId to formconfig
 
+        $eFormField = Mimoto::service('config')->getParent(CoreConfig::Mimoto);
+
+
 
         // 4. setup
         $page->addForm(CoreConfig::COREFORM_FORM_INPUTVALUE, $valueEntity, ['response' => ['onSuccess' => ['closePopup' => true]]]);

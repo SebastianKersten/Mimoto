@@ -33783,9 +33783,9 @@
 	        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit');
 	    },
 	    
-	    formFieldValueEdit: function(nFormFieldValueId)
+	    formFieldValueEdit: function(nFormFieldId, nFormFieldValueId)
 	    {
-	        window.open('/mimoto.cms/formfieldvalue/' + nFormFieldValueId + '/edit', '_self');
+	        window.open('/mimoto.cms/formfield/' + nFormId + '/fieldvalue/' + nFormFieldValueId + '/edit', '_self');
 	    },
 	    
 	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)

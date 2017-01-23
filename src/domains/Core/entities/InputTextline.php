@@ -209,38 +209,6 @@ class InputTextline
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label');
                 $value->setValue('entityProperty', $connectedEntityProperty);
 
-                // validation rule #1
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation1');
-                $validationRule->setValue('key', 'maxchars');
-                $validationRule->setValue('value', 50);
-                $validationRule->setValue('errorMessage', 'No more than 10 characters');
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #2
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation2');
-                $validationRule->setValue('key', 'minchars');
-                $validationRule->setValue('value', 1);
-                $validationRule->setValue('errorMessage', "Value can't be empty");
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #3
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation3');
-                $validationRule->setValue('key', 'regex_custom');
-                $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
-                $validationRule->setValue('errorMessage', 'No characters other than a-z, A-Z and 0-9 allowed');
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #4
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--label_value_validation4');
-                $validationRule->setValue('key', 'api');
-                $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
-                $validationRule->setValue('errorMessage', 'The name needs to be unique');
-                $value->addValue('validation', $validationRule);
-
             // add value to field
             $field->setValue('value', $value);
 
@@ -270,37 +238,8 @@ class InputTextline
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description');
                 $value->setValue('entityProperty', $connectedEntityProperty);
 
-                // validation rule #1
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value_validation1');
-                $validationRule->setValue('key', 'maxchars');
-                $validationRule->setValue('value', 50);
-                $validationRule->setValue('errorMessage', 'No more than 10 characters');
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #2
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value_validation2');
-                $validationRule->setValue('key', 'minchars');
-                $validationRule->setValue('value', 1);
-                $validationRule->setValue('errorMessage', "Value can't be empty");
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #3
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value_validation3');
-                $validationRule->setValue('key', 'regex_custom');
-                $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
-                $validationRule->setValue('errorMessage', 'No characters other than a-z, A-Z and 0-9 allowed');
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #4
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--description_value_validation4');
-                $validationRule->setValue('key', 'api');
-                $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
-                $validationRule->setValue('errorMessage', 'The name needs to be unique');
-                $value->addValue('validation', $validationRule);
+                // 4. setup validation
+                $value->setValue('optional', true);
 
             // add value to field
             $field->setValue('value', $value);
@@ -331,37 +270,8 @@ class InputTextline
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder');
                 $value->setValue('entityProperty', $connectedEntityProperty);
 
-                // validation rule #1
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value_validation1');
-                $validationRule->setValue('key', 'maxchars');
-                $validationRule->setValue('value', 50);
-                $validationRule->setValue('errorMessage', 'No more than 10 characters');
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #2
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value_validation2');
-                $validationRule->setValue('key', 'minchars');
-                $validationRule->setValue('value', 1);
-                $validationRule->setValue('errorMessage', "Value can't be empty");
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #3
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value_validation3');
-                $validationRule->setValue('key', 'regex_custom');
-                $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
-                $validationRule->setValue('errorMessage', 'No characters other than a-z, A-Z and 0-9 allowed');
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #4
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--placeholder_value_validation4');
-                $validationRule->setValue('key', 'api');
-                $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
-                $validationRule->setValue('errorMessage', 'The name needs to be unique');
-                $value->addValue('validation', $validationRule);
+                // 4. setup validation
+                $value->setValue('optional', true);
 
             // add value to field
             $field->setValue('value', $value);
@@ -392,37 +302,8 @@ class InputTextline
                 $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix');
                 $value->setValue('entityProperty', $connectedEntityProperty);
 
-                // validation rule #1
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value_validation1');
-                $validationRule->setValue('key', 'maxchars');
-                $validationRule->setValue('value', 50);
-                $validationRule->setValue('errorMessage', 'No more than 10 characters');
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #2
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value_validation2');
-                $validationRule->setValue('key', 'minchars');
-                $validationRule->setValue('value', 1);
-                $validationRule->setValue('errorMessage', "Value can't be empty");
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #3
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value_validation3');
-                $validationRule->setValue('key', 'regex_custom');
-                $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
-                $validationRule->setValue('errorMessage', 'No characters other than a-z, A-Z and 0-9 allowed');
-                $value->addValue('validation', $validationRule);
-
-                // validation rule #4
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
-                $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTLINE.'--prefix_value_validation4');
-                $validationRule->setValue('key', 'api');
-                $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
-                $validationRule->setValue('errorMessage', 'The name needs to be unique');
-                $value->addValue('validation', $validationRule);
+                // 4. setup validation
+                $value->setValue('optional', true);
 
             // add value to field
             $field->setValue('value', $value);
@@ -443,4 +324,5 @@ class InputTextline
         // send
         return $field;
     }
+
 }
