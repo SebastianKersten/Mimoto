@@ -81,7 +81,7 @@
     }
 
     #{$pr-forms}_FormComponent-content--no-description {
-       padding: 0 percentage(1 / 3) 0 0;
+        padding: 0 percentage(1 / 3) 0 0;
     }
 
         #{$pr-forms}_FormComponent-element {
@@ -111,6 +111,7 @@
                     height: 50px;
                     margin-bottom: 10px;
                     padding-left: 15px;
+                    user-select: none;
                     font-family: $font-family-helvetica;
                     font-size: rem-calc(14px);
                     line-height: rem-calc(48px);
