@@ -315,17 +315,24 @@ class Component
                 'file' => 'MimotoCMS/components/forms/input/MultiSelect/MultiSelect.twig',
                 'conditionals' => []
             ),
+
             (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
                 'file' => 'MimotoCMS/components/forms/input/Radiobutton/Radiobutton.twig',
                 'conditionals' => []
             ),
             (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--option',
+                'file' => 'MimotoCMS/components/forms/input/Radiobutton/RadiobuttonOption/RadiobuttonOption.twig',
+                'conditionals' => []
+            ),
+
+
+            (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN,
                 'file' => 'MimotoCMS/components/forms/input/Dropdown/Dropdown.twig',
                 'conditionals' => []
             ),
-
             (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN.'--option',
                 'file' => 'MimotoCMS/components/forms/input/Dropdown/DropdownOption/DropdownOption.twig',

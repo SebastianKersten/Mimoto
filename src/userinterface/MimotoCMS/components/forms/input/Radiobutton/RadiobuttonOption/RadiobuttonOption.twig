@@ -1,0 +1,5 @@
+<div class="MimotoCMS_forms_FormComponent-element-container">
+    {% set sInputId = fieldId ~ '-' ~ Aimless.data('key') %}
+    <input {{ input }} id="{{ sInputId }}" type="radio" value="{{ Aimless.data('key') }}" class="MimotoCMS_forms_input_RadioButton js-radio-button" {% if value == Aimless.data('key') %}checked{% endif %}/>
+    <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ Aimless.data('value') }}</label>
+</div>
