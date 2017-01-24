@@ -76,6 +76,23 @@ class InputValidation
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--trigger',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'trigger',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--trigger-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
                 )
             ]
         );

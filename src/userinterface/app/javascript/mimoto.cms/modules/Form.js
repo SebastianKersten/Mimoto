@@ -184,7 +184,7 @@ module.exports.prototype = {
 
         // 5. locate form in dom
         var $form = $('form[name="' + sFormName + '"]');
-
+        
         // 6. read public key
         var sPublicKey = '';
         var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
@@ -202,10 +202,16 @@ module.exports.prototype = {
         // 7. collect data
         var aValues = {};
         var classRoot = this;
+        var bValidated = true;
         for (var i = 0; i < nFieldCount; i++)
         {
             // 7a. register
             var field = aFields[i];
+            
+            
+            // validate
+            if (!classRoot._validateInputField(field)) { bValidated = false; continue; }
+            
             
             var aInputFields = $("[data-aimless-form-field='" + field.sName + "']", $form);
     
@@ -224,7 +230,7 @@ module.exports.prototype = {
                     {
                         // init
                         var value = classRoot._getValueFromInputField($input);
-            
+                        
                         // store
                         if (value !== null) aValues[field.sName].push(value);
                     });
@@ -236,7 +242,7 @@ module.exports.prototype = {
                     {
                         // init
                         var value = classRoot._getValueFromInputField($input);
-        
+                        
                         // store
                         if (value !== null) aValues[field.sName] = value;
                     });
@@ -244,7 +250,10 @@ module.exports.prototype = {
                 
             });
         }
-    
+        
+        
+        // don't send if not validated
+        if (!bValidated) return;
         
         
         // 10. collect data
@@ -381,13 +390,22 @@ module.exports.prototype = {
         // validate
         if ($($component).is("input"))
         {
+            
             switch($($component).attr('type'))
             {
                 case 'radio':
-
-                    if ($($component).prop("checked") === true) {
-                        value = $($component).val();
-                    }
+    
+                    var aComponents = $component;
+                    
+                    // 7c. collect value
+                    aComponents.each( function(index, $component)
+                    {
+                        if ($($component).prop("checked") === true)
+                        {
+                            value = $($component).val();
+                        }
+                    });
+                    
                     break;
                 
                 case 'checkbox':
@@ -494,8 +512,8 @@ module.exports.prototype = {
     {
         // register
         var classRoot = this;
-
-
+        
+        
         field.$input.on('input', function(e)
         {
             var sFormName = field.sFormId;
@@ -508,6 +526,19 @@ module.exports.prototype = {
             classRoot._validateInputField(field);
 
         });
+    
+        field.$input.on('change', function(e)
+        {
+            var sFormName = field.sFormId;
+            var value = $(this).val();
+        
+            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
+        
+            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
+        
+            classRoot._validateInputField(field);
+        
+        });
     },
 
     _validateInputField: function(field)
@@ -518,7 +549,7 @@ module.exports.prototype = {
 
         // init
         var sErrorMessage = '';
-
+        
         // check rules
         var nValidationRuleCount = field.settings.validation.length;
         var bValid = true;
@@ -555,8 +586,8 @@ module.exports.prototype = {
                 case 'regex_custom':
 
                     // init
-                    var patt = new RegExp(validationRule.value);
-
+                    var patt = new RegExp(validationRule.value, "g");
+                    
                     // validate
                     if (!patt.test(value))
                     {

@@ -153,22 +153,25 @@ class EntityProperty
      */
     private static function setNameValidation($field)
     {
+        // validation rule #2
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation2');
+        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('value', 1);
+        $validationRule->setValue('errorMessage', "Value can't be empty");
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
 
-//        // validation rule #1
-//        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE_VALIDATION);
-//        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation1');
-//        $validationRule->setValue('key', 'maxchars');
-//        $validationRule->setValue('value', 50);
-//        $validationRule->setValue('errorMessage', 'No more than 10 characters');
-//        $field->addValue('validation', $validationRule);
-//
-//        // validation rule #2
-//        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE_VALIDATION);
-//        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation2');
-//        $validationRule->setValue('key', 'minchars');
-//        $validationRule->setValue('value', 1);
-//        $validationRule->setValue('errorMessage', "Value can't be empty");
-//        $field->addValue('validation', $validationRule);
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation1');
+        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
+        $validationRule->setValue('errorMessage', 'Name should be in lowerCamelCase, starting with a letter followed by [a-zA-Z0-9-_]');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+
 //
 //        // validation rule #3
 //        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE_VALIDATION);
@@ -222,6 +225,16 @@ class EntityProperty
         $option->setValue('key', MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION);
         $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION);
         $field->addValue('options', $option);
+
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_validation1');
+        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('value', '^('.MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION.')$');
+        $validationRule->setValue('errorMessage', 'Select one of the above types');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
 
         // send
         return $field;
