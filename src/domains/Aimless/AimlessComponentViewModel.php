@@ -46,9 +46,9 @@ class AimlessComponentViewModel
         return $this->_component->data($sPropertySelector, $bGetConnectionInfo);
     }
 
-    public function render($sPropertySelector, $sComponentName = null)
+    public function render($sPropertySelector, $sComponentName = null, $customValues = null)
     {
-        return $this->_component->data($sPropertySelector, false, true, $sComponentName);
+        return $this->_component->data($sPropertySelector, false, true, $sComponentName, null, $customValues);
     }
 
     public function renderWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)

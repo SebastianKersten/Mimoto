@@ -191,7 +191,7 @@ class InputTextRTF
                 $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // validation rule #1
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE_VALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTRTF.'--label_value_validation1');
                 $validationRule->setValue('key', 'maxchars');
                 $validationRule->setValue('value', 50);
@@ -199,7 +199,7 @@ class InputTextRTF
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #2
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE_VALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTRTF.'--label_value_validation2');
                 $validationRule->setValue('key', 'minchars');
                 $validationRule->setValue('value', 1);
@@ -207,7 +207,7 @@ class InputTextRTF
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #3
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE_VALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTRTF.'--label_value_validation3');
                 $validationRule->setValue('key', 'regex_custom');
                 $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
@@ -215,7 +215,7 @@ class InputTextRTF
                 $value->addValue('validation', $validationRule);
 
                 // validation rule #4
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE_VALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_INPUT_TEXTRTF.'--label_value_validation4');
                 $validationRule->setValue('key', 'api');
                 $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');

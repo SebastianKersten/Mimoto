@@ -165,7 +165,7 @@ class AimlessComponent
     // --- Twig usage
 
 
-    public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null, $sWrapperName = null)
+    public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null, $sWrapperName = null, $customValues = null)
     {
         // find
         $nSeperatorPos = strpos($sPropertySelector, '.');
@@ -207,13 +207,13 @@ class AimlessComponent
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                         // read, render and send
-                        return $this->renderEntityProperty($sPropertySelector, $sComponentName, $sWrapperName);
+                        return $this->renderEntityProperty($sPropertySelector, $sComponentName, $sWrapperName, $customValues);
                         break;
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                         // read, render and send
-                        return $this->renderCollectionProperty($sPropertySelector, $sComponentName, $sWrapperName);
+                        return $this->renderCollectionProperty($sPropertySelector, $sComponentName, $sWrapperName, $customValues);
                         break;
                 }
             }
@@ -272,7 +272,7 @@ class AimlessComponent
      * @param string $sComponentName
      * @return mixed|string Either a rendered component or a value
      */
-    private function renderEntityProperty($sPropertySelector, $sComponentName = null)
+    private function renderEntityProperty($sPropertySelector, $sComponentName = null, $customValues = null)
     {
         // 1. read
         $xValue = $this->_entity->getValue($sPropertySelector);
@@ -303,7 +303,7 @@ class AimlessComponent
         $component = $this->_AimlessService->createComponent($sComponentName, $xValue);
 
         // 6. render and send
-        return $component->render();
+        return $component->render($customValues);
     }
 
     /**
@@ -312,7 +312,7 @@ class AimlessComponent
      * @param string $sComponentName
      * @return mixed|string Either a rendered component or a value
      */
-    private function renderCollectionProperty($sPropertySelector, $sComponentName = null, $sWrapperName = null)
+    private function renderCollectionProperty($sPropertySelector, $sComponentName = null, $sWrapperName = null, $customValues = null)
     {
 
         // #todo - double code om $this->_aPropertyComponents[$sMainPropertyName] te laten werken
@@ -347,7 +347,7 @@ class AimlessComponent
         }
 
         // 4. render and send
-        return $this->renderCollection($xValue, $aConnections, $sComponentName, null, null, $sWrapperName);
+        return $this->renderCollection($xValue, $aConnections, $sComponentName, null, null, $sWrapperName, $customValues);
 
     }
 
@@ -525,7 +525,7 @@ class AimlessComponent
 
     
     
-    public function render()
+    public function render($customValues = null)
     {
         if (!empty($this->_sWrapperName))
         {
@@ -538,12 +538,21 @@ class AimlessComponent
             // compose
             $this->_aVars['Aimless'] = $viewModel;
 
+            // add custom values
+            if (!empty($customValues))
+            {
+                foreach ($customValues as $key => $value)
+                {
+                    $this->_aVars[$key] = $value;
+                }
+            }
+
             // output
             return $this->_TwigService->render($sWrapperFile, $this->_aVars);
         }
         else
         {
-            return $this->renderComponent($this->_sComponentName);
+            return $this->renderComponent($this->_sComponentName, $customValues);
         }
     }
 
@@ -552,7 +561,7 @@ class AimlessComponent
         return $this->renderComponent($sComponentName);
     }
 
-    private function renderComponent($sComponentName)
+    private function renderComponent($sComponentName, $customValues = null)
     {
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $this->_entity->getEntityTypeName();
@@ -567,12 +576,21 @@ class AimlessComponent
         // compose
         $this->_aVars['Aimless'] = $viewModel;
 
+        // add custom values
+        if (!empty($customValues))
+        {
+            foreach ($customValues as $key => $value)
+            {
+                $this->_aVars[$key] = $value;
+            }
+        }
+
         // output
         return $this->_TwigService->render($sComponentFile, $this->_aVars);
     }
 
 
-    public function module($sModuleName, $values = [])
+    public function module($sModuleName, $customValues = null)
     {
         // get module file
         $sModuleFile = $this->_AimlessService->getComponentFile($sModuleName);
@@ -583,8 +601,14 @@ class AimlessComponent
         // compose
         $this->_aVars['Aimless'] = $viewModel;
 
-        // configure
-        $this->_aVars = $values;
+        // add custom values
+        if (!empty($customValues))
+        {
+            foreach ($customValues as $key => $value)
+            {
+                $this->_aVars[$key] = $value;
+            }
+        }
 
         // output
         return $this->_TwigService->render($sModuleFile, $this->_aVars);
@@ -599,7 +623,7 @@ class AimlessComponent
      * @param array $aFieldVars
      * @return string Rendered template
      */
-    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null)
+    protected function renderCollection($aCollection, $aConnections, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null, $customValues = null)
     {
         // init
         $sRenderedCollection = '';
@@ -615,7 +639,7 @@ class AimlessComponent
             $connection = (!empty($aConnections)) ? $aConnections[$i] : null;
 
             // render
-            $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput, $sWrapperName);
+            $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput, $sWrapperName, $customValues);
         }
         
         // send
@@ -630,7 +654,7 @@ class AimlessComponent
      * @param null $aFieldVars
      * @return string
      */
-    private function renderCollectionItem($entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null)
+    private function renderCollectionItem($entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null, $customValues = null)
     {
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
@@ -656,7 +680,7 @@ class AimlessComponent
         foreach ($this->_aVars as $sKey => $value) { $component->setVar($sKey, $value); }
 
         // output
-        return $component->render();
+        return $component->render($customValues);
     }
 
     /**
@@ -690,28 +714,27 @@ class AimlessComponent
      * @param $aFieldVars
      * @return AimlessInput
      */
-    private function renderCollectionItemAsInput($sTemplateName, $field, $connection, $aFieldVars)
+    private function renderCollectionItemAsInput($sTemplateName, $eField, $connection, $aFieldVars)
     {
         // validate
-        if (!isset($aFieldVars[$field->getEntityTypeName().'.'.$field->getId()]))
+        if (!isset($aFieldVars[$eField->getEntityTypeName().'.'.$eField->getId()]))
         {
-            $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please set a <b>varname</b> or connect an <b>entityProperty</b> to the value of field with <b>id=".$field->getId()."</b> and type=".$field->getEntityTypeName(), 'AimlessComponent', true);
+            $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please set a <b>varname</b> or connect an <b>entityProperty</b> to the value of field with <b>id=".$eField->getId()."</b> and type=".$eField->getEntityTypeName(), 'AimlessComponent', true);
         }
 
         // gerister
-        $fieldVar = $aFieldVars[$field->getEntityTypeName().'.'.$field->getId()];
+        $fieldVar = $aFieldVars[$eField->getEntityTypeName().'.'.$eField->getId()];
 
         // #todo
-        if ($field->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN)
+        if ($eField->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN)
         {
-            $fieldValue = $field->getValue('value');
-            $aFieldValueOptions = $fieldValue->getValue('options', true);
+            $aFieldValueOptions = $eField->getValue('options', true);
 
             //error($aFieldValueOptions);
         }
 
         // create and send
-        return $this->_AimlessService->createInput($sTemplateName, $field, $connection, $fieldVar->key, $fieldVar->value);
+        return $this->_AimlessService->createInput($sTemplateName, $eField, $connection, $fieldVar->key, $fieldVar->value);
     }
 
     /**
@@ -728,8 +751,6 @@ class AimlessComponent
         // output
         return $component->render(); //$this->_aVars); // #todo - pass vars for rendering
     }
-
-
 
 
 

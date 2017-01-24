@@ -513,7 +513,7 @@ class ContentSection
                 $value->setValue('entityProperty', $connectedEntityProperty);
 
                 // 3b. validation rule #1
-                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUEVALIDATION);
+                $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE_VALIDATION);
                 $validationRule->setId(CoreConfig::COREFORM_CONTENTSECTION.'--name_value_validation1');
                 $validationRule->setValue('key', 'maxchars');
                 $validationRule->setValue('value', 25);

@@ -214,35 +214,6 @@ class FormController
         return $component->render();
     }
 
-    public function formFieldValueEdit(Application $app, $nFormFieldValueId)
-    {
-        // 1. load
-        $valueEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM_INPUTVALUE, $nFormFieldValueId);
-
-        // 2. validate
-        if ($valueEntity === false) return $app->redirect("/mimoto.cms/forms");
-
-        // 3. create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
-
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
-
-        // 1. translate $nFormFieldTypeId to formconfig
-
-        $eFormField = Mimoto::service('config')->getParent(CoreConfig::Mimoto);
-
-
-
-        // 4. setup
-        $page->addForm(CoreConfig::COREFORM_FORM_INPUTVALUE, $valueEntity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
-
-        // 5. render and send
-        return $page->render();
-    }
-
-
     public function formFieldDelete(Application $app, $nFormFieldTypeId, $nFormFieldId)
     {
         // #todo add transaction

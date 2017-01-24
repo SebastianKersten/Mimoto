@@ -505,27 +505,46 @@ class MimotoEntityConfigRepository
             if (!empty($entity->extends))
             {
                 // build
-                $aExtensions = array_merge([$entity->id], $this->buildExtensionStack($entity->extends, []));
+                $aExtensions = $this->buildExtensionStack($entity->extends);
+                $aTypeOfs = array_merge([$entity->id], $aExtensions);
 
-                $entity->typeOf = $aExtensions;
+                $entity->typeOf = $aTypeOfs;
 
                 $entity->typeOfAsNames = [];
 
-                $nExtensionCount = count($aExtensions);
-                for ($k = 0; $k < $nExtensionCount; $k++)
+                $nTypeOfCount = count($aTypeOfs);
+                for ($k = 0; $k < $nTypeOfCount; $k++)
                 {
-                    $entity->typeOfAsNames[$k] = $this->getEntityNameById($aExtensions[$k]);
+                    $entity->typeOfAsNames[$k] = $this->getEntityNameById($aTypeOfs[$k]);
                 }
 
-                for ($j = $nExtensionCount - 1; $j > 0; $j--)
+                // add base properties
+                $nExtensionCount =  count($aExtensions);
+                for ($nExtensionIndex = 0; $nExtensionIndex < $nExtensionCount; $nExtensionIndex++)
                 {
+                    // register
+                    $extensionId = $aExtensions[$nExtensionIndex];
+
                     // find
-                    $baseEntity = $this->findEntityById($aExtensions[$j]);
+                    $baseEntity = $this->findEntityById($extensionId);
 
-                    // combine
-                    $nPropertyCount = count($entity->properties);
-                    array_splice($entity->properties, $nPropertyCount - 1, 0, $baseEntity->properties);
+                    $nPropertyCount = count($baseEntity->properties);
+                    for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
+                    {
+                        // clone
+                        $property = clone $baseEntity->properties[$nPropertyIndex];
+
+                        if (!isset($property->owner))
+                        {
+                            // make note
+                            $property->owner = $extensionId;
+
+                            // store
+                            $entity->properties[] = $property;
+                        }
+                    }
                 }
+
             }
             else
             {
@@ -541,7 +560,7 @@ class MimotoEntityConfigRepository
      * @param $aExtensions An array containing the stack of extensions
      * @return array
      */
-    private function buildExtensionStack($baseId, $aExtensions)
+    private function buildExtensionStack($baseId, $aExtensions = [])
     {
         $nEntityCount = count($this->_aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)

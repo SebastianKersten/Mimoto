@@ -4,6 +4,7 @@
 namespace Mimoto\Core\entities;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
@@ -24,7 +25,7 @@ class Input
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT,
             'extends' => null,
-            'forms' => [],
+            'forms' => [CoreConfig::COREFORM_FORM_INPUTVALUE],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT.'--value',
@@ -34,15 +35,65 @@ class Input
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'--value-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'--value-allowedEntityType',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityType',
-                            'type' => 'value', // #todo - fixme
-                            'value' => CoreConfig::MIMOTO_FORM_INPUTVALUE
+                            'type' => 'value',
+                            'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
                         )
                     ]
-                )
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT.'--options',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'options',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'--options-allowedEntityTypes',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_FORM_INPUTOPTION]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'--options-allowDuplicates',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT.'--validation',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'validation',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUT.'--validation-allowedEntityTypes',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_FORM_INPUTVALIDATION]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY.'--validation-allowDuplicates',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
             ]
         );
     }

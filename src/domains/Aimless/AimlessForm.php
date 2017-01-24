@@ -55,7 +55,7 @@ class AimlessForm extends AimlessComponent
     }
 
 
-    public function render()
+    public function render($customValues = null)
     {
         // 1. load form
         $form = $this->_FormService->getFormByName($this->_sFormName);
@@ -68,6 +68,9 @@ class AimlessForm extends AimlessComponent
 
         // 3. prepare
         $formVars = $this->_FormService->getFormVars($form, $this->_xValues, $aFields, $nEntityId);
+
+
+
 
 
         if ($form->getValue('customSubmit') === true)

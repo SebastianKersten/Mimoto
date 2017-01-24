@@ -1,5 +1,3 @@
-@import 'FormFieldValue/FormFieldValue';
-
 div.MimotoCMS_pages_forms_FormDetail-FormField {
 
     display: flex;
@@ -35,7 +33,7 @@ div.MimotoCMS_pages_forms_FormDetail-FormField {
         width: 20%;
         text-align: right;
 
-        & > button {
+        & > div > button {
             margin-bottom: 5px;
         }
     }

@@ -272,11 +272,6 @@ module.exports.prototype = {
         Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit');
     },
     
-    formFieldValueEdit: function(nFormFieldId, nFormFieldValueId)
-    {
-        window.open('/mimoto.cms/formfield/' + nFormId + '/fieldvalue/' + nFormFieldValueId + '/edit', '_self');
-    },
-    
     formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
     {
         $.ajax({

@@ -21,7 +21,7 @@ use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\Component;
 
 use Mimoto\Core\entities\Form;
-use Mimoto\Core\entities\InputValue;
+use Mimoto\Core\entities\Input;
 
 use Mimoto\Core\entities\InputTextline;
 use Mimoto\Core\entities\InputTextBlock;
@@ -96,15 +96,17 @@ class FormService
         // 2. load form from database
         $aResults = $this->_EntityService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $sFormName]]);
 
+        $form = $aResults[0];
+
         // 3. validate if form exists
-        if (!isset($aResults[0]))
+        if (empty($form))
         {
             $this->_MimotoLogService->warn('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
             die();
         }
         
         // send
-        return $aResults[0];
+        return $form;
     }
 
     public function parseForm($sFormName, Request $request)
@@ -170,7 +172,6 @@ class FormService
         $formVars = Mimoto::service('forms')->getFormVars($form, $aValues, null, $entity->id);
 
 
-
         // collect
         if (empty($entity->id))
         {
@@ -192,6 +193,8 @@ class FormService
             $entity->entity = $this->_EntityService->get($entity->type, $entity->id);
         }
 
+
+        //output('$entity', $entity);
 
         // 5. authenticate #todo
 //        if ($sPublicKey !== Mimoto::service('user')->getUserPublicKey(json_encode($formVars->connectedEntities)))
@@ -481,137 +484,95 @@ class FormService
         $formVars->connectedEntities[] = $sEntityName.'.'.(empty($nEntityId) ? CoreConfig::ENTITY_NEW : $nEntityId);
 
 
-
-        //output('$formVars', $formVars, true);
-
         // 4. find input fields
         $nFieldCount = count($aFields);
-        for ($i = 0; $i < $nFieldCount; $i++)
+        for ($nFieldIndex = 0; $nFieldIndex < $nFieldCount; $nFieldIndex++)
         {
             // register
-            $field = $aFields[$i];
+            $field = $aFields[$nFieldIndex];
 
             // filter, inputs only
             if (!$field->typeOf(CoreConfig::MIMOTO_FORM_INPUT)) continue;
 
-            // register
-            $fieldValue = $field->getValue('value');
+            // read
+            $fieldValueConnection = $field->getValue('value', true);
 
             // skip if invalid
-            if (empty($fieldValue))
+            if (empty($fieldValueConnection))
             {
-                Mimoto::service('log')->warn("Input misses a value", "The input with id <b>".$field->getId()."</b> is missing it's value property");
+                Mimoto::service('log')->warn("An input's value is unset", "The input with id <b>".$field->getId()."</b> is missing it's value property");
                 continue;
             }
 
             // register
-            $sVarType = $fieldValue->getValue(CoreConfig::INPUTVALUE_VARTYPE);
             $sFieldSelector = $field->getEntityTypeName().'.'.$field->getId();
 
-            // validate
-            switch($sVarType)
+            // read
+            $fieldValueId = $fieldValueConnection->getChildId();
+
+
+            // 1. get entity to which the property is connected
+            $sEntityName = $this->_MimotoEntityConfigService->getEntityNameByPropertyId($fieldValueId);
+            $sPropertyName = $this->_MimotoEntityConfigService->getPropertyNameById($fieldValueId);
+            $sPropertyType = $this->_MimotoEntityConfigService->getPropertyTypeById($fieldValueId);
+
+            // auto create
+            if (!isset($orderedValues->entities[$sEntityName])) $orderedValues->entities[$sEntityName] = Mimoto::service('data')->create($sEntityName);
+
+            // prepare
+            $xEntityId = $orderedValues->entities[$sEntityName]->getId();
+            if (empty($xEntityId)) $xEntityId = CoreConfig::ENTITY_NEW;
+            $sEntitySelector = $sEntityName.'.'.$xEntityId;
+
+
+            // init
+            $propertyValue = null;
+
+            // read value
+            switch($sPropertyType)
             {
-                case CoreConfig::INPUTVALUE_VARTYPE_VARNAME:
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
-                    // register
-                    $sVarName = $fieldValue->getValue('varname');
-
-                    // validate
-                    if (!isset($orderedValues->customvars[$sVarName]))
-                    {
-                        Mimoto::service('log')->notify('Input has no varname', "The input with id <b>".$field->getId()."</b> is of type <b>varname</b> but the actual varname hasn't been defined");
-                        continue;
-                    }
-
-                    // store
-                    $formVars->fieldVars[$sFieldSelector] = (object) array(
-                        'key' => $sVarName,
-                        'value' => $orderedValues->customvars[$sVarName]
-                    );
-
+                    $propertyValue = $orderedValues->entities[$sEntityName]->getValue($sPropertyName);
                     break;
 
-                case CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY:
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-                    // read
-                    $entityProperty = $fieldValue->getValue('entityProperty', true);
+                    $propertyValueConnection = $orderedValues->entities[$sEntityName]->getValue($sPropertyName, true);
 
-                    // validate
-                    if (empty($entityProperty))
+                    if (!empty($propertyValueConnection))
                     {
-                        Mimoto::service('log')->notify('Input not properly connected to a property', "The input with id <b>".$field->getId()."</b> is of type <b>entityproperty</b> but is not actually connected to a property");
-                        continue;
+                        $propertyValue = $propertyValueConnection->getChildEntityTypeName().'.'.$propertyValueConnection->getChildId();
                     }
+                    break;
 
-                    // read
-                    $entityPropertyId = $entityProperty->getChildId();
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
+                    $propertyValue = [];
 
-                    // 1. get entity to which the property is connected
-                    $sEntityName = $this->_MimotoEntityConfigService->getEntityNameByPropertyId($entityPropertyId);
-                    $sPropertyName = $this->_MimotoEntityConfigService->getPropertyNameById($entityPropertyId);
-                    $sPropertyType = $this->_MimotoEntityConfigService->getPropertyTypeById($entityPropertyId);
+                    $aPropertyValueConnections = $orderedValues->entities[$sEntityName]->getValue($sPropertyName, true);
 
-                    // auto create
-                    if (!isset($orderedValues->entities[$sEntityName])) $orderedValues->entities[$sEntityName] = Mimoto::service('data')->create($sEntityName);
-
-                    // prepare
-                    $xEntityId = $orderedValues->entities[$sEntityName]->getId();
-                    if (empty($xEntityId)) $xEntityId = CoreConfig::ENTITY_NEW;
-                    $sEntitySelector = $sEntityName.'.'.$xEntityId;
-
-
-                    // init
-                    $propertyValue = null;
-
-                    // read value
-                    switch($sPropertyType)
+                    $nPropertyValueConnectionCount = count($aPropertyValueConnections);
+                    for ($nPropertyValueConnectionIndex = 0; $nPropertyValueConnectionIndex < $nPropertyValueConnectionCount; $nPropertyValueConnectionIndex++)
                     {
-                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+                        $propertyValueConnection = $aPropertyValueConnections[$nPropertyValueConnectionIndex];
 
-                            $propertyValue = $orderedValues->entities[$sEntityName]->getValue($sPropertyName);
-                            break;
-
-                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-
-                            $propertyValueConnection = $orderedValues->entities[$sEntityName]->getValue($sPropertyName, true);
-
-                            if (!empty($propertyValueConnection))
-                            {
-                                $propertyValue = $propertyValueConnection->getChildEntityTypeName().'.'.$propertyValueConnection->getChildId();
-                            }
-                            break;
-
-                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-
-                            $propertyValue = [];
-
-                            $aPropertyValueConnections = $orderedValues->entities[$sEntityName]->getValue($sPropertyName, true);
-
-                            $nPropertyValueConnectionCount = count($aPropertyValueConnections);
-                            for ($nPropertyValueConnectionIndex = 0; $nPropertyValueConnectionIndex < $nPropertyValueConnectionCount; $nPropertyValueConnectionIndex++)
-                            {
-                                $propertyValueConnection = $aPropertyValueConnections[$nPropertyValueConnectionIndex];
-
-                                $propertyValue[] = $propertyValueConnection->getChildEntityTypeName().'.'.$propertyValueConnection->getChildId();
-                            }
-                            break;
+                        $propertyValue[] = $propertyValueConnection->getChildEntityTypeName().'.'.$propertyValueConnection->getChildId();
                     }
-
-                    // output('propertyValue', $propertyValue, true);
-
-
-                    // 1. store field var
-                    $formVars->fieldVars[$sFieldSelector] = (object) array(
-                        'key' => $sEntitySelector.'.'.$sPropertyName,
-                        'value' => $propertyValue
-                    );
-
-                    // 2. store entity
-                    if (!in_array($sEntitySelector, $formVars->connectedEntities)) $formVars->connectedEntities[] = $sEntitySelector;
-
                     break;
             }
+
+            // output('propertyValue', $propertyValue, true);
+
+
+            // 1. store field var
+            $formVars->fieldVars[$sFieldSelector] = (object) array(
+                'key' => $sEntitySelector.'.'.$sPropertyName,
+                'value' => $propertyValue
+            );
+
+            // 2. store entity
+            if (!in_array($sEntitySelector, $formVars->connectedEntities)) $formVars->connectedEntities[] = $sEntitySelector;
         }
 
         // NOTE - make sure the array is ordered in a similar fashion
@@ -621,6 +582,8 @@ class FormService
         ksort($formVars->fieldVars);
         sort($formVars->connectedEntities);
 
+
+        //error($formVars);
 
         // send
         return $formVars;
@@ -685,7 +648,6 @@ class FormService
             // form ----------
 
             case CoreConfig::COREFORM_FORM: return Form::getForm(); break;
-            case CoreConfig::COREFORM_FORM_INPUTVALUE: return InputValue::getForm(); break;
 
             // input ---------
 

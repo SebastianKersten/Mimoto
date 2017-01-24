@@ -11,10 +11,8 @@ use Mimoto\Core\entities\Component;
 use Mimoto\Core\entities\ContentSection;
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\Input;
-use Mimoto\Core\entities\InputMultiSelect;
-use Mimoto\Core\entities\InputValue;
-use Mimoto\Core\entities\InputValueSetting;
-use Mimoto\Core\entities\InputValueValidation;
+use Mimoto\Core\entities\InputOption;
+use Mimoto\Core\entities\InputValidation;
 use Mimoto\Core\entities\OutputTitle;
 use Mimoto\Core\entities\LayoutGroupStart;
 use Mimoto\Core\entities\LayoutGroupEnd;
@@ -23,6 +21,7 @@ use Mimoto\Core\entities\InputCheckbox;
 use Mimoto\Core\entities\InputDropdown;
 use Mimoto\Core\entities\InputRadioButton;
 use Mimoto\Core\entities\InputTextline;
+use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputTextblock;
 use Mimoto\Core\entities\InputTextRTF;
 use Mimoto\Core\entities\InputList;
@@ -67,10 +66,9 @@ class CoreConfig
 
     // forms
     const MIMOTO_FORM                           = '_MimotoAimless__interaction__form';
-    const MIMOTO_FORM_INPUT                     = '_MimotoAimless__interaction__forminput';
-    const MIMOTO_FORM_INPUTVALUE                = '_MimotoAimless__interaction__forminputvalue';
-    const MIMOTO_FORM_INPUTVALUESETTING         = '_MimotoAimless__interaction__forminputvaluesetting';
-    const MIMOTO_FORM_INPUTVALUEVALIDATION      = '_MimotoAimless__interaction__forminputvaluevalidation';
+    const MIMOTO_FORM_INPUT                     = '_MimotoAimless__interaction__form_input';
+    const MIMOTO_FORM_INPUTOPTION               = '_MimotoAimless__interaction__form_inputoption';
+    const MIMOTO_FORM_INPUTVALIDATION           = '_MimotoAimless__interaction__form_inputvalidation';
 
     // input
     const MIMOTO_FORM_INPUT_TEXTLINE            = '_MimotoAimless__interaction__form_input_textline';
@@ -136,7 +134,7 @@ class CoreConfig
 
     const COREFORM_COMPONENT            = '_MimotoAimless__coreform__component';
     const COREFORM_FORM                 = '_MimotoAimless__coreform__form';
-    const COREFORM_FORM_INPUTVALUE      = '_MimotoAimless__coreform__form_inputValue';
+    const COREFORM_FORM_INPUTVALUE      = '_MimotoAimless__coreform__form_inputvalue';
 
 
     // input
@@ -191,9 +189,8 @@ class CoreConfig
             // forms
             Form::getStructure(),
             Input::getStructure(),
-            InputValue::getStructure(),
-            InputValueSetting::getStructure(),
-            InputValueValidation::getStructure(),
+            InputOption::getStructure(),
+            InputValidation::getStructure(),
 
             // output
             OutputTitle::getStructure(),
@@ -209,7 +206,7 @@ class CoreConfig
             InputTextRTF::getStructure(),
             InputCheckbox::getStructure(),
             InputMultiSelect::getStructure(),
-            InputRadiobutton::getStructure(),
+            InputRadioButton::getStructure(),
             InputDropdown::getStructure(),
             InputList::getStructure(),
             InputImage::getStructure(),

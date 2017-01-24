@@ -297,8 +297,6 @@ class AimlessService
             case 'onEntityPropertyCreated': Mimoto::service('config')->onEntityPropertyCreated($data); break;
             case 'onEntityPropertyUpdated': Mimoto::service('config')->onEntityPropertyUpdated($data); break;
 
-            case 'onInputFieldCreated':     Mimoto::service('config')->onInputFieldCreated($data); break;
-
             default:
                 
                 die("AimlessService: Unknown request '".$sRequest."'");

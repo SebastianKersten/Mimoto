@@ -5,10 +5,7 @@
         <div class="MimotoCMS_forms_input_Dropdown-container">
             <select {{ Aimless.input() }} class="MimotoCMS_forms_input_Dropdown js-dropdown">
                 <option value=""></option> {# check if field is optional, if selection made, disable this null-option #}
-                {% set aOptions = Aimless.fieldOptions() %}
-                {% for option in aOptions %}
-                    <option value="{{ option.key }}" {% if Aimless.value() == option.key %}selected{% endif %}>{{ option.value }}</option>
-                {% endfor %}
+                {{ Aimless.render('options', '_MimotoAimless__interaction__form_input_dropdown--option', { value: Aimless.value() }) }}
             </select>
             <svg class="MimotoCMS_forms_input_Dropdown-icon"><use xlink:href="#ico-arrow"></use></svg>
         </div>

@@ -9,32 +9,32 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * InputValueSetting
+ * InputValidation
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputValueSetting
+class InputValidation
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING,
+            'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION,
             'created' => CoreConfig::EPOCH,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING,
+            'name' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION,
             'extends' => null,
             'forms' => [],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--key',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--key',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'key',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--key-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--key-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
@@ -44,14 +44,31 @@ class InputValueSetting
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--value',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--value',
                     'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'value',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALUESETTING.'--value-type',
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--value-type',
+                            'created' => CoreConfig::EPOCH,
+                            // ---
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--errorMessage',
+                    'created' => CoreConfig::EPOCH,
+                    // ---
+                    'name' => 'errorMessage',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--errorMessage-type',
                             'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
