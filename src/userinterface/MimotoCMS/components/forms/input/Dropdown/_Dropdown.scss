@@ -19,7 +19,7 @@
         outline: none;
         background-color: $alabaster;
         transition: all 100ms ease-out;
-        -webkit-appearance: none;
+        appearance: none;
 
         &:focus {
             border-color: $pale-slate;
