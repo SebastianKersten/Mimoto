@@ -79,7 +79,7 @@ module.exports.prototype = {
             'sType': 'input', // #todo - const
             'settings': settings,
             $field: $("[data-aimless-form-field='" + sInputFieldId + "']", $form),
-            $input: $("input[data-aimless-form-field-input='" + sInputFieldId + "']", $form),
+            $input: $("[data-aimless-form-field-input='" + sInputFieldId + "']", $form),
             $error: $("[data-aimless-form-field-error='" + sInputFieldId + "']", $form)
         };
 
@@ -389,7 +389,6 @@ module.exports.prototype = {
         // validate
         if ($($component).is("input"))
         {
-            
             switch($($component).attr('type'))
             {
                 case 'radio':
@@ -435,16 +434,16 @@ module.exports.prototype = {
                     break;
 
                 default:
-
+                    
                     value = $($component).val();
             }
-        };
-
+        }
+        
         if ($($component).is("select"))
         {
             value = $($component).val();
         }
-    
+        
         if ($($component).is("textarea"))
         {
             value = $($component).val();
@@ -583,7 +582,7 @@ module.exports.prototype = {
                     break;
 
                 case 'minchars':
-
+                    
                     // validate
                     if (value.length < validationRule.value)
                     {

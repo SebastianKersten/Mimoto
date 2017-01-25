@@ -7,7 +7,6 @@ namespace Mimoto\Core\forms;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
-use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
 /**
@@ -33,9 +32,6 @@ class EntityPropertyForm_Value_type
         $form->addValue('fields', self::getField_type());
 
         CoreFormUtils::addField_groupEnd($form);
-
-
-
 
         // send
         return $form;
