@@ -224,26 +224,16 @@ class FormController
 
         if ($formField->hasProperty('value'))
         {
-            // 2. read
-            $value = $formField->getValue('value');
+            // 5. clear
+            $formField->setValue('value', null);
 
-            // 3. clear
-            if (!empty($value))
-            {
-                $value->setValue('entityProperty', null);
+            // 6. remove connections
+            Mimoto::service('data')->store($formField);
 
-                // 4. remove connections
-                Mimoto::service('data')->store($value);
+            // 7. remove value
+            Mimoto::service('data')->delete();
 
-                // 5. clear
-                $formField->setValue('value', null);
-
-                // 6. remove connections
-                Mimoto::service('data')->store($formField);
-
-                // 7. remove value
-                Mimoto::service('data')->delete($value);
-            }
+            // #todo options and validation delete
         }
 
         // 8. load

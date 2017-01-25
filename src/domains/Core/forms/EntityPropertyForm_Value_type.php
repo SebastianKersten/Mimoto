@@ -6,6 +6,7 @@ namespace Mimoto\Core\forms;
 // Mimoto classes
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\CoreFormUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
@@ -23,13 +24,18 @@ class EntityPropertyForm_Value_type
     public static function getStructure()
     {
         // init
-        $form = self::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE);
 
         // setup
-        $form->addValue('fields', self::getField_title('Configure'));
-        $form->addValue('fields', self::getField_groupStart());
+        CoreFormUtils::addField_title($form, 'Configure');
+        CoreFormUtils::addField_groupStart($form);
+
         $form->addValue('fields', self::getField_type());
-        $form->addValue('fields', self::getField_groupEnd());
+
+        CoreFormUtils::addField_groupEnd($form);
+
+
+
 
         // send
         return $form;
@@ -43,51 +49,6 @@ class EntityPropertyForm_Value_type
 
 
     /**
-     * Init structure
-     */
-    private static function initForm($sFormName)
-    {
-        // init
-        $form = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
-
-        // setup
-        $form->setId($sFormName);
-        $form->setValue('name', $sFormName);
-        $form->setValue('realtimeCollaborationMode', false);
-
-        // send
-        return $form;
-    }
-
-    /**
-     * Get field: title
-     */
-    private static function getField_title($sTitle)
-    {
-        // create and setup
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
-        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--title');
-        $field->setValue('title', $sTitle);
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: groupStart
-     */
-    private static function getField_groupStart()
-    {
-        // create
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
-        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--groupstart');
-        $field->setValue('title', 'Value settings');
-
-        // send
-        return $field;
-    }
-
-    /**
      * Get field: type
      */
     private static function getField_type()
@@ -97,43 +58,37 @@ class EntityPropertyForm_Value_type
         $field->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--type');
         $field->setValue('label', 'Type');
 
-            // 2. setup value
-            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-            $value->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--type-value');
-            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
+        // 3. connect to property
+        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--value');
+        $field->setValue('value', $connectedEntityProperty);
 
-                // 3. connect to property
-                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-                $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--value');
-                $value->setValue('entityProperty', $connectedEntityProperty);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_TEXTLINE);
+        $option->setValue('key', CoreConfig::DATA_VALUE_TEXTLINE);
+        $option->setValue('value', CoreConfig::DATA_VALUE_TEXTLINE);
+        $field->addValue('options', $option);
 
-                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_TEXTLINE);
-                $option->setValue('key', CoreConfig::DATA_VALUE_TEXTLINE);
-                $option->setValue('value', CoreConfig::DATA_VALUE_TEXTLINE);
-                $value->addValue('options', $option);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_TEXTBLOCK);
+        $option->setValue('key', CoreConfig::DATA_VALUE_TEXTBLOCK);
+        $option->setValue('value', CoreConfig::DATA_VALUE_TEXTBLOCK);
+        $field->addValue('options', $option);
 
-                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUESETTING);
-                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_TEXTBLOCK);
-                $option->setValue('key', CoreConfig::DATA_VALUE_TEXTBLOCK);
-                $option->setValue('value', CoreConfig::DATA_VALUE_TEXTBLOCK);
-                $value->addValue('options', $option);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_BOOLEAN);
+        $option->setValue('key', CoreConfig::DATA_VALUE_BOOLEAN);
+        $option->setValue('value', CoreConfig::DATA_VALUE_BOOLEAN);
+        $field->addValue('options', $option);
 
-            // add
-            $field->setValue('value', $value);
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: groupEnd
-     */
-    private static function getField_groupEnd()
-    {
-        // create
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
-        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--groupend');
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--type_value_validation1');
+        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('value', '^('.CoreConfig::DATA_VALUE_TEXTLINE.'|'.CoreConfig::DATA_VALUE_TEXTBLOCK.'|'.CoreConfig::DATA_VALUE_BOOLEAN.')$');
+        $validationRule->setValue('errorMessage', 'Select one of the above types');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
 
         // send
         return $field;

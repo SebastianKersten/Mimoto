@@ -251,7 +251,6 @@ module.exports.prototype = {
             });
         }
         
-        
         // don't send if not validated
         if (!bValidated) return;
         
@@ -394,17 +393,25 @@ module.exports.prototype = {
             switch($($component).attr('type'))
             {
                 case 'radio':
-    
-                    var aComponents = $component;
                     
-                    // 7c. collect value
-                    aComponents.each( function(index, $component)
+                    if ($component instanceof Array) // #fixme - should be needed. Single only!
                     {
-                        if ($($component).prop("checked") === true)
+                        var aComponents = $component;
+    
+                        // 7c. collect value
+                        aComponents.each( function(index, $component)
                         {
-                            value = $($component).val();
-                        }
-                    });
+                            if ($($component).prop("checked") === true)
+                            {
+                                value = $($component).val();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        value = $($component).val();
+                    }
+                    
                     
                     break;
                 
@@ -546,7 +553,7 @@ module.exports.prototype = {
         // validae
         if (!field.settings) return;
         if (!field.settings.validation) return;
-
+console.log('Validate start ..');
         // init
         var sErrorMessage = '';
         
@@ -560,7 +567,9 @@ module.exports.prototype = {
 
             // read
             var value = this._getValueFromInputField(field.$input);
-
+            
+            console.log('Value = ' + value);
+            
             switch(validationRule.key)
             {
                 case 'maxchars':
@@ -613,8 +622,9 @@ module.exports.prototype = {
                 field.$error.text('');
             }
         }
-
+        
+        // send
+        return bValid;
     }
-
 
 };

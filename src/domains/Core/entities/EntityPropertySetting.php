@@ -24,7 +24,12 @@ class EntityPropertySetting
             // ---
             'name' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING,
             'extends' => null,
-            'forms' => [],
+            'forms' => [
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES
+            ],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--key',

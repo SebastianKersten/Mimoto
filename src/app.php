@@ -69,6 +69,8 @@ function error($data, $bDumpVar = false)
     echo '</pre>';
     echo '</div>';
     echo '<br>';
+
+    //throw new Exception('');
     die();
 }
 

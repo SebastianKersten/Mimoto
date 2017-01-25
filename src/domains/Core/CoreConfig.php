@@ -112,6 +112,7 @@ class CoreConfig
     // data values
     const DATA_VALUE_TEXTLINE       = 'textline';
     const DATA_VALUE_TEXTBLOCK      = 'textblock';
+    const DATA_VALUE_BOOLEAN        = 'boolean';
     const DATA_VALUE_TRUE           = 'true';
     const DATA_VALUE_FALSE          = 'false';
 

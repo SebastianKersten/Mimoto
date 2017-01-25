@@ -28,11 +28,7 @@ class EntityProperty
             'name' => CoreConfig::MIMOTO_ENTITYPROPERTY,
             'extends' => null,
             'forms' => [
-                CoreConfig::COREFORM_ENTITYPROPERTY,
-                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE,
-                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE,
-                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES,
-                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES
+                CoreConfig::COREFORM_ENTITYPROPERTY
             ],
             'properties' => [
                 (object) array(
@@ -234,7 +230,6 @@ class EntityProperty
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
-
 
         // send
         return $field;
