@@ -26,7 +26,7 @@ use Mimoto\Core\entities\Input;
 use Mimoto\Core\entities\InputTextline;
 use Mimoto\Core\entities\InputTextBlock;
 use Mimoto\Core\entities\InputTextRTF;
-use Mimoto\Core\entities\InputRadiobutton;
+use Mimoto\Core\entities\InputRadioButton;
 use Mimoto\Core\entities\InputCheckbox;
 
 use Mimoto\Core\entities\LayoutGroupEnd;
@@ -654,7 +654,7 @@ class FormService
             case CoreConfig::COREFORM_INPUT_TEXTLINE: return InputTextline::getForm(); break;
             case CoreConfig::COREFORM_INPUT_TEXTBLOCK: return InputTextBlock::getForm(); break;
             case CoreConfig::COREFORM_INPUT_TEXTRTF: return InputTextRTF::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_RADIOBUTTON: return InputRadiobutton::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_RADIOBUTTON: return InputRadioButton::getForm(); break;
             case CoreConfig::COREFORM_INPUT_CHECKBOX: return InputCheckbox::getForm(); break;
 
             // output ---------
