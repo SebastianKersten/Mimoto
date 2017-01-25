@@ -310,11 +310,19 @@ class Component
                 'file' => 'MimotoCMS/components/forms/input/Checkbox/Checkbox.twig',
                 'conditionals' => []
             ),
+
+
             (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT,
                 'file' => 'MimotoCMS/components/forms/input/MultiSelect/MultiSelect.twig',
                 'conditionals' => []
             ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT.'--option',
+                'file' => 'MimotoCMS/components/forms/input/MultiSelect/MultiSelectOption/MultiSelectOption.twig',
+                'conditionals' => []
+            ),
+
 
             (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
