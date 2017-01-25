@@ -34355,8 +34355,11 @@
 	            });
 	        }
 	        
+	        
+	        console.log('Before validated ..');
 	        // don't send if not validated
 	        if (!bValidated) return;
+	        console.log('After validated ..');
 	        
 	        
 	        // 10. collect data
@@ -34552,6 +34555,9 @@
 	        {
 	            value = $($component).val();
 	        }
+	        
+	        console.warn('value:');
+	        console.warn(value);
 	        
 	        // send
 	        return value;

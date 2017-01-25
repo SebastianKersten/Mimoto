@@ -149,7 +149,7 @@ class EntityProperty
      */
     private static function setNameValidation($field)
     {
-        // validation rule #2
+        // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation2');
         $validationRule->setValue('key', 'minchars');
@@ -158,7 +158,7 @@ class EntityProperty
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
 
-        // validation rule #1
+        // validation rule #2
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation1');
         $validationRule->setValue('key', 'regex_custom');
