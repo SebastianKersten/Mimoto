@@ -1,18 +1,5 @@
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "multiselect"} %}
     {% block form_component_element %}
-
-        {% set aValues = Aimless.value() %}
-        {% set aOptions = Aimless.fieldOptions() %}
-
-        {% for option in aOptions %}
-            <div class="MimotoCMS_forms_FormComponent-element-container">
-                {% set sInputId = Aimless.fieldId()~'-'~option.key %}
-                <div class="MimotoCMS_forms_input_MultiSelect-container">
-                    <input {{ Aimless.input() }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect js-checkbox" value="{{ option.key }}" {% if option.key in aValues %}checked{% endif %} />
-                    <svg class="MimotoCMS_forms_input_MultiSelect-icon"><use xlink:href="#ico-checkmark"></use></svg>
-                </div>
-                <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ option.value }}</label>
-            </div>
-        {% endfor %}
+        {{ Aimless.render('options', '_MimotoAimless__interaction__form_input_multiselect--option', { value: Aimless.value(), fieldId: Aimless.meta('id'), input: Aimless.input() }) }}
     {% endblock %}
 {% endembed %}
