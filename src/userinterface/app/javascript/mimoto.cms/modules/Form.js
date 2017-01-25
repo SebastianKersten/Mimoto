@@ -394,11 +394,12 @@ module.exports.prototype = {
             {
                 case 'radio':
                     
-                    if ($component instanceof Array) // #fixme - should be needed. Single only!
+                    //  fix for handling radiobutton onSubmit en onChange
+                    if ($component.length)
                     {
                         var aComponents = $component;
     
-                        // 7c. collect value
+                        // collect value
                         aComponents.each( function(index, $component)
                         {
                             if ($($component).prop("checked") === true)
@@ -409,9 +410,11 @@ module.exports.prototype = {
                     }
                     else
                     {
-                        value = $($component).val();
+                        if ($($component).prop("checked") === true)
+                        {
+                            value = $($component).val();
+                        }
                     }
-                    
                     
                     break;
                 
@@ -538,13 +541,12 @@ module.exports.prototype = {
         {
             var sFormName = field.sFormId;
             var value = $(this).val();
-        
+            
             // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
         
             // #todo change reference to sInputFieldId / addEventListener / removeEventListener
         
             classRoot._validateInputField(field);
-        
         });
     },
 
@@ -553,7 +555,7 @@ module.exports.prototype = {
         // validae
         if (!field.settings) return;
         if (!field.settings.validation) return;
-console.log('Validate start ..');
+
         // init
         var sErrorMessage = '';
         
@@ -567,8 +569,6 @@ console.log('Validate start ..');
 
             // read
             var value = this._getValueFromInputField(field.$input);
-            
-            console.log('Value = ' + value);
             
             switch(validationRule.key)
             {
