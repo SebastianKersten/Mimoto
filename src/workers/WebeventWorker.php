@@ -2,7 +2,7 @@
 
 
 // Pusher classes
-require_once(dirname(dirname(dirname(__FILE__))).'/vendor/pusher/pusher-php-server/lib/pusher.php');
+require_once(dirname(dirname(dirname(__FILE__))).'/vendor/pusher/pusher-php-server/lib/Pusher.php');
 
 //echo gearman_version();
 
