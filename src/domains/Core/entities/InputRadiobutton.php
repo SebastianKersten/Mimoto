@@ -10,11 +10,11 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * InputRadiobutton
+ * InputRadioButton
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class InputRadiobutton
+class InputRadioButton
 {
 
     public static function getStructure()

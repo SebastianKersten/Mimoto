@@ -690,7 +690,7 @@ class ExampleController
         return $component->render();
     }
 
-    public function viewInputRadiobutton(Application $app)
+    public function viewInputRadioButton(Application $app)
     {
         // load
         $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, 1);

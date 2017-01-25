@@ -16,9 +16,12 @@
 
         .MimotoCMS_interface_Header-menu-user {
             display: flex;
-            padding-left: 20px;
             color: $dusty-gray;
             align-items: center;
+
+            @include breakpoint(small up) {
+                padding-left: 20px;
+            }
 
             &:hover {
                 text-decoration: none;
