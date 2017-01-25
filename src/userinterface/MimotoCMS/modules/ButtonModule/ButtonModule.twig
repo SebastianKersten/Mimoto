@@ -20,10 +20,12 @@
 {% endif %}
 
 <{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_ButtonModule{{ classes }}"{% if onclick %} onclick="{{ onclick }}"{% endif %}{% if icon|default('') %} data-icon="#ico-{{ icon }}"{% endif %}>
-    {% if label|default('') %}
-        <span class="MimotoCMS_ButtonModule-text">{{ label }}</span>
-    {% endif %}
-    {% if icon|default('') %}
-        <svg class="MimotoCMS_ButtonModule-icon"><use xlink:href="#ico-{{ icon }}"></use></svg>
-    {% endif %}
+    <div class="MimotoCMS_ButtonModule-content">
+        {% if label|default('') %}
+            <span class="MimotoCMS_ButtonModule-text">{{ label }}</span>
+        {% endif %}
+        {% if icon|default('') %}
+            <svg class="MimotoCMS_ButtonModule-icon"><use xlink:href="#ico-{{ icon }}"></use></svg>
+        {% endif %}
+    </div>
 </{{ element }}>

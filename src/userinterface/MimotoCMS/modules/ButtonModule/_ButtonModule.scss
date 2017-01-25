@@ -1,5 +1,4 @@
 .MimotoCMS_ButtonModule {
-    display: inline-flex;
     padding: 10px 20px;
     cursor: pointer;
     text-decoration: none;
@@ -8,8 +7,6 @@
     outline: none;
     background-color: $black;
     box-shadow: none;
-    flex-wrap: nowrap;
-    align-items: center;
 
     &:hover {
         text-decoration: none;
@@ -26,6 +23,10 @@
 
     &:hover {
         background-color: $black;
+    }
+
+    .MimotoCMS_ButtonModule-icon {
+        fill: $white;
     }
 }
 
@@ -46,8 +47,8 @@
         background-color: $black;
     }
 
-    &>.MimotoCMS_ButtonModule-icon {
-        color: #fff;
+    .MimotoCMS_ButtonModule-icon {
+        fill: $white;
     }
 }
 
@@ -56,27 +57,35 @@
     font-size: rem-calc(10px);
 }
 
-    .MimotoCMS_ButtonModule-text {
-        font-family: $font-family-futura;
-        font-size: rem-calc(14px);
-        font-weight: 500;
-        line-height: rem-calc(20px);
+    .MimotoCMS_ButtonModule-content {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
     }
 
-    .MimotoCMS_ButtonModule-icon {
-        display: block;
-        width: 10px;
-        height: 10px;
-        margin: 5px 0 5px 15px;
-        fill: $tower-gray;
-    }
+        .MimotoCMS_ButtonModule-text {
+            font-family: $font-family-futura;
+            font-size: rem-calc(14px);
+            font-weight: 500;
+            line-height: rem-calc(20px);
+            flex: 1 1 auto;
+        }
 
-    .MimotoCMS_ButtonModule-icon--loading {
-        width: 12px;
-        height: 12px;
-        margin: 4px 0 4px 13px;
-        stroke: $tower-gray;
-    }
+        .MimotoCMS_ButtonModule-icon {
+            display: block;
+            width: 10px;
+            height: 10px;
+            margin: 5px 0 5px 15px;
+            fill: $tower-gray;
+            flex: 0 0 auto;
+        }
 
-    .MimotoCMS_ButtonModule-icon--success {
-    }
+        .MimotoCMS_ButtonModule-icon--loading {
+            width: 12px;
+            height: 12px;
+            margin: 4px 0 4px 13px;
+            stroke: $tower-gray;
+        }
+
+        .MimotoCMS_ButtonModule-icon--success {
+        }
