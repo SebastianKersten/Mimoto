@@ -52,7 +52,7 @@ module.exports.prototype = {
         }
 
         // connect
-        Mimoto.Aimless.pusher = new Pusher('19c5b7fbb5340fe48402', {
+        Mimoto.Aimless.pusher = new Pusher('6fa10de17a6b4e5c0c40', {
             cluster: 'eu',
             host: 'api-eu.pusher.com',
             encrypted: true,
