@@ -34175,7 +34175,7 @@
 	
 	        // 1. locate form in dom
 	        var $form = $('form[name="' + currentForm.sName + '"]');
-	
+	console.log('sInputFieldId = ' + sInputFieldId);
 	        // setup
 	        var field = {
 	            'sFormId': currentForm,
@@ -34183,7 +34183,7 @@
 	            'sType': 'input', // #todo - const
 	            'settings': settings,
 	            $field: $("[data-aimless-form-field='" + sInputFieldId + "']", $form),
-	            $input: $("[data-aimless-form-field-input='" + sInputFieldId + "']", $form),
+	            $input: $("[data-aimless-form-field-input='" + sInputFieldId + "']", $form),  // todo - multiselect x * option
 	            $error: $("[data-aimless-form-field-error='" + sInputFieldId + "']", $form)
 	        };
 	
@@ -34355,8 +34355,11 @@
 	            });
 	        }
 	        
+	        
+	        console.log('Before validated ..');
 	        // don't send if not validated
 	        if (!bValidated) return;
+	        console.log('After validated ..');
 	        
 	        
 	        // 10. collect data
@@ -34552,6 +34555,9 @@
 	        {
 	            value = $($component).val();
 	        }
+	        
+	        console.warn('value:');
+	        console.warn(value);
 	        
 	        // send
 	        return value;

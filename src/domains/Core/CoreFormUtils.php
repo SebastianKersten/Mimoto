@@ -179,7 +179,7 @@ class CoreFormUtils
     /**
      * Get field: label
      */
-    public static function addField_textline(MimotoEntity $form, $sFieldId, $sEntityPropertyId, $sLabel = '', $sPlaceholder = '', $sDescription = '')
+    public static function addField_textline(MimotoEntity $form, $sFieldId, $sEntityPropertyId, $sLabel = '', $sPlaceholder = '', $sDescription = '', $sPrefix = '')
     {
         // register
         $sFormId = $form->getId();
@@ -190,6 +190,7 @@ class CoreFormUtils
         $field->setValue('label', $sLabel);
         $field->setValue('placeholder', $sPlaceholder);
         $field->setValue('description', $sDescription);
+        $field->setValue('prefix', $sPrefix);
 
         // 2. connect to property
         $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
