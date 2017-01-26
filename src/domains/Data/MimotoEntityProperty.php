@@ -50,6 +50,12 @@ class MimotoEntityProperty
 
 
     /**
+     * Get id
+     * @return string
+     */
+    public function getId() { return $this->_config->id; }
+
+    /**
      * Get name
      * @return string
      */

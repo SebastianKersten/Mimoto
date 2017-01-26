@@ -32,14 +32,14 @@ class InputTextline
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
@@ -49,14 +49,14 @@ class InputTextline
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
@@ -66,14 +66,14 @@ class InputTextline
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'placeholder',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
@@ -83,14 +83,14 @@ class InputTextline
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'prefix',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
@@ -132,27 +132,28 @@ class InputTextline
             $form, 'label', CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label',
             'Label', 'Enter the input\'s label', 'Clarify what is required from the content editor'
         );
+        CoreFormUtils::setLabelValidation($field, CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label');
 
         $field = CoreFormUtils::addField_textline
         (
             $form, 'description', CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description',
-            'Label',
-            'Enter the input\'s description',
+            'Description',
+            'Enter a description',
             'Clarify what is required from the content editor'
         );
 
         $field = CoreFormUtils::addField_textline
         (
             $form, 'placeholder', CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder',
-            'Label',
-            'Enter the input\'s placeholder',
+            'Placeholder',
+            'Enter a placeholder',
             'Clarify what is required from the content editor'
         );
 
         $field = CoreFormUtils::addField_textline
         (
             $form, 'prifix', CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix',
-            'Prefix', 'Enter the input\'s prefix',
+            'Prefix', 'Enter a prefix',
             'Clarify what is required from the content editor'
         );
 

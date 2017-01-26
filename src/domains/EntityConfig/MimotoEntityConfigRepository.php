@@ -539,6 +539,9 @@ class MimotoEntityConfigRepository
                             // make note
                             $property->owner = $extensionId;
 
+                            // convert core id's (what about custom data id's?)
+                            $property->id = $entity->id.substr($property->id, strlen($extensionId));
+
                             // store
                             $entity->properties[] = $property;
                         }
@@ -552,6 +555,9 @@ class MimotoEntityConfigRepository
                 $entity->typeOfAsNames = [$this->getEntityNameById($entity->id)];
             }
         }
+
+
+        //error($this->_aEntities);
     }
 
     /**

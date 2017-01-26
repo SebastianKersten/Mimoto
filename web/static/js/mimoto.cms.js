@@ -34175,7 +34175,7 @@
 	
 	        // 1. locate form in dom
 	        var $form = $('form[name="' + currentForm.sName + '"]');
-	console.log('sInputFieldId = ' + sInputFieldId);
+	        
 	        // setup
 	        var field = {
 	            'sFormId': currentForm,
@@ -34356,10 +34356,10 @@
 	        }
 	        
 	        
-	        console.log('Before validated ..');
+	        //console.log('Before validated ..');
 	        // don't send if not validated
 	        if (!bValidated) return;
-	        console.log('After validated ..');
+	        //console.log('After validated ..');
 	        
 	        
 	        // 10. collect data

@@ -22,7 +22,7 @@ class Entity
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_ENTITY,
-            'created' => CoreConfig::EPOCH,
+            //'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_ENTITY,
             'extends' => null,
@@ -30,14 +30,14 @@ class Entity
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--name',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--name-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--name-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
@@ -47,22 +47,22 @@ class Entity
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--properties',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'properties',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--properties-allowedEntityTypes',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--properties-allowedEntityTypes',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => [CoreConfig::MIMOTO_ENTITYPROPERTY]
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--properties-allowDuplicates',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--properties-allowDuplicates',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
@@ -72,14 +72,14 @@ class Entity
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--extends',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'extends',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--extends-allowedEntityType',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--extends-allowedEntityType',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityType',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
@@ -89,14 +89,14 @@ class Entity
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--isAbstract',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'isAbstract',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--isAbstract-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--isAbstract-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
@@ -106,22 +106,22 @@ class Entity
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--components',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'components',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--components-allowedEntityTypes',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--components-allowedEntityTypes',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => [CoreConfig::MIMOTO_COMPONENT]
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--components-allowDuplicates',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--components-allowDuplicates',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
@@ -131,22 +131,22 @@ class Entity
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--forms',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'forms',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--forms-allowedEntityTypes',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--forms-allowedEntityTypes',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => [CoreConfig::MIMOTO_FORM]
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITY.'--forms-allowDuplicates',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITY.'--forms-allowDuplicates',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
@@ -189,14 +189,14 @@ class Entity
         );
         self::setNameValidation($field);
 
-        $form->addValue('fields', self::getField_extends());
-
-        CoreFormUtils::addField_checkbox
-        (
-            $form, 'isAbstract', CoreConfig::MIMOTO_ENTITY.'--isAbstract',
-            'Configuration',
-            'Skip dedicated table for this entity'
-        );
+//        $form->addValue('fields', self::getField_extends());
+//
+//        CoreFormUtils::addField_checkbox
+//        (
+//            $form, 'isAbstract', CoreConfig::MIMOTO_ENTITY.'--isAbstract',
+//            'Configuration',
+//            'Skip dedicated table for this entity'
+//        );
 
         CoreFormUtils::addField_groupEnd($form);
 
@@ -218,39 +218,21 @@ class Entity
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation2');
+        $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation2');
         $validationRule->setValue('key', 'minchars');
         $validationRule->setValue('value', 1);
-        $validationRule->setValue('errorMessage', "Value can't be empty");
+        $validationRule->setValue('errorMessage', "The entity name can't be empty");
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
 
         // validation rule #2
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation1');
         $validationRule->setValue('key', 'regex_custom');
         $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
         $validationRule->setValue('errorMessage', 'Name should be in lowerCamelCase, starting with a letter followed by [a-zA-Z0-9-_]');
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
-
-
-//
-//        // validation rule #3
-//        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-//        $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation3');
-//        $validationRule->setValue('key', 'regex_custom');
-//        $validationRule->setValue('value', '^[a-zA-Z0-9][a-zA-Z0-9_-]*$');
-//        $validationRule->setValue('errorMessage', 'No characters other than a-z, A-Z and 0-9 allowed');
-//        $field->addValue('validation', $validationRule);
-//
-//        // validation rule #4
-//        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-//        $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation4');
-//        $validationRule->setValue('key', 'api');
-//        $validationRule->setValue('value', '/mimoto.cms/entityproperty/validatename');
-//        $validationRule->setValue('errorMessage', 'The name needs to be unique');
-//        $field->addValue('validation', $validationRule);
 
         // send
         return $field;

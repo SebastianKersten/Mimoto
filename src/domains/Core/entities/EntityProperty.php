@@ -23,7 +23,7 @@ class EntityProperty
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_ENTITYPROPERTY,
-            'created' => CoreConfig::EPOCH,
+            //'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_ENTITYPROPERTY,
             'extends' => null,
@@ -34,16 +34,16 @@ class EntityProperty
                 (object) array(
 
                     'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name',
-                    'created' => CoreConfig::EPOCH,
+                   // 'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'key' => 'type',
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--name-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
+                            'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -51,14 +51,14 @@ class EntityProperty
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--type-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
@@ -68,14 +68,14 @@ class EntityProperty
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'settings',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowedEntityTypes',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowedEntityTypes',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
@@ -83,8 +83,8 @@ class EntityProperty
 
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowDuplicates',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings-allowDuplicates',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'allowDuplicates',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
@@ -154,7 +154,7 @@ class EntityProperty
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation2');
         $validationRule->setValue('key', 'minchars');
         $validationRule->setValue('value', 1);
-        $validationRule->setValue('errorMessage', "Value can't be empty");
+        $validationRule->setValue('errorMessage', "The property name can't be empty");
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
 

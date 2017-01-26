@@ -1,7 +1,7 @@
 <div class="MimotoCMS_forms_FormComponent-element-container">
     {% set sInputId = fieldId ~ '-' ~ Aimless.data('key') %}
     <div class="MimotoCMS_forms_input_MultiSelect-container">
-        <input {{ input }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect js-checkbox" value="{{ Aimless.data('key') }}" {% if value == Aimless.data('key') %}checked{% endif %} />
+        <input {{ input }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect js-checkbox" value="{{ Aimless.data('key') }}" {% for singleValue in value %}{% if singleValue == Aimless.data('key') %}checked{% endif %}{% endfor %} />
         <svg class="MimotoCMS_forms_input_MultiSelect-icon"><use xlink:href="#ico-checkmark"></use></svg>
     </div>
     <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ Aimless.data('value') }}</label>
