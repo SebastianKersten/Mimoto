@@ -24,6 +24,10 @@
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "list"} %}
     {% block form_component_element %}
         <div class="MimotoCMS_forms_input_List js-list js-list-sortable">
+
+
+            '_MimotoAimless__interaction__form_input_list--item
+
             {% for list_item in list_items %}
                 {% include 'MimotoCMS/components/forms/input/ListItem/ListItem.twig' with {
                     "list_item": list_item,

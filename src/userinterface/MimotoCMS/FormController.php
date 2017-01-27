@@ -102,7 +102,7 @@ class FormController
         $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
         // 2. load
-        $parentEntity = $app['Mimoto.Config']->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $parentEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
         // 3. remove connection
         $parentEntity->removeValue('forms', $form);

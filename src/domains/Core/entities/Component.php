@@ -354,8 +354,8 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => CoreConfig::MIMOTO_FORM_INPUT_LISTITEM,
-                'file' => 'MimotoCMS/components/forms/input/ListItem/ListItem.twig',
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_LIST.'--item',
+                'file' => 'MimotoCMS/components/forms/input/List/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
             (object) array(

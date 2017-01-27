@@ -20,7 +20,7 @@ class InputVideo
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO,
-            'created' => CoreConfig::EPOCH,
+            //'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO,
             'visualName' => 'Video',
@@ -29,14 +29,14 @@ class InputVideo
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--label',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--label-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--label-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
@@ -46,14 +46,14 @@ class InputVideo
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--description',
-                    'created' => CoreConfig::EPOCH,
+                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--description-type',
-                            'created' => CoreConfig::EPOCH,
+                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_VIDEO.'--description-type',
+                            //'created' => CoreConfig::EPOCH,
                             // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,

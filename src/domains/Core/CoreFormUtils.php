@@ -63,6 +63,18 @@ class CoreFormUtils
         // register
         $sFormId = $form->getId();
 
+        // load
+        $sParentEntityId = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+
+
+        // #todo
+
+        // 1. get parent (pass from form to field to this form where it is needed!)
+        // 2. get parent properties
+        // 3. get property id's
+
+
+
 
         // --- group start
 
@@ -82,8 +94,7 @@ class CoreFormUtils
 
         // 2. connect to property
         $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId($sFormId.'--value');
-        // $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_INPUT.'--value'); todo
+        $connectedEntityProperty->setId($sParentEntityId.'--value');
         $field->setValue('value', $connectedEntityProperty);
 
         // load
@@ -201,6 +212,24 @@ class CoreFormUtils
         $form->addValue('fields', $field);
 
         // 3. send
+        return $field;
+    }
+
+    /**
+     * Set label validation
+     */
+    public static function setLabelValidation($field, $sFieldId)
+    {
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId($sFieldId.'_value_validation1');
+        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('value', 1);
+        $validationRule->setValue('errorMessage', "Please supply a label for the field");
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
         return $field;
     }
 }
