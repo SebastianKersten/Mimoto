@@ -5,17 +5,17 @@
     {% endif %}
 
     <div class="MimotoCMS_forms_input_ListItem-text">
-        <p class="MimotoCMS_forms_input_ListItem-title">{{ list_item.title }}</p>
-        <p class="MimotoCMS_forms_input_ListItem-subtitle">{{ list_item.subtitle }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-title">{{ title }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-subtitle">{{ subtitle }}</p>
     </div>
 
-    {% if list_item.removeable|default(false) %}
+    {% if list_item.removeable|default(true) %}
         <div class="MimotoCMS_forms_input_ListItem-button">
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', link: '#', types: ['grey'] }) }}
+            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', link: '#', types: ['alert'] }) }}
         </div>
     {% endif %}
 
-    {% if sortable|default(false) %}
+    {% if sortable|default(true) %}
         <div class="MimotoCMS_forms_input_ListItem-handle">
             <div class="MimotoCMS_forms_input_ListItem-handle-dot"></div>
             <div class="MimotoCMS_forms_input_ListItem-handle-dot"></div>

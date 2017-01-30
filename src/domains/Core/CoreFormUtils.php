@@ -58,7 +58,7 @@ class CoreFormUtils
     /**
      * Get value input
      */
-    public static function addFieldsValueInput(MimotoEntity $form)
+    public static function addFieldsValueInput(MimotoEntity $form, $bShowOptions = false)
     {
         // register
         $sFormId = $form->getId();
@@ -122,11 +122,34 @@ class CoreFormUtils
         $form->addValue('fields', $field);
 
 
+        // verify
+        if ($bShowOptions)
+        {
+            // 1. create and setup field
+            $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_LIST);
+            $field->setId($sFormId . '--options');
+            $field->setValue('label', 'Options');
+            $field->setValue('description', 'Provide the options the user can pick from');
+
+            // 2. connect to property
+            $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+            $connectedEntityProperty->setId($sParentEntityId . '--options');
+            $field->setValue('value', $connectedEntityProperty);
+
+
+            // 1. add mapping as option
+            // 2. set url
+
+
+            $form->addValue('fields', $field);
+        }
+
+
         // --- group end
 
         // create
         $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
-        $field->setId($sFormId.'--groupend-value');
+        $field->setId($sFormId . '--groupend-value');
         $form->addValue('fields', $field);
     }
 
