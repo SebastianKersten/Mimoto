@@ -132,7 +132,10 @@ class FormController
         {
             if ($aInputTypesAll[$nInputIndex]->id != CoreConfig::MIMOTO_FORM_INPUT)
             {
-                $aInputTypes[] = $aInputTypesAll[$nInputIndex];
+                if ($aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE) // todo temp
+                {
+                    $aInputTypes[] = $aInputTypesAll[$nInputIndex];
+                }
             }
         }
 

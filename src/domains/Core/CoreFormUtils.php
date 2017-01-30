@@ -46,7 +46,7 @@ class CoreFormUtils
 
         // 1. create and setup
         $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
-        $field->setId($sFormId.self::ID_DIVIDER.'title');
+        $field->setId($sFormId.self::ID_DIVIDER.'formtitle');
         $field->setValue('title', $sTitle);
         $field->setValue('subtitle', $sSubtitle);
         $field->setValue('description', $sDescription);
