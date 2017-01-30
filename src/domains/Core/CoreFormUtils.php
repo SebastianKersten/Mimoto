@@ -138,11 +138,26 @@ class CoreFormUtils
 
 
             // 1. add mapping as option
-            // 2. set url
-
+            // 2. set options (sortable |mapping | url | target (popup/page)
 
             $form->addValue('fields', $field);
         }
+
+        // 1. create and setup field
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_LIST);
+        $field->setId($sFormId . '--validation');
+        $field->setValue('label', 'Validation');
+        $field->setValue('description', 'Add your validation rules');
+
+        // 2. connect to property
+        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $connectedEntityProperty->setId($sParentEntityId . '--validation');
+        $field->setValue('value', $connectedEntityProperty);
+
+        // 1. add mapping as option
+        // 2. set options (sortable |mapping | url | target (popup/page)
+
+        $form->addValue('fields', $field);
 
 
         // --- group end

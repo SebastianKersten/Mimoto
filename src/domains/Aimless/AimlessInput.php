@@ -63,7 +63,7 @@ class AimlessInput extends AimlessComponent
         // return raw value (= connection)
         if (!$bRenderValues) return $this->_value;
 
-        echo $this->_sFieldId;
+        //echo $this->_sFieldId;
 
         if (!is_array($this->_value))
         {
