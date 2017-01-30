@@ -230,8 +230,6 @@ class FormController
             // 6. remove connections
             Mimoto::service('data')->store($formField);
 
-            // 7. remove value
-            Mimoto::service('data')->delete();
 
             // #todo options and validation delete
         }

@@ -70,7 +70,7 @@ function error($data, $bDumpVar = false)
     echo '</div>';
     echo '<br>';
 
-    //throw new Exception('');
+    throw new Exception('');
     die();
 }
 

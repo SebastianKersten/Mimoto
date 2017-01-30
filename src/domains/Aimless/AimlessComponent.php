@@ -714,27 +714,32 @@ class AimlessComponent
      * @param $aFieldVars
      * @return AimlessInput
      */
-    private function renderCollectionItemAsInput($sTemplateName, $eField, $connection, $aFieldVars)
+    private function renderCollectionItemAsInput($sTemplateName, $eField, $connection, $aFormFields)
     {
+        // init
+        $bFormFieldFound = false;
+
+        // search
+        $nFormFieldCount = count($aFormFields);
+        for ($nFormFieldIndex = 0; $nFormFieldIndex < $nFormFieldCount; $nFormFieldIndex++)
+        {
+            // register
+            $formField = $aFormFields[$nFormFieldIndex];
+
+            // check
+            if ($formField->fieldSelector == $eField->getEntityTypeName().'.'.$eField->getId())
+            {
+                // toggle
+                $bFormFieldFound = true;
+                break;
+            }
+        }
+
         // validate
-        if (!isset($aFieldVars[$eField->getEntityTypeName().'.'.$eField->getId()]))
-        {
-            $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please set a <b>varname</b> or connect an <b>entityProperty</b> to the value of field with <b>id=".$eField->getId()."</b> and type=".$eField->getEntityTypeName(), 'AimlessComponent', true);
-        }
-
-        // gerister
-        $fieldVar = $aFieldVars[$eField->getEntityTypeName().'.'.$eField->getId()];
-
-        // #todo
-        if ($eField->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN)
-        {
-            $aFieldValueOptions = $eField->getValue('options', true);
-
-            //error($aFieldValueOptions);
-        }
+        if (!$bFormFieldFound) $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please add a value to input field with <b>id=".$eField->getId()."</b> and type=".$eField->getEntityTypeName(), 'AimlessComponent', true);
 
         // create and send
-        return $this->_AimlessService->createInput($sTemplateName, $eField, $connection, $fieldVar->key, $fieldVar->value);
+        return $this->_AimlessService->createInput($sTemplateName, $eField, $connection, $formField->key, $formField->value);
     }
 
     /**

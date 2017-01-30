@@ -60,6 +60,8 @@ class AimlessInput extends AimlessComponent
 
     public function value()
     {
+        //echo 'Value = '.$this->_value.'<br>';
+
         return $this->_value;
     }
 
