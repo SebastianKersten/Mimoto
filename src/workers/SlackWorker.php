@@ -30,6 +30,10 @@ function sendSlackNotification($job)
             "icon_emoji"    =>  ":ant:"
         ));
 
+    echo "Slack event (".date('Y.m.d H:i:s').")\n";
+    echo "-------------------------------------\n";
+    print_r($data);
+    echo "-------------------------------------\n\n\n";
 
     // You can get your webhook endpoint from your Slack settings
     $ch = curl_init($config->slack->webhook);

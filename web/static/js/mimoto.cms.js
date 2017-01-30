@@ -34556,8 +34556,8 @@
 	            value = $($component).val();
 	        }
 	        
-	        console.warn('value:');
-	        console.warn(value);
+	        //console.warn('value:');
+	        //console.warn(value);
 	        
 	        // send
 	        return value;
@@ -34565,8 +34565,8 @@
 	
 	    _setInputFieldValue: function($component, value) // #todo - implement
 	    {
-	        console.log('value:');
-	        console.error(value);
+	        //console.log('value:');
+	        //console.error(value);
 	        
 	        
 	        if ($($component).is("input"))
