@@ -282,11 +282,6 @@ class AimlessService
      */
     public function handleRequest($sRequest, $data, $config)
     {
-        
-//        output('$sRequest', $sRequest);
-//        output('$data', $data);
-//        output('$config', $config);
-        
         switch($sRequest)
         {
             case 'dataUpdate':              $this->dataUpdate($data, $config); break;
@@ -584,9 +579,6 @@ class AimlessService
 
         // connect
         if (!empty($aConnections)) $data->connections = $aConnections;
-
-//error($data);
-        //output('Data to broadcast', $data);
         
         
         // 1. dit gaat via async, het is efficienter om de rest af te handelen via deze directe route (denk aan "modified")
@@ -595,8 +587,11 @@ class AimlessService
 
         if (!empty($data->changes)) { $this->sendPusherEvent('Aimless', 'data.changed', $data); }
         
-        //$this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
-        //$this->sendPusherEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));
+        /**
+         * Exaamples:
+         * $this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
+         * $this->sendPusherEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));
+         */
     }
     
     /**
