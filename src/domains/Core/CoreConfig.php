@@ -135,6 +135,8 @@ class CoreConfig
     const COREFORM_COMPONENT            = '_MimotoAimless__coreform__component';
     const COREFORM_FORM                 = '_MimotoAimless__coreform__form';
     const COREFORM_FORM_INPUTVALUE      = '_MimotoAimless__coreform__form_inputvalue';
+    const COREFORM_FORM_INPUTOPTION     = '_MimotoAimless__coreform__form_inputoption';
+    const COREFORM_FORM_INPUTVALIDATION = '_MimotoAimless__coreform__form_inputvalidation';
 
 
     // input

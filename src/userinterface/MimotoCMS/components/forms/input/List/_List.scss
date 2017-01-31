@@ -1,5 +1,12 @@
 @import 'ListItem/ListItem';
 
 #{$pr-input}_List {
-    padding: 0 0 5px;
+
+    & > div {
+        margin: 0 0 5px 0;
+    }
+
+    & > div:last-child {
+        margin: 0;
+    }
 }

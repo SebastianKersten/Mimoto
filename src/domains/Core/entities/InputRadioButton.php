@@ -104,8 +104,10 @@ class InputRadioButton
             'Description', 'Enter a description', 'If needed, add additional explaination regarding the input field'
         );
 
+        CoreFormUtils::addField_groupEnd($form);
+
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, true);
 
         // send
         return $form;

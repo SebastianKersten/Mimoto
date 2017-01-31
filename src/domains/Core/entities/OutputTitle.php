@@ -6,6 +6,7 @@ namespace Mimoto\Core\entities;
 // Mimoto classes
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\CoreFormUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
@@ -21,7 +22,6 @@ class OutputTitle
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
-            'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
             'visualName' => 'Title',
@@ -30,15 +30,11 @@ class OutputTitle
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--title',
-                    'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'title',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--title-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -47,15 +43,11 @@ class OutputTitle
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--subtitle',
-                    'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'subtitle',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--subtitle-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -64,15 +56,11 @@ class OutputTitle
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--description',
-                    'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--description-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTBLOCK
@@ -90,8 +78,6 @@ class OutputTitle
 
 
 
-
-
     // ----------------------------------------------------------------------------
     // --- Form -------------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -103,15 +89,38 @@ class OutputTitle
     public static function getForm()
     {
         // init
-        $form = self::initForm(CoreConfig::COREFORM_OUTPUT_TITLE);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_OUTPUT_TITLE);
 
         // setup
-        $form->addValue('fields', self::getField_formtitle('Add new title'));
-        $form->addValue('fields', self::getField_groupStart());
-        $form->addValue('fields', self::getField_title());
-        $form->addValue('fields', self::getField_subtitle());
-        $form->addValue('fields', self::getField_description());
-        $form->addValue('fields', self::getField_groupEnd());
+        CoreFormUtils::addField_title($form, 'Title');
+        CoreFormUtils::addField_groupStart($form);
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'title', CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--title',
+            'Title',
+            'Enter the title',
+            ''
+        );
+        self::setTitleValidation($field);
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'subtitle', CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--subtitle',
+            'Subtitle',
+            'Enter a subtitle',
+            ''
+        );
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'description', CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--description',
+            'Description',
+            'Enter a description',
+            'Describe to the user what the form is about'
+        );
+
+        CoreFormUtils::addField_groupEnd($form);
 
         // send
         return $form;
@@ -125,142 +134,18 @@ class OutputTitle
 
 
     /**
-     * Init structure
+     * Set title validation
      */
-    private static function initForm($sFormName)
+    private static function setTitleValidation($field)
     {
-        // init
-        $form = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
-
-        // setup
-        $form->setId($sFormName);
-        $form->setValue('name', $sFormName);
-        $form->setValue('realtimeCollaborationMode', false);
-
-        // send
-        return $form;
-    }
-
-    /**
-     * Get field: title
-     */
-    private static function getField_formtitle($sTitle)
-    {
-        // create and setup
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
-        $field->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--formtitle');
-        $field->setValue('title', $sTitle);
-        $field->setValue('description', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: groupStart
-     */
-    private static function getField_groupStart()
-    {
-        // create
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
-        $field->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--groupstart');
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: label
-     */
-    private static function getField_title()
-    {
-        // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
-        $field->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--title');
-        $field->setValue('label', 'Title');
-        $field->setValue('placeholder', "Enter the title");
-
-            // 2. setup value
-            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-            $value->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--title_value');
-            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
-
-                // 3. connect to property
-                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-                $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--title');
-                $value->setValue('entityProperty', $connectedEntityProperty);
-
-            // add value to field
-            $field->setValue('value', $value);
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: description
-     */
-    private static function getField_subtitle()
-    {
-        // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
-        $field->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--subtitle');
-        $field->setValue('label', 'Subtitle');
-        $field->setValue('placeholder', "Enter a subtitle");
-
-            // 2. setup value
-            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-            $value->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--subtitle_value');
-            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
-
-                // 3. connect to property
-                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-                $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--subtitle');
-                $value->setValue('entityProperty', $connectedEntityProperty);
-
-            // add value to field
-            $field->setValue('value', $value);
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: placeholder
-     */
-    private static function getField_description()
-    {
-        // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK);
-        $field->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--description');
-        $field->setValue('label', 'Description');
-        $field->setValue('placeholder', "Enter a description");
-
-            // 2. setup value
-            $value = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALUE);
-            $value->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--description_value');
-            $value->setValue(CoreConfig::INPUTVALUE_VARTYPE, CoreConfig::INPUTVALUE_VARTYPE_ENTITYPROPERTY);
-
-                // 3. connect to property
-                $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-                $connectedEntityProperty->setId(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--description');
-                $value->setValue('entityProperty', $connectedEntityProperty);
-
-            // add value to field
-            $field->setValue('value', $value);
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: groupEnd
-     */
-    private static function getField_groupEnd()
-    {
-        // create
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
-        $field->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--groupend');
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--title_value_validation1');
+        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('value', 1);
+        $validationRule->setValue('errorMessage', "The title can't be empty");
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
 
         // send
         return $field;

@@ -266,9 +266,16 @@ class MimotoDataUtils
 
                 break;
 
+            case MimotoEntityPropertyValueTypes::VALUETYPE_EMPTY:
+
+                $connection = null;
+                break;
+
             default:
 
-                Mimoto::service('log')->silent("Unknown connection value", "The property '".$sPropertyName."' only allows values of type '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."'", true);
+                output('Unknown value type', $sValueType);
+
+                Mimoto::service('log')->error("Unknown connection value", "The property '".$sPropertyName."' only allows values of type '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."'", true);
                 break;
         }
 

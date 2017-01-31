@@ -452,8 +452,8 @@ module.exports.prototype = {
             value = $($component).val();
         }
         
-        console.warn('value:');
-        console.warn(value);
+        //console.warn('value:');
+        //console.warn(value);
         
         // send
         return value;
@@ -461,6 +461,10 @@ module.exports.prototype = {
 
     _setInputFieldValue: function($component, value) // #todo - implement
     {
+        //console.log('value:');
+        //console.error(value);
+        
+        
         if ($($component).is("input"))
         {
             switch($($component).attr('type'))
@@ -490,6 +494,11 @@ module.exports.prototype = {
             }
         };
     
+        if ($($component).is("select"))
+        {
+            $($component).val(value);
+        }
+        
         if ($($component).is("textarea"))
         {
             // output

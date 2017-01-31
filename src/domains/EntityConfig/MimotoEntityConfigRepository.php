@@ -161,12 +161,15 @@ class MimotoEntityConfigRepository
         }
     }
 
-    public function getPropertyIdByName($sName)
+    public function getPropertyIdByName($sName, $nParentEntityTypeId = null)
     {
         $nEntityCount = count($this->_aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)
         {
             $entity = $this->_aEntities[$i];
+
+            // verify and skip
+            if (!empty($nParentEntityTypeId) && $entity->id != $nParentEntityTypeId) continue;
 
             $nPropertyCount = count($entity->properties);
             for ($j = 0; $j < $nPropertyCount; $j++)

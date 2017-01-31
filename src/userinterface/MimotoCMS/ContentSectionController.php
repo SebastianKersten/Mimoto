@@ -111,7 +111,7 @@ class ContentSectionController
         return $component->render();
     }
 
-    public function contentSectionDelete(Application $app, Request $request, $nContentSectionId)
+    public function contentSectionDelete(Application $app, $nContentSectionId)
     {
         // delete
         //Mimoto::service('config')->entityDelete($nContentSectionId);

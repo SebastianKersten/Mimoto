@@ -35,7 +35,7 @@ class AimlessForm extends AimlessComponent
      * @param EntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sFormName, $xValues, $aOptions, $AimlessService, $DataService, $FormService, $LogService, $TwigService)
+    public function __construct($sFormName, $entity, $aOptions, $AimlessService, $DataService, $FormService, $LogService, $TwigService)
     {
 
         if (empty($options))
@@ -49,7 +49,7 @@ class AimlessForm extends AimlessComponent
 
             // register
             $this->_sFormName = $sFormName;
-            $this->_xValues = $xValues;
+            $this->_entity = $entity;
             $this->_aOptions = $aOptions;
         }
     }
@@ -64,13 +64,10 @@ class AimlessForm extends AimlessComponent
         $aFields = $form->getValue('fields');
 
         // #fixme
-        $nEntityId = ($this->_xValues instanceof MimotoEntity) ? $this->_xValues->getId() : null;
+        $nEntityId = ($this->_entity instanceof MimotoEntity) ? $this->_entity->getId() : null;
 
         // 3. prepare
-        $formVars = $this->_FormService->getFormVars($form, $this->_xValues, $aFields, $nEntityId);
-
-
-
+        $formFieldValues = $this->_FormService->getFormFieldValues($form, $this->_entity, $aFields, $nEntityId);
 
 
         if ($form->getValue('customSubmit') === true)
@@ -97,8 +94,8 @@ class AimlessForm extends AimlessComponent
 
 
         // add security
-        $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.Mimoto::service('user')->getUserPublicKey(json_encode($formVars->connectedEntities)).'">';
-        $sRenderedForm .= '<input type="hidden" name="Mimoto.EntityId" value="'.$formVars->entityId.'">';
+        $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.Mimoto::service('user')->getUserPublicKey(json_encode($formFieldValues)).'">';
+        $sRenderedForm .= '<input type="hidden" name="Mimoto.EntityId" value="'.$formFieldValues->entityId.'">';
 
         // add instructions
         if (!empty($this->_aOptions) && !empty($this->_aOptions['onCreatedConnectTo']))
@@ -107,7 +104,7 @@ class AimlessForm extends AimlessComponent
         }
 
         // render form
-        $sRenderedForm .= parent::renderCollection($aFields, null, null, $formVars->fieldVars, true);
+        $sRenderedForm .= parent::renderCollection($aFields, null, null, $formFieldValues->fields, true);
 
         // finish
         $sRenderedForm .= '</form>';

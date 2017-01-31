@@ -42,6 +42,11 @@ function sendUpdate($job)
     // read
     $workload = json_decode($job->workload());
 
+    echo "Pusher event (".date('Y.m.d H:i:s').")\n";
+    echo "-------------------------------------\n";
+    print_r($workload);
+    echo "-------------------------------------\n\n\n";
+
     // send
     $GLOBALS['pusher']->trigger($workload->sChannel, $workload->sEvent, $workload->data);
 }

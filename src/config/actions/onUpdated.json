@@ -33,7 +33,8 @@
 
             "form",
             "forms",
-            "components"
+            "components",
+            "title"
         ]
     },
     "notes": [

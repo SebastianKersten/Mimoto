@@ -113,9 +113,9 @@ class MimotoEntityConfigService
         return $this->_entityConfigRepository->getPropertyNameById($nId);
     }
 
-    public function getPropertyIdByName($sName)
+    public function getPropertyIdByName($sName, $nParentEntityTypeId = null)
     {
-        return $this->_entityConfigRepository->getPropertyIdByName($sName);
+        return $this->_entityConfigRepository->getPropertyIdByName($sName, $nParentEntityTypeId);
     }
 
     public function getPropertyTypeById($nId)

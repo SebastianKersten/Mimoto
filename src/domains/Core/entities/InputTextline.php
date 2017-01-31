@@ -23,7 +23,6 @@ class InputTextline
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
-            'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE,
             'visualName' => 'Textline',
@@ -32,15 +31,11 @@ class InputTextline
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label',
-                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--label-type',
-                            //'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -49,15 +44,11 @@ class InputTextline
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description',
-                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'description',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--description-type',
-                            //'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -66,15 +57,11 @@ class InputTextline
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder',
-                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'placeholder',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--placeholder-type',
-                            //'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -83,15 +70,11 @@ class InputTextline
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix',
-                    //'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'prefix',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            //'id' => CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix-type',
-                            //'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -152,7 +135,7 @@ class InputTextline
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'prifix', CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix',
+            $form, 'prefix', CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE.'--prefix',
             'Prefix', 'Enter a prefix',
             'Clarify what is required from the content editor'
         );

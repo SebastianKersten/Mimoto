@@ -58,51 +58,55 @@ class AimlessInput extends AimlessComponent
         return 'data-aimless-form-field-error="'.$this->_sFieldId.'"';
     }
 
-    public function value()
+    public function value($bRenderValues = false, $sModuleName = null, $mapping = null)
     {
-        return $this->_value;
-    }
+        // return raw value (= connection)
+        if (!$bRenderValues) return $this->_value;
 
-    public function fieldOptions()
-    {
-        // register
-        $fieldValue = $this->_entity->getValue('value');
+        //echo $this->_sFieldId;
 
-        // validate
-        if (empty($fieldValue)) { Mimoto::service('log')->notify('AimlessInput', "No 'value' set on input field"); return; }
-
-        // register
-        $aFieldValueOptions = $fieldValue->getValue('options');
-
-        // collect
-        $aOptions = [];
-        $nOptionCount = count($aFieldValueOptions);
-        for ($i = 0; $i < $nOptionCount; $i++)
+        if (!is_array($this->_value))
         {
-            // register
-            $fieldValueOption = $aFieldValueOptions[$i];
+            // entity render
 
-            //echo $sOptionType = $fieldValueOption->getEntityTypeName();
-
-            //output('$fieldValueOption', $fieldValueOption);
-
-            // compose
-            $option = (object) array(
-                'key' => $fieldValueOption->getValue('key'),
-                'value' => $fieldValueOption->getValue('value')
-            );
-
-            // store
-            $aOptions[] = $option;
+            return 'Entity #todo';
         }
+        else
+        {
+            // collection render
 
-        // send
-        return $aOptions;
-    }
+            // init
+            $sOutput = '';
 
-    public function fieldValidation()
-    {
+            $nItemCount = count($this->_value);
+            for ($nItemIndex = 0; $nItemIndex < $nItemCount; $nItemIndex++)
+            {
+                // split
+                $aSelectorComponents = explode('.', $this->_value[$nItemIndex]);
 
+                // register
+                $nEntityTypeName = $aSelectorComponents[0];
+                $nEntityId = $aSelectorComponents[1];
+
+                // read
+                $entity = Mimoto::service('data')->get($nEntityTypeName, $nEntityId);
+
+
+                $aValues = [];
+
+                foreach ($mapping as $sVarName => $sPropertyName)
+                {
+                    if ($entity->hasProperty($sPropertyName))
+                    {
+                        $aValues[$sVarName] = $entity->getValue($sPropertyName);
+                    }
+                }
+
+                $sOutput .= MimotoAimlessUtils::getModule($sModuleName, $aValues);
+            }
+
+            return $sOutput;
+        }
     }
 
 

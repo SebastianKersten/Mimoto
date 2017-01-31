@@ -132,7 +132,13 @@ class FormController
         {
             if ($aInputTypesAll[$nInputIndex]->id != CoreConfig::MIMOTO_FORM_INPUT)
             {
-                $aInputTypes[] = $aInputTypesAll[$nInputIndex];
+                if ( // todo temp
+                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE ||
+                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON
+                )
+                {
+                    $aInputTypes[] = $aInputTypesAll[$nInputIndex];
+                }
             }
         }
 
@@ -230,8 +236,6 @@ class FormController
             // 6. remove connections
             Mimoto::service('data')->store($formField);
 
-            // 7. remove value
-            Mimoto::service('data')->delete();
 
             // #todo options and validation delete
         }
