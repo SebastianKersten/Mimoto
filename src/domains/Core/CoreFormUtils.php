@@ -5,6 +5,7 @@ namespace Mimoto\Core;
 
 // Mimoto classes
 use Mimoto\Mimoto;
+use Mimoto\Core\entities\InputOption;
 use Mimoto\Data\MimotoEntity;
 
 
@@ -137,8 +138,19 @@ class CoreFormUtils
             $field->setValue('value', $connectedEntityProperty);
 
 
-            // 1. add mapping as option
-            // 2. set options (sortable |mapping | url | target (popup/page)
+            $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_LIST_ITEM);
+            $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUT_LIST_ITEM.'--item1');
+            $itemForm->setValue('label', 'Label');
+            $itemForm->setValue('form', InputOption::getForm());
+
+            // add form
+            $field->addValue('items', $itemForm);
+
+
+            // 1. settings
+            // 2. add mapping as option
+            // 3. set options (sortable |mapping | url | target (popup/page)
+
 
             $form->addValue('fields', $field);
         }

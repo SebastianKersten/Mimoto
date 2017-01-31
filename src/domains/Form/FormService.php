@@ -21,13 +21,17 @@ use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\Component;
 
 use Mimoto\Core\entities\Form;
-use Mimoto\Core\entities\Input;
 
 use Mimoto\Core\entities\InputTextline;
 use Mimoto\Core\entities\InputTextBlock;
 use Mimoto\Core\entities\InputTextRTF;
 use Mimoto\Core\entities\InputRadioButton;
 use Mimoto\Core\entities\InputCheckbox;
+use Mimoto\Core\entities\InputList;
+use Mimoto\Core\entities\InputListItem;
+use Mimoto\Core\entities\InputDropdown;
+use Mimoto\Core\entities\InputImage;
+use Mimoto\Core\entities\InputMultiSelect;
 
 use Mimoto\Core\entities\LayoutGroupEnd;
 use Mimoto\Core\entities\LayoutGroupStart;
@@ -566,11 +570,17 @@ class FormService
 
             // input ---------
 
-            case CoreConfig::COREFORM_INPUT_TEXTLINE: return InputTextline::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_TEXTBLOCK: return InputTextBlock::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_TEXTRTF: return InputTextRTF::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_RADIOBUTTON: return InputRadioButton::getForm(); break;
             case CoreConfig::COREFORM_INPUT_CHECKBOX: return InputCheckbox::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_DROPDOWN: return InputDropdown::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_IMAGE: return InputImage::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_LIST: return InputList::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_LIST_ITEM: return InputListItem::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_MULTISELECT: return InputMultiSelect::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_RADIOBUTTON: return InputRadioButton::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_TEXTBLOCK: return InputTextBlock::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_TEXTLINE: return InputTextline::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_TEXTRTF: return InputTextRTF::getForm(); break;
+            case CoreConfig::COREFORM_INPUT_VIDEO: return InputVideo::getForm(); break;
 
             // output ---------
 
@@ -595,6 +605,7 @@ class FormService
             case CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN: return CoreConfig::COREFORM_INPUT_DROPDOWN; break;
             case CoreConfig::MIMOTO_FORM_INPUT_IMAGE: return CoreConfig::COREFORM_INPUT_IMAGE; break;
             case CoreConfig::MIMOTO_FORM_INPUT_LIST: return CoreConfig::COREFORM_INPUT_LIST; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_LIST_ITEM: return CoreConfig::COREFORM_INPUT_LIST_ITEM; break;
             case CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT: return CoreConfig::COREFORM_INPUT_MULTISELECT; break;
             case CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON: return CoreConfig::COREFORM_INPUT_RADIOBUTTON; break;
             case CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK: return CoreConfig::COREFORM_INPUT_TEXTBLOCK; break;

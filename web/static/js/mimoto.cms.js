@@ -33794,6 +33794,10 @@
 	        });
 	    },
 	    
+	    forFieldAddItemToList: function(sURL)
+	    {
+	        Mimoto.popup.open(sURL);
+	    }
 	    
 	}
 	

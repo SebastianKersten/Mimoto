@@ -25,6 +25,7 @@ use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputTextblock;
 use Mimoto\Core\entities\InputTextRTF;
 use Mimoto\Core\entities\InputList;
+use Mimoto\Core\entities\InputListItem;
 use Mimoto\Core\entities\InputImage;
 use Mimoto\Core\entities\InputVideo;
 use Mimoto\Core\entities\Notification;
@@ -79,6 +80,7 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_MimotoAimless__interaction__form_input_radiobutton';
     const MIMOTO_FORM_INPUT_DROPDOWN            = '_MimotoAimless__interaction__form_input_dropdown';
     const MIMOTO_FORM_INPUT_LIST                = '_MimotoAimless__interaction__form_input_list';
+    const MIMOTO_FORM_INPUT_LIST_ITEM           = '_MimotoAimless__interaction__form_input_list_item';
     const MIMOTO_FORM_INPUT_IMAGE               = '_MimotoAimless__interaction__form_input_image';
     const MIMOTO_FORM_INPUT_VIDEO               = '_MimotoAimless__interaction__form_input_video';
 
@@ -148,6 +150,7 @@ class CoreConfig
     const COREFORM_INPUT_RADIOBUTTON    = '_MimotoAimless__coreform_input_radiobutton';
     const COREFORM_INPUT_DROPDOWN       = '_MimotoAimless__coreform_input_dropdown';
     const COREFORM_INPUT_LIST           = '_MimotoAimless__coreform_input_list';
+    const COREFORM_INPUT_LIST_ITEM      = '_MimotoAimless__coreform_input_list_item';
     const COREFORM_INPUT_IMAGE          = '_MimotoAimless__coreform_input_image';
     const COREFORM_INPUT_VIDEO          = '_MimotoAimless__coreform_input_video';
 
@@ -211,6 +214,7 @@ class CoreConfig
             InputRadioButton::getStructure(),
             InputDropdown::getStructure(),
             InputList::getStructure(),
+            InputListItem::getStructure(),
             InputImage::getStructure(),
             InputVideo::getStructure(),
 

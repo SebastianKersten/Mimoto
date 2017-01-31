@@ -1,8 +1,20 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "list", button:true } %}
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "list", button:true, buttonOnClick:"Mimoto.CMS.forFieldAddItemToList('/mimoto.cms/formfield/add/"~Aimless.fieldId()~"')", target:'page' } %}
     {% block form_component_element %}
-        <div class="MimotoCMS_forms_input_List js-list js-list-sortable" data-aimless-id="{{ Aimless.fieldId() }}" data-aimless-component="_MimotoAimless__interaction__form_input_list-item">
+        <div class="MimotoCMS_forms_input_List js-list js-list-sortable" data-aimless-id="{{ Aimless.fieldId() }}" data-aimless-component="_MimotoAimless__interaction__form_input_list_item">
 
-            {{ Aimless.value(true, '_MimotoAimless__interaction__form_input_list-item', { 'title': 'value', 'subtitle': 'key' }) }}
+            {{ Aimless.fieldId() }}
+
+            {{ Aimless.value(true, '_MimotoAimless__interaction__form_input_list_item', { 'title': 'value', 'subtitle': 'key' }) }}
+
+            {#
+                // 1. mapping in settings
+                // 2. type: { 'componentVar1':'entityVar1', 'componentVar2':'entityVar2' } general key/value pair
+                // 3.
+
+
+                $app->get ('/mimoto.cms/formfield/add/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldItemAdd');
+                _MimotoAimless__interaction__form_input_radiobutton.1.options
+            #}
 
         </div>
     {% endblock %}

@@ -283,5 +283,9 @@ module.exports.prototype = {
         });
     },
     
+    forFieldAddItemToList: function(sURL)
+    {
+        Mimoto.popup.open(sURL);
+    }
     
 }

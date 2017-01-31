@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 01/24/2017 23:10:22 PM
+ Date: 02/01/2017 00:44:08 AM
 */
 
 SET NAMES utf8mb4;
@@ -36,13 +36,13 @@ DROP TABLE IF EXISTS `_MimotoAimless__connections__core`;
 CREATE TABLE `_MimotoAimless__connections__core` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_entity_type_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `parent_property_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `parent_id` int(10) unsigned DEFAULT NULL,
+  `parent_property_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `child_entity_type_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__connections__project`
@@ -51,8 +51,8 @@ DROP TABLE IF EXISTS `_MimotoAimless__connections__project`;
 CREATE TABLE `_MimotoAimless__connections__project` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `parent_entity_type_id` int(10) DEFAULT NULL,
-  `parent_property_id` int(10) unsigned DEFAULT NULL,
   `parent_id` int(10) unsigned DEFAULT NULL,
+  `parent_property_id` int(10) unsigned DEFAULT NULL,
   `child_entity_type_id` int(10) unsigned DEFAULT NULL,
   `child_id` int(10) unsigned DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
@@ -82,7 +82,7 @@ CREATE TABLE `_MimotoAimless__core__entity` (
   `isAbstract` enum('0','1') DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__core__entityproperty`
@@ -94,7 +94,7 @@ CREATE TABLE `_MimotoAimless__core__entityproperty` (
   `type` enum('value','entity','collection') COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__core__entitypropertysetting`
@@ -107,7 +107,7 @@ CREATE TABLE `_MimotoAimless__core__entitypropertysetting` (
   `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__devtools__notification`
@@ -122,7 +122,7 @@ CREATE TABLE `_MimotoAimless__devtools__notification` (
   `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form`
@@ -139,7 +139,19 @@ CREATE TABLE `_MimotoAimless__interaction__form` (
   `target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Table structure for `_MimotoAimless__interaction__form_fieldrules`
+-- ----------------------------
+DROP TABLE IF EXISTS `_MimotoAimless__interaction__form_fieldrules`;
+CREATE TABLE `_MimotoAimless__interaction__form_fieldrules` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_input_checkbox`
@@ -152,7 +164,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_input_checkbox` (
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_input_dropdown`
@@ -186,6 +198,17 @@ CREATE TABLE `_MimotoAimless__interaction__form_input_list` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+--  Table structure for `_MimotoAimless__interaction__form_input_list_item`
+-- ----------------------------
+DROP TABLE IF EXISTS `_MimotoAimless__interaction__form_input_list_item`;
+CREATE TABLE `_MimotoAimless__interaction__form_input_list_item` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -229,7 +252,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_input_textblock` (
   `maxchars` int(10) unsigned DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_input_textline`
@@ -243,7 +266,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_input_textline` (
   `prefix` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_input_textrtf`
@@ -259,7 +282,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_input_textrtf` (
   `maxchars` int(10) unsigned DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_input_video`
@@ -283,7 +306,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_inputoption` (
   `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_inputvalidation`
@@ -297,7 +320,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_inputvalidation` (
   `trigger` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_layout_divider`
@@ -307,7 +330,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_layout_divider` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_layout_groupend`
@@ -317,7 +340,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_layout_groupend` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_layout_groupstart`
@@ -328,7 +351,7 @@ CREATE TABLE `_MimotoAimless__interaction__form_layout_groupstart` (
   `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_MimotoAimless__interaction__form_output_title`
@@ -339,18 +362,6 @@ CREATE TABLE `_MimotoAimless__interaction__form_output_title` (
   `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `subtitle` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8_unicode_ci,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
---  Table structure for `_MimotoAimless__interaction__forminputvaluerules`
--- ----------------------------
-DROP TABLE IF EXISTS `_MimotoAimless__interaction__forminputvaluerules`;
-CREATE TABLE `_MimotoAimless__interaction__forminputvaluerules` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -381,36 +392,16 @@ CREATE TABLE `_MimotoAimless__view__componentconditional` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
---  Table structure for `author`
--- ----------------------------
-DROP TABLE IF EXISTS `author`;
-CREATE TABLE `author` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
 --  Table structure for `person`
 -- ----------------------------
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE `person` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `role` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
---  Table structure for `user`
--- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
