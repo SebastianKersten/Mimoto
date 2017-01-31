@@ -8,5 +8,6 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [QSA,L]
+    RedirectMatch 302 "^/$" "http://afstudeerproject-prototype.lusenet.com/mimoto.cms"
 
 </IfModule>
