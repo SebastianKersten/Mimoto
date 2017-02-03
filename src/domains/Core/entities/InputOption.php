@@ -25,12 +25,12 @@ class InputOption
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUTOPTION,
             'extends' => null,
-            'forms' => [],
+            'forms' => [CoreConfig::COREFORM_FORM_INPUTOPTION],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTOPTION.'--key',
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTOPTION.'--label',
                     // ---
-                    'name' => 'key',
+                    'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
@@ -52,7 +52,21 @@ class InputOption
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
-                )
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTOPTION.'--form',
+                    // ---
+                    'name' => 'form',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => 'allowedEntityType',
+                            'type' => 'value',
+                            'value' => CoreConfig::MIMOTO_FORM
+                        )
+                    ]
+                ),
+                // mapping
             ]
         );
     }
@@ -70,6 +84,21 @@ class InputOption
 
 
     /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_FORM_INPUTOPTION,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORM_INPUTOPTION, 'label'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORM_INPUTOPTION, 'value')
+            ]
+        );
+    }
+
+    /**
      * Get form
      */
     public static function getForm()
@@ -83,14 +112,14 @@ class InputOption
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'key', CoreConfig::MIMOTO_FORM_INPUTOPTION.'--key',
-            'Key', 'Key name', 'The key name should be unique'
+            $form, 'label', CoreConfig::MIMOTO_FORM_INPUTOPTION.'--label',
+            'Label', 'Describe the value that is being presented', 'The label should be unique'
         );
 
         $field = CoreFormUtils::addField_textline
         (
             $form, 'value', CoreConfig::MIMOTO_FORM_INPUTOPTION.'--value',
-            'Value', 'Enter the value that is presented', 'The value name should be unique'
+            'Value', 'Enter the value that is presented', 'The value should be unique'
         );
 
         CoreFormUtils::addField_groupEnd($form);

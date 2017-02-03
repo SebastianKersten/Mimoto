@@ -171,6 +171,23 @@ class Entity
 
 
     /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_ENTITY,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITY, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITY, 'extends'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITY, 'isAbstract')
+            ]
+        );
+    }
+
+
+    /**
      * Get form
      */
     public static function getForm()
@@ -193,7 +210,7 @@ class Entity
 //
 //        CoreFormUtils::addField_checkbox
 //        (
-//            $form, 'isAbstract', CoreConfig::MIMOTO_ENTITY.'--isAbstract',
+//            $form, 'isAbstract', CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITY, 'isAbstract'),
 //            'Configuration',
 //            'Skip dedicated table for this entity'
 //        );
@@ -219,7 +236,7 @@ class Entity
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation2');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "The entity name can't be empty");
         $validationRule->setValue('trigger', 'submit');
@@ -228,7 +245,7 @@ class Entity
         // validation rule #2
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation1');
-        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
         $validationRule->setValue('errorMessage', 'Name should be in lowerCamelCase, starting with a letter followed by [a-zA-Z0-9-_]');
         $validationRule->setValue('trigger', 'submit');
@@ -244,8 +261,7 @@ class Entity
     private static function getField_extends()
     {
         // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN);
-        $field->setId(CoreConfig::COREFORM_ENTITY.'--extends');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_ENTITY, 'extends');
         $field->setValue('label', 'Extend other entity');
         $field->setValue('description', "Inherit that entity's properties");
 

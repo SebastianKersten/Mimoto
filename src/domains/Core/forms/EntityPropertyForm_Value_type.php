@@ -18,9 +18,23 @@ class EntityPropertyForm_Value_type
 {
 
     /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, 'type')
+            ]
+        );
+    }
+
+    /**
      * Get structure
      */
-    public static function getStructure()
+    public static function getForm()
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE);
@@ -50,8 +64,7 @@ class EntityPropertyForm_Value_type
     private static function getField_type()
     {
         // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
-        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--type');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, 'type');
         $field->setValue('label', 'Type');
 
         // 3. connect to property
@@ -80,7 +93,7 @@ class EntityPropertyForm_Value_type
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--type_value_validation1');
-        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^('.CoreConfig::DATA_VALUE_TEXTLINE.'|'.CoreConfig::DATA_VALUE_TEXTBLOCK.'|'.CoreConfig::DATA_VALUE_BOOLEAN.')$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');

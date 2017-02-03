@@ -84,6 +84,23 @@ class OutputTitle
 
 
     /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_OUTPUT_TITLE,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_OUTPUT_TITLE, 'title'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_OUTPUT_TITLE, 'subtitle'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_OUTPUT_TITLE, 'description')
+            ]
+        );
+    }
+
+
+    /**
      * Get form
      */
     public static function getForm()
@@ -141,7 +158,7 @@ class OutputTitle
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_OUTPUT_TITLE.'--title_value_validation1');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "The title can't be empty");
         $validationRule->setValue('trigger', 'submit');

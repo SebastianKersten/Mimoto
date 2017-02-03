@@ -25,10 +25,14 @@ use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputTextblock;
 use Mimoto\Core\entities\InputTextRTF;
 use Mimoto\Core\entities\InputList;
-use Mimoto\Core\entities\InputListItem;
 use Mimoto\Core\entities\InputImage;
 use Mimoto\Core\entities\InputVideo;
 use Mimoto\Core\entities\Notification;
+
+use Mimoto\Core\forms\EntityPropertyForm_Value_type;
+use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
+use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
+use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 
 
 /**
@@ -80,7 +84,6 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_MimotoAimless__interaction__form_input_radiobutton';
     const MIMOTO_FORM_INPUT_DROPDOWN            = '_MimotoAimless__interaction__form_input_dropdown';
     const MIMOTO_FORM_INPUT_LIST                = '_MimotoAimless__interaction__form_input_list';
-    const MIMOTO_FORM_INPUT_LIST_ITEM           = '_MimotoAimless__interaction__form_input_list_item';
     const MIMOTO_FORM_INPUT_IMAGE               = '_MimotoAimless__interaction__form_input_image';
     const MIMOTO_FORM_INPUT_VIDEO               = '_MimotoAimless__interaction__form_input_video';
 
@@ -132,13 +135,12 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_MimotoAimless__coreform__entitypropertysetting_value_allowedEntityTypes';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_MimotoAimless__coreform__entitypropertysetting_collection_allowDuplicates';
 
-    const COREFORM_CONTENTSECTION       = '_MimotoAimless__coreform__contentsection';
+    const COREFORM_CONTENTSECTION               = '_MimotoAimless__coreform__contentsection';
 
-    const COREFORM_COMPONENT            = '_MimotoAimless__coreform__component';
-    const COREFORM_FORM                 = '_MimotoAimless__coreform__form';
-    const COREFORM_FORM_INPUTVALUE      = '_MimotoAimless__coreform__form_inputvalue';
-    const COREFORM_FORM_INPUTOPTION     = '_MimotoAimless__coreform__form_inputoption';
-    const COREFORM_FORM_INPUTVALIDATION = '_MimotoAimless__coreform__form_inputvalidation';
+    const COREFORM_COMPONENT                    = '_MimotoAimless__coreform__component';
+    const COREFORM_FORM                         = '_MimotoAimless__coreform__form';
+    const COREFORM_FORM_INPUTOPTION             = '_MimotoAimless__coreform__form_inputoption';
+    const COREFORM_FORM_INPUTVALIDATION         = '_MimotoAimless__coreform__form_inputvalidation';
 
 
     // input
@@ -214,7 +216,6 @@ class CoreConfig
             InputRadioButton::getStructure(),
             InputDropdown::getStructure(),
             InputList::getStructure(),
-            InputListItem::getStructure(),
             InputImage::getStructure(),
             InputVideo::getStructure(),
 
@@ -224,6 +225,55 @@ class CoreConfig
 
         // send
         return $aEntities;
+    }
+
+    public static function getCoreForms()
+    {
+        // setup
+        $aForms = [
+
+            // core
+            Entity::getFormStructure(),
+            EntityProperty::getFormStructure(),
+            EntityPropertyForm_Value_type::getFormStructure(),
+            EntityPropertyForm_Entity_allowedEntityType::getFormStructure(),
+            EntityPropertyForm_Collection_allowedEntityTypes::getFormStructure(),
+            EntityPropertyForm_Collection_allowDuplicates::getFormStructure(),
+
+            // views
+            Component::getFormStructure(),
+
+            // content
+            ContentSection::getFormStructure(),
+
+            // forms
+            Form::getFormStructure(),
+            InputOption::getFormStructure(),
+            InputValidation::getFormStructure(),
+
+            // output
+            OutputTitle::getFormStructure(),
+
+            // layout
+            LayoutDivider::getFormStructure(),
+            LayoutGroupStart::getFormStructure(),
+            LayoutGroupEnd::getFormStructure(),
+
+            // input
+            InputCheckbox::getFormStructure(),
+//            //CoreConfig::COREFORM_INPUT_DROPDOWN => InputDropdown::getForm(),
+//            //CoreConfig::COREFORM_INPUT_IMAGE => InputImage::getForm(),
+//            //CoreConfig::COREFORM_INPUT_LIST => InputList::getForm(),
+//            //CoreConfig::COREFORM_INPUT_MULTISELECT => InputMultiSelect::getForm(),
+            InputRadioButton::getFormStructure(),
+//            CoreConfig::COREFORM_INPUT_TEXTBLOCK => InputTextBlock::getForm(),
+            InputTextline::getFormStructure()
+//            CoreConfig::COREFORM_INPUT_TEXTRTF => InputTextRTF::getForm(),
+//            //CoreConfig::COREFORM_INPUT_VIDEO => InputVideo::getForm()
+        ];
+
+        // send
+        return $aForms;
     }
 
 }

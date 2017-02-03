@@ -10,37 +10,6 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
-use Mimoto\Core\forms\EntityPropertyForm_Value_type;
-use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
-use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
-use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
-
-use Mimoto\Core\entities\Entity;
-use Mimoto\Core\entities\EntityProperty;
-
-use Mimoto\Core\entities\Component;
-
-use Mimoto\Core\entities\Form;
-
-use Mimoto\Core\entities\InputTextline;
-use Mimoto\Core\entities\InputTextBlock;
-use Mimoto\Core\entities\InputTextRTF;
-use Mimoto\Core\entities\InputRadioButton;
-use Mimoto\Core\entities\InputCheckbox;
-use Mimoto\Core\entities\InputList;
-use Mimoto\Core\entities\InputListItem;
-use Mimoto\Core\entities\InputDropdown;
-use Mimoto\Core\entities\InputImage;
-use Mimoto\Core\entities\InputMultiSelect;
-
-use Mimoto\Core\entities\LayoutGroupEnd;
-use Mimoto\Core\entities\LayoutGroupStart;
-use Mimoto\Core\entities\LayoutDivider;
-
-use Mimoto\Core\entities\OutputTitle;
-
-use Mimoto\Core\entities\ContentSection;
-
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
 
@@ -58,6 +27,10 @@ class FormService
     private $_MimotoEntityConfigService;
     private $_MimotoLogService;
 
+    // config data
+    private $_aFormConfigs = [];
+
+
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -73,6 +46,12 @@ class FormService
         $this->_EntityService = $EntityService;
         $this->_MimotoEntityConfigService = $MimotoEntityConfigService;
         $this->_MimotoLogService = $MimotoLogService;
+
+        // load
+        $this->_aFormConfigs = CoreConfig::getCoreForms();
+        //$this->loadProjectFormConfigs();
+
+        //error($this->_aFormConfigs);
     }
     
     
@@ -90,8 +69,47 @@ class FormService
         // 1. check if form is part of core
         if (substr($sFormName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
         {
+            $nFormConfigCount = count($this->_aFormConfigs);
+            for ($nFormConfigIndex = 0; $nFormConfigIndex < $nFormConfigCount; $nFormConfigIndex++)
+            {
+                // register
+                $formConfig = $this->_aFormConfigs[$nFormConfigIndex];
+
+                if ($formConfig->id == $sFormName)
+                {
+                    // load form
+                    $form = call_user_func(array($formConfig->class, 'getForm'));
+
+                        // validate and send
+                    if ($form !== false) return $form;
+
+
+                }
+            }
+        }
+        else
+        {
+            // 2. load form from database
+            //Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $formConfig->id);
+        }
+
+        // call_user_func(array($classname, 'getInstance'));
+        // getFormByFieldId
+        // getFormById
+        // getFormFieldById
+
+
+        $this->_MimotoLogService->warn('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
+
+
+        // 1. check if form is part of core
+        if (substr($sFormName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
+        {
+
+
+
             // load
-            $form = $this->loadCoreForm($sFormName);
+            $form = $this->loadCoreForms($sFormName);
 
             // validate and send
             if ($form !== false) return $form;
@@ -112,6 +130,58 @@ class FormService
         // send
         return $form;
     }
+
+    public function getFormFieldByFieldId($nRequestedFieldId)
+    {
+        // init
+        $field = null;
+
+        $nFormConfigCount = count($this->_aFormConfigs);
+        for ($nFormConfigIndex = 0; $nFormConfigIndex < $nFormConfigCount; $nFormConfigIndex++)
+        {
+            // register
+            $formConfig = $this->_aFormConfigs[$nFormConfigIndex];
+
+            // register
+            $aInputFieldIds = $formConfig->inputFieldIds;
+
+            $nInputFieldIdCount = count($aInputFieldIds);
+            for ($nInputFieldIdIndex = 0; $nInputFieldIdIndex < $nInputFieldIdCount; $nInputFieldIdIndex++)
+            {
+                // register
+                $formFielId = $aInputFieldIds[$nInputFieldIdIndex];
+
+                // verify
+                if ($formFielId == $nRequestedFieldId)
+                {
+                    // load form
+                    $form = call_user_func(array($formConfig->class, 'getForm'));
+
+                    // validate and send
+                    $aFormFields = $form->getValue('fields');
+
+                    $nFormFieldCount = count($aFormFields);
+                    for ($nFormFieldIndex = 0; $nFormFieldIndex < $nFormFieldCount; $nFormFieldIndex++)
+                    {
+                        // register
+                        $formField = $aFormFields[$nFormFieldIndex];
+
+                        // verify
+                        if ($formField->getId() == $nRequestedFieldId)
+                        {
+                            $field = $formField;
+                            break 3;
+                        }
+                    }
+                }
+            }
+        }
+
+        // send
+        return $field;
+    }
+
+
 
     public function parseForm($sFormName, Request $request)
     {
@@ -543,58 +613,8 @@ class FormService
         return $formFieldValues;
     }
 
-    private function loadCoreForm($sFormName)
-    {
-        switch($sFormName)
-        {
-            case CoreConfig::COREFORM_ENTITY: return Entity::getForm(); break;
 
-            case CoreConfig::COREFORM_ENTITYPROPERTY: return EntityProperty::getForm(); break;
-
-            case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE: return EntityPropertyForm_Value_type::getStructure(); break;
-            case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE: return EntityPropertyForm_Entity_allowedEntityType::getStructure(); break;
-            case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES: return EntityPropertyForm_Collection_allowedEntityTypes::getStructure(); break;
-            case CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES: return EntityPropertyForm_Collection_allowDuplicates::getStructure(); break;
-
-            // component -----
-
-            case CoreConfig::COREFORM_COMPONENT: return Component::getForm(); break;
-
-            // content -----
-
-            case CoreConfig::COREFORM_CONTENTSECTION: return ContentSection::getForm(); break;
-
-            // form ----------
-
-            case CoreConfig::COREFORM_FORM: return Form::getForm(); break;
-
-            // input ---------
-
-            case CoreConfig::COREFORM_INPUT_CHECKBOX: return InputCheckbox::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_DROPDOWN: return InputDropdown::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_IMAGE: return InputImage::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_LIST: return InputList::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_LIST_ITEM: return InputListItem::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_MULTISELECT: return InputMultiSelect::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_RADIOBUTTON: return InputRadioButton::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_TEXTBLOCK: return InputTextBlock::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_TEXTLINE: return InputTextline::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_TEXTRTF: return InputTextRTF::getForm(); break;
-            case CoreConfig::COREFORM_INPUT_VIDEO: return InputVideo::getForm(); break;
-
-            // output ---------
-
-            case CoreConfig::COREFORM_OUTPUT_TITLE: return OutputTitle::getForm(); break;
-
-            // layout ---------
-
-            case CoreConfig::COREFORM_LAYOUT_DIVIDER: return LayoutDivider::getForm(); break;
-            case CoreConfig::COREFORM_LAYOUT_GROUPSTART: return LayoutGroupStart::getForm(); break;
-            case CoreConfig::COREFORM_LAYOUT_GROUPEND: return LayoutGroupEnd::getForm(); break;
-
-            default: die("FormService.loadCoreForm('$sFormName') - Form not found");
-        }
-    }
+    // #todo - get form based on connected entity (= parent.forms)
 
     public function getCoreFormByEntityTypeId($sEntitytypeId)
     {
@@ -605,7 +625,6 @@ class FormService
             case CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN: return CoreConfig::COREFORM_INPUT_DROPDOWN; break;
             case CoreConfig::MIMOTO_FORM_INPUT_IMAGE: return CoreConfig::COREFORM_INPUT_IMAGE; break;
             case CoreConfig::MIMOTO_FORM_INPUT_LIST: return CoreConfig::COREFORM_INPUT_LIST; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_LIST_ITEM: return CoreConfig::COREFORM_INPUT_LIST_ITEM; break;
             case CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT: return CoreConfig::COREFORM_INPUT_MULTISELECT; break;
             case CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON: return CoreConfig::COREFORM_INPUT_RADIOBUTTON; break;
             case CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK: return CoreConfig::COREFORM_INPUT_TEXTBLOCK; break;
@@ -622,4 +641,114 @@ class FormService
             case CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND: return CoreConfig::COREFORM_LAYOUT_GROUPEND; break;
         }
     }
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Load project forms
+     */
+    private function loadProjectForms()
+    {
+        $aAllEntity = $this->loadRawFormData();
+        $aAllEntity_Connections = $this->loadRawConnectionData(CoreConfig::MIMOTO_ENTITY);
+        $aAllEntityProperties = $this->loadRawEntityPropertyData();
+    }
+
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods - Raw data ---------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Load raw form data
+     * @return array Entities
+     */
+    private function loadRawFormData()
+    {
+        // init
+        $aForms = [];
+
+        // load all entities
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.CoreConfig::MIMOTO_FORM);
+        $params = array();
+        $stmt->execute($params);
+
+        foreach ($stmt as $row)
+        {
+            // compose
+            $form = (object) array(
+                'id' => $row['id'],
+                'created' => $row['created'],
+                'name' => $row['name'],
+                'description' => $row['description'],
+                'realtimeCollaboration' => $row['realtimeCollaboration'],
+                'customSubmit' => $row['customSubmit'],
+                'action' => $row['action'],
+                'method' => $row['method'],
+                'target' => $row['target'],
+
+
+                'fields' => []
+            );
+
+            // store
+            $aForms[] = $form;
+        }
+
+        // send
+        return $aForms;
+    }
+
+    /**
+     * Load raw connection data
+     * @param string Parent entity type id
+     * @return array Entity connections
+     */
+    private function loadRawConnectionData($sParentEntityTypeId)
+    {
+        // init
+        $aConnections = [];
+
+        // load all connections
+        $stmt = Mimoto::service('database')->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id ".
+            "ORDER BY parent_id ASC, sortindex ASC"
+        );
+        $params = array(
+            ':parent_entity_type_id' => $sParentEntityTypeId
+        );
+        $stmt->execute($params);
+
+        foreach ($stmt as $row)
+        {
+            // compose
+            $connection = (object) array(
+                'id' => $row['id'],                                         // the id of the connection
+                'parent_entity_type_id' => $row['parent_entity_type_id'],   // the id of the parent's entity config
+                'parent_property_id' => $row['parent_property_id'],         // the id of the parent entity's property
+                'parent_id' => $row['parent_id'],                           // the id of the parent entity
+                'child_entity_type_id' => $row['child_entity_type_id'],     // the id of the child's entity config
+                'child_id' => $row['child_id'],                             // the id of the child entity connected to the parent
+                'sortindex' => $row['sortindex']                            // the sortindex
+            );
+
+            // load
+            $nEntityId = $row['parent_id'];
+
+            // store
+            $aConnections[$nEntityId][] = $connection;
+        }
+
+        // send
+        return $aConnections;
+    }
+
 }

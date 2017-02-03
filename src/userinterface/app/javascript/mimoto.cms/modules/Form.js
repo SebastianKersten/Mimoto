@@ -584,7 +584,7 @@ module.exports.prototype = {
             // read
             var value = this._getValueFromInputField(field.$input);
             
-            switch(validationRule.key)
+            switch(validationRule.type)
             {
                 case 'maxchars':
 

@@ -133,7 +133,7 @@ class AimlessInput extends AimlessComponent
 
         // load and prepare
         $settings = (object) array(
-            'validation' => $this->getValidationRules()
+            'validation' => $this->getFieldValidationRules()
         );
 
         // connect
@@ -144,10 +144,10 @@ class AimlessInput extends AimlessComponent
     }
 
     /**
-     * Get validation rules
+     * Get field validation rules
      * @return array Validation rules
      */
-    private function getValidationRules()
+    private function getFieldValidationRules()
     {
         // init
         $aValidationRules = [];
@@ -166,9 +166,10 @@ class AimlessInput extends AimlessComponent
                 $validationRule = $aValueValidationRules[$i];
 
                 $aValidationRules[] = (object) array(
-                    'key' => $validationRule->getValue('key'),
+                    'type' => $validationRule->getValue('type'),
                     'value' => $validationRule->getValue('value'),
-                    'errorMessage' => $validationRule->getValue('errorMessage')
+                    'errorMessage' => $validationRule->getValue('errorMessage'),
+                    'trigger' => $validationRule->getValue('trigger')
                 );
             }
         }
@@ -176,4 +177,5 @@ class AimlessInput extends AimlessComponent
         // send
         return $aValidationRules;
     }
+
 }

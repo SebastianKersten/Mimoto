@@ -42,6 +42,20 @@ class LayoutGroupEnd
     // ----------------------------------------------------------------------------
 
 
+
+    /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_LAYOUT_GROUPEND,
+            'class' => get_class(),
+            'inputFieldIds' => []
+        );
+    }
+
+
     /**
      * Get form
      */

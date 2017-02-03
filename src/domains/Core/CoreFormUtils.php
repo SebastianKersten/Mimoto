@@ -46,8 +46,7 @@ class CoreFormUtils
         $sFormId = $form->getId();
 
         // 1. create and setup
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
-        $field->setId($sFormId.self::ID_DIVIDER.'formtitle');
+        $field = self::createField(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE, $sFormId, 'formtitle');
         $field->setValue('title', $sTitle);
         $field->setValue('subtitle', $sSubtitle);
         $field->setValue('description', $sDescription);
@@ -80,16 +79,14 @@ class CoreFormUtils
         // --- group start
 
         // create
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
-        $field->setId($sFormId.'--groupstart-value');
+        $field = self::createField(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART, $sFormId, 'groupstart-value');
         $form->addValue('fields', $field);
 
 
         // --- value
 
         // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN);
-        $field->setId($sFormId.'--value');
+        $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, $sFormId, 'value');
         $field->setValue('label', 'Value');
         $field->setValue('description', 'Connect to this entity\'s property');
 
@@ -111,12 +108,18 @@ class CoreFormUtils
             $nEntityPropertyCount = count($aEntityProperties);
             for ($nEntityPropertyIndex = 0; $nEntityPropertyIndex < $nEntityPropertyCount; $nEntityPropertyIndex++)
             {
+                // register
                 $entityProperty = $aEntityProperties[$nEntityPropertyIndex];
+
+                // compose
                 $sLabel = $entity->getValue('name').'.'.$entityProperty->getValue('name');
+
+
                 $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
-                $option->setValue('key', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
-                $option->setValue('value', $sLabel);
+                $option->setValue('label', $sLabel);
+                $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
+
                 $field->addValue('options', $option);
             }
         }
@@ -127,8 +130,7 @@ class CoreFormUtils
         if ($bShowOptions)
         {
             // 1. create and setup field
-            $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_LIST);
-            $field->setId($sFormId . '--options');
+            $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'options');
             $field->setValue('label', 'Options');
             $field->setValue('description', 'Provide the options the user can pick from');
 
@@ -138,13 +140,14 @@ class CoreFormUtils
             $field->setValue('value', $connectedEntityProperty);
 
 
-            $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_LIST_ITEM);
-            $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUT_LIST_ITEM.'--item1');
+            $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
             $itemForm->setValue('label', 'Label');
-            $itemForm->setValue('form', InputOption::getForm());
 
-            // add form
-            $field->addValue('items', $itemForm);
+            // connect form
+            $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTOPTION);
+            $itemForm->setValue('form', $connectedForm);
+            $field->addValue('options', $itemForm);
 
 
             // 1. settings
@@ -156,8 +159,7 @@ class CoreFormUtils
         }
 
         // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_LIST);
-        $field->setId($sFormId . '--validation');
+        $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'validation');
         $field->setValue('label', 'Validation');
         $field->setValue('description', 'Add your validation rules');
 
@@ -165,6 +167,15 @@ class CoreFormUtils
         $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
         $connectedEntityProperty->setId($sParentEntityId . '--validation');
         $field->setValue('value', $connectedEntityProperty);
+
+        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--validation-item1');
+        $itemForm->setValue('label', 'Label');
+
+        // connect form
+        $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTVALIDATION);
+        $itemForm->setValue('form', $connectedForm);
+        $field->addValue('options', $itemForm);
 
         // 1. add mapping as option
         // 2. set options (sortable |mapping | url | target (popup/page)
@@ -175,8 +186,7 @@ class CoreFormUtils
         // --- group end
 
         // create
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
-        $field->setId($sFormId . '--groupend-value');
+        $field = self::createField(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND, $sFormId, 'groupend-value');
         $form->addValue('fields', $field);
     }
 
@@ -189,9 +199,10 @@ class CoreFormUtils
         $sFormId = $form->getId();
 
         // 1. create
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
-        $field->setId($sFormId.'--groupstart');
-        if (!empty($sGroupLabel)) $field->setValue('title', $sTitle);
+        $field = self::createField(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART, $sFormId, 'groupstart');
+
+        // compose
+        if (!empty($sTitle)) $field->setValue('title', $sTitle);
 
         // store
         $form->addValue('fields', $field);
@@ -206,8 +217,7 @@ class CoreFormUtils
         $sFormId = $form->getId();
 
         // 1. create
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
-        $field->setId($sFormId.'--groupend');
+        $field = self::createField(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND, $sFormId, 'groupend');
 
         // store
         $form->addValue('fields', $field);
@@ -225,6 +235,9 @@ class CoreFormUtils
         // 1. create and setup field
         $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX);
         $field->setId($sFormId.self::ID_DIVIDER.$sFieldId);
+
+
+
         $field->setValue('label', $sLabel);
         $field->setValue('option', $sOption);
 
@@ -273,7 +286,7 @@ class CoreFormUtils
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId($sFieldId.'_value_validation1');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('value', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Please supply a label for the field");
         $validationRule->setValue('trigger', 'submit');
@@ -282,4 +295,26 @@ class CoreFormUtils
         // send
         return $field;
     }
+
+    public static function createField($sFieldType, $sFormId, $sFieldName)
+    {
+        // create
+        $field = Mimoto::service('data')->create($sFieldType);
+
+        // setup
+        $field->setId(self::composeFieldName($sFormId, $sFieldName));
+
+        // send
+        return $field;
+    }
+
+    public static function composeFieldName($sFormId, $sFieldName)
+    {
+        // compose
+        $sFieldName = $sFormId.self::ID_DIVIDER.$sFieldName;
+
+        // send
+        return $sFieldName;
+    }
+
 }

@@ -18,10 +18,25 @@ use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 class EntityPropertyForm_Collection_allowDuplicates
 {
 
+
+    /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES, 'value')
+            ]
+        );
+    }
+
     /**
      * Get structure
      */
-    public static function getStructure()
+    public static function getForm()
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES);

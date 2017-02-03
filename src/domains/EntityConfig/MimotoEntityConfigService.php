@@ -160,15 +160,13 @@ class MimotoEntityConfigService
         // 2. check if entity table name is unique
         if (!EntityConfigTableUtils::tableNameIsUnique($sEntityName))
         {
-            Mimoto::service('log')->error("Duplicate table name", "Table '$sEntityName' for new entity already exists");
-            die();
+            Mimoto::service('log')->error("Duplicate table name", "Table '$sEntityName' for new entity already exists", true);
         }
 
         // 3. create table
         if (!EntityConfigTableUtils::createEntityTable($sEntityName))
         {
-            Mimoto::service('log')->error("Entity table creation issue", "Error while creating table for entity '$sEntityName'");
-            die();
+            Mimoto::service('log')->error("Entity table creation issue", "Error while creating table for entity '$sEntityName'", true);
         }
 
         // 4. cleanup cache

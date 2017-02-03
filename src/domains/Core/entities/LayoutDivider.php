@@ -42,6 +42,20 @@ class LayoutDivider
     // ----------------------------------------------------------------------------
 
 
+
+    /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_LAYOUT_DIVIDER,
+            'class' => get_class(),
+            'inputFieldIds' => []
+        );
+    }
+
+
     /**
      * Get form
      */

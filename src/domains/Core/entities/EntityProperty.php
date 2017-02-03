@@ -101,6 +101,21 @@ class EntityProperty
 
     }
 
+    /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_ENTITYPROPERTY,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTY, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTY, 'type')
+            ]
+        );
+    }
+
 
 
     // ----------------------------------------------------------------------------
@@ -152,7 +167,7 @@ class EntityProperty
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation2');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "The property name can't be empty");
         $validationRule->setValue('trigger', 'submit');
@@ -161,7 +176,7 @@ class EntityProperty
         // validation rule #2
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation1');
-        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
         $validationRule->setValue('errorMessage', 'Name should be in lowerCamelCase, starting with a letter followed by [a-zA-Z0-9-_]');
         $validationRule->setValue('trigger', 'submit');
@@ -195,8 +210,7 @@ class EntityProperty
     private static function getField_type()
     {
         // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
-        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_ENTITYPROPERTY, 'type');
         $field->setValue('label', 'Type');
 
         // 3. connect to property
@@ -225,7 +239,7 @@ class EntityProperty
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_validation1');
-        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^('.MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION.')$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');

@@ -24,7 +24,7 @@ class Input
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_FORM_INPUTVALUE],
+            'forms' => [],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT.'--value',

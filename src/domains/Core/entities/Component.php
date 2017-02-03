@@ -354,7 +354,7 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => CoreConfig::MIMOTO_FORM_INPUT_LIST_ITEM,
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_LIST.'-item',
                 'file' => 'MimotoCMS/components/forms/input/List/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
@@ -429,6 +429,21 @@ class Component
 
 
     /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_COMPONENT,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_COMPONENT, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_COMPONENT, 'file')
+            ]
+        );
+    }
+
+    /**
      * Get form
      */
     public static function getForm()
@@ -476,7 +491,7 @@ class Component
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_COMPONENT.'--name_value_validation1');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");
         $field->addValue('validation', $validationRule);
@@ -493,7 +508,7 @@ class Component
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_COMPONENT.'--file_value_validation1');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");
         $field->addValue('validation', $validationRule);

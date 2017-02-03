@@ -98,6 +98,27 @@ class InputTextline
     // ----------------------------------------------------------------------------
 
 
+
+    /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_INPUT_TEXTLINE,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_TEXTLINE, 'label'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_TEXTLINE, 'description'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_TEXTLINE, 'placeholder'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_TEXTLINE, 'prefix'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_TEXTLINE, 'value'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_TEXTLINE, 'options'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_TEXTLINE, 'validation')
+            ]
+        );
+    }
+
     /**
      * Get form
      */

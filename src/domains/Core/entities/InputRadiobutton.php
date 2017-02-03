@@ -22,7 +22,6 @@ class InputRadioButton
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
-            'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON,
             'visualName' => 'Radiobutton',
@@ -31,15 +30,11 @@ class InputRadioButton
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label',
-                    'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'label',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--label_type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -54,9 +49,6 @@ class InputRadioButton
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON.'--description_type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -78,6 +70,26 @@ class InputRadioButton
     // --- Form -------------------------------------------------------------------
     // ----------------------------------------------------------------------------
 
+
+
+
+    /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_INPUT_RADIOBUTTON,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_RADIOBUTTON, 'label'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_RADIOBUTTON, 'description'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_RADIOBUTTON, 'value'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_RADIOBUTTON, 'options'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_RADIOBUTTON, 'validation')
+            ]
+        );
+    }
 
     /**
      * Get form

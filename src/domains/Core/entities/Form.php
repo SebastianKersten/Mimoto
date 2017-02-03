@@ -172,6 +172,20 @@ class Form
 
 
     /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_FORM,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORM, 'name')
+            ]
+        );
+    }
+
+    /**
      * Get form
      */
     public static function getForm()
@@ -210,7 +224,7 @@ class Form
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_FORM.'--name_value_validation2');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "The form name can't be empty");
         $validationRule->setValue('trigger', 'submit');
@@ -219,7 +233,7 @@ class Form
         // validation rule #2
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_FORM.'--name_value_validation1');
-        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
         $validationRule->setValue('errorMessage', 'Name should be in lowerCamelCase, starting with a letter followed by [a-zA-Z0-9-_]');
         $validationRule->setValue('trigger', 'submit');

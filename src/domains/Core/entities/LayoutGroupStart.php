@@ -61,6 +61,22 @@ class LayoutGroupStart
     // ----------------------------------------------------------------------------
 
 
+
+    /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_LAYOUT_GROUPSTART,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_LAYOUT_GROUPSTART, 'title')
+            ]
+        );
+    }
+
+
     /**
      * Get form
      */

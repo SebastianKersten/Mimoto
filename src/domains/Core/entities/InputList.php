@@ -51,24 +51,6 @@ class InputList
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUT_LIST.'--items',
-                    // ---
-                    'name' => 'items',
-                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
-                    'settings' => [
-                        'allowedEntityTypes' => (object) array(
-                            'key' => 'allowedEntityTypes',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_FORM_INPUT_LIST_ITEM]
-                        ),
-                        'allowDuplicates' => (object) array(
-                            'key' => 'allowDuplicates',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => CoreConfig::DATA_VALUE_FALSE
-                        )
-                    ]
                 )
             ]
         );

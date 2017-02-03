@@ -152,7 +152,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
             else
             {
                 // 2b. report missing configuration
-                Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you arring adding to the collection '".$this->_config->name."'", true);
+                Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you are adding to the collection '".$this->_config->name."'", true);
                 return;
             }
         }
@@ -216,7 +216,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
             else
             {
                 // 2b. report missing configuration
-                Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you arring adding to the collection '".$this->_config->name."'", true);
+                Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you are adding to the collection '".$this->_config->name."'", true);
                 return;
             }
         }

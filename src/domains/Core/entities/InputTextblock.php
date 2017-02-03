@@ -96,6 +96,24 @@ class InputTextblock
     // ----------------------------------------------------------------------------
 
 
+
+
+//    /**
+//     * Get form structure
+//     */
+//    public static function getFormStructure()
+//    {
+//        return (object) array(
+//            'id' => CoreConfig::COREFORM_INPUT_CHECKBOX,
+//            'class' => get_class(),
+//            'inputFieldIds' => [
+//                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_CHECKBOX, 'label'),
+//                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_CHECKBOX, 'description'),
+//                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_CHECKBOX, 'option')
+//            ]
+//        );
+//    }
+
     /**
      * Get form
      */

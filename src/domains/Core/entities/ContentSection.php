@@ -130,6 +130,23 @@ class ContentSection
 
 
     /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_CONTENTSECTION,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'type'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'form'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'isHiddenFromMenu')
+            ]
+        );
+    }
+
+    /**
      * Get form
      */
     public static function getForm()
@@ -179,7 +196,7 @@ class ContentSection
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation2');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "The section name can't be empty");
         $validationRule->setValue('trigger', 'submit');
@@ -195,8 +212,7 @@ class ContentSection
     private static function getField_type()
     {
         // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON);
-        $field->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_CONTENTSECTION, 'type');
         $field->setValue('label', 'Type');
 
         // 3a. connect to property
@@ -220,7 +236,7 @@ class ContentSection
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_validation1');
-        $validationRule->setValue('key', 'regex_custom');
+        $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^('.ContentSection::TYPE_ITEM.'|'.ContentSection::TYPE_GROUP.')$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');
@@ -236,8 +252,7 @@ class ContentSection
     private static function getField_form()
     {
         // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN);
-        $field->setId(CoreConfig::COREFORM_CONTENTSECTION.'--form');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_CONTENTSECTION, 'form');
         $field->setValue('label', 'Form');
         $field->setValue('description', "What form would you like to use?");
 

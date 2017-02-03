@@ -18,9 +18,22 @@ class EntityPropertyForm_Entity_allowedEntityType
 {
 
     /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE,
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE, 'allowedEntityType')
+            ]
+        );
+    }
+
+    /**
      * Get NEW structure
      */
-    public static function getStructure()
+    public static function getForm()
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE);
@@ -50,8 +63,7 @@ class EntityPropertyForm_Entity_allowedEntityType
     private static function getField_allowedEntityType()
     {
         // 1. create and setup field
-        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN);
-        $field->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE.'--allowedEntityType');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE, 'allowedEntityType');
         $field->setValue('label', 'Allowed entity type');
 
         // 2. connect to property
@@ -78,7 +90,7 @@ class EntityPropertyForm_Entity_allowedEntityType
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE.'--allowedEntityType_value_validation1');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");
         $validationRule->setValue('trigger', 'submit');
