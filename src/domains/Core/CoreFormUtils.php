@@ -5,7 +5,7 @@ namespace Mimoto\Core;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\Core\entities\InputOption;
+use Mimoto\Core\entities\Input;
 use Mimoto\Data\MimotoEntity;
 
 
@@ -91,9 +91,7 @@ class CoreFormUtils
         $field->setValue('description', 'Connect to this entity\'s property');
 
         // 2. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId($sParentEntityId.'--value');
-        $field->setValue('value', $connectedEntityProperty);
+        self::addValueToField($field, $sParentEntityId, 'value');
 
         // load
         $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
@@ -129,17 +127,17 @@ class CoreFormUtils
         // verify
         if ($bShowOptions)
         {
-            // 1. create and setup field
+            // create
             $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'options');
+
+            // setup
             $field->setValue('label', 'Options');
             $field->setValue('description', 'Provide the options the user can pick from');
 
-            // 2. connect to property
-            $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-            $connectedEntityProperty->setId($sParentEntityId . '--options');
-            $field->setValue('value', $connectedEntityProperty);
+            // connect
+            self::addValueToField($field, $sParentEntityId, 'options');
 
-
+            // configure
             $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
             $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
             $itemForm->setValue('label', 'Label');
@@ -148,26 +146,27 @@ class CoreFormUtils
             $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTOPTION);
             $itemForm->setValue('form', $connectedForm);
             $field->addValue('options', $itemForm);
-
-
-            // 1. settings
-            // 2. add mapping as option
-            // 3. set options (sortable |mapping | url | target (popup/page)
-
-
+//
+//
+//            // 1. settings
+//            // 2. add mapping as option
+//            // 3. set options (sortable |mapping | url | target (popup/page)
+//
+//
             $form->addValue('fields', $field);
         }
 
-        // 1. create and setup field
+        // create
         $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'validation');
+
+        // setup
         $field->setValue('label', 'Validation');
         $field->setValue('description', 'Add your validation rules');
 
-        // 2. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId($sParentEntityId . '--validation');
-        $field->setValue('value', $connectedEntityProperty);
+        // connect
+        self::addValueToField($field, $sParentEntityId, 'validation');
 
+        // configure
         $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--validation-item1');
         $itemForm->setValue('label', 'Label');
@@ -315,6 +314,28 @@ class CoreFormUtils
 
         // send
         return $sFieldName;
+    }
+
+    /**
+     * Add the reference of a entity's property to the value of the input field
+     * @param MimotoEntity $field
+     * @param $sParentEntityId
+     * @param $sPropertyName
+     * @return MimotoEntity
+     */
+    public static function addValueToField(MimotoEntity $field, $sParentEntityId, $sPropertyName)
+    {
+        // 1. create
+        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+
+        // 2. define
+        $connectedEntityProperty->setId($sParentEntityId.self::ID_DIVIDER.$sPropertyName);
+
+        // 3. connect
+        $field->setValue('value', $connectedEntityProperty);
+
+        // 4. send
+        return $field;
     }
 
 }

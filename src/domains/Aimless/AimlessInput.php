@@ -91,7 +91,7 @@ class AimlessInput extends AimlessComponent
                 // read
                 $entity = Mimoto::service('data')->get($nEntityTypeName, $nEntityId);
 
-
+                // init
                 $aValues = [];
 
                 foreach ($mapping as $sVarName => $sPropertyName)

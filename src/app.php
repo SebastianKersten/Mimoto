@@ -65,12 +65,19 @@ function error($data, $bDumpVar = false)
     echo '<div>';
     echo '<h2><b style="font-size:larger;">Error</b></h2><hr style="border:0;height:1px;background:#ffffff">';
     echo '<pre style="overflow:scroll">';
-    ($bDumpVar) ? var_dump($data) : print_r($data);
+    if (empty($data))
+    {
+        echo "<i style='font-style:italic'>No data provided</i>";
+    }
+    else
+    {
+        ($bDumpVar) ? var_dump($data) : print_r($data);
+    }
     echo '</pre>';
     echo '</div>';
     echo '<br>';
 
-    throw new Exception('oh oh, computer says oops!');
+    //throw new Exception('oh oh, computer says oops!');
     die();
 }
 

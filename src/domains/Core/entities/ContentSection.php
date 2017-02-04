@@ -223,14 +223,14 @@ class ContentSection
         // 3b. set options
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-value');
-        $option->setValue('key', ContentSection::TYPE_ITEM);
-        $option->setValue('value', 'Item');
+        $option->setValue('value', ContentSection::TYPE_ITEM);
+        $option->setValue('label', 'Item');
         $field->addValue('options', $option);
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-entity');
-        $option->setValue('key', ContentSection::TYPE_GROUP);
-        $option->setValue('value', 'Group');
+        $option->setValue('value', ContentSection::TYPE_GROUP);
+        $option->setValue('label', 'Group');
         $field->addValue('options', $option);
 
         // validation rule #1
@@ -273,15 +273,15 @@ class ContentSection
             //output('$entity->getValue(\'name\')', $entity->getValue('name'));
             $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
             $option->setId(CoreConfig::COREFORM_CONTENTSECTION.'--form_value_options-valuesettings-collection-'.$entity->getId());
-            $option->setValue('key', $entity->getEntityTypeName().'.'.$entity->getId());
-            $option->setValue('value', $entity->getValue('name'));
+            $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
+            $option->setValue('label', $entity->getValue('name'));
             $field->addValue('options', $option);
         }
 
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_CONTENTSECTION.'--form_value_validation2');
-        $validationRule->setValue('key', 'minchars');
+        $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Please select a form");
         $validationRule->setValue('trigger', 'submit');
