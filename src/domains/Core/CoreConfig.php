@@ -264,7 +264,7 @@ class CoreConfig
             InputDropdown::getFormStructure(),
 //            //CoreConfig::COREFORM_INPUT_IMAGE => InputImage::getForm(),
 //            //CoreConfig::COREFORM_INPUT_LIST => InputList::getForm(),
-//            //CoreConfig::COREFORM_INPUT_MULTISELECT => InputMultiSelect::getForm(),
+            InputMultiSelect::getFormStructure(),
             InputRadioButton::getFormStructure(),
 //            CoreConfig::COREFORM_INPUT_TEXTBLOCK => InputTextBlock::getForm(),
             InputTextline::getFormStructure()
