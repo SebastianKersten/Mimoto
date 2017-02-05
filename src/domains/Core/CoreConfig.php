@@ -261,7 +261,7 @@ class CoreConfig
 
             // input
             InputCheckbox::getFormStructure(),
-//            //CoreConfig::COREFORM_INPUT_DROPDOWN => InputDropdown::getForm(),
+            InputDropdown::getFormStructure(),
 //            //CoreConfig::COREFORM_INPUT_IMAGE => InputImage::getForm(),
 //            //CoreConfig::COREFORM_INPUT_LIST => InputList::getForm(),
 //            //CoreConfig::COREFORM_INPUT_MULTISELECT => InputMultiSelect::getForm(),

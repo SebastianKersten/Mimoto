@@ -33802,10 +33802,18 @@
 	    formFieldOptionEdit: function(nOptionID)
 	    {
 	        console.log('formFieldOptionEdit: ' + nOptionID);
+	        //Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
 	    },
 	    
 	    formFieldOptionDelete: function(nOptionID)
 	    {
+	        $.ajax({
+	            type: 'get',
+	            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
 	        console.log('formFieldOptionDelete: ' + nOptionID);
 	    }
 	    

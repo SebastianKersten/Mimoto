@@ -135,7 +135,8 @@ class FormController
             {
                 if ( // todo temp
                     $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE ||
-                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON
+                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON ||
+                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN
                 )
                 {
                     $aInputTypes[] = $aInputTypesAll[$nInputIndex];
@@ -334,6 +335,46 @@ class FormController
 
         // 6. render and send
         return $component->render();
+    }
+
+
+    public function formFielditemDelete(Application $app, $nFormFieldItemId)
+    {
+        // load
+        $formFieldItem = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM_INPUTOPTION, $nFormFieldItemId);
+
+        // collect
+        $aParents = Mimoto::service('config')->getParentConnections($formFieldItem);
+
+        // find
+        $nParentCount = count($aParents);
+        for ($nParentIndex = 0; $nParentIndex < $nParentCount; $nParentIndex++)
+        {
+            // register
+            $parent = $aParents[$nParentIndex];
+
+
+
+            // 1. auto delete connection
+            // 2. if disconnected item, auto delete if no other connections
+
+            // remove connection
+            $parent->removeValue('fields', $formFieldItem);
+        }
+
+
+        // 1. hoe parent FormField opzoeken?
+
+
+
+        // 10. persist removed
+        Mimoto::service('data')->store($parentForm);
+
+        // 11. delete property
+        Mimoto::service('data')->delete($formFieldItem);
+
+        // 12. send
+        return new JsonResponse((object) array('result' => 'FormFieldItem deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 }
