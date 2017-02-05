@@ -329,6 +329,7 @@ class FormController
         $component->addForm($sFormName, null, [
             'onCreatedConnectTo' => $sPropertySelector,
             'response' => ['onSuccess' => ['closePopup' => true]]
+            //'response' => ['onSuccess' => ['reloadPopup' => '/mimoto.cms/formfield/'.$nFormFieldTypeId.'/'.$nFormFieldId.'/edit']]
         ]);
 
         // 6. render and send

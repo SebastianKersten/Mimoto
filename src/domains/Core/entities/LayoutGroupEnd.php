@@ -50,6 +50,7 @@ class LayoutGroupEnd
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_LAYOUT_GROUPEND,
+            'name' => CoreConfig::COREFORM_LAYOUT_GROUPEND,
             'class' => get_class(),
             'inputFieldIds' => []
         );

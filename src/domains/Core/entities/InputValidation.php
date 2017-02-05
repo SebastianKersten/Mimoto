@@ -102,6 +102,7 @@ class InputValidation
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_FORM_INPUTVALIDATION,
+            'name' => CoreConfig::COREFORM_FORM_INPUTVALIDATION,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORM_INPUTVALIDATION, 'type'),

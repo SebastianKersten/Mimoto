@@ -136,6 +136,7 @@ class ContentSection
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_CONTENTSECTION,
+            'name' => CoreConfig::COREFORM_CONTENTSECTION,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'name'),

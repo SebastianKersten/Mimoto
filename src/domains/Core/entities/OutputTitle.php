@@ -90,6 +90,7 @@ class OutputTitle
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_OUTPUT_TITLE,
+            'name' => CoreConfig::COREFORM_OUTPUT_TITLE,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_OUTPUT_TITLE, 'title'),

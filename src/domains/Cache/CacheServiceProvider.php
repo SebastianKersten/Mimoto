@@ -4,7 +4,7 @@
 namespace Mimoto\Cache;
 
 // Mimoto classes
-use Mimoto\Cache\MimotoCacheService;
+use Mimoto\Mimoto;
 
 // Silex classes
 use Silex\Application;
@@ -12,13 +12,23 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * MimotoCacheServiceProvider
+ * CacheServiceProvider
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoCacheServiceProvider implements ServiceProviderInterface
+class CacheServiceProvider implements ServiceProviderInterface
 {
-    
+    // configuration
+    private $_bEnableCache;
+
+
+    public function __construct($bEnableCache = false)
+    {
+        // register
+        $this->_bEnableCache = $bEnableCache;
+    }
+
+
     public function register(Application $app)
     {
         $app['Mimoto.Cache'] = $app->share(function($app)
@@ -31,11 +41,15 @@ class MimotoCacheServiceProvider implements ServiceProviderInterface
             
             // if ($bResult) #todo - only start on success
             
-            return new MimotoCacheService($memcache);
+            return new CacheService($memcache, $this->_bEnableCache);
         });
         
     }
 
-    public function boot(Application $app) {}
+    public function boot(Application $app)
+    {
+        // register
+        Mimoto::setService('cache', $app['Mimoto.Cache']);
+    }
     
 }

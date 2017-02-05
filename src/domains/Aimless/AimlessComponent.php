@@ -42,6 +42,7 @@ class AimlessComponent
     protected $_aFormConfigs = [];
     protected $_aPropertyComponents = [];
     protected $_aPropertyFormatters = [];
+    protected $_mapping;
 
     protected $_connection;
 
@@ -52,7 +53,19 @@ class AimlessComponent
 
 
     // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------s
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    public function setMapping($mapping)
+    {
+        // store
+        $this->_mapping = $mapping;
+    }
+
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
 
 
@@ -191,6 +204,11 @@ class AimlessComponent
 
                 return $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
             }
+
+
+            // convert via mapping
+            if (!empty($this->_mapping)) $sMainPropertyName = $this->_mapping[$sMainPropertyName];
+
 
             if ($this->_entity->hasProperty($sMainPropertyName))
             {

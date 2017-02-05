@@ -283,9 +283,19 @@ module.exports.prototype = {
         });
     },
     
-    forFieldAddItemToList: function(sURL)
+    formFieldAddItemToList: function(sURL)
     {
         Mimoto.popup.open(sURL);
+    },
+    
+    formFieldOptionEdit: function(nOptionID)
+    {
+        console.log('formFieldOptionEdit: ' + nOptionID);
+    },
+    
+    formFieldOptionDelete: function(nOptionID)
+    {
+        console.log('formFieldOptionDelete: ' + nOptionID);
     }
     
 }

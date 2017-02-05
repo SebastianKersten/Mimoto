@@ -26,6 +26,7 @@ class EntityPropertyForm_Collection_allowDuplicates
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES,
+            'name' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES, 'value')

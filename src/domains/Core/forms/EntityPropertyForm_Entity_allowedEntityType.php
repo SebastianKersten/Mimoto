@@ -24,6 +24,8 @@ class EntityPropertyForm_Entity_allowedEntityType
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE,
+            'name' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE,
+            'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE, 'allowedEntityType')
             ]

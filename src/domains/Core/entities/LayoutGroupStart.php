@@ -69,6 +69,7 @@ class LayoutGroupStart
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_LAYOUT_GROUPSTART,
+            'name' => CoreConfig::COREFORM_LAYOUT_GROUPSTART,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_LAYOUT_GROUPSTART, 'title')

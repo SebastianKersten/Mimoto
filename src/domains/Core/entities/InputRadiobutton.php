@@ -80,6 +80,7 @@ class InputRadioButton
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_INPUT_RADIOBUTTON,
+            'name' => CoreConfig::COREFORM_INPUT_RADIOBUTTON,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_RADIOBUTTON, 'label'),

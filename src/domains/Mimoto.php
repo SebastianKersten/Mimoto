@@ -7,7 +7,7 @@ namespace Mimoto;
 use Mimoto\Event\MimotoEventServiceProvider;
 use Mimoto\Aimless\AimlessServiceProvider;
 use Mimoto\Data\EntityServiceProvider;
-use Mimoto\Cache\MimotoCacheServiceProvider;
+use Mimoto\Cache\CacheServiceProvider;
 use Mimoto\Form\FormServiceProvider;
 use Mimoto\Log\MimotoLogServiceProvider;
 use Mimoto\User\MimotoUserServiceProvider;
@@ -34,13 +34,13 @@ class Mimoto
      * Constructor
      * @param Application $app
      */
-    public function __construct($app)
+    public function __construct($app, $bEnableCache = false)
     {
         // setup templates
         $app['twig']->getLoader()->addPath(dirname(dirname(__FILE__)) . '/userinterface');
 
         // setup Mimoto services
-        $app->register(new MimotoCacheServiceProvider());
+        $app->register(new CacheServiceProvider($bEnableCache));
         $app->register(new EntityServiceProvider());
         $app->register(new AimlessServiceProvider());
         $app->register(new MimotoEventServiceProvider());

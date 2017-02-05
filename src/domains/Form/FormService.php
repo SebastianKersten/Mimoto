@@ -24,7 +24,7 @@ class FormService
 
     // services
     private $_EntityService;
-    private $_MimotoEntityConfigService;
+    private $_EntityConfigService;
     private $_MimotoLogService;
 
     // config data
@@ -40,18 +40,32 @@ class FormService
     /**
      * Constructor
      */
-    public function __construct($EntityService, $MimotoEntityConfigService, $MimotoLogService)
+    public function __construct($EntityService, $EntityConfigService, $MimotoLogService)
     {
         // register
         $this->_EntityService = $EntityService;
-        $this->_MimotoEntityConfigService = $MimotoEntityConfigService;
+        $this->_EntityConfigService = $EntityConfigService;
         $this->_MimotoLogService = $MimotoLogService;
 
-        // load
-        $this->_aFormConfigs = CoreConfig::getCoreForms();
-        //$this->loadProjectFormConfigs();
 
-        //error($this->_aFormConfigs);
+        // toggle between cache or database
+        if ( Mimoto::service('cache')->isEnabled() && Mimoto::service('cache')->getValue('mimoto.core.formconfigs'))
+        {
+            // load
+            $this->_aFormConfigs = Mimoto::service('cache')->getValue('mimoto.core.formconfigs');
+        }
+        else
+        {
+            // load
+            $this->_aFormConfigs = CoreConfig::getCoreForms();
+            $this->_aFormConfigs = array_merge($this->_aFormConfigs, $this->loadProjectFormConfigs());
+
+            // cache
+            if (Mimoto::service('cache')->isEnabled())
+            {
+                Mimoto::service('cache')->setValue('mimoto.core.formconfigs', $this->_aFormConfigs);
+            }
+        }
     }
     
     
@@ -66,69 +80,32 @@ class FormService
      */
     public function getFormByName($sFormName)
     {
-        // 1. check if form is part of core
-        if (substr($sFormName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
+        $nFormConfigCount = count($this->_aFormConfigs);
+        for ($nFormConfigIndex = 0; $nFormConfigIndex < $nFormConfigCount; $nFormConfigIndex++)
         {
-            $nFormConfigCount = count($this->_aFormConfigs);
-            for ($nFormConfigIndex = 0; $nFormConfigIndex < $nFormConfigCount; $nFormConfigIndex++)
-            {
-                // register
-                $formConfig = $this->_aFormConfigs[$nFormConfigIndex];
+            // register
+            $formConfig = $this->_aFormConfigs[$nFormConfigIndex];
 
-                if ($formConfig->id == $sFormName)
+            if ($formConfig->name == $sFormName)
+            {
+                if (isset($formConfig->class) && substr($sFormName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
                 {
                     // load form
                     $form = call_user_func(array($formConfig->class, 'getForm'));
-
-                        // validate and send
-                    if ($form !== false) return $form;
-
-
                 }
+                else
+                {
+                    // load form from database
+                    $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $formConfig->id);
+                }
+
+                // validate and send
+                if ($form !== false) return $form;
             }
         }
-        else
-        {
-            // 2. load form from database
-            //Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $formConfig->id);
-        }
 
-        // call_user_func(array($classname, 'getInstance'));
-        // getFormByFieldId
-        // getFormById
-        // getFormFieldById
-
-
-        $this->_MimotoLogService->warn('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
-
-
-        // 1. check if form is part of core
-        if (substr($sFormName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
-        {
-
-
-
-            // load
-            $form = $this->loadCoreForms($sFormName);
-
-            // validate and send
-            if ($form !== false) return $form;
-        }
-
-        // 2. load form from database
-        $aResults = $this->_EntityService->find(['type' => CoreConfig::MIMOTO_FORM, 'value' => ["name" => $sFormName]]);
-
-        $form = $aResults[0];
-
-        // 3. validate if form exists
-        if (empty($form))
-        {
-            $this->_MimotoLogService->warn('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
-            die();
-        }
-        
-        // send
-        return $form;
+        // if here, broadcast error
+        $this->_MimotoLogService->error('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
     }
 
     public function getFormFieldByFieldId($nRequestedFieldId)
@@ -550,9 +527,9 @@ class FormService
 
 
             // 1. get entity to which the property is connected
-            $sEntityName = $this->_MimotoEntityConfigService->getEntityNameByPropertyId($fieldValueId);
-            $sPropertyName = $this->_MimotoEntityConfigService->getPropertyNameById($fieldValueId);
-            $sPropertyType = $this->_MimotoEntityConfigService->getPropertyTypeById($fieldValueId);
+            $sEntityName = $this->_EntityConfigService->getEntityNameByPropertyId($fieldValueId);
+            $sPropertyName = $this->_EntityConfigService->getPropertyNameById($fieldValueId);
+            $sPropertyType = $this->_EntityConfigService->getPropertyTypeById($fieldValueId);
 
             // auto create
             if (!isset($entity)) $entity = Mimoto::service('data')->create($sEntityName);
@@ -651,13 +628,39 @@ class FormService
     /**
      * Load project forms
      */
-    private function loadProjectForms()
+    private function loadProjectFormConfigs()
     {
-        $aAllEntity = $this->loadRawFormData();
-        $aAllEntity_Connections = $this->loadRawConnectionData(CoreConfig::MIMOTO_ENTITY);
-        $aAllEntityProperties = $this->loadRawEntityPropertyData();
-    }
+        // load
+        $aAllFormConfigs = $this->loadRawFormConfigData();
+        $aAllFormConfigConnections = $this->loadRawFormConfigConnectionData(CoreConfig::MIMOTO_FORM);
 
+        $nFormConfigCount = count($aAllFormConfigs);
+        for ($nFormConfigIndex = 0; $nFormConfigIndex < $nFormConfigCount; $nFormConfigIndex++)
+        {
+            // register
+            $formConfig = $aAllFormConfigs[$nFormConfigIndex];
+
+            // read
+            $nFormId = $formConfig->id;
+
+            $nFormFieldCount = count($aAllFormConfigConnections[$nFormId]);
+            for ($nFormFieldIndex = 0; $nFormFieldIndex < $nFormFieldCount; $nFormFieldIndex++)
+            {
+                // register
+                $formFieldConnection = $aAllFormConfigConnections[$nFormId][$nFormFieldIndex];
+
+                // check if field is input
+                if (Mimoto::service('config')->entityIsTypeOf($formFieldConnection->child_entity_type_id, CoreConfig::MIMOTO_FORM_INPUT))
+                {
+                    // store
+                    $formConfig->inputFieldIds[] = $formFieldConnection->child_id;
+                }
+            }
+        }
+
+        // send
+        return $aAllFormConfigs;
+    }
 
 
 
@@ -670,7 +673,7 @@ class FormService
      * Load raw form data
      * @return array Entities
      */
-    private function loadRawFormData()
+    private function loadRawFormConfigData()
     {
         // init
         $aForms = [];
@@ -688,14 +691,12 @@ class FormService
                 'created' => $row['created'],
                 'name' => $row['name'],
                 'description' => $row['description'],
-                'realtimeCollaboration' => $row['realtimeCollaboration'],
+                'realtimeCollaborationMode' => $row['realtimeCollaborationMode'],
                 'customSubmit' => $row['customSubmit'],
                 'action' => $row['action'],
                 'method' => $row['method'],
                 'target' => $row['target'],
-
-
-                'fields' => []
+                'inputFieldIds' => []
             );
 
             // store
@@ -711,7 +712,7 @@ class FormService
      * @param string Parent entity type id
      * @return array Entity connections
      */
-    private function loadRawConnectionData($sParentEntityTypeId)
+    private function loadRawFormConfigConnectionData($sParentEntityTypeId)
     {
         // init
         $aConnections = [];

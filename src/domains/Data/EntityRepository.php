@@ -5,7 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\EntityConfig\MimotoEntityConfig;
+use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Event\MimotoEvent;
 
@@ -58,7 +58,7 @@ class EntityRepository
      * Create new entity
      * @return MimotoEntity
      */
-    public function create(MimotoEntityConfig $entityConfig)
+    public function create(EntityConfig $entityConfig)
     {
         // init and send
         return $this->createEntity($entityConfig);
@@ -70,7 +70,7 @@ class EntityRepository
      * @return MimotoEntity
      * @throws MimotoEntityException
      */
-    public function get(MimotoEntityConfig $entityConfig, $nEntityId)
+    public function get(EntityConfig $entityConfig, $nEntityId)
     {
 
         // #todo - validate entityId (hoort hier, want centraal validatie van input
@@ -108,7 +108,7 @@ class EntityRepository
      * Find a collection entities
      * @return MimotoCollection containing zero or more entities
      */
-    public function find(MimotoEntityConfig $entityConfig, $criteria)
+    public function find(EntityConfig $entityConfig, $criteria)
     {
         
         // init
@@ -161,7 +161,7 @@ class EntityRepository
      * Store entity
      * @param MimotoEntity $entity
      */
-    public function store(MimotoEntityConfig $entityConfig, MimotoEntity $entity)
+    public function store(EntityConfig $entityConfig, MimotoEntity $entity)
     {
         // read
         $aModifiedValues = $entity->getChanges();
@@ -196,7 +196,7 @@ class EntityRepository
             // set value
             switch($propertyValue->type)
             {
-                case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
+                case EntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
                     
                     switch($propertyConfig->type)
                     {
@@ -211,7 +211,7 @@ class EntityRepository
                     
                     break;
 
-                case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
+                case EntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
 
                     $modifiedCollection = $aModifiedValues[$sPropertyName];
 
@@ -389,7 +389,7 @@ class EntityRepository
      * Delete entity
      * @param entity $entity
      */
-    public function delete(MimotoEntityConfig $entityConfig, MimotoEntity $entity)
+    public function delete(EntityConfig $entityConfig, MimotoEntity $entity)
     {
         // load
         $stmt = Mimoto::service('database')->prepare('DELETE FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
@@ -412,7 +412,7 @@ class EntityRepository
      * @param int $nIndex
      * @return entity
      */
-    private function createEntity(MimotoEntityConfig $entityConfig, $result = null)
+    private function createEntity(EntityConfig $entityConfig, $result = null)
     {
         // read
         $nEntityId = (!empty($result)) ? $result['id'] : null;
@@ -462,7 +462,7 @@ class EntityRepository
                 // set value
                 switch($propertyValue->type)
                 {
-                    case MimotoEntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
+                    case EntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
 
                         // 1. register
                         $value = MimotoDataUtils::convertStoredValueToRuntimeValue($result[$propertyValue->mysqlColumnName], $propertyConfig->settings->type->type);
@@ -471,7 +471,7 @@ class EntityRepository
                         $entity->setValue($propertyConfig->name, $value);
                         break;
 
-                    case MimotoEntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
+                    case EntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
                         
                         // init
                         $aCollection = array();

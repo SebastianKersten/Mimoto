@@ -11,17 +11,17 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\EntityConfig\EntityConfigTableUtils;
-use Mimoto\EntityConfig\MimotoEntityConfig;
+use Mimoto\EntityConfig\EntityConfig;
 
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * MimotoEntityConfigService
+ * EntityConfigService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoEntityConfigService
+class EntityConfigService
 {
 
     // config
@@ -57,7 +57,7 @@ class MimotoEntityConfigService
     /**
      * Get entity by id
      * @param int $nId
-     * @return MimotoEntityConfig The requested entity config
+     * @return EntityConfig The requested entity config
      */
     public function getEntityConfigById($nId)
     {
@@ -467,7 +467,7 @@ class MimotoEntityConfigService
             $setting = $aSettings[$nSettingIndex];
 
             // verify
-            if ($setting->getValue('name') == MimotoEntityConfig::SETTING_VALUE_TYPE)
+            if ($setting->getValue('name') == EntityConfig::SETTING_VALUE_TYPE)
             {
                 $sColumnType = $setting->getValue('value');
                 break;
@@ -484,7 +484,7 @@ class MimotoEntityConfigService
         $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
         // 2. setup property setting
-        $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_VALUE_TYPE);
+        $entityPropertySetting->setValue('key', EntityConfig::SETTING_VALUE_TYPE);
         $entityPropertySetting->setValue('type', MimotoEntityPropertyValueTypes::VALUETYPE_TEXT);
         $entityPropertySetting->setValue('value', CoreConfig::DATA_VALUE_TEXTLINE);
 
@@ -504,7 +504,7 @@ class MimotoEntityConfigService
         $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
         // setup
-        $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
+        $entityPropertySetting->setValue('key', EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
         $entityPropertySetting->setValue('type', '');
         $entityPropertySetting->setValue('value', '');
 
@@ -524,7 +524,7 @@ class MimotoEntityConfigService
         $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
         // setup
-        $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES);
+        $entityPropertySetting->setValue('key', EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES);
         $entityPropertySetting->setValue('type', '');
         $entityPropertySetting->setValue('value', '');
 
@@ -538,7 +538,7 @@ class MimotoEntityConfigService
         $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
         // setup
-        $entityPropertySetting->setValue('key', MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES);
+        $entityPropertySetting->setValue('key', EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES);
         $entityPropertySetting->setValue('type', MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN);
         $entityPropertySetting->setValue('value', false);
 

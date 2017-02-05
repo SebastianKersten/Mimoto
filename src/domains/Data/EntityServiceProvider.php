@@ -5,8 +5,8 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\EntityConfig\MimotoEntityConfigRepository;
-use Mimoto\EntityConfig\MimotoEntityConfigService;
+use Mimoto\EntityConfig\EntityConfigRepository;
+use Mimoto\EntityConfig\EntityConfigService;
 
 // Silex classes
 use Silex\Application;
@@ -57,9 +57,9 @@ class EntityServiceProvider implements ServiceProviderInterface
         $app['Mimoto.Config'] = $app['Mimoto.EntityConfigService'] = $app->share(function($app) {
 
             // init
-            $service = new MimotoEntityConfigService
+            $service = new EntityConfigService
             (
-                new MimotoEntityConfigRepository()
+                new EntityConfigRepository()
             );
 
             // send

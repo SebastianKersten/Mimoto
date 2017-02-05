@@ -24,6 +24,7 @@ class EntityPropertyForm_Value_type
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE,
+            'name' => CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, 'type')

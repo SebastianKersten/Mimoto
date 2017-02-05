@@ -36,7 +36,10 @@ Mimoto::setService('twig', $twig);
 // setup
 $app['debug'] = true;
 $app['twig'] = $twig;
-$app['Mimoto'] = new \Mimoto\Mimoto($app);
+$app['Mimoto'] = new \Mimoto\Mimoto($app, false);
+
+
+//Mimoto::service('cache')->enable();
 
 
 //function Mimoto('data') of als singleton Mimoto::data->create

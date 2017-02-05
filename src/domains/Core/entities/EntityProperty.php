@@ -108,6 +108,7 @@ class EntityProperty
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_ENTITYPROPERTY,
+            'name' => CoreConfig::COREFORM_ENTITYPROPERTY,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITYPROPERTY, 'name'),

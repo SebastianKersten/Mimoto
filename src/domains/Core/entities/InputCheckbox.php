@@ -104,6 +104,7 @@ class InputCheckbox
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_INPUT_CHECKBOX,
+            'name' => CoreConfig::COREFORM_INPUT_CHECKBOX,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_CHECKBOX, 'label'),

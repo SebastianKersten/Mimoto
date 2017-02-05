@@ -7,7 +7,7 @@ namespace Mimoto\Core\entities;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
-use Mimoto\EntityConfig\MimotoEntityConfig;
+use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
@@ -36,7 +36,7 @@ class InputTextline
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -49,7 +49,7 @@ class InputTextline
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -62,7 +62,7 @@ class InputTextline
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -75,7 +75,7 @@ class InputTextline
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'key' => MimotoEntityConfig::SETTING_VALUE_TYPE,
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -106,6 +106,7 @@ class InputTextline
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_INPUT_TEXTLINE,
+            'name' => CoreConfig::COREFORM_INPUT_TEXTLINE,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_TEXTLINE, 'label'),

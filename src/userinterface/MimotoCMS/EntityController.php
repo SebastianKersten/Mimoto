@@ -8,7 +8,7 @@ use Mimoto\Mimoto;
 use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
-use Mimoto\EntityConfig\MimotoEntityConfig;
+use Mimoto\EntityConfig\EntityConfig;
 
 
 // Symfony classes
@@ -196,19 +196,19 @@ class EntityController
             // remoe connections from settings
             switch($setting->getValue('key'))
             {
-                case MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
+                case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
                     // unset
-                    $setting->setValue(MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE, null);
+                    $setting->setValue(EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE, null);
 
                     // persist
                     Mimoto::service('data')->store($setting);
 
                     break;
 
-                case MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
+                case EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
 
-                    $aAllowedEntityTypes = $setting->getValue(MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES);
+                    $aAllowedEntityTypes = $setting->getValue(EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES);
 
                     $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
                     for ($nAllowedEntityTypeIndex = 0; $nAllowedEntityTypeIndex < $nAllowedEntityTypeCount; $nAllowedEntityTypeIndex++)
@@ -217,7 +217,7 @@ class EntityController
                         $allowedEntityType = $aAllowedEntityTypes[$nAllowedEntityTypeIndex];
 
                         // remove
-                        $setting->removeValue(MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES, $allowedEntityType);
+                        $setting->removeValue(EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES, $allowedEntityType);
                     }
 
                     // persist
@@ -269,22 +269,22 @@ class EntityController
         // 4. select form based on type
         switch ($entity->getValue('key'))
         {
-            case MimotoEntityConfig::SETTING_VALUE_TYPE:
+            case EntityConfig::SETTING_VALUE_TYPE:
 
                 $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
                 break;
 
-            case MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
+            case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
                 $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
                 break;
 
-            case MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
+            case EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
 
                 $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
                 break;
 
-            case MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES:
+            case EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES:
 
                 $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
                 break;
@@ -412,12 +412,12 @@ class EntityController
 
                 switch($sKey)
                 {
-                    case MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
+                    case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
                         $entityStructure->entityNames[$value] = Mimoto::service('config')->getEntityNameById($value);
                         break;
 
-                    case MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
+                    case EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
 
                         // convert
                         $aAllowedEntityTypes = (!empty($value)) ? $value : [];

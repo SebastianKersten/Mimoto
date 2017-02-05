@@ -5,17 +5,30 @@ namespace Mimoto\Cache;
 
 
 /**
- * MimotoCacheService
+ * CacheService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoCacheService
+class CacheService
 {
-    
+
     // services
     private $_memcache;
-    
-    
+
+    // settings
+    private $_bCacheEnabled;
+
+
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    public function isEnabled()
+    {
+        return $this->_bCacheEnabled;
+    }
+
     
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -25,10 +38,16 @@ class MimotoCacheService
     /**
      * Constructor
      */
-    public function __construct($memcache)
+    public function __construct($memcache, $bEnableCache = false)
     {
         // register
         $this->_memcache = $memcache;
+
+        // init
+        $this->_bCacheEnabled = $bEnableCache;
+
+        // flush all
+        if (!$this->_bCacheEnabled) $this->_memcache->flush();
     }
     
     
@@ -36,7 +55,7 @@ class MimotoCacheService
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
+
     
     public function getValue($sKey)
     {

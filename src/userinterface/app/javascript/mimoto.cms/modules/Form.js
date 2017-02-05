@@ -370,6 +370,11 @@ module.exports.prototype = {
                         {
                             Mimoto.popup.close();
                         }
+                        else if (form.responseSettings.onSuccess.reloadPopup)
+                        {
+                            Mimoto.popup.replace(form.responseSettings.onSuccess.reloadPopup);
+                        }
+                        
                     }
                 }
             }

@@ -33794,9 +33794,19 @@
 	        });
 	    },
 	    
-	    forFieldAddItemToList: function(sURL)
+	    formFieldAddItemToList: function(sURL)
 	    {
 	        Mimoto.popup.open(sURL);
+	    },
+	    
+	    formFieldOptionEdit: function(nOptionID)
+	    {
+	        console.log('formFieldOptionEdit: ' + nOptionID);
+	    },
+	    
+	    formFieldOptionDelete: function(nOptionID)
+	    {
+	        console.log('formFieldOptionDelete: ' + nOptionID);
 	    }
 	    
 	}
@@ -34003,6 +34013,7 @@
 	    _loadPopupContent: function(sURL)
 	    {
 	        var popup_content = document.getElementById('popup_content');
+	        var layer_popup = document.getElementById('layer_popup');
 	        
 	        $.ajax({
 	            url: sURL,
@@ -34026,6 +34037,9 @@
 	                 primaryInput.value = '';
 	                 primaryInput.value = val;
 	                 }*/
+	    
+	                // reset scroll
+	                layer_popup.scrollTop = 0;
 	            }
 	        });
 	    },
@@ -34478,6 +34492,11 @@
 	                        {
 	                            Mimoto.popup.close();
 	                        }
+	                        else if (form.responseSettings.onSuccess.reloadPopup)
+	                        {
+	                            Mimoto.popup.replace(form.responseSettings.onSuccess.reloadPopup);
+	                        }
+	                        
 	                    }
 	                }
 	            }

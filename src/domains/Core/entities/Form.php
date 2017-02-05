@@ -178,6 +178,7 @@ class Form
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_FORM,
+            'name' => CoreConfig::COREFORM_FORM,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORM, 'name')

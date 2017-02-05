@@ -90,6 +90,7 @@ class InputOption
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_FORM_INPUTOPTION,
+            'name' => CoreConfig::COREFORM_FORM_INPUTOPTION,
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORM_INPUTOPTION, 'label'),

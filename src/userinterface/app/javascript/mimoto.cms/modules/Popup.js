@@ -66,6 +66,7 @@ module.exports.prototype = {
     _loadPopupContent: function(sURL)
     {
         var popup_content = document.getElementById('popup_content');
+        var layer_popup = document.getElementById('layer_popup');
         
         $.ajax({
             url: sURL,
@@ -89,6 +90,9 @@ module.exports.prototype = {
                  primaryInput.value = '';
                  primaryInput.value = val;
                  }*/
+    
+                // reset scroll
+                layer_popup.scrollTop = 0;
             }
         });
     },

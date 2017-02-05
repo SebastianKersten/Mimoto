@@ -4,16 +4,15 @@
 namespace Mimoto\EntityConfig;
 
 // Mimoto classes
-use Mimoto\EntityConfig\MimotoEntityConfigException;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
 /**
- * MimotoEntityConfig
+ * EntityConfig
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoEntityConfig
+class EntityConfig
 {
     
     /**
@@ -122,12 +121,11 @@ class MimotoEntityConfig
      * Get the config of a property
      * @param string $sPropertyName The property's name
      * @return object config
-     * @throws MimotoEntityConfigException
      */
     public function getPropertyConfig($sPropertyName)
     {
         // validate
-        if (!$this->hasProperty($sPropertyName)) { throw new MimotoEntityConfigException("( '-' ) - Hmm, I can't seem to find the property '$sPropertyName'"); }
+        if (!$this->hasProperty($sPropertyName)) { throw new \Exception("( '-' ) - Hmm, I can't seem to find the property '$sPropertyName'"); }
         
         // send
         return $this->_aProperties[$sPropertyName];
@@ -136,12 +134,11 @@ class MimotoEntityConfig
     /**
      * Get the config of a property value
      * @param string $sPropertyName The property's name
-     * @throws MimotoEntityConfigException
      */
     public function getPropertyValue($sPropertyName)
     {
         // validate
-        if (!$this->hasPropertyValue($sPropertyName)) { throw new MimotoEntityConfigException("( '-' ) - It looks like no value has been connected to property '$sPropertyName'"); }
+        if (!$this->hasPropertyValue($sPropertyName)) { throw new \Exception("( '-' ) - It looks like no value has been connected to property '$sPropertyName'"); }
         
         // send
         return $this->_aPropertyValues[$sPropertyName];
@@ -163,7 +160,7 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                MimotoEntityConfig::SETTING_VALUE_TYPE => $settings[MimotoEntityConfig::SETTING_VALUE_TYPE]
+                EntityConfig::SETTING_VALUE_TYPE => $settings[EntityConfig::SETTING_VALUE_TYPE]
             )
         );
         
@@ -184,7 +181,7 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => $settings[MimotoEntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value
+                EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value
             )
         );
         
@@ -205,8 +202,8 @@ class MimotoEntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
             'id' => $nPropertyId,
             'settings' => (object) array(
-                MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES => $settings[MimotoEntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES]->value,
-                MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES => $settings[MimotoEntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]
+                EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES => $settings[EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES]->value,
+                EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES => $settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]
             )
         );
 

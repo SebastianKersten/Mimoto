@@ -50,6 +50,7 @@ class LayoutDivider
     {
         return (object) array(
             'id' => CoreConfig::COREFORM_LAYOUT_DIVIDER,
+            'name' => CoreConfig::COREFORM_LAYOUT_DIVIDER,
             'class' => get_class(),
             'inputFieldIds' => []
         );

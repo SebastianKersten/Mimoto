@@ -75,6 +75,7 @@ class AimlessInput extends AimlessComponent
         {
             // collection render
 
+
             // init
             $sOutput = '';
 
@@ -91,18 +92,14 @@ class AimlessInput extends AimlessComponent
                 // read
                 $entity = Mimoto::service('data')->get($nEntityTypeName, $nEntityId);
 
-                // init
-                $aValues = [];
+                // create
+                $component = Mimoto::service('aimless')->createComponent($sModuleName, $entity);
 
-                foreach ($mapping as $sVarName => $sPropertyName)
-                {
-                    if ($entity->hasProperty($sPropertyName))
-                    {
-                        $aValues[$sVarName] = $entity->getValue($sPropertyName);
-                    }
-                }
+                // configure
+                if (!empty($mapping)) $component->setMapping($mapping);
 
-                $sOutput .= MimotoAimlessUtils::getModule($sModuleName, $aValues);
+                // render
+                $sOutput .= $component->render();
             }
 
             return $sOutput;
