@@ -621,8 +621,9 @@ div.example_page {
 }
 
 div.form_holder {
-  background-color: #f5f5f5;
-  padding: 30px;
+    background-color: #f5f5f5;
+    padding: 30px;
+    max-width: 818px;
 }
 
 div.example_article

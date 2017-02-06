@@ -64,14 +64,17 @@ class ContentSectionController
 
     public function contentSectionView(Application $app, $nContentSectionId)
     {
-        // 1. load requested entity
+        // 1. load
         $contentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
 
-        // 2. check if contentSection exists
+        // 2. validate
         if ($contentSection === false) return $app->redirect("/mimoto.cms/contentsections");
 
-        // 3. create component
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_contentsections_ContentSectionDetail', $contentSection);
+        // 3. create
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
+
+        // 4. setup
+        $page->addForm(CoreConfig::COREFORM_CONTENTSECTION, $contentSection, ['response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/contentsections']]]);
 
         // add content menu
         $page = InterfaceUtils::addMenuToComponent($page);

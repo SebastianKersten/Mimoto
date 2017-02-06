@@ -99,7 +99,6 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         if (!empty($sSubpropertySelector)) { $this->forwardSetValue($sSubpropertySelector, $xValue); return; }
 
 
-
         // 2. validate
         if (!is_array($xValue)) Mimoto::service('log')->error("Incorrect value for collection property", "The property " . $this->_config->name . " only accepts arrays when using setValue()", true);
 

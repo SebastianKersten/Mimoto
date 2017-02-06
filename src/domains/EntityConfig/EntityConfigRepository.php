@@ -337,7 +337,7 @@ class EntityConfigRepository
         $aAllEntityPropertySettings = $this->loadRawEntityPropertySettingData();
         $aAllEntityPropertySetting_Connections = $this->loadRawConnectionData(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
-
+        
 
         // --- compose ---
 
@@ -397,7 +397,7 @@ class EntityConfigRepository
                 $property = $entity->properties[$nPropertyIndex];
                 
                 // validate
-                if (!isset($aAllEntityPropertySettings[$property->id]) || !isset($aAllEntityProperty_Connections[$property->id]))
+                if (!isset($aAllEntityProperty_Connections[$property->id]))
                 {
                     // notify
                     //$this->_LogService->silent('Data construction error - propertysettings', "The property with name '".$property->name."' has no settings", 'EntityConfigRepository');
@@ -510,8 +510,6 @@ class EntityConfigRepository
             // store
             $this->_aEntities[] = $entity;
         }
-
-        //error($this->_aEntities);
     }
 
     /**

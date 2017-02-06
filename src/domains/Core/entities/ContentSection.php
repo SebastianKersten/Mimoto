@@ -223,13 +223,13 @@ class ContentSection
 
         // 3b. set options
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-value');
+        $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-item');
         $option->setValue('value', ContentSection::TYPE_ITEM);
         $option->setValue('label', 'Item');
         $field->addValue('options', $option);
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-entity');
+        $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-group');
         $option->setValue('value', ContentSection::TYPE_GROUP);
         $option->setValue('label', 'Group');
         $field->addValue('options', $option);
@@ -281,7 +281,7 @@ class ContentSection
 
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_CONTENTSECTION.'--form_value_validation2');
+        $validationRule->setId(CoreConfig::COREFORM_CONTENTSECTION.'--form_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Please select a form");
