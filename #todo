@@ -233,7 +233,7 @@ https://github.com/filamentgroup/elementary/blob/master/examples/index.html
  #document
 ----------
 1. Waarom $sEntityType meegeven aan MimotoEntity constructor en waarvoor wordt deze gebruikt? (generiek dispatchen domain events)
-2. MimotoeventService ondersteunt configurable actions en is verantwoordelijk voor de routing i.c.m. dynamische acties
+2. EventService ondersteunt configurable actions en is verantwoordelijk voor de routing i.c.m. dynamische acties
 
 #notes
 ------

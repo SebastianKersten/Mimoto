@@ -11,7 +11,7 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Form\FormService;
-use Mimoto\Log\MimotoLogService;
+use Mimoto\Log\LogService;
 
 
 /**
@@ -25,9 +25,10 @@ class AimlessService
     // services
     private $_EntityService;
     private $_AimlessService;
-    private $_MimotoLogService;
+    private $_LogService;
     private $_TwigService;
-    
+    private $_FormService;
+
     // config
     private $_aComponents;
     
@@ -41,13 +42,13 @@ class AimlessService
     /**
      * Constructor
      */
-    public function __construct($EntityService, FormService $FormService, MimotoLogService $MimotoLogService, $TwigService)
+    public function __construct($EntityService, FormService $FormService, LogService $LogService, $TwigService)
     {
         // register
         $this->_EntityService = $EntityService;
         $this->_FormService = $FormService;
         $this->_AimlessService = $this;
-        $this->_MimotoLogService = $MimotoLogService;
+        $this->_LogService = $LogService;
         $this->_TwigService = $TwigService;
         
         // load and register
@@ -70,7 +71,7 @@ class AimlessService
     public function createComponent($sComponentName, $entity = null, $connection = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_AimlessService, $this->_EntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -82,7 +83,7 @@ class AimlessService
     public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_AimlessService, $this->_EntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -94,7 +95,7 @@ class AimlessService
     public function createInput($sComponentName, $entity = null, $connection = null, $sFieldName = null, $value = null)
     {
         // init and send
-        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $this->_AimlessService, $this->_EntityService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -106,7 +107,7 @@ class AimlessService
     public function createForm($sFormName, $xData, $options = null)
     {
         // init and send
-        return new AimlessForm($sFormName, $xData, $options, $this->_AimlessService, $this->_EntityService, $this->_FormService, $this->_MimotoLogService, $this->_TwigService);
+        return new AimlessForm($sFormName, $xData, $options, $this->_AimlessService, $this->_EntityService, $this->_FormService, $this->_LogService, $this->_TwigService);
     }
 
 

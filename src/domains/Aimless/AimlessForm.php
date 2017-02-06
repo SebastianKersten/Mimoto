@@ -94,7 +94,7 @@ class AimlessForm extends AimlessComponent
 
 
         // add security
-        $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.Mimoto::service('user')->getUserPublicKey(json_encode($formFieldValues)).'">';
+        $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues)).'">';
         $sRenderedForm .= '<input type="hidden" name="Mimoto.EntityId" value="'.$formFieldValues->entityId.'">';
 
         // add instructions

@@ -27,7 +27,7 @@ class FormServiceProvider implements ServiceProviderInterface
 
         $app['Mimoto.Forms'] = $app['Mimoto.FormService'] = $app->share(function($app)
         {
-            return new FormService($app['Mimoto.Data'], $app['Mimoto.Config'], $app['Mimoto.Log']);
+            return new FormService();
         });
     }
 

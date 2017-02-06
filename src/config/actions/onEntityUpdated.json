@@ -1,6 +1,0 @@
-{
-    "trigger": "_MimotoAimless__core__entity.updated",
-    "service": "Aimless",
-    "request": "updateEntityTable",
-    "type": "sync"
-}

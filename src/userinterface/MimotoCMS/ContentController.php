@@ -93,6 +93,7 @@ class ContentController
         $sName = $contentSectionEntity->getValue('name');
         $sFormName = $contentSectionEntity->getValue('form.name');
 
+
         // 4b. create page containing a form
         $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
 

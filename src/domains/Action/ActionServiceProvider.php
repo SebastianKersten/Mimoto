@@ -1,11 +1,10 @@
 <?php
 
 // classpath
-namespace Mimoto\Log;
+namespace Mimoto\Action;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\Log\MimotoLogService;
 
 // Silex classes
 use Silex\Application;
@@ -13,25 +12,25 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * LogServiceProvider
+ * ActionServiceProvider
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoLogServiceProvider implements ServiceProviderInterface
+class ActionServiceProvider implements ServiceProviderInterface
 {
     
     public function register(Application $app)
     {
-        $app['Mimoto.Log'] = $app['Mimoto.LogService'] = $app->share(function($app)
+        $app['Mimoto.ActionService'] = $app->share(function($app)
         {
-            return new MimotoLogService($app['Mimoto.Data']);
+            return new ActionService();
         });
     }
 
     public function boot(Application $app)
     {
         // register
-        Mimoto::setService('log', $app['Mimoto.Log']);
+        Mimoto::setService('actions', $app['Mimoto.ActionService']);
     }
     
 }

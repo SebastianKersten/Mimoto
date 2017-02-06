@@ -4,13 +4,14 @@
 namespace Mimoto;
 
 // Mimoto classes
-use Mimoto\Event\MimotoEventServiceProvider;
+use Mimoto\Action\ActionServiceProvider;
+use Mimoto\Event\EventServiceProvider;
 use Mimoto\Aimless\AimlessServiceProvider;
 use Mimoto\Data\EntityServiceProvider;
 use Mimoto\Cache\CacheServiceProvider;
 use Mimoto\Form\FormServiceProvider;
-use Mimoto\Log\MimotoLogServiceProvider;
-use Mimoto\User\MimotoUserServiceProvider;
+use Mimoto\Log\LogServiceProvider;
+use Mimoto\User\UserServiceProvider;
 
 
 /**
@@ -42,11 +43,12 @@ class Mimoto
         // setup Mimoto services
         $app->register(new CacheServiceProvider($bEnableCache));
         $app->register(new EntityServiceProvider());
+        $app->register(new LogServiceProvider());
         $app->register(new AimlessServiceProvider());
-        $app->register(new MimotoEventServiceProvider());
+        $app->register(new EventServiceProvider());
         $app->register(new FormServiceProvider());
-        $app->register(new MimotoLogServiceProvider());
-        $app->register(new MimotoUserServiceProvider());
+        $app->register(new UserServiceProvider());
+        $app->register(new ActionServiceProvider());
 
 
 

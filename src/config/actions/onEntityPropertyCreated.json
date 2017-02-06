@@ -1,6 +1,0 @@
-{
-    "trigger": "_MimotoAimless__core__entityproperty.created",
-    "service": "Aimless",
-    "request": "onEntityPropertyCreated",
-    "type": "sync"
-}

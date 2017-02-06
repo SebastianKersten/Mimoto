@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Data\MimotoEntityConnection;
@@ -68,7 +69,7 @@ class MimotoAimlessController
     public function parseForm(Application $app, Request $request, $sFormName)
     {
         // parse
-        $formResponse = $app['Mimoto.Forms']->parseForm($sFormName, $request);
+        $formResponse = Mimoto::service('forms')->parseForm($sFormName, $request);
 
         // render and send
         return new JsonResponse($formResponse);

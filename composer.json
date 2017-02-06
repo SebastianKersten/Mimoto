@@ -23,6 +23,7 @@
             "Mimoto\\UserInterface\\": "./src/userinterface",
             "Mimoto\\EntityConfig\\": "./src/domains/EntityConfig",
             "Mimoto\\FormConfig\\": "./src/domains/FormConfig",
+            "Mimoto\\Action\\": "./src/domains/Action",
             "Mimoto\\Core\\": "./src/domains/Core",
             "Mimoto\\Data\\": "./src/domains/Data",
             "Mimoto\\Event\\": "./src/domains/Event",

@@ -20,4 +20,4 @@ $app->run();
 //$time_end = microtime_float();
 //$time = $time_end - $time_start;
 //
-//echo "<!--Memory usage = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes) and it took $time seconds to load data-->";
+//echo "<!--Memory usage = ".number_format(ceil(($after - $before)/1000), 0, ',', '.')."kb (".number_format(($after - $before), 0, ',', '.')." bytes) and it took $time seconds to load data-->;";

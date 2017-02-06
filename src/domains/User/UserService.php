@@ -8,11 +8,11 @@ use Mimoto\Core\CoreConfig;
 
 
 /**
- * MimotoUserService
+ * UserService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoUserService
+class UserService
 {
 
     const USER_ID = 69;

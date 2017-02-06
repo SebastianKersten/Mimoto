@@ -9,7 +9,7 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoEntityException;
-use Mimoto\Log\MimotoLogService;
+use Mimoto\Log\LogService;
 
 
 /**
@@ -232,6 +232,9 @@ class EntityConfigRepository
 
     public function getEntityNameByPropertyId($nId)
     {
+        //echo 'id = '.$nId;
+
+
         // search
         $nEntityCount = count($this->_aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)
@@ -253,6 +256,8 @@ class EntityConfigRepository
 
             }
         }
+
+        //error($this->_aEntities);
 
         Mimoto::service('log')->error('Incomplete entity config', "No entity found which contains a property with <b>id=".$nId."</b>", true);
     }
@@ -346,7 +351,7 @@ class EntityConfigRepository
             if (!isset($aAllEntity_Connections[$entity->id]))
             {
                 // notify
-                //$this->_MimotoLogService->silent('Data construction error - properties', "The entity with name '".$entity->name."' has no properties", 'EntityConfigRepository');
+                //$this->_LogService->silent('Data construction error - properties', "The entity with name '".$entity->name."' has no properties", 'EntityConfigRepository');
 
                 // skip
                 continue;
@@ -395,7 +400,7 @@ class EntityConfigRepository
                 if (!isset($aAllEntityPropertySettings[$property->id]) || !isset($aAllEntityProperty_Connections[$property->id]))
                 {
                     // notify
-                    //$this->_MimotoLogService->silent('Data construction error - propertysettings', "The property with name '".$property->name."' has no settings", 'EntityConfigRepository');
+                    //$this->_LogService->silent('Data construction error - propertysettings', "The property with name '".$property->name."' has no settings", 'EntityConfigRepository');
 
                     // skip
                     continue 2;
@@ -436,7 +441,10 @@ class EntityConfigRepository
                                 // validate
                                 if (!isset($aAllEntityPropertySetting_Connections[$setting->id])) {
                                     // notify
-                                    //$this->_MimotoLogService->silent('', '');
+                                    //$this->_LogService->silent('', '');
+                                    //echo 'SKIP  '.$setting->key;
+                                    //error($setting);
+                                    //error($connection);
 
                                     // skip
                                     continue 3;
@@ -502,6 +510,8 @@ class EntityConfigRepository
             // store
             $this->_aEntities[] = $entity;
         }
+
+        //error($this->_aEntities);
     }
 
     /**

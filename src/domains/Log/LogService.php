@@ -8,11 +8,11 @@ use Mimoto\Core\CoreConfig;
 
 
 /**
- * MimotoLogService
+ * LogService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoLogService
+class LogService
 {
 
     // services

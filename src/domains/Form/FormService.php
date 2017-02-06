@@ -22,11 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
 class FormService
 {
 
-    // services
-    private $_EntityService;
-    private $_EntityConfigService;
-    private $_MimotoLogService;
-
     // config data
     private $_aFormConfigs = [];
 
@@ -40,14 +35,8 @@ class FormService
     /**
      * Constructor
      */
-    public function __construct($EntityService, $EntityConfigService, $MimotoLogService)
+    public function __construct()
     {
-        // register
-        $this->_EntityService = $EntityService;
-        $this->_EntityConfigService = $EntityConfigService;
-        $this->_MimotoLogService = $MimotoLogService;
-
-
         // toggle between cache or database
         if ( Mimoto::service('cache')->isEnabled() && Mimoto::service('cache')->getValue('mimoto.core.formconfigs'))
         {
@@ -105,7 +94,7 @@ class FormService
         }
 
         // if here, broadcast error
-        $this->_MimotoLogService->error('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
+        Mimoto::service('log')->error('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
     }
 
     public function getFormFieldByFieldId($nRequestedFieldId)
@@ -182,7 +171,7 @@ class FormService
         if (empty($requestData->entityId))
         {
             // create
-            $entity = $this->_EntityService->create($sEntityName);
+            $entity = Mimoto::service('data')->create($sEntityName);
         }
         else
         {
@@ -193,7 +182,7 @@ class FormService
             }
 
             // load
-            $entity = $this->_EntityService->get($sEntityName, $requestData->entityId);
+            $entity = Mimoto::service('data')->get($sEntityName, $requestData->entityId);
         }
 
 
@@ -217,7 +206,7 @@ class FormService
 
         // 5. authenticate #todo
         $sPublicKey = $requestData->publicKey;
-//        if ($sPublicKey !== Mimoto::service('user')->getUserPublicKey(json_encode($formVars->connectedEntities)))
+//        if ($sPublicKey !== Mimoto::service('users')->getUserPublicKey(json_encode($formVars->connectedEntities)))
 //        {
 //            Mimoto::service('log')->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
 //        }
@@ -475,7 +464,7 @@ class FormService
             $formFieldValues = Mimoto::service('forms')->getFormFieldValues($form, $entity);
 
             // 2. define
-            $formResponse->newPublicKey = Mimoto::service('user')->getUserPublicKey(json_encode($formFieldValues));
+            $formResponse->newPublicKey = Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues));
         }
 
         // send
@@ -532,9 +521,9 @@ class FormService
 
 
             // 1. get entity to which the property is connected
-            $sEntityName = $this->_EntityConfigService->getEntityNameByPropertyId($fieldValueId);
-            $sPropertyName = $this->_EntityConfigService->getPropertyNameById($fieldValueId);
-            $sPropertyType = $this->_EntityConfigService->getPropertyTypeById($fieldValueId);
+            $sEntityName = Mimoto::service('config')->getEntityNameByPropertyId($fieldValueId);
+            $sPropertyName = Mimoto::service('config')->getPropertyNameById($fieldValueId);
+            $sPropertyType = Mimoto::service('config')->getPropertyTypeById($fieldValueId);
 
             // auto create
             if (!isset($entity)) $entity = Mimoto::service('data')->create($sEntityName);
@@ -666,7 +655,7 @@ class FormService
                 }
             }
         }
-        
+
         // send
         return $aAllFormConfigs;
     }

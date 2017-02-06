@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoEventService
+class EventService
 {
     
     // utils
@@ -181,29 +181,9 @@ class MimotoEventService
     private function getActionsByEvent($sEvent)
     {
         
-        // configure
-        $sPathToActionFiles = dirname(dirname(dirname(dirname(__FILE__)))).'/src/config/actions';
-        
-        
         // init
-        $aAllActions = [];
-        
-        if ($handle = opendir($sPathToActionFiles))
-        {
-            while (false !== ($entry = readdir($handle))) {
-                if ($entry != "." && $entry != "..") {
-                    
-                    // #todo validate json - later, doe dit in een install-script die alles in een php file laadt
-                    $json = file_get_contents($sPathToActionFiles.'/'.$entry);
-                    $action = json_decode($json);
-                    
-                    // register
-                    $aAllActions[] = $action;
-                }
-            }
-            closedir($handle);
-        }
-        
+        $aAllActions = Mimoto::service('actions')->getAllActions();
+
         
         // --- filter ---
         

@@ -1,6 +1,0 @@
-{
-    "trigger": "*.created",
-    "service": "Aimless",
-    "request": "dataCreate",
-    "type": "async"
-}

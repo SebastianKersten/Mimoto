@@ -4,6 +4,7 @@
 namespace Mimoto\UserInterface\examples;
 
 // Silex classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Silex\Application;
 
@@ -128,11 +129,11 @@ class ExampleFormController
 
     public function viewExampleForm4(Application $app)
     {
-        //$app['Mimoto.Log']->notify('A notification', "There is something I would like you to be aware of. No rush!");
-        $app['Mimoto.Log']->silent('Silent notice', "The configuration is missing a paramater, but we'll do without for now");
-        //$app['Mimoto.Log']->silent('Another silent test', "Does it live update?");
-        //$app['Mimoto.Log']->warn('Some warning', "Something probably needs your attention");
-        //$app['Mimoto.Log']->error('uh-oh, an error', "Your code is broken. Please fix");
+        //Mimoto::service('log')->notify('A notification', "There is something I would like you to be aware of. No rush!");
+        Mimoto::service('log')->silent('Silent notice', "The configuration is missing a paramater, but we'll do without for now");
+        //Mimoto::service('log')->silent('Another silent test', "Does it live update?");
+        //Mimoto::service('log')->warn('Some warning', "Something probably needs your attention");
+        //Mimoto::service('log')->error('uh-oh, an error', "Your code is broken. Please fix");
 
 
         // load

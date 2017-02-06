@@ -83,7 +83,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--contentItem',
+                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--contentItem',
                     // ---
                     'name' => 'contentItem',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -96,7 +96,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--contentItems',
+                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--contentItems',
                     // ---
                     'name' => 'contentItems',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,

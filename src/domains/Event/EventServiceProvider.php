@@ -4,7 +4,7 @@
 namespace Mimoto\Event;
 
 // Mimoto classes
-use Mimoto\Event\MimotoEventService;
+use Mimoto\Event\EventService;
 
 // Silex classes
 use Silex\Application;
@@ -12,17 +12,17 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * MimotoEventServiceProvider
+ * EventServiceProvider
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoEventServiceProvider implements ServiceProviderInterface
+class EventServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {
         $app['Mimoto.EventService'] = $app->share(function ($app)
         {
-            $service = new MimotoEventService($app['dispatcher']);
+            $service = new EventService($app['dispatcher']);
             
             return $service;
         });

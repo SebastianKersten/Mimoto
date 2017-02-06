@@ -276,4 +276,94 @@ class CoreConfig
         return $aForms;
     }
 
+    public static function getCoreActions()
+    {
+        // setup
+        $aActions = [
+            (object) array(
+                'trigger' => '*.created',
+                'service' => 'Aimless',
+                'request' => 'dataCreate',
+                'type' => 'async'
+            ),
+            (object) array(
+                'trigger' => CoreConfig::MIMOTO_ENTITY.'.created', // #todo - move 'created' etc to const class
+                'service' => 'Aimless',
+                'request' => 'createEntityTable',
+                'type' => 'sync'
+            ),
+            (object) array(
+                'trigger' => CoreConfig::MIMOTO_ENTITY.'.updated',
+                'service' => 'Aimless',
+                'request' => 'updateEntityTable',
+                'type' => 'sync'
+            ),
+            (object) array(
+                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTY.'.created',
+                'service' => 'Aimless',
+                'request' => 'onEntityPropertyCreated',
+                'type' => 'sync'
+            ),
+            (object) array(
+                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTY.'.updated',
+                'service' => 'Aimless',
+                'request' => 'onEntityPropertyUpdated',
+                'type' => 'sync'
+            ),
+            (object) array(
+                'trigger' => CoreConfig::MIMOTO_NOTIFICATION.'.created',
+                'service' => 'Aimless',
+                'request' => 'sendSlackNotification',
+                'type' => 'async',
+                'config' => (object) array(
+                    'channel' => 'mimoto_notifications'
+                )
+            ),
+            (object) array(
+                'trigger' => '*.updated',
+                'service' => 'Aimless',
+                'request' => 'dataUpdate',
+                'type' => 'async',
+                'config' => (object) array(
+                    'properties' => array(
+                        'state',
+                        'name',
+                        'type',
+
+                        'description',
+
+                        'client.name',
+                        'agency.name',
+                        'projectManager',
+                        'projectManager.name',
+
+                        'subprojects',
+                        'properties',
+                        'fields',
+                        'value',
+                        'allowedEntityType',
+                        'allowedEntityTypes',
+
+                        'file',
+                        'label',
+
+                        'placeholder',
+                        'prefix',
+
+                        'form',
+                        'forms',
+                        'components',
+                        'title'
+                    )
+                ),
+                'notes' => array(
+                    "voor admin user, send all. Add 'except'. Wildcard"
+                )
+            )
+        ];
+
+        // send
+        return $aActions;
+    }
+
 }
