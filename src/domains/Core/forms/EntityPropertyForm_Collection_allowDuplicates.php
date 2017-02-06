@@ -18,7 +18,6 @@ use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 class EntityPropertyForm_Collection_allowDuplicates
 {
 
-
     /**
      * Get form structure
      */

@@ -648,21 +648,25 @@ class FormService
             // read
             $nFormId = $formConfig->id;
 
-            $nFormFieldCount = count($aAllFormConfigConnections[$nFormId]);
-            for ($nFormFieldIndex = 0; $nFormFieldIndex < $nFormFieldCount; $nFormFieldIndex++)
+            if (isset($aAllFormConfigConnections[$nFormId]))
             {
-                // register
-                $formFieldConnection = $aAllFormConfigConnections[$nFormId][$nFormFieldIndex];
+                $nFormFieldCount = count($aAllFormConfigConnections[$nFormId]);
 
-                // check if field is input
-                if (Mimoto::service('config')->entityIsTypeOf($formFieldConnection->child_entity_type_id, CoreConfig::MIMOTO_FORM_INPUT))
+                for ($nFormFieldIndex = 0; $nFormFieldIndex < $nFormFieldCount; $nFormFieldIndex++)
                 {
-                    // store
-                    $formConfig->inputFieldIds[] = $formFieldConnection->child_id;
+                    // register
+                    $formFieldConnection = $aAllFormConfigConnections[$nFormId][$nFormFieldIndex];
+
+                    // check if field is input
+                    if (Mimoto::service('config')->entityIsTypeOf($formFieldConnection->child_entity_type_id, CoreConfig::MIMOTO_FORM_INPUT))
+                    {
+                        // store
+                        $formConfig->inputFieldIds[] = $formFieldConnection->child_id;
+                    }
                 }
             }
         }
-
+        
         // send
         return $aAllFormConfigs;
     }

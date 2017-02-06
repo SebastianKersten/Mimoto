@@ -403,7 +403,7 @@ class EntityConfigRepository
 
 
                 $property = $this->setDefaultPropertySettings($property);
-                
+
 
                 // register
                 $aEntityProperty_Connections = $aAllEntityProperty_Connections[$property->id];
