@@ -75,19 +75,19 @@ class EntityPropertyForm_Value_type
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_TEXTLINE);
-        $option->setValue('key', CoreConfig::DATA_VALUE_TEXTLINE);
+        $option->setValue('label', CoreConfig::DATA_VALUE_TEXTLINE);
         $option->setValue('value', CoreConfig::DATA_VALUE_TEXTLINE);
         $field->addValue('options', $option);
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_TEXTBLOCK);
-        $option->setValue('key', CoreConfig::DATA_VALUE_TEXTBLOCK);
+        $option->setValue('label', CoreConfig::DATA_VALUE_TEXTBLOCK);
         $option->setValue('value', CoreConfig::DATA_VALUE_TEXTBLOCK);
         $field->addValue('options', $option);
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_BOOLEAN);
-        $option->setValue('key', CoreConfig::DATA_VALUE_BOOLEAN);
+        $option->setValue('label', CoreConfig::DATA_VALUE_BOOLEAN);
         $option->setValue('value', CoreConfig::DATA_VALUE_BOOLEAN);
         $field->addValue('options', $option);
 
