@@ -402,6 +402,9 @@ class EntityConfigRepository
                 }
 
 
+                $property = $this->setDefaultPropertySettings($property);
+                
+
                 // register
                 $aEntityProperty_Connections = $aAllEntityProperty_Connections[$property->id];
 
@@ -567,9 +570,6 @@ class EntityConfigRepository
                 $entity->typeOfAsNames = [$this->getEntityNameById($entity->id)];
             }
         }
-
-
-        //error($this->_aEntities);
     }
 
     /**
@@ -901,6 +901,64 @@ class EntityConfigRepository
 
         // send
         return $aConnections;
+    }
+
+
+    /**
+     * Set default property settings that can be overruled by user config
+     * @param $property
+     * @return mixed
+     */
+    private function setDefaultPropertySettings($property)
+    {
+        // toggle
+        switch($property->type)
+        {
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                $property->settings = array(
+                    EntityConfig::SETTING_VALUE_TYPE => (object) array(
+                        'key' => EntityConfig::SETTING_VALUE_TYPE,
+                        'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                        'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                    )
+                );
+
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                $property->settings = array(
+                    EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => (object) array(
+                        'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                        'type' => '',
+                        'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                    )
+                );
+
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                $property->settings = array(
+                    EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES => (object) array(
+                        'key' => EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES,
+                        'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                        'value' => []
+                    ),
+                    EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES => (object) array(
+                        'key' => EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES,
+                        'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                        'value' => false
+                    ),
+                );
+
+                break;
+
+        }
+
+        // send
+        return $property;
     }
 
 }
