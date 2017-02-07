@@ -9,12 +9,9 @@
         <p class="MimotoCMS_forms_input_ListItem-subtitle">{{ Aimless.render('subtitle') }}</p>
     </div>
 
-    {% if list_item.removeable|default(true) %}
-        <div class="MimotoCMS_forms_input_ListItem-button">
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldOptionEdit('"~Aimless.meta('id')~"')", types: ['secondary', 'small'] }) }}
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', onclick: "Mimoto.CMS.formFieldOptionDelete('"~Aimless.meta('id')~"')", types: ['alert', 'small'] }) }}
-        </div>
-    {% endif %}
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldOptionEdit('"~Aimless.meta('id')~"')", types: ['secondary', 'small'] }) }}
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', onclick: "Mimoto.CMS.formFieldOptionDelete('"~Aimless.meta('id')~"')", types: ['alert', 'small'] }) }}
+
 
     {% if sortable|default(true) %}
         <div class="MimotoCMS_forms_input_ListItem-handle">

@@ -353,7 +353,10 @@ class CoreConfig
                         'form',
                         'forms',
                         'components',
-                        'title'
+                        'title',
+
+                        'options',
+                        'validation'
                     )
                 ),
                 'notes' => array(

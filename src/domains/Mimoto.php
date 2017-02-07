@@ -114,7 +114,7 @@ class Mimoto
         $app->get ('/mimoto.cms/formfield/add/{nFormFieldTypeId}/{nFormFieldId}/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldItemAddToList');
         $app->get ('/mimoto.cms/formfield/add/{nFormFieldTypeId}/{nFormFieldId}/{sPropertySelector}/{sItemId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldItemAddToList');
 
-        $app->get ('/mimoto.cms/formfielditem/{nFormFieldItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFielditemDelete');
+        $app->get ('/mimoto.cms/formfielditem/{nFormFieldItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldItemDelete');
 
         $app->get('/mimoto.cms/notifications', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::viewNotificationCenter');
         $app->get('/mimoto.cms/notifications/{nNotificationId}/close', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeNotification');

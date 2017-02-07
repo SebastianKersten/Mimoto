@@ -5,6 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Mimoto;
+use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Event\MimotoEvent;
@@ -391,12 +392,182 @@ class EntityRepository
      */
     public function delete(EntityConfig $entityConfig, MimotoEntity $entity)
     {
-        // load
+        // cleanup parent
+        $this->cleanupParents($entity);
+
+        // cleanup children
+        $this->cleanupChildren($entity);
+
+        // cleanup entity
         $stmt = Mimoto::service('database')->prepare('DELETE FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
         $params = array(
             ':id' => $entity->getId()
         );
-        return $stmt->execute($params);
+        $stmt->execute($params);
+    }
+
+    private function cleanupParents(MimotoEntity $entity)
+    {
+        // load
+        $aParents = $this->getAllParents($entity);
+
+        // parse
+        $nParentCount = count($aParents);
+        for ($nParentIndex = 0; $nParentIndex < $nParentCount; $nParentIndex++)
+        {
+            // register
+            $parent = $aParents[$nParentIndex];
+
+            // remove
+            switch(Mimoto::service('config')->getPropertyTypeById($parent->propertyId))
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                    $parent->entity->setValue($parent->propertyName, null);
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                    $parent->entity->removeValue($parent->propertyName, $entity);
+                    break;
+            }
+
+            // store
+            Mimoto::service('data')->store($parent->entity);
+        }
+    }
+
+    private function getAllParents(MimotoEntity $entity)
+    {
+        // init
+        $aParentEntities = [];
+
+        // load all connections
+        $stmt = Mimoto::service('database')->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "child_entity_type_id = :child_entity_type_id && ".
+            "child_id = :child_id ".
+            "ORDER BY parent_id ASC, sortindex ASC"
+        );
+        $params = array(
+            ':child_entity_type_id' => $entity->getEntityTypeId(),
+            ':child_id' => $entity->getId()
+        );
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll();
+
+        // register
+        $nResultCount = count($aResults);
+        for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
+        {
+            // register
+            $result = $aResults[$nResultIndex];
+
+            // convert
+            $sParentEntityTypeName = Mimoto::service('config')->getEntityNameById($result['parent_entity_type_id']);
+
+            // compose
+            $parent = (object) array(
+                'entity' => Mimoto::service('data')->get($sParentEntityTypeName, $result['parent_id']),
+                'propertyId' => $result['parent_property_id'],
+                'propertyName' => Mimoto::service('config')->getPropertyNameById($result['parent_property_id'])
+            );
+
+            // store
+            $aParentEntities[] = $parent;
+        }
+
+        // send
+        return $aParentEntities;
+    }
+
+    private function cleanupChildren($entity)
+    {
+        // load
+        $aChildren = $this->getAllChildren($entity);
+
+        // parse
+        $nChildCount = count($aChildren);
+        for ($nChildIndex = 0; $nChildIndex < $nChildCount; $nChildIndex++)
+        {
+            // register
+            $child = $aChildren[$nChildIndex];
+
+            // remove
+            switch(Mimoto::service('config')->getPropertyTypeById($child->parentPropertyId))
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                    $entity->setValue($child->parentPropertyName, null);
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                    $entity->removeValue($child->parentPropertyName, $child->entity);
+                    break;
+            }
+
+            // store
+            Mimoto::service('data')->store($entity);
+
+
+            // 1. check if child has any parents
+            // 2. if yes skip
+            // 3. if no cleanup
+
+            // cleanup
+            Mimoto::service('data')->delete($child->entity);
+        }
+
+    }
+
+    private function getAllChildren(MimotoEntity $entity)
+    {
+        // init
+        $aChildEntities = [];
+
+        // load all connections
+        $stmt = Mimoto::service('database')->prepare(
+            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "parent_entity_type_id = :parent_entity_type_id && ".
+            "parent_id = :parent_id ".
+            "ORDER BY parent_id ASC, sortindex ASC"
+        );
+        $params = array(
+            ':parent_entity_type_id' => $entity->getEntityTypeId(),
+            ':parent_id' => $entity->getId()
+        );
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll();
+
+        // register
+        $nResultCount = count($aResults);
+        for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
+        {
+            // register
+            $result = $aResults[$nResultIndex];
+
+            // convert
+            $sChildEntityTypeName = Mimoto::service('config')->getEntityNameById($result['child_entity_type_id']);
+
+            // compose
+            $child = (object) array(
+                'entity' => Mimoto::service('data')->get($sChildEntityTypeName, $result['child_id']),
+                'parentPropertyId' => $result['parent_property_id'],
+                'parentPropertyName' => Mimoto::service('config')->getPropertyNameById($result['parent_property_id'])
+
+            );
+
+            // get
+            $aChildEntities[] = $child;
+        }
+
+        // send
+        return $aChildEntities;
     }
 
     

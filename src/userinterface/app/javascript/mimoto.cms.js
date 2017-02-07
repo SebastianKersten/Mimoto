@@ -3,8 +3,8 @@
 require('jquery-ui');
 
 var HeaderView = require('./views/Header');
-var FormView = require('./views/form-components/Form');
-var ListView = require('./views/form-components/List');
+// var FormView = require('./views/form-components/Form');
+// var ListView = require('./views/form-components/List');
 
 var ButtonUtils = require('./utils/Button');
 
@@ -30,31 +30,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var navigation = document.querySelector('.js-navigation');
     var header = document.querySelector('.js-header');
-    var forms = document.querySelectorAll('.js-form');
-    var lists = document.querySelectorAll('.js-list');
-
-    EH.init({
-        "errorElement": "p",
-        "errorElementClasses": ["MimotoCMS_forms_FormComponent-element-error"],
-        "iconSelectorClass": "js-error-icon",
-        "validatedClass": "MimotoCMS_forms_FormComponent--is-validated",
-        "validatedIcon": "#ico-checkmark",
-        "validatedIconClass": "MimotoCMS_forms_FormComponent-title-icon--checkmark",
-        "errorParentClass": "js-error-parent",
-        "errorClass": "MimotoCMS_forms_FormComponent--has-error",
-        "errorIcon": "#ico-warning",
-        "errorIconClass": "MimotoCMS_forms_FormComponent-title-icon--warning"
-    });
+    // var forms = document.querySelectorAll('.js-form');
+    // var lists = document.querySelectorAll('.js-list');
+    //
+    // EH.init({
+    //     "errorElement": "p",
+    //     "errorElementClasses": ["MimotoCMS_forms_FormComponent-element-error"],
+    //     "iconSelectorClass": "js-error-icon",
+    //     "validatedClass": "MimotoCMS_forms_FormComponent--is-validated",
+    //     "validatedIcon": "#ico-checkmark",
+    //     "validatedIconClass": "MimotoCMS_forms_FormComponent-title-icon--checkmark",
+    //     "errorParentClass": "js-error-parent",
+    //     "errorClass": "MimotoCMS_forms_FormComponent--has-error",
+    //     "errorIcon": "#ico-warning",
+    //     "errorIconClass": "MimotoCMS_forms_FormComponent-title-icon--warning"
+    // });
 
     if (navigation && header) { new HeaderView(header); }
 
-    for (var i = 0; i < forms.length; i++) {
-        new FormView(forms[i]);
-    }
-
-    for (i = 0; i < lists.length; i++) {
-        new ListView(lists[i]);
-    }
+    // for (var i = 0; i < forms.length; i++) {
+    //     new FormView(forms[i]);
+    // }
+    //
+    // for (i = 0; i < lists.length; i++) {
+    //     new ListView(lists[i]);
+    // }
 
     //var loadingButton = document.querySelector('.js-loading-example');
     //var successButton = document.querySelector('.js-success-example');

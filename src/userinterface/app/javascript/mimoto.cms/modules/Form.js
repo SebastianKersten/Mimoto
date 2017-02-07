@@ -268,7 +268,7 @@ module.exports.prototype = {
         // console.log(aValues);
         // console.error(requestData);
         // console.log('------');
-    
+        
         
         // 11. send data
         $.ajax({

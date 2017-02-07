@@ -269,7 +269,7 @@ module.exports.prototype = {
     
     formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
     {
-        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit');
+        window.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
     },
     
     formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
@@ -291,19 +291,20 @@ module.exports.prototype = {
     formFieldOptionEdit: function(nOptionID)
     {
         console.log('formFieldOptionEdit: ' + nOptionID);
+        alert('formFieldOptionEdit: ' + nOptionID);
+        
         //Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
     },
     
-    formFieldOptionDelete: function(nOptionID)
+    formFieldOptionDelete: function(nOptionId)
     {
         $.ajax({
             type: 'get',
-            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
+            url: "/mimoto.cms/formfielditem/" + nOptionId + '/delete',
             success: function(resultData, resultStatus, resultSomething) {
                 console.log(resultData);
             }
         });
-        console.log('formFieldOptionDelete: ' + nOptionID);
     }
     
 }

@@ -102,15 +102,6 @@ class FormController
         // 1. load
         $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
-        // 2. load
-        $parentEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
-
-        // 3. remove connection
-        $parentEntity->removeValue('forms', $form);
-
-        // 4. persist removed
-        Mimoto::service('data')->store($parentEntity);
-
         // 5. delete property
         Mimoto::service('data')->delete($form);
 
@@ -211,16 +202,33 @@ class FormController
         if ($entity === false) return $app->redirect("/mimoto.cms/forms");
 
         // 3. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
 
         // 4. get form name
         $sFormName = Mimoto::service('forms')->getCoreFormByEntityTypeId($entity->getEntityTypeName());
 
         // 5. setup
-        $component->addForm($sFormName, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $page->addForm($sFormName, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+
+
+        // add content menu
+        $page = InterfaceUtils::addMenuToComponent($page);
+
+        // setup page
+        $page->setVar('pageTitle', array(
+                (object)array(
+                    "label" => 'todo',
+                    "url" => '/mimoto.cms/todo'
+                ),
+                (object)array(
+                    "label" => 'todo',
+                    "url" => '/mimoto.cms/todo'
+                )
+            )
+        );
 
         // 6. render and send
-        return $component->render();
+        return $page->render();
     }
 
     public function formFieldDelete(Application $app, $nFormFieldTypeId, $nFormFieldId)
@@ -339,40 +347,13 @@ class FormController
     }
 
 
-    public function formFielditemDelete(Application $app, $nFormFieldItemId)
+    public function formFieldItemDelete(Application $app, $nFormFieldItemId)
     {
         // load
-        $formFieldItem = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM_INPUTOPTION, $nFormFieldItemId);
+        $eFormFieldItem = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM_INPUTOPTION, $nFormFieldItemId);
 
-        // collect
-        $aParents = Mimoto::service('config')->getParentConnections($formFieldItem);
-
-        // find
-        $nParentCount = count($aParents);
-        for ($nParentIndex = 0; $nParentIndex < $nParentCount; $nParentIndex++)
-        {
-            // register
-            $parent = $aParents[$nParentIndex];
-
-
-
-            // 1. auto delete connection
-            // 2. if disconnected item, auto delete if no other connections
-
-            // remove connection
-            $parent->removeValue('fields', $formFieldItem);
-        }
-
-
-        // 1. hoe parent FormField opzoeken?
-
-
-
-        // 10. persist removed
-        Mimoto::service('data')->store($parentForm);
-
-        // 11. delete property
-        Mimoto::service('data')->delete($formFieldItem);
+        // delete
+        Mimoto::service('data')->delete($eFormFieldItem);
 
         // 12. send
         return new JsonResponse((object) array('result' => 'FormFieldItem deleted! '.date("Y.m.d H:i:s")), 200);

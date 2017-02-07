@@ -15,9 +15,9 @@ module.exports.prototype = {
 
         console.log('Init List');
 
-        this.setVariables();
+        //this.setVariables();
 
-        if (this.isSortable) this.initSortable();
+        //if (this.isSortable) this.initSortable();
 
     },
 

@@ -228,7 +228,7 @@ class EntityService
         if (!isset($this->_aEntityConfigs[$entity->getEntityTypeName()]))
         {
 
-            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($entity->getEntityTypeName());
+            $entityConfig = Mimoto::service('config')->getEntityConfigByName($entity->getEntityTypeName());
 
             if ($entityConfig !== false)
             {
