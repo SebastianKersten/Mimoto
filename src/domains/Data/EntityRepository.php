@@ -512,13 +512,11 @@ class EntityRepository
             // store
             Mimoto::service('data')->store($entity);
 
-
-            // 1. check if child has any parents
-            // 2. if yes skip
-            // 3. if no cleanup
+            // load
+            $aParents = $this->getAllParents($child->entity);
 
             // cleanup
-            Mimoto::service('data')->delete($child->entity);
+            if (count($aParents) == 0) Mimoto::service('data')->delete($child->entity);
         }
 
     }
