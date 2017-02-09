@@ -512,6 +512,9 @@ class EntityRepository
             // store
             Mimoto::service('data')->store($entity);
 
+            // 1. get all children
+            $this->cleanupChildren($child->entity);
+
             // load
             $aParents = $this->getAllParents($child->entity);
 

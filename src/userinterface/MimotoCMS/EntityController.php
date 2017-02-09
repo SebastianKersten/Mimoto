@@ -130,10 +130,17 @@ class EntityController
         return $component->render();
     }
 
-    public function entityDelete(Application $app, Request $request, $nEntityId)
+    public function entityDelete(Application $app, $nEntityId)
     {
+        // 1. load
+        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+
+
+        output('$entity', $entity);
+
         // delete
-        $app['Mimoto.Config']->entityDelete($nEntityId);
+        Mimoto::service('data')->delete($entity);
+        Mimoto::service('config')->entityDelete($entity);
 
         // send
         return new JsonResponse((object) array('result' => 'Entity deleted! '.date("Y.m.d H:i:s")), 200);

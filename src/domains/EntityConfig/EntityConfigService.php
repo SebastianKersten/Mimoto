@@ -565,4 +565,16 @@ class EntityConfigService
         // TODO Flush memcache
     }
 
+    private function deleteEntityTable($sEntityName)
+    {
+        // 1. check in table comments if item id is similar
+        $stmt = Mimoto::service('database')->prepare(
+            "DROP TABLE ".$sEntityName
+        );
+        $params = array();
+        $stmt->execute($params);
+
+        return true;
+    }
+
 }
