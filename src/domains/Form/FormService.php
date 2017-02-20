@@ -446,8 +446,6 @@ class FormService
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
-                        output('$entity', $entity, true);
-
                         // add
                         $eParent->setValue($sInstructionEntityPropertyName, $entity);
                         break;
