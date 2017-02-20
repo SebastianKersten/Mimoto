@@ -47,7 +47,7 @@ class CacheService
         $this->_bCacheEnabled = $bEnableCache;
 
         // flush all
-        if (!$this->_bCacheEnabled) $this->_memcache->flush();
+        if (!$this->_bCacheEnabled && !empty($this->_memcache)) $this->_memcache->flush();
     }
     
     

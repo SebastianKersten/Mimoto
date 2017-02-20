@@ -35,8 +35,8 @@ class CacheServiceProvider implements ServiceProviderInterface
         {
             $memcache = null;
 
-//            if ($this->_bEnableCache)
-//            {
+            if ($this->_bEnableCache)
+            {
                 // init
                 $memcache = new \Memcache;
 
@@ -44,7 +44,7 @@ class CacheServiceProvider implements ServiceProviderInterface
                 $memcache->connect('localhost', 11211);
 
                 // if ($bResult) #todo - only start on success
-//            }
+            }
 
             return new CacheService($memcache, $this->_bEnableCache);
         });
