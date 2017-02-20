@@ -6,4 +6,4 @@ node_modules
 #web/static/css
 #web/static/js
 src/config.php
-web/dynamic
+web/dynamic/*
