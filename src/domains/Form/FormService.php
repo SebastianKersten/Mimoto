@@ -270,13 +270,6 @@ class FormService
 
                         // create
                         $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entity->getId(), [$allowedEntityType], $nChildType, $field->propertyName);
-
-
-
-                        // ========= todo =============
-
-
-                        //output('$connection', $connection, true);
                     }
 
                     // store

@@ -98,8 +98,8 @@ class ContentController
         $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
 
         // 4c. setup form
-        //$page->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems', 'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]]);
-        $page->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems']);
+        $page->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems', 'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]]);
+        //$page->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems']);
 
         // 5. add content menu
         $page = InterfaceUtils::addMenuToComponent($page);
@@ -143,6 +143,7 @@ class ContentController
 
         // 4c. setup form
         $page->addForm($sFormName, $entity, ['response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]]);
+        //$page->addForm($sFormName, $entity);
 
         // 5. add content menu
         $page = InterfaceUtils::addMenuToComponent($page);
