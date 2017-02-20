@@ -33,14 +33,19 @@ class CacheServiceProvider implements ServiceProviderInterface
     {
         $app['Mimoto.Cache'] = $app->share(function($app)
         {
-            // init
-            $memcache = new \Memcache;
-            
-            // connect
-            $memcache->connect('localhost', 11211);
-            
-            // if ($bResult) #todo - only start on success
-            
+            $memcache = null;
+
+//            if ($this->_bEnableCache)
+//            {
+                // init
+                $memcache = new \Memcache;
+
+                // connect
+                $memcache->connect('localhost', 11211);
+
+                // if ($bResult) #todo - only start on success
+//            }
+
             return new CacheService($memcache, $this->_bEnableCache);
         });
         

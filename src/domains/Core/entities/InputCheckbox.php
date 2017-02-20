@@ -155,7 +155,7 @@ class InputCheckbox
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        //CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form);
 
         // send
         return $form;

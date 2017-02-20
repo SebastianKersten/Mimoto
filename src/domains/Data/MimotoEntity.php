@@ -186,6 +186,11 @@ class MimotoEntity
                 $property = new MimotoEntityProperty_Entity($propertyConfig, $this->getId(), $this->getEntityTypeId());
                 break;
 
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
+
+                $property = new MimotoEntityProperty_Image($propertyConfig, $this->getId(), $this->getEntityTypeId());
+                break;
+
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                 $property = new MimotoEntityProperty_Collection($propertyConfig, $this->getId(), $this->getEntityTypeId());

@@ -8,6 +8,7 @@ use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\Component;
+use Mimoto\Core\entities\File;
 use Mimoto\Core\entities\ContentSection;
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\Input;
@@ -65,6 +66,9 @@ class CoreConfig
     const MIMOTO_COMPONENT                      = '_MimotoAimless__view__component';
     const MIMOTO_COMPONENTCONDITIONAL           = '_MimotoAimless__view__componentconditional';
     //const MIMOTO_PAGE                         = '_MimotoAimless__view__page';
+
+    // media
+    const MIMOTO_FILE                           = '_MimotoAimless__core__file';
 
     // content
     const MIMOTO_CONTENTSECTION                 = '_MimotoAimless__core__contentsection';
@@ -142,6 +146,8 @@ class CoreConfig
     const COREFORM_FORM_INPUTOPTION             = '_MimotoAimless__coreform__form_inputoption';
     const COREFORM_FORM_INPUTVALIDATION         = '_MimotoAimless__coreform__form_inputvalidation';
 
+    const COREFORM_FILE                         = '_MimotoAimless__coreform__file';
+
 
     // input
     const COREFORM_INPUT_TEXTLINE       = '_MimotoAimless__coreform__input_textline';
@@ -191,6 +197,7 @@ class CoreConfig
             Component::getStructure(),
 
             // content
+            File::getStructure(),
             ContentSection::getStructure(),
 
             // forms
@@ -262,7 +269,7 @@ class CoreConfig
             // input
             InputCheckbox::getFormStructure(),
             InputDropdown::getFormStructure(),
-//            //CoreConfig::COREFORM_INPUT_IMAGE => InputImage::getForm(),
+            InputImage::getFormStructure(),
 //            //CoreConfig::COREFORM_INPUT_LIST => InputList::getForm(),
             InputMultiSelect::getFormStructure(),
             InputRadioButton::getFormStructure(),

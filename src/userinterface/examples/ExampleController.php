@@ -630,75 +630,21 @@ class ExampleController
     }
     
     
-    
-    public function viewAllArticlesInMemcache(Application $app, $sEntityType)
-    {
-        
-        $aArticles = $app['Mimoto.Data']->find(['type' => $sEntityType]);
 
-        $nArticleCount = count($aArticles);
-        for ($i = 0; $i < $nArticleCount; $i++)
-        {
-            $article = $aArticles[$i];
-            
-            $sEntityId = $sEntityType.'.'.$article->getId();
-            
-            $cachedArticle = $app['Mimoto.Cache']->getValue($sEntityId);
-            
-            echo $sEntityId.' in cache: '.(($cachedArticle === false) ? 'no' : '<b>YES</b>').'<br>';
-            
-                
-        }
-        
-        return '<br>Done!';
-    }
-
-
-    public function viewInputTextline(Application $app)
+    public function viewImageExample(Application $app, $nPersonId)
     {
         // load
-        $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE, 1);
+        $ePerson = Mimoto::service('data')->get('person', $nPersonId);
 
-        // create
-        $component = $app['Mimoto.Aimless']->createInput('_mimoto_form_input_textline', $field);
-
-        // render and send
-        return $component->render();
-    }
-
-    public function viewInputCheckbox(Application $app)
-    {
         // load
-        $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX, 1);
+        //$eAvatar = Mimoto::service('data')->create(CoreConfig::MIMOTO_FILE);
 
-        // create
-        $component = $app['Mimoto.Aimless']->createInput('_mimoto_form_input_checkbox', $field);
 
-        // render and send
-        return $component->render();
-    }
+        output('$ePerson id='.$nPersonId, $ePerson);
 
-    public function viewInputDropdown(Application $app)
-    {
-        // load
-        $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, 1);
-
-        // create
-        $component = $app['Mimoto.Aimless']->createInput('_mimoto_form_input_dropdown', $field);
 
         // render and send
-        return $component->render();
+        return 'Done ..';
     }
 
-    public function viewInputRadioButton(Application $app)
-    {
-        // load
-        $field = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, 1);
-
-        // create
-        $component = $app['Mimoto.Aimless']->createInput('_mimoto_form_input_radiobutton', $field);
-
-        // render and send
-        return $component->render();
-    }
 }

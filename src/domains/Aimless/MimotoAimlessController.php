@@ -110,4 +110,60 @@ class MimotoAimlessController
             return "Forbidden";
         }
     }
+
+    public function uploadImage(Application $app, Request $request)
+    {
+        // validate
+        if (!empty($_FILES))
+        {
+            $sTargetDir = Mimoto::value('config')->general->web_root.Mimoto::value('config')->media->upload_dir;
+            $sOriginalFileName = $_FILES['file']['name'];
+
+            // create
+            $eFile = Mimoto::service('data')->create(CoreConfig::MIMOTO_FILE);
+
+            // setup
+            $eFile->setValue('path', Mimoto::value('config')->media->upload_dir);
+            $eFile->setValue('originalName', $sOriginalFileName);
+
+            // store
+            Mimoto::service('data')->store($eFile);
+
+
+            // analyse
+            $aPathParts = pathinfo($_FILES["file"]["name"]);
+            $sExtension = $aPathParts['extension'];
+
+            // setup
+            $sNewFileName = md5($eFile->getId().$sOriginalFileName).'.'.$sExtension;
+            $sTargetFile = $sTargetDir.$sNewFileName;
+
+            // store
+            $eFile->setValue('name', $sNewFileName);
+
+            // move to correct location
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $sTargetFile))
+            {
+                // register
+                $eFile->setValue('type', $sExtension);
+                $eFile->setValue('size', filesize($sTargetFile));
+
+                // store
+                Mimoto::service('data')->store($eFile);
+
+                $imageDataResponse = (object) array(
+                    'file_id' => $eFile->getEntityTypeName().'.'.$eFile->getId()
+                );
+
+                // send success
+                return new JsonResponse($imageDataResponse, 200);
+            }
+            else
+            {
+                // send error
+                return new JsonResponse((object) array('result' => 'Image NOT uploaded! '.date("Y.m.d H:i:s")), 500);
+            }
+
+        }
+    }
 }

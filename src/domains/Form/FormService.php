@@ -233,6 +233,7 @@ class FormService
             // read
             $sPropertyType = $entity->getPropertyType($field->propertyName);
 
+
             switch($sPropertyType)
             {
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
@@ -242,13 +243,13 @@ class FormService
                     break;
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                     // init
                     $connection = null;
 
                     // validate
-                    if (!empty($field->newValue)) // todo here!!!
+                    if (!empty($field->newValue))
                     {
                         // register
                         $sConnectionValue = $field->newValue;
@@ -269,6 +270,13 @@ class FormService
 
                         // create
                         $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entity->getId(), [$allowedEntityType], $nChildType, $field->propertyName);
+
+
+
+                        // ========= todo =============
+
+
+                        //output('$connection', $connection, true);
                     }
 
                     // store
@@ -434,12 +442,18 @@ class FormService
             // read
             $sPropertyType = $eParent->getPropertyType($sInstructionEntityPropertyName);
 
+
             // validate
-            if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY || $sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+            if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY ||
+                $sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE ||
+                $sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
                 switch ($sPropertyType)
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
+
+                        output('$entity', $entity, true);
 
                         // add
                         $eParent->setValue($sInstructionEntityPropertyName, $entity);
@@ -546,6 +560,7 @@ class FormService
                     break;
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                     $propertyValueConnection = $entity->getValue($sPropertyName, true);
 

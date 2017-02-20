@@ -220,6 +220,7 @@ class EntityRepository
                     switch($propertyConfig->type)
                     {
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                             if (count($modifiedCollection->added) > 0)
@@ -422,6 +423,7 @@ class EntityRepository
             switch(Mimoto::service('config')->getPropertyTypeById($parent->propertyId))
             {
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                     $parent->entity->setValue($parent->propertyName, null);
                     break;
@@ -499,6 +501,7 @@ class EntityRepository
             switch(Mimoto::service('config')->getPropertyTypeById($child->parentPropertyId))
             {
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                     $entity->setValue($child->parentPropertyName, null);
                     break;
@@ -625,7 +628,7 @@ class EntityRepository
             $sPropertyName = $aPropertyNames[$i];
             $propertyConfig = $entityConfig->getPropertyConfig($sPropertyName);
             $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
-            
+
             // setup property
             $entity->setupProperty($propertyConfig);
             
@@ -685,7 +688,8 @@ class EntityRepository
                             $aCollection[] = $connection;
                         }
 
-                        if ($propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY)
+                        if ($propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY
+                            || $propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE)
                         {
                             if (isset($aCollection[0]))
                             {

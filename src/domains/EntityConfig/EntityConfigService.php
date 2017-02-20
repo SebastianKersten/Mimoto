@@ -321,6 +321,11 @@ class EntityConfigService
 
                 $this->createCollectionPropertySettings($entityProperty);
                 break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
+
+                $this->createImagePropertySettings($entityProperty);
+                break;
         }
 
         // 2. cleanup cache
@@ -518,6 +523,26 @@ class EntityConfigService
         Mimoto::service('data')->store($entityProperty);
     }
 
+    private function createImagePropertySettings(MimotoEntity $entityProperty)
+    {
+//        // init
+//        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+//
+//        // setup
+//        $entityPropertySetting->setValue('key', EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
+//        $entityPropertySetting->setValue('type', '');
+//        $entityPropertySetting->setValue('value', CoreConfig::MIMOTO_FILE);
+//
+//        // create
+//        Mimoto::service('data')->store($entityPropertySetting);
+//
+//        // connect
+//        $entityProperty->addValue('settings', $entityPropertySetting);
+//
+//        // store
+//        Mimoto::service('data')->store($entityProperty);
+    }
+
     private function createCollectionPropertySettings(MimotoEntity $entityProperty)
     {
         // init
@@ -551,7 +576,6 @@ class EntityConfigService
         // store
         Mimoto::service('data')->store($entityProperty);
     }
-
 
 
     public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)

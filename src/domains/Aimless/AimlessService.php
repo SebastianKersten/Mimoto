@@ -434,9 +434,10 @@ class AimlessService
                         break;
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                         // init
-                        $valueForBroadcast->type = MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY;
+                        $valueForBroadcast->type = $sPropertyType;
 
                         // compose
                         $valueForBroadcast->entity = null;

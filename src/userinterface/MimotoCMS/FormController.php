@@ -128,7 +128,8 @@ class FormController
                     $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE ||
                     $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON ||
                     $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN ||
-                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT
+                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT ||
+                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_IMAGE
                 )
                 {
                     $aInputTypes[] = $aInputTypesAll[$nInputIndex];

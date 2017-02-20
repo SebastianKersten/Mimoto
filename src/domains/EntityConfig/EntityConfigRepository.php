@@ -395,114 +395,119 @@ class EntityConfigRepository
             {
                 // read
                 $property = $entity->properties[$nPropertyIndex];
-                
-                // validate
-                if (!isset($aAllEntityProperty_Connections[$property->id]))
-                {
-                    // notify
-                    //$this->_LogService->silent('Data construction error - propertysettings', "The property with name '".$property->name."' has no settings", 'EntityConfigRepository');
-
-                    // skip
-                    continue 2;
-                }
-
 
                 $property = $this->setDefaultPropertySettings($property);
 
-
-                // register
-                $aEntityProperty_Connections = $aAllEntityProperty_Connections[$property->id];
-
-                // cleanup
-                unset($aAllEntityProperty_Connections[$property->id]);
-
-
-                // store
-                while(count($aEntityProperty_Connections) > 0)
+                // validate
+                if (isset($aAllEntityProperty_Connections[$property->id]))
                 {
-                    // register and cleanup
-                    $connection = array_shift($aEntityProperty_Connections);
+                    // notify
+                    //$this->_LogService->silent('Data construction error - propertysettings', "The property with name '".$property->name."' has no settings", 'EntityConfigRepository');
+                    //error($property);
 
-                    switch($connection->parent_property_id)
+                    // #todo - Deze check eruit! Een config hoeft geen settings te bevatten
+
+                    // skip
+                    //continue 2;
+
+
+
+
+
+                    // register
+                    $aEntityProperty_Connections = $aAllEntityProperty_Connections[$property->id];
+
+                    // cleanup
+                    unset($aAllEntityProperty_Connections[$property->id]);
+
+
+                    // store
+                    while (count($aEntityProperty_Connections) > 0)
                     {
-                        case CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings':
+                        // register and cleanup
+                        $connection = array_shift($aEntityProperty_Connections);
 
-                            // setting
-                            $setting = $aAllEntityPropertySettings[$connection->child_id];
+                        switch ($connection->parent_property_id)
+                        {
+                            case CoreConfig::MIMOTO_ENTITYPROPERTY . '--settings':
 
-                            // cleanup
-                            unset($aAllEntityPropertySettings[$connection->child_id]);
-
-
-                            // filter
-                            if ($setting->key == EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE || $setting->key == EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES)
-                            {
-
-                                // validate
-                                if (!isset($aAllEntityPropertySetting_Connections[$setting->id])) {
-                                    // notify
-                                    //$this->_LogService->silent('', '');
-                                    //echo 'SKIP  '.$setting->key;
-                                    //error($setting);
-                                    //error($connection);
-
-                                    // skip
-                                    continue 3;
-                                }
-
-                                // register
-                                $aEntityPropertySetting_Connections = $aAllEntityPropertySetting_Connections[$setting->id];
+                                // setting
+                                $setting = $aAllEntityPropertySettings[$connection->child_id];
 
                                 // cleanup
-                                unset($aAllEntityPropertySetting_Connections[$setting->id]);
+                                unset($aAllEntityPropertySettings[$connection->child_id]);
 
 
-                                switch($setting->key)
+                                // filter
+                                if ($setting->key == EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE || $setting->key == EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES)
                                 {
-                                    case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
-                                        // store
-                                        while(count($aEntityPropertySetting_Connections) > 0)
-                                        {
-                                            // register and cleanup
-                                            $connection = array_shift($aEntityPropertySetting_Connections);
+                                    // validate
+                                    if (!isset($aAllEntityPropertySetting_Connections[$setting->id]))
+                                    {
+                                        // notify
+                                        //$this->_LogService->silent('', '');
+                                        //echo 'SKIP  '.$setting->key;
+                                        //error($setting);
+                                        //error($connection);
 
-                                            // validate
-                                            if ($connection->parent_property_id !== CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityType') continue;
+                                        // skip
+                                        continue 3;
+                                    }
 
-                                            // store
-                                            $setting->value = $connection->child_id;
-                                        }
+                                    // register
+                                    $aEntityPropertySetting_Connections = $aAllEntityPropertySetting_Connections[$setting->id];
 
-                                        break;
+                                    // cleanup
+                                    unset($aAllEntityPropertySetting_Connections[$setting->id]);
 
-                                    case EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
 
-                                        // init
-                                        $setting->value = [];
-
-                                        // store
-                                        while(count($aEntityPropertySetting_Connections) > 0)
-                                        {
-                                            // register and cleanup
-                                            $connection = array_shift($aEntityPropertySetting_Connections);
-
-                                            // validate
-                                            if ($connection->parent_property_id !== CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityTypes') continue;
+                                    switch ($setting->key)
+                                    {
+                                        case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
                                             // store
-                                            $setting->value[] = $connection->child_id;
-                                        }
-                                        break;
+                                            while (count($aEntityPropertySetting_Connections) > 0)
+                                            {
+                                                // register and cleanup
+                                                $connection = array_shift($aEntityPropertySetting_Connections);
+
+                                                // validate
+                                                if ($connection->parent_property_id !== CoreConfig::MIMOTO_ENTITYPROPERTYSETTING . '--allowedEntityType') continue;
+
+                                                // store
+                                                $setting->value = $connection->child_id;
+                                            }
+
+                                            break;
+
+                                        case EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
+
+                                            // init
+                                            $setting->value = [];
+
+                                            // store
+                                            while (count($aEntityPropertySetting_Connections) > 0)
+                                            {
+                                                // register and cleanup
+                                                $connection = array_shift($aEntityPropertySetting_Connections);
+
+                                                // validate
+                                                if ($connection->parent_property_id !== CoreConfig::MIMOTO_ENTITYPROPERTYSETTING . '--allowedEntityTypes') continue;
+
+                                                // store
+                                                $setting->value[] = $connection->child_id;
+                                            }
+                                            break;
+                                    }
                                 }
-                            }
 
 
+                                // store
+                                $property->settings[$setting->key] = $setting;
 
-                            // store
-                            $property->settings[$setting->key] = $setting;
-
-                            break;
+                                break;
+                        }
                     }
                 }
             }
@@ -708,6 +713,27 @@ class EntityConfigRepository
 
                         // setup
                         $entityConfig->setEntityAsProperty($property->name, $property->id, $settings);
+
+                        // connect entity to data source
+                        $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
+
+                        // init
+                        $settings = array();
+
+                        // copy
+                        $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE] = clone $property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE];
+
+                        // prepare
+                        $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value = (object) array(
+                            'id' => $property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value,
+                            'name' => $this->getEntityNameById($property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value)
+                        );
+
+                        // setup
+                        $entityConfig->setImageAsProperty($property->name, $property->id, $settings);
 
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
@@ -939,8 +965,20 @@ class EntityConfigRepository
                 $property->settings = array(
                     EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => (object) array(
                         'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
-                        'type' => '',
-                        'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        'type' => MimotoEntityPropertyValueTypes::VALUETYPE_CONNECTION,
+                        'value' => null
+                    )
+                );
+
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
+
+                $property->settings = array(
+                    EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => (object) array(
+                        'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                        'type' => MimotoEntityPropertyValueTypes::VALUETYPE_CONNECTION,
+                        'value' => CoreConfig::MIMOTO_FILE
                     )
                 );
 

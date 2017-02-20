@@ -6,6 +6,8 @@
 
 'use strict';
 
+var Dropzone = require('dropzone');
+Dropzone.autoDiscover = false;
 
 module.exports = function() {
 
@@ -85,7 +87,7 @@ module.exports.prototype = {
 
         // store
         currentForm.aFields.push(field);
-
+        
         // store
         // Mimoto.Aimless.realtime.broadcastedValues[sInputFieldId] = {
         //     sFormName: currentForm.sFormName,
@@ -644,6 +646,94 @@ module.exports.prototype = {
         
         // send
         return bValid;
-    }
+    },
+    
+    
+    setupImageField: function(sImageFieldId, sInputFieldId)
+    {
+        // read
+        var currentForm = this._aForms[this._sCurrentOpenForm];
+    
+        // 1. locate form in dom
+        var $form = $('form[name="' + currentForm.sName + '"]');
+        
+        // setup
+        var field = $("[" + sInputFieldId + "]", $form);
+        var fieldInput = $("input", field);
 
+        
+        
+        this.el = document.getElementById(sImageFieldId);
+        
+        this._imageField_imageUploadClass = '.js-image-upload';
+        this._imageField_imageUploadTriggerClass = '.js-image-upload-trigger';
+        this._imageField_previewClass = '.js-image-upload-preview';
+        this._imageField_previewTemplateClass = '.js-image-upload-preview-template';
+    
+        this._imageField_showPreviewClass = 'MimotoCMS_forms_input_ImageUpload--show-preview';
+        this._imageField_showPreviewImageClass = 'MimotoCMS_forms_input_ImageUpload--show-preview-image';
+        this._imageField_hideUploadProgressClass = 'MimotoCMS_forms_input_ImageUpload--hide-upload-progess';
+    
+        this._imageField_errorParent = this.el.querySelector('.js-error-parent');
+    
+        this._imageField_postURL = "/Mimoto.Aimless/upload/image";
+        this._imageField_imageUpload = this.el.querySelector(this._imageField_imageUploadClass);
+        this._imageField_inputfield = this.el.querySelector('.js-image-upload-value');
+        
+    
+        // preview template
+        var previewNode = document.querySelector(this._imageField_previewTemplateClass);
+        var template = previewNode.parentNode.innerHTML;
+        previewNode.id = "";
+        previewNode.parentNode.removeChild(previewNode);
+        this._imageField_previewTemplate = template;
+    
+        // setup
+        this._imageField_dropzone = new Dropzone(this._imageField_imageUpload, {
+            url: this._imageField_postURL,
+            maxFilesize: 1,
+            parallelUploads: 20,
+            previewTemplate: this._imageField_previewTemplate,
+            thumbnailWidth: 500,
+            thumbnailHeight: null,
+            previewsContainer: this._imageField_previewClass,
+            clickable: this._imageField_imageUploadTriggerClass
+        });
+    
+        this._imageField_dropzone.on('removedfile', function (file) {
+            this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewClass);
+            this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewImageClass);
+            //EH.clearState(this.el);
+    
+            // set value
+            fieldInput.val('');
+            
+        }.bind(this));
+    
+        this._imageField_dropzone.on('addedfile', function (file) {
+            this._imageField_dropzone.element.classList.add(this._imageField_showPreviewClass);
+        }.bind(this));
+    
+        this._imageField_dropzone.on('thumbnail', function (file) {
+            this._imageField_dropzone.element.classList.add(this._imageField_showPreviewImageClass);
+        }.bind(this));
+    
+        this._imageField_dropzone.on('error', function (file, errorMessage, xhrObject) {
+            //EH.addErrorState(this.el, errorMessage);
+        }.bind(this));
+    
+        this._imageField_dropzone.on('success', function (file, serverResponse) {
+            
+            // set value
+            fieldInput.val(serverResponse.file_id);
+        
+            setTimeout(function () {
+                this._imageField_dropzone.element.classList.add(this._imageField_hideUploadProgressClass);
+                //EH.addValidatedState(this.el);
+                console.warn(file);
+                console.warn(serverResponse);
+            }.bind(this), 100);
+        }.bind(this));
+    }
+    
 };

@@ -2,6 +2,11 @@
 
     $config = (object) array
     (
+        'general' => (object) array
+        (
+            'project_root' => '/',
+            'web_root' => '/',
+        ),
         'mysql' => (object) array
         (
             'host' => '',
@@ -21,6 +26,10 @@
         'slack' => (object) array
         (
             'webhook' => ''
+        ),
+        'media' => (object) array
+        (
+            'upload_dir' => ''
         )
     );
 

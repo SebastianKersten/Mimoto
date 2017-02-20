@@ -133,6 +133,11 @@ class AimlessInput extends AimlessComponent
             'validation' => $this->getFieldValidationRules()
         );
 
+
+        // 1. add type
+        // 2. add field id (niet van entity maar van eigenlijk formfield
+        // 3. derde parameter
+
         // connect
         $sRenderedField .= '<script>Mimoto.form.registerInputField(\''.$this->_sFieldId.'\', '.json_encode($settings).')</script>';
 

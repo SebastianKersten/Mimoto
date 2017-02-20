@@ -24,6 +24,7 @@ class FormServiceProvider implements ServiceProviderInterface
         // register
         $app->post('/Mimoto.Aimless/form/{sFormName}', 'Mimoto\\Aimless\\MimotoAimlessController::parseForm');
         $app->post('/Mimoto.Aimless/validate/{nValidationId}', 'Mimoto\\Aimless\\MimotoAimlessController::validateFormField');
+        $app->post('/Mimoto.Aimless/upload/image', 'Mimoto\\Aimless\\MimotoAimlessController::uploadImage');
 
         $app['Mimoto.Forms'] = $app['Mimoto.FormService'] = $app->share(function($app)
         {
