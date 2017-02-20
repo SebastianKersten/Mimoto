@@ -1,8 +1,8 @@
 {{
     Aimless.module('Mimoto.CMS.ListItemModule',
     {
-        label: Aimless.data('name'),
-        label_realtime: Aimless.realtime('name'),
+        label: Aimless.meta('id'),
+        label_realtime: '',
         sublabel: Aimless.meta('id'),
         sublabel_realtime:  '',
         button_label: 'Edit',
@@ -10,3 +10,8 @@
         button_type: 'secondary'
     })
 }}
+
+{#
+    label: Aimless.data('name'),
+    label_realtime: Aimless.realtime('name'),
+#}
