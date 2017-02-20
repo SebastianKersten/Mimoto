@@ -15,7 +15,7 @@
         "twig/twig": "~1.0",
         "pusher/pusher-php-server": "^2.6",
         "sendgrid/sendgrid": "~5.0.7",
-        "brianlmoon/net_gearman": "dev-master"
+        "brianlmoon/net_gearman": "~1.0"
     },
     "autoload": {
         "psr-4": {
