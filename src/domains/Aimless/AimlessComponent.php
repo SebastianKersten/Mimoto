@@ -290,6 +290,18 @@ class AimlessComponent
      */
     private function renderEntityProperty($sPropertySelector, $sComponentName = null, $customValues = null)
     {
+
+        // special render output
+        if ($this->_entity->getPropertySubtype($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE)
+        {
+            // read
+            $image = $this->_entity->getValue($sPropertySelector);
+
+            // compose and send
+            return Mimoto::value('config')->general->public_root.$image->getValue('path').$image->getValue('name');
+        }
+
+
         // 1. read
         $xValue = $this->_entity->getValue($sPropertySelector);
 

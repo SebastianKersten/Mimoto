@@ -309,7 +309,7 @@ class EntityController
         // init
         $entityStructure = (object) array();
         $entityStructure->name = $entity->getValue('name');
-        $entityStructure->hasTable = (intval($entity->getValue('isAbstract')) === 1) ? false : true;
+        $entityStructure->hasTable = false; //(intval($entity->getValue('isAbstract')) === 1) ? false : true;
         $entityStructure->instanceCount = 0;
         $entityStructure->extends = [];
         $entityStructure->extendedBy = [];

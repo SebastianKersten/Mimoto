@@ -54,9 +54,9 @@ class File
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FILE.'--type',
+                    'id' => CoreConfig::MIMOTO_FILE.'--mime',
                     // ---
-                    'name' => 'type',
+                    'name' => 'mime',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
@@ -75,6 +75,45 @@ class File
                         'type' => (object) array(
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_INTEGER,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FILE.'--width',
+                    // ---
+                    'name' => 'width',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_INTEGER,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FILE.'--height',
+                    // ---
+                    'name' => 'height',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_INTEGER,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FILE.'--aspectRatio',
+                    // ---
+                    'name' => 'aspectRatio',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_FLOAT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]

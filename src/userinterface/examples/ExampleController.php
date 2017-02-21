@@ -636,15 +636,13 @@ class ExampleController
         // load
         $ePerson = Mimoto::service('data')->get('person', $nPersonId);
 
-
-        output('$ePerson id='.$nPersonId, $ePerson);
-
+        //output('$ePerson id='.$nPersonId, $ePerson);
 
         // create
-        $component = Mimoto::service('aimless')->createComponent('person', $ePerson);
+        $page = Mimoto::service('aimless')->createComponent('person', $ePerson);
 
         // render and send
-        return $component->render();
+        return $page->render();
     }
 
 }

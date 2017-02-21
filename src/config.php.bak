@@ -6,6 +6,7 @@
         (
             'project_root' => '/',
             'web_root' => '/',
+            'public_root' => '/'
         ),
         'mysql' => (object) array
         (

@@ -144,9 +144,15 @@ class MimotoAimlessController
             // move to correct location
             if (move_uploaded_file($_FILES['file']['tmp_name'], $sTargetFile))
             {
+                // analyze
+                $aImageInfo = getimagesize($sTargetFile);
+
                 // register
-                $eFile->setValue('type', $sExtension);
+                $eFile->setValue('mime', $aImageInfo['mime']);
                 $eFile->setValue('size', filesize($sTargetFile));
+                $eFile->setValue('width', $aImageInfo[0]);
+                $eFile->setValue('height', $aImageInfo[1]);
+                $eFile->setValue('aspectRatio', $aImageInfo[0] / $aImageInfo[1]);
 
                 // store
                 Mimoto::service('data')->store($eFile);

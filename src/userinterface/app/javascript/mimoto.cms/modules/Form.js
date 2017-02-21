@@ -649,7 +649,7 @@ module.exports.prototype = {
     },
     
     
-    setupImageField: function(sImageFieldId, sInputFieldId)
+    setupImageField: function(sImageFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
     {
         // read
         var currentForm = this._aForms[this._sCurrentOpenForm];
@@ -699,7 +699,8 @@ module.exports.prototype = {
             previewsContainer: this._imageField_previewClass,
             clickable: this._imageField_imageUploadTriggerClass
         });
-    
+        
+        
         this._imageField_dropzone.on('removedfile', function (file) {
             this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewClass);
             this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewImageClass);

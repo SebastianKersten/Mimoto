@@ -711,8 +711,12 @@ class EntityConfigRepository
                             'name' => $this->getEntityNameById($property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value)
                         );
 
+
+                        $sSubtype = (isset($property->subtype)) ? $property->subtype : null;
+
+
                         // setup
-                        $entityConfig->setEntityAsProperty($property->name, $property->id, $settings);
+                        $entityConfig->setEntityAsProperty($property->name, $property->id, $settings, $sSubtype);
 
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);

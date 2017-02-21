@@ -174,12 +174,13 @@ class EntityConfig
      * @param string $sPropertyName The property's name
      * @param array $settings Array containing the setting 'entityType'
      */
-    public function setEntityAsProperty($sPropertyName, $nPropertyId, $settings)
+    public function setEntityAsProperty($sPropertyName, $nPropertyId, $settings, $sSubtype = null)
     {
         // compose
         $property = (object) array(
             'name' => $sPropertyName,
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
+            'subtype' => $sSubtype,
             'id' => $nPropertyId,
             'settings' => (object) array(
                 EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value
