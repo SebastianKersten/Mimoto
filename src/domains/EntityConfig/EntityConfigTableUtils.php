@@ -96,7 +96,7 @@ class EntityConfigTableUtils
         $sDataType = self::getColumnDataType($sColumnType);
 
         // 2. add column to table
-        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN ".$sPropertyName." ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
+        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN ".$sPropertyName." ".$sDataType." AFTER ".$sColumnOnTheLeft."");
         $params = array();
         if ($stmt->execute($params) === false) error("Error while adding column '$sPropertyName' to entity table '$sEntityName'");
     }
