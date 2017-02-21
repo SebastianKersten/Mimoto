@@ -26,7 +26,7 @@ class EntityConfigTableUtils
 
     public static function entityNameIsUnique($sEntityName)
     {
-        $stmt = Mimoto::service('database')->prepare("SELECT * FROM ".CoreConfig::MIMOTO_ENTITY." WHERE name = :name");
+        $stmt = Mimoto::service('database')->prepare("SELECT * FROM `".CoreConfig::MIMOTO_ENTITY."` WHERE name = :name");
         $params = array(':name' => $sEntityName);
         if ($stmt->execute($params) === false) error("Error while searching for duplicates of entity name '$sEntityName'");
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -35,7 +35,7 @@ class EntityConfigTableUtils
 
     public static function tableNameIsUnique($sEntityName)
     {
-        $stmt = Mimoto::service('database')->prepare("SHOW TABLES LIKE '".$sEntityName."'");
+        $stmt = Mimoto::service('database')->prepare("SHOW TABLES LIKE `".$sEntityName."`");
         $params = array();
         if ($stmt->execute($params) === false) error("Error while checking for duplicate entity table '$sEntityName'");
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -74,8 +74,8 @@ class EntityConfigTableUtils
     public static function entityPropertyNameIsUnique($nEntityId, $sEntityPropertyName)
     {
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_ENTITYPROPERTY." LEFT JOIN ".CoreConfig::MIMOTO_CONNECTIONS_CORE." ".
-            "ON ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".id = ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".child_id ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_ENTITYPROPERTY."` LEFT JOIN `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` ".
+            "ON `".CoreConfig::MIMOTO_CONNECTIONS_CORE.".id` = `".CoreConfig::MIMOTO_CONNECTIONS_CORE.".child_id` ".
             "WHERE ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_id = :parent_id ".
             "&& ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_property_id = :parent_property_id ".
             "&& ".CoreConfig::MIMOTO_ENTITYPROPERTY.".name = :name");
@@ -96,7 +96,7 @@ class EntityConfigTableUtils
         $sDataType = self::getColumnDataType($sColumnType);
 
         // 2. add column to table
-        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN `".$sPropertyName."` ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
+        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN ".$sPropertyName." ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
         $params = array();
         if ($stmt->execute($params) === false) error("Error while adding column '$sPropertyName' to entity table '$sEntityName'");
     }

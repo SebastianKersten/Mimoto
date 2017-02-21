@@ -785,7 +785,7 @@ class EntityConfigRepository
         $aEntities = [];
 
         // load all entities
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.CoreConfig::MIMOTO_ENTITY);
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_ENTITY.'`');
         $params = array();
         $stmt->execute($params);
 
@@ -819,7 +819,7 @@ class EntityConfigRepository
         $aEntityProperties = [];
 
         // load all properties
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTY;
+        $sql = 'SELECT * FROM `'.CoreConfig::MIMOTO_ENTITYPROPERTY.'`';
         foreach (Mimoto::service('database')->query($sql) as $row)
         {
             // compose
@@ -853,7 +853,7 @@ class EntityConfigRepository
         $aEntityPropertySettings = [];
 
         // load all settings
-        $sql = 'SELECT * FROM '.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING;
+        $sql = 'SELECT * FROM `'.CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'`';
         foreach (Mimoto::service('database')->query($sql) as $row)
         {
             // compose
@@ -888,7 +888,7 @@ class EntityConfigRepository
 
         // load all connections
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` WHERE ".
             "parent_entity_type_id = :parent_entity_type_id ".
             "ORDER BY parent_id ASC, sortindex ASC"
         );

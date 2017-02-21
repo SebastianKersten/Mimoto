@@ -134,7 +134,7 @@ class ActionService
         $aForms = [];
 
         // load all entities
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.CoreConfig::MIMOTO_FORM);
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_FORM.'`');
         $params = array();
         $stmt->execute($params);
 
@@ -174,7 +174,7 @@ class ActionService
 
         // load all connections
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` WHERE ".
             "parent_entity_type_id = :parent_entity_type_id ".
             "ORDER BY parent_id ASC, sortindex ASC"
         );

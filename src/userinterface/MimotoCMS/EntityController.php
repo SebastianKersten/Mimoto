@@ -323,7 +323,7 @@ class EntityController
         if ($entityStructure->hasTable)
         {
             // load
-            $stmt = Mimoto::service('database')->prepare('SELECT count(id) FROM ' . $entity->getValue('name'));
+            $stmt = Mimoto::service('database')->prepare('SELECT count(id) FROM `' . $entity->getValue('name').'`');
             $params = array();
             $stmt->execute($params);
 
@@ -453,7 +453,7 @@ class EntityController
 
         // load
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` WHERE ".
             "parent_entity_type_id = :parent_entity_type_id && ".
             "parent_property_id = :parent_property_id && ".
             "child_entity_type_id = :child_entity_type_id && ".
@@ -500,7 +500,7 @@ class EntityController
 
         // load
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_PROJECT." WHERE ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTIONS_PROJECT."` WHERE ".
             "parent_entity_type_id = :parent_entity_type_id && ".
             "parent_property_id = :parent_property_id && ".
             "child_entity_type_id = :child_entity_type_id &&".

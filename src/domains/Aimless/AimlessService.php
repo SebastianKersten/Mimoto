@@ -218,7 +218,7 @@ class AimlessService
 
 
         // load all templates
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.CoreConfig::MIMOTO_COMPONENT);
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_COMPONENT.'`');
         $params = array();
         $stmt->execute($params);
 
@@ -240,7 +240,7 @@ class AimlessService
 
 
         // load all conditionals
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.CoreConfig::MIMOTO_COMPONENTCONDITIONAL);
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'`');
         $params = array();
         $stmt->execute($params);
 
@@ -559,7 +559,7 @@ class AimlessService
 
         // load all connections
         $sql =
-            'SELECT * FROM '.CoreConfig::MIMOTO_CONNECTIONS_PROJECT.
+            'SELECT * FROM `'.CoreConfig::MIMOTO_CONNECTIONS_PROJECT.'`'.
             ' WHERE child_entity_type_id="'.$xChildEntityTypeId.'" && child_id="'.$entity->getId().'"'.
             ' ORDER BY parent_id ASC, sortindex ASC';
 
