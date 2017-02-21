@@ -75,7 +75,7 @@ class EntityConfigTableUtils
     {
         $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM `".CoreConfig::MIMOTO_ENTITYPROPERTY."` LEFT JOIN `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` ".
-            "ON `".CoreConfig::MIMOTO_CONNECTIONS_CORE.".id` = `".CoreConfig::MIMOTO_CONNECTIONS_CORE.".child_id` ".
+            "ON `".CoreConfig::MIMOTO_CONNECTIONS_CORE.".id = ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".child_id ".
             "WHERE ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_id = :parent_id ".
             "&& ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_property_id = :parent_property_id ".
             "&& ".CoreConfig::MIMOTO_ENTITYPROPERTY.".name = :name");
@@ -96,7 +96,7 @@ class EntityConfigTableUtils
         $sDataType = self::getColumnDataType($sColumnType);
 
         // 2. add column to table
-        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN ".$sPropertyName." ".$sDataType." AFTER ".$sColumnOnTheLeft."");
+        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN `".$sPropertyName."` ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
         $params = array();
         if ($stmt->execute($params) === false) error("Error while adding column '$sPropertyName' to entity table '$sEntityName'");
     }

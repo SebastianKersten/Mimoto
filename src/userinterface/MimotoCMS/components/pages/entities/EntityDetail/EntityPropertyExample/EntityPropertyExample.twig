@@ -1,9 +1,9 @@
 <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample" {{ Aimless.realtime() }}>
 
-    {% if Aimless.data('type') == "image" %}
+    {% if Aimless.data('subtype') == "image" %}
 
         &lt;img <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">
-        {{ '{{ ' }}Aimless.realtime(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Aimless.realtime('name') }}>{{ "'"~Aimless.data('name')~"'" }}</span>) {{ ' }}' }}</span> <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ ' }}Aimless.render(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Aimless.realtime('name') }}>{{ "'"~Aimless.data('name')~"'" }}</span>){{ ' }}' }}</span> /&gt;
+        {{ '{{ ' }}Aimless.realtime(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Aimless.realtime('name') }}>{{ "'"~Aimless.data('name')~"'" }}</span>) {{ ' }}' }}</span> src="<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ ' }}Aimless.render(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Aimless.realtime('name') }}>{{ "'"~Aimless.data('name')~"'" }}</span>){{ ' }}' }}</span>" /&gt;
 
     {% else %}
 
