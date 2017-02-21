@@ -16,6 +16,10 @@ class MimotoEntityPropertyTypes
     const PROPERTY_TYPE_ENTITY = 'entity';
     const PROPERTY_TYPE_COLLECTION = 'collection';
 
-    // special property types
-    const PROPERTY_TYPE_IMAGE = 'image';
+    // propery subtypes
+    const PROPERTY_SUBTYPE_IMAGE = 'image';
+    const PROPERTY_SUBTYPE_VIDEO = 'video';
+    const PROPERTY_SUBTYPE_AUDIO = 'audio';
+    const PROPERTY_SUBTYPE_FILE = 'file';
+
 }

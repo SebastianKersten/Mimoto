@@ -4,6 +4,7 @@
 namespace Mimoto\EntityConfig;
 
 // Mimoto classes
+use Mimoto\Core\CoreFormUtils;
 use Mimoto\Mimoto;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Core\CoreConfig;
@@ -313,6 +314,10 @@ class EntityConfigService
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE:
 
                 $this->createEntityPropertySettings($entityProperty);
                 break;
@@ -320,11 +325,6 @@ class EntityConfigService
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                 $this->createCollectionPropertySettings($entityProperty);
-                break;
-
-            case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
-
-                $this->createImagePropertySettings($entityProperty);
                 break;
         }
 
@@ -505,42 +505,88 @@ class EntityConfigService
 
     private function createEntityPropertySettings(MimotoEntity $entityProperty)
     {
-        // init
-        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+        switch($entityProperty->getValue('type'))
+        {
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE:
 
-        // setup
-        $entityPropertySetting->setValue('key', EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
-        $entityPropertySetting->setValue('type', '');
-        $entityPropertySetting->setValue('value', '');
+                $entityProperty->setValue('subtype', $entityProperty->getValue('type'));
+                $entityProperty->setValue('type', MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY);
 
-        // create
-        Mimoto::service('data')->store($entityPropertySetting);
+                // store
+                Mimoto::service('data')->store($entityProperty);
 
-        // connect
-        $entityProperty->addValue('settings', $entityPropertySetting);
+                switch($entityProperty->getValue('subtype'))
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE:
 
-        // store
-        Mimoto::service('data')->store($entityProperty);
+                        // init
+                        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+                        // setup
+                        $entityPropertySetting->setValue('key', EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
+
+                        // create
+                        $connectedAllowedEntityType = Mimoto::service('data')->create(CoreConfig::MIMOTO_FILE);
+                        $connectedAllowedEntityType->setId(CoreConfig::MIMOTO_FILE);
+
+                        // connect
+                        $entityPropertySetting->setValue('allowedEntityType', $connectedAllowedEntityType);
+
+                        // create
+                        Mimoto::service('data')->store($entityPropertySetting);
+
+
+                        // #todo add image specific settings ...
+
+
+
+                        // connect
+                        $entityProperty->addValue('settings', $entityPropertySetting);
+
+                        // store
+                        Mimoto::service('data')->store($entityProperty);
+
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO:
+                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO:
+                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE:
+
+                        // to implement ..
+
+                        break;
+                }
+
+                break;
+
+            default:
+
+                // init
+                $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+                // setup
+                $entityPropertySetting->setValue('key', EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
+                $entityPropertySetting->setValue('type', '');
+                $entityPropertySetting->setValue('value', '');
+
+                // create
+                Mimoto::service('data')->store($entityPropertySetting);
+
+                // connect
+                $entityProperty->addValue('settings', $entityPropertySetting);
+
+                // store
+                Mimoto::service('data')->store($entityProperty);
+
+        }
     }
 
     private function createImagePropertySettings(MimotoEntity $entityProperty)
     {
-//        // init
-//        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
-//
-//        // setup
-//        $entityPropertySetting->setValue('key', EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE);
-//        $entityPropertySetting->setValue('type', '');
-//        $entityPropertySetting->setValue('value', CoreConfig::MIMOTO_FILE);
-//
-//        // create
-//        Mimoto::service('data')->store($entityPropertySetting);
-//
-//        // connect
-//        $entityProperty->addValue('settings', $entityPropertySetting);
-//
-//        // store
-//        Mimoto::service('data')->store($entityProperty);
+
     }
 
     private function createCollectionPropertySettings(MimotoEntity $entityProperty)
@@ -593,7 +639,7 @@ class EntityConfigService
     {
         // 1. check in table comments if item id is similar
         $stmt = Mimoto::service('database')->prepare(
-            "DROP TABLE ".$sEntityName
+            "DROP TABLE `".$sEntityName."`"
         );
         $params = array();
         $stmt->execute($params);

@@ -4,8 +4,9 @@
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__name">
             <a href="/mimoto.cms/entityproperty/{{ Aimless.meta('id') }}/view" {{ Aimless.realtime('name') }} >{{ Aimless.render('name') }}</a>
         </div>
-        <div {{ Aimless.realtime('type') }} class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
-            {{ Aimless.render('type') }}
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
+            <div {{ Aimless.realtime('subtype') }}>{{ Aimless.render('subtype') }}</div>
+            <div {{ Aimless.realtime('type') }}>{{ Aimless.render('type') }}</div>
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer">
             {{ Aimless.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting') }}

@@ -243,7 +243,6 @@ class FormService
                     break;
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                     // init
                     $connection = null;
@@ -438,13 +437,11 @@ class FormService
 
             // validate
             if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY ||
-                $sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE ||
                 $sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
             {
                 switch ($sPropertyType)
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                         // add
                         $eParent->setValue($sInstructionEntityPropertyName, $entity);
@@ -551,7 +548,6 @@ class FormService
                     break;
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                     $propertyValueConnection = $entity->getValue($sPropertyName, true);
 

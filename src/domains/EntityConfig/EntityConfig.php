@@ -189,27 +189,6 @@ class EntityConfig
         // store
         $this->_aProperties[$sPropertyName] = $property;
     }
-
-    /**
-     * Set image as property
-     * @param string $sPropertyName The property's name
-     * --- @param array $settings Array containing the option 'entityType'
-     */
-    public function setImageAsProperty($sPropertyName, $nPropertyId, $settings)
-    {
-        // compose
-        $property = (object) array(
-            'name' => $sPropertyName,
-            'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE,
-            'id' => $nPropertyId,
-            'settings' => (object) array(
-                EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value
-            )
-        );
-
-        // store
-        $this->_aProperties[$sPropertyName] = $property;
-    }
     
     /**
      * Set collection as property

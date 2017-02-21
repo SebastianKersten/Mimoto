@@ -257,8 +257,32 @@ class MimotoDataUtils
                 }
                 else
                 {
+                    // read
+                    $sChildEntityTypeId = $connection->getChildEntityTypeId();
+
+                    // init
+                    $bValidated = false;
+
+                    // search
+                    $nAllowedEntityTypeIdCount = count($aAllowedEntityTypeIds);
+                    for ($nAllowedEntityTypeIdIndex = 0; $nAllowedEntityTypeIdIndex < $nAllowedEntityTypeIdCount; $nAllowedEntityTypeIdIndex++)
+                    {
+                        // register
+                        $sAllowedEntityTypeId = $aAllowedEntityTypeIds[$nAllowedEntityTypeIdIndex];
+
+                        // validate
+                        if (Mimoto::service('config')->entityIsTypeOf($sChildEntityTypeId, $sAllowedEntityTypeId))
+                        {
+                            $bValidated = true;
+                            break;
+                        }
+                    }
+
+                    // verify
+                    if (!$bValidated && in_array(CoreConfig::WILDCARD, $aAllowedEntityTypeIds)) $bValidated = true;
+
                     // validate
-                    if (!in_array($connection->getChildEntityTypeId(), $aAllowedEntityTypeIds) && !in_array(CoreConfig::WILDCARD, $aAllowedEntityTypeIds))
+                    if (!$bValidated)
                     {
                         Mimoto::service('log')->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."'", true);
                     }

@@ -74,34 +74,57 @@ class EntityRepository
     public function get(EntityConfig $entityConfig, $nEntityId)
     {
 
-        // #todo - validate entityId (hoort hier, want centraal validatie van input
 
 
-        // validate
-        //if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
 
-        // load
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
-        $params = array(
-            ':id' => $nEntityId
-        );
-        $stmt->execute($params);
-
-        // load
-        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        // verify
-        if (count($aResults) !== 1)
+        if (substr($nEntityId, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
         {
-            throw new MimotoEntityException("( '-' ) - Sorry, I can't find the the '".$entityConfig->getName()."' entity with id='$nEntityId'");
-        }
-        else
-        {
+            error($entityConfig);
+
+
+            // 1. hoe ophalen core data
+            // 2. aparte functie (kent alle types)
+
+            // 3. create default -> setId() en setName()
+            //
+
+
             // setup
             $entity = $this->createEntity($entityConfig, $aResults[0]);
 
             // send
             return $entity;
+        }
+        else
+        {
+
+            // #todo - validate entityId (hoort hier, want centraal validatie van input
+
+            // validate
+            //if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
+
+            // load
+            $stmt = Mimoto::service('database')->prepare('SELECT * FROM ' . $entityConfig->getMySQLTable() . ' WHERE id = :id');
+            $params = array(
+                ':id' => $nEntityId
+            );
+            $stmt->execute($params);
+
+            // load
+            $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            // verify
+            if (count($aResults) !== 1)
+            {
+                throw new MimotoEntityException("( '-' ) - Sorry, I can't find the the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
+            } else
+            {
+                // setup
+                $entity = $this->createEntity($entityConfig, $aResults[0]);
+
+                // send
+                return $entity;
+            }
         }
     }
     
@@ -220,7 +243,6 @@ class EntityRepository
                     switch($propertyConfig->type)
                     {
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                             if (count($modifiedCollection->added) > 0)
@@ -292,7 +314,7 @@ class EntityRepository
             }
 
 
-            $sQuery .= ' ' . $entityConfig->getMySQLTable();
+            $sQuery .= ' `' . $entityConfig->getMySQLTable().'`';
             $sQuery .= (count($aQueryElements) > 0 || !$bIsExistingEntity) ? ' SET ' : '';
 
             $params = array();
@@ -400,7 +422,7 @@ class EntityRepository
         $this->cleanupChildren($entity);
 
         // cleanup entity
-        $stmt = Mimoto::service('database')->prepare('DELETE FROM '.$entityConfig->getMySQLTable().' WHERE id = :id');
+        $stmt = Mimoto::service('database')->prepare('DELETE FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
         $params = array(
             ':id' => $entity->getId()
         );
@@ -423,7 +445,6 @@ class EntityRepository
             switch(Mimoto::service('config')->getPropertyTypeById($parent->propertyId))
             {
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                     $parent->entity->setValue($parent->propertyName, null);
                     break;
@@ -446,7 +467,7 @@ class EntityRepository
 
         // load all connections
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` WHERE ".
             "child_entity_type_id = :child_entity_type_id && ".
             "child_id = :child_id ".
             "ORDER BY parent_id ASC, sortindex ASC"
@@ -501,7 +522,6 @@ class EntityRepository
             switch(Mimoto::service('config')->getPropertyTypeById($child->parentPropertyId))
             {
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
 
                     $entity->setValue($child->parentPropertyName, null);
                     break;
@@ -534,7 +554,7 @@ class EntityRepository
 
         // load all connections
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM ".CoreConfig::MIMOTO_CONNECTIONS_CORE." WHERE ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` WHERE ".
             "parent_entity_type_id = :parent_entity_type_id && ".
             "parent_id = :parent_id ".
             "ORDER BY parent_id ASC, sortindex ASC"
@@ -653,7 +673,7 @@ class EntityRepository
 
                         // load
                         $stmt = Mimoto::service('database')->prepare(
-                            'SELECT * FROM '.$propertyValue->mysqlConnectionTable.
+                            'SELECT * FROM `'.$propertyValue->mysqlConnectionTable.'`'.
                             ' WHERE parent_id = :parent_id'.
                             ' && parent_property_id = :parent_property_id'.
                             ' && parent_entity_type_id = :parent_entity_type_id'.
@@ -688,8 +708,7 @@ class EntityRepository
                             $aCollection[] = $connection;
                         }
 
-                        if ($propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY
-                            || $propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE)
+                        if ($propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY)
                         {
                             if (isset($aCollection[0]))
                             {
@@ -726,7 +745,7 @@ class EntityRepository
     {
         // load
         $stmt = Mimoto::service('database')->prepare(
-            "INSERT INTO ".$sDBTable." SET ".
+            "INSERT INTO `".$sDBTable."` SET ".
             "parent_entity_type_id = :parent_entity_type_id, ".
             "parent_property_id = :parent_property_id, ".
             "parent_id = :parent_id, ".
@@ -753,7 +772,7 @@ class EntityRepository
     {
         // load
         $stmt = Mimoto::service('database')->prepare(
-            'UPDATE '.$sDBTable.' SET '.
+            'UPDATE `'.$sDBTable.'` SET '.
             'sortindex = :sortindex '.
             'WHERE id = :id'
         );
@@ -768,7 +787,7 @@ class EntityRepository
     {
         // load
         $stmt = Mimoto::service('database')->prepare(
-            'DELETE FROM '.$sDBTable.' WHERE id = :id'
+            'DELETE FROM `'.$sDBTable.'` WHERE id = :id'
         );
         $params = array(
             ':id' => $existingItem->getId()

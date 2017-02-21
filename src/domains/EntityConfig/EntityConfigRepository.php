@@ -718,27 +718,6 @@ class EntityConfigRepository
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
                         break;
 
-                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
-
-                        // init
-                        $settings = array();
-
-                        // copy
-                        $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE] = clone $property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE];
-
-                        // prepare
-                        $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value = (object) array(
-                            'id' => $property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value,
-                            'name' => $this->getEntityNameById($property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value)
-                        );
-
-                        // setup
-                        $entityConfig->setImageAsProperty($property->name, $property->id, $settings);
-
-                        // connect entity to data source
-                        $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
-                        break;
-
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                         // init
@@ -967,18 +946,6 @@ class EntityConfigRepository
                         'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                         'type' => MimotoEntityPropertyValueTypes::VALUETYPE_CONNECTION,
                         'value' => null
-                    )
-                );
-
-                break;
-
-            case MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE:
-
-                $property->settings = array(
-                    EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => (object) array(
-                        'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
-                        'type' => MimotoEntityPropertyValueTypes::VALUETYPE_CONNECTION,
-                        'value' => CoreConfig::MIMOTO_FILE
                     )
                 );
 

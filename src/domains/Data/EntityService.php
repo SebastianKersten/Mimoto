@@ -5,7 +5,7 @@ namespace Mimoto\Data;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\Data\MimotoEntityException;
+use Mimoto\Core\CoreConfig;
 
 
 /**

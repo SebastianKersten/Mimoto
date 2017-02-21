@@ -4,6 +4,7 @@
 namespace Mimoto\Core\entities;
 
 // Mimoto classes
+use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
@@ -38,7 +39,7 @@ class EntityProperty
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'key' => 'type',
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -51,7 +52,20 @@ class EntityProperty
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'key' => 'type',
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTY.'--subtype',
+                    // ---
+                    'name' => 'subtype',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
@@ -64,13 +78,13 @@ class EntityProperty
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'key' => 'allowedEntityTypes',
+                            'key' => EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => [CoreConfig::MIMOTO_ENTITYPROPERTYSETTING]
 
                         ),
                         'allowDuplicates' => (object) array(
-                            'key' => 'allowDuplicates',
+                            'key' => EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
@@ -223,15 +237,15 @@ class EntityProperty
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-image');
-        $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE);
-        $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE);
+        $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE);
+        $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE);
         $field->addValue('options', $option);
 
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
-        $validationRule->setValue('value', '^('.MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_IMAGE.')$');
+        $validationRule->setValue('value', '^('.MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION.'|'.MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE.')$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
