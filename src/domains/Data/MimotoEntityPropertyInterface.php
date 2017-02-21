@@ -16,6 +16,7 @@ interface MimotoEntityPropertyInterface
 
     // config
     public function getType($sSubpropertySelector = null);
+    public function getSubtype($sSubpropertySelector = null);
 
     // data
     public function getValue($bGetConnectionInfo = false, $sSubpropertySelector = null, $bGetPersistentValue = false);

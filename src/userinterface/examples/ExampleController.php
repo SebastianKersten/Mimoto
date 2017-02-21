@@ -636,15 +636,15 @@ class ExampleController
         // load
         $ePerson = Mimoto::service('data')->get('person', $nPersonId);
 
-        // load
-        //$eAvatar = Mimoto::service('data')->create(CoreConfig::MIMOTO_FILE);
-
 
         output('$ePerson id='.$nPersonId, $ePerson);
 
 
+        // create
+        $component = Mimoto::service('aimless')->createComponent('person', $ePerson);
+
         // render and send
-        return 'Done ..';
+        return $component->render();
     }
 
 }

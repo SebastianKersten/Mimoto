@@ -823,6 +823,7 @@ class EntityConfigRepository
                 'id' => $row['id'],
                 'name' => $row['name'],
                 'type' => $row['type'],
+                'subtype' => $row['subtype'],
                 'created' => $row['created'],
                 'settings' => []
             );

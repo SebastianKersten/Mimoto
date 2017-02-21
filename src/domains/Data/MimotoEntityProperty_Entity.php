@@ -68,6 +68,28 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
         }
     }
 
+    /**
+     * Get subtype
+     * @return string
+     */
+    public function getSubtype($sSubpropertySelector = null)
+    {
+        // 1. forward request
+        if (!empty($sSubpropertySelector))
+        {
+            // load
+            $entity = $this->loadEntity();
+
+            // forward and send
+            return (!empty($entity)) ? $entity->getPropertySubtype($sSubpropertySelector) : null;
+        }
+        else
+        {
+            // send
+            return $this->_config->subtype;
+        }
+    }
+
 
 
     // ----------------------------------------------------------------------------

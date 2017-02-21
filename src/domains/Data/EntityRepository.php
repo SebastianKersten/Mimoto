@@ -73,24 +73,21 @@ class EntityRepository
      */
     public function get(EntityConfig $entityConfig, $nEntityId)
     {
-
-
-
-
         if (substr($nEntityId, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
         {
-            error($entityConfig);
-
 
             // 1. hoe ophalen core data
             // 2. aparte functie (kent alle types)
-
             // 3. create default -> setId() en setName()
-            //
 
+            // TEMP - ease and quick fix
+
+            // create
+            $entity = $this->createEntity($entityConfig);
 
             // setup
-            $entity = $this->createEntity($entityConfig, $aResults[0]);
+            $entity->setId($nEntityId);
+            $entity->setValue('name', $entityConfig->getName());
 
             // send
             return $entity;
@@ -104,7 +101,7 @@ class EntityRepository
             //if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
 
             // load
-            $stmt = Mimoto::service('database')->prepare('SELECT * FROM ' . $entityConfig->getMySQLTable() . ' WHERE id = :id');
+            $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
             $params = array(
                 ':id' => $nEntityId
             );
@@ -142,7 +139,7 @@ class EntityRepository
         $aEntities->setCriteria($criteria);
 
 
-        $sQuery = 'SELECT * FROM '.$entityConfig->getMySQLTable();
+        $sQuery = 'SELECT * FROM `'.$entityConfig->getMySQLTable().'`';
         $params = array();
 
         if (isset($criteria['value']))

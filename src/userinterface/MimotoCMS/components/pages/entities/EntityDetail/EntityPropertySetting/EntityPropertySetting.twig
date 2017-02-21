@@ -1,6 +1,9 @@
 <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting">
+
     {{ Aimless.render('key') }} <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu">
+
         <a onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Aimless.meta('id', 'type') }}');">edit</a>
+
     </span>:<br>
     {% if Aimless.data('key') == 'allowedEntityType' %}
         <div {{ Aimless.realtime('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>

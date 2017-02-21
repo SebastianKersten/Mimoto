@@ -217,6 +217,21 @@ class MimotoEntity
     }
 
     /**
+     * Get property subtype
+     * @param $sPropertySelector
+     * @return mixed
+     */
+    public function getPropertySubtype($sPropertySelector)
+    {
+        // load
+        $property = $this->getProperty($sPropertySelector);
+        $sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
+
+        // forwand and send
+        return $property->getSubtype($sSubpropertySelector);
+    }
+
+    /**
      * Check if this entity is of a certain base type entity
      * @param $sEntityType
      * @return boolean
