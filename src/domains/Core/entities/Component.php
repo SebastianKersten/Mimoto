@@ -163,6 +163,30 @@ class Component
             ),
 
 
+            // selections
+
+            (object) array(
+                'name' => 'Mimoto.CMS_selections_SelectionOverview',
+                'file' => 'MimotoCMS/components/pages/selections/SelectionOverview/SelectionOverview.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_selections_SelectionOverview_ListItem',
+                'file' => 'MimotoCMS/components/pages/selections/SelectionOverview/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_selections_SelectionDetail',
+                'file' => 'MimotoCMS/components/pages/selections/SelectionDetail/SelectionDetail.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_selections_SelectionDetail-Rule',
+                'file' => 'MimotoCMS/components/pages/selections/SelectionDetail/SelectionRule/SelectionRule.twig',
+                'conditionals' => []
+            ),
+
+
 
             // content sections
 
@@ -186,12 +210,12 @@ class Component
             // content
 
             (object) array(
-                'name' => 'Mimoto.CMS_contents_ContentOverview',
+                'name' => 'Mimoto.CMS_content_ContentOverview',
                 'file' => 'MimotoCMS/components/pages/content/ContentOverview/ContentOverview.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_contents_ContentOverview_ListItem',
+                'name' => 'Mimoto.CMS_content_ContentOverview_ListItem',
                 'file' => 'MimotoCMS/components/pages/content/ContentOverview/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
@@ -303,7 +327,7 @@ class Component
             ),
             (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF,
-                'file' => 'MimotoCMS/components/forms/input/Textblock/Textblock.twig',
+                'file' => 'MimotoCMS/components/forms/input/TextRTF/TextRTF.twig',
                 'conditionals' => []
             ),
             (object) array(

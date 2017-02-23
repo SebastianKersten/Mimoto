@@ -645,4 +645,14 @@ class ExampleController
         return $page->render();
     }
 
+    public function viewSelectionExample(Application $app, $nSelectionId)
+    {
+        // load
+        $eSelection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
+
+        //output('$ePerson id='.$nPersonId, $ePerson);
+
+
+    }
+
 }

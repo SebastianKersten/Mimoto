@@ -9,6 +9,8 @@ use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\Component;
 use Mimoto\Core\entities\File;
+use Mimoto\Core\entities\Selection;
+use Mimoto\Core\entities\SelectionRule;
 use Mimoto\Core\entities\ContentSection;
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\Input;
@@ -48,64 +50,63 @@ class CoreConfig
     const EPOCH = '1976-10-19 23:15:00';
 
 
-    const CORE_PREFIX                           = '_MimotoAimless__';
+    const CORE_PREFIX                           = '_Mimoto_';
     const WILDCARD                              = '*';
     const ENTITY_NEW                            = 'TheCakeIsALie';
 
     // core
-    const MIMOTO_ENTITY                         = '_MimotoAimless__core__entity';
-    const MIMOTO_ENTITYPROPERTY                 = '_MimotoAimless__core__entityproperty';
-    const MIMOTO_ENTITYPROPERTYSETTING          = '_MimotoAimless__core__entitypropertysetting';
+    const MIMOTO_ENTITY                         = '_Mimoto_entity';
+    const MIMOTO_ENTITYPROPERTY                 = '_Mimoto_entityproperty';
+    const MIMOTO_ENTITYPROPERTYSETTING          = '_Mimoto_entitypropertysetting';
 
     // connections
-    const MIMOTO_CONNECTIONS_CORE               = '_MimotoAimless__connections__core';
-    const MIMOTO_CONNECTIONS_PROJECT            = '_MimotoAimless__connections__project';
+    const MIMOTO_CONNECTION                     = '_Mimoto_connection';
 
     // views
-    //const MIMOTO_TEMPLATE                     = '_mimoto_template';
-    const MIMOTO_COMPONENT                      = '_MimotoAimless__view__component';
-    const MIMOTO_COMPONENTCONDITIONAL           = '_MimotoAimless__view__componentconditional';
-    //const MIMOTO_PAGE                         = '_MimotoAimless__view__page';
-
-    // media
-    const MIMOTO_FILE                           = '_MimotoAimless__core__file';
-
-    // content
-    const MIMOTO_CONTENTSECTION                 = '_MimotoAimless__core__contentsection';
-
-    // forms
-    const MIMOTO_FORM                           = '_MimotoAimless__interaction__form';
-    const MIMOTO_FORM_INPUT                     = '_MimotoAimless__interaction__form_input';
-    const MIMOTO_FORM_INPUTOPTION               = '_MimotoAimless__interaction__form_inputoption';
-    const MIMOTO_FORM_INPUTVALIDATION           = '_MimotoAimless__interaction__form_inputvalidation';
-
-    // input
-    const MIMOTO_FORM_INPUT_TEXTLINE            = '_MimotoAimless__interaction__form_input_textline';
-    const MIMOTO_FORM_INPUT_TEXTBLOCK           = '_MimotoAimless__interaction__form_input_textblock';
-    const MIMOTO_FORM_INPUT_TEXTRTF             = '_MimotoAimless__interaction__form_input_textrtf';
-    const MIMOTO_FORM_INPUT_CHECKBOX            = '_MimotoAimless__interaction__form_input_checkbox';
-    const MIMOTO_FORM_INPUT_MULTISELECT         = '_MimotoAimless__interaction__form_input_multiselect';
-    const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_MimotoAimless__interaction__form_input_radiobutton';
-    const MIMOTO_FORM_INPUT_DROPDOWN            = '_MimotoAimless__interaction__form_input_dropdown';
-    const MIMOTO_FORM_INPUT_LIST                = '_MimotoAimless__interaction__form_input_list';
-    const MIMOTO_FORM_INPUT_IMAGE               = '_MimotoAimless__interaction__form_input_image';
-    const MIMOTO_FORM_INPUT_VIDEO               = '_MimotoAimless__interaction__form_input_video';
-
-    // output
-    const MIMOTO_FORM_OUTPUT_TITLE              = '_MimotoAimless__interaction__form_output_title';
-
-    // layout
-    const MIMOTO_FORM_LAYOUT_GROUPSTART         = '_MimotoAimless__interaction__form_layout_groupstart';
-    const MIMOTO_FORM_LAYOUT_GROUPEND           = '_MimotoAimless__interaction__form_layout_groupend';
-    const MIMOTO_FORM_LAYOUT_DIVIDER            = '_MimotoAimless__interaction__form_layout_divider';
-
-
+    const MIMOTO_COMPONENT                      = '_Mimoto_component';
+    const MIMOTO_COMPONENTCONDITIONAL           = '_Mimoto_componentconditional';
+    const MIMOTO_PAGE                           = '_Mimoto_page';
+    const MIMOTO_LAYOUT                         = '_Mimoto_layout';
 
     // functionality
-    const MIMOTO_ACTION                         = '_MimotoAimless__config__action';
+    const MIMOTO_ACTION                         = '_Mimoto_action';
+    const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';
 
+    // search
+    const MIMOTO_SELECTION                      = '_Mimoto_selection';
+    const MIMOTO_SELECTIONRULE                  = '_Mimoto_selectionrule';
 
-    const MIMOTO_NOTIFICATION                   = '_MimotoAimless__devtools__notification';
+    // media
+    const MIMOTO_FILE                           = '_Mimoto_file';
+
+    // content
+    const MIMOTO_CONTENTSECTION                 = '_Mimoto_contentsection';
+
+    // forms
+    const MIMOTO_FORM                           = '_Mimoto_form';
+    const MIMOTO_FORM_INPUT                     = '_Mimoto_form_input';
+    const MIMOTO_FORM_INPUTOPTION               = '_Mimoto_form_inputoption';
+    const MIMOTO_FORM_INPUTVALIDATION           = '_Mimoto_form_inputvalidation';
+
+    // input
+    const MIMOTO_FORM_INPUT_TEXTLINE            = '_Mimoto_form_input_textline';
+    const MIMOTO_FORM_INPUT_TEXTBLOCK           = '_Mimoto_form_input_textblock';
+    const MIMOTO_FORM_INPUT_TEXTRTF             = '_Mimoto_form_input_textrtf';
+    const MIMOTO_FORM_INPUT_CHECKBOX            = '_Mimoto_form_input_checkbox';
+    const MIMOTO_FORM_INPUT_MULTISELECT         = '_Mimoto_form_input_multiselect';
+    const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_Mimoto_form_input_radiobutton';
+    const MIMOTO_FORM_INPUT_DROPDOWN            = '_Mimoto_form_input_dropdown';
+    const MIMOTO_FORM_INPUT_LIST                = '_Mimoto_form_input_list';
+    const MIMOTO_FORM_INPUT_IMAGE               = '_Mimoto_form_input_image';
+    const MIMOTO_FORM_INPUT_VIDEO               = '_Mimoto_form_input_video';
+
+    // output
+    const MIMOTO_FORM_OUTPUT_TITLE              = '_Mimoto_form_output_title';
+
+    // layout
+    const MIMOTO_FORM_LAYOUT_GROUPSTART         = '_Mimoto_form_layout_groupstart';
+    const MIMOTO_FORM_LAYOUT_GROUPEND           = '_Mimoto_form_layout_groupend';
+    const MIMOTO_FORM_LAYOUT_DIVIDER            = '_Mimoto_form_layout_divider';
 
 
     // property types
@@ -146,7 +147,10 @@ class CoreConfig
     const COREFORM_FORM_INPUTOPTION             = '_MimotoAimless__coreform__form_inputoption';
     const COREFORM_FORM_INPUTVALIDATION         = '_MimotoAimless__coreform__form_inputvalidation';
 
-    const COREFORM_FILE                         = '_MimotoAimless__coreform__file';
+    const COREFORM_FILE                         = '_Mimoto_coreform_file';
+
+    const COREFORM_SELECTION                    = '_Mimoto_coreform_selection';
+    const COREFORM_SELECTIONRULE                = '_Mimoto_coreform_selectionrule';
 
 
     // input
@@ -193,6 +197,10 @@ class CoreConfig
             EntityProperty::getStructure(),
             EntityPropertySetting::getStructure(),
 
+            // search
+            Selection::getStructure(),
+            SelectionRule::getStructure(),
+
             // views
             Component::getStructure(),
 
@@ -216,13 +224,13 @@ class CoreConfig
 
             // input
             InputTextline::getStructure(),
+            InputList::getStructure(),
             InputTextblock::getStructure(),
             InputTextRTF::getStructure(),
             InputCheckbox::getStructure(),
             InputMultiSelect::getStructure(),
             InputRadioButton::getStructure(),
             InputDropdown::getStructure(),
-            InputList::getStructure(),
             InputImage::getStructure(),
             InputVideo::getStructure(),
 
@@ -247,6 +255,10 @@ class CoreConfig
             EntityPropertyForm_Collection_allowedEntityTypes::getFormStructure(),
             EntityPropertyForm_Collection_allowDuplicates::getFormStructure(),
 
+            // search
+            Selection::getFormStructure(),
+            SelectionRule::getFormStructure(),
+
             // views
             Component::getFormStructure(),
 
@@ -270,13 +282,13 @@ class CoreConfig
             InputCheckbox::getFormStructure(),
             InputDropdown::getFormStructure(),
             InputImage::getFormStructure(),
-//            //CoreConfig::COREFORM_INPUT_LIST => InputList::getForm(),
+            InputList::getFormStructure(),
             InputMultiSelect::getFormStructure(),
             InputRadioButton::getFormStructure(),
-//            CoreConfig::COREFORM_INPUT_TEXTBLOCK => InputTextBlock::getForm(),
-            InputTextline::getFormStructure()
-//            CoreConfig::COREFORM_INPUT_TEXTRTF => InputTextRTF::getForm(),
-//            //CoreConfig::COREFORM_INPUT_VIDEO => InputVideo::getForm()
+            InputTextBlock::getFormStructure(),
+            InputTextline::getFormStructure(),
+            InputTextRTF::getFormStructure(),
+            InputVideo::getFormStructure()
         ];
 
         // send

@@ -559,7 +559,7 @@ class AimlessService
 
         // load all connections
         $sql =
-            'SELECT * FROM `'.CoreConfig::MIMOTO_CONNECTIONS_PROJECT.'`'.
+            'SELECT * FROM `'.CoreConfig::MIMOTO_CONNECTION.'`'.
             ' WHERE child_entity_type_id="'.$xChildEntityTypeId.'" && child_id="'.$entity->getId().'"'.
             ' ORDER BY parent_id ASC, sortindex ASC';
 

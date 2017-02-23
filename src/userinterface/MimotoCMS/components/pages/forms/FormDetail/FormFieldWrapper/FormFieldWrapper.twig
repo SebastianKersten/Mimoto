@@ -2,11 +2,11 @@
 
     <div class="MimotoCMS_pages_forms_FormDetail-FormField__wrapper">
 
-        {% if Aimless.typeOf('_MimotoAimless__interaction__form_layout_groupstart') %}
+        {% if Aimless.typeOf('_Mimoto_form_layout_groupstart') %}
             Group start
-        {% elseif Aimless.typeOf('_MimotoAimless__interaction__form_layout_groupend') %}
+        {% elseif Aimless.typeOf('_Mimoto_form_layout_groupend') %}
             Group end
-        {% elseif Aimless.typeOf('_MimotoAimless__interaction__form_layout_divider') %}
+        {% elseif Aimless.typeOf('_Mimoto_form_layout_divider') %}
             Divider
         {% else %}
             {{ Aimless.wrap() }}
@@ -16,7 +16,7 @@
     <div class="MimotoCMS_pages_forms_FormDetail-FormField__menu">
 
 
-        {% if Aimless.typeOf('_MimotoAimless__interaction__form_input') %}
+        {% if Aimless.typeOf('_Mimoto_form_input') %}
 
             <div {{ Aimless.showOnEmpty('value') }}>
                 {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Connect value', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Aimless.meta('type') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}

@@ -1,0 +1,15 @@
+{{
+    Aimless.module('Mimoto.CMS.ListItemModule',
+    {
+        label: Aimless.data('name'),
+        label_realtime: Aimless.realtime('name'),
+        sublabel: 'id='~Aimless.meta('id'),
+        sublabel_realtime: '',
+        button_label: 'View',
+        button_action: 'Mimoto.CMS.selectionView('~Aimless.meta('id')~');',
+        button_type: 'secondary',
+        button2_label: 'Delete',
+        button2_action: 'Mimoto.CMS.selectionDelete('~Aimless.meta('id')~');',
+        button2_type: 'alert'
+    })
+}}

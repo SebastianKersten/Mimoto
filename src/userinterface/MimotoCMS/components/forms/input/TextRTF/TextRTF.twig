@@ -1,0 +1,13 @@
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "textrtf"} %}
+    {% block form_component_element %}
+        <div class="MimotoCMS_forms_input_TextRTF-rtfmenu">
+            <span>B</span>
+            <span>I</span>
+            <span>U</span>
+            <span>link</span>
+            <span>ol</span>
+            <span>ul</span>
+        </div>
+        <textarea {{ Aimless.input() }} class="MimotoCMS_forms_input_TextRTF js-textrtf" name="" placeholder="{{ Aimless.render('placeholder') }}">{{ Aimless.value() }}</textarea>
+    {% endblock %}
+{% endembed %}

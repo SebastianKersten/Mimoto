@@ -1,1 +1,7 @@
-[Component:"Video"]
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "video" } %}
+    {% block form_component_element %}
+        [Component:"Video"]<br>
+        - upload<br>
+        - player
+    {% endblock %}
+{% endembed %}

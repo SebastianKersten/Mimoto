@@ -30,7 +30,7 @@ class MimotoDataUtils
 
     public static function validatePropertyName($sPropertyName)
     {
-        // check _MimotoAimless__ CoreConfig::CORE_PREFIX
+        // check _Mimoto_ CoreConfig::CORE_PREFIX
 
         return preg_match("/^[a-zA-Z-_][a-zA-Z0-9-_]*(\.[a-zA-Z-_][a-zA-Z0-9_-]*)*$/", $sPropertyName);
         //return preg_match("/^[a-zA-Z][a-zA-Z0-9-_]*(\.[a-zA-Z][a-zA-Z0-9_-]*)*$/", $sPropertyName);

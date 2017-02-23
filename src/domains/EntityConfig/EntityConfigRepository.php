@@ -262,6 +262,11 @@ class EntityConfigRepository
         Mimoto::service('log')->error('Incomplete entity config', "No entity found which contains a property with <b>id=".$nId."</b>", true);
     }
 
+    /**
+     * Get entity name by form id
+     * @param $sFormId The name of the form
+     * @return mixed
+     */
     public function getEntityNameByFormId($sFormId)
     {
         // search
@@ -271,6 +276,10 @@ class EntityConfigRepository
             // register
             $entity = $this->_aEntities[$nEntityIndex];
 
+            // validate
+            if (empty($entity->forms)) continue;
+
+            // find
             $nFormCount = count($entity->forms);
             for ($nFormIndex = 0; $nFormIndex < $nFormCount; $nFormIndex++)
             {
@@ -282,7 +291,8 @@ class EntityConfigRepository
             }
         }
 
-        Mimoto::service('log')->error('Entity not found by form id', "No entity found which contains a form with <b>id=".$sFormId."</b>", true);
+        // report
+        Mimoto::service('log')->error('Form not supported', "No entity found that contains a form with <b>id=".$sFormId."</b>", true);
     }
 
 
@@ -661,17 +671,7 @@ class EntityConfigRepository
             $entityConfig->setId($entity->id);
             $entityConfig->setName($entity->name);
             $entityConfig->setMySQLTable($entity->name);
-
-            // compose
-            if (substr($this->getEntityNameById($entity->id), 0, 16) == CoreConfig::CORE_PREFIX)
-            {
-                $sConnectionTable = CoreConfig::MIMOTO_CONNECTIONS_CORE;
-            }
-            else
-            {
-                $sConnectionTable = CoreConfig::MIMOTO_CONNECTIONS_PROJECT;
-            }
-
+            $sConnectionTable = CoreConfig::MIMOTO_CONNECTION;
 
             // store
             $nPropertyCount = count($entity->properties);
@@ -888,7 +888,7 @@ class EntityConfigRepository
 
         // load all connections
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` WHERE ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTION."` WHERE ".
             "parent_entity_type_id = :parent_entity_type_id ".
             "ORDER BY parent_id ASC, sortindex ASC"
         );

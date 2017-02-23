@@ -53,7 +53,7 @@ class ContentController
             case ContentSection::TYPE_GROUP:
 
                 // 4d. create component
-                $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_contents_ContentOverview', $contentSectionEntity);
+                $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_content_ContentOverview', $contentSectionEntity);
 
                 break;
 

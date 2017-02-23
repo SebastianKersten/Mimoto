@@ -189,6 +189,44 @@ module.exports.prototype = {
     },
     
     
+    /**
+     * Selections
+     */
+    selectionNew: function()
+    {
+        var popup = Mimoto.popup.open("/mimoto.cms/selection/new");
+    },
+    
+    selectionView: function(nSelectionId)
+    {
+        window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
+    },
+    
+    selectionEdit: function(nSelectionId)
+    {
+        Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/edit');
+    },
+    
+    selectionDelete: function(nSelectionId)
+    {
+        window.open('/mimoto.cms/selection/' + nSelectionId + '/delete', '_self');
+    },
+    
+    selectionRuleNew: function(nSelectionId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
+    },
+    
+    selectionRuleEdit: function(nSelectionRuleId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
+    },
+    
+    selectionRuleDelete: function(nSelectionRuleId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete');
+    },
+    
     
     /**
      * Content sections

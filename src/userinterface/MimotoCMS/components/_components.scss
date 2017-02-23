@@ -9,7 +9,9 @@
 @import 'forms/input/List/ListItem/ListItem';
 @import 'forms/input/RadioButton/RadioButton';
 @import 'forms/input/Textblock/Textblock';
+@import 'forms/input/TextRTF/TextRTF';
 @import 'forms/input/Textline/Textline';
+@import 'forms/input/Video/Video';
 
 @import 'forms/output/Title/Title';
 
@@ -28,5 +30,6 @@
 @import 'interface/Interface';
 @import 'pages/content/Content';
 @import 'pages/contentsections/ContentSections';
+@import 'pages/selections/Selections';
 
 @import '../modules/modules';

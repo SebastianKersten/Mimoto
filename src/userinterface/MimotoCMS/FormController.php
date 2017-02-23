@@ -124,16 +124,7 @@ class FormController
         {
             if ($aInputTypesAll[$nInputIndex]->id != CoreConfig::MIMOTO_FORM_INPUT)
             {
-                if ( // todo temp
-                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE ||
-                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON ||
-                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN ||
-                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT ||
-                    $aInputTypesAll[$nInputIndex]->id == CoreConfig::MIMOTO_FORM_INPUT_IMAGE
-                )
-                {
-                    $aInputTypes[] = $aInputTypesAll[$nInputIndex];
-                }
+                $aInputTypes[] = $aInputTypesAll[$nInputIndex];
             }
         }
 
@@ -172,7 +163,7 @@ class FormController
         // 1. collect items (fixed set?)
         // 5. eigen entities
         // 6. setup item
-        // 7. hardcoded (_MimotoAimless__interaction__form_input_textline -> textline-form)
+        // 7. hardcoded (_Mimoto_form_input_textline -> textline-form)
 
 
         // output

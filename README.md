@@ -331,7 +331,7 @@ Aimless has support for aesy to implement counters for for instance new notifica
 
 Example:
 ```
-<div id="header_notification_count" class="hidden" data-aimless-count="_MimotoAimless__devtools__notification" data-aimless-filter='{"state":"open"}' data-aimless-config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
+<div id="header_notification_count" class="hidden" data-aimless-count="_Mimoto_notification" data-aimless-filter='{"state":"open"}' data-aimless-config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
 ```
 
 

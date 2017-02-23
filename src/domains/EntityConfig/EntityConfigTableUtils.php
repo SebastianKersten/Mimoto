@@ -74,10 +74,10 @@ class EntityConfigTableUtils
     public static function entityPropertyNameIsUnique($nEntityId, $sEntityPropertyName)
     {
         $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM `".CoreConfig::MIMOTO_ENTITYPROPERTY."` LEFT JOIN `".CoreConfig::MIMOTO_CONNECTIONS_CORE."` ".
-            "ON `".CoreConfig::MIMOTO_CONNECTIONS_CORE.".id = ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".child_id ".
-            "WHERE ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_id = :parent_id ".
-            "&& ".CoreConfig::MIMOTO_CONNECTIONS_CORE.".parent_property_id = :parent_property_id ".
+            "SELECT * FROM `".CoreConfig::MIMOTO_ENTITYPROPERTY."` LEFT JOIN `".CoreConfig::MIMOTO_CONNECTION."` ".
+            "ON `".CoreConfig::MIMOTO_CONNECTION.".id = ".CoreConfig::MIMOTO_CONNECTION.".child_id ".
+            "WHERE ".CoreConfig::MIMOTO_CONNECTION.".parent_id = :parent_id ".
+            "&& ".CoreConfig::MIMOTO_CONNECTION.".parent_property_id = :parent_property_id ".
             "&& ".CoreConfig::MIMOTO_ENTITYPROPERTY.".name = :name");
         $params = array(
             "parent_id" => $nEntityId,
