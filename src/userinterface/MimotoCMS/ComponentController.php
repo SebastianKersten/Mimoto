@@ -120,7 +120,7 @@ class ComponentController
         Mimoto::service('data')->delete($component);
 
         // 6. send
-        return new JsonResponse((object) array('result' => 'Component deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'Component deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 }

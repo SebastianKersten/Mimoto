@@ -120,6 +120,6 @@ class ContentSectionController
         //Mimoto::service('config')->entityDelete($nContentSectionId);
 
         // send
-        //return new JsonResponse((object) array('result' => 'Content deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'Content section deleted! '.date("Y.m.d H:i:s")), 200);
     }
 }

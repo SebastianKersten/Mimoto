@@ -132,20 +132,20 @@ class CoreConfig
 
 
     // core forms
-    const COREFORM_ENTITY               = '_MimotoAimless__coreform__entity';
-    const COREFORM_ENTITYPROPERTY       = '_MimotoAimless__coreform__entityproperty';
+    const COREFORM_ENTITY               = '_Mimoto_coreform__entity';
+    const COREFORM_ENTITYPROPERTY       = '_Mimoto_coreform__entityproperty';
 
-    const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE                     = '_MimotoAimless__coreform__entitypropertysetting_value_type';
-    const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE       = '_MimotoAimless__coreform__entitypropertysetting_entity_allowedEntityType';
-    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_MimotoAimless__coreform__entitypropertysetting_value_allowedEntityTypes';
-    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_MimotoAimless__coreform__entitypropertysetting_collection_allowDuplicates';
+    const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE                     = '_Mimoto_coreform__entitypropertysetting_value_type';
+    const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE       = '_Mimoto_coreform__entitypropertysetting_entity_allowedEntityType';
+    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entitypropertysetting_value_allowedEntityTypes';
+    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entitypropertysetting_collection_allowDuplicates';
 
-    const COREFORM_CONTENTSECTION               = '_MimotoAimless__coreform__contentsection';
+    const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentsection';
 
-    const COREFORM_COMPONENT                    = '_MimotoAimless__coreform__component';
-    const COREFORM_FORM                         = '_MimotoAimless__coreform__form';
-    const COREFORM_FORM_INPUTOPTION             = '_MimotoAimless__coreform__form_inputoption';
-    const COREFORM_FORM_INPUTVALIDATION         = '_MimotoAimless__coreform__form_inputvalidation';
+    const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
+    const COREFORM_FORM                         = '_Mimoto_coreform__form';
+    const COREFORM_FORM_INPUTOPTION             = '_Mimoto_coreform__form_inputoption';
+    const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform__form_inputvalidation';
 
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
 
@@ -154,25 +154,25 @@ class CoreConfig
 
 
     // input
-    const COREFORM_INPUT_TEXTLINE       = '_MimotoAimless__coreform__input_textline';
-    const COREFORM_INPUT_TEXTBLOCK      = '_MimotoAimless__coreform_input_textblock';
-    const COREFORM_INPUT_TEXTRTF        = '_MimotoAimless__coreform_input_textrtf';
-    const COREFORM_INPUT_CHECKBOX       = '_MimotoAimless__coreform_input_checkbox';
-    const COREFORM_INPUT_MULTISELECT    = '_MimotoAimless__coreform_input_multiselect';
-    const COREFORM_INPUT_RADIOBUTTON    = '_MimotoAimless__coreform_input_radiobutton';
-    const COREFORM_INPUT_DROPDOWN       = '_MimotoAimless__coreform_input_dropdown';
-    const COREFORM_INPUT_LIST           = '_MimotoAimless__coreform_input_list';
-    const COREFORM_INPUT_LIST_ITEM      = '_MimotoAimless__coreform_input_list_item';
-    const COREFORM_INPUT_IMAGE          = '_MimotoAimless__coreform_input_image';
-    const COREFORM_INPUT_VIDEO          = '_MimotoAimless__coreform_input_video';
+    const COREFORM_INPUT_TEXTLINE       = '_Mimoto_coreform__input_textline';
+    const COREFORM_INPUT_TEXTBLOCK      = '_Mimoto_coreform_input_textblock';
+    const COREFORM_INPUT_TEXTRTF        = '_Mimoto_coreform_input_textrtf';
+    const COREFORM_INPUT_CHECKBOX       = '_Mimoto_coreform_input_checkbox';
+    const COREFORM_INPUT_MULTISELECT    = '_Mimoto_coreform_input_multiselect';
+    const COREFORM_INPUT_RADIOBUTTON    = '_Mimoto_coreform_input_radiobutton';
+    const COREFORM_INPUT_DROPDOWN       = '_Mimoto_coreform_input_dropdown';
+    const COREFORM_INPUT_LIST           = '_Mimoto_coreform_input_list';
+    const COREFORM_INPUT_LIST_ITEM      = '_Mimoto_coreform_input_list_item';
+    const COREFORM_INPUT_IMAGE          = '_Mimoto_coreform_input_image';
+    const COREFORM_INPUT_VIDEO          = '_Mimoto_coreform_input_video';
 
     // output
-    const COREFORM_OUTPUT_TITLE         = '_MimotoAimless__coreform_output_title';
+    const COREFORM_OUTPUT_TITLE         = '_Mimoto_coreform_output_title';
 
     // layout
-    const COREFORM_LAYOUT_GROUPSTART    = '_MimotoAimless__coreform_layout_groupstart';
-    const COREFORM_LAYOUT_GROUPEND      = '_MimotoAimless__coreform_layout_groupend';
-    const COREFORM_LAYOUT_DIVIDER       = '_MimotoAimless__coreform_layout_divider';
+    const COREFORM_LAYOUT_GROUPSTART    = '_Mimoto_coreform_layout_groupstart';
+    const COREFORM_LAYOUT_GROUPEND      = '_Mimoto_coreform_layout_groupend';
+    const COREFORM_LAYOUT_DIVIDER       = '_Mimoto_coreform_layout_divider';
 
 
 

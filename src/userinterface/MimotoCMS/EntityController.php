@@ -138,7 +138,7 @@ class EntityController
         Mimoto::service('config')->entityDelete($entity);
 
         // send
-        return new JsonResponse((object) array('result' => 'Entity deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'Entity deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 
@@ -251,7 +251,7 @@ class EntityController
         Mimoto::service('data')->delete($entityProperty);
 
         // 6. send
-        return new JsonResponse((object) array('result' => 'EntityProperty deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'EntityProperty deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 

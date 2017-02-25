@@ -106,7 +106,7 @@ class FormController
         Mimoto::service('data')->delete($form);
 
         // 6. send
-        return new JsonResponse((object) array('result' => 'Form deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'Form deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function formFieldNew_fieldTypeSelector(Application $app, $nFormId)
@@ -256,7 +256,7 @@ class FormController
         Mimoto::service('data')->delete($formField);
 
         // 12. send
-        return new JsonResponse((object) array('result' => 'FormField deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'FormField deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function formFieldItemAddToList(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sItemId = null)
@@ -341,14 +341,14 @@ class FormController
 
     public function formFieldItemDelete(Application $app, $nFormFieldItemId)
     {
-        // load
+        // 1. load
         $eFormFieldItem = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM_INPUTOPTION, $nFormFieldItemId);
 
-        // delete
+        // 2. delete
         Mimoto::service('data')->delete($eFormFieldItem);
 
-        // 12. send
-        return new JsonResponse((object) array('result' => 'FormFieldItem deleted! '.date("Y.m.d H:i:s")), 200);
+        // 3. send
+        return Mimoto::service('messages')->response((object) array('result' => 'FormFieldItem deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 }

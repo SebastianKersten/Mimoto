@@ -29517,7 +29517,7 @@
 	    entityPropertyDelete:  function(nEntityPropertyId)
 	    {
 	        // 11. send data
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
 	            success: function(resultData, resultStatus, resultSomething) {
@@ -29546,7 +29546,7 @@
 	        });
 	
 	        // 11. send data
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'GET',
 	            url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
 	            data: null,
@@ -29578,7 +29578,7 @@
 	    
 	    componentDelete: function(nComponentId)
 	    {
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/component/" + nComponentId + "/delete",
 	            success: function(resultData, resultStatus, resultSomething) {
@@ -29647,14 +29647,24 @@
 	        var popup = Mimoto.popup.open("/mimoto.cms/contentsection/new");
 	    },
 	    
-	    contentSectionView: function(nContentId)
+	    contentSectionView: function(nContentSectionId)
 	    {
-	        window.open('/mimoto.cms/contentsection/' + nContentId + '/view', '_self');
+	        window.open('/mimoto.cms/contentsection/' + nContentSectionId + '/view', '_self');
 	    },
 	    
-	    contentSectionEdit: function(nContentId)
+	    contentSectionEdit: function(nContentSectionId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentId + '/edit');
+	        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
+	    },
+	    contentSectionDelete: function(nContentSectionId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
 	    },
 	    
 	    
