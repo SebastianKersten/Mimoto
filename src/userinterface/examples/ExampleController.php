@@ -650,9 +650,14 @@ class ExampleController
         // load
         $eSelection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
 
-        //output('$ePerson id='.$nPersonId, $ePerson);
+
+        //output('$eSelection id='.$nSelectionId, $eSelection);
 
 
+        $aEntities = Mimoto::service('data')->select('test');
+
+        // send
+        return '<hr>Mimoto done ..';
     }
 
 }

@@ -8,6 +8,10 @@ use Mimoto\Mimoto;
 use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 
+// Symfony classes
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 // Silex classes
 use Silex\Application;
 
@@ -116,8 +120,8 @@ class SelectionController
         // 2. delete
         Mimoto::service('data')->delete($eSelection);
 
-        // 3. redirect
-        return $app->redirect("/mimoto.cms/selections");
+        // 3. send
+        return new JsonResponse((object) array('result' => 'Selection deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function selectionRuleNew(Application $app, $nSelectionId)
@@ -137,10 +141,10 @@ class SelectionController
         return $component->render();
     }
 
-    public function selectionRuleEdit(Application $app, $nEntityPropertyId)
+    public function selectionRuleEdit(Application $app, $nSelectionRuleId)
     {
         // 1. load
-        $eSelectionRule = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTIONRULE, $nEntityPropertyId);
+        $eSelectionRule = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTIONRULE, $nSelectionRuleId);
 
         // 2. validate
         if ($eSelectionRule === false) return $app->redirect("/mimoto.cms/selections");
@@ -155,10 +159,10 @@ class SelectionController
         return $component->render();
     }
 
-    public function selectionRuleDelete(Application $app, $nEntityPropertyId)
+    public function selectionRuleDelete(Application $app, $nSelectionRuleId)
     {
         // 1. load
-        $eSelectionRule = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
+        $eSelectionRule = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTIONRULE, $nSelectionRuleId);
 
 //        // 2. find
 //        $parentEntity = $app['Mimoto.Config']->getParentEntity($eSelectionRule);

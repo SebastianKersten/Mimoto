@@ -37,7 +37,7 @@
     $app->get('/example11', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample11');
 
     $app->get('/image/{nPersonId}', 'Mimoto\\UserInterface\\examples\\ExampleController::viewImageExample');
-    $app->get('/selection/{nPersonId}', 'Mimoto\\UserInterface\\examples\\ExampleController::viewSelectionExample');
+    $app->get('/selection/{nSelectionId}', 'Mimoto\\UserInterface\\examples\\ExampleController::viewSelectionExample');
 
     // --- service tests ---
     $app->get('/test/pusher', 'Mimoto\\UserInterface\\examples\\ExampleController::testPusher');

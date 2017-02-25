@@ -209,7 +209,13 @@ module.exports.prototype = {
     
     selectionDelete: function(nSelectionId)
     {
-        window.open('/mimoto.cms/selection/' + nSelectionId + '/delete', '_self');
+        $.ajax({
+            type: 'get',
+            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
     },
     
     selectionRuleNew: function(nSelectionId)
@@ -224,7 +230,13 @@ module.exports.prototype = {
     
     selectionRuleDelete: function(nSelectionRuleId)
     {
-        var popup = Mimoto.popup.open('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete');
+        $.ajax({
+            type: 'get',
+            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
     },
     
     

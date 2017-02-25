@@ -375,7 +375,9 @@ class CoreConfig
                         'title',
 
                         'options',
-                        'validation'
+                        'validation',
+
+                        'rules'
                     )
                 ),
                 'notes' => array(

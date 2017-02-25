@@ -1,11 +1,11 @@
-<div class="MimotoCMS_pages_selections_EntityDetail-EntityProperty" {{ Aimless.realtime() }}>
+<div class="MimotoCMS_pages_selections_SelectionDetail-Rule" {{ Aimless.realtime() }}>
 
-    <div class="MimotoCMS_pages_selections_SelectionDetail-EntityProperty__data">
-        <div class="MimotoCMS_pages_selections_SelectionDetail-EntityProperty__name">
+    <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__data">
+        <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__name">
             <div {{ Aimless.realtime('type') }} >{{ Aimless.render('type') }}</div>
         </div>
     </div>
-    <div class="MimotoCMS_pages_selections_SelectionDetail-EntityProperty__menu">
+    <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__menu">
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.selectionRuleEdit('" ~ Aimless.meta('id') ~ "');" }) }}
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.selectionRuleDelete('" ~ Aimless.meta('id') ~ "');" }) }}
     </div>

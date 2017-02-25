@@ -10,14 +10,12 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\EntityConfig;
 
-
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 // Silex classes
 use Silex\Application;
-
 
 
 /**

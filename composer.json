@@ -28,6 +28,7 @@
             "Mimoto\\Event\\": "./src/domains/Event",
             "Mimoto\\Entity\\": "./src/domains/Entity",
             "Mimoto\\Selection\\": "./src/domains/Selection",
+            "Mimoto\\Message\\": "./src/domains/Message",
             "Mimoto\\Form\\": "./src/domains/Form",
             "Mimoto\\Log\\": "./src/domains/Log",
             "Mimoto\\User\\": "./src/domains/User",
