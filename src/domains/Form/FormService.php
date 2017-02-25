@@ -474,8 +474,6 @@ class FormService
     }
 
 
-
-
     public function getFormFieldValues($form, $entity, $aFields = null, $nEntityId = null)
     {
         // 1. register fields

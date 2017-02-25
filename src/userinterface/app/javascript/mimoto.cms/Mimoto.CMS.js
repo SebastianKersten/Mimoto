@@ -209,7 +209,7 @@ module.exports.prototype = {
     
     selectionDelete: function(nSelectionId)
     {
-        $.ajax({
+        Mimoto.Aimless.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
             success: function(resultData, resultStatus, resultSomething) {
@@ -230,7 +230,7 @@ module.exports.prototype = {
     
     selectionRuleDelete: function(nSelectionRuleId)
     {
-        $.ajax({
+        Mimoto.Aimless.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
             success: function(resultData, resultStatus, resultSomething) {

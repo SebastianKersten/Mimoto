@@ -73,7 +73,8 @@
 	Mimoto.classes.DomRealtime = __webpack_require__(7);
 	
 	// setup
-	Mimoto.Aimless = new MimotoAimless(new Mimoto.classes.DomService());
+	Mimoto.Aimless = new MimotoAimless();
+	Mimoto.Aimless.dom = new Mimoto.classes.DomService();
 	Mimoto.Aimless.utils = new Mimoto.classes.DomUtils();
 	Mimoto.Aimless.realtime = new Mimoto.classes.DomRealtime();
 	
@@ -155,9 +156,6 @@
 	
 	module.exports = function(DomService)
 	{
-	    // register
-	    this._DomService = DomService;
-	    
 	    // start
 	    this.__construct();
 	};
@@ -210,11 +208,11 @@
 	        var channel = Mimoto.Aimless.pusher.subscribe('Aimless');
 	        
 	        // setup listeners
-	        channel.bind('data.changed', this._DomService.onDataChanged);
-	        channel.bind('data.created', this._DomService.onDataCreated);
-	        channel.bind('page.change', this._DomService.onPageChange);
-	        channel.bind('component.load', this._DomService.onComponentLoad);
-	        channel.bind('popup.open', this._DomService.onPopupOpen);
+	        channel.bind('data.changed', Mimoto.Aimless.dom.onDataChanged);
+	        channel.bind('data.created', Mimoto.Aimless.dom.onDataCreated);
+	        channel.bind('page.change', Mimoto.Aimless.dom.onPageChange);
+	        channel.bind('component.load', Mimoto.Aimless.dom.onComponentLoad);
+	        channel.bind('popup.open', Mimoto.Aimless.dom.onPopupOpen);
 	    }
 	
 	}
@@ -234,14 +232,17 @@
 	
 	
 	module.exports = function() {
-	
+	    
+	    
 	    // start
 	    this.__construct();
 	};
 	
 	module.exports.prototype = {
-	
-	
+	    
+	    
+	    _aParsedMessages: [],
+	    
 	
 	    // ----------------------------------------------------------------------------
 	    // --- Constructor ------------------------------------------------------------
@@ -266,9 +267,13 @@
 	    /**
 	     * Handle data CHANGED
 	     */
-	    onDataChanged: function(data)
+	    onDataChanged: function(data, sChannel)
 	    {
-	        console.log('Aimless - data.changed');
+	        // validate
+	        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
+	        
+	        
+	        console.log('Aimless - data.changed (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
 	        console.log(data);
 	        
 	        
@@ -287,22 +292,23 @@
 	    /**
 	     * Handle data CREATED
 	     */
-	    onDataCreated: function(data)
+	    onDataCreated: function(data, sChannel)
 	    {
+	        // validate
+	        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
+	        
+	        
+	        console.log('Aimless - data.created (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
+	        console.log(data);
+	        
+	    
+	    
 	        // setup
 	        var mls_container = data.entityType;
 	    
 	        // register
 	        var classRoot = module.exports.prototype;
 	    
-	        console.log('Aimless - data.created');
-	        console.log(data);
-	        
-	        
-	        
-	        //console.clear();
-	    
-	        
 	    
 	    
 	        // --- component level ---
@@ -1238,7 +1244,56 @@
 	    
 	        // send
 	        return component;
+	    },
+	    
+	    /**
+	     * Validate if data modifications already have been locally handled parsed
+	     * @param messageID
+	     * @returns boolean
+	     * @private
+	     */
+	    _validateMessage: function (aParsedMessages, message, sChannel)
+	    {
+	        // init
+	        var bHasBeenParsed = false;
+	        
+	        // default
+	        if (!sChannel) sChannel = 'webevent';
+	        
+	        if (!aParsedMessages[message.uid])
+	        {
+	            // register
+	            message.channel = sChannel;
+	            
+	            // store
+	            aParsedMessages[message.uid] = message;
+	        }
+	        else
+	        {
+	            if (aParsedMessages[message.uid].channel != sChannel)
+	            {
+	                bHasBeenParsed = true;
+	            }
+	        }
+	    
+	        // auto cleanup older messages
+	        var nAgeInSeconds = 5 * 60; // set to 5 minutes
+	        for (var sUID in aParsedMessages)
+	        {
+	            // register
+	            var parsedMessage = aParsedMessages[sUID];
+	            
+	            // check and remove
+	            if (parseInt(message.timestamp) - parseInt(parsedMessage.timestamp) > nAgeInSeconds)
+	            {
+	                delete aParsedMessages[parsedMessage.uid];
+	            }
+	        }
+	        
+	        // send
+	        return bHasBeenParsed;
 	    }
+	    
 	    
 	}
 	
@@ -11597,8 +11652,48 @@
 	                $($component).replaceWith(data);
 	            }
 	        });
-	    }
+	    },
 	    
+	    callAPI: function(request)
+	    {
+	        $.ajax({
+	            type: request.type,
+	            url: request.url,
+	            data: request.data,
+	            dataType: request.dataType,
+	            success: function (resultData, resultStatus, resultSomething)
+	            {
+	                console.error(resultData);
+	                
+	                // verify and validate
+	                if (resultData.dataModifications && resultData.dataModifications instanceof Array)
+	                {
+	                    var nModificationCount = resultData.dataModifications.length;
+	                    for (var nModificationIndex = 0; nModificationIndex < nModificationCount; nModificationIndex++)
+	                    {
+	                        // register
+	                        var dataModification = resultData.dataModifications[nModificationIndex];
+	                        
+	                        switch(dataModification.type)
+	                        {
+	                            case 'data.created':
+	    
+	                                Mimoto.Aimless.dom.onDataCreated(dataModification.data, 'direct');
+	                                break;
+	                            
+	                            case 'data.changed':
+	    
+	                                Mimoto.Aimless.dom.onDataChanged(dataModification.data, 'direct');
+	                                break;
+	                        }
+	                    }
+	                }
+	                
+	                // forward
+	                request.success(resultData.response, resultStatus, resultSomething);
+	            }
+	        });
+	    }
 	    
 	}
 	

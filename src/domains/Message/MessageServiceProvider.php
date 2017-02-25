@@ -30,7 +30,7 @@ class MessageServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        Mimoto::setService('message', $app['Mimoto.Message']);
+        Mimoto::setService('messages', $app['Mimoto.Message']);
     }
     
 }

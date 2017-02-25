@@ -272,8 +272,9 @@ module.exports.prototype = {
         // console.log('------');
         
         
+        
         // 11. send data
-        $.ajax({
+        Mimoto.Aimless.utils.callAPI({
             type: form.sMethod,
             url: form.sAction,
             data: JSON.stringify(requestData),

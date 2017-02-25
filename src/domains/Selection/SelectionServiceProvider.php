@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace Mimoto\Form;
+namespace Mimoto\Selection;
 
 // Mimoto classes
 use Mimoto\Mimoto;

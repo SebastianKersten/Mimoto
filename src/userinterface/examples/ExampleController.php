@@ -660,4 +660,19 @@ class ExampleController
         return '<hr>Mimoto done ..';
     }
 
+    public function viewMessageExample(Application $app)
+    {
+        // load
+        $ePerson = Mimoto::service('data')->get('person', 1);
+
+        // alter
+        $ePerson->setValue('title', date('Y.m.d H:i:s'));
+
+        // store
+        Mimoto::service('data')->store($ePerson);
+
+        // send
+        return Mimoto::service('messages')->response('Ja!');
+    }
+
 }

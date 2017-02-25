@@ -1,4 +1,4 @@
-^<?php
+<?php
 
 // classpath
 namespace Mimoto\Selection;
@@ -37,6 +37,7 @@ class SelectionService
      */
     public function __construct()
     {
+        return;
         // toggle between cache or database
         if ( Mimoto::service('cache')->isEnabled() && Mimoto::service('cache')->getValue('mimoto.core.selectionconfigs'))
         {

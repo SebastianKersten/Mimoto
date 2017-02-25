@@ -8,9 +8,6 @@
 
 module.exports = function(DomService)
 {
-    // register
-    this._DomService = DomService;
-    
     // start
     this.__construct();
 };
@@ -63,11 +60,11 @@ module.exports.prototype = {
         var channel = Mimoto.Aimless.pusher.subscribe('Aimless');
         
         // setup listeners
-        channel.bind('data.changed', this._DomService.onDataChanged);
-        channel.bind('data.created', this._DomService.onDataCreated);
-        channel.bind('page.change', this._DomService.onPageChange);
-        channel.bind('component.load', this._DomService.onComponentLoad);
-        channel.bind('popup.open', this._DomService.onPopupOpen);
+        channel.bind('data.changed', Mimoto.Aimless.dom.onDataChanged);
+        channel.bind('data.created', Mimoto.Aimless.dom.onDataCreated);
+        channel.bind('page.change', Mimoto.Aimless.dom.onPageChange);
+        channel.bind('component.load', Mimoto.Aimless.dom.onComponentLoad);
+        channel.bind('popup.open', Mimoto.Aimless.dom.onPopupOpen);
     }
 
 }

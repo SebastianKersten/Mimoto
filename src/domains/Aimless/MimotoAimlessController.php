@@ -72,7 +72,7 @@ class MimotoAimlessController
         $formResponse = Mimoto::service('forms')->parseForm($sFormName, $request);
 
         // render and send
-        return new JsonResponse($formResponse);
+        return Mimoto::service('messages')->response($formResponse, 200);
     }
 
     public function validateFormField(Application $app, Request $request, $sFormName, $sFieldId, $nValidationId)

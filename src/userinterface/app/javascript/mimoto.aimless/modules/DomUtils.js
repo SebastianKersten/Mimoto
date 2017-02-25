@@ -121,7 +121,47 @@ module.exports.prototype = {
                 $($component).replaceWith(data);
             }
         });
-    }
+    },
     
+    callAPI: function(request)
+    {
+        $.ajax({
+            type: request.type,
+            url: request.url,
+            data: request.data,
+            dataType: request.dataType,
+            success: function (resultData, resultStatus, resultSomething)
+            {
+                console.error(resultData);
+                
+                // verify and validate
+                if (resultData.dataModifications && resultData.dataModifications instanceof Array)
+                {
+                    var nModificationCount = resultData.dataModifications.length;
+                    for (var nModificationIndex = 0; nModificationIndex < nModificationCount; nModificationIndex++)
+                    {
+                        // register
+                        var dataModification = resultData.dataModifications[nModificationIndex];
+                        
+                        switch(dataModification.type)
+                        {
+                            case 'data.created':
+    
+                                Mimoto.Aimless.dom.onDataCreated(dataModification.data, 'direct');
+                                break;
+                            
+                            case 'data.changed':
+    
+                                Mimoto.Aimless.dom.onDataChanged(dataModification.data, 'direct');
+                                break;
+                        }
+                    }
+                }
+                
+                // forward
+                request.success(resultData.response, resultStatus, resultSomething);
+            }
+        });
+    }
     
 }

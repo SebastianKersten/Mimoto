@@ -121,7 +121,7 @@ class SelectionController
         Mimoto::service('data')->delete($eSelection);
 
         // 3. send
-        return new JsonResponse((object) array('result' => 'Selection deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'Selection deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function selectionRuleNew(Application $app, $nSelectionId)
@@ -177,6 +177,6 @@ class SelectionController
         Mimoto::service('data')->delete($eSelectionRule);
 
         // 6. send
-        return new JsonResponse((object) array('result' => 'SelectionRule deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'SelectionRule deleted! '.date("Y.m.d H:i:s")), 200);
     }
 }

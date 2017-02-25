@@ -29608,7 +29608,7 @@
 	    
 	    selectionDelete: function(nSelectionId)
 	    {
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
 	            success: function(resultData, resultStatus, resultSomething) {
@@ -29629,7 +29629,7 @@
 	    
 	    selectionRuleDelete: function(nSelectionRuleId)
 	    {
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
 	            success: function(resultData, resultStatus, resultSomething) {
@@ -30341,8 +30341,9 @@
 	        // console.log('------');
 	        
 	        
+	        
 	        // 11. send data
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: form.sMethod,
 	            url: form.sAction,
 	            data: JSON.stringify(requestData),

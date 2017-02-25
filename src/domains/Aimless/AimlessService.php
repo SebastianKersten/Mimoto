@@ -342,7 +342,10 @@ class AimlessService
         
         // init
         $data = (object) array();
-        
+
+        // config
+        $data->messageID = Mimoto::service('messages')->getMessageUID();
+
         // setup
         $data->entityId = $nEntityId;
         $data->entityType = $sEntityType;
@@ -584,7 +587,12 @@ class AimlessService
         
         // 1. dit gaat via async, het is efficienter om de rest af te handelen via deze directe route (denk aan "modified")
         // 2. handel eerst alles rondom de nieuwe data af!
-        
+
+
+        // register
+        Mimoto::service('messages')->registerModification('data.changed', $data);
+
+
 
         if (!empty($data->changes)) { $this->sendPusherEvent('Aimless', 'data.changed', $data); }
         
@@ -609,11 +617,17 @@ class AimlessService
         
         // init
         $data = (object) array();
-        
+
+        // config
+        $data->messageID = Mimoto::service('messages')->getMessageUID();
+
         // setup
         $data->entityId = $nEntityId;
         $data->entityType = $sEntityType;
-        
+
+        // register
+        Mimoto::service('messages')->registerModification('data.created', $data);
+
         // send
         $this->sendPusherEvent('Aimless', 'data.created', $data);
     }

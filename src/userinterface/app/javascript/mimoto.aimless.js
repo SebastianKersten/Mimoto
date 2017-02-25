@@ -20,7 +20,8 @@ Mimoto.classes.DomUtils = require('./mimoto.aimless/modules/DomUtils');
 Mimoto.classes.DomRealtime = require('./mimoto.aimless/modules/DomRealtime');
 
 // setup
-Mimoto.Aimless = new MimotoAimless(new Mimoto.classes.DomService());
+Mimoto.Aimless = new MimotoAimless();
+Mimoto.Aimless.dom = new Mimoto.classes.DomService();
 Mimoto.Aimless.utils = new Mimoto.classes.DomUtils();
 Mimoto.Aimless.realtime = new Mimoto.classes.DomRealtime();
 

@@ -8,14 +8,17 @@
 
 
 module.exports = function() {
-
+    
+    
     // start
     this.__construct();
 };
 
 module.exports.prototype = {
-
-
+    
+    
+    _aParsedMessages: [],
+    
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -40,9 +43,13 @@ module.exports.prototype = {
     /**
      * Handle data CHANGED
      */
-    onDataChanged: function(data)
+    onDataChanged: function(data, sChannel)
     {
-        console.log('Aimless - data.changed');
+        // validate
+        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
+        
+        
+        console.log('Aimless - data.changed (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
         console.log(data);
         
         
@@ -61,22 +68,23 @@ module.exports.prototype = {
     /**
      * Handle data CREATED
      */
-    onDataCreated: function(data)
+    onDataCreated: function(data, sChannel)
     {
+        // validate
+        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
+        
+        
+        console.log('Aimless - data.created (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
+        console.log(data);
+        
+    
+    
         // setup
         var mls_container = data.entityType;
     
         // register
         var classRoot = module.exports.prototype;
     
-        console.log('Aimless - data.created');
-        console.log(data);
-        
-        
-        
-        //console.clear();
-    
-        
     
     
         // --- component level ---
@@ -1012,6 +1020,55 @@ module.exports.prototype = {
     
         // send
         return component;
+    },
+    
+    /**
+     * Validate if data modifications already have been locally handled parsed
+     * @param messageID
+     * @returns boolean
+     * @private
+     */
+    _validateMessage: function (aParsedMessages, message, sChannel)
+    {
+        // init
+        var bHasBeenParsed = false;
+        
+        // default
+        if (!sChannel) sChannel = 'webevent';
+        
+        if (!aParsedMessages[message.uid])
+        {
+            // register
+            message.channel = sChannel;
+            
+            // store
+            aParsedMessages[message.uid] = message;
+        }
+        else
+        {
+            if (aParsedMessages[message.uid].channel != sChannel)
+            {
+                bHasBeenParsed = true;
+            }
+        }
+    
+        // auto cleanup older messages
+        var nAgeInSeconds = 5 * 60; // set to 5 minutes
+        for (var sUID in aParsedMessages)
+        {
+            // register
+            var parsedMessage = aParsedMessages[sUID];
+            
+            // check and remove
+            if (parseInt(message.timestamp) - parseInt(parsedMessage.timestamp) > nAgeInSeconds)
+            {
+                delete aParsedMessages[parsedMessage.uid];
+            }
+        }
+        
+        // send
+        return bHasBeenParsed;
     }
+    
     
 }

@@ -12,6 +12,8 @@ use Mimoto\Cache\CacheServiceProvider;
 use Mimoto\Form\FormServiceProvider;
 use Mimoto\Log\LogServiceProvider;
 use Mimoto\User\UserServiceProvider;
+use Mimoto\Selection\SelectionServiceProvider;
+use Mimoto\Message\MessageServiceProvider;
 
 
 /**
@@ -49,6 +51,8 @@ class Mimoto
         $app->register(new FormServiceProvider());
         $app->register(new UserServiceProvider());
         $app->register(new ActionServiceProvider());
+        $app->register(new SelectionServiceProvider());
+        $app->register(new MessageServiceProvider());
 
 
 
