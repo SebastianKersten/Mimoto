@@ -95,46 +95,32 @@ module.exports.prototype = {
     /**
      * Init notification count
      */
-    initNotificationCount: function () {
-
-        // setup
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/mimoto.cms/notifications/count');
-
+    initNotificationCount: function ()
+    {
         // init
         var classRoot = this;
-
-        xhr.onreadystatechange = function ()
-        {
-            // init
-            var DONE = 4; // readyState 4 means the request is done.
-            var OK = 200; // status 200 is a successful return.
-
-            if (xhr.readyState === DONE)
-            {
-                if (xhr.status === OK)
+        
+        Mimoto.Aimless.utils.callAPI({
+            type: 'GET',
+            url: '/mimoto.cms/notifications/count',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                
+                // convert
+                var data = resultData;
+    
+                if (parseInt(data.count) > 0)
                 {
-                    // convert
-                    var data = JSON.parse(this.responseText);
-
-                    if (parseInt(data.count) > 0)
-                    {
-                        // update counter
-                        classRoot.notificationCount.innerText = data.count;
-                        classRoot.notificationCount.classList.remove('hidden');
-
-                        // add notifications
-                        classRoot.el.querySelector('.js-messages').innerHTML = data.notifications;
-                    }
-                }
-                else
-                {
-                    console.log('Error: ' + xhr.status); // An error occurred during the request.
+                    // update counter
+                    classRoot.notificationCount.innerText = data.count;
+                    classRoot.notificationCount.classList.remove('hidden');
+        
+                    // add notifications
+                    classRoot.el.querySelector('.js-messages').innerHTML = data.notifications;
                 }
             }
-        };
-
-        xhr.send(null);
+        });
     },
     
     /**
@@ -142,43 +128,43 @@ module.exports.prototype = {
      */
     initConversationCount: function () {
         
-        // setup
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/mimoto.cms/conversations/count');
-        
-        // init
-        var classRoot = this;
-
-        xhr.onreadystatechange = function () {
-            // init
-            var DONE = 4; // readyState 4 means the request is done.
-            var OK = 200; // status 200 is a successful return.
-            
-            if (xhr.readyState === DONE)
-            {
-                if (xhr.status === OK)
-                {
-                    // convert
-                    var data = JSON.parse(this.responseText);
-                    
-                    if (parseInt(data.count) > 0)
-                    {
-                        // update counter
-                        classRoot.conversationCount.innerText = data.count;
-                        classRoot.conversationCount.classList.remove('hidden');
-                        
-                        // add notifications
-                        classRoot.el.querySelector('.js-messages').innerHTML = data.conversations;
-                    }
-                }
-                else
-                {
-                    console.log('Error: ' + xhr.status); // An error occurred during the request.
-                }
-            }
-        };
-        
-        xhr.send(null);
+        // // setup
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('GET', '/mimoto.cms/conversations/count');
+        //
+        // // init
+        // var classRoot = this;
+        //
+        // xhr.onreadystatechange = function () {
+        //     // init
+        //     var DONE = 4; // readyState 4 means the request is done.
+        //     var OK = 200; // status 200 is a successful return.
+        //
+        //     if (xhr.readyState === DONE)
+        //     {
+        //         if (xhr.status === OK)
+        //         {
+        //             // convert
+        //             var data = JSON.parse(this.responseText);
+        //
+        //             if (parseInt(data.count) > 0)
+        //             {
+        //                 // update counter
+        //                 classRoot.conversationCount.innerText = data.count;
+        //                 classRoot.conversationCount.classList.remove('hidden');
+        //
+        //                 // add notifications
+        //                 classRoot.el.querySelector('.js-messages').innerHTML = data.conversations;
+        //             }
+        //         }
+        //         else
+        //         {
+        //             console.log('Error: ' + xhr.status); // An error occurred during the request.
+        //         }
+        //     }
+        // };
+        //
+        // xhr.send(null);
     },
 
     /**

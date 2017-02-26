@@ -4,8 +4,8 @@
 
 {% block content %}
 
-    <div class="MimotoCMS_pages_notifications_NotificationOverview__container" {{ Aimless.realtime('notifications.{state="open"}') }}>
-        {{ Aimless.selection('notifications') }}
+    <div class="MimotoCMS_pages_notifications_NotificationOverview__container" {{ Aimless.realtime('notifications.{state="open"}', 'Mimoto.CMS_notifications_Notification') }}>
+        {{ Aimless.render('notifications.{state="open"}', 'Mimoto.CMS_notifications_Notification') }}
     </div>
 
 {% endblock %}

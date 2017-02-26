@@ -6,12 +6,16 @@
 {{
     Aimless.module('Mimoto.CMS.ListItemModule',
     {
+        realtime: Aimless.realtime(),
         label: Aimless.data('name'),
         label_realtime: Aimless.realtime('name'),
         sublabel: 'type='~Aimless.data('type')~', form='~sFormInfo,
         sublabel_realtime:  Aimless.realtime('type'),
         button_label: 'View',
         button_action: 'Mimoto.CMS.contentSectionView('~Aimless.meta('id')~');',
-        button_type: 'secondary'
+        button_type: 'secondary',
+        button2_label: 'Delete',
+        button2_action: 'Mimoto.CMS.contentSectionDelete('~Aimless.meta('id')~', \''~Aimless.data('name')~'\');',
+        button2_type: 'alert'
     })
 }}

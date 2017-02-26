@@ -23,11 +23,22 @@ class ContentController
 
     public function contentEdit(Application $app, $nContentId)
     {
+        // 1. createPage (extends AimlessComponent, maar met eigen template, zo ook createPopup, krijgt pageInfo)
+        // 2. addComponent (zoals addForm)
+
+
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
+
+        // 4. create
+        $page = Mimoto::service('aimless')->createPage('Mimoto.CMS_form_Page', $eRoot);
+
+
+
         // 1. load content section
         $contentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
 
         // 2. check if contentSection exists
-        if ($contentSectionEntity === false) return $app->redirect("/mimoto.cms/contentsections");
+        if ($contentSectionEntity === false) return $app->redirect("/mimoto.cms");
 
         // 3. read properties
         $sName = $contentSectionEntity->getValue('name');
@@ -43,10 +54,13 @@ class ContentController
                 $contentItem = $contentSectionEntity->getValue('contentItem');
 
                 // 4b. create page containing a form
-                $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
+                $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
 
                 // 4c. setup form
-                $page->addForm($sFormName, $contentItem, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItem']);
+                $component->addForm($sFormName, $contentItem, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItem']);
+
+                // connect
+                $page->addComponent('content', $component);
 
                 break;
 
@@ -62,9 +76,6 @@ class ContentController
                 // 4e. report
                 Mimoto::service('log')->warn("ContentSection with invalid type", "A content section id=`$nContentId` requested for edit has an unknown type of value `$sType`");
         }
-
-        // 5. add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
 
         // 6. setup page
         $page->setVar('nContentSectionId', $nContentId);

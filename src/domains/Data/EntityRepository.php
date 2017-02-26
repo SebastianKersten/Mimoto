@@ -82,12 +82,22 @@ class EntityRepository
 
             // TEMP - ease and quick fix
 
-            // create
-            $entity = $this->createEntity($entityConfig);
 
-            // setup
-            $entity->setId($nEntityId);
-            $entity->setValue('name', $entityConfig->getName());
+
+            // prepare
+            $entityData = array(
+                'id' => $nEntityId,
+                'created' => CoreConfig::EPOCH
+            );
+
+            // create
+            $entity = $this->createEntity($entityConfig, $entityData);
+
+            if ($entity->hasProperty('name')) $entity->setValue('name', $nEntityId);
+
+
+            //$entity->setValue('name', $entityConfig->getName()); // note: niet op alles van toepassing, dus niet te gebruiken
+            // verplaats maar naar function getData() in de entity config
 
             // send
             return $entity;

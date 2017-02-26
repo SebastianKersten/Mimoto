@@ -4,6 +4,7 @@
 namespace Mimoto\Log;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
 
@@ -15,10 +16,6 @@ use Mimoto\Core\CoreConfig;
 class LogService
 {
 
-    // services
-    private $_EntityService;
-
-
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -27,10 +24,9 @@ class LogService
     /**
      * Constructor
      */
-    public function __construct($EntityService)
+    public function __construct()
     {
-        // register
-        $this->_EntityService = $EntityService;
+
     }
 
 
@@ -89,21 +85,30 @@ class LogService
     private function createNotification($sTitle, $sMessage, $debugBacktrace, $sCategory)
     {
         // create
-        $notification = $this->_EntityService->create(CoreConfig::MIMOTO_NOTIFICATION);
+        $eNotification = Mimoto::service('data')->create(CoreConfig::MIMOTO_NOTIFICATION);
 
         // prepare
         $sDispatcher = $debugBacktrace['class'].'::'.$debugBacktrace['function'];
         if (isset($debugBacktrace['line'])) { $sDispatcher .= ' (called from line #'.$debugBacktrace['line'].')'; }
 
         // setup
-        $notification->setValue('title', $sTitle);
-        $notification->setValue('message', $sMessage);
-        $notification->setValue('dispatcher', $sDispatcher);
-        $notification->setValue('category', $sCategory);
-        $notification->setValue('state', 'open');
+        $eNotification->setValue('title', $sTitle);
+        $eNotification->setValue('message', $sMessage);
+        $eNotification->setValue('dispatcher', $sDispatcher);
+        $eNotification->setValue('category', $sCategory);
+        $eNotification->setValue('state', 'open');
 
         // store
-        $this->_EntityService->store($notification);
+        Mimoto::service('data')->store($eNotification);
+
+        // get
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
+
+        // connect
+        $eRoot->addValue('notifications', $eNotification);
+
+        // store
+        Mimoto::service('data')->store($eRoot);
     }
 
 }

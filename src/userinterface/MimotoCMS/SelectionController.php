@@ -27,13 +27,10 @@ class SelectionController
     public function viewSelectionOverview(Application $app)
     {
         // load
-        $aSelections = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_SELECTION]);
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT);
 
         // create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_selections_SelectionOverview');
-
-        // setup
-        $page->addSelection('selections', $aSelections, 'Mimoto.CMS_selections_SelectionOverview_ListItem');
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_selections_SelectionOverview', $eRoot);
 
         // add content menu
         $page = InterfaceUtils::addMenuToComponent($page);

@@ -25,13 +25,10 @@ class NotificationsController
     public function viewNotificationCenter(Application $app)
     {
         // load
-        $aNotifications = Mimoto::service('data')->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
 
         // create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_notifications_NotificationOverview');
-        
-        // setup
-        $page->addSelection('notifications', $aNotifications, 'Mimoto.CMS_notifications_Notification');
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_notifications_NotificationOverview', $eRoot);
 
         // add content menu
         $page = InterfaceUtils::addMenuToComponent($page);
@@ -64,7 +61,7 @@ class NotificationsController
         Mimoto::service('data')->store($notification);
 
         // send
-        return new Response('Notification closed');
+        return Mimoto::service('messages')->response('Notification closed');
     }
 
     public function getNotificationCount(Application $app)
@@ -79,7 +76,7 @@ class NotificationsController
         $component->addSelection('notifications', $aNotifications, 'Mimoto.CMS_notifications_NotificationSmall');
 
         // render and send
-        return new JsonResponse((object) array(
+        return Mimoto::service('messages')->response((object) array(
             'count' => count($aNotifications),
             'notifications' => $component->render()
         ));

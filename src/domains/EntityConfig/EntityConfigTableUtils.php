@@ -35,6 +35,7 @@ class EntityConfigTableUtils
 
     public static function tableNameIsUnique($sEntityName)
     {
+        output('tableNameIsUnique?', "SHOW TABLES LIKE `".$sEntityName."`");
         $stmt = Mimoto::service('database')->prepare("SHOW TABLES LIKE `".$sEntityName."`");
         $params = array();
         if ($stmt->execute($params) === false) error("Error while checking for duplicate entity table '$sEntityName'");

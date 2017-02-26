@@ -60,8 +60,20 @@ class AimlessService
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
+    /**
+     * Create page
+     * @param string $sComponentName The name of the registered template
+     * @param MimotoEntity $entity The data to be combined with the template
+     * @return AimlessComponent
+     */
+    public function createPage($sComponentName, $entity = null, $connection = null)
+    {
+        // init and send
+        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+    }
+
     /**
      * Create component
      * @param string $sComponentName The name of the registered template
@@ -78,7 +90,7 @@ class AimlessService
      * Create component wrapper
      * @param string $sComponentName The name of the registered template
      * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessComponentWrapper
+     * @return AimlessComponent
      */
     public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null)
     {

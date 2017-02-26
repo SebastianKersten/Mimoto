@@ -68,13 +68,14 @@ module.exports.prototype = {
 
     entityUpdate: function(nEntityId, data)
     {
-        $.ajax({
+        Mimoto.Aimless.utils.callAPI({
             type: 'POST',
             url: "/mimoto.cms/entity/" + nEntityId + "/update",
             data: data,
-            dataType: 'json'
-        }).done(function(data) {
-            Mimoto.popup.close();
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                Mimoto.popup.close();
+            }
         });
     },
 
@@ -82,13 +83,15 @@ module.exports.prototype = {
     {
         var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
         if (response == true) {
-            $.ajax({
+    
+            Mimoto.Aimless.utils.callAPI({
                 type: 'GET',
                 url: "/mimoto.cms/entity/" + nEntityId + "/delete",
                 //data: data,
-                dataType: 'json'
-            }).done(function(data) {
-                window.open('/mimoto.cms/entities', '_self');
+                dataType: 'json',
+                success: function(resultData, resultStatus, resultSomething) {
+                    window.open('/mimoto.cms/entities', '_self');
+                }
             });
         }
     },
@@ -100,13 +103,14 @@ module.exports.prototype = {
 
     entityPropertyCreate: function(nEntityId, data)
     {
-        $.ajax({
+        Mimoto.Aimless.utils.callAPI({
             type: 'POST',
             url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
             data: data,
-            dataType: 'json'
-        }).done(function(data) {
-            Mimoto.popup.close();
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                Mimoto.popup.close();
+            }
         });
     },
 
@@ -257,15 +261,18 @@ module.exports.prototype = {
     {
         Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
     },
-    contentSectionDelete: function(nContentSectionId)
+    contentSectionDelete: function(nContentSectionId, sContentSectionName)
     {
-        Mimoto.Aimless.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
+        var response = confirm("Are you sure you want to delete the content section called '" + sContentSectionName + "'?\n\nALL RELATED DATA WILL BE LOST!!\n\n(Don't say I didn't warn you!)");
+        if (response == true) {
+            Mimoto.Aimless.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
     },
     
     

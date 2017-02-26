@@ -654,10 +654,13 @@ class ExampleController
         //output('$eSelection id='.$nSelectionId, $eSelection);
 
 
-        $aEntities = Mimoto::service('data')->select('test');
+        //$aEntities = Mimoto::service('data')->select('test');
+
+
+        Mimoto::service('log')->silent('Yep!', date('Y.m.d H:i:s'));
 
         // send
-        return '<hr>Mimoto done ..';
+        return Mimoto::service('messages')->response('<hr>Mimoto done ..');
     }
 
     public function viewMessageExample(Application $app)
@@ -672,7 +675,7 @@ class ExampleController
         Mimoto::service('data')->store($ePerson);
 
         // send
-        return Mimoto::service('messages')->response('Ja!');
+        return Mimoto::service('messages')->response('<hr>Mimoto done ..');
     }
 
 }

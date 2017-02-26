@@ -5,7 +5,6 @@ namespace Mimoto\Log;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\Log\LogService;
 
 // Silex classes
 use Silex\Application;
@@ -24,7 +23,7 @@ class LogServiceProvider implements ServiceProviderInterface
     {
         $app['Mimoto.LogService'] = $app->share(function($app)
         {
-            return new LogService($app['Mimoto.Data']);
+            return new LogService();
         });
     }
 

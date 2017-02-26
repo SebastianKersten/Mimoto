@@ -29183,46 +29183,32 @@
 	    /**
 	     * Init notification count
 	     */
-	    initNotificationCount: function () {
-	
-	        // setup
-	        var xhr = new XMLHttpRequest();
-	        xhr.open('GET', '/mimoto.cms/notifications/count');
-	
+	    initNotificationCount: function ()
+	    {
 	        // init
 	        var classRoot = this;
-	
-	        xhr.onreadystatechange = function ()
-	        {
-	            // init
-	            var DONE = 4; // readyState 4 means the request is done.
-	            var OK = 200; // status 200 is a successful return.
-	
-	            if (xhr.readyState === DONE)
-	            {
-	                if (xhr.status === OK)
+	        
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'GET',
+	            url: '/mimoto.cms/notifications/count',
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                
+	                // convert
+	                var data = resultData;
+	    
+	                if (parseInt(data.count) > 0)
 	                {
-	                    // convert
-	                    var data = JSON.parse(this.responseText);
-	
-	                    if (parseInt(data.count) > 0)
-	                    {
-	                        // update counter
-	                        classRoot.notificationCount.innerText = data.count;
-	                        classRoot.notificationCount.classList.remove('hidden');
-	
-	                        // add notifications
-	                        classRoot.el.querySelector('.js-messages').innerHTML = data.notifications;
-	                    }
-	                }
-	                else
-	                {
-	                    console.log('Error: ' + xhr.status); // An error occurred during the request.
+	                    // update counter
+	                    classRoot.notificationCount.innerText = data.count;
+	                    classRoot.notificationCount.classList.remove('hidden');
+	        
+	                    // add notifications
+	                    classRoot.el.querySelector('.js-messages').innerHTML = data.notifications;
 	                }
 	            }
-	        };
-	
-	        xhr.send(null);
+	        });
 	    },
 	    
 	    /**
@@ -29230,43 +29216,43 @@
 	     */
 	    initConversationCount: function () {
 	        
-	        // setup
-	        var xhr = new XMLHttpRequest();
-	        xhr.open('GET', '/mimoto.cms/conversations/count');
-	        
-	        // init
-	        var classRoot = this;
-	
-	        xhr.onreadystatechange = function () {
-	            // init
-	            var DONE = 4; // readyState 4 means the request is done.
-	            var OK = 200; // status 200 is a successful return.
-	            
-	            if (xhr.readyState === DONE)
-	            {
-	                if (xhr.status === OK)
-	                {
-	                    // convert
-	                    var data = JSON.parse(this.responseText);
-	                    
-	                    if (parseInt(data.count) > 0)
-	                    {
-	                        // update counter
-	                        classRoot.conversationCount.innerText = data.count;
-	                        classRoot.conversationCount.classList.remove('hidden');
-	                        
-	                        // add notifications
-	                        classRoot.el.querySelector('.js-messages').innerHTML = data.conversations;
-	                    }
-	                }
-	                else
-	                {
-	                    console.log('Error: ' + xhr.status); // An error occurred during the request.
-	                }
-	            }
-	        };
-	        
-	        xhr.send(null);
+	        // // setup
+	        // var xhr = new XMLHttpRequest();
+	        // xhr.open('GET', '/mimoto.cms/conversations/count');
+	        //
+	        // // init
+	        // var classRoot = this;
+	        //
+	        // xhr.onreadystatechange = function () {
+	        //     // init
+	        //     var DONE = 4; // readyState 4 means the request is done.
+	        //     var OK = 200; // status 200 is a successful return.
+	        //
+	        //     if (xhr.readyState === DONE)
+	        //     {
+	        //         if (xhr.status === OK)
+	        //         {
+	        //             // convert
+	        //             var data = JSON.parse(this.responseText);
+	        //
+	        //             if (parseInt(data.count) > 0)
+	        //             {
+	        //                 // update counter
+	        //                 classRoot.conversationCount.innerText = data.count;
+	        //                 classRoot.conversationCount.classList.remove('hidden');
+	        //
+	        //                 // add notifications
+	        //                 classRoot.el.querySelector('.js-messages').innerHTML = data.conversations;
+	        //             }
+	        //         }
+	        //         else
+	        //         {
+	        //             console.log('Error: ' + xhr.status); // An error occurred during the request.
+	        //         }
+	        //     }
+	        // };
+	        //
+	        // xhr.send(null);
 	    },
 	
 	    /**
@@ -29467,13 +29453,14 @@
 	
 	    entityUpdate: function(nEntityId, data)
 	    {
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'POST',
 	            url: "/mimoto.cms/entity/" + nEntityId + "/update",
 	            data: data,
-	            dataType: 'json'
-	        }).done(function(data) {
-	            Mimoto.popup.close();
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                Mimoto.popup.close();
+	            }
 	        });
 	    },
 	
@@ -29481,13 +29468,15 @@
 	    {
 	        var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
 	        if (response == true) {
-	            $.ajax({
+	    
+	            Mimoto.Aimless.utils.callAPI({
 	                type: 'GET',
 	                url: "/mimoto.cms/entity/" + nEntityId + "/delete",
 	                //data: data,
-	                dataType: 'json'
-	            }).done(function(data) {
-	                window.open('/mimoto.cms/entities', '_self');
+	                dataType: 'json',
+	                success: function(resultData, resultStatus, resultSomething) {
+	                    window.open('/mimoto.cms/entities', '_self');
+	                }
 	            });
 	        }
 	    },
@@ -29499,13 +29488,14 @@
 	
 	    entityPropertyCreate: function(nEntityId, data)
 	    {
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'POST',
 	            url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
 	            data: data,
-	            dataType: 'json'
-	        }).done(function(data) {
-	            Mimoto.popup.close();
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                Mimoto.popup.close();
+	            }
 	        });
 	    },
 	
@@ -29656,15 +29646,18 @@
 	    {
 	        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
 	    },
-	    contentSectionDelete: function(nContentSectionId)
+	    contentSectionDelete: function(nContentSectionId, sContentSectionName)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
+	        var response = confirm("Are you sure you want to delete the content section called '" + sContentSectionName + "'?\n\nALL RELATED DATA WILL BE LOST!!\n\n(Don't say I didn't warn you!)");
+	        if (response == true) {
+	            Mimoto.Aimless.utils.callAPI({
+	                type: 'get',
+	                url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
 	    },
 	    
 	    

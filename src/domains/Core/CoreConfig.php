@@ -4,6 +4,7 @@
 namespace Mimoto\Core;
 
 // Mimoto classes
+use Mimoto\Core\entities\Root;
 use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
@@ -54,6 +55,9 @@ class CoreConfig
     const WILDCARD                              = '*';
     const ENTITY_NEW                            = 'TheCakeIsALie';
 
+    // root
+    const MIMOTO_ROOT                           = '_Mimoto_root';
+
     // core
     const MIMOTO_ENTITY                         = '_Mimoto_entity';
     const MIMOTO_ENTITYPROPERTY                 = '_Mimoto_entityproperty';
@@ -71,6 +75,7 @@ class CoreConfig
     // functionality
     const MIMOTO_ACTION                         = '_Mimoto_action';
     const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';
+    const MIMOTO_USER                           = '_Mimoto_user';
 
     // search
     const MIMOTO_SELECTION                      = '_Mimoto_selection';
@@ -191,6 +196,9 @@ class CoreConfig
 
         // setup
         $aEntities = [
+
+            // root
+            Root::getStructure(),
 
             // core
             Entity::getStructure(),
@@ -377,7 +385,11 @@ class CoreConfig
                         'options',
                         'validation',
 
-                        'rules'
+                        'rules',
+                        'notifications',
+                        'entities',
+                        'users',
+                        'contentSections'
                     )
                 ),
                 'notes' => array(

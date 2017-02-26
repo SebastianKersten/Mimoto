@@ -23,16 +23,10 @@ class ContentSectionController
     public function viewContentSectionOverview(Application $app)
     {
         // load
-        $aContentSections = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_CONTENTSECTION]);
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
 
         // create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_contentsections_ContentSectionOverview');
-
-        // setup
-        $page->addSelection('contentSections', $aContentSections, 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem');
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_contentsections_ContentSectionOverview', $eRoot);
 
         // setup page
         $page->setVar('pageTitle', array(
@@ -56,7 +50,14 @@ class ContentSectionController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
 
         // 2. setup
-        $component->addForm(CoreConfig::COREFORM_CONTENTSECTION, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $component->addForm(
+            CoreConfig::COREFORM_CONTENTSECTION,
+            $entity,
+            [
+                'onCreatedConnectTo' => CoreConfig::MIMOTO_ROOT.'.'.CoreConfig::MIMOTO_ROOT.'.contentSections',
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
 
         // 3. render and send
         return $component->render();
@@ -65,61 +66,67 @@ class ContentSectionController
     public function contentSectionView(Application $app, $nContentSectionId)
     {
         // 1. load
-        $contentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
+        $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
 
         // 2. validate
-        if ($contentSection === false) return $app->redirect("/mimoto.cms/contentsections");
+        if ($eContentSection === false) return $app->redirect("/mimoto.cms/contentsections");
 
-        // 3. create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page');
+        // 3. load
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
 
-        // 4. setup
-        $page->addForm(CoreConfig::COREFORM_CONTENTSECTION, $contentSection, ['response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/contentsections']]]);
+        // 4. create
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page', $eRoot);
 
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
+        // 5. setup
+        $page->addForm(CoreConfig::COREFORM_CONTENTSECTION, $eContentSection, ['response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/contentsections']]]);
 
-        // setup page
+        // 6. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => 'Data',
                     "url" => '/mimoto.cms/contentsections'
                 ),
                 (object) array(
-                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_CONTENTSECTION.'.'.$contentSection->getId().'.name">'.$contentSection->getValue('name').'</span>"',
-                    "url" => '/mimoto.cms/contentsection/'.$contentSection->getId().'/view'
+                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_CONTENTSECTION.'.'.$eContentSection->getId().'.name">'.$eContentSection->getValue('name').'</span>"',
+                    "url" => '/mimoto.cms/contentsection/'.$eContentSection->getId().'/view'
                 )
             )
         );
 
-        // 5. output
+        // 7. output
         return $page->render();
     }
 
     public function contentSectionEdit(Application $app, $nContentSectionId)
     {
         // 1. load
-        $contentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
+        $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
 
         // 2. validate
-        if ($contentSection === false) return $app->redirect("/mimoto.cms/contentsections");
+        if ($eContentSection === false) return $app->redirect("/mimoto.cms/contentsections");
 
-        // 3. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 3. load
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
+
+        // 4. create
+        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Page', $eRoot);
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_CONTENTSECTION, $contentSection, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $page->addForm(CoreConfig::COREFORM_CONTENTSECTION, $eContentSection, ['response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/contentsections']]]);
 
         // 5. render and send
-        return $component->render();
+        return $page->render();
     }
 
     public function contentSectionDelete(Application $app, $nContentSectionId)
     {
-        // delete
-        //Mimoto::service('config')->entityDelete($nContentSectionId);
+        // 1. load
+        $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
 
-        // send
+        // 2. selete
+        Mimoto::service('data')->delete($eContentSection);
+
+        // 3. send
         return Mimoto::service('messages')->response((object) array('result' => 'Content section deleted! '.date("Y.m.d H:i:s")), 200);
     }
 }
