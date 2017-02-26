@@ -97,6 +97,22 @@ class Component
         $aCoreComponents = [
 
             // interface
+            (object) array(
+                'name' => 'MimotoCMS_layout_Page',
+                'file' => 'MimotoCMS/components/base_page.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_layout_Popup',
+                'file' => 'MimotoCMS/components/base_popup.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_layout_Form',
+                'file' => 'MimotoCMS/components/forms/Form.twig',
+                'conditionals' => []
+            ),
+
 
             (object) array(
                 'name' => 'MimotoCMS_interface_Menu_MenuButton',
@@ -281,15 +297,17 @@ class Component
 
             // forms - page and popup
 
-            (object) array(
-                'name' => 'Mimoto.CMS_form_Popup',
-                'file' => 'MimotoCMS/components/forms/FormPopup.twig',
-                'conditionals' => []
-            ),(object) array(
-                'name' => 'Mimoto.CMS_form_Page',
-                'file' => 'MimotoCMS/components/forms/FormPage.twig',
-                'conditionals' => []
-            ),
+
+//            (object) array(
+//                'name' => 'Mimoto.CMS_form_Popup',
+//                'file' => 'MimotoCMS/components/forms/FormPopup.twig',
+//                'conditionals' => []
+//            ),
+//            (object) array(
+//                'name' => 'Mimoto.CMS_form_Page',
+//                'file' => 'MimotoCMS/components/forms/FormPage.twig',
+//                'conditionals' => []
+//            ),
 
 
 

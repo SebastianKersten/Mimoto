@@ -5,7 +5,6 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\EntityConfig;
@@ -36,9 +35,6 @@ class EntityController
 
         // setup
         $page->addSelection('entities', $aEntities, 'Mimoto.CMS_entities_EntityOverview_ListItem');
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
         
         // setup page
         $page->setVar('pageTitle', array(
@@ -85,9 +81,6 @@ class EntityController
 
         //error($page);
         $page->addSelection('menuContentSections', []);
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
 
 
         // todo - insert as simple values, add realtime support later

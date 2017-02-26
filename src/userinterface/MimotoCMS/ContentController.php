@@ -6,7 +6,6 @@ namespace Mimoto\UserInterface\MimotoCMS;
 // Mimoto classes
 use Mimoto\Core\entities\ContentSection;
 use Mimoto\Mimoto;
-use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 
 // Silex classes
@@ -112,9 +111,6 @@ class ContentController
         $page->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems', 'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]]);
         //$page->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems']);
 
-        // 5. add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
-
         // 6. setup page
         $page->setVar('nContentSectionId', $nContentId);
         $page->setVar('pageTitle', array(
@@ -155,9 +151,6 @@ class ContentController
         // 4c. setup form
         $page->addForm($sFormName, $entity, ['response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]]);
         //$page->addForm($sFormName, $entity);
-
-        // 5. add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
 
         // 6. setup page
         $page->setVar('nContentSectionId', $nContentId);

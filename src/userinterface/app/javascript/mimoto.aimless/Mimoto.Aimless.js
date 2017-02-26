@@ -47,7 +47,7 @@ module.exports.prototype = {
                 }
             };
         }
-        return;
+        
         // connect
         Mimoto.Aimless.pusher = new Pusher('19c5b7fbb5340fe48402', {
             cluster: 'eu',

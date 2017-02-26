@@ -1,11 +1,5 @@
-{% extends "MimotoCMS/components/base.twig" %}
+{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new content section', icon:'plus', onclick:"Mimoto.CMS.contentSectionNew();" }) }}
 
-{% block content %}
-
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new content section', icon:'plus', onclick:"Mimoto.CMS.contentSectionNew();" }) }}
-
-    <div class="MimotoCMS_pages_contentsections_ContentSectionOverview__container" {{ Aimless.realtime('contentSections', 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem') }}>
-        {{ Aimless.render('contentSections', 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem') }}
-    </div>
-
-{% endblock %}
+<div class="MimotoCMS_pages_contentsections_ContentSectionOverview__container" {{ Aimless.realtime('contentSections', 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem') }}>
+    {{ Aimless.render('contentSections', 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem') }}
+</div>

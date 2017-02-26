@@ -38,6 +38,7 @@ class AimlessComponent
     protected $_aVars = [];
     protected $_aSelections = [];
     protected $_aFormConfigs = [];
+    protected $_aRegisteredComponents = [];
     protected $_aPropertyComponents = [];
     protected $_aPropertyFormatters = [];
     protected $_mapping;
@@ -156,7 +157,14 @@ class AimlessComponent
         );
     }
 
-
+    public function addComponent($sComponentAlias, AimlessComponent $component, $options = null)
+    {
+        // store
+        $this->_aRegisteredComponents[$sComponentAlias] = (object) array(
+            'component' => $component,
+            'options' => $options
+        );
+    }
 
 
     public function markComponentAsConnectedItem($nConnectionId, $nSortIndex)
@@ -587,6 +595,26 @@ class AimlessComponent
     public function wrap($sComponentName)
     {
         return $this->renderComponent($sComponentName);
+    }
+
+    public function component($sComponentAlias)
+    {
+        // validate
+        if (!isset($this->_aRegisteredComponents[$sComponentAlias]))
+        {
+            // notify
+            Mimoto::service('log')->silent('Page unable to render component', "A The component with alias '".$sComponentAlias."' on a page I'm trying to render seems to be undefined.");
+
+            // send (continue by skipping this component)
+            return '';
+        }
+
+        // register
+        $component = $this->_aRegisteredComponents[$sComponentAlias]->component;
+        $options = $this->_aRegisteredComponents[$sComponentAlias]->options;
+
+        // send
+        return $component->render($options);
     }
 
     private function renderComponent($sComponentName, $customValues = null)

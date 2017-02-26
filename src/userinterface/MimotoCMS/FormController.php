@@ -7,7 +7,6 @@ namespace Mimoto\UserInterface\MimotoCMS;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoDataUtils;
-use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -58,9 +57,6 @@ class FormController
 
         // 3. create component
         $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail', $form);
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
 
         // setup page
         $page->setVar('pageTitle', array(
@@ -201,10 +197,6 @@ class FormController
 
         // 5. setup
         $page->addForm($sFormName, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
-
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
 
         // setup page
         $page->setVar('pageTitle', array(

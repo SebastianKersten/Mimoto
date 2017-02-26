@@ -5,7 +5,6 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Mimoto;
-use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 use Mimoto\Core\CoreConfig;
 
 // Silex classes
@@ -24,16 +23,13 @@ class NotificationsController
     
     public function viewNotificationCenter(Application $app)
     {
-        // load
-        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
+        // 1. init page
+        $page = Mimoto::service('aimless')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
-        // create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_notifications_NotificationOverview', $eRoot);
+        // 2. create and connect content
+        $page->addComponent('content', Mimoto::service('aimless')->createComponent('Mimoto.CMS_notifications_NotificationOverview', $eRoot));
 
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
-
-        // setup page
+        // 3. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => 'Notification Center',
@@ -42,7 +38,7 @@ class NotificationsController
             )
         );
 
-        // render and send
+        // 5. output
         return $page->render();
     }
 

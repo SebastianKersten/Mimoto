@@ -389,7 +389,8 @@ class CoreConfig
                         'notifications',
                         'entities',
                         'users',
-                        'contentSections'
+                        'contentSections',
+                        'selections'
                     )
                 ),
                 'notes' => array(

@@ -1,6 +1,6 @@
-<div data-mimoto-component="MimotoCMS_pages_notifications_Notification" class="MimotoCMS_pages_notifications_Notification">
+<div class="MimotoCMS_pages_notifications_Notification" {{ Aimless.realtime() }}>
     <a name="notification_{{ Aimless.meta('id') }}"></a>
-    <div class="notification notification--{{ Aimless.data('category') }}" {{ Aimless.realtime() }}>
+    <div class="notification notification--{{ Aimless.data('category') }}">
 
         <div class="notification-content">
             <p class="notification-title" {{ Aimless.realtime('title') }}>{{ Aimless.data('title') }}</p>

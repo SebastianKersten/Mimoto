@@ -6,7 +6,6 @@ namespace Mimoto\UserInterface\MimotoCMS;
 // Silex classes
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
-use Mimoto\UserInterface\MimotoCMS\utils\InterfaceUtils;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
@@ -63,9 +62,6 @@ class ComponentController
 
         // 4. setup component
         //$page->setPropertyComponent('properties', 'Mimoto.CMS_components_ComponentDetail-ComponentConditional');
-
-        // add content menu
-        $page = InterfaceUtils::addMenuToComponent($page);
 
         // 5. setup page
         $page->setVar('pageTitle', array(

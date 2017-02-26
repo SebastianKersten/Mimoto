@@ -175,13 +175,21 @@ class Mimoto
         {
             return self::$_aServices[$sServiceName];
         }
+        else
+        {
+            return null;
+        }
     }
 
-    public static function value($sServiceName)
+    public static function value($sKey)
     {
-        if (isset(self::$_aValues[$sServiceName]))
+        if (isset(self::$_aValues[$sKey]))
         {
-            return self::$_aValues[$sServiceName];
+            return self::$_aValues[$sKey];
+        }
+        else
+        {
+            return null;
         }
     }
 
@@ -192,10 +200,10 @@ class Mimoto
         self::$_aServices[$sServiceName] = $service;
     }
 
-    public static function setValue($sValueName, $value)
+    public static function setValue($sKey, $value)
     {
         // store
-        self::$_aValues[$sValueName] = $value;
+        self::$_aValues[$sKey] = $value;
     }
 
     public function runInDebugMode()

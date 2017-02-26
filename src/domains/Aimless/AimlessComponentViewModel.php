@@ -71,6 +71,11 @@ class AimlessComponentViewModel
         return $this->_component->selection($sSelectionName);
     }
 
+    public function component($sComponentAlias)
+    {
+        return $this->_component->component($sComponentAlias);
+    }
+
     public function meta($sPropertyName)
     {
         return $this->_component->meta($sPropertyName);

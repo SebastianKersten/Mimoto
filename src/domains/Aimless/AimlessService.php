@@ -68,10 +68,50 @@ class AimlessService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessComponent
      */
-    public function createPage($sComponentName, $entity = null, $connection = null)
+    public function createPage($param1 = null, $param2 = null)
     {
+        // default
+        $sComponentName = Mimoto::value('page.layout.default');
+        $entity = null;
+
+        //
+        if (!empty($param1) && $param1 instanceof MimotoEntity) $entity = $param1;
+        if (!empty($param2) && $param2 instanceof MimotoEntity) $entity = $param2;
+
+        if (!empty($param1) && is_string($param1)) $sComponentName = $param1;
+        if (!empty($param2) && is_string($param2)) $sComponentName = $param2;
+
+        // verify
+        if (empty($sComponentName)) error("Please read the Mimoto::service('aimless')->createPage() documentation [link]");
+
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, null, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+    }
+
+    /**
+     * Create popup
+     * @param string $sComponentName The name of the registered template
+     * @param MimotoEntity $entity The data to be combined with the template
+     * @return AimlessComponent
+     */
+    public function createPopup($param1 = null, $param2 = null)
+    {
+        // default
+        $sComponentName = Mimoto::value('popup.layout.default');
+        $entity = null;
+
+        //
+        if (!empty($param1) && $param1 instanceof MimotoEntity) $entity = $param1;
+        if (!empty($param2) && $param2 instanceof MimotoEntity) $entity = $param2;
+
+        if (!empty($param1) && is_string($param1)) $sComponentName = $param1;
+        if (!empty($param2) && is_string($param2)) $sComponentName = $param2;
+
+        // verify
+        if (empty($sComponentName)) error("Please read the Mimoto::service('aimless')->createPopup() documentation [link]");
+
+        // init and send
+        return new AimlessComponent($sComponentName, $entity, null, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**

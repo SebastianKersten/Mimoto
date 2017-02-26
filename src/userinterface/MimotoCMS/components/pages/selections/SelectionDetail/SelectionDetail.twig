@@ -1,62 +1,56 @@
-{% extends "MimotoCMS/components/base.twig" %}
+{%
+    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
+        id: 'componentdetails',
+        tabs: [
+            {
+                label: 'Selection structure',
+                panel_id: 'panel_selectiondetail_info'
+            }
+        ]
+    }
+%}
+    {% block panels %}
 
-{% block content %}
+        <!-- structure -->
 
-    {%
-        embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-            id: 'componentdetails',
-            tabs: [
-                {
-                    label: 'Selection structure',
-                    panel_id: 'panel_selectiondetail_info'
-                }
-            ]
-        }
-    %}
-        {% block panels %}
+        <div id="panel_selectiondetail_info" class="MimotoCMS_pages_selections_SelectionDetail__panel">
 
-            <!-- structure -->
+            <div class="MimotoCMS_pages_selections_SelectionDetail_Structure">
 
-            <div id="panel_selectiondetail_info" class="MimotoCMS_pages_selections_SelectionDetail__panel">
+                <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta">
+                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta_info">
 
-                <div class="MimotoCMS_pages_selections_SelectionDetail_Structure">
+                        <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__selectionname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
 
-                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta">
-                        <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta_info">
+                    </div>
 
-                            <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__selectionname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
-
-                        </div>
-
-                        <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta_menu">
-                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.selectionEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
-                        </div>
-
+                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.selectionEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
                     </div>
 
                 </div>
 
-                <div class="MimotoCMS_pages_selections_SelectionDetail__block">
-
-                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_empty" {{ Aimless.showOnEmpty('rules') }}>
-                        <div>This selection has no rules yet.<br>Don't hesitate one minute more, start adding one!</div>
-                        <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new rule', icon:'plus', onclick:"Mimoto.CMS.selectionRuleNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
-                    </div>
-
-                    <div {{ Aimless.hideOnEmpty('rules') }}>
-                        <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_container" {{ Aimless.realtime('rules', 'Mimoto.CMS_selections_SelectionDetail-Rule') }}>
-                            {{ Aimless.render('rules', 'Mimoto.CMS_selections_SelectionDetail-Rule') }}
-                        </div>
-
-                        <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_menu">
-                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new rule', icon:'plus', onclick:"Mimoto.CMS.selectionRuleNew('" ~ Aimless.meta('id') ~ "');" }) }}
-                        </div>
-                    </div>
-
-                </div>
             </div>
 
-        {% endblock %}
-    {% endembed %}
+            <div class="MimotoCMS_pages_selections_SelectionDetail__block">
 
-{% endblock %}
+                <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_empty" {{ Aimless.showOnEmpty('rules') }}>
+                    <div>This selection has no rules yet.<br>Don't hesitate one minute more, start adding one!</div>
+                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new rule', icon:'plus', onclick:"Mimoto.CMS.selectionRuleNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                </div>
+
+                <div {{ Aimless.hideOnEmpty('rules') }}>
+                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_container" {{ Aimless.realtime('rules', 'Mimoto.CMS_selections_SelectionDetail-Rule') }}>
+                        {{ Aimless.render('rules', 'Mimoto.CMS_selections_SelectionDetail-Rule') }}
+                    </div>
+
+                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new rule', icon:'plus', onclick:"Mimoto.CMS.selectionRuleNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    {% endblock %}
+{% endembed %}
