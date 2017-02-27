@@ -29706,7 +29706,7 @@
 	    
 	    formDelete: function(nFormId)
 	    {
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/form/" + nFormId + "/delete",
 	            success: function(resultData, resultStatus, resultSomething) {
@@ -29729,14 +29729,16 @@
 	    
 	    formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
 	    {
-	        window.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
+	        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
 	    },
 	    
 	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
 	    {
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
+	            data: null,
+	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
 	                console.log(resultData);
 	            }
@@ -29758,9 +29760,11 @@
 	    
 	    formFieldOptionDelete: function(nOptionId)
 	    {
-	        $.ajax({
+	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/formfielditem/" + nOptionId + '/delete',
+	            data: null,
+	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
 	                console.log(resultData);
 	            }

@@ -44,7 +44,7 @@ class FormController
         // 4. connect
         $popup->addComponent('content', $component);
 
-        // 3. render and send
+        // 5. output
         return $popup->render();
     }
 
@@ -225,8 +225,8 @@ class FormController
 
     public function formFieldEdit(Application $app, $nFormFieldTypeId, $nFormFieldId)
     {
-        // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
 
         // 2. load data
         $eFormField = Mimoto::service('data')->get($nFormFieldTypeId, $nFormFieldId);
@@ -245,28 +245,16 @@ class FormController
             Mimoto::service('forms')->getCoreFormByEntityTypeId($eFormField->getEntityTypeName()),
             $eFormField,
             [
-                'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/form/'.$eParentForm->getId().'/view']]
+                'response' => ['onSuccess' => ['closePopup' => true]]
+                //'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/form/'.$eParentForm->getId().'/view']]
             ]
         );
 
         // 7. connect
-        $page->addComponent('content', $component);
-
-        // 8. setup page
-        $page->setVar('pageTitle', array(
-                (object)array(
-                    "label" => 'todo',
-                    "url" => '/mimoto.cms/todo'
-                ),
-                (object)array(
-                    "label" => 'todo',
-                    "url" => '/mimoto.cms/todo'
-                )
-            )
-        );
+        $popup->addComponent('content', $component);
 
         // 9. output
-        return $page->render();
+        return $popup->render();
     }
 
     public function formFieldDelete(Application $app, $nFormFieldTypeId, $nFormFieldId)
@@ -286,6 +274,11 @@ class FormController
 
     public function formFieldItemAddToList(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sItemId = null)
     {
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
+
+
+
         // validate
         if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) die('Invalid property selector');
 
@@ -346,21 +339,26 @@ class FormController
         // read
         $form = $option->getValue('form');
 
-        // read
-        $sFormName = $form->getValue('name');
 
-        // 3. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 3. create content
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
-        // 5. setup
-        $component->addForm($sFormName, null, [
-            'onCreatedConnectTo' => $sPropertySelector,
-            'response' => ['onSuccess' => ['closePopup' => true]]
-            //'response' => ['onSuccess' => ['reloadPopup' => '/mimoto.cms/formfield/'.$nFormFieldTypeId.'/'.$nFormFieldId.'/edit']]
-        ]);
+        // 4. setup content
+        $component->addForm(
+            $form->getValue('name'),
+            null,
+            [
+                'onCreatedConnectTo' => $sPropertySelector,
+                'response' => ['onSuccess' => ['closePopup' => true]]
+                //'response' => ['onSuccess' => ['reloadPopup' => '/mimoto.cms/formfield/'.$nFormFieldTypeId.'/'.$nFormFieldId.'/edit']]
+            ]
+        );
+
+        // 5. connect
+        $popup->addComponent('content', $component);
 
         // 6. render and send
-        return $component->render();
+        return $popup->render();
     }
 
 
