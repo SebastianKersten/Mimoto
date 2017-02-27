@@ -1,15 +1,5 @@
-{% extends "MimotoCMS/components/base.twig" %}
+{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new', icon:'plus', onclick:"Mimoto.CMS.contentNew('"~Aimless.meta('id')~"');" }) }}
 
-{% block content %}
-
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new', icon:'plus', onclick:"Mimoto.CMS.contentNew('"~Aimless.meta('id')~"');" }) }}
-
-    {#<br><br>
-    #todo - draggable list module<br>
-    <br>#}
-
-    <div class="MimotoCMS_pages_content_ContentOverview__container" {{ Aimless.realtime('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}>
-        {{ Aimless.render('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}
-    </div>
-
-{% endblock %}
+<div class="MimotoCMS_pages_content_ContentOverview__container" {{ Aimless.realtime('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}>
+    {{ Aimless.render('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}
+</div>
