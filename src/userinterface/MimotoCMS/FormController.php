@@ -226,7 +226,7 @@ class FormController
     public function formFieldEdit(Application $app, $nFormFieldTypeId, $nFormFieldId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eFormField = Mimoto::service('data')->get($nFormFieldTypeId, $nFormFieldId);
@@ -245,16 +245,15 @@ class FormController
             Mimoto::service('forms')->getCoreFormByEntityTypeId($eFormField->getEntityTypeName()),
             $eFormField,
             [
-                'response' => ['onSuccess' => ['closePopup' => true]]
-                //'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/form/'.$eParentForm->getId().'/view']]
+                'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/form/'.$eParentForm->getId().'/view']]
             ]
         );
 
         // 7. connect
-        $popup->addComponent('content', $component);
+        $page->addComponent('content', $component);
 
         // 9. output
-        return $popup->render();
+        return $page->render();
     }
 
     public function formFieldDelete(Application $app, $nFormFieldTypeId, $nFormFieldId)
@@ -276,7 +275,6 @@ class FormController
     {
         // 1. init popup
         $popup = Mimoto::service('aimless')->createPopup();
-
 
 
         // validate

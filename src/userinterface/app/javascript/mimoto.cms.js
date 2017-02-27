@@ -26,6 +26,7 @@ Mimoto.page = new Mimoto.modules.Page();
 Mimoto.popup = new Mimoto.modules.Popup();
 Mimoto.form = new Mimoto.modules.Form();
 
+
 document.addEventListener('DOMContentLoaded', function () {
 
     var navigation = document.querySelector('.js-navigation');
@@ -82,5 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
     //    ButtonUtils.removeSuccessState(successButton);
     //
     //}.bind(this), 3000);
+    
 
 }, false);

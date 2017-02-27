@@ -57,11 +57,14 @@ class ContentController
                 // 5d. create component
                 $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_content_ContentOverview', $eContentSectionEntity);
 
+                // 5e. setup content
+                $component->setVar('nContentSectionId', $nContentId);
+
                 break;
 
             default:
 
-                // 5e. report
+                // 5f. report
                 Mimoto::service('log')->warn("ContentSection with invalid type", "A content section id=`$nContentId` requested for edit has an unknown type of value `$sType`");
         }
 
@@ -69,7 +72,6 @@ class ContentController
         $page->addComponent('content', $component);
 
         // 7. setup page
-        $page->setVar('nContentSectionId', $nContentId);
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => $sName,
@@ -180,6 +182,18 @@ class ContentController
 
         // 10. output
         return $page->render();
+    }
+
+    public function contentGroupItemDelete(Application $app, $nContentId, $sContentTypeName, $nContentItemId)
+    {
+        // 1. load data
+        $eEntity = Mimoto::service('data')->get($sContentTypeName, $nContentItemId);
+
+        // 2. cleanup
+        Mimoto::service('data')->delete($eEntity);
+
+        // 3. send
+        return Mimoto::service('messages')->response((object) array('result' => 'Content item deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 }

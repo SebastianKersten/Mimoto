@@ -10311,6 +10311,7 @@
 	Mimoto.popup = new Mimoto.modules.Popup();
 	Mimoto.form = new Mimoto.modules.Form();
 	
+	
 	document.addEventListener('DOMContentLoaded', function () {
 	
 	    var navigation = document.querySelector('.js-navigation');
@@ -10367,6 +10368,7 @@
 	    //    ButtonUtils.removeSuccessState(successButton);
 	    //
 	    //}.bind(this), 3000);
+	    
 	
 	}, false);
 
@@ -29682,6 +29684,19 @@
 	        window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
 	    },
 	    
+	    contentDelete: function(nContentId, sContentTypeName, nContentItemId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/delete',
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
 	    
 	    
 	    /**
@@ -29729,7 +29744,7 @@
 	    
 	    formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
+	        window.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
 	    },
 	    
 	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
@@ -30002,6 +30017,9 @@
 	    
 	                // reset scroll
 	                layer_popup.scrollTop = 0;
+	                
+	                // update
+	                Mimoto.Aimless.utils.parseRequestQueue();
 	            }
 	        });
 	    },
@@ -30115,6 +30133,7 @@
 	    {
 	        // init
 	        this._aForms = [];
+	        this._aRequests = [];
 	        this._sCurrentOpenForm = '';
 	    },
 	
@@ -30123,8 +30142,8 @@
 	    // ----------------------------------------------------------------------------
 	    // --- Public methods ---------------------------------------------------------
 	    // ----------------------------------------------------------------------------
-	
-	
+	    
+	    
 	    /**
 	     * Open new form
 	     */
@@ -30189,7 +30208,7 @@
 	    {
 	
 	    },
-	
+	    
 	    /**
 	     * Close form
 	     */

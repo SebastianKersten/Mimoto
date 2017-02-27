@@ -390,7 +390,10 @@ class CoreConfig
                         'entities',
                         'users',
                         'contentSections',
-                        'selections'
+                        'selections',
+
+                        'contentItem',
+                        'contentItems'
                     )
                 ),
                 'notes' => array(

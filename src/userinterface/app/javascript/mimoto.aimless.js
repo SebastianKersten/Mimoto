@@ -31,4 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 1. setup webevents
     Mimoto.Aimless.connect(false);
     
+    // update
+    Mimoto.Aimless.utils.parseRequestQueue();
+    
 }, false);

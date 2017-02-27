@@ -31,6 +31,7 @@ module.exports.prototype = {
     {
         // init
         this._aForms = [];
+        this._aRequests = [];
         this._sCurrentOpenForm = '';
     },
 
@@ -39,8 +40,8 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
-
-
+    
+    
     /**
      * Open new form
      */
@@ -105,7 +106,7 @@ module.exports.prototype = {
     {
 
     },
-
+    
     /**
      * Close form
      */

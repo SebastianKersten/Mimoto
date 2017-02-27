@@ -297,6 +297,19 @@ module.exports.prototype = {
         window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
     },
     
+    contentDelete: function(nContentId, sContentTypeName, nContentItemId)
+    {
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/delete',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
+    },
+    
     
     
     /**
@@ -344,7 +357,7 @@ module.exports.prototype = {
     
     formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
     {
-        Mimoto.popup.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
+        window.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
     },
     
     formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)

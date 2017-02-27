@@ -115,6 +115,7 @@ class Mimoto
         $app->get ('/mimoto.cms/content/{nContentId}', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentEdit');
         $app->get ('/mimoto.cms/content/{nContentId}/new', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemNew');
         $app->get ('/mimoto.cms/content/{nContentId}/{sContentTypeName}/{nContentItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemEdit');
+        $app->get ('/mimoto.cms/content/{nContentId}/{sContentTypeName}/{nContentItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemDelete');
 
         // Form
         $app->get ('/mimoto.cms/entity/{nEntityId}/form/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formNew');

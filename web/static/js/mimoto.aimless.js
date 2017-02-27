@@ -84,6 +84,9 @@
 	    // 1. setup webevents
 	    Mimoto.Aimless.connect(false);
 	    
+	    // update
+	    Mimoto.Aimless.utils.parseRequestQueue();
+	    
 	}, false);
 
 
@@ -11558,7 +11561,7 @@
 	     */
 	    __construct: function()
 	    {
-	        
+	        this._aRequests = [];
 	    },
 	
 	
@@ -11693,6 +11696,39 @@
 	                request.success(resultData.response, resultStatus, resultSomething);
 	            }
 	        });
+	    },
+	    
+	    registerRequest: function(sMethod)
+	    {
+	        // collect
+	        var aArguments = [];
+	        var nArgumentCount = arguments.length;
+	        for (var nArgumentIndex = 1; nArgumentIndex < nArgumentCount; nArgumentIndex++)
+	        {
+	            aArguments.push(arguments[nArgumentIndex]);
+	        }
+	        
+	        // compose
+	        var request = {
+	            method: arguments[0],
+	            aArguments: aArguments
+	        };
+	        
+	        // store
+	        this._aRequests.push(request);
+	    },
+	    
+	    parseRequestQueue: function()
+	    {
+	        // parse
+	        while (this._aRequests.length > 0)
+	        {
+	            // register
+	            var request = this._aRequests.shift();
+	            
+	            // execute
+	            request.method.apply(Mimoto.form, request.aArguments);
+	        }
 	    }
 	    
 	}

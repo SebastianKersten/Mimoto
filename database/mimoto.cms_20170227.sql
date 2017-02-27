@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 02/23/2017 18:28:56 PM
+ Date: 02/27/2017 14:28:06 PM
 */
 
 SET NAMES utf8mb4;
@@ -67,7 +67,7 @@ CREATE TABLE `_Mimoto_connection` (
   `child_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_contentsection`
@@ -80,7 +80,7 @@ CREATE TABLE `_Mimoto_contentsection` (
   `isHiddenFromMenu` enum('0','1') DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_entity`
@@ -92,7 +92,7 @@ CREATE TABLE `_Mimoto_entity` (
   `isAbstract` enum('0','1') DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_entityproperty`
@@ -105,7 +105,7 @@ CREATE TABLE `_Mimoto_entityproperty` (
   `subtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_entitypropertysetting`
@@ -118,7 +118,7 @@ CREATE TABLE `_Mimoto_entitypropertysetting` (
   `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_file`
@@ -136,7 +136,7 @@ CREATE TABLE `_Mimoto_file` (
   `originalName` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form`
@@ -153,7 +153,7 @@ CREATE TABLE `_Mimoto_form` (
   `target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form_fieldrules`
@@ -202,7 +202,7 @@ CREATE TABLE `_Mimoto_form_input_image` (
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form_input_list`
@@ -239,7 +239,7 @@ CREATE TABLE `_Mimoto_form_input_radiobutton` (
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form_input_textblock`
@@ -255,7 +255,7 @@ CREATE TABLE `_Mimoto_form_input_textblock` (
   `maxchars` int(10) unsigned DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form_input_textline`
@@ -285,7 +285,7 @@ CREATE TABLE `_Mimoto_form_input_textrtf` (
   `maxchars` int(10) unsigned DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form_input_video`
@@ -297,7 +297,7 @@ CREATE TABLE `_Mimoto_form_input_video` (
   `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form_inputoption`
@@ -309,7 +309,7 @@ CREATE TABLE `_Mimoto_form_inputoption` (
   `value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form_inputoption_listitem`
@@ -405,7 +405,7 @@ CREATE TABLE `_Mimoto_notification` (
   `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_selection`
@@ -416,7 +416,7 @@ CREATE TABLE `_Mimoto_selection` (
   `name` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_selectionrule`
@@ -426,6 +426,9 @@ CREATE TABLE `_Mimoto_selectionrule` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
+  `entity_type_id` varchar(255) DEFAULT NULL,
+  `property_type_id` varchar(255) DEFAULT NULL,
+  `item_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -436,10 +439,9 @@ DROP TABLE IF EXISTS `person`;
 CREATE TABLE `person` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `role` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
