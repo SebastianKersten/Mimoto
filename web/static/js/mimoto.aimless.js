@@ -199,23 +199,29 @@
 	            };
 	        }
 	        
-	        // connect
-	        Mimoto.Aimless.pusher = new Pusher('19c5b7fbb5340fe48402', {
-	            cluster: 'eu',
-	            host: 'api-eu.pusher.com',
-	            encrypted: true,
-	            authEndpoint: '/Mimoto.Aimless/realtime/collaboration'
-	        });
-	        
-	        // init
-	        var channel = Mimoto.Aimless.pusher.subscribe('Aimless');
-	        
-	        // setup listeners
-	        channel.bind('data.changed', Mimoto.Aimless.dom.onDataChanged);
-	        channel.bind('data.created', Mimoto.Aimless.dom.onDataCreated);
-	        channel.bind('page.change', Mimoto.Aimless.dom.onPageChange);
-	        channel.bind('component.load', Mimoto.Aimless.dom.onComponentLoad);
-	        channel.bind('popup.open', Mimoto.Aimless.dom.onPopupOpen);
+	        try {
+	            // connect
+	            Mimoto.Aimless.pusher = new Pusher('19c5b7fbb5340fe48402', {
+	                cluster: 'eu',
+	                host: 'api-eu.pusher.com',
+	                encrypted: true,
+	                authEndpoint: '/Mimoto.Aimless/realtime/collaboration'
+	            });
+	    
+	            // init
+	            var channel = Mimoto.Aimless.pusher.subscribe('Aimless');
+	    
+	            // setup listeners
+	            channel.bind('data.changed', Mimoto.Aimless.dom.onDataChanged);
+	            channel.bind('data.created', Mimoto.Aimless.dom.onDataCreated);
+	            channel.bind('page.change', Mimoto.Aimless.dom.onPageChange);
+	            channel.bind('component.load', Mimoto.Aimless.dom.onComponentLoad);
+	            channel.bind('popup.open', Mimoto.Aimless.dom.onPopupOpen);
+	        }
+	        catch(e)
+	        {
+	            console.log('Pusher says oops! (might have something to do with something like Privacy Badger');
+	        }
 	    }
 	
 	}
