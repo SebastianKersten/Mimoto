@@ -74,7 +74,7 @@ class ContentSectionController
         $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
 
         // 3. validate data
-        if ($eContentSection === false) return $app->redirect("/mimoto.cms/contentsections");
+        if (empty($eContentSection)) return $app->redirect("/mimoto.cms/contentsections");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_contentsections_ContentSectionDetail', $eContentSection);
@@ -108,7 +108,7 @@ class ContentSectionController
         $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
 
         // 3. validate data
-        if ($eContentSection === false) return $app->redirect("/mimoto.cms/contentsections");
+        if (empty($eContentSection)) return $app->redirect("/mimoto.cms/contentsections");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');

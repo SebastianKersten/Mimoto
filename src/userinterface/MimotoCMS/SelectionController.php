@@ -90,7 +90,7 @@ class SelectionController
         $eSelection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
 
         // 3. validate data
-        if ($eSelection === false) return $app->redirect("/mimoto.cms/selections");
+        if (empty($eSelection)) return $app->redirect("/mimoto.cms/selections");
 
         // 4. create
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_selections_SelectionDetail', $eSelection);
@@ -124,7 +124,7 @@ class SelectionController
         $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
 
         // 3. validate
-        if ($eContentSection === false) return $app->redirect("/mimoto.cms/selections");
+        if (empty($eContentSection)) return $app->redirect("/mimoto.cms/selections");
 
         // 4. create
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
@@ -189,7 +189,7 @@ class SelectionController
         $eSelectionRule = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTIONRULE, $nSelectionRuleId);
 
         // 3. validate data
-        if ($eSelectionRule === false) return $app->redirect("/mimoto.cms/selections");
+        if (empty($eSelectionRule)) return $app->redirect("/mimoto.cms/selections");
 
         // 4. create
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');

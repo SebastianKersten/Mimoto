@@ -57,7 +57,7 @@ class FormController
         $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
         // 3. validate data
-        if ($eForm === false) return $app->redirect("/mimoto.cms/forms");
+        if (empty($eForm)) return $app->redirect("/mimoto.cms/forms");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail', $eForm);
@@ -91,7 +91,7 @@ class FormController
         $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
         // 3. validate data
-        if ($eForm === false) return $app->redirect("/mimoto.cms/forms");
+        if (empty($eForm)) return $app->redirect("/mimoto.cms/forms");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
@@ -232,7 +232,7 @@ class FormController
         $eFormField = Mimoto::service('data')->get($nFormFieldTypeId, $nFormFieldId);
 
         // 3. validate data
-        if ($eFormField === false) return $app->redirect("/mimoto.cms/forms");
+        if (empty($eFormField)) return $app->redirect("/mimoto.cms/forms");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
@@ -284,7 +284,7 @@ class FormController
         $formField = Mimoto::service('forms')->getFormFieldByFieldId($nFormFieldId);
 
         // 2. validate
-        if ($formField === false) return $app->redirect("/mimoto.cms/forms");
+        if (empty($formField)) return $app->redirect("/mimoto.cms/forms");
 
         // 1. welk formulierveld hort hierbij? get formid en formselector
         $aOptions = $formField->getValue('options');

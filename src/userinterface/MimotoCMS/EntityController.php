@@ -81,7 +81,7 @@ class EntityController
         $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
         // 3. validate data
-        if ($eEntity === false) return $app->redirect("/mimoto.cms/entities");
+        if (empty($eEntity)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityDetail', $eEntity);
@@ -118,7 +118,7 @@ class EntityController
         $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
         // 2. validate data
-        if ($eEntity === false) return $app->redirect("/mimoto.cms/entities");
+        if (empty($eEntity)) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
@@ -194,7 +194,7 @@ class EntityController
         $eEntityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
 
         // 3. validate data
-        if ($eEntityProperty === false) return $app->redirect("/mimoto.cms/entities");
+        if (empty($eEntityProperty)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
@@ -239,7 +239,7 @@ class EntityController
         $eEntityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, $nEntityPropertySettingId);
 
         // 3. validate data
-        if ($eEntityProperty === false) return $app->redirect("/mimoto.cms/entities");
+        if (empty($eEntityProperty)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');

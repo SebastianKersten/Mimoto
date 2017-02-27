@@ -29,7 +29,7 @@ class ContentController
         $eContentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
 
         // 3. validate data
-        if ($eContentSectionEntity === false) return $app->redirect("/mimoto.cms");
+        if (empty($eContentSectionEntity)) return $app->redirect("/mimoto.cms");
 
         // 4. read properties
         $sName = $eContentSectionEntity->getValue('name');
@@ -93,7 +93,7 @@ class ContentController
         $eContentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
 
         // 3. validate data
-        if ($eContentSectionEntity === false) return $app->redirect("/mimoto.cms/contentsections");
+        if (empty($eContentSectionEntity)) return $app->redirect("/mimoto.cms/contentsections");
 
         // 4. read properties
         $sName = $eContentSectionEntity->getValue('name');
@@ -142,7 +142,7 @@ class ContentController
         $contentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
 
         // 3. validate config data
-        if ($contentSectionEntity === false) return $app->redirect("/mimoto.cms/contentsections");
+        if (empty($contentSectionEntity)) return $app->redirect("/mimoto.cms/contentsections");
 
         // 4. read properties
         $sName = $contentSectionEntity->getValue('name');

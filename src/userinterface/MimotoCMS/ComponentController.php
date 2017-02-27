@@ -57,7 +57,7 @@ class ComponentController
         $eComponent = Mimoto::service('data')->get(CoreConfig::MIMOTO_COMPONENT, $nComponentId);
 
         // 3. validate data
-        if ($eComponent === false) return $app->redirect("/mimoto.cms/components");
+        if (empty($eComponent)) return $app->redirect("/mimoto.cms/components");
 
         // 4. create content
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
