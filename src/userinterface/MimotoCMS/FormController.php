@@ -25,90 +25,116 @@ class FormController
 
     public function formNew(Application $app, $nEntityId)
     {
-        // create dummy
-        $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
 
-        // 1. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 2. create content
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
-        // 2. setup
-        $component->addForm(CoreConfig::COREFORM_FORM, $entity,
+        // 3. setup content
+        $component->addForm(
+            CoreConfig::COREFORM_FORM,
+            null,
             [
                 'onCreatedConnectTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.forms',
-                'response' => [
-                    'onSuccess' => [
-                        'closePopup' => true
-                    ]
-                ]
+                'response' => ['onSuccess' => ['closePopup' => true]]
             ]
         );
 
+        // 4. connect
+        $popup->addComponent('content', $component);
+
         // 3. render and send
-        return $component->render();
+        return $popup->render();
     }
 
     public function formView(Application $app, $nFormId)
     {
-        // 1. load requested entity
-        $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
+        // 1. init page
+        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
-        // 2. check if entity exists
-        if ($form === false) return $app->redirect("/mimoto.cms/forms");
+        // 2. load data
+        $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
-        // 3. create component
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail', $form);
+        // 3. validate data
+        if ($eForm === false) return $app->redirect("/mimoto.cms/forms");
 
-        // setup page
+        // 4. create content
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail', $eForm);
+
+        // 5. setup page
         $page->setVar('pageTitle', array(
                 (object)array(
                     "label" => 'Forms',
                     "url" => '/mimoto.cms/forms'
                 ),
                 (object)array(
-                    "label" => '"<span data-aimless-value="' . CoreConfig::MIMOTO_FORM . '.' . $form->getId() . '.name">' . $form->getValue('name') . '</span>"',
-                    "url" => '/mimoto.cms/form/' . $form->getId() . '/view'
+                    "label" => '"<span data-aimless-value="' . CoreConfig::MIMOTO_FORM . '.' . $eForm->getId() . '.name">' . $eForm->getValue('name') . '</span>"',
+                    "url" => '/mimoto.cms/form/' . $eForm->getId() . '/view'
                 )
             )
         );
 
-        // 5. output
+        // 6. connect
+        $page->addComponent('content', $component);
+
+        // 7. output
         return $page->render();
     }
 
     public function formEdit(Application $app, $nFormId)
     {
-        // 1. load
-        $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
 
-        // 2. validate
-        if ($form === false) return $app->redirect("/mimoto.cms/forms");
+        // 2. load data
+        $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
-        // 3. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 3. validate data
+        if ($eForm === false) return $app->redirect("/mimoto.cms/forms");
 
-        // 4. setup
-        $component->addForm(CoreConfig::COREFORM_FORM, $form, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        // 4. create content
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
-        // 5. render and send
+        // 5. setup content
+        $component->addForm(
+            CoreConfig::COREFORM_FORM,
+            $eForm,
+            [
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
+
+        // 6. connect
+        $popup->addComponent('content', $component);
+
+        // 7. output
         return $component->render();
     }
 
     public function formDelete(Application $app, $nFormId)
     {
         // 1. load
-        $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
+        $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
 
-        // 5. delete property
-        Mimoto::service('data')->delete($form);
+        // 2. delete
+        Mimoto::service('data')->delete($eForm);
 
-        // 6. send
+        // 3. send
         return Mimoto::service('messages')->response((object) array('result' => 'Form deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function formFieldNew_fieldTypeSelector(Application $app, $nFormId)
     {
-        // create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail_TypeSelector');
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
+
+        // 2. create content
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail_TypeSelector');
+
+
+        // ----------
+
 
         // load
         $aInputTypesAll = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_INPUT]);
@@ -147,10 +173,10 @@ class FormController
 
 
         // register
-        $page->setVar('nFormId', $nFormId);
-        $page->setVar('aInputTypes', $aInputTypes);
-        $page->setVar('aLayoutTypes', $aLayoutTypes);
-        $page->setVar('aOutputTypes', $aOutputTypes);
+        $component->setVar('nFormId', $nFormId);
+        $component->setVar('aInputTypes', $aInputTypes);
+        $component->setVar('aLayoutTypes', $aLayoutTypes);
+        $component->setVar('aOutputTypes', $aOutputTypes);
 
 
 
@@ -162,27 +188,46 @@ class FormController
         // 7. hardcoded (_Mimoto_form_input_textline -> textline-form)
 
 
-        // output
-        return $page->render();
+        // ----------
+
+
+        // 3. connect
+        $popup->addComponent('content', $component);
+
+        // 4. output
+        return $popup->render();
     }
 
     public function formFieldNew_fieldForm(Application $app, $nFormId, $nFormFieldTypeId)
     {
-        // 1. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
 
-        // 4. get form name
-        $sFormName = Mimoto::service('forms')->getCoreFormByEntityTypeId($nFormFieldTypeId);
+        // 2. create content
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
-        // 3. setup
-        $component->addForm($sFormName, null, ['onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields', 'response' => ['onSuccess' => ['closePopup' => true]]]);
+        // 3. content
+        $component->addForm(
+            Mimoto::service('forms')->getCoreFormByEntityTypeId($nFormFieldTypeId),
+            null,
+            [
+                'onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields',
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
 
-        // 4. render and send
+        // 4. connect
+        $popup->addComponent('content', $component);
+
+        // 5. output
         return $component->render();
     }
 
     public function formFieldEdit(Application $app, $nFormFieldTypeId, $nFormFieldId)
     {
+        
+
+
         // 1. load
         $entity = Mimoto::service('data')->get($nFormFieldTypeId, $nFormFieldId);
 
