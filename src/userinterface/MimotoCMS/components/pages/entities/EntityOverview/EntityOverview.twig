@@ -1,15 +1,14 @@
-{% extends "MimotoCMS/components/base.twig" %}
+{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();", types:['secondary'] }) }}
 
-{% block content %}
+<div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Aimless.realtime('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}>
+    {{ Aimless.render('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}
+</div>
 
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();", types:['secondary'] }) }}
-
-    <div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Aimless.realtime('entities') }}>
-        {% embed "MimotoCMS/modules/ListModule/ListModule.twig" %}
-            {% block listmodule_content %}
-                {{ Aimless.selection('entities') }}
-            {% endblock %}
-        {% endembed %}
-    </div>
-
-{% endblock %}
+<div {{ Aimless.showOnEmpty('entities') }}>
+    <b>Start building</b> your project by:
+    <ul>
+        <li>1) starting with <u>entities</u> <i>(the data structure)</i></li>
+        <li>2) followed by <u>forms</u> <i>(the data input)</i> to populate them with data</li>
+        <li>3) and finishing with <u>components</u> <i>(the data output)</i> to present the data to the user</li>
+    </ul>
+</div>

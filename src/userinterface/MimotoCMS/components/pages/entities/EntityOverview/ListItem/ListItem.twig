@@ -1,6 +1,7 @@
 {{
     Aimless.module('Mimoto.CMS.ListItemModule',
     {
+        realtime: Aimless.realtime(),
         label: Aimless.data('name'),
         label_realtime: Aimless.realtime('name'),
         sublabel: 'id = '~Aimless.meta('id'),

@@ -71,19 +71,19 @@ class Entity
                         )
                     ]
                 ),
-//                (object) array(
-//                    'id' => CoreConfig::MIMOTO_ENTITY.'--isAbstract',
-//                    // ---
-//                    'name' => 'isAbstract',
-//                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-//                    'settings' => [
-//                        'type' => (object) array(
-//                            'key' => 'type',
-//                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-//                            'value' => CoreConfig::DATA_VALUE_FALSE
-//                        )
-//                    ]
-//                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--isAbstract',
+                    // ---
+                    'name' => 'isAbstract',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--components',
                     // ---

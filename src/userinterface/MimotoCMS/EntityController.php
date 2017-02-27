@@ -27,16 +27,13 @@ class EntityController
 
     public function viewEntityOverview(Application $app)
     {
-        // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
+        // 1. init page
+        $page = Mimoto::service('aimless')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
-        // create
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityOverview');
-
-        // setup
-        $page->addSelection('entities', $aEntities, 'Mimoto.CMS_entities_EntityOverview_ListItem');
+        // 2. create and connect content
+        $page->addComponent('content', Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityOverview', $eRoot));
         
-        // setup page
+        // 3. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => 'Entities',
@@ -45,79 +42,100 @@ class EntityController
             )
         );
 
-        // output
+        // 4. output
         return $page->render();
     }
 
 
     public function entityNew(Application $app)
     {
-        // create dummy
-        $entity = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITY);
+        // 1. init popup
+        $popup =  Mimoto::service('aimless')->createPopup();
 
-        // 1. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 2. create content
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
-        // 2. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITY, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        // 3. setup content
+        $component->addForm(
+            CoreConfig::COREFORM_ENTITY,
+            null,
+            [
+                'onCreatedConnectTo' => CoreConfig::MIMOTO_ROOT.'.'.CoreConfig::MIMOTO_ROOT.'.entities',
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
 
-        // 3. render and send
+        // 4. connect
+        $popup->addComponent('content', $component);
+
+        // 5. output
         return $component->render();
     }
 
     public function entityView(Application $app, $nEntityId)
     {
-        // 1. load requested entity
-        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+        // 1. init page
+        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
-        // 2. check if entity exists
-        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+        // 2. load data
+        $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
-        // 3. create component
-        $page = Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityDetail', $entity);
+        // 3. validate data
+        if ($eEntity === false) return $app->redirect("/mimoto.cms/entities");
 
-        // 4. setup component
-        $page->setPropertyComponent('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty');
+        // 4. create content
+        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityDetail', $eEntity);
 
-        //error($page);
-        $page->addSelection('menuContentSections', []);
+        // 5. setup content
+        $component->setVar('entityStructure', $this->getEntityStructure($eEntity));
 
-
-        // todo - insert as simple values, add realtime support later
-
-        // setup page
-        $page->setVar('entityStructure', $this->getEntityStructure($entity));
+        // 6. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => 'Entities',
                     "url" => '/mimoto.cms/entities'
                 ),
                 (object) array(
-                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_ENTITY.'.'.$entity->getId().'.name">'.$entity->getValue('name').'</span>"',
-                    "url" => '/mimoto.cms/entity/'.$entity->getId().'/view'
+                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_ENTITY.'.'.$eEntity->getId().'.name">'.$eEntity->getValue('name').'</span>"',
+                    "url" => '/mimoto.cms/entity/'.$eEntity->getId().'/view'
                 )
             )
         );
 
-        // 5. output
+        // 7. connect
+        $page->addComponent('content', $component);
+
+        // 8. output
         return $page->render();
     }
 
     public function entityEdit(Application $app, $nEntityId)
     {
-        // 1. load
-        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
 
-        // 2. validate
-        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+        // 2. load data
+        $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+
+        // 2. validate data
+        if ($eEntity === false) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
         // 4. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITY, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        $component->addForm(
+            CoreConfig::COREFORM_ENTITY,
+            $eEntity,
+            [
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
 
-        // 5. render and send
+        // 5. connect
+        $popup->addComponent('content', $component);
+
+        // 6. output
         return $component->render();
     }
 
@@ -126,11 +144,13 @@ class EntityController
         // 1. load
         $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
-        // delete
+        // 2. delete
         Mimoto::service('data')->delete($entity);
+
+        // 3. cleanup
         Mimoto::service('config')->entityDelete($entity);
 
-        // send
+        // 4. send
         return Mimoto::service('messages')->response((object) array('result' => 'Entity deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
@@ -141,107 +161,67 @@ class EntityController
 
     public function entityPropertyNew(Application $app, $nEntityId)
     {
-        // create dummy
-        $entityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
 
-        // 1. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 2. create content
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
-        // 2. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY, $entityProperty, ['onCreatedConnectTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.properties', 'response' => ['onSuccess' => ['closePopup' => true]]]);
+        // 2. setup content
+        $component->addForm(
+            CoreConfig::COREFORM_ENTITYPROPERTY,
+            null,
+            [
+                'onCreatedConnectTo' => CoreConfig::MIMOTO_ENTITY.'.'.$nEntityId.'.properties',
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
 
-        // 3. render and send
+        // 4. connect
+        $popup->addComponent('content', $component);
+
+        // 5. output
         return $component->render();
 
     }
 
     public function entityPropertyEdit(Application $app, $nEntityPropertyId)
     {
-        // 1. load
-        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
 
-        // 2. validate
-        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+        // 2. load data
+        $eEntityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
 
-        // 3. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 3. validate data
+        if ($eEntityProperty === false) return $app->redirect("/mimoto.cms/entities");
 
-        // 4. setup
-        $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTY, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+        // 4. create content
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
-        // 5. render and send
-        return $component->render();
+        // 5. setup content
+        $component->addForm(
+            CoreConfig::COREFORM_ENTITYPROPERTY,
+            $eEntityProperty,
+            [
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
+
+        // 6. connect
+        $popup->addComponent('content', $component);
+
+        // 7. render and send
+        return $popup->render();
     }
 
     public function entityPropertyDelete(Application $app, $nEntityPropertyId)
     {
         // 1. load
-        $entityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
-
-        // 2. load settings
-        $aEntityPropertySetting = $entityProperty->getValue('settings');
-
-        // 3. delete settings
-        $aSettingCount = count($aEntityPropertySetting);
-        for ($aSettingIndex = 0; $aSettingIndex < $aSettingCount; $aSettingIndex++)
-        {
-            // register
-            $setting = $aEntityPropertySetting[$aSettingIndex];
-
-            // remoe connections from settings
-            switch($setting->getValue('key'))
-            {
-                case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
-
-                    // unset
-                    $setting->setValue(EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE, null);
-
-                    // persist
-                    Mimoto::service('data')->store($setting);
-
-                    break;
-
-                case EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
-
-                    $aAllowedEntityTypes = $setting->getValue(EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES);
-
-                    $nAllowedEntityTypeCount = count($aAllowedEntityTypes);
-                    for ($nAllowedEntityTypeIndex = 0; $nAllowedEntityTypeIndex < $nAllowedEntityTypeCount; $nAllowedEntityTypeIndex++)
-                    {
-                        // register
-                        $allowedEntityType = $aAllowedEntityTypes[$nAllowedEntityTypeIndex];
-
-                        // remove
-                        $setting->removeValue(EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES, $allowedEntityType);
-                    }
-
-                    // persist
-                    Mimoto::service('data')->store($setting);
-
-                    break;
-            }
-
-            // remove connection
-            $entityProperty->removeValue('settings', $setting);
-
-            // delete connection
-            Mimoto::service('data')->delete($setting);
-        }
-
-        // 4. persist removed connections
-        Mimoto::service('data')->store($entityProperty);
-
-        // 5. load
-        $parentEntity = $app['Mimoto.Config']->getParentEntity($entityProperty);
-
-        // 6. remove connection
-        $parentEntity->removeValue('properties', $entityProperty);
-
-        // 7. persist removed
-        Mimoto::service('data')->store($parentEntity);
+        $eEtityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
 
         // 5. delete property
-        Mimoto::service('data')->delete($entityProperty);
+        Mimoto::service('data')->delete($eEtityProperty);
 
         // 6. send
         return Mimoto::service('messages')->response((object) array('result' => 'EntityProperty deleted! '.date("Y.m.d H:i:s")), 200);
@@ -252,40 +232,55 @@ class EntityController
 
     public function entityPropertySettingEdit(Application $app, $nEntityPropertySettingId)
     {
-        // 1. load
-        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, $nEntityPropertySettingId);
+        // 1. init popup
+        $popup = Mimoto::service('aimless')->createPopup();
 
-        // 2. validate
-        if ($entity === false) return $app->redirect("/mimoto.cms/entities");
+        // 2. load data
+        $eEntityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, $nEntityPropertySettingId);
 
-        // 3. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_form_Popup');
+        // 3. validate data
+        if ($eEntityProperty === false) return $app->redirect("/mimoto.cms/entities");
 
-        // 4. select form based on type
-        switch ($entity->getValue('key'))
+        // 4. create content
+        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+
+        // 5. select form based on type
+        switch ($eEntityProperty->getValue('key'))
         {
             case EntityConfig::SETTING_VALUE_TYPE:
 
-                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+                $sFormName = CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE;
                 break;
 
             case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
-                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+                $sFormName = CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE;
                 break;
 
             case EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
 
-                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+                $sFormName = CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES;
                 break;
 
             case EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES:
 
-                $component->addForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES, $entity, ['response' => ['onSuccess' => ['closePopup' => true]]]);
+                $sFormName = CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES;
                 break;
         }
 
-        // 5. render and send
+        // 6. setup content
+        $component->addForm(
+            $sFormName,
+            $eEntityProperty,
+            [
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
+
+        // 7. connect
+        $popup->addComponent('content', $component);
+
+        // 8. render and send
         return $component->render();
     }
 
@@ -300,7 +295,7 @@ class EntityController
         // init
         $entityStructure = (object) array();
         $entityStructure->name = $entity->getValue('name');
-        $entityStructure->hasTable = false; //(intval($entity->getValue('isAbstract')) === 1) ? false : true;
+        $entityStructure->hasTable = true; //(intval($entity->getValue('isAbstract')) === 1) ? false : true;
         $entityStructure->instanceCount = 0;
         $entityStructure->extends = [];
         $entityStructure->extendedBy = [];

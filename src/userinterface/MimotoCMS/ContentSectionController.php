@@ -45,7 +45,7 @@ class ContentSectionController
         // 1. init popup
         $popup = Mimoto::service('aimless')->createPopup();
 
-        // 2. create content
+        // 2. create and connect content
         $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup content
