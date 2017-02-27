@@ -482,7 +482,7 @@ module.exports.prototype = {
                     // output
                     $($component).each( function(nIndex, $component)
                     {
-                        $($component).prop('checked', $($component).val() == change.value);
+                        $($component).prop('checked', $($component).val() == value);
                     });
                     break;
     
@@ -491,7 +491,7 @@ module.exports.prototype = {
                     // output
                     $($component).each( function(nIndex, $component)
                     {
-                        $($component).prop('checked', $($component).val() == change.value);
+                        $($component).prop('checked', $($component).val() == value);
                     });
                     break;
                 

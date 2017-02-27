@@ -1,56 +1,39 @@
-{% extends "MimotoCMS/components/base.twig" %}
+{%
+    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
+        id: 'componentdetails',
+        tabs: [
+            {
+                label: 'Options',
+                panel_id: 'panel_contentsectiondetail_info'
+            }
+        ]
+    }
+%}
+    {% block panels %}
 
-{% block content %}
+        <!-- structure -->
 
-    {%
-        embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-            id: 'componentdetails',
-            tabs: [
-                {
-                    label: 'Options',
-                    panel_id: 'panel_contentsectiondetail_info'
-                }
-            ]
-        }
-    %}
-        {% block panels %}
+        <div id="panel_contentsectiondetail_info" class="MimotoCMS_pages_contentsections_ContentSectionDetail__panel">
 
-            <!-- structure -->
+            <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure">
 
-            <div id="panel_contentsectiondetail_info" class="MimotoCMS_pages_contentsections_ContentSectionDetail__panel">
+                <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta">
+                    <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta_info">
 
-                <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure">
-
-                    <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta">
-                        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta_info">
-
-                            <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectionname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
-                            <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectiontype" {{ Aimless.realtime('type') }}>{{ Aimless.data('type') }}</div>
-                            <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectionformname" {{ Aimless.realtime('form.name') }}>{{ Aimless.data('form.name') }}</div>
-
-                        </div>
-
-                        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta_menu">
-                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.contentSectionEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
-                        </div>
+                        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectionname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
+                        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectiontype" {{ Aimless.realtime('type') }}>{{ Aimless.data('type') }}</div>
+                        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__contentsectionformname" {{ Aimless.realtime('form.name') }}>{{ Aimless.data('form.name') }}</div>
 
                     </div>
 
+                    <div class="MimotoCMS_pages_contentsections_ContentSectionDetail_Structure__meta_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.contentSectionEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
+                    </div>
+
                 </div>
+
             </div>
-
-        {% endblock %}
-    {% endembed %}
-
-
-
-    {#<div class="MimotoCMS_pages_contentsections_ContentSectionDetail__example">
-
-        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail__codeexample-title">Component example</div>
-
-        <div class="MimotoCMS_pages_contentsections_ContentSectionDetail__example-container">
-            <iframe src="https://mimoto.nl" class="MimotoCMS_pages_contentsections_ContentSectionDetail"></iframe>
         </div>
-    </div>#}
 
-{% endblock %}
+    {% endblock %}
+{% endembed %}

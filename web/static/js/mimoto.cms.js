@@ -29571,6 +29571,8 @@
 	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/component/" + nComponentId + "/delete",
+	            data: null,
+	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
 	                console.log(resultData);
 	            }
@@ -29601,6 +29603,8 @@
 	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
+	            data: null,
+	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
 	                console.log(resultData);
 	            }
@@ -29622,6 +29626,8 @@
 	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
+	            data: null,
+	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
 	                console.log(resultData);
 	            }
@@ -29653,6 +29659,8 @@
 	            Mimoto.Aimless.utils.callAPI({
 	                type: 'get',
 	                url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
+	                data: null,
+	                dataType: 'json',
 	                success: function (resultData, resultStatus, resultSomething) {
 	                    console.log(resultData);
 	                }
@@ -30554,7 +30562,7 @@
 	                    // output
 	                    $($component).each( function(nIndex, $component)
 	                    {
-	                        $($component).prop('checked', $($component).val() == change.value);
+	                        $($component).prop('checked', $($component).val() == value);
 	                    });
 	                    break;
 	    
@@ -30563,7 +30571,7 @@
 	                    // output
 	                    $($component).each( function(nIndex, $component)
 	                    {
-	                        $($component).prop('checked', $($component).val() == change.value);
+	                        $($component).prop('checked', $($component).val() == value);
 	                    });
 	                    break;
 	                

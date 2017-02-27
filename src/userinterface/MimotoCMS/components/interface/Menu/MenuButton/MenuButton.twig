@@ -1,6 +1,6 @@
 {% set sIcon = 'publications' %}
 {% if Aimless.data('type') == 'group' %}{% set sIcon = 'files' %}{% endif %}
-<li class="MimotoCMS_interface_Menu-item">
+<li class="MimotoCMS_interface_Menu-item" {{ Aimless.realtime() }}>
     <a href="/mimoto.cms/content/{{ Aimless.meta('id') }}" class="MimotoCMS_interface_Menu-item-link">
         <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-{{ sIcon }}'/></svg>
         <span class="MimotoCMS_interface_Menu-item-text" {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</span>

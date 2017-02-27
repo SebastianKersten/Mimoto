@@ -186,6 +186,8 @@ module.exports.prototype = {
         Mimoto.Aimless.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/component/" + nComponentId + "/delete",
+            data: null,
+            dataType: 'json',
             success: function(resultData, resultStatus, resultSomething) {
                 console.log(resultData);
             }
@@ -216,6 +218,8 @@ module.exports.prototype = {
         Mimoto.Aimless.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
+            data: null,
+            dataType: 'json',
             success: function(resultData, resultStatus, resultSomething) {
                 console.log(resultData);
             }
@@ -237,6 +241,8 @@ module.exports.prototype = {
         Mimoto.Aimless.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
+            data: null,
+            dataType: 'json',
             success: function(resultData, resultStatus, resultSomething) {
                 console.log(resultData);
             }
@@ -268,6 +274,8 @@ module.exports.prototype = {
             Mimoto.Aimless.utils.callAPI({
                 type: 'get',
                 url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
+                data: null,
+                dataType: 'json',
                 success: function (resultData, resultStatus, resultSomething) {
                     console.log(resultData);
                 }
