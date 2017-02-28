@@ -216,7 +216,7 @@ class EntityConfigRepository
             // register
             $entity = $this->_aEntities[$i];
 
-            if ($entity->name == $sTypeOfEntity)
+            if ($entity->id == $sTypeOfEntity)
             {
                 if (!isset($entity->typeOf) || empty($entity->typeOf))
                 {
@@ -224,7 +224,7 @@ class EntityConfigRepository
                 }
                 else
                 {
-                    return in_array($sTypeToCompare, $entity->typeOfAsNames);
+                    return in_array($sTypeToCompare, $entity->typeOf);
                 }
             }
         }
