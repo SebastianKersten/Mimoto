@@ -9,6 +9,7 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\Core\entities\Component;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+use Mimoto\EntityConfig\EntityConfigUtils;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Form\FormService;
 use Mimoto\Log\LogService;
@@ -167,21 +168,24 @@ class AimlessService
 
     public function getComponentFile($sComponentName, MimotoEntity $entity = null)
     {
+        // search
         $nComponentCount = count($this->_aComponents);
-        for ($i = 0; $i < $nComponentCount; $i++)
+        for ($nComponentIndex = 0; $nComponentIndex < $nComponentCount; $nComponentIndex++)
         {
-            $template = $this->_aComponents[$i];
-            
+            // register
+            $template = $this->_aComponents[$nComponentIndex];
+
+            // verify
             if ($template->name === $sComponentName)
             {
                 if (count($template->conditionals) > 0 && $entity !== null)
                 {
                     $bValidated = true;
                     $nConditionalCount = count($template->conditionals);
-                    for ($j = 0; $j < $nConditionalCount; $j++)
+                    for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
                     {
-                        $conditional = $template->conditionals[$j];
-                        
+                        $conditional = $template->conditionals[$nConditionalIndex];
+
                         if ($entity->getValue($conditional->key) !== $conditional->value)
                         {
                             $bValidated = false;
@@ -290,6 +294,10 @@ class AimlessService
             $aTemplates[] = $entity;
         }
 
+        // load
+        $aComponentConditionalConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_COMPONENT);
+        $aEntityPropertyConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_COMPONENTCONDITIONAL);
+
 
         // load all conditionals
         $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'`');
@@ -300,23 +308,53 @@ class AimlessService
         {
             $conditional = (object) array(
                 'id' => $row['id'],
-                'template_id' => $row['template_id'],
-                'key' => $row['key'],
                 'value' => $row['value'],
                 'created' => $row['created']
             );
 
             $nTemplateCount = count($aTemplates);
-            for ($j = 0; $j < $nTemplateCount; $j++)
+            for ($nTemplateIndex = 0; $nTemplateIndex < $nTemplateCount; $nTemplateIndex++)
             {
-                $template = $aTemplates[$j];
-                
-                if ($template->id === $conditional->template_id)
+                // register
+                $template = $aTemplates[$nTemplateIndex];
+
+                // verify
+                if (isset($aComponentConditionalConnections[$template->id]))
                 {
-                    $template->conditionals[] = $conditional;
+                    $nConnectionCount = count($aComponentConditionalConnections[$template->id]);
+                    for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
+                    {
+                        // register
+                        $rawConnection = $aComponentConditionalConnections[$template->id][$nConnectionIndex];
+
+                        if ($rawConnection->child_id == $conditional->id)
+                        {
+
+                            // find
+                            $nPropertyConnectionCount = count($aEntityPropertyConnections[$rawConnection->child_id]);
+                            for ($nPropertyConnectionIndex = 0; $nPropertyConnectionIndex < $nPropertyConnectionCount; $nPropertyConnectionIndex++)
+                            {
+                                // register
+                                $rawEntityPropertyConnection = $aEntityPropertyConnections[$rawConnection->child_id][$nPropertyConnectionIndex];
+
+                                // verify
+                                if ($rawEntityPropertyConnection->parent_id == $rawConnection->child_id)
+                                {
+                                    // get property name
+                                    $conditional->key = Mimoto::service('config')->getPropertyNameById($rawEntityPropertyConnection->child_id);
+
+                                    // store
+                                    $template->conditionals[] = $conditional;
+
+                                    break;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
+
 
         // add core components
         $aTemplates = array_merge($aTemplates, Component::getData());

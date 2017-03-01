@@ -22,7 +22,6 @@ class Component
     {
         return (object) array(
             'id' => CoreConfig::MIMOTO_COMPONENT,
-            'created' => CoreConfig::EPOCH,
             // ---
             'name' => CoreConfig::MIMOTO_COMPONENT,
             'extends' => null,
@@ -30,15 +29,11 @@ class Component
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_COMPONENT.'--name',
-                    'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--name-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -47,15 +42,11 @@ class Component
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_COMPONENT.'--file',
-                    'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'file',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--file-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
@@ -64,23 +55,16 @@ class Component
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals',
-                    'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'conditionals',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals-allowedEntityTypes',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => [CoreConfig::MIMOTO_COMPONENTCONDITIONAL]
                         ),
                         'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals-allowDuplicates',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'allowDuplicates',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_FALSE
@@ -168,8 +152,18 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-Component',
-                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/Component/Component.twig',
+                'name' => 'Mimoto.CMS_entities_EntityDetail-ComponentListItem',
+                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/ComponentListItem/ComponentListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_entities_EntityDetail-ComponentDetail',
+                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/ComponentDetail/ComponentDetail.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_entities_EntityDetail-ComponentConditional',
+                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/ComponentDetail/ComponentConditional/ComponentConditional.twig',
                 'conditionals' => []
             ),
             (object) array(

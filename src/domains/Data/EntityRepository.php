@@ -349,6 +349,7 @@ class EntityRepository
                 $params[':created'] = date("YmdHis");
             }
 
+
             // load
             $stmt = Mimoto::service('database')->prepare($sQuery);
             $stmt->execute($params);
@@ -362,6 +363,7 @@ class EntityRepository
             }
 
         }
+
 
 
         // --- events ---

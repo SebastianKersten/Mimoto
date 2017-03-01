@@ -215,4 +215,5 @@ class SelectionController
         // 3. output
         return Mimoto::service('messages')->response((object) array('result' => 'SelectionRule deleted! '.date("Y.m.d H:i:s")), 200);
     }
+
 }

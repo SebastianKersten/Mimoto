@@ -663,19 +663,28 @@ class ExampleController
         return Mimoto::service('messages')->response('<hr>Mimoto done ..');
     }
 
-    public function viewMessageExample(Application $app)
+    public function viewArticleExample(Application $app, $nArticleId)
     {
-        // load
-        $ePerson = Mimoto::service('data')->get('person', 1);
+        // 1. load data
+        $eArticle = Mimoto::service('data')->get('article', $nArticleId);
 
-        // alter
-        $ePerson->setValue('title', date('Y.m.d H:i:s'));
+        // 2. create dom
+        $component = Mimoto::service('aimless')->createComponent('article', $eArticle);
 
-        // store
-        Mimoto::service('data')->store($ePerson);
+        // 3. output
+        return $component->render();
+    }
 
-        // send
-        return Mimoto::service('messages')->response('<hr>Mimoto done ..');
+    public function viewArticleFeedExample(Application $app)
+    {
+        // 1. load data
+        $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, 1);
+
+        // 2. create dom
+        $component = Mimoto::service('aimless')->createComponent('article_feed', $eContentSection);
+
+        // 3. output
+        return $component->render();
     }
 
 }

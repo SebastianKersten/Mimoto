@@ -9,6 +9,7 @@ use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\Component;
+use Mimoto\Core\entities\ComponentConditional;
 use Mimoto\Core\entities\File;
 use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
@@ -148,6 +149,7 @@ class CoreConfig
     const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentsection';
 
     const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
+    const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentconditional';
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
     const COREFORM_FORM_INPUTOPTION             = '_Mimoto_coreform__form_inputoption';
     const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform__form_inputvalidation';
@@ -211,6 +213,7 @@ class CoreConfig
 
             // views
             Component::getStructure(),
+            ComponentConditional::getStructure(),
 
             // content
             File::getStructure(),
@@ -269,6 +272,7 @@ class CoreConfig
 
             // views
             Component::getFormStructure(),
+            ComponentConditional::getFormStructure(),
 
             // content
             ContentSection::getFormStructure(),
@@ -393,7 +397,8 @@ class CoreConfig
                         'selections',
 
                         'contentItem',
-                        'contentItems'
+                        'contentItems',
+                        'conditionals'
                     )
                 ),
                 'notes' => array(

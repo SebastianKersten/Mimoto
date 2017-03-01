@@ -4,7 +4,9 @@
 namespace Mimoto\Core\entities;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\CoreFormUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
@@ -19,297 +21,193 @@ class ComponentConditional
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_COMPONENT,
-            'created' => CoreConfig::EPOCH,
+            'id' => CoreConfig::MIMOTO_COMPONENTCONDITIONAL,
             // ---
-            'name' => CoreConfig::MIMOTO_COMPONENT,
+            'name' => CoreConfig::MIMOTO_COMPONENTCONDITIONAL,
             'extends' => null,
-            'forms' => [],
+            'forms' => [CoreConfig::COREFORM_COMPONENTCONDITIONAL],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENT.'--name',
-                    'created' => CoreConfig::EPOCH,
+                    'id' => CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty',
                     // ---
-                    'name' => 'name',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'name' => 'entityProperty',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--name-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENT.'--file',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'file',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--file-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals',
-                    'created' => CoreConfig::EPOCH,
-                    // ---
-                    'name' => 'conditionals',
-                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
-                    'settings' => [
-                        'allowedEntityTypes' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals-allowedEntityTypes',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'allowedEntityTypes',
+                        'allowedEntityType' => (object) array(
+                            'key' => 'allowedEntityType',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_COMPONENTCONDITIONAL]
-                        ),
-                        'allowDuplicates' => (object) array(
-                            'id' => CoreConfig::MIMOTO_COMPONENT.'--conditionals-allowDuplicates',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
-                            'key' => 'allowDuplicates',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => CoreConfig::DATA_VALUE_FALSE
+                            'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
                         )
                     ]
-                )
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--value',
+                    // ---
+                    'name' => 'value',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+
             ]
         );
     }
 
     public static function getData()
     {
-        // define
-        $aCoreComponents = [
 
-            // dashboard
-
-            (object) array(
-                'name' => 'Mimoto.CMS_dashboard_Overview',
-                'file' => 'MimotoCMS/components/pages/dashboard/Overview.twig',
-                'conditionals' => []
-            ),
-
-
-            // entities
-
-            (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityOverview',
-                'file' => 'MimotoCMS/components/pages/entities/EntityOverview/EntityOverview.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityOverview_ListItem',
-                'file' => 'MimotoCMS/components/pages/entities/EntityOverview/ListItem/ListItem.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail',
-                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityDetail.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityProperty',
-                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityProperty/EntityProperty.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting',
-                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertySetting/EntityPropertySetting.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType',
-                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertySettingAllowedEntityType/EntityPropertySettingAllowedEntityType.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample',
-                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertyExample/EntityPropertyExample.twig',
-                'conditionals' => []
-            ),
+    }
 
 
 
-            // components
-
-            (object) array(
-                'name' => 'Mimoto.CMS_components_ComponentOverview',
-                'file' => 'MimotoCMS/components/pages/components/ComponentOverview/ComponentOverview.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_components_ComponentOverview_ListItem',
-                'file' => 'MimotoCMS/components/pages/components/ComponentOverview/ListItem/ListItem.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_components_ComponentDetail',
-                'file' => 'MimotoCMS/components/pages/components/ComponentDetail/ComponentDetail.twig',
-                'conditionals' => []
-            ),
+    // ----------------------------------------------------------------------------
+    // --- Form -------------------------------------------------------------------
+    // ----------------------------------------------------------------------------
 
 
-            // content
-
-            (object) array(
-                'name' => 'Mimoto.CMS_content_ContentOverview',
-                'file' => 'MimotoCMS/content/pages/content/Overview.twig',
-                'conditionals' => []
-            ),
-
-
-            // actions
-
-            (object) array(
-                'name' => 'Mimoto.CMS_actions_ActionOverview',
-                'file' => 'MimotoCMS/components/pages/actions/Overview.twig',
-                'conditionals' => []
-            ),
-
-
-            // users
-
-            (object) array(
-                'name' => 'Mimoto.CMS_users_UserOverview',
-                'file' => 'MimotoCMS/components/pages/users/Overview.twig',
-                'conditionals' => []
-            ),
+    /**
+     * Get form structure
+     */
+    public static function getFormStructure()
+    {
+        return (object) array(
+            'id' => CoreConfig::COREFORM_COMPONENTCONDITIONAL,
+            'name' => CoreConfig::COREFORM_COMPONENTCONDITIONAL,
+            'class' => get_class(),
+            'inputFieldIds' => [
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_COMPONENTCONDITIONAL, 'entityProperty'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_COMPONENTCONDITIONAL, 'value')
+            ]
+        );
+    }
 
 
-            // forms
+    /**
+     * Get form
+     */
+    public static function getForm()
+    {
+        // init
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_COMPONENTCONDITIONAL);
 
-            (object) array(
-                'name' => 'Mimoto.CMS_forms_FormOverview',
-                'file' => 'MimotoCMS/components/pages/forms/FormOverview/FormOverview.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_forms_FormListItem',
-                'file' => 'MimotoCMS/components/pages/forms/FormListItem/FormListItem.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_forms_FormDetail',
-                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormDetail.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_forms_FieldListItem',
-                'file' => 'MimotoCMS/components/pages/forms/FieldListItem/FieldListItem.twig',
-                'conditionals' => []
-            ),
+        // setup
+        CoreFormUtils::addField_title($form, 'Component conditional', 'The component conditional is a powerful feature to render a collection with multiple types of items (think of for instance a feed with different article types), all with different templates but for you as a developer still only <u>one</u> line of code!');
+        CoreFormUtils::addField_groupStart($form);
+
+        $field = self::getField_entityProperty();
+        $form->addValue('fields', $field);
+        self::setEntityPropertyValidation($field);
 
 
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'value', CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--value',
+            'Value', 'The property\'s value', 'Enter the value you would like to check'
+        );
+        self::setValueValidation($field);
 
-            // inputs
-
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_output_title',
-                'file' => 'MimotoCMS/components/forms/output/Title/Title.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_layout_groupstart',
-                'file' => 'MimotoCMS/components/forms/layout/GroupStart/GroupStart.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_layout_groupend',
-                'file' => 'MimotoCMS/components/forms/layout/GroupEnd/GroupEnd.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_textline',
-                'file' => 'MimotoCMS/components/forms/input/Textline/Textline.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_checkbox',
-                'file' => 'MimotoCMS/components/forms/input/Checkbox/Checkbox.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_multiselect',
-                'file' => 'MimotoCMS/components/forms/input/MultiSelect/MultiSelect.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_radiobutton',
-                'file' => 'MimotoCMS/components/forms/input/Radiobutton/Radiobutton.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_dropdown',
-                'file' => 'MimotoCMS/components/forms/input/Dropdown/Dropdown.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_layout_divider',
-                'file' => 'MimotoCMS/components/forms/layout/Divider/Divider.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_list',
-                'file' => 'MimotoCMS/components/forms/input/List/List.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_listItem',
-                'file' => 'MimotoCMS/components/forms/input/ListItem/ListItem.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_image',
-                'file' => 'MimotoCMS/components/forms/input/Image/Image.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => '_MimotoAimless__interaction__form_input_video',
-                'file' => 'MimotoCMS/components/forms/input/Video/Video.twig',
-                'conditionals' => []
-            ),
-
-
-            // notification center
-
-            (object) array(
-                'name' => 'Mimoto.CMS_notifications_NotificationOverview',
-                'file' => 'MimotoCMS/components/pages/notifications/NotificationOverview/NotificationOverview.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_notifications_NotificationOverviewSmall',
-                'file' => 'MimotoCMS/components/pages/notifications/NotificationOverviewSmall/NotificationOverviewSmall.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_notifications_Notification',
-                'file' => 'MimotoCMS/components/pages/notifications/Notification/Notification.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_notifications_NotificationSmall',
-                'file' => 'MimotoCMS/components/pages/notifications/NotificationSmall/NotificationSmall.twig',
-                'conditionals' => []
-            ),
-
-        ];
+        CoreFormUtils::addField_groupEnd($form);
 
         // send
-        return $aCoreComponents;
+        return $form;
+
+
+    }
+
+
+    // ----------------------------------------------------------------------------
+    // --- private methods---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Get field: entityProperty
+     */
+    private static function getField_entityProperty()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_COMPONENTCONDITIONAL, 'entityProperty');
+        $field->setValue('label', 'The property');
+        $field->setValue('description', "Select the property you want to connect");
+
+        // 2. connect to property
+        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $connectedEntityProperty->setId(CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty');
+        $field->setValue('value', $connectedEntityProperty);
+
+        // load
+        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
+        $nEntityCount = count($aEntities);
+        for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
+        {
+            // register
+            $entity = $aEntities[$nEntityIndex];
+
+            // read
+            $aEntityProperties = $entity->getValue('properties');
+            $nEntityPropertyCount = count($aEntityProperties);
+            for ($nEntityPropertyIndex = 0; $nEntityPropertyIndex < $nEntityPropertyCount; $nEntityPropertyIndex++)
+            {
+                // register
+                $entityProperty = $aEntityProperties[$nEntityPropertyIndex];
+
+                // compose
+                $sLabel = $entity->getValue('name').'.'.$entityProperty->getValue('name');
+
+
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
+                $option->setValue('label', $sLabel);
+                $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
+
+                $field->addValue('options', $option);
+            }
+        }
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Set entityProperty validation
+     */
+    private static function setEntityPropertyValidation($field)
+    {
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_COMPONENTCONDITIONAL.'--entityProperty_value_validation1');
+        $validationRule->setValue('type', 'minchars');
+        $validationRule->setValue('value', 1);
+        $validationRule->setValue('errorMessage', "Please select one of the properties");
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
+    }
+
+
+    /**
+     * Set value validation
+     */
+    private static function setValueValidation($field)
+    {
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_COMPONENTCONDITIONAL.'--value_value_validation1');
+        $validationRule->setValue('type', 'regex_custom');
+        $validationRule->setValue('value', '^[a-zA-Z0-9_-]*$');
+        $validationRule->setValue('errorMessage', 'Value can only contain the characters [a-zA-Z0-9-_]');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
     }
 
 }

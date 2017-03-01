@@ -11,7 +11,7 @@
  Target Server Version : 50711
  File Encoding         : utf-8
 
- Date: 02/27/2017 14:43:10 PM
+ Date: 03/01/2017 10:32:33 AM
 */
 
 SET NAMES utf8mb4;
@@ -47,10 +47,8 @@ CREATE TABLE `_Mimoto_component` (
 DROP TABLE IF EXISTS `_Mimoto_componentconditional`;
 CREATE TABLE `_Mimoto_componentconditional` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `template_id` int(10) unsigned NOT NULL,
-  `key` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `value` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `created` datetime NOT NULL,
+  `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

@@ -1,0 +1,63 @@
+{%
+    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
+        id: 'componentdetails',
+        tabs: [
+            {
+                label: 'Component configuration',
+                panel_id: 'panel_componentdetail_info'
+            }
+        ]
+    }
+%}
+    {% block panels %}
+
+        <!-- structure -->
+
+        <div id="panel_componentdetail_info" class="MimotoCMS_pages_components_ComponentDetail__panel">
+
+            <div class="MimotoCMS_pages_components_ComponentDetail_Structure">
+
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta">
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_info">
+
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentfile" {{ Aimless.realtime('file') }}>{{ Aimless.data('file') }}</div>
+
+                    </div>
+
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="MimotoCMS_pages_components_ComponentDetail__block">
+
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_empty" {{ Aimless.showOnEmpty('conditionals') }}>
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_explanation">
+                        This component has no conditionals, but since this is optional I'm not
+                        going to bother you too much about it. Remember however that this opens
+                        the powerful feature to render for example a feed with multiple types of
+                        items, all with different templates but for you as a developer still only
+                        <u>one</u> line of code!
+                    </div>
+                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                </div>
+
+                <div {{ Aimless.hideOnEmpty('conditionals') }}>
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container" {{ Aimless.realtime('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}>
+                        {{ Aimless.render('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}
+                    </div>
+
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    {% endblock %}
+{% endembed %}

@@ -141,6 +141,8 @@ module.exports.prototype = {
 
     notificationClose: function(sEntityType, nNotificationId)
     {
+        // 1. remove 8 and 9 (will be handled by the api call response)
+        
         // 8. find field
         var aNotifications = $("[data-aimless-id='" + sEntityType + '.' + nNotificationId + "']");
 
@@ -176,6 +178,11 @@ module.exports.prototype = {
         //popup.on('success') = popup.close();
     },
     
+    componentView: function(nComponentId)
+    {
+        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
+    },
+    
     componentEdit: function(nComponentId)
     {
         Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
@@ -194,6 +201,49 @@ module.exports.prototype = {
         });
     },
     
+    
+    componentConditionalNew: function(nComponentId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/conditional/new');
+    },
+    
+    componentConditionalEdit: function(nComponentConditionalId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
+    },
+    
+    componentConditionalDelete: function(nComponentConditionalId)
+    {
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/componentconditional/' + nComponentConditionalId + '/delete',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
+    },
+    
+    
+    
+    
+    //
+    //
+    // /**
+    //  * Create new component
+    //  */
+    // eNew: function(nEntityId)
+    // {
+    //     var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
+    //
+    //     // Mimoto.Aimless/data/
+    //
+    //
+    //     popup() / page()
+    // },
+    //
+    //
     
     /**
      * Selections

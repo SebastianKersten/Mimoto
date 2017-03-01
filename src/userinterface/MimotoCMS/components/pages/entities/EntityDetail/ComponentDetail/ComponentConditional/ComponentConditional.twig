@@ -1,0 +1,13 @@
+<div class="MimotoCMS_pages_components_ComponentConditional" {{ Aimless.realtime() }}>
+
+    <div class="MimotoCMS_pages_components_ComponentConditional__data">
+        <div class="MimotoCMS_pages_components_ComponentConditional__name">
+            <span {{ Aimless.realtime('entityProperty.name') }}>{{ Aimless.render('entityProperty.name') }}</span> =
+            "<span {{ Aimless.realtime('value') }} >{{ Aimless.render('value') }}</span>"
+        </div>
+    </div>
+    <div class="MimotoCMS_pages_components_ComponentConditional__menu">
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.componentConditionalEdit('" ~ Aimless.meta('id') ~ "');" }) }}
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.componentConditionalDelete('" ~ Aimless.meta('id') ~ "');" }) }}
+    </div>
+</div>

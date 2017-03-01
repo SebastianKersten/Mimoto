@@ -60,7 +60,7 @@ class MimotoEntityProperty_Value extends MimotoEntityProperty implements MimotoE
      */
     public function getSubtype($sSubpropertySelector = null)
     {
-        return $this->_config->subtype;
+        return (isset($this->_config->subtype)) ? $this->_config->subtype : '';
     }
 
 

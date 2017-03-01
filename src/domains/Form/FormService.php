@@ -94,7 +94,7 @@ class FormService
         }
 
         // if here, broadcast error
-        Mimoto::service('log')->error('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> in the database");
+        Mimoto::service('log')->error('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> associated to the entity you are trying to create or edit.", true);
     }
 
     public function getFormFieldByFieldId($nRequestedFieldId)

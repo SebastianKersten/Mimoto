@@ -96,6 +96,10 @@ class Mimoto
         $app->get ('/mimoto.cms/component/{nComponentId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentEdit');
         $app->get ('/mimoto.cms/component/{nComponentId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentDelete');
 
+        $app->get ('/mimoto.cms/component/{nComponentId}/conditional/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentConditionalNew');
+        $app->get ('/mimoto.cms/componentconditional/{nComponentConditionalId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentConditionalEdit');
+        $app->get ('/mimoto.cms/componentconditional/{nComponentConditionalId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentConditionalDelete');
+
         // Content
         $app->get ('/mimoto.cms/selection/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionNew');
         $app->get ('/mimoto.cms/selection/{nSelectionId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionView');
