@@ -1,13 +1,44 @@
-<div class="MimotoCMS_pages_components_ComponentConditional" {{ Aimless.realtime() }}>
+{% set bConfiguredCorrectly = true %}
+
+<div class="MimotoCMS_pages_components_ComponentConditional" {{ Aimless.realtime() }} data-aimless-reloadonchange="true">
 
     <div class="MimotoCMS_pages_components_ComponentConditional__data">
         <div class="MimotoCMS_pages_components_ComponentConditional__name">
-            <span {{ Aimless.realtime('entityProperty.name') }}>{{ Aimless.render('entityProperty.name') }}</span> =
-            "<span {{ Aimless.realtime('value') }} >{{ Aimless.render('value') }}</span>"
+
+            {% if Aimless.data('type') == 'entityType' %}
+                {% if Aimless.data('entityType') is empty %}
+                    Please provide an entity type ..
+                    {% set bConfiguredCorrectly = false %}
+                {% else %}
+                    When the type of the entity is "<span {{ Aimless.realtime('entityType.name') }}>{{ Aimless.render('entityType.name') }}</span>"
+                {% endif %}
+            {% elseif Aimless.data('type') == 'propertyValue' %}
+                {% if Aimless.data('entityProperty') is empty %}
+                    Please provide a property ..
+                    {% set bConfiguredCorrectly = false %}
+                {% else %}
+                    When the property
+                    "<span {{ Aimless.realtime('entityProperty.name') }}>{{ Aimless.render('entityProperty.name') }}</span>"
+                    equals "<span {{ Aimless.realtime('value') }} >{{ Aimless.render('value') }}</span>"
+                {% endif %}
+            {% else %}
+                This conditional hasn't been configured correctly yet .. please edit!
+                {% set bConfiguredCorrectly = false %}
+            {% endif %}
+
         </div>
     </div>
     <div class="MimotoCMS_pages_components_ComponentConditional__menu">
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.componentConditionalEdit('" ~ Aimless.meta('id') ~ "');" }) }}
+
+        {% if bConfiguredCorrectly %}
+            {% set sButtonLabel = 'Edit' %}
+            {% set sButtonType = 'secondary' %}
+        {% else %}
+            {% set sButtonLabel = 'Fix' %}
+            {% set sButtonType = 'alert' %}
+        {% endif %}
+
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:sButtonLabel, types:['small', sButtonType], onclick:"Mimoto.CMS.componentConditionalEdit('" ~ Aimless.meta('id') ~ "');" }) }}
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.componentConditionalDelete('" ~ Aimless.meta('id') ~ "');" }) }}
     </div>
 </div>

@@ -216,10 +216,9 @@ class ContentSection
         $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_CONTENTSECTION, 'type');
         $field->setValue('label', 'Type');
 
-        // 3a. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type');
-        $field->setValue('value', $connectedEntityProperty);
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_CONTENTSECTION, 'type');
+
 
         // 3b. set options
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
@@ -257,10 +256,9 @@ class ContentSection
         $field->setValue('label', 'Form');
         $field->setValue('description', "What form would you like to use?");
 
-        // 2. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--form');
-        $field->setValue('value', $connectedEntityProperty);
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_CONTENTSECTION, 'form');
+
 
         // load
         $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);

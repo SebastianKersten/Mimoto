@@ -212,10 +212,9 @@ class EntityProperty
         $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_ENTITYPROPERTY, 'type');
         $field->setValue('label', 'Type');
 
-        // 3. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--type');
-        $field->setValue('value', $connectedEntityProperty);
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ENTITYPROPERTY, 'type');
+
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-value');

@@ -192,13 +192,14 @@ class CoreFormUtils
     /**
      * Get field: groupStart
      */
-    public static function addField_groupStart(MimotoEntity $form, $sTitle = null)
+    public static function addField_groupStart(MimotoEntity $form, $sTitle = null, $sGroupId = '')
     {
         // register
         $sFormId = $form->getId();
 
         // 1. create
         $field = self::createField(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART, $sFormId, 'groupstart');
+        $field->setId(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART.$sGroupId);
 
         // compose
         if (!empty($sTitle)) $field->setValue('title', $sTitle);
@@ -210,13 +211,14 @@ class CoreFormUtils
     /**
      * Get field: groupEnd
      */
-    public static function addField_groupEnd(MimotoEntity $form)
+    public static function addField_groupEnd(MimotoEntity $form, $sGroupId = '')
     {
         // register
         $sFormId = $form->getId();
 
         // 1. create
         $field = self::createField(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND, $sFormId, 'groupend');
+        $field->setId(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND.$sGroupId);
 
         // store
         $form->addValue('fields', $field);
@@ -239,6 +241,7 @@ class CoreFormUtils
 
         $field->setValue('label', $sLabel);
         $field->setValue('option', $sOption);
+
 
         // 2. connect to property
         $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);

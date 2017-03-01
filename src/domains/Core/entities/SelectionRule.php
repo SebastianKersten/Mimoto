@@ -124,10 +124,9 @@ class SelectionRule
         $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_SELECTIONRULE, 'type');
         $field->setValue('label', 'Type');
 
-        // 3. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTY.'--type');
-        $field->setValue('value', $connectedEntityProperty);
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTIONRULE, 'type');
+
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::MIMOTO_SELECTIONRULE.'--type_value_options-value');

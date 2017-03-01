@@ -69,10 +69,9 @@ class EntityPropertyForm_Collection_allowedEntityTypes
         $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES, 'type');
         $field->setValue('label', 'Allowed entity types');
 
-        // 2. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityTypes');
-        $field->setValue('value', $connectedEntityProperty);
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, 'allowedEntityTypes');
+
 
         // load
         $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);

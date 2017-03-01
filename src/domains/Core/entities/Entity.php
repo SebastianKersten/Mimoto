@@ -232,10 +232,9 @@ class Entity
         $field->setValue('label', 'Extend other entity');
         $field->setValue('description', "Inherit that entity's properties");
 
-        // 2. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_ENTITY.'--extends');
-        $field->setValue('value', $connectedEntityProperty);
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ENTITY, 'extends');
+
 
         // load
         $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);

@@ -18,6 +18,10 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 class ComponentConditional
 {
 
+    const ENTITY_TYPE = 'entityType';
+    const PROPERTY_VALUE = 'propertyValue';
+
+
     public static function getStructure()
     {
         return (object) array(
@@ -27,6 +31,32 @@ class ComponentConditional
             'extends' => null,
             'forms' => [CoreConfig::COREFORM_COMPONENTCONDITIONAL],
             'properties' => [
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--type',
+                    // ---
+                    'name' => 'type',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityType',
+                    // ---
+                    'name' => 'entityType',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => 'allowedEntityType',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => CoreConfig::MIMOTO_ENTITY
+                        )
+                    ]
+                ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty',
                     // ---
@@ -52,7 +82,7 @@ class ComponentConditional
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
-                ),
+                )
 
             ]
         );
@@ -97,11 +127,22 @@ class ComponentConditional
 
         // setup
         CoreFormUtils::addField_title($form, 'Component conditional', 'The component conditional is a powerful feature to render a collection with multiple types of items (think of for instance a feed with different article types), all with different templates but for you as a developer still only <u>one</u> line of code!');
+
         CoreFormUtils::addField_groupStart($form);
+        $form->addValue('fields', $field = self::getField_type());
+        CoreFormUtils::addField_groupEnd($form);
+
+
+        CoreFormUtils::addField_groupStart($form, 'Settings for entity type', 'group_entityType');
+        $form->addValue('fields', $field = self::getField_entityType());
+        CoreFormUtils::addField_groupEnd($form, 'group_entityType');
+
+
+        CoreFormUtils::addField_groupStart($form, 'Settings for property value', 'group_propertyValue');
 
         $field = self::getField_entityProperty();
         $form->addValue('fields', $field);
-        self::setEntityPropertyValidation($field);
+        //self::setEntityPropertyValidation($field);
 
 
         $field = CoreFormUtils::addField_textline
@@ -109,9 +150,9 @@ class ComponentConditional
             $form, 'value', CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--value',
             'Value', 'The property\'s value', 'Enter the value you would like to check'
         );
-        self::setValueValidation($field);
+        //self::setValueValidation($field);
 
-        CoreFormUtils::addField_groupEnd($form);
+        CoreFormUtils::addField_groupEnd($form, 'group_propertyValue');
 
         // send
         return $form;
@@ -126,6 +167,85 @@ class ComponentConditional
 
 
     /**
+     * Get field: type
+     */
+    private static function getField_type()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_COMPONENTCONDITIONAL, 'type');
+        $field->setValue('label', 'Type');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_COMPONENTCONDITIONAL, 'type');
+
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_COMPONENTCONDITIONAL.'--type_value_option-entityType');
+        $option->setValue('label', ComponentConditional::ENTITY_TYPE);
+        $option->setValue('value', ComponentConditional::ENTITY_TYPE);
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_COMPONENTCONDITIONAL.'--type_value_option-propertyValue');
+        $option->setValue('label', ComponentConditional::PROPERTY_VALUE);
+        $option->setValue('value', ComponentConditional::PROPERTY_VALUE);
+        $field->addValue('options', $option);
+
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_COMPONENTCONDITIONAL.'--type_value_validation1');
+        $validationRule->setValue('type', 'regex_custom');
+        $validationRule->setValue('value', '^('.ComponentConditional::ENTITY_TYPE.'|'.ComponentConditional::PROPERTY_VALUE.')$');
+        $validationRule->setValue('errorMessage', 'Select one of the above types');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: entityType
+     */
+    private static function getField_entityType()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_ENTITY, 'entityType');
+        $field->setValue('label', 'Entity type');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_COMPONENTCONDITIONAL, 'entityType');
+
+
+
+        // 1. use core selection with exclusion of current
+
+
+
+        // load
+        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
+
+        $nEntityCount = count($aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            // register
+            $entity = $aEntities[$i];
+
+            //output('$entity->getValue(\'name\')', $entity->getValue('name'));
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option->setId(CoreConfig::COREFORM_ENTITY.'--entityType_value_options-valuesettings-collection-'.$entity->getId());
+            $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
+            $option->setValue('label', $entity->getValue('name'));
+            $field->addValue('options', $option);
+        }
+
+        // send
+        return $field;
+    }
+
+
+
+    /**
      * Get field: entityProperty
      */
     private static function getField_entityProperty()
@@ -135,10 +255,9 @@ class ComponentConditional
         $field->setValue('label', 'The property');
         $field->setValue('description', "Select the property you want to connect");
 
-        // 2. connect to property
-        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
-        $connectedEntityProperty->setId(CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty');
-        $field->setValue('value', $connectedEntityProperty);
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_COMPONENTCONDITIONAL, 'entityProperty');
+
 
         // load
         $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);

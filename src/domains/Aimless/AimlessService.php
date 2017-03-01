@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Core\entities\ComponentConditional;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\entities\Component;
@@ -186,11 +187,31 @@ class AimlessService
                     {
                         $conditional = $template->conditionals[$nConditionalIndex];
 
-                        if ($entity->getValue($conditional->key) !== $conditional->value)
+                        switch($conditional->type)
                         {
-                            $bValidated = false;
-                            break;
+                            case ComponentConditional::ENTITY_TYPE:
+
+                                if (!empty($entity))
+                                {
+                                    if ($entity->getEntityTypeName() !== $conditional->entityName)
+                                    {
+                                        $bValidated = false;
+                                        break;
+                                    }
+                                }
+                                break;
+
+                            case ComponentConditional::PROPERTY_VALUE:
+
+                                if ($entity->getValue($conditional->propertyName) !== $conditional->value)
+                                {
+                                    $bValidated = false;
+                                    break;
+                                }
+                                break;
                         }
+
+
                     }
                     
                     if ($bValidated) { return $template->file; }
@@ -308,7 +329,7 @@ class AimlessService
         {
             $conditional = (object) array(
                 'id' => $row['id'],
-                'value' => $row['value'],
+                'type' => $row['type'],
                 'created' => $row['created']
             );
 
@@ -327,26 +348,49 @@ class AimlessService
                         // register
                         $rawConnection = $aComponentConditionalConnections[$template->id][$nConnectionIndex];
 
+                        // verify
                         if ($rawConnection->child_id == $conditional->id)
                         {
 
-                            // find
-                            $nPropertyConnectionCount = count($aEntityPropertyConnections[$rawConnection->child_id]);
-                            for ($nPropertyConnectionIndex = 0; $nPropertyConnectionIndex < $nPropertyConnectionCount; $nPropertyConnectionIndex++)
+                            if (isset($aEntityPropertyConnections[$rawConnection->child_id]))
                             {
-                                // register
-                                $rawEntityPropertyConnection = $aEntityPropertyConnections[$rawConnection->child_id][$nPropertyConnectionIndex];
-
-                                // verify
-                                if ($rawEntityPropertyConnection->parent_id == $rawConnection->child_id)
+                                // find
+                                $nPropertyConnectionCount = count($aEntityPropertyConnections[$rawConnection->child_id]);
+                                for ($nPropertyConnectionIndex = 0; $nPropertyConnectionIndex < $nPropertyConnectionCount; $nPropertyConnectionIndex++)
                                 {
-                                    // get property name
-                                    $conditional->key = Mimoto::service('config')->getPropertyNameById($rawEntityPropertyConnection->child_id);
+                                    // register
+                                    $rawEntityPropertyConnection = $aEntityPropertyConnections[$rawConnection->child_id][$nPropertyConnectionIndex];
 
-                                    // store
-                                    $template->conditionals[] = $conditional;
+                                    // verify
+                                    if ($rawEntityPropertyConnection->parent_id == $rawConnection->child_id)
+                                    {
 
-                                    break;
+                                        if (
+                                            $conditional->type == ComponentConditional::ENTITY_TYPE &&
+                                            $rawEntityPropertyConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityType'
+                                        ) {
+                                            // setup
+                                            $conditional->entityName = Mimoto::service('config')->getEntityNameById($rawEntityPropertyConnection->child_id);
+
+                                            // store
+                                            $template->conditionals[] = $conditional;
+                                            break;
+                                        }
+
+                                        if (
+                                            $conditional->type == ComponentConditional::PROPERTY_VALUE &&
+                                            $rawEntityPropertyConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty'
+                                        ) {
+
+                                            // setup
+                                            $conditional->propertyName = Mimoto::service('config')->getPropertyNameById($rawEntityPropertyConnection->child_id);
+                                            $conditional->value = $row['value'];
+
+                                            // store
+                                            $template->conditionals[] = $conditional;
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -354,7 +398,7 @@ class AimlessService
                 }
             }
         }
-
+        
 
         // add core components
         $aTemplates = array_merge($aTemplates, Component::getData());
