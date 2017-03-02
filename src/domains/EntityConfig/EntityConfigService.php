@@ -381,14 +381,13 @@ class EntityConfigService
         $eEntity = self::getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
 
         // 4. register
-        $sOldPropertyName = $eEntityProperty->getValue('name', false, true);
-        $sNewPropertyName = $eEntityProperty->getValue('name');
+        $sPropertyName = $eEntityProperty->getValue('name');
 
         // 5. determine
-        $sColumnType = $this->getColumnTypeFromSetting($eEntityProperty);
+        $sNewColumnType = $this->getColumnTypeFromSetting($eEntityProperty);
 
         // 6. rename
-        //EntityConfigTableUtils::renamePropertyColumn($eEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
+        EntityConfigTableUtils::alterPropertyColumnType($eEntity->getValue('name'), $sPropertyName, $sNewColumnType);
     }
 
     public function getParent($sParentEntityTypeId, $sParentPropertyId, MimotoEntity $child)
@@ -456,7 +455,7 @@ class EntityConfigService
             $setting = $aSettings[$nSettingIndex];
 
             // verify
-            if ($setting->getValue('name') == EntityConfig::SETTING_VALUE_TYPE)
+            if ($setting->getValue('key') == EntityConfig::SETTING_VALUE_TYPE)
             {
                 $sColumnType = $setting->getValue('value');
                 break;

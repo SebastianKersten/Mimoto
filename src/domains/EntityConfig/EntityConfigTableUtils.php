@@ -112,6 +112,17 @@ class EntityConfigTableUtils
         if ($stmt->execute($params) === false) error("Error while renaming column '$sOldPropertyName' to entity table '$sEntityName'");
     }
 
+    public static function alterPropertyColumnType($sEntityName, $sPropertyName, $sColumnType)
+    {
+        // 1. convert
+        $sDataType = self::getColumnDataType($sColumnType);
+
+        // 2. add column to table
+        $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` MODIFY `".$sPropertyName."` ".$sDataType);
+        $params = array();
+        if ($stmt->execute($params) === false) error("Error while changing the type of column '$sPropertyName' of entity table '$sEntityName' to '$sDataType'");
+    }
+
     public static function removePropertyColumnFromEntityTable($sEntityName, $sPropertyName)
     {
         // 2. add column to table
@@ -127,7 +138,7 @@ class EntityConfigTableUtils
         switch($sColumnType)
         {
             case 'textline': $sDataType = "VARCHAR(255)"; break;
-            case 'textblock': $sDataType = "TEXT"; break;
+            case 'textblock': $sDataType = "TEXT NOT NULL"; break;
             case 'boolean': $sDataType = "ENUM('0','1')"; break;
         }
 
