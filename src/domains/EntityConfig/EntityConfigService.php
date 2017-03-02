@@ -5,6 +5,7 @@ namespace Mimoto\EntityConfig;
 
 // Mimoto classes
 use Mimoto\Core\CoreFormUtils;
+use Mimoto\Core\entities\Entity;
 use Mimoto\Mimoto;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Core\CoreConfig;
@@ -202,9 +203,10 @@ class EntityConfigService
 
                     if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
                     {
-                        // get column type
-                        $sColumnType = 'textline';
+                        // load
+                        $sColumnType = $this->getColumnTypeFromSetting($entityProperty);
 
+                        // search
                         $sColumnOnTheLeft = $this->getColumnOntheLeft($entity, $entityProperty->getValue('name'));
 
                         // add
@@ -216,7 +218,7 @@ class EntityConfigService
             // 4b. change sortindex
             if (isset($aChanges['properties']->changed))
             {
-
+                // 1. do nothing
             }
 
 
@@ -333,79 +335,60 @@ class EntityConfigService
         $this->flushEntityConfigCache();
     }
 
-    public function onEntityPropertyUpdated(MimotoEntity $entityProperty)
+    public function onEntityPropertyUpdated(MimotoEntity $eEntityProperty)
     {
         // 1. verify
-        if ($entityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
+        if ($eEntityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
 
         // 2. check if changes were made
-        if (!$entityProperty->hasChanges()) return;
+        if (!$eEntityProperty->hasChanges()) return;
 
         // 3. read changes
-        $aChanges = $entityProperty->getChanges();
+        $aChanges = $eEntityProperty->getChanges();
 
         // 4. check if name was changed
         if (!isset($aChanges['name'])) return;
 
         // 5. register
-        $sOldPropertyName = $entityProperty->getValue('name', false, true);
-        $sNewPropertyName = $entityProperty->getValue('name');
+        $sOldPropertyName = $eEntityProperty->getValue('name', false, true);
+        $sNewPropertyName = $eEntityProperty->getValue('name');
 
         // 6. get parent entity
-        $parentEntity = $this->getParentEntity($entityProperty); // #todo foei!
+        $eEntity = self::getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
 
         // 7. check if parentEntity is known (something to do with store and acceptChanges)
-        if (empty($parentEntity)) return;
+        if (empty($eEntity)) return;
 
+        // 8 verify
+        if ($eEntityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return;
 
-        if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
-        {
-            // 7. prepare
-            $sColumnType = 'textline'; //$this->getColumnTypeFromSetting($entityProperty);
+        // 9. determinde
+        $sColumnType = $this->getColumnTypeFromSetting($eEntityProperty);
 
-            // 8. rename
-            EntityConfigTableUtils::renamePropertyColumn($parentEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
-        }
+        // 10. rename
+        EntityConfigTableUtils::renamePropertyColumn($eEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
     }
 
-    public function getParentEntity(MimotoEntity $entityProperty)
+    public function onEntityPropertySettingUpdated(MimotoEntity $eEntityPropertySetting)
     {
-        // load all connections
-        $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTION."` WHERE ".
-            "parent_entity_type_id = :parent_entity_type_id && ".
-            "parent_property_id = :parent_property_id && ".
-            "child_entity_type_id = :child_entity_type_id && ".
-            "child_id = :child_id ".
-            "ORDER BY parent_id ASC, sortindex ASC"
-        );
-        $params = array(
-            ':parent_entity_type_id' => CoreConfig::MIMOTO_ENTITY,
-            ':parent_property_id' => CoreConfig::MIMOTO_ENTITY.'--properties',
-            ':child_entity_type_id' => $entityProperty->getEntityTypeId(),
-            ':child_id' => $entityProperty->getId(),
-        );
-        $stmt->execute($params);
+        // 1. load parent property
+        $eEntityProperty = self::getParent(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings', $eEntityPropertySetting);
 
-        //output('$stmt', $stmt);
-        //output('$params', $params);
+        // 2. verify
+        if ($eEntityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return;
 
-        // load
-        $aResults = $stmt->fetchAll();
+        // 3. load parent entity
+        $eEntity = self::getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
 
-        // register
-        $nResultCount = count($aResults);
+        // 4. register
+        $sOldPropertyName = $eEntityProperty->getValue('name', false, true);
+        $sNewPropertyName = $eEntityProperty->getValue('name');
 
-        //output('$nResultCount', $nResultCount);
+        // 5. determine
+        $sColumnType = $this->getColumnTypeFromSetting($eEntityProperty);
 
-        // validate
-        if ($nResultCount != 1) return null;
-
-        // load
-        $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $aResults[0]['parent_id']);
-
-        // send
-        return $entity;
+        // 6. rename
+        //EntityConfigTableUtils::renamePropertyColumn($eEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
     }
 
     public function getParent($sParentEntityTypeId, $sParentPropertyId, MimotoEntity $child)

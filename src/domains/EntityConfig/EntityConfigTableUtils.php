@@ -126,7 +126,9 @@ class EntityConfigTableUtils
         $sDataType = null;
         switch($sColumnType)
         {
-            case 'textline': $sDataType = 'VARCHAR(255)'; break;
+            case 'textline': $sDataType = "VARCHAR(255)"; break;
+            case 'textblock': $sDataType = "TEXT"; break;
+            case 'boolean': $sDataType = "ENUM('0','1')"; break;
         }
 
         // 2. verify specs
@@ -139,4 +141,5 @@ class EntityConfigTableUtils
         // send
         return $sDataType;
     }
+
 }

@@ -343,6 +343,12 @@ class CoreConfig
                 'type' => 'sync'
             ),
             (object) array(
+                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'.updated',
+                'service' => 'Aimless',
+                'request' => 'onEntityPropertySettingUpdated',
+                'type' => 'sync'
+            ),
+            (object) array(
                 'trigger' => CoreConfig::MIMOTO_NOTIFICATION.'.created',
                 'service' => 'Aimless',
                 'request' => 'sendSlackNotification',

@@ -22,7 +22,7 @@
             </div>
             <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-image-upload-value"/>
         </div>
-        <script>Mimoto.form.setupImageField('{{ Aimless.meta('type')~"."~Aimless.meta('id') }}', '{{ Aimless.field() }}');</script>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupImageField, '{{ Aimless.meta('type')~"."~Aimless.meta('id') }}', '{{ Aimless.field() }}');</script>
     {% endblock %}
 
 {% endembed %}

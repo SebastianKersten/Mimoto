@@ -419,13 +419,14 @@ class AimlessService
     {
         switch($sRequest)
         {
-            case 'dataUpdate':              $this->dataUpdate($data, $config); break;
-            case 'dataCreate':              $this->dataCreate($data, $config); break;
-            case 'sendSlackNotification':   $this->sendSlackNotification($data, $config); break;
-            case 'createEntityTable':       Mimoto::service('config')->entityCreateTable($data); break;
-            case 'updateEntityTable':       Mimoto::service('config')->entityUpdateTable($data); break;
-            case 'onEntityPropertyCreated': Mimoto::service('config')->onEntityPropertyCreated($data); break;
-            case 'onEntityPropertyUpdated': Mimoto::service('config')->onEntityPropertyUpdated($data); break;
+            case 'dataUpdate':                      $this->dataUpdate($data, $config); break;
+            case 'dataCreate':                      $this->dataCreate($data, $config); break;
+            case 'sendSlackNotification':           $this->sendSlackNotification($data, $config); break;
+            case 'createEntityTable':               Mimoto::service('config')->entityCreateTable($data); break;
+            case 'updateEntityTable':               Mimoto::service('config')->entityUpdateTable($data); break;
+            case 'onEntityPropertyCreated':         Mimoto::service('config')->onEntityPropertyCreated($data); break;
+            case 'onEntityPropertyUpdated':         Mimoto::service('config')->onEntityPropertyUpdated($data); break;
+            case 'onEntityPropertySettingUpdated':  Mimoto::service('config')->onEntityPropertySettingUpdated($data); break;
 
             default:
                 
