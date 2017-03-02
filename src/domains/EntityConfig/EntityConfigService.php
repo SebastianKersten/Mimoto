@@ -257,9 +257,10 @@ class EntityConfigService
         {
             // register
             $sPropertyName = $aAllProperties[$nPropertyIndex]->getValue('name');
+            $sPropertyType = $aAllProperties[$nPropertyIndex]->getValue('type');
 
             // verify
-            if ($sPropertyName != $sRequestedColumn)
+            if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE && $sPropertyName != $sRequestedColumn)
             {
                 $sColumnOnTheLeft = $sPropertyName;
                 break;
