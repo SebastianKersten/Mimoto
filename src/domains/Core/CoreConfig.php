@@ -38,6 +38,7 @@ use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
+use Mimoto\Selection\SelectionRuleTypes;
 
 
 /**
@@ -409,6 +410,24 @@ class CoreConfig
 
         // send
         return $aActions;
+    }
+
+    public static function getCoreSelections()
+    {
+        // setup
+        $aSelections = [
+//            (object)array(
+//                'name' => CoreConfig::CORE_PREFIX . 'all_entities',
+//                'rules' => [
+//                    (object)array(
+//                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_ENTITY
+//                    )
+//                ]
+//            )
+        ];
+
+        // send
+        return $aSelections;
     }
 
 }

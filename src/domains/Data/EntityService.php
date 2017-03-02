@@ -4,8 +4,10 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Selection\SelectionRuleTypes;
 
 
 /**
@@ -159,11 +161,14 @@ class EntityService
      */
     public function find($criteria)
     {
+        // init
+        $aRequestedEntities = [];
 
-        if (isset($criteria['type']))
+
+        if (isset($criteria[SelectionRuleTypes::TYPE]) && !isset($criteria[SelectionRuleTypes::CHILDOF]))
         {
             // read
-            $sEntityType = $criteria['type'];
+            $sEntityType = $criteria[SelectionRuleTypes::TYPE];
 
             // verify
             if (!isset($this->_aEntityConfigs[$sEntityType]))
@@ -181,11 +186,97 @@ class EntityService
             }
 
             // load
-            $aEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);
+            $aRequestedEntities = $this->_entityRepository->find($this->_aEntityConfigs[$sEntityType], $criteria);
+        }
+        else
+        if (isset($criteria[SelectionRuleTypes::CHILDOF]) && isset($criteria[SelectionRuleTypes::INSTANCE]))
+        {
+            // init
+            $eParent = $criteria[SelectionRuleTypes::INSTANCE];
+
+            // convert
+            if (MimotoDataUtils::isValidEntityId($criteria[SelectionRuleTypes::INSTANCE]) && isset($criteria[SelectionRuleTypes::TYPE]) && MimotoDataUtils::isValidEntityName($criteria[SelectionRuleTypes::TYPE]))
+            {
+                // load
+                $eParent = Mimoto::service('data')->get($criteria[SelectionRuleTypes::TYPE], $criteria[SelectionRuleTypes::INSTANCE]);
+            }
+
+            // verify
+            if (!empty($eParent) && $eParent instanceof MimotoEntity)
+            {
+                // init
+                $sPropertyName = $criteria[SelectionRuleTypes::CHILDOF];
+
+                if (MimotoDataUtils::isValidPropertyId($criteria[SelectionRuleTypes::CHILDOF]))
+                {
+                    // convert
+                    $sPropertyName = Mimoto::service('config')->getPropertyNameById($criteria[SelectionRuleTypes::CHILDOF]);
+                }
+
+                // verify
+                if ($eParent->hasProperty($sPropertyName))
+                {
+                    // toggle
+                    switch($eParent->getPropertyType($sPropertyName))
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                            // load
+                            $eChild = $eParent->getValue($sPropertyName);
+
+                            // store
+                            if (!empty($eChild)) $aRequestedEntities[] = $eChild;
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                            // load
+                            $eChildren = $eParent->getValue($sPropertyName);
+
+                            // store
+                            if (!empty($eChildren)) $aRequestedEntities = array_merge($aRequestedEntities, $eChildren);
+                            break;
+                    }
+                }
+            }
         }
         
         // send
-        return $aEntities;
+        return $aRequestedEntities;
+    }
+
+    public function select($sSelectionName)
+    {
+        // init
+        $aRequestedEntities = [];
+
+        // load
+        $selection = Mimoto::service('selection')->getSelectionByName($sSelectionName);
+
+        // validate
+        if (empty($selection)) return $aRequestedEntities;
+
+
+        // search
+        $nRuleCount = count($selection->rules);
+        for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
+        {
+            // register
+            $rule = $selection->rules[$nRuleIndex];
+
+            // compose
+            $criteria = array(
+                SelectionRuleTypes::TYPE => Mimoto::service('config')->getEntityNameById($rule->entity_type_id),
+                SelectionRuleTypes::INSTANCE => $rule->instance_id,
+                SelectionRuleTypes::CHILDOF => $rule->property_id,
+            );
+
+            // load and register
+            $aRequestedEntities = array_merge(Mimoto::service('data')->find($criteria), $aRequestedEntities);
+        }
+
+        // send
+        return $aRequestedEntities;
     }
     
     

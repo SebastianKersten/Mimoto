@@ -137,16 +137,16 @@ class EntityRepository
     
     /**
      * Find a collection entities
-     * @return MimotoCollection containing zero or more entities
+     * @return array containing zero or more entities
      */
     public function find(EntityConfig $entityConfig, $criteria)
     {
         
         // init
-        $aEntities = new MimotoCollection();
+        $aEntities = []; //new MimotoCollection();
         
         // setup
-        $aEntities->setCriteria($criteria);
+        //$aEntities->setCriteria($criteria);
 
 
         $sQuery = 'SELECT * FROM `'.$entityConfig->getMySQLTable().'`';

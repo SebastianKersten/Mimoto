@@ -154,16 +154,23 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         // 2. assist
         if (empty($xEntityTypeId))
         {
-            if (count($this->_config->settings->allowedEntityTypes) == 1)
+            if ($xValue instanceof MimotoEntity)
             {
-                // 2a. auto select
-                $xEntityTypeId = $this->_config->settings->allowedEntityTypes[0]->id;
+                $xEntityTypeId = $xValue->getEntityTypeId();
             }
             else
             {
-                // 2b. report missing configuration
-                Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you are adding to the collection '".$this->_config->name."'", true);
-                return;
+                if (count($this->_config->settings->allowedEntityTypes) == 1)
+                {
+                    // 2a. auto select
+                    $xEntityTypeId = $this->_config->settings->allowedEntityTypes[0]->id;
+                }
+                else
+                {
+                    // 2b. report missing configuration
+                    Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you are adding to the collection '".$this->_config->name."'", true);
+                    return;
+                }
             }
         }
 
@@ -179,9 +186,11 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
             $nCurrentCollectionCount = count($this->_data->currentCollection);
             for ($nCurrentCollectionIndex = 0; $nCurrentCollectionIndex < $nCurrentCollectionCount; $nCurrentCollectionIndex++)
             {
-                if (!empty($connection->getChildId()) && $this->_data->currentCollection[$nCurrentCollectionIndex]->getChildId() == $connection->getChildId())
+                // validate
+                if (!empty($connection->getChildId()) && $this->_data->currentCollection[$nCurrentCollectionIndex]->getChildId() == $connection->getChildId() &&
+                    !empty($connection->getChildEntityTypeId()) && $this->_data->currentCollection[$nCurrentCollectionIndex]->getChildEntityTypeId() == $connection->getChildEntityTypeId())
                 {
-                    return;
+                    return 'No duplicates allowed';
                 }
             }
         }
@@ -216,18 +225,23 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         // 2. assist
         if (empty($xEntityTypeId))
         {
-
-
-            if (count($this->_config->settings->allowedEntityTypes) == 1)
+            if ($xValue instanceof MimotoEntity)
             {
-                // 2a. auto select
-                $xEntityTypeId = $this->_config->settings->allowedEntityTypes[0]->id;
+                $xEntityTypeId = $xValue->getEntityTypeId();
             }
             else
             {
-                // 2b. report missing configuration
-                Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you are adding to the collection '".$this->_config->name."'", true);
-                return;
+                if (count($this->_config->settings->allowedEntityTypes) == 1)
+                {
+                    // 2a. auto select
+                    $xEntityTypeId = $this->_config->settings->allowedEntityTypes[0]->id;
+                }
+                else
+                {
+                    // 2b. report missing configuration
+                    Mimoto::service('log')->error("Missing entity type on added item", "Please define the type of the item you are adding to the collection '".$this->_config->name."'", true);
+                    return;
+                }
             }
         }
 

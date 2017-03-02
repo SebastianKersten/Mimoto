@@ -220,7 +220,7 @@
 	        }
 	        catch(e)
 	        {
-	            console.log('Pusher says oops! (might have something to do with something like Privacy Badger');
+	            console.log('Pusher says oops! (might have something to do with something like Privacy Badger)');
 	        }
 	    }
 	

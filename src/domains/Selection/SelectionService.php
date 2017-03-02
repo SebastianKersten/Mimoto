@@ -4,6 +4,7 @@
 namespace Mimoto\Selection;
 
 // Mimoto classes
+use Mimoto\EntityConfig\EntityConfigUtils;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
@@ -37,7 +38,6 @@ class SelectionService
      */
     public function __construct()
     {
-        return;
         // toggle between cache or database
         if ( Mimoto::service('cache')->isEnabled() && Mimoto::service('cache')->getValue('mimoto.core.selectionconfigs'))
         {
@@ -47,8 +47,7 @@ class SelectionService
         else
         {
             // load
-            $this->_aSelectionConfigs = CoreConfig::getCoreSelections();
-            $this->_aSelectionConfigs = array_merge($this->_aSelectionConfigs, $this->loadProjectSelectionConfigs());
+            $this->_aSelectionConfigs = array_merge(CoreConfig::getCoreSelections(), $this->loadProjectSelectionConfigs());
 
             // cache
             if (Mimoto::service('cache')->isEnabled())
@@ -70,34 +69,31 @@ class SelectionService
      */
     public function getSelectionByName($sSelectionName)
     {
+        // init
+        $selection = null;
+
+        // find
         $nSelectionConfigCount = count($this->_aSelectionConfigs);
         for ($nSelectionConfigIndex = 0; $nSelectionConfigIndex < $nSelectionConfigCount; $nSelectionConfigIndex++)
         {
             // register
             $selectionConfig = $this->_aSelectionConfigs[$nSelectionConfigIndex];
 
+            // verify
             if ($selectionConfig->name == $sSelectionName)
             {
-                if (isset($selectionConfig->class) && substr($sSelectionName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
-                {
-                    // load form
-                    $selection = call_user_func(array($selectionConfig->class, 'getSelection'));
-                }
-                else
-                {
-                    // load form from database
-                    $selection = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $selectionConfig->id);
-                }
-
-                // validate and send
-                if ($selection !== false) return $selection;
+                // store
+                $selection = $selectionConfig;
+                break;
             }
         }
 
-        // if here, broadcast error
-        Mimoto::service('log')->error('Unknown form requested', "I wasn't able to find the selection with name <b>".$sSelectionName."</b> in the database");
-    }
+        // validate or report
+        if (empty($selection)) Mimoto::service('log')->silent('Unknown selection requested', "I wasn't able to find the selection with name <b>".$sSelectionName."</b> in the database");
 
+        // send
+        return $selection;
+    }
 
 
 
@@ -106,120 +102,114 @@ class SelectionService
      */
     private function loadProjectSelectionConfigs()
     {
-        // load
-        $aAllSelectionConfigs = $this->loadRawSelectionConfigData();
-        $aAllSelectionConfigConnections = $this->loadRawSelectionConfigConnectionData(CoreConfig::MIMOTO_SELECTION);
-        $aAllSelectionRules = $this->loadRawSelectionConfigConnectionData(CoreConfig::MIMOTO_SELECTIONRULE);
-
-        $nSelectionConfigCount = count($aAllSelectionConfigConnections);
-        for ($nSelectionConfigIndex = 0; $nSelectionConfigIndex < $nSelectionConfigCount; $nSelectionConfigIndex++)
-        {
-            // register
-            $selectionConfig = $aAllSelectionConfigConnections[$nSelectionConfigIndex];
-
-            // read
-            $nSelectionId = $selectionConfig->id;
-
-            // verify
-            if (isset($aAllSelectionConfigConnections[$nSelectionId]))
-            {
-                // connect
-                $nSelectionFieldCount = count($aAllSelectionConfigConnections[$nSelectionId]);
-                for ($nSelectionFieldIndex = 0; $nSelectionFieldIndex < $nSelectionFieldCount; $nSelectionFieldIndex++)
-                {
-                    // register
-                    $selectionRuleConnection = $aAllSelectionConfigConnections[$nSelectionId][$nSelectionFieldIndex];
-
-                }
-            }
-        }
-
-        // send
-        return $aAllSelectionConfigs;
-    }
-
-
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods - Raw data ---------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Load raw selection data
-     * @return array Entities
-     */
-    private function loadRawSelectionConfigData()
-    {
         // init
         $aSelections = [];
 
-        // load all entities
+        // init
+        $aAllSelections = [];
+        $aAllSelectionRuleConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTION);
+        $aAllSelectionRules = [];
+
+
+        // load all selections
         $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_SELECTION.'`');
         $params = array();
         $stmt->execute($params);
 
         foreach ($stmt as $row)
         {
-            // compose
-            $selection = (object) array(
+            // compose and store
+            $aAllSelections[] = (object) array(
                 'id' => $row['id'],
-                'created' => $row['created'],
                 'name' => $row['name'],
+                'created' => $row['created'],
                 'rules' => []
             );
-
-            // store
-            $aSelections[] = $selection;
         }
 
-        // send
-        return $aSelections;
-    }
-
-    /**
-     * Load raw connection data
-     * @param string Parent entity type id
-     * @return array Entity connections
-     */
-    private function loadRawSelectionConfigConnectionData($sParentEntityTypeId)
-    {
-        // init
-        $aConnections = [];
-
-        // load all connections
-        $stmt = Mimoto::service('database')->prepare(
-            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTION."` WHERE ".
-            "parent_entity_type_id = :parent_entity_type_id ".
-            "ORDER BY parent_id ASC, sortindex ASC"
-        );
-        $params = array(
-            ':parent_entity_type_id' => $sParentEntityTypeId
-        );
+        // load all selection rules
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_SELECTIONRULE.'`');
+        $params = array();
         $stmt->execute($params);
 
         foreach ($stmt as $row)
         {
-            // compose
-            $connection = (object) array(
-                'id' => $row['id'],                                         // the id of the connection
-                'parent_entity_type_id' => $row['parent_entity_type_id'],   // the id of the parent's entity config
-                'parent_property_id' => $row['parent_property_id'],         // the id of the parent entity's property
-                'parent_id' => $row['parent_id'],                           // the id of the parent entity
-                'child_entity_type_id' => $row['child_entity_type_id'],     // the id of the child's entity config
-                'child_id' => $row['child_id'],                             // the id of the child entity connected to the parent
-                'sortindex' => $row['sortindex']                            // the sortindex
+            // compose and store
+            $aAllSelectionRules[] = (object) array(
+                'id' => $row['id'],
+                'type' => $row['type'],
+                'entity_type_id' => $row['entity_type_id'],
+                'instance_id' => $row['instance_id'],
+                'property_id' => $row['property_id'],
+                'created' => $row['created'],
             );
+        }
 
-            // load
-            $nEntityId = $row['parent_id'];
+        // build
+        $nSelectionCount = count($aAllSelections);
+        for ($nSelectionIndex = 0; $nSelectionIndex < $nSelectionCount; $nSelectionIndex++)
+        {
+            // register
+            $selection = $aAllSelections[$nSelectionIndex];
 
-            // store
-            $aConnections[$nEntityId][] = $connection;
+            // read
+            $nSelectionId = $selection->id;
+
+            // init
+            $aRules = [];
+
+            // verify
+            if (isset($aAllSelectionRuleConnections[$nSelectionId]))
+            {
+                // connect
+                $nSelectionRuleCount = count($aAllSelectionRuleConnections[$nSelectionId]);
+                for ($nSelectionRuleIndex = 0; $nSelectionRuleIndex < $nSelectionRuleCount; $nSelectionRuleIndex++)
+                {
+                    // register
+                    $selectionRuleConnection = $aAllSelectionRuleConnections[$nSelectionId][$nSelectionRuleIndex];
+
+                    // verify
+                    if ($selectionRuleConnection->parent_id == $selection->id)
+                    {
+                        // search
+                        $nRuleCount = count($aAllSelectionRules);
+                        for ($nRuleIndex = 0;$nRuleIndex < $nRuleCount; $nRuleIndex++)
+                        {
+                            // register
+                            $rule = $aAllSelectionRules[$nRuleIndex];
+
+                            // verify
+                            if ($rule->id == $selectionRuleConnection->child_id)
+                            {
+                                // validate
+                                if (!empty($rule->entity_type_id) || !empty($rule->instance_id) || !empty($rule->property_id))
+                                {
+                                    // compose and store
+                                    $aRules[] = (object) array(
+                                        'entity_type_id' => $rule->entity_type_id,
+                                        'instance_id' => $rule->instance_id,
+                                        'property_id' => $rule->property_id
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // verify
+            if (count($aRules) > 0)
+            {
+                // store
+                $selection->rules = array_merge($selection->rules, $aRules);
+
+                // store
+                $aSelections[] = $selection;
+            }
         }
 
         // send
-        return $aConnections;
+        return $aSelections;
     }
 
 }

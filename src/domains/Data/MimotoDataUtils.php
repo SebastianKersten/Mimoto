@@ -28,6 +28,8 @@ class MimotoDataUtils
 
 
 
+
+
     public static function validatePropertyName($sPropertyName)
     {
         // check _Mimoto_ CoreConfig::CORE_PREFIX
@@ -54,10 +56,57 @@ class MimotoDataUtils
     
     public static function isValidEntityId($value)
     {
+        // validate
         if (is_object($value)) return false;
 
-        return (preg_match("/^[a-zA-Z0-9_-]{1,}$/", $value)) ? true : false;
+        // verify
+        if (is_string($value) && substr($value, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
+        {
+            return (preg_match("/^".CoreConfig::CORE_PREFIX."[a-zA-Z0-9_-]{1,}$/", $value)) ? true : false;
+        }
+        else
+        {
+            return (preg_match("/^[0-9]{1,}$/", $value)) ? true : false;
+        }
     }
+
+    public static function isValidEntityName($value)
+    {
+        // validate
+        if (is_object($value)) return false;
+
+        // verify
+        if (is_string($value) && substr($value, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
+        {
+            return (preg_match("/^".CoreConfig::CORE_PREFIX."[a-zA-Z0-9_-]{1,}$/", $value)) ? true : false;
+        }
+        else
+        {
+            return (preg_match("/^[a-zA-Z][a-zA-Z0-9_-]*$/", $value)) ? true : false;
+        }
+    }
+
+    /**
+     * Check if a propertyId is formatted correctly
+     * @param $value
+     * @return bool
+     */
+    public static function isValidPropertyId($value)
+    {
+        // validate
+        if (is_object($value)) return false;
+
+        // verify
+        if (is_string($value) && substr($value, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
+        {
+            return (preg_match("/^".CoreConfig::CORE_PREFIX."[a-zA-Z0-9_-]{1,}$/", $value)) ? true : false;
+        }
+        else
+        {
+            return (preg_match("/^[0-9]{1,}$/", $value)) ? true : false;
+        }
+    }
+
 
     /**
      * Get value type

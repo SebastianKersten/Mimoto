@@ -389,6 +389,10 @@ class MimotoEntity
      */
     public function hasProperty($sProperty)
     {
+        // validate
+        if (is_object($sProperty)) return false;
+
+        // verify
         return isset($this->_aProperties[$sProperty]);
     }
 

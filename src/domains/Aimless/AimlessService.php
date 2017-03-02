@@ -398,7 +398,7 @@ class AimlessService
                 }
             }
         }
-        
+
 
         // add core components
         $aTemplates = array_merge($aTemplates, Component::getData());

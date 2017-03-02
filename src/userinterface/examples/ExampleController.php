@@ -648,16 +648,51 @@ class ExampleController
     public function viewSelectionExample(Application $app, $nSelectionId)
     {
         // load
-        $eSelection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
-
-
+        //$eSelection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
         //output('$eSelection id='.$nSelectionId, $eSelection);
 
+
+        // --- example 1 ---
+
+//        $aEntities = Mimoto::service('data')->find(
+//            [
+//                'type' => CoreConfig::MIMOTO_CONTENTSECTION,
+//                'instance' => 1,
+//                'childOf' => 'contentItems'
+//            ]
+//        );
+
+
+        // --- example 2 ---
+
+//        $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, 2);
+//
+//        $aEntities = Mimoto::service('data')->find(
+//            [
+//                'instance' => $eContentSection,
+//                'childOf' => 'contentItem'
+//            ]
+//        );
+
+
+        // --- example 3 ---
+
+
+        //$aEntities = Mimoto::service('data')->select('all_articles');
+        $aEntities = Mimoto::service('data')->select('selection_of_articles');
+
+
+        for ($i = 0; $i < count($aEntities); $i++)
+        {
+            output('Result '.$i.' - '.$aEntities[$i]->getValue('title'));
+        }
+
+        die();
 
         //$aEntities = Mimoto::service('data')->select('test');
 
 
-        Mimoto::service('log')->silent('Yep!', date('Y.m.d H:i:s'));
+        //Mimoto::service('log')->silent('Yep!', date('Y.m.d H:i:s'));
 
         // send
         return Mimoto::service('messages')->response('<hr>Mimoto done ..');
