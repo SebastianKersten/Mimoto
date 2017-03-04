@@ -14,16 +14,26 @@
 
     {% if Aimless.data('key') == 'allowedEntityType' %}
         {% if propertySubtype != 'image' %}
-            <div {{ Aimless.realtime('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
-                {{ Aimless.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
+            <div {{ Aimless.showOnEmpty('allowedEntityType') }}>
+                <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
+            </div>
+            <div {{ Aimless.hideOnEmpty('allowedEntityType') }}>
+                <div {{ Aimless.realtime('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
+                    {{ Aimless.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
+                </div>
             </div>
         {% endif %}
     {% elseif Aimless.data('key') == 'allowedEntityTypes' %}
-        [
-            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes" {{ Aimless.realtime('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
-                {{ Aimless.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
-            </div>
-        ]
+        <div {{ Aimless.showOnEmpty('allowedEntityTypes') }}>
+            <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
+        </div>
+        <div {{ Aimless.hideOnEmpty('allowedEntityTypes') }}>
+            [
+                <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes" {{ Aimless.realtime('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
+                    {{ Aimless.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
+                </div>
+            ]
+        </div>
     {% elseif Aimless.data('key') == 'allowDuplicates' %}
         <div {{ Aimless.realtime('value') }}>{% if Aimless.data('value') %}true{% else %}false{% endif %}</div>
     {% else %}

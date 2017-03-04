@@ -88,14 +88,14 @@ class EntityPropertyForm_Entity_allowedEntityType
             $field->addValue('options', $option);
         }
 
-        // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE.'--allowedEntityType_value_validation1');
-        $validationRule->setValue('type', 'minchars');
-        $validationRule->setValue('value', 1);
-        $validationRule->setValue('errorMessage', "Value can't be empty");
-        $validationRule->setValue('trigger', 'submit');
-        $field->addValue('validation', $validationRule);
+//        // validation rule #1
+//        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+//        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE.'--allowedEntityType_value_validation1');
+//        $validationRule->setValue('type', 'minchars');
+//        $validationRule->setValue('value', 1);
+//        $validationRule->setValue('errorMessage', "Value can't be empty");
+//        $validationRule->setValue('trigger', 'submit');
+//        $field->addValue('validation', $validationRule);
 
         // send
         return $field;

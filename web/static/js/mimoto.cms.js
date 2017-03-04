@@ -29506,16 +29506,19 @@
 	        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
 	    },
 	    
-	    entityPropertyDelete:  function(nEntityPropertyId)
+	    entityPropertyDelete:  function(nEntityPropertyId, sEntityPropertyName)
 	    {
-	        // 11. send data
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
+	        var response = confirm("Are you sure you want to delete the property '" + sEntityPropertyName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+	        if (response == true) {
+	            // 11. send data
+	            Mimoto.Aimless.utils.callAPI({
+	                type: 'get',
+	                url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
 	    },
 	    
 	    
