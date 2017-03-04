@@ -76,13 +76,12 @@ class EntityRepository
         if (substr($nEntityId, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
         {
 
+
             // 1. hoe ophalen core data
             // 2. aparte functie (kent alle types)
             // 3. create default -> setId() en setName()
 
             // TEMP - ease and quick fix
-
-
 
             // prepare
             $entityData = array(
@@ -123,8 +122,10 @@ class EntityRepository
             // verify
             if (count($aResults) !== 1)
             {
-                throw new MimotoEntityException("( '-' ) - Sorry, I can't find the the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
-            } else
+                Mimoto::service('log')->silent("Entity not found", "Sorry, I can't find the the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
+                return null;
+            }
+            else
             {
                 // setup
                 $entity = $this->createEntity($entityConfig, $aResults[0]);
@@ -621,17 +622,18 @@ class EntityRepository
         // read
         $nEntityId = (!empty($result)) ? $result['id'] : null;
 
+
         // make sure an entity is available only once
         if (empty($nEntityId))
         {
             // init
             $entity = new MimotoEntity($entityConfig->getId(), $entityConfig->getName(), false);
         }
-        else if(!isset($this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)]))
+        else if (!isset($this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)]))
         {
             // init
             $entity = new MimotoEntity($entityConfig->getId(), $entityConfig->getName(), false);
-            
+
             // register
             $entity->setId($nEntityId);
             $entity->setCreated($result['created']);
@@ -648,19 +650,21 @@ class EntityRepository
 
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
-        
+
+
         // load properties
         $nPropertyCount = count($aPropertyNames);
-        for ($i = 0; $i < $nPropertyCount; $i++)
+        for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
         {
             // register
-            $sPropertyName = $aPropertyNames[$i];
+            $sPropertyName = $aPropertyNames[$nPropertyIndex];
             $propertyConfig = $entityConfig->getPropertyConfig($sPropertyName);
             $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
 
             // setup property
             $entity->setupProperty($propertyConfig);
-            
+
+            // veridy
             if (!empty($nEntityId))
             {
                 // set value
@@ -668,11 +672,15 @@ class EntityRepository
                 {
                     case EntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
 
-                        // 1. register
-                        $value = MimotoDataUtils::convertStoredValueToRuntimeValue($result[$propertyValue->mysqlColumnName], $propertyConfig->settings->type->type);
+                        // verify (Mimoto root-records like "_Mimoto_file._Mimoto_file" have no values)
+                        if (isset($result[$propertyValue->mysqlColumnName]))
+                        {
+                            // 1. register
+                            $value = MimotoDataUtils::convertStoredValueToRuntimeValue($result[$propertyValue->mysqlColumnName], $propertyConfig->settings->type->type);
 
-                        // 2. store
-                        $entity->setValue($propertyConfig->name, $value);
+                            // 2. store
+                            $entity->setValue($propertyConfig->name, $value);
+                        }
                         break;
 
                     case EntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:

@@ -91,7 +91,7 @@ class ContentSection
                         'allowedEntityType' => (object) array(
                             'key' => 'allowedEntityType',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => CoreConfig::WILDCARD
+                            'value' => null
                         )
                     ]
                 ),
@@ -104,7 +104,7 @@ class ContentSection
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::WILDCARD]
+                            'value' => []
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

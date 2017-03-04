@@ -78,8 +78,8 @@ class EntityPropertySetting
                     'settings' => [
                         'allowedEntityType' => (object) array(
                             'key' => 'allowedEntityType',
-                            'type' => '', // #todo - fixme
-                            'value' => CoreConfig::MIMOTO_ENTITY
+                            'type' => 'id',
+                            'value' => null
                         )
                     ]
                 ),
@@ -92,7 +92,7 @@ class EntityPropertySetting
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => [CoreConfig::MIMOTO_ENTITY]
+                            'value' => []
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

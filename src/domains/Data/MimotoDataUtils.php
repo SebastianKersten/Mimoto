@@ -292,12 +292,12 @@ class MimotoDataUtils
                 }
 
                 // validate config
-                if (count($aAllowedEntityTypeIds) == 0)
-                {
-                    Mimoto::service('log')->silent("Missing configuration of allowed property types", "Please define which value types are allowed to connect to property '".$sPropertyName."'");
-                    $connection = null;
-                    break;
-                }
+//                if (count($aAllowedEntityTypeIds) == 0)
+//                {
+//                    Mimoto::service('log')->silent("Missing configuration of allowed property types", "Please define which value types are allowed to connect to property '".$sPropertyName."'");
+//                    $connection = null;
+//                    break;
+//                }
 
                 // validate childEntityType
                 if (!empty($connection) && (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId())))
@@ -328,7 +328,7 @@ class MimotoDataUtils
                     }
 
                     // verify
-                    if (!$bValidated && in_array(CoreConfig::WILDCARD, $aAllowedEntityTypeIds)) $bValidated = true;
+                    if (!$bValidated && empty($aAllowedEntityTypeIds)) $bValidated = true;
 
                     // validate
                     if (!$bValidated)
@@ -393,6 +393,10 @@ class MimotoDataUtils
 
                 break;
 
+            case MimotoEntityPropertyValueTypes::VALUETYPE_INTEGER:
+
+                break;
+
             case MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN:
 
                 // convert
@@ -420,6 +424,11 @@ class MimotoDataUtils
         switch ($sType)
         {
             case MimotoEntityPropertyValueTypes::VALUETYPE_TEXT:
+
+                break;
+
+
+            case MimotoEntityPropertyValueTypes::VALUETYPE_INTEGER:
 
                 break;
 

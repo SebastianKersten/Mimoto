@@ -128,8 +128,17 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
         // 1. forward request
         if (!empty($sSubpropertySelector)) { $this->forwardSetValue($sSubpropertySelector, $xValue); return; }
 
+        // init
+        $aAllowedEntityTypes = [];
+
+        // fill
+        if (!empty($this->_config->settings->allowedEntityType->id) && !empty($this->_config->settings->allowedEntityType->name))
+        {
+            $aAllowedEntityTypes[] = $this->_config->settings->allowedEntityType;
+        }
+
         // 2. create connection
-        $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), [$this->_config->settings->allowedEntityType], $this->_config->settings->allowedEntityType->id, $this->_config->name);
+        $connection = MimotoDataUtils::createConnection($xValue, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $aAllowedEntityTypes, $this->_config->settings->allowedEntityType->id, $this->_config->name);
 
         // 3. store as persistent if change tracking is disabled
         if (!$this->_bTrackChanges) $this->_data->persistentEntity = (!empty($connection)) ? clone $connection : null;
@@ -284,8 +293,6 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
      */
     private function forwardGetValue($sPropertySelector, $bGetConnectionInfo)
     {
-
-
         // load
         $entity = $this->loadEntity();
 

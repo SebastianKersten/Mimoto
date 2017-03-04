@@ -715,6 +715,10 @@ class AimlessComponent
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
 
+
+        // 1. error when missing template
+
+
         // create
         if ($bRenderInputFieldsAsInput && $entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
         {

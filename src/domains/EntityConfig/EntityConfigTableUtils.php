@@ -138,7 +138,7 @@ class EntityConfigTableUtils
         switch($sColumnType)
         {
             case 'textline': $sDataType = "VARCHAR(255)"; break;
-            case 'textblock': $sDataType = "TEXT NOT NULL"; break;
+            case 'textblock': $sDataType = "TEXT"; break;
             case 'boolean': $sDataType = "ENUM('0','1')"; break;
         }
 

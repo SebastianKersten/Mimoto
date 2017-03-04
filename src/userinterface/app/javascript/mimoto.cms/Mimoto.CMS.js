@@ -43,7 +43,7 @@ module.exports.prototype = {
 
         //popup.on('success') = popup.close();
     },
-
+    
     // entityCreate: function(data)
     // {
     //     $.ajax({

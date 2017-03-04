@@ -54,7 +54,6 @@ class CoreConfig
 
 
     const CORE_PREFIX                           = '_Mimoto_';
-    const WILDCARD                              = '*';
     const ENTITY_NEW                            = 'TheCakeIsALie';
 
     // root

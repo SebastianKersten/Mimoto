@@ -58,7 +58,7 @@ class Form
                             // ---
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::WILDCARD]
+                            'value' => []
                         ),
                         'allowDuplicates' => (object) array(
                             'id' => CoreConfig::MIMOTO_FORM.'--fields-allowDuplicates',

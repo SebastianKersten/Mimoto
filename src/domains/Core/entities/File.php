@@ -24,7 +24,7 @@ class File
             'id' => CoreConfig::MIMOTO_FILE,
             // ---
             'name' => CoreConfig::MIMOTO_FILE,
-            'extends' => CoreConfig::MIMOTO_ENTITY,
+            'extends' => null,
             'forms' => [CoreConfig::COREFORM_FILE],
             'properties' => [
                 (object) array(
