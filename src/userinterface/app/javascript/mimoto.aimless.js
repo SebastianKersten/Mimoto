@@ -28,9 +28,6 @@ Mimoto.Aimless.realtime = new Mimoto.classes.DomRealtime();
 // connect
 document.addEventListener('DOMContentLoaded', function () {
     
-    // 1. setup webevents
-    Mimoto.Aimless.connect(false);
-    
     // update
     Mimoto.Aimless.utils.parseRequestQueue();
     

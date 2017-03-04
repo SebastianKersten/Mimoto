@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Aimless\MimotoAimlessUtils;
 
 
@@ -114,6 +115,11 @@ class AimlessComponentViewModel
     public function typeOf($sEntityTypeName)
     {
         return $this->_component->typeOf($sEntityTypeName);
+    }
+
+    public function globalValue($sKey)
+    {
+        return Mimoto::globalValue($sKey);
     }
 
 }

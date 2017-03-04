@@ -26,6 +26,7 @@ class Mimoto
 
     private static $_aServices = [];
     private static $_aValues = [];
+    private static $_aGlobalValues = [];
 
 
     const DATA = 'data';
@@ -198,6 +199,17 @@ class Mimoto
         }
     }
 
+    public static function globalValue($sKey)
+    {
+        if (isset(self::$_aGlobalValues[$sKey]))
+        {
+            return self::$_aGlobalValues[$sKey];
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     public static function setService($sServiceName, $service)
     {
@@ -209,6 +221,12 @@ class Mimoto
     {
         // store
         self::$_aValues[$sKey] = $value;
+    }
+
+    public static function setGlobalValue($sKey, $value)
+    {
+        // store
+        self::$_aGlobalValues[$sKey] = $value;
     }
 
     public function runInDebugMode()

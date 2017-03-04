@@ -37,6 +37,15 @@ Mimoto::setService('twig', $twig);
 Mimoto::setValue('page.layout.default', 'MimotoCMS_layout_Page');
 Mimoto::setValue('popup.layout.default', 'MimotoCMS_layout_Popup'); // uit general 'layouts' sectie
 
+// configure Pusher
+Mimoto::setGlobalValue('pusher.auth_key', Mimoto::value('config')->pusher->auth_key);
+Mimoto::setGlobalValue('pusher.cluster', Mimoto::value('config')->pusher->cluster);
+Mimoto::setGlobalValue('pusher.host', Mimoto::value('config')->pusher->host);
+Mimoto::setGlobalValue('pusher.encrypted', Mimoto::value('config')->pusher->encrypted);
+Mimoto::setGlobalValue('pusher.authEndpoint', Mimoto::value('config')->pusher->authEndPoint);
+
+//Mimoto::registerService('mail');
+
 // setup
 $app['debug'] = true;
 $app['twig'] = $twig;

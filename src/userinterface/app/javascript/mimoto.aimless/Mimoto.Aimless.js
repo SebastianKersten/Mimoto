@@ -37,7 +37,7 @@ module.exports.prototype = {
     /**
      * Create new entity
      */
-    connect: function (bDebugMode)
+    connect: function (sAuthKey, sCluster, sHost, bEncrypted, sAuthEndPoint, bDebugMode)
     {
         if (bDebugMode === true) {
             // Enable pusher logging - don't include this in production
@@ -50,11 +50,11 @@ module.exports.prototype = {
         
         try {
             // connect
-            Mimoto.Aimless.pusher = new Pusher('19c5b7fbb5340fe48402', {
-                cluster: 'eu',
-                host: 'api-eu.pusher.com',
-                encrypted: true,
-                authEndpoint: '/Mimoto.Aimless/realtime/collaboration'
+            Mimoto.Aimless.pusher = new Pusher(sAuthKey, {
+                cluster: sCluster,
+                host: sHost,
+                encrypted: bEncrypted,
+                authEndpoint: sAuthEndPoint
             });
     
             // init

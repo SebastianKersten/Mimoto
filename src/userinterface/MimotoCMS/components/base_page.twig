@@ -12,9 +12,19 @@
     <script src="/mimoto.cms/static/js/mimoto.aimless.js"></script>
     <script src="/mimoto.cms/static/js/mimoto.cms.js"></script>
 
+    <script>
+        Mimoto.Aimless.connect(
+            '{{ Aimless.globalValue('pusher.auth_key') }}',
+            '{{ Aimless.globalValue('pusher.cluster') }}',
+            '{{ Aimless.globalValue('pusher.host') }}',
+            '{{ Aimless.globalValue('pusher.encrypted') }}',
+            '{{ Aimless.globalValue('pusher.authEndpoint') }}',
+            false
+        );
+    </script>
+
 </head>
 <body>
-
     {% include "MimotoCMS/components/svg.twig" %}
 
     <div class="layer_application">
