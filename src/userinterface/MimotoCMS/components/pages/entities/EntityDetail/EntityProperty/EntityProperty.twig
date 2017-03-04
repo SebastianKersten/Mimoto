@@ -5,11 +5,14 @@
              {{ Aimless.render('name') }}
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
-            <div {{ Aimless.realtime('subtype') }}>{{ Aimless.render('subtype') }}</div>
-            <div {{ Aimless.realtime('type') }}>{{ Aimless.render('type') }}</div>
+            {% if Aimless.data('subtype') == 'image' %}
+                <div {{ Aimless.realtime('subtype') }}>{{ Aimless.render('subtype') }}</div>
+            {% else %}
+                <div {{ Aimless.realtime('type') }}>{{ Aimless.render('type') }}</div>
+            {% endif %}
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer">
-            {{ Aimless.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting') }}
+            {{ Aimless.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { propertySubtype:Aimless.data('subtype') }) }}
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">
