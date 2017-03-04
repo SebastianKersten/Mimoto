@@ -648,19 +648,19 @@ class ExampleController
     public function viewSelectionExample(Application $app, $nSelectionId)
     {
         // load
-        //$eSelection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
-        //output('$eSelection id='.$nSelectionId, $eSelection);
+//        $eSelection = Mimoto::service('data')->find(['type' => 3]);
+//        output('$eSelection id='.$nSelectionId, $eSelection);
 
 
         // --- example 1 ---
 
-//        $aEntities = Mimoto::service('data')->find(
-//            [
-//                'type' => CoreConfig::MIMOTO_CONTENTSECTION,
-//                'instance' => 1,
-//                'childOf' => 'contentItems'
-//            ]
-//        );
+        $aEntities = Mimoto::service('data')->find(
+            [
+                'type' => CoreConfig::MIMOTO_CONTENTSECTION,
+                'instance' => 1,
+                'childOf' => 'contentItems'
+            ]
+        );
 
 
         // --- example 2 ---
@@ -679,7 +679,7 @@ class ExampleController
 
 
         //$aEntities = Mimoto::service('data')->select('all_articles');
-        $aEntities = Mimoto::service('data')->select('selection_of_articles');
+        //$aEntities = Mimoto::service('data')->select('selection_of_articles');
 
 
         for ($i = 0; $i < count($aEntities); $i++)

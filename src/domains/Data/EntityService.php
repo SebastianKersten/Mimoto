@@ -126,6 +126,9 @@ class EntityService
      */
     public function get($sEntityType, $nId)
     {
+        // verify and convert
+        if (MimotoDataUtils::isValidEntityId($sEntityType)) $sEntityType = $this->_EntityConfigService->getEntityNameById($sEntityType);
+
         // verify
         if (!isset($this->_aEntityConfigs[$sEntityType]))
         {
@@ -169,6 +172,9 @@ class EntityService
         {
             // read
             $sEntityType = $criteria[SelectionRuleTypes::TYPE];
+
+            // verify and convert
+            if (MimotoDataUtils::isValidEntityId($sEntityType)) $sEntityType = $this->_EntityConfigService->getEntityNameById($sEntityType);
 
             // verify
             if (!isset($this->_aEntityConfigs[$sEntityType]))

@@ -139,25 +139,25 @@ class CoreConfig
 
     // core forms
     const COREFORM_ENTITY               = '_Mimoto_coreform__entity';
-    const COREFORM_ENTITYPROPERTY       = '_Mimoto_coreform__entityproperty';
+    const COREFORM_ENTITYPROPERTY       = '_Mimoto_coreform__entityProperty';
 
-    const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE                     = '_Mimoto_coreform__entitypropertysetting_value_type';
-    const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE       = '_Mimoto_coreform__entitypropertysetting_entity_allowedEntityType';
-    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entitypropertysetting_value_allowedEntityTypes';
-    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entitypropertysetting_collection_allowDuplicates';
+    const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE                     = '_Mimoto_coreform__entityPropertySetting_value_type';
+    const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE       = '_Mimoto_coreform__entityPropertySetting_entity_allowedEntityType';
+    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes';
+    const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
-    const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentsection';
+    const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentSection';
 
     const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
-    const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentconditional';
+    const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentConditional';
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
-    const COREFORM_FORM_INPUTOPTION             = '_Mimoto_coreform__form_inputoption';
-    const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform__form_inputvalidation';
+    const COREFORM_FORM_INPUTOPTION             = '_Mimoto_coreform__form_inputOption';
+    const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform__form_inputValidation';
 
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
 
     const COREFORM_SELECTION                    = '_Mimoto_coreform_selection';
-    const COREFORM_SELECTIONRULE                = '_Mimoto_coreform_selectionrule';
+    const COREFORM_SELECTIONRULE                = '_Mimoto_coreform_selectionRule';
 
 
     // input
