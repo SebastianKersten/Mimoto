@@ -340,9 +340,6 @@ class EntityConfigService
         // 1. verify
         if ($eEntityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
 
-        output('onEntityPropertyUpdated', $eEntityProperty);
-
-
         // 2. check if changes were made
         if (!$eEntityProperty->hasChanges()) return;
 
