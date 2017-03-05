@@ -4,6 +4,7 @@
 namespace Mimoto\Core\entities;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
@@ -125,11 +126,9 @@ class InputValidation
         CoreFormUtils::addField_title($form, 'Validation', 'Set a validation rule', '');
         CoreFormUtils::addField_groupStart($form);
 
-        $field = CoreFormUtils::addField_textline
-        (
-            $form, 'type', CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--type',
-            'Type', '#todo - Needs to be a dropdown!!!', 'The label should be unique'
-        );
+
+        $form->addValue('fields', self::getField_type());
+
 
         $field = CoreFormUtils::addField_textline
         (
@@ -143,15 +142,96 @@ class InputValidation
             'Error message', 'Enter an error message', 'Describe the problem to the user'
         );
 
-        $field = CoreFormUtils::addField_textline
-        (
-            $form, 'trigger', CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--trigger',
-            'Trigger', '#todo - Needs to be a dropdown/radiobutton!!!', 'Define when the rule needs to be applied'
-        );
+        $form->addValue('fields', self::getField_trigger());
 
         CoreFormUtils::addField_groupEnd($form);
 
         // send
         return $form;
     }
+
+    /**
+     * Get field: type
+     */
+    private static function getField_type()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_FORM_INPUTVALIDATION, 'type');
+        $field->setValue('label', 'Type');
+        $field->setValue('description', 'Define the type of the validation rule');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_INPUTVALIDATION, 'type');
+
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-maxchars');
+        $option->setValue('label', 'Maximum amount of charaters');
+        $option->setValue('value', 'maxchars');
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-minchars');
+        $option->setValue('label', 'Minimum amount of charaters');
+        $option->setValue('value', 'minchars');
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-regex_custom');
+        $option->setValue('label', 'Regular expression');
+        $option->setValue('value', 'regex_custom');
+        $field->addValue('options', $option);
+
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_validation1');
+        $validationRule->setValue('type', 'minchars');
+        $validationRule->setValue('value', 1);
+        $validationRule->setValue('errorMessage', 'Select one of the above types');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: trigger
+     */
+    private static function getField_trigger()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_FORM_INPUTVALIDATION, 'trigger');
+        $field->setValue('label', 'Trigger');
+        $field->setValue('description', 'Define when the rule needs to be applied'); // #todo - needs multiselect support
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_INPUTVALIDATION, 'trigger');
+
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-maxchars');
+        $option->setValue('label', 'On sumbit');
+        $option->setValue('value', 'onSubmit');
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-minchars');
+        $option->setValue('label', 'While typing');
+        $option->setValue('value', 'onChange');
+        $field->addValue('options', $option);
+
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--tirgger_value_validation1');
+        $validationRule->setValue('type', 'minchars');
+        $validationRule->setValue('value', 1);
+        $validationRule->setValue('errorMessage', 'Select one of the above types');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
+    }
+
 }

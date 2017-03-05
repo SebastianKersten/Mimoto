@@ -137,6 +137,7 @@ class CoreFormUtils
             // connect
             self::addValueToField($field, $sParentEntityId, 'options');
 
+
             // configure
             $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
             $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
@@ -146,6 +147,26 @@ class CoreFormUtils
             $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTOPTION);
             $itemForm->setValue('form', $connectedForm);
             $field->addValue('options', $itemForm);
+
+
+            // 1. inputoption (hard value)
+            // 2. selection
+
+
+
+
+
+            // configure
+//            $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTSELECTION);
+//            $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item2');
+//            $itemForm->setValue('label', 'Label');
+//
+//            // connect form
+//            $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTOPTION);
+//            $itemForm->setValue('form', $connectedForm);
+//            $field->addValue('options', $itemForm);
+
+
 //
 //
 //            // 1. settings

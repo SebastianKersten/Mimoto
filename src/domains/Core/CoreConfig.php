@@ -421,6 +421,15 @@ class CoreConfig
     {
         // setup
         $aSelections = [
+//            (object)array(
+//                'name' => CoreConfig::MIMOTO_FORM_INPUT_LIST.'options',
+//                'Mimoto list input options',
+//                'rules' => [
+//                    (object)array(
+//                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_ENTITY
+//                    )
+//                ]
+//            ),
             (object)array(
                 'name' => CoreConfig::CORE_PREFIX . 'all_entities', // internal of external?
                 'label' => 'xxx',

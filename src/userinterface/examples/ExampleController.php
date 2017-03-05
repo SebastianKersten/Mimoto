@@ -654,13 +654,13 @@ class ExampleController
 
         // --- example 1 ---
 
-        $aEntities = Mimoto::service('data')->find(
-            [
-                'type' => CoreConfig::MIMOTO_CONTENTSECTION,
-                'instance' => 1,
-                'childOf' => 'contentItems'
-            ]
-        );
+//        $aEntities = Mimoto::service('data')->find(
+//            [
+//                'type' => CoreConfig::MIMOTO_CONTENTSECTION,
+//                'instance' => 1,
+//                'childOf' => 'contentItems'
+//            ]
+//        );
 
 
         // --- example 2 ---
@@ -678,7 +678,7 @@ class ExampleController
         // --- example 3 ---
 
 
-        //$aEntities = Mimoto::service('data')->select('all_articles');
+        $aEntities = Mimoto::service('data')->select('all_articles');
         //$aEntities = Mimoto::service('data')->select('selection_of_articles');
 
 

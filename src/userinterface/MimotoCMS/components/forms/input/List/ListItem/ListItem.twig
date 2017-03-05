@@ -5,8 +5,8 @@
     {% endif %}
 
     <div class="MimotoCMS_forms_input_ListItem-text">
-        <p class="MimotoCMS_forms_input_ListItem-title">{{ Aimless.render('title') }}</p>
-        <p class="MimotoCMS_forms_input_ListItem-subtitle">{{ Aimless.render('subtitle') }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-title">{{ Aimless.getValueBySortindex() }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-subtitle">{{ Aimless.getValueBySortindex(1) }}</p>
     </div>
 
     {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldOptionEdit('"~Aimless.meta('id')~"')", types: ['secondary', 'small'] }) }}

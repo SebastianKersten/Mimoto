@@ -42,6 +42,7 @@ class SelectionRule
                         )
                     ]
                 ),
+
                 (object) array(
                     'id' => CoreConfig::COREFORM_SELECTIONRULE.'--entity',
                     // ---
@@ -50,11 +51,38 @@ class SelectionRule
                     'settings' => [
                         'allowedEntityType' => (object) array(
                             'key' => 'allowedEntityType',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY, // #todo - allow array
                             'value' => CoreConfig::MIMOTO_ENTITY
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::COREFORM_SELECTIONRULE.'--instance',
+                    // ---
+                    'name' => 'entity',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => 'allowedEntityType',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY, // #todo - allow array
+                            'value' => null
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::COREFORM_SELECTIONRULE.'--entityProperty',
+                    // ---
+                    'name' => 'entity',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => 'allowedEntityType',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY, // #todo - allow array
+                            'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
+                        )
+                    ]
                 )
+
             ]
         );
     }
