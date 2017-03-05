@@ -266,6 +266,40 @@ class AimlessComponent
         return '';
     }
 
+    public function getValueBySortindex($nIndex = 0)
+    {
+        // read
+        $aPropertyNames = $this->_entity->getPropertyNames();
+
+        // search
+        $nFoundPropertyIndex = 0;
+        $nPropertyCount = count($aPropertyNames);
+        for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
+        {
+            // register
+            $sPropertyName = $aPropertyNames[$nPropertyIndex];
+
+            // verify
+            if ($this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+            {
+                // verify
+                if ($nFoundPropertyIndex == $nIndex)
+                {
+                    return $this->_entity->getValue($sPropertyName);
+                }
+                else
+                {
+                    // update
+                    $nFoundPropertyIndex++;
+                }
+            }
+        }
+
+        // send default
+        return '';
+    }
+
+
     /**
      * Render value property
      * @param $sPropertyName

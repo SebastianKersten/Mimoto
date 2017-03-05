@@ -122,4 +122,9 @@ class AimlessComponentViewModel
         return Mimoto::globalValue($sKey);
     }
 
+    public function getValueBySortindex($nIndex = 0)
+    {
+        return $this->_component->getValueBySortindex($nIndex);
+    }
+
 }

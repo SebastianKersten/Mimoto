@@ -2,7 +2,7 @@
     Aimless.module('Mimoto.CMS.ListItemModule',
     {
         realtime: Aimless.realtime(),
-        label: Aimless.meta('id'),
+        label: Aimless.getValueBySortindex(),
         label_realtime: '',
         sublabel: Aimless.meta('id'),
         sublabel_realtime:  '',

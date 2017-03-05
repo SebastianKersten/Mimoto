@@ -421,14 +421,15 @@ class CoreConfig
     {
         // setup
         $aSelections = [
-//            (object)array(
-//                'name' => CoreConfig::CORE_PREFIX . 'all_entities',
-//                'rules' => [
-//                    (object)array(
-//                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_ENTITY
-//                    )
-//                ]
-//            )
+            (object)array(
+                'name' => CoreConfig::CORE_PREFIX . 'all_entities', // internal of external?
+                'label' => 'xxx',
+                'rules' => [
+                    (object)array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_ENTITY
+                    )
+                ]
+            )
         ];
 
         // send
