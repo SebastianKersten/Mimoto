@@ -399,8 +399,6 @@ class EntityRepository
         }
 
 
-
-
         // setup
         $event = new MimotoEvent($entity, $sEvent);
 
@@ -638,8 +636,8 @@ class EntityRepository
             $entity->setId($nEntityId);
             $entity->setCreated($result['created']);
 
-            // store
-            $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $entity;
+            // store - #todo restore a working version of the entity caching
+            //$this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $entity;
         }
         else
         {

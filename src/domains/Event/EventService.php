@@ -82,21 +82,20 @@ class EventService
         
         // broadcast to system
         if ($event instanceof Event) { $this->_dispatcher->dispatch($sEvent, $event); }
-        
+
         // validate
         if (!($event instanceof MimotoEvent)) { return; }
         
-        
         // load
         $aActions = $this->getActionsByEvent($sEvent); //$this->_ActionService->getActionsByEvent($sEvent);
+
+        // trigger all actions
         $nActionCount = count($aActions);
-        
-        
-        for ($i = 0; $i < $nActionCount; $i++)
+        for ($nActionIndex = 0; $nActionIndex < $nActionCount; $nActionIndex++)
         {
             // register
-            $action = $aActions[$i];
-            
+            $action = $aActions[$nActionIndex];
+
             // verify
             //if (isset($this->_aServices[$action->service]))
             //{
@@ -112,7 +111,7 @@ class EventService
             //}
             
         }
-        
+
         
         /* 
         
@@ -180,9 +179,9 @@ class EventService
     
     private function getActionsByEvent($sEvent)
     {
-        
-        // init
+        // register
         $aAllActions = Mimoto::service('actions')->getAllActions();
+
 
         
         // --- filter ---
@@ -202,6 +201,9 @@ class EventService
             
             // register
             $action = $aAllActions[$i];
+
+            // init
+            $bIsValidTrigger = true;
             
             // read
             $aTriggers = (is_array($action->trigger)) ? $action->trigger : [$action->trigger];
@@ -243,7 +245,6 @@ class EventService
             // register
             if ($bIsValidTrigger) { $aFilteredActions[] = $action; }
         }
-        
 
         // send
         return $aFilteredActions;
