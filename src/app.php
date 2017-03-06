@@ -73,7 +73,7 @@ function output($sTitle, $data = null, $bScream = false)
     echo '<br>';
 }
 
-function error($data, $bDumpVar = false)
+function error($data)
 {
     echo '<div style="background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px; width:100%;">';
     echo '<div>';
@@ -85,7 +85,7 @@ function error($data, $bDumpVar = false)
     }
     else
     {
-        ($bDumpVar) ? var_dump($data) : echo print_r($data, true);
+        echo print_r($data, true);
     }
     echo '</pre>';
     echo '</div>';

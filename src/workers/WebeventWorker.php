@@ -44,7 +44,7 @@ function sendUpdate($job)
 
     echo "Pusher event (".date('Y.m.d H:i:s').")\n";
     echo "-------------------------------------\n";
-    print_r($workload);
+    echo print_r($workload, true);
     echo "-------------------------------------\n\n\n";
 
     // send
