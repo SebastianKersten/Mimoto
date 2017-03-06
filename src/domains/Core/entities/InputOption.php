@@ -18,6 +18,11 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 class InputOption
 {
 
+    const VALUE = 'value';
+    const FORM = 'form';
+    const SELECTION = 'selection';
+
+
     public static function getStructure()
     {
         return (object) array(
@@ -25,12 +30,25 @@ class InputOption
             // ---
             'name' => CoreConfig::MIMOTO_FORM_INPUTOPTION,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_FORM_INPUTOPTION],
+            'forms' => [CoreConfig::COREFORM_INPUTOPTION],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUTOPTION.'--label',
                     // ---
                     'name' => 'label',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTOPTION.'--type',
+                    // ---
+                    'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
@@ -66,6 +84,19 @@ class InputOption
                         )
                     ]
                 ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUTOPTION.'--selection',
+                    // ---
+                    'name' => 'selection',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => 'allowedEntityType',
+                            'type' => 'value',
+                            'value' => CoreConfig::MIMOTO_SELECTION
+                        )
+                    ]
+                ),
                 // mapping
             ]
         );
@@ -89,12 +120,15 @@ class InputOption
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_FORM_INPUTOPTION,
-            'name' => CoreConfig::COREFORM_FORM_INPUTOPTION,
+            'id' => CoreConfig::COREFORM_INPUTOPTION,
+            'name' => CoreConfig::COREFORM_INPUTOPTION,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORM_INPUTOPTION, 'label'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORM_INPUTOPTION, 'value')
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUTOPTION, 'label'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUTOPTION, 'type'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUTOPTION, 'value'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUTOPTION, 'form'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUTOPTION, 'selection')
             ]
         );
     }
@@ -105,7 +139,7 @@ class InputOption
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_FORM_INPUTOPTION);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUTOPTION);
 
         // setup
         CoreFormUtils::addField_title($form, 'Option', '', "Entities are composed of 'properties'. Add properties to your entity and decide what type they are. A property can have three types: <i>value</i>, <i>entity</i> or <i>collection</i>");
@@ -117,16 +151,156 @@ class InputOption
             'Label', 'Describe the value that is being presented', 'The label should be unique'
         );
 
+        $form->addValue('fields', self::getField_type());
+
+        CoreFormUtils::addField_groupEnd($form);
+
+
+        // --- value
+
+
+        CoreFormUtils::addField_groupStart($form, 'Settings for the value type', 'group_value');
         $field = CoreFormUtils::addField_textline
         (
             $form, 'value', CoreConfig::MIMOTO_FORM_INPUTOPTION.'--value',
             'Value', 'Enter the value that is presented', 'The value should be unique'
         );
+        CoreFormUtils::addField_groupEnd($form, 'group_value');
 
-        CoreFormUtils::addField_groupEnd($form);
+        // --- form
+
+        CoreFormUtils::addField_groupStart($form, 'Settings for the form type', 'group_form');
+        $form->addValue('fields', self::getField_form());
+        CoreFormUtils::addField_groupEnd($form, 'group_form');
+
+
+        // --- selection
+
+        CoreFormUtils::addField_groupStart($form, 'Settings for the selection type', 'group_selction');
+        $form->addValue('fields', self::getField_selection());
+        CoreFormUtils::addField_groupEnd($form, 'group_selection');
 
         // send
         return $form;
+    }
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- private methods---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Get field: type
+     */
+    private static function getField_type()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_INPUTOPTION, 'type');
+        $field->setValue('label', 'Type');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_INPUTOPTION, 'type');
+
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_INPUTOPTION.'--type_value_options-value');
+        $option->setValue('label', 'A new value');
+        $option->setValue('value', InputOption::VALUE); // ?? is deze nodig?
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_INPUTOPTION.'--type_value_options-form');
+        $option->setValue('label', 'Create a list item using a form');
+        $option->setValue('value', InputOption::FORM);
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_INPUTOPTION.'--type_value_options-selection');
+        $option->setValue('label', 'Select from existing items');
+        $option->setValue('value', InputOption::SELECTION);
+        $field->addValue('options', $option);
+
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_validation1');
+        $validationRule->setValue('type', 'regex_custom');
+        $validationRule->setValue('value', '^('.InputOption::VALUE.'|'.InputOption::FORM.'|'.InputOption::SELECTION.')$');
+        $validationRule->setValue('errorMessage', 'Select one of the above types');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: form
+     */
+    private static function getField_form()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_INPUTOPTION, 'form');
+        $field->setValue('label', 'Form');
+        $field->setValue('description', "What form would you like to use?");
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_INPUTOPTION, 'form');
+
+
+        // load
+        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);
+
+        $nEntityCount = count($aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            // register
+            $entity = $aEntities[$i];
+
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option->setId(CoreConfig::COREFORM_INPUTOPTION.'--form_value_options-valuesettings-collection-'.$entity->getId());
+            $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
+            $option->setValue('label', $entity->getValue('name'));
+            $field->addValue('options', $option);
+        }
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: form
+     */
+    private static function getField_selection()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_INPUTOPTION, 'selection');
+        $field->setValue('label', 'Selection');
+        $field->setValue('description', "What selection would you like to use?");
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_INPUTOPTION, 'selection');
+
+
+        // load
+        $aSelections = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_SELECTION]);
+
+        $nSelectionCount = count($aSelections);
+        for ($nSelectionIndex = 0; $nSelectionIndex < $nSelectionCount; $nSelectionIndex++)
+        {
+            // register
+            $entity = $aSelections[$nSelectionIndex];
+
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option->setId(CoreConfig::COREFORM_INPUTOPTION.'--selection_value_options-'.$entity->getId());
+            $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
+            $option->setValue('label', $entity->getValue('name'));
+            $field->addValue('options', $option);
+        }
+
+        // send
+        return $field;
     }
 
 }

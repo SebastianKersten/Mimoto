@@ -678,13 +678,16 @@ class ExampleController
         // --- example 3 ---
 
 
-        $aEntities = Mimoto::service('data')->select('all_articles');
+        echo '<b>Selection `articleTypes`</b><br><br>';
+
+        $aEntities = Mimoto::service('data')->select('articleTypes');
+        //$aEntities = Mimoto::service('data')->select('all_articles');
         //$aEntities = Mimoto::service('data')->select('selection_of_articles');
 
 
         for ($i = 0; $i < count($aEntities); $i++)
         {
-            output('Result '.$i.' - '.$aEntities[$i]->getValue('title'));
+            echo 'Result '.$i.' = `'.$aEntities[$i]->getValue('label').'` ('.$aEntities[$i]->getEntityTypeName().'.'.$aEntities[$i]->getId().')<br>';
         }
 
         die();

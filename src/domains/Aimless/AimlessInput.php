@@ -58,12 +58,22 @@ class AimlessInput extends AimlessComponent
         return 'data-aimless-form-field-error="'.$this->_sFieldId.'"';
     }
 
-    public function value($bRenderValues = false, $sModuleName = null, $mapping = null)
+    public function value($bRenderValues = false, $sModuleName = null, $mapping = null, $customVars = null)
     {
         // return raw value (= connection)
-        if (!$bRenderValues) return $this->_value;
-
-        //echo $this->_sFieldId;
+        if (!$bRenderValues)
+        {
+            if (is_array($this->_value))
+            {
+                // convert and send
+                return json_encode($this->_value);
+            }
+            else
+            {
+                // send
+                return $this->_value;
+            }
+        }
 
         if (!is_array($this->_value))
         {
@@ -75,34 +85,40 @@ class AimlessInput extends AimlessComponent
         {
             // collection render
 
-
-            // init
-            $sOutput = '';
-
-            $nItemCount = count($this->_value);
-            for ($nItemIndex = 0; $nItemIndex < $nItemCount; $nItemIndex++)
+            if (empty($sModuleName))
             {
-                // split
-                $aSelectorComponents = explode('.', $this->_value[$nItemIndex]);
-
-                // register
-                $nEntityTypeName = $aSelectorComponents[0];
-                $nEntityId = $aSelectorComponents[1];
-
-                // read
-                $entity = Mimoto::service('data')->get($nEntityTypeName, $nEntityId);
-
-                // create
-                $component = Mimoto::service('aimless')->createComponent($sModuleName, $entity);
-
-                // configure
-                if (!empty($mapping)) $component->setMapping($mapping);
-
-                // render
-                $sOutput .= $component->render();
+                return 'Please supply a module name when rendering a list value';
             }
+            else
+            {
+                // init
+                $sOutput = '';
 
-            return $sOutput;
+                $nItemCount = count($this->_value);
+                for ($nItemIndex = 0; $nItemIndex < $nItemCount; $nItemIndex++)
+                {
+                    // split
+                    $aSelectorComponents = explode('.', $this->_value[$nItemIndex]);
+
+                    // register
+                    $nEntityTypeName = $aSelectorComponents[0];
+                    $nEntityId = $aSelectorComponents[1];
+
+                    // read
+                    $entity = Mimoto::service('data')->get($nEntityTypeName, $nEntityId);
+
+                    // create
+                    $component = Mimoto::service('aimless')->createComponent($sModuleName, $entity);
+
+                    // configure
+                    if (!empty($mapping)) $component->setMapping($mapping);
+
+                    // render
+                    $sOutput .= $component->render($customVars);
+                }
+
+                return $sOutput;
+            }
         }
     }
 

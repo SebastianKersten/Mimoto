@@ -58,7 +58,7 @@ class CoreFormUtils
     /**
      * Get value input
      */
-    public static function addFieldsValueInput(MimotoEntity $form, $bShowOptions = false)
+    public static function addFieldsValueInput(MimotoEntity $form)
     {
         // register
         $sFormId = $form->getId();
@@ -123,60 +123,6 @@ class CoreFormUtils
         }
         $form->addValue('fields', $field);
 
-
-        // verify
-        if ($bShowOptions)
-        {
-            // create
-            $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'options');
-
-            // setup
-            $field->setValue('label', 'Options');
-            $field->setValue('description', 'Provide the options the user can pick from');
-
-            // connect
-            self::addValueToField($field, $sParentEntityId, 'options');
-
-
-            // configure
-            $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-            $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
-            $itemForm->setValue('label', 'Label');
-
-            // connect form
-            $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTOPTION);
-            $itemForm->setValue('form', $connectedForm);
-            $field->addValue('options', $itemForm);
-
-
-            // 1. inputoption (hard value)
-            // 2. selection
-
-
-
-
-
-            // configure
-//            $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTSELECTION);
-//            $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item2');
-//            $itemForm->setValue('label', 'Label');
-//
-//            // connect form
-//            $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTOPTION);
-//            $itemForm->setValue('form', $connectedForm);
-//            $field->addValue('options', $itemForm);
-
-
-//
-//
-//            // 1. settings
-//            // 2. add mapping as option
-//            // 3. set options (sortable |mapping | url | target (popup/page)
-//
-//
-            $form->addValue('fields', $field);
-        }
-
         // create
         $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'validation');
 
@@ -207,6 +153,46 @@ class CoreFormUtils
 
         // create
         $field = self::createField(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND, $sFormId, 'groupend-value');
+        $form->addValue('fields', $field);
+    }
+
+    public static function addField_optionsForListConfig(MimotoEntity $form)
+    {
+        // register
+        $sFormId = $form->getId();
+
+        // load
+        $sParentEntityId = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+
+        // create
+        $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'options');
+
+        // setup
+        $field->setValue('label', 'Options');
+        $field->setValue('description', 'Provide the options the user can pick from');
+
+        // connect
+        self::addValueToField($field, $sParentEntityId, 'options');
+
+
+        // configure
+        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
+        $itemForm->setValue('label', 'Label');
+
+        // connect form
+        $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
+        $itemForm->setValue('form', $connectedForm);
+        $field->addValue('options', $itemForm);
+
+
+        // 1. inputoption (hard value)
+        // 2. selection
+
+        // 1. settings
+        // 2. add mapping as option
+        // 3. set options (sortable |mapping | url | target (popup/page)
+
         $form->addValue('fields', $field);
     }
 

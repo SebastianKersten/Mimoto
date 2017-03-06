@@ -4,6 +4,7 @@
 namespace Mimoto\Core\entities;
 
 // Mimoto classes
+use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
@@ -79,9 +80,11 @@ class InputList
             'name' => CoreConfig::COREFORM_INPUT_LIST,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_LIST, 'name'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_LIST, 'extends'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_LIST, 'isAbstract')
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_LIST, 'label'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_LIST, 'description'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_LIST, 'value'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_LIST, 'options'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_LIST, 'validation')
             ]
         );
     }
@@ -114,45 +117,61 @@ class InputList
             'Clarify what is required from the content editor'
         );
 
-        //$form->addValue('fields', self::getField_options());
+        $form->addValue('fields', self::getField_options());
 
 
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form, true);
+        CoreFormUtils::addFieldsValueInput($form);
 
         // send
         return $form;
     }
-//
-//    /**
-//     * Get field: type
-//     */
-//    private static function getField_options()
-//    {
-//        // create
-//        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, CoreConfig::COREFORM_INPUT_LIST, 'options');
-//
-//        // setup
-//        $field->setValue('label', 'Options');
-//        $field->setValue('description', 'Provide the options the user can pick from');
-//
-//        // connect
-//        self::addValueToField($field, $sParentEntityId, 'options');
-//
-//        // configure
-//        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-//        $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
-//        $itemForm->setValue('label', 'Label');
-//
-//        // connect form
-//        $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTOPTION);
-//        $itemForm->setValue('form', $connectedForm);
-//        $field->addValue('options', $itemForm);
-//
-//        // send
-//        return $field;
-//    }
+
+    /**
+     * Get field: type
+     */
+    private static function getField_options()
+    {
+        // create
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, CoreConfig::COREFORM_INPUT_LIST, 'options');
+
+        // setup
+        $field->setValue('label', 'Options');
+        $field->setValue('description', 'Provide the options the user can pick from');
+
+        // connect
+        CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_INPUT_LIST, 'options');
+
+        // MIMOTO_FORM_INPUT_LISTITEM_CREATE = has name and `form`
+        // MIMOTO_FORM_INPUT_LISTITEM_SELECT = has name and `selection` (create or select)
+
+
+        // COREFORM_FORM_INPUT_LISTITEM_CREATE
+        // COREFORM_FORM_INPUT_LISTITEM_SELECT
+
+
+        // LISTITEM has name, type, form, selection
+
+        // select all from type="form"
+
+        // 1. CREATE
+        // 2. SELECT
+
+
+        // configure
+        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
+        $itemForm->setValue('label', 'Label');
+
+        // connect form
+        $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
+        $itemForm->setValue('form', $connectedForm);
+        $field->addValue('options', $itemForm);
+
+        // send
+        return $field;
+    }
 
 }

@@ -426,30 +426,41 @@ module.exports.prototype = {
         });
     },
     
-    formFieldAddItemToList: function(sURL)
+    formFieldListItemAdd: function(sListFieldType, sListFieldId, sInstanceId)
     {
-        Mimoto.popup.open(sURL);
+        // 1. build
+        var sURL = '/mimoto.cms/formfield/add/' + sListFieldType + '/' + sListFieldId + '/' + sInstanceId;
+        
+        console.log(sURL);
+        
+        var popup = Mimoto.popup.open(sURL);
+        
+        // 1. return root of the popup (or root object)
+        // 2. connect content of the popup (onload) to the popup object
+        // 3. dispatchSuccess
+        // 4. handle success
+        // 5. do not autoconnect
+        // 6. add new value to list
+        
+        popup.success = function()
+        {
+            
+        }
     },
     
-    formFieldOptionEdit: function(nOptionID)
+    formFieldListItemEdit: function(sInputFieldId, sListItemInstanceType, sListItemInstanceId)
     {
-        console.log('formFieldOptionEdit: ' + nOptionID);
-        alert('formFieldOptionEdit: ' + nOptionID);
+        console.log('formFieldListItem EDIT: ' + sInputFieldId + ' & ' + sListItemInstanceType + '.' + sListItemInstanceId);
         
         //Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
     },
     
-    formFieldOptionDelete: function(nOptionId)
+    formFieldListItemDelete: function(sInputFieldId, sListItemInstanceType, sListItemInstanceId)
     {
-        Mimoto.Aimless.utils.callAPI({
-            type: 'get',
-            url: "/mimoto.cms/formfielditem/" + nOptionId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
+        console.log('formFieldListItem DELETE: ' + sInputFieldId + ' & ' + sListItemInstanceType + '.' + sListItemInstanceId);
+        
+        // 1. remove from list value
+        
     }
     
 }

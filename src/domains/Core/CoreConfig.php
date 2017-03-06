@@ -151,7 +151,7 @@ class CoreConfig
     const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
     const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentConditional';
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
-    const COREFORM_FORM_INPUTOPTION             = '_Mimoto_coreform__form_inputOption';
+    const COREFORM_INPUTOPTION                  = '_Mimoto_coreform__form_inputoption';
     const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform__form_inputValidation';
 
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
@@ -169,7 +169,7 @@ class CoreConfig
     const COREFORM_INPUT_RADIOBUTTON    = '_Mimoto_coreform_input_radiobutton';
     const COREFORM_INPUT_DROPDOWN       = '_Mimoto_coreform_input_dropdown';
     const COREFORM_INPUT_LIST           = '_Mimoto_coreform_input_list';
-    const COREFORM_INPUT_LIST_ITEM      = '_Mimoto_coreform_input_list_item';
+
     const COREFORM_INPUT_IMAGE          = '_Mimoto_coreform_input_image';
     const COREFORM_INPUT_VIDEO          = '_Mimoto_coreform_input_video';
 

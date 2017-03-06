@@ -143,7 +143,7 @@ class InputMultiSelect
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form, true);
+        CoreFormUtils::addFieldsValueInput($form);
 
         // send
         return $form;

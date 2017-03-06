@@ -211,7 +211,7 @@ class InputValidation
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
         $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-maxchars');
-        $option->setValue('label', 'On sumbit');
+        $option->setValue('label', 'On submit');
         $option->setValue('value', 'onSubmit');
         $field->addValue('options', $option);
 

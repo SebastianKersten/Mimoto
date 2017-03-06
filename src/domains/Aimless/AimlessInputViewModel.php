@@ -58,9 +58,9 @@ class AimlessInputViewModel extends AimlessComponentViewModel
         return $this->_component->error();
     }
 
-    public function value($bRenderValues = false, $sComponentName = null, $mapping = null)
+    public function value($bRenderValues = false, $sComponentName = null, $mapping = null, $customVars = null)
     {
-        return $this->_component->value($bRenderValues, $sComponentName, $mapping);
+        return $this->_component->value($bRenderValues, $sComponentName, $mapping, $customVars);
     }
 
     public function fieldValidation()

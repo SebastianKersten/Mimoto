@@ -213,6 +213,11 @@ class MimotoDataUtils
      */
     public static function getEntityIdFromEntityInstanceSelector($sSelector)
     {
+
+        // #todo
+        if (substr($sSelector, 0, 1) == '[') return null; // can't handle collections yet
+
+
         // split
         $aParts = explode('.', $sSelector);
 
@@ -333,7 +338,7 @@ class MimotoDataUtils
                     // validate
                     if (!$bValidated)
                     {
-                        Mimoto::service('log')->error("Incorrect value", "The property '".$sPropertyName."' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."'", true);
+                        Mimoto::service('log')->error("Incorrect value", "The property '$xParentEntityTypeId.$sPropertyName' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."' (and not `$sChildEntityTypeId`)", true);
                     }
                 }
 

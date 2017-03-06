@@ -9,8 +9,8 @@
         <p class="MimotoCMS_forms_input_ListItem-subtitle">{{ Aimless.getValueBySortindex(1) }}</p>
     </div>
 
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldOptionEdit('"~Aimless.meta('id')~"')", types: ['secondary', 'small'] }) }}
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', onclick: "Mimoto.CMS.formFieldOptionDelete('"~Aimless.meta('id')~"')", types: ['alert', 'small'] }) }}
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldListItemEdit('"~sInputFieldId~"', '"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"')", types: ['secondary', 'small'] }) }}
+    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', onclick: "Mimoto.CMS.formFieldListItemDelete('"~sInputFieldId~"', '"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"')", types: ['alert', 'small'] }) }}
 
 
     {% if sortable|default(true) %}

@@ -397,72 +397,90 @@ module.exports.prototype = {
     {
         // init
         var value = null;
-
-        // validate
-        if ($($component).is("input"))
-        {
-            switch($($component).attr('type'))
-            {
-                case 'radio':
-                    
-                    //  fix for handling radiobutton onSubmit en onChange
-                    if ($component.length)
-                    {
-                        var aComponents = $component;
+        
+        var sAimlessInputType = $($component).attr('data-aimless-input-type');
     
-                        // collect value
-                        aComponents.each( function(index, $component)
-                        {
-                            if ($($component).prop("checked") === true)
-                            {
-                                value = $($component).val();
-                            }
-                        });
-                    }
-                    else
-                    {
-                        if ($($component).prop("checked") === true)
-                        {
-                            value = $($component).val();
-                        }
-                    }
-                    
-                    break;
-                
-                case 'checkbox':
-                    
-                    if ($($component).attr('value'))
-                    {
-                        if ($($component).prop("checked") === true)
-                        {
-                            value = $($component).val();
-                        }
-                    }
-                    else
-                    {
-                        value = $($component).prop("checked");
-                    }
-                    
-                    break;
+        console.log('Input type = ' + sAimlessInputType);
 
-                default:
+        
+        switch(sAimlessInputType)
+        {
+            case 'list':
+    
+                value = $($component).val();
+                break;
+                
+            default:
+    
+                // validate
+                if ($($component).is("input"))
+                {
+                    switch($($component).attr('type'))
+                    {
+                        case 'radio':
+                
+                            //  fix for handling radiobutton onSubmit en onChange
+                            if ($component.length)
+                            {
+                                var aComponents = $component;
                     
+                                // collect value
+                                aComponents.each( function(index, $component)
+                                {
+                                    if ($($component).prop("checked") === true)
+                                    {
+                                        value = $($component).val();
+                                    }
+                                });
+                            }
+                            else
+                            {
+                                if ($($component).prop("checked") === true)
+                                {
+                                    value = $($component).val();
+                                }
+                            }
+                
+                            break;
+            
+                        case 'checkbox':
+                
+                            if ($($component).attr('value'))
+                            {
+                                if ($($component).prop("checked") === true)
+                                {
+                                    value = $($component).val();
+                                }
+                            }
+                            else
+                            {
+                                value = $($component).prop("checked");
+                            }
+                
+                            break;
+            
+                        default:
+                
+                            value = $($component).val();
+                    }
+                }
+    
+                if ($($component).is("select"))
+                {
                     value = $($component).val();
-            }
+                }
+    
+                if ($($component).is("textarea"))
+                {
+                    value = $($component).val();
+                }
+                
+                break;
         }
         
-        if ($($component).is("select"))
-        {
-            value = $($component).val();
-        }
         
-        if ($($component).is("textarea"))
-        {
-            value = $($component).val();
-        }
-        
-        //console.warn('value:');
-        //console.warn(value);
+        console.warn('value:');
+        console.warn(value);
         
         // send
         return value;

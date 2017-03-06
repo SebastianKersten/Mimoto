@@ -271,7 +271,7 @@ class FormController
         return Mimoto::service('messages')->response((object) array('result' => 'FormField deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
-    public function formFieldItemAddToList(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sItemId = null)
+    public function formFieldListItemAdd(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sItemId = null)
     {
         // 1. init popup
         $popup = Mimoto::service('aimless')->createPopup();
@@ -288,6 +288,7 @@ class FormController
 
         // 1. welk formulierveld hort hierbij? get formid en formselector
         $aOptions = $formField->getValue('options');
+
 
 
         // ---
@@ -347,7 +348,7 @@ class FormController
             null,
             [
                 'onCreatedConnectTo' => $sPropertySelector,
-                'response' => ['onSuccess' => ['closePopup' => true]]
+                'response' => ['onSuccess' => ['closePopup' => true]],
                 //'response' => ['onSuccess' => ['reloadPopup' => '/mimoto.cms/formfield/'.$nFormFieldTypeId.'/'.$nFormFieldId.'/edit']]
             ]
         );
@@ -359,17 +360,9 @@ class FormController
         return $popup->render();
     }
 
-
-    public function formFieldItemDelete(Application $app, $nFormFieldItemId)
-    {
-        // 1. load
-        $eFormFieldItem = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM_INPUTOPTION, $nFormFieldItemId);
-
-        // 2. delete
-        Mimoto::service('data')->delete($eFormFieldItem);
-
-        // 3. send
-        return Mimoto::service('messages')->response((object) array('result' => 'FormFieldItem deleted! '.date("Y.m.d H:i:s")), 200);
-    }
+//    public function formFieldItemEdit(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sItemId = null)
+//    {
+//
+//    }
 
 }
