@@ -67,7 +67,7 @@ function output($sTitle, $data = null, $bScream = false)
     echo '<div style="background-color:'.$sBackgroundColor.';border:solid 1px '.$sBorderColor.';padding:20px">';
     echo '<h2><b style="color:'.$sTextColor.'">'.$sTitle.'</b></h2><hr>';
     echo '<pre style="width:100%">';
-    if (!empty($data)) print_r($data);
+    if (!empty($data)) echo print_r($data, true);
     echo '</pre>';
     echo '</div>';
     echo '<br>';
@@ -85,7 +85,7 @@ function error($data, $bDumpVar = false)
     }
     else
     {
-        ($bDumpVar) ? var_dump($data) : print_r($data);
+        ($bDumpVar) ? var_dump($data) : echo print_r($data, true);
     }
     echo '</pre>';
     echo '</div>';

@@ -1,19 +1,16 @@
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "list", button:true, buttonLabel:'Add', buttonIcon:'plus', buttonOnClick:"Mimoto.CMS.formFieldListItemAdd('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"', '"~Aimless.fieldId()~"')", target:'page' } %}
+
     {% block form_component_element %}
 
         {# showOnEmpty / hideOmEmtpy on empty collection #}
 
         <div class="MimotoCMS_forms_input_List js-list js-list-sortable" data-aimless-contains="{{ Aimless.fieldId() }}" data-aimless-component="_Mimoto_form_input_list-item">
 
-
             {{ Aimless.value(true, '_Mimoto_form_input_list-item', { 'title': 'label', 'subtitle': 'type' }, { sInputFieldId:Aimless.fieldId() } ) }}
-
-
 
             {#
                 // 1. mapping in settings
                 // 2. type: { 'componentVar1':'entityVar1', 'componentVar2':'entityVar2' } general key/value pair
-                // 3.
             #}
 
         </div>
@@ -21,4 +18,5 @@
         <input type="hidden" data-aimless-input-type="list" {{ Aimless.input() }} value='{{ Aimless.value() }}' />
 
     {% endblock %}
+
 {% endembed %}
