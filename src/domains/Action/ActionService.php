@@ -54,7 +54,7 @@ class ActionService
         }
 
 
-        //error($this->_aActionConfigs);
+        //Mimoto::error($this->_aActionConfigs);
     }
     
     

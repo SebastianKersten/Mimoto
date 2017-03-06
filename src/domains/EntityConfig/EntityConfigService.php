@@ -300,7 +300,7 @@ class EntityConfigService
         $sEntityName = $entity->getValue('name');
 
         // 2. delete table
-        if (!$this->deleteEntityTable($sEntityName)) error("Error while deleting entity table '$sEntityName'"); // #todo
+        if (!$this->deleteEntityTable($sEntityName)) Mimoto::error("Error while deleting entity table '$sEntityName'"); // #todo
 
         // 3. cleanup cache
         $this->flushEntityConfigCache();

@@ -72,7 +72,7 @@ class LogService
         $this->createNotification($sTitle, $sMessage, debug_backtrace()[1], 'error');
 
         // outut
-        if ($bOutputErrorToUser) error($sTitle." - ".$sMessage);
+        if ($bOutputErrorToUser) Mimoto::error($sTitle." - ".$sMessage);
     }
 
     /**

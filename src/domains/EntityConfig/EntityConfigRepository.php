@@ -391,7 +391,7 @@ class EntityConfigRepository
                     case CoreConfig::MIMOTO_ENTITY.'--properties':
 
                         // validate
-                        if (!isset($aAllEntityProperties[$connection->child_id])) { error("Oops, the entity config named '$entity->name' seems to miss a property"); };
+                        if (!isset($aAllEntityProperties[$connection->child_id])) { Mimoto::error("Oops, the entity config named '$entity->name' seems to miss a property"); };
 
                         // register
                         $entity->properties[] = $aAllEntityProperties[$connection->child_id];

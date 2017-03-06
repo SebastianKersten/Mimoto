@@ -51,48 +51,8 @@ $app['debug'] = true;
 $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app, false);
 
+// run in debgu mode
+Mimoto::runInDebugMode(true);
 
-
-//function Mimoto('data') of als singleton Mimoto::data->create
-// add actions folder
-
-
-function output($sTitle, $data = null, $bScream = false)
-{
-    // style
-    $sTextColor = ($bScream) ? '#ff0000' : '#06afea';
-    $sBorderColor = ($bScream) ? '#ff0000' : '#858585';
-    $sBackgroundColor = ($bScream) ? '#ffbbbb' : '#f5f5f5';
-
-    echo '<div style="background-color:'.$sBackgroundColor.';border:solid 1px '.$sBorderColor.';padding:20px">';
-    echo '<h2><b style="color:'.$sTextColor.'">'.$sTitle.'</b></h2><hr>';
-    echo '<pre style="width:100%">';
-    if (!empty($data)) echo print_r($data, true);
-    echo '</pre>';
-    echo '</div>';
-    echo '<br>';
-}
-
-function error($data)
-{
-    echo '<div style="background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px; width:100%;">';
-    echo '<div>';
-    echo '<h2><b style="font-size:larger;">Error</b></h2><hr style="border:0;height:1px;background:#ffffff">';
-    echo '<pre style="overflow:scroll">';
-    if (empty($data))
-    {
-        echo "<i style='font-style:italic'>No data provided</i>";
-    }
-    else
-    {
-        echo print_r($data, true);
-    }
-    echo '</pre>';
-    echo '</div>';
-    echo '<br>';
-
-    //throw new Exception('oh oh, computer says oops!');
-    die();
-}
-
+// send
 return $app;

@@ -459,7 +459,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
 
         // 1. todo - haal de conditionals er in de getValue vanaf. Forward is alleen naar subitems, dus forward moet individueel
 
-        error($aConditionals);
+        Mimoto::error($aConditionals);
 
 
 

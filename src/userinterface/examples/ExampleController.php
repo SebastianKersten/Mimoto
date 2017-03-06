@@ -422,7 +422,7 @@ class ExampleController
         //error($author);
 
 
-        error(($author->typeOf('person')) ? 'Yes, entity is of type "person"' : 'No, entity is not of type "person"');
+        Mimoto::error(($author->typeOf('person')) ? 'Yes, entity is of type "person"' : 'No, entity is not of type "person"');
 
 
 
@@ -470,7 +470,7 @@ class ExampleController
         // load
         $entityProperty = $app['Mimoto.Data']->get(CoreConfig::MIMOTO_ENTITYPROPERTY, 1);
 
-        error($entityProperty);
+        Mimoto::error($entityProperty);
 
 
         // load
@@ -649,12 +649,12 @@ class ExampleController
     {
         // load
 //        $eSelection = Mimoto::service('data')->find(['type' => 3]);
-//        output('$eSelection id='.$nSelectionId, $eSelection);
+//        Mimoto::output('$eSelection id='.$nSelectionId, $eSelection);
 
 
         // --- example 1 ---
 
-//        $aEntities = Mimoto::service('data')->find(
+//        $aResults = Mimoto::service('data')->find(
 //            [
 //                'type' => CoreConfig::MIMOTO_CONTENTSECTION,
 //                'instance' => 1,
@@ -667,7 +667,7 @@ class ExampleController
 
 //        $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, 2);
 //
-//        $aEntities = Mimoto::service('data')->find(
+//        $aResults = Mimoto::service('data')->find(
 //            [
 //                'instance' => $eContentSection,
 //                'childOf' => 'contentItem'
@@ -680,14 +680,20 @@ class ExampleController
 
         echo '<b>Selection `articleTypes`</b><br><br>';
 
-        $aEntities = Mimoto::service('data')->select('articleTypes');
-        //$aEntities = Mimoto::service('data')->select('all_articles');
-        //$aEntities = Mimoto::service('data')->select('selection_of_articles');
+        $aResults = Mimoto::service('data')->select('articleTypes');
+        //$aResults = Mimoto::service('data')->select('all_articles');
+        //$aResults = Mimoto::service('data')->select('selection_of_articles');
 
 
-        for ($i = 0; $i < count($aEntities); $i++)
+        // output
+        $nResultCount = count($aResults);
+        for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
         {
-            echo 'Result '.$i.' = `'.$aEntities[$i]->getValue('label').'` ('.$aEntities[$i]->getEntityTypeName().'.'.$aEntities[$i]->getId().')<br>';
+            // register
+            $eResult = $aResults[$nResultIndex];
+
+            // output
+            echo 'Result '.$nResultIndex.' = `'.$eResult->getValue('label').'` ('.$eResult->getEntityTypeName().'.'.$eResult->getId().')<br>';
         }
 
         die();

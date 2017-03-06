@@ -28,6 +28,8 @@ class Mimoto
     private static $_aValues = [];
     private static $_aGlobalValues = [];
 
+    private static $_bDebugMode = false;
+
 
     const DATA = 'data';
     const CONFIG = 'config';
@@ -227,8 +229,54 @@ class Mimoto
         self::$_aGlobalValues[$sKey] = $value;
     }
 
-    public function runInDebugMode()
+    public static function runInDebugMode($bDebugMode)
     {
-        // #todo
+        // toggle
+        self::$_bDebugMode = $bDebugMode;
+    }
+
+
+    public static function output($sTitle, $data = null, $bScream = false)
+    {
+        // validate
+        if (!self::$_bDebugMode) return;
+
+        // style
+        $sTextColor = ($bScream) ? '#ff0000' : '#06afea';
+        $sBorderColor = ($bScream) ? '#ff0000' : '#858585';
+        $sBackgroundColor = ($bScream) ? '#ffbbbb' : '#f5f5f5';
+
+        echo '<div style="background-color:'.$sBackgroundColor.';border:solid 1px '.$sBorderColor.';padding:20px">';
+        if (is_string($sTitle)) echo '<h2><b style="color:'.$sTextColor.'">'.$sTitle.'</b></h2><hr>';
+        echo '<pre style="width:100%">';
+        if (!empty($data)) echo print_r($data, true);
+        echo '</pre>';
+        echo '</div>';
+        echo '<br>';
+    }
+
+    public static function error($data)
+    {
+        // validate
+        if (!self::$_bDebugMode) return;
+
+        echo '<div style="background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px; width:100%;">';
+        echo '<div>';
+        echo '<h2><b style="font-size:larger;">Error</b></h2><hr style="border:0;height:1px;background:#ffffff">';
+        echo '<pre style="overflow:scroll">';
+        if (empty($data))
+        {
+            echo "<i style='font-style:italic'>No data provided</i>";
+        }
+        else
+        {
+            echo print_r($data, true);
+        }
+        echo '</pre>';
+        echo '</div>';
+        echo '<br>';
+
+        //throw new Exception('oh oh, computer says oops!');
+        die();
     }
 }

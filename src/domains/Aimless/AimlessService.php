@@ -84,7 +84,7 @@ class AimlessService
         if (!empty($param2) && is_string($param2)) $sComponentName = $param2;
 
         // verify
-        if (empty($sComponentName)) error("Please read the Mimoto::service('aimless')->createPage() documentation [link]");
+        if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('aimless')->createPage() documentation [link]");
 
         // init and send
         return new AimlessComponent($sComponentName, $entity, null, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
@@ -110,7 +110,7 @@ class AimlessService
         if (!empty($param2) && is_string($param2)) $sComponentName = $param2;
 
         // verify
-        if (empty($sComponentName)) error("Please read the Mimoto::service('aimless')->createPopup() documentation [link]");
+        if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('aimless')->createPopup() documentation [link]");
 
         // init and send
         return new AimlessComponent($sComponentName, $entity, null, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);

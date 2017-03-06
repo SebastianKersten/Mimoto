@@ -28,7 +28,7 @@ class EntityConfigTableUtils
     {
         $stmt = Mimoto::service('database')->prepare("SELECT * FROM `".CoreConfig::MIMOTO_ENTITY."` WHERE name = :name");
         $params = array(':name' => $sEntityName);
-        if ($stmt->execute($params) === false) error("Error while searching for duplicates of entity name '$sEntityName'");
+        if ($stmt->execute($params) === false) Mimoto::error("Error while searching for duplicates of entity name '$sEntityName'");
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return (count($aResults) == 0) ? true : false;
     }
@@ -37,7 +37,7 @@ class EntityConfigTableUtils
     {
         $stmt = Mimoto::service('database')->prepare("SHOW TABLES LIKE '".$sEntityName."'");
         $params = array();
-        if ($stmt->execute($params) === false) error("Error while checking for duplicate entity table '$sEntityName'");
+        if ($stmt->execute($params) === false) Mimoto::error("Error while checking for duplicate entity table '$sEntityName'");
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return (count($aResults) == 0) ? true : false;
     }
@@ -84,7 +84,7 @@ class EntityConfigTableUtils
             "parent_property_id" => CoreConfig::MIMOTO_ENTITY.'--properties',
             "name" => $sEntityPropertyName
         );
-        if ($stmt->execute($params) === false) error("Error while checking for duplicate EntityProperty '$sEntityPropertyName'");
+        if ($stmt->execute($params) === false) Mimoto::error("Error while checking for duplicate EntityProperty '$sEntityPropertyName'");
         $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return (count($aResults) == 0) ? true : false;
     }
@@ -98,7 +98,7 @@ class EntityConfigTableUtils
         // 2. add column to table
         $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN `".$sPropertyName."` ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
         $params = array();
-        if ($stmt->execute($params) === false) error("Error while adding column '$sPropertyName' to entity table '$sEntityName'");
+        if ($stmt->execute($params) === false) Mimoto::error("Error while adding column '$sPropertyName' to entity table '$sEntityName'");
     }
 
     public static function renamePropertyColumn($sEntityName, $sOldPropertyName, $sNewPropertyName, $sColumnType)
@@ -109,7 +109,7 @@ class EntityConfigTableUtils
         // 2. add column to table
         $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` CHANGE COLUMN `".$sOldPropertyName."` `".$sNewPropertyName."` ".$sDataType);
         $params = array();
-        if ($stmt->execute($params) === false) error("Error while renaming column '$sOldPropertyName' to entity table '$sEntityName'");
+        if ($stmt->execute($params) === false) Mimoto::error("Error while renaming column '$sOldPropertyName' to entity table '$sEntityName'");
     }
 
     public static function alterPropertyColumnType($sEntityName, $sPropertyName, $sColumnType)
@@ -120,7 +120,7 @@ class EntityConfigTableUtils
         // 2. add column to table
         $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` MODIFY `".$sPropertyName."` ".$sDataType);
         $params = array();
-        if ($stmt->execute($params) === false) error("Error while changing the type of column '$sPropertyName' of entity table '$sEntityName' to '$sDataType'");
+        if ($stmt->execute($params) === false) Mimoto::error("Error while changing the type of column '$sPropertyName' of entity table '$sEntityName' to '$sDataType'");
     }
 
     public static function removePropertyColumnFromEntityTable($sEntityName, $sPropertyName)
@@ -128,7 +128,7 @@ class EntityConfigTableUtils
         // 2. add column to table
         $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` DROP COLUMN `".$sPropertyName."`");
         $params = array();
-        if ($stmt->execute($params) === false) error("Error while removing column '$sPropertyName' to entity table '$sEntityName'");
+        if ($stmt->execute($params) === false) Mimoto::error("Error while removing column '$sPropertyName' to entity table '$sEntityName'");
     }
 
     private static function getColumnDataType($sColumnType)
