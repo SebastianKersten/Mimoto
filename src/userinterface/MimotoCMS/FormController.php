@@ -4,6 +4,7 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
+use Mimoto\Core\entities\InputOption;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoDataUtils;
@@ -271,8 +272,9 @@ class FormController
         return Mimoto::service('messages')->response((object) array('result' => 'FormField deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
-    public function formFieldListItemAdd(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sItemId = null)
+    public function formFieldListItemAdd(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sOptionId = null)
     {
+
         // 1. init popup
         $popup = Mimoto::service('aimless')->createPopup();
 
@@ -281,7 +283,7 @@ class FormController
         if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) die('Invalid property selector');
 
         // load
-        $formField = Mimoto::service('forms')->getFormFieldByFieldId($nFormFieldId);
+        $formField = Mimoto::service('forms')->getFormFieldByFieldId($nFormFieldTypeId, $nFormFieldId);
 
         // 2. validate
         if (empty($formField)) return $app->redirect("/mimoto.cms/forms");
@@ -294,14 +296,14 @@ class FormController
         // ---
 
         // init
-        $option = false;
+        $option = null;
 
         if (count($aOptions) == 1)
         {
             // register
             $option = $aOptions[0];
         }
-        else if (count($aOptions) > 1 && !empty($sItemId))
+        else if (count($aOptions) > 1 && !empty($sOptionId))
         {
             // init
             $bOptionFound = false;
@@ -313,7 +315,7 @@ class FormController
                 $option = $aOptions[$nOptionIndex];
 
                 // verify
-                if ($option->getId() == $sItemId)
+                if ($option->getId() == $sOptionId)
                 {
                     $bOptionFound = true;
                     break;
@@ -322,18 +324,54 @@ class FormController
 
             if (!$bOptionFound)
             {
-                Mimoto::service('log')->error("List option not found", "On adding a new item to a list, the requested list option '$sItemId' wasn't found", true);
+                Mimoto::service('log')->error("List option not found", "On adding a new item to a list, the requested list option '$sOptionId' wasn't found", true);
             }
+
+
+            // 1. load form (or selection) based on option id
+
+
         }
         else if (count($aOptions) > 1 && empty($sItemId))
         {
-            echo '1. load selector';
+
+            echo '<b>Choose a form:</b><br><br>';
+
+
+            if ($nFormFieldTypeId == CoreConfig::MIMOTO_FORM_INPUT_LIST)
+            {
+                $nOptionCount = count($aOptions);
+                for ($nOptionIndex = 0; $nOptionIndex < $nOptionCount; $nOptionIndex++)
+                {
+                    // register
+                    $option = $aOptions[$nOptionIndex];
+
+
+                    if ($option->getValue('type') == InputOption::FORM)
+                    {
+                        // compose
+                        $sURL = '/mimoto.cms/formfield/add/'.$nFormFieldTypeId.'/'.$nFormFieldId.'/'.$sPropertySelector.'/'.$option->getId();
+
+                        // output
+                        echo '- <a href="#" style="color:#000000;" onclick="Mimoto.popup.replace(\''.$sURL.'\');">'.$option->getValue('label').'</a><br>';
+                    }
+                }
+
+                // exit
+                return '';
+            }
         }
         else
         {
             Mimoto::service('log')->error("No list options set", "Please add options to the list '$nFormFieldId' in order to add items to it", true);
         }
 
+
+        // validate
+        if (empty($option)) Mimoto::service('log')->error("No options selected", "Please select a valid options for adding items to this list", true);
+
+
+        // --- show form
 
         // read
         $form = $option->getValue('form');
@@ -347,6 +385,7 @@ class FormController
             $form->getValue('name'),
             null,
             [
+                //'onCreatedReturnToClient' => true,
                 'onCreatedConnectTo' => $sPropertySelector,
                 'response' => ['onSuccess' => ['closePopup' => true]],
                 //'response' => ['onSuccess' => ['reloadPopup' => '/mimoto.cms/formfield/'.$nFormFieldTypeId.'/'.$nFormFieldId.'/edit']]
@@ -364,5 +403,40 @@ class FormController
 //    {
 //
 //    }
+
+    public function formFieldListItemEdit(Application $app, $sPropertyId, $sListItemType, $sListItemId)
+    {
+        // load
+        $eListItem = Mimoto::service('data')->get($sListItemType, $sListItemId);
+
+        Mimoto::error($eListItem);
+    }
+
+
+
+    public function formFieldListItemRemove(Application $app, $sPropertyId, $sListItemType, $sListItemId)
+    {
+        // load
+        $eListItem = Mimoto::service('data')->get($sListItemType, $sListItemId);
+
+        // delete
+        Mimoto::service('data')->delete($eListItem);
+
+
+//        // split
+//        $aParentParts = explode('.', $sPropertyId);
+//
+//        // load
+//        $eParent = Mimoto::service('data')->get($aParentParts[0], $aParentParts[1]);
+//
+//        // remove
+//        $eParent->removeValue($aParentParts[2], $eListItem);
+//
+//        // store
+//        Mimoto::service('data')->store($eParent);
+
+        // output
+        return Mimoto::service('messages')->response((object) array('result' => 'Item removed from list! '.date("Y.m.d H:i:s")), 200);
+    }
 
 }

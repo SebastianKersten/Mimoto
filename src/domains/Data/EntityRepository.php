@@ -199,10 +199,10 @@ class EntityRepository
         $aModifiedValues = $entity->getChanges();
 
         // save nothing if no changes
-        if (count($aModifiedValues) == 0 && MimotoDataUtils::isValidEntityId($entity->getId())) { return $entity; }
+        if (count($aModifiedValues) == 0 && MimotoDataUtils::isValidId($entity->getId())) { return $entity; }
 
         // determine
-        $bIsExistingEntity = (MimotoDataUtils::isValidEntityId($entity->getId())) ? true : false;
+        $bIsExistingEntity = (MimotoDataUtils::isValidId($entity->getId())) ? true : false;
 
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();

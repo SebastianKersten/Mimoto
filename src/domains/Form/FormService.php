@@ -97,7 +97,7 @@ class FormService
         Mimoto::service('log')->error('Unknown form requested', "I wasn't able to find the form with name <b>".$sFormName."</b> associated to the entity you are trying to create or edit.", true);
     }
 
-    public function getFormFieldByFieldId($nRequestedFieldId)
+    public function getFormFieldByFieldId($sRequestedFieldTypeId, $nRequestedFieldId)
     {
         // init
         $field = null;
@@ -115,14 +115,28 @@ class FormService
             for ($nInputFieldIdIndex = 0; $nInputFieldIdIndex < $nInputFieldIdCount; $nInputFieldIdIndex++)
             {
                 // register
-                $formFielId = $aInputFieldIds[$nInputFieldIdIndex];
+                $formFieldId = $aInputFieldIds[$nInputFieldIdIndex];
 
-                // verify
-                if ($formFielId == $nRequestedFieldId)
+
+                // init
+                $form = null;
+
+                // verify (Core forms)
+                if ($formFieldId == $nRequestedFieldId) // #todo - fix this last part - remove getFormStructure mothods
                 {
                     // load form
                     $form = call_user_func(array($formConfig->class, 'getForm'));
+                }
 
+                // verify (project forms)
+                if ($formFieldId == $sRequestedFieldTypeId.'.'.$nRequestedFieldId)
+                {
+                    // load form
+                    $form = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $formConfig->id);
+                }
+
+                if (!empty($form))
+                {
                     // validate and send
                     $aFormFields = $form->getValue('fields');
 
@@ -175,7 +189,7 @@ class FormService
         }
         else
         {
-            if (!MimotoDataUtils::isValidEntityId($requestData->entityId))
+            if (!MimotoDataUtils::isValidId($requestData->entityId))
             {
                 Mimoto::service('log')->error('Invalid id on form submit', "The form with name <b>".$sFormName."</b> has an incorrect id `".$requestData->entityId."`");
                 die();
@@ -281,6 +295,8 @@ class FormService
                     // init
                     $aNewConnections = [];
 
+                    // convert
+                    $field->newValue = json_decode($field->newValue);
 
                     // correct
                     if (!empty($field->newValue) && !is_array($field->newValue)) $field->newValue = [$field->newValue];
@@ -650,7 +666,7 @@ class FormService
                     if (Mimoto::service('config')->entityIsTypeOf($formFieldConnection->child_entity_type_id, CoreConfig::MIMOTO_FORM_INPUT))
                     {
                         // store
-                        $formConfig->inputFieldIds[] = $formFieldConnection->child_id;
+                        $formConfig->inputFieldIds[] = $formFieldConnection->child_entity_type_id.'.'.$formFieldConnection->child_id;
                     }
                 }
             }

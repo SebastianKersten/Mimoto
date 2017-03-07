@@ -67,10 +67,13 @@ class SelectionService
     /**
      * Get form by its name
      */
-    public function getSelectionByName($sSelectionName)
+    public function getSelection($sSelectionNameOrId)
     {
         // init
         $selection = null;
+
+        // define search startegy
+        $bSearchById = MimotoDataUtils::isValidId($sSelectionNameOrId);
 
         // find
         $nSelectionConfigCount = count($this->_aSelectionConfigs);
@@ -80,7 +83,8 @@ class SelectionService
             $selectionConfig = $this->_aSelectionConfigs[$nSelectionConfigIndex];
 
             // verify
-            if ($selectionConfig->name == $sSelectionName)
+            if (($bSearchById && $selectionConfig->id == $sSelectionNameOrId) ||
+                (!$bSearchById && $selectionConfig->name == $sSelectionNameOrId))
             {
                 // store
                 $selection = $selectionConfig;
@@ -89,7 +93,7 @@ class SelectionService
         }
 
         // validate or report
-        if (empty($selection)) Mimoto::service('log')->silent('Unknown selection requested', "I wasn't able to find the selection with name <b>".$sSelectionName."</b> in the database");
+        if (empty($selection)) Mimoto::service('log')->silent('Unknown selection requested', "I wasn't able to find the selection with name or id <b>`".$sSelectionNameOrId."`</b> in the database");
 
         // send
         return $selection;

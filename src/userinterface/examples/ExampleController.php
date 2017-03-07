@@ -680,7 +680,7 @@ class ExampleController
 
         echo '<b>Selection `articleTypes`</b><br><br>';
 
-        $aResults = Mimoto::service('data')->select('articleTypes');
+        $aResults = Mimoto::service('data')->select(3);
         //$aResults = Mimoto::service('data')->select('all_articles');
         //$aResults = Mimoto::service('data')->select('selection_of_articles');
 

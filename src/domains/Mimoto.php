@@ -136,7 +136,9 @@ class Mimoto
         $app->get ('/mimoto.cms/formfield/{nFormFieldTypeId}/{nFormFieldId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldDelete');
 
         $app->get ('/mimoto.cms/formfield/add/{nFormFieldTypeId}/{nFormFieldId}/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemAdd');
-        //$app->get ('/mimoto.cms/formfield/add/{nFormFieldTypeId}/{nFormFieldId}/{sPropertySelector}/{sItemId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldItemAddToList');
+        $app->get ('/mimoto.cms/formfield/add/{nFormFieldTypeId}/{nFormFieldId}/{sPropertySelector}/{sOptionId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemAdd');
+        $app->get ('/mimoto.cms/formfield/edit/{sPropertyId}/{sListItemType}/{sListItemId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemEdit');
+        $app->get ('/mimoto.cms/formfield/remove/{sPropertyId}/{sListItemType}/{sListItemId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemRemove');
 
         $app->get('/mimoto.cms/notifications', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::viewNotificationCenter');
         $app->get('/mimoto.cms/notifications/{nNotificationId}/close', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeNotification');
@@ -276,7 +278,7 @@ class Mimoto
         echo '</div>';
         echo '<br>';
 
-        //throw new Exception('oh oh, computer says oops!');
+        //throw new \Exception('oh oh, computer says oops!');
         die();
     }
 }

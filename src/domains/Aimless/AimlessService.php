@@ -490,6 +490,12 @@ class AimlessService
         $aModifiedValues = $entity->getChanges();
 
 
+
+        // temp override
+        $config->properties = [];
+        foreach ($aModifiedValues as $sKey => $value) $config->properties[] = $sKey;
+
+
         // verify
         if (isset($config->properties))
         {

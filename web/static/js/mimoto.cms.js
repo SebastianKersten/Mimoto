@@ -29835,19 +29835,35 @@
 	        }
 	    },
 	    
-	    formFieldListItemEdit: function(sInputFieldId, sListItemInstanceType, sListItemInstanceId)
+	    formFieldListItemEdit: function(sPropertyId, sListItemType, sListItemId)
 	    {
-	        console.log('formFieldListItem EDIT: ' + sInputFieldId + ' & ' + sListItemInstanceType + '.' + sListItemInstanceId);
+	        console.log('EDIT:');
+	        console.log('sPropertyId = ' + sPropertyId);
+	        console.log('sListItemType = ' + sListItemType);
+	        console.log('sListItemId = ' + sListItemId);
+	    
+	        // 1. build
+	        var sURL = "/mimoto.cms/formfield/edit/" + sPropertyId + '/' + sListItemType + '/' + sListItemId;
+	    
+	        console.log(sURL);
 	        
-	        //Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
+	        window.open(sURL, '_self');
+	        
+	        console.warn('Done ..');
+	        alert('xxx');
 	    },
 	    
-	    formFieldListItemDelete: function(sInputFieldId, sListItemInstanceType, sListItemInstanceId)
+	    formFieldListItemDelete: function(sPropertyId, sListItemType, sListItemId)
 	    {
-	        console.log('formFieldListItem DELETE: ' + sInputFieldId + ' & ' + sListItemInstanceType + '.' + sListItemInstanceId);
-	        
-	        // 1. remove from list value
-	        
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: "/mimoto.cms/formfield/remove/" + sPropertyId + '/' + sListItemType + '/' + sListItemId,
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
 	    }
 	    
 	}

@@ -431,6 +431,7 @@ class CoreConfig
 //                ]
 //            ),
             (object)array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_entities', // internal of external?
                 'name' => CoreConfig::CORE_PREFIX . 'all_entities', // internal of external?
                 'label' => 'xxx',
                 'rules' => [

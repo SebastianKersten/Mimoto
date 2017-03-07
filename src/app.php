@@ -23,7 +23,7 @@ $app = new \Silex\Application();
 // setup
 $loader = new \Twig_Loader_Filesystem([Mimoto::value('ProjectConfig.root').Mimoto::value('ProjectConfig.twigroot')]);
 $twig = new Twig_Environment($loader, array(
-    // 'cache' => '../app/cache',
+    //'cache' => '../twigcache',
     'autoescape' => false
 ));
 

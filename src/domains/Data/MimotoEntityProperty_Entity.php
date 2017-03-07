@@ -324,7 +324,7 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
         // check if available
         if (!empty($this->_data->currentEntity) && empty($this->_data->currentEntity->getEntity()))
         {
-            if (MimotoDataUtils::isValidEntityId($this->_data->currentEntity->getChildId()))
+            if (MimotoDataUtils::isValidId($this->_data->currentEntity->getChildId()))
             {
                 // load
                 $this->_data->currentEntity->setEntity(Mimoto::service('data')->get($this->_data->currentEntity->getChildEntityTypeName(), $this->_data->currentEntity->getChildId()));

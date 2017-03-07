@@ -53,8 +53,8 @@ class MimotoDataUtils
     {
         return ($value instanceof MimotoEntity);
     }
-    
-    public static function isValidEntityId($value)
+
+    public static function isValidId($value)
     {
         // validate
         if (is_object($value)) return false;
@@ -122,7 +122,7 @@ class MimotoDataUtils
         if (MimotoDataUtils::isEntity($xValue)) return MimotoEntityPropertyValueTypes::VALUETYPE_ENTITY;
 
         // 3. check if value is a valid entity
-        if (MimotoDataUtils::isValidEntityId($xValue)) return MimotoEntityPropertyValueTypes::VALUETYPE_ID;
+        if (MimotoDataUtils::isValidId($xValue)) return MimotoEntityPropertyValueTypes::VALUETYPE_ID;
 
         // 4. check if value is empty
         if (empty($xValue)) return MimotoEntityPropertyValueTypes::VALUETYPE_EMPTY;
@@ -305,7 +305,7 @@ class MimotoDataUtils
 //                }
 
                 // validate childEntityType
-                if (!empty($connection) && (empty($connection->getChildId()) || !MimotoDataUtils::isValidEntityId($connection->getChildId())))
+                if (!empty($connection) && (empty($connection->getChildId()) || !MimotoDataUtils::isValidId($connection->getChildId())))
                 {
                     $connection = null;
                 }

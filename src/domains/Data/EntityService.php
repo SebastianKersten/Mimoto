@@ -127,7 +127,7 @@ class EntityService
     public function get($sEntityType, $nId)
     {
         // verify and convert
-        if (MimotoDataUtils::isValidEntityId($sEntityType)) $sEntityType = $this->_EntityConfigService->getEntityNameById($sEntityType);
+        if (MimotoDataUtils::isValidId($sEntityType)) $sEntityType = $this->_EntityConfigService->getEntityNameById($sEntityType);
 
         // verify
         if (!isset($this->_aEntityConfigs[$sEntityType]))
@@ -174,7 +174,7 @@ class EntityService
             $sEntityType = $criteria[SelectionRuleTypes::TYPE];
 
             // verify and convert
-            if (MimotoDataUtils::isValidEntityId($sEntityType)) $sEntityType = $this->_EntityConfigService->getEntityNameById($sEntityType);
+            if (MimotoDataUtils::isValidId($sEntityType)) $sEntityType = $this->_EntityConfigService->getEntityNameById($sEntityType);
 
             // verify
             if (!isset($this->_aEntityConfigs[$sEntityType]))
@@ -201,7 +201,7 @@ class EntityService
             $eParent = $criteria[SelectionRuleTypes::INSTANCE];
 
             // convert
-            if (MimotoDataUtils::isValidEntityId($criteria[SelectionRuleTypes::INSTANCE]) && isset($criteria[SelectionRuleTypes::TYPE]) && MimotoDataUtils::isValidEntityName($criteria[SelectionRuleTypes::TYPE]))
+            if (MimotoDataUtils::isValidId($criteria[SelectionRuleTypes::INSTANCE]) && isset($criteria[SelectionRuleTypes::TYPE]) && MimotoDataUtils::isValidEntityName($criteria[SelectionRuleTypes::TYPE]))
             {
                 // load
                 $eParent = Mimoto::service('data')->get($criteria[SelectionRuleTypes::TYPE], $criteria[SelectionRuleTypes::INSTANCE]);
@@ -251,13 +251,13 @@ class EntityService
         return $aRequestedEntities;
     }
 
-    public function select($sSelectionName)
+    public function select($sSelectionNameOrId)
     {
         // init
         $aRequestedEntities = [];
 
         // load
-        $selection = Mimoto::service('selection')->getSelectionByName($sSelectionName);
+        $selection = Mimoto::service('selection')->getSelection($sSelectionNameOrId);
 
         // validate
         if (empty($selection)) return $aRequestedEntities;
