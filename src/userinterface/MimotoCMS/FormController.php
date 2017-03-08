@@ -195,7 +195,11 @@ class FormController
             {
 
                 // todo primary field (er hoeft niet altijd een label te zijn
-                $eInputField->setValue('label', $sPropertyName);
+                if ($eInputField->hasProperty('label'))
+                {
+                    $eInputField->setValue('label', $sPropertyName);
+                }
+
 
                 // connect property to field value
                 $eConnectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
