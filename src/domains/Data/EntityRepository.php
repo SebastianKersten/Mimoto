@@ -543,14 +543,18 @@ class EntityRepository
             // store
             Mimoto::service('data')->store($entity);
 
-            // 1. get all children
-            $this->cleanupChildren($child->entity);
-
             // load
             $aParents = $this->getAllParents($child->entity);
 
             // cleanup
-            if (count($aParents) == 0) Mimoto::service('data')->delete($child->entity);
+            if (count($aParents) == 0)
+            {
+                // 1. get all children
+                $this->cleanupChildren($child->entity);
+
+                // 2. remove
+                Mimoto::service('data')->delete($child->entity);
+            }
         }
 
     }

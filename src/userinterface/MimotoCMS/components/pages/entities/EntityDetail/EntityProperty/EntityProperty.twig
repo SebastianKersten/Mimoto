@@ -11,7 +11,7 @@
                 <div {{ Aimless.realtime('type') }}>{{ Aimless.render('type') }}</div>
             {% endif %}
         </div>
-        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer">
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Aimless.realtime('settings') }}>
             {{ Aimless.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { propertySubtype:Aimless.data('subtype') }) }}
         </div>
     </div>
