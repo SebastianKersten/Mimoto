@@ -298,9 +298,11 @@ class FormService
                     // convert
                     $field->newValue = json_decode($field->newValue);
 
+
+                    //Mimoto::output('$field->newValue', $field->newValue);
+
                     // correct
                     if (!empty($field->newValue) && !is_array($field->newValue)) $field->newValue = [$field->newValue];
-
 
                     // verify
                     if (!empty($field->newValue))
@@ -309,8 +311,11 @@ class FormService
                         foreach ($field->newValue as $sConnectionValue)
                         {
                             // split
-                            $nChildType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sConnectionValue);
+                            $sChildTypeName = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sConnectionValue);
                             $nChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sConnectionValue);
+
+                            // convert
+                            $nChildTypeId = Mimoto::service('config')->getEntityIdByName($sChildTypeName);
 
                             // register
                             $nParentEntityTypeId = $entity->getEntityTypeId();
@@ -318,78 +323,80 @@ class FormService
 
                             // convert
                             $allowedEntityType = (object)array(
-                                'id' => $nChildType,
-                                'name' => Mimoto::service('config')->getEntityNameById($nChildType)
+                                'id' => $nChildTypeId,
+                                'name' => $sChildTypeName
                             );
 
                             // create
-                            $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entity->getId(), [$allowedEntityType], $nChildType, $field->propertyName);
+                            $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entity->getId(), [$allowedEntityType], $nChildTypeId, $field->propertyName);
 
                             // register
                             $aNewConnections[] = $connection;
                         }
-                    }
 
-                    // load
-                    $aCurrentConnections = $entity->getValue($field->propertyName, true);
+                        // load
+                        $aCurrentConnections = $entity->getValue($field->propertyName, true);
 
-                    // find new connections
-                    $nNewConnectionCount = count($aNewConnections);
-                    for ($nNewConnectionIndex = 0; $nNewConnectionIndex < $nNewConnectionCount; $nNewConnectionIndex++)
-                    {
-                        // register
-                        $newConnection = $aNewConnections[$nNewConnectionIndex];
+                        //Mimoto::output('$aCurrentConnections', $aCurrentConnections, true);
 
-                        $bConnectionFound = false;
-                        $nCurrentConnectionCount = count($aCurrentConnections);
-                        for ($nCurrentConnectionIndex = 0; $nCurrentConnectionIndex < $nCurrentConnectionCount; $nCurrentConnectionIndex++)
-                        {
-                            // register
-                            $currentConnection = $aCurrentConnections[$nCurrentConnectionIndex];
-
-                            // check
-                            if (MimotoDataUtils::connectionsAreSimilar($newConnection, $currentConnection))
-                            {
-                                $bConnectionFound = true;
-                                break;
-                            }
-                        }
-
-                        // store if new
-                        if (!$bConnectionFound) $entity->addValue($field->propertyName, $newConnection);
-                    }
-
-                    // reload after adding new connections
-                    $aCurrentConnections = $entity->getValue($field->propertyName, true);
-
-                    // find removed connections
-                    $nCurrentConnectionCount = count($aCurrentConnections);
-                    for ($nCurrentConnectionIndex = 0; $nCurrentConnectionIndex < $nCurrentConnectionCount; $nCurrentConnectionIndex++)
-                    {
-                        // register
-                        $currentConnection = $aCurrentConnections[$nCurrentConnectionIndex];
-
-                        $bConnectionFound = false;
+                        // find new connections
                         $nNewConnectionCount = count($aNewConnections);
                         for ($nNewConnectionIndex = 0; $nNewConnectionIndex < $nNewConnectionCount; $nNewConnectionIndex++)
                         {
                             // register
                             $newConnection = $aNewConnections[$nNewConnectionIndex];
 
-                            // check
-                            if (MimotoDataUtils::connectionsAreSimilar($newConnection, $currentConnection))
+                            $bConnectionFound = false;
+                            $nCurrentConnectionCount = count($aCurrentConnections);
+                            for ($nCurrentConnectionIndex = 0; $nCurrentConnectionIndex < $nCurrentConnectionCount; $nCurrentConnectionIndex++)
                             {
-                                $bConnectionFound = true;
-                                break;
+                                // register
+                                $currentConnection = $aCurrentConnections[$nCurrentConnectionIndex];
+
+                                // check
+                                if (MimotoDataUtils::connectionsAreSimilar($newConnection, $currentConnection))
+                                {
+                                    $bConnectionFound = true;
+                                    break;
+                                }
                             }
+
+                            // store if new
+                            if (!$bConnectionFound) $entity->addValue($field->propertyName, $newConnection);
                         }
 
-                        // store if new
-                        if (!$bConnectionFound) $entity->removeValue($field->propertyName, $currentConnection);
+                        // reload after adding new connections
+                        $aCurrentConnections = $entity->getValue($field->propertyName, true);
+
+                        // find removed connections
+                        $nCurrentConnectionCount = count($aCurrentConnections);
+                        for ($nCurrentConnectionIndex = 0; $nCurrentConnectionIndex < $nCurrentConnectionCount; $nCurrentConnectionIndex++)
+                        {
+                            // register
+                            $currentConnection = $aCurrentConnections[$nCurrentConnectionIndex];
+
+                            $bConnectionFound = false;
+                            $nNewConnectionCount = count($aNewConnections);
+                            for ($nNewConnectionIndex = 0; $nNewConnectionIndex < $nNewConnectionCount; $nNewConnectionIndex++)
+                            {
+                                // register
+                                $newConnection = $aNewConnections[$nNewConnectionIndex];
+
+                                // check
+                                if (MimotoDataUtils::connectionsAreSimilar($newConnection, $currentConnection))
+                                {
+                                    $bConnectionFound = true;
+                                    break;
+                                }
+                            }
+
+                            // store if new
+                            if (!$bConnectionFound) $entity->removeValue($field->propertyName, $currentConnection);
+                        }
                     }
 
                     // reload after adding new connections
-                    $aCurrentConnections = $entity->getValue($field->propertyName, true);
+                    //$aCurrentConnections = $entity->getValue($field->propertyName, true);
 
                     break;
 

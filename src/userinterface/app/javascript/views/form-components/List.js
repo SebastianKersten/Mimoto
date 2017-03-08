@@ -10,7 +10,7 @@ module.exports = function (element) {
 };
 
 module.exports.prototype = {
-
+    
     init: function () {
 
         console.log('Init List');

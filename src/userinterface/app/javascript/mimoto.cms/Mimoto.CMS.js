@@ -426,10 +426,10 @@ module.exports.prototype = {
         });
     },
     
-    formFieldListItemAdd: function(sListFieldType, sListFieldId, sInstanceId)
+    formFieldListItemAdd: function(sInputFieldType, sInputFieldId, sPropertySelector)
     {
         // 1. build
-        var sURL = '/mimoto.cms/formfield/add/' + sListFieldType + '/' + sListFieldId + '/' + sInstanceId;
+        var sURL = '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector;
         
         console.log(sURL);
         
@@ -448,29 +448,22 @@ module.exports.prototype = {
         }
     },
     
-    formFieldListItemEdit: function(sPropertyId, sListItemType, sListItemId)
+    formFieldListItemEdit: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)
     {
-        console.log('EDIT:');
-        console.log('sPropertyId = ' + sPropertyId);
-        console.log('sListItemType = ' + sListItemType);
-        console.log('sListItemId = ' + sListItemId);
-    
-        // 1. build
-        var sURL = "/mimoto.cms/formfield/edit/" + sPropertyId + '/' + sListItemType + '/' + sListItemId;
-    
-        console.log(sURL);
-        
-        window.open(sURL, '_self');
-        
-        console.warn('Done ..');
-        alert('xxx');
+        // reload
+        window.open("/mimoto.cms/formfield/" + sInputFieldType + "/" + sInputFieldId + "/edit/" + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId, '_self');
     },
     
-    formFieldListItemDelete: function(sPropertyId, sListItemType, sListItemId)
+    
+    formFieldListItemDelete: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)
     {
+        // 1. sInputFieldType
+        // 2. sInputFieldId
+        
+        
         Mimoto.Aimless.utils.callAPI({
             type: 'get',
-            url: "/mimoto.cms/formfield/remove/" + sPropertyId + '/' + sListItemType + '/' + sListItemId,
+            url: '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId +  '/remove/' + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
             data: null,
             dataType: 'json',
             success: function(resultData, resultStatus, resultSomething) {

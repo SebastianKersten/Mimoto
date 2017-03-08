@@ -184,7 +184,7 @@ module.exports.prototype = {
         var form = this._aForms[sFormName];
         var aFields = form.aFields;
         var nFieldCount = aFields.length;
-
+        
         // 5. locate form in dom
         var $form = $('form[name="' + sFormName + '"]');
         

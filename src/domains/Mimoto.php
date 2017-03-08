@@ -135,10 +135,10 @@ class Mimoto
         $app->get ('/mimoto.cms/formfield/{nFormFieldTypeId}/{nFormFieldId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldEdit');
         $app->get ('/mimoto.cms/formfield/{nFormFieldTypeId}/{nFormFieldId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldDelete');
 
-        $app->get ('/mimoto.cms/formfield/add/{nFormFieldTypeId}/{nFormFieldId}/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemAdd');
-        $app->get ('/mimoto.cms/formfield/add/{nFormFieldTypeId}/{nFormFieldId}/{sPropertySelector}/{sOptionId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemAdd');
-        $app->get ('/mimoto.cms/formfield/edit/{sPropertyId}/{sListItemType}/{sListItemId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemEdit');
-        $app->get ('/mimoto.cms/formfield/remove/{sPropertyId}/{sListItemType}/{sListItemId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemRemove');
+        $app->get ('/mimoto.cms/formfield/{sInputFieldType}/{sInputFieldId}/add/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemAdd');
+        $app->get ('/mimoto.cms/formfield/{sInputFieldType}/{sInputFieldId}/add/{sPropertySelector}/{sOptionId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemAdd');
+        $app->get ('/mimoto.cms/formfield/{sInputFieldType}/{sInputFieldId}/edit/{sPropertySelector}/{sInstanceType}/{sInstanceId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemEdit');
+        $app->get ('/mimoto.cms/formfield/{sInputFieldType}/{sInputFieldId}/remove/{sPropertySelector}/{sInstanceType}/{sInstanceId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldListItemRemove');
 
         $app->get('/mimoto.cms/notifications', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::viewNotificationCenter');
         $app->get('/mimoto.cms/notifications/{nNotificationId}/close', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeNotification');
