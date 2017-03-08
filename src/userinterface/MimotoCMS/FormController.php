@@ -5,6 +5,9 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Core\entities\InputOption;
+use Mimoto\EntityConfig\EntityConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoDataUtils;
@@ -47,6 +50,184 @@ class FormController
 
         // 5. output
         return $popup->render();
+    }
+
+    public function formAutogenerate(Application $app, $nEntityId)
+    {
+        // 1. get name (check name)
+        // 2. get all forms
+
+        // load data
+        $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+
+        // register
+        $sEntityName = $eEntity->getValue('name');
+
+        // validate
+        if (empty($eEntity)) return $app->redirect("/mimoto.cms/entities/".$nEntityId.'/edit');
+
+        // load all
+        $aExistingForms = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);
+
+
+        // init
+        $sNewFormName = $sEntityName;
+
+        // search
+        $bNewNameDecided = false;
+        $nNameIndex = 0;
+        while(!$bNewNameDecided)
+        {
+            // init
+            $bNewNameAlreadyExists = false;
+
+            // search
+            $nFormCount = count($aExistingForms);
+            for ($nFormIndex = 0; $nFormIndex < $nFormCount;$nFormIndex++)
+            {
+                // register
+                $eExistsingForm = $aExistingForms[$nFormIndex];
+
+                // verify
+                if ($eExistsingForm->getValue('name') == $sNewFormName)
+                {
+                    // 1. en nu? skip en ga naar volgende
+                    $bNewNameAlreadyExists = true;
+                    break;
+                }
+            }
+
+            if ($bNewNameAlreadyExists)
+            {
+                // update
+                $nNameIndex++;
+
+                // compose
+                $sNewFormName = $sEntityName.' ('.$nNameIndex.')';
+            }
+            else
+            {
+                // toggle
+                $bNewNameDecided = true;
+            }
+        }
+
+
+        // init
+        $eNewForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
+
+        // setup
+        $eNewForm->setValue('name', $sNewFormName);
+
+
+        // register
+        $aProperties = $eEntity->getValue('properties');
+
+        // parse fields
+        $nPropertyCount = count($aProperties);
+        for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
+        {
+            // register
+            $eProperty = $aProperties[$nPropertyIndex];
+
+            // register
+            $sPropertyName = $eProperty->getValue('name');
+            $aPropertySettings = $eProperty->getValue('settings');
+
+
+            // init
+            $eInputField = null;
+
+            // togglew
+            switch($eProperty->getValue('type'))
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                    // parse settings
+                    $nSettingCount = count($aPropertySettings);
+                    for ($nSettingIndex = 0; $nSettingIndex < $nSettingCount;$nSettingIndex++)
+                    {
+                        // register
+                        $eSetting = $aPropertySettings[$nSettingIndex];
+
+                        // toggle
+                        switch($eSetting->getValue('key'))
+                        {
+                            case EntityConfig::SETTING_VALUE_TYPE:
+
+                                switch($eSetting->getValue('type'))
+                                {
+                                    case MimotoEntityPropertyValueTypes::VALUETYPE_TEXT:
+
+                                        switch($eSetting->getValue('value'))
+                                        {
+                                            case CoreConfig::DATA_VALUE_TEXTLINE:
+
+                                                $eInputField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE);
+                                                break;
+
+                                            case CoreConfig::DATA_VALUE_TEXTBLOCK:
+
+                                                $eInputField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK);
+                                                break;
+                                        }
+
+                                        break;
+                                }
+
+                                break;
+                        }
+                    }
+
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                    break;
+            }
+
+
+            if (!empty($eInputField))
+            {
+
+                // todo primary field (er hoeft niet altijd een label te zijn
+                $eInputField->setValue('label', $sPropertyName);
+
+                // connect property to field value
+                $eConnectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+                $eConnectedEntityProperty->setId($eProperty->getId());
+                $eInputField->setValue('value', $eConnectedEntityProperty);
+
+                // store
+                Mimoto::service('data')->store($eInputField);
+
+                // connect
+                $eNewForm->addValue('fields', $eInputField);
+            }
+        }
+
+
+        // store
+        Mimoto::service('data')->store($eNewForm);
+
+        // connect
+        $eEntity->addValue('forms', $eNewForm);
+
+        // store
+        Mimoto::service('data')->store($eEntity);
+
+
+        Mimoto::error($sNewFormName);
+
+
+
+
+        // output
+        Mimoto::service('messages')->response((object) array('result' => 'For created! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function formView(Application $app, $nFormId)

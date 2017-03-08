@@ -143,7 +143,10 @@
 
                 <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showOnEmpty('forms') }}>
                     <div>This entity has no form yet.<br>Go ahead, start adding one!</div>
-                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                    <div>
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Auto-generate form', icon:'plus', onclick:"Mimoto.CMS.entityFormAutogenerate('" ~ Aimless.meta('id') ~ "');" }) }}
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                    </div>
                 </div>
 
                 <div {{ Aimless.hideOnEmpty('forms') }}>
@@ -152,6 +155,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
+                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Auto-generate form', icon:'plus', onclick:"Mimoto.CMS.entityFormAutogenerate('" ~ Aimless.meta('id') ~ "');" }) }}
                         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Aimless.meta('id') ~ "');" }) }}
                     </div>
                 </div>

@@ -29762,6 +29762,17 @@
 	        //popup.on('success') = popup.close();
 	    },
 	    
+	    entityFormAutogenerate: function(nEntityId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: "/mimoto.cms/entity/" + nEntityId + "/form/autogenerate",
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
 	    formView: function(nFormId)
 	    {
 	        window.open('/mimoto.cms/form/' + nFormId + '/view', '_self');
