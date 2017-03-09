@@ -236,8 +236,11 @@ class EntityRepository
                     
                             $aQueryElements[] = (object) array(
                                 'key' => $propertyValue->mysqlColumnName,
-                                'value' => MimotoDataUtils::convertRuntimeValueToStorableValue($entity->getValue($sPropertyName), $propertyConfig->settings->type->type)
+                                'value' => MimotoDataUtils::convertRuntimeValueToStorableValue($entity->getValue($sPropertyName), $propertyConfig->settings->type->type, $propertyConfig->settings->type->value)
                             );
+
+                            Mimoto::output(count($aQueryElements), $aQueryElements);
+
                             break;
                     }
                     
@@ -678,7 +681,7 @@ class EntityRepository
                         if (isset($result[$propertyValue->mysqlColumnName]))
                         {
                             // 1. register
-                            $value = MimotoDataUtils::convertStoredValueToRuntimeValue($result[$propertyValue->mysqlColumnName], $propertyConfig->settings->type->type);
+                            $value = MimotoDataUtils::convertStoredValueToRuntimeValue($result[$propertyValue->mysqlColumnName], $propertyConfig->settings->type->type, $propertyConfig->settings->type->value);
 
                             // 2. store
                             $entity->setValue($propertyConfig->name, $value);

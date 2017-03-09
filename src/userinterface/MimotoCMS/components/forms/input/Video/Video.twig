@@ -1,37 +1,36 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "video" } %}
-    {% block form_component_element %}
-        [Component:"Video"]<br>
-        - upload<br>
-        - player
-    {% endblock %}
-{% endembed %}
-
-
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "image"} %}
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "video", button:true, buttonLabel:'Upload video', buttonIcon:'', buttonClass:'js-video-upload-trigger' } %}
 
     {% block form_component_element %}
         <div id="{{ Aimless.meta('type')~"."~Aimless.meta('id') }}">
-            <div class="MimotoCMS_forms_input_ImageUpload js-image-upload">
-                <div class="MimotoCMS_forms_input_ImageUpload-trigger js-image-upload-trigger">
-                    <div class="MimotoCMS_forms_input_ImageUpload-trigger-button"><svg class="MimotoCMS_forms_input_ImageUpload-button-trigger-icon"><use xlink:href="#ico-plus"></use></svg></div>
-                    <p class="MimotoCMS_forms_input_ImageUpload-trigger-text">Klik hier of drop een afbeelding</p>
-                </div>
+            <div class="MimotoCMS_forms_input_VideoUpload js-video-upload">
+                {#<div class="MimotoCMS_forms_input_VideoUpload-trigger js-video-upload-trigger">
+                    <div class="MimotoCMS_forms_input_VideoUpload-trigger-button"><svg class="MimotoCMS_forms_input_VideoUpload-button-trigger-icon"><use xlink:href="#ico-plus"></use></svg></div>
+                    <p class="MimotoCMS_forms_input_VideoUpload-trigger-text">Click here or drop a video</p>
+                </div>#}
 
-                <div class="MimotoCMS_forms_input_ImageUpload-preview js-image-upload-preview">
-                    <div class="MimotoCMS_forms_input_ImageUpload-preview-template js-image-upload-preview-template">
-                        <img data-dz-thumbnail class="MimotoCMS_forms_input_ImageUpload-preview-image" />
-                        <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progress">
-                            <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
+                <video id="xxx-video" class="MimotoCMS_forms_input_VideoUpload-player" muted loop poster="">
+                    <source src="" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+
+
+                <div class="MimotoCMS_forms_input_VideoUpload-preview js-video-upload-preview">
+
+                    <div class="MimotoCMS_forms_input_VideoUpload-preview-template js-video-upload-preview-template">
+                        <img data-dz-thumbnail class="MimotoCMS_forms_input_VideoUpload-preview-video" />
+                        <div class="MimotoCMS_forms_input_VideoUpload-preview-upload-progress">
+                            <div class="MimotoCMS_forms_input_VideoUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
                         </div>
-                        <div class="MimotoCMS_forms_input_ImageUpload-preview-button">
+                        <div class="MimotoCMS_forms_input_VideoUpload-preview-button">
                             {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
                         </div>
                     </div>
                 </div>
             </div>
-            <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-image-upload-value"/>
+            <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-video-upload-value"/>
         </div>
-        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupImageField, '{{ Aimless.meta('type')~"."~Aimless.meta('id') }}', '{{ Aimless.field() }}');</script>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupVideoField, '{{ Aimless.meta('type')~"."~Aimless.meta('id') }}', '{{ Aimless.field() }}');</script>
+
     {% endblock %}
 
 {% endembed %}

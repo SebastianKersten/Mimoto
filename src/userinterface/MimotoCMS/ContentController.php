@@ -184,7 +184,7 @@ class ContentController
                 break;
             }
         }
-        
+
 
         // 8. connect
         $page->addComponent('content', $component);

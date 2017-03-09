@@ -240,11 +240,17 @@ class EntityProperty
         $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE);
         $field->addValue('options', $option);
 
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-video');
+        $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO);
+        $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO);
+        $field->addValue('options', $option);
+
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
-        $validationRule->setValue('value', '^('.MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION.'|'.MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE.')$');
+        $validationRule->setValue('value', '^('.MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION.'|'.MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE.'|'.MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO.')$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);

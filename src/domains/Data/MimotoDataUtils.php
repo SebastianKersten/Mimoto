@@ -389,12 +389,29 @@ class MimotoDataUtils
      * @param string $sType The preferred type of the value
      * @return mixed Runtime usable value
      */
-    public static function convertStoredValueToRuntimeValue($value, $sType)
+    public static function convertStoredValueToRuntimeValue($value, $sType, $sSubtype)
     {
         // convert
         switch ($sType)
         {
             case MimotoEntityPropertyValueTypes::VALUETYPE_TEXT:
+
+                switch($sSubtype)
+                {
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_INTEGER:
+
+                        break;
+
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN:
+
+                        // convert
+                        $value = ($value == 1) ? true : false;
+                        break;
+
+                    default:
+
+                        break;
+                }
 
                 break;
 
@@ -423,15 +440,31 @@ class MimotoDataUtils
      * @param string $sType The preferred type of the value
      * @return mixed Storable value
      */
-    public static function convertRuntimeValueToStorableValue($value, $sType)
+    public static function convertRuntimeValueToStorableValue($value, $sType, $sSubtype)
     {
         // convert
-        switch ($sType)
+        switch($sType)
         {
             case MimotoEntityPropertyValueTypes::VALUETYPE_TEXT:
 
-                break;
+                switch($sSubtype)
+                {
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_INTEGER:
 
+                        break;
+
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN:
+
+                        // convert
+                        $value = ($value === true) ? 1 : 0;
+                        break;
+
+                    default:
+
+                        break;
+                }
+
+                break;
 
             case MimotoEntityPropertyValueTypes::VALUETYPE_INTEGER:
 

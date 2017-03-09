@@ -30939,6 +30939,116 @@
 	                console.warn(serverResponse);
 	            }.bind(this), 100);
 	        }.bind(this));
+	    },
+	    
+	    setupVideoField: function(sVideoFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
+	    {
+	        // read
+	        var currentForm = this._aForms[this._sCurrentOpenForm];
+	        
+	        // 1. locate form in dom
+	        var $form = $('form[name="' + currentForm.sName + '"]');
+	        
+	        // setup
+	        var field = $("[" + sInputFieldId + "]", $form);
+	        var fieldInput = $("input", field);
+	    
+	    
+	        // register
+	        // var video = document.getElementById('xxx-video');
+	        //
+	        // video.src = full_path;
+	        // video.controls = true;
+	        
+	        
+	        this.el = document.getElementById(sVideoFieldId);
+	        
+	        this._videoField_videoUploadClass = '.js-video-upload';
+	        this._videoField_videoUploadTriggerClass = '.js-video-upload-trigger';
+	        this._videoField_previewClass = '.js-video-upload-preview';
+	        this._videoField_previewTemplateClass = '.js-video-upload-preview-template';
+	        
+	        this._videoField_showPreviewClass = 'MimotoCMS_forms_input_ImageUpload--show-preview';
+	        this._videoField_showPreviewImageClass = 'MimotoCMS_forms_input_ImageUpload--show-preview-video';
+	        this._videoField_hideUploadProgressClass = 'MimotoCMS_forms_input_ImageUpload--hide-upload-progess';
+	        
+	        this._videoField_errorParent = this.el.querySelector('.js-error-parent');
+	        
+	        this._videoField_postURL = "/Mimoto.Aimless/upload/video";
+	        this._videoField_videoUpload = this.el.querySelector(this._videoField_videoUploadClass);
+	        this._videoField_inputfield = this.el.querySelector('.js-video-upload-value');
+	        
+	        
+	        // preview template
+	        var previewNode = document.querySelector(this._videoField_previewTemplateClass);
+	        var template = previewNode.parentNode.innerHTML;
+	        previewNode.id = "";
+	        previewNode.parentNode.removeChild(previewNode);
+	        this._videoField_previewTemplate = template;
+	        
+	        // setup
+	        this._videoField_dropzone = new Dropzone(this._videoField_videoUpload, {
+	            url: this._videoField_postURL,
+	            maxFilesize: 1000,
+	            parallelUploads: 20,
+	            previewTemplate: this._videoField_previewTemplate,
+	            thumbnailWidth: 500,
+	            thumbnailHeight: null,
+	            previewsContainer: this._videoField_previewClass,
+	            acceptedFiles: ".mp4",
+	            clickable: this._videoField_videoUploadTriggerClass
+	        });
+	        
+	        
+	        this._videoField_dropzone.on('removedfile', function (file) {
+	            this._videoField_dropzone.element.classList.remove(this._videoField_showPreviewClass);
+	            this._videoField_dropzone.element.classList.remove(this._videoField_showPreviewImageClass);
+	            //EH.clearState(this.el);
+	            
+	            // set value
+	            fieldInput.val('');
+	            
+	        }.bind(this));
+	        
+	        this._videoField_dropzone.on('addedfile', function (file) {
+	            //this._videoField_dropzone.element.classList.add(this._videoField_showPreviewClass);
+	        }.bind(this));
+	        
+	        this._videoField_dropzone.on('thumbnail', function (file) {
+	            //this._videoField_dropzone.element.classList.add(this._videoField_showPreviewImageClass);
+	        }.bind(this));
+	        
+	        this._videoField_dropzone.on('error', function (file, errorMessage, xhrObject) {
+	            //EH.addErrorState(this.el, errorMessage);
+	        }.bind(this));
+	        
+	        this._videoField_dropzone.on('success', function (file, serverResponse) {
+	            
+	            // set value
+	            fieldInput.val(serverResponse.file_id);
+	    
+	            console.warn(serverResponse.full_path);
+	            
+	            // register
+	            var video = document.getElementById('xxx-video');
+	            
+	            // add source
+	            video.src = serverResponse.full_path;
+	            video.controls = true;
+	            
+	            // load video
+	            video.load();
+	            
+	            
+	            setTimeout(function () {
+	                this._videoField_dropzone.element.classList.add(this._videoField_hideUploadProgressClass);
+	                
+	                //EH.addValidatedState(this.el);
+	                
+	                //console.warn(serverResponse);
+	                
+	            }.bind(this), 100);
+	        }.bind(this));
 	    }
 	    
 	};

@@ -504,6 +504,9 @@ class EntityConfigService
                 switch($entityProperty->getValue('subtype'))
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE:
+                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO:
+                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO:
+                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE:
 
                         // init
                         $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
@@ -522,7 +525,7 @@ class EntityConfigService
                         Mimoto::service('data')->store($entityPropertySetting);
 
 
-                        // #todo add image specific settings ...
+                        // #todo - add specific image/video/audio/file settings ...
 
 
 
@@ -531,14 +534,6 @@ class EntityConfigService
 
                         // store
                         Mimoto::service('data')->store($entityProperty);
-
-                        break;
-
-                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO:
-                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO:
-                    case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE:
-
-                        // to implement ..
 
                         break;
                 }

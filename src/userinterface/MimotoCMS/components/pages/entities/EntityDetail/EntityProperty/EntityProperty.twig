@@ -5,7 +5,7 @@
              {{ Aimless.render('name') }}
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
-            {% if Aimless.data('subtype') == 'image' %}
+            {% if Aimless.data('subtype') == 'image' or Aimless.data('subtype') == 'video' or Aimless.data('subtype') == 'audio' or Aimless.data('subtype') == 'file' %}
                 <div {{ Aimless.realtime('subtype') }}>{{ Aimless.render('subtype') }}</div>
             {% else %}
                 <div {{ Aimless.realtime('type') }}>{{ Aimless.render('type') }}</div>

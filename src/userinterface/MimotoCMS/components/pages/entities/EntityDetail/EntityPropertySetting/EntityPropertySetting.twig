@@ -1,19 +1,19 @@
 <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting" {{ Aimless.realtime() }}>
 
-    {% if propertySubtype == 'image' %}
+    {% if propertySubtype == 'image' or propertySubtype=='video' or propertySubtype=='audio' or propertySubtype=='file' %}
         <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">default settings</span>
     {% else %}
         {{ Aimless.render('key') }}
     {% endif %}
 
     <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu">
-        {% if propertySubtype != 'image' %}<a onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Aimless.meta('id', 'type') }}');">edit</a>{% endif %}
+        {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}<a onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Aimless.meta('id', 'type') }}');">edit</a>{% endif %}
     </span>
 
-    {% if propertySubtype != 'image' %}:<br>{% endif %}
+    {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}:<br>{% endif %}
 
     {% if Aimless.data('key') == 'allowedEntityType' %}
-        {% if propertySubtype != 'image' %}
+        {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}
             <div {{ Aimless.showOnEmpty('allowedEntityType') }}>
                 <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
             </div>
