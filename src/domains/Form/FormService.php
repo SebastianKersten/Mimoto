@@ -295,12 +295,6 @@ class FormService
                     // init
                     $aNewConnections = [];
 
-                    // convert
-                    $field->newValue = json_decode($field->newValue);
-
-
-                    //Mimoto::output('$field->newValue', $field->newValue);
-
                     // correct
                     if (!empty($field->newValue) && !is_array($field->newValue)) $field->newValue = [$field->newValue];
 

@@ -30585,15 +30585,13 @@
 	        var value = null;
 	        
 	        var sAimlessInputType = $($component).attr('data-aimless-input-type');
-	    
-	        console.log('Input type = ' + sAimlessInputType);
-	
+	        
 	        
 	        switch(sAimlessInputType)
 	        {
 	            case 'list':
-	    
-	                value = $($component).val();
+	                
+	                value = JSON.parse($($component).val());
 	                break;
 	                
 	            default:
