@@ -676,7 +676,7 @@ module.exports.prototype = {
         var $form = $('form[name="' + currentForm.sName + '"]');
         
         // setup
-        var field = $("[" + sInputFieldId + "]", $form);
+        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
         var fieldInput = $("input", field);
 
         
@@ -753,6 +753,36 @@ module.exports.prototype = {
                 console.warn(serverResponse);
             }.bind(this), 100);
         }.bind(this));
+    
+    
+        // register
+        var classRoot = document;
+    
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
+            success: function(resultData, resultStatus, resultSomething)
+            {
+                console.log('resultData', resultData);
+            
+                console.log('1)');
+            
+                if (resultData && resultData.file_id)
+                {
+                    // register
+                    var video = classRoot.getElementById('xxx-video');
+                
+                    console.warn(video);
+                
+                    // setup
+                    video.src = resultData.full_path;
+                    video.controls = true;
+                
+                    // load video
+                    video.load();
+                }
+            }
+        });
     },
     
     setupVideoField: function(sVideoFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
@@ -764,17 +794,9 @@ module.exports.prototype = {
         var $form = $('form[name="' + currentForm.sName + '"]');
         
         // setup
-        var field = $("[" + sInputFieldId + "]", $form);
+        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
         var fieldInput = $("input", field);
     
-    
-        // register
-        // var video = document.getElementById('xxx-video');
-        //
-        // video.src = full_path;
-        // video.controls = true;
-        
-        
         this.el = document.getElementById(sVideoFieldId);
         
         this._videoField_videoUploadClass = '.js-video-upload';
@@ -863,6 +885,31 @@ module.exports.prototype = {
                 
             }.bind(this), 100);
         }.bind(this));
+        
+        
+        // register
+        var classRoot = document;
+        
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
+            success: function(resultData, resultStatus, resultSomething)
+            {
+                if (resultData && resultData.file_id)
+                {
+                    // register
+                    var video = classRoot.getElementById('xxx-video');
+                    
+                    // setup
+                    video.src = resultData.full_path;
+                    video.controls = true;
+    
+                    // load video
+                    video.load();
+                }
+            }
+        });
+        
     }
     
 };

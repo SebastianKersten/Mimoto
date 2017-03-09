@@ -27,6 +27,10 @@ class AimlessServiceProvider implements ServiceProviderInterface
         $app->get('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sComponentName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView');
         $app->post('/Mimoto.Aimless/realtime/collaboration', 'Mimoto\\Aimless\\MimotoAimlessController::authenticateUser');
 
+        $app->get('/Mimoto.Aimless/media/source/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::getMediaSource');
+
+
+
         $app['Mimoto.Aimless'] = $app['Mimoto.AimlessService'] = $app->share(function($app)
         {
             return new AimlessService($app['Mimoto.Data'], $app['Mimoto.Forms'], Mimoto::service('log'), Mimoto::service('twig'));

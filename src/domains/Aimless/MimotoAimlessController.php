@@ -236,4 +236,35 @@ class MimotoAimlessController
 
         }
     }
+
+    public function getMediaSource(Application $app, Request $request, $sPropertySelector)
+    {
+        // split
+        $aParentParts = explode('.', $sPropertySelector);
+
+        // load
+        $eParent = Mimoto::service('data')->get($aParentParts[0], $aParentParts[1]);
+
+        // read
+        $eFile = $eParent->getValue($aParentParts[2]);
+
+        if (!empty($eFile))
+        {
+            // compose
+            $response = (object)array(
+                'file_id' => $eFile->getEntityTypeName() . '.' . $eFile->getId(),
+                'full_path' => '/' . $eFile->getValue('path') . $eFile->getValue('name')
+            );
+
+            // send file info
+            return Mimoto::service('messages')->response($response);
+        }
+        else
+        {
+            // send empty
+            return Mimoto::service('messages')->response(null);
+        }
+
+    }
+
 }

@@ -339,8 +339,15 @@ class AimlessComponent
             // read
             $image = $this->_entity->getValue($sPropertySelector);
 
-            // compose and send
-            return Mimoto::value('config')->general->public_root.$image->getValue('path').$image->getValue('name');
+            if (!empty($image))
+            {
+                // compose and send
+                return Mimoto::value('config')->general->public_root.$image->getValue('path').$image->getValue('name');
+            }
+            else
+            {
+                return '';
+            }
         }
 
 
