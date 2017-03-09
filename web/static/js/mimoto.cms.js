@@ -30673,7 +30673,7 @@
 	    _setInputFieldValue: function($component, value) // #todo - implement
 	    {
 	        //console.log('value:');
-	        //console.error(value);
+	        
 	        
 	        
 	        if ($($component).is("input"))
@@ -30690,11 +30690,11 @@
 	                    break;
 	    
 	                case 'checkbox':
-	        
+	                    
 	                    // output
 	                    $($component).each( function(nIndex, $component)
 	                    {
-	                        $($component).prop('checked', $($component).val() == value);
+	                        $($component).prop('checked', value);
 	                    });
 	                    break;
 	                

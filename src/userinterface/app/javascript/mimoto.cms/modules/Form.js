@@ -487,7 +487,7 @@ module.exports.prototype = {
     _setInputFieldValue: function($component, value) // #todo - implement
     {
         //console.log('value:');
-        //console.error(value);
+        
         
         
         if ($($component).is("input"))
@@ -504,11 +504,11 @@ module.exports.prototype = {
                     break;
     
                 case 'checkbox':
-        
+                    
                     // output
                     $($component).each( function(nIndex, $component)
                     {
-                        $($component).prop('checked', $($component).val() == value);
+                        $($component).prop('checked', value);
                     });
                     break;
                 

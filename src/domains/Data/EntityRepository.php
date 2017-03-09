@@ -238,9 +238,6 @@ class EntityRepository
                                 'key' => $propertyValue->mysqlColumnName,
                                 'value' => MimotoDataUtils::convertRuntimeValueToStorableValue($entity->getValue($sPropertyName), $propertyConfig->settings->type->type, $propertyConfig->settings->type->value)
                             );
-
-                            Mimoto::output(count($aQueryElements), $aQueryElements);
-
                             break;
                     }
                     
