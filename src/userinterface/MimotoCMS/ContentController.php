@@ -5,6 +5,7 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Core\entities\ContentSection;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
@@ -163,6 +164,28 @@ class ContentController
             ]
         );
 
+
+        // init
+        $sLabelProperty = '...';
+
+        // get first value field
+        $aPropertyNames = $eEntity->getPropertyNames();
+
+        $nPropertyNameCount = count($aPropertyNames);
+        for ($nPropertyNameIndex = 0; $nPropertyNameIndex < $nPropertyNameCount; $nPropertyNameIndex++)
+        {
+            // register
+            $sPropertyName = $aPropertyNames[$nPropertyNameIndex];
+
+            // verify
+            if ($eEntity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+            {
+                $sLabelProperty = '<span data-aimless-value="'.$eEntity->getEntityTypeName().'.'.$eEntity->getId().'.'.$sPropertyName.'">'.$eEntity->getValue($sPropertyName).'</span>';
+                break;
+            }
+        }
+        
+
         // 8. connect
         $page->addComponent('content', $component);
 
@@ -174,7 +197,7 @@ class ContentController
                     "url" => '/mimoto.cms/content/'.$nContentId
                 ),
                 (object) array(
-                    "label" => '- temp label -',
+                    "label" => $sLabelProperty,
                     "url" => '/mimoto.cms/content/'.$nContentId
                 )
             )

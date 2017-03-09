@@ -89,7 +89,7 @@ class ContentSectionController
                     "url" => '/mimoto.cms/contentsections'
                 ),
                 (object) array(
-                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_CONTENTSECTION.'.'.$eContentSection->getId().'.name">'.$eContentSection->getValue('name').'</span>"',
+                    "label" => '<span data-aimless-value="'.CoreConfig::MIMOTO_CONTENTSECTION.'.'.$eContentSection->getId().'.name">'.$eContentSection->getValue('name').'</span>',
                     "url" => '/mimoto.cms/contentsection/'.$eContentSection->getId().'/view'
                 )
             )

@@ -255,7 +255,7 @@ class FormController
                     "url" => '/mimoto.cms/forms'
                 ),
                 (object)array(
-                    "label" => '"<span data-aimless-value="' . CoreConfig::MIMOTO_FORM . '.' . $eForm->getId() . '.name">' . $eForm->getValue('name') . '</span>"',
+                    "label" => '<span data-aimless-value="' . CoreConfig::MIMOTO_FORM . '.' . $eForm->getId() . '.name">' . $eForm->getValue('name') . '</span>',
                     "url" => '/mimoto.cms/form/' . $eForm->getId() . '/view'
                 )
             )

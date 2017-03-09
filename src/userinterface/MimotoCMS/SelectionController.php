@@ -105,7 +105,7 @@ class SelectionController
                     "url" => '/mimoto.cms/selections'
                 ),
                 (object) array(
-                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_SELECTION.'.'.$eSelection->getId().'.name">'.$eSelection->getValue('name').'</span>"',
+                    "label" => '<span data-aimless-value="'.CoreConfig::MIMOTO_SELECTION.'.'.$eSelection->getId().'.name">'.$eSelection->getValue('name').'</span>',
                     "url" => '/mimoto.cms/selection/'.$eSelection->getId().'/view'
                 )
             )

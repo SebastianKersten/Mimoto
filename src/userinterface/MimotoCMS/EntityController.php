@@ -96,7 +96,7 @@ class EntityController
                     "url" => '/mimoto.cms/entities'
                 ),
                 (object) array(
-                    "label" => '"<span data-aimless-value="'.CoreConfig::MIMOTO_ENTITY.'.'.$eEntity->getId().'.name">'.$eEntity->getValue('name').'</span>"',
+                    "label" => '<span data-aimless-value="'.CoreConfig::MIMOTO_ENTITY.'.'.$eEntity->getId().'.name">'.$eEntity->getValue('name').'</span>',
                     "url" => '/mimoto.cms/entity/'.$eEntity->getId().'/view'
                 )
             )
