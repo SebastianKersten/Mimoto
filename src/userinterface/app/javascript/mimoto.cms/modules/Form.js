@@ -697,6 +697,10 @@ module.exports.prototype = {
         this._imageField_postURL = "/Mimoto.Aimless/upload/image";
         this._imageField_imageUpload = this.el.querySelector(this._imageField_imageUploadClass);
         this._imageField_inputfield = this.el.querySelector('.js-image-upload-value');
+    
+    
+        // register
+        var classRoot = document;
         
     
         // preview template
@@ -755,8 +759,7 @@ module.exports.prototype = {
         }.bind(this));
     
     
-        // register
-        var classRootDropZone = this._imageField_dropzone;
+        
     
         Mimoto.Aimless.utils.callAPI({
             type: 'get',
@@ -765,7 +768,11 @@ module.exports.prototype = {
             {
                 if (resultData && resultData.file_id)
                 {
-                    console.log('Current file = ' + resultData.full_path);
+                    // register
+                    var image = classRoot.getElementById('xxx-image');
+    
+                    // setup
+                    image.src = resultData.full_path;
                 }
             }
         });

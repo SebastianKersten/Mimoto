@@ -498,7 +498,8 @@ class AimlessComponent
                 $sWrapper = (!empty($sWrapperName)) ? ' data-aimless-wrapper="'.$sWrapperName.'"' : '';
 
                 // send
-                return 'data-aimless-selection="'.$this->_aSelections[$sPropertyName]->aEntities->getCriteria()['type'].'"'.$sFilter.$sComponent.$sWrapper;
+                //return 'data-aimless-selection="'.$this->_aSelections[$sPropertyName]->aEntities->getCriteria()['type'].'"'.$sFilter.$sComponent.$sWrapper;
+                return $sFilter.$sComponent.$sWrapper; // #todo - fix selections
             }
                 
         }
