@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Core\CoreConfig;
 use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Aimless\AimlessInputViewModel;
@@ -63,7 +64,7 @@ class AimlessInput extends AimlessComponent
         // return raw value (= connection)
         if (!$bRenderValues)
         {
-            if (is_array($this->_value))
+            if (!empty($this->_entity) && $this->_entity->getEntityTypeName() == CoreConfig::MIMOTO_FORM_INPUT_LIST)
             {
                 // convert and send
                 return json_encode($this->_value);

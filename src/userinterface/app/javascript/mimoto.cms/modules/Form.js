@@ -476,10 +476,6 @@ module.exports.prototype = {
                 break;
         }
         
-        
-        console.warn('value:');
-        console.warn(value);
-        
         // send
         return value;
     },
