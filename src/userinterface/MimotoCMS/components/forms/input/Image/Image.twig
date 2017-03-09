@@ -1,4 +1,4 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "image"} %}
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonClass:'js-image-upload-trigger' } %}
 
     {% block form_component_element %}
         <div id="{{ Aimless.meta('type')~"."~Aimless.meta('id') }}">

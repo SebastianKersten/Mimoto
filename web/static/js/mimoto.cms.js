@@ -30895,7 +30895,7 @@
 	        // setup
 	        this._imageField_dropzone = new Dropzone(this._imageField_imageUpload, {
 	            url: this._imageField_postURL,
-	            maxFilesize: 1,
+	            maxFilesize: 1000,
 	            parallelUploads: 20,
 	            previewTemplate: this._imageField_previewTemplate,
 	            thumbnailWidth: 500,
@@ -30942,30 +30942,16 @@
 	    
 	    
 	        // register
-	        var classRoot = document;
+	        var classRootDropZone = this._imageField_dropzone;
 	    
 	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
 	            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
 	            success: function(resultData, resultStatus, resultSomething)
 	            {
-	                console.log('resultData', resultData);
-	            
-	                console.log('1)');
-	            
 	                if (resultData && resultData.file_id)
 	                {
-	                    // register
-	                    var video = classRoot.getElementById('xxx-video');
-	                
-	                    console.warn(video);
-	                
-	                    // setup
-	                    video.src = resultData.full_path;
-	                    video.controls = true;
-	                
-	                    // load video
-	                    video.load();
+	                    console.log('Current file = ' + resultData.full_path);
 	                }
 	            }
 	        });
