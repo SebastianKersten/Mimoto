@@ -332,22 +332,26 @@ class AimlessComponent
      */
     private function renderEntityProperty($sPropertySelector, $sComponentName = null, $customValues = null)
     {
-
         // special render output
-        if ($this->_entity->getPropertySubtype($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE)
+        switch($this->_entity->getPropertySubtype($sPropertySelector))
         {
-            // read
-            $image = $this->_entity->getValue($sPropertySelector);
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO:
+            case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE:
 
-            if (!empty($image))
-            {
-                // compose and send
-                return Mimoto::value('config')->general->public_root.$image->getValue('path').$image->getValue('name');
-            }
-            else
-            {
-                return '';
-            }
+                // read
+                $eFile = $this->_entity->getValue($sPropertySelector);
+                
+                if (!empty($eFile))
+                {
+                    // compose and send
+                    return Mimoto::value('config')->general->public_root.$eFile->getValue('path').$eFile->getValue('name');
+                }
+                else
+                {
+                    return '';
+                }
         }
 
 
