@@ -47,9 +47,9 @@
                 </div>
 
                 <div {{ Aimless.hideOnEmpty('conditionals') }}>
-                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container" {{ Aimless.realtime('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}>
+                    <ul class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container js-list js-list-sortable" {{ Aimless.realtime('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}>
                         {{ Aimless.render('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}
-                    </div>
+                    </ul>
 
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_menu">
                         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Aimless.meta('id') ~ "');" }) }}

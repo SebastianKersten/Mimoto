@@ -680,6 +680,8 @@ class FormController
 
                     // 1. ??
 
+                    break;
+
                 default:
 
                     return 'Something went wrong here';

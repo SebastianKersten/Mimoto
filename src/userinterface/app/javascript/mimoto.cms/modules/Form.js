@@ -877,7 +877,7 @@ module.exports.prototype = {
             thumbnailWidth: 500,
             thumbnailHeight: null,
             previewsContainer: this._videoField_previewClass,
-            acceptedFiles: ".mp4",
+            acceptedFiles: ".mp4, .webm",
             clickable: this._videoField_videoUploadTriggerClass
         });
         

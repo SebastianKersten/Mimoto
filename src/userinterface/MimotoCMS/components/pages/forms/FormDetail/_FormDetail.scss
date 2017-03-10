@@ -67,13 +67,13 @@ div.MimotoCMS_pages_forms_FormDetail_Structure__fields_menu {
     text-align: left;
 }
 
-div.MimotoCMS_pages_forms_FormDetail_Structure__fields_container {
+ul.MimotoCMS_pages_forms_FormDetail_Structure__fields_container {
 
-    &>div {
+    &>li {
         margin-bottom: 5px;
     }
 
-    &>div:last-child {
+    &>li:last-child {
         margin-bottom: 0;
     }
 

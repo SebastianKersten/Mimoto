@@ -1,6 +1,6 @@
 {% set bConfiguredCorrectly = true %}
 
-<div class="MimotoCMS_pages_components_ComponentConditional" {{ Aimless.realtime() }} data-aimless-reloadonchange="true">
+<li class="MimotoCMS_pages_components_ComponentConditional" {{ Aimless.realtime() }} data-aimless-reloadonchange="true">
 
     <div class="MimotoCMS_pages_components_ComponentConditional__data">
         <div class="MimotoCMS_pages_components_ComponentConditional__name">
@@ -41,4 +41,18 @@
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:sButtonLabel, types:['small', sButtonType], onclick:"Mimoto.CMS.componentConditionalEdit('" ~ Aimless.meta('id') ~ "');" }) }}
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.componentConditionalDelete('" ~ Aimless.meta('id') ~ "');" }) }}
     </div>
-</div>
+    <div class="MimotoCMS_pages_components_ComponentConditional__menu-handle">
+        <div class="MimotoCMS_ListItemModule-handle">
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+        </div>
+    </div>
+</li>

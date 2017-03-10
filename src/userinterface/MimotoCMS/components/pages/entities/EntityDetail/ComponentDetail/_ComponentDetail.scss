@@ -78,13 +78,13 @@ div.MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_menu {
     text-align: left;
 }
 
-div.MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container {
+ul.MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container {
 
-    &>div {
+    &>li {
         margin-bottom: 5px;
     }
 
-    &>div:last-child {
+    &>li:last-child {
         margin-bottom: 0;
     }
 

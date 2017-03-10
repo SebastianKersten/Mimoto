@@ -4,6 +4,7 @@ require('jquery-ui');
 
 var HeaderView = require('./views/Header');
 var ButtonUtils = require('./utils/Button');
+var Sortable = require('sortablejs'); // https://github.com/RubaXa/Sortable
 
 if (typeof Mimoto == "undefined") Mimoto = {};
 if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
@@ -32,6 +33,61 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // init
     if (navigation && header) { new HeaderView(header); }
+    
+    
+    // setup sortable lists
+    
+    // find
+    var aListElements = document.querySelectorAll('.js-list');
+    
+    
+    var nListCount = aListElements.length;
+    for (var nListIndex = 0; nListIndex < nListCount; nListIndex++)
+    {
+        // register
+        var listItem = aListElements[nListIndex];
+        
+        // read
+        var bIsSortable = listItem.classList.contains('js-list-sortable');
+    
+        // verify
+        if (bIsSortable)
+        {
+            var sortable = new Sortable(listItem, {
+                group: 'list_' + nListIndex,
+                handle: '.MimotoCMS_ListItemModule-handle',
+                dragClass: 'MimotoCMS_ListItemModule--drag',
+                ghostClass: 'MimotoCMS_ListItemModule--ghost',
+                // store: {
+                //     /**
+                //      * Get the order of elements. Called once during initialization.
+                //      * @param   {Sortable}  sortable
+                //      * @returns {Array}
+                //      */
+                //     get: function (sortable) {
+                //         var order = localStorage.getItem(sortable.options.group.name);
+                //         return order ? order.split('|') : [];
+                //     },
+                //
+                //     /**
+                //      * Save the order of elements. Called onEnd (when the item is dropped).
+                //      * @param {Sortable}  sortable
+                //      */
+                //     set: function (sortable) {
+                //         var order = sortable.toArray();
+                //         localStorage.setItem(sortable.options.group.name, order.join('|'));
+                //     }
+                // },
+                onEnd: function (e)
+                {
+                    // adjust
+                    Mimoto.form._changeOrder(e.from, e.item, e.oldIndex, e.newIndex)
+                }
+            });
+        }
+    }
+    
+    
     
     
     //var loadingButton = document.querySelector('.js-loading-example');

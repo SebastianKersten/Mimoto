@@ -1,4 +1,4 @@
-div.MimotoCMS_pages_entities_EntityDetail-EntityProperty {
+li.MimotoCMS_pages_entities_EntityDetail-EntityProperty {
 
     display: flex;
     flex-direction: row;
@@ -22,7 +22,7 @@ div.MimotoCMS_pages_entities_EntityDetail-EntityProperty {
         flex-direction: row;
         flex-wrap: wrap;
 
-        width: 80%;
+        width: 75%;
 
         div.MimotoCMS_pages_entities_EntityDetail-EntityProperty__name {
 
@@ -77,8 +77,14 @@ div.MimotoCMS_pages_entities_EntityDetail-EntityProperty {
     div.MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu {
         white-space: nowrap;
         padding: 5px;
-        flex-grow: 1;
         width: 20%;
+        flex-direction: row;
         text-align: right;
+    }
+
+    div.MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu-handle {
+        padding: 7px 0 0 0;
+        flex-direction: row;
+        display: inline-block;
     }
 }

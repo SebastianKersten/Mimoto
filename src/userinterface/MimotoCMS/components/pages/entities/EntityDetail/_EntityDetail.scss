@@ -70,13 +70,13 @@ div.MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu {
     text-align: left;
 }
 
-div.MimotoCMS_pages_entities_EntityDetail_Structure__properties_container {
+ul.MimotoCMS_pages_entities_EntityDetail_Structure__properties_container {
 
-    &>div {
+    &>li {
         margin-bottom: 5px;
     }
 
-    &>div:last-child {
+    &>li:last-child {
         margin-bottom: 0;
     }
 
@@ -106,16 +106,16 @@ div.MimotoCMS_pages_entities_EntityDetail__block {
 
 
 
-div.MimotoCMS_pages_entities_EntityDetail_container {
+ul.MimotoCMS_pages_entities_EntityDetail_container {
 
     padding: 1px;
     background-color: #f1f1f1;
 
-    & > div {
-        margin-bottom: 1px;
+    & > li {
+        margin-bottom: 5px;
     }
 
-    & > div:last-child {
+    & > li:last-child {
         margin-bottom: 0;
     }
 }

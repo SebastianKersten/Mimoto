@@ -1,8 +1,8 @@
 {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();", types:['secondary'] }) }}
 
-<div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Aimless.realtime('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}>
+<ul class="MimotoCMS_pages_entities_EntityOverview__container js-list js-list-sortable" {{ Aimless.realtime('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}>
     {{ Aimless.render('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}
-</div>
+</ul>
 
 <div {{ Aimless.showOnEmpty('entities') }}>
     <b>Start building</b> your project by:

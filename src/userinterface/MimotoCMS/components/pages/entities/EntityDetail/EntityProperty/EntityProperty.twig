@@ -1,4 +1,4 @@
-<div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty" {{ Aimless.realtime() }}>
+<li class="MimotoCMS_pages_entities_EntityDetail-EntityProperty" {{ Aimless.realtime() }}>
 
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__data">
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__name" {{ Aimless.realtime('name') }}>
@@ -16,8 +16,21 @@
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Aimless.meta('id') ~ "');" }) }}
-        {#{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Move', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyMove('" ~ Aimless.meta('id') ~ "');" }) }}#}
         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.entityPropertyDelete('" ~ Aimless.meta('id') ~ "', '" ~ Aimless.data('name') ~ "');" }) }}
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Aimless.meta('id') ~ "');" }) }}
     </div>
-</div>
+    <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu-handle">
+        <div class="MimotoCMS_ListItemModule-handle">
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+        </div>
+    </div>
+</li>

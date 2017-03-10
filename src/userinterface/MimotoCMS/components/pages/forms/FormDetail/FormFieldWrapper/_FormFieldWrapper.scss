@@ -1,4 +1,4 @@
-div.MimotoCMS_pages_forms_FormDetail-FormField {
+li.MimotoCMS_pages_forms_FormDetail-FormField {
 
     display: flex;
     flex-direction: row;
@@ -22,7 +22,7 @@ div.MimotoCMS_pages_forms_FormDetail-FormField {
         flex-direction: row;
         flex-wrap: wrap;
 
-        width: 80%;
+        width: 75%;
         padding: 25px 10px 10px 25px;
     }
 
@@ -30,11 +30,19 @@ div.MimotoCMS_pages_forms_FormDetail-FormField {
         white-space: nowrap;
         padding: 10px;
         flex-grow: 1;
+        flex-direction: row;
         width: 20%;
         text-align: right;
 
         & > div > button {
             margin-bottom: 5px;
         }
+    }
+
+    div.MimotoCMS_pages_forms_FormDetail-FormField__menu-handle {
+        padding: 7px 0 0 0;
+        flex-direction: row;
+        width: 5%;
+        display: inline-block;
     }
 }

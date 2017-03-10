@@ -856,7 +856,7 @@
 	                        var connection = change.collection.connections[nConnectionIndex];
 	                        
 	                        // register
-	                        var $currentItem = $('[data-aimless-connection="' + connection.id + '"]');
+	                        var $currentItem = $('[data-aimless-connection="' + connection.id + '"]', $container);
 	                        $currentItem.attr('data-aimless-sortindex', connection.sortindex);
 	                        
 	                        if (nConnectionIndex == 0)
