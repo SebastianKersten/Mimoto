@@ -444,6 +444,10 @@ class AimlessComponent
 
     public function realtime($sPropertySelector = null, $sComponentName = null, $sWrapperName = null)
     {
+        $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' data-aimless-connection="'.$this->_connection->getId().'"' : '';
+        $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' data-aimless-sortindex="'.$this->_connection->getSortIndex().'"' : '';
+
+
         if ($sPropertySelector !== null)
         {
             // cleanup
@@ -499,7 +503,7 @@ class AimlessComponent
 
                 // send
                 //return 'data-aimless-selection="'.$this->_aSelections[$sPropertyName]->aEntities->getCriteria()['type'].'"'.$sFilter.$sComponent.$sWrapper;
-                return $sFilter.$sComponent.$sWrapper; // #todo - fix selections
+                return $sConnection.$sSortIndex.$sFilter.$sComponent.$sWrapper; // #todo - fix selections
             }
                 
         }
@@ -516,9 +520,6 @@ class AimlessComponent
 
         if ($sPropertySelector === null)
         {
-            $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' data-aimless-connection="'.$this->_connection->getId().'"' : '';
-            $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' data-aimless-sortindex="'.$this->_connection->getSortIndex().'"' : '';
-
             $sComponent = (!empty($this->_sComponentName)) ? ' data-aimless-component="'.$this->_sComponentName.'"' : '';
             $sWrapper = (!empty($this->_sWrapperName)) ? ' data-aimless-wrapper="'.$this->_sWrapperName.'"' : '';
 
@@ -539,7 +540,7 @@ class AimlessComponent
                     $sComponent = (!empty($sComponentName)) ? ' data-aimless-component="'.$sComponentName.'"' : '';
                     $sWrapper = (!empty($sWrapperName)) ? ' data-aimless-wrapper="'.$sWrapperName.'"' : '';
 
-                    return 'data-aimless-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sComponent.$sWrapper;
+                    return 'data-aimless-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
                     break;
 
                 default:
@@ -734,7 +735,7 @@ class AimlessComponent
             $entity = $aCollection[$i];
 
             // register
-            $connection = (!empty($aConnections)) ? $aConnections[$i] : null;
+            $connection = (!empty($aConnections) && !empty($aConnections[$i])) ? $aConnections[$i] : null;
 
             // render
             $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput, $sWrapperName, $customValues);

@@ -205,7 +205,7 @@ class MimotoEntityConnection
      *
      * @param int
      */
-    public function setSortIndex($nSortIndex) { $this->_nSortIndex = $nSortIndex; }
+    public function setSortIndex($nSortIndex) { $this->_nSortIndex = intval($nSortIndex); }
 
 
     /**

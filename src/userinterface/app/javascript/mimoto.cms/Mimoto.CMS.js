@@ -352,15 +352,18 @@ module.exports.prototype = {
     
     contentDelete: function(nContentId, sContentTypeName, nContentItemId)
     {
-        Mimoto.Aimless.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
+        var response = confirm("Are you sure you want to delete this item?");
+        if (response == true) {
+            Mimoto.Aimless.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/delete',
+                data: null,
+                dataType: 'json',
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
     },
     
     
@@ -453,10 +456,10 @@ module.exports.prototype = {
         // 5. do not autoconnect
         // 6. add new value to list
         
-        popup.success = function()
-        {
-            
-        }
+        // popup.success = function()
+        // {
+        //
+        // }
     },
     
     formFieldListItemEdit: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)

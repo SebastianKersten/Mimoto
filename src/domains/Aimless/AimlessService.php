@@ -489,8 +489,6 @@ class AimlessService
         $data->changes = array();
         $aModifiedValues = $entity->getChanges();
 
-
-
         // temp override
         $config->properties = [];
         foreach ($aModifiedValues as $sKey => $value) $config->properties[] = $sKey;
@@ -653,8 +651,6 @@ class AimlessService
                             }
                         }
 
-
-
                         // validate
                         if (!empty($aModifiedValues[$sMainPropertyName]->removed))
                         {
@@ -682,7 +678,54 @@ class AimlessService
                             }
                         };
 
-                        
+
+                        // --- get connections
+
+
+                        if (!empty($aModifiedValues[$sMainPropertyName]->updated))
+                        {
+                            // init
+                            $aUnsortedConnections = [];
+
+                            // read
+                            $aConnectionsToSort = $entity->getValue($sMainPropertyName, true);
+
+                            // collect
+                            $nUnsortedConnectionCount = count($aConnectionsToSort);
+                            for ($nUnsortedConnectionIndex = 0; $nUnsortedConnectionIndex < $nUnsortedConnectionCount; $nUnsortedConnectionIndex++)
+                            {
+                                // register
+                                $unsortedConnection = $aConnectionsToSort[$nUnsortedConnectionIndex];
+
+                                // compose
+                                $aUnsortedConnections[] = (object) array(
+                                    'id' => $unsortedConnection->getId(),
+                                    'sortindex' => $unsortedConnection->getSortindex()
+                                );
+                            }
+
+                            // init
+                            $valueForBroadcast->collection->connections = [];
+
+                            // sort
+                            while (count($valueForBroadcast->collection->connections) < count($aUnsortedConnections))
+                            {
+                                for ($nConnectionIndex = 0; $nConnectionIndex < count($aUnsortedConnections); $nConnectionIndex++)
+                                {
+                                    // register
+                                    $connection = $aUnsortedConnections[$nConnectionIndex];
+
+                                    // verify
+                                    if ($connection->sortindex == count($valueForBroadcast->collection->connections))
+                                    {
+                                        // store
+                                        $valueForBroadcast->collection->connections[] = $connection;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
                         break;
                         
                 }

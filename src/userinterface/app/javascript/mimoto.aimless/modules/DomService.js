@@ -609,6 +609,41 @@ module.exports.prototype = {
                         $item.remove();
                     }
                 }
+                
+                
+                
+                // --- change list item order
+                
+                if (change.collection && change.collection.connections)
+                {
+                    // init
+                    var $previousItem = null;
+                    
+                    var nConnectionCount = change.collection.connections.length;
+                    for (var nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
+                    {
+                        // register
+                        var connection = change.collection.connections[nConnectionIndex];
+                        
+                        // register
+                        var $currentItem = $('[data-aimless-connection="' + connection.id + '"]');
+                        $currentItem.attr('data-aimless-sortindex', connection.sortindex);
+                        
+                        if (nConnectionIndex == 0)
+                        {
+                            // move
+                            $($container).prepend($currentItem);
+                        }
+                        else
+                        {
+                            // move
+                            $($currentItem).insertAfter($previousItem);
+                        }
+                        
+                        // update
+                        $previousItem = $currentItem
+                    }
+                }
             
             });
         }

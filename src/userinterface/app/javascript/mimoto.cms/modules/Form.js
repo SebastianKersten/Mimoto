@@ -101,59 +101,55 @@ module.exports.prototype = {
 
         // connect
         this._connectInputField(field);
-    
-    
+        
+        // register
+        var classPath = this;
+        
         // read type
         var sAimlessInputType = this._getInputFieldType(field.$input);
     
-        console.log(sAimlessInputType);
-        
+        // verify
         if (sAimlessInputType == 'list')
         {
-            
-            
             // find
             var listInputField = document.querySelectorAll('[data-aimless-form-field="' + sInputFieldId + '"]');
-            console.warn(listInputField);
-            
-            
-            
             var listElement = listInputField[0].querySelectorAll('.js-list');
-            console.warn(listElement);
+            
             // read
             var bIsSortable = listElement[0].classList.contains('js-list-sortable');
             
-            
+            // verify
             if (bIsSortable)
             {
-                
                 var sortable = new Sortable(listElement[0], {
                     group: sInputFieldId,
                     handle: '.MimotoCMS_forms_input_ListItem-handle',
                     dragClass: 'MimotoCMS_forms_input_ListItem--drag',
                     ghostClass: 'MimotoCMS_forms_input_ListItem--ghost',
-                    store: {
-                        /**
-                         * Get the order of elements. Called once during initialization.
-                         * @param   {Sortable}  sortable
-                         * @returns {Array}
-                         */
-                        get: function (sortable) {
-                            var order = localStorage.getItem(sortable.options.group.name);
-                            return order ? order.split('|') : [];
-                        },
-            
-                        /**
-                         * Save the order of elements. Called onEnd (when the item is dropped).
-                         * @param {Sortable}  sortable
-                         */
-                        set: function (sortable) {
-                            var order = sortable.toArray();
-                            localStorage.setItem(sortable.options.group.name, order.join('|'));
-                        }
-                    },
-                    onEnd: function (e) {
-                        console.log(e); // @sebastian in dit event zit alles wat je nodig hebt
+                    // store: {
+                    //     /**
+                    //      * Get the order of elements. Called once during initialization.
+                    //      * @param   {Sortable}  sortable
+                    //      * @returns {Array}
+                    //      */
+                    //     get: function (sortable) {
+                    //         var order = localStorage.getItem(sortable.options.group.name);
+                    //         return order ? order.split('|') : [];
+                    //     },
+                    //
+                    //     /**
+                    //      * Save the order of elements. Called onEnd (when the item is dropped).
+                    //      * @param {Sortable}  sortable
+                    //      */
+                    //     set: function (sortable) {
+                    //         var order = sortable.toArray();
+                    //         localStorage.setItem(sortable.options.group.name, order.join('|'));
+                    //     }
+                    // },
+                    onEnd: function (e)
+                    {
+                        // adjust
+                        classPath._changeOrder(e.from, e.item, e.oldIndex, e.newIndex)
                     }
                 });
             }
@@ -193,11 +189,8 @@ module.exports.prototype = {
             // register
             currentForm.aSubmitButtons.push($component);
             
-            console.log('Submit register');
-            
-            
             // setup
-            $($component).click(function() { console.log('Submit pressed'); classRoot.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
+            $($component).click(function() { classRoot.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
         });
 
 
@@ -915,8 +908,6 @@ module.exports.prototype = {
             
             // set value
             fieldInput.val(serverResponse.file_id);
-    
-            console.warn(serverResponse.full_path);
             
             // register
             var video = document.getElementById('xxx-video');
@@ -969,6 +960,27 @@ module.exports.prototype = {
     {
         // read type
         return $($component).attr('data-aimless-input-type');
+    },
+    
+    _changeOrder: function(htmlParentElement, htmlChildElement, nOldIndex, nNewIndex)
+    {
+        // register
+        var sPropertySelector = htmlParentElement.getAttribute('data-aimless-contains');
+        var nConnectionId = htmlChildElement.getAttribute('data-aimless-connection');
+        var nCurrentSortindex = htmlChildElement.getAttribute('data-aimless-sortindex');
+        
+        // validate
+        if (!sPropertySelector || !nConnectionId || !nCurrentSortindex) return;
+        
+        // store
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/form/list/sort/' + sPropertySelector + '/' + nConnectionId + '/' + nOldIndex + '/' + nNewIndex,
+            success: function(resultData, resultStatus, resultSomething)
+            {
+                //console.log('Mimoto ===> I received a response from the FormController::updateSortindex!');
+            }
+        });
     }
     
 };

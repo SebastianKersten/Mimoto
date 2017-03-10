@@ -1,5 +1,5 @@
 {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new', icon:'plus', onclick:"Mimoto.CMS.contentNew('"~Aimless.meta('id')~"');" }) }}
 
-<div class="MimotoCMS_pages_content_ContentOverview__container" {{ Aimless.realtime('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}>
+<ul class="MimotoCMS_pages_content_ContentOverview__container" {{ Aimless.realtime('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}>
     {{ Aimless.render('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}
-</div>
+</ul>

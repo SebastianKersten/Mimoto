@@ -698,7 +698,7 @@ class FormController
             $form->getValue('name'),
             $eInstance,
             [
-                'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/formfield/'.$sInputFieldType.'/'.$sInputFieldId.'/edit']]
+                // This is just wrong! Use [returnPage] instead ---- 'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/formfield/'.$sInputFieldType.'/'.$sInputFieldId.'/edit']]
             ]
         );
 
@@ -735,4 +735,54 @@ class FormController
         return Mimoto::service('messages')->response((object) array('result' => 'Item removed from list! '.date("Y.m.d H:i:s")), 200);
     }
 
+    public function updateSortindex(Application $app, $sPropertySelector, $nConnectionId, $nOldIndex, $nNewIndex)
+    {
+        // 1. split
+        $aPropertySelectorParts = explode('.', $sPropertySelector);
+
+        // 2. load
+        $eParent = Mimoto::service('data')->get($aPropertySelectorParts[0], $aPropertySelectorParts[1]);
+
+        // 3. validate
+        if (!($eParent->hasProperty($aPropertySelectorParts[2]) && $eParent->getPropertyType($aPropertySelectorParts[2]) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION))
+        {
+            // 3a. output
+            return Mimoto::service('messages')->response((object) array('result' => 'I encountered a problem while adjusting the sortindex! '.date("Y.m.d H:i:s")), 400);
+        }
+
+
+        // 4. register
+        $aConnections = $eParent->getValue($aPropertySelectorParts[2], true);
+
+        // 5. alter sortindex
+        $nConnectionCount = count($aConnections);
+        for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
+        {
+            // register
+            $connection = $aConnections[$nConnectionIndex];
+
+            // swap
+            if ($connection->getId() == $nConnectionId && $connection->getSortindex() == $nOldIndex)
+            {
+                $connection->setSortindex($nNewIndex);
+            }
+            else
+            {
+                if ($connection->getSortindex() == $nNewIndex)
+                {
+                    $connection->setSortindex($nOldIndex);
+                }
+                else
+                {
+                    $connection->setSortindex($nConnectionIndex);
+                }
+            }
+        }
+
+        // store
+        Mimoto::service('data')->store($eParent);
+
+        // output
+        return Mimoto::service('messages')->response((object) array('result' => 'Sortindex altered! '.date("Y.m.d H:i:s")), 200);
+    }
 }

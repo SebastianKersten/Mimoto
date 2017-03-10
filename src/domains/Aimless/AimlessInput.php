@@ -80,7 +80,7 @@ class AimlessInput extends AimlessComponent
         {
             // entity render
 
-            return 'Entity #todo';
+            return '########### Entity #todo';
         }
         else
         {
@@ -95,6 +95,17 @@ class AimlessInput extends AimlessComponent
                 // init
                 $sOutput = '';
 
+
+                // split
+                $aEntitySelectorElements = explode('.', $this->_sFieldId);
+
+                // load
+                $eParent = Mimoto::service('data')->get($aEntitySelectorElements[0], $aEntitySelectorElements[1]);
+
+                // register
+                $aConnections = $eParent->getValue($aEntitySelectorElements[2], true);
+
+                // parse items
                 $nItemCount = count($this->_value);
                 for ($nItemIndex = 0; $nItemIndex < $nItemCount; $nItemIndex++)
                 {
@@ -109,7 +120,7 @@ class AimlessInput extends AimlessComponent
                     $entity = Mimoto::service('data')->get($nEntityTypeName, $nEntityId);
 
                     // create
-                    $component = Mimoto::service('aimless')->createComponent($sModuleName, $entity);
+                    $component = Mimoto::service('aimless')->createComponent($sModuleName, $entity, $aConnections[$nItemIndex]);
 
                     // configure
                     if (!empty($mapping)) $component->setMapping($mapping);
