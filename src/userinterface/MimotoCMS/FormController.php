@@ -120,6 +120,27 @@ class FormController
         $eNewForm->setValue('name', $sNewFormName);
 
 
+
+        // create
+        $eField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
+
+        // setup
+        $eField->setValue('title', $sEntityName);
+        $eField->setValue('subtitle', 'Auto-generated form');
+        $eField->setValue('description', "This form has been created by Mimoto's auto auto-generation feature based on the entity's properties on ".date('d F Y H:i:s').". Adjust, add, remove or change the fields as you feel fit!");
+
+        // store
+        Mimoto::service('data')->store($eField);
+
+        // connect
+        $eNewForm->addValue('fields', $eField);
+
+        // create & connect group start
+        $eField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART);
+        Mimoto::service('data')->store($eField);
+        $eNewForm->addValue('fields', $eField);
+
+
         // register
         $aProperties = $eEntity->getValue('properties');
 
@@ -183,6 +204,19 @@ class FormController
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
+                    switch($eProperty->getValue('subtype'))
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE:
+
+                            $eInputField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_IMAGE);
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO:
+
+                            $eInputField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_VIDEO);
+                            break;
+                    }
+
                     break;
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
@@ -215,6 +249,12 @@ class FormController
         }
 
 
+        // create & connect group end
+        $eField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND);
+        Mimoto::service('data')->store($eField);
+        $eNewForm->addValue('fields', $eField);
+
+
         // store
         Mimoto::service('data')->store($eNewForm);
 
@@ -223,12 +263,6 @@ class FormController
 
         // store
         Mimoto::service('data')->store($eEntity);
-
-
-        Mimoto::error($sNewFormName);
-
-
-
 
         // output
         Mimoto::service('messages')->response((object) array('result' => 'For created! '.date("Y.m.d H:i:s")), 200);
