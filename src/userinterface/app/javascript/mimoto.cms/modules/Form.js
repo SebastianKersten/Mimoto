@@ -6,6 +6,8 @@
 
 'use strict';
 
+var Sortable = require('sortablejs'); // https://github.com/RubaXa/Sortable
+
 var Dropzone = require('dropzone');
 Dropzone.autoDiscover = false;
 
@@ -94,9 +96,70 @@ module.exports.prototype = {
         //     sFormName: currentForm.sFormName,
         //     value: $(field.$input).val()
         // };
+    
+        // var forms = document.querySelectorAll('.js-form');
 
         // connect
         this._connectInputField(field);
+    
+    
+        // read type
+        var sAimlessInputType = this._getInputFieldType(field.$input);
+    
+        console.log(sAimlessInputType);
+        
+        if (sAimlessInputType == 'list')
+        {
+            
+            
+            // find
+            var listInputField = document.querySelectorAll('[data-aimless-form-field="' + sInputFieldId + '"]');
+            console.warn(listInputField);
+            
+            
+            
+            var listElement = listInputField[0].querySelectorAll('.js-list');
+            console.warn(listElement);
+            // read
+            var bIsSortable = listElement[0].classList.contains('js-list-sortable');
+            
+            
+            if (bIsSortable)
+            {
+                
+                var sortable = new Sortable(listElement[0], {
+                    group: sInputFieldId,
+                    handle: '.MimotoCMS_forms_input_ListItem-handle',
+                    dragClass: 'MimotoCMS_forms_input_ListItem--drag',
+                    ghostClass: 'MimotoCMS_forms_input_ListItem--ghost',
+                    store: {
+                        /**
+                         * Get the order of elements. Called once during initialization.
+                         * @param   {Sortable}  sortable
+                         * @returns {Array}
+                         */
+                        get: function (sortable) {
+                            var order = localStorage.getItem(sortable.options.group.name);
+                            return order ? order.split('|') : [];
+                        },
+            
+                        /**
+                         * Save the order of elements. Called onEnd (when the item is dropped).
+                         * @param {Sortable}  sortable
+                         */
+                        set: function (sortable) {
+                            var order = sortable.toArray();
+                            localStorage.setItem(sortable.options.group.name, order.join('|'));
+                        }
+                    },
+                    onEnd: function (e) {
+                        console.log(e); // @sebastian in dit event zit alles wat je nodig hebt
+                    }
+                });
+            }
+        }
+        
+        
     },
 
     /**
@@ -398,7 +461,8 @@ module.exports.prototype = {
         // init
         var value = null;
         
-        var sAimlessInputType = $($component).attr('data-aimless-input-type');
+        // read type
+        var sAimlessInputType = this._getInputFieldType($component);
         
         
         switch(sAimlessInputType)
@@ -899,6 +963,12 @@ module.exports.prototype = {
             }
         });
         
+    },
+    
+    _getInputFieldType: function($component)
+    {
+        // read type
+        return $($component).attr('data-aimless-input-type');
     }
     
 };

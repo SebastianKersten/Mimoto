@@ -4,7 +4,7 @@
 
         {# showOnEmpty / hideOmEmtpy on empty collection #}
 
-        <div class="MimotoCMS_forms_input_List js-list js-list-sortable" data-aimless-contains="{{ Aimless.fieldId() }}" data-aimless-component="_Mimoto_form_input_list-item">
+        <ul class="MimotoCMS_forms_input_List js-list js-list-sortable" data-aimless-contains="{{ Aimless.fieldId() }}" data-aimless-component="_Mimoto_form_input_list-item">
 
             {{ Aimless.value(true, '_Mimoto_form_input_list-item', { 'title': 'label', 'subtitle': 'type' }, { sInputFieldType:Aimless.meta('type'), sInputFieldId:Aimless.meta('id'), sPropertySelector:Aimless.fieldId() } ) }}
 
@@ -13,7 +13,7 @@
                 // 2. type: { 'componentVar1':'entityVar1', 'componentVar2':'entityVar2' } general key/value pair
             #}
 
-        </div>
+        </ul>
 
         <input type="hidden" data-aimless-input-type="list" {{ Aimless.input() }} value='{{ Aimless.value() }}' />
 
