@@ -1,0 +1,79 @@
+div.MimotoPublisher_Article {
+    width: 100%;
+}
+
+div.MimotoPublisher-Article-lede-container {
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.MimotoPublisher-Article-lede {
+    padding: 100px 100px 20px 100px;
+    width: 550px;
+    font-size: 18px;
+    line-height: 30px;
+
+    & > span.MimotoPublisher-Article-articletype {
+        color: #000000;
+        background-color : #ffffff;
+        font-size: 14px;
+        padding: 3px 7px 3px 7px;
+    }
+}
+
+div.MimotoPublisher-Article-authors-container {
+
+    text-align: right;
+
+    & > div {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    & > div:last-child {
+        margin-right: 0;
+    }
+}
+
+div.MimotoPublisher-Article-header {
+    position: relative;
+}
+
+div.MimotoPublisher-Article-title {
+    margin: 0 200px 30px 100px;
+    font-size: 48px;
+    line-height: 50px;
+    font-weight: bold;
+    font-family: "Futura PT W02 Book", sans-serif;
+}
+
+img.MimotoPublisher-Article-headerImage {
+    position: relative;
+    width: 100%;
+    z-index: 0;
+}
+
+div.MimotoPublisher-Article-body {
+
+    font-size: 18px;
+    line-height: 30px;
+    width: 100%;
+    max-width: 750px;
+    background-color: #ffffff;
+    padding: 50px 50px 80px 50px;
+    margin-left: auto;
+    margin-right: auto;
+
+    &::first-letter {
+        color: #DF5B57;
+        float: left;
+        font-size: 65px;
+        font-weight: bold;
+        line-height: 55px;
+        padding-top: 4px;
+        padding-right: 8px;
+        padding-left: 3px;
+    }
+}

@@ -261,9 +261,9 @@ class AimlessService
                     {
                         // register
                         $conditional = $template->conditionals[$nConditionalIndex];
-
+                        
                         // store
-                        $sComponentConditionals .= $conditional->key;
+                        $sComponentConditionals .= $conditional->propertyName;
 
                         // compose
                         if ($nConditionalIndex < $nConditionalCount - 1) $sComponentConditionals .= ',';

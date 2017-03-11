@@ -10289,7 +10289,7 @@
 	
 	var HeaderView = __webpack_require__(10);
 	var ButtonUtils = __webpack_require__(11);
-	var Sortable = __webpack_require__(17); // https://github.com/RubaXa/Sortable
+	var Sortable = __webpack_require__(12); // https://github.com/RubaXa/Sortable
 	
 	if (typeof Mimoto == "undefined") Mimoto = {};
 	if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
@@ -10297,11 +10297,11 @@
 	
 	//Mimoto = require('./mimoto.cms/Mimoto');
 	
-	Mimoto.CMS = __webpack_require__(12);
-	Mimoto.modules.Tabmenu = __webpack_require__(13);
-	Mimoto.modules.Popup = __webpack_require__(14);
-	Mimoto.modules.Page = __webpack_require__(15);
-	Mimoto.modules.Form = __webpack_require__(16);
+	Mimoto.CMS = __webpack_require__(13);
+	Mimoto.modules.Tabmenu = __webpack_require__(14);
+	Mimoto.modules.Popup = __webpack_require__(15);
+	Mimoto.modules.Page = __webpack_require__(16);
+	Mimoto.modules.Form = __webpack_require__(17);
 	
 	// init
 	Mimoto.CMS = new Mimoto.CMS();
@@ -29418,1801 +29418,6 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($) {/**
-	 * Mimoto.CMS
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	module.exports = function()
-	{
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function ()
-	    {
-	
-	    },
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Public methods - entity ------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Create new entity
-	     */
-	    entityNew: function()
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/entity/new");
-	
-	        //popup.on('success') = popup.close();
-	    },
-	    
-	    // entityCreate: function(data)
-	    // {
-	    //     $.ajax({
-	    //         type: 'POST',
-	    //         url: "/mimoto.cms/entity/create",
-	    //         data: data,
-	    //         dataType: 'json'
-	    //     }).done(function(data) {
-	    //         Mimoto.popup.close();
-	    //     });
-	    // },
-	
-	    entityView: function(nEntityId)
-	    {
-	        window.open('/mimoto.cms/entity/' + nEntityId + '/view', '_self');
-	    },
-	
-	    entityEdit: function(nEntityId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/entity/' + nEntityId + '/edit');
-	    },
-	
-	    entityUpdate: function(nEntityId, data)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'POST',
-	            url: "/mimoto.cms/entity/" + nEntityId + "/update",
-	            data: data,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                Mimoto.popup.close();
-	            }
-	        });
-	    },
-	
-	    entityDelete: function(nEntityId, sEntityName)
-	    {
-	        var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
-	        if (response == true) {
-	    
-	            Mimoto.Aimless.utils.callAPI({
-	                type: 'GET',
-	                url: "/mimoto.cms/entity/" + nEntityId + "/delete",
-	                //data: data,
-	                dataType: 'json',
-	                success: function(resultData, resultStatus, resultSomething) {
-	                    window.open('/mimoto.cms/entities', '_self');
-	                }
-	            });
-	        }
-	    },
-	
-	    entityPropertyNew: function(nEntityId)
-	    {
-	        Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
-	    },
-	
-	    entityPropertyCreate: function(nEntityId, data)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'POST',
-	            url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
-	            data: data,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                Mimoto.popup.close();
-	            }
-	        });
-	    },
-	
-	    entityPropertyEdit: function(nEntityPropertyId)
-	    {
-	        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
-	    },
-	    
-	    entityPropertyDelete:  function(nEntityPropertyId, sEntityPropertyName)
-	    {
-	        var response = confirm("Are you sure you want to delete the property '" + sEntityPropertyName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-	        if (response == true) {
-	            // 11. send data
-	            Mimoto.Aimless.utils.callAPI({
-	                type: 'get',
-	                url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
-	                success: function (resultData, resultStatus, resultSomething) {
-	                    console.log(resultData);
-	                }
-	            });
-	        }
-	    },
-	    
-	    
-	    entityPropertySettingEdit: function(nEntityPropertySettingId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
-	    },
-	
-	
-	
-	    notificationClose: function(sEntityType, nNotificationId)
-	    {
-	        // 1. remove 8 and 9 (will be handled by the api call response)
-	        
-	        // 8. find field
-	        var aNotifications = $("[data-aimless-id='" + sEntityType + '.' + nNotificationId + "']");
-	
-	        // 9. collect value
-	        aNotifications.each( function(index, $component) {
-	            // init
-	            $($component).remove();
-	        });
-	
-	        // 11. send data
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'GET',
-	            url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething)
-	            {
-	                console.log(resultData);
-	                console.log(resultStatus);
-	                console.log(resultSomething);
-	            }
-	        });
-	    },
-	    
-	    
-	    /**
-	     * Create new component
-	     */
-	    entityComponentNew: function(nEntityId)
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
-	        
-	        //popup.on('success') = popup.close();
-	    },
-	    
-	    componentView: function(nComponentId)
-	    {
-	        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
-	    },
-	    
-	    componentEdit: function(nComponentId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
-	    },
-	    
-	    componentDelete: function(nComponentId)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: "/mimoto.cms/component/" + nComponentId + "/delete",
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	    
-	    componentConditionalNew: function(nComponentId)
-	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/conditional/new');
-	    },
-	    
-	    componentConditionalEdit: function(nComponentConditionalId)
-	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
-	    },
-	    
-	    componentConditionalDelete: function(nComponentConditionalId)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/componentconditional/' + nComponentConditionalId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	    
-	    
-	    
-	    //
-	    //
-	    // /**
-	    //  * Create new component
-	    //  */
-	    // eNew: function(nEntityId)
-	    // {
-	    //     var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
-	    //
-	    //     // Mimoto.Aimless/data/
-	    //
-	    //
-	    //     popup() / page()
-	    // },
-	    //
-	    //
-	    
-	    /**
-	     * Selections
-	     */
-	    selectionNew: function()
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/selection/new");
-	    },
-	    
-	    selectionView: function(nSelectionId)
-	    {
-	        window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
-	    },
-	    
-	    selectionEdit: function(nSelectionId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/edit');
-	    },
-	    
-	    selectionDelete: function(nSelectionId)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	    selectionRuleNew: function(nSelectionId)
-	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
-	    },
-	    
-	    selectionRuleEdit: function(nSelectionRuleId)
-	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
-	    },
-	    
-	    selectionRuleDelete: function(nSelectionRuleId)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	    
-	    /**
-	     * Content sections
-	     */
-	    contentSectionNew: function()
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/contentsection/new");
-	    },
-	    
-	    contentSectionView: function(nContentSectionId)
-	    {
-	        window.open('/mimoto.cms/contentsection/' + nContentSectionId + '/view', '_self');
-	    },
-	    
-	    contentSectionEdit: function(nContentSectionId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
-	    },
-	    contentSectionDelete: function(nContentSectionId, sContentSectionName)
-	    {
-	        var response = confirm("Are you sure you want to delete the content section called '" + sContentSectionName + "'?\n\nALL RELATED DATA WILL BE LOST!!\n\n(Don't say I didn't warn you!)");
-	        if (response == true) {
-	            Mimoto.Aimless.utils.callAPI({
-	                type: 'get',
-	                url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
-	                data: null,
-	                dataType: 'json',
-	                success: function (resultData, resultStatus, resultSomething) {
-	                    console.log(resultData);
-	                }
-	            });
-	        }
-	    },
-	    
-	    
-	    /**
-	     * Content sections
-	     */
-	    contentNew: function(nContentId)
-	    {
-	        window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
-	    },
-	    
-	    contentEdit: function(nContentId, sContentTypeName, nContentItemId)
-	    {
-	        window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
-	    },
-	    
-	    contentDelete: function(nContentId, sContentTypeName, nContentItemId)
-	    {
-	        var response = confirm("Are you sure you want to delete this item?");
-	        if (response == true) {
-	            Mimoto.Aimless.utils.callAPI({
-	                type: 'get',
-	                url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/delete',
-	                data: null,
-	                dataType: 'json',
-	                success: function (resultData, resultStatus, resultSomething) {
-	                    console.log(resultData);
-	                }
-	            });
-	        }
-	    },
-	    
-	    
-	    
-	    /**
-	     * Create new form
-	     */
-	    entityFormNew: function(nEntityId)
-	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/form/new");
-	        
-	        //popup.on('success') = popup.close();
-	    },
-	    
-	    entityFormAutogenerate: function(nEntityId)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: "/mimoto.cms/entity/" + nEntityId + "/form/autogenerate",
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	    formView: function(nFormId)
-	    {
-	        window.open('/mimoto.cms/form/' + nFormId + '/view', '_self');
-	    },
-	    
-	    formEdit: function(nFormId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
-	    },
-	    
-	    formDelete: function(nFormId)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: "/mimoto.cms/form/" + nFormId + "/delete",
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	    formFieldNew_TypeSelector: function(nFormId)
-	    {
-	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/field/new');
-	    },
-	    
-	    formFieldNew_FieldForm: function(nFormId, nFormFieldTypeId)
-	    {
-	        console.log('formFieldNew_FieldForm: nFormId=' + nFormId + ', nFormFieldTypeId=' + nFormFieldTypeId);
-	        
-	        Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
-	    },
-	    
-	    formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
-	    {
-	        window.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
-	    },
-	    
-	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
-	    {
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	    
-	    formFieldListItemAdd: function(sInputFieldType, sInputFieldId, sPropertySelector)
-	    {
-	        // 1. build
-	        var sURL = '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector;
-	        
-	        console.log(sURL);
-	        
-	        var popup = Mimoto.popup.open(sURL);
-	        
-	        // 1. return root of the popup (or root object)
-	        // 2. connect content of the popup (onload) to the popup object
-	        // 3. dispatchSuccess
-	        // 4. handle success
-	        // 5. do not autoconnect
-	        // 6. add new value to list
-	        
-	        // popup.success = function()
-	        // {
-	        //
-	        // }
-	    },
-	    
-	    formFieldListItemEdit: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)
-	    {
-	        // reload
-	        window.open("/mimoto.cms/formfield/" + sInputFieldType + "/" + sInputFieldId + "/edit/" + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId, '_self');
-	    },
-	    
-	    
-	    formFieldListItemDelete: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)
-	    {
-	        // 1. sInputFieldType
-	        // 2. sInputFieldId
-	        
-	        
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId +  '/remove/' + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    }
-	    
-	}
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 13 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	module.exports = function(sTabmenuId, aTabs) {
-	
-	    // register
-	    this._sTabmenuId = sTabmenuId;
-	    this._aTabs = aTabs;
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function()
-	    {
-	        // setup
-	        this._setupTabs();
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Private methods --------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Setup tabs
-	     */
-	    _setupTabs: function()
-	    {
-	        // init
-	        var classRoot = this;
-	
-	        var nTabCount = this._aTabs.length;
-	        for (var i = 0; i < nTabCount; i++)
-	        {
-	            // register
-	            var tab = this._aTabs[i];
-	
-	            // connect
-	            tab.$tab = document.getElementById(tab.id);
-	            tab.$panel = document.getElementById(tab.panel_id);
-	
-	            // setup
-	            if (i == 0) { this._showPanel(tab.$panel); } else { this._hidePanel(tab.$panel); }
-	
-	            // connect
-	            tab.$tab.addEventListener('click', function(tab) {
-	                this._selectTab(tab);
-	            }.bind(this, tab));
-	        }
-	    },
-	
-	    /**
-	     * Check menu state
-	     */
-	    _selectTab: function(selectedTab)
-	    {
-	        var nTabCount = this._aTabs.length;
-	        for (var i = 0; i < nTabCount; i++)
-	        {
-	            // register
-	            var tab = this._aTabs[i];
-	
-	            if (tab == selectedTab)
-	            {
-	                this._showPanel(tab.$panel);
-	                this._activateTab(tab.$tab);
-	            }
-	            else
-	            {
-	                this._hidePanel(tab.$panel);
-	                this._deactivateTab(tab.$tab);
-	            }
-	        }
-	    },
-	
-	    /**
-	     * Activate tab
-	     */
-	    _activateTab: function($tab)
-	    {
-	        $tab.classList.add("active");
-	    },
-	
-	    /**
-	     * Deactivate tab
-	     */
-	    _deactivateTab: function($tab)
-	    {
-	        $tab.classList.remove("active");
-	    },
-	
-	    /**
-	     * Show panel
-	     */
-	    _showPanel: function($panel)
-	    {
-	        $panel.classList.remove("hidden");
-	    },
-	
-	    /**
-	     * Hide panel
-	     */
-	    _hidePanel: function($panel)
-	    {
-	        $panel.classList.add("hidden");
-	    }
-	
-	};
-
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
-	 * Popup
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	module.exports = function() {
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function()
-	    {
-	
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Public methods ---------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    open: function(sURL)
-	    {
-	        this._showPopup();
-	        this._loadPopupContent(sURL);
-	    },
-	
-	    close: function()
-	    {
-	        this._hidePopup();
-	    },
-	    
-	    replace: function(sURL)
-	    {
-	        this._loadPopupContent(sURL);
-	    },
-	    
-	    _showPopup: function()
-	    {
-	        // register
-	        var layer_overlay = document.getElementById('layer_overlay');
-	        var layer_popup = document.getElementById('layer_popup');
-	    
-	        // show
-	        layer_overlay.classList.remove('hidden');
-	        layer_popup.classList.remove('hidden');
-	    },
-	    
-	    _loadPopupContent: function(sURL)
-	    {
-	        var popup_content = document.getElementById('popup_content');
-	        var layer_popup = document.getElementById('layer_popup');
-	        
-	        $.ajax({
-	            url: sURL,
-	            dataType: 'html',
-	            success: function(data, textStatus, jqXHR) {
-	            
-	                //jQuery(selecteur).html(jqXHR.responseText);
-	                var response = jQuery(jqXHR.responseText);
-	                //var responseScript = response.filter("script");
-	                //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
-	            
-	                //popup_content.innerHTML = reponse;
-	                $('#popup_content').html(data);
-	            
-	                /*// focus primary input
-	                 var primaryInput = document.getElementById('form_field_name');
-	                 if (primaryInput)
-	                 {
-	                 primaryInput.focus();
-	                 var val = primaryInput.value;
-	                 primaryInput.value = '';
-	                 primaryInput.value = val;
-	                 }*/
-	    
-	                // reset scroll
-	                layer_popup.scrollTop = 0;
-	                
-	                // update
-	                Mimoto.Aimless.utils.parseRequestQueue();
-	            }
-	        });
-	    },
-	    
-	    _hidePopup: function()
-	    {
-	        // register
-	        var layer_overlay = document.getElementById('layer_overlay');
-	        var layer_popup = document.getElementById('layer_popup');
-	        var popup_content = document.getElementById('popup_content');
-	    
-	        // cleanup
-	        popup_content.innerHTML = '';
-	    
-	        // hide
-	        layer_overlay.classList.add('hidden');
-	        layer_popup.classList.add('hidden');
-	    }
-	
-	};
-	
-	
-	
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(5)))
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	/**
-	 * Page
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	module.exports = function() {
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function()
-	    {
-	
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Private methods --------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    change: function(sURL)
-	    {
-	        window.location.href = sURL;
-	    }
-	
-	};
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {/**
-	 * Mimoto.CMS - Form handling
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var Sortable = __webpack_require__(17); // https://github.com/RubaXa/Sortable
-	
-	var Dropzone = __webpack_require__(18);
-	Dropzone.autoDiscover = false;
-	
-	module.exports = function() {
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function()
-	    {
-	        // init
-	        this._aForms = [];
-	        this._aRequests = [];
-	        this._sCurrentOpenForm = '';
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Public methods ---------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	    
-	    
-	    /**
-	     * Open new form
-	     */
-	    open: function(sFormName, sAction, sMethod, bRealtimeCollaborationMode, responseSettings)
-	    {
-	        // store
-	        this._sCurrentOpenForm = sFormName;
-	
-	        // setup
-	        var form = {
-	            'sName': sFormName,
-	            'sAction': sAction,
-	            'sMethod': sMethod,
-	            'aFields': [],
-	            'bRealtimeCollaborationMode': bRealtimeCollaborationMode,
-	            'responseSettings': JSON.parse(responseSettings)
-	        };
-	
-	        // register
-	        this._aForms[sFormName] = form;
-	    },
-	
-	    /**
-	     * Register input field
-	     */
-	    registerInputField: function(sInputFieldId, settings)
-	    {
-	        // read
-	        var currentForm = this._aForms[this._sCurrentOpenForm]; // #todo - validate if no form set
-	
-	        // 1. locate form in dom
-	        var $form = $('form[name="' + currentForm.sName + '"]');
-	        
-	        // setup
-	        var field = {
-	            'sFormId': currentForm,
-	            'sName': sInputFieldId,
-	            'sType': 'input', // #todo - const
-	            'settings': settings,
-	            $field: $("[data-aimless-form-field='" + sInputFieldId + "']", $form),
-	            $input: $("[data-aimless-form-field-input='" + sInputFieldId + "']", $form),  // todo - multiselect x * option
-	            $error: $("[data-aimless-form-field-error='" + sInputFieldId + "']", $form)
-	        };
-	
-	        // store
-	        currentForm.aFields.push(field);
-	        
-	        // store
-	        // Mimoto.Aimless.realtime.broadcastedValues[sInputFieldId] = {
-	        //     sFormName: currentForm.sFormName,
-	        //     value: $(field.$input).val()
-	        // };
-	    
-	        // var forms = document.querySelectorAll('.js-form');
-	
-	        // connect
-	        this._connectInputField(field);
-	        
-	        // register
-	        var classPath = this;
-	        
-	        // read type
-	        var sAimlessInputType = this._getInputFieldType(field.$input);
-	    
-	        // verify
-	        if (sAimlessInputType == 'list')
-	        {
-	            // find
-	            var listInputField = document.querySelectorAll('[data-aimless-form-field="' + sInputFieldId + '"]');
-	            var listElement = listInputField[0].querySelectorAll('.js-list');
-	            
-	            // read
-	            var bIsSortable = listElement[0].classList.contains('js-list-sortable');
-	            
-	            // verify
-	            if (bIsSortable)
-	            {
-	                var sortable = new Sortable(listElement[0], {
-	                    group: sInputFieldId,
-	                    handle: '.MimotoCMS_forms_input_ListItem-handle',
-	                    dragClass: 'MimotoCMS_forms_input_ListItem--drag',
-	                    ghostClass: 'MimotoCMS_forms_input_ListItem--ghost',
-	                    // store: {
-	                    //     /**
-	                    //      * Get the order of elements. Called once during initialization.
-	                    //      * @param   {Sortable}  sortable
-	                    //      * @returns {Array}
-	                    //      */
-	                    //     get: function (sortable) {
-	                    //         var order = localStorage.getItem(sortable.options.group.name);
-	                    //         return order ? order.split('|') : [];
-	                    //     },
-	                    //
-	                    //     /**
-	                    //      * Save the order of elements. Called onEnd (when the item is dropped).
-	                    //      * @param {Sortable}  sortable
-	                    //      */
-	                    //     set: function (sortable) {
-	                    //         var order = sortable.toArray();
-	                    //         localStorage.setItem(sortable.options.group.name, order.join('|'));
-	                    //     }
-	                    // },
-	                    onEnd: function (e)
-	                    {
-	                        // adjust
-	                        classPath._changeOrder(e.from, e.item, e.oldIndex, e.newIndex)
-	                    }
-	                });
-	            }
-	        }
-	        
-	        
-	    },
-	
-	    /**
-	     * Unregister input field
-	     */
-	    unregisterInputField: function(sInputFieldId)
-	    {
-	
-	    },
-	    
-	    /**
-	     * Close form
-	     */
-	    close: function(sFormName)
-	    {
-	        // register
-	        var classRoot = this;
-	
-	        // search
-	        var aSubmitButtons = $('[data-aimless-form-submit="' + sFormName + '"]');
-	
-	        // activate
-	        aSubmitButtons.each(function(nIndex, $component) {
-	
-	            // read
-	            var currentForm = classRoot._aForms[classRoot._sCurrentOpenForm]; // #todo - validate if no form set
-	
-	            // prepare
-	            if (!currentForm.aSubmitButtons) currentForm.aSubmitButtons = [];
-	
-	            // register
-	            currentForm.aSubmitButtons.push($component);
-	            
-	            // setup
-	            $($component).click(function() { classRoot.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
-	        });
-	
-	
-	        // Mimoto.Aimless.privateChannel = Mimoto.Aimless.pusher.subscribe('private-' + 'AimlessForm_' + sFormName);
-	        //
-	        // Mimoto.Aimless.privateChannel.bind('client-Aimless:formfield_update_' + sFormName, function(data)
-	        // {
-	        //
-	        //     var $input = $("input[data-aimless-form-field-input='" + data.fieldId + "']");
-	        //
-	        //
-	        //     // 1. check if supports realtime
-	        //     // 2. get this text
-	        //     // 3. get diff patch
-	        //
-	        //
-	        //     console.log(Mimoto.Aimless.pusher);
-	        //
-	        //     var currentValue = $($input).val();
-	        //     var patches = Mimoto.Aimless.realtime.dmp.patch_fromText(data.diff);
-	        //
-	        //     //var ms_start = (new Date).getTime();
-	        //     var results = Mimoto.Aimless.realtime.dmp.patch_apply(patches, currentValue);
-	        //     //var ms_end = (new Date).getTime();
-	        //
-	        //
-	        //     Mimoto.Aimless.realtime.broadcastedValues[data.fieldId].value = results[0];
-	        //     $($input).val(results[0]);
-	        // });
-	    },
-	
-	    /**
-	     * Submit form
-	     */
-	    submit: function(sFormName)
-	    {
-	        // 1. validate
-	        if (!this._aForms) return;
-	
-	        // 2. set default is no specific form requested
-	        if (!sFormName) { for (var s in this._aForms) { sFormName = s; break; } }
-	
-	        // 3. validate
-	        if (!this._aForms[sFormName]) return;
-	
-	        // 4. register
-	        var form = this._aForms[sFormName];
-	        var aFields = form.aFields;
-	        var nFieldCount = aFields.length;
-	        
-	        // 5. locate form in dom
-	        var $form = $('form[name="' + sFormName + '"]');
-	        
-	        // 6. read public key
-	        var sPublicKey = '';
-	        var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
-	        aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
-	    
-	        var nEntityId = '';
-	        var aEntityIds = $("input[name='Mimoto.EntityId']", $form);
-	        aEntityIds.each( function(index, $component) { nEntityId = $($component).val(); });
-	    
-	        // 6. read instructions
-	        var sOnCreatedConnectTo = '';
-	        var aOnCreatedConnectTo = $("input[name='Mimoto.onCreated:connectTo']", $form);
-	        aOnCreatedConnectTo.each( function(index, $component) { sOnCreatedConnectTo = $($component).val(); });
-	        
-	        // 7. collect data
-	        var aValues = {};
-	        var classRoot = this;
-	        var bValidated = true;
-	        for (var i = 0; i < nFieldCount; i++)
-	        {
-	            // 7a. register
-	            var field = aFields[i];
-	            
-	            
-	            // validate
-	            if (!classRoot._validateInputField(field)) { bValidated = false; continue; }
-	            
-	            
-	            var aInputFields = $("[data-aimless-form-field='" + field.sName + "']", $form);
-	    
-	            aInputFields.each( function(index, $inputField)
-	            {
-	                // 7b. find field
-	                var aInputs = $("[data-aimless-form-field-input='" + field.sName + "']", $inputField);
-	                
-	                if (aInputs.length > 1 && ($(aInputs[0]).is("input")) && $(aInputs[0]).attr('type') == 'checkbox')
-	                {
-	                    // init
-	                    aValues[field.sName] = [];
-	        
-	                    // 7c. collect value
-	                    aInputs.each( function(index, $input)
-	                    {
-	                        // init
-	                        var value = classRoot._getValueFromInputField($input);
-	                        
-	                        // store
-	                        if (value !== null) aValues[field.sName].push(value);
-	                    });
-	                }
-	                else
-	                {
-	                    // 7c. collect value
-	                    aInputs.each( function(index, $input)
-	                    {
-	                        // init
-	                        var value = classRoot._getValueFromInputField($input);
-	                        
-	                        // store
-	                        if (value !== null) aValues[field.sName] = value;
-	                    });
-	                }
-	                
-	            });
-	        }
-	        
-	        
-	        //console.log('Before validated ..');
-	        // don't send if not validated
-	        if (!bValidated) return;
-	        //console.log('After validated ..');
-	        
-	        
-	        // 10. collect data
-	        var requestData = { publicKey: sPublicKey, entityId: nEntityId, values: aValues };
-	        if (sOnCreatedConnectTo) requestData.onCreatedConnectTo = sOnCreatedConnectTo;
-	
-	
-	
-	        // console.log('Sending ' + form.sAction + ' ' + form.sMethod);
-	        // console.log(aValues);
-	        // console.error(requestData);
-	        // console.log('------');
-	        
-	        
-	        
-	        // 11. send data
-	        Mimoto.Aimless.utils.callAPI({
-	            type: form.sMethod,
-	            url: form.sAction,
-	            data: JSON.stringify(requestData),
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething)
-	            {
-	                
-	                if (resultData.newEntities)
-	                {
-	
-	                    for (var sEntityType in resultData.newEntities)
-	                    {
-	                        var newEntity = resultData.newEntities[sEntityType];
-	
-	                        // 1. locate form in dom
-	                        var $form = $('form[name="' + resultData.formName + '"]');
-	
-	
-	                        // update dom
-	                        var aFields = $('[data-aimless-form-field^="' + newEntity.selector + '"]', $form);
-	                        aFields.each( function(index, $component)
-	                        {
-	                            var mls_form_field = $($component).attr("data-aimless-form-field");
-	                            mls_form_field = newEntity.id + mls_form_field.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field", mls_form_field);
-	                        });
-	
-	                        // update dom
-	                        var aFields = $('[data-aimless-form-field-input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
-	                        
-	                        aFields.each( function(index, $component)
-	                        {
-	                            var sOld_mls_form_field_input = $($component).attr("data-aimless-form-field-input");
-	                            var sNew_mls_form_field_input = newEntity.id + sOld_mls_form_field_input.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field-input", sNew_mls_form_field_input);
-	
-	                            classRoot._alterRegisteredFieldId(resultData.formName, sOld_mls_form_field_input, sNew_mls_form_field_input);
-	
-	                            var name = $($component).attr("name");
-	                            name = newEntity.id + name.substr(newEntity.selector.length);
-	                            $($component).attr("name", name);
-	                        });
-	
-	                        // update dom
-	                        var aFields = $('[data-aimless-form-field-error^="' + newEntity.selector + '"]', $form);
-	                        aFields.each( function(index, $component)
-	                        {
-	                            var mls_form_field_error = $($component).attr("data-aimless-form-field-error");
-	                            mls_form_field_error = newEntity.id + mls_form_field_error.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field-error", mls_form_field_error);
-	                        });
-	                    }
-	                }
-	
-	                if (resultData.newPublicKey)
-	                {
-	                    // 6. read public key
-	                    var sPublicKey = '';
-	                    var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
-	                    aPublicKeys.each( function(index, $component)
-	                    {
-	                        sPublicKey = $($component).val(resultData.newPublicKey);
-	                    });
-	                    
-	                    // cleanup instuctions
-	                    $("input[name='Mimoto.onCreated:addTo']", $form).remove();
-	                }
-	    
-	                if (resultData.newEntityId)
-	                {
-	                    // 6. read public key
-	                    var nEntityId = '';
-	                    var aEntityIds = $("input[name='Mimoto.EntityId']", $form);
-	                    aEntityIds.each( function(index, $component)
-	                    {
-	                        nEntityId = $($component).val(resultData.newEntityId);
-	                    });
-	        
-	                    // cleanup instuctions
-	                    $("input[name='Mimoto.onCreated:addTo']", $form).remove();
-	                }
-	
-	                // 1. #todo get input field value in method
-	                // 2. collaborationMode
-	    
-	                
-	                if (form.responseSettings)
-	                {
-	                    if (form.responseSettings.onSuccess)
-	                    {
-	                        if (form.responseSettings.onSuccess.loadPage)
-	                        {
-	                            window.open(form.responseSettings.onSuccess.loadPage, '_self');
-	                        }
-	                        else if (form.responseSettings.onSuccess.closePopup)
-	                        {
-	                            Mimoto.popup.close();
-	                        }
-	                        else if (form.responseSettings.onSuccess.reloadPopup)
-	                        {
-	                            Mimoto.popup.replace(form.responseSettings.onSuccess.reloadPopup);
-	                        }
-	                        
-	                    }
-	                }
-	            }
-	        });
-	
-	    },
-	
-	
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Private methods --------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    _getValueFromInputField: function($component)
-	    {
-	        // init
-	        var value = null;
-	        
-	        // read type
-	        var sAimlessInputType = this._getInputFieldType($component);
-	        
-	        
-	        switch(sAimlessInputType)
-	        {
-	            case 'list':
-	                
-	                value = JSON.parse($($component).val());
-	                break;
-	                
-	            default:
-	    
-	                // validate
-	                if ($($component).is("input"))
-	                {
-	                    switch($($component).attr('type'))
-	                    {
-	                        case 'radio':
-	                
-	                            //  fix for handling radiobutton onSubmit en onChange
-	                            if ($component.length)
-	                            {
-	                                var aComponents = $component;
-	                    
-	                                // collect value
-	                                aComponents.each( function(index, $component)
-	                                {
-	                                    if ($($component).prop("checked") === true)
-	                                    {
-	                                        value = $($component).val();
-	                                    }
-	                                });
-	                            }
-	                            else
-	                            {
-	                                if ($($component).prop("checked") === true)
-	                                {
-	                                    value = $($component).val();
-	                                }
-	                            }
-	                
-	                            break;
-	            
-	                        case 'checkbox':
-	                
-	                            if ($($component).attr('value'))
-	                            {
-	                                if ($($component).prop("checked") === true)
-	                                {
-	                                    value = $($component).val();
-	                                }
-	                            }
-	                            else
-	                            {
-	                                value = $($component).prop("checked");
-	                            }
-	                
-	                            break;
-	            
-	                        default:
-	                
-	                            value = $($component).val();
-	                    }
-	                }
-	    
-	                if ($($component).is("select"))
-	                {
-	                    value = $($component).val();
-	                }
-	    
-	                if ($($component).is("textarea"))
-	                {
-	                    value = $($component).val();
-	                }
-	                
-	                break;
-	        }
-	        
-	        // send
-	        return value;
-	    },
-	
-	    _setInputFieldValue: function($component, value) // #todo - implement
-	    {
-	        //console.log('value:');
-	        
-	        
-	        
-	        if ($($component).is("input"))
-	        {
-	            switch($($component).attr('type'))
-	            {
-	                case 'radio':
-	
-	                    // output
-	                    $($component).each( function(nIndex, $component)
-	                    {
-	                        $($component).prop('checked', $($component).val() == value);
-	                    });
-	                    break;
-	    
-	                case 'checkbox':
-	                    
-	                    // output
-	                    $($component).each( function(nIndex, $component)
-	                    {
-	                        $($component).prop('checked', value);
-	                    });
-	                    break;
-	                
-	                default:
-	
-	                    // output
-	                    $($component).val(value);
-	            }
-	        };
-	    
-	        if ($($component).is("select"))
-	        {
-	            $($component).val(value);
-	        }
-	        
-	        if ($($component).is("textarea"))
-	        {
-	            // output
-	            $($component).val(value);
-	        }
-	    },
-	
-	    _alterRegisteredFieldId: function(sFormName, sOldInputFieldId, sNewInputFieldId)
-	    {
-	        var form = this._aForms[sFormName];
-	
-	        var nFieldCount = form.aFields.length;
-	        for (var i = 0; i < nFieldCount; i++)
-	        {
-	            // register
-	            var field = form.aFields[i];
-	
-	            if (field.sName == sOldInputFieldId)
-	            {
-	                field.$input.off('input');
-	
-	                field.sName = sNewInputFieldId;
-	                field.$input = $("input[data-aimless-form-field-input='" + sNewInputFieldId + "']");
-	
-	                // store
-	                // Mimoto.Aimless.realtime.broadcastedValues[sNewInputFieldId] = Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
-	                // delete Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
-	
-	                this._connectInputField(field);
-	            }
-	        }
-	    },
-	
-	    _connectInputField: function(field)
-	    {
-	        // register
-	        var classRoot = this;
-	        
-	        
-	        field.$input.on('input', function(e)
-	        {
-	            var sFormName = field.sFormId;
-	            var value = $(this).val();
-	
-	            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
-	
-	            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
-	
-	            classRoot._validateInputField(field);
-	
-	        });
-	    
-	        field.$input.on('change', function(e)
-	        {
-	            var sFormName = field.sFormId;
-	            var value = $(this).val();
-	            
-	            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
-	        
-	            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
-	        
-	            classRoot._validateInputField(field);
-	        });
-	    },
-	
-	    _validateInputField: function(field)
-	    {
-	        // validae
-	        if (!field.settings) return;
-	        if (!field.settings.validation) return;
-	
-	        // init
-	        var sErrorMessage = '';
-	        
-	        // check rules
-	        var nValidationRuleCount = field.settings.validation.length;
-	        var bValid = true;
-	        for (var i = 0; i < nValidationRuleCount; i++)
-	        {
-	            // register
-	            var validationRule = field.settings.validation[i];
-	
-	            // read
-	            var value = this._getValueFromInputField(field.$input);
-	            
-	            switch(validationRule.type)
-	            {
-	                case 'maxchars':
-	
-	                    // validate
-	                    if (value.length > validationRule.value)
-	                    {
-	                        sErrorMessage = validationRule.errorMessage;
-	                        bValid = false;
-	                    }
-	                    break;
-	
-	                case 'minchars':
-	                    
-	                    // validate
-	                    if (value.length < validationRule.value)
-	                    {
-	                        sErrorMessage = validationRule.errorMessage;
-	                        bValid = false;
-	                    }
-	                    break;
-	
-	                case 'regex_custom':
-	
-	                    // init
-	                    var patt = new RegExp(validationRule.value, "g");
-	                    
-	                    // validate
-	                    if (!patt.test(value))
-	                    {
-	                        sErrorMessage = validationRule.errorMessage;
-	                        bValid = false;
-	                    }
-	                    break;
-	            }
-	
-	            if (!bValid) break;
-	        }
-	
-	        // update interface
-	        if (field.$error)
-	        {
-	            if (sErrorMessage)
-	            {
-	                field.$error.text(sErrorMessage);
-	                // #todo toggle field icon - zie code David
-	            }
-	            else
-	            {
-	                field.$error.text('');
-	            }
-	        }
-	        
-	        // send
-	        return bValid;
-	    },
-	    
-	    
-	    setupImageField: function(sImageFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
-	    {
-	        // read
-	        var currentForm = this._aForms[this._sCurrentOpenForm];
-	    
-	        // 1. locate form in dom
-	        var $form = $('form[name="' + currentForm.sName + '"]');
-	        
-	        // setup
-	        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
-	        var fieldInput = $("input", field);
-	
-	        
-	        
-	        this.el = document.getElementById(sImageFieldId);
-	        
-	        this._imageField_imageUploadClass = '.js-image-upload';
-	        this._imageField_imageUploadTriggerClass = '.js-image-upload-trigger';
-	        this._imageField_previewClass = '.js-image-upload-preview';
-	        this._imageField_previewTemplateClass = '.js-image-upload-preview-template';
-	    
-	        this._imageField_showPreviewClass = 'MimotoCMS_forms_input_ImageUpload--show-preview';
-	        this._imageField_showPreviewImageClass = 'MimotoCMS_forms_input_ImageUpload--show-preview-image';
-	        this._imageField_hideUploadProgressClass = 'MimotoCMS_forms_input_ImageUpload--hide-upload-progess';
-	    
-	        this._imageField_errorParent = this.el.querySelector('.js-error-parent');
-	    
-	        this._imageField_postURL = "/Mimoto.Aimless/upload/image";
-	        this._imageField_imageUpload = this.el.querySelector(this._imageField_imageUploadClass);
-	        this._imageField_inputfield = this.el.querySelector('.js-image-upload-value');
-	    
-	    
-	        // register
-	        var classRoot = document;
-	        
-	    
-	        // preview template
-	        var previewNode = document.querySelector(this._imageField_previewTemplateClass);
-	        var template = previewNode.parentNode.innerHTML;
-	        previewNode.id = "";
-	        previewNode.parentNode.removeChild(previewNode);
-	        this._imageField_previewTemplate = template;
-	    
-	        // setup
-	        this._imageField_dropzone = new Dropzone(this._imageField_imageUpload, {
-	            url: this._imageField_postURL,
-	            maxFilesize: 1000,
-	            parallelUploads: 20,
-	            previewTemplate: this._imageField_previewTemplate,
-	            thumbnailWidth: 500,
-	            thumbnailHeight: null,
-	            previewsContainer: this._imageField_previewClass,
-	            clickable: this._imageField_imageUploadTriggerClass
-	        });
-	        
-	        
-	        this._imageField_dropzone.on('removedfile', function (file) {
-	            this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewClass);
-	            this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewImageClass);
-	            //EH.clearState(this.el);
-	    
-	            // set value
-	            fieldInput.val('');
-	            
-	        }.bind(this));
-	    
-	        this._imageField_dropzone.on('addedfile', function (file) {
-	            this._imageField_dropzone.element.classList.add(this._imageField_showPreviewClass);
-	        }.bind(this));
-	    
-	        this._imageField_dropzone.on('thumbnail', function (file) {
-	            this._imageField_dropzone.element.classList.add(this._imageField_showPreviewImageClass);
-	        }.bind(this));
-	    
-	        this._imageField_dropzone.on('error', function (file, errorMessage, xhrObject) {
-	            //EH.addErrorState(this.el, errorMessage);
-	        }.bind(this));
-	    
-	        this._imageField_dropzone.on('success', function (file, serverResponse) {
-	            
-	            // set value
-	            fieldInput.val(serverResponse.file_id);
-	        
-	            setTimeout(function () {
-	                this._imageField_dropzone.element.classList.add(this._imageField_hideUploadProgressClass);
-	                //EH.addValidatedState(this.el);
-	                console.warn(file);
-	                console.warn(serverResponse);
-	            }.bind(this), 100);
-	        }.bind(this));
-	    
-	    
-	        
-	    
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
-	            success: function(resultData, resultStatus, resultSomething)
-	            {
-	                if (resultData && resultData.file_id)
-	                {
-	                    // register
-	                    var image = classRoot.getElementById('xxx-image');
-	    
-	                    // setup
-	                    image.src = resultData.full_path;
-	                }
-	            }
-	        });
-	    },
-	    
-	    setupVideoField: function(sVideoFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
-	    {
-	        // read
-	        var currentForm = this._aForms[this._sCurrentOpenForm];
-	        
-	        // 1. locate form in dom
-	        var $form = $('form[name="' + currentForm.sName + '"]');
-	        
-	        // setup
-	        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
-	        var fieldInput = $("input", field);
-	    
-	        this.el = document.getElementById(sVideoFieldId);
-	        
-	        this._videoField_videoUploadClass = '.js-video-upload';
-	        this._videoField_videoUploadTriggerClass = '.js-video-upload-trigger';
-	        this._videoField_previewClass = '.js-video-upload-preview';
-	        this._videoField_previewTemplateClass = '.js-video-upload-preview-template';
-	        
-	        this._videoField_showPreviewClass = 'MimotoCMS_forms_input_ImageUpload--show-preview';
-	        this._videoField_showPreviewImageClass = 'MimotoCMS_forms_input_ImageUpload--show-preview-video';
-	        this._videoField_hideUploadProgressClass = 'MimotoCMS_forms_input_ImageUpload--hide-upload-progess';
-	        
-	        this._videoField_errorParent = this.el.querySelector('.js-error-parent');
-	        
-	        this._videoField_postURL = "/Mimoto.Aimless/upload/video";
-	        this._videoField_videoUpload = this.el.querySelector(this._videoField_videoUploadClass);
-	        this._videoField_inputfield = this.el.querySelector('.js-video-upload-value');
-	        
-	        
-	        // preview template
-	        var previewNode = document.querySelector(this._videoField_previewTemplateClass);
-	        var template = previewNode.parentNode.innerHTML;
-	        previewNode.id = "";
-	        previewNode.parentNode.removeChild(previewNode);
-	        this._videoField_previewTemplate = template;
-	        
-	        // setup
-	        this._videoField_dropzone = new Dropzone(this._videoField_videoUpload, {
-	            url: this._videoField_postURL,
-	            maxFilesize: 1000,
-	            parallelUploads: 20,
-	            previewTemplate: this._videoField_previewTemplate,
-	            thumbnailWidth: 500,
-	            thumbnailHeight: null,
-	            previewsContainer: this._videoField_previewClass,
-	            acceptedFiles: ".mp4, .webm",
-	            clickable: this._videoField_videoUploadTriggerClass
-	        });
-	        
-	        
-	        this._videoField_dropzone.on('removedfile', function (file) {
-	            this._videoField_dropzone.element.classList.remove(this._videoField_showPreviewClass);
-	            this._videoField_dropzone.element.classList.remove(this._videoField_showPreviewImageClass);
-	            //EH.clearState(this.el);
-	            
-	            // set value
-	            fieldInput.val('');
-	            
-	        }.bind(this));
-	        
-	        this._videoField_dropzone.on('addedfile', function (file) {
-	            //this._videoField_dropzone.element.classList.add(this._videoField_showPreviewClass);
-	        }.bind(this));
-	        
-	        this._videoField_dropzone.on('thumbnail', function (file) {
-	            //this._videoField_dropzone.element.classList.add(this._videoField_showPreviewImageClass);
-	        }.bind(this));
-	        
-	        this._videoField_dropzone.on('error', function (file, errorMessage, xhrObject) {
-	            //EH.addErrorState(this.el, errorMessage);
-	        }.bind(this));
-	        
-	        this._videoField_dropzone.on('success', function (file, serverResponse) {
-	            
-	            // set value
-	            fieldInput.val(serverResponse.file_id);
-	            
-	            // register
-	            var video = document.getElementById('xxx-video');
-	            
-	            // add source
-	            video.src = serverResponse.full_path;
-	            video.controls = true;
-	            
-	            // load video
-	            video.load();
-	            
-	            
-	            setTimeout(function () {
-	                this._videoField_dropzone.element.classList.add(this._videoField_hideUploadProgressClass);
-	                
-	                //EH.addValidatedState(this.el);
-	                
-	                //console.warn(serverResponse);
-	                
-	            }.bind(this), 100);
-	        }.bind(this));
-	        
-	        
-	        // register
-	        var classRoot = document;
-	        
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
-	            success: function(resultData, resultStatus, resultSomething)
-	            {
-	                if (resultData && resultData.file_id)
-	                {
-	                    // register
-	                    var video = classRoot.getElementById('xxx-video');
-	                    
-	                    // setup
-	                    video.src = resultData.full_path;
-	                    video.controls = true;
-	    
-	                    // load video
-	                    video.load();
-	                }
-	            }
-	        });
-	        
-	    },
-	    
-	    _getInputFieldType: function($component)
-	    {
-	        // read type
-	        return $($component).attr('data-aimless-input-type');
-	    },
-	    
-	    _changeOrder: function(htmlParentElement, htmlChildElement, nOldIndex, nNewIndex)
-	    {
-	        // register
-	        var sPropertySelector = htmlParentElement.getAttribute('data-aimless-contains');
-	        var nConnectionId = htmlChildElement.getAttribute('data-aimless-connection');
-	        var nCurrentSortindex = htmlChildElement.getAttribute('data-aimless-sortindex');
-	        
-	        // validate
-	        if (!sPropertySelector || !nConnectionId || !nCurrentSortindex) return;
-	        
-	        // store
-	        Mimoto.Aimless.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/form/list/sort/' + sPropertySelector + '/' + nConnectionId + '/' + nOldIndex + '/' + nNewIndex,
-	            success: function(resultData, resultStatus, resultSomething)
-	            {
-	                //console.log('Mimoto ===> I received a response from the FormController::updateSortindex!');
-	            }
-	        });
-	    }
-	    
-	};
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**!
 	 * Sortable
 	 * @author	RubaXa   <trash@rubaxa.org>
@@ -32597,6 +30802,1801 @@
 		Sortable.version = '1.5.0-rc1';
 		return Sortable;
 	});
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Mimoto.CMS
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function()
+	{
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function ()
+	    {
+	
+	    },
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods - entity ------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Create new entity
+	     */
+	    entityNew: function()
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/entity/new");
+	
+	        //popup.on('success') = popup.close();
+	    },
+	    
+	    // entityCreate: function(data)
+	    // {
+	    //     $.ajax({
+	    //         type: 'POST',
+	    //         url: "/mimoto.cms/entity/create",
+	    //         data: data,
+	    //         dataType: 'json'
+	    //     }).done(function(data) {
+	    //         Mimoto.popup.close();
+	    //     });
+	    // },
+	
+	    entityView: function(nEntityId)
+	    {
+	        window.open('/mimoto.cms/entity/' + nEntityId + '/view', '_self');
+	    },
+	
+	    entityEdit: function(nEntityId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/entity/' + nEntityId + '/edit');
+	    },
+	
+	    entityUpdate: function(nEntityId, data)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'POST',
+	            url: "/mimoto.cms/entity/" + nEntityId + "/update",
+	            data: data,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                Mimoto.popup.close();
+	            }
+	        });
+	    },
+	
+	    entityDelete: function(nEntityId, sEntityName)
+	    {
+	        var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
+	        if (response == true) {
+	    
+	            Mimoto.Aimless.utils.callAPI({
+	                type: 'GET',
+	                url: "/mimoto.cms/entity/" + nEntityId + "/delete",
+	                //data: data,
+	                dataType: 'json',
+	                success: function(resultData, resultStatus, resultSomething) {
+	                    window.open('/mimoto.cms/entities', '_self');
+	                }
+	            });
+	        }
+	    },
+	
+	    entityPropertyNew: function(nEntityId)
+	    {
+	        Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
+	    },
+	
+	    entityPropertyCreate: function(nEntityId, data)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'POST',
+	            url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
+	            data: data,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                Mimoto.popup.close();
+	            }
+	        });
+	    },
+	
+	    entityPropertyEdit: function(nEntityPropertyId)
+	    {
+	        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
+	    },
+	    
+	    entityPropertyDelete:  function(nEntityPropertyId, sEntityPropertyName)
+	    {
+	        var response = confirm("Are you sure you want to delete the property '" + sEntityPropertyName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+	        if (response == true) {
+	            // 11. send data
+	            Mimoto.Aimless.utils.callAPI({
+	                type: 'get',
+	                url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
+	    },
+	    
+	    
+	    entityPropertySettingEdit: function(nEntityPropertySettingId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
+	    },
+	
+	
+	
+	    notificationClose: function(sEntityType, nNotificationId)
+	    {
+	        // 1. remove 8 and 9 (will be handled by the api call response)
+	        
+	        // 8. find field
+	        var aNotifications = $("[data-aimless-id='" + sEntityType + '.' + nNotificationId + "']");
+	
+	        // 9. collect value
+	        aNotifications.each( function(index, $component) {
+	            // init
+	            $($component).remove();
+	        });
+	
+	        // 11. send data
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'GET',
+	            url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething)
+	            {
+	                console.log(resultData);
+	                console.log(resultStatus);
+	                console.log(resultSomething);
+	            }
+	        });
+	    },
+	    
+	    
+	    /**
+	     * Create new component
+	     */
+	    entityComponentNew: function(nEntityId)
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
+	        
+	        //popup.on('success') = popup.close();
+	    },
+	    
+	    componentView: function(nComponentId)
+	    {
+	        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
+	    },
+	    
+	    componentEdit: function(nComponentId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
+	    },
+	    
+	    componentDelete: function(nComponentId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: "/mimoto.cms/component/" + nComponentId + "/delete",
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	    
+	    componentConditionalNew: function(nComponentId)
+	    {
+	        var popup = Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/conditional/new');
+	    },
+	    
+	    componentConditionalEdit: function(nComponentConditionalId)
+	    {
+	        var popup = Mimoto.popup.open('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
+	    },
+	    
+	    componentConditionalDelete: function(nComponentConditionalId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/mimoto.cms/componentconditional/' + nComponentConditionalId + '/delete',
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	    
+	    
+	    
+	    //
+	    //
+	    // /**
+	    //  * Create new component
+	    //  */
+	    // eNew: function(nEntityId)
+	    // {
+	    //     var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
+	    //
+	    //     // Mimoto.Aimless/data/
+	    //
+	    //
+	    //     popup() / page()
+	    // },
+	    //
+	    //
+	    
+	    /**
+	     * Selections
+	     */
+	    selectionNew: function()
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/selection/new");
+	    },
+	    
+	    selectionView: function(nSelectionId)
+	    {
+	        window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
+	    },
+	    
+	    selectionEdit: function(nSelectionId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/edit');
+	    },
+	    
+	    selectionDelete: function(nSelectionId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	    selectionRuleNew: function(nSelectionId)
+	    {
+	        var popup = Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
+	    },
+	    
+	    selectionRuleEdit: function(nSelectionRuleId)
+	    {
+	        var popup = Mimoto.popup.open('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
+	    },
+	    
+	    selectionRuleDelete: function(nSelectionRuleId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	    
+	    /**
+	     * Content sections
+	     */
+	    contentSectionNew: function()
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/contentsection/new");
+	    },
+	    
+	    contentSectionView: function(nContentSectionId)
+	    {
+	        window.open('/mimoto.cms/contentsection/' + nContentSectionId + '/view', '_self');
+	    },
+	    
+	    contentSectionEdit: function(nContentSectionId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
+	    },
+	    contentSectionDelete: function(nContentSectionId, sContentSectionName)
+	    {
+	        var response = confirm("Are you sure you want to delete the content section called '" + sContentSectionName + "'?\n\nALL RELATED DATA WILL BE LOST!!\n\n(Don't say I didn't warn you!)");
+	        if (response == true) {
+	            Mimoto.Aimless.utils.callAPI({
+	                type: 'get',
+	                url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
+	                data: null,
+	                dataType: 'json',
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
+	    },
+	    
+	    
+	    /**
+	     * Content sections
+	     */
+	    contentNew: function(nContentId)
+	    {
+	        window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
+	    },
+	    
+	    contentEdit: function(nContentId, sContentTypeName, nContentItemId)
+	    {
+	        window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
+	    },
+	    
+	    contentDelete: function(nContentId, sContentTypeName, nContentItemId)
+	    {
+	        var response = confirm("Are you sure you want to delete this item?");
+	        if (response == true) {
+	            Mimoto.Aimless.utils.callAPI({
+	                type: 'get',
+	                url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/delete',
+	                data: null,
+	                dataType: 'json',
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
+	    },
+	    
+	    
+	    
+	    /**
+	     * Create new form
+	     */
+	    entityFormNew: function(nEntityId)
+	    {
+	        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/form/new");
+	        
+	        //popup.on('success') = popup.close();
+	    },
+	    
+	    entityFormAutogenerate: function(nEntityId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: "/mimoto.cms/entity/" + nEntityId + "/form/autogenerate",
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	    formView: function(nFormId)
+	    {
+	        window.open('/mimoto.cms/form/' + nFormId + '/view', '_self');
+	    },
+	    
+	    formEdit: function(nFormId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
+	    },
+	    
+	    formDelete: function(nFormId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: "/mimoto.cms/form/" + nFormId + "/delete",
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	    formFieldNew_TypeSelector: function(nFormId)
+	    {
+	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/field/new');
+	    },
+	    
+	    formFieldNew_FieldForm: function(nFormId, nFormFieldTypeId)
+	    {
+	        console.log('formFieldNew_FieldForm: nFormId=' + nFormId + ', nFormFieldTypeId=' + nFormFieldTypeId);
+	        
+	        Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
+	    },
+	    
+	    formFieldEdit: function(nFormFieldTypeId, nFormFieldId)
+	    {
+	        window.open('/mimoto.cms/formfield/' + nFormFieldTypeId + '/' + nFormFieldId + '/edit', '_self');
+	    },
+	    
+	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
+	    {
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    },
+	    
+	    formFieldListItemAdd: function(sInputFieldType, sInputFieldId, sPropertySelector)
+	    {
+	        // 1. build
+	        var sURL = '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector;
+	        
+	        console.log(sURL);
+	        
+	        var popup = Mimoto.popup.open(sURL);
+	        
+	        // 1. return root of the popup (or root object)
+	        // 2. connect content of the popup (onload) to the popup object
+	        // 3. dispatchSuccess
+	        // 4. handle success
+	        // 5. do not autoconnect
+	        // 6. add new value to list
+	        
+	        // popup.success = function()
+	        // {
+	        //
+	        // }
+	    },
+	    
+	    formFieldListItemEdit: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)
+	    {
+	        // reload
+	        window.open("/mimoto.cms/formfield/" + sInputFieldType + "/" + sInputFieldId + "/edit/" + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId, '_self');
+	    },
+	    
+	    
+	    formFieldListItemDelete: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)
+	    {
+	        // 1. sInputFieldType
+	        // 2. sInputFieldId
+	        
+	        
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId +  '/remove/' + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
+	            data: null,
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething) {
+	                console.log(resultData);
+	            }
+	        });
+	    }
+	    
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = function(sTabmenuId, aTabs) {
+	
+	    // register
+	    this._sTabmenuId = sTabmenuId;
+	    this._aTabs = aTabs;
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	        // setup
+	        this._setupTabs();
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Setup tabs
+	     */
+	    _setupTabs: function()
+	    {
+	        // init
+	        var classRoot = this;
+	
+	        var nTabCount = this._aTabs.length;
+	        for (var i = 0; i < nTabCount; i++)
+	        {
+	            // register
+	            var tab = this._aTabs[i];
+	
+	            // connect
+	            tab.$tab = document.getElementById(tab.id);
+	            tab.$panel = document.getElementById(tab.panel_id);
+	
+	            // setup
+	            if (i == 0) { this._showPanel(tab.$panel); } else { this._hidePanel(tab.$panel); }
+	
+	            // connect
+	            tab.$tab.addEventListener('click', function(tab) {
+	                this._selectTab(tab);
+	            }.bind(this, tab));
+	        }
+	    },
+	
+	    /**
+	     * Check menu state
+	     */
+	    _selectTab: function(selectedTab)
+	    {
+	        var nTabCount = this._aTabs.length;
+	        for (var i = 0; i < nTabCount; i++)
+	        {
+	            // register
+	            var tab = this._aTabs[i];
+	
+	            if (tab == selectedTab)
+	            {
+	                this._showPanel(tab.$panel);
+	                this._activateTab(tab.$tab);
+	            }
+	            else
+	            {
+	                this._hidePanel(tab.$panel);
+	                this._deactivateTab(tab.$tab);
+	            }
+	        }
+	    },
+	
+	    /**
+	     * Activate tab
+	     */
+	    _activateTab: function($tab)
+	    {
+	        $tab.classList.add("active");
+	    },
+	
+	    /**
+	     * Deactivate tab
+	     */
+	    _deactivateTab: function($tab)
+	    {
+	        $tab.classList.remove("active");
+	    },
+	
+	    /**
+	     * Show panel
+	     */
+	    _showPanel: function($panel)
+	    {
+	        $panel.classList.remove("hidden");
+	    },
+	
+	    /**
+	     * Hide panel
+	     */
+	    _hidePanel: function($panel)
+	    {
+	        $panel.classList.add("hidden");
+	    }
+	
+	};
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
+	 * Popup
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function() {
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    open: function(sURL)
+	    {
+	        this._showPopup();
+	        this._loadPopupContent(sURL);
+	    },
+	
+	    close: function()
+	    {
+	        this._hidePopup();
+	    },
+	    
+	    replace: function(sURL)
+	    {
+	        this._loadPopupContent(sURL);
+	    },
+	    
+	    _showPopup: function()
+	    {
+	        // register
+	        var layer_overlay = document.getElementById('layer_overlay');
+	        var layer_popup = document.getElementById('layer_popup');
+	    
+	        // show
+	        layer_overlay.classList.remove('hidden');
+	        layer_popup.classList.remove('hidden');
+	    },
+	    
+	    _loadPopupContent: function(sURL)
+	    {
+	        var popup_content = document.getElementById('popup_content');
+	        var layer_popup = document.getElementById('layer_popup');
+	        
+	        $.ajax({
+	            url: sURL,
+	            dataType: 'html',
+	            success: function(data, textStatus, jqXHR) {
+	            
+	                //jQuery(selecteur).html(jqXHR.responseText);
+	                var response = jQuery(jqXHR.responseText);
+	                //var responseScript = response.filter("script");
+	                //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
+	            
+	                //popup_content.innerHTML = reponse;
+	                $('#popup_content').html(data);
+	            
+	                /*// focus primary input
+	                 var primaryInput = document.getElementById('form_field_name');
+	                 if (primaryInput)
+	                 {
+	                 primaryInput.focus();
+	                 var val = primaryInput.value;
+	                 primaryInput.value = '';
+	                 primaryInput.value = val;
+	                 }*/
+	    
+	                // reset scroll
+	                layer_popup.scrollTop = 0;
+	                
+	                // update
+	                Mimoto.Aimless.utils.parseRequestQueue();
+	            }
+	        });
+	    },
+	    
+	    _hidePopup: function()
+	    {
+	        // register
+	        var layer_overlay = document.getElementById('layer_overlay');
+	        var layer_popup = document.getElementById('layer_popup');
+	        var popup_content = document.getElementById('popup_content');
+	    
+	        // cleanup
+	        popup_content.innerHTML = '';
+	    
+	        // hide
+	        layer_overlay.classList.add('hidden');
+	        layer_popup.classList.add('hidden');
+	    }
+	
+	};
+	
+	
+	
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(5)))
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	/**
+	 * Page
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function() {
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    change: function(sURL)
+	    {
+	        window.location.href = sURL;
+	    }
+	
+	};
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Mimoto.CMS - Form handling
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var Sortable = __webpack_require__(12); // https://github.com/RubaXa/Sortable
+	
+	var Dropzone = __webpack_require__(18);
+	Dropzone.autoDiscover = false;
+	
+	module.exports = function() {
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	        // init
+	        this._aForms = [];
+	        this._aRequests = [];
+	        this._sCurrentOpenForm = '';
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	    
+	    
+	    /**
+	     * Open new form
+	     */
+	    open: function(sFormName, sAction, sMethod, bRealtimeCollaborationMode, responseSettings)
+	    {
+	        // store
+	        this._sCurrentOpenForm = sFormName;
+	
+	        // setup
+	        var form = {
+	            'sName': sFormName,
+	            'sAction': sAction,
+	            'sMethod': sMethod,
+	            'aFields': [],
+	            'bRealtimeCollaborationMode': bRealtimeCollaborationMode,
+	            'responseSettings': JSON.parse(responseSettings)
+	        };
+	
+	        // register
+	        this._aForms[sFormName] = form;
+	    },
+	
+	    /**
+	     * Register input field
+	     */
+	    registerInputField: function(sInputFieldId, settings)
+	    {
+	        // read
+	        var currentForm = this._aForms[this._sCurrentOpenForm]; // #todo - validate if no form set
+	
+	        // 1. locate form in dom
+	        var $form = $('form[name="' + currentForm.sName + '"]');
+	        
+	        // setup
+	        var field = {
+	            'sFormId': currentForm,
+	            'sName': sInputFieldId,
+	            'sType': 'input', // #todo - const
+	            'settings': settings,
+	            $field: $("[data-aimless-form-field='" + sInputFieldId + "']", $form),
+	            $input: $("[data-aimless-form-field-input='" + sInputFieldId + "']", $form),  // todo - multiselect x * option
+	            $error: $("[data-aimless-form-field-error='" + sInputFieldId + "']", $form)
+	        };
+	
+	        // store
+	        currentForm.aFields.push(field);
+	        
+	        // store
+	        // Mimoto.Aimless.realtime.broadcastedValues[sInputFieldId] = {
+	        //     sFormName: currentForm.sFormName,
+	        //     value: $(field.$input).val()
+	        // };
+	    
+	        // var forms = document.querySelectorAll('.js-form');
+	
+	        // connect
+	        this._connectInputField(field);
+	        
+	        // register
+	        var classPath = this;
+	        
+	        // read type
+	        var sAimlessInputType = this._getInputFieldType(field.$input);
+	    
+	        // verify
+	        if (sAimlessInputType == 'list')
+	        {
+	            // find
+	            var listInputField = document.querySelectorAll('[data-aimless-form-field="' + sInputFieldId + '"]');
+	            var listElement = listInputField[0].querySelectorAll('.js-list');
+	            
+	            // read
+	            var bIsSortable = listElement[0].classList.contains('js-list-sortable');
+	            
+	            // verify
+	            if (bIsSortable)
+	            {
+	                var sortable = new Sortable(listElement[0], {
+	                    group: sInputFieldId,
+	                    handle: '.MimotoCMS_forms_input_ListItem-handle',
+	                    dragClass: 'MimotoCMS_forms_input_ListItem--drag',
+	                    ghostClass: 'MimotoCMS_forms_input_ListItem--ghost',
+	                    // store: {
+	                    //     /**
+	                    //      * Get the order of elements. Called once during initialization.
+	                    //      * @param   {Sortable}  sortable
+	                    //      * @returns {Array}
+	                    //      */
+	                    //     get: function (sortable) {
+	                    //         var order = localStorage.getItem(sortable.options.group.name);
+	                    //         return order ? order.split('|') : [];
+	                    //     },
+	                    //
+	                    //     /**
+	                    //      * Save the order of elements. Called onEnd (when the item is dropped).
+	                    //      * @param {Sortable}  sortable
+	                    //      */
+	                    //     set: function (sortable) {
+	                    //         var order = sortable.toArray();
+	                    //         localStorage.setItem(sortable.options.group.name, order.join('|'));
+	                    //     }
+	                    // },
+	                    onEnd: function (e)
+	                    {
+	                        // adjust
+	                        classPath._changeOrder(e.from, e.item, e.oldIndex, e.newIndex)
+	                    }
+	                });
+	            }
+	        }
+	        
+	        
+	    },
+	
+	    /**
+	     * Unregister input field
+	     */
+	    unregisterInputField: function(sInputFieldId)
+	    {
+	
+	    },
+	    
+	    /**
+	     * Close form
+	     */
+	    close: function(sFormName)
+	    {
+	        // register
+	        var classRoot = this;
+	
+	        // search
+	        var aSubmitButtons = $('[data-aimless-form-submit="' + sFormName + '"]');
+	
+	        // activate
+	        aSubmitButtons.each(function(nIndex, $component) {
+	
+	            // read
+	            var currentForm = classRoot._aForms[classRoot._sCurrentOpenForm]; // #todo - validate if no form set
+	
+	            // prepare
+	            if (!currentForm.aSubmitButtons) currentForm.aSubmitButtons = [];
+	
+	            // register
+	            currentForm.aSubmitButtons.push($component);
+	            
+	            // setup
+	            $($component).click(function() { classRoot.submit(sFormName); /*alert('Submit was auto connected!');*/ } );
+	        });
+	
+	
+	        // Mimoto.Aimless.privateChannel = Mimoto.Aimless.pusher.subscribe('private-' + 'AimlessForm_' + sFormName);
+	        //
+	        // Mimoto.Aimless.privateChannel.bind('client-Aimless:formfield_update_' + sFormName, function(data)
+	        // {
+	        //
+	        //     var $input = $("input[data-aimless-form-field-input='" + data.fieldId + "']");
+	        //
+	        //
+	        //     // 1. check if supports realtime
+	        //     // 2. get this text
+	        //     // 3. get diff patch
+	        //
+	        //
+	        //     console.log(Mimoto.Aimless.pusher);
+	        //
+	        //     var currentValue = $($input).val();
+	        //     var patches = Mimoto.Aimless.realtime.dmp.patch_fromText(data.diff);
+	        //
+	        //     //var ms_start = (new Date).getTime();
+	        //     var results = Mimoto.Aimless.realtime.dmp.patch_apply(patches, currentValue);
+	        //     //var ms_end = (new Date).getTime();
+	        //
+	        //
+	        //     Mimoto.Aimless.realtime.broadcastedValues[data.fieldId].value = results[0];
+	        //     $($input).val(results[0]);
+	        // });
+	    },
+	
+	    /**
+	     * Submit form
+	     */
+	    submit: function(sFormName)
+	    {
+	        // 1. validate
+	        if (!this._aForms) return;
+	
+	        // 2. set default is no specific form requested
+	        if (!sFormName) { for (var s in this._aForms) { sFormName = s; break; } }
+	
+	        // 3. validate
+	        if (!this._aForms[sFormName]) return;
+	
+	        // 4. register
+	        var form = this._aForms[sFormName];
+	        var aFields = form.aFields;
+	        var nFieldCount = aFields.length;
+	        
+	        // 5. locate form in dom
+	        var $form = $('form[name="' + sFormName + '"]');
+	        
+	        // 6. read public key
+	        var sPublicKey = '';
+	        var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
+	        aPublicKeys.each( function(index, $component) { sPublicKey = $($component).val(); });
+	    
+	        var nEntityId = '';
+	        var aEntityIds = $("input[name='Mimoto.EntityId']", $form);
+	        aEntityIds.each( function(index, $component) { nEntityId = $($component).val(); });
+	    
+	        // 6. read instructions
+	        var sOnCreatedConnectTo = '';
+	        var aOnCreatedConnectTo = $("input[name='Mimoto.onCreated:connectTo']", $form);
+	        aOnCreatedConnectTo.each( function(index, $component) { sOnCreatedConnectTo = $($component).val(); });
+	        
+	        // 7. collect data
+	        var aValues = {};
+	        var classRoot = this;
+	        var bValidated = true;
+	        for (var i = 0; i < nFieldCount; i++)
+	        {
+	            // 7a. register
+	            var field = aFields[i];
+	            
+	            
+	            // validate
+	            if (!classRoot._validateInputField(field)) { bValidated = false; continue; }
+	            
+	            
+	            var aInputFields = $("[data-aimless-form-field='" + field.sName + "']", $form);
+	    
+	            aInputFields.each( function(index, $inputField)
+	            {
+	                // 7b. find field
+	                var aInputs = $("[data-aimless-form-field-input='" + field.sName + "']", $inputField);
+	                
+	                if (aInputs.length > 1 && ($(aInputs[0]).is("input")) && $(aInputs[0]).attr('type') == 'checkbox')
+	                {
+	                    // init
+	                    aValues[field.sName] = [];
+	        
+	                    // 7c. collect value
+	                    aInputs.each( function(index, $input)
+	                    {
+	                        // init
+	                        var value = classRoot._getValueFromInputField($input);
+	                        
+	                        // store
+	                        if (value !== null) aValues[field.sName].push(value);
+	                    });
+	                }
+	                else
+	                {
+	                    // 7c. collect value
+	                    aInputs.each( function(index, $input)
+	                    {
+	                        // init
+	                        var value = classRoot._getValueFromInputField($input);
+	                        
+	                        // store
+	                        if (value !== null) aValues[field.sName] = value;
+	                    });
+	                }
+	                
+	            });
+	        }
+	        
+	        
+	        //console.log('Before validated ..');
+	        // don't send if not validated
+	        if (!bValidated) return;
+	        //console.log('After validated ..');
+	        
+	        
+	        // 10. collect data
+	        var requestData = { publicKey: sPublicKey, entityId: nEntityId, values: aValues };
+	        if (sOnCreatedConnectTo) requestData.onCreatedConnectTo = sOnCreatedConnectTo;
+	
+	
+	
+	        // console.log('Sending ' + form.sAction + ' ' + form.sMethod);
+	        // console.log(aValues);
+	        // console.error(requestData);
+	        // console.log('------');
+	        
+	        
+	        
+	        // 11. send data
+	        Mimoto.Aimless.utils.callAPI({
+	            type: form.sMethod,
+	            url: form.sAction,
+	            data: JSON.stringify(requestData),
+	            dataType: 'json',
+	            success: function(resultData, resultStatus, resultSomething)
+	            {
+	                
+	                if (resultData.newEntities)
+	                {
+	
+	                    for (var sEntityType in resultData.newEntities)
+	                    {
+	                        var newEntity = resultData.newEntities[sEntityType];
+	
+	                        // 1. locate form in dom
+	                        var $form = $('form[name="' + resultData.formName + '"]');
+	
+	
+	                        // update dom
+	                        var aFields = $('[data-aimless-form-field^="' + newEntity.selector + '"]', $form);
+	                        aFields.each( function(index, $component)
+	                        {
+	                            var mls_form_field = $($component).attr("data-aimless-form-field");
+	                            mls_form_field = newEntity.id + mls_form_field.substr(newEntity.selector.length);
+	                            $($component).attr("data-aimless-form-field", mls_form_field);
+	                        });
+	
+	                        // update dom
+	                        var aFields = $('[data-aimless-form-field-input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
+	                        
+	                        aFields.each( function(index, $component)
+	                        {
+	                            var sOld_mls_form_field_input = $($component).attr("data-aimless-form-field-input");
+	                            var sNew_mls_form_field_input = newEntity.id + sOld_mls_form_field_input.substr(newEntity.selector.length);
+	                            $($component).attr("data-aimless-form-field-input", sNew_mls_form_field_input);
+	
+	                            classRoot._alterRegisteredFieldId(resultData.formName, sOld_mls_form_field_input, sNew_mls_form_field_input);
+	
+	                            var name = $($component).attr("name");
+	                            name = newEntity.id + name.substr(newEntity.selector.length);
+	                            $($component).attr("name", name);
+	                        });
+	
+	                        // update dom
+	                        var aFields = $('[data-aimless-form-field-error^="' + newEntity.selector + '"]', $form);
+	                        aFields.each( function(index, $component)
+	                        {
+	                            var mls_form_field_error = $($component).attr("data-aimless-form-field-error");
+	                            mls_form_field_error = newEntity.id + mls_form_field_error.substr(newEntity.selector.length);
+	                            $($component).attr("data-aimless-form-field-error", mls_form_field_error);
+	                        });
+	                    }
+	                }
+	
+	                if (resultData.newPublicKey)
+	                {
+	                    // 6. read public key
+	                    var sPublicKey = '';
+	                    var aPublicKeys = $("input[name='Mimoto.PublicKey']", $form);
+	                    aPublicKeys.each( function(index, $component)
+	                    {
+	                        sPublicKey = $($component).val(resultData.newPublicKey);
+	                    });
+	                    
+	                    // cleanup instuctions
+	                    $("input[name='Mimoto.onCreated:addTo']", $form).remove();
+	                }
+	    
+	                if (resultData.newEntityId)
+	                {
+	                    // 6. read public key
+	                    var nEntityId = '';
+	                    var aEntityIds = $("input[name='Mimoto.EntityId']", $form);
+	                    aEntityIds.each( function(index, $component)
+	                    {
+	                        nEntityId = $($component).val(resultData.newEntityId);
+	                    });
+	        
+	                    // cleanup instuctions
+	                    $("input[name='Mimoto.onCreated:addTo']", $form).remove();
+	                }
+	
+	                // 1. #todo get input field value in method
+	                // 2. collaborationMode
+	    
+	                
+	                if (form.responseSettings)
+	                {
+	                    if (form.responseSettings.onSuccess)
+	                    {
+	                        if (form.responseSettings.onSuccess.loadPage)
+	                        {
+	                            window.open(form.responseSettings.onSuccess.loadPage, '_self');
+	                        }
+	                        else if (form.responseSettings.onSuccess.closePopup)
+	                        {
+	                            Mimoto.popup.close();
+	                        }
+	                        else if (form.responseSettings.onSuccess.reloadPopup)
+	                        {
+	                            Mimoto.popup.replace(form.responseSettings.onSuccess.reloadPopup);
+	                        }
+	                        
+	                    }
+	                }
+	            }
+	        });
+	
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    _getValueFromInputField: function($component)
+	    {
+	        // init
+	        var value = null;
+	        
+	        // read type
+	        var sAimlessInputType = this._getInputFieldType($component);
+	        
+	        
+	        switch(sAimlessInputType)
+	        {
+	            case 'list':
+	                
+	                value = JSON.parse($($component).val());
+	                break;
+	                
+	            default:
+	    
+	                // validate
+	                if ($($component).is("input"))
+	                {
+	                    switch($($component).attr('type'))
+	                    {
+	                        case 'radio':
+	                
+	                            //  fix for handling radiobutton onSubmit en onChange
+	                            if ($component.length)
+	                            {
+	                                var aComponents = $component;
+	                    
+	                                // collect value
+	                                aComponents.each( function(index, $component)
+	                                {
+	                                    if ($($component).prop("checked") === true)
+	                                    {
+	                                        value = $($component).val();
+	                                    }
+	                                });
+	                            }
+	                            else
+	                            {
+	                                if ($($component).prop("checked") === true)
+	                                {
+	                                    value = $($component).val();
+	                                }
+	                            }
+	                
+	                            break;
+	            
+	                        case 'checkbox':
+	                
+	                            if ($($component).attr('value'))
+	                            {
+	                                if ($($component).prop("checked") === true)
+	                                {
+	                                    value = $($component).val();
+	                                }
+	                            }
+	                            else
+	                            {
+	                                value = $($component).prop("checked");
+	                            }
+	                
+	                            break;
+	            
+	                        default:
+	                
+	                            value = $($component).val();
+	                    }
+	                }
+	    
+	                if ($($component).is("select"))
+	                {
+	                    value = $($component).val();
+	                }
+	    
+	                if ($($component).is("textarea"))
+	                {
+	                    value = $($component).val();
+	                }
+	                
+	                break;
+	        }
+	        
+	        // send
+	        return value;
+	    },
+	
+	    _setInputFieldValue: function($component, value) // #todo - implement
+	    {
+	        //console.log('value:');
+	        
+	        
+	        
+	        if ($($component).is("input"))
+	        {
+	            switch($($component).attr('type'))
+	            {
+	                case 'radio':
+	
+	                    // output
+	                    $($component).each( function(nIndex, $component)
+	                    {
+	                        $($component).prop('checked', $($component).val() == value);
+	                    });
+	                    break;
+	    
+	                case 'checkbox':
+	                    
+	                    // output
+	                    $($component).each( function(nIndex, $component)
+	                    {
+	                        $($component).prop('checked', value);
+	                    });
+	                    break;
+	                
+	                default:
+	
+	                    // output
+	                    $($component).val(value);
+	            }
+	        };
+	    
+	        if ($($component).is("select"))
+	        {
+	            $($component).val(value);
+	        }
+	        
+	        if ($($component).is("textarea"))
+	        {
+	            // output
+	            $($component).val(value);
+	        }
+	    },
+	
+	    _alterRegisteredFieldId: function(sFormName, sOldInputFieldId, sNewInputFieldId)
+	    {
+	        var form = this._aForms[sFormName];
+	
+	        var nFieldCount = form.aFields.length;
+	        for (var i = 0; i < nFieldCount; i++)
+	        {
+	            // register
+	            var field = form.aFields[i];
+	
+	            if (field.sName == sOldInputFieldId)
+	            {
+	                field.$input.off('input');
+	
+	                field.sName = sNewInputFieldId;
+	                field.$input = $("input[data-aimless-form-field-input='" + sNewInputFieldId + "']");
+	
+	                // store
+	                // Mimoto.Aimless.realtime.broadcastedValues[sNewInputFieldId] = Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
+	                // delete Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
+	
+	                this._connectInputField(field);
+	            }
+	        }
+	    },
+	
+	    _connectInputField: function(field)
+	    {
+	        // register
+	        var classRoot = this;
+	        
+	        
+	        field.$input.on('input', function(e)
+	        {
+	            var sFormName = field.sFormId;
+	            var value = $(this).val();
+	
+	            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
+	
+	            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
+	
+	            classRoot._validateInputField(field);
+	
+	        });
+	    
+	        field.$input.on('change', function(e)
+	        {
+	            var sFormName = field.sFormId;
+	            var value = $(this).val();
+	            
+	            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
+	        
+	            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
+	        
+	            classRoot._validateInputField(field);
+	        });
+	    },
+	
+	    _validateInputField: function(field)
+	    {
+	        // validae
+	        if (!field.settings) return;
+	        if (!field.settings.validation) return;
+	
+	        // init
+	        var sErrorMessage = '';
+	        
+	        // check rules
+	        var nValidationRuleCount = field.settings.validation.length;
+	        var bValid = true;
+	        for (var i = 0; i < nValidationRuleCount; i++)
+	        {
+	            // register
+	            var validationRule = field.settings.validation[i];
+	
+	            // read
+	            var value = this._getValueFromInputField(field.$input);
+	            
+	            switch(validationRule.type)
+	            {
+	                case 'maxchars':
+	
+	                    // validate
+	                    if (value.length > validationRule.value)
+	                    {
+	                        sErrorMessage = validationRule.errorMessage;
+	                        bValid = false;
+	                    }
+	                    break;
+	
+	                case 'minchars':
+	                    
+	                    // validate
+	                    if (value.length < validationRule.value)
+	                    {
+	                        sErrorMessage = validationRule.errorMessage;
+	                        bValid = false;
+	                    }
+	                    break;
+	
+	                case 'regex_custom':
+	
+	                    // init
+	                    var patt = new RegExp(validationRule.value, "g");
+	                    
+	                    // validate
+	                    if (!patt.test(value))
+	                    {
+	                        sErrorMessage = validationRule.errorMessage;
+	                        bValid = false;
+	                    }
+	                    break;
+	            }
+	
+	            if (!bValid) break;
+	        }
+	
+	        // update interface
+	        if (field.$error)
+	        {
+	            if (sErrorMessage)
+	            {
+	                field.$error.text(sErrorMessage);
+	                // #todo toggle field icon - zie code David
+	            }
+	            else
+	            {
+	                field.$error.text('');
+	            }
+	        }
+	        
+	        // send
+	        return bValid;
+	    },
+	    
+	    
+	    setupImageField: function(sImageFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
+	    {
+	        // read
+	        var currentForm = this._aForms[this._sCurrentOpenForm];
+	    
+	        // 1. locate form in dom
+	        var $form = $('form[name="' + currentForm.sName + '"]');
+	        
+	        // setup
+	        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+	        var fieldInput = $("input", field);
+	
+	        
+	        
+	        this.el = document.getElementById(sImageFieldId);
+	        
+	        this._imageField_imageUploadClass = '.js-image-upload';
+	        this._imageField_imageUploadTriggerClass = '.js-image-upload-trigger';
+	        this._imageField_previewClass = '.js-image-upload-preview';
+	        this._imageField_previewTemplateClass = '.js-image-upload-preview-template';
+	    
+	        this._imageField_showPreviewClass = 'MimotoCMS_forms_input_ImageUpload--show-preview';
+	        this._imageField_showPreviewImageClass = 'MimotoCMS_forms_input_ImageUpload--show-preview-image';
+	        this._imageField_hideUploadProgressClass = 'MimotoCMS_forms_input_ImageUpload--hide-upload-progess';
+	    
+	        this._imageField_errorParent = this.el.querySelector('.js-error-parent');
+	    
+	        this._imageField_postURL = "/Mimoto.Aimless/upload/image";
+	        this._imageField_imageUpload = this.el.querySelector(this._imageField_imageUploadClass);
+	        this._imageField_inputfield = this.el.querySelector('.js-image-upload-value');
+	    
+	    
+	        // register
+	        var classRoot = document;
+	        
+	    
+	        // preview template
+	        var previewNode = document.querySelector(this._imageField_previewTemplateClass);
+	        var template = previewNode.parentNode.innerHTML;
+	        previewNode.id = "";
+	        previewNode.parentNode.removeChild(previewNode);
+	        this._imageField_previewTemplate = template;
+	    
+	        // setup
+	        this._imageField_dropzone = new Dropzone(this._imageField_imageUpload, {
+	            url: this._imageField_postURL,
+	            maxFilesize: 1000,
+	            parallelUploads: 20,
+	            previewTemplate: this._imageField_previewTemplate,
+	            thumbnailWidth: 500,
+	            thumbnailHeight: null,
+	            previewsContainer: this._imageField_previewClass,
+	            clickable: this._imageField_imageUploadTriggerClass
+	        });
+	        
+	        
+	        this._imageField_dropzone.on('removedfile', function (file) {
+	            this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewClass);
+	            this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewImageClass);
+	            //EH.clearState(this.el);
+	    
+	            // set value
+	            fieldInput.val('');
+	            
+	        }.bind(this));
+	    
+	        this._imageField_dropzone.on('addedfile', function (file) {
+	            this._imageField_dropzone.element.classList.add(this._imageField_showPreviewClass);
+	        }.bind(this));
+	    
+	        this._imageField_dropzone.on('thumbnail', function (file) {
+	            this._imageField_dropzone.element.classList.add(this._imageField_showPreviewImageClass);
+	        }.bind(this));
+	    
+	        this._imageField_dropzone.on('error', function (file, errorMessage, xhrObject) {
+	            //EH.addErrorState(this.el, errorMessage);
+	        }.bind(this));
+	    
+	        this._imageField_dropzone.on('success', function (file, serverResponse) {
+	            
+	            // set value
+	            fieldInput.val(serverResponse.file_id);
+	        
+	            setTimeout(function () {
+	                this._imageField_dropzone.element.classList.add(this._imageField_hideUploadProgressClass);
+	                //EH.addValidatedState(this.el);
+	                console.warn(file);
+	                console.warn(serverResponse);
+	            }.bind(this), 100);
+	        }.bind(this));
+	    
+	    
+	        
+	    
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
+	            success: function(resultData, resultStatus, resultSomething)
+	            {
+	                if (resultData && resultData.file_id)
+	                {
+	                    // register
+	                    var image = classRoot.getElementById('xxx-image');
+	    
+	                    // setup
+	                    image.src = resultData.full_path;
+	                }
+	            }
+	        });
+	    },
+	    
+	    setupVideoField: function(sVideoFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
+	    {
+	        // read
+	        var currentForm = this._aForms[this._sCurrentOpenForm];
+	        
+	        // 1. locate form in dom
+	        var $form = $('form[name="' + currentForm.sName + '"]');
+	        
+	        // setup
+	        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+	        var fieldInput = $("input", field);
+	    
+	        this.el = document.getElementById(sVideoFieldId);
+	        
+	        this._videoField_videoUploadClass = '.js-video-upload';
+	        this._videoField_videoUploadTriggerClass = '.js-video-upload-trigger';
+	        this._videoField_previewClass = '.js-video-upload-preview';
+	        this._videoField_previewTemplateClass = '.js-video-upload-preview-template';
+	        
+	        this._videoField_showPreviewClass = 'MimotoCMS_forms_input_ImageUpload--show-preview';
+	        this._videoField_showPreviewImageClass = 'MimotoCMS_forms_input_ImageUpload--show-preview-video';
+	        this._videoField_hideUploadProgressClass = 'MimotoCMS_forms_input_ImageUpload--hide-upload-progess';
+	        
+	        this._videoField_errorParent = this.el.querySelector('.js-error-parent');
+	        
+	        this._videoField_postURL = "/Mimoto.Aimless/upload/video";
+	        this._videoField_videoUpload = this.el.querySelector(this._videoField_videoUploadClass);
+	        this._videoField_inputfield = this.el.querySelector('.js-video-upload-value');
+	        
+	        
+	        // preview template
+	        var previewNode = document.querySelector(this._videoField_previewTemplateClass);
+	        var template = previewNode.parentNode.innerHTML;
+	        previewNode.id = "";
+	        previewNode.parentNode.removeChild(previewNode);
+	        this._videoField_previewTemplate = template;
+	        
+	        // setup
+	        this._videoField_dropzone = new Dropzone(this._videoField_videoUpload, {
+	            url: this._videoField_postURL,
+	            maxFilesize: 1000,
+	            parallelUploads: 20,
+	            previewTemplate: this._videoField_previewTemplate,
+	            thumbnailWidth: 500,
+	            thumbnailHeight: null,
+	            previewsContainer: this._videoField_previewClass,
+	            acceptedFiles: ".mp4, .webm",
+	            clickable: this._videoField_videoUploadTriggerClass
+	        });
+	        
+	        
+	        this._videoField_dropzone.on('removedfile', function (file) {
+	            this._videoField_dropzone.element.classList.remove(this._videoField_showPreviewClass);
+	            this._videoField_dropzone.element.classList.remove(this._videoField_showPreviewImageClass);
+	            //EH.clearState(this.el);
+	            
+	            // set value
+	            fieldInput.val('');
+	            
+	        }.bind(this));
+	        
+	        this._videoField_dropzone.on('addedfile', function (file) {
+	            //this._videoField_dropzone.element.classList.add(this._videoField_showPreviewClass);
+	        }.bind(this));
+	        
+	        this._videoField_dropzone.on('thumbnail', function (file) {
+	            //this._videoField_dropzone.element.classList.add(this._videoField_showPreviewImageClass);
+	        }.bind(this));
+	        
+	        this._videoField_dropzone.on('error', function (file, errorMessage, xhrObject) {
+	            //EH.addErrorState(this.el, errorMessage);
+	        }.bind(this));
+	        
+	        this._videoField_dropzone.on('success', function (file, serverResponse) {
+	            
+	            // set value
+	            fieldInput.val(serverResponse.file_id);
+	            
+	            // register
+	            var video = document.getElementById('xxx-video');
+	            
+	            // add source
+	            video.src = serverResponse.full_path;
+	            video.controls = true;
+	            
+	            // load video
+	            video.load();
+	            
+	            
+	            setTimeout(function () {
+	                this._videoField_dropzone.element.classList.add(this._videoField_hideUploadProgressClass);
+	                
+	                //EH.addValidatedState(this.el);
+	                
+	                //console.warn(serverResponse);
+	                
+	            }.bind(this), 100);
+	        }.bind(this));
+	        
+	        
+	        // register
+	        var classRoot = document;
+	        
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
+	            success: function(resultData, resultStatus, resultSomething)
+	            {
+	                if (resultData && resultData.file_id)
+	                {
+	                    // register
+	                    var video = classRoot.getElementById('xxx-video');
+	                    
+	                    // setup
+	                    video.src = resultData.full_path;
+	                    video.controls = true;
+	    
+	                    // load video
+	                    video.load();
+	                }
+	            }
+	        });
+	        
+	    },
+	    
+	    _getInputFieldType: function($component)
+	    {
+	        // read type
+	        return $($component).attr('data-aimless-input-type');
+	    },
+	    
+	    _changeOrder: function(htmlParentElement, htmlChildElement, nOldIndex, nNewIndex)
+	    {
+	        // register
+	        var sPropertySelector = htmlParentElement.getAttribute('data-aimless-contains');
+	        var nConnectionId = htmlChildElement.getAttribute('data-aimless-connection');
+	        var nCurrentSortindex = htmlChildElement.getAttribute('data-aimless-sortindex');
+	        
+	        // validate
+	        if (!sPropertySelector || !nConnectionId || !nCurrentSortindex) return;
+	        
+	        // store
+	        Mimoto.Aimless.utils.callAPI({
+	            type: 'get',
+	            url: '/mimoto.cms/form/list/sort/' + sPropertySelector + '/' + nConnectionId + '/' + nOldIndex + '/' + nNewIndex,
+	            success: function(resultData, resultStatus, resultSomething)
+	            {
+	                //console.log('Mimoto ===> I received a response from the FormController::updateSortindex!');
+	            }
+	        });
+	    }
+	    
+	};
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 

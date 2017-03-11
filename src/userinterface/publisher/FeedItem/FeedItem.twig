@@ -1,0 +1,15 @@
+<div class="MimotoPublisher-FeedItem" {{ Aimless.realtime() }}>
+    <div class="MimotoPublisher-FeedItem-header">
+        <div class="MimotoPublisher-FeedItem-titlecontainer">
+            <h1 class="MimotoPublisher-FeedItem-title">
+                <span class="MimotoPublisher-FeedItem-title">
+                    <a href="/publisher/article/{{ Aimless.meta('id') }}" {{ Aimless.realtime('title') }}>{{ Aimless.render('title') }}</a>
+                </span>
+            </h1>
+        </div>
+        <img class="MimotoPublisher-FeedItem-headerImage" src="{{ Aimless.render('headerImage') }}" {{ Aimless.realtime('headerImage') }}>
+    </div>
+    <div class="MimotoPublisher-FeedItem-lede" {{ Aimless.realtime('lede') }}>
+        {{ Aimless.render('lede') }} .. <a href="/publisher/article/{{ Aimless.meta('id') }}">lees meer</a>
+    </div>
+</div>

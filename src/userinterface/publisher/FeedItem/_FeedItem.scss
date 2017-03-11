@@ -1,0 +1,65 @@
+div.MimotoPublisher-FeedItem {
+    background-color: #ffffff;
+    margin: auto;
+    width: 750px;
+}
+
+div.MimotoPublisher-FeedItem-header {
+    position: relative;
+}
+
+div.MimotoPublisher-FeedItem-titlecontainer {
+    position: absolute;
+    z-index: 1;
+    padding: 50px;
+
+}
+
+h1.MimotoPublisher-FeedItem-title {
+
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
+
+    margin: auto;
+    width: 90%;
+
+    text-align: center;
+
+    font-size: 48px;
+    font-weight: bold;
+    font-family: "Futura PT W02 Book", sans-serif;
+
+
+    & > span {
+        background-color : black;
+        line-height: 1.4;
+
+        & > a {
+            text-decoration: none;
+        }
+
+        & > a:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+img.MimotoPublisher-FeedItem-headerImage {
+    position: relative;
+    width: 100%;
+    z-index: 0;
+}
+
+div.MimotoPublisher-FeedItem-lede {
+    padding: 50px;
+
+    & > a {
+        text-decoration: none;
+        color: #DF5B57;
+    }
+
+    & > a:hover {
+        text-decoration: underline;
+    }
+}

@@ -13,8 +13,6 @@ module.exports = function (env)
         context: jsSrc,
         plugins: [
             new webpack.ProvidePlugin({
-                EH: 'ErrorHandling',
-                FV: 'FormValidation',
                 $: "jquery",
                 jQuery: "jquery",
                 "window.jQuery": "jquery"

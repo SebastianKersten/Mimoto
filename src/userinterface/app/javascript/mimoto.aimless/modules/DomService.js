@@ -661,7 +661,7 @@ module.exports.prototype = {
                         else
                         {
                             // move
-                            $($currentItem).once().insertAfter($previousItem);
+                            $($currentItem).insertAfter($previousItem); // once()
                         }
                         
                         // update

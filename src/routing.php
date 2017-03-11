@@ -47,6 +47,12 @@
     $app->get('/test/pusher', 'Mimoto\\UserInterface\\examples\\ExampleController::testPusher');
 
 
+    // Mimoto.Publisher
+    $app->get ('/publisher', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewFeed');
+    $app->get ('/publisher/article/{nArticleId}', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewArticle');
+    $app->post('/publisher/article/{nArticleId}/commnent/add', 'Mimoto\\UserInterface\\publisher\\PublisherController::addComment');
+
+
 
 //    $app->get('/example12', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample12');
 //    $app->get('/example13', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample13');
