@@ -266,7 +266,7 @@ class AimlessComponent
         return '';
     }
 
-    public function getValueBySortindex($nIndex = 0)
+    public function getValueBySortindex($nIndex = 0, $bGetRealtime = false)
     {
         // read
         $aPropertyNames = $this->_entity->getPropertyNames();
@@ -285,7 +285,7 @@ class AimlessComponent
                 // verify
                 if ($nFoundPropertyIndex == $nIndex)
                 {
-                    return $this->_entity->getValue($sPropertyName);
+                    return ($bGetRealtime) ? $this->realtime($sPropertyName) : $this->data($sPropertyName);
                 }
                 else
                 {

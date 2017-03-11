@@ -127,4 +127,9 @@ class AimlessComponentViewModel
         return $this->_component->getValueBySortindex($nIndex);
     }
 
+    public function getRealtimeBySortindex($nIndex = 0)
+    {
+        return $this->_component->getValueBySortindex($nIndex, true);
+    }
+
 }
