@@ -2,6 +2,7 @@ vendor/
 composer.phar
 composer.lock
 .idea/
+**/.DS_Store
 node_modules
 #web/static/css
 #web/static/js

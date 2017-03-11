@@ -342,7 +342,7 @@ class AimlessComponent
 
                 // read
                 $eFile = $this->_entity->getValue($sPropertySelector);
-                
+
                 if (!empty($eFile))
                 {
                     // compose and send

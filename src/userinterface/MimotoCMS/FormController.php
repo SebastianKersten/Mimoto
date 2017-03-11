@@ -756,35 +756,24 @@ class FormController
         // 4. register
         $aConnections = $eParent->getValue($aPropertySelectorParts[2], true);
 
-        // 5. alter sortindex
+        // 5. move
+        array_splice($aConnections, $nNewIndex, 0, array_splice($aConnections, $nOldIndex, 1));
+
+        // 6. fix sortindex
         $nConnectionCount = count($aConnections);
         for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
         {
             // register
             $connection = $aConnections[$nConnectionIndex];
 
-            // swap
-            if ($connection->getId() == $nConnectionId && $connection->getSortindex() == $nOldIndex)
-            {
-                $connection->setSortindex($nNewIndex);
-            }
-            else
-            {
-                if ($connection->getSortindex() == $nNewIndex)
-                {
-                    $connection->setSortindex($nOldIndex);
-                }
-                else
-                {
-                    $connection->setSortindex($nConnectionIndex);
-                }
-            }
+            // update
+            $connection->setSortindex($nConnectionIndex);
         }
 
-        // store
+        // 7. store
         Mimoto::service('data')->store($eParent);
 
-        // output
+        // 8. output
         return Mimoto::service('messages')->response((object) array('result' => 'Sortindex altered! '.date("Y.m.d H:i:s")), 200);
     }
 }
