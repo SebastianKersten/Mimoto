@@ -3,13 +3,16 @@
     padding: 0;
     list-style: none;
     flex: 0 0 100%;
+    margin-right: 5px;
 
     @include breakpoint(medium up) {
-        flex: 0 0 percentage(1 / 2);
+        flex-basis: percentage(1 / 2);
+        max-width: calc(50% - 5px);
     }
 
     @include breakpoint(xlarge up) {
-        flex: 0 0 percentage(1 / 3);
+        flex-basis: percentage(1 / 3);
+        max-width: calc(33% - 5px);
     }
 }
 
@@ -25,12 +28,15 @@
         .MimotoCMS_ListItemModule-info {
             padding: 8px 7px 8px 15px;
             flex: 1 1 auto;
+            overflow: hidden;
         }
 
             .MimotoCMS_ListItemModule-label {
                 font-size: rem-calc(18px);
                 line-height: rem-calc(24px);
                 white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .MimotoCMS_ListItemModule-sublabel {
