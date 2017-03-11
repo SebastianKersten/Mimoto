@@ -3,7 +3,6 @@
     padding: 0;
     list-style: none;
     flex: 0 0 100%;
-    margin-right: 5px;
 
     @include breakpoint(medium up) {
         flex-basis: percentage(1 / 2);
