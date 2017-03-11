@@ -532,7 +532,8 @@ class AimlessService
                 
                 // read
                 $sPropertyType = $entity->getPropertyType($sMainPropertyName);
-                
+                $sPropertySubtype = $entity->getPropertySubtype($sMainPropertyName);
+
                 
                 switch($sPropertyType)
                 {
@@ -579,6 +580,7 @@ class AimlessService
 
                         // init
                         $valueForBroadcast->type = $sPropertyType;
+                        $valueForBroadcast->subtype = $sPropertySubtype;
 
                         // compose
                         $valueForBroadcast->entity = null;
@@ -592,6 +594,27 @@ class AimlessService
                                 'connection' => $aModifiedValues[$sMainPropertyName]->added[0]->toJSON(),
                                 'data' => []
                             );
+
+                            // broadcast media
+                            switch($sPropertySubtype)
+                            {
+                                case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE:
+                                case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO:
+                                case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO:
+                                case MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE:
+
+                                    // read
+                                    $eFile = $entity->getValue($sMainPropertyName);
+
+                                    if (!empty($eFile))
+                                    {
+                                        $valueForBroadcast->entity->file = (object) array(
+                                            'path' => Mimoto::value('config')->general->public_root.$eFile->getValue('path'),
+                                            'name' => $eFile->getValue('name')
+                                        );
+                                    }
+                                    break;
+                            }
                         }
 
                         break;

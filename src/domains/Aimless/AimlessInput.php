@@ -5,6 +5,7 @@ namespace Mimoto\Aimless;
 
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Aimless\AimlessInputViewModel;
@@ -98,6 +99,10 @@ class AimlessInput extends AimlessComponent
 
                 // split
                 $aEntitySelectorElements = explode('.', $this->_sFieldId);
+
+                // validate
+                if (!MimotoDataUtils::isValidId($aEntitySelectorElements[1])) return '';
+
 
                 // load
                 $eParent = Mimoto::service('data')->get($aEntitySelectorElements[0], $aEntitySelectorElements[1]);

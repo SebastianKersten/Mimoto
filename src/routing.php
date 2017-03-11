@@ -41,6 +41,7 @@
     $app->get('/message', 'Mimoto\\UserInterface\\examples\\ExampleController::viewMessageExample');
     $app->get('/article/{nArticleId}', 'Mimoto\\UserInterface\\examples\\ExampleController::viewArticleExample');
     $app->get('/feed', 'Mimoto\\UserInterface\\examples\\ExampleController::viewArticleFeedExample');
+    $app->get('/author', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExampleAuthor');
 
     // --- service tests ---
     $app->get('/test/pusher', 'Mimoto\\UserInterface\\examples\\ExampleController::testPusher');

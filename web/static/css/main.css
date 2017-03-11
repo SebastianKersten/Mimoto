@@ -633,6 +633,10 @@ div.example_article
   padding: 8px;
 }
 
+img.example_avatar {
+    max-width: 100%;
+}
+
 div.example_article_regular
 {
   border: #c3c3c3 solid 1px;

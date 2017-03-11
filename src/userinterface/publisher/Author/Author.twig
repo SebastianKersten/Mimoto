@@ -1,12 +1,12 @@
 {% extends "examples/components/examplebase.twig" %}
 
 {% block content %}
-    <h1>Example 1 - Person</h1>
+    <h1>Author</h1>
     <i>A name and the person's avatar</i><br>
     <br>
     <br>
     <div class="example_article" {{ Aimless.realtime() }}>
         <i><span {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</span></i><br><br>
-        <img src="{{ Aimless.render('avatar') }}">
+        <img class="example_avatar" src="{{ Aimless.render('avatar') }}" {{ Aimless.realtime('avatar') }}>
     </div>
 {% endblock %}

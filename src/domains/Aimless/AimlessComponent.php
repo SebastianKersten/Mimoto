@@ -266,7 +266,7 @@ class AimlessComponent
         return '';
     }
 
-    public function getValueBySortindex($nIndex = 0, $bGetRealtime = false)
+    public function getValueBySortindex($nIndex = 0, $bGetRealtime = false, $bGetImage = false)
     {
         // read
         $aPropertyNames = $this->_entity->getPropertyNames();
@@ -279,18 +279,37 @@ class AimlessComponent
             // register
             $sPropertyName = $aPropertyNames[$nPropertyIndex];
 
-            // verify
-            if ($this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+            if ($bGetImage)
+            {
+                if ($this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY &&
+                    $this->_entity->getPropertySubtype($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE)
+                {
+                    // verify
+                    if ($nFoundPropertyIndex == $nIndex)
+                    {
+                        return ($bGetRealtime) ? $this->realtime($sPropertyName) : $this->data($sPropertyName, false, true);
+                    }
+                    else
+                    {
+                        // update
+                        $nFoundPropertyIndex++;
+                    }
+                }
+            }
+            else
             {
                 // verify
-                if ($nFoundPropertyIndex == $nIndex)
+                if ($this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
                 {
-                    return ($bGetRealtime) ? $this->realtime($sPropertyName) : $this->data($sPropertyName);
-                }
-                else
-                {
-                    // update
-                    $nFoundPropertyIndex++;
+                    // verify
+                    if ($nFoundPropertyIndex == $nIndex)
+                    {
+                        return ($bGetRealtime) ? $this->realtime($sPropertyName) : $this->data($sPropertyName, false, true);
+                    } else
+                    {
+                        // update
+                        $nFoundPropertyIndex++;
+                    }
                 }
             }
         }
@@ -539,12 +558,22 @@ class AimlessComponent
 
                     // 1. check if component was set todo
 
-                    $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
 
-                    $sComponent = (!empty($sComponentName)) ? ' data-aimless-component="'.$sComponentName.'"' : '';
-                    $sWrapper = (!empty($sWrapperName)) ? ' data-aimless-wrapper="'.$sWrapperName.'"' : '';
+                    if ($this->_entity->getPropertySubtype($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE
+                        && empty($sComponentName))
+                    {
+                        return 'data-aimless-image="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
+                    }
+                    else
+                    {
+                        $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
 
-                    return 'data-aimless-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
+                        $sComponent = (!empty($sComponentName)) ? ' data-aimless-component="'.$sComponentName.'"' : '';
+                        $sWrapper = (!empty($sWrapperName)) ? ' data-aimless-wrapper="'.$sWrapperName.'"' : '';
+
+                        return 'data-aimless-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
+                    }
+
                     break;
 
                 default:

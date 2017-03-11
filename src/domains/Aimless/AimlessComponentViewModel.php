@@ -127,9 +127,19 @@ class AimlessComponentViewModel
         return $this->_component->getValueBySortindex($nIndex);
     }
 
-    public function getRealtimeBySortindex($nIndex = 0)
+    public function getRealtimeValueBySortindex($nIndex = 0)
     {
         return $this->_component->getValueBySortindex($nIndex, true);
+    }
+
+    public function getImageBySortindex($nIndex = 0)
+    {
+        return $this->_component->getValueBySortindex($nIndex, false, true);
+    }
+
+    public function getRealtimeImageBySortindex($nIndex = 0)
+    {
+        return $this->_component->getValueBySortindex($nIndex, true, true);
     }
 
 }

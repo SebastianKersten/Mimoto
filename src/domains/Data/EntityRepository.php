@@ -119,9 +119,19 @@ class EntityRepository
             // load
             $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
+            //if ($entityConfig->getName() == CoreConfig::MIMOTO_CONTENTSECTION)
+            //{
+             //   Mimoto::output('$aResults', $aResults);
+            //}
+
+            //Mimoto::output('$nEntityId '.$nEntityId, $entityConfig);
+            //throw new \Exception('oh oh, computer says oops!');
+
+
             // verify
             if (count($aResults) !== 1)
             {
+
                 Mimoto::service('log')->silent("Entity not found", "Sorry, I can't find the the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
                 return null;
             }

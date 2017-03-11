@@ -731,4 +731,16 @@ class ExampleController
         return $component->render();
     }
 
+    public function viewExampleAuthor(Application $app)
+    {
+        // load
+        $eAuthor = Mimoto::service('data')->get('author', 1);
+
+        // create
+        $component = Mimoto::service('aimless')->createComponent('author', $eAuthor);
+
+        // render and send
+        return $component->render();
+    }
+
 }
