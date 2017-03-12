@@ -11,8 +11,7 @@ use Mimoto\Core\CoreConfig;
 use Silex\Application;
 
 // Symfony classes
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 
 /**
@@ -28,7 +27,7 @@ class PublisherController
         // 1. load data
         $eContentSection = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_CONTENTSECTION, 'value' => ['name' => 'Articles']]);
 
-        // 2. create content
+        // 2. create template
         $page = Mimoto::service('aimless')->createPage('feed', $eContentSection[0]);
 
         // 3. output
@@ -37,13 +36,13 @@ class PublisherController
 
     public function viewArticle(Application $app, $nArticleId)
     {
-        // 2. load data
+        // 1. load data
         $eArticle = Mimoto::service('data')->get('article', $nArticleId);
 
-        // 3. create content
+        // 2. create template
         $page = Mimoto::service('aimless')->createPage('article', $eArticle);
 
-        // 5. output
+        // 3. output
         return $page->render();
     }
 
@@ -52,17 +51,35 @@ class PublisherController
         // 1. init page
         $eComment = Mimoto::service('data')->create('comment');
 
-        // 2. load and convert
-        $requestData = json_decode($request->getContent());
+        // 2. register
+        $eComment->setValue('message', $request->get('message'));
 
-        // 3. setup
-        $eComment->setValue('message', $requestData->message);
-
-        // 4. store
+        // 3. store
         Mimoto::service('data')->store($eComment);
 
-        // 5. send
+        // 4. load article
+        $eArticle = Mimoto::service('data')->get('article', $nArticleId);
+
+        // 5. register
+        $eArticle->addValue('comments', $eComment);
+
+        // 6. store
+        Mimoto::service('data')->store($eArticle);
+
+        // 7. send
         return Mimoto::service('messages')->response('Comment added');
+    }
+
+    public function removeComment(Application $app, $nCommentId)
+    {
+        // 1. load comment
+        $eComment = Mimoto::service('data')->get('comment', $nCommentId);
+
+        // 2. delete comment
+        Mimoto::service('data')->delete($eComment);
+
+        // 3. send
+        return Mimoto::service('messages')->response('Comment removed');
     }
 
 }

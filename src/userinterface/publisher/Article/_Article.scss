@@ -77,3 +77,73 @@ div.MimotoPublisher-Article-body {
         padding-left: 3px;
     }
 }
+
+div.MimotoPublisher-Article-comments {
+    width: 100%;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+
+    & > h1 {
+        padding: 30px 50px 15px 50px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #858585;
+    }
+}
+
+div.MimotoPublisher-Article-comments-container-empty {
+    color: #858585;
+    font-style: italic;
+    padding: 0 50px 0 50px;
+}
+
+div.MimotoPublisher-Article-comments-container {
+
+    & > div {
+        margin-bottom: 10px;
+    }
+
+    & > div:last-child {
+        margin-bottom: 0;
+    }
+}
+
+div.MimotoPublisher-Article-commentform {
+    padding: 30px 50px 30px 50px;
+    font-size: 18px;
+}
+
+input.MimotoPublisher-Article-comment {
+    background-color: #ffffff;
+    padding: 10px;
+    border: solid 1px #858585;
+    display:inline-block;
+    min-height:10px;
+    width: 500px;
+    max-width: 100%;
+    color: #858585;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+div.MimotoPublisher-Article-commentform-button {
+    display: inline-block;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 13px 15px 12px 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+div.MimotoPublisher_Comment-options {
+    padding-top: 5px;
+    font-size: 12px;
+    color: #858585;
+    cursor: pointer;
+}
+
+div.MimotoPublisher_Comment-options:hover {
+    text-decoration: underline;
+}

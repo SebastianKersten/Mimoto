@@ -22,11 +22,46 @@
             );
         </script>
 
+        <script>
+
+            function addComment(nArticleId)
+            {
+                // register
+                var commentForm = document.getElementById('commentForm');
+
+                // call
+                Mimoto.Aimless.utils.callAPI({
+                    type: 'post',
+                    url: "/publisher/article/" + nArticleId + "/comment/add",
+                    data: {message: commentForm.value},
+                    dataType: 'json',
+                    success: function(resultData, resultStatus, resultSomething) {
+                        commentForm.value = '';
+                        window.scrollTo(0,document.body.scrollHeight);
+                    }
+                });
+            }
+
+            function removeComment(nCommentId)
+            {
+                // call
+                Mimoto.Aimless.utils.callAPI({
+                    type: 'post',
+                    url: "/publisher/comment/" + nCommentId + "/remove",
+                    data: {message: commentForm.value},
+                    dataType: 'json',
+                    success: function(resultData, resultStatus, resultSomething) {
+                    }
+                });
+            }
+
+        </script>
+
     </head>
     <body class="MimotoPublisher">
         <div class="MimotoPublisher-menu">
             <div class="MimotoPublisher-menu-home"><a href="/publisher">Home</a></div>
-            <div class="MimotoPublisher-menu-logo">Mimoto.Publisher</div>
+            <div class="MimotoPublisher-menu-logo">De Correspondent</div>
         </div>
         {% block content %}{% endblock %}
         <div class="MimotoPublisher-footer">

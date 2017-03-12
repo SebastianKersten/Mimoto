@@ -50,7 +50,8 @@
     // Mimoto.Publisher
     $app->get ('/publisher', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewFeed');
     $app->get ('/publisher/article/{nArticleId}', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewArticle');
-    $app->post('/publisher/article/{nArticleId}/commnent/add', 'Mimoto\\UserInterface\\publisher\\PublisherController::addComment');
+    $app->post('/publisher/article/{nArticleId}/comment/add', 'Mimoto\\UserInterface\\publisher\\PublisherController::addComment');
+    $app->post('/publisher/comment/{nCommentId}/remove', 'Mimoto\\UserInterface\\publisher\\PublisherController::removeComment');
 
 
 

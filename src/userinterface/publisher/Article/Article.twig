@@ -21,4 +21,22 @@
 
     <div class="MimotoPublisher-Article-body" {{ Aimless.realtime('body') }}>{{ Aimless.render('body') }}</div>
 
+    <div class="MimotoPublisher-Article-comments">
+
+        <h1>Bijdragen</h1>
+
+        <div {{ Aimless.showOnEmpty('comments') }} class="MimotoPublisher-Article-comments-container-empty">
+            Er zijn nog geen bijdragen. Vertel als eerste jouw kijk op dit stuk ..
+        </div>
+
+        <div {{ Aimless.hideOnEmpty('comments') }} class="MimotoPublisher-Article-comments-container" {{ Aimless.realtime('comments', 'comment') }}>
+            {{ Aimless.render('comments', 'comment') }}</div>
+
+        <div class="MimotoPublisher-Article-commentform">
+            <input id="commentForm" type="text" class="MimotoPublisher-Article-comment" />
+            <div class="MimotoPublisher-Article-commentform-button" onclick="addComment({{ Aimless.meta('id') }})">Draag bij +</div>
+        </div>
+
+    </div>
+
 {% endblock %}

@@ -1,12 +1,5 @@
-{% extends "examples/components/examplebase.twig" %}
-
-{% block content %}
-    <h1>Author</h1>
-    <i>A name and the person's avatar</i><br>
-    <br>
-    <br>
-    <div class="example_article" {{ Aimless.realtime() }}>
-        <i><span {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</span></i><br><br>
-        <img class="example_avatar" src="{{ Aimless.render('avatar') }}" {{ Aimless.realtime('avatar') }}>
-    </div>
-{% endblock %}
+<div class="MimotoPublisher_Comment" {{ Aimless.realtime() }}>
+    <div class="MimotoPublisher_Comment-user">Een willekeurig iemand zei:</div>
+    <div class="MimotoPublisher_Comment-message" {{ Aimless.realtime('message') }}>{{ Aimless.render('message') }}</div>
+    <div class="MimotoPublisher_Comment-options" onclick="removeComment({{ Aimless.meta('id') }})">Rapporteer</div>
+</div>

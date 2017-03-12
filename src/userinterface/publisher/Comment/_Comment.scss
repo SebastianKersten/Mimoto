@@ -1,1 +1,17 @@
+div.MimotoPublisher_Comment
+{
+    width: 100%;
+    background-color: #EfEeEe;
+    padding: 20px;
+}
 
+div.MimotoPublisher_Comment-user {
+    font-style: italic;
+    color: #858585;
+    font-size: 14px;
+}
+
+div.MimotoPublisher_Comment-message {
+    color: #000000;
+    font-size: 18px;
+}
