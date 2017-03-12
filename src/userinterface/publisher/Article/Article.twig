@@ -13,10 +13,6 @@
 
     <div class="MimotoPublisher-Article-title" {{ Aimless.realtime('title') }}>{{ Aimless.render('title') }}</div>
 
-    <div class="MimotoPublisher-Article-authors-container" {{ Aimless.realtime('authors', 'author') }}>
-        {{ Aimless.render('authors', 'author') }}
-    </div>
-
     <img class="MimotoPublisher-Article-headerImage" src="{{ Aimless.render('headerImage') }}" {{ Aimless.realtime('headerImage') }}>
 
     <div class="MimotoPublisher-Article-body" {{ Aimless.realtime('body') }}>{{ Aimless.render('body') }}</div>

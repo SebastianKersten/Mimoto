@@ -248,6 +248,9 @@ class MimotoAimlessController
         // split
         $aParentParts = explode('.', $sPropertySelector);
 
+        // validate
+        if (!MimotoDataUtils::isValidId($aParentParts[1])) return Mimoto::service('messages')->response(null);
+
         // load
         $eParent = Mimoto::service('data')->get($aParentParts[0], $aParentParts[1]);
 

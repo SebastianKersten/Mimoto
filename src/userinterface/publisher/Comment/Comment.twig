@@ -1,5 +1,5 @@
-<div class="MimotoPublisher_Comment" {{ Aimless.realtime() }}>
+<div class="MimotoPublisher_Comment" {{ Aimless.realtime() }} data-aimless-forceonreload="true">
     <div class="MimotoPublisher_Comment-user">Een willekeurig iemand zei:</div>
     <div class="MimotoPublisher_Comment-message" {{ Aimless.realtime('message') }}>{{ Aimless.render('message') }}</div>
-    <div class="MimotoPublisher_Comment-options" onclick="removeComment({{ Aimless.meta('id') }})">Rapporteer</div>
+    <span class="MimotoPublisher_Comment-options"><a onclick="removeComment({{ Aimless.meta('id') }})">Rapporteer</a></span>
 </div>

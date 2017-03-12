@@ -121,8 +121,8 @@ class ContentController
                     "url" => '/mimoto.cms/content/'.$nContentId
                 ),
                 (object) array(
-                    "label" => '- temp label -',
-                    "url" => '/mimoto.cms/content/'.$nContentId
+                    "label" => 'new',
+                    "url" => ''
                 )
             )
         );
