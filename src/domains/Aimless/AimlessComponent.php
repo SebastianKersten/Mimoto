@@ -175,6 +175,11 @@ class AimlessComponent
 
 
 
+    public function getConnectionId()
+    {
+        return (!empty($this->_connection)) ? $this->_connection->getId() : '';
+    }
+
     // ----------------------------------------------------------------------------
     // --- Public methods - Aimless -----------------------------------------------
     // ----------------------------------------------------------------------------
@@ -528,7 +533,6 @@ class AimlessComponent
                 //return 'data-aimless-selection="'.$this->_aSelections[$sPropertyName]->aEntities->getCriteria()['type'].'"'.$sFilter.$sComponent.$sWrapper;
                 return $sConnection.$sSortIndex.$sFilter.$sComponent.$sWrapper; // #todo - fix selections
             }
-                
         }
         
         

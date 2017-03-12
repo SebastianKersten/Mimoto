@@ -144,11 +144,11 @@ class EntityController
         // 1. load
         $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
 
-        // 2. delete
-        Mimoto::service('data')->delete($entity);
-
         // 3. cleanup
         Mimoto::service('config')->entityDelete($entity);
+
+        // 2. delete
+        Mimoto::service('data')->delete($entity);
 
         // 4. send
         return Mimoto::service('messages')->response((object) array('result' => 'Entity deleted! '.date("Y.m.d H:i:s")), 200);

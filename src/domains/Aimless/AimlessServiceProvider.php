@@ -22,8 +22,10 @@ class AimlessServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         // register
-        $app->get('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentId}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView');
+        $app->get('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView');
+        $app->get('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView')->value('sPropertySelector', '');
         $app->get('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView');
+        $app->get('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView')->value('sPropertySelector', '');
         $app->get('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sComponentName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView');
         $app->post('/Mimoto.Aimless/realtime/collaboration', 'Mimoto\\Aimless\\MimotoAimlessController::authenticateUser');
 

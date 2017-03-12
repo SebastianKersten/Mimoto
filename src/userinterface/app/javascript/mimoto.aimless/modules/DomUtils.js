@@ -40,11 +40,15 @@ module.exports.prototype = {
     /**
      * Load component
      */
-    loadComponent: function ($container, sEntityTypeName, nId, sTemplate)
+    loadComponent: function ($container, sEntityTypeName, nId, sComponentName, sPropertySelector)
     {
+        // default
+        var sPropertySelector = (!sPropertySelector) ? '' : '/' + sPropertySelector;
+    
+        // execute
         $.ajax({
             type: 'GET',
-            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sComponentName + sPropertySelector,
             data: null,
             dataType: 'html',
             success: function (data) {
@@ -56,11 +60,15 @@ module.exports.prototype = {
     /**
      * Load wrapper
      */
-    loadWrapper: function ($container, sEntityTypeName, nId, sWrapper, sComponent)
+    loadWrapper: function ($container, sEntityTypeName, nId, sWrapper, sComponentName, sPropertySelector)
     {
+        // default
+        var sPropertySelector = (!sPropertySelector) ? '' : '/' + sPropertySelector;
+        
+        // execute
         $.ajax({
             type: 'GET',
-            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
+            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponentName) ? '/' + sComponent : '') + sPropertySelector,
             data: null,
             dataType: 'html',
             success: function (data) {

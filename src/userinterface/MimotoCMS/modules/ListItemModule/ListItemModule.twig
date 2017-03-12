@@ -13,7 +13,7 @@
             {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, types:[button_type] }) }}
         </div>
 
-        {% if sortable|default(true) %}
+        {% if sortable is empty or sortable %}
             <div class="MimotoCMS_ListItemModule-handle">
                 <div class="MimotoCMS_ListItemModule-handle-dot"></div>
                 <div class="MimotoCMS_ListItemModule-handle-dot"></div>

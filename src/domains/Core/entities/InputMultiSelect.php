@@ -140,6 +140,8 @@ class InputMultiSelect
             'Description', 'Enter a description', 'If needed, add additional explaination regarding the input field'
         );
 
+        CoreFormUtils::addField_optionsForListConfig($form);
+
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input

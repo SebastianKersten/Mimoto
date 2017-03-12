@@ -31273,28 +31273,63 @@
 	        // }
 	    },
 	    
-	    formFieldListItemEdit: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)
+	    formFieldListItemEdit: function(nConnectionId, sInstanceType, sInstanceId)
 	    {
-	        // reload
-	        window.open("/mimoto.cms/formfield/" + sInputFieldType + "/" + sInputFieldId + "/edit/" + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId, '_self');
+	        // search
+	        var listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
+	        
+	        // execute
+	        window.open("/mimoto.cms/formfield/" + listInfo.sInputFieldType + "/" + listInfo.sInputFieldId + "/edit/" + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId, '_self');
 	    },
 	    
 	    
-	    formFieldListItemDelete: function(sInputFieldType, sInputFieldId, sPropertySelector, sInstanceType, sInstanceId)
+	    formFieldListItemDelete: function(nConnectionId, sInstanceType, sInstanceId)
 	    {
-	        // 1. sInputFieldType
-	        // 2. sInputFieldId
+	        // search
+	        var listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
 	        
-	        
+	        // execute
 	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
-	            url: '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId +  '/remove/' + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
+	            url: '/mimoto.cms/formfield/' + listInfo.sInputFieldType + '/' + listInfo.sInputFieldId +  '/remove/' + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
 	            data: null,
 	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
 	                console.log(resultData);
 	            }
 	        });
+	    },
+	    
+	    findListByListItem: function(nConnectionId, sInstanceType, sInstanceId)
+	    {
+	        // init
+	        var listInfo = [];
+	        
+	        // search
+	        var $listItem = $('[data-aimless-id="' + sInstanceType + '.' + sInstanceId + '"][data-aimless-connection="' + nConnectionId + '"]');
+	        
+	        
+	        // validate
+	        if (!$listItem) { console.log('ListItem not found'); return; }
+	    
+	    
+	        // search
+	        var $parent = $($listItem).parent();
+	    
+	        // register
+	        var sInputFieldSelector = $($parent).attr('data-aimless-contains');
+	    
+	        // split
+	        var aInputFieldSelectorElements = sInputFieldSelector.split('.');
+	        
+	        
+	        // compose
+	        listInfo.sInputFieldType = aInputFieldSelectorElements[0];
+	        listInfo.sInputFieldId = aInputFieldSelectorElements[1];
+	        listInfo.sPropertySelector = sInputFieldSelector;
+	        
+	        // send
+	        return listInfo;
 	    }
 	    
 	}

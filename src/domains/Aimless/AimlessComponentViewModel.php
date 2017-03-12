@@ -142,4 +142,9 @@ class AimlessComponentViewModel
         return $this->_component->getValueBySortindex($nIndex, true, true);
     }
 
+    public function getConnectionId()
+    {
+        return $this->_component->getConnectionId();
+    }
+
 }

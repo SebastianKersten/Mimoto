@@ -36,25 +36,31 @@ class MimotoAimlessController
      * @param string $sComponentId
      * @return html Rendered twig template
      */
-    public function renderEntityView(Application $app, $sEntityType, $nEntityId, $sComponentId)
+    public function renderEntityView(Application $app, $sEntityType, $nEntityId, $sComponentName, $sPropertySelector = null)
     {
         // load
-        $entity = $app['Mimoto.Data']->get($sEntityType, $nEntityId);
-        
+        $entity = Mimoto::service('data')->get($sEntityType, $nEntityId);
+
+        // search
+        $connection = $this->_getConnection($sEntityType, $nEntityId, $sPropertySelector);
+
         // create
-        $component = $app['Mimoto.Aimless']->createComponent($sComponentId, $entity);
-        
+        $component = Mimoto::service('aimless')->createComponent($sComponentName, $entity, $connection);
+
         // render and send
         return $component->render();
     }
 
-    public function renderWrapperView(Application $app, $sEntityType, $nEntityId, $sWrapperName, $sComponentName = null)
+    public function renderWrapperView(Application $app, $sEntityType, $nEntityId, $sWrapperName, $sComponentName, $sPropertySelector = null)
     {
         // load
-        $entity = $app['Mimoto.Data']->get($sEntityType, $nEntityId);
+        $entity = Mimoto::service('data')->get($sEntityType, $nEntityId);
+
+        // search
+        $connection = $this->_getConnection($sEntityType, $nEntityId, $sPropertySelector);
 
         // create
-        $component = $app['Mimoto.Aimless']->createWrapper($sWrapperName, $sComponentName, $entity);
+        $component = Mimoto::service('aimless')->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
 
         // render and send
         return $component->render();
@@ -265,6 +271,57 @@ class MimotoAimlessController
             return Mimoto::service('messages')->response(null);
         }
 
+    }
+
+
+    private function _getConnection($sEntityType, $nEntityId, $sPropertySelector)
+    {
+        // init
+        $connection = null;
+
+        // verify
+        if (!empty($sPropertySelector))
+        {
+            // split
+            $aPropertySelectorElements = explode('.', $sPropertySelector);
+
+            // register
+            $sParentEntityTypeName = $aPropertySelectorElements[0];
+            $xParentEntityId = $aPropertySelectorElements[1];
+            $sParentPropertyName = $aPropertySelectorElements[2];
+
+            // load
+            $eParent = Mimoto::service('data')->get($sParentEntityTypeName, $xParentEntityId);
+
+            // validate
+            if (!empty($eParent) && $eParent->hasProperty($sParentPropertyName))
+            {
+                if ($eParent->getPropertyType($sParentPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+                {
+                    // read
+                    $aConnections = $eParent->getValue($sParentPropertyName, true);
+
+                    // search
+                    $nConnectionCount = count($aConnections);
+                    for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
+                    {
+                        // register
+                        $parentConnection = $aConnections[$nConnectionIndex];
+
+                        // verify
+                        if ($parentConnection->getChildEntityTypeName() == $sEntityType && $parentConnection->getChildId() == $nEntityId)
+                        {
+                            // register
+                            $connection = $parentConnection;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // send
+        return $connection;
     }
 
 }

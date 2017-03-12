@@ -283,17 +283,17 @@ class FormController
         $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail', $eForm);
 
         // 5. setup page
-        $page->setVar('pageTitle', array(
-                (object)array(
-                    "label" => 'Forms',
-                    "url" => '/mimoto.cms/forms'
-                ),
-                (object)array(
-                    "label" => '<span data-aimless-value="' . CoreConfig::MIMOTO_FORM . '.' . $eForm->getId() . '.name">' . $eForm->getValue('name') . '</span>',
-                    "url" => '/mimoto.cms/form/' . $eForm->getId() . '/view'
-                )
-            )
-        );
+//        $page->setVar('pageTitle', array(
+//                (object)array(
+//                    "label" => 'Forms',
+//                    "url" => '/mimoto.cms/forms'
+//                ),
+//                (object)array(
+//                    "label" => '<span data-aimless-value="' . CoreConfig::MIMOTO_FORM . '.' . $eForm->getId() . '.name">' . $eForm->getValue('name') . '</span>',
+//                    "url" => '/mimoto.cms/form/' . $eForm->getId() . '/view'
+//                )
+//            )
+//        );
 
         // 6. connect
         $page->addComponent('content', $component);
@@ -628,65 +628,73 @@ class FormController
         $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
-        $eInstance = Mimoto::service('data')->get($sInstanceType, $sInstanceId);
+        $eOption = Mimoto::service('data')->get($sInstanceType, $sInstanceId);
 
-        // 3. load form field
-        $formField = Mimoto::service('forms')->getFormFieldByFieldId($sInputFieldType, $sInputFieldId);
+        // 3. validate
+        if (empty($eOption)) return $app->redirect("/mimoto.cms");
 
-        // 4. validate
-        if (empty($formField)) return $app->redirect("/mimoto.cms/forms");
+        // 4. load form field
+        $eFormField = Mimoto::service('forms')->getFormFieldByFieldId($sInputFieldType, $sInputFieldId);
+
+        // 5. validate
+        if (empty($eFormField)) return $app->redirect("/mimoto.cms");
 
         // 5. read options
-        $aOptions = $formField->getValue('options');
+        $aFieldOptions = $eFormField->getValue('options');
 
 
 
-        // 1. find best option
-
+        $form = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
 
         // init
-        $form = null;
+//        $form = null;
+//
+//
+//        switch($eOption->getValue('type'))
+//        {
+//            case InputOption::VALUE:
+//
+//                // read
+//                $form = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
+//                break;
+//
+//            case InputOption::FORM:
+//
+//                // read
+//                $form = $eOption->getValue('form');
+//
+////
+////                // 6. find best options
+////                $nOptionCount = count($aFieldOptions);
+////                for ($nOptionIndex = 0; $nOptionIndex < $nOptionCount; $nOptionIndex++)
+////                {
+////                    // register
+////                    $eOption = $aFieldOptions[$nOptionIndex];
+////
+////                    //Mimoto::error($eOption);
+////
+////
+////
+////                    if ($form->getValue('name') == $sInstanceType)
+////                {
+////                    break;
+////                }
+//
+//                break;
+//
+//            case InputOption::SELECTION:
+//
+//                // 1. ??
+//
+//                break;
+//
+//            default:
+//
+//                echo 'Something went wrong here';
+//        }
 
 
 
-        // 6. find best options
-        $nOptionCount = count($aOptions);
-        for ($nOptionIndex = 0; $nOptionIndex < $nOptionCount; $nOptionIndex++)
-        {
-            // register
-            $option = $aOptions[$nOptionIndex];
-
-            switch($option->getValue('type'))
-            {
-                case InputOption::VALUE:
-
-                    // read
-                    $form = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
-                    break;
-
-                case InputOption::FORM:
-
-                    // read
-                    $form = $option->getValue('form');
-
-                    if ($form->getValue('name') == $sInstanceType)
-                    {
-                        break 2;
-                    }
-
-                    break;
-
-                case InputOption::SELECTION:
-
-                    // 1. ??
-
-                    break;
-
-                default:
-
-                    return 'Something went wrong here';
-            }
-        }
 
 
         if (empty($form)) return 'Please select your edit strategy ... [finish this code!]';
@@ -698,7 +706,7 @@ class FormController
         // 4. setup content
         $component->addForm(
             $form->getValue('name'),
-            $eInstance,
+            $eOption,
             [
                 // This is just wrong! Use [returnPage] instead ---- 'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/formfield/'.$sInputFieldType.'/'.$sInputFieldId.'/edit']]
             ]

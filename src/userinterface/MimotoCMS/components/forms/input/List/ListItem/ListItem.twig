@@ -5,12 +5,14 @@
     {% endif %}
 
     <div class="MimotoCMS_forms_input_ListItem-text">
-        <p class="MimotoCMS_forms_input_ListItem-title">{{ Aimless.getValueBySortindex() }}</p>
-        <p class="MimotoCMS_forms_input_ListItem-subtitle">{{ Aimless.meta('type') }}: {{ Aimless.getValueBySortindex(1) }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-title" {{ Aimless.getRealtimeBySortindex() }}>{{ Aimless.getValueBySortindex() }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-subtitle" {{ Aimless.getRealtimeBySortindex(1) }}>{{ Aimless.getValueBySortindex(1) }}</p>
     </div>
 
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldListItemEdit('"~sInputFieldType~"', '"~sInputFieldId~"', '"~sPropertySelector~"', '"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"')", types: ['secondary', 'small'] }) }}
-    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', onclick: "Mimoto.CMS.formFieldListItemDelete('"~sInputFieldType~"', '"~sInputFieldId~"', '"~sPropertySelector~"', '"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"')", types: ['alert', 'small'] }) }}
+    <div class="MimotoCMS_forms_input_ListItem-menu">
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', onclick: "Mimoto.CMS.formFieldListItemDelete('"~Aimless.getConnectionId()~"', '"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"')", types: ['alert', 'small'] }) }}
+        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldListItemEdit('"~Aimless.getConnectionId()~"', '"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"')", types: ['secondary', 'small'] }) }}
+    </div>
 
 
     {% if sortable|default(true) %}

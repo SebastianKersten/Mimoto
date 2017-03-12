@@ -66,3 +66,11 @@
         background-color: $tower-gray;
     }
 
+div.MimotoCMS_forms_input_ListItem-menu {
+    & > div {
+        margin-right: 3px;
+    }
+    & > div:last-child {
+        margin-right: 0;
+    }
+}

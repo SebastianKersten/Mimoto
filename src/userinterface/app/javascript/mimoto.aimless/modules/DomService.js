@@ -92,22 +92,25 @@ module.exports.prototype = {
         // search
         var aComponents = $("[data-aimless-contains='" + mls_container + "']");
     
-        aComponents.each( function(index, $component)
+        aComponents.each( function(index, $container)
         {
             // read
-            var mls_component = classRoot._getComponentName($($component).attr("data-aimless-component"));
-            var mls_sortorder = $($component).attr("data-aimless-sortorder"); // #todo
-            var mls_wrapper = $($component).attr("data-aimless-wrapper");
+            var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
+            var mls_sortorder = $($container).attr("data-aimless-sortorder"); // #todo
+            var mls_wrapper = $($container).attr("data-aimless-wrapper");
+            var mls_contains = $($container).attr("data-aimless-contains");
+            
+            console.warn('mls_contains = ' + mls_contains);
             
             if (mls_wrapper)
             {
-                Mimoto.Aimless.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
+                Mimoto.Aimless.utils.loadWrapper($container, data.entityType, data.entityId, mls_wrapper, mls_component.name, mls_contains);
             }
             else
             {
                 if (mls_component.name)
                 {
-                    Mimoto.Aimless.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
+                    Mimoto.Aimless.utils.loadComponent($container, data.entityType, data.entityId, mls_component.name, mls_contains);
                 }
             }
         });
@@ -605,13 +608,13 @@ module.exports.prototype = {
     
                             if (mls_wrapper)
                             {
-                                Mimoto.Aimless.utils.loadWrapper($container, item.connection.childEntityTypeName, item.connection.childId, mls_wrapper, mls_component.name);
+                                Mimoto.Aimless.utils.loadWrapper($container, item.connection.childEntityTypeName, item.connection.childId, mls_wrapper, mls_component.name, mls_contains);
                             }
                             else
                             {
                                 if (mls_component !== undefined)
                                 {
-                                    Mimoto.Aimless.utils.loadComponent($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
+                                    Mimoto.Aimless.utils.loadComponent($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name, mls_contains);
                                 }
                             }
                         }

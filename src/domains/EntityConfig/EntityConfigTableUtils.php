@@ -128,7 +128,8 @@ class EntityConfigTableUtils
         // 2. add column to table
         $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` DROP COLUMN `".$sPropertyName."`");
         $params = array();
-        if ($stmt->execute($params) === false) Mimoto::error("Error while removing column '$sPropertyName' to entity table '$sEntityName'");
+        $stmt->execute($params);
+        //if ($stmt->execute($params) === false) Mimoto::error("Error while removing column '$sPropertyName' from entity table '$sEntityName'");
     }
 
     private static function getColumnDataType($sColumnType)
