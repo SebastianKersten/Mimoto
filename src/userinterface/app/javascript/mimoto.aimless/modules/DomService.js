@@ -653,19 +653,20 @@ module.exports.prototype = {
                         var $currentItem = $('[data-aimless-connection="' + connection.id + '"]', $container);
                         $currentItem.attr('data-aimless-sortindex', connection.sortindex);
                         
+                        // verify
                         if (nConnectionIndex == 0)
                         {
                             // move
-                            $($container).prepend($currentItem);
+                            $($container).prepend($currentItem[0]);
                         }
                         else
                         {
                             // move
-                            $($currentItem).insertAfter($previousItem); // once()
+                            $($currentItem[0]).insertAfter($previousItem);
                         }
-                        
+
                         // update
-                        $previousItem = $currentItem
+                        $previousItem = $currentItem[0]
                     }
                 }
             
