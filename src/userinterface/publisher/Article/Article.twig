@@ -17,6 +17,16 @@
 
     <div class="MimotoPublisher-Article-body" {{ Aimless.realtime('body') }}>{{ Aimless.render('body') }}</div>
 
+    <div class="MimotoPublisher-Article-comments" {{ Aimless.hideOnEmpty('comments') }}>
+
+        <h1>Uitgelichte bijdragen</h1>
+
+        <div {{ Aimless.hideOnEmpty('comments') }} class="MimotoPublisher-Article-comments-container" {{ Aimless.realtime('comments', 'comment') }}>
+            {{ Aimless.render('comments', 'comment') }}
+        </div>
+
+    </div>
+
     <div class="MimotoPublisher-Article-comments">
 
         <h1>Bijdragen</h1>

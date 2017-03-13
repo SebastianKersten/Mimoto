@@ -28,3 +28,29 @@ function removeComment(nCommentId)
         }
     });
 }
+
+function highlightComment(nCommentId)
+{
+    // call
+    Mimoto.Aimless.utils.callAPI({
+        type: 'post',
+        url: "/publisher/comment/" + nCommentId + "/highlight",
+        data: null,
+        dataType: 'json',
+        success: function(resultData, resultStatus, resultSomething) {
+        }
+    });
+}
+
+function unhighlightComment(nCommentId)
+{
+    // call
+    Mimoto.Aimless.utils.callAPI({
+        type: 'post',
+        url: "/publisher/comment/" + nCommentId + "/unhighlight",
+        data: null,
+        dataType: 'json',
+        success: function(resultData, resultStatus, resultSomething) {
+        }
+    });
+}

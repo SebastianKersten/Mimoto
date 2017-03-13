@@ -506,11 +506,10 @@ module.exports.prototype = {
         var $parent = $($listItem).parent();
     
         // register
-        var sInputFieldSelector = $($parent).attr('data-aimless-contains');
-    
+        var sInputFieldSelector = $($parent).attr('data-aimless-list-id');
+        
         // split
         var aInputFieldSelectorElements = sInputFieldSelector.split('.');
-        
         
         // compose
         listInfo.sInputFieldType = aInputFieldSelectorElements[0];

@@ -52,6 +52,8 @@
     $app->get ('/publisher/article/{nArticleId}', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewArticle');
     $app->post('/publisher/article/{nArticleId}/comment/add', 'Mimoto\\UserInterface\\publisher\\PublisherController::addComment');
     $app->post('/publisher/comment/{nCommentId}/remove', 'Mimoto\\UserInterface\\publisher\\PublisherController::removeComment');
+    $app->post('/publisher/comment/{nCommentId}/highlight', 'Mimoto\\UserInterface\\publisher\\PublisherController::highlightComment');
+    $app->post('/publisher/comment/{nCommentId}/unhiglight', 'Mimoto\\UserInterface\\publisher\\PublisherController::unhighlightComment');
 
 
 
