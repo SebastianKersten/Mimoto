@@ -667,6 +667,11 @@ class FormController
 
                     switch($eFieldOption->getValue('type'))
                     {
+                        case InputOption::VALUE:
+
+                            $form = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
+                            break;
+
                         case InputOption::FORM:
 
                             // read
@@ -685,7 +690,6 @@ class FormController
                             break;
 
                         case InputOption::SELECTION:
-                        case InputOption::VALUE:
                         default:
 
                             Mimoto::error("Congratulation! You found a part that hasn't been implemented yet. Your request needs additional code!");

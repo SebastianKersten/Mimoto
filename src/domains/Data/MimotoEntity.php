@@ -490,7 +490,7 @@ class MimotoEntity
         }
 
         // verify
-        if (count($aMatchingProperties) === 0) Mimoto::service('log')->error("No such property", "The property <b>$sPropertySelector</b> you are looking for doesn't seem to be here", true);
+        if (count($aMatchingProperties) === 0) Mimoto::service('log')->error("No such property", "The property `<b>$sPropertySelector</b>` you are looking for doesn't seem to be here", true);
 
         // send
         return $aMatchingProperties[0];

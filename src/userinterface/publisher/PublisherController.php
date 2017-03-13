@@ -28,7 +28,7 @@ class PublisherController
         $eContentSection = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_CONTENTSECTION, 'value' => ['name' => 'Articles']]);
 
         // 2. create template
-        $page = Mimoto::service('aimless')->createPage('feed', $eContentSection[0]);
+        $page = Mimoto::service('aimless')->createPage('feed', (!empty($eContentSection)) ? $eContentSection[0] : '');
 
         // 3. output
         return $page->render();
