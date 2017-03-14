@@ -406,6 +406,12 @@ class Component
                 'file' => 'MimotoCMS/components/forms/input/Video/Video.twig',
                 'conditionals' => []
             ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER,
+                'file' => 'MimotoCMS/components/forms/input/ColorPicker/ColorPicker.twig',
+                'conditionals' => []
+            ),
+
 
 
             // notification center

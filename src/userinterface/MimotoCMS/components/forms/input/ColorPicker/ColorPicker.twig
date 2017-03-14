@@ -1,0 +1,11 @@
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "colorpicker" } %}
+    {% block form_component_element %}
+
+        <div>color rectangle</div>
+        <div>button die popup opent</div>
+
+        input wordt "hidden"
+        <input {{ Aimless.input() }} type="type" class="MimotoCMS_forms_input_ColorPicker" value="{{ Aimless.value() }}"/>
+
+    {% endblock %}
+{% endembed %}

@@ -127,7 +127,7 @@ class FormController
         // setup
         $eField->setValue('title', $sEntityName);
         $eField->setValue('subtitle', 'Auto-generated form');
-        $eField->setValue('description', "This form has been created by Mimoto's auto auto-generation feature based on the entity's properties on ".date('d F Y H:i:s').". Adjust, add, remove or change the fields as you feel fit!");
+        $eField->setValue('description', "This form has been created by Mimoto's auto-generation feature based on the entity's properties on ".date('d F Y H:i:s').". Adjust, add, remove or change the fields as you feel fit!");
 
         // store
         Mimoto::service('data')->store($eField);

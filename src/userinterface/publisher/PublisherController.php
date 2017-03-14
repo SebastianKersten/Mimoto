@@ -82,34 +82,4 @@ class PublisherController
         return Mimoto::service('messages')->response('Comment removed');
     }
 
-    public function highlightComment(Application $app, $nCommentId)
-    {
-        // 1. load comment
-        $eComment = Mimoto::service('data')->get('comment', $nCommentId);
-
-        // 2. toggle
-        $eComment = $eComment->setValue('state', 'highlighted');
-
-        // 2. store
-        Mimoto::service('data')->store($eComment);
-
-        // 3. send
-        return Mimoto::service('messages')->response('Comment highlighted');
-    }
-
-    public function unhighlightComment(Application $app, $nCommentId)
-    {
-        // 1. load comment
-        $eComment = Mimoto::service('data')->get('comment', $nCommentId);
-
-        // 2. toggle
-        $eComment = $eComment->setValue('state', '');
-
-        // 2. store
-        Mimoto::service('data')->store($eComment);
-
-        // 3. send
-        return Mimoto::service('messages')->response('Comment unhighlighted');
-    }
-
 }

@@ -2,8 +2,8 @@
 
 {% block content %}
 
-    <div class="MimotoPublisher_Feed-container" {{ Aimless.realtime('contentItems.{type=explainer}', 'feeditem') }}>
-        {{ Aimless.render('contentItems.{type=explainer}', 'feeditem') }}
+    <div class="MimotoPublisher_Feed-container" {{ Aimless.realtime('contentItems', 'feeditem') }}>
+        {{ Aimless.render('contentItems', 'feeditem') }}
     </div>
 
 {% endblock %}

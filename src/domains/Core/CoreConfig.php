@@ -32,6 +32,7 @@ use Mimoto\Core\entities\InputTextRTF;
 use Mimoto\Core\entities\InputList;
 use Mimoto\Core\entities\InputImage;
 use Mimoto\Core\entities\InputVideo;
+use Mimoto\Core\entities\InputColorPicker;
 use Mimoto\Core\entities\Notification;
 
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
@@ -105,6 +106,7 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_LIST                = '_Mimoto_form_input_list';
     const MIMOTO_FORM_INPUT_IMAGE               = '_Mimoto_form_input_image';
     const MIMOTO_FORM_INPUT_VIDEO               = '_Mimoto_form_input_video';
+    const MIMOTO_FORM_INPUT_COLORPICKER         = '_Mimoto_form_input_colorpicker';
 
     // output
     const MIMOTO_FORM_OUTPUT_TITLE              = '_Mimoto_form_output_title';
@@ -172,6 +174,7 @@ class CoreConfig
 
     const COREFORM_INPUT_IMAGE          = '_Mimoto_coreform_input_image';
     const COREFORM_INPUT_VIDEO          = '_Mimoto_coreform_input_video';
+    const COREFORM_INPUT_COLORPICKER    = '_Mimoto_coreform_input_colorpicker';
 
     // output
     const COREFORM_OUTPUT_TITLE         = '_Mimoto_coreform_output_title';
@@ -244,6 +247,7 @@ class CoreConfig
             InputDropdown::getStructure(),
             InputImage::getStructure(),
             InputVideo::getStructure(),
+            InputColorPicker::getStructure(),
 
             // devtools
             Notification::getStructure()
@@ -300,7 +304,8 @@ class CoreConfig
             InputTextBlock::getFormStructure(),
             InputTextline::getFormStructure(),
             InputTextRTF::getFormStructure(),
-            InputVideo::getFormStructure()
+            InputVideo::getFormStructure(),
+            InputColorPicker::getFormStructure()
         ];
 
         // send
