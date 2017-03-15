@@ -148,28 +148,30 @@ class AimlessComponentViewModel
 
     public function hideWhenEmpty($sPropertySelector)
     {
-        return $this->_component->hidewhenEmpty($sPropertySelector);
+        return $this->_component->hideWhenEmpty($sPropertySelector);
     }
 
-//    public function showWhenNoEmpty($sPropertySelector)
+//    public function showWhenNotEmpty($sPropertySelector)
 //    {
-//        return $this->_component->showWhenEmpty($sPropertySelector);
+//        return $this->_component->showWhenNotEmpty($sPropertySelector);
 //    }
-
-//    public function hideWhenNoEmpty($sPropertySelector)
+//
+//    public function hideWhenNotEmpty($sPropertySelector)
 //    {
 //        return $this->_component->hidewhenNotEmpty($sPropertySelector);
 //    }
+//
+//
+//    public function showWhenEquals($sPropertySelector, $value)
+//    {
+//        return $this->_component->showWhenEquals($sPropertySelector);
+//    }
+//
+//    public function hideWhenEquals($sPropertySelector, $value)
+//    {
+//        return $this->_component->hideWhenEquals($sPropertySelector);
+//    }
 
-//
-//
-//
-//
-//
-//
-//
-//Mimoto.showWhenEmpty(‘’)
-//Mimoto.hideWhenEmpty(‘’)
 //
 //Mimoto.showWhenEquals(‘type’, ‘regular’)
 //Mimoto.hideWhenEquals(‘type’, ‘regular’)
