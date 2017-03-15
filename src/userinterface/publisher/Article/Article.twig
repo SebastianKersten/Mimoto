@@ -15,25 +15,25 @@
     <img class="MimotoPublisher-Article-headerImage" src="{{ Aimless.render('headerImage') }}" {{ Aimless.realtime('headerImage') }}>
 
     <div class="MimotoPublisher-Article-body" {{ Aimless.realtime('body') }}>{{ Aimless.render('body') }}</div>
-    
-    {#<div class="MimotoPublisher-Article-comments">#}
 
-        {#<h1>Bijdragen</h1>#}
+    <div class="MimotoPublisher-Article-comments">
 
-        {#<div {{ Aimless.showOnEmpty('comments') }} class="MimotoPublisher-Article-comments-container-empty">#}
-            {#Er zijn nog geen bijdragen. Vertel als eerste jouw kijk op dit stuk ..#}
-        {#</div>#}
+        <h1>Bijdragen</h1>
 
-        {#<div {{ Aimless.hideOnEmpty('comments') }} class="MimotoPublisher-Article-comments-container" {{ Aimless.realtime('comments', 'comment') }}>#}
-            {#{{ Aimless.render('comments', 'comment') }}#}
-        {#</div>#}
+        <div {{ Aimless.showWhenEmpty('comments') }} class="MimotoPublisher-Article-comments-container-empty">
+            Er zijn nog geen bijdragen. Vertel als eerste jouw kijk op dit stuk ..
+        </div>
 
-        {#<div class="MimotoPublisher-Article-commentform">#}
-            {#<input id="commentForm" type="text" class="MimotoPublisher-Article-comment" />#}
-            {#<div class="MimotoPublisher-Article-commentform-button" onclick="addComment({{ Aimless.meta('id') }})">Draag bij +</div>#}
-        {#</div>#}
+        <div {{ Aimless.hideWhenEmpty('comments') }} class="MimotoPublisher-Article-comments-container" {{ Aimless.realtime('comments', 'comment') }}>
+            {{ Aimless.render('comments', 'comment') }}
+        </div>
 
-    {#</div>#}
+        <div class="MimotoPublisher-Article-commentform">
+            <input id="commentForm" type="text" class="MimotoPublisher-Article-comment" />
+            <div class="MimotoPublisher-Article-commentform-button" onclick="addComment({{ Aimless.meta('id') }})">Draag bij +</div>
+        </div>
+
+    </div>
 
 {% endblock %}
 

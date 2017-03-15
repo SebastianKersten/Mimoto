@@ -267,7 +267,7 @@ class AimlessComponent
         }
 
         // report missing property
-        Mimoto::service('log')->silent("Property or selection no found", "The property or selection with name <b>$sMainPropertyName</b> doens't seem to be available.");
+        Mimoto::service('log')->silent("Property or selection not found", "The property or selection with name <b>$sMainPropertyName</b> doens't seem to be available.");
         return '';
     }
 
@@ -903,7 +903,7 @@ class AimlessComponent
 
 
 
-    public function hideOnEmpty($sPropertySelector)
+    public function hideWhenEmpty($sPropertySelector)
     {
 
         if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
@@ -925,8 +925,20 @@ class AimlessComponent
         return '';
     }
 
-    public function showOnEmpty($sPropertySelector)
+    public function showWhenEmpty($sPropertySelector)
     {
+
+//            // cleanup
+//            $nSeparatorPos = strpos($sPropertySelector, '.');
+//
+//
+//        $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
+//        $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);
+//
+//            // compose
+//            $sFilter = (!empty($selector->conditionals)) ? " data-aimless-filter='".json_encode($selector->conditionals)."'" : '';
+
+
 
         if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
         {

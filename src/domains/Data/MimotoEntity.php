@@ -490,7 +490,14 @@ class MimotoEntity
         }
 
         // verify
-        if (count($aMatchingProperties) === 0) Mimoto::service('log')->error("No such property", "The property `<b>$sPropertySelector</b>` you are looking for doesn't seem to be here", true);
+        if (count($aMatchingProperties) === 0)
+        {
+            // compose
+            $sFullPropertySelector = $this->getEntityTypeName().'.'.(!empty($this->getId()) ? $this->getId() : '[no id]').'.'.$sPropertySelector;
+
+            // broadcast
+            Mimoto::service('log')->error("No such property", "The property `<b>$sFullPropertySelector</b>` you are looking for doesn't seem to be here", true);
+        }
 
         // send
         return $aMatchingProperties[0];

@@ -97,16 +97,6 @@ class AimlessComponentViewModel
         return MimotoAimlessUtils::getModule($sModuleName, $values);
     }
 
-    public function hideOnEmpty($sPropertySelector)
-    {
-        return $this->_component->hideOnEmpty($sPropertySelector);
-    }
-
-    public function showOnEmpty($sPropertySelector)
-    {
-        return $this->_component->showOnEmpty($sPropertySelector);
-    }
-
     public function reloadOnChange()
     {
         return $this->_component->reloadOnChange();
@@ -146,5 +136,66 @@ class AimlessComponentViewModel
     {
         return $this->_component->getConnectionId();
     }
+
+
+    // visibity and styling options
+
+
+    public function showWhenEmpty($sPropertySelector)
+    {
+        return $this->_component->showWhenEmpty($sPropertySelector);
+    }
+
+    public function hideWhenEmpty($sPropertySelector)
+    {
+        return $this->_component->hidewhenEmpty($sPropertySelector);
+    }
+
+//    public function showWhenNoEmpty($sPropertySelector)
+//    {
+//        return $this->_component->showWhenEmpty($sPropertySelector);
+//    }
+
+//    public function hideWhenNoEmpty($sPropertySelector)
+//    {
+//        return $this->_component->hidewhenNotEmpty($sPropertySelector);
+//    }
+
+//
+//
+//
+//
+//
+//
+//
+//Mimoto.showWhenEmpty(‘’)
+//Mimoto.hideWhenEmpty(‘’)
+//
+//Mimoto.showWhenEquals(‘type’, ‘regular’)
+//Mimoto.hideWhenEquals(‘type’, ‘regular’)
+//
+//Mimoto.styleWhenEquals(‘type’, ‘regular’, ‘background-color:#ff9900’)
+//Mimoto.classWhenEquals(‘type’, ‘regular’, ‘your-bam-class’)
+//
+//> Mimoto.styleWhenEquals(‘subprojects.{type=x}’, 2, ‘background-color:#ff9900’)
+//
+//> Mimoto.styleWhenGreater
+//
+//
+//
+//
+//#subprojects = collection
+//	#subproject type = x
+//	#subproject type = y
+//	#subproject type = x
+//
+//
+//
+//Mimoto.styleWhenEquals(‘parent, ‘regular’, ‘background-color:#ff9900’)
+//
+//
+//Mimoto.loadWhenEquals(‘type’, ‘explainer’, ‘/your/api/with/html/output’)
+
+
 
 }
