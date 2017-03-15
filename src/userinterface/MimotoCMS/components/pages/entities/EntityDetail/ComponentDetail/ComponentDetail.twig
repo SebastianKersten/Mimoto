@@ -35,7 +35,7 @@
 
             <div class="MimotoCMS_pages_components_ComponentDetail__block">
 
-                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_empty" {{ Aimless.showOnEmpty('conditionals') }}>
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_empty" {{ Aimless.showWhenEmpty('conditionals') }}>
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_explanation">
                         This component has no conditionals, but since this is optional I'm not
                         going to bother you too much about it. Remember however that this opens
@@ -46,7 +46,7 @@
                     <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
                 </div>
 
-                <div {{ Aimless.hideOnEmpty('conditionals') }}>
+                <div {{ Aimless.hideWhenEmpty('conditionals') }}>
                     <ul class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container js-list js-list-sortable" {{ Aimless.realtime('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}>
                         {{ Aimless.render('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}
                     </ul>

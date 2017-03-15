@@ -34,12 +34,12 @@
 
             <div class="MimotoCMS_pages_selections_SelectionDetail__block">
 
-                <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_empty" {{ Aimless.showOnEmpty('rules') }}>
+                <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_empty" {{ Aimless.showWhenEmpty('rules') }}>
                     <div>This selection has no rules yet.<br>Don't hesitate one minute more, start adding one!</div>
                     <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new rule', icon:'plus', onclick:"Mimoto.CMS.selectionRuleNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
                 </div>
 
-                <div {{ Aimless.hideOnEmpty('rules') }}>
+                <div {{ Aimless.hideWhenEmpty('rules') }}>
                     <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_container" {{ Aimless.realtime('rules', 'Mimoto.CMS_selections_SelectionDetail-Rule') }}>
                         {{ Aimless.render('rules', 'Mimoto.CMS_selections_SelectionDetail-Rule') }}
                     </div>

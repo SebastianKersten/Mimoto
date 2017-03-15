@@ -31,12 +31,12 @@
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Aimless.showOnEmpty('fields') }}>
+                <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Aimless.showWhenEmpty('fields') }}>
                     <div>This forms has no fields yet.<br>Go ahead, start adding them!</div>
                     <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Aimless.meta('id') ~ "');" }) }}</div>
                 </div>
 
-                <div {{ Aimless.hideOnEmpty('fields') }}>
+                <div {{ Aimless.hideWhenEmpty('fields') }}>
                     <ul class="MimotoCMS_pages_forms_FormDetail_Structure__fields_container js-list js-list-sortable" {{ Aimless.realtimeWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}>
                         {{ Aimless.renderWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}
                     </ul>

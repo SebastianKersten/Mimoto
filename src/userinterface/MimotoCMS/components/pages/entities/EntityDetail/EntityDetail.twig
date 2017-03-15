@@ -72,12 +72,12 @@
 
                 <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showOnEmpty('properties') }}>
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showWhenEmpty('properties') }}>
                         <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
                         <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
                     </div>
 
-                    <div {{ Aimless.hideOnEmpty('properties') }}>
+                    <div {{ Aimless.hideWhenEmpty('properties') }}>
                         <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Aimless.realtime('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}>
                             {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
                         </ul>
@@ -141,7 +141,7 @@
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showOnEmpty('forms') }}>
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showWhenEmpty('forms') }}>
                     <div>This entity has no form yet.<br>Go ahead, start adding one!</div>
                     <div>
                         {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Auto-generate form', icon:'plus', onclick:"Mimoto.CMS.entityFormAutogenerate('" ~ Aimless.meta('id') ~ "');" }) }}
@@ -149,7 +149,7 @@
                     </div>
                 </div>
 
-                <div {{ Aimless.hideOnEmpty('forms') }}>
+                <div {{ Aimless.hideWhenEmpty('forms') }}>
                     <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Aimless.realtime('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}>
                         {{ Aimless.render('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}
                     </ul>
@@ -187,12 +187,12 @@
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showOnEmpty('components') }}>
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showWhenEmpty('components') }}>
                     <div>This entity has no component yet.<br>Go ahead, start adding one!</div>
                     <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.entityComponentNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
                 </div>
 
-                <div {{ Aimless.hideOnEmpty('components') }}>
+                <div {{ Aimless.hideWhenEmpty('components') }}>
                     <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Aimless.realtime('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}>
                         {{ Aimless.render('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}
                     </ul>

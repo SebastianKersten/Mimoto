@@ -14,20 +14,20 @@
 
     {% if Aimless.data('key') == 'allowedEntityType' %}
         {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}
-            <div {{ Aimless.showOnEmpty('allowedEntityType') }}>
+            <div {{ Aimless.showWhenEmpty('allowedEntityType') }}>
                 <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
             </div>
-            <div {{ Aimless.hideOnEmpty('allowedEntityType') }}>
+            <div {{ Aimless.hideWhenEmpty('allowedEntityType') }}>
                 <div {{ Aimless.realtime('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
                     {{ Aimless.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
                 </div>
             </div>
         {% endif %}
     {% elseif Aimless.data('key') == 'allowedEntityTypes' %}
-        <div {{ Aimless.showOnEmpty('allowedEntityTypes') }}>
+        <div {{ Aimless.showWhenEmpty('allowedEntityTypes') }}>
             <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
         </div>
-        <div {{ Aimless.hideOnEmpty('allowedEntityTypes') }}>
+        <div {{ Aimless.hideWhenEmpty('allowedEntityTypes') }}>
             [
                 <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes" {{ Aimless.realtime('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
                     {{ Aimless.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
