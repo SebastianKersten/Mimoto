@@ -62,6 +62,11 @@ class AimlessComponent
         $this->_mapping = $mapping;
     }
 
+    public function getEntity()
+    {
+        return $this->_entity;
+    }
+
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------

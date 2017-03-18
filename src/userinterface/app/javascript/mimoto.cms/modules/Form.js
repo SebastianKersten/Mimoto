@@ -35,6 +35,7 @@ module.exports.prototype = {
         this._aForms = [];
         this._aRequests = [];
         this._sCurrentOpenForm = '';
+        this._aMediaFields = [];
     },
 
 
@@ -720,100 +721,98 @@ module.exports.prototype = {
     },
     
     
-    setupImageField: function(sImageFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
+    setupImageField: function(sImageFieldId, sFlatImageFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
     {
         // read
         var currentForm = this._aForms[this._sCurrentOpenForm];
-    
+        
+        // validate
+        if (!currentForm) return;
+        
+        
+        
         // 1. locate form in dom
         var $form = $('form[name="' + currentForm.sName + '"]');
         
-        // setup
+        // register
         var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
         var fieldInput = $("input", field);
-
+    
+        // setup
+        var mediaField = {
+            sImageFieldShowPreviewClass: 'MimotoCMS_forms_input_ImageUpload--show-preview',
+            sImageFieldShowPreviewImageClass: 'MimotoCMS_forms_input_ImageUpload--show-preview-image',
+            domElement: document.getElementById(sImageFieldId),
+            sImageFieldId: sImageFieldId,
+            field: field
+        };
+        
+        // store
+        this._aMediaFields[sImageFieldId] = mediaField;
         
         
-        this.el = document.getElementById(sImageFieldId);
-        
-        this._imageField_imageUploadClass = '.js-image-upload';
-        this._imageField_imageUploadTriggerClass = '.js-image-upload-trigger';
-        this._imageField_previewClass = '.js-image-upload-preview';
-        this._imageField_previewTemplateClass = '.js-image-upload-preview-template';
-    
-        this._imageField_showPreviewClass = 'MimotoCMS_forms_input_ImageUpload--show-preview';
-        this._imageField_showPreviewImageClass = 'MimotoCMS_forms_input_ImageUpload--show-preview-image';
-        this._imageField_hideUploadProgressClass = 'MimotoCMS_forms_input_ImageUpload--hide-upload-progess';
-    
-        this._imageField_errorParent = this.el.querySelector('.js-error-parent');
-    
-        this._imageField_postURL = "/Mimoto.Aimless/upload/image";
-        this._imageField_imageUpload = this.el.querySelector(this._imageField_imageUploadClass);
-        this._imageField_inputfield = this.el.querySelector('.js-image-upload-value');
-    
-    
         // register
         var classRoot = document;
         
     
         // preview template
-        var previewNode = document.querySelector(this._imageField_previewTemplateClass);
+        var previewNode = document.querySelector('.js-' + sFlatImageFieldId + '-image-upload-preview-template');
         var template = previewNode.parentNode.innerHTML;
         previewNode.id = "";
         previewNode.parentNode.removeChild(previewNode);
-        this._imageField_previewTemplate = template;
+        mediaField.previewTemplate = template;
     
         // setup
-        this._imageField_dropzone = new Dropzone(this._imageField_imageUpload, {
-            url: this._imageField_postURL,
+        mediaField.dropzone = new Dropzone(mediaField.domElement.querySelector('.js-' + sFlatImageFieldId + '-image-upload'), {
+            url: '/Mimoto.Aimless/upload/image',
             maxFilesize: 1000,
             parallelUploads: 20,
-            previewTemplate: this._imageField_previewTemplate,
+            previewTemplate: mediaField.previewTemplate,
             thumbnailWidth: 500,
             thumbnailHeight: null,
-            previewsContainer: this._imageField_previewClass,
-            clickable: this._imageField_imageUploadTriggerClass
+            previewsContainer: '.js-' + sFlatImageFieldId + '-image-upload-preview',
+            clickable: '.js-' + sFlatImageFieldId + '-image-upload-trigger'
         });
-        
-        
-        this._imageField_dropzone.on('removedfile', function (file) {
-            this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewClass);
-            this._imageField_dropzone.element.classList.remove(this._imageField_showPreviewImageClass);
-            //EH.clearState(this.el);
+    
+    
+        mediaField.dropzone.on('removedfile', function (file)
+        {
+            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewClass);
+            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewImageClass);
     
             // set value
             fieldInput.val('');
             
         }.bind(this));
     
-        this._imageField_dropzone.on('addedfile', function (file) {
-            this._imageField_dropzone.element.classList.add(this._imageField_showPreviewClass);
+        mediaField.dropzone.on('addedfile', function (file)
+        {
+            mediaField.dropzone.element.classList.add(mediaField.sImageFieldShowPreviewClass);
         }.bind(this));
     
-        this._imageField_dropzone.on('thumbnail', function (file) {
-            this._imageField_dropzone.element.classList.add(this._imageField_showPreviewImageClass);
+        mediaField.dropzone.on('thumbnail', function (file)
+        {
+            mediaField.dropzone.element.classList.add(mediaField.sImageFieldShowPreviewImageClass);
         }.bind(this));
     
-        this._imageField_dropzone.on('error', function (file, errorMessage, xhrObject) {
-            //EH.addErrorState(this.el, errorMessage);
-        }.bind(this));
+        mediaField.dropzone.on('error', function (file, errorMessage, xhrObject) {}.bind(this));
     
-        this._imageField_dropzone.on('success', function (file, serverResponse) {
-            
+        mediaField.dropzone.on('success', function (file, serverResponse)
+        {
             // set value
             fieldInput.val(serverResponse.file_id);
         
-            setTimeout(function () {
-                this._imageField_dropzone.element.classList.add(this._imageField_hideUploadProgressClass);
-                //EH.addValidatedState(this.el);
+            setTimeout(function ()
+            {
+                mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
+                
                 console.warn(file);
                 console.warn(serverResponse);
+                
             }.bind(this), 100);
         }.bind(this));
     
-    
         
-    
         Mimoto.Aimless.utils.callAPI({
             type: 'get',
             url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
@@ -822,7 +821,7 @@ module.exports.prototype = {
                 if (resultData && resultData.file_id)
                 {
                     // register
-                    var image = classRoot.getElementById('xxx-image');
+                    var image = document.getElementById('js-' + sFlatImageFieldId + '-previewimage');
     
                     // setup
                     image.src = resultData.full_path;
@@ -831,86 +830,69 @@ module.exports.prototype = {
         });
     },
     
-    setupVideoField: function(sVideoFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
+    setupVideoField: function(sVideoFieldId, sFlatVideoFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
     {
         // read
         var currentForm = this._aForms[this._sCurrentOpenForm];
+    
+        // validate
+        if (!currentForm) return;
+        
         
         // 1. locate form in dom
         var $form = $('form[name="' + currentForm.sName + '"]');
         
-        // setup
+        // register
         var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
         var fieldInput = $("input", field);
     
-        this.el = document.getElementById(sVideoFieldId);
-        
-        this._videoField_videoUploadClass = '.js-video-upload';
-        this._videoField_videoUploadTriggerClass = '.js-video-upload-trigger';
-        this._videoField_previewClass = '.js-video-upload-preview';
-        this._videoField_previewTemplateClass = '.js-video-upload-preview-template';
-        
-        this._videoField_showPreviewClass = 'MimotoCMS_forms_input_ImageUpload--show-preview';
-        this._videoField_showPreviewImageClass = 'MimotoCMS_forms_input_ImageUpload--show-preview-video';
-        this._videoField_hideUploadProgressClass = 'MimotoCMS_forms_input_ImageUpload--hide-upload-progess';
-        
-        this._videoField_errorParent = this.el.querySelector('.js-error-parent');
-        
-        this._videoField_postURL = "/Mimoto.Aimless/upload/video";
-        this._videoField_videoUpload = this.el.querySelector(this._videoField_videoUploadClass);
-        this._videoField_inputfield = this.el.querySelector('.js-video-upload-value');
+        // setup
+        var mediaField = {
+            domElement: document.getElementById(sVideoFieldId),
+            sVideoFieldId: sVideoFieldId,
+            field: field
+        };
+    
+        // store
+        this._aMediaFields[sVideoFieldId] = mediaField;
         
         
         // preview template
-        var previewNode = document.querySelector(this._videoField_previewTemplateClass);
+        var previewNode = document.querySelector('.js-' + sFlatVideoFieldId + '-video-upload-preview-template');
         var template = previewNode.parentNode.innerHTML;
         previewNode.id = "";
         previewNode.parentNode.removeChild(previewNode);
-        this._videoField_previewTemplate = template;
+        mediaField.previewTemplate = template;
         
         // setup
-        this._videoField_dropzone = new Dropzone(this._videoField_videoUpload, {
-            url: this._videoField_postURL,
+        mediaField.dropzone = new Dropzone(mediaField.domElement.querySelector('.js-' + sFlatVideoFieldId + '-video-upload'), {
+            url: '/Mimoto.Aimless/upload/video',
             maxFilesize: 1000,
             parallelUploads: 20,
-            previewTemplate: this._videoField_previewTemplate,
+            previewTemplate: mediaField.previewTemplate,
             thumbnailWidth: 500,
             thumbnailHeight: null,
-            previewsContainer: this._videoField_previewClass,
+            previewsContainer: '.js-' + sFlatVideoFieldId + '-video-upload-preview',
             acceptedFiles: ".mp4, .webm",
-            clickable: this._videoField_videoUploadTriggerClass
+            clickable: '.js-' + sFlatVideoFieldId + '-video-upload-trigger'
         });
-        
-        
-        this._videoField_dropzone.on('removedfile', function (file) {
-            this._videoField_dropzone.element.classList.remove(this._videoField_showPreviewClass);
-            this._videoField_dropzone.element.classList.remove(this._videoField_showPreviewImageClass);
-            //EH.clearState(this.el);
-            
-            // set value
+    
+    
+        mediaField.dropzone.on('removedfile', function (file) {
             fieldInput.val('');
-            
         }.bind(this));
-        
-        this._videoField_dropzone.on('addedfile', function (file) {
-            //this._videoField_dropzone.element.classList.add(this._videoField_showPreviewClass);
-        }.bind(this));
-        
-        this._videoField_dropzone.on('thumbnail', function (file) {
-            //this._videoField_dropzone.element.classList.add(this._videoField_showPreviewImageClass);
-        }.bind(this));
-        
-        this._videoField_dropzone.on('error', function (file, errorMessage, xhrObject) {
-            //EH.addErrorState(this.el, errorMessage);
-        }.bind(this));
-        
-        this._videoField_dropzone.on('success', function (file, serverResponse) {
+    
+        mediaField.dropzone.on('addedfile', function (file) {}.bind(this));
+        mediaField.dropzone.on('thumbnail', function (file) {}.bind(this));
+        mediaField.dropzone.on('error', function (file, errorMessage, xhrObject) {}.bind(this));
+    
+        mediaField.dropzone.on('success', function (file, serverResponse) {
             
             // set value
             fieldInput.val(serverResponse.file_id);
             
             // register
-            var video = document.getElementById('xxx-video');
+            var video = document.getElementById('js-' + sFlatVideoFieldId + '-previewvideo');
             
             // add source
             video.src = serverResponse.full_path;
@@ -921,11 +903,7 @@ module.exports.prototype = {
             
             
             setTimeout(function () {
-                this._videoField_dropzone.element.classList.add(this._videoField_hideUploadProgressClass);
-                
-                //EH.addValidatedState(this.el);
-                
-                //console.warn(serverResponse);
+                mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
                 
             }.bind(this), 100);
         }.bind(this));
@@ -942,7 +920,7 @@ module.exports.prototype = {
                 if (resultData && resultData.file_id)
                 {
                     // register
-                    var video = classRoot.getElementById('xxx-video');
+                    var video = classRoot.getElementById('js-' + sFlatVideoFieldId + '-previewvideo');
                     
                     // setup
                     video.src = resultData.full_path;

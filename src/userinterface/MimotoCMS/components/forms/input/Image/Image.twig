@@ -1,17 +1,20 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonClass:'js-image-upload-trigger' } %}
+{% set sImagefieldId = Aimless.meta('type')~"."~Aimless.meta('id') %}
+{% set sFlatImageFieldId = Aimless.meta('type')~Aimless.meta('id') %}
+
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonClass:'js-'~sFlatImageFieldId~'-image-upload-trigger' } %}
 
     {% block form_component_element %}
         <div id="{{ Aimless.meta('type')~"."~Aimless.meta('id') }}">
-            <div class="MimotoCMS_forms_input_ImageUpload js-image-upload">
-                <div class="MimotoCMS_forms_input_ImageUpload-trigger js-image-upload-trigger">
+            <div class="MimotoCMS_forms_input_ImageUpload js-{{ sFlatImageFieldId }}-image-upload">
+                <div class="MimotoCMS_forms_input_ImageUpload-trigger js-{{ sFlatImageFieldId }}-image-upload-trigger">
                     <div class="MimotoCMS_forms_input_ImageUpload-trigger-button"><svg class="MimotoCMS_forms_input_ImageUpload-button-trigger-icon"><use xlink:href="#ico-plus"></use></svg></div>
                     <p class="MimotoCMS_forms_input_ImageUpload-trigger-text">Click here or drop an image</p>
                 </div>
 
-                <img id="xxx-image" class="MimotoCMS_forms_input_ImageUpload-new-preview-image" src="">
+                <img id="js-{{ sFlatImageFieldId }}-previewimage" class="MimotoCMS_forms_input_ImageUpload-new-preview-image" src="">
 
-                <div class="MimotoCMS_forms_input_ImageUpload-preview js-image-upload-preview">
-                    <div class="MimotoCMS_forms_input_ImageUpload-preview-template js-image-upload-preview-template">
+                <div class="MimotoCMS_forms_input_ImageUpload-preview js-{{ sFlatImageFieldId }}-image-upload-preview">
+                    <div class="MimotoCMS_forms_input_ImageUpload-preview-template js-{{ sFlatImageFieldId }}-image-upload-preview-template">
                         <img data-dz-thumbnail class="MimotoCMS_forms_input_ImageUpload-preview-image" />
                         <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progress">
                             <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
@@ -22,9 +25,9 @@
                     </div>
                 </div>
             </div>
-            <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-image-upload-value"/>
+            <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-{{ sFlatImageFieldId }}-image-upload-value"/>
         </div>
-        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupImageField, '{{ Aimless.meta('type')~"."~Aimless.meta('id') }}', '{{ Aimless.fieldId() }}');</script>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupImageField, '{{ sImagefieldId }}', '{{ sFlatImageFieldId }}', '{{ Aimless.fieldId() }}');</script>
     {% endblock %}
 
 {% endembed %}

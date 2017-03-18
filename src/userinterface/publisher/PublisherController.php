@@ -46,6 +46,17 @@ class PublisherController
         return $page->render();
     }
 
+
+
+
+
+
+
+
+
+
+
+
     public function addComment(Application $app, Request $request, $nArticleId)
     {
         // 1. init page
@@ -80,6 +91,34 @@ class PublisherController
 
         // 3. send
         return Mimoto::service('messages')->response('Comment removed');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function viewEditor(Application $app, $nArticleId)
+    {
+        // 1. load data
+        $eArticle = Mimoto::service('data')->get('editor', $nArticleId);
+
+        // 2. create template
+        $page = Mimoto::service('aimless')->createPage('editor', $eArticle);
+
+        // 3. output
+        return $page->render();
     }
 
 }

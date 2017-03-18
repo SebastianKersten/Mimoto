@@ -1,22 +1,21 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "video", button:true, buttonLabel:'Upload video', buttonIcon:'', buttonClass:'js-video-upload-trigger' } %}
+{% set sVideofieldId = Aimless.meta('type')~"."~Aimless.meta('id') %}
+{% set sFlatVideoFieldId = Aimless.meta('type')~Aimless.meta('id') %}
+
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "video", button:true, buttonLabel:'Upload video', buttonIcon:'', buttonClass:'js-'~sFlatVideoFieldId~'-video-upload-trigger' } %}
 
     {% block form_component_element %}
         <div id="{{ Aimless.meta('type')~"."~Aimless.meta('id') }}">
-            <div class="MimotoCMS_forms_input_VideoUpload js-video-upload">
-                {#<div class="MimotoCMS_forms_input_VideoUpload-trigger js-video-upload-trigger">
-                    <div class="MimotoCMS_forms_input_VideoUpload-trigger-button"><svg class="MimotoCMS_forms_input_VideoUpload-button-trigger-icon"><use xlink:href="#ico-plus"></use></svg></div>
-                    <p class="MimotoCMS_forms_input_VideoUpload-trigger-text">Click here or drop a video</p>
-                </div>#}
+            <div class="MimotoCMS_forms_input_VideoUpload js-{{ sFlatVideoFieldId }}-video-upload">
 
-                <video id="xxx-video" class="MimotoCMS_forms_input_VideoUpload-player" muted loop poster="">
+                <video id="js-{{ sFlatVideoFieldId }}-previewvideo" class="MimotoCMS_forms_input_VideoUpload-player" muted loop poster="">
                     <source src="" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
 
 
-                <div class="MimotoCMS_forms_input_VideoUpload-preview js-video-upload-preview">
+                <div class="MimotoCMS_forms_input_VideoUpload-preview js-{{ sFlatVideoFieldId }}-video-upload-preview">
 
-                    <div class="MimotoCMS_forms_input_VideoUpload-preview-template js-video-upload-preview-template">
+                    <div class="MimotoCMS_forms_input_VideoUpload-preview-template js-{{ sFlatVideoFieldId }}-video-upload-preview-template">
                         <img data-dz-thumbnail class="MimotoCMS_forms_input_VideoUpload-preview-video" />
                         <div class="MimotoCMS_forms_input_VideoUpload-preview-upload-progress">
                             <div class="MimotoCMS_forms_input_VideoUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
@@ -27,9 +26,9 @@
                     </div>
                 </div>
             </div>
-            <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-video-upload-value"/>
+            <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-{{ sFlatVideoFieldId }}-video-upload-value"/>
         </div>
-        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupVideoField, '{{ Aimless.meta('type')~"."~Aimless.meta('id') }}', '{{ Aimless.fieldId }}');</script>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupVideoField, '{{ sVideofieldId }}', '{{ sFlatVideoFieldId }}', '{{ Aimless.fieldId }}');</script>
 
     {% endblock %}
 
