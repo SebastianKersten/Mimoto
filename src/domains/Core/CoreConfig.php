@@ -72,6 +72,7 @@ class CoreConfig
     const MIMOTO_COMPONENT                      = '_Mimoto_component';
     const MIMOTO_COMPONENTCONDITIONAL           = '_Mimoto_componentconditional';
     const MIMOTO_PAGE                           = '_Mimoto_page';
+    const MIMOTO_DATASET                        = '_Mimoto_dataset';
     const MIMOTO_LAYOUT                         = '_Mimoto_layout';
 
     // functionality

@@ -147,7 +147,7 @@ class FormService
                         $formField = $aFormFields[$nFormFieldIndex];
 
                         // verify
-                        if ($formField->getId() == $nRequestedFieldId)
+                        if ($formField->getEntityTypeName() == $sRequestedFieldTypeId && $formField->getId() == $nRequestedFieldId)
                         {
                             $field = $formField;
                             break 3;

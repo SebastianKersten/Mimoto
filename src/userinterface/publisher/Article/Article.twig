@@ -4,7 +4,7 @@
 
     <div class="MimotoPublisher-Article-lede-container">
         <div class="MimotoPublisher-Article-lede">
-            <span class="MimotoPublisher-Article-articletype">{% if Aimless.data('type') == 'explainer' %}Explainer{% else %}Verhaal van de dag{% endif %}</span>
+            <span class="MimotoPublisher-Article-articletype"> {{ Aimless.realtime('type.label') }}>{{ Aimless.render('type.label') }}</span>
              -
             <span {{ Aimless.realtime('lede') }}>{{ Aimless.render('lede') }}</span>
         </div>

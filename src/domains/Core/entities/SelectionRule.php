@@ -44,7 +44,7 @@ class SelectionRule
                 ),
 
                 (object) array(
-                    'id' => CoreConfig::COREFORM_SELECTIONRULE.'--entity',
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--entity',
                     // ---
                     'name' => 'entity',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -57,9 +57,9 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::COREFORM_SELECTIONRULE.'--instance',
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--instance',
                     // ---
-                    'name' => 'entity',
+                    'name' => 'instance',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
@@ -70,9 +70,9 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::COREFORM_SELECTIONRULE.'--entityProperty',
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--entityProperty',
                     // ---
-                    'name' => 'entity',
+                    'name' => 'entityProperty',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
@@ -110,7 +110,9 @@ class SelectionRule
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'type'),
-                //CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'entity'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'entity'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'instance'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'entityProperty')
             ]
         );
     }
@@ -126,11 +128,15 @@ class SelectionRule
 
         // setup
         CoreFormUtils::addField_title($form, 'Selection rule', '', "Configure a selection rule to select specific sets of data.");
+
         CoreFormUtils::addField_groupStart($form);
-
         $form->addValue('fields', self::getField_type());
-
         CoreFormUtils::addField_groupEnd($form);
+
+        CoreFormUtils::addField_groupStart($form, 'Settings the type', 'group_entity');
+        $form->addValue('fields', self::getField_entities());
+        CoreFormUtils::addField_groupEnd($form, 'group_entity');
+
 
         // send
         return $form;
@@ -187,5 +193,41 @@ class SelectionRule
         return $field;
     }
 
+    /**
+     * Get field: entities
+     */
+    private static function getField_entities()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_SELECTIONRULE, 'entity');
+        $field->setValue('label', 'Select the entity type');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTIONRULE, 'entity');
+
+
+        // load
+        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
+
+        $nEntityCount = count($aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            // register
+            $entity = $aEntities[$i];
+
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entity_value_options-valuesettings-collection-'.$entity->getId());
+            $option->setValue('label', $entity->getValue('name'));
+            $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
+
+            $field->addValue('options', $option);
+        }
+
+        // send
+        return $field;
+    }
+
+
+    // 1. lijst van entityProperty, maar alleen collections
 
 }
