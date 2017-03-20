@@ -4,7 +4,7 @@
         <label for="" class="MimotoCMS_forms_FormComponent-title">{{ Aimless.data('label') }} {# {% if Aimless.data('value.optional') %}<span class="MimotoCMS_forms_FormComponent-title-information">(optioneel)</span>{% endif %}#}<svg class="js-error-icon MimotoCMS_forms_FormComponent-title-icon"><use xlink:href=""></use></svg></label>
         {% if button|default(false) %}
             <div class="MimotoCMS_forms_FormComponent-button {{ buttonClass }}">
-                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: buttonLabel, link: '#', icon:buttonIcon, types:['small', 'secondary'], onclick:buttonOnClick|default('') }) }}
+                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: buttonLabel, icon:buttonIcon, types:['small', 'secondary'], onclick:buttonOnClick|default('') }) }}
             </div>
         {% endif %}
     </div>
