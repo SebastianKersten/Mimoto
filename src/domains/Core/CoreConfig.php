@@ -26,7 +26,7 @@ use Mimoto\Core\entities\LayoutGroupEnd;
 use Mimoto\Core\entities\LayoutDivider;
 use Mimoto\Core\entities\InputCheckbox;
 use Mimoto\Core\entities\InputDropdown;
-use Mimoto\Core\entities\InputRadioButton;
+use Mimoto\Core\entities\InputRadiobutton;
 use Mimoto\Core\entities\InputTextline;
 use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputTextblock;
@@ -253,7 +253,7 @@ class CoreConfig
             InputTextRTF::getStructure(),
             InputCheckbox::getStructure(),
             InputMultiSelect::getStructure(),
-            InputRadioButton::getStructure(),
+            InputRadiobutton::getStructure(),
             InputDropdown::getStructure(),
             InputImage::getStructure(),
             InputVideo::getStructure(),
@@ -314,7 +314,7 @@ class CoreConfig
             InputImage::getFormStructure(),
             InputList::getFormStructure(),
             InputMultiSelect::getFormStructure(),
-            InputRadioButton::getFormStructure(),
+            InputRadiobutton::getFormStructure(),
             InputTextBlock::getFormStructure(),
             InputTextline::getFormStructure(),
             InputTextRTF::getFormStructure(),
