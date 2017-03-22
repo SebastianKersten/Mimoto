@@ -10,6 +10,8 @@ use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\Component;
 use Mimoto\Core\entities\ComponentConditional;
+use Mimoto\Core\entities\Layout;
+use Mimoto\Core\entities\LayoutContainer;
 use Mimoto\Core\entities\File;
 use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
@@ -74,6 +76,7 @@ class CoreConfig
     const MIMOTO_PAGE                           = '_Mimoto_page';
     const MIMOTO_DATASET                        = '_Mimoto_dataset';
     const MIMOTO_LAYOUT                         = '_Mimoto_layout';
+    const MIMOTO_LAYOUTCONTAINER                = '_Mimoto_layoutcontainer';
 
     // functionality
     const MIMOTO_ACTION                         = '_Mimoto_action';
@@ -150,12 +153,14 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
     const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentSection';
+    const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
+    const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
 
     const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
     const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentConditional';
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
-    const COREFORM_INPUTOPTION                  = '_Mimoto_coreform__form_inputoption';
-    const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform__form_inputValidation';
+    const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
+    const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform_form_inputValidation';
 
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
 
@@ -164,7 +169,7 @@ class CoreConfig
 
 
     // input
-    const COREFORM_INPUT_TEXTLINE       = '_Mimoto_coreform__input_textline';
+    const COREFORM_INPUT_TEXTLINE       = '_Mimoto_coreform_input_textline';
     const COREFORM_INPUT_TEXTBLOCK      = '_Mimoto_coreform_input_textblock';
     const COREFORM_INPUT_TEXTRTF        = '_Mimoto_coreform_input_textrtf';
     const COREFORM_INPUT_CHECKBOX       = '_Mimoto_coreform_input_checkbox';
@@ -218,6 +223,10 @@ class CoreConfig
             // views
             Component::getStructure(),
             ComponentConditional::getStructure(),
+
+            // views
+            Layout::getStructure(),
+            LayoutContainer::getStructure(),
 
             // content
             File::getStructure(),
@@ -278,6 +287,10 @@ class CoreConfig
             // views
             Component::getFormStructure(),
             ComponentConditional::getFormStructure(),
+
+            // views
+            Layout::getFormStructure(),
+            LayoutContainer::getFormStructure(),
 
             // content
             ContentSection::getFormStructure(),

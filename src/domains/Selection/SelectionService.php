@@ -212,11 +212,11 @@ class SelectionService
                                         case CoreConfig::MIMOTO_SELECTIONRULE.'--instance':
 
                                             $newSelectionRule->instance = $selectionRuleSetting;
-//                                            $newSelectionRule->instance = (object) array(
-//                                                'entity_type_id' => $selectionRuleSetting->child_id,
-//                                                'entity_type_name' => Mimoto::service('config')->getPropertyNameById($selectionRuleSetting->child_id)
-//                                                    'instance_id' => ...
-//                                            );
+                                            $newSelectionRule->instance = (object) array(
+                                                'entity_type_id' => $selectionRuleSetting->child_entity_type_id,
+                                                'entity_type_name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_entity_type_id),
+                                                'instance_id' => $selectionRuleSetting->child_id
+                                            );
 
                                             $bSettingFound = true;
                                             break;

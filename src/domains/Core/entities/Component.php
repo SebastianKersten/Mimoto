@@ -198,6 +198,30 @@ class Component
 
 
 
+            // layouts
+
+            (object) array(
+                'name' => 'Mimoto.CMS_layouts_LayoutOverview',
+                'file' => 'MimotoCMS/components/pages/layouts/LayoutOverview/LayoutOverview.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_layouts_LayoutOverview_ListItem',
+                'file' => 'MimotoCMS/components/pages/layouts/LayoutOverview/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_layouts_LayoutDetail',
+                'file' => 'MimotoCMS/components/pages/layouts/LayoutDetail/LayoutDetail.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_layouts_LayoutDetail-LayoutContainer',
+                'file' => 'MimotoCMS/components/pages/layouts/LayoutDetail/LayoutContainer/LayoutContainer.twig',
+                'conditionals' => []
+            ),
+
+
             // content sections
 
             (object) array(

@@ -304,6 +304,62 @@ module.exports.prototype = {
     
     
     /**
+     * Layouts
+     */
+    layoutNew: function()
+    {
+        var popup = Mimoto.popup.open("/mimoto.cms/layout/new");
+    },
+    
+    layoutView: function(nLayoutId)
+    {
+        window.open('/mimoto.cms/layout/' + nLayoutId + '/view', '_self');
+    },
+    
+    layoutEdit: function(nLayoutId)
+    {
+        Mimoto.popup.open('/mimoto.cms/layout/' + nLayoutId + '/edit');
+    },
+    
+    layoutDelete: function(nLayoutId)
+    {
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/layout/' + nLayoutId + '/delete',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
+    },
+    
+    layoutContainerNew: function(nLayoutId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/layout/' + nLayoutId + '/layoutcontainer/new');
+    },
+    
+    layoutContainerEdit: function(nLayoutContainerId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/edit');
+    },
+    
+    layoutContainerDelete: function(nLayoutContainerId)
+    {
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/delete',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
+    },
+    
+    
+    
+    /**
      * Content sections
      */
     contentSectionNew: function()

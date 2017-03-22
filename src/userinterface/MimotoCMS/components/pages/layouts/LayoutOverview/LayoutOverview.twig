@@ -1,0 +1,5 @@
+{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new layout', icon:'plus', onclick:"Mimoto.CMS.layoutNew();" }) }}
+
+<ul class="MimotoCMS_pages_layouts_LayoutOverview__container js-list js-list-sortable" {{ Aimless.realtime('layouts', 'Mimoto.CMS_layouts_LayoutOverview_ListItem') }}>
+    {{ Aimless.render('layouts', 'Mimoto.CMS_layouts_LayoutOverview_ListItem') }}
+</ul>

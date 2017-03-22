@@ -118,7 +118,7 @@ class Root
                 (object) array(
                     'id' => CoreConfig::MIMOTO_ROOT.'--layouts',
                     // ---
-                    'name' => 'layout',
+                    'name' => 'layouts',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
