@@ -130,7 +130,7 @@ class OutputTitle
             ''
         );
 
-        $field = CoreFormUtils::addField_textline
+        $field = CoreFormUtils::addField_textblock
         (
             $form, 'description', CoreConfig::MIMOTO_FORM_OUTPUT_TITLE.'--description',
             'Description',
