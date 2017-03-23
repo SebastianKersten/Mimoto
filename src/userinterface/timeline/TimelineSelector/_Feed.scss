@@ -1,0 +1,12 @@
+div.MimotoPublisher_Feed-container {
+    padding: 80px 0 100px 0;
+    width: 100%;
+
+    & > div {
+        margin-bottom: 40px;
+    }
+
+    & > div:last-child {
+        margin-bottom: 0;
+    }
+}

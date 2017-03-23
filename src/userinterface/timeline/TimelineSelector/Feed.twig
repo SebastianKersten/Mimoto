@@ -1,0 +1,9 @@
+{% extends "publisher/base.twig" %}
+
+{% block content %}
+
+    <div class="MimotoPublisher_Feed-container" {{ Aimless.realtime('contentItems', 'feeditem') }}>
+        {{ Aimless.render('contentItems', 'feeditem') }}
+    </div>
+
+{% endblock %}

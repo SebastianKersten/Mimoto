@@ -222,10 +222,10 @@ class AimlessService
                 }
             }
         }
-        
-        throw new \Exception("AimlessService says: Template '$sComponentName' not found");
-        die("AimlessService says: Template '$sComponentName' not found");
-        
+
+        Mimoto::service('log')->error("Template `$sComponentName` not found", "I con't find the template you are looking for", true);
+
+
         // 1. broadcast webevent for debugging purposes
         // 2. standaard report error (error level)
         

@@ -387,6 +387,8 @@ class AimlessComponentViewModel
 
 
 
+// Mimoto.classWhenInArray('???') ? hoe werkt dit? meegeven als twigVar?
+
 
 //
 //Mimoto.styleWhenEquals(‘type’, ‘regular’, ‘background-color:#ff9900’)

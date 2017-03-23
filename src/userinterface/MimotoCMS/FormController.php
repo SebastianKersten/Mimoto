@@ -125,7 +125,7 @@ class FormController
         $eField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
 
         // setup
-        $eField->setValue('title', $sEntityName);
+        $eField->setValue('title', $sEntityName); // #todo convert lowerCamelCase to Readable string
         $eField->setValue('subtitle', 'Auto-generated form');
         $eField->setValue('description', "This form has been created by Mimoto's auto-generation feature based on the entity's properties on ".date('d F Y H:i:s').". Adjust, add, remove or change the fields as you feel fit!");
 
