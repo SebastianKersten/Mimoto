@@ -301,7 +301,6 @@ class CoreFormUtils
         $field->setValue('label', $sLabel);
         $field->setValue('placeholder', $sPlaceholder);
         $field->setValue('description', $sDescription);
-        $field->setValue('prefix', $sPrefix);
 
         // 2. connect to property
         $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
