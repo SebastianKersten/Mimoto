@@ -534,15 +534,18 @@ module.exports.prototype = {
         var listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
         
         // execute
-        Mimoto.Aimless.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/formfield/' + listInfo.sInputFieldType + '/' + listInfo.sInputFieldId +  '/remove/' + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
+        var response = confirm("Are you sure you want to delete this item?");
+        if (response == true) {
+            Mimoto.Aimless.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/formfield/' + listInfo.sInputFieldType + '/' + listInfo.sInputFieldId + '/remove/' + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
+                data: null,
+                dataType: 'json',
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
     },
     
     findListByListItem: function(nConnectionId, sInstanceType, sInstanceId)
