@@ -1,8 +1,9 @@
 <IfModule mod_rewrite.c>
+
     Options -MultiViews
 
     RewriteEngine On
-    #RewriteBase /path/to/app
+
     RewriteRule ^static/ - [L,NC]
     RewriteRule ^dynamic/ - [L,NC]
     RewriteCond %{REQUEST_FILENAME} !-d
