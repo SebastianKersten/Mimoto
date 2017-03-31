@@ -63,6 +63,39 @@ class NotificationsController
         return Mimoto::service('messages')->response('Notification closed');
     }
 
+    public function closeAllNotifications(Application $app)
+    {
+        // 1. load
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
+
+        // 2. register
+        $aNotificationConnections = $eRoot->getValue('notifications', true);
+
+        // 3. delete
+        $nNotificationCount = count($aNotificationConnections);
+        for ($nNotificationIndex = 0; $nNotificationIndex < $nNotificationCount; $nNotificationIndex++)
+        {
+            // register
+            $notificationConnection = $aNotificationConnections[$nNotificationIndex];
+
+            // load
+            $eNotification = Mimoto::service('data')->get(CoreConfig::MIMOTO_NOTIFICATION, $notificationConnection->getChildId());
+
+            // change state
+            $eNotification->setValue('state', 'closed');
+
+            // store
+            Mimoto::service('data')->store($eNotification);
+
+            // cleanup (added - temp- for keeping the database empty)
+            Mimoto::service('data')->delete($eNotification);
+        }
+
+        // send
+        return Mimoto::service('messages')->response('All notifications closed');
+    }
+
+
     public function getNotificationCount(Application $app)
     {
         // load

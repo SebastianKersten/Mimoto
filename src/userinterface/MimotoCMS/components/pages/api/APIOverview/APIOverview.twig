@@ -1,0 +1,5 @@
+{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new', icon:'plus', onclick:"Mimoto.CMS.contentNew('"~Aimless.meta('id')~"');" }) }}
+
+<ul class="MimotoCMS_pages_content_ContentOverview-container js-list js-list-sortable" {{ Aimless.realtime('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}>
+    {{ Aimless.render('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}
+</ul>

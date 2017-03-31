@@ -5,6 +5,7 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Core\entities\InputOption;
+use Mimoto\Data\DataFormattingUtils;
 use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
@@ -125,7 +126,7 @@ class FormController
         $eField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_OUTPUT_TITLE);
 
         // setup
-        $eField->setValue('title', $sEntityName); // #todo convert lowerCamelCase to Readable string
+        $eField->setValue('title', DataFormattingUtils::lowerCameCase2Label($sEntityName));
         $eField->setValue('subtitle', 'Auto-generated form');
         $eField->setValue('description', "This form has been created by Mimoto's auto-generation feature based on the entity's properties on ".date('d F Y H:i:s').". Adjust, add, remove or change the fields as you feel fit!");
 
@@ -221,6 +222,11 @@ class FormController
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
+                    //$eInputField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_LIST);
+
+                    // 1. connects forms if present
+                    // 2. present options or ask to auto-generate child-item forms
+
                     break;
             }
 
@@ -231,7 +237,7 @@ class FormController
                 // todo primary field (er hoeft niet altijd een label te zijn
                 if ($eInputField->hasProperty('label'))
                 {
-                    $eInputField->setValue('label', $sPropertyName);
+                    $eInputField->setValue('label', DataFormattingUtils::lowerCameCase2Label($sPropertyName));
                 }
 
 
@@ -265,7 +271,7 @@ class FormController
         Mimoto::service('data')->store($eEntity);
 
         // output
-        Mimoto::service('messages')->response((object) array('result' => 'For created! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'Form created! '.date("Y.m.d H:i:s")), 200);
     }
 
     public function formView(Application $app, $nFormId)

@@ -222,6 +222,54 @@ class Component
             ),
 
 
+            // api
+
+            (object) array(
+                'name' => 'Mimoto.CMS_api_APIOverview',
+                'file' => 'MimotoCMS/components/pages/api/APIOverview/APIOverview.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_api_APIOverview_ListItem',
+                'file' => 'MimotoCMS/components/pages/api/APIOverview/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_api_APIDetail',
+                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIDetail.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_api_APIDetail-APIContainer',
+                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIContainer/APIContainer.twig',
+                'conditionals' => []
+            ),
+
+
+            // pages
+
+//            (object) array(
+//                'name' => 'Mimoto.CMS_pages_PageOverview',
+//                'file' => 'MimotoCMS/components/pages/pages/APIOverview/APIOverview.twig',
+//                'conditionals' => []
+//            ),
+//            (object) array(
+//                'name' => 'Mimoto.CMS_api_APIOverview_ListItem',
+//                'file' => 'MimotoCMS/components/pages/api/APIOverview/ListItem/ListItem.twig',
+//                'conditionals' => []
+//            ),
+//            (object) array(
+//                'name' => 'Mimoto.CMS_api_APIDetail',
+//                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIDetail.twig',
+//                'conditionals' => []
+//            ),
+//            (object) array(
+//                'name' => 'Mimoto.CMS_api_APIDetail-APIContainer',
+//                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIContainer/APIContainer.twig',
+//                'conditionals' => []
+//            ),
+
+
             // content sections
 
             (object) array(

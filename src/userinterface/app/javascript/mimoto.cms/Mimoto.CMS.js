@@ -169,6 +169,20 @@ module.exports.prototype = {
             }
         });
     },
+
+    notificationsCloseAll: function()
+    {
+        // 11. send data
+        Mimoto.Aimless.utils.callAPI({
+            type: 'GET',
+            url: '/mimoto.cms/notifications/closeall',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething)
+            {
+            }
+        });
+    },
     
     
     /**

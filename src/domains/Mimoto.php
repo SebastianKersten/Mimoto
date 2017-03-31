@@ -72,6 +72,9 @@ class Mimoto
         $app->get('/mimoto.cms/contentsections', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::viewContentSectionOverview');
         $app->get('/mimoto.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview');
         $app->get('/mimoto.cms/users', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::viewUserOverview');
+        $app->get('/mimoto.cms/api', 'Mimoto\\UserInterface\\MimotoCMS\\APIController::viewAPIOverview');
+        $app->get('/mimoto.cms/flows', 'Mimoto\\UserInterface\\MimotoCMS\\FlowController::viewFlowOverview');
+        $app->get('/mimoto.cms/pages', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::viewPageOverview');
 
         //$app->get('/mimoto.cms/messages', 'Mimoto\\UserInterface\\MimotoCMS\\MessageController::viewMessages');
         //$app->get('/mimoto.cms/contacts', 'Mimoto\\UserInterface\\MimotoCMS\\ContactController::viewContacts');
@@ -156,6 +159,7 @@ class Mimoto
 
         $app->get('/mimoto.cms/notifications', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::viewNotificationCenter');
         $app->get('/mimoto.cms/notifications/{nNotificationId}/close', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeNotification');
+        $app->get('/mimoto.cms/notifications/closeall', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeAllNotifications');
         $app->get('/mimoto.cms/notifications/count', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::getNotificationCount');
 
         $app->get('/mimoto.cms/conversations', 'Mimoto\\UserInterface\\MimotoCMS\\ConversationsController::viewConversationCenter');
