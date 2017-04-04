@@ -67,6 +67,11 @@ class AimlessComponentViewModel
         return $this->_component->realtime($sPropertySelector, $sComponentName, $sWrapperName);
     }
 
+    public function jsListen($sPropertySelector, $fJavascriptDelegate)
+    {
+        return $this->_component->jsListen($sPropertySelector, $fJavascriptDelegate);
+    }
+
     public function selection($sSelectionName)
     {
         return $this->_component->selection($sSelectionName);

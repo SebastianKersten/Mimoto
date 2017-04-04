@@ -71,6 +71,11 @@ module.exports.prototype = {
         {
             console.log('Pusher says oops! (might have something to do with something like Privacy Badger)');
         }
+    },
+
+    listen: function(sPropertySelector, fJavascriptDelegate)
+    {
+        Mimoto.Aimless.dom.registerEventListener(sPropertySelector, fJavascriptDelegate);
     }
 
 }

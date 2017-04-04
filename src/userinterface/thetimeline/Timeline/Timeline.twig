@@ -1,0 +1,15 @@
+{% extends "thetimeline/base.twig" %}
+
+{% block content %}
+
+    <div id="TheTimeline-container" class="TheTimeline-container">
+        <svg id="TheTimeline-canvas" class="TheTimeline-canvas"></svg>
+        <div class="TheTimeline-name" {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</div>
+        <div id="TheTimeline-moments" class="TheTimeline-moments" {{ Aimless.realtime('moments', 'moment') }}>
+            {{ Aimless.render('moments', 'moment') }}
+        </div>
+    </div>
+
+    <script>{{ Aimless.jsListen('moments', 'TheTimeline.positionMoments') }}</script>
+
+{% endblock %}

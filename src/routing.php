@@ -57,6 +57,9 @@
     $app->get ('/publisher/editor/{nArticleId}', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewEditor');
 
 
+    // The Timeline
+    $app->get ('/thetimeline/{nTimelineId}', 'Mimoto\\UserInterface\\thetimeline\\TimelineController::viewTimeline');
+
 
 //    $app->get('/example12', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample12');
 //    $app->get('/example13', 'Mimoto\\UserInterface\\examples\\ExampleController::viewExample13');

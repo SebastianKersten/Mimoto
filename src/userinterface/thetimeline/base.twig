@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Mimoto.Publisher</title>
+        <title>The Timeline</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
@@ -21,17 +21,11 @@
                 false
             );
         </script>
-        <script src="/static/js/publisher.js"></script>
+        <script src="/static/js/thetimeline.js"></script>
+        <script></script>
 
     </head>
-    <body class="MimotoPublisher">
-        <div class="MimotoPublisher-menu">
-            <div class="MimotoPublisher-menu-home"><a href="/publisher">Home</a></div>
-            <div class="MimotoPublisher-menu-logo">De Correspondent</div>
-        </div>
+    <body class="TheTimeline" style="background-color:{{ Aimless.render('backgroundColor') }}">
         {% block content %}{% endblock %}
-        <div class="MimotoPublisher-footer">
-            Built on top of Mimoto<br>The ultra fast, fluid & realtime data management microframework
-        </div>
     </body>
 </html>

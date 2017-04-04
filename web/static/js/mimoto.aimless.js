@@ -219,6 +219,11 @@
 	        {
 	            console.log('Pusher says oops! (might have something to do with something like Privacy Badger)');
 	        }
+	    },
+	
+	    listen: function(sPropertySelector, fJavascriptDelegate)
+	    {
+	        Mimoto.Aimless.dom.registerEventListener(sPropertySelector, fJavascriptDelegate);
 	    }
 	
 	}
@@ -248,6 +253,7 @@
 	    
 	    
 	    _aParsedMessages: [],
+	    _aEventListeners: [],
 	    
 	
 	    // ----------------------------------------------------------------------------
@@ -263,6 +269,15 @@
 	        
 	    },
 	
+	    registerEventListener: function(sPropertySelector, fJavascriptDelegate)
+	    {
+	        this._aEventListeners.push(
+	            {
+	                sPropertySelector: sPropertySelector,
+	                fJavascriptDelegate: fJavascriptDelegate
+	            }
+	        );
+	    },
 	
 	
 	    // ----------------------------------------------------------------------------
@@ -293,6 +308,8 @@
 	        module.exports.prototype._updateSelections(data.entityType, data.entityId, data.changes);
 	        module.exports.prototype._updateInputFields(sEntityIdentifier, data.changes);
 	        module.exports.prototype._updateCounters(data.entityType, data.changes);
+	
+	        module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
 	    },
 	    
 	    /**
@@ -423,7 +440,9 @@
 	        // {
 	        //     $($component).css({"display": ""});
 	        // });
-	        
+	
+	        var sEntityIdentifier = data.entityType + '.' + data.entityId;
+	        module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
 	    },
 	    
 	    onPageChange: function (data)
@@ -1270,6 +1289,33 @@
 	            }
 	        
 	        });
+	    },
+	
+	    _triggerJavascriptListeners: function(sEntityIdentifier, aChanges)
+	    {
+	        console.log('_triggerJavascriptListeners triggered ...');
+	
+	        // parse modified values
+	        var nChangeCount = aChanges.length;
+	        for (var nChangeIndex = 0; nChangeIndex < nChangeCount; nChangeIndex++)
+	        {
+	            // register
+	            var change = aChanges[nChangeIndex];
+	
+	            // find event listeners
+	            var nListenerCount = this._aEventListeners.length;
+	            for (var nListenerIndex = 0; nListenerIndex < nListenerCount; nListenerIndex++)
+	            {
+	                // register
+	                var listener = this._aEventListeners[nListenerIndex];
+	
+	                if (listener.sPropertySelector == sEntityIdentifier + '.' + change.propertyName)
+	                {
+	                    // execute
+	                    listener.fJavascriptDelegate(change);
+	                }
+	            }
+	        }
 	    },
 	    
 	    /**

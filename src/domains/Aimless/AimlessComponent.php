@@ -592,7 +592,21 @@ class AimlessComponent
             }
         }
     }
-    
+
+    public function jsListen($sPropertySelector, $fJavascriptDelegate)
+    {
+        if ($sPropertySelector !== null && $fJavascriptDelegate !== null)
+        {
+            // cleanup
+            $nSeparatorPos = strpos($sPropertySelector, '.');
+            $sPropertyName = ($nSeparatorPos !== false) ? substr($sPropertySelector, 0, $nSeparatorPos) : $sPropertySelector;
+
+            return 'Mimoto.Aimless.listen("'.$this->_entity->getEntityTypeName().'.'.$this->_entity->getId().'.'.$sPropertyName.'", '.$fJavascriptDelegate.');';
+        }
+
+        return '';
+    }
+
     /**
      * Get entity's meta information 'id' or 'created'
      * @param type $sPropertyName The entity's meta information 'id' or 'created'
