@@ -77,7 +77,7 @@ var TheTimeline = function()
             var moment = aMoments[nMomentIndex];
 
             // position
-            TheTimeline._positionMoment(TheTimeline._canvas, moment);
+            this._positionMoment(this._canvas, moment);
         }
     }
 

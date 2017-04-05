@@ -221,9 +221,9 @@
 	        }
 	    },
 	
-	    listen: function(sPropertySelector, fJavascriptDelegate)
+	    listen: function(sPropertySelector, scope, fJavascriptDelegate)
 	    {
-	        Mimoto.Aimless.dom.registerEventListener(sPropertySelector, fJavascriptDelegate);
+	        Mimoto.Aimless.dom.registerEventListener(sPropertySelector, scope, fJavascriptDelegate);
 	    }
 	
 	}
@@ -269,11 +269,12 @@
 	        
 	    },
 	
-	    registerEventListener: function(sPropertySelector, fJavascriptDelegate)
+	    registerEventListener: function(sPropertySelector, scope, fJavascriptDelegate)
 	    {
 	        this._aEventListeners.push(
 	            {
 	                sPropertySelector: sPropertySelector,
+	                scope: scope,
 	                fJavascriptDelegate: fJavascriptDelegate
 	            }
 	        );
@@ -1312,7 +1313,7 @@
 	                if (listener.sPropertySelector == sEntityIdentifier + '.' + change.propertyName)
 	                {
 	                    // execute
-	                    listener.fJavascriptDelegate(change);
+	                    listener.fJavascriptDelegate.apply(listener.scope, change);
 	                }
 	            }
 	        }

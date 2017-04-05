@@ -73,9 +73,9 @@ module.exports.prototype = {
         }
     },
 
-    listen: function(sPropertySelector, fJavascriptDelegate)
+    listen: function(sPropertySelector, scope, fJavascriptDelegate)
     {
-        Mimoto.Aimless.dom.registerEventListener(sPropertySelector, fJavascriptDelegate);
+        Mimoto.Aimless.dom.registerEventListener(sPropertySelector, scope, fJavascriptDelegate);
     }
 
 }

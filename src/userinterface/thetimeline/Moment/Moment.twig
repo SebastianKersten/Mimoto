@@ -3,5 +3,5 @@
     <div class="TheTimeline_Moment-shortDescription" {{ Aimless.realtime('shortDescription') }}>{{ Aimless.render('shortDescription') }}</div>
     <div class="TheTimeline_Moment-date js-date" {{ Aimless.hideWhenEmpty('date') }} {{ Aimless.realtime('date') }}>{{ Aimless.render('date') }}</div>
     <div class="TheTimeline_Moment-importance js-importance" {{ Aimless.realtime('importance') }}>{{ Aimless.render('importance') }}</div>
-    <script>{{ Aimless.jsListen('date', 'TheTimeline.positionMoments') }}</script>
+    <script>{{ Aimless.jsListen('date', 'TheTimeline', 'TheTimeline.positionMoments') }}</script>
 </div>
