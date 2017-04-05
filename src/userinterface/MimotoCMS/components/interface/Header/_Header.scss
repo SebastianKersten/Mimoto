@@ -4,6 +4,8 @@
     top: 0;
     right: 0;
     left: 0;
+    display: flex;
+    justify-content: space-between;
     height: $header-height-collapsed;
     border-bottom: 1px solid $alto;
     background: $white;
@@ -17,12 +19,13 @@
     #{$pr-interface}_Header-logo-container {
         position: relative;
         z-index: 1;
-        float: left;
+        flex: 0 0 $header-height-collapsed;
         width: $header-height-collapsed;
         height: $header-height-collapsed;
         background-color: $black;
 
         @include breakpoint(large up) {
+            flex: 0 0 $navigation-width;
             width: $navigation-width;
             height: $header-height;
             transition: width .25s;
