@@ -3,14 +3,14 @@
 
     @include breakpoint(large up) {
         @include clearfix;
+        flex: 0 1 100%;
         display: block;
-        float: left;
         padding: 22px 0 22px 40px;
+        overflow: hidden;
     }
 }
 
     #{$pr-interface}_Header-breadcrumbs-list-item {
-        float: left;
         color: $dusty-gray;
 
         &:hover {
@@ -32,4 +32,7 @@
             line-height: rem-calc(20px);
             text-decoration: none;
             color: inherit;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }

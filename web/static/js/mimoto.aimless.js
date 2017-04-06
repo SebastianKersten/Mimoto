@@ -1294,7 +1294,7 @@
 	
 	    _triggerJavascriptListeners: function(sEntityIdentifier, aChanges)
 	    {
-	        console.log('_triggerJavascriptListeners triggered ...');
+	        console.log('_triggerJavascriptListeners triggered ..');
 	
 	        // validate
 	        if (!this._aEventListeners || !aChanges) return;
