@@ -1,0 +1,11 @@
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "datepicker" } %}
+    {% block form_component_element %}
+
+        <div>settings opgeven als listoption (bijv. jaar, of volledige datum, of incl tijd)</div>
+        <div>button die popup opent</div>
+
+        input wordt "hidden"
+        <input {{ Aimless.input() }} type="type" class="MimotoCMS_forms_input_DatePicker" value="{{ Aimless.value() }}"/>
+
+    {% endblock %}
+{% endembed %}

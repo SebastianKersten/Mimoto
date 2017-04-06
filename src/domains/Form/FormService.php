@@ -628,6 +628,7 @@ class FormService
             case CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF: return CoreConfig::COREFORM_INPUT_TEXTRTF; break;
             case CoreConfig::MIMOTO_FORM_INPUT_VIDEO: return CoreConfig::COREFORM_INPUT_VIDEO; break;
             case CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER: return CoreConfig::COREFORM_INPUT_COLORPICKER; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER: return CoreConfig::COREFORM_INPUT_DATEPICKER; break;
         }
     }
 

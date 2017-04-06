@@ -266,7 +266,7 @@
 	     */
 	    __construct: function()
 	    {
-	        
+	        this._aEventListeners = [];
 	    },
 	
 	    registerEventListener: function(sPropertySelector, scope, fJavascriptDelegate)
@@ -1295,6 +1295,9 @@
 	    _triggerJavascriptListeners: function(sEntityIdentifier, aChanges)
 	    {
 	        console.log('_triggerJavascriptListeners triggered ...');
+	
+	        // validate
+	        if (!this._aEventListeners || !aChanges) return;
 	
 	        // parse modified values
 	        var nChangeCount = aChanges.length;

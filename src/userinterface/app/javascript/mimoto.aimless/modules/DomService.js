@@ -31,7 +31,7 @@ module.exports.prototype = {
      */
     __construct: function()
     {
-        
+        this._aEventListeners = [];
     },
 
     registerEventListener: function(sPropertySelector, scope, fJavascriptDelegate)
@@ -1060,6 +1060,9 @@ module.exports.prototype = {
     _triggerJavascriptListeners: function(sEntityIdentifier, aChanges)
     {
         console.log('_triggerJavascriptListeners triggered ...');
+
+        // validate
+        if (!this._aEventListeners || !aChanges) return;
 
         // parse modified values
         var nChangeCount = aChanges.length;

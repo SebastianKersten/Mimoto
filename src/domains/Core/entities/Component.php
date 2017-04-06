@@ -483,6 +483,11 @@ class Component
                 'file' => 'MimotoCMS/components/forms/input/ColorPicker/ColorPicker.twig',
                 'conditionals' => []
             ),
+            (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER,
+                'file' => 'MimotoCMS/components/forms/input/DatePicker/DatePicker.twig',
+                'conditionals' => []
+            ),
 
 
 
