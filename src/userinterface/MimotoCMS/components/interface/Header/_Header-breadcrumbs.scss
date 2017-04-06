@@ -11,6 +11,8 @@
 }
 
     #{$pr-interface}_Header-breadcrumbs-list-item {
+        display: inline-block;
+        white-space: nowrap;
         color: $dusty-gray;
 
         &:hover {
