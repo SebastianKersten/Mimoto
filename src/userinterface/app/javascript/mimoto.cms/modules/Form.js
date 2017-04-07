@@ -957,7 +957,8 @@ module.exports.prototype = {
             sDatePickerId: sDatePickerId,
             field: field,
             datePickerInputElement: document.querySelector(jsClass + '-input'),
-            currentValue: document.querySelector(jsClass + '-input').getAttribute('data-dp-value')
+            currentValue: document.querySelector(jsClass + '-input').getAttribute('data-dp-value'),
+            dateFormat: document.querySelector(jsClass + '-input').getAttribute('data-dp-format')
         }
 
         // store
@@ -965,7 +966,7 @@ module.exports.prototype = {
 
         new Flatpickr(this._aDatePicker[sDatePickerId].datePickerInputElement, {
             altInput: true,
-            altFormat: 'F J, Y / H:i',
+            altFormat: this._aDatePicker[sDatePickerId].dateFormat,
             defaultDate: this._aDatePicker[sDatePickerId].currentValue,
             enableTime: true,
             dateFormat: 'Y-m-d H:i:S', // 2017-03-08 21:46:42
