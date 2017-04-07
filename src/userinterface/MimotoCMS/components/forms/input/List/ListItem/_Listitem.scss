@@ -25,6 +25,7 @@
     #{$pr-input}_ListItem-text {
         padding: 15px 20px;
         flex: 1 1 auto;
+        overflow: hidden;
     }
 
         #{$pr-input}_ListItem-title,
@@ -39,6 +40,9 @@
 
         #{$pr-input}_ListItem-subtitle {
             color: $gray;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
     #{$pr-input}_ListItem-button {
