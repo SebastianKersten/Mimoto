@@ -1,3 +1,31 @@
-div.MimotoCMS_forms_input_DatePicker {
+#{$pr-input}_DatePicker {
+    > div {
+        width: 100%;
+    }
 
+    &-input {
+        display: block;
+        width: 100%;
+        height: 50px;
+        margin: 0 0 10px;
+        padding: 14px 15px;
+        font-family: $font-family-helvetica;
+        font-size: rem-calc(14px);
+        line-height: rem-calc(20px);
+        color: $black;
+        border: 1px solid $pale-slate;
+        outline: none;
+        background: $alabaster;
+        transition: all 100ms ease-out;
+
+        &:focus {
+            border-color: $tower-gray;
+            background: $white;
+
+            + #{$pr-forms}_FormComponent-element-prefix {
+                border-color: $tower-gray;
+                background: $white;
+            }
+        }
+    }
 }

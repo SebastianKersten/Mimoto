@@ -9,6 +9,8 @@
 var Sortable = require('sortablejs'); // https://github.com/RubaXa/Sortable
 
 var Dropzone = require('dropzone');
+var Flatpickr = require('flatpickr');
+
 Dropzone.autoDiscover = false;
 
 module.exports = function() {
@@ -36,6 +38,7 @@ module.exports.prototype = {
         this._aRequests = [];
         this._sCurrentOpenForm = '';
         this._aMediaFields = [];
+        this._aDatePicker = [];
     },
 
 
@@ -933,7 +936,45 @@ module.exports.prototype = {
         });
         
     },
-    
+
+    setupDatePicker: function(sDatePickerId, sFlatDatePickerId, sInputFieldId) {
+        // read
+        var currentForm = this._aForms[this._sCurrentOpenForm];
+
+        // validate
+        if (!currentForm) return;
+
+        // 1. locate form in dom
+        var $form = $('form[name="' + currentForm.sName + '"]');
+
+        // register
+        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+        var fieldInput = $("input", field);
+
+        var jsClass = '.js-' + sFlatDatePickerId + '-date-picker';
+
+        var datePicker = {
+            sDatePickerId: sDatePickerId,
+            field: field,
+            datePickerInputElement: document.querySelector(jsClass + '-input'),
+            currentValue: document.querySelector(jsClass + '-input').getAttribute('data-dp-value')
+        }
+
+        // store
+        this._aDatePicker[sDatePickerId] = datePicker;
+
+        new Flatpickr(this._aDatePicker[sDatePickerId].datePickerInputElement, {
+            altInput: true,
+            altFormat: 'F J, Y / H:i',
+            defaultDate: this._aDatePicker[sDatePickerId].currentValue,
+            enableTime: true,
+            dateFormat: 'Y-m-d H:i:S', // 2017-03-08 21:46:42
+            // noCalendar: true, // only diplays time
+            time_24hr: true,
+            'static': true
+        });
+    },
+
     _getInputFieldType: function($component)
     {
         // read type

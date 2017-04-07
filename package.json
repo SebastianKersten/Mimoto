@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "dropzone": "^4.3.0",
+    "flatpickr": "^2.4.8",
     "foundation-sites": "^6.2.4-rc1",
     "jquery": "^3.1.1",
     "jquery-ui-dist": "^1.12.1",
