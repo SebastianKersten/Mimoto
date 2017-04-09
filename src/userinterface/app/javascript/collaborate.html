@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <title>Mimoto Realtime Collaboration</title>
+
+    <link href="https://cdn.quilljs.com/1.2.3/quill.snow.css" rel="stylesheet">
+
+    <script src="http://mimoto.aimless/mimoto.cms/static/js/mimoto.cms.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        window.onload = function()
+        {
+            var deltaPending = null;
+            var documentPending = null;
+
+
+            var deltaBuffer = null;
+
+
+            var quill = new Mimoto.modules.Quill('#editor', {
+                theme: 'snow'
+            });
+
+
+            var socket = io();
+
+
+            quill.on('text-change', function(delta, oldContents, source)
+            {
+                if (source == 'api')
+                {
+                     console.warn("An API call triggered this change.", delta);
+
+                }
+                else if (source == 'user')
+                {
+                    console.log("The user triggered this change.", delta, oldContents);
+
+
+                    if (!deltaPending && !documentPending)
+                    {
+                        deltaPending = delta;
+                        documentPending = oldContents;
+
+                        socket.emit('ot', deltaPending);
+                    }
+                    else
+                    {
+                        // init
+                        if (!deltaBuffer) deltaBuffer = new Mimoto.modules.QuillDelta();
+
+                        // stack
+                        deltaBuffer = deltaBuffer.compose(delta);
+                    }
+
+
+                    console.warn('Pending contents = ' + JSON.stringify(deltaPending, null, 2));
+                    console.warn('Buffer contents = ' + JSON.stringify(deltaBuffer, null, 2));
+
+                }
+
+                //console.log('change = ' + JSON.stringify(delta, null, 2), '\nprevious contents = ' + JSON.stringify(oldContents, null, 2));
+
+            });
+
+            socket.on('initialContent', function(delta) {
+               quill.setContents(delta);
+            });
+
+            socket.on('ot-other', function(delta) {
+                console.log('OT from other', delta);
+
+                if (deltaPending && documentPending)
+                {
+                    var diff = documentPending.transform(delta);
+                }
+
+                quill.updateContents(delta);
+            });
+
+            socket.on('ot-self', function(delta) {
+
+                console.log("socket.on('ot') = delta received", delta);
+
+
+                //var newDelta = deltaPending.transform(delta);
+
+                if (deltaPending && documentPending)
+                {
+
+                    //var diff = documentPending.transform(delta);
+
+                    //console.log('The diff is', diff);
+
+
+                    // 1. delta van ander ook over pendingDocument heengooien
+                    // 2. van wie komt de delta. if from self, ander gedrag
+                    // 3. broadcast naar rest en naar self
+
+
+                    //quill.updateContents(diff);
+
+
+                    if (deltaBuffer)
+                    {
+                        //
+                        deltaPending = deltaBuffer;
+                        documentPending = diff;
+
+                        socket.emit('ot', deltaPending);
+
+                        // reset
+                        deltaBuffer = null;
+                    }
+                    else
+                    {
+                        deltaPending = null;
+                        documentPending = null;
+                    }
+                }
+
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+    <div id="editor" style="height: 300px;"></div>
+
+</body>
+</html>
