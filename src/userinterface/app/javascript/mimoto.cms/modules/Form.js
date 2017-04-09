@@ -36,6 +36,7 @@ module.exports.prototype = {
         this._aRequests = [];
         this._sCurrentOpenForm = '';
         this._aMediaFields = [];
+        this._aRichTextFields = [];
     },
 
 
@@ -959,6 +960,92 @@ module.exports.prototype = {
                 //console.log('Mimoto ===> I received a response from the FormController::updateSortindex!');
             }
         });
+    },
+
+
+
+
+    setupRichTextField: function(sRichTextFieldId, sFlatRichTextFieldId, sInputFieldId)
+    {
+        // read
+        var currentForm = this._aForms[this._sCurrentOpenForm];
+
+        // validate
+        if (!currentForm) return;
+
+
+
+        // 1. locate form in dom
+        var $form = $('form[name="' + currentForm.sName + '"]');
+
+        // register
+        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+        var fieldInput = $("input", field);
+
+        // setup
+        var richTextField = {
+            domElement: document.getElementById(sRichTextFieldId),
+            sImageFieldId: sRichTextFieldId,
+            field: field
+        };
+
+        // store
+        this._aRichTextFields[sRichTextFieldId] = richTextField;
+
+
+        // register
+        var classRoot = document;
+
+
+        richTextField.quill = new Mimoto.modules.Quill('#' + sFlatRichTextFieldId, {
+            theme: 'snow' // 'bubble'
+        });
+
+        // prepare deltas
+        richTextField.deltaPending = new Mimoto.modules.QuillDelta();
+        richTextField.deltaBuffer = new Mimoto.modules.QuillDelta();
+
+
+        richTextField.quill.on('text-change', function(delta, oldContents, source)
+        {
+            // if (source == 'api') {
+            //     console.log("An API call triggered this change.");
+            // } else if (source == 'user') {
+            //     console.log("A user action triggered this change.", delta, oldDelta);
+            // }
+
+
+            // var contents = richTextField.quill.getContents();
+            //
+            // console.log('contents', contents);
+            //
+            // var html = "contents = " + JSON.stringify(contents, null, 2);
+            //
+            // if (delta) {
+            //     console.log('change', delta);
+            //     html = "change = " + JSON.stringify(delta, null, 2) + "\n\n" + html;
+            // }
+            // console.log('html', html);
+
+
+
+            // 1. set timer
+            // 2. move buffer to pending
+            // 3. save original state of content
+            // 4. save all OTs since original state
+            // 5. on source, just parse OTs
+
+
+            console.log('change = ' + JSON.stringify(delta, null, 2), '\nprevious contents = ' + JSON.stringify(oldContents, null, 2));
+
+            richTextField.deltaBuffer.push(delta);
+
+            console.log('Delta after', richTextField.deltaBuffer, oldContents);
+        });
+
+
+        richTextField.quill.insertText(0, 'abc');
+
     }
     
 };

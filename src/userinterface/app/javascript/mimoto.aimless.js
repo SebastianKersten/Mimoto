@@ -5,7 +5,7 @@
  */
 
 
-require('./lib/diff_match_patch/diff_match_patch');
+//require('./lib/diff_match_patch/diff_match_patch');
 
 // init
 if (typeof Mimoto == "undefined") Mimoto = {};

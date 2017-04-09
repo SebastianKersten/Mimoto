@@ -2,9 +2,11 @@
 
 require('jquery-ui');
 
+
 var HeaderView = require('./views/Header');
 var ButtonUtils = require('./utils/Button');
 var Sortable = require('sortablejs'); // https://github.com/RubaXa/Sortable
+
 
 if (typeof Mimoto == "undefined") Mimoto = {};
 if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
@@ -17,6 +19,8 @@ Mimoto.modules.Tabmenu = require('./mimoto.cms/modules/Tabmenu');
 Mimoto.modules.Popup = require('./mimoto.cms/modules/Popup');
 Mimoto.modules.Page = require('./mimoto.cms/modules/Page');
 Mimoto.modules.Form = require('./mimoto.cms/modules/Form');
+Mimoto.modules.Quill = require('quill');
+Mimoto.modules.QuillDelta = require('quill-delta');
 
 // init
 Mimoto.CMS = new Mimoto.CMS();
