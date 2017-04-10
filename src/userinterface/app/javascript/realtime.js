@@ -38,6 +38,10 @@ app.get('/collaborate', function(req, res){
     res.sendFile(__dirname + '/collaborate.html');
 });
 
+app.get('/mimoto.cms.js', function(req, res){
+    res.sendFile(__dirname + '/temp/mimoto.cms.js');
+});
+
 io.on('connection', function(socket){
 
     console.log('a user connected');

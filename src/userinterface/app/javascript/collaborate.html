@@ -6,7 +6,7 @@
     <link href="https://cdn.quilljs.com/1.2.3/quill.snow.css" rel="stylesheet">
     <link href="https://cdn.quilljs.com/1.2.3/quill.bubble.css" rel="stylesheet">
 
-    <script src="http://mimoto.aimless/mimoto.cms/static/js/mimoto.cms.js"></script>
+    <script src="/mimoto.cms.js"></script>
 
     <script src="/socket.io/socket.io.js"></script>
 
@@ -25,6 +25,11 @@
             border: 1px solid #e5e5e5;
             background-color: #ffffff;
         }
+
+        p {
+            line-height: 25px;
+            font-size: 14px;
+        }
     </style>
 
     <script>
@@ -38,7 +43,14 @@
 
 
             var quill = new Mimoto.modules.Quill('#editor', {
-                theme: 'bubble'
+                theme: 'bubble',
+                modules: {
+                    history: {
+                        delay: 2000,
+                        maxStack: 500,
+                        userOnly: true
+                    }
+                }
             });
 
 
@@ -145,7 +157,7 @@
 
 <body>
 
-    <div id="editor" class="editor">xxx</div>
+    <div id="editor" class="editor"></div>
 
 </body>
 </html>
