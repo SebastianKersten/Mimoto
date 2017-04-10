@@ -37,10 +37,34 @@
         {
             var deltaPending = null;
             var documentPending = null;
-
-
             var deltaBuffer = null;
 
+            // add mimoto-card embed
+            var Embed = Mimoto.modules.Quill.import('blots/embed');
+            class MimotoInfocard extends Embed {
+            static create(value) {
+              let node = super.create(value);
+              node.innerText = value;
+
+              return node;
+            }
+            }
+
+            MimotoInfocard.blotName = 'mimoto-infocard'; //now you can use .ql-hr classname in your toolbar
+            MimotoInfocard.className = 'mimoto-infocard';
+            MimotoInfocard.tagName = 'span';
+
+            Mimoto.modules.Quill.register({
+            'formats/mimoto-infocard': MimotoInfocard
+            });
+
+            var toolbarOptions = [
+                ['bold', 'italic'],
+                [{'header': 1}, {'header': 2}],
+                ['blockquote', 'link'],
+                [{'mimoto-infocard': 'infocard'}],
+                ['clean']
+            ];
 
             var quill = new Mimoto.modules.Quill('#editor', {
                 theme: 'bubble',
@@ -53,12 +77,25 @@
                 }
             });
 
+            // Handlers can also be added post initialization
+            var toolbar = quill.getModule('toolbar');
+            toolbar.addHandler('mimoto-infocard', function () {
+            console.log('New handler for mimoto-infocard');
+
+            // get the position of the cursor
+            var range = quill.getSelection();
+            var text = quill.getText(range);
+
+            if (range) {
+              quill.deleteText(range);
+              quill.insertEmbed(range.index, "mimoto-infocard", text);
+            }
+            });
 
             var socket = io();
 
 
-            quill.on('text-change', function(delta, oldContents, source)
-            {
+            quill.on('text-change', function(delta, oldContents, source){
                 if (source == 'api')
                 {
                      console.warn("An API call triggered this change.", delta);
@@ -67,7 +104,6 @@
                 else if (source == 'user')
                 {
                     console.log("The user triggered this change.", delta, oldContents);
-
 
                     if (!deltaPending && !documentPending)
                     {
@@ -84,7 +120,6 @@
                         // stack
                         deltaBuffer = deltaBuffer.compose(delta);
                     }
-
 
                     console.warn('Pending contents = ' + JSON.stringify(deltaPending, null, 2));
                     console.warn('Buffer contents = ' + JSON.stringify(deltaBuffer, null, 2));
