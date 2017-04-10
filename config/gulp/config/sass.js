@@ -7,7 +7,7 @@ module.exports = {
   dest: config.dest + "/css",
   settings: {
     outputStyle: 'compressed',
-    includePaths: ['node_modules/foundation-sites/scss'],
+    includePaths: ['node_modules/foundation-sites/scss', 'node_modules/flatpickr/dist'],
     indentedSyntax: true // Enable .sass syntax!
   }
 
