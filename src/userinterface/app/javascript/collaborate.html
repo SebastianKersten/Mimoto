@@ -43,7 +43,7 @@
                     if (!deltaPending && !documentPending)
                     {
                         deltaPending = delta;
-                        documentPending = oldContents;
+                        //documentPending = oldContents;
 
                         socket.emit('ot', deltaPending);
                     }
@@ -71,11 +71,19 @@
             });
 
             socket.on('ot-other', function(delta) {
-                console.log('OT from other', delta);
+
+                console.log('OTHER - delta received', delta);
+
+                // 1. check if
+
+
 
                 if (deltaPending && documentPending)
                 {
-                    var diff = documentPending.transform(delta);
+                    //var diff = documentPending.transform(delta);
+
+
+                    //console.error(diff);
                 }
 
                 quill.updateContents(delta);
@@ -83,32 +91,23 @@
 
             socket.on('ot-self', function(delta) {
 
-                console.log("socket.on('ot') = delta received", delta);
+                console.log("SELF = delta received", delta);
 
 
-                //var newDelta = deltaPending.transform(delta);
-
-                if (deltaPending && documentPending)
+                if (deltaPending)
                 {
 
-                    //var diff = documentPending.transform(delta);
+                    if (deltaPending.toString() == delta.toString())
+                    {
+                        console.log('The deltas are EQUAL', delta);
 
-                    //console.log('The diff is', diff);
-
-
-                    // 1. delta van ander ook over pendingDocument heengooien
-                    // 2. van wie komt de delta. if from self, ander gedrag
-                    // 3. broadcast naar rest en naar self
-
-
-                    //quill.updateContents(diff);
-
+                        deltaPending  = null;
+                    }
 
                     if (deltaBuffer)
                     {
                         //
                         deltaPending = deltaBuffer;
-                        documentPending = diff;
 
                         socket.emit('ot', deltaPending);
 
@@ -120,6 +119,10 @@
                         deltaPending = null;
                         documentPending = null;
                     }
+                }
+                else
+                {
+                    console.error('------------- Noooooooooooooo', delta);
                 }
 
             });
