@@ -36,3 +36,20 @@
         margin-right: 0;
     }
 }
+
+#{$pr-input}_TextRTF-input {
+
+    padding: 10px 0 15px 0;
+
+    background-color: #ffffff;
+    border: #a5a5a5 1px solid;
+
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
