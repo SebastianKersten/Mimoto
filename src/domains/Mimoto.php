@@ -6,7 +6,7 @@ namespace Mimoto;
 // Mimoto classes
 use Mimoto\Action\ActionServiceProvider;
 use Mimoto\Event\EventServiceProvider;
-use Mimoto\Aimless\AimlessServiceProvider;
+use Mimoto\Aimless\OutputServiceProvider;
 use Mimoto\Data\EntityServiceProvider;
 use Mimoto\Cache\CacheServiceProvider;
 use Mimoto\Form\FormServiceProvider;
@@ -49,7 +49,7 @@ class Mimoto
         $app->register(new CacheServiceProvider($bEnableCache));
         $app->register(new EntityServiceProvider());
         $app->register(new LogServiceProvider());
-        $app->register(new AimlessServiceProvider());
+        $app->register(new OutputServiceProvider());
         $app->register(new EventServiceProvider());
         $app->register(new FormServiceProvider());
         $app->register(new UserServiceProvider());

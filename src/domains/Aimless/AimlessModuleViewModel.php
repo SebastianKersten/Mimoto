@@ -3,9 +3,6 @@
 // classpath
 namespace Mimoto\Aimless;
 
-// Mimoto classes
-use Mimoto\Aimless\MimotoAimlessUtils;
-
 
 /**
  * AimlessModuleViewModel

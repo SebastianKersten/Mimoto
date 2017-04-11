@@ -45,7 +45,7 @@ class MimotoAimlessController
         $connection = $this->_getConnection($sEntityType, $nEntityId, $sPropertySelector);
 
         // create
-        $component = Mimoto::service('aimless')->createComponent($sComponentName, $entity, $connection);
+        $component = Mimoto::service('output')->createComponent($sComponentName, $entity, $connection);
 
         // render and send
         return $component->render();
@@ -60,7 +60,7 @@ class MimotoAimlessController
         $connection = $this->_getConnection($sEntityType, $nEntityId, $sPropertySelector);
 
         // create
-        $component = Mimoto::service('aimless')->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
+        $component = Mimoto::service('output')->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
 
         // render and send
         return $component->render();

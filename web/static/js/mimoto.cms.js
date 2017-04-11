@@ -31091,7 +31091,7 @@
 	        // 1. remove 8 and 9 (will be handled by the api call response)
 	        
 	        // 8. find field
-	        var aNotifications = $("[data-aimless-id='" + sEntityType + '.' + nNotificationId + "']");
+	        var aNotifications = $("[data-mimoto-id='" + sEntityType + '.' + nNotificationId + "']");
 	
 	        // 9. collect value
 	        aNotifications.each( function(index, $component) {
@@ -31512,7 +31512,7 @@
 	        var listInfo = [];
 	        
 	        // search
-	        var $listItem = $('[data-aimless-id="' + sInstanceType + '.' + sInstanceId + '"][data-aimless-connection="' + nConnectionId + '"]');
+	        var $listItem = $('[data-mimoto-id="' + sInstanceType + '.' + sInstanceId + '"][data-mimoto-connection="' + nConnectionId + '"]');
 	        
 	        
 	        // validate
@@ -31523,7 +31523,7 @@
 	        var $parent = $($listItem).parent();
 	    
 	        // register
-	        var sInputFieldSelector = $($parent).attr('data-aimless-list-id');
+	        var sInputFieldSelector = $($parent).attr('data-mimoto-list-id');
 	        
 	        // split
 	        var aInputFieldSelectorElements = sInputFieldSelector.split('.');
@@ -31941,9 +31941,9 @@
 	            'sName': sInputFieldId,
 	            'sType': 'input', // #todo - const
 	            'settings': settings,
-	            $field: $("[data-aimless-form-field='" + sInputFieldId + "']", $form),
-	            $input: $("[data-aimless-form-field-input='" + sInputFieldId + "']", $form),  // todo - multiselect x * option
-	            $error: $("[data-aimless-form-field-error='" + sInputFieldId + "']", $form)
+	            $field: $("[data-mimoto-form-field='" + sInputFieldId + "']", $form),
+	            $input: $("[data-mimoto-form-field-input='" + sInputFieldId + "']", $form),  // todo - multiselect x * option
+	            $error: $("[data-mimoto-form-field-error='" + sInputFieldId + "']", $form)
 	        };
 	
 	        // store
@@ -31970,7 +31970,7 @@
 	        if (sAimlessInputType == 'list')
 	        {
 	            // find
-	            var listInputField = document.querySelectorAll('[data-aimless-form-field="' + sInputFieldId + '"]');
+	            var listInputField = document.querySelectorAll('[data-mimoto-form-field="' + sInputFieldId + '"]');
 	            var listElement = listInputField[0].querySelectorAll('.js-list');
 	            
 	            // read
@@ -32033,7 +32033,7 @@
 	        var classRoot = this;
 	
 	        // search
-	        var aSubmitButtons = $('[data-aimless-form-submit="' + sFormName + '"]');
+	        var aSubmitButtons = $('[data-mimoto-form-submit="' + sFormName + '"]');
 	
 	        // activate
 	        aSubmitButtons.each(function(nIndex, $component) {
@@ -32057,7 +32057,7 @@
 	        // Mimoto.Aimless.privateChannel.bind('client-Aimless:formfield_update_' + sFormName, function(data)
 	        // {
 	        //
-	        //     var $input = $("input[data-aimless-form-field-input='" + data.fieldId + "']");
+	        //     var $input = $("input[data-mimoto-form-field-input='" + data.fieldId + "']");
 	        //
 	        //
 	        //     // 1. check if supports realtime
@@ -32130,12 +32130,12 @@
 	            if (!classRoot._validateInputField(field)) { bValidated = false; continue; }
 	            
 	            
-	            var aInputFields = $("[data-aimless-form-field='" + field.sName + "']", $form);
+	            var aInputFields = $("[data-mimoto-form-field='" + field.sName + "']", $form);
 	    
 	            aInputFields.each( function(index, $inputField)
 	            {
 	                // 7b. find field
-	                var aInputs = $("[data-aimless-form-field-input='" + field.sName + "']", $inputField);
+	                var aInputs = $("[data-mimoto-form-field-input='" + field.sName + "']", $inputField);
 	                
 	                if (aInputs.length > 1 && ($(aInputs[0]).is("input")) && $(aInputs[0]).attr('type') == 'checkbox')
 	                {
@@ -32209,22 +32209,22 @@
 	
 	
 	                        // update dom
-	                        var aFields = $('[data-aimless-form-field^="' + newEntity.selector + '"]', $form);
+	                        var aFields = $('[data-mimoto-form-field^="' + newEntity.selector + '"]', $form);
 	                        aFields.each( function(index, $component)
 	                        {
-	                            var mls_form_field = $($component).attr("data-aimless-form-field");
+	                            var mls_form_field = $($component).attr("data-mimoto-form-field");
 	                            mls_form_field = newEntity.id + mls_form_field.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field", mls_form_field);
+	                            $($component).attr("data-mimoto-form-field", mls_form_field);
 	                        });
 	
 	                        // update dom
-	                        var aFields = $('[data-aimless-form-field-input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
+	                        var aFields = $('[data-mimoto-form-field-input^="' + newEntity.selector + '"][name^="' + newEntity.selector + '"]', $form);
 	                        
 	                        aFields.each( function(index, $component)
 	                        {
-	                            var sOld_mls_form_field_input = $($component).attr("data-aimless-form-field-input");
+	                            var sOld_mls_form_field_input = $($component).attr("data-mimoto-form-field-input");
 	                            var sNew_mls_form_field_input = newEntity.id + sOld_mls_form_field_input.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field-input", sNew_mls_form_field_input);
+	                            $($component).attr("data-mimoto-form-field-input", sNew_mls_form_field_input);
 	
 	                            classRoot._alterRegisteredFieldId(resultData.formName, sOld_mls_form_field_input, sNew_mls_form_field_input);
 	
@@ -32234,12 +32234,12 @@
 	                        });
 	
 	                        // update dom
-	                        var aFields = $('[data-aimless-form-field-error^="' + newEntity.selector + '"]', $form);
+	                        var aFields = $('[data-mimoto-form-field-error^="' + newEntity.selector + '"]', $form);
 	                        aFields.each( function(index, $component)
 	                        {
-	                            var mls_form_field_error = $($component).attr("data-aimless-form-field-error");
+	                            var mls_form_field_error = $($component).attr("data-mimoto-form-field-error");
 	                            mls_form_field_error = newEntity.id + mls_form_field_error.substr(newEntity.selector.length);
-	                            $($component).attr("data-aimless-form-field-error", mls_form_field_error);
+	                            $($component).attr("data-mimoto-form-field-error", mls_form_field_error);
 	                        });
 	                    }
 	                }
@@ -32457,7 +32457,7 @@
 	                field.$input.off('input');
 	
 	                field.sName = sNewInputFieldId;
-	                field.$input = $("input[data-aimless-form-field-input='" + sNewInputFieldId + "']");
+	                field.$input = $("input[data-mimoto-form-field-input='" + sNewInputFieldId + "']");
 	
 	                // store
 	                // Mimoto.Aimless.realtime.broadcastedValues[sNewInputFieldId] = Mimoto.Aimless.realtime.broadcastedValues[sOldInputFieldId];
@@ -32592,7 +32592,7 @@
 	        var $form = $('form[name="' + currentForm.sName + '"]');
 	        
 	        // register
-	        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+	        var field = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
 	        var fieldInput = $("input", field);
 	    
 	        // setup
@@ -32700,7 +32700,7 @@
 	        var $form = $('form[name="' + currentForm.sName + '"]');
 	        
 	        // register
-	        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+	        var field = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
 	        var fieldInput = $("input", field);
 	    
 	        // setup
@@ -32802,7 +32802,7 @@
 	        var $form = $('form[name="' + currentForm.sName + '"]');
 	
 	        // register
-	        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+	        var field = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
 	        var fieldInput = $("input", field);
 	
 	        var jsClass = '.js-' + sFlatDatePickerId + '-date-picker';
@@ -32833,15 +32833,15 @@
 	    _getInputFieldType: function($component)
 	    {
 	        // read type
-	        return $($component).attr('data-aimless-input-type');
+	        return $($component).attr('data-mimoto-input-type');
 	    },
 	    
 	    _changeOrder: function(htmlParentElement, htmlChildElement, nOldIndex, nNewIndex)
 	    {
 	        // register
-	        var sPropertySelector = htmlParentElement.getAttribute('data-aimless-contains');
-	        var nConnectionId = htmlChildElement.getAttribute('data-aimless-connection');
-	        var nCurrentSortindex = htmlChildElement.getAttribute('data-aimless-sortindex');
+	        var sPropertySelector = htmlParentElement.getAttribute('data-mimoto-contains');
+	        var nConnectionId = htmlChildElement.getAttribute('data-mimoto-connection');
+	        var nCurrentSortindex = htmlChildElement.getAttribute('data-mimoto-sortindex');
 	        
 	        // validate
 	        if (!sPropertySelector || !nConnectionId || !nCurrentSortindex) return;
@@ -32874,7 +32874,7 @@
 	        var $form = $('form[name="' + currentForm.sName + '"]');
 	
 	        // register
-	        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+	        var field = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
 	        var fieldInput = $("input", field);
 	
 	        // setup

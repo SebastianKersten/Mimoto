@@ -12,11 +12,11 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * AimlessServiceProvider
+ * OutputServiceProvider
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class AimlessServiceProvider implements ServiceProviderInterface
+class OutputServiceProvider implements ServiceProviderInterface
 {
     
     public function register(Application $app)
@@ -33,16 +33,16 @@ class AimlessServiceProvider implements ServiceProviderInterface
 
 
 
-        $app['Mimoto.Aimless'] = $app['Mimoto.AimlessService'] = $app->share(function($app)
+        $app['Mimoto.Output'] = $app['Mimoto.OutputService'] = $app->share(function($app)
         {
-            return new AimlessService($app['Mimoto.Data'], $app['Mimoto.Forms'], Mimoto::service('log'), Mimoto::service('twig'));
+            return new OutputService($app['Mimoto.Data'], $app['Mimoto.Forms'], Mimoto::service('log'), Mimoto::service('twig'));
         });
     }
 
     public function boot(Application $app)
     {
         // register
-        Mimoto::setService('aimless', $app['Mimoto.Aimless']);
+        Mimoto::setService('output', $app['Mimoto.Output']);
     }
     
 }

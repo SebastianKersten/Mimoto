@@ -4,8 +4,8 @@
         {# #todo - make menu editable, core elements are always there behind 'settings' or 'tools' (1 page with subpages) #}
 
 
-        <ul class="MimotoCMS_interface_Menu-group" {{ Aimless.hideWhenEmpty('contentSections') }} {{ Aimless.realtime('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}>
-            {{ Aimless.render('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}
+        <ul class="MimotoCMS_interface_Menu-group" {{ Mimoto.hideWhenEmpty('contentSections') }} {{ Mimoto.realtime('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}>
+            {{ Mimoto.render('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}
         </ul>
 
 

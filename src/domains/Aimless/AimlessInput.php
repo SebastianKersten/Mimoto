@@ -30,10 +30,10 @@ class AimlessInput extends AimlessComponent
      * @param MimotoEntity $entity
      * @param mixed $value
      */
-    public function __construct($sComponentName, $entity, $connection, $sFieldName, $value, $AimlessService, $DataService, $LogService, $TwigService)
+    public function __construct($sComponentName, $entity, $connection, $sFieldName, $value, $OutputService, $DataService, $LogService, $TwigService)
     {
         // forward
-        parent::__construct($sComponentName, $entity, $connection, null, $AimlessService, $DataService, $LogService, $TwigService);
+        parent::__construct($sComponentName, $entity, $connection, null, $OutputService, $DataService, $LogService, $TwigService);
 
         // store
         $this->_sFieldId = $sFieldName;
@@ -42,12 +42,12 @@ class AimlessInput extends AimlessComponent
 
     public function field()
     {
-        return 'data-aimless-form-field="'.$this->_sFieldId.'"';
+        return 'data-mimoto-form-field="'.$this->_sFieldId.'"';
     }
 
     public function input()
     {
-        return 'data-aimless-form-field-input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"';
+        return 'data-mimoto-form-field-input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"';
     }
 
     public function fieldId()
@@ -57,7 +57,7 @@ class AimlessInput extends AimlessComponent
 
     public function error()
     {
-        return 'data-aimless-form-field-error="'.$this->_sFieldId.'"';
+        return 'data-mimoto-form-field-error="'.$this->_sFieldId.'"';
     }
 
     public function value($bRenderValues = false, $sModuleName = null, $mapping = null, $customVars = null)
@@ -125,7 +125,7 @@ class AimlessInput extends AimlessComponent
                     $entity = Mimoto::service('data')->get($nEntityTypeName, $nEntityId);
 
                     // create
-                    $component = Mimoto::service('aimless')->createComponent($sModuleName, $entity, $aConnections[$nItemIndex]);
+                    $component = Mimoto::service('output')->createComponent($sModuleName, $entity, $aConnections[$nItemIndex]);
 
                     // configure
                     if (!empty($mapping)) $component->setMapping($mapping);
@@ -150,13 +150,13 @@ class AimlessInput extends AimlessComponent
     public function render($customValues = null)
     {
         // get requested component
-        $sComponentFile = $this->_AimlessService->getComponentFile($this->_sComponentName, $this->_entity);
+        $sComponentFile = $this->_OutputService->getComponentFile($this->_sComponentName, $this->_entity);
 
         // create
         $viewModel = new AimlessInputViewModel($this);
 
         // compose
-        $this->_aVars['Aimless'] = $viewModel;
+        $this->_aVars['Mimoto'] = $viewModel;
 
         // render
         $sRenderedField = $this->_TwigService->render($sComponentFile, $this->_aVars);

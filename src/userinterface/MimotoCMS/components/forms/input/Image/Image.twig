@@ -1,10 +1,10 @@
-{% set sImagefieldId = Aimless.meta('type')~"."~Aimless.meta('id') %}
-{% set sFlatImageFieldId = Aimless.meta('type')~Aimless.meta('id') %}
+{% set sImagefieldId = Mimoto.meta('type')~"."~Mimoto.meta('id') %}
+{% set sFlatImageFieldId = Mimoto.meta('type')~Mimoto.meta('id') %}
 
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonClass:'js-'~sFlatImageFieldId~'-image-upload-trigger' } %}
 
     {% block form_component_element %}
-        <div id="{{ Aimless.meta('type')~"."~Aimless.meta('id') }}">
+        <div id="{{ Mimoto.meta('type')~"."~Mimoto.meta('id') }}">
             <div class="MimotoCMS_forms_input_ImageUpload js-{{ sFlatImageFieldId }}-image-upload">
                 <div class="MimotoCMS_forms_input_ImageUpload-trigger js-{{ sFlatImageFieldId }}-image-upload-trigger">
                     <div class="MimotoCMS_forms_input_ImageUpload-trigger-button"><svg class="MimotoCMS_forms_input_ImageUpload-button-trigger-icon"><use xlink:href="#ico-plus"></use></svg></div>
@@ -20,14 +20,14 @@
                             <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
                         </div>
                         <div class="MimotoCMS_forms_input_ImageUpload-preview-button">
-                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
+                            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
                         </div>
                     </div>
                 </div>
             </div>
-            <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-{{ sFlatImageFieldId }}-image-upload-value"/>
+            <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}" class=".js-{{ sFlatImageFieldId }}-image-upload-value"/>
         </div>
-        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupImageField, '{{ sImagefieldId }}', '{{ sFlatImageFieldId }}', '{{ Aimless.fieldId() }}');</script>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupImageField, '{{ sImagefieldId }}', '{{ sFlatImageFieldId }}', '{{ Mimoto.fieldId() }}');</script>
     {% endblock %}
 
 {% endembed %}

@@ -18,11 +18,11 @@
             <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta">
 
                 <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_info">
-                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__formname" {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</div>
+                    <div class="MimotoCMS_pages_forms_FormDetail_Structure__formname" {{ Mimoto.realtime('name') }}>{{ Mimoto.render('name') }}</div>
                 </div>
 
                 <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_menu">
-                    {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.formEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
+                    {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.formEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
                 </div>
 
             </div>
@@ -31,18 +31,18 @@
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Aimless.showWhenEmpty('fields') }}>
+                <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Mimoto.showWhenEmpty('fields') }}>
                     <div>This forms has no fields yet.<br>Go ahead, start adding them!</div>
-                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                 </div>
 
-                <div {{ Aimless.hideWhenEmpty('fields') }}>
-                    <ul class="MimotoCMS_pages_forms_FormDetail_Structure__fields_container js-list js-list-sortable" {{ Aimless.realtimeWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}>
-                        {{ Aimless.renderWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}
+                <div {{ Mimoto.hideWhenEmpty('fields') }}>
+                    <ul class="MimotoCMS_pages_forms_FormDetail_Structure__fields_container js-list js-list-sortable" {{ Mimoto.realtimeWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}>
+                        {{ Mimoto.renderWrapper('fields', 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper') }}
                     </ul>
 
                     <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_menu">
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Aimless.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
 

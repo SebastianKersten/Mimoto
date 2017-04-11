@@ -1,9 +1,0 @@
-{% extends "examples/components/examplebase.twig" %}
-
-{% block content %}
-    <h1>Example 1a - Article - Regular</h1>
-    <div class="example_article_regular" {{ Aimless.realtime() }}>
-        <b><span {{ Aimless.realtime('title') }}>{{ Aimless.render('title') }}</span></b><br><br>
-        <i><span {{ Aimless.realtime('body') }}>{{ Aimless.render('body') }}</span></i><br><br>
-    </div>
-{% endblock %}

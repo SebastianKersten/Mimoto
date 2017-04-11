@@ -165,7 +165,7 @@ class AimlessComponentViewModel
 //    //        $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);
 //    //
 //    //            // compose
-//    //            $sFilter = (!empty($selector->conditionals)) ? " data-aimless-filter='".json_encode($selector->conditionals)."'" : '';
+//    //            $sFilter = (!empty($selector->conditionals)) ? " data-mimoto-filter='".json_encode($selector->conditionals)."'" : '';
 //
 //
 //
@@ -173,7 +173,7 @@ class AimlessComponentViewModel
 //            {
 //                $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
 //
-//                return 'data-aimless-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+//                return 'data-mimoto-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
 //            }
 //            else
 //            {
@@ -181,7 +181,7 @@ class AimlessComponentViewModel
 //                {
 //                    $sDisplayState = (!$this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
 //
-//                    return 'data-aimless-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
+//                    return 'data-mimoto-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
 //                }
 //            }
 //

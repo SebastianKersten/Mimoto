@@ -28,7 +28,7 @@ class TimelineController
         $eTimeline = Mimoto::service('data')->get('timeline', $nTimelineId);
 
         // 2. create template
-        $page = Mimoto::service('aimless')->createPage('timeline', $eTimeline);
+        $page = Mimoto::service('output')->createPage('timeline', $eTimeline);
 
         // 3. output
         return $page->render();

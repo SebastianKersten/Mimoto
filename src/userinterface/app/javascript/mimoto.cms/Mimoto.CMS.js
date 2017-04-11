@@ -147,7 +147,7 @@ module.exports.prototype = {
         // 1. remove 8 and 9 (will be handled by the api call response)
         
         // 8. find field
-        var aNotifications = $("[data-aimless-id='" + sEntityType + '.' + nNotificationId + "']");
+        var aNotifications = $("[data-mimoto-id='" + sEntityType + '.' + nNotificationId + "']");
 
         // 9. collect value
         aNotifications.each( function(index, $component) {
@@ -568,7 +568,7 @@ module.exports.prototype = {
         var listInfo = [];
         
         // search
-        var $listItem = $('[data-aimless-id="' + sInstanceType + '.' + sInstanceId + '"][data-aimless-connection="' + nConnectionId + '"]');
+        var $listItem = $('[data-mimoto-id="' + sInstanceType + '.' + sInstanceId + '"][data-mimoto-connection="' + nConnectionId + '"]');
         
         
         // validate
@@ -579,7 +579,7 @@ module.exports.prototype = {
         var $parent = $($listItem).parent();
     
         // register
-        var sInputFieldSelector = $($parent).attr('data-aimless-list-id');
+        var sInputFieldSelector = $($parent).attr('data-mimoto-list-id');
         
         // split
         var aInputFieldSelectorElements = sInputFieldSelector.split('.');

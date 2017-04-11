@@ -1,12 +1,12 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "list", button:true, buttonLabel:'Add', buttonIcon:'plus', buttonOnClick:"Mimoto.CMS.formFieldListItemAdd('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"', '"~Aimless.fieldId()~"')", target:'page' } %}
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "list", button:true, buttonLabel:'Add', buttonIcon:'plus', buttonOnClick:"Mimoto.CMS.formFieldListItemAdd('"~Mimoto.meta('type')~"', '"~Mimoto.meta('id')~"', '"~Mimoto.fieldId()~"')", target:'page' } %}
 
     {% block form_component_element %}
 
         {# showOnEmpty / hideOmEmtpy on empty collection #}
 
-        <ul class="MimotoCMS_forms_input_List js-list js-list-sortable" data-aimless-list-id="{{ Aimless.meta('type')~'.'~Aimless.meta('id') }}"  data-aimless-contains="{{ Aimless.fieldId() }}" data-aimless-component="_Mimoto_form_input_list-item">
+        <ul class="MimotoCMS_forms_input_List js-list js-list-sortable" data-mimoto-list-id="{{ Mimoto.meta('type')~'.'~Mimoto.meta('id') }}"  data-mimoto-contains="{{ Mimoto.fieldId() }}" data-mimoto-component="_Mimoto_form_input_list-item">
 
-            {{ Aimless.value(true, '_Mimoto_form_input_list-item', null) }}
+            {{ Mimoto.value(true, '_Mimoto_form_input_list-item', null) }}
 
             {#
                 // 1. mapping in settings
@@ -15,7 +15,7 @@
 
         </ul>
 
-        <input type="hidden" data-aimless-input-type="list" {{ Aimless.input() }} value='{{ Aimless.value() }}' />
+        <input type="hidden" data-mimoto-input-type="list" {{ Mimoto.input() }} value='{{ Mimoto.value() }}' />
 
     {% endblock %}
 

@@ -31,10 +31,10 @@ class FormController
     public function formNew(Application $app, $nEntityId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup content
         $component->addForm(
@@ -277,7 +277,7 @@ class FormController
     public function formView(Application $app, $nFormId)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
@@ -286,7 +286,7 @@ class FormController
         if (empty($eForm)) return $app->redirect("/mimoto.cms/forms");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail', $eForm);
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_forms_FormDetail', $eForm);
 
         // 5. setup page
 //        $page->setVar('pageTitle', array(
@@ -295,7 +295,7 @@ class FormController
 //                    "url" => '/mimoto.cms/forms'
 //                ),
 //                (object)array(
-//                    "label" => '<span data-aimless-value="' . CoreConfig::MIMOTO_FORM . '.' . $eForm->getId() . '.name">' . $eForm->getValue('name') . '</span>',
+//                    "label" => '<span data-mimoto-value="' . CoreConfig::MIMOTO_FORM . '.' . $eForm->getId() . '.name">' . $eForm->getValue('name') . '</span>',
 //                    "url" => '/mimoto.cms/form/' . $eForm->getId() . '/view'
 //                )
 //            )
@@ -311,7 +311,7 @@ class FormController
     public function formEdit(Application $app, $nFormId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
@@ -320,7 +320,7 @@ class FormController
         if (empty($eForm)) return $app->redirect("/mimoto.cms/forms");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup content
         $component->addForm(
@@ -353,10 +353,10 @@ class FormController
     public function formFieldNew_fieldTypeSelector(Application $app, $nFormId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create content
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_forms_FormDetail_TypeSelector');
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_forms_FormDetail_TypeSelector');
 
 
         // ----------
@@ -427,10 +427,10 @@ class FormController
     public function formFieldNew_fieldForm(Application $app, $nFormId, $nFormFieldTypeId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. content
         $component->addForm(
@@ -452,7 +452,7 @@ class FormController
     public function formFieldEdit(Application $app, $nFormFieldTypeId, $nFormFieldId)
     {
         // 1. init popup
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eFormField = Mimoto::service('data')->get($nFormFieldTypeId, $nFormFieldId);
@@ -461,7 +461,7 @@ class FormController
         if (empty($eFormField)) return $app->redirect("/mimoto.cms/forms");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. get parent form
         $eParentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eFormField);
@@ -501,7 +501,7 @@ class FormController
     {
 
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
 
         // validate
@@ -603,7 +603,7 @@ class FormController
 
 
         // 3. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 4. setup content
         $component->addForm(
@@ -633,7 +633,7 @@ class FormController
         //Mimoto::output($sInputFieldType, $sInputFieldId);
 
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eListItem = Mimoto::service('data')->get($sInstanceType, $sInstanceId);
@@ -711,7 +711,7 @@ class FormController
 
 
         // 3. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 4. setup content
         $component->addForm(

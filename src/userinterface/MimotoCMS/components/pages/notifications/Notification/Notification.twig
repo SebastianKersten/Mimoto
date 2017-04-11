@@ -1,18 +1,18 @@
-<div class="MimotoCMS_pages_notifications_Notification" {{ Aimless.realtime() }}>
-    <a name="notification_{{ Aimless.meta('id') }}"></a>
-    <div class="notification notification--{{ Aimless.data('category') }}">
+<div class="MimotoCMS_pages_notifications_Notification" {{ Mimoto.realtime() }}>
+    <a name="notification_{{ Mimoto.meta('id') }}"></a>
+    <div class="notification notification--{{ Mimoto.data('category') }}">
 
         <div class="notification-content">
-            <p class="notification-title" {{ Aimless.realtime('title') }}>{{ Aimless.data('title') }}</p>
+            <p class="notification-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</p>
             <p class="notification-subtitle">
-                <span class="notification-subtitle-timestamp">{{ Aimless.meta('created') }}</span> by
-                <span class="notification-subtitle-creator">{{ Aimless.data('dispatcher') }}</span>
+                <span class="notification-subtitle-timestamp">{{ Mimoto.meta('created') }}</span> by
+                <span class="notification-subtitle-creator">{{ Mimoto.data('dispatcher') }}</span>
             </p>
-            <p class="notification-message" {{ Aimless.realtime('message') }}>{{ Aimless.data('message') }}</p>
+            <p class="notification-message" {{ Mimoto.realtime('message') }}>{{ Mimoto.data('message') }}</p>
         </div>
 
         <div class="notification-button">
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Close', onclick: "Mimoto.CMS.notificationClose('"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"');" }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label: 'Close', onclick: "Mimoto.CMS.notificationClose('"~Mimoto.meta('type')~"', '"~Mimoto.meta('id')~"');" }) }}
         </div>
 
     </div>

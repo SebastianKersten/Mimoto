@@ -17,16 +17,16 @@ use Mimoto\Log\LogService;
 
 
 /**
- * AimlessService
+ * OutputService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class AimlessService
+class OutputService
 {
     
     // services
     private $_EntityService;
-    private $_AimlessService;
+    private $_OutputService;
     private $_LogService;
     private $_TwigService;
     private $_FormService;
@@ -49,7 +49,7 @@ class AimlessService
         // register
         $this->_EntityService = $EntityService;
         $this->_FormService = $FormService;
-        $this->_AimlessService = $this;
+        $this->_OutputService = $this;
         $this->_LogService = $LogService;
         $this->_TwigService = $TwigService;
         
@@ -84,10 +84,10 @@ class AimlessService
         if (!empty($param2) && is_string($param2)) $sComponentName = $param2;
 
         // verify
-        if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('aimless')->createPage() documentation [link]");
+        if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('output')->createPage() documentation [link]");
 
         // init and send
-        return new AimlessComponent($sComponentName, $entity, null, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, null, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -110,10 +110,10 @@ class AimlessService
         if (!empty($param2) && is_string($param2)) $sComponentName = $param2;
 
         // verify
-        if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('aimless')->createPopup() documentation [link]");
+        if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('output')->createPopup() documentation [link]");
 
         // init and send
-        return new AimlessComponent($sComponentName, $entity, null, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, null, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -125,7 +125,7 @@ class AimlessService
     public function createComponent($sComponentName, $entity = null, $connection = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -137,7 +137,7 @@ class AimlessService
     public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -149,7 +149,7 @@ class AimlessService
     public function createInput($sComponentName, $entity = null, $connection = null, $sFieldName = null, $value = null)
     {
         // init and send
-        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $this->_AimlessService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -161,7 +161,7 @@ class AimlessService
     public function createForm($sFormName, $xData, $options = null)
     {
         // init and send
-        return new AimlessForm($sFormName, $xData, $options, $this->_AimlessService, $this->_EntityService, $this->_FormService, $this->_LogService, $this->_TwigService);
+        return new AimlessForm($sFormName, $xData, $options, $this->_OutputService, $this->_EntityService, $this->_FormService, $this->_LogService, $this->_TwigService);
     }
 
 
@@ -430,7 +430,7 @@ class AimlessService
 
             default:
                 
-                die("AimlessService: Unknown request '".$sRequest."'");
+                die("OutputService: Unknown request '".$sRequest."'");
         }
     }
     

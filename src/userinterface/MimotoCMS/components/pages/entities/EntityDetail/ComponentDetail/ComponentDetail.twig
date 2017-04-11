@@ -20,13 +20,13 @@
                 <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta">
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_info">
 
-                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
-                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentfile" {{ Aimless.realtime('file') }}>{{ Aimless.data('file') }}</div>
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentfile" {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
 
                     </div>
 
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
                     </div>
 
                 </div>
@@ -35,7 +35,7 @@
 
             <div class="MimotoCMS_pages_components_ComponentDetail__block">
 
-                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_empty" {{ Aimless.showWhenEmpty('conditionals') }}>
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_empty" {{ Mimoto.showWhenEmpty('conditionals') }}>
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_explanation">
                         This component has no conditionals, but since this is optional I'm not
                         going to bother you too much about it. Remember however that this opens
@@ -43,16 +43,16 @@
                         items, all with different templates but for you as a developer still only
                         <u>one</u> line of code!
                     </div>
-                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                 </div>
 
-                <div {{ Aimless.hideWhenEmpty('conditionals') }}>
-                    <ul class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container js-list js-list-sortable" {{ Aimless.realtime('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}>
-                        {{ Aimless.render('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}
+                <div {{ Mimoto.hideWhenEmpty('conditionals') }}>
+                    <ul class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container js-list js-list-sortable" {{ Mimoto.realtime('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}>
+                        {{ Mimoto.render('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}
                     </ul>
 
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_menu">
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
 

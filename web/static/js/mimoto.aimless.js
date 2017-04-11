@@ -283,15 +283,15 @@
 	        // --- component level ---
 	    
 	        // search
-	        var aComponents = $("[data-aimless-contains='" + mls_container + "']");
+	        var aComponents = $("[data-mimoto-contains='" + mls_container + "']");
 	    
 	        aComponents.each( function(index, $container)
 	        {
 	            // read
-	            var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
-	            var mls_sortorder = $($container).attr("data-aimless-sortorder"); // #todo
-	            var mls_wrapper = $($container).attr("data-aimless-wrapper");
-	            var mls_contains = $($container).attr("data-aimless-contains");
+	            var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	            var mls_sortorder = $($container).attr("data-mimoto-sortorder"); // #todo
+	            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
+	            var mls_contains = $($container).attr("data-mimoto-contains");
 	            
 	            console.warn('mls_contains = ' + mls_contains);
 	            
@@ -312,14 +312,14 @@
 	        // --- selection level ---
 	        
 	        // search
-	        var aComponents = $("[data-aimless-selection='" + mls_container + "']");
+	        var aComponents = $("[data-mimoto-selection='" + mls_container + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
 	            // read
-	            var mls_component = classRoot._getComponentName($($component).attr("data-aimless-component"));
-	            var mls_sortorder = $($component).attr("data-aimless-sortorder"); // #todo
-	            var mls_wrapper = $($component).attr("data-aimless-wrapper");
+	            var mls_component = classRoot._getComponentName($($component).attr("data-mimoto-component"));
+	            var mls_sortorder = $($component).attr("data-mimoto-sortorder"); // #todo
+	            var mls_wrapper = $($component).attr("data-mimoto-wrapper");
 	    
 	            if (mls_wrapper)
 	            {
@@ -337,16 +337,16 @@
 	    
 	    
 	    
-	        // --- data-aimless-count (onCreate) ---
+	        // --- data-mimoto-count (onCreate) ---
 	    
 	    
 	        // search
-	        var aComponents = $("[data-aimless-count='" + mls_container + "']");
+	        var aComponents = $("[data-mimoto-count='" + mls_container + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
 	        
-	            var mls_config = $($component).attr("data-aimless-config");
+	            var mls_config = $($component).attr("data-mimoto-config");
 	        
 	            if (mls_config) { mls_config = $.parseJSON(mls_config); }
 	        
@@ -380,7 +380,7 @@
 	    
 	    
 	        // // search
-	        // var aComponents = $("[data-aimless-showonempty='" + mls_container + "']");
+	        // var aComponents = $("[data-mimoto-showonempty='" + mls_container + "']");
 	        //
 	        // aComponents.each( function(index, $component)
 	        // {
@@ -432,12 +432,12 @@
 	        
 	        
 	        // search
-	        var aValues = $("[data-aimless-value]");
+	        var aValues = $("[data-mimoto-value]");
 	        
 	        aValues.each( function(nIndex, $component)
 	        {
 	            // read
-	            var mls_value = $($component).attr("data-aimless-value");
+	            var mls_value = $($component).attr("data-mimoto-value");
 	        
 	            // determine
 	            var nOriginPos = mls_value.indexOf('[');
@@ -521,7 +521,7 @@
 	                            new_mls_value_origin += '.' + change.origin.propertyName;
 	                        
 	                            // update dom
-	                            $($component).attr('data-aimless-value', mls_value + '[' + new_mls_value_origin + ']');
+	                            $($component).attr('data-mimoto-value', mls_value + '[' + new_mls_value_origin + ']');
 	                        }
 	                    }
 	                }
@@ -542,7 +542,7 @@
 	            if (!change.value)
 	            {
 	                // search
-	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
 	                aComponents.each( function(index, $component)
 	                {
@@ -550,7 +550,7 @@
 	                });
 	    
 	                // search
-	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
 	                aComponents.each( function(index, $component)
 	                {
@@ -560,7 +560,7 @@
 	            else
 	            {
 	                // search
-	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
 	                aComponents.each( function(index, $component)
 	                {
@@ -568,7 +568,7 @@
 	                });
 	    
 	                // search
-	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
 	                aComponents.each( function(index, $component)
 	                {
@@ -597,17 +597,17 @@
 	    
 	        // --- force reload components
 	        
-	        var aComponents = $("[data-aimless-id='" + sEntityIdentifier + "']");
+	        var aComponents = $("[data-mimoto-id='" + sEntityIdentifier + "']");
 	        aComponents.each(function (nIndex, $component)
 	        {
 	            // read
-	            var mls_reloadOnChange = $($component).attr("data-aimless-reloadonchange");
+	            var mls_reloadOnChange = $($component).attr("data-mimoto-reloadonchange");
 	            
 	            
 	            if (mls_reloadOnChange == 'true')
 	            {
-	                var mls_component = classRoot._getComponentName($($component).attr("data-aimless-component"));
-	                var mls_wrapper = $($component).attr("data-aimless-wrapper");
+	                var mls_component = classRoot._getComponentName($($component).attr("data-mimoto-component"));
+	                var mls_wrapper = $($component).attr("data-mimoto-wrapper");
 	    
 	                if (mls_wrapper)
 	                {
@@ -644,7 +644,7 @@
 	            if (change.subtype && change.subtype == 'image')
 	            {
 	                // search
-	                var aImages = $("[data-aimless-image='" + sEntityIdentifier + "." + change.propertyName + "']");
+	                var aImages = $("[data-mimoto-image='" + sEntityIdentifier + "." + change.propertyName + "']");
 	
 	                if (change.entity && change.entity.file)
 	                {
@@ -663,13 +663,13 @@
 	            
 	            
 	            // collect
-	            var aContainers = $("[data-aimless-entity='" + sEntityIdentifier + "." + change.propertyName + "']");
+	            var aContainers = $("[data-mimoto-entity='" + sEntityIdentifier + "." + change.propertyName + "']");
 	            
 	            aContainers.each(function (nIndex, $container)
 	            {
 	                // read
-	                var mls_entity = $($container).attr("data-aimless-entity");
-	                var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
+	                var mls_entity = $($container).attr("data-mimoto-entity");
+	                var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
 	                
 	                // register
 	                var item = change.entity;
@@ -699,7 +699,7 @@
 	            if (!change.entity)
 	            {
 	                // search
-	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -707,7 +707,7 @@
 	                });
 	            
 	                // search
-	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -717,7 +717,7 @@
 	            else
 	            {
 	                // search
-	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -725,7 +725,7 @@
 	                });
 	            
 	                // search
-	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -762,15 +762,15 @@
 	            if (!change.collection) continue;
 	            
 	            // collect
-	            var aContainers = $("[data-aimless-contains='" + sEntityIdentifier + "." + change.propertyName + "']");
+	            var aContainers = $("[data-mimoto-contains='" + sEntityIdentifier + "." + change.propertyName + "']");
 	        
 	        
 	            aContainers.each(function(nIndex, $container)
 	            {
 	                // read
-	                var mls_contains = $($container).attr("data-aimless-contains");
-	                var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
-	                var mls_filter = $($container).attr("data-aimless-filter");
+	                var mls_contains = $($container).attr("data-mimoto-contains");
+	                var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	                var mls_filter = $($container).attr("data-mimoto-filter");
 	                
 	                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 	            
@@ -799,7 +799,7 @@
 	                        // load
 	                        if (bFilterApproved)
 	                        {
-	                            var mls_wrapper = $($container).attr("data-aimless-wrapper");
+	                            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
 	    
 	                            if (mls_wrapper)
 	                            {
@@ -825,7 +825,7 @@
 	                        var item = change.collection.removed[iRemoved];
 	                    
 	                        // find
-	                        var $item = $("[data-aimless-id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $container);
+	                        var $item = $("[data-mimoto-id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $container);
 	                    
 	                        // delete
 	                        $item.remove();
@@ -848,8 +848,8 @@
 	                        var connection = change.collection.connections[nConnectionIndex];
 	                        
 	                        // register
-	                        var $currentItem = $('[data-aimless-connection="' + connection.id + '"]', $container);
-	                        $currentItem.attr('data-aimless-sortindex', connection.sortindex);
+	                        var $currentItem = $('[data-mimoto-connection="' + connection.id + '"]', $container);
+	                        $currentItem.attr('data-mimoto-sortindex', connection.sortindex);
 	                        
 	                        // verify
 	                        if (nConnectionIndex == 0)
@@ -885,15 +885,15 @@
 	                var connection = aConnections[nConnectionIndex];
 	
 	                // search
-	                var aContainers = $("[data-aimless-contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
+	                var aContainers = $("[data-mimoto-contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
 	                
 	                
 	                aContainers.each(function(nIndex, $container)
 	                {
 	                    // read
-	                    var mls_contains = $($container).attr("data-aimless-contains");
-	                    var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
-	                    var mls_filter = $($container).attr("data-aimless-filter");
+	                    var mls_contains = $($container).attr("data-mimoto-contains");
+	                    var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	                    var mls_filter = $($container).attr("data-mimoto-filter");
 	                    
 	                    
 	                    
@@ -925,7 +925,7 @@
 	                        // load
 	                        if (bFilterApproved)
 	                        {
-	                            var mls_wrapper = $($container).attr("data-aimless-wrapper");
+	                            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
 	    
 	                            if (mls_wrapper)
 	                            {
@@ -941,7 +941,7 @@
 	                        }
 	                        else {
 	                            // search
-	                            var aSubitems = $("[data-aimless-id='" + sEntityIdentifier + "']", $container);
+	                            var aSubitems = $("[data-mimoto-id='" + sEntityIdentifier + "']", $container);
 	        
 	                            aSubitems.each(function (nIndex, $component) {
 	            
@@ -976,7 +976,7 @@
 	                        if (bShouldToggle)
 	                        {
 	                            // search
-	                            var aSubitems = $("[data-aimless-id='" + sEntityIdentifier + "']", $container);
+	                            var aSubitems = $("[data-mimoto-id='" + sEntityIdentifier + "']", $container);
 	    
 	                            aSubitems.each(function (nIndex, $component)
 	                            {
@@ -986,7 +986,7 @@
 	                                // reload with new template
 	                                //Mimoto.Aimless.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
 	    
-	                                var mls_wrapper = $($container).attr("data-aimless-wrapper");
+	                                var mls_wrapper = $($container).attr("data-mimoto-wrapper");
 	    
 	                                if (mls_wrapper)
 	                                {
@@ -1021,7 +1021,7 @@
 	            if (change.collection.count == 0)
 	            {
 	                // search
-	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	                
 	                aComponents.each( function(index, $component)
 	                {
@@ -1029,7 +1029,7 @@
 	                });
 	            
 	                // search
-	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -1039,7 +1039,7 @@
 	            else
 	            {
 	                // search
-	                var aComponents = $("[data-aimless-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -1047,7 +1047,7 @@
 	                });
 	            
 	                // search
-	                var aComponents = $("[data-aimless-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -1077,23 +1077,23 @@
 	            var change = changes[i];
 	        
 	        
-	            var aContainers = $("[data-aimless-selection='" + sEntityType + "']");
+	            var aContainers = $("[data-mimoto-selection='" + sEntityType + "']");
 	        
 	        
 	            aContainers.each(function(nIndex, $container)
 	            {
 	                // read
-	                var mls_selection = $($container).attr("data-aimless-selection");
-	                var mls_component = classRoot._getComponentName($($container).attr("data-aimless-component"));
-	                var mls_filter = $($container).attr("data-aimless-filter");
+	                var mls_selection = $($container).attr("data-mimoto-selection");
+	                var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	                var mls_filter = $($container).attr("data-mimoto-filter");
 	            
 	                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 	            
 	            
-	                // 1. read data-aimless-id's van items binnen component
+	                // 1. read data-mimoto-id's van items binnen component
 	            
 	            
-	                var aSubitems = $("[data-aimless-id='" + sEntityType + '.' + sEntityId + "']", $container);
+	                var aSubitems = $("[data-mimoto-id='" + sEntityType + '.' + sEntityId + "']", $container);
 	            
 	            
 	                aSubitems.each(function(nIndex, $subitem)
@@ -1126,12 +1126,12 @@
 	    _updateInputFields: function (sEntityIdentifier, changes)
 	    {
 	        // search
-	        var aValues = $("[data-aimless-form-field-input]");
+	        var aValues = $("[data-mimoto-form-field-input]");
 	        
 	        aValues.each( function(nIndex, $component)
 	        {
 	            // read
-	            var mls_form_field_input = $($component).attr("data-aimless-form-field-input");
+	            var mls_form_field_input = $($component).attr("data-mimoto-form-field-input");
 	        
 	            // determine
 	            var nOriginPos = mls_form_field_input.indexOf('[');
@@ -1170,12 +1170,12 @@
 	    {
 	    
 	        // search
-	        var aComponents = $("[data-aimless-count='" + sEntityType + "']");
+	        var aComponents = $("[data-mimoto-count='" + sEntityType + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
 	        
-	            var mls_filter = $($component).attr("data-aimless-filter");
+	            var mls_filter = $($component).attr("data-mimoto-filter");
 	        
 	            if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 	        
@@ -1201,7 +1201,7 @@
 	                // load
 	                if (!bFilterApproved)
 	                {
-	                    var mls_config = $($component).attr("data-aimless-config");
+	                    var mls_config = $($component).attr("data-mimoto-config");
 	                
 	                    if (mls_config) { mls_config = $.parseJSON(mls_config); }
 	                

@@ -22,7 +22,7 @@ class AimlessComponent
 {
     
     // services
-    protected $_AimlessService;
+    protected $_OutputService;
     protected $_DataService;
     protected $_LogService;
     protected $_TwigService;
@@ -77,11 +77,11 @@ class AimlessComponent
      * Constructor
      * @param string $sComponentName
      * @param MimotoEntity $entity
-     * @param AimlessService $AimlessService
+     * @param OutputService $OutputService
      * @param EntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sComponentName, MimotoEntity $entity = null, $connection = null, $sWrapperName = null, AimlessService $AimlessService, EntityService $DataService, LogService $LogService, $TwigService)
+    public function __construct($sComponentName, MimotoEntity $entity = null, $connection = null, $sWrapperName = null, OutputService $OutputService, EntityService $DataService, LogService $LogService, $TwigService)
     {
         // register
         $this->_sComponentName = $sComponentName;
@@ -90,7 +90,7 @@ class AimlessComponent
         $this->_sWrapperName = $sWrapperName;
 
         // register
-        $this->_AimlessService = $AimlessService;
+        $this->_OutputService = $OutputService;
         $this->_DataService = $DataService;
         $this->_LogService = $LogService;
         $this->_TwigService = $TwigService;
@@ -410,7 +410,7 @@ class AimlessComponent
         }
 
         // 5. create component
-        $component = $this->_AimlessService->createComponent($sComponentName, $xValue);
+        $component = $this->_OutputService->createComponent($sComponentName, $xValue);
 
         // 6. render and send
         return $component->render($customValues);
@@ -465,7 +465,7 @@ class AimlessComponent
     public function selection($sSelectionName)
     {
         // validate
-        if (!isset($this->_aSelections[$sSelectionName])) die("Aimless says: Selection '$sSelectionName' not defined");
+        if (!isset($this->_aSelections[$sSelectionName])) die("Mimoto says: Selection '$sSelectionName' not defined");
 
         // load
         $selection = $this->_aSelections[$sSelectionName];
@@ -477,8 +477,8 @@ class AimlessComponent
 
     public function realtime($sPropertySelector = null, $sComponentName = null, $sWrapperName = null)
     {
-        $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' data-aimless-connection="'.$this->_connection->getId().'"' : '';
-        $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' data-aimless-sortindex="'.$this->_connection->getSortIndex().'"' : '';
+        $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' data-mimoto-connection="'.$this->_connection->getId().'"' : '';
+        $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' data-mimoto-sortindex="'.$this->_connection->getSortIndex().'"' : '';
 
 
         if ($sPropertySelector !== null)
@@ -491,7 +491,7 @@ class AimlessComponent
             $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);
 
             // compose
-            $sFilter = (!empty($selector->conditionals)) ? " data-aimless-filter='".json_encode($selector->conditionals)."'" : '';
+            $sFilter = (!empty($selector->conditionals)) ? " data-mimoto-filter='".json_encode($selector->conditionals)."'" : '';
 
 
             #component
@@ -506,15 +506,15 @@ class AimlessComponent
                     }
                 }
 
-                $sComponentConditionals = Mimoto::service('aimless')->getComponentConditionalsAsString($sComponentName);
+                $sComponentConditionals = Mimoto::service('output')->getComponentConditionalsAsString($sComponentName);
                 $sComponentName .= $sComponentConditionals;
 
                 // compose
-                $sComponent = (!empty($sComponentName)) ? ' data-aimless-component="'.$sComponentName.'"' : '';
-                $sWrapper = (!empty($sWrapperName)) ? ' data-aimless-wrapper="'.$sWrapperName.'"' : '';
+                $sComponent = (!empty($sComponentName)) ? ' data-mimoto-component="'.$sComponentName.'"' : '';
+                $sWrapper = (!empty($sWrapperName)) ? ' data-mimoto-wrapper="'.$sWrapperName.'"' : '';
 
                 // send
-                return 'data-aimless-contains="'.$this->_entity->getAimlessValue($sPropertyName).'"'.$sFilter.$sComponent.$sWrapper;
+                return 'data-mimoto-contains="'.$this->_entity->getAimlessValue($sPropertyName).'"'.$sFilter.$sComponent.$sWrapper;
             }
             else
             if (isset($this->_aSelections[$sPropertyName]))
@@ -527,15 +527,15 @@ class AimlessComponent
                     }
                 }
 
-                $sComponentConditionals = Mimoto::service('aimless')->getComponentConditionalsAsString($sComponentName);
+                $sComponentConditionals = Mimoto::service('output')->getComponentConditionalsAsString($sComponentName);
                 $sComponentName .= $sComponentConditionals;
 
                 // compose
-                $sComponent = ' data-aimless-component="'.$sComponentName.'"';
-                $sWrapper = (!empty($sWrapperName)) ? ' data-aimless-wrapper="'.$sWrapperName.'"' : '';
+                $sComponent = ' data-mimoto-component="'.$sComponentName.'"';
+                $sWrapper = (!empty($sWrapperName)) ? ' data-mimoto-wrapper="'.$sWrapperName.'"' : '';
 
                 // send
-                //return 'data-aimless-selection="'.$this->_aSelections[$sPropertyName]->aEntities->getCriteria()['type'].'"'.$sFilter.$sComponent.$sWrapper;
+                //return 'data-mimoto-selection="'.$this->_aSelections[$sPropertyName]->aEntities->getCriteria()['type'].'"'.$sFilter.$sComponent.$sWrapper;
                 return $sConnection.$sSortIndex.$sFilter.$sComponent.$sWrapper; // #todo - fix selections
             }
 
@@ -544,7 +544,7 @@ class AimlessComponent
         
         if (empty($this->_entity))
         {
-            die("Aimless says: Realtime feature for property '$sPropertySelector' not possible if no entity is set");
+            die("Mimoto says: Realtime feature for property '$sPropertySelector' not possible if no entity is set");
         
             // 1. broadcast webevent for debugging purposes
             // 2. standaard report error (error level)
@@ -553,11 +553,11 @@ class AimlessComponent
 
         if ($sPropertySelector === null)
         {
-            $sComponent = (!empty($this->_sComponentName)) ? ' data-aimless-component="'.$this->_sComponentName.'"' : '';
-            $sWrapper = (!empty($this->_sWrapperName)) ? ' data-aimless-wrapper="'.$this->_sWrapperName.'"' : '';
+            $sComponent = (!empty($this->_sComponentName)) ? ' data-mimoto-component="'.$this->_sComponentName.'"' : '';
+            $sWrapper = (!empty($this->_sWrapperName)) ? ' data-mimoto-wrapper="'.$this->_sWrapperName.'"' : '';
 
 
-            return 'data-aimless-id="'.$this->_entity->getAimlessId().'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
+            return 'data-mimoto-id="'.$this->_entity->getAimlessId().'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
         }
         else
         {
@@ -572,23 +572,23 @@ class AimlessComponent
                     if ($this->_entity->getPropertySubtype($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE
                         && empty($sComponentName))
                     {
-                        return 'data-aimless-image="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
+                        return 'data-mimoto-image="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
                     }
                     else
                     {
                         $sComponentName = (!empty($sComponentName)) ? $sComponentName : $this->_aPropertyComponents[$sPropertyName]->sComponentName;
 
-                        $sComponent = (!empty($sComponentName)) ? ' data-aimless-component="'.$sComponentName.'"' : '';
-                        $sWrapper = (!empty($sWrapperName)) ? ' data-aimless-wrapper="'.$sWrapperName.'"' : '';
+                        $sComponent = (!empty($sComponentName)) ? ' data-mimoto-component="'.$sComponentName.'"' : '';
+                        $sWrapper = (!empty($sWrapperName)) ? ' data-mimoto-wrapper="'.$sWrapperName.'"' : '';
 
-                        return 'data-aimless-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
+                        return 'data-mimoto-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
                     }
 
                     break;
 
                 default:
 
-                    return 'data-aimless-value="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
+                    return 'data-mimoto-value="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
             }
         }
     }
@@ -656,7 +656,7 @@ class AimlessComponent
         $formConfig = $this->_aFormConfigs[$sKey];
 
         // 4. output
-        return 'data-aimless-form-submit="'.$formConfig->sFormName.'"';
+        return 'data-mimoto-form-submit="'.$formConfig->sFormName.'"';
     }
 
     
@@ -666,13 +666,13 @@ class AimlessComponent
         if (!empty($this->_sWrapperName))
         {
             // get component file
-            $sWrapperFile = $this->_AimlessService->getComponentFile($this->_sWrapperName, $this->_entity);
+            $sWrapperFile = $this->_OutputService->getComponentFile($this->_sWrapperName, $this->_entity);
 
             // create
             $viewModel = new AimlessWrapperViewModel($this, $this->_sComponentName);
 
             // compose
-            $this->_aVars['Aimless'] = $viewModel;
+            $this->_aVars['Mimoto'] = $viewModel;
 
             // add custom values
             if (!empty($customValues))
@@ -724,13 +724,13 @@ class AimlessComponent
 
 
         // get component file
-        $sComponentFile = $this->_AimlessService->getComponentFile($sTemplateName, $this->_entity);
+        $sComponentFile = $this->_OutputService->getComponentFile($sTemplateName, $this->_entity);
 
         // create
         $viewModel = new AimlessComponentViewModel($this);
 
         // compose
-        $this->_aVars['Aimless'] = $viewModel;
+        $this->_aVars['Mimoto'] = $viewModel;
 
         // add custom values
         if (!empty($customValues))
@@ -749,13 +749,13 @@ class AimlessComponent
     public function module($sModuleName, $customValues = null)
     {
         // get module file
-        $sModuleFile = $this->_AimlessService->getComponentFile($sModuleName);
+        $sModuleFile = $this->_OutputService->getComponentFile($sModuleName);
 
         // create
         $viewModel = new AimlessModuleViewModel($this);
 
         // compose
-        $this->_aVars['Aimless'] = $viewModel;
+        $this->_aVars['Mimoto'] = $viewModel;
 
         // add custom values
         if (!empty($customValues))
@@ -852,7 +852,7 @@ class AimlessComponent
     private function renderCollectionItemAsComponent($sTemplateName, $entity, $connection)
     {
         // create and send
-        return $this->_AimlessService->createComponent($sTemplateName, $entity, $connection);
+        return $this->_OutputService->createComponent($sTemplateName, $entity, $connection);
     }
 
     /**
@@ -864,7 +864,7 @@ class AimlessComponent
     private function renderCollectionItemAsComponentWrapper($sComponentName, $entity, $connection, $sWrapperName)
     {
         // create and send
-        return $this->_AimlessService->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
+        return $this->_OutputService->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
     }
 
     /**
@@ -899,7 +899,7 @@ class AimlessComponent
         if (!$bFormFieldFound) $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please add a value to input field with <b>id=".$eField->getId()."</b> and type=".$eField->getEntityTypeName(), 'AimlessComponent', true);
 
         // create and send
-        return $this->_AimlessService->createInput($sTemplateName, $eField, $connection, $formField->key, $formField->value);
+        return $this->_OutputService->createInput($sTemplateName, $eField, $connection, $formField->key, $formField->value);
     }
 
     /**
@@ -911,7 +911,7 @@ class AimlessComponent
     private function renderForm($sFormName, $xValues, $options)
     {
         // create
-        $component = $this->_AimlessService->createForm($sFormName, $xValues, $options);
+        $component = $this->_OutputService->createForm($sFormName, $xValues, $options);
 
         // output
         return $component->render(); //$this->_aVars); // #todo - pass vars for rendering
@@ -929,7 +929,7 @@ class AimlessComponent
         {
             $sDisplayState = (empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
 
-            return 'data-aimless-hideonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+            return 'data-mimoto-hideonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
         }
         else
         {
@@ -937,7 +937,7 @@ class AimlessComponent
             {
                 $sDisplayState = ($this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
 
-                return 'data-aimless-hideonempty="'.$sPropertySelector.'" '.$sDisplayState;
+                return 'data-mimoto-hideonempty="'.$sPropertySelector.'" '.$sDisplayState;
             }
         }
 
@@ -955,7 +955,7 @@ class AimlessComponent
 //        $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);
 //
 //            // compose
-//            $sFilter = (!empty($selector->conditionals)) ? " data-aimless-filter='".json_encode($selector->conditionals)."'" : '';
+//            $sFilter = (!empty($selector->conditionals)) ? " data-mimoto-filter='".json_encode($selector->conditionals)."'" : '';
 
 
 
@@ -963,7 +963,7 @@ class AimlessComponent
         {
             $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
 
-            return 'data-aimless-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+            return 'data-mimoto-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
         }
         else
         {
@@ -971,7 +971,7 @@ class AimlessComponent
             {
                 $sDisplayState = (!$this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
 
-                return 'data-aimless-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
+                return 'data-mimoto-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
             }
         }
 
@@ -980,7 +980,7 @@ class AimlessComponent
 
     public function reloadOnChange()
     {
-        return 'data-aimless-reloadonchange="true"';
+        return 'data-mimoto-reloadonchange="true"';
     }
 
     public function hasProperty($sPropertyName)

@@ -33,7 +33,7 @@ class MimotoAimlessUtils
     public static function getModule($sModuleName, $values = [])
     {
         // get module file
-        $sModuleFile = Mimoto::service('aimless')->getComponentFile($sModuleName);
+        $sModuleFile = Mimoto::service('output')->getComponentFile($sModuleName);
 
         // create
         $viewModel = new AimlessModuleViewModel();
@@ -42,7 +42,7 @@ class MimotoAimlessUtils
         $aVars = $values;
 
         // compose
-        $aVars['Aimless'] = $viewModel;
+        $aVars['Mimoto'] = $viewModel;
 
         // output
         return Mimoto::service('twig')->render($sModuleFile, $aVars);

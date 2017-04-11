@@ -30,13 +30,13 @@ Mimoto is typecasted
 
 ##### onUpdate
 
-* data-aimless-id
-* data-aimless-value
+* data-mimoto-id
+* data-mimoto-value
 
 ##### onCreated
 
-* data-aimless-contains
-* data-aimless-filter
+* data-mimoto-contains
+* data-mimoto-filter
 
 
 ## Actions
@@ -108,7 +108,7 @@ public function addForm($sFormName, $xData = null, $options = null)
     <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"></span></label>
     <div class="form-component-content">
       <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
+        <input type="text" class="form-component-element-input" placeholder="" value="{{ Mimoto.value() }}" />
       </div>
       <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
     </div>
@@ -118,7 +118,7 @@ public function addForm($sFormName, $xData = null, $options = null)
     <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"></span></label>
     <div class="form-component-content">
       <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
+        <input type="text" class="form-component-element-input" placeholder="" value="{{ Mimoto.value() }}" />
       </div>
       <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
     </div>
@@ -128,7 +128,7 @@ public function addForm($sFormName, $xData = null, $options = null)
     <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"><svg class="form-component-title-icon-svg"><use xlink:href='#checkmark'/></svg></span></label>
     <div class="form-component-content">
       <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
+        <input type="text" class="form-component-element-input" placeholder="" value="{{ Mimoto.value() }}" />
       </div>
       <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
     </div>
@@ -138,7 +138,7 @@ public function addForm($sFormName, $xData = null, $options = null)
     <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"><span class="form-component-title-icon"><svg class="form-component-title-icon-svg"><use xlink:href='#checkmark'/></svg></span></span></label>
     <div class="form-component-content">
       <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Aimless.value() }}" />
+        <input type="text" class="form-component-element-input" placeholder="" value="{{ Mimoto.value() }}" />
         <p class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
       </div>
       <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
@@ -288,7 +288,7 @@ Aimless has support for aesy to implement counters for for instance new notifica
 
 Example:
 ```
-<div id="header_notification_count" class="hidden" data-aimless-count="_Mimoto_notification" data-aimless-filter='{"state":"open"}' data-aimless-config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
+<div id="header_notification_count" class="hidden" data-mimoto-count="_Mimoto_notification" data-mimoto-filter='{"state":"open"}' data-mimoto-config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
 ```
 
 

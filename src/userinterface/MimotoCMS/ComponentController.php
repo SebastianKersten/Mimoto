@@ -26,10 +26,10 @@ class ComponentController
     public function componentNew(Application $app, $nEntityId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup content
         $component->addForm(
@@ -51,7 +51,7 @@ class ComponentController
     public function componentView(Application $app, $nComponentId)
     {
         // 1. init popup
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eComponent = Mimoto::service('data')->get(CoreConfig::MIMOTO_COMPONENT, $nComponentId);
@@ -60,7 +60,7 @@ class ComponentController
         if (empty($eComponent)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityDetail-ComponentDetail', $eComponent);
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_entities_EntityDetail-ComponentDetail', $eComponent);
 
         // 6. connect
         $page->addComponent('content', $component);
@@ -72,7 +72,7 @@ class ComponentController
     public function componentEdit(Application $app, $nComponentId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eComponent = Mimoto::service('data')->get(CoreConfig::MIMOTO_COMPONENT, $nComponentId);
@@ -81,7 +81,7 @@ class ComponentController
         if (empty($eComponent)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup content
         $component->addForm(
@@ -114,10 +114,10 @@ class ComponentController
     public function componentConditionalNew(Application $app, $nComponentId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup
         $component->addForm(CoreConfig::COREFORM_COMPONENTCONDITIONAL, null,
@@ -137,7 +137,7 @@ class ComponentController
     public function componentConditionalEdit(Application $app, $nComponentConditionalId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eComponentConditional = Mimoto::service('data')->get(CoreConfig::MIMOTO_COMPONENTCONDITIONAL, $nComponentConditionalId);
@@ -146,7 +146,7 @@ class ComponentController
         if (empty($eComponentConditional)) return $app->redirect("/mimoto.cms/components");
 
         // 4. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup
         $component->addForm(CoreConfig::COREFORM_COMPONENTCONDITIONAL, $eComponentConditional, ['response' => ['onSuccess' => ['closePopup' => true]]]);
