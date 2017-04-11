@@ -96,6 +96,10 @@
 
             quill.on('text-change', function(delta, oldContents, source)
             {
+                // getBounds
+                socket.emit('selectionChange', quill.getSelection());
+
+
                 if (source == 'api')
                 {
                      console.warn("An API call triggered this change.", delta);
