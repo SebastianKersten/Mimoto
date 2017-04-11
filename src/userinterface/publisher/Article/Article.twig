@@ -15,7 +15,7 @@
 
     <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.render('headerImage') }}" {{ Mimoto.realtime('headerImage') }}>
 
-    <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }}>{{ Mimoto.render('body') }}</div>
+    <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.editable('body', {'options':['xxx']}) }}>{{ Mimoto.render('body') }}</div>
 
     <div class="MimotoPublisher-Article-comments">
 

@@ -72,6 +72,11 @@ class AimlessComponentViewModel
         return $this->_component->jsListen($sPropertySelector, $scope, $fJavascriptDelegate);
     }
 
+    public function editable($sPropertySelector, $options = null)
+    {
+        return $this->_component->editable($sPropertySelector, $options);
+    }
+
     public function selection($sSelectionName)
     {
         return $this->_component->selection($sSelectionName);

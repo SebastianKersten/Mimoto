@@ -607,6 +607,36 @@ class AimlessComponent
         return '';
     }
 
+    public function editable($sPropertySelector, $options = null)
+    {
+        // 1. check global settings
+        // 2. return mls identifier from class
+        // 3. create js module
+        // 4. convert options to json
+
+        if (!empty($sPropertySelector))
+        {
+            // cleanup
+            $nSeparatorPos = strpos($sPropertySelector, '.');
+            $sPropertyName = ($nSeparatorPos !== false) ? substr($sPropertySelector, 0, $nSeparatorPos) : $sPropertySelector;
+
+            // 1. forward
+            // 2. centralize forward
+
+            // init
+            $aimlessTags = new AimlessTags($this->_entity);
+
+            // setup
+            $aimlessTags->setEdit($sPropertyName, $options);
+
+            // send
+            return $aimlessTags->render();
+        }
+
+        // send
+        return '';
+    }
+
     /**
      * Get entity's meta information 'id' or 'created'
      * @param type $sPropertyName The entity's meta information 'id' or 'created'
