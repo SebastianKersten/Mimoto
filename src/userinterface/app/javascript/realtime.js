@@ -91,6 +91,11 @@ io.on('connection', function(socket){
 
     });
 
+    socket.on('selectionChange', function(range)
+    {
+        socket.broadcast.emit('selectionChange', range);
+    });
+
 });
 
 http.listen(4000, function(){

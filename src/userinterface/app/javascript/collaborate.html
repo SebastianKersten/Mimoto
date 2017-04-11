@@ -18,17 +18,45 @@
             height: 100%;
             background: #fafafa;
         }
-        .editor {
+
+        div.container {
+            position: relative;
             margin: 25px;
             padding: 25px;
             height: 100%;
+
             border: 1px solid #e5e5e5;
             background-color: #ffffff;
+        }
+
+        div.cursors {
+            position: absolute;
+            height: 100%;
+            min-height: 250px;
+        }
+
+        div.cursor {
+            position: absolute;
+            background-color: #06AFEA;
+            display: inline-block;
+        }
+
+        .editor {
+            position: relative;
+            height: 100%;
+            min-height: 250px;
         }
 
         p {
             line-height: 25px;
             font-size: 14px;
+        }
+
+        blockquote {
+            max-width: 450px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #b5b3b4;
         }
     </style>
 
@@ -56,6 +84,15 @@
 
             var socket = io();
 
+
+            quill.on('selection-change', function()
+            {
+                console.log('selectionChange', quill.getSelection());
+
+                // getBounds
+                socket.emit('selectionChange', quill.getSelection());
+
+            });
 
             quill.on('text-change', function(delta, oldContents, source)
             {
@@ -151,13 +188,55 @@
                 }
 
             });
+
+
+            socket.on('selectionChange', function(range) {
+
+
+                var cursor = document.getElementById('cursor');
+
+
+                if (!range)
+                {
+                    console.log('User lost focus');
+
+                    cursor.style.display = 'none';
+                }
+                else
+                {
+                    var bounds = quill.getBounds(range.index, range.length);
+
+                    cursor.style.display = 'inline-block';
+
+                    if (range.length == 0)
+                    {
+                        console.log('Cursor', bounds);
+                    }
+                    else if (range.length > 0)
+                    {
+                        console.log('Selection', bounds);
+                    }
+
+                    cursor.style.left = bounds.left + 'px';
+                    cursor.style.right = bounds.right + 'px';
+                    cursor.style.top = (bounds.top  - 2) + 'px';
+                    //cursor.style.bottom = (bounds.bottom + 2) + 'px';
+
+                    cursor.style.width = Math.max(3, bounds.width) + 'px';
+                    cursor.style.height = (bounds.height + 5) + 'px';
+                }
+
+            });
         }
     </script>
 </head>
 
 <body>
 
-    <div id="editor" class="editor"></div>
+    <div class="container">
+        <div id="cursors" class="cursors"><div id="cursor" class="cursor"></div></div>
+        <div id="editor" class="editor"></div>
+    </div>
 
 </body>
 </html>
