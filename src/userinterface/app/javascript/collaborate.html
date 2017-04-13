@@ -58,6 +58,18 @@
             font-weight: bold;
             color: #b5b3b4;
         }
+
+        .mimoto-infocard {
+            color: gray;
+            border-radius: 5px;
+            border: solid 2px gray;
+            padding: 0 5px;
+            display: inline-block;
+
+        }
+        .mimoto-infocard:hover{
+            cursor: none;
+        }
     </style>
 
     <script>
@@ -69,10 +81,19 @@
 
             var deltaBuffer = null;
 
+          var toolbarOptions = [
+            ['bold', 'italic'],
+            [{'header': 1}, {'header': 2}],
+            ['blockquote', 'link'],
+            [{'mimoto-infocard': 'infocard'}],
+            ['clean']
+          ];
+
 
             var quill = new Mimoto.modules.Quill('#editor', {
                 theme: 'bubble',
                 modules: {
+                    toolbar: toolbarOptions,
                     history: {
                         delay: 2000,
                         maxStack: 500,
@@ -82,8 +103,51 @@
             });
 
 
-            var socket = io();
+          // Handlers can also be added post initialization
+          var toolbar = quill.getModule('toolbar');
 
+          // @todo maybe add this handler on the mimoto.cms
+          toolbar.addHandler('mimoto-infocard', function (value) {
+            console.log('New handler for mimoto-infocard');
+
+            // get the position of the cursor
+            var range = quill.getSelection();
+            var text = quill.getText(range);
+//            var contents = quill.getContents(range);
+//            var bounds = quill.getBounds(range);
+            var blot = quill.getLeaf(range.index);
+            var infoCard = blot[0].next;
+//            var format = quill.getFormat(range);
+
+//            console.log({value});
+//            console.log({range});
+//            console.log({text});
+//            console.log({contents});
+//            console.log({bounds});
+//            console.log({blot});
+//            console.log({format});
+
+            // insert infocard
+            if (range && (range.length > 1 || text !== ' ')) {
+              quill.deleteText(range);
+              quill.insertEmbed(range.index, "mimoto-infocard", text);
+            }
+
+            // remove infocard if this exists
+            if(blot && infoCard){
+              if(infoCard.domNode.className === 'mimoto-infocard'){
+
+                var parent = infoCard.domNode.parentNode;
+                var text = document.createTextNode(infoCard.domNode.innerText);
+
+                parent.replaceChild(text, infoCard.domNode);
+
+              }
+            }
+
+          });
+
+            var socket = io();
 
             quill.on('selection-change', function()
             {

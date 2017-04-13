@@ -10319,15 +10319,13 @@
 	
 	__webpack_require__(8);
 	
-	
 	var HeaderView = __webpack_require__(9);
 	var ButtonUtils = __webpack_require__(10);
 	var Sortable = __webpack_require__(11); // https://github.com/RubaXa/Sortable
 	
-	
-	if (typeof Mimoto == "undefined") Mimoto = {};
-	if (typeof Mimoto.CMS == "undefined") Mimoto.CMS = {};
-	if (typeof Mimoto.modules == "undefined") Mimoto.modules = {};
+	if (typeof Mimoto === "undefined") Mimoto = {};
+	if (typeof Mimoto.CMS === "undefined") Mimoto.CMS = {};
+	if (typeof Mimoto.modules === "undefined") Mimoto.modules = {};
 	
 	//Mimoto = require('./mimoto.cms/Mimoto');
 	
@@ -10345,6 +10343,26 @@
 	Mimoto.popup = new Mimoto.modules.Popup();
 	Mimoto.form = new Mimoto.modules.Form();
 	
+	// Parchment Embed
+	const Embed = Mimoto.modules.Quill.import('blots/embed');
+	
+	// Create Mimoto Infocard to Quill
+	class MimotoInfocard extends Embed {
+	  static create(value) {
+	    var node = super.create(value);
+	    node.innerText = value;
+	    return node;
+	  }
+	  optimize(){}
+	}
+	MimotoInfocard.blotName = 'mimoto-infocard'; //now you can use .ql-hr classname in your toolbar
+	MimotoInfocard.className = 'mimoto-infocard';
+	MimotoInfocard.tagName = 'span';
+	
+	// Register mimoto infocard
+	Mimoto.modules.Quill.register({
+	  'formats/mimoto-infocard': MimotoInfocard
+	});
 	
 	document.addEventListener('DOMContentLoaded', function () {
 	
