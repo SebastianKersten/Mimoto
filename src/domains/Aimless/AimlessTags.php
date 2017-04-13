@@ -27,6 +27,8 @@ class AimlessTags
     var $_editOptions = null;
 
 
+    const ATTRIBUTE_PREFIX = 'data-mimoto-';
+
 
     public function __construct($entity)
     {
@@ -55,7 +57,7 @@ class AimlessTags
             $sJsonOptions = (!empty($this->_editOptions)) ? json_encode($this->_editOptions) : '';
 
             // compose
-            $sTags .= 'data-edit-value="'.$this->_entity->getEntityTypeName().'.'.$this->_entity->getId().'.'.$this->_sPropertyName.'" data-edit-options=\''.$sJsonOptions.'\'';
+            $sTags .= self::ATTRIBUTE_PREFIX.'editable="'.$this->_entity->getEntityTypeName().'.'.$this->_entity->getId().'.'.$this->_sPropertyName.'" '.self::ATTRIBUTE_PREFIX.'editable-options=\''.$sJsonOptions.'\'';
         }
 
 
