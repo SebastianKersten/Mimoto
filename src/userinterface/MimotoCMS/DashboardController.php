@@ -22,10 +22,10 @@ class DashboardController
     public function viewDashboard(Application $app)
     {
         // 1. init page
-        $page = $app['Mimoto.Aimless']->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = $app['Mimoto.Output']->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create content
-        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_dashboard_Overview');
+        $component = $app['Mimoto.Output']->createComponent('Mimoto.CMS_dashboard_Overview');
 
         // 3. connect
         $page->addComponent('content', $component);
