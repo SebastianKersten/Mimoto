@@ -15,7 +15,8 @@
         "twig/twig": "~1.0",
         "pusher/pusher-php-server": "^2.6",
         "sendgrid/sendgrid": "~5.0.7",
-        "james-heinrich/getid3": "~1.9"
+        "james-heinrich/getid3": "~1.9",
+        "symfony/security": "^3.2"
     },
     "autoload": {
         "psr-4": {

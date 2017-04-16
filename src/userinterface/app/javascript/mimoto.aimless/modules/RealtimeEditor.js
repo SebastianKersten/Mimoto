@@ -25,6 +25,8 @@ module.exports.prototype = {
 
     _socket: null,
 
+    _sPropertySelector: null,
+
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -36,18 +38,19 @@ module.exports.prototype = {
      */
     __construct: function(sPropertySelector, editOptions, editableValue)
     {
-
-        // 1. sPropertySelector - connect to room x
-
+        // register
+        this._sPropertySelector = sPropertySelector;
 
         // setup
         this._socket = new io('http://localhost:4000');
         //this._socket = new io('http://192.168.178.72.xip.io:4000');
 
+
         var classRoot = this;
 
         // listen to socket
-        this._socket.on('initialContent', function(delta) { classRoot._socketOnInitialContent(delta); });
+        this._socket.on('connect', function() { classRoot._socketOnConnect(); });
+        this._socket.on('mostRecentDraft', function(delta) { classRoot._socketOnMostRecentDraft(delta); });
         this._socket.on('ot-self', function(delta) { classRoot._socketOnTextChangeSelf(delta); });
         this._socket.on('ot-other', function(delta) { classRoot._socketOnTextChangeOther(delta); });
         this._socket.on('selectionChange', function(delta) { classRoot._socketOnSelectionChange(delta); });
@@ -97,7 +100,7 @@ module.exports.prototype = {
 
 
     // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
+    // --- Private methods text management ----------------------------------------
     // ----------------------------------------------------------------------------
 
 
@@ -146,7 +149,23 @@ module.exports.prototype = {
         }
     },
 
-    _socketOnInitialContent: function(delta)
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods text management ----------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _socketOnConnect: function()
+    {
+        socket.emit('connectToValue', this._sPropertySelector);
+
+
+        socket.emit
+    },
+
+    _socketOnMostRecentDraft: function(delta)
     {
         this._quill.setContents(delta);
     },

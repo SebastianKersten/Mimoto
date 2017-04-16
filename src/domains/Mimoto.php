@@ -15,6 +15,13 @@ use Mimoto\User\UserServiceProvider;
 use Mimoto\Selection\SelectionServiceProvider;
 use Mimoto\Message\MessageServiceProvider;
 
+// Silex classes
+use Silex\Provider\SessionServiceProvider;
+
+// Symfony classes
+use Symfony\Component\HttpFoundation\Request;
+use Silex\Provider\SecurityServiceProvider;
+
 
 /**
  * Mimoto
@@ -45,6 +52,9 @@ class Mimoto
         // setup templates
         $app['twig']->getLoader()->addPath(dirname(dirname(__FILE__)) . '/userinterface');
 
+        // setup Silex services
+        $app->register(new SessionServiceProvider());
+
         // setup Mimoto services
         $app->register(new CacheServiceProvider($bEnableCache));
         $app->register(new EntityServiceProvider());
@@ -56,6 +66,19 @@ class Mimoto
         $app->register(new ActionServiceProvider());
         $app->register(new SelectionServiceProvider());
         $app->register(new MessageServiceProvider());
+
+
+
+
+
+        // --- access control ---
+
+
+        $app->post('/mimoto.cms', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::login');
+        $app->get ('/mimoto.cms/logout', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logout');
+
+
+        $app->get ('/mimoto.cms/account', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::editCurrentUser');
 
 
 
@@ -96,6 +119,14 @@ class Mimoto
 
         // EntityPropertySetting
         $app->get('/mimoto.cms/entitypropertysetting/{nEntityPropertySettingId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertySettingEdit');
+
+
+        // User
+        $app->get ('/mimoto.cms/user/new', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::userNew');
+        $app->get ('/mimoto.cms/user/{nUserId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::userView');
+        $app->get ('/mimoto.cms/user/{nUserId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::userEdit');
+        $app->get ('/mimoto.cms/user/{nUserId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::userDelete');
+
 
         // Component
         $app->get ('/mimoto.cms/entity/{nEntityId}/component/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentNew');
@@ -157,10 +188,10 @@ class Mimoto
 
         $app->get('/mimoto.cms/form/list/sort/{sPropertySelector}/{nConnectionId}/{nOldIndex}/{nNewIndex}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::updateSortindex');
 
-        $app->get('/mimoto.cms/notifications', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::viewNotificationCenter');
-        $app->get('/mimoto.cms/notifications/{nNotificationId}/close', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeNotification');
-        $app->get('/mimoto.cms/notifications/closeall', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeAllNotifications');
-        $app->get('/mimoto.cms/notifications/count', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::getNotificationCount');
+        $app->get('/mimoto.cms/notifications', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::viewNotificationCenter');//->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/notifications/{nNotificationId}/close', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeNotification');//->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/notifications/closeall', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::closeAllNotifications');//->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/notifications/count', 'Mimoto\\UserInterface\\MimotoCMS\\NotificationsController::getNotificationCount');//->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         $app->get('/mimoto.cms/conversations', 'Mimoto\\UserInterface\\MimotoCMS\\ConversationsController::viewConversationCenter');
         $app->get('/mimoto.cms/conversations/{nConversationId}/close', 'Mimoto\\UserInterface\\MimotoCMS\\ConversationsController::closeConversation');

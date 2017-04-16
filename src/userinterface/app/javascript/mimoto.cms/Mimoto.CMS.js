@@ -315,7 +315,40 @@ module.exports.prototype = {
             }
         });
     },
-    
+
+
+
+    /**
+     * Users
+     */
+    userNew: function()
+    {
+        var popup = Mimoto.popup.open("/mimoto.cms/user/new");
+    },
+
+    userView: function(nUserId)
+    {
+        window.open('/mimoto.cms/user/' + nUserId + '/view', '_self');
+    },
+
+    userEdit: function(nUserId)
+    {
+        Mimoto.popup.open('/mimoto.cms/user/' + nUserId + '/edit');
+    },
+
+    userDelete: function(nUserId)
+    {
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/user/' + nUserId + '/delete',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
+    },
+
     
     /**
      * Layouts

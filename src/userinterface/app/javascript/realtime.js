@@ -5,19 +5,21 @@ var io = require('socket.io')(http);
 var quillDelta = require("quill-delta");
 
 
+var aClients = [];
+
 var Memcached = require('memcached');
 var memcached = new Memcached('127.0.0.1:11211');
 
-var aChatMessages = [];
+// var aChatMessages = [];
 var article = new quillDelta().insert('\n');
 
 
-memcached.get('aChatMessages', function (err, data) {
-    //console.log('aChatMessages in memory');
-    //console.log(data);
-
-    if (data) aChatMessages = data;
-});
+// memcached.get('aChatMessages', function (err, data) {
+//     //console.log('aChatMessages in memory');
+//     //console.log(data);
+//
+//     if (data) aChatMessages = data;
+// });
 
 
 memcached.get('article', function (err, data) {
@@ -29,11 +31,6 @@ memcached.get('article', function (err, data) {
 });
 
 
-
-app.get('/', function(req, res){
-    res.sendFile(__dirname + '/realtime.html');
-});
-
 app.get('/collaborate', function(req, res){
     res.sendFile(__dirname + '/collaborate.html');
 });
@@ -42,35 +39,71 @@ app.get('/mimoto.cms.js', function(req, res){
     res.sendFile(__dirname + '/temp/mimoto.cms.js');
 });
 
-io.on('connection', function(socket){
+
+socket.on("connection", function (client)
+{
+    client.on("join", function(name)
+    {
+        aClients[client.id] = name;
+
+        client.emit("update", "You have connected to the server.");
+
+        socket.sockets.emit("update", name + " has joined the server.");
+        socket.sockets.emit("update-people", people);
+    });
+
+    client.on("send", function(msg)
+    {
+        socket.sockets.emit("chat", people[client.id], msg);
+    });
+
+    client.on("disconnect", function()
+    {
+        socket.sockets.emit("update", aClients[client.id] + " has left the server.");
+        delete aClients[client.id];
+        socket.sockets.emit("update-people", people);
+    });
+});
+
+
+
+io.on('connection', function(client) {
 
     console.log('a user connected');
 
-    socket.broadcast.emit('chat message', 'hi');
-
-
-
-    socket.emit('initialContent', article); //new quillDelta().insert('\n')); //article);
-
-
-    socket.on('disconnect', function(){
+    client.on('disconnect', function()
+    {
         console.log('user disconnected');
     });
 
-    socket.on('chat message', function(msg){
+    client.on('connectToValue', function(sPropertySelector)
+    {
+        // jonty
+        client.join(sPropertySelector);
 
-        console.log('message: ' + msg);
 
-        aChatMessages.push(msg);
+        memcached.get(this._sPropertySelector, function (err, data)
+        {
 
-        memcached.set('aChatMessages', aChatMessages, 0, function (err) {
-            console.log('aChatMessages has been updated');
+            if (!data)
+            {
+                // 1. get from php
+            }
+
+
+
+            console.log('article in memory:', data);
+
+            if (data) article = new quillDelta(data);
+
         });
 
-        io.emit('chat message', msg);
+
+        //
+        client.emit('mostCurrentDraft', value);
     });
 
-    socket.on('ot', function(delta){
+    client.on('ot', function(delta){
 
         // update
         article = article.compose(delta);
@@ -79,8 +112,8 @@ io.on('connection', function(socket){
         console.log('article = ', article);
 
 
-        socket.emit('ot-self', delta);
-        socket.broadcast.emit('ot-other', delta);
+        client.emit('ot-self', delta);
+        client.broadcast.emit('ot-other', delta);
 
 
         // store

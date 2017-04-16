@@ -315,6 +315,34 @@ class CoreFormUtils
     }
 
     /**
+     * Get field: label
+     */
+    public static function addField_image(MimotoEntity $form, $sFieldId, $sEntityPropertyId, $sLabel = '', $sDescription = '')
+    {
+        // register
+        $sFormId = $form->getId();
+
+        // 1. create and setup field
+        $field = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_IMAGE);
+        $field->setId($sFormId.self::ID_DIVIDER.$sFieldId);
+        $field->setValue('label', $sLabel);
+        $field->setValue('description', $sDescription);
+
+        // 2. connect to property
+        $connectedEntityProperty = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTY);
+        $connectedEntityProperty->setId($sEntityPropertyId);
+        $field->setValue('value', $connectedEntityProperty);
+
+        // store
+        $form->addValue('fields', $field);
+
+        // 3. send
+        return $field;
+    }
+
+
+
+    /**
      * Set label validation
      */
     public static function setLabelValidation($field, $sFieldId)

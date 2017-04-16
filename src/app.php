@@ -46,10 +46,16 @@ Mimoto::setGlobalValue('pusher.authEndpoint', Mimoto::value('config')->pusher->a
 
 //Mimoto::registerService('mail');
 
+
+// temp solution
+Mimoto::setGlobalValue('app', $app);
+
+
 // setup
 $app['debug'] = true;
 $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app, false);
+
 
 // run in debgu mode
 Mimoto::runInDebugMode(true);

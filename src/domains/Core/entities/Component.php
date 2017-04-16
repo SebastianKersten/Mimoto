@@ -82,6 +82,11 @@ class Component
 
             // interface
             (object) array(
+                'name' => 'MimotoCMS_layout_Login',
+                'file' => 'MimotoCMS/components/base_login.twig',
+                'conditionals' => []
+            ),
+            (object) array(
                 'name' => 'MimotoCMS_layout_Page',
                 'file' => 'MimotoCMS/components/base_page.twig',
                 'conditionals' => []
@@ -317,7 +322,17 @@ class Component
 
             (object) array(
                 'name' => 'Mimoto.CMS_users_UserOverview',
-                'file' => 'MimotoCMS/components/pages/users/Overview.twig',
+                'file' => 'MimotoCMS/components/pages/users/UserOverview/UserOverview.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_users_UserOverview_ListItem',
+                'file' => 'MimotoCMS/components/pages/users/UserOverview/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_users_UserDetail',
+                'file' => 'MimotoCMS/components/pages/users/UserDetail/UserDetail.twig',
                 'conditionals' => []
             ),
 
