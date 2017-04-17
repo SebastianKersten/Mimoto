@@ -40,36 +40,44 @@ app.get('/mimoto.cms.js', function(req, res){
 });
 
 
-socket.on("connection", function (client)
-{
-    client.on("join", function(name)
-    {
-        aClients[client.id] = name;
 
-        client.emit("update", "You have connected to the server.");
-
-        socket.sockets.emit("update", name + " has joined the server.");
-        socket.sockets.emit("update-people", people);
-    });
-
-    client.on("send", function(msg)
-    {
-        socket.sockets.emit("chat", people[client.id], msg);
-    });
-
-    client.on("disconnect", function()
-    {
-        socket.sockets.emit("update", aClients[client.id] + " has left the server.");
-        delete aClients[client.id];
-        socket.sockets.emit("update-people", people);
-    });
-});
+// socket.on("connection", function (client)
+// {
+//     client.on("join", function(name)
+//     {
+//         aClients[client.id] = name;
+//
+//         client.emit("update", "You have connected to the server.");
+//
+//         socket.sockets.emit("update", name + " has joined the server.");
+//         socket.sockets.emit("update-people", people);
+//     });
+//
+//     client.on("send", function(msg)
+//     {
+//         socket.sockets.emit("chat", people[client.id], msg);
+//     });
+//
+//     client.on("disconnect", function()
+//     {
+//         socket.sockets.emit("update", aClients[client.id] + " has left the server.");
+//         delete aClients[client.id];
+//         socket.sockets.emit("update-people", people);
+//     });
+// });
 
 
 
 io.on('connection', function(client) {
 
     console.log('a user connected');
+
+
+    client.on("logon", function (data)
+    {
+        console.log('Logon', data);
+    });
+
 
     client.on('disconnect', function()
     {
@@ -124,9 +132,9 @@ io.on('connection', function(client) {
 
     });
 
-    socket.on('selectionChange', function(range)
+    client.on('selectionChange', function(range)
     {
-        socket.broadcast.emit('selectionChange', range);
+        client.broadcast.emit('selectionChange', range);
     });
 
 });

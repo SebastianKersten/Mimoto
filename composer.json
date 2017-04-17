@@ -16,7 +16,8 @@
         "pusher/pusher-php-server": "^2.6",
         "sendgrid/sendgrid": "~5.0.7",
         "james-heinrich/getid3": "~1.9",
-        "symfony/security": "^3.2"
+        "symfony/security": "^3.2",
+        "wisembly/elephant.io": "^3.2"
     },
     "autoload": {
         "psr-4": {

@@ -77,8 +77,11 @@ class Mimoto
         $app->post('/mimoto.cms', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::login');
         $app->get ('/mimoto.cms/logout', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logout');
 
-
         $app->get ('/mimoto.cms/account', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::editCurrentUser');
+
+
+
+        $app->get ('/mimoto.cms/logon', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logon');
 
 
 

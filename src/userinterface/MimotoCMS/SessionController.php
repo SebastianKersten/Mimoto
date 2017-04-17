@@ -14,6 +14,9 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 
+use ElephantIO\Exception\ServerConnectionFailureException;
+
+
 /**
  * SessionController
  *
@@ -114,6 +117,28 @@ class SessionController
     public function logon(Application $app)
     {
         // 1. for realtime editing
+
+
+
+
+
+        $client = new \ElephantIO\Client(new \ElephantIO\Engine\SocketIO\Version1X('http://localhost:4000'));
+
+        try
+        {
+            $client->initialize();
+            $client->emit('logon', ['title' => 'test']);
+            $client->close();
+        }
+        catch (ServerConnectionFailureException $e)
+        {
+            echo 'Server Connection Failure!!';
+        }
+
+
+
+        Mimoto::error($client);
+
     }
 
 }
