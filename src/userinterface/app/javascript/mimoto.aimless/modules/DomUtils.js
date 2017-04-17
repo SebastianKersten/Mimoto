@@ -140,7 +140,7 @@ module.exports.prototype = {
             dataType: request.dataType,
             success: function (resultData, resultStatus, resultSomething)
             {
-                console.error(resultData);
+                //console.error(resultData);
                 
                 // verify and validate
                 if (resultData.dataModifications && resultData.dataModifications instanceof Array)

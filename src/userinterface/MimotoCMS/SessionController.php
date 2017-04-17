@@ -114,20 +114,23 @@ class SessionController
         return $app->redirect('/mimoto.cms');
     }
 
-    public function logon(Application $app)
+    public function logon(Request $request, Application $app)
     {
         // 1. for realtime editing
 
+        $sSocketId = $request->get('id');
 
 
+        $user = $app['session']->get('user');
 
 
-        $client = new \ElephantIO\Client(new \ElephantIO\Engine\SocketIO\Version1X('http://localhost:4000'));
+        $client = new \ElephantIO\Client(new \ElephantIO\Engine\SocketIO\Version1X('http://localhost:4001'));
+
 
         try
         {
             $client->initialize();
-            $client->emit('logon', ['title' => 'test']);
+            $client->emit('logon', ['user' => $user, 'socketId' => $sSocketId]);
             $client->close();
         }
         catch (ServerConnectionFailureException $e)
@@ -135,9 +138,21 @@ class SessionController
             echo 'Server Connection Failure!!';
         }
 
+        return Mimoto::service('messages')->response(true, 200);
 
+    }
 
-        Mimoto::error($client);
+    public function recent(Application $app, $sPropertySelector)
+    {
+
+        // 1. split
+        $aPropertyElements = explode('.', $sPropertySelector);
+
+        // 2. load
+        $eEntity = Mimoto::service('data')->get($aPropertyElements[0], $aPropertyElements[1]);
+
+        // 3. read and send
+        return $eEntity->getValue($aPropertyElements[2]);
 
     }
 

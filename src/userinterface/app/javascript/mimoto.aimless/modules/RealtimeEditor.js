@@ -27,6 +27,8 @@ module.exports.prototype = {
 
     _sPropertySelector: null,
 
+    _user: null,
+
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -50,7 +52,7 @@ module.exports.prototype = {
 
         // listen to socket
         this._socket.on('connect', function() { classRoot._socketOnConnect(); });
-        this._socket.on('logon', function() { classRoot._socketOnLogon(); });
+        this._socket.on('logon', function(data) { classRoot._socketOnLogon(data); });
 
 
         this._socket.on('mostRecentDraft', function(delta) { classRoot._socketOnMostRecentDraft(delta); });
@@ -102,58 +104,6 @@ module.exports.prototype = {
     },
 
 
-    // ----------------------------------------------------------------------------
-    // --- Private methods text management ----------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-
-    _onSelectionChange: function()
-    {
-        // getBounds
-        this._socket.emit('selectionChange', this._quill.getSelection());
-    },
-
-    _onTextChange: function(delta, oldContents, source)
-    {
-        // getBounds
-        this._socket.emit('selectionChange', this._quill.getSelection());
-
-
-        if (source == 'api')
-        {
-            console.warn("An API call triggered this change.", delta);
-
-        }
-        else if (source == 'user')
-        {
-            console.log("The user triggered this change.", delta, oldContents);
-
-
-            if (!this._deltaPending)
-            {
-                this._deltaPending = delta;
-
-                this._socket.emit('ot', this._deltaPending);
-            }
-            else
-            {
-                // init
-                if (!this._deltaBuffer) this._deltaBuffer = new Mimoto.modules.QuillDelta();
-
-                // stack
-                this._deltaBuffer = this._deltaBuffer.compose(delta);
-            }
-
-
-            console.warn('Pending contents = ' + JSON.stringify(this._deltaPending, null, 2));
-            console.warn('Buffer contents = ' + JSON.stringify(this._deltaBuffer, null, 2));
-
-        }
-    },
-
-
-
 
     // ----------------------------------------------------------------------------
     // --- Private methods text management ----------------------------------------
@@ -162,14 +112,41 @@ module.exports.prototype = {
 
     _socketOnConnect: function()
     {
-        this._socket.emit('connectToValue', this._sPropertySelector);
+
+        // 1. logon with php
+
+        console.log('User connected ...');
+        console.log('Authenticating user ...');
 
 
-        //socket.emit
+        var classRoot = this;
+
+
+        Mimoto.Aimless.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/logon',
+            data: { id: this._socket.id },
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething)
+            {
+                //console.log('Authenticate request finished');
+            }
+        });
+
+
+    },
+
+    _socketOnLogon: function(user)
+    {
+        console.log('This client was logged on via PHP and NodeJS', user);
+
+        this._socket.emit('edit', this._sPropertySelector);
     },
 
     _socketOnMostRecentDraft: function(delta)
     {
+        console.log('Latest value', delta);
+
         this._quill.setContents(delta);
     },
 
@@ -248,6 +225,59 @@ module.exports.prototype = {
         //     cursor.style.height = (bounds.height + 5) + 'px';
         // }
 
+    },
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods text management ----------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+
+    _onSelectionChange: function()
+    {
+        // getBounds
+        this._socket.emit('selectionChange', this._quill.getSelection());
+    },
+
+    _onTextChange: function(delta, oldContents, source)
+    {
+        // getBounds
+        this._socket.emit('selectionChange', this._quill.getSelection());
+
+
+        if (source == 'api')
+        {
+            console.warn("An API call triggered this change.", delta);
+
+        }
+        else if (source == 'user')
+        {
+            console.log("The user triggered this change.", delta, oldContents);
+
+
+            if (!this._deltaPending)
+            {
+                this._deltaPending = delta;
+
+                this._socket.emit('ot', this._deltaPending);
+            }
+            else
+            {
+                // init
+                if (!this._deltaBuffer) this._deltaBuffer = new Mimoto.modules.QuillDelta();
+
+                // stack
+                this._deltaBuffer = this._deltaBuffer.compose(delta);
+            }
+
+
+            console.warn('Pending contents = ' + JSON.stringify(this._deltaPending, null, 2));
+            console.warn('Buffer contents = ' + JSON.stringify(this._deltaBuffer, null, 2));
+
+        }
     }
+
 
 }
