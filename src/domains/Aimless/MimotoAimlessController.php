@@ -91,7 +91,7 @@ class MimotoAimlessController
     {
         // Pusher classes
         require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/vendor/pusher/pusher-php-server/lib/pusher.php');
-        $config = require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
+        $config = require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 
         if ($app['Mimoto.User']->getUserId())
         {

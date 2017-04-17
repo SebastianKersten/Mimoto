@@ -108,7 +108,7 @@ io.on('connection', function(client) {
 
 
         //
-        client.emit('mostCurrentDraft', value);
+        client.emit('mostCurrentDraft', value = 'x');
     });
 
     client.on('ot', function(delta){

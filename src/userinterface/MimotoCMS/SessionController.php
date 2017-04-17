@@ -31,7 +31,7 @@ class SessionController
      * @param Application $app
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function validateCMSUser(Request $request, Application $app)
+    public static function validateCMSUser(Request $request, Application $app) // #research - not sure why this needs to be static
     {
         // validate
         if (!$app['session']->get('is_user'))

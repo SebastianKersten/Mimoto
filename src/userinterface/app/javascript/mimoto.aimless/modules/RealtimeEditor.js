@@ -50,6 +50,9 @@ module.exports.prototype = {
 
         // listen to socket
         this._socket.on('connect', function() { classRoot._socketOnConnect(); });
+        this._socket.on('logon', function() { classRoot._socketOnLogon(); });
+
+
         this._socket.on('mostRecentDraft', function(delta) { classRoot._socketOnMostRecentDraft(delta); });
         this._socket.on('ot-self', function(delta) { classRoot._socketOnTextChangeSelf(delta); });
         this._socket.on('ot-other', function(delta) { classRoot._socketOnTextChangeOther(delta); });
@@ -159,10 +162,10 @@ module.exports.prototype = {
 
     _socketOnConnect: function()
     {
-        socket.emit('connectToValue', this._sPropertySelector);
+        this._socket.emit('connectToValue', this._sPropertySelector);
 
 
-        socket.emit
+        //socket.emit
     },
 
     _socketOnMostRecentDraft: function(delta)

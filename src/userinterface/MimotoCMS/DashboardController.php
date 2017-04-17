@@ -32,7 +32,18 @@ class DashboardController
             $aUsers = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_USER]);
 
             // validate
-            if (count($aUsers) == 0) return $app->redirect('/mimoto.cms/users');
+            if (count($aUsers) == 0)
+            {
+                Mimoto::output('Install Mimoto', '
+                    <ol>
+                        <li>Make a copy of `config.php.bak` and name it `config.php`</li>
+                        <li>Add your MySQL credentials to your `config.php`</li>
+                        <li>Import the database dump in `/database` in your MySQL</li>
+                        <li>Add at least 1 user to the `_Mimoto_user` table</li> 
+                    </ol>
+                ');
+                die();
+            }
 
 
             // --- end of temp setup

@@ -10,20 +10,20 @@
         ),
         'mysql' => (object) array
         (
-            'host' => '',
-            'dbname' => '',
-            'username' => '',
+            'host' => '127.0.0.1',
+            'dbname' => 'mimoto.cms',
+            'username' => 'root',
             'password' => ''
         ),
         'pusher' => (object) array
         (
-            'auth_key' => '',
-            'secret' => '',
-            'app_id' => '',
+            'auth_key' => '19c5b7fbb5340fe48402',
+            'secret' => 'f35bb4069448073dbaee',
+            'app_id' => '284931',
             'cluster' => 'eu',
             'host' => 'api-eu.pusher.com',
             'encrypted' => true,
-            'authEndPoint' => ''
+            'authEndPoint' => '/Mimoto.Aimless/realtime/collaboration'
         ),
         'slack' => (object) array
         (
