@@ -35,11 +35,30 @@ class GridController
 
     }
 
-    public function viewCourse(Application $app, $nCourseId, $nSlideId)
+    public function viewCourse(Application $app, $nCourseId, $nSlideIndex = 0)
     {
+        // 1. load course
+        $eCourse = Mimoto::service('data')->get('course', $nCourseId);
 
+        // 2. get slides
+        $aSlides = $eCourse->getValue('slides');
 
+        // 3. validate
+        if (count($aSlides) == 0) die ('Please add a slide to this course');
+
+        // 4. validate
+        if (!isset($aSlides[$nSlideIndex])) die ('The slide you are looking for is not here');
+
+        // 5. register
+        $eSlide = $aSlides[$nSlideIndex];
+
+        // 6. create template
+        $page = Mimoto::service('output')->createPage('slide', $eSlide);
+
+        // 7. output
+        return $page->render();
     }
+
 
     public function viewGrid(Application $app)
     {
