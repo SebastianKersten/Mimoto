@@ -1,6 +1,32 @@
 {% extends "grid/base_slide.twig" %}
 
-{% set nGridCategories = 5 %}
+{% set nGridCategories = [
+    {
+        label: 'overleg',
+        color: 'ff0033'
+    },
+    {
+        label: 'wedstrijd',
+        color: 'ff8000'
+    },
+    {
+        label: 'tweede training',
+        color: 'ffe600'
+    },
+    {
+        label: 'team tactisch',
+        color: '1ab34d'
+    },
+    {
+        label: 'rust',
+        color: '1a66ff'
+    },
+    {
+        label: 'derde helft',
+        color: '801ab3'
+    }
+] %}
+
 {% set nGridItems = 7 * 5 %}
 
 {% block slide %}
@@ -10,26 +36,12 @@
         {#<div  {{ Mimoto.realtime('body') }}>{{ Mimoto.render('body') }}</div>#}
     {#</div>#}
 
-
     <div class="GridPrototypeSlideGrid" {{ Mimoto.realtime() }}>
         <h1  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</h1>
         <div class="GridPrototype-container js-sortable-container-categories">
-            {% for i in 1..nGridCategories %}
-                <div class="GridPrototype-category js-sortable-item">
-                    <span class="GridPrototype-item-content">#{{ i }}</span>
-
-                    <div class="MimotoCMS_ListItemModule-handle js-sortable-item-handle">
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                        <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                    </div>
+            {% for category in nGridCategories %}
+                <div class="GridPrototype-category js-sortable-item" style="background-color: #{{ category.color }};">
+                    <span class="GridPrototype-item-content">{{ category.label }}</span>
                 </div>
             {% endfor %}
         </div>
@@ -37,7 +49,7 @@
         <div class="GridPrototype-container js-sortable-container-items">
             {% for i in 1..nGridItems %}
                 <div class="GridPrototype-item js-sortable-item">
-                    <span class="GridPrototype-item-content">#{{ i }}</span>
+                    <span class="GridPrototype-item-content"></span>
                 </div>
             {% endfor %}
         </div>

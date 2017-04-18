@@ -13,20 +13,38 @@ div.GridPrototype-container {
     width: 100%;
     padding: 20px;
     margin: 0 auto;
+    position: relative;
+    max-height: 295px;
+    overflow: hidden;
 
     background-color: #ffffff;
 }
 
+div.GridPrototype-items-background {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+    display: none;
+}
+
 div.GridPrototype-item,
+div.GridPrototype-item-hidden,
 div.GridPrototype-category {
+    position: relative;
+
     flex-basis: calc((100% - 6px) / 7);
     min-height: 50px;
 
     margin-bottom: 1px;
-    font-size: 24px;
+    font-size: 17px;
     display: flex;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    color: #fff;
+    font-weight: 800;
 }
 
 div.GridPrototype-item {
@@ -35,4 +53,13 @@ div.GridPrototype-item {
 
 div.GridPrototype-category {
     background-color: #aaa;
+}
+
+div.GridPrototype-item-hidden {
+    // visibility: hidden;
+    border: 1px solid #000;
+}
+
+.sortable-ghost {
+    width: 10px !important;
 }
