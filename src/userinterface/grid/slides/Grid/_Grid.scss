@@ -1,3 +1,30 @@
-div.GridPrototypeSlideGrid {
+div.GridPrototype-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80vw;
+    padding: 20px;
+    margin: 0 auto;
 
+    background-color: #9dbab7;
+}
+
+div.GridPrototype-item,
+div.GridPrototype-category {
+    flex-basis: calc((100% - 6px) / 7);
+    min-height: 50px;
+
+    margin-bottom: 1px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.GridPrototype-item {
+    background-color: #eee;
+}
+
+div.GridPrototype-category {
+    background-color: #aaa;
 }
