@@ -15,4 +15,5 @@
 
     // The Grid
     $app->get ('/grid', 'Mimoto\\UserInterface\\grid\\GridController::viewGrid');
-    $app->get ('/grid/{nCourseId}', 'Mimoto\\UserInterface\\grid\\GridController::viewGrid');
+    $app->get ('/grid/courses', 'Mimoto\\UserInterface\\grid\\GridController::viewCourses');
+    $app->get ('/grid/courses/{nCourseId}', 'Mimoto\\UserInterface\\grid\\GridController::viewCourse');

@@ -2,12 +2,15 @@
 
 {% block content %}
 
-    <h1>Courses</h1>
-    <br>
-    <div class="GridPrototype-courses" {{ Mimoto.realtime('contentItems', 'course') }}>
-        {{ Mimoto.render('contentItems', 'course') }}
-    </div>
+    <div class="GridPrototypeOverview">
 
+        <h1>Courses</h1>
+
+        <div class="GridPrototypeOverview-courses" {{ Mimoto.realtime('contentItems', 'course') }}>
+            {{ Mimoto.render('contentItems', 'course') }}
+        </div>
+
+    </div>
 {% endblock %}
 
 
