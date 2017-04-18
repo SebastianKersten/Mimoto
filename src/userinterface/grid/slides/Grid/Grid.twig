@@ -1,13 +1,24 @@
 {% extends "grid/base.twig" %}
 
+{% set nGridItems = 7 * 5 %}
+
 {% block content %}
 
-    <div class="GridPrototypeSlideGrid" {{ Mimoto.realtime() }}>
-        <div  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
-        <div  {{ Mimoto.realtime('body') }}>{{ Mimoto.render('body') }}</div>
+    {#<div class="GridPrototypeSlideGrid" {{ Mimoto.realtime() }}>#}
+        {#<div  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>#}
+        {#<div  {{ Mimoto.realtime('body') }}>{{ Mimoto.render('body') }}</div>#}
+    {#</div>#}
+
+    <h1>Grid prototype</h1>
+    <br>
+    <div class="GridPrototype-container js-sortable-container">
+        {% for i in 1..nGridItems|number_format %}
+            <div class="GridPrototype-item">
+                <span class="GridPrototype-item-content">#{{ i }}</span>
+            </div>
+        {% endfor %}
     </div>
 
+    <script>setupSortable();</script>
+
 {% endblock %}
-
-
-

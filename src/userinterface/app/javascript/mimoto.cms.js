@@ -21,7 +21,7 @@ Mimoto.modules.Page = require('./mimoto.cms/modules/Page');
 Mimoto.modules.Form = require('./mimoto.cms/modules/Form');
 Mimoto.modules.Quill = require('quill');
 Mimoto.modules.QuillDelta = require('quill-delta');
-Mimoto.modules.Sortable = require('sortablejs'); 
+Mimoto.modules.Sortable = require('sortablejs');
 
 // init
 Mimoto.CMS = new Mimoto.CMS();
