@@ -75,16 +75,16 @@ div.MimotoPublisher-Article-body {
     margin-right: auto;
     overflow: visible;
 
-    &::first-letter {
-        color: #DF5B57;
-        float: left;
-        font-size: 65px;
-        font-weight: bold;
-        line-height: 55px;
-        padding-top: 4px;
-        padding-right: 8px;
-        padding-left: 3px;
-    }
+    //&::first-letter {
+    //    color: #DF5B57;
+    //    float: left;
+    //    font-size: 65px;
+    //    font-weight: bold;
+    //    line-height: 55px;
+    //    padding-top: 4px;
+    //    padding-right: 8px;
+    //    padding-left: 3px;
+    //}
 
     & p {
         margin-bottom: 20px;

@@ -17,7 +17,7 @@ var Memcached = require('memcached');
 var memcached = new Memcached('127.0.0.1:11211');
 
 // var aChatMessages = [];
-var article = new quillDelta().insert('\n');
+//var article = new quillDelta().insert('\n');
 
 
 // memcached.get('aChatMessages', function (err, data) {
@@ -28,13 +28,13 @@ var article = new quillDelta().insert('\n');
 // });
 
 
-memcached.get('article', function (err, data) {
-
-    console.log('article in memory:', data);
-
-    if (data) article = new quillDelta(data);
-
-});
+// memcached.get('article', function (err, data) {
+//
+//     console.log('article in memory:', data);
+//
+//     if (data) article = new quillDelta(data);
+//
+// });
 
 
 app.get('/collaborate', function(req, res){
@@ -119,42 +119,39 @@ io.on('connection', function(socket) {
     client.socket.on('edit', function(sPropertySelector)
     {
         // jonty
-        client.socket.join(sPropertySelector);
+        //client.socket.join(sPropertySelector);
 
 
 
 
-        memcached.get('draft:' + sPropertySelector, function (err, data)
+        memcached.get('draft:' + sPropertySelector, function (err, delta)
         {
 
-            if (!data)
+            if (!delta)
             {
+
+                console.log('No data in memcache ...');
+                console.log('Loading from MySQL ...');
+
                 runner.exec(
                     "curl http://mimoto.aimless/mimoto.cms/recent/" + sPropertySelector,
                     function (error, stdout, stderr)
                     {
-                        console.log('done', stdout);
-
-
-                        data = new quillDelta().insert(stdout);
+                        // build
+                        var deltaValue = new quillDelta().insert(stdout);
 
                         // store
-                        memcached.set('draft:' + sPropertySelector, data, 0, function (err) {
-                            console.log('Draft has been loaded');
+                        memcached.set('draft:' + sPropertySelector, deltaValue, 0, function (err) {
+                            console.log('------------- Draft has been loaded and set');
                         });
                     }
                 );
             }
 
 
+            console.log('Draft of `' + sPropertySelector + '` in memory:', delta);
 
-
-
-            console.log('Draft of `' + sPropertySelector + '` in memory:', data);
-
-            client.socket.emit('mostCurrentDraft', data);
-
-            //if (data) article = new quillDelta(data);
+            client.socket.emit('mostRecentDraft', delta);
 
         });
 
@@ -163,24 +160,32 @@ io.on('connection', function(socket) {
 
     });
 
-    client.socket.on('ot', function(delta){
+    client.socket.on('ot', function(change)
+    {
+        console.log('OT change = ', change);
 
-        // update
-        article = article.compose(delta);
+        // 1. memcache could be cleared from external. add check (and refresh editors)
 
+        memcached.get('draft:' + change.sPropertySelector, function (err, deltaValue)
+        {
+            var delta = new quillDelta(deltaValue);
 
-        console.log('article = ', article);
+            // update data
+            delta = delta.compose(change.delta);
 
+            // store
+            memcached.set('draft:' + change.sPropertySelector, delta, 0, function (err) {
+                console.log('data has been updated');
+            });
 
-        client.socket.emit('ot-self', delta);
-        client.socket.broadcast.emit('ot-other', delta);
-
-
-        // store
-        memcached.set('article', article, 0, function (err) {
-            console.log('article has been updated');
+            memcached.get('draft:' + change.sPropertySelector, function (err, deltaValue)
+            {
+                console.log('updated data = ', deltaValue);
+            });
         });
 
+        client.socket.emit('ot-self', change.delta);
+        client.socket.broadcast.emit('ot-other', change.delta);
 
     });
 

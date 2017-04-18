@@ -43,6 +43,7 @@
     "node-php": "^0.0.1",
     "quill": "^1.2.3",
     "quill-delta": "^3.5.0",
+    "quill-render": "^1.0.5",
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.3",
     "sortablejs": "^1.5.1"

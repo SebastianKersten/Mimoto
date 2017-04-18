@@ -177,7 +177,15 @@ module.exports.prototype = {
                 //
                 this._deltaPending = this._deltaBuffer;
 
-                this._socket.emit('ot', this._deltaPending);
+
+
+                var change = {
+                    sPropertySelector: this._sPropertySelector,
+                    delta: this._deltaPending
+                }
+
+
+                this._socket.emit('ot', change);
 
                 // reset
                 this._deltaBuffer = null;
@@ -261,7 +269,14 @@ module.exports.prototype = {
             {
                 this._deltaPending = delta;
 
-                this._socket.emit('ot', this._deltaPending);
+
+                var change = {
+                    sPropertySelector: this._sPropertySelector,
+                    delta: this._deltaPending
+                }
+
+
+                this._socket.emit('ot', change);
             }
             else
             {
