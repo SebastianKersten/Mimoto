@@ -12,3 +12,6 @@
 
     // The Timeline
     $app->get ('/thetimeline/{nTimelineId}', 'Mimoto\\UserInterface\\thetimeline\\TimelineController::viewTimeline');
+
+    // The Grid
+    $app->get ('/grid', 'Mimoto\\UserInterface\\grid\\GridController::viewGrid');
