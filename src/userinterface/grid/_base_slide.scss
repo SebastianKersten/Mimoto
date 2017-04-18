@@ -9,6 +9,7 @@ div.GridPrototypeSlide-menu {
     padding: 10px;
     background-color: #ffffff;
     color: #000000;
+    position: fixed;
 }
 
 div.GridPrototypeSlide-menu-label {
@@ -36,6 +37,6 @@ div.GridPrototypeSlide-button {
 }
 
 div.GridPrototypeSlide-container {
-    padding: 50px;
+    padding: 100px 50px 50px 50px;
     width: 100%;
 }
