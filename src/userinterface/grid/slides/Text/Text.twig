@@ -2,9 +2,9 @@
 
 {% block content %}
 
-    <div {{ Mimoto.realtime() }}>
-        <div  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
-        <img {{ Mimoto.realtime('image') }} src="{{ Mimoto.render('image') }}" />
+    <div class="GridPrototypeSlideVideo" {{ Mimoto.realtime() }}>
+        <div {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
+        <div {{ Mimoto.realtime('body') }}>{{ Mimoto.render('body') }}</div>
     </div>
 
 {% endblock %}
