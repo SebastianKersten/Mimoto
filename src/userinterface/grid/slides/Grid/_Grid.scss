@@ -1,23 +1,45 @@
 div.GridPrototypeSlideGrid {
-    width: 800px;
+    width: 1000px;
     margin-right: auto;
     margin-left: auto;
     background-color: #EAE9E9;
     padding: 20px 30px 30px 30px;
 }
 
+div.GridPrototype {
+    padding: 20px;
+    background-color: #fff;
+}
+
+div.GridPrototype-weeknumbers {
+    width: 111px;
+    float: left;
+}
+
+span.GridPrototype-weeknumber {
+    width: 111px;
+    min-height: 50px;
+
+    margin-bottom: 1px;
+    font-size: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
 div.GridPrototype-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 100%;
-    padding: 20px;
-    margin: 0 auto;
     position: relative;
-    max-height: 295px;
+    max-height: 346px;
     overflow: hidden;
 
-    background-color: #ffffff;
+    &:first-child {
+        margin-left: 111px;
+        margin-bottom: 20px;
+    }
 }
 
 div.GridPrototype-items-background {
@@ -30,11 +52,11 @@ div.GridPrototype-items-background {
 }
 
 div.GridPrototype-item,
-div.GridPrototype-item-hidden,
+div.GridPrototype-day,
 div.GridPrototype-category {
     position: relative;
 
-    flex-basis: calc((100% - 6px) / 7);
+    flex-basis: 111px;
     min-height: 50px;
 
     margin-bottom: 1px;
@@ -51,15 +73,12 @@ div.GridPrototype-item {
     background-color: #eee;
 }
 
+div.GridPrototype-day {
+    color: #000;
+    font-weight: 400;
+    background-color: #ddd;
+}
+
 div.GridPrototype-category {
-    background-color: #aaa;
-}
-
-div.GridPrototype-item-hidden {
-    // visibility: hidden;
-    border: 1px solid #000;
-}
-
-.sortable-ghost {
-    width: 10px !important;
+    cursor: pointer;
 }

@@ -1,6 +1,6 @@
 {% extends "grid/base_slide.twig" %}
 
-{% set nGridCategories = [
+{% set aGridCategories = [
     {
         label: 'overleg',
         color: 'ff0033'
@@ -10,7 +10,7 @@
         color: 'ff8000'
     },
     {
-        label: 'tweede training',
+        label: 'viering',
         color: 'ffe600'
     },
     {
@@ -27,6 +27,8 @@
     }
 ] %}
 
+{% set aWeekDays = ['maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', 'zondag'] %}
+
 {% set nGridItems = 7 * 5 %}
 
 {% block slide %}
@@ -38,20 +40,38 @@
 
     <div class="GridPrototypeSlideGrid" {{ Mimoto.realtime() }}>
         <h1  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</h1>
-        <div class="GridPrototype-container js-sortable-container-categories">
-            {% for category in nGridCategories %}
-                <div class="GridPrototype-category js-sortable-item" style="background-color: #{{ category.color }};">
-                    <span class="GridPrototype-item-content">{{ category.label }}</span>
-                </div>
-            {% endfor %}
-        </div>
 
-        <div class="GridPrototype-container js-sortable-container-items">
-            {% for i in 1..nGridItems %}
-                <div class="GridPrototype-item js-sortable-item">
-                    <span class="GridPrototype-item-content"></span>
-                </div>
-            {% endfor %}
+        <div class="GridPrototype">
+            <div class="GridPrototype-container js-sortable-container-categories">
+                {% for category in aGridCategories %}
+                    <div class="GridPrototype-category js-sortable-item" style="background-color: #{{ category.color }};">
+                        <span class="GridPrototype-item-content">{{ category.label }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="GridPrototype-weeknumbers">
+                <span class="GridPrototype-weeknumber"></span>
+                <span class="GridPrototype-weeknumber">week 1</span>
+                <span class="GridPrototype-weeknumber">week 2</span>
+                <span class="GridPrototype-weeknumber">week 3</span>
+                <span class="GridPrototype-weeknumber">week 4</span>
+                <span class="GridPrototype-weeknumber">week 5</span>
+            </div>
+
+            <div class="GridPrototype-container js-sortable-container-items">
+                {% for day in aWeekDays %}
+                    <div class="GridPrototype-day">
+                        <span class="GridPrototype-item-content">{{ day }}</span>
+                    </div>
+                {% endfor %}
+
+                {% for i in 1..nGridItems %}
+                    <div class="GridPrototype-item js-sortable-item">
+                        <span class="GridPrototype-item-content"></span>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
