@@ -13,7 +13,7 @@
     $app->get ('/thetimeline/{nTimelineId}', 'Mimoto\\UserInterface\\thetimeline\\TimelineController::viewTimeline');
 
     // The Grid
-    $app->get ('/grid', 'Mimoto\\UserInterface\\grid\\GridController::viewGrid');
+    $app->get ('/grid', 'Mimoto\\UserInterface\\grid\\GridController::viewCourses');
     $app->get ('/grid/courses', 'Mimoto\\UserInterface\\grid\\GridController::viewCourses');
     $app->get ('/grid/course/{nCourseId}', 'Mimoto\\UserInterface\\grid\\GridController::viewCourse');
     $app->get ('/grid/course/{nCourseId}/{nSlideIndex}', 'Mimoto\\UserInterface\\grid\\GridController::viewCourse');

@@ -67,14 +67,4 @@ class GridController
         return $page->render();
     }
 
-
-    public function viewGrid(Application $app)
-    {
-        // 1. create page
-        $page = Mimoto::service('output')->createPage('grid');
-
-        // 2. output
-        return $page->render();
-    }
-
 }
