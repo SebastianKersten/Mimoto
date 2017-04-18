@@ -10409,7 +10409,7 @@
 	Mimoto.modules.Form = __webpack_require__(72);
 	Mimoto.modules.Quill = __webpack_require__(75);
 	Mimoto.modules.QuillDelta = __webpack_require__(80);
-	Mimoto.modules.Sortable = __webpack_require__(67);
+	Mimoto.modules.Sortable = __webpack_require__(67); 
 	
 	// init
 	Mimoto.CMS = new Mimoto.CMS();
