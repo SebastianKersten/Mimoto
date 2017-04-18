@@ -1,0 +1,13 @@
+{% extends "grid/base.twig" %}
+
+{% block content %}
+
+    <div {{ Mimoto.realtime() }}>
+        <div  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
+        <img {{ Mimoto.realtime('image') }} src="{{ Mimoto.render('image') }}" />
+    </div>
+
+{% endblock %}
+
+
+

@@ -22,6 +22,25 @@ use Symfony\Component\HttpFoundation\Request;
 class GridController
 {
 
+    public function viewCourses(Application $app)
+    {
+        // 1. load data
+        $eContentSection = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_CONTENTSECTION, 'value' => ['name' => 'Courses']]);
+
+        // 2. create template
+        $page = Mimoto::service('output')->createPage('courseOverview', (!empty($eContentSection)) ? $eContentSection[0] : '');
+
+        // 3. output
+        return $page->render();
+
+    }
+
+    public function viewCourse(Application $app, $nCourseId, $nSlideId)
+    {
+
+
+    }
+
     public function viewGrid(Application $app)
     {
         // 1. create page

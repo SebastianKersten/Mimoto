@@ -1,0 +1,15 @@
+{% extends "grid/base.twig" %}
+
+{% block content %}
+
+    <div {{ Mimoto.realtime() }}>
+        <div  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
+        <div>
+            The grid goes here ...
+        </div>
+    </div>
+
+{% endblock %}
+
+
+

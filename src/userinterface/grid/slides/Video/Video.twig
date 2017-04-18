@@ -1,0 +1,16 @@
+{% extends "grid/base.twig" %}
+
+{% block content %}
+
+    <div {{ Mimoto.realtime() }}>
+        <div {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
+
+        <video width="320" height="240" controls src="{{ Mimoto.render('video') }}">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+{% endblock %}
+
+
+
