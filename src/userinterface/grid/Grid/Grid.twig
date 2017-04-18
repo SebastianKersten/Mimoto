@@ -1,12 +1,20 @@
 {% extends "grid/base.twig" %}
 
+{% set nGridItems = 7 * 5 %}
+
 {% block content %}
 
     <h1>Grid prototype</h1>
     <br>
-    <div class="GridPrototype-container">
-        This is the grid container
+    <div class="GridPrototype-container js-sortable-container">
+        {% for i in 1..nGridItems|number_format %}
+            <div class="GridPrototype-item">
+                <span class="GridPrototype-item-content">#{{ i }}</span>
+            </div>
+        {% endfor %}
     </div>
+
+    <script>setupSortable();</script>
 
 {% endblock %}
 

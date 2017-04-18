@@ -1,5 +1,19 @@
 div.GridPrototype-container {
-    width: 100%;
-    height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    background-color: #eee;
+}
+
+div.GridPrototype-item {
+    flex-basis: 17vw;
+    min-height: 17vw;
+
     background-color: #9dbab7;
+    margin-bottom: 3%;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
