@@ -1,12 +1,10 @@
-{% extends "grid/base.twig" %}
+{% extends "grid/base_slide.twig" %}
 
-{% block content %}
+{% block slide %}
 
     <div class="GridPrototypeSlideImage" {{ Mimoto.realtime() }}>
-        <div  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
-        <div>
-            The grid goes here ...
-        </div>
+        <h1  {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</h1>
+        <img class="GridPrototypeSlideImage" {{ Mimoto.realtime('image') }} src="{{ Mimoto.render('image') }}" />
     </div>
 
 {% endblock %}

@@ -1,0 +1,22 @@
+{% extends "grid/base.twig" %}
+
+{% block content %}
+
+    <div class="GridPrototypeSlide">
+
+        <div class="GridPrototypeSlide-menu">
+
+            <div class="GridPrototypeSlide-menu-label"><span class="GridPrototypeSlide-courseName">{{ sCourseName }}</span> - Stap {{ nSlideIndex }} / {{ nSlideCount }}</div>
+            <div class="GridPrototypeSlide-menu-navigation">
+                {% if nSlideIndex > 1 %}<div class="GridPrototypeSlide-button" onclick="window.open('/grid/course/{{ nCourseId }}/{{ nPreviousSlide }}', '_self')">Vorige</div>{% endif %}
+                {% if nSlideIndex < nSlideCount %}<div class="GridPrototypeSlide-button" onclick="window.open('/grid/course/{{ nCourseId }}/{{ nNextSlide }}', '_self')">Volgende</div>{% endif %}
+            </div>
+        </div>
+
+        <div class="GridPrototypeSlide-container">
+            {% block slide %}{% endblock %}
+        </div>
+
+    </div>
+
+{% endblock %}

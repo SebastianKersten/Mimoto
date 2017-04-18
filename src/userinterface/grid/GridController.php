@@ -55,7 +55,15 @@ class GridController
         // 6. create template
         $page = Mimoto::service('output')->createPage('slide', $eSlide);
 
-        // 7. output
+        // 7. setup
+        $page->setVar('nCourseId', $nCourseId);
+        $page->setVar('sCourseName', $eCourse->getValue('name'));
+        $page->setVar('nSlideIndex', $nSlideIndex + 1);
+        $page->setVar('nSlideCount', count($aSlides));
+        $page->setVar('nPreviousSlide', $nSlideIndex - 1);
+        $page->setVar('nNextSlide', $nSlideIndex + 1);
+
+        // 8. output
         return $page->render();
     }
 

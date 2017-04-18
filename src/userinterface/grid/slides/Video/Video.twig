@@ -1,9 +1,9 @@
-{% extends "grid/base.twig" %}
+{% extends "grid/base_slide.twig" %}
 
-{% block content %}
+{% block slide %}
 
     <div class="GridPrototypeSlideVideo" {{ Mimoto.realtime() }}>
-        <div {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
+        <h1 {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</h1>
 
         <video width="320" height="240" controls src="{{ Mimoto.render('video') }}">
             Your browser does not support the video tag.

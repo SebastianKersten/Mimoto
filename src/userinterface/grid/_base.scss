@@ -1,5 +1,5 @@
+@import "base_slide";
 @import "Course/Course";
-@import "Grid/Grid";
 @import "Overview/Overview";
 @import "slides/Image/Image";
 @import "slides/Video/Video";
@@ -14,7 +14,7 @@ body.GridPrototype {
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
 }
