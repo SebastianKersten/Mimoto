@@ -113,6 +113,15 @@ class AssetController
         return new Response($this->loadDynamicFile('avatar.png'));
     }
 
+    public function loadColorPickerFile($sFile)
+    {
+        // compose
+        $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/static/images/vanderlee-colorpicker/'.$sFile;
+
+        // load and send
+        return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
+    }
+
 
 
     // ----------------------------------------------------------------------------

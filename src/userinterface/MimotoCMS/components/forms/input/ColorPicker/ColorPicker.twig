@@ -1,11 +1,37 @@
+{% set sColorPickerId = Aimless.meta('type')~"."~Aimless.meta('id') %}
+{% set sFlatColorPickerId = Aimless.meta('type')~Aimless.meta('id') %}
+
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "colorpicker" } %}
     {% block form_component_element %}
 
-        <div>color rectangle</div>
-        <div>button die popup opent</div>
+        <div class="MimotoCMS_forms_input_ColorPicker js-{{ sFlatColorPickerId }}-color-picker">
+            <div>color rectangle</div>
+            <div>button die popup opent</div>
 
-        input wordt "hidden"
-        <input {{ Aimless.input() }} type="type" class="MimotoCMS_forms_input_ColorPicker" value="{{ Aimless.value() }}"/>
-
+            <p>input wordt "hidden"</p>
+            <input {{ Aimless.input() }} type="type" class="MimotoCMS_forms_input_ColorPicker-input js-{{ sFlatColorPickerId }}-color-picker-input" value="{{ Aimless.value() }}" />
+            <div class="MimotoCMS_forms_input_ColorPicker-wrapper"><div class="MimotoCMS_forms_input_ColorPicker-container js-{{ sFlatColorPickerId }}-color-picker-container"></div></div>
+        </div>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupColorPicker, '{{ sColorPickerId }}', '{{ sFlatColorPickerId }}', '{{ Aimless.fieldId() }}');</script>
     {% endblock %}
 {% endembed %}
+
+
+{# {% set sDatePickerId = Aimless.meta('type')~"."~Aimless.meta('id') %}
+{% set sFlatDatePickerId = Aimless.meta('type')~Aimless.meta('id') %}
+{% set sPHPDateFormat = 'F jS, Y / H:i' %}
+{% set sFRDateFormat = 'F J, Y / H:i' %}
+
+{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "datepicker" } %}
+    {% block form_component_element %}
+
+        <div class="MimotoCMS_forms_input_DatePicker">
+            <div>settings opgeven als listoption (bijv. jaar, of volledige datum, of incl tijd)</div>
+            <div>button die popup opent</div>
+
+            <p>input wordt "hidden"</p>
+            <input {{ Aimless.input() }} type="text" class="MimotoCMS_forms_input_DatePicker-input js-{{ sFlatDatePickerId }}-date-picker-input" value="{{ date(Aimless.value())|date(sPHPDateFormat) }}" data-dp-value="{{ Aimless.value() }}" data-dp-format="{{ sFRDateFormat }}"/>
+        </div>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupDatePicker, '{{ sDatePickerId }}', '{{ sFlatDatePickerId }}', '{{ Aimless.fieldId() }}');</script>
+    {% endblock %}
+{% endembed %} #}

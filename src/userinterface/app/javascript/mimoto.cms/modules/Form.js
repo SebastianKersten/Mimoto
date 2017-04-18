@@ -10,6 +10,7 @@ var Sortable = require('sortablejs'); // https://github.com/RubaXa/Sortable
 
 var Dropzone = require('dropzone');
 var Flatpickr = require('flatpickr');
+var Colorpicker = require('vanderlee-colorpicker');
 
 Dropzone.autoDiscover = false;
 
@@ -40,6 +41,7 @@ module.exports.prototype = {
         this._aMediaFields = [];
         this._aDatePicker = [];
         this._aRichTextFields = [];
+        this._aColorPicker = [];
     },
 
 
@@ -160,7 +162,7 @@ module.exports.prototype = {
             }
         }
         
-        
+
     },
 
     /**
@@ -975,6 +977,76 @@ module.exports.prototype = {
             time_24hr: true,
             'static': true
         });
+    },
+
+    setupColorPicker: function(sColorPickerId, sFlatColorPickerId, sInputFieldId) {
+        // read
+        var currentForm = this._aForms[this._sCurrentOpenForm];
+
+        // validate
+        if (!currentForm) return;
+
+        // 1. locate form in dom
+        var $form = $('form[name="' + currentForm.sName + '"]');
+
+        // register
+        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+        var fieldInput = $("input", field);
+
+        var jsClass = '.js-' + sFlatColorPickerId + '-color-picker';
+
+        var colorPicker = {
+            sColorPickerId: sColorPickerId,
+            field: field,
+            colorPickerInputElement: document.querySelector(jsClass + '-input'),
+            colorPickerContainerElement: document.querySelector(jsClass + '-container'),
+            // currentValue: document.querySelector(jsClass + '-input').getAttribute('data-cp-value'),
+            // colorFormat: document.querySelector(jsClass + '-input').getAttribute('data-cp-format')
+        }
+
+        // store
+        this._aColorPicker[sColorPickerId] = colorPicker;
+        console.log(this);
+        // this._aColorPicker[sColorPickerId].colorPickerInputElement.colorpicker();
+        $(jsClass + '-input').colorpicker();
+
+        // // var demoWheelElement = document.getElementById("colorWheelDemo");
+        // this._aColorPicker[sColorPickerId].colorPickerInputElement.addEventListener('click', function() {
+        //     console.log(this);
+        //     this._aColorPicker[sColorPickerId].colorPickerContainerElement.parentNode.classList.add('open');
+        //     var colorWheel = new iro.ColorWheel(this._aColorPicker[sColorPickerId].colorPickerContainerElement, {
+        //         width: 320,
+        //         height: 320,
+
+        //           // Radius of the markers that show the current color:
+        //           markerRadius: 8,
+        //           // Padding space around the markers:
+        //           padding: 4,
+        //           // Space between the hue/saturation ring and the value slider:
+        //           sliderMargin: 24,
+
+        //           // Initial color value -- any valid CSS color string works:
+        //           color: "#fff"
+        //     });
+        //     colorWheel.watch(function(color) {
+        //         console.log(color);
+        //         console.log(colorWheel);
+        //     });
+        //     // this._aColorPicker[sColorPickerId].colorPickerContainerElement.removeEventListener('click', this);
+        // }.bind(this));
+
+        // 
+
+        // new Flatpickr(this._aDatePicker[sColorPickerId].datePickerInputElement, {
+        //     altInput: true,
+        //     altFormat: this._aDatePicker[sColorPickerId].dateFormat,
+        //     defaultDate: this._aDatePicker[sColorPickerId].currentValue,
+        //     enableTime: true,
+        //     dateFormat: 'Y-m-d H:i:S', // 2017-03-08 21:46:42
+        //     // noCalendar: true, // only diplays time
+        //     time_24hr: true,
+        //     'static': true
+        // });
     },
 
     _getInputFieldType: function($component)

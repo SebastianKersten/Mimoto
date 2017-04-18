@@ -191,6 +191,7 @@ class Mimoto
         $app->get('/mimoto.cms/static/images/mimoto_logo.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogo');
         $app->get('/mimoto.cms/static/images/mimoto_logo_collapsed.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogoCollapsed');
         $app->get('/mimoto.cms/dynamic/avatar.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageAvatar');
+        $app->get('/mimoto.cms/static/images/vanderlee-colorpicker/{sFile}', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadColorPickerFile');
     }
 
 

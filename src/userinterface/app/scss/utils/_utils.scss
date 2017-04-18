@@ -3,4 +3,13 @@
 @import 'variables';
 @import 'mixins';
 
-@import 'themes/airbnb'; // Flatpickr datepicker styling
+@import 'jquery-ui-dist/jquery-ui.min'; // Needed for jQuery color 
+@import 'jquery-ui-dist/jquery-ui.structure.min'; // Needed for jQuery color 
+@import 'jquery-ui-dist/jquery-ui.theme.min'; // Needed for jQuery color 
+
+@import 'lib/jquery-ui'; // Needed for jQuery color picker
+@import 'lib/vanderlee-colorpicker'; // jQuery color picker styling
+
+// @import 'jquery-ui-dist/jquery-ui.theme.min'; // Needed for jQuery color picker
+// @import 'jquery-ui/themes/base/';
+// @import 'flatpickr/dist/themes/airbnb'; // Flatpickr datepicker styling
