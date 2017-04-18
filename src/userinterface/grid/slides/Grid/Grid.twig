@@ -1,5 +1,6 @@
 {% extends "grid/base.twig" %}
 
+{% set nGridCategories = 5 %}
 {% set nGridItems = 7 * 5 %}
 
 {% block content %}
@@ -11,9 +12,30 @@
 
     <h1>Grid prototype</h1>
     <br>
-    <div class="GridPrototype-container js-sortable-container">
-        {% for i in 1..nGridItems|number_format %}
-            <div class="GridPrototype-item">
+    <div class="GridPrototype-container js-sortable-container-categories">
+        {% for i in 1..nGridCategories %}
+            <div class="GridPrototype-category js-sortable-item">
+                <span class="GridPrototype-item-content">#{{ i }}</span>
+
+                <div class="MimotoCMS_ListItemModule-handle js-sortable-item-handle">
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                    <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="GridPrototype-container js-sortable-container-items">
+        {% for i in 1..nGridItems %}
+            <div class="GridPrototype-item js-sortable-item">
                 <span class="GridPrototype-item-content">#{{ i }}</span>
             </div>
         {% endfor %}
