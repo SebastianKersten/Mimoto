@@ -999,17 +999,14 @@ module.exports.prototype = {
             sColorPickerId: sColorPickerId,
             field: field,
             colorPickerInputElement: field[0].querySelector(jsClass + '-input'),
-            colorPickerContainerElement: field[0].querySelector(jsClass + '-container'),
-            // currentValue: document.querySelector(jsClass + '-input').getAttribute('data-cp-value'),
-            // colorFormat: document.querySelector(jsClass + '-input').getAttribute('data-cp-format')
+            colorPickerPreviewElement: field[0].querySelector(jsClass + '-preview'),
+            colorPickerContainerElement: field[0].querySelector(jsClass + '-container')
         }
 
         // store
         this._aColorPicker[sColorPickerId] = colorPicker;
-        console.log(this);
-        // this._aColorPicker[sColorPickerId].colorPickerInputElement.colorpicker();
+
         this._aColorPicker[sColorPickerId].colorPickerInputElement.addEventListener('click', function(clickEvent) {
-            // console.log();
             $(jsClass + '-container').colorpicker({
                 stop: updateColor,
                 color: clickEvent.target.getAttribute('value'),
@@ -1029,64 +1026,28 @@ module.exports.prototype = {
                 }
             });
 
+            var _this = this;
+
             function updateColor(stopEvent, data) {
-                console.log('updating', data);
+                clickEvent.target.style.outline = 'none';
                 clickEvent.target.setAttribute('value', data.formatted);
+                _this._aColorPicker[sColorPickerId].colorPickerPreviewElement.style.backgroundColor = data.formatted;
             }
             this._aColorPicker[sColorPickerId].colorPickerContainerElement.classList.add('open');
         }.bind(this));
 
-        // var specifiedElement = document.getElementById('a');
+        this._aColorPicker[sColorPickerId].colorPickerInputElement.addEventListener('input', function(e) {
+            $(jsClass + '-container').colorpicker('setColor', this.value);
+        });
 
-        //I'm using "click" but it works with any event
         document.addEventListener('mousedown', function(event) {
             var isClickInsideContainer = this._aColorPicker[sColorPickerId].colorPickerContainerElement.contains(event.target);
             var isClickInsideInput = this._aColorPicker[sColorPickerId].colorPickerInputElement == event.target;
 
             if (!isClickInsideContainer && !isClickInsideInput) {
-                // console.log('clicking outside', isClickInsideInput, isClickInsideContainer);
                 this._aColorPicker[sColorPickerId].colorPickerContainerElement.classList.remove('open');
-                // $(jsClass + '-container').colorpicker('destroy');
             }
         }.bind(this));
-
-        // // var demoWheelElement = document.getElementById("colorWheelDemo");
-        // this._aColorPicker[sColorPickerId].colorPickerInputElement.addEventListener('click', function() {
-        //     console.log(this);
-        //     this._aColorPicker[sColorPickerId].colorPickerContainerElement.parentNode.classList.add('open');
-        //     var colorWheel = new iro.ColorWheel(this._aColorPicker[sColorPickerId].colorPickerContainerElement, {
-        //         width: 320,
-        //         height: 320,
-
-        //           // Radius of the markers that show the current color:
-        //           markerRadius: 8,
-        //           // Padding space around the markers:
-        //           padding: 4,
-        //           // Space between the hue/saturation ring and the value slider:
-        //           sliderMargin: 24,
-
-        //           // Initial color value -- any valid CSS color string works:
-        //           color: "#fff"
-        //     });
-        //     colorWheel.watch(function(color) {
-        //         console.log(color);
-        //         console.log(colorWheel);
-        //     });
-        //     // this._aColorPicker[sColorPickerId].colorPickerContainerElement.removeEventListener('click', this);
-        // }.bind(this));
-
-        // 
-
-        // new Flatpickr(this._aDatePicker[sColorPickerId].datePickerInputElement, {
-        //     altInput: true,
-        //     altFormat: this._aDatePicker[sColorPickerId].dateFormat,
-        //     defaultDate: this._aDatePicker[sColorPickerId].currentValue,
-        //     enableTime: true,
-        //     dateFormat: 'Y-m-d H:i:S', // 2017-03-08 21:46:42
-        //     // noCalendar: true, // only diplays time
-        //     time_24hr: true,
-        //     'static': true
-        // });
     },
 
     _getInputFieldType: function($component)
