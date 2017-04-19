@@ -998,8 +998,8 @@ module.exports.prototype = {
         var colorPicker = {
             sColorPickerId: sColorPickerId,
             field: field,
-            colorPickerInputElement: document.querySelector(jsClass + '-input'),
-            colorPickerContainerElement: document.querySelector(jsClass + '-container'),
+            colorPickerInputElement: field[0].querySelector(jsClass + '-input'),
+            colorPickerContainerElement: field[0].querySelector(jsClass + '-container'),
             // currentValue: document.querySelector(jsClass + '-input').getAttribute('data-cp-value'),
             // colorFormat: document.querySelector(jsClass + '-input').getAttribute('data-cp-format')
         }
@@ -1008,7 +1008,47 @@ module.exports.prototype = {
         this._aColorPicker[sColorPickerId] = colorPicker;
         console.log(this);
         // this._aColorPicker[sColorPickerId].colorPickerInputElement.colorpicker();
-        $(jsClass + '-input').colorpicker();
+        this._aColorPicker[sColorPickerId].colorPickerInputElement.addEventListener('click', function(clickEvent) {
+            // console.log();
+            $(jsClass + '-container').colorpicker({
+                stop: updateColor,
+                color: clickEvent.target.getAttribute('value'),
+                okOnEnter: true,
+                parts:  [   '', 'map', 'bar', '',
+                'hsv', 'rgb', 'alpha', 'preview',
+                '', ''
+                ],
+                alpha:  true,
+                layout: {
+                    map:        [0, 1, 1, 5],
+                    bar:        [1, 1, 1, 5],
+                    alpha:      [2, 4, 1, 1],
+                    preview:    [2, 1, 1, 1],
+                    hsv:        [2, 2, 1, 1],
+                    rgb:        [2, 3, 1, 1],
+                }
+            });
+
+            function updateColor(stopEvent, data) {
+                console.log('updating', data);
+                clickEvent.target.setAttribute('value', data.formatted);
+            }
+            this._aColorPicker[sColorPickerId].colorPickerContainerElement.classList.add('open');
+        }.bind(this));
+
+        // var specifiedElement = document.getElementById('a');
+
+        //I'm using "click" but it works with any event
+        document.addEventListener('mousedown', function(event) {
+            var isClickInsideContainer = this._aColorPicker[sColorPickerId].colorPickerContainerElement.contains(event.target);
+            var isClickInsideInput = this._aColorPicker[sColorPickerId].colorPickerInputElement == event.target;
+
+            if (!isClickInsideContainer && !isClickInsideInput) {
+                // console.log('clicking outside', isClickInsideInput, isClickInsideContainer);
+                this._aColorPicker[sColorPickerId].colorPickerContainerElement.classList.remove('open');
+                // $(jsClass + '-container').colorpicker('destroy');
+            }
+        }.bind(this));
 
         // // var demoWheelElement = document.getElementById("colorWheelDemo");
         // this._aColorPicker[sColorPickerId].colorPickerInputElement.addEventListener('click', function() {

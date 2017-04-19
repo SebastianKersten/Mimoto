@@ -10,9 +10,12 @@
 
             <p>input wordt "hidden"</p>
             <input {{ Aimless.input() }} type="type" class="MimotoCMS_forms_input_ColorPicker-input js-{{ sFlatColorPickerId }}-color-picker-input" value="{{ Aimless.value() }}" />
-            <div class="MimotoCMS_forms_input_ColorPicker-wrapper"><div class="MimotoCMS_forms_input_ColorPicker-container js-{{ sFlatColorPickerId }}-color-picker-container"></div></div>
+            <div class="MimotoCMS_forms_input_ColorPicker-wrapper js-{{ sFlatColorPickerId }}-color-picker-container">
+                {# <div class="MimotoCMS_forms_input_ColorPicker-container "> #}
+                {# </div> #}
+            </div>
+            <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupColorPicker, '{{ sColorPickerId }}', '{{ sFlatColorPickerId }}', '{{ Aimless.fieldId() }}');</script>
         </div>
-        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupColorPicker, '{{ sColorPickerId }}', '{{ sFlatColorPickerId }}', '{{ Aimless.fieldId() }}');</script>
     {% endblock %}
 {% endembed %}
 
