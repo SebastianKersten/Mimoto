@@ -1012,10 +1012,10 @@ module.exports.prototype = {
                 color: clickEvent.target.getAttribute('value'),
                 okOnEnter: true,
                 parts:  [   '', 'map', 'bar', '',
-                'hsv', 'rgb', 'alpha', 'preview',
+                'hsv', 'rgb', '', 'preview',
                 '', ''
                 ],
-                alpha:  true,
+                // alpha:  true,
                 layout: {
                     map:        [0, 1, 1, 5],
                     bar:        [1, 1, 1, 5],
