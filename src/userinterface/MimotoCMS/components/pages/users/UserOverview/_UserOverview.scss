@@ -1,0 +1,19 @@
+@import 'ListItem/ListItem';
+
+ul.MimotoCMS_pages_users_UserOverview__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    margin-bottom: 25px;
+    margin-top: 30px;
+
+    &>li {
+        margin-bottom: 5px;
+        margin-right: 5px;
+    }
+
+    &>li:last-child {
+        margin-bottom: 0;
+    }
+}

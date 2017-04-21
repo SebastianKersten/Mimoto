@@ -7,7 +7,7 @@ require_once(dirname(dirname(dirname(__FILE__))).'/vendor/pusher/pusher-php-serv
 //echo gearman_version();
 
 
-$config = require_once(dirname(dirname(__FILE__)).'/config.php');
+$config = require_once(dirname(dirname(__FILE__)) . '/config.php');
 
 
 // init

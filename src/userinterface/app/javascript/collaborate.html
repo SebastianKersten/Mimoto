@@ -6,9 +6,59 @@
     <link href="https://cdn.quilljs.com/1.2.3/quill.snow.css" rel="stylesheet">
     <link href="https://cdn.quilljs.com/1.2.3/quill.bubble.css" rel="stylesheet">
 
-    <script src="http://mimoto.aimless/mimoto.cms/static/js/mimoto.cms.js"></script>
+    <script src="/mimoto.cms.js"></script>
 
     <script src="/socket.io/socket.io.js"></script>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background: #fafafa;
+        }
+
+        div.container {
+            position: relative;
+            margin: 25px;
+            padding: 25px;
+            height: 100%;
+
+            border: 1px solid #e5e5e5;
+            background-color: #ffffff;
+        }
+
+        div.cursors {
+            position: absolute;
+            height: 100%;
+            min-height: 250px;
+        }
+
+        div.cursor {
+            position: absolute;
+            background-color: #FF9999;
+            display: inline-block;
+        }
+
+        .editor {
+            position: relative;
+            height: 100%;
+            min-height: 250px;
+        }
+
+        p {
+            line-height: 25px;
+            font-size: 14px;
+        }
+
+        blockquote {
+            max-width: 450px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #b5b3b4;
+        }
+    </style>
 
     <script>
         window.onload = function()
@@ -21,15 +71,35 @@
 
 
             var quill = new Mimoto.modules.Quill('#editor', {
-                theme: 'bubble'
+                theme: 'bubble',
+                modules: {
+                    history: {
+                        delay: 2000,
+                        maxStack: 500,
+                        userOnly: true
+                    }
+                }
             });
 
 
             var socket = io();
 
 
+            quill.on('selection-change', function()
+            {
+                console.log('selectionChange', quill.getSelection());
+
+                // getBounds
+                socket.emit('selectionChange', quill.getSelection());
+
+            });
+
             quill.on('text-change', function(delta, oldContents, source)
             {
+                // getBounds
+                socket.emit('selectionChange', quill.getSelection());
+
+
                 if (source == 'api')
                 {
                      console.warn("An API call triggered this change.", delta);
@@ -120,9 +190,44 @@
                         documentPending = null;
                     }
                 }
+
+            });
+
+
+            socket.on('selectionChange', function(range) {
+
+
+                var cursor = document.getElementById('cursor');
+
+
+                if (!range)
+                {
+                    console.log('User lost focus');
+
+                    cursor.style.display = 'none';
+                }
                 else
                 {
-                    console.error('------------- Noooooooooooooo', delta);
+                    var bounds = quill.getBounds(range.index, range.length);
+
+                    cursor.style.display = 'inline-block';
+
+                    if (range.length == 0)
+                    {
+                        console.log('Cursor', bounds);
+                    }
+                    else if (range.length > 0)
+                    {
+                        console.log('Selection', bounds);
+                    }
+
+                    cursor.style.left = (bounds.left - 2) + 'px';
+                    //cursor.style.right = bounds.right + 'px';
+                    cursor.style.top = (bounds.top  - 2) + 'px';
+                    //cursor.style.bottom = (bounds.bottom + 2) + 'px';
+
+                    cursor.style.width = Math.max(3, bounds.width) + 'px';
+                    cursor.style.height = (bounds.height + 5) + 'px';
                 }
 
             });
@@ -132,7 +237,10 @@
 
 <body>
 
-    <div id="editor" style="height: 300px;"></div>
+    <div class="container">
+        <div id="cursors" class="cursors"><div id="cursor" class="cursor"></div></div>
+        <div id="editor" class="editor"></div>
+    </div>
 
 </body>
 </html>

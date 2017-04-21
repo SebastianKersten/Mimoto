@@ -13,11 +13,11 @@
 
         <script>
             Mimoto.Aimless.connect(
-                '{{ Aimless.globalValue('pusher.auth_key') }}',
-                '{{ Aimless.globalValue('pusher.cluster') }}',
-                '{{ Aimless.globalValue('pusher.host') }}',
-                '{{ Aimless.globalValue('pusher.encrypted') }}',
-                '{{ Aimless.globalValue('pusher.authEndpoint') }}',
+                '{{ Mimoto.globalValue('pusher.auth_key') }}',
+                '{{ Mimoto.globalValue('pusher.cluster') }}',
+                '{{ Mimoto.globalValue('pusher.host') }}',
+                '{{ Mimoto.globalValue('pusher.encrypted') }}',
+                '{{ Mimoto.globalValue('pusher.authEndpoint') }}',
                 false
             );
         </script>
@@ -25,7 +25,7 @@
         <script></script>
 
     </head>
-    <body class="TheTimeline" style="background-color:{{ Aimless.render('backgroundColor') }}">
+    <body class="TheTimeline" style="background-color:{{ Mimoto.render('backgroundColor') }}">
         {% block content %}{% endblock %}
     </body>
 </html>

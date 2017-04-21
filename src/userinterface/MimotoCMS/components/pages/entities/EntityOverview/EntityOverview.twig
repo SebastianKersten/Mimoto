@@ -1,10 +1,10 @@
-{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();", types:['secondary'] }) }}
+{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();", types:['secondary'] }) }}
 
-<ul class="MimotoCMS_pages_entities_EntityOverview__container js-list js-list-sortable" {{ Aimless.realtime('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}>
-    {{ Aimless.render('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}
+<ul class="MimotoCMS_pages_entities_EntityOverview__container js-list js-list-sortable" {{ Mimoto.realtime('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}>
+    {{ Mimoto.render('entities', 'Mimoto.CMS_entities_EntityOverview_ListItem') }}
 </ul>
 
-<div {{ Aimless.showWhenEmpty('entities') }}>
+<div {{ Mimoto.showWhenEmpty('entities') }}>
     <b>Start building</b> your project by:
     <ul>
         <li>1) starting with <u>entities</u> <i>(the data structure)</i></li>

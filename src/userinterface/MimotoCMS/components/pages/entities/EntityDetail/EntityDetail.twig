@@ -1,6 +1,6 @@
-{% set extends = Aimless.data('extends.name') %}
-{# set extends_id = Aimless.meta('extends.id') #}{# todo #}
-{% set extends_id = Aimless.meta('id') %}{# todo #}
+{% set extends = Mimoto.data('extends.name') %}
+{# set extends_id = Mimoto.meta('extends.id') #}{# todo #}
+{% set extends_id = Mimoto.meta('id') %}{# todo #}
 
 
 {%
@@ -35,11 +35,11 @@
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_info">
 
-                        <span class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</span>
+                        <span class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
 
                         {% if entityStructure.extends is not empty %}
                             {% for extension in entityStructure.extends %}
-                                extends <b><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span data-aimless-id="entity.{{ extension.id }}.name" class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname">{{ extension.name }}</span></a></b>
+                                extends <b><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span data-mimoto-id="entity.{{ extension.id }}.name" class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname">{{ extension.name }}</span></a></b>
                             {% endfor %}
                             <br>
                         {% endif %}
@@ -48,7 +48,7 @@
                             <div class="MimotoCMS_pages_entities_EntityDetail_Structure__extendedby">
                                 Extended by:
                                 {% for extension in entityStructure.extendedBy %}
-                                <a href="/mimoto.cms/entity/{{ extension.id }}/view"><span data-aimless-value="_MimotoAimless__core__entity.{{ extension.id }}.name">{{ extension.name }}</span></a>{% if not loop.last %}, {% endif %}
+                                <a href="/mimoto.cms/entity/{{ extension.id }}/view"><span data-mimoto-value="_MimotoAimless__core__entity.{{ extension.id }}.name">{{ extension.name }}</span></a>{% if not loop.last %}, {% endif %}
                                 {% endfor %}
                             </div>
                         {% endif %}
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_menu">
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Aimless.meta('id') ~ "');", types:['secondary'] }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.entityEdit('" ~ Mimoto.meta('id') ~ "');", types:['secondary'] }) }}
                     </div>
 
                 </div>
@@ -72,18 +72,18 @@
 
                 <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showWhenEmpty('properties') }}>
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('properties') }}>
                         <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
-                        <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                        <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                     </div>
 
-                    <div {{ Aimless.hideWhenEmpty('properties') }}>
-                        <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Aimless.realtime('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}>
-                            {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
+                    <div {{ Mimoto.hideWhenEmpty('properties') }}>
+                        <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}>
+                            {{ Mimoto.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
                         </ul>
 
                         <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new property', icon:'plus', onclick:"Mimoto.CMS.entityPropertyNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                         </div>
                     </div>
 
@@ -100,8 +100,8 @@
                 [search fields]
                 <br>
                 <br>
-                {#<div class="MimotoCMS_pages_entities_EntityDetail_Properties__container" {{ Aimless.realtime('instances') }}>
-                    {{ Aimless.data('instances') }}
+                {#<div class="MimotoCMS_pages_entities_EntityDetail_Properties__container" {{ Mimoto.realtime('instances') }}>
+                    {{ Mimoto.data('instances') }}
                 </div>#}
             </div>
 
@@ -115,7 +115,7 @@
             <br>
             <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
             <br>
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete entity', icon:'warning', onclick:"Mimoto.CMS.entityDelete(" ~ Aimless.meta('id') ~ ", '" ~ Aimless.data('name') ~ "');", types:['alert'] }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete entity', icon:'warning', onclick:"Mimoto.CMS.entityDelete(" ~ Mimoto.meta('id') ~ ", '" ~ Mimoto.data('name') ~ "');", types:['alert'] }) }}
         </div>
 
     {% endblock %}
@@ -141,22 +141,22 @@
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showWhenEmpty('forms') }}>
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('forms') }}>
                     <div>This entity has no form yet.<br>Go ahead, start adding one!</div>
                     <div>
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Auto-generate form', icon:'plus', onclick:"Mimoto.CMS.entityFormAutogenerate('" ~ Aimless.meta('id') ~ "');" }) }}
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Auto-generate form', icon:'plus', onclick:"Mimoto.CMS.entityFormAutogenerate('" ~ Mimoto.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
 
-                <div {{ Aimless.hideWhenEmpty('forms') }}>
-                    <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Aimless.realtime('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}>
-                        {{ Aimless.render('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}
+                <div {{ Mimoto.hideWhenEmpty('forms') }}>
+                    <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}>
+                        {{ Mimoto.render('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}
                     </ul>
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Auto-generate form', icon:'plus', onclick:"Mimoto.CMS.entityFormAutogenerate('" ~ Aimless.meta('id') ~ "');" }) }}
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Auto-generate form', icon:'plus', onclick:"Mimoto.CMS.entityFormAutogenerate('" ~ Mimoto.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new form', icon:'plus', onclick:"Mimoto.CMS.entityFormNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
 
@@ -187,18 +187,18 @@
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Aimless.showWhenEmpty('components') }}>
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('components') }}>
                     <div>This entity has no component yet.<br>Go ahead, start adding one!</div>
-                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.entityComponentNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.entityComponentNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                 </div>
 
-                <div {{ Aimless.hideWhenEmpty('components') }}>
-                    <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Aimless.realtime('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}>
-                        {{ Aimless.render('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}
+                <div {{ Mimoto.hideWhenEmpty('components') }}>
+                    <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}>
+                        {{ Mimoto.render('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}
                     </ul>
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.entityComponentNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new component', icon:'plus', onclick:"Mimoto.CMS.entityComponentNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
 
@@ -211,9 +211,9 @@
                 <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-title">Twig example</div>
 
                 <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-container">
-                    <code>{{ "<div "|escape }}<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Aimless.realtime() }}' }}</span>&gt;</code>
-                    <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties" {{ Aimless.realtime('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}>
-                        {{ Aimless.render('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}
+                    <code>{{ "<div "|escape }}<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Mimoto.realtime() }}' }}</span>&gt;</code>
+                    <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties" {{ Mimoto.realtime('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}>
+                        {{ Mimoto.render('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}
                     </div>
                     <code>{{ "</div>"|escape }}</code>
                 </div>

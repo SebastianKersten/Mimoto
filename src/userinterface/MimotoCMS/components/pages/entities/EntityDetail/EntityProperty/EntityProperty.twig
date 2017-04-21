@@ -1,23 +1,23 @@
-<li class="MimotoCMS_pages_entities_EntityDetail-EntityProperty" {{ Aimless.realtime() }}>
+<li class="MimotoCMS_pages_entities_EntityDetail-EntityProperty" {{ Mimoto.realtime() }}>
 
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__data">
-        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__name" {{ Aimless.realtime('name') }}>
-             {{ Aimless.render('name') }}
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__name" {{ Mimoto.realtime('name') }}>
+             {{ Mimoto.render('name') }}
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
-            {% if Aimless.data('subtype') == 'image' or Aimless.data('subtype') == 'video' or Aimless.data('subtype') == 'audio' or Aimless.data('subtype') == 'file' %}
-                <div {{ Aimless.realtime('subtype') }}>{{ Aimless.render('subtype') }}</div>
+            {% if Mimoto.data('subtype') == 'image' or Mimoto.data('subtype') == 'video' or Mimoto.data('subtype') == 'audio' or Mimoto.data('subtype') == 'file' %}
+                <div {{ Mimoto.realtime('subtype') }}>{{ Mimoto.render('subtype') }}</div>
             {% else %}
-                <div {{ Aimless.realtime('type') }}>{{ Aimless.render('type') }}</div>
+                <div {{ Mimoto.realtime('type') }}>{{ Mimoto.render('type') }}</div>
             {% endif %}
         </div>
-        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Aimless.realtime('settings') }}>
-            {{ Aimless.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { propertySubtype:Aimless.data('subtype') }) }}
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Mimoto.realtime('settings') }}>
+            {{ Mimoto.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { propertySubtype:Mimoto.data('subtype') }) }}
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.entityPropertyDelete('" ~ Aimless.meta('id') ~ "', '" ~ Aimless.data('name') ~ "');" }) }}
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Aimless.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.entityPropertyDelete('" ~ Mimoto.meta('id') ~ "', '" ~ Mimoto.data('name') ~ "');" }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu-handle">
         <div class="MimotoCMS_ListItemModule-handle">

@@ -2,11 +2,11 @@
     {% block form_component_element %}
         <div class="MimotoCMS_forms_FormComponent-element-container">
             <div class="MimotoCMS_forms_input_Checkbox-container">
-                {% set sInputId = Aimless.meta('type')~'.'~Aimless.meta('id') %}
-                <input {{ Aimless.input() }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_Checkbox js-checkbox" {% if Aimless.value() %}checked{% endif %} />
+                {% set sInputId = Mimoto.meta('type')~'.'~Mimoto.meta('id') %}
+                <input {{ Mimoto.input() }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_Checkbox js-checkbox" {% if Mimoto.value() %}checked{% endif %} />
                 <svg class="MimotoCMS_forms_input_Checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
             </div>
-            <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ Aimless.data('option') }}</label>
+            <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ Mimoto.data('option') }}</label>
         </div>
     {% endblock %}
 {% endembed %}

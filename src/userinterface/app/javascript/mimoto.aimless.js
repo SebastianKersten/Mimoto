@@ -5,13 +5,14 @@
  */
 
 
-//require('./lib/diff_match_patch/diff_match_patch');
-
 // init
 if (typeof Mimoto == "undefined") Mimoto = {};
 if (typeof Mimoto.Aimless == "undefined") Mimoto.Aimless = {};
 if (typeof Mimoto.modules == "undefined") Mimoto.modules = {};
 if (typeof Mimoto.classes == "undefined") Mimoto.classes = {};
+
+
+var RealtimeEditor = require('./mimoto.aimless/modules/RealtimeEditor');
 
 // include
 var MimotoAimless = require('./mimoto.aimless/Mimoto.Aimless');
@@ -30,5 +31,36 @@ document.addEventListener('DOMContentLoaded', function () {
     
     // update
     Mimoto.Aimless.utils.parseRequestQueue();
+
+    // search
+    var aEditableValues = document.querySelectorAll('[data-mimoto-editable]');
+
+    // init
+    var aRealtimeEditors = [];
+
+    // setup
+    var nEditableValueCount = aEditableValues.length;
+    for (var nEditableValueIndex = 0; nEditableValueIndex < nEditableValueCount; nEditableValueIndex++)
+    {
+        // register
+        var editableValue = aEditableValues[nEditableValueIndex];
+
+        // read
+        var sPropertySelector = editableValue.getAttribute('data-mimoto-editable');
+        var editOptions = JSON.parse(editableValue.getAttribute('data-mimoto-editable-options'));
+
+        console.log('editable', sPropertySelector, editOptions, editableValue);
+
+
+        // init
+        var realtimeEditor = new RealtimeEditor(sPropertySelector, editOptions, editableValue);
+
+
+        // store
+        aRealtimeEditors.push(realtimeEditor);
+
+    }
+
+
     
 }, false);

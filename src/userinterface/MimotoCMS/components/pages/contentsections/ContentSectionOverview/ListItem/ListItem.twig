@@ -1,21 +1,21 @@
-{% if Aimless.data('form') is not empty %}
-    {% set sFormInfo = Aimless.data('form.name') %}
+{% if Mimoto.data('form') is not empty %}
+    {% set sFormInfo = Mimoto.data('form.name') %}
 {% else %}
     {% set sFormInfo = 'No form selected yet' %}
 {% endif %}
 {{
-    Aimless.module('Mimoto.CMS.ListItemModule',
+    Mimoto.module('Mimoto.CMS.ListItemModule',
     {
-        realtime: Aimless.realtime(),
-        label: Aimless.data('name'),
-        label_realtime: Aimless.realtime('name'),
-        sublabel: 'type='~Aimless.data('type')~', form='~sFormInfo,
-        sublabel_realtime:  Aimless.realtime('type'),
+        realtime: Mimoto.realtime(),
+        label: Mimoto.data('name'),
+        label_realtime: Mimoto.realtime('name'),
+        sublabel: 'type='~Mimoto.data('type')~', form='~sFormInfo,
+        sublabel_realtime:  Mimoto.realtime('type'),
         button_label: 'View',
-        button_action: 'Mimoto.CMS.contentSectionView('~Aimless.meta('id')~');',
+        button_action: 'Mimoto.CMS.contentSectionView('~Mimoto.meta('id')~');',
         button_type: 'secondary',
         button2_label: 'Delete',
-        button2_action: 'Mimoto.CMS.contentSectionDelete('~Aimless.meta('id')~', \''~Aimless.data('name')~'\');',
+        button2_action: 'Mimoto.CMS.contentSectionDelete('~Mimoto.meta('id')~', \''~Mimoto.data('name')~'\');',
         button2_type: 'alert'
     })
 }}

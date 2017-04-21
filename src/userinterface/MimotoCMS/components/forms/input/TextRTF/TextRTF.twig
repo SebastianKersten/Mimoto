@@ -1,13 +1,13 @@
-{% set sRichTextFieldId = Aimless.meta('type')~"."~Aimless.meta('id') %}
-{% set sFlatRichTextFieldId = Aimless.meta('type')~Aimless.meta('id') %}
+{% set sRichTextFieldId = Mimoto.meta('type')~"."~Mimoto.meta('id') %}
+{% set sFlatRichTextFieldId = Mimoto.meta('type')~Mimoto.meta('id') %}
 
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "textrtf"} %}
 
     {% block form_component_element %}
 
-        <div id="{{ sFlatRichTextFieldId }}" {{ Aimless.input() }} class="MimotoCMS_forms_input_TextRTF-input">{{ Aimless.value() }}</div>
+        <div id="{{ sFlatRichTextFieldId }}" {{ Mimoto.input() }} class="MimotoCMS_forms_input_TextRTF-input">{{ Mimoto.value() }}</div>
 
-        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupRichTextField, '{{ sRichTextFieldId }}', '{{ sFlatRichTextFieldId }}', '{{ Aimless.fieldId() }}');</script>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupRichTextField, '{{ sRichTextFieldId }}', '{{ sFlatRichTextFieldId }}', '{{ Mimoto.fieldId() }}');</script>
 
     {% endblock %}
 

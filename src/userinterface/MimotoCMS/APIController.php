@@ -37,10 +37,10 @@ class APIController
 
 
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('aimless')->createComponent('Mimoto.CMS_api_APIOverview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_api_APIOverview', $eRoot));
 
         // 3. setup page
         $page->setVar('pageTitle', array(
@@ -62,10 +62,10 @@ class APIController
     public function layoutNew()
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create form layout
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup form
         $component->addForm(
@@ -91,7 +91,7 @@ class APIController
     public function layoutView(Application $app, $nLayoutId)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eLayout = Mimoto::service('data')->get(CoreConfig::MIMOTO_LAYOUT, $nLayoutId);
@@ -100,7 +100,7 @@ class APIController
         if (empty($eLayout)) return $app->redirect("/mimoto.cms/layouts");
 
         // 4. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_layouts_LayoutDetail', $eLayout);
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_layouts_LayoutDetail', $eLayout);
 
         // 5. connect
         $page->addComponent('content', $component);
@@ -112,7 +112,7 @@ class APIController
                     "url" => '/mimoto.cms/layouts'
                 ),
                 (object) array(
-                    "label" => '<span data-aimless-value="'.CoreConfig::MIMOTO_LAYOUT.'.'.$eLayout->getId().'.name">'.$eLayout->getValue('name').'</span>',
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_LAYOUT.'.'.$eLayout->getId().'.name">'.$eLayout->getValue('name').'</span>',
                     "url" => '/mimoto.cms/layout/'.$eLayout->getId().'/view'
                 )
             )
@@ -125,7 +125,7 @@ class APIController
     public function layoutEdit(Application $app, $nLayoutId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load
         $eLayout = Mimoto::service('data')->get(CoreConfig::MIMOTO_LAYOUT, $nLayoutId);
@@ -134,7 +134,7 @@ class APIController
         if (empty($eLayout)) return $app->redirect("/mimoto.cms/layouts");
 
         // 4. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup
         $component->addForm(
@@ -167,10 +167,10 @@ class APIController
     public function layoutContainerNew(Application $app, $nLayoutId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup
         $component->addForm(CoreConfig::COREFORM_LAYOUTCONTAINER, null,
@@ -190,7 +190,7 @@ class APIController
     public function layoutContainerEdit(Application $app, $nLayoutContainerId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eLayoutContainer = Mimoto::service('data')->get(CoreConfig::MIMOTO_LAYOUTCONTAINER, $nLayoutContainerId);
@@ -199,7 +199,7 @@ class APIController
         if (empty($eLayoutContainer)) return $app->redirect("/mimoto.cms/layouts");
 
         // 4. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup
         $component->addForm(CoreConfig::COREFORM_LAYOUTCONTAINER, $eLayoutContainer, ['response' => ['onSuccess' => ['closePopup' => true]]]);

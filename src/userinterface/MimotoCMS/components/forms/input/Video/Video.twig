@@ -1,10 +1,10 @@
-{% set sVideofieldId = Aimless.meta('type')~"."~Aimless.meta('id') %}
-{% set sFlatVideoFieldId = Aimless.meta('type')~Aimless.meta('id') %}
+{% set sVideofieldId = Mimoto.meta('type')~"."~Mimoto.meta('id') %}
+{% set sFlatVideoFieldId = Mimoto.meta('type')~Mimoto.meta('id') %}
 
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "video", button:true, buttonLabel:'Upload video', buttonIcon:'', buttonClass:'js-'~sFlatVideoFieldId~'-video-upload-trigger' } %}
 
     {% block form_component_element %}
-        <div id="{{ Aimless.meta('type')~"."~Aimless.meta('id') }}">
+        <div id="{{ Mimoto.meta('type')~"."~Mimoto.meta('id') }}">
             <div class="MimotoCMS_forms_input_VideoUpload js-{{ sFlatVideoFieldId }}-video-upload">
 
                 <video id="js-{{ sFlatVideoFieldId }}-previewvideo" class="MimotoCMS_forms_input_VideoUpload-player" muted loop poster="">
@@ -21,14 +21,14 @@
                             <div class="MimotoCMS_forms_input_VideoUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
                         </div>
                         <div class="MimotoCMS_forms_input_VideoUpload-preview-button">
-                            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
+                            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
                         </div>
                     </div>
                 </div>
             </div>
-            <input {{ Aimless.input() }} type="hidden" value="{{ Aimless.value() }}" class=".js-{{ sFlatVideoFieldId }}-video-upload-value"/>
+            <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}" class=".js-{{ sFlatVideoFieldId }}-video-upload-value"/>
         </div>
-        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupVideoField, '{{ sVideofieldId }}', '{{ sFlatVideoFieldId }}', '{{ Aimless.fieldId }}');</script>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupVideoField, '{{ sVideofieldId }}', '{{ sFlatVideoFieldId }}', '{{ Mimoto.fieldId }}');</script>
 
     {% endblock %}
 

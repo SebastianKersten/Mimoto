@@ -8,6 +8,7 @@ use Mimoto\Core\entities\Root;
 use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
+use Mimoto\Core\entities\User;
 use Mimoto\Core\entities\Component;
 use Mimoto\Core\entities\ComponentConditional;
 use Mimoto\Core\entities\Layout;
@@ -154,6 +155,8 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
+    const COREFORM_USER                         = '_Mimoto_coreform_user';
+
     const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentSection';
     const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
     const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
@@ -219,6 +222,9 @@ class CoreConfig
             EntityProperty::getStructure(),
             EntityPropertySetting::getStructure(),
 
+            // users
+            User::getStructure(),
+
             // search
             Selection::getStructure(),
             SelectionRule::getStructure(),
@@ -283,6 +289,9 @@ class CoreConfig
             EntityPropertyForm_Entity_allowedEntityType::getFormStructure(),
             EntityPropertyForm_Collection_allowedEntityTypes::getFormStructure(),
             EntityPropertyForm_Collection_allowDuplicates::getFormStructure(),
+
+            // users
+            User::getFormStructure(),
 
             // search
             Selection::getFormStructure(),

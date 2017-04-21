@@ -132,7 +132,7 @@ class EntityRepository
             if (count($aResults) !== 1)
             {
 
-                Mimoto::service('log')->silent("Entity not found", "Sorry, I can't find the the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
+                Mimoto::service('log')->silent("Entity not found", "Sorry, I can't find the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
                 return null;
             }
             else

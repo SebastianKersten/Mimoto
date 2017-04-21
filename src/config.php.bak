@@ -4,8 +4,8 @@
     (
         'general' => (object) array
         (
-            'project_root' => '/',
-            'web_root' => '/',
+            'project_root' => dirname(dirname(__FILE__)).'/',
+            'web_root' => dirname(dirname(__FILE__)).'/web/',
             'public_root' => '/'
         ),
         'mysql' => (object) array
@@ -31,7 +31,7 @@
         ),
         'media' => (object) array
         (
-            'upload_dir' => ''
+            'upload_dir' => 'dynamic/'
         )
     );
 

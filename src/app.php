@@ -9,8 +9,24 @@ require_once __DIR__.'/../vendor/autoload.php';
 // Mimoto classes
 use Mimoto\Mimoto;
 
+
+$config = @include(dirname(__FILE__) . '/config.php');
+
+if (!$config)
+{
+    echo "
+    <h1>Installling Mimoto</h1>
+    <ol>
+        <li>Make a copy of `config.php.bak` and name it `config.php`</li>
+        <li>Add your MySQL credentials to your `config.php`</li>
+        <li>Import the database dump in `/database` in your MySQL</li>
+        <li>Add at least 1 user to the `_Mimoto_user` table</li>
+    </ol>";
+    die();
+}
+
 // configure
-Mimoto::setValue('config', include(dirname(__FILE__).'/config.php'));
+Mimoto::setValue('config', $config);
 Mimoto::setValue('ProjectConfig.root', __DIR__ . '/../');
 Mimoto::setValue('ProjectConfig.twigroot', 'src/userinterface/');
 
@@ -46,10 +62,16 @@ Mimoto::setGlobalValue('pusher.authEndpoint', Mimoto::value('config')->pusher->a
 
 //Mimoto::registerService('mail');
 
+
+// temp solution
+Mimoto::setGlobalValue('app', $app);
+
+
 // setup
 $app['debug'] = true;
 $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app, false);
+
 
 // run in debgu mode
 Mimoto::runInDebugMode(true);

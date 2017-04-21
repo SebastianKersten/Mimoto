@@ -1,0 +1,17 @@
+{% extends "grid/base.twig" %}
+
+{% block content %}
+
+    <div class="GridPrototypeOverview">
+
+        <h1>Courses</h1>
+
+        <div class="GridPrototypeOverview-courses" {{ Mimoto.realtime('contentItems', 'course') }}>
+            {{ Mimoto.render('contentItems', 'course') }}
+        </div>
+
+    </div>
+{% endblock %}
+
+
+

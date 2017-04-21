@@ -28,10 +28,10 @@ class EntityController
     public function viewEntityOverview(Application $app)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityOverview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_entities_EntityOverview', $eRoot));
         
         // 3. setup page
         $page->setVar('pageTitle', array(
@@ -50,10 +50,10 @@ class EntityController
     public function entityNew(Application $app)
     {
         // 1. init popup
-        $popup =  Mimoto::service('aimless')->createPopup();
+        $popup =  Mimoto::service('output')->createPopup();
 
         // 2. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup content
         $component->addForm(
@@ -75,7 +75,7 @@ class EntityController
     public function entityView(Application $app, $nEntityId)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
@@ -84,7 +84,7 @@ class EntityController
         if (empty($eEntity)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_entities_EntityDetail', $eEntity);
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_entities_EntityDetail', $eEntity);
 
         // 5. setup content
         $component->setVar('entityStructure', $this->getEntityStructure($eEntity));
@@ -96,7 +96,7 @@ class EntityController
                     "url" => '/mimoto.cms/entities'
                 ),
                 (object) array(
-                    "label" => '<span data-aimless-value="'.CoreConfig::MIMOTO_ENTITY.'.'.$eEntity->getId().'.name">'.$eEntity->getValue('name').'</span>',
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_ENTITY.'.'.$eEntity->getId().'.name">'.$eEntity->getValue('name').'</span>',
                     "url" => '/mimoto.cms/entity/'.$eEntity->getId().'/view'
                 )
             )
@@ -112,7 +112,7 @@ class EntityController
     public function entityEdit(Application $app, $nEntityId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
@@ -121,7 +121,7 @@ class EntityController
         if (empty($eEntity)) return $app->redirect("/mimoto.cms/entities");
 
         // 3. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 4. setup
         $component->addForm(
@@ -162,10 +162,10 @@ class EntityController
     public function entityPropertyNew(Application $app, $nEntityId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 2. setup content
         $component->addForm(
@@ -188,7 +188,7 @@ class EntityController
     public function entityPropertyEdit(Application $app, $nEntityPropertyId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eEntityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $nEntityPropertyId);
@@ -197,7 +197,7 @@ class EntityController
         if (empty($eEntityProperty)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup content
         $component->addForm(
@@ -233,7 +233,7 @@ class EntityController
     public function entityPropertySettingEdit(Application $app, $nEntityPropertySettingId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eEntityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, $nEntityPropertySettingId);
@@ -242,7 +242,7 @@ class EntityController
         if (empty($eEntityProperty)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. select form based on type
         switch ($eEntityProperty->getValue('key'))

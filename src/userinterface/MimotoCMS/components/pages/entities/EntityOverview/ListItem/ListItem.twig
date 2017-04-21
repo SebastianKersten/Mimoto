@@ -1,12 +1,12 @@
 {{
-    Aimless.module('Mimoto.CMS.ListItemModule',
+    Mimoto.module('Mimoto.CMS.ListItemModule',
     {
-        realtime: Aimless.realtime(),
-        label: Aimless.data('name'),
-        label_realtime: Aimless.realtime('name'),
-        sublabel: 'id = '~Aimless.meta('id'),
+        realtime: Mimoto.realtime(),
+        label: Mimoto.data('name'),
+        label_realtime: Mimoto.realtime('name'),
+        sublabel: 'id = '~Mimoto.meta('id'),
         button_label: 'View',
-        button_action: 'Mimoto.CMS.entityView('~Aimless.meta('id')~');',
+        button_action: 'Mimoto.CMS.entityView('~Mimoto.meta('id')~');',
         button_type: 'secondary'
     })
 }}

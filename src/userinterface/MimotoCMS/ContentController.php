@@ -24,7 +24,7 @@ class ContentController
     public function contentEdit(Application $app, $nContentId)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eContentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
@@ -46,7 +46,7 @@ class ContentController
                 $contentItem = $eContentSectionEntity->getValue('contentItem');
 
                 // 5b. create page containing a form
-                $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+                $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
                 // 5c. setup form
                 $component->addForm($sFormName, $contentItem, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItem']);
@@ -56,7 +56,7 @@ class ContentController
             case ContentSection::TYPE_GROUP:
 
                 // 5d. create component
-                $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_content_ContentOverview', $eContentSectionEntity);
+                $component = Mimoto::service('output')->createComponent('Mimoto.CMS_content_ContentOverview', $eContentSectionEntity);
 
                 // 5e. setup content
                 $component->setVar('nContentSectionId', $nContentId);
@@ -88,7 +88,7 @@ class ContentController
     public function contentGroupItemNew(Application $app, $nContentId)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eContentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
@@ -101,7 +101,7 @@ class ContentController
         $sFormName = $eContentSectionEntity->getValue('form.name');
 
         // 5. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 6. setup content
         $component->addForm(
@@ -137,7 +137,7 @@ class ContentController
     public function contentGroupItemEdit(Application $app, $nContentId, $sContentTypeName, $nContentItemId)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load config data
         $contentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
@@ -153,7 +153,7 @@ class ContentController
         $eEntity = Mimoto::service('data')->get($sContentTypeName, $nContentItemId);
 
         // 6. create page containing a form
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 7. setup form
         $component->addForm(
@@ -180,7 +180,7 @@ class ContentController
             // verify
             if ($eEntity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
             {
-                $sLabelProperty = '<span data-aimless-value="'.$eEntity->getEntityTypeName().'.'.$eEntity->getId().'.'.$sPropertyName.'">'.$eEntity->getValue($sPropertyName).'</span>';
+                $sLabelProperty = '<span data-mimoto-value="'.$eEntity->getEntityTypeName().'.'.$eEntity->getId().'.'.$sPropertyName.'">'.$eEntity->getValue($sPropertyName).'</span>';
                 break;
             }
         }

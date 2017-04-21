@@ -1,17 +1,17 @@
-<li class="MimotoCMS_forms_input_ListItem" {{ Aimless.realtime() }}>
+<li class="MimotoCMS_forms_input_ListItem" {{ Mimoto.realtime() }}>
 
     {% if list_item.image|default('') %}
         <figure class="MimotoCMS_forms_input_ListItem-figure" style="background-image: url({{ list_item.image }});"></figure>
     {% endif %}
 
     <div class="MimotoCMS_forms_input_ListItem-text">
-        <p class="MimotoCMS_forms_input_ListItem-title" {{ Aimless.getRealtimeBySortindex() }}>{{ Aimless.getValueBySortindex() }}</p>
-        <p class="MimotoCMS_forms_input_ListItem-subtitle" {{ Aimless.getRealtimeBySortindex(1) }}>{{ Aimless.getValueBySortindex(1) }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-title" {{ Mimoto.getRealtimeBySortindex() }}>{{ Mimoto.getValueBySortindex() }}</p>
+        <p class="MimotoCMS_forms_input_ListItem-subtitle" {{ Mimoto.getRealtimeBySortindex(1) }}>{{ Mimoto.getValueBySortindex(1) }}</p>
     </div>
 
     <div class="MimotoCMS_forms_input_ListItem-menu">
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Remove', onclick: "Mimoto.CMS.formFieldListItemDelete('"~Aimless.getConnectionId()~"', '"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"')", types: ['alert', 'small'] }) }}
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldListItemEdit('"~Aimless.getConnectionId()~"', '"~Aimless.meta('type')~"', '"~Aimless.meta('id')~"')", types: ['secondary', 'small'] }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label: 'Remove', onclick: "Mimoto.CMS.formFieldListItemDelete('"~Mimoto.getConnectionId()~"', '"~Mimoto.meta('type')~"', '"~Mimoto.meta('id')~"')", types: ['alert', 'small'] }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label: 'Edit', onclick: "Mimoto.CMS.formFieldListItemEdit('"~Mimoto.getConnectionId()~"', '"~Mimoto.meta('type')~"', '"~Mimoto.meta('id')~"')", types: ['secondary', 'small'] }) }}
     </div>
 
 

@@ -20,13 +20,13 @@
                 <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__meta">
                     <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__meta_info">
 
-                        <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutname" {{ Aimless.realtime('name') }}>{{ Aimless.data('name') }}</div>
-                        <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__componentfile" {{ Aimless.realtime('file') }}>{{ Aimless.data('file') }}</div>
+                        <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+                        <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__componentfile" {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
 
                     </div>
 
                     <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__meta_menu">
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.layoutEdit('" ~ Aimless.meta('id') ~ "');", type:'secondary' }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.layoutEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
                     </div>
 
                 </div>
@@ -35,18 +35,18 @@
 
             <div class="MimotoCMS_pages_layouts_LayoutDetail__block">
 
-                <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_empty" {{ Aimless.showWhenEmpty('containers') }}>
+                <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_empty" {{ Mimoto.showWhenEmpty('containers') }}>
                     <div>This layout has no containers yet.<br>Add one. Now! I'm not kidding, Do it!</div>
-                    <div>{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new container', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Aimless.meta('id') ~ "');" }) }}</div>
+                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new container', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                 </div>
 
-                <div {{ Aimless.hideWhenEmpty('containers') }}>
-                    <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_container" {{ Aimless.realtime('containers', 'Mimoto.CMS_layouts_LayoutDetail-LayoutContainer') }}>
-                        {{ Aimless.render('containers', 'Mimoto.CMS_layouts_LayoutDetail-LayoutContainer') }}
+                <div {{ Mimoto.hideWhenEmpty('containers') }}>
+                    <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_container" {{ Mimoto.realtime('containers', 'Mimoto.CMS_layouts_LayoutDetail-LayoutContainer') }}>
+                        {{ Mimoto.render('containers', 'Mimoto.CMS_layouts_LayoutDetail-LayoutContainer') }}
                     </div>
 
                     <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_menu">
-                        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new container', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Aimless.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new container', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
 

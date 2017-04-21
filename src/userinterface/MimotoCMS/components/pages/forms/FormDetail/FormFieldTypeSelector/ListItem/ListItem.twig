@@ -1,11 +1,11 @@
 {{
-    Aimless.module('Mimoto.CMS.ListItemModule',
+    Mimoto.module('Mimoto.CMS.ListItemModule',
     {
-        label: Aimless.data('name'),
-        label_realtime: Aimless.realtime('name'),
-        sublabel: 'id = '~Aimless.meta('id'),
+        label: Mimoto.data('name'),
+        label_realtime: Mimoto.realtime('name'),
+        sublabel: 'id = '~Mimoto.meta('id'),
         button_label: 'Select',
-        button_action: 'Mimoto.CMS.formFieldNew_TypeSelector('~Aimless.meta('id')~');',
+        button_action: 'Mimoto.CMS.formFieldNew_TypeSelector('~Mimoto.meta('id')~');',
         button_type: 'secondary',
         sortable: 'no'
     })

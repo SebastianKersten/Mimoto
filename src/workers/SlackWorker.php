@@ -1,4 +1,4 @@
-<?php
+\<?php
 
 //gearman_version();
 
@@ -16,7 +16,7 @@ while ($worker->work());
 function sendSlackNotification($job)
 {
     // load
-    $config = require(dirname(dirname(__FILE__)).'/config.php');
+    $config = require(dirname(dirname(__FILE__)) . '/config.php');
 
     // read
     $workload = json_decode($job->workload());

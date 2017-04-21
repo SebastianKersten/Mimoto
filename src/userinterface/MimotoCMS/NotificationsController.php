@@ -24,10 +24,10 @@ class NotificationsController
     public function viewNotificationCenter(Application $app)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('aimless')->createComponent('Mimoto.CMS_notifications_NotificationOverview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_notifications_NotificationOverview', $eRoot));
 
         // 3. setup page
         $page->setVar('pageTitle', array(
@@ -102,7 +102,7 @@ class NotificationsController
         $aNotifications = Mimoto::service('data')->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
 
         // create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_notifications_NotificationOverviewSmall');
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_notifications_NotificationOverviewSmall');
 
         // setup
         $component->addSelection('notifications', $aNotifications, 'Mimoto.CMS_notifications_NotificationSmall');

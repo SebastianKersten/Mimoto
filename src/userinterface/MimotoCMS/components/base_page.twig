@@ -14,11 +14,11 @@
 
     <script>
         Mimoto.Aimless.connect(
-            '{{ Aimless.globalValue('pusher.auth_key') }}',
-            '{{ Aimless.globalValue('pusher.cluster') }}',
-            '{{ Aimless.globalValue('pusher.host') }}',
-            '{{ Aimless.globalValue('pusher.encrypted') }}',
-            '{{ Aimless.globalValue('pusher.authEndpoint') }}',
+            '{{ Mimoto.globalValue('pusher.auth_key') }}',
+            '{{ Mimoto.globalValue('pusher.cluster') }}',
+            '{{ Mimoto.globalValue('pusher.host') }}',
+            '{{ Mimoto.globalValue('pusher.encrypted') }}',
+            '{{ Mimoto.globalValue('pusher.authEndpoint') }}',
             false
         );
     </script>
@@ -39,7 +39,7 @@
         {% include "MimotoCMS/components/interface/Menu/Menu.twig" %}
 
         <section class="MimotoCMS_Pagecontent">
-            {{ Aimless.component('content') }}
+            {{ Mimoto.component('content') }}
         </section>
 
     </div>

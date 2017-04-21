@@ -1,5 +1,5 @@
-{% set sDatePickerId = Aimless.meta('type')~"."~Aimless.meta('id') %}
-{% set sFlatDatePickerId = Aimless.meta('type')~Aimless.meta('id') %}
+{% set sDatePickerId = Mimoto.meta('type')~"."~Mimoto.meta('id') %}
+{% set sFlatDatePickerId = Mimoto.meta('type')~Mimoto.meta('id') %}
 {% set sPHPDateFormat = 'F jS, Y / H:i' %}
 {% set sFRDateFormat = 'F J, Y / H:i' %}
 
@@ -11,8 +11,8 @@
             <div>button die popup opent</div>
 
             <p>input wordt "hidden"</p>
-            <input {{ Aimless.input() }} type="text" class="MimotoCMS_forms_input_DatePicker-input js-{{ sFlatDatePickerId }}-date-picker-input" value="{{ date(Aimless.value())|date(sPHPDateFormat) }}" data-dp-value="{{ Aimless.value() }}" data-dp-format="{{ sFRDateFormat }}"/>
+            <input {{ Mimoto.input() }} type="text" class="MimotoCMS_forms_input_DatePicker-input js-{{ sFlatDatePickerId }}-date-picker-input" value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-value="{{ Mimoto.value() }}" data-dp-format="{{ sFRDateFormat }}"/>
         </div>
-        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupDatePicker, '{{ sDatePickerId }}', '{{ sFlatDatePickerId }}', '{{ Aimless.fieldId() }}');</script>
+        <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupDatePicker, '{{ sDatePickerId }}', '{{ sFlatDatePickerId }}', '{{ Mimoto.fieldId() }}');</script>
     {% endblock %}
 {% endembed %}

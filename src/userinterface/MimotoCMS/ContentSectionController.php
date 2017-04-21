@@ -22,10 +22,10 @@ class ContentSectionController
     public function viewContentSectionOverview(Application $app)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('aimless')->createComponent('Mimoto.CMS_contentsections_ContentSectionOverview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_contentsections_ContentSectionOverview', $eRoot));
 
         // 3. setup page
         $page->setVar('pageTitle', array(
@@ -43,10 +43,10 @@ class ContentSectionController
     public function contentSectionNew(Application $app)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup content
         $component->addForm(
@@ -68,7 +68,7 @@ class ContentSectionController
     public function contentSectionView(Application $app, $nContentSectionId)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
@@ -77,7 +77,7 @@ class ContentSectionController
         if (empty($eContentSection)) return $app->redirect("/mimoto.cms/contentsections");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_contentsections_ContentSectionDetail', $eContentSection);
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_contentsections_ContentSectionDetail', $eContentSection);
 
         // 5. connect
         $page->addComponent('content', $component);
@@ -89,7 +89,7 @@ class ContentSectionController
                     "url" => '/mimoto.cms/contentsections'
                 ),
                 (object) array(
-                    "label" => '<span data-aimless-value="'.CoreConfig::MIMOTO_CONTENTSECTION.'.'.$eContentSection->getId().'.name">'.$eContentSection->getValue('name').'</span>',
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_CONTENTSECTION.'.'.$eContentSection->getId().'.name">'.$eContentSection->getValue('name').'</span>',
                     "url" => '/mimoto.cms/contentsection/'.$eContentSection->getId().'/view'
                 )
             )
@@ -102,7 +102,7 @@ class ContentSectionController
     public function contentSectionEdit(Application $app, $nContentSectionId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentSectionId);
@@ -111,7 +111,7 @@ class ContentSectionController
         if (empty($eContentSection)) return $app->redirect("/mimoto.cms/contentsections");
 
         // 4. create content
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup contennt
         $component->addForm(

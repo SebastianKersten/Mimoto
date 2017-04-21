@@ -1,26 +1,26 @@
-<div {{ Aimless.field() }} class="MimotoCMS_forms_FormComponent js-form-component{% if type|default('') %} js-form-component-{{ type }}{% endif %}" {{ Aimless.realtime() }}>
+<div {{ Mimoto.field() }} class="MimotoCMS_forms_FormComponent js-form-component{% if type|default('') %} js-form-component-{{ type }}{% endif %}" {{ Mimoto.realtime() }}>
 
     <div class="MimotoCMS_forms_FormComponent-header">
-        <label for="" class="MimotoCMS_forms_FormComponent-title">{{ Aimless.data('label') }} {# {% if Aimless.data('value.optional') %}<span class="MimotoCMS_forms_FormComponent-title-information">(optioneel)</span>{% endif %}#}<svg class="js-error-icon MimotoCMS_forms_FormComponent-title-icon"><use xlink:href=""></use></svg></label>
+        <label for="" class="MimotoCMS_forms_FormComponent-title">{{ Mimoto.data('label') }} {# {% if Mimoto.data('value.optional') %}<span class="MimotoCMS_forms_FormComponent-title-information">(optioneel)</span>{% endif %}#}<svg class="js-error-icon MimotoCMS_forms_FormComponent-title-icon"><use xlink:href=""></use></svg></label>
         {% if button|default(false) %}
             <div class="MimotoCMS_forms_FormComponent-button {{ buttonClass }}">
-                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label: buttonLabel, icon:buttonIcon, types:['small', 'secondary'], onclick:buttonOnClick|default('') }) }}
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label: buttonLabel, icon:buttonIcon, types:['small', 'secondary'], onclick:buttonOnClick|default('') }) }}
             </div>
         {% endif %}
     </div>
 
-    <div class="MimotoCMS_forms_FormComponent-content {% if not Aimless.data('description')|default('') %}MimotoCMS_forms_FormComponent-content--no-description{% endif %}">
+    <div class="MimotoCMS_forms_FormComponent-content {% if not Mimoto.data('description')|default('') %}MimotoCMS_forms_FormComponent-content--no-description{% endif %}">
 
         <div class="MimotoCMS_forms_FormComponent-element js-error-parent">
 
             {% block form_component_element %}{% endblock %}
 
-            <p {{ Aimless.error() }} class="MimotoCMS_forms_FormComponent-element-error"></p>
+            <p {{ Mimoto.error() }} class="MimotoCMS_forms_FormComponent-element-error"></p>
 
         </div>
 
-        {% if Aimless.data('description')|default('') %}
-            <p class="MimotoCMS_forms_FormComponent-description">{{ Aimless.data('description') }}</p>
+        {% if Mimoto.data('description')|default('') %}
+            <p class="MimotoCMS_forms_FormComponent-description">{{ Mimoto.data('description') }}</p>
         {% endif %}
 
     </div>

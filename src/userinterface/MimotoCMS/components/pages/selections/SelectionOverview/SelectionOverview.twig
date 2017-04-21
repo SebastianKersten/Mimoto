@@ -1,5 +1,5 @@
-{{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Add new selection', icon:'plus', onclick:"Mimoto.CMS.selectionNew();" }) }}
+{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new selection', icon:'plus', onclick:"Mimoto.CMS.selectionNew();" }) }}
 
-<ul class="MimotoCMS_pages_selections_SelectionOverview__container js-list js-list-sortable" {{ Aimless.realtime('selections', 'Mimoto.CMS_selections_SelectionOverview_ListItem') }}>
-    {{ Aimless.render('selections', 'Mimoto.CMS_selections_SelectionOverview_ListItem') }}
+<ul class="MimotoCMS_pages_selections_SelectionOverview__container js-list js-list-sortable" {{ Mimoto.realtime('selections', 'Mimoto.CMS_selections_SelectionOverview_ListItem') }}>
+    {{ Mimoto.render('selections', 'Mimoto.CMS_selections_SelectionOverview_ListItem') }}
 </ul>

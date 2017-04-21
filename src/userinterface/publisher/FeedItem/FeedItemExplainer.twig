@@ -1,12 +1,12 @@
-<div class="MimotoPublisher-FeedItemExplainer" {{ Aimless.realtime() }}>
+<div class="MimotoPublisher-FeedItemExplainer" {{ Mimoto.realtime() }}>
     <div class="MimotoPublisher-FeedItemExplainer-header">
         <div class="MimotoPublisher-FeedItemExplainer-titlecontainer">
             <h1 class="MimotoPublisher-FeedItemExplainer-title">
                 <span class="MimotoPublisher-FeedItemExplainer-title">
-                    <a href="/publisher/article/{{ Aimless.meta('id') }}" {{ Aimless.realtime('title') }}>{{ Aimless.render('title') }}</a>
+                    <a href="/publisher/article/{{ Mimoto.meta('id') }}" {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</a>
                 </span>
             </h1>
         </div>
-        <img class="MimotoPublisher-FeedItemExplainer-headerImage" src="{{ Aimless.render('headerImage') }}" {{ Aimless.realtime('headerImage') }}>
+        <img class="MimotoPublisher-FeedItemExplainer-headerImage" src="{{ Mimoto.render('headerImage') }}" {{ Mimoto.realtime('headerImage') }}>
     </div>
 </div>

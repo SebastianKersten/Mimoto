@@ -8,9 +8,9 @@
         </div>
         <div class="MimotoCMS_ListItemModule-menu">
             {% if button2_label is not empty %}
-                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:button2_label, onclick:button2_action, types:[button2_type] }) }}
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button2_label, onclick:button2_action, types:[button2_type] }) }}
             {% endif %}
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, types:[button_type] }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, types:[button_type] }) }}
         </div>
 
         {% if sortable is empty or sortable %}

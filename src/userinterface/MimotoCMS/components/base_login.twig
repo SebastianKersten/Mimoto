@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>Mimoto.CMS</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="/mimoto.cms/static/css/mimoto.cms.css">
+
+    <style>
+
+        body {
+            padding:100px
+        }
+
+        h1 {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input.username, input.password {
+            width: 350px;
+            padding: 12px 15px;
+        }
+
+        input.submit {
+            padding: 7px 12px;
+            margin-top: 30px;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <div>
+        <h1>Mimoto.CMS</h1>
+
+        <form action="/mimoto.cms" method="post">
+            <input type="hidden" name="request" value="{{ requestedPage }}">
+            <fieldset>
+                <legend>email</legend>
+                <input type="test" name="username" id="username" value="{{ username }}" class="username" />
+            </fieldset>
+            <fieldset>
+                <legend>password</legend>
+                <input type="password" name="password" id="password" class="password" />
+            </fieldset>
+            <input type="submit" value="Login" class="submit" />
+        </form>
+
+    </div>
+
+</body>
+</html>

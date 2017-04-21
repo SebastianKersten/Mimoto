@@ -35,14 +35,14 @@ class EventService
     /**
      * Constructor
      */
-    public function __construct($dispatcher) //, $AimlessService)
+    public function __construct($dispatcher) //, $OutputService)
     {
         // register
         $this->_dispatcher = $dispatcher;
         
         // register services
         $this->_aServices = [
-            'AimlessService' => ''//,
+            'OutputService' => ''//,
             //'MailService' => $MailService
         ];
     }
@@ -106,7 +106,7 @@ class EventService
                 {
                     // call
                     //$this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
-                    Mimoto::service('aimless')->handleRequest($action->request, $event->getEntity(), $config);
+                    Mimoto::service('output')->handleRequest($action->request, $event->getEntity(), $config);
                 }
             //}
             

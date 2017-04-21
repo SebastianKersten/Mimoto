@@ -1,33 +1,33 @@
-<li class="MimotoCMS_pages_forms_FormDetail-FormField" {{ Aimless.realtime() }} {{ Aimless.reloadOnChange() }}>
+<li class="MimotoCMS_pages_forms_FormDetail-FormField" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
 
     <div class="MimotoCMS_pages_forms_FormDetail-FormField__wrapper">
 
-        {% if Aimless.typeOf('_Mimoto_form_layout_groupstart') %}
+        {% if Mimoto.typeOf('_Mimoto_form_layout_groupstart') %}
             Group start
-        {% elseif Aimless.typeOf('_Mimoto_form_layout_groupend') %}
+        {% elseif Mimoto.typeOf('_Mimoto_form_layout_groupend') %}
             Group end
-        {% elseif Aimless.typeOf('_Mimoto_form_layout_divider') %}
+        {% elseif Mimoto.typeOf('_Mimoto_form_layout_divider') %}
             Divider
         {% else %}
-            {{ Aimless.wrap() }}
+            {{ Mimoto.wrap() }}
         {% endif %}
 
     </div>
     <div class="MimotoCMS_pages_forms_FormDetail-FormField__menu">
 
-        {% if Aimless.typeOf('_Mimoto_form_input') %}
-            <div {{ Aimless.showWhenEmpty('value') }}>
-                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Connect value', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Aimless.meta('type') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}
+        {% if Mimoto.typeOf('_Mimoto_form_input') %}
+            <div {{ Mimoto.showWhenEmpty('value') }}>
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Connect value', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('type') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
             </div>
 
-            <div {{ Aimless.hideWhenEmpty('value') }}>
-                {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Aimless.meta('typeId') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}
+            <div {{ Mimoto.hideWhenEmpty('value') }}>
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
             </div>
         {% else %}
-            {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Aimless.meta('typeId') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
         {% endif %}
 
-        {{ Aimless.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldDelete('" ~ Aimless.meta('typeId') ~ "', '" ~ Aimless.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldDelete('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
 
         <div class="MimotoCMS_pages_forms_FormDetail-FormField__menu-handle">
             <div class="MimotoCMS_ListItemModule-handle">

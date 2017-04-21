@@ -4,8 +4,8 @@
         {# #todo - make menu editable, core elements are always there behind 'settings' or 'tools' (1 page with subpages) #}
 
 
-        <ul class="MimotoCMS_interface_Menu-group" {{ Aimless.hideWhenEmpty('contentSections') }} {{ Aimless.realtime('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}>
-            {{ Aimless.render('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}
+        <ul class="MimotoCMS_interface_Menu-group" {{ Mimoto.hideWhenEmpty('contentSections') }} {{ Mimoto.realtime('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}>
+            {{ Mimoto.render('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}
         </ul>
 
 
@@ -91,6 +91,20 @@
                 <a href="/mimoto.cms/users" class="MimotoCMS_interface_Menu-item-link">
                     <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-team'/></svg>
                     <span class="MimotoCMS_interface_Menu-item-text">Users</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="MimotoCMS_interface_Menu-group">
+            <li class="MimotoCMS_interface_Menu-item">
+                <a href="/mimoto.cms/heartbeat" class="MimotoCMS_interface_Menu-item-link">
+                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-drafts'/></svg>
+                    <span class="MimotoCMS_interface_Menu-item-text">Heartbeat</span>
+                </a>
+            </li>
+            <li class="MimotoCMS_interface_Menu-item">
+                <a href="/mimoto.cms/logout" class="MimotoCMS_interface_Menu-item-link">
+                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-drafts'/></svg>
+                    <span class="MimotoCMS_interface_Menu-item-text">Logout</span>
                 </a>
             </li>
         </ul>

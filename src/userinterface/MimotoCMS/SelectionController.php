@@ -30,10 +30,10 @@ class SelectionController
     public function viewSelectionOverview()
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('aimless')->createComponent('Mimoto.CMS_selections_SelectionOverview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_selections_SelectionOverview', $eRoot));
 
         // 3. setup page
         $page->setVar('pageTitle', array(
@@ -55,10 +55,10 @@ class SelectionController
     public function selectionNew()
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create form layout
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup form
         $component->addForm(
@@ -84,7 +84,7 @@ class SelectionController
     public function selectionView(Application $app, $nSelectionId)
     {
         // 1. init page
-        $page = Mimoto::service('aimless')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
         $eSelection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
@@ -93,7 +93,7 @@ class SelectionController
         if (empty($eSelection)) return $app->redirect("/mimoto.cms/selections");
 
         // 4. create
-        $component = Mimoto::service('aimless')->createComponent('Mimoto.CMS_selections_SelectionDetail', $eSelection);
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_selections_SelectionDetail', $eSelection);
 
         // 5. connect
         $page->addComponent('content', $component);
@@ -105,7 +105,7 @@ class SelectionController
                     "url" => '/mimoto.cms/selections'
                 ),
                 (object) array(
-                    "label" => '<span data-aimless-value="'.CoreConfig::MIMOTO_SELECTION.'.'.$eSelection->getId().'.name">'.$eSelection->getValue('name').'</span>',
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_SELECTION.'.'.$eSelection->getId().'.name">'.$eSelection->getValue('name').'</span>',
                     "url" => '/mimoto.cms/selection/'.$eSelection->getId().'/view'
                 )
             )
@@ -118,7 +118,7 @@ class SelectionController
     public function selectionEdit(Application $app, $nSelectionId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load
         $eContentSection = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTION, $nSelectionId);
@@ -127,7 +127,7 @@ class SelectionController
         if (empty($eContentSection)) return $app->redirect("/mimoto.cms/selections");
 
         // 4. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup
         $component->addForm(
@@ -160,10 +160,10 @@ class SelectionController
     public function selectionRuleNew(Application $app, $nSelectionId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 3. setup
         $component->addForm(CoreConfig::COREFORM_SELECTIONRULE, null,
@@ -183,7 +183,7 @@ class SelectionController
     public function selectionRuleEdit(Application $app, $nSelectionRuleId)
     {
         // 1. init popup
-        $popup = Mimoto::service('aimless')->createPopup();
+        $popup = Mimoto::service('output')->createPopup();
 
         // 2. load data
         $eSelectionRule = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTIONRULE, $nSelectionRuleId);
@@ -192,7 +192,7 @@ class SelectionController
         if (empty($eSelectionRule)) return $app->redirect("/mimoto.cms/selections");
 
         // 4. create
-        $component = Mimoto::service('aimless')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup
         $component->addForm(CoreConfig::COREFORM_SELECTIONRULE, $eSelectionRule, ['response' => ['onSuccess' => ['closePopup' => true]]]);

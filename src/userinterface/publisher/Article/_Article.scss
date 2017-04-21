@@ -55,26 +55,66 @@ img.MimotoPublisher-Article-headerImage {
     z-index: 0;
 }
 
+.ql-editor, .ql-container{
+    overflow-y: auto;
+    height: auto;
+}
+
 div.MimotoPublisher-Article-body {
 
+    position: relative;
     font-size: 18px;
+    font-family: "Futura PT W02 Book", sans-serif;
     line-height: 30px;
     width: 100%;
+    height: auto;
     max-width: 750px;
     background-color: #ffffff;
     padding: 50px 50px 80px 50px;
     margin-left: auto;
     margin-right: auto;
+    overflow: visible;
 
-    &::first-letter {
-        color: #DF5B57;
-        float: left;
-        font-size: 65px;
+    //&::first-letter {
+    //    color: #DF5B57;
+    //    float: left;
+    //    font-size: 65px;
+    //    font-weight: bold;
+    //    line-height: 55px;
+    //    padding-top: 4px;
+    //    padding-right: 8px;
+    //    padding-left: 3px;
+    //}
+
+    & p {
+        margin-bottom: 20px;
+    }
+    & p:last-child {
+        margin-bottom: 0;
+    }
+
+    & h1 {
         font-weight: bold;
-        line-height: 55px;
-        padding-top: 4px;
-        padding-right: 8px;
-        padding-left: 3px;
+        font-family: "Futura PT W02 Book", sans-serif;
+        color: #DF5B57;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    & h2 {
+        font-weight: bold;
+        font-family: "Futura PT W02 Book", sans-serif;
+        color: #DF5B57;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    & strong {
+        font-weight: bold;
+    }
+
+    & em {
+        font-style: italic;
     }
 }
 

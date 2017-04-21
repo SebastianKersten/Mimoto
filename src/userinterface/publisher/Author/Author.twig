@@ -5,8 +5,8 @@
     <i>A name and the person's avatar</i><br>
     <br>
     <br>
-    <div class="example_article" {{ Aimless.realtime() }}>
-        <i><span {{ Aimless.realtime('name') }}>{{ Aimless.render('name') }}</span></i><br><br>
-        <img class="example_avatar" src="{{ Aimless.render('avatar') }}" {{ Aimless.realtime('avatar') }}>
+    <div class="example_article" {{ Mimoto.realtime() }}>
+        <i><span {{ Mimoto.realtime('name') }}>{{ Mimoto.render('name') }}</span></i><br><br>
+        <img class="example_avatar" src="{{ Mimoto.render('avatar') }}" {{ Mimoto.realtime('avatar') }}>
     </div>
 {% endblock %}

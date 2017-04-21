@@ -1,7 +1,7 @@
-<div class="TheTimeline_Moment" {{ Aimless.realtime() }}>
-    <div class="TheTimeline_Moment-title" {{ Aimless.realtime('title') }}>{{ Aimless.render('title') }}</div>
-    <div class="TheTimeline_Moment-shortDescription" {{ Aimless.realtime('shortDescription') }}>{{ Aimless.render('shortDescription') }}</div>
-    <div class="TheTimeline_Moment-date js-date" {{ Aimless.hideWhenEmpty('date') }} {{ Aimless.realtime('date') }}>{{ Aimless.render('date') }}</div>
-    <div class="TheTimeline_Moment-importance js-importance" {{ Aimless.realtime('importance') }}>{{ Aimless.render('importance') }}</div>
-    <script>{{ Aimless.jsListen('date', 'TheTimeline', 'TheTimeline.positionMoments') }}</script>
+<div class="TheTimeline_Moment" {{ Mimoto.realtime() }}>
+    <div class="TheTimeline_Moment-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
+    <div class="TheTimeline_Moment-shortDescription" {{ Mimoto.realtime('shortDescription') }}>{{ Mimoto.render('shortDescription') }}</div>
+    <div class="TheTimeline_Moment-date js-date" {{ Mimoto.hideWhenEmpty('date') }} {{ Mimoto.realtime('date') }}>{{ Mimoto.render('date') }}</div>
+    <div class="TheTimeline_Moment-importance js-importance" {{ Mimoto.realtime('importance') }}>{{ Mimoto.render('importance') }}</div>
+    <script>{{ Mimoto.jsListen('date', 'TheTimeline', 'TheTimeline.positionMoments') }}</script>
 </div>

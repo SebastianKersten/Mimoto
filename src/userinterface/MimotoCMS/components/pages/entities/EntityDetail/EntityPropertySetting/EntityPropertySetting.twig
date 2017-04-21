@@ -1,42 +1,42 @@
-<div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting" {{ Aimless.realtime() }}>
+<div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting" {{ Mimoto.realtime() }}>
 
     {% if propertySubtype == 'image' or propertySubtype=='video' or propertySubtype=='audio' or propertySubtype=='file' %}
         <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">default settings</span>
     {% else %}
-        {{ Aimless.render('key') }}
+        {{ Mimoto.render('key') }}
     {% endif %}
 
     <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu">
-        {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}<a onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Aimless.meta('id', 'type') }}');">edit</a>{% endif %}
+        {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}<a onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Mimoto.meta('id', 'type') }}');">edit</a>{% endif %}
     </span>
 
     {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}:<br>{% endif %}
 
-    {% if Aimless.data('key') == 'allowedEntityType' %}
+    {% if Mimoto.data('key') == 'allowedEntityType' %}
         {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}
-            <div {{ Aimless.showWhenEmpty('allowedEntityType') }}>
+            <div {{ Mimoto.showWhenEmpty('allowedEntityType') }}>
                 <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
             </div>
-            <div {{ Aimless.hideWhenEmpty('allowedEntityType') }}>
-                <div {{ Aimless.realtime('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
-                    {{ Aimless.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
+            <div {{ Mimoto.hideWhenEmpty('allowedEntityType') }}>
+                <div {{ Mimoto.realtime('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
+                    {{ Mimoto.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
                 </div>
             </div>
         {% endif %}
-    {% elseif Aimless.data('key') == 'allowedEntityTypes' %}
-        <div {{ Aimless.showWhenEmpty('allowedEntityTypes') }}>
+    {% elseif Mimoto.data('key') == 'allowedEntityTypes' %}
+        <div {{ Mimoto.showWhenEmpty('allowedEntityTypes') }}>
             <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
         </div>
-        <div {{ Aimless.hideWhenEmpty('allowedEntityTypes') }}>
+        <div {{ Mimoto.hideWhenEmpty('allowedEntityTypes') }}>
             [
-                <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes" {{ Aimless.realtime('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
-                    {{ Aimless.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
+                <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes" {{ Mimoto.realtime('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
+                    {{ Mimoto.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
                 </div>
             ]
         </div>
-    {% elseif Aimless.data('key') == 'allowDuplicates' %}
-        <div {{ Aimless.realtime('value') }}>{% if Aimless.data('value') %}true{% else %}false{% endif %}</div>
+    {% elseif Mimoto.data('key') == 'allowDuplicates' %}
+        <div {{ Mimoto.realtime('value') }}>{% if Mimoto.data('value') %}true{% else %}false{% endif %}</div>
     {% else %}
-        <div {{ Aimless.realtime('value') }}>{{ Aimless.render('value') }}</div>
+        <div {{ Mimoto.realtime('value') }}>{{ Mimoto.render('value') }}</div>
     {% endif %}
 </div>
