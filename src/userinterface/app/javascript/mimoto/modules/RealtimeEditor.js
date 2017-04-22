@@ -7,13 +7,14 @@
 'use strict';
 
 var io = require('socket.io-client');
+var QuillDelta = require("quill-delta");
 
 
-module.exports = function(sPropertySelector, editOptions, editableValue) {
+module.exports = function(socket, sPropertySelector, editOptions, editableValue) {
 
 
     // start
-    this.__construct(sPropertySelector, editOptions, editableValue);
+    this.__construct(socket, sPropertySelector, editOptions, editableValue);
 };
 
 module.exports.prototype = {
@@ -26,6 +27,7 @@ module.exports.prototype = {
     _socket: null,
 
     _sPropertySelector: null,
+    _otid: null,
 
     _user: null,
 
@@ -38,27 +40,42 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function(sPropertySelector, editOptions, editableValue)
+    __construct: function(socket, sPropertySelector, editOptions, editableValue)
     {
         // register
+        this._socket = socket;
         this._sPropertySelector = sPropertySelector;
 
-        // setup
-        this._socket = new io('http://localhost:4000');
-        //this._socket = new io('http://192.168.178.72.xip.io:4000');
+
 
 
         var classRoot = this;
 
-        // listen to socket
-        this._socket.on('connect', function() { classRoot._socketOnConnect(); });
-        this._socket.on('logon', function(data) { classRoot._socketOnLogon(data); });
+
+        document.showPending = function()
+        {
+            console.log('pending', JSON.stringify(classRoot._deltaPending, null, 2));
+        };
+
+
+        document.sendPending = function()
+        {
+            console.log('Sending pending ...');
+            classRoot._sendPending();
+        };
+
+        document.showBuffer = function()
+        {
+            console.log('buffer', classRoot._deltaBuffer);
+        };
+
 
 
         this._socket.on('mostRecentDraft', function(delta) { classRoot._socketOnMostRecentDraft(delta); });
         this._socket.on('ot-self', function(delta) { classRoot._socketOnTextChangeSelf(delta); });
         this._socket.on('ot-other', function(delta) { classRoot._socketOnTextChangeOther(delta); });
         this._socket.on('selectionChange', function(delta) { classRoot._socketOnSelectionChange(delta); });
+        this._socket.on('message', function(sMessage) { classRoot._socketOnMessage(sMessage); });
 
 
 
@@ -69,7 +86,7 @@ module.exports.prototype = {
 
         if (editOptions) {
 
-            console.log('editOptions', editOptions);
+            //console.log('editOptions', editOptions);
 
             if (editOptions.options && editOptions.options.formats) {
                 formats = editOptions.options.formats;
@@ -77,7 +94,7 @@ module.exports.prototype = {
             }
         }
 
-        console.log('formats', formats);
+        //console.log('formats', formats);
 
 
         // create
@@ -101,101 +118,97 @@ module.exports.prototype = {
         // listen
         this._quill.on('selection-change', function() { classRoot._onSelectionChange(); });
         this._quill.on('text-change', function(delta, oldContents, source) { classRoot._onTextChange(delta, oldContents, source); } );
-    },
 
-
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods text management ----------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _socketOnConnect: function()
-    {
-
-        // 1. logon with php
-
-        console.log('User connected ...');
-        console.log('Authenticating user ...');
-
-
-        var classRoot = this;
-
-
-        Mimoto.Aimless.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/logon',
-            data: { id: this._socket.id },
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething)
-            {
-                //console.log('Authenticate request finished');
-            }
-        });
-
-
-    },
-
-    _socketOnLogon: function(user)
-    {
-        console.log('This client was logged on via PHP and NodeJS', user);
 
         this._socket.emit('edit', this._sPropertySelector);
     },
 
+
+
+
     _socketOnMostRecentDraft: function(delta)
     {
-        console.log('Latest value', delta);
-
         this._quill.setContents(delta);
     },
 
-    _socketOnTextChangeOther: function(delta)
+    _socketOnTextChangeOther: function(parsedChange)
     {
-        console.log('OTHER - delta received', delta);
+        // register
+        this._otid = parsedChange.otid; // per kamer opslaan
+        console.log('this._otid', this._otid);
 
-        this._quill.updateContents(delta);
-    },
+        // 1. convert
+        var delta = new QuillDelta(parsedChange.delta);
 
-    _socketOnTextChangeSelf: function(delta)
-    {
-        console.log("SELF = delta received", delta);
+
+        console.log(parsedChange.user.name + ' sent: ', JSON.stringify(delta, null, 2));
 
 
         if (this._deltaPending)
         {
 
-            if (this._deltaPending.toString() == delta.toString())
-            {
-                console.log('The deltas are EQUAL', delta);
+            // console.warn('before delta', JSON.stringify(delta, null, 2));
+            // console.warn('before _deltaPending', JSON.stringify(this._deltaPending, null, 2));
 
-                this._deltaPending  = null;
-            }
-
-            if (this._deltaBuffer)
-            {
-                //
-                this._deltaPending = this._deltaBuffer;
+            //this._deltaPending = new QuillDelta(delta.transform(this._deltaPending, false));
+            delta = new QuillDelta(this._deltaPending.transform(delta, false));
 
 
+            //this._deltaPending = this._deltaPending.compose(delta, false);
 
-                var change = {
-                    sPropertySelector: this._sPropertySelector,
-                    delta: this._deltaPending
-                }
-
-
-                this._socket.emit('ot', change);
-
-                // reset
-                this._deltaBuffer = null;
-            }
-            else
-            {
-                this._deltaPending = null;
-                this._documentPending = null;
-            }
+            // console.warn('transformed delta', JSON.stringify(delta, null, 2));
+            // console.warn('transformed _deltaPending', JSON.stringify(this._deltaPending, null, 2));
         }
+
+
+
+        if (this._deltaBuffer)
+        {
+            // console.log('---');
+            // console.warn('buffer before', JSON.stringify(this._deltaBuffer, null, 2));
+            // this._deltaBuffer = delta.transform(this._deltaBuffer, true);
+            // console.warn('buffer ater ', JSON.stringify(this._deltaBuffer, null, 2));
+        }
+
+
+        this._quill.updateContents(delta);
+    },
+
+    _socketOnTextChangeSelf: function(parsedChange)
+    {
+        // register
+        this._otid = parsedChange.otid; // per kamer opslaan
+        console.log('this._otid', this._otid);
+
+        // 1. convert
+        var delta = new QuillDelta(parsedChange.delta);
+
+        console.log('My (' + parsedChange.user.name + ') own delta returned: ', JSON.stringify(delta, null, 2));
+
+
+        // 1. queue van pakketjes sinds ontvangen recentValue?
+
+
+        if (this._deltaBuffer)
+        {
+            //
+            this._deltaPending = this._deltaBuffer;
+
+            // reset
+            this._deltaBuffer = null;
+
+            // #fixme - temp disabled
+            this._sendPending();
+        }
+        else
+        {
+            this._deltaPending = null;
+        }
+    },
+
+    _socketOnMessage: function(sMessage)
+    {
+        console.warn('Message ' + sMessage);
     },
 
     _socketOnSelectionChange: function(range)
@@ -257,26 +270,23 @@ module.exports.prototype = {
 
         if (source == 'api')
         {
-            console.warn("An API call triggered this change.", delta);
+            //console.warn("An API call triggered this change.", delta);
 
         }
         else if (source == 'user')
         {
-            console.log("The user triggered this change.", delta, oldContents);
+            //console.log("The user triggered this change.", delta, oldContents);
 
 
             if (!this._deltaPending)
             {
                 this._deltaPending = delta;
 
-
-                var change = {
-                    sPropertySelector: this._sPropertySelector,
-                    delta: this._deltaPending
-                }
+                //console.log('New delta = ' + JSON.stringify(this._deltaPending, null, 2));
 
 
-                this._socket.emit('ot', change);
+                // #fixme - temp disabled
+                this._sendPending();
             }
             else
             {
@@ -285,13 +295,27 @@ module.exports.prototype = {
 
                 // stack
                 this._deltaBuffer = this._deltaBuffer.compose(delta);
+
+                console.warn('Buffer = ' + JSON.stringify(this._deltaBuffer, null, 2));
             }
 
 
-            console.warn('Pending contents = ' + JSON.stringify(this._deltaPending, null, 2));
-            console.warn('Buffer contents = ' + JSON.stringify(this._deltaBuffer, null, 2));
+            // console.warn('Pending contents = ' + JSON.stringify(this._deltaPending, null, 2));
+            // console.warn('Buffer contents = ' + JSON.stringify(this._deltaBuffer, null, 2));
 
         }
+    },
+
+    _sendPending: function()
+    {
+        var change = {
+            sPropertySelector: this._sPropertySelector,
+            delta: this._deltaPending,
+            otid: this._otid
+        }
+
+
+        this._socket.emit('ot', change);
     }
 
 
