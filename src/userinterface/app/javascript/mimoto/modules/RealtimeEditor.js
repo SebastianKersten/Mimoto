@@ -29,6 +29,9 @@ module.exports.prototype = {
     _sPropertySelector: null,
     _otid: null,
 
+
+    _baseDocument: null,
+
     _user: null,
 
 
@@ -71,7 +74,7 @@ module.exports.prototype = {
 
 
 
-        this._socket.on('mostRecentDraft', function(delta) { classRoot._socketOnMostRecentDraft(delta); });
+        this._socket.on('baseDocument', function(delta) { classRoot._socketOnBaseDocument(delta); });
         this._socket.on('ot-self', function(delta) { classRoot._socketOnTextChangeSelf(delta); });
         this._socket.on('ot-other', function(delta) { classRoot._socketOnTextChangeOther(delta); });
         this._socket.on('selectionChange', function(delta) { classRoot._socketOnSelectionChange(delta); });
@@ -126,41 +129,34 @@ module.exports.prototype = {
 
 
 
-    _socketOnMostRecentDraft: function(delta)
+    _socketOnBaseDocument: function(baseDocument)
     {
-        this._quill.setContents(delta);
+        // register
+        this._baseDocument = baseDocument;
+
+
+        console.log('this._baseDocument', JSON.stringify(this._baseDocument, null, 2));
+
+        //documentUpdate = {}
+
+
+        // show content
+        this._quill.setContents(baseDocument.content);
     },
 
     _socketOnTextChangeOther: function(parsedChange)
     {
         // register
-        this._otid = parsedChange.otid; // per kamer opslaan
-        console.log('this._otid', this._otid);
+        this._nCurrentDeltaIndex = parsedChange.otid; // per kamer opslaan
 
         // 1. convert
         var delta = new QuillDelta(parsedChange.delta);
 
 
-        console.log(parsedChange.user.name + ' sent: ', JSON.stringify(delta, null, 2));
+        console.log(parsedChange.user.name + ' sent: ', JSON.stringify(delta, null, 2), ' with index = ' + this._nCurrentDeltaIndex);
 
 
-        if (this._deltaPending)
-        {
-
-            // console.warn('before delta', JSON.stringify(delta, null, 2));
-            // console.warn('before _deltaPending', JSON.stringify(this._deltaPending, null, 2));
-
-            //this._deltaPending = new QuillDelta(delta.transform(this._deltaPending, false));
-            delta = new QuillDelta(this._deltaPending.transform(delta, false));
-
-
-            //this._deltaPending = this._deltaPending.compose(delta, false);
-
-            // console.warn('transformed delta', JSON.stringify(delta, null, 2));
-            // console.warn('transformed _deltaPending', JSON.stringify(this._deltaPending, null, 2));
-        }
-
-
+        if (this._deltaPending) delta = new QuillDelta(this._deltaPending.transform(delta, false));
 
         if (this._deltaBuffer)
         {
@@ -177,13 +173,13 @@ module.exports.prototype = {
     _socketOnTextChangeSelf: function(parsedChange)
     {
         // register
-        this._otid = parsedChange.otid; // per kamer opslaan
-        console.log('this._otid', this._otid);
+        this._nCurrentDeltaIndex = parsedChange.otid; // per kamer opslaan
 
         // 1. convert
         var delta = new QuillDelta(parsedChange.delta);
 
-        console.log('My (' + parsedChange.user.name + ') own delta returned: ', JSON.stringify(delta, null, 2));
+        console.log('My (' + parsedChange.user.name + ') own delta returned: ', JSON.stringify(delta, null, 2), ' with index = ' + this._nCurrentDeltaIndex);
+
 
 
         // 1. queue van pakketjes sinds ontvangen recentValue?
@@ -198,7 +194,7 @@ module.exports.prototype = {
             this._deltaBuffer = null;
 
             // #fixme - temp disabled
-            this._sendPending();
+            //this._sendPending();
         }
         else
         {
@@ -280,13 +276,21 @@ module.exports.prototype = {
 
             if (!this._deltaPending)
             {
+                this._deltaPending = {
+                    sPropertySelector: this._sPropertySelector,
+                    delta: delta,
+                    otid: this._nCurrentDeltaIndex
+                }
+
+
+
                 this._deltaPending = delta;
 
                 //console.log('New delta = ' + JSON.stringify(this._deltaPending, null, 2));
 
 
                 // #fixme - temp disabled
-                this._sendPending();
+                //this._sendPending();
             }
             else
             {
@@ -311,7 +315,7 @@ module.exports.prototype = {
         var change = {
             sPropertySelector: this._sPropertySelector,
             delta: this._deltaPending,
-            otid: this._otid
+            otid: this._nCurrentDeltaIndex
         }
 
 
