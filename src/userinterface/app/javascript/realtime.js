@@ -164,23 +164,71 @@ socketIO.on('connection', function(client)
         if (!change || !change.delta) return;
 
 
+        // convert
+        var delta = new QuillDelta(change.delta);
+
+
+
+
+
         // register
         var sPropertySelector = change.sPropertySelector;
 
 
-
-        console.log('deltaIndex of client = ' + change.nDeltaIndex);
-        console.log('current deltaIndex = ' + aRooms[sPropertySelector].nDeltaIndex);
-
+        // register
+        var baseDocument = aRooms[sPropertySelector];
 
 
-        // update
-        var nNewIndex = aRooms[sPropertySelector].nDeltaIndex++;
+
+
+
+
+        console.log('=== Start === ');
+        console.log(JSON.stringify(baseDocument.aDeltas, null, 2));
+        console.log('=== End ===');
+
+
+        console.log('deltaIndex of client = ' + change.nCurrentlyKnownDeltaIndex);
+        console.log('current deltaIndex = ' + (baseDocument.nDeltaIndex - 1));
+
+
+        if (change.nCurrentlyKnownDeltaIndex < baseDocument.nDeltaIndex - 1)
+        {
+
+            console.log('Client is not in sync with server ...');
+            console.log('Starting correction ...');
+
+
+            console.log(JSON.stringify(baseDocument.aDeltas, null, 2));
+
+
+            for (var nIndex = change.nCurrentlyKnownDeltaIndex + 1; nIndex <= baseDocument.nDeltaIndex - 1; nIndex++)
+            {
+
+
+                // register
+                var deltaFromHistory = baseDocument.aDeltas[nIndex];
+
+                console.log('deltaFromHistory', deltaFromHistory);
+
+                console.log('> delta before', delta);
+                delta = new QuillDelta(deltaFromHistory.transform(delta, false));
+                console.log('> delta after', delta);
+            }
+
+            //change.delta
+
+            console.log('Correction finished...', JSON.stringify(delta, null, 2));
+        }
+        else
+        {
+            console.log('Client and server in sync.');
+        }
+
+
 
         // store
-        aRooms[sPropertySelector].aDeltas[nNewIndex] = change.delta;
-
-
+        aRooms[sPropertySelector].aDeltas[baseDocument.nDeltaIndex] = delta;
 
 
 
@@ -189,33 +237,31 @@ socketIO.on('connection', function(client)
 
 
 
+        //console.log(JSON.stringify(aRooms[sPropertySelector].aDeltas[nNewDeltaIndex], null, 2));
 
-        console.log(JSON.stringify(aRooms[sPropertySelector].aDeltas[nNewIndex], null, 2));
-
-
-
-        var delta = new QuillDelta(storedDocument);
 
         // update data
-        delta = delta.compose(change.delta);
+        baseDocument.content = baseDocument.content.compose(delta);
 
 
 
-        var parsedChange = {
+        //console.log('baseDocument on server', JSON.stringify(baseDocument.content, null, 2));
+
+
+
+        var parsedDelta = {
             user: client.user,
-            delta: change.delta,
-            otid: nCurrentCount
+            delta: delta,
+            nNewDeltaIndex: baseDocument.nDeltaIndex
         };
 
+        // update
+        baseDocument.nDeltaIndex++;
 
 
-        var sender = aClients[client.id];
-
-        console.log('---> otid for ' + sender.user.name + ' = ' + change.nDeltaIndex);
-        console.log('---> change = ', JSON.stringify(change, null, 2));
-
-        client.emit('ot-self', parsedChange);
-        client.broadcast.emit('ot-other', parsedChange);
+        // send
+        client.emit('ot-self', parsedDelta);
+        client.broadcast.to(sPropertySelector).emit('ot-other', parsedDelta);
     });
 
     client.on('selectionChange', function(range)

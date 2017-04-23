@@ -69,14 +69,14 @@ module.exports.prototype = {
 
         document.showBuffer = function()
         {
-            console.log('buffer', classRoot._deltaBuffer);
+            console.warn('buffer', JSON.stringify(classRoot._deltaBuffer, null, 2));
         };
 
 
 
         this._socket.on('baseDocument', function(delta) { classRoot._socketOnBaseDocument(delta); });
-        this._socket.on('ot-self', function(delta) { classRoot._socketOnTextChangeSelf(delta); });
-        this._socket.on('ot-other', function(delta) { classRoot._socketOnTextChangeOther(delta); });
+        this._socket.on('ot-self', function(delta) { classRoot._socketSelfOT(delta); });
+        this._socket.on('ot-other', function(delta) { classRoot._socketOtherOT(delta); });
         this._socket.on('selectionChange', function(delta) { classRoot._socketOnSelectionChange(delta); });
         this._socket.on('message', function(sMessage) { classRoot._socketOnMessage(sMessage); });
 
@@ -134,77 +134,91 @@ module.exports.prototype = {
         // register
         this._baseDocument = baseDocument;
 
-
-        console.log('this._baseDocument', JSON.stringify(this._baseDocument, null, 2));
-
-        //documentUpdate = {}
-
-
         // show content
         this._quill.setContents(baseDocument.content);
     },
 
-    _socketOnTextChangeOther: function(parsedChange)
+
+    _socketSelfOT: function(parsedDelta)
     {
+        console.log('My own delta has returned: ', JSON.stringify(parsedDelta.delta, null, 2), ' with index = ' + parsedDelta.nNewDeltaIndex);
+
+
         // register
-        this._nCurrentDeltaIndex = parsedChange.otid; // per kamer opslaan
+        this._baseDocument.nDeltaIndex = parsedDelta.nNewDeltaIndex;
 
-        // 1. convert
-        var delta = new QuillDelta(parsedChange.delta);
-
-
-        console.log(parsedChange.user.name + ' sent: ', JSON.stringify(delta, null, 2), ' with index = ' + this._nCurrentDeltaIndex);
+        // reset
+        this._deltaPending = null;
 
 
-        if (this._deltaPending) delta = new QuillDelta(this._deltaPending.transform(delta, false));
-
+        // next send changes
         if (this._deltaBuffer)
         {
-            // console.log('---');
-            // console.warn('buffer before', JSON.stringify(this._deltaBuffer, null, 2));
-            // this._deltaBuffer = delta.transform(this._deltaBuffer, true);
-            // console.warn('buffer ater ', JSON.stringify(this._deltaBuffer, null, 2));
-        }
-
-
-        this._quill.updateContents(delta);
-    },
-
-    _socketOnTextChangeSelf: function(parsedChange)
-    {
-        // register
-        this._nCurrentDeltaIndex = parsedChange.otid; // per kamer opslaan
-
-        // 1. convert
-        var delta = new QuillDelta(parsedChange.delta);
-
-        console.log('My (' + parsedChange.user.name + ') own delta returned: ', JSON.stringify(delta, null, 2), ' with index = ' + this._nCurrentDeltaIndex);
-
-
-
-        // 1. queue van pakketjes sinds ontvangen recentValue?
-
-
-        if (this._deltaBuffer)
-        {
-            //
+            // move in queue
             this._deltaPending = this._deltaBuffer;
 
             // reset
             this._deltaBuffer = null;
 
             // #fixme - temp disabled
-            //this._sendPending();
-        }
-        else
-        {
-            this._deltaPending = null;
+            this._sendPending();
         }
     },
 
+
+    _socketOtherOT: function(parsedDelta)
+    {
+        console.log('OTHER - parsedDelta.nNewDeltaIndex = ', parsedDelta.nNewDeltaIndex);
+
+
+        // register
+        this._baseDocument.nDeltaIndex = parsedDelta.nNewDeltaIndex;
+
+
+
+        // 1. convert
+        var delta = new QuillDelta(parsedDelta.delta);
+
+
+        console.log(parsedDelta.user.name + ' sent: ', JSON.stringify(delta, null, 2), ' with index = ' + parsedDelta.nNewDeltaIndex);
+
+
+        // update pending
+        if (this._deltaPending)
+        {
+            //console.log('this._deltaPending.delta before ', JSON.stringify(this._deltaPending.delta, null, 2));
+            // transform pending to delta
+            this._deltaPending.delta = new QuillDelta(delta.transform(this._deltaPending.delta, true));
+            //console.log('this._deltaPending.delta after ', JSON.stringify(this._deltaPending.delta, null, 2));
+
+
+            //console.warn('Delta before', JSON.stringify(delta, null, 2));
+            // transform delta to pending
+            delta = new QuillDelta(this._deltaPending.delta.transform(delta, false));
+            //console.warn('Delta after ', JSON.stringify(delta, null, 2));
+        }
+
+
+        // update buffer
+        if (this._deltaBuffer)
+        {
+            this._deltaBuffer.delta = new QuillDelta(delta.transform(this._deltaBuffer.delta, true));
+
+
+            delta = new QuillDelta(this._deltaBuffer.delta.transform(delta, false));
+        }
+
+
+
+
+        // update content
+        this._quill.updateContents(delta);
+    },
+
+
     _socketOnMessage: function(sMessage)
     {
-        console.warn('Message ' + sMessage);
+        console.warn(sMessage);
     },
 
     _socketOnSelectionChange: function(range)
@@ -264,62 +278,53 @@ module.exports.prototype = {
         this._socket.emit('selectionChange', this._quill.getSelection());
 
 
-        if (source == 'api')
+        if (source == 'user')
         {
-            //console.warn("An API call triggered this change.", delta);
-
-        }
-        else if (source == 'user')
-        {
-            //console.log("The user triggered this change.", delta, oldContents);
-
 
             if (!this._deltaPending)
             {
                 this._deltaPending = {
                     sPropertySelector: this._sPropertySelector,
                     delta: delta,
-                    otid: this._nCurrentDeltaIndex
-                }
+                    nCurrentlyKnownDeltaIndex: this._baseDocument.nDeltaIndex
+                };
 
-
-
-                this._deltaPending = delta;
-
-                //console.log('New delta = ' + JSON.stringify(this._deltaPending, null, 2));
+                console.log('New delta pending = ' + JSON.stringify(this._deltaPending, null, 2));
 
 
                 // #fixme - temp disabled
-                //this._sendPending();
+                this._sendPending();
             }
             else
             {
                 // init
-                if (!this._deltaBuffer) this._deltaBuffer = new Mimoto.modules.QuillDelta();
+                if (!this._deltaBuffer)
+                {
+                    this._deltaBuffer = {
+                        sPropertySelector: this._sPropertySelector,
+                        delta: new Mimoto.modules.QuillDelta(),
+                        nCurrentlyKnownDeltaIndex: this._baseDocument.nDeltaIndex
+                    };
+                }
 
                 // stack
-                this._deltaBuffer = this._deltaBuffer.compose(delta);
+                this._deltaBuffer.delta = this._deltaBuffer.delta.compose(delta);
 
-                console.warn('Buffer = ' + JSON.stringify(this._deltaBuffer, null, 2));
+                console.warn('Buffer = ', JSON.stringify(this._deltaBuffer, null, 2));
             }
-
-
-            // console.warn('Pending contents = ' + JSON.stringify(this._deltaPending, null, 2));
-            // console.warn('Buffer contents = ' + JSON.stringify(this._deltaBuffer, null, 2));
-
         }
     },
 
     _sendPending: function()
     {
-        var change = {
-            sPropertySelector: this._sPropertySelector,
-            delta: this._deltaPending,
-            otid: this._nCurrentDeltaIndex
-        }
+        // update to latest
+        this._deltaPending.nCurrentlyKnownDeltaIndex = this._baseDocument.nDeltaIndex;
 
 
-        this._socket.emit('ot', change);
+        console.log('Ready to send delta ' + JSON.stringify(this._deltaPending, null, 2));
+
+        // send
+        this._socket.emit('ot', this._deltaPending);
     }
 
 

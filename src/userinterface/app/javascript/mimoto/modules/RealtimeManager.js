@@ -50,6 +50,7 @@ module.exports.prototype = {
 
         // listen to socket
         this._socket.on('connect', function() { classRoot._socketOnConnect(); });
+        this._socket.on('disconnect', function() { classRoot._socketOnDisconnect(); });
         this._socket.on('logon', function(data) { classRoot._socketOnLogon(data); });
     },
 
@@ -81,6 +82,14 @@ module.exports.prototype = {
 
     },
 
+    _socketOnDisconnect: function()
+    {
+        console.warn('Connection with server was lost .. reconnecting ..');
+
+        // cleanup
+        delete this.aRealtimeEditors;
+    },
+
     /**
      * Handle socket on 'logon'
      * This event is received when this client is successfully authenticated by Mimoto
@@ -106,7 +115,7 @@ module.exports.prototype = {
         var aEditableValues = document.querySelectorAll('[data-mimoto-editable]');
 
         // init
-        var aRealtimeEditors = [];
+        this._aRealtimeEditors = [];
 
         // setup
         var nEditableValueCount = aEditableValues.length;
@@ -127,7 +136,7 @@ module.exports.prototype = {
 
 
             // store
-            aRealtimeEditors.push(realtimeEditor);
+            this._aRealtimeEditors.push(realtimeEditor);
         }
     }
 
