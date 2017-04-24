@@ -97,41 +97,74 @@ class ContentController
         if (empty($eContentSectionEntity)) return $app->redirect("/mimoto.cms/contentsections");
 
         // 4. read properties
-        $sName = $eContentSectionEntity->getValue('name');
+        //$sName = $eContentSectionEntity->getValue('name');
         $sFormName = $eContentSectionEntity->getValue('form.name');
 
-        // 5. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
-        // 6. setup content
-        $component->addForm(
-            $sFormName,
-            null,
-            [
-                'onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems',
-                'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]
-            ]
-        );
+        // 5. --- instantly create new entity
 
-        // 7. setup page
-        $page->setVar('nContentSectionId', $nContentId);
-        $page->setVar('pageTitle', array(
-                (object) array(
-                    "label" => $sName,
-                    "url" => '/mimoto.cms/content/'.$nContentId
-                ),
-                (object) array(
-                    "label" => 'new',
-                    "url" => ''
-                )
-            )
-        );
 
-        // connect
-        $page->addComponent('content', $component);
+        // 5a. get form
+        $eForm = Mimoto::service('input')->getFormByName($sFormName);
 
-        // 8. output
-        return $page->render();
+        // 5b. get form's entity
+        $eFormParentEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
+
+        // 5c. create entity
+        $eNewEntity = Mimoto::service('data')->create($eFormParentEntity->getValue('name'));
+
+        // 5d. persist entity
+        Mimoto::service('data')->store($eNewEntity);
+
+        // 5e. connect
+        $eContentSectionEntity->addValue('contentItems', $eNewEntity);
+
+        // 5f. persist connection
+        Mimoto::service('data')->store($eContentSectionEntity);
+
+
+        // 5. --- [end]
+
+        // redirect to edit
+        return $app->redirect('/mimoto.cms/content/'.$nContentId.'/'.$eFormParentEntity->getValue('name').'/'.$eNewEntity->getId().'/edit');
+
+//
+//        // 6. create content
+//        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+//
+//        // 7. setup content
+//        $component->addForm(
+//            $sFormName,
+//            $eNewEntity,
+//            [
+//                //'onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems',
+//                'response' => [
+//                    'onSuccess' => [
+//                        'loadPage' => '/mimoto.cms/content/'.$nContentId
+//                    ]
+//                ]
+//            ]
+//        );
+//
+//        // 8. setup page
+//        $page->setVar('nContentSectionId', $nContentId);
+//        $page->setVar('pageTitle', array(
+//                (object) array(
+//                    "label" => $sName,
+//                    "url" => '/mimoto.cms/content/'.$nContentId
+//                ),
+//                (object) array(
+//                    "label" => 'new',
+//                    "url" => ''
+//                )
+//            )
+//        );
+//
+//        // 9. connect
+//        $page->addComponent('content', $component);
+//
+//        // 10. output
+//        return $page->render();
     }
 
     public function contentGroupItemEdit(Application $app, $nContentId, $sContentTypeName, $nContentItemId)
@@ -160,7 +193,7 @@ class ContentController
             $sFormName,
             $eEntity,
             [
-                'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]
+                //'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]
             ]
         );
 

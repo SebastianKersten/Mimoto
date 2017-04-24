@@ -172,7 +172,7 @@ class FormService
         $aValues = $requestData->values;
 
         // 3. load form
-        $form = Mimoto::service('forms')->getFormByName($sFormName);
+        $form = Mimoto::service('input')->getFormByName($sFormName);
 
         // 4. load
         $xParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
@@ -201,7 +201,7 @@ class FormService
 
 
         // 4. prepare
-        $formFieldValues = Mimoto::service('forms')->getFormFieldValues($form, $entity, null, $entity->getId()); // todo - strip values
+        $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity, null, $entity->getId()); // todo - strip values
 
         // get all vars and entities
         $nFieldCount = count($formFieldValues->fields);
@@ -480,7 +480,7 @@ class FormService
         if ($bIsNew)
         {
             // 1. load
-            $formFieldValues = Mimoto::service('forms')->getFormFieldValues($form, $entity);
+            $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity);
 
             // 2. define
             $formResponse->newPublicKey = Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues));

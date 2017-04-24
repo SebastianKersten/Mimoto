@@ -445,11 +445,13 @@ module.exports.prototype = {
      */
     contentNew: function(nContentId)
     {
+        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
         window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
     },
     
     contentEdit: function(nContentId, sContentTypeName, nContentItemId)
     {
+        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit');
         window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
     },
     

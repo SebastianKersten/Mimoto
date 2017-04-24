@@ -36,7 +36,7 @@ class FormServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        Mimoto::setService('forms', $app['Mimoto.Forms']);
+        Mimoto::setService('input', $app['Mimoto.Forms']);
     }
     
 }

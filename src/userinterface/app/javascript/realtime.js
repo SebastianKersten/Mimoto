@@ -198,6 +198,8 @@ socketIO.on('connection', function(client)
             console.log('Client is not in sync with server ...');
             console.log('Starting correction ...');
 
+            // #question is this part still relevant?
+
 
             console.log(JSON.stringify(baseDocument.aDeltas, null, 2));
 

@@ -75,7 +75,7 @@ class MimotoAimlessController
     public function parseForm(Application $app, Request $request, $sFormName)
     {
         // parse
-        $formResponse = Mimoto::service('forms')->parseForm($sFormName, $request);
+        $formResponse = Mimoto::service('input')->parseForm($sFormName, $request);
 
         // render and send
         return Mimoto::service('messages')->response($formResponse, 200);

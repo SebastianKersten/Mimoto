@@ -32864,11 +32864,13 @@
 	     */
 	    contentNew: function(nContentId)
 	    {
+	        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
 	        window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
 	    },
 	    
 	    contentEdit: function(nContentId, sContentTypeName, nContentItemId)
 	    {
+	        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit');
 	        window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
 	    },
 	    
@@ -33984,6 +33986,7 @@
 	        
 	        field.$input.on('input', function(e)
 	        {
+	            var form = field.sFormId;
 	            var sFormName = field.sFormId;
 	            var value = $(this).val();
 	
@@ -33993,18 +33996,22 @@
 	
 	            classRoot._validateInputField(field);
 	
+	            classRoot._startAutosave(form, field);
 	        });
 	    
 	        field.$input.on('change', function(e)
 	        {
+	            var form = field.sFormId;
 	            var sFormName = field.sFormId;
 	            var value = $(this).val();
 	            
 	            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
 	        
 	            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
-	        
+	
 	            classRoot._validateInputField(field);
+	
+	            classRoot._startAutosave(form);
 	        });
 	    },
 	
@@ -34166,17 +34173,23 @@
 	        {
 	            // set value
 	            fieldInput.val(serverResponse.file_id);
-	        
+	
+	            classRoot._startAutosave(currentForm);
+	
+	            mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
+	
 	            setTimeout(function ()
 	            {
-	                mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
+	                //mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
 	                
 	                console.warn(file);
 	                console.warn(serverResponse);
 	                
 	            }.bind(this), 100);
 	        }.bind(this));
-	    
+	
+	
+	        var classRoot = this;
 	        
 	        Mimoto.Aimless.utils.callAPI({
 	            type: 'get',
@@ -34462,6 +34475,31 @@
 	
 	        richTextField.quill.insertText(0, 'abc');
 	
+	    },
+	
+	    _startAutosave: function(form)
+	    {
+	
+	        console.log('Autosave ', form);
+	
+	
+	        if (!form.autosaveTimer)
+	        {
+	
+	            var classRoot = this;
+	
+	            form.autosaveTimer = setTimeout(function(){ classRoot._executeAutoSave(form); }, 1000);
+	        }
+	    },
+	
+	    _executeAutoSave: function(form)
+	    {
+	        // cleanup
+	        clearTimeout(form.autosaveTimer);
+	
+	        console.log('Auto saving ... ');
+	
+	        this.submit(form.sName);
 	    }
 	    
 	};

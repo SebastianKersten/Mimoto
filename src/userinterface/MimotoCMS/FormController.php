@@ -434,7 +434,7 @@ class FormController
 
         // 3. content
         $component->addForm(
-            Mimoto::service('forms')->getCoreFormByEntityTypeId($nFormFieldTypeId),
+            Mimoto::service('input')->getCoreFormByEntityTypeId($nFormFieldTypeId),
             null,
             [
                 'onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields',
@@ -468,7 +468,7 @@ class FormController
 
         // 6. setup content
         $component->addForm(
-            Mimoto::service('forms')->getCoreFormByEntityTypeId($eFormField->getEntityTypeName()),
+            Mimoto::service('input')->getCoreFormByEntityTypeId($eFormField->getEntityTypeName()),
             $eFormField,
             [
                 'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/form/'.$eParentForm->getId().'/view']]
@@ -508,7 +508,7 @@ class FormController
         if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) die('Invalid property selector');
 
         // load
-        $formField = Mimoto::service('forms')->getFormFieldByFieldId($sInputFieldType, $sInputFieldId);
+        $formField = Mimoto::service('input')->getFormFieldByFieldId($sInputFieldType, $sInputFieldId);
 
         // 2. validate
         if (empty($formField)) return $app->redirect("/mimoto.cms/forms");
@@ -650,13 +650,13 @@ class FormController
         {
             case CoreConfig::MIMOTO_FORM_INPUTOPTION:
 
-                $form = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
+                $form = Mimoto::service('input')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
                 break;
 
             default:
 
                 // 4. load form field
-                $eFormField = Mimoto::service('forms')->getFormFieldByFieldId($sInputFieldType, $sInputFieldId);
+                $eFormField = Mimoto::service('input')->getFormFieldByFieldId($sInputFieldType, $sInputFieldId);
 
                 // 5. validate
                 if (empty($eFormField)) Mimoto::error('Not here'); //return $app->redirect("/mimoto.cms");
@@ -675,7 +675,7 @@ class FormController
                     {
                         case InputOption::VALUE:
 
-                            $form = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
+                            $form = Mimoto::service('input')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
                             break;
 
                         case InputOption::FORM:
