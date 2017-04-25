@@ -466,6 +466,11 @@ class EntityConfigService
         return $sColumnType;
     }
 
+
+    /**
+     * Create "value" property settings
+     * @param MimotoEntity $entityProperty
+     */
     private function createValuePropertySettings(MimotoEntity $entityProperty)
     {
         // 1. init property setting
@@ -486,6 +491,10 @@ class EntityConfigService
         Mimoto::service('data')->store($entityProperty);
     }
 
+    /**
+     * Create "entity" property settings
+     * @param MimotoEntity $entityProperty
+     */
     private function createEntityPropertySettings(MimotoEntity $entityProperty)
     {
         switch($entityProperty->getValue('type'))
@@ -567,6 +576,10 @@ class EntityConfigService
 
     }
 
+    /**
+     * Create "collection" property settings
+     * @param MimotoEntity $entityProperty
+     */
     private function createCollectionPropertySettings(MimotoEntity $entityProperty)
     {
         // init

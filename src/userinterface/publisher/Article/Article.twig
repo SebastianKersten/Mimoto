@@ -15,12 +15,12 @@
 
     <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.render('headerImage') }}" {{ Mimoto.realtime('headerImage') }}>
 
-    <div class="otmenu">
-        <div class="otbutton" onclick="showPending();">Show pending</div>
-        <div class="otbutton" onclick="sendPending();">Send pending</div>
+    {#<div class="otmenu">#}
+        {#<div class="otbutton" onclick="showPending();">Show pending</div>#}
+        {#<div class="otbutton" onclick="sendPending();">Send pending</div>#}
 
-        <div class="otbutton" onclick="showBuffer();" style="margin-left:25px;">Show buffer</div>
-    </div>
+        {#<div class="otbutton" onclick="showBuffer();" style="margin-left:25px;">Show buffer</div>#}
+    {#</div>#}
 
     <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.editable('body', {'options': { 'formats':['bold', 'italic', 'underline'] }} ) }}>{{ Mimoto.render('body') }}</div>
 

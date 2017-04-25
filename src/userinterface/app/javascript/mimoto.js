@@ -1,5 +1,5 @@
 /**
- * Aimless - MLS - Mimoto's Live Screen protocol
+ * Mimoto - Realtime dom manager
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -19,17 +19,15 @@ var RealtimeManager = require('./mimoto/modules/RealtimeManager');
 var MimotoAimless = require('./mimoto/Mimoto');
 Mimoto.classes.DomService = require('./mimoto/modules/DomService');
 Mimoto.classes.DomUtils = require('./mimoto/modules/DomUtils');
-Mimoto.classes.DomRealtime = require('./mimoto/modules/DomRealtime');
 
 // setup
 Mimoto.Aimless = new MimotoAimless();
 Mimoto.Aimless.dom = new Mimoto.classes.DomService();
 Mimoto.Aimless.utils = new Mimoto.classes.DomUtils();
-Mimoto.Aimless.realtime = new Mimoto.classes.DomRealtime();
 
 // connect
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // update
     Mimoto.Aimless.utils.parseRequestQueue();
 

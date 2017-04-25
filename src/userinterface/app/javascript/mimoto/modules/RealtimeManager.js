@@ -43,7 +43,7 @@ module.exports.prototype = {
 
         // setup
         //this._socket = new io('http://localhost:4000');
-        this._socket = new io('http://192.168.178.42.xip.io:4000');
+        this._socket = new io('http://10.0.0.97.xip.io:4000');
 
 
         var classRoot = this;

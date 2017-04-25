@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(71);
+	module.exports = __webpack_require__(72);
 
 
 /***/ },
@@ -11786,17 +11786,18 @@
 /***/ },
 /* 69 */,
 /* 70 */,
-/* 71 */
+/* 71 */,
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//'use strict'; #note SK - do not uncomment
 	
-	__webpack_require__(72);
+	__webpack_require__(73);
 	
 	
-	var HeaderView = __webpack_require__(73);
-	var ButtonUtils = __webpack_require__(74);
-	var Sortable = __webpack_require__(75); // https://github.com/RubaXa/Sortable
+	var HeaderView = __webpack_require__(74);
+	var ButtonUtils = __webpack_require__(75);
+	var Sortable = __webpack_require__(76); // https://github.com/RubaXa/Sortable
 	
 	
 	if (typeof Mimoto == "undefined") Mimoto = {};
@@ -11805,14 +11806,14 @@
 	
 	//Mimoto = require('./mimoto.cms/Mimoto');
 	
-	Mimoto.CMS = __webpack_require__(76);
-	Mimoto.modules.Tabmenu = __webpack_require__(77);
-	Mimoto.modules.Popup = __webpack_require__(78);
-	Mimoto.modules.Page = __webpack_require__(79);
-	Mimoto.modules.Form = __webpack_require__(80);
-	Mimoto.modules.Quill = __webpack_require__(83);
+	Mimoto.CMS = __webpack_require__(77);
+	Mimoto.modules.Tabmenu = __webpack_require__(78);
+	Mimoto.modules.Popup = __webpack_require__(79);
+	Mimoto.modules.Page = __webpack_require__(80);
+	Mimoto.modules.Form = __webpack_require__(81);
+	Mimoto.modules.Quill = __webpack_require__(84);
 	Mimoto.modules.QuillDelta = __webpack_require__(59);
-	Mimoto.modules.Sortable = __webpack_require__(75);
+	Mimoto.modules.Sortable = __webpack_require__(76);
 	
 	// init
 	Mimoto.CMS = new Mimoto.CMS();
@@ -11918,7 +11919,7 @@
 
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery UI - v1.12.1 - 2016-09-14
@@ -30629,7 +30630,7 @@
 	}));
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30841,7 +30842,7 @@
 
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -30926,7 +30927,7 @@
 
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**!
@@ -32414,7 +32415,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(68)))
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -33052,7 +33053,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(68)))
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -33180,7 +33181,7 @@
 
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
@@ -33308,7 +33309,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(68), __webpack_require__(68)))
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports) {
 
 	/**
@@ -33358,7 +33359,7 @@
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -33369,10 +33370,10 @@
 	
 	'use strict';
 	
-	var Sortable = __webpack_require__(75); // https://github.com/RubaXa/Sortable
+	var Sortable = __webpack_require__(76); // https://github.com/RubaXa/Sortable
 	
-	var Dropzone = __webpack_require__(81);
-	var Flatpickr = __webpack_require__(82);
+	var Dropzone = __webpack_require__(82);
+	var Flatpickr = __webpack_require__(83);
 	
 	Dropzone.autoDiscover = false;
 	
@@ -34178,14 +34179,6 @@
 	
 	            mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
 	
-	            setTimeout(function ()
-	            {
-	                //mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
-	                
-	                console.warn(file);
-	                console.warn(serverResponse);
-	                
-	            }.bind(this), 100);
 	        }.bind(this));
 	
 	
@@ -34278,12 +34271,11 @@
 	            
 	            // load video
 	            video.load();
-	            
-	            
-	            setTimeout(function () {
-	                mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
-	                
-	            }.bind(this), 100);
+	
+	            classRoot._startAutosave(currentForm);
+	
+	            mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
+	
 	        }.bind(this));
 	        
 	        
@@ -34507,7 +34499,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(68)))
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery, module) {
@@ -36281,7 +36273,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(68), __webpack_require__(16)(module)))
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -38363,7 +38355,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(68)))
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -49262,10 +49254,10 @@
 	/***/ })
 	/******/ ]);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(84).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(85).Buffer))
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -49278,9 +49270,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(85)
-	var ieee754 = __webpack_require__(86)
-	var isArray = __webpack_require__(87)
+	var base64 = __webpack_require__(86)
+	var ieee754 = __webpack_require__(87)
+	var isArray = __webpack_require__(88)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -51061,7 +51053,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -51181,7 +51173,7 @@
 
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -51271,7 +51263,7 @@
 
 
 /***/ },
-/* 87 */
+/* 88 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;

@@ -815,14 +815,6 @@ module.exports.prototype = {
 
             mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
 
-            setTimeout(function ()
-            {
-                //mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
-                
-                console.warn(file);
-                console.warn(serverResponse);
-                
-            }.bind(this), 100);
         }.bind(this));
 
 
@@ -915,12 +907,11 @@ module.exports.prototype = {
             
             // load video
             video.load();
-            
-            
-            setTimeout(function () {
-                mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
-                
-            }.bind(this), 100);
+
+            classRoot._startAutosave(currentForm);
+
+            mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
+
         }.bind(this));
         
         
