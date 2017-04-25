@@ -6,6 +6,6 @@ composer.lock
 node_modules
 #web/static/css
 #web/static/js
-src/config.php
+#src/config.php
 web/dynamic/*
 twigcache/
