@@ -1124,6 +1124,7 @@ module.exports.prototype = {
     {
         // cleanup
         clearTimeout(form.autosaveTimer);
+        delete(form.autosaveTimer);
 
         console.log('Auto saving ... ');
 

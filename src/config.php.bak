@@ -23,7 +23,7 @@
             'cluster' => 'eu',
             'host' => 'api-eu.pusher.com',
             'encrypted' => true,
-            'authEndPoint' => ''
+            'authEndPoint' => '/Mimoto.Aimless/realtime/collaboration'
         ),
         'slack' => (object) array
         (
