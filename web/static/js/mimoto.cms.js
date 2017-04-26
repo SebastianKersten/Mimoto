@@ -34473,7 +34473,7 @@
 	    {
 	
 	        console.log('Autosave ', form);
-	
+	        return;
 	
 	        if (!form.autosaveTimer)
 	        {
