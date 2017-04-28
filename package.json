@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/SebastianKersten/Mimoto.Aimless.git"
+    "url": "https://github.com/SebastianKersten/Mimoto.git"
   },
   "author": "",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/SebastianKersten/Mimoto.Aimless/issues"
+    "url": "https://github.com/SebastianKersten/Mimoto/issues"
   },
-  "homepage": "https://github.com/SebastianKersten/Mimoto.Aimless",
+  "homepage": "https://github.com/SebastianKersten/Mimoto",
   "devDependencies": {
     "autoprefixer": "^6.4.1",
     "babel-core": "^6.24.1",

@@ -6,7 +6,10 @@
 
 
 // Mimoto classes
-var MimotoX = require('./mimoto/MimotoX');
+var MimotoStartup = require('./mimoto/modules/MimotoStartup');
+
+
+if (typeof MimotoX == "undefined") MimotoX = new MimotoStartup();
 
 
 // init
@@ -22,12 +25,12 @@ var RealtimeManager = require('./mimoto/modules/RealtimeManager');
 // include
 var MimotoAimless = require('./mimoto/Mimoto');
 Mimoto.classes.DomService = require('./mimoto/modules/DomService');
-//Mimoto.classes.DomUtils = require('./mimoto/modules/DomUtils');
+Mimoto.classes.DomUtils = require('./mimoto/modules/DomUtils');
 
 // setup
 Mimoto.Aimless = new MimotoAimless();
-//Mimoto.Aimless.dom = new Mimoto.classes.DomService();
-//Mimoto.Aimless.utils = new Mimoto.classes.DomUtils();
+Mimoto.Aimless.dom = new Mimoto.classes.DomService();
+Mimoto.Aimless.utils = new Mimoto.classes.DomUtils();
 
 // connect
 document.addEventListener('DOMContentLoaded', function () {
@@ -35,11 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // update
     Mimoto.Aimless.utils.parseRequestQueue();
 
-
-    window.MimotoX = new MimotoX('Hoi');
+    MimotoX.connect();
 
     // connect
-    var realtimeManager = new RealtimeManager();
+    //var realtimeManager = new RealtimeManager();
 
 
 }, false);
