@@ -71,6 +71,24 @@ class EntityPropertySetting
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--textOptions',
+                    // ---
+                    'name' => 'textOptions',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => 'array',
+                            'value' => [CoreConfig::MIMOTO_TEXTOPTION]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'value' => CoreConfig::DATA_VALUE_FALSE,
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--allowedEntityType',
                     // ---
                     'name' => 'allowedEntityType',

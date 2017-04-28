@@ -80,6 +80,10 @@ class CoreConfig
     const MIMOTO_LAYOUT                         = '_Mimoto_layout';
     const MIMOTO_LAYOUTCONTAINER                = '_Mimoto_layoutcontainer';
 
+    // text
+    const MIMOTO_TEXTOPTION                     = '_Mimoto_textoption';
+    const MIMOTO_TEXTOPTIONATTRIBUTE            = '_Mimoto_textoptionattribute';
+
     // functionality
     const MIMOTO_ACTION                         = '_Mimoto_action';
     const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';

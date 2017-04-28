@@ -82,6 +82,87 @@ module.exports.prototype = {
 
 
 
+        let Inline = Mimoto.modules.Quill.import('blots/inline');
+
+        class InfocardBlot extends Inline
+        {
+            static create(value)
+            {
+                let node = super.create();
+
+                // Sanitize url value if desired
+                node.setAttribute('xxx', value);
+                node.setAttribute('class', 'infocard');
+
+                // Okay to set other non-format related attributes
+                // These are invisible to Parchment so must be static
+                node.setAttribute('target', 'ohyeah');
+
+                return node;
+            }
+
+            static formats(node)
+            {
+                // We will only be called with a node already
+                // determined to be a Link blot, so we do
+                // not need to check ourselves
+                return node.getAttribute('xxx');
+            }
+        }
+
+        InfocardBlot.blotName = 'infocard';
+        InfocardBlot.tagName = 'span';
+
+        Mimoto.modules.Quill.register(InfocardBlot);
+
+
+
+
+
+
+
+        //
+        //
+        //
+        // var InfocardBlot = {};
+        // InfocardBlot.prototype = Inline.prototype;
+        //
+        //
+        // InfocardBlot.create = function(value)
+        // {
+        //     var node = Inline.create();
+        //
+        //     // Sanitize url value if desired
+        //     node.setAttribute('xxx', value);
+        //
+        //     // Okay to set other non-format related attributes
+        //     // These are invisible to Parchment so must be static
+        //     node.setAttribute('yyy', '_blank');
+        //
+        //     return node;
+        // };
+        //
+        // InfocardBlot.formats = function(node)
+        // {
+        //     // We will only be called with a node already
+        //     // determined to be a Link blot, so we do
+        //     // not need to check ourselves
+        //     return node.getAttribute('href');
+        // }
+        //
+        //
+        //
+        //
+        // InfocardBlot.blotName = 'infocard';
+        // InfocardBlot.tagName = 'span';
+
+
+        //Mimoto.modules.Quill.register(InfocardBlot);
+
+
+
+
+
         // init
         var formats = null;
         var toolbar = null;
@@ -106,6 +187,7 @@ module.exports.prototype = {
             modules: {
                 toolbar: [
                     [{ 'header': [1, 2, false]}],
+                    ['infocard'],
                     formats
                 ],
                 history: {
@@ -115,8 +197,65 @@ module.exports.prototype = {
                 }
             },
             placeholder: 'Start typing',
-            formats: ['bold', 'italic', 'underline', 'header']
+            formats: ['bold', 'italic', 'underline', 'header', 'infocard']
         });
+
+
+
+        var customButton = document.querySelector('.ql-infocard');
+        customButton.addEventListener('click', function()
+        {
+            var range = this._quill.getSelection();
+
+            if (range) {
+                this._quill.insertText(range.index, "Ω");
+            }
+        });
+
+
+
+
+        //var toolbar = quill.getModule('toolbar');
+
+
+
+        // // @todo maybe add this handler on the mimoto.cms
+        // toolbar.addHandler('mimoto-infocard', function (value)
+        // {
+        //     // get the position of the cursor
+        //     var range = this._quill.getSelection();
+        //     var text = this._quill.getText(range);
+        //
+        //     var blot = quill.getLeaf(range.index);
+        //     var infoCard = blot[0].next;
+        //
+        //     // insert infocard
+        //     if (range && (range.length > 1 || text !== ' '))
+        //     {
+        //         this._quill.deleteText(range);
+        //         this._quill.insertEmbed(range.index, "mimoto-infocard", text);
+        //     }
+        //
+        //     // remove infocard if this exists
+        //     if (blot && infoCard)
+        //     {
+        //         if (infoCard.domNode.className === 'mimoto-infocard')
+        //         {
+        //             var parent = infoCard.domNode.parentNode;
+        //             var text = document.createTextNode(infoCard.domNode.innerText);
+        //
+        //             parent.replaceChild(text, infoCard.domNode);
+        //         }
+        //     }
+        // });
+
+
+
+
+
+
+
+
 
         // listen
         this._quill.on('selection-change', function() { classRoot._onSelectionChange(); });
