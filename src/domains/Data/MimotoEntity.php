@@ -241,6 +241,36 @@ class MimotoEntity
         return Mimoto::service('config')->entityIsTypeOf($this->_config->entityTypeName, $sEntityTypeName);
     }
 
+  public function jsonData()
+  {
+    $valid = method_exists($this, 'getValue');
+
+    if ($valid) {
+      $contentItems = $this->getValue('contentItems');
+
+      if (is_array($contentItems)) {
+
+        $data = [];
+
+        foreach ($contentItems as $item){
+          $item_data = [];
+
+          foreach ($item->_aProperties as $key => $value) {
+            $item_data[$key] = $item->getValue($key);
+          }
+
+          array_push($data, $item_data);
+        }
+
+        return json_encode($data);
+
+      }
+
+    } else {
+     error_log('Cannot get json data from MimotoEntity');
+    }
+  }
+
 
     
     // ----------------------------------------------------------------------------
