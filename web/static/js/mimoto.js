@@ -52,7 +52,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * Mimoto - The ultra fast, fluid & realtime data management microframework
+	 * Mimoto - An ultra fast, fluid & realtime data management microframework
 	 *
 	 * @author Sebastian Kersten (@supertaboo)
 	 */
@@ -22666,7 +22666,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * Mimoto - The ultra fast, fluid & realtime data management microframework
+	 * Mimoto - An ultra fast, fluid & realtime data management microframework
 	 *
 	 * @author Sebastian Kersten (@supertaboo)
 	 */

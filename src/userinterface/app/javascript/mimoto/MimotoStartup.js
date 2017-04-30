@@ -1,5 +1,5 @@
 /**
- * Mimoto - The ultra fast, fluid & realtime data management microframework
+ * Mimoto - An ultra fast, fluid & realtime data management microframework
  *
  * @author Sebastian Kersten (@supertaboo)
  */
