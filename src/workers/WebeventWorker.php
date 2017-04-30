@@ -18,20 +18,20 @@ $worker->addServer();
 $worker->addFunction("sendUpdate", "sendUpdate");
 
 
-
-// configure    
-$options = array(
-    'cluster' => $config->pusher->cluster,
-    'encrypted' => $config->pusher->encrypted,
-    'host' => $config->pusher->host
-);
-
-$GLOBALS['pusher'] = new \Pusher(
-    $config->pusher->auth_key,
-    $config->pusher->secret,
-    $config->pusher->app_id,
-    $options
-);
+//
+//// configure
+//$options = array(
+//    'cluster' => $config->pusher->cluster,
+//    'encrypted' => $config->pusher->encrypted,
+//    'host' => $config->pusher->host
+//);
+//
+//$GLOBALS['pusher'] = new \Pusher(
+//    $config->pusher->auth_key,
+//    $config->pusher->secret,
+//    $config->pusher->app_id,
+//    $options
+//);
 
 
 while ($worker->work());
@@ -39,8 +39,13 @@ while ($worker->work());
 
 function sendUpdate($job)
 {
+
+    //$client = new \ElephantIO\Client(new \ElephantIO\Engine\SocketIO\Version1X('http://localhost:4001'));
+
     // read
     $workload = json_decode($job->workload());
+
+
 
     echo "Pusher event (".date('Y.m.d H:i:s').")\n";
     echo "-------------------------------------\n";
@@ -48,5 +53,5 @@ function sendUpdate($job)
     echo "-------------------------------------\n\n\n";
 
     // send
-    $GLOBALS['pusher']->trigger($workload->sChannel, $workload->sEvent, $workload->data);
+    //$GLOBALS['pusher']->trigger($workload->sChannel, $workload->sEvent, $workload->data);
 }

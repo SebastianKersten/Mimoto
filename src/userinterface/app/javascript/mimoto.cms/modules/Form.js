@@ -336,7 +336,7 @@ module.exports.prototype = {
         
         
         // 11. send data
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: form.sMethod,
             url: form.sAction,
             data: JSON.stringify(requestData),
@@ -820,7 +820,7 @@ module.exports.prototype = {
 
         var classRoot = this;
         
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
             success: function(resultData, resultStatus, resultSomething)
@@ -918,7 +918,7 @@ module.exports.prototype = {
         // register
         var classRoot = document;
         
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
             success: function(resultData, resultStatus, resultSomething)
@@ -996,7 +996,7 @@ module.exports.prototype = {
         if (!sPropertySelector || !nConnectionId || !nCurrentSortindex) return;
         
         // store
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/form/list/sort/' + sPropertySelector + '/' + nConnectionId + '/' + nOldIndex + '/' + nNewIndex,
             success: function(resultData, resultStatus, resultSomething)

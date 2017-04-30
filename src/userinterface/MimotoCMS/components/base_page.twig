@@ -15,14 +15,17 @@
     {#<script src="/static/js/mimotoX.js"></script>#}
 
     <script>
-        Mimoto.Aimless.connect(
-            '{{ Mimoto.globalValue('pusher.auth_key') }}',
-            '{{ Mimoto.globalValue('pusher.cluster') }}',
-            '{{ Mimoto.globalValue('pusher.host') }}',
-            '{{ Mimoto.globalValue('pusher.encrypted') }}',
-            '{{ Mimoto.globalValue('pusher.authEndpoint') }}',
-            false
-        );
+
+        MimotoX.debug = true;
+
+        {#Mimoto.Aimless.connect(#}
+            {#'{{ Mimoto.globalValue('pusher.auth_key') }}',#}
+            {#'{{ Mimoto.globalValue('pusher.cluster') }}',#}
+            {#'{{ Mimoto.globalValue('pusher.host') }}',#}
+            {#'{{ Mimoto.globalValue('pusher.encrypted') }}',#}
+            {#'{{ Mimoto.globalValue('pusher.authEndpoint') }}',#}
+            {#false#}
+        {#);#}
     </script>
 
     <!-- Theme included stylesheets -->

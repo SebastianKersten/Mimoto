@@ -4,7 +4,7 @@ function addComment(nArticleId)
     var commentForm = document.getElementById('commentForm');
     
     // call
-    Mimoto.Aimless.utils.callAPI({
+    MimotoX.utils.callAPI({
         type: 'post',
         url: "/publisher/article/" + nArticleId + "/comment/add",
         data: {message: commentForm.value},
@@ -19,7 +19,7 @@ function addComment(nArticleId)
 function removeComment(nCommentId)
 {
     // call
-    Mimoto.Aimless.utils.callAPI({
+    MimotoX.utils.callAPI({
         type: 'post',
         url: "/publisher/comment/" + nCommentId + "/remove",
         data: {message: commentForm.value},
@@ -32,7 +32,7 @@ function removeComment(nCommentId)
 function highlightComment(nCommentId)
 {
     // call
-    Mimoto.Aimless.utils.callAPI({
+    MimotoX.utils.callAPI({
         type: 'post',
         url: "/publisher/comment/" + nCommentId + "/highlight",
         data: null,
@@ -45,7 +45,7 @@ function highlightComment(nCommentId)
 function unhighlightComment(nCommentId)
 {
     // call
-    Mimoto.Aimless.utils.callAPI({
+    MimotoX.utils.callAPI({
         type: 'post',
         url: "/publisher/comment/" + nCommentId + "/unhighlight",
         data: null,

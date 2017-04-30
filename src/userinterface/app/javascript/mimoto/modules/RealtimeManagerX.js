@@ -59,7 +59,7 @@ class RealtimeManagerX
         console.log('Logging on user ...');
 
         // 2. authenticate
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/logon',
             data: { id: this._socket.id },

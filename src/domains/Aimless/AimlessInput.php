@@ -172,7 +172,7 @@ class AimlessInput extends AimlessComponent
         // 3. derde parameter
 
         // connect
-        $sRenderedField .= '<script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.registerInputField, "'.$this->_sFieldId.'", '.json_encode($settings).')</script>';
+        $sRenderedField .= '<script>MimotoX.utils.registerRequest(Mimoto.form.registerInputField, "'.$this->_sFieldId.'", '.json_encode($settings).')</script>';
 
         // output
         return $sRenderedField;

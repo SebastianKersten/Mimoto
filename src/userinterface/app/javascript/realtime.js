@@ -318,6 +318,7 @@ socketIOMimoto.on('connection', function(server)
         aClients[data.socketId].user = data.user;
         aClients[data.socketId].emit('logon', data);
 
+
         //
         // var nClientCount = aClients.length;
         // for (var nClientIndex = 0; nClientIndex < nClientCount; nClientIndex++)
@@ -340,6 +341,19 @@ socketIOMimoto.on('connection', function(server)
     server.on("logoff", function (data)
     {
         console.log('Mimoto logoff', data); // for instance in case of forced logout
+    });
+
+
+    server.on("data.changed", function(data)
+    {
+        console.log('data.changed');
+        socketIO.emit('data.changed', data);
+    });
+
+    server.on("data.created", function(data)
+    {
+        console.log('data.created');
+        socketIO.emit('data.created', data);
     });
 
 });

@@ -39,19 +39,31 @@ module.exports.prototype = {
     __construct: function()
     {
         // log
-        console.log('Connecting user');
+        if (MimotoX.debug) console.log('Connecting user');
+
+
+        // 1. get correct port if not supplied via constructor
 
         // setup
         this._socket = new io('http://localhost:4000');
         //this._socket = new io('http://192.168.178.227.xip.io:4000');
 
+        // register
+        let classRoot = this;
 
-        var classRoot = this;
-
-        // listen to socket
+        // logon events
         this._socket.on('connect', function() { classRoot._socketOnConnect(); });
         this._socket.on('disconnect', function() { classRoot._socketOnDisconnect(); });
         this._socket.on('logon', function(data) { classRoot._socketOnLogon(data); });
+
+        // data events
+        this._socket.on('data.changed', function(data) { MimotoX.dom.onDataChanged(data); });
+        this._socket.on('data.created', function(data) { MimotoX.dom.onDataCreated(data); });
+
+        // user interface events
+        this._socket.on('page.change', function(data) { MimotoX.dom.onPageChange(data); });
+        this._socket.on('component.load', function(data) { MimotoX.dom.onComponentLoad(data); });
+        this._socket.on('popup.open', function(data) { MimotoX.dom.onPopupOpen(data); });
     },
 
 
@@ -65,11 +77,11 @@ module.exports.prototype = {
     {
 
         // 1. logon with php
-        console.log('User connected.');
-        console.log('Logging on user ...');
+        if (MimotoX.debug) console.log('User connected.');
+        if (MimotoX.debug) console.log('Logging on user ...');
 
         // 2. authenticate
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/logon',
             data: { id: this._socket.id },
@@ -84,7 +96,7 @@ module.exports.prototype = {
 
     _socketOnDisconnect: function()
     {
-        console.warn('Connection with server was lost .. reconnecting ..');
+        if (MimotoX.debug) console.warn('Connection with server was lost .. reconnecting ..');
 
         // cleanup
         delete this.aRealtimeEditors;
@@ -98,8 +110,8 @@ module.exports.prototype = {
      */
     _socketOnLogon: function(data)
     {
-        console.log('User `' + data.user.name + '` is logged on.');
-        console.log('===========================================================');
+        if (MimotoX.debug) console.log('User `' + data.user.name + '` is logged on.');
+        if (MimotoX.debug) console.log('===========================================================');
 
         // connect editable values
         this._setupEditableValues();

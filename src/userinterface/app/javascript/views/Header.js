@@ -100,7 +100,7 @@ module.exports.prototype = {
         // init
         var classRoot = this;
         
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'GET',
             url: '/mimoto.cms/notifications/count',
             data: null,

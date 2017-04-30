@@ -95,7 +95,7 @@ module.exports.prototype = {
                 layer_popup.scrollTop = 0;
                 
                 // update
-                Mimoto.Aimless.utils.parseRequestQueue();
+                MimotoX.utils.parseRequestQueue();
             }
         });
     },

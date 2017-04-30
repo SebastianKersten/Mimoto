@@ -15,6 +15,12 @@ use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Form\FormService;
 use Mimoto\Log\LogService;
 
+// ElephantIO classes
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version1X;
+use ElephantIO\Exception\ServerConnectionFailureException;
+
+
 
 /**
  * OutputService
@@ -801,12 +807,12 @@ class OutputService
 
 
 
-        if (!empty($data->changes)) { $this->sendPusherEvent('Aimless', 'data.changed', $data); }
+        if (!empty($data->changes)) { $this->sendSocketIOEvent('Aimless', 'data.changed', $data); }
         
         /**
          * Exaamples:
-         * $this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
-         * $this->sendPusherEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));
+         * $this->sendSocketIOEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
+         * $this->sendSocketIOEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));
          */
     }
     
@@ -836,7 +842,7 @@ class OutputService
         Mimoto::service('messages')->registerModification('data.created', $data);
 
         // send
-        $this->sendPusherEvent('Aimless', 'data.created', $data);
+        $this->sendSocketIOEvent('Aimless', 'data.created', $data);
     }
     
     /**
@@ -845,8 +851,42 @@ class OutputService
      * @param type $sEvent
      * @param type $data
      */
-    private function sendPusherEvent($sChannel, $sEvent, $data)
+    private function sendSocketIOEvent($sChannel, $sEvent, $data)
     {
+
+        // init
+        $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+
+
+        // convert
+        $aData = [];
+        foreach ($data as $sKey => $value)
+        {
+            $aData[$sKey] = $value;
+        }
+
+
+        try
+        {
+            $client->initialize();
+            $client->emit($sEvent, $aData);
+            $client->close();
+        }
+        catch (ServerConnectionFailureException $e)
+        {
+            echo 'Server Connection Failure!!';
+        }
+
+        // temp, keepalive is better
+        unset($client);
+
+
+
+
+        return; // ------ temp disable Gearman because its being a bitch!
+
+
+
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;
 

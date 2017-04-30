@@ -141,7 +141,7 @@ module.exports.prototype = {
             success: function (resultData, resultStatus, resultSomething)
             {
                 //console.error(resultData);
-                
+
                 // verify and validate
                 if (resultData.dataModifications && resultData.dataModifications instanceof Array)
                 {
@@ -150,22 +150,22 @@ module.exports.prototype = {
                     {
                         // register
                         var dataModification = resultData.dataModifications[nModificationIndex];
-                        
+
                         switch(dataModification.type)
                         {
                             case 'data.created':
-    
-                                Mimoto.Aimless.dom.onDataCreated(dataModification.data, 'direct');
+
+                                MimotoX.dom.onDataCreated(dataModification.data, 'direct');
                                 break;
-                            
+
                             case 'data.changed':
-    
-                                Mimoto.Aimless.dom.onDataChanged(dataModification.data, 'direct');
+
+                                MimotoX.dom.onDataChanged(dataModification.data, 'direct');
                                 break;
                         }
                     }
                 }
-                
+
                 // forward
                 request.success(resultData.response, resultStatus, resultSomething);
             }

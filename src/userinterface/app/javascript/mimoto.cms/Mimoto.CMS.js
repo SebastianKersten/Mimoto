@@ -68,7 +68,7 @@ module.exports.prototype = {
 
     entityUpdate: function(nEntityId, data)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'POST',
             url: "/mimoto.cms/entity/" + nEntityId + "/update",
             data: data,
@@ -84,7 +84,7 @@ module.exports.prototype = {
         var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
         if (response == true) {
     
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'GET',
                 url: "/mimoto.cms/entity/" + nEntityId + "/delete",
                 //data: data,
@@ -103,7 +103,7 @@ module.exports.prototype = {
 
     entityPropertyCreate: function(nEntityId, data)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'POST',
             url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
             data: data,
@@ -124,7 +124,7 @@ module.exports.prototype = {
         var response = confirm("Are you sure you want to delete the property '" + sEntityPropertyName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
         if (response == true) {
             // 11. send data
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'get',
                 url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
                 success: function (resultData, resultStatus, resultSomething) {
@@ -156,7 +156,7 @@ module.exports.prototype = {
         });
 
         // 11. send data
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'GET',
             url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
             data: null,
@@ -173,7 +173,7 @@ module.exports.prototype = {
     notificationsCloseAll: function()
     {
         // 11. send data
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'GET',
             url: '/mimoto.cms/notifications/closeall',
             data: null,
@@ -207,7 +207,7 @@ module.exports.prototype = {
     
     componentDelete: function(nComponentId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/component/" + nComponentId + "/delete",
             data: null,
@@ -231,7 +231,7 @@ module.exports.prototype = {
     
     componentConditionalDelete: function(nComponentConditionalId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/componentconditional/' + nComponentConditionalId + '/delete',
             data: null,
@@ -282,7 +282,7 @@ module.exports.prototype = {
     
     selectionDelete: function(nSelectionId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
             data: null,
@@ -305,7 +305,7 @@ module.exports.prototype = {
     
     selectionRuleDelete: function(nSelectionRuleId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
             data: null,
@@ -338,7 +338,7 @@ module.exports.prototype = {
 
     userDelete: function(nUserId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/user/' + nUserId + '/delete',
             data: null,
@@ -370,7 +370,7 @@ module.exports.prototype = {
     
     layoutDelete: function(nLayoutId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/layout/' + nLayoutId + '/delete',
             data: null,
@@ -393,7 +393,7 @@ module.exports.prototype = {
     
     layoutContainerDelete: function(nLayoutContainerId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/delete',
             data: null,
@@ -427,7 +427,7 @@ module.exports.prototype = {
     {
         var response = confirm("Are you sure you want to delete the content section called '" + sContentSectionName + "'?\n\nALL RELATED DATA WILL BE LOST!!\n\n(Don't say I didn't warn you!)");
         if (response == true) {
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'get',
                 url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
                 data: null,
@@ -459,7 +459,7 @@ module.exports.prototype = {
     {
         var response = confirm("Are you sure you want to delete this item?");
         if (response == true) {
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'get',
                 url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/delete',
                 data: null,
@@ -485,7 +485,7 @@ module.exports.prototype = {
     
     entityFormAutogenerate: function(nEntityId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/entity/" + nEntityId + "/form/autogenerate",
             success: function(resultData, resultStatus, resultSomething) {
@@ -506,7 +506,7 @@ module.exports.prototype = {
     
     formDelete: function(nFormId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/form/" + nFormId + "/delete",
             success: function(resultData, resultStatus, resultSomething) {
@@ -534,7 +534,7 @@ module.exports.prototype = {
     
     formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
             data: null,
@@ -585,7 +585,7 @@ module.exports.prototype = {
         // execute
         var response = confirm("Are you sure you want to delete this item?");
         if (response == true) {
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'get',
                 url: '/mimoto.cms/formfield/' + listInfo.sInputFieldType + '/' + listInfo.sInputFieldId + '/remove/' + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
                 data: null,

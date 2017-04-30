@@ -13,7 +13,7 @@ use Silex\Application;
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
 
-
+// ElephantIO classes
 use ElephantIO\Exception\ServerConnectionFailureException;
 
 
