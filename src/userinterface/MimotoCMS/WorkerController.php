@@ -43,12 +43,13 @@ class WorkerController
         echo "Booting Socket.io worker at ".date('Y.m.d H:i:s')." ... \n\n";
 
 
-        echo 'Worker gateway = '.Mimoto::value('config')->socketio->workergateway;
-
         // output
         ob_flush();
         flush();
 
+
+        //$GLOBALS['socketIOClient'] = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+        //$GLOBALS['socketIOClient']->initialize(true);
 
         // init
         $worker = new GearmanWorker();
@@ -57,12 +58,33 @@ class WorkerController
         $worker->addServer();
         $worker->addFunction("sendUpdate", function($job)
         {
+            // init
+            $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
 
-//            // init
-//            $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
-//
             // read
             $workload = json_decode($job->workload());
+
+            // convert
+            $aData = [];
+            foreach ($workload->data as $sKey => $value)
+            {
+                $aData[$sKey] = $value;
+            }
+
+            try
+            {
+                // output
+                ob_flush();
+                flush();
+
+                $client->initialize();
+                $client->emit($workload->sEvent, $aData);
+                $client->close();
+            }
+            catch (ServerConnectionFailureException $e)
+            {
+                echo '\n\nServer Connection Failure!!\n\n';
+            }
 
             // output
             echo "Socket.io event (".date('Y.m.d H:i:s').")\n";
@@ -73,25 +95,10 @@ class WorkerController
             // output
             ob_flush();
             flush();
-//
-//            try
-//            {
-//                echo 'Once ...';
-//                // output
-//                ob_flush();
-//                flush();
-//
-//                $client->initialize();
-//                $client->emit($workload->sEvent, ['data' => $workload->data]);
-//                $client->close();
-//            }
-//            catch (ServerConnectionFailureException $e)
-//            {
-//                echo 'Server Connection Failure!!';
-//            }
-//
-//            // temp, keepalive is better
-//            unset($client);
+
+
+            // temp, keepalive is better
+            //unset($client);
         });
 
 
@@ -145,7 +152,7 @@ class WorkerController
             echo print_r($data, true);
             echo "-------------------------------------\n\n\n";
 
-            
+
             // You can get your webhook endpoint from your Slack settings
             $ch = curl_init(Mimoto::value('config')->slack->webhook);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");

@@ -853,43 +853,8 @@ class OutputService
      */
     private function sendSocketIOEvent($sChannel, $sEvent, $data)
     {
-
-        // init
-        $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
-
-
-        // convert
-        $aData = [];
-        foreach ($data as $sKey => $value)
-        {
-            $aData[$sKey] = $value;
-        }
-
-
-        try
-        {
-            $client->initialize();
-            $client->emit($sEvent, $aData);
-            $client->close();
-        }
-        catch (ServerConnectionFailureException $e)
-        {
-            echo 'Server Connection Failure!!';
-        }
-
-        // temp, keepalive is better
-        unset($client);
-
-
-
-
-        return; // ------ temp disable Gearman because its being a bitch!
-
-
-
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;
-
 
         // init
         $client= new \GearmanClient();
