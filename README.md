@@ -2,7 +2,7 @@
 
 
 # Mimoto
-The ultra fast, fluid and realtime data management microframework 
+An ultra fast, fluid and realtime data management microframework 
 
 
 # Requirements
