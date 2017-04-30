@@ -55,18 +55,18 @@ module.exports.prototype = {
     _showPopup: function()
     {
         // register
-        var layer_overlay = document.getElementById('layer_overlay');
-        var layer_popup = document.getElementById('layer_popup');
+        var layer_overlay = document.getElementById('Mimoto_layer_overlay');
+        var layer_popup = document.getElementById('Mimoto_layer_popup');
     
         // show
-        layer_overlay.classList.remove('hidden');
-        layer_popup.classList.remove('hidden');
+        layer_overlay.classList.remove('Mimoto_hidden');
+        layer_popup.classList.remove('Mimoto_hidden');
     },
     
     _loadPopupContent: function(sURL)
     {
-        var popup_content = document.getElementById('popup_content');
-        var layer_popup = document.getElementById('layer_popup');
+        var popup_content = document.getElementById('Mimoto_popup_content');
+        var layer_popup = document.getElementById('Mimoto_layer_popup');
         
         $.ajax({
             url: sURL,
@@ -79,7 +79,7 @@ module.exports.prototype = {
                 //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
             
                 //popup_content.innerHTML = reponse;
-                $('#popup_content').html(data);
+                $('#Mimoto_popup_content').html(data);
             
                 /*// focus primary input
                  var primaryInput = document.getElementById('form_field_name');
@@ -103,16 +103,16 @@ module.exports.prototype = {
     _hidePopup: function()
     {
         // register
-        var layer_overlay = document.getElementById('layer_overlay');
-        var layer_popup = document.getElementById('layer_popup');
+        var layer_overlay = document.getElementById('Mimoto_layer_overlay');
+        var layer_popup = document.getElementById('Mimoto_layer_popup');
         var popup_content = document.getElementById('popup_content');
     
         // cleanup
         popup_content.innerHTML = '';
     
         // hide
-        layer_overlay.classList.add('hidden');
-        layer_popup.classList.add('hidden');
+        layer_overlay.classList.add('Mimoto_hidden');
+        layer_popup.classList.add('Mimoto_hidden');
     }
 
 };

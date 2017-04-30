@@ -6,10 +6,10 @@
 
 
 // Mimoto classes
-var MimotoStartup = require('./mimoto/MimotoStartup');
+var Mimoto = require('./mimoto/Mimoto');
 
 // init
-window.MimotoX = new MimotoStartup();
+window.MimotoX = new Mimoto();
 
 // connect
-document.addEventListener('DOMContentLoaded', function () { MimotoX.startup(); }, false);
+document.addEventListener('DOMContentLoaded', function () { MimotoX.startup(); }, true);

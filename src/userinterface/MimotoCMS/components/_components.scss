@@ -38,50 +38,6 @@
 
 @import '../modules/modules';
 
-@import '../../publisher/base';
-@import '../../publisher/Article/Article';
-@import '../../publisher/Author/Author';
-@import '../../publisher/Feed/Feed';
-@import '../../publisher/FeedItem/FeedItem';
-@import '../../publisher/FeedItem/FeedItemExplainer';
-@import '../../publisher/Comment/Comment';
-@import '../../publisher/Editor/Editor';
-
-@import '../../thetimeline/base';
-
-@import '../../grid/base';
-
-
-
-
-span.infocard {
-    color: $fuzzy-wuzzy-brown;
-    font-weight: bold;
-
-}
-span.infocard::after {
-    content: '';
-    display: inline-block;
-    width: 23px;
-    height: 19px;
-    vertical-align: sub;
-    background: url('/static/images/infocard.png') 0 0 no-repeat;
-    background-size: 19px 19px;
-    background-position: right 0 center;
-}
-
-span.infocard:hover{
-    cursor: pointer;
-}
-
-.ql-infocard::after {
-    content: '';
-    padding-top: 4px;
-    padding-left: 19px;
-    color: #ffffff;
-    width: 19px;
-    height: 19px;
-    vertical-align: middle;
-    background: url('/static/images/infocard.png') 0 0 no-repeat;
-    background-size: 19px 19px;
+div.mimoto_cms {
+    z-index: 19761019;
 }

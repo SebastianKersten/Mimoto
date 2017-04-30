@@ -1,3 +1,12 @@
+@import 'Article/Article';
+@import 'Author/Author';
+@import 'Feed/Feed';
+@import 'FeedItem/FeedItem';
+@import 'FeedItem/FeedItemExplainer';
+@import 'Comment/Comment';
+@import 'Editor/Editor';
+
+
 body.MimotoPublisher {
     background-color: #E5E4E4;
     margin: 0;
@@ -37,4 +46,36 @@ div.MimotoPublisher-footer {
     padding: 25px;
     text-align: center;
     color: #858585;
+}
+
+span.infocard {
+    color: $fuzzy-wuzzy-brown;
+    font-weight: bold;
+
+}
+span.infocard::after {
+    content: '';
+    display: inline-block;
+    width: 23px;
+    height: 19px;
+    vertical-align: sub;
+    background: url('/static/images/infocard.png') 0 0 no-repeat;
+    background-size: 19px 19px;
+    background-position: right 0 center;
+}
+
+span.infocard:hover{
+    cursor: pointer;
+}
+
+.ql-infocard::after {
+    content: '';
+    padding-top: 4px;
+    padding-left: 19px;
+    color: #ffffff;
+    width: 19px;
+    height: 19px;
+    vertical-align: middle;
+    background: url('/static/images/infocard.png') 0 0 no-repeat;
+    background-size: 19px 19px;
 }

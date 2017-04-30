@@ -1,24 +1,24 @@
-div.layer_overlay {
-  background-color: #000;
-  background: rgba(0,0,0,0.5);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height:100%;
-  z-index: 1000;
+div.Mimoto_layer_overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height:100%;
+    background-color: #000;
+    background: rgba(0,0,0,0.5);
+    z-index: 19761019;
 }
 
-div.layer_popup {
-  position: absolute;
+div.Mimoto_layer_popup {
+  position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
   overflow: auto;
   padding: 25px;
-  z-index: 2000;
+    z-index: 19761019;
 }
 
 div.MimotoCMS_interface_Popup {
@@ -52,4 +52,8 @@ div.MimotoCMS_interface_Popup__title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+}
+
+.Mimoto_hidden {
+  display: none;
 }
