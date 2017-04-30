@@ -41,6 +41,7 @@ module.exports.prototype = {
 
     // config
     debug: null,
+    gateway: null,
 
 
     // ----------------------------------------------------------------------------
@@ -58,7 +59,7 @@ module.exports.prototype = {
         this.dom = new DomService();
 
         // configure
-        this.debug = false
+        this.debug = false;
     },
 
 
@@ -79,7 +80,7 @@ module.exports.prototype = {
         MimotoX.utils.parseRequestQueue();
 
         // logon
-        this._realtimeManager = new RealtimeManager();
+        this._realtimeManager = new RealtimeManager(this.gateway);
     },
 
     /**

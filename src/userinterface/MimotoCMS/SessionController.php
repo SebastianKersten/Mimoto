@@ -156,4 +156,11 @@ class SessionController
 
     }
 
+    public function gateway(Application $app)
+    {
+        // read and send
+        return Mimoto::service('messages')->response(Mimoto::value('config')->socketio->clientgateway, 200);
+
+    }
+
 }

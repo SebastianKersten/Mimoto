@@ -15,16 +15,6 @@
             'username' => '',
             'password' => ''
         ),
-        'pusher' => (object) array
-        (
-            'auth_key' => '',
-            'secret' => '',
-            'app_id' => '',
-            'cluster' => 'eu',
-            'host' => 'api-eu.pusher.com',
-            'encrypted' => true,
-            'authEndPoint' => '/Mimoto.Aimless/realtime/collaboration'
-        ),
         'slack' => (object) array
         (
             'webhook' => ''

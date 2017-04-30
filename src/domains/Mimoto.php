@@ -80,6 +80,7 @@ class Mimoto
         $app->get ('/mimoto.cms/connect', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::connect'); // retrun domain & port
         $app->get ('/mimoto.cms/logout', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logout');
 
+        $app->get ('/mimoto.cms/gateway', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::gateway');
         $app->get ('/mimoto.cms/logon', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logon');
         $app->get ('/mimoto.cms/recent/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::recent');
 

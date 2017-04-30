@@ -15,10 +15,10 @@ var io = require('socket.io-client');
 
 
 
-module.exports = function()
+module.exports = function(sGateway)
 {
     // start
-    this.__construct();
+    this.__construct(sGateway);
 };
 
 module.exports.prototype = {
@@ -36,17 +36,45 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function()
+    __construct: function(sGateway)
     {
         // log
         if (MimotoX.debug) console.log('Connecting user');
 
 
-        // 1. get correct port if not supplied via constructor
+        if (!sGateway)
+        {
+            // register
+            let classRoot = this;
 
+            // 2. authenticate
+            MimotoX.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/gateway',
+                dataType: 'json',
+                success: function(resultData, resultStatus, resultSomething)
+                {
+                    classRoot._connect(resultData);
+                }
+            });
+        }
+        else
+        {
+            this._connect(sGateway);
+        }
+    },
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods text management ----------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _connect: function(sGateway)
+    {
         // setup
-        this._socket = new io('http://localhost:4000');
-        //this._socket = new io('http://192.168.178.227.xip.io:4000');
+        this._socket = new io(sGateway);
 
         // register
         let classRoot = this;
@@ -66,16 +94,8 @@ module.exports.prototype = {
         this._socket.on('popup.open', function(data) { MimotoX.dom.onPopupOpen(data); });
     },
 
-
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods text management ----------------------------------------
-    // ----------------------------------------------------------------------------
-
-
     _socketOnConnect: function()
     {
-
         // 1. logon with php
         if (MimotoX.debug) console.log('User connected.');
         if (MimotoX.debug) console.log('Logging on user ...');
@@ -105,7 +125,7 @@ module.exports.prototype = {
     /**
      * Handle socket on 'logon'
      * This event is received when this client is successfully authenticated by Mimoto
-     * @param user
+     * @param data
      * @private
      */
     _socketOnLogon: function(data)
@@ -124,27 +144,27 @@ module.exports.prototype = {
     _setupEditableValues: function()
     {
         // search
-        var aEditableValues = document.querySelectorAll('[data-mimoto-editable]');
+        let aEditableValues = document.querySelectorAll('[data-mimoto-editable]');
 
         // init
         this._aRealtimeEditors = [];
 
         // setup
-        var nEditableValueCount = aEditableValues.length;
-        for (var nEditableValueIndex = 0; nEditableValueIndex < nEditableValueCount; nEditableValueIndex++)
+        let nEditableValueCount = aEditableValues.length;
+        for (let nEditableValueIndex = 0; nEditableValueIndex < nEditableValueCount; nEditableValueIndex++)
         {
             // register
-            var editableValue = aEditableValues[nEditableValueIndex];
+            let editableValue = aEditableValues[nEditableValueIndex];
 
             // read
-            var sPropertySelector = editableValue.getAttribute('data-mimoto-editable');
-            var editOptions = JSON.parse(editableValue.getAttribute('data-mimoto-editable-options'));
+            let sPropertySelector = editableValue.getAttribute('data-mimoto-editable');
+            let editOptions = JSON.parse(editableValue.getAttribute('data-mimoto-editable-options'));
 
             //console.log('editable', sPropertySelector, editOptions, editableValue);
 
 
             // init
-            var realtimeEditor = new RealtimeEditor(this._socket, sPropertySelector, editOptions, editableValue);
+            let realtimeEditor = new RealtimeEditor(this._socket, sPropertySelector, editOptions, editableValue);
 
 
             // store
