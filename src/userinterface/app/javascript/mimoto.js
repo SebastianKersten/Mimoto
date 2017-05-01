@@ -14,7 +14,8 @@ window.MimotoX = new Mimoto();
 // connect
 document.addEventListener('DOMContentLoaded', function () {
 
-    MimotoX.version = '###VERSION_NUMBER###';
+    MimotoX.version = __webpack_hash__;
+
     MimotoX.startup();
 
 }, true);

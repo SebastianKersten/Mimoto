@@ -16,7 +16,8 @@ module.exports = function (env)
                 $: "jquery",
                 jQuery: "jquery",
                 "window.jQuery": "jquery"
-            })
+            }),
+            new webpack.ExtendedAPIPlugin()
         ],
         resolve: {
             modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components', 'src/userinterface/MimotoCMS/modules', 'src/userinterface/app/javascript/utils'],
