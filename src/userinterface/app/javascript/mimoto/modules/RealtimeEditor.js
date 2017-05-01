@@ -7,6 +7,7 @@
 'use strict';
 
 var io = require('socket.io-client');
+var Quill = require("quill");
 var QuillDelta = require("quill-delta");
 
 
@@ -82,7 +83,7 @@ module.exports.prototype = {
 
 
 
-        let Inline = Mimoto.modules.Quill.import('blots/inline');
+        let Inline = Quill.import('blots/inline');
 
         class InfocardBlot extends Inline
         {
@@ -91,12 +92,12 @@ module.exports.prototype = {
                 let node = super.create();
 
                 // Sanitize url value if desired
-                node.setAttribute('xxx', value);
+                node.setAttribute('data-mimoto-inline-id', value);
                 node.setAttribute('class', 'infocard');
 
                 // Okay to set other non-format related attributes
                 // These are invisible to Parchment so must be static
-                node.setAttribute('target', 'ohyeah');
+                //node.setAttribute('target', 'ohyeah');
 
                 return node;
             }
@@ -106,61 +107,14 @@ module.exports.prototype = {
                 // We will only be called with a node already
                 // determined to be a Link blot, so we do
                 // not need to check ourselves
-                return node.getAttribute('xxx');
+                return node.getAttribute('data-mimoto-inline-id'); // 1. type check bij meerdere types
             }
         }
 
         InfocardBlot.blotName = 'infocard';
         InfocardBlot.tagName = 'span';
 
-        Mimoto.modules.Quill.register(InfocardBlot);
-
-
-
-
-
-
-
-        //
-        //
-        //
-        // var InfocardBlot = {};
-        // InfocardBlot.prototype = Inline.prototype;
-        //
-        //
-        // InfocardBlot.create = function(value)
-        // {
-        //     var node = Inline.create();
-        //
-        //     // Sanitize url value if desired
-        //     node.setAttribute('xxx', value);
-        //
-        //     // Okay to set other non-format related attributes
-        //     // These are invisible to Parchment so must be static
-        //     node.setAttribute('yyy', '_blank');
-        //
-        //     return node;
-        // };
-        //
-        // InfocardBlot.formats = function(node)
-        // {
-        //     // We will only be called with a node already
-        //     // determined to be a Link blot, so we do
-        //     // not need to check ourselves
-        //     return node.getAttribute('href');
-        // }
-        //
-        //
-        //
-        //
-        // InfocardBlot.blotName = 'infocard';
-        // InfocardBlot.tagName = 'span';
-
-
-        //Mimoto.modules.Quill.register(InfocardBlot);
-
-
-
+        Quill.register(InfocardBlot);
 
 
         // init
@@ -182,7 +136,7 @@ module.exports.prototype = {
 
 
         // create
-        this._quill = new Mimoto.modules.Quill(editableValue, {
+        this._quill = new Quill(editableValue, {
             theme: 'bubble',
             modules: {
                 toolbar: [
@@ -201,61 +155,48 @@ module.exports.prototype = {
         });
 
 
+        let toolbarModule = this._quill.getModule('toolbar');
+        toolbarModule.addHandler('infocard', editInfocard);
 
-        var customButton = document.querySelector('.ql-infocard');
-        customButton.addEventListener('click', function()
+
+        function editInfocard(e)
         {
-            var range = this._quill.getSelection();
+            console.log('editInfocard');
 
-            if (range) {
-                this._quill.insertText(range.index, "Ω");
-            }
-        });
+            // 1. range meeveranderen met delta's
 
+            let range = classRoot._quill.getSelection();
 
+            if (range)
+            {
+                var aFormats = classRoot._quill.getFormat(range);
 
+                if (!aFormats.infocard)
+                {
+                    console.log('Set format ...');
 
-        //var toolbar = quill.getModule('toolbar');
+                    var popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
 
+                    //console.log('popup', popup);
 
-
-        // // @todo maybe add this handler on the mimoto.cms
-        // toolbar.addHandler('mimoto-infocard', function (value)
-        // {
-        //     // get the position of the cursor
-        //     var range = this._quill.getSelection();
-        //     var text = this._quill.getText(range);
-        //
-        //     var blot = quill.getLeaf(range.index);
-        //     var infoCard = blot[0].next;
-        //
-        //     // insert infocard
-        //     if (range && (range.length > 1 || text !== ' '))
-        //     {
-        //         this._quill.deleteText(range);
-        //         this._quill.insertEmbed(range.index, "mimoto-infocard", text);
-        //     }
-        //
-        //     // remove infocard if this exists
-        //     if (blot && infoCard)
-        //     {
-        //         if (infoCard.domNode.className === 'mimoto-infocard')
-        //         {
-        //             var parent = infoCard.domNode.parentNode;
-        //             var text = document.createTextNode(infoCard.domNode.innerText);
-        //
-        //             parent.replaceChild(text, infoCard.domNode);
-        //         }
-        //     }
-        // });
+                    //popup.addEventListener('data', function() { } );
 
 
+                    // 2. after addition -> trigger javascript to add functionality to edit
 
 
+                    var value = 'infocard.3'; // 1. get from popup
 
-
-
-
+                    // set format
+                    classRoot._quill.format('infocard', value, 'user');
+                }
+                else
+                {
+                    // clear format
+                    classRoot._quill.format('infocard', false, 'user');
+                }
+            };
+        }
 
         // listen
         this._quill.on('selection-change', function() { classRoot._onSelectionChange(); });
@@ -280,7 +221,8 @@ module.exports.prototype = {
 
     _socketSelfOT: function(parsedDelta)
     {
-        console.log('My own delta has returned: ', JSON.stringify(parsedDelta.delta, null, 2), ' with index = ' + parsedDelta.nNewDeltaIndex);
+        // delta debugging
+        //console.log('My own delta has returned: ', JSON.stringify(parsedDelta.delta, null, 2), ' with index = ' + parsedDelta.nNewDeltaIndex);
 
 
         // register
@@ -307,7 +249,8 @@ module.exports.prototype = {
 
     _socketOtherOT: function(parsedDelta)
     {
-        console.log('OTHER - parsedDelta.nNewDeltaIndex = ', parsedDelta.nNewDeltaIndex);
+        // delta debugging
+        //console.log('OTHER - parsedDelta.nNewDeltaIndex = ', parsedDelta.nNewDeltaIndex);
 
 
         // register
@@ -319,7 +262,8 @@ module.exports.prototype = {
         var delta = new QuillDelta(parsedDelta.delta);
 
 
-        console.log(parsedDelta.user.name + ' sent: ', JSON.stringify(delta, null, 2), ' with index = ' + parsedDelta.nNewDeltaIndex);
+        // delta debugging
+        //console.log(parsedDelta.user.name + ' sent: ', JSON.stringify(delta, null, 2), ' with index = ' + parsedDelta.nNewDeltaIndex);
 
 
         // update pending
@@ -428,7 +372,8 @@ module.exports.prototype = {
                     nCurrentlyKnownDeltaIndex: this._baseDocument.nDeltaIndex
                 };
 
-                console.log('New delta pending = ' + JSON.stringify(this._deltaPending, null, 2));
+                // delta debugging
+                //console.log('New delta pending = ' + JSON.stringify(this._deltaPending, null, 2));
 
 
                 // #fixme - temp disabled
@@ -441,7 +386,7 @@ module.exports.prototype = {
                 {
                     this._deltaBuffer = {
                         sPropertySelector: this._sPropertySelector,
-                        delta: new Mimoto.modules.QuillDelta(),
+                        delta: new QuillDelta(),
                         nCurrentlyKnownDeltaIndex: this._baseDocument.nDeltaIndex
                     };
                 }
@@ -449,7 +394,8 @@ module.exports.prototype = {
                 // stack
                 this._deltaBuffer.delta = this._deltaBuffer.delta.compose(delta);
 
-                console.warn('Buffer = ', JSON.stringify(this._deltaBuffer, null, 2));
+                // delta debugging
+                //console.warn('Buffer = ', JSON.stringify(this._deltaBuffer, null, 2));
             }
         }
     },
@@ -460,7 +406,8 @@ module.exports.prototype = {
         this._deltaPending.nCurrentlyKnownDeltaIndex = this._baseDocument.nDeltaIndex;
 
 
-        console.log('Ready to send delta ' + JSON.stringify(this._deltaPending, null, 2));
+        // delta debugging
+        //console.log('Ready to send delta ' + JSON.stringify(this._deltaPending, null, 2));
 
         // send
         this._socket.emit('ot', this._deltaPending);

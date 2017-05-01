@@ -36,6 +36,9 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
+/******/ 	// __webpack_hash__
+/******/ 	__webpack_require__.h = "c9aa9f6d20b2d6438573";
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -33289,7 +33292,7 @@
 	        // register
 	        var layer_overlay = document.getElementById('Mimoto_layer_overlay');
 	        var layer_popup = document.getElementById('Mimoto_layer_popup');
-	        var popup_content = document.getElementById('popup_content');
+	        var popup_content = document.getElementById('Mimoto_popup_content');
 	    
 	        // cleanup
 	        popup_content.innerHTML = '';

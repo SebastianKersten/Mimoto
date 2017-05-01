@@ -105,7 +105,7 @@ module.exports.prototype = {
         // register
         var layer_overlay = document.getElementById('Mimoto_layer_overlay');
         var layer_popup = document.getElementById('Mimoto_layer_popup');
-        var popup_content = document.getElementById('popup_content');
+        var popup_content = document.getElementById('Mimoto_popup_content');
     
         // cleanup
         popup_content.innerHTML = '';

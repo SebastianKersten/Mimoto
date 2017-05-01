@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class MimotoAimlessController
 {
-    
+
     /**
      * Get view based on entity type and entity id and formatted by component id
      * @param Application $app
@@ -90,11 +90,10 @@ class MimotoAimlessController
     public function authenticateUser(Application $app, Request $request)
     {
         // Pusher classes
-        require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/vendor/pusher/pusher-php-server/lib/pusher.php');
+        require_once(dirname(dirname(dirname(dirname(__FILE__)))) . '/vendor/pusher/pusher-php-server/lib/pusher.php');
         $config = require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 
-        if ($app['Mimoto.User']->getUserId())
-        {
+        if ($app['Mimoto.User']->getUserId()) {
             // configure
             $options = array(
                 $config->pusher->cluster,
@@ -109,9 +108,7 @@ class MimotoAimlessController
             );
 
             return $pusher->socket_auth($request->get('channel_name'), $request->get('socket_id'));
-        }
-        else
-        {
+        } else {
             header('', true, 403);
             return "Forbidden";
         }
@@ -120,9 +117,8 @@ class MimotoAimlessController
     public function uploadImage(Application $app, Request $request)
     {
         // validate
-        if (!empty($_FILES))
-        {
-            $sTargetDir = Mimoto::value('config')->general->web_root.Mimoto::value('config')->media->upload_dir;
+        if (!empty($_FILES)) {
+            $sTargetDir = Mimoto::value('config')->general->web_root . Mimoto::value('config')->media->upload_dir;
             $sOriginalFileName = $_FILES['file']['name'];
 
             // create
@@ -141,15 +137,14 @@ class MimotoAimlessController
             $sExtension = $aPathParts['extension'];
 
             // setup
-            $sNewFileName = md5($eFile->getId().$sOriginalFileName).'.'.$sExtension;
-            $sTargetFile = $sTargetDir.$sNewFileName;
+            $sNewFileName = md5($eFile->getId() . $sOriginalFileName) . '.' . $sExtension;
+            $sTargetFile = $sTargetDir . $sNewFileName;
 
             // store
             $eFile->setValue('name', $sNewFileName);
 
             // move to correct location
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $sTargetFile))
-            {
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $sTargetFile)) {
                 // analyze
                 $aImageInfo = getimagesize($sTargetFile);
 
@@ -163,17 +158,15 @@ class MimotoAimlessController
                 // store
                 Mimoto::service('data')->store($eFile);
 
-                $imageDataResponse = (object) array(
-                    'file_id' => $eFile->getEntityTypeName().'.'.$eFile->getId()
+                $imageDataResponse = (object)array(
+                    'file_id' => $eFile->getEntityTypeName() . '.' . $eFile->getId()
                 );
 
                 // send success
                 return new JsonResponse($imageDataResponse, 200);
-            }
-            else
-            {
+            } else {
                 // send error
-                return new JsonResponse((object) array('result' => 'Image NOT uploaded! '.date("Y.m.d H:i:s")), 500);
+                return new JsonResponse((object)array('result' => 'Image NOT uploaded! ' . date("Y.m.d H:i:s")), 500);
             }
 
         }
@@ -183,9 +176,8 @@ class MimotoAimlessController
     public function uploadVideo(Application $app, Request $request)
     {
         // validate
-        if (!empty($_FILES))
-        {
-            $sTargetDir = Mimoto::value('config')->general->web_root.Mimoto::value('config')->media->upload_dir;
+        if (!empty($_FILES)) {
+            $sTargetDir = Mimoto::value('config')->general->web_root . Mimoto::value('config')->media->upload_dir;
             $sOriginalFileName = $_FILES['file']['name'];
 
             // create
@@ -204,15 +196,14 @@ class MimotoAimlessController
             $sExtension = $aPathParts['extension'];
 
             // setup
-            $sNewFileName = md5($eFile->getId().$sOriginalFileName).'.'.$sExtension;
-            $sTargetFile = $sTargetDir.$sNewFileName;
+            $sNewFileName = md5($eFile->getId() . $sOriginalFileName) . '.' . $sExtension;
+            $sTargetFile = $sTargetDir . $sNewFileName;
 
             // store
             $eFile->setValue('name', $sNewFileName);
 
             // move to correct location
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $sTargetFile))
-            {
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $sTargetFile)) {
                 // analyze
 //                $aImageInfo = getimagesize($sTargetFile);
 //
@@ -226,18 +217,16 @@ class MimotoAimlessController
                 // store
                 Mimoto::service('data')->store($eFile);
 
-                $imageDataResponse = (object) array(
-                    'file_id' => $eFile->getEntityTypeName().'.'.$eFile->getId(),
-                    'full_path' => '/'.$eFile->getValue('path').$eFile->getValue('name')
+                $imageDataResponse = (object)array(
+                    'file_id' => $eFile->getEntityTypeName() . '.' . $eFile->getId(),
+                    'full_path' => '/' . $eFile->getValue('path') . $eFile->getValue('name')
                 );
 
                 // send success
                 return new JsonResponse($imageDataResponse, 200);
-            }
-            else
-            {
+            } else {
                 // send error
-                return new JsonResponse((object) array('result' => 'Image NOT uploaded! '.date("Y.m.d H:i:s")), 500);
+                return new JsonResponse((object)array('result' => 'Image NOT uploaded! ' . date("Y.m.d H:i:s")), 500);
             }
 
         }
@@ -257,8 +246,7 @@ class MimotoAimlessController
         // read
         $eFile = $eParent->getValue($aParentParts[2]);
 
-        if (!empty($eFile))
-        {
+        if (!empty($eFile)) {
             // compose
             $response = (object)array(
                 'file_id' => $eFile->getEntityTypeName() . '.' . $eFile->getId(),
@@ -267,9 +255,7 @@ class MimotoAimlessController
 
             // send file info
             return Mimoto::service('messages')->response($response);
-        }
-        else
-        {
+        } else {
             // send empty
             return Mimoto::service('messages')->response(null);
         }
@@ -283,8 +269,7 @@ class MimotoAimlessController
         $connection = null;
 
         // verify
-        if (!empty($sPropertySelector))
-        {
+        if (!empty($sPropertySelector)) {
             // split
             $aPropertySelectorElements = explode('.', $sPropertySelector);
 
@@ -297,23 +282,19 @@ class MimotoAimlessController
             $eParent = Mimoto::service('data')->get($sParentEntityTypeName, $xParentEntityId);
 
             // validate
-            if (!empty($eParent) && $eParent->hasProperty($sParentPropertyName))
-            {
-                if ($eParent->getPropertyType($sParentPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
-                {
+            if (!empty($eParent) && $eParent->hasProperty($sParentPropertyName)) {
+                if ($eParent->getPropertyType($sParentPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION) {
                     // read
                     $aConnections = $eParent->getValue($sParentPropertyName, true);
 
                     // search
                     $nConnectionCount = count($aConnections);
-                    for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
-                    {
+                    for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++) {
                         // register
                         $parentConnection = $aConnections[$nConnectionIndex];
 
                         // verify
-                        if ($parentConnection->getChildEntityTypeName() == $sEntityType && $parentConnection->getChildId() == $nEntityId)
-                        {
+                        if ($parentConnection->getChildEntityTypeName() == $sEntityType && $parentConnection->getChildId() == $nEntityId) {
                             // register
                             $connection = $parentConnection;
                             break;
@@ -325,6 +306,36 @@ class MimotoAimlessController
 
         // send
         return $connection;
+    }
+
+    public function renderForm(Application $app, Request $request, $sFormName)
+    {
+        // load
+        //$eForm = Mimoto::service('input')->getFormByName($sFormname);
+
+
+        // 1. init popup
+        $popup =  Mimoto::service('output')->createPopup();
+
+        // 2. create content
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+
+        // 3. setup content
+        $component->addForm(
+            $sFormName,
+            null,
+            [
+                //'onCreatedConnectTo' => CoreConfig::MIMOTO_ROOT.'.'.CoreConfig::MIMOTO_ROOT.'.entities',
+                //'response' => ['onSuccess' => ['closePopup' => true]]
+                'response' => ['onSuccess' => ['dispatchEvent' => true]]
+            ]
+        );
+
+        // 4. connect
+        $popup->addComponent('content', $component);
+
+        // 5. output
+        return $component->render();
     }
 
 }

@@ -159,11 +159,11 @@ module.exports.prototype = {
             popup.appendChild(contentElement);
 
             document.body.appendChild(rootElement);
-
-
-            document.body.classList.add("mimoto_layer_application");
         }
 
+
+        // lock background from scrolling
+        document.body.classList.add("mimoto_layer_application");
 
 
         // register
@@ -236,8 +236,8 @@ module.exports.prototype = {
         layer_overlay.classList.add('Mimoto_hidden');
         layer_popup.classList.add('Mimoto_hidden');
 
-
-        document.body.classList.remove("mimoto_layer_application");
+        // unlock background for scrolling
+        document.body.classList.remove('mimoto_layer_application');
     }
 
 }

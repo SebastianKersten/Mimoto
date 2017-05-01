@@ -22,12 +22,16 @@ class OutputServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         // register
-        $app->get('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView');
-        $app->get('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView')->value('sPropertySelector', '');
-        $app->get('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView');
-        $app->get('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView')->value('sPropertySelector', '');
-        $app->get('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sComponentName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView')->value('sPropertySelector', '');
+        $app->get ('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView');
+        $app->get ('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderEntityView')->value('sPropertySelector', '');
+        $app->get ('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView');
+        $app->get ('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView')->value('sPropertySelector', '');
+        $app->get ('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sComponentName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView')->value('sPropertySelector', '');
+        $app->get ('/Mimoto.Aimless/form/{sFormName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderForm');
+
+
         $app->post('/Mimoto.Aimless/realtime/collaboration', 'Mimoto\\Aimless\\MimotoAimlessController::authenticateUser');
+
 
         $app->get('/Mimoto.Aimless/media/source/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::getMediaSource');
 
