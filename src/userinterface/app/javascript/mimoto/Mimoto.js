@@ -43,6 +43,9 @@ module.exports.prototype = {
     debug: null,
     gateway: null,
 
+    // caching
+    version: null,
+
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -60,6 +63,7 @@ module.exports.prototype = {
 
         // configure
         this.debug = false;
+        this.version = '';
     },
 
 
@@ -137,6 +141,8 @@ module.exports.prototype = {
             popup.setAttribute('class', 'MimotoCMS_interface_Popup');
 
 
+            popupLayer.appendChild(popup);
+
             var closeButtonElement = document.createElement('div');
             closeButtonElement.setAttribute('class', 'MimotoCMS_interface_Popup__closebutton');
             closeButtonElement.setAttribute('onclick', 'MimotoX.closePopup();');
@@ -144,12 +150,13 @@ module.exports.prototype = {
             var closeButtonLabel = document.createTextNode('Close');
             closeButtonElement.appendChild(closeButtonLabel);
 
+
             var contentElement = document.createElement('div');
             contentElement.setAttribute('id', 'Mimoto_popup_content');
             contentElement.setAttribute('class', 'MimotoCMS_interface_Popup__content');
 
-            popupLayer.appendChild(closeButtonElement);
-            popupLayer.appendChild(contentElement);
+            popup.appendChild(closeButtonElement);
+            popup.appendChild(contentElement);
 
             document.body.appendChild(rootElement);
 

@@ -12,4 +12,9 @@ var Mimoto = require('./mimoto/Mimoto');
 window.MimotoX = new Mimoto();
 
 // connect
-document.addEventListener('DOMContentLoaded', function () { MimotoX.startup(); }, true);
+document.addEventListener('DOMContentLoaded', function () {
+
+    MimotoX.version = '###VERSION_NUMBER###';
+    MimotoX.startup();
+
+}, true);
