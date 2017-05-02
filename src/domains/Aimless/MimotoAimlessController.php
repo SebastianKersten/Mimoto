@@ -308,10 +308,33 @@ class MimotoAimlessController
         return $connection;
     }
 
-    public function renderForm(Application $app, Request $request, $sFormName)
+    public function renderForm(Application $app, Request $request, $sFormName, $sEntitySelector = null)
     {
-        // load
-        //$eForm = Mimoto::service('input')->getFormByName($sFormname);
+        if (!empty($sEntitySelector))
+        {
+            // split
+            $aSelectorParts = explode('.', $sEntitySelector);
+
+            // load
+            $eEntity = Mimoto::service('data')->get($aSelectorParts[0], $aSelectorParts[1]); // #todo validate inputs
+        }
+        else
+        {
+            // load
+            $eForm = Mimoto::service('input')->getFormByName($sFormName);
+
+            // get parent entity
+            $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
+
+            // create
+            $eEntity = Mimoto::service('data')->create($eParent->getValue('name'));
+
+            // store
+            Mimoto::service('data')->store($eEntity);
+
+            // compose
+            $sEntitySelector = $eEntity->getEntityTypeName().'.'.$eEntity->getId();
+        }
 
 
         // 1. init popup
@@ -323,11 +346,11 @@ class MimotoAimlessController
         // 3. setup content
         $component->addForm(
             $sFormName,
-            null,
+            $eEntity,
             [
                 //'onCreatedConnectTo' => CoreConfig::MIMOTO_ROOT.'.'.CoreConfig::MIMOTO_ROOT.'.entities',
                 //'response' => ['onSuccess' => ['closePopup' => true]]
-                'response' => ['onSuccess' => ['dispatchEvent' => true]]
+                'response' => ['onSuccess' => ['dispatchEvent' => (object) array('data' => $sEntitySelector)]]
             ]
         );
 

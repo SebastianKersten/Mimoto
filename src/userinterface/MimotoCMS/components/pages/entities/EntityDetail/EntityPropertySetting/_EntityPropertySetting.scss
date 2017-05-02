@@ -9,6 +9,20 @@ div.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting {
     & div.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes {
         padding-left: 20px;
     }
+
+    & div.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__formattingOptions {
+
+        padding-left: 20px;
+        padding-right: 15px;
+
+        & > div::after {
+            content: ', ';
+        }
+
+        & > div:last-child::after {
+            content: '';
+        }
+    }
 }
 
 

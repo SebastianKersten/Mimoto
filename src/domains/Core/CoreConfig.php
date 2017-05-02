@@ -9,6 +9,8 @@ use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\User;
+use Mimoto\Core\entities\FormattingOption;
+use Mimoto\Core\entities\FormattingOptionAttribute;
 use Mimoto\Core\entities\Component;
 use Mimoto\Core\entities\ComponentConditional;
 use Mimoto\Core\entities\Layout;
@@ -40,6 +42,7 @@ use Mimoto\Core\entities\InputDatePicker;
 use Mimoto\Core\entities\Notification;
 
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
+use Mimoto\Core\forms\EntityPropertyForm_Value_formattingOptions;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
@@ -81,8 +84,8 @@ class CoreConfig
     const MIMOTO_LAYOUTCONTAINER                = '_Mimoto_layoutcontainer';
 
     // text
-    const MIMOTO_TEXTOPTION                     = '_Mimoto_textoption';
-    const MIMOTO_TEXTOPTIONATTRIBUTE            = '_Mimoto_textoptionattribute';
+    const MIMOTO_FORMATTINGOPTION               = '_Mimoto_formattingoption';
+    const MIMOTO_FORMATTINGOPTIONATTRIBUTE      = '_Mimoto_formattingoptionattribute';
 
     // functionality
     const MIMOTO_ACTION                         = '_Mimoto_action';
@@ -155,6 +158,7 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTY       = '_Mimoto_coreform__entityProperty';
 
     const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE                     = '_Mimoto_coreform__entityPropertySetting_value_type';
+    const COREFORM_ENTITYPROPERTYSETTING_VALUE_FORMATTINGOPTIONS        = '_Mimoto_coreform__entityPropertySetting_value_formattingoptions';
     const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE       = '_Mimoto_coreform__entityPropertySetting_entity_allowedEntityType';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
@@ -170,6 +174,9 @@ class CoreConfig
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
     const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
     const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform_form_inputValidation';
+
+    const COREFORM_FORMATTINGOPTION             = '_Mimoto_coreform_formattingoption';
+    const COREFORM_FORMATTINGOPTIONATTRIBUTE    = '_Mimoto_coreform_formattingoptionattribute';
 
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
 
@@ -241,6 +248,10 @@ class CoreConfig
             Layout::getStructure(),
             LayoutContainer::getStructure(),
 
+            // formatting
+            FormattingOption::getStructure(),
+            FormattingOptionAttribute::getStructure(),
+
             // content
             File::getStructure(),
             ContentSection::getStructure(),
@@ -290,6 +301,7 @@ class CoreConfig
             Entity::getFormStructure(),
             EntityProperty::getFormStructure(),
             EntityPropertyForm_Value_type::getFormStructure(),
+            EntityPropertyForm_Value_formattingOptions::getFormStructure(),
             EntityPropertyForm_Entity_allowedEntityType::getFormStructure(),
             EntityPropertyForm_Collection_allowedEntityTypes::getFormStructure(),
             EntityPropertyForm_Collection_allowDuplicates::getFormStructure(),
@@ -308,6 +320,10 @@ class CoreConfig
             // views
             Layout::getFormStructure(),
             LayoutContainer::getFormStructure(),
+
+            // formatting
+            FormattingOption::getFormStructure(),
+            //FormattingOptionAttribute::getFormStructure(),
 
             // content
             ContentSection::getFormStructure(),
@@ -481,6 +497,16 @@ class CoreConfig
 
         // send
         return $aSelections;
+    }
+
+    public static function getCoreData($sEntityTypeName, $sItemId)
+    {
+        if ($sEntityTypeName == CoreConfig::MIMOTO_FORMATTINGOPTION)
+        {
+            return FormattingOption::getData($sItemId);
+        }
+
+        return false;
     }
 
 }

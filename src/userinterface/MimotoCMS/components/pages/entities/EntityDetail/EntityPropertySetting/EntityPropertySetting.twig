@@ -24,6 +24,7 @@
             </div>
         {% endif %}
     {% elseif Mimoto.data('key') == 'allowedEntityTypes' %}
+
         <div {{ Mimoto.showWhenEmpty('allowedEntityTypes') }}>
             <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
         </div>
@@ -34,8 +35,22 @@
                 </div>
             ]
         </div>
+
     {% elseif Mimoto.data('key') == 'allowDuplicates' %}
         <div {{ Mimoto.realtime('value') }}>{% if Mimoto.data('value') %}true{% else %}false{% endif %}</div>
+    {% elseif Mimoto.data('key') == 'formattingOptions' %}
+
+        <div {{ Mimoto.showWhenEmpty('formattingOptions') }}>
+            <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">no formatting</span>
+        </div>
+        <div {{ Mimoto.hideWhenEmpty('formattingOptions') }}>
+            [
+            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__formattingOptions" {{ Mimoto.realtime('formattingOptions', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingFormattingOption') }}>
+                {{ Mimoto.render('formattingOptions', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingFormattingOption') }}
+            </div>
+            ]
+        </div>
+
     {% else %}
         <div {{ Mimoto.realtime('value') }}>{{ Mimoto.render('value') }}</div>
     {% endif %}

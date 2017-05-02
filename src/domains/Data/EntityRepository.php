@@ -77,11 +77,14 @@ class EntityRepository
         {
 
 
+
             // 1. hoe ophalen core data
-            // 2. aparte functie (kent alle types)
+            // 2. aparte functie (kent alle types - registerClass by key)
             // 3. create default -> setId() en setName()
 
             // TEMP - ease and quick fix
+
+
 
             // prepare
             $entityData = array(
@@ -92,7 +95,21 @@ class EntityRepository
             // create
             $entity = $this->createEntity($entityConfig, $entityData);
 
-            if ($entity->hasProperty('name')) $entity->setValue('name', $nEntityId);
+
+            $coreData = CoreConfig::getCoreData($entityConfig->getId(), $nEntityId);
+
+            if ($coreData !== false)
+            {
+                foreach ($coreData as $sPropertyName => $value)
+                {
+                    $entity->setValue($sPropertyName, $value);
+                }
+            }
+            else
+            {
+                if ($entity->hasProperty('name')) $entity->setValue('name', $nEntityId);
+            }
+
 
 
             //$entity->setValue('name', $entityConfig->getName()); // note: niet op alles van toepassing, dus niet te gebruiken

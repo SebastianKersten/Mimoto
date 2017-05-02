@@ -101,6 +101,7 @@ class Mimoto
         // main menu
         $app->get('/mimoto.cms/entities', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::viewEntityOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/selections', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::viewSelectionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/configuration/formatting', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/layouts', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::viewLayoutOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/contentsections', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::viewContentSectionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -159,6 +160,18 @@ class Mimoto
         $app->get ('/mimoto.cms/selection/{nSelectionId}/rule/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+
+        // Formatting options
+        $app->get ('/mimoto.cms/formattingOption/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/formattingOption/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/formattingOption/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/formattingOption/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+//        $app->get ('/mimoto.cms/selection/{nSelectionId}/rule/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+//        $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+//        $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
 
         // Layout
         $app->get ('/mimoto.cms/layout/new', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -233,7 +246,6 @@ class Mimoto
         // images
         $app->get('/mimoto.cms/static/images/mimoto_logo.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogo');
         $app->get('/mimoto.cms/static/images/mimoto_logo_collapsed.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogoCollapsed');
-        $app->get('/mimoto.cms/dynamic/avatar.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageAvatar');
     }
 
 

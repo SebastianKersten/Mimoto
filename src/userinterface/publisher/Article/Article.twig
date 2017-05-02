@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
+    <div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }} {{ Mimoto.editable('title', {'options': { 'formats':['bold', 'italic', 'underline'] }} ) }}>{{ Mimoto.render('title') }}</div>
 
     <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.render('headerImage') }}" {{ Mimoto.realtime('headerImage') }}>
 

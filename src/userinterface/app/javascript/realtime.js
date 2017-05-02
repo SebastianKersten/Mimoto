@@ -14,26 +14,26 @@ var QuillDelta = require("quill-delta");
 var aClients = [];
 var aRooms = [];
 
-var Memcached = require('memcached');
-var memcached = new Memcached('127.0.0.1:11211');
+// var Memcached = require('memcached');
+// var memcached = new Memcached('127.0.0.1:11211');
 
 
-app.get('/reset', function(req, res){
-
-    var deltaValue = new QuillDelta().insert('Lorem ipsum\n');
-
-    // store
-    memcached.set('draft:article.1.body', deltaValue, 0, function (err) {
-        console.log('------------- Draft has been reset');
-    });
-
-    // store
-    memcached.set('draft:article.1.body:count', 0, 0, function (err) {
-        console.log('------------- Draft count has been reset');
-    });
-
-    res.send('The draft of `article.1.body` has been reset!');
-});
+// app.get('/reset', function(req, res){
+//
+//     var deltaValue = new QuillDelta().insert('Lorem ipsum\n');
+//
+//     // store
+//     memcached.set('draft:article.1.body', deltaValue, 0, function (err) {
+//         console.log('------------- Draft has been reset');
+//     });
+//
+//     // store
+//     memcached.set('draft:article.1.body:count', 0, 0, function (err) {
+//         console.log('------------- Draft count has been reset');
+//     });
+//
+//     res.send('The draft of `article.1.body` has been reset!');
+// });
 
 
 app.get('/collaborate', function(req, res){
@@ -253,6 +253,7 @@ socketIO.on('connection', function(client)
 
         var parsedDelta = {
             user: client.user,
+            sPropertySelector: change.sPropertySelector,
             delta: delta,
             nNewDeltaIndex: baseDocument.nDeltaIndex
         };

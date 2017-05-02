@@ -152,6 +152,11 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
+                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingFormattingOption',
+                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertySettingFormattingOption/EntityPropertySettingFormattingOption.twig',
+                'conditionals' => []
+            ),
+            (object) array(
                 'name' => 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample',
                 'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertyExample/EntityPropertyExample.twig',
                 'conditionals' => []
@@ -201,6 +206,29 @@ class Component
                 'conditionals' => []
             ),
 
+
+            // formatting options
+
+            (object) array(
+                'name' => 'Mimoto.CMS_formattingoptions_Overview',
+                'file' => 'MimotoCMS/components/pages/formattingoptions/Overview/Overview.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_formattingoptions_Overview_ListItem',
+                'file' => 'MimotoCMS/components/pages/formattingoptions/Overview/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_formattingoptions_Detail',
+                'file' => 'MimotoCMS/components/pages/formattingoptions/Detail/Detail.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_formattingoptions_Detail-Attribute',
+                'file' => 'MimotoCMS/components/pages/formattingoptions/Detail/Attribute/Attribute.twig',
+                'conditionals' => []
+            ),
 
 
             // layouts

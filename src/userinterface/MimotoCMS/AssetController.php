@@ -104,15 +104,6 @@ class AssetController
         return new Response($this->loadStaticFile('images/mimoto_logo_collapsed.png'));
     }
 
-    public function loadImageAvatar(Application $app)
-    {
-        // 1. prepare output
-        $this->setHeaderForImagePNG();
-
-        // 2. load and send
-        return new Response($this->loadDynamicFile('avatar.png'));
-    }
-
 
 
     // ----------------------------------------------------------------------------

@@ -439,7 +439,11 @@ module.exports.prototype = {
                         {
                             Mimoto.popup.replace(form.responseSettings.onSuccess.reloadPopup);
                         }
-                        
+                        else if (form.responseSettings.onSuccess.dispatchEvent)
+                        {
+                            
+                            console.log('form.responseSettings.onSuccess.dispatchEvent', form.responseSettings.onSuccess.dispatchEvent);
+                        }
                     }
                 }
             }

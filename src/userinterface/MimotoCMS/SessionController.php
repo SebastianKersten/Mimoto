@@ -151,6 +151,9 @@ class SessionController
         // 2. load
         $eEntity = Mimoto::service('data')->get($aPropertyElements[0], $aPropertyElements[1]);
 
+
+
+        
         // 3. read and send
         return $eEntity->getValue($aPropertyElements[2]);
 

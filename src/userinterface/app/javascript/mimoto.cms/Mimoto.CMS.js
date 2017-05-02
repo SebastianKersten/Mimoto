@@ -319,6 +319,62 @@ module.exports.prototype = {
 
 
     /**
+     * Formatting options
+     */
+    formattingOptionNew: function()
+    {
+        var popup = Mimoto.popup.open("/mimoto.cms/formattingOption/new");
+    },
+
+    formattingOptionView: function(nItemId)
+    {
+        window.open('/mimoto.cms/formattingOption/' + nItemId + '/view', '_self');
+    },
+
+    formattingOptionEdit: function(nItemId)
+    {
+        Mimoto.popup.open('/mimoto.cms/formattingOption/' + nItemId + '/edit');
+    },
+
+    formattingOptionDelete: function(nItemId)
+    {
+        MimotoX.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/formattingOption/' + nItemId + '/delete',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
+    },
+
+    formattingOptionAttributeNew: function(nItemId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/formattingOption/' + nItemId + '/formattingOptionAttribute/new');
+    },
+
+    formattingOptionAttributeEdit: function(nItemId)
+    {
+        var popup = Mimoto.popup.open('/mimoto.cms/formattingOptionAttribute/' + nItemId + '/edit');
+    },
+
+    formattingOptionAttributeDelete: function(nItemId)
+    {
+        MimotoX.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/formattingOptionAttribute/' + nItemId + '/delete',
+            data: null,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                console.log(resultData);
+            }
+        });
+    },
+
+
+
+    /**
      * Users
      */
     userNew: function()

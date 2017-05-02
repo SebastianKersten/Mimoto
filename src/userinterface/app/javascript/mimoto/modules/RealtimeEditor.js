@@ -211,6 +211,10 @@ module.exports.prototype = {
 
     _socketOnBaseDocument: function(baseDocument)
     {
+        // skip if not relevant #todo - make more efficient (room per field o.i.d.)
+        if (baseDocument.sPropertySelector != this._sPropertySelector) return;
+
+
         // register
         this._baseDocument = baseDocument;
 
@@ -223,6 +227,9 @@ module.exports.prototype = {
     {
         // delta debugging
         //console.log('My own delta has returned: ', JSON.stringify(parsedDelta.delta, null, 2), ' with index = ' + parsedDelta.nNewDeltaIndex);
+
+        // skip if not relevant #todo - make more efficient (room per field o.i.d.)
+        if (parsedDelta.sPropertySelector != this._sPropertySelector) return;
 
 
         // register
@@ -251,6 +258,10 @@ module.exports.prototype = {
     {
         // delta debugging
         //console.log('OTHER - parsedDelta.nNewDeltaIndex = ', parsedDelta.nNewDeltaIndex);
+
+
+        // skip if not relevant #todo - make more efficient (room per field o.i.d.)
+        if (parsedDelta.sPropertySelector != this._sPropertySelector) return;
 
 
         // register

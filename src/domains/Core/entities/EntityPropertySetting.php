@@ -26,6 +26,7 @@ class EntityPropertySetting
             'extends' => null,
             'forms' => [
                 CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_FORMATTINGOPTIONS,
                 CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE,
                 CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES,
                 CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES
@@ -71,15 +72,15 @@ class EntityPropertySetting
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--textOptions',
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--formattingOptions',
                     // ---
-                    'name' => 'textOptions',
+                    'name' => 'formattingOptions',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => [CoreConfig::MIMOTO_TEXTOPTION]
+                            'value' => [CoreConfig::MIMOTO_FORMATTINGOPTION]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

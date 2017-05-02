@@ -487,6 +487,25 @@ class EntityConfigService
         // 4. connect property setting to property
         $entityProperty->addValue('settings', $entityPropertySetting);
 
+
+        // --- formatting options
+
+        // 1. init property setting
+        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+        // 2. setup property setting
+        $entityPropertySetting->setValue('key', EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS);
+        $entityPropertySetting->setValue('type', '');
+        $entityPropertySetting->setValue('value', '');
+
+        // 3. persist property setting
+        Mimoto::service('data')->store($entityPropertySetting);
+
+        // 4. connect property setting to property
+        $entityProperty->addValue('settings', $entityPropertySetting);
+
+
+
         // 5. persist connection
         Mimoto::service('data')->store($entityProperty);
     }
