@@ -13,6 +13,9 @@ var RealtimeEditor = require('./RealtimeEditor');
 // Socket.io classes
 var io = require('socket.io-client');
 
+// Quill classes
+var Quill = require("quill");
+
 
 
 module.exports = function(sGateway)
@@ -50,11 +53,16 @@ module.exports.prototype = {
             // 2. authenticate
             MimotoX.utils.callAPI({
                 type: 'get',
-                url: '/mimoto.cms/gateway',
+                url: '/mimoto.cms/initialize',
                 dataType: 'json',
                 success: function(resultData, resultStatus, resultSomething)
                 {
-                    classRoot._connect(resultData);
+                    if (resultData.formattingOptions)
+                    {
+                        classRoot._configureEditor(resultData.formattingOptions);
+                    }
+
+                    classRoot._connect(resultData.gateway);
                 }
             });
         }
@@ -119,7 +127,7 @@ module.exports.prototype = {
         if (MimotoX.debug) console.warn('Connection with server was lost .. reconnecting ..');
 
         // cleanup
-        delete this.aRealtimeEditors;
+        delete this._aRealtimeEditors;
     },
 
     /**
@@ -135,6 +143,66 @@ module.exports.prototype = {
 
         // connect editable values
         this._setupEditableValues();
+    },
+
+    /**
+     * Configure editor
+     */
+    _configureEditor: function(aFormattingOptions)
+    {
+        if (MimotoX.debug) console.log('Configuring editor ...');
+
+
+        // add formatting options
+        let nFormattingOptionCount = aFormattingOptions.length;
+        for (let nFormattingOptionIndex = 0; nFormattingOptionIndex < nFormattingOptionCount; nFormattingOptionIndex++)
+        {
+            // register
+            let formattingOption = aFormattingOptions[nFormattingOptionIndex];
+
+
+            console.log('Fromatting options ' + nFormattingOptionIndex, JSON.stringify(formattingOption, null, 2));
+        }
+
+
+        // 1. build options
+        // 1. add options
+
+
+
+
+        let Inline = Quill.import('blots/inline');
+
+        class InfocardBlot extends Inline
+        {
+            static create(value)
+            {
+                let node = super.create();
+
+                // Sanitize url value if desired
+                node.setAttribute('data-mimoto-inline-id', value);
+                node.setAttribute('class', 'infocard');
+
+                // Okay to set other non-format related attributes
+                // These are invisible to Parchment so must be static
+                //node.setAttribute('target', 'ohyeah');
+
+                return node;
+            }
+
+            static formats(node)
+            {
+                // We will only be called with a node already
+                // determined to be a Link blot, so we do
+                // not need to check ourselves
+                return node.getAttribute('data-mimoto-inline-id'); // 1. type check bij meerdere types
+            }
+        }
+
+        InfocardBlot.blotName = 'infocard';
+        InfocardBlot.tagName = 'span';
+
+        Quill.register(InfocardBlot);
     },
 
     /**

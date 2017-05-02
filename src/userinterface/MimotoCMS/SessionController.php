@@ -4,16 +4,22 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
+use Mimoto\Core\FormattingUtils;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\EntityConfig\EntityConfig;
 
 // Silex classes
 use Silex\Application;
 
 // Symfony classes
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 // ElephantIO classes
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version1X;
 use ElephantIO\Exception\ServerConnectionFailureException;
 
 
@@ -45,6 +51,29 @@ class SessionController
         }
     }
 
+    /**
+     * Initialize realtime session
+     * @param Application $app
+     * @return mixed
+     */
+    public function initialize(Application $app)
+    {
+        // compose
+        $response = (object) array
+        (
+            'gateway' => Mimoto::value('config')->socketio->clientgateway
+        );
+
+        // only for logged in users
+        if ($app['session']->get('is_user'))
+        {
+            // read and register
+            $response->formattingOptions = FormattingUtils::getCustomFormattingOptions(); // #todo -> cache this!
+        }
+
+        // send
+        return Mimoto::service('messages')->response($response, 200);
+    }
 
     public function login(Request $request, Application $app)
     {
@@ -118,17 +147,20 @@ class SessionController
     {
         // 1. for realtime editing
 
-        $sSocketId = $request->get('id');
+        // do nothing is user not logged in
+        if (!$app['session']->get('is_user')) return '';
 
 
-        $user = $app['session']->get('user');
-
-
-        $client = new \ElephantIO\Client(new \ElephantIO\Engine\SocketIO\Version1X('http://localhost:4001'));
-
+        // setup socket connection
+        $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
 
         try
         {
+            // read
+            $sSocketId = $request->get('id');
+            $user = $app['session']->get('user');
+
+            // broadcast approval
             $client->initialize();
             $client->emit('logon', ['user' => $user, 'socketId' => $sSocketId]);
             $client->close();
@@ -138,31 +170,90 @@ class SessionController
             echo 'Server Connection Failure!!';
         }
 
+        // send
         return Mimoto::service('messages')->response(true, 200);
 
     }
 
     public function recent(Application $app, $sPropertySelector)
     {
-
         // 1. split
         $aPropertyElements = explode('.', $sPropertySelector);
 
         // 2. load
-        $eEntity = Mimoto::service('data')->get($aPropertyElements[0], $aPropertyElements[1]);
+        $eItem = Mimoto::service('data')->get($aPropertyElements[0], $aPropertyElements[1]);
+
+        // 3. validate
+        if (empty($eItem)) return '';
 
 
 
-        
+        // 2. get entity property
+        // 3. get entity property setting
+        // 4. check formatting
+
+
+        // init
+        $formattingOptions = array();
+
+
+        // load
+        $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, Mimoto::service('config')->getEntityIdByName($aPropertyElements[0]));
+
+        // read
+        $aProperties = $eEntity->getValue('properties');
+
+        // search
+        $nPropertyCount = count($aProperties);
+        for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
+        {
+            // register
+            $eProperty = $aProperties[$nPropertyIndex];
+
+            // verify
+            if ($eProperty->getValue('name') == $aPropertyElements[2] && $eProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+            {
+                // read
+                $aSettings = $eProperty->getValue('settings');
+
+                // search
+                $nSettingCount = count($aSettings);
+                for ($nSettingIndex = 0; $nSettingIndex < $nSettingCount; $nSettingIndex++)
+                {
+                    // register
+                    $setting = $aSettings[$nSettingIndex];
+
+                    // verify
+                    if ($setting->getValue('key') == EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS)
+                    {
+                        // read
+                        $aRegisteredFormattingOptions = $setting->getValue('formattingOptions');
+
+                        // compose
+                        $nFormattingOptionCount = count($aRegisteredFormattingOptions);
+                        for ($nFormattingOptionIndex = 0; $nFormattingOptionIndex < $nFormattingOptionCount; $nFormattingOptionIndex++)
+                        {
+                            // register
+                            $registeredFormattingOption = $aRegisteredFormattingOptions[$nFormattingOptionIndex];
+
+                            // compose
+                            $formattingOptions[] = $registeredFormattingOption->getValue('name');
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        // compose
+        $response = (object) array(
+            'formattingOptions' => $formattingOptions,
+            'content' => $eItem->getValue($aPropertyElements[2])
+        );
+
         // 3. read and send
-        return $eEntity->getValue($aPropertyElements[2]);
-
-    }
-
-    public function gateway(Application $app)
-    {
-        // read and send
-        return Mimoto::service('messages')->response(Mimoto::value('config')->socketio->clientgateway, 200);
+        return new JsonResponse($response);
 
     }
 

@@ -6,7 +6,11 @@
 
 'use strict';
 
+
+// Socket.io classes
 var io = require('socket.io-client');
+
+// Quill classes
 var Quill = require("quill");
 var QuillDelta = require("quill-delta");
 
@@ -80,41 +84,6 @@ module.exports.prototype = {
         this._socket.on('ot-other', function(delta) { classRoot._socketOtherOT(delta); });
         this._socket.on('selectionChange', function(delta) { classRoot._socketOnSelectionChange(delta); });
         this._socket.on('message', function(sMessage) { classRoot._socketOnMessage(sMessage); });
-
-
-
-        let Inline = Quill.import('blots/inline');
-
-        class InfocardBlot extends Inline
-        {
-            static create(value)
-            {
-                let node = super.create();
-
-                // Sanitize url value if desired
-                node.setAttribute('data-mimoto-inline-id', value);
-                node.setAttribute('class', 'infocard');
-
-                // Okay to set other non-format related attributes
-                // These are invisible to Parchment so must be static
-                //node.setAttribute('target', 'ohyeah');
-
-                return node;
-            }
-
-            static formats(node)
-            {
-                // We will only be called with a node already
-                // determined to be a Link blot, so we do
-                // not need to check ourselves
-                return node.getAttribute('data-mimoto-inline-id'); // 1. type check bij meerdere types
-            }
-        }
-
-        InfocardBlot.blotName = 'infocard';
-        InfocardBlot.tagName = 'span';
-
-        Quill.register(InfocardBlot);
 
 
         // init
@@ -213,7 +182,6 @@ module.exports.prototype = {
     {
         // skip if not relevant #todo - make more efficient (room per field o.i.d.)
         if (baseDocument.sPropertySelector != this._sPropertySelector) return;
-
 
         // register
         this._baseDocument = baseDocument;

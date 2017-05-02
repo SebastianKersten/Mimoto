@@ -133,14 +133,18 @@ socketIO.on('connection', function(client)
             runner.exec
             (
                 "curl http://mimoto.aimless/mimoto.cms/recent/" + sPropertySelector,
-                function (error, stdout, stderr)
+                function (error, response, stderr)
                 {
+                    // convert
+                    response = JSON.parse(response);
+
                     // init
-                    var dBaseDocument = new QuillDelta().insert(stdout);
+                    var dBaseDocument = new QuillDelta().insert(response.content);
 
                     // setup and store in memory
                     aRooms[sPropertySelector] = {
                         sPropertySelector: sPropertySelector,
+                        formattingOptions: response.formattingOptions,
                         content: dBaseDocument,
                         nDeltaIndex: 0,
                         aDeltas: []
@@ -285,6 +289,7 @@ _broadcastBaseDocument = function(client, sPropertySelector)
     // prepare
     var baseDocument = {
         sPropertySelector: sPropertySelector,
+        formattingOptions: aRooms[sPropertySelector].formattingOptions,
         content: aRooms[sPropertySelector].content,
         nDeltaIndex: aRooms[sPropertySelector].nDeltaIndex
     };

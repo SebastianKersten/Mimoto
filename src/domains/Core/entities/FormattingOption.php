@@ -43,6 +43,19 @@ class FormattingOption
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--type',
+                    // ---
+                    'name' => 'type',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--attributes',
                     // ---
                     'name' => 'attributes',
@@ -115,6 +128,7 @@ class FormattingOption
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'type'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'attributes')
             ]
         );
@@ -147,7 +161,7 @@ class FormattingOption
         self::setNameValidation($field);
 
 
-        //$form->addValue('fields', self::getField_type());
+        $form->addValue('fields', self::getField_type());
 
         CoreFormUtils::addField_groupEnd($form);
 
@@ -170,7 +184,7 @@ class FormattingOption
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation2');
+        $validationRule->setId(CoreConfig::COREFORM_FORMATTINGOPTION.'--name_value_validation2');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "The property name can't be empty");
@@ -179,7 +193,7 @@ class FormattingOption
 
         // validation rule #2
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::COREFORM_FORMATTINGOPTION.'--name_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
         $validationRule->setValue('errorMessage', 'Name should be in lowerCamelCase, starting with a letter followed by [a-zA-Z0-9-_]');
@@ -214,48 +228,36 @@ class FormattingOption
     private static function getField_type()
     {
         // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_ENTITYPROPERTY, 'type');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_FORMATTINGOPTION, 'type');
         $field->setValue('label', 'Type');
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ENTITYPROPERTY, 'type');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORMATTINGOPTION, 'type');
 
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-value');
-        $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE);
-        $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE);
+        $option->setId(CoreConfig::COREFORM_FORMATTINGOPTION.'--type_value_options-inline');
+        $option->setValue('label', 'Inline');
+        $option->setValue('value', 'inline');
         $field->addValue('options', $option);
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-entity');
-        $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY);
-        $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY);
+        $option->setId(CoreConfig::COREFORM_FORMATTINGOPTION.'--type_value_options-block');
+        $option->setValue('label', 'Block');
+        $option->setValue('value', 'block');
         $field->addValue('options', $option);
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-collection');
-        $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION);
-        $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION);
-        $field->addValue('options', $option);
-
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-image');
-        $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE);
-        $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE);
-        $field->addValue('options', $option);
-
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-video');
-        $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO);
-        $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO);
+        $option->setId(CoreConfig::COREFORM_FORMATTINGOPTION.'--type_value_options-embeds');
+        $option->setValue('label', 'Embeds');
+        $option->setValue('value', 'embeds');
         $field->addValue('options', $option);
 
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_validation1');
+        $validationRule->setId(CoreConfig::COREFORM_FORMATTINGOPTION.'--type_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
-        $validationRule->setValue('value', '^('.MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY.'|'.MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION.'|'.MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE.'|'.MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO.')$');
+        $validationRule->setValue('value', '^(inline|block|embeds)$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
