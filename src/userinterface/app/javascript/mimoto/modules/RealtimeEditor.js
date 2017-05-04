@@ -320,53 +320,6 @@ module.exports.prototype = {
             formats: formats
         });
 
-        // function editInfocard(e)
-        // {
-        //     console.log('editInfocard');
-        //
-        //     // 1. range meeveranderen met delta's
-        //
-        //     let range = quill.getSelection();
-        //
-        //     console.log('range', range);
-        //
-        //     if (range) {
-        //         let aFormats = quill.getFormat(range);
-        //
-        //         if (!aFormats.infocard) {
-        //             console.log('Set format ...');
-        //
-                        //let popup = Mimoto.popup('/Mimoto.Aimless/form/infocard');
-        //
-        //             //console.log('popup', popup);
-        //
-        //             //popup.addEventListener('data', function() { } );
-        //
-        //
-        //             // 2. after addition -> trigger javascript to add functionality to edit
-        //
-        //
-        //             let value = 'infocard.3'; // 1. get from popup
-        //
-        //             // set format
-        //             quill.format('infocard', value, 'user');
-        //         }
-        //         else {
-        //             // clear format
-        //             quill.format('infocard', false, 'user');
-        //         }
-        //     }
-        // }
-        //
-        //
-        // if (this._sPropertySelector === 'article.1.body')
-        // {
-        //     let toolbarModule = quill.getModule('toolbar');
-        //
-        //     toolbarModule.addHandler('infocard', editInfocard);
-        // }
-
-
 
         // configure
         quill.on('selection-change', function() { classRoot._onSelectionChange(); });

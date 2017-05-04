@@ -37,7 +37,8 @@ class FormattingUtils
                 'name' => $customFormattingOption->getValue('name'),
                 'type' => $customFormattingOption->getValue('type'),
                 'tagName' => $customFormattingOption->getValue('tagName'),
-                'jsEditor' => $customFormattingOption->getValue('jsEditor'),
+                'jsOnAdd' => $customFormattingOption->getValue('jsOnAdd'),
+                'jsOnEdit' => $customFormattingOption->getValue('jsOnEdit'),
                 'attributes' => []
             );
 

@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "0d27a5cd83ad5b199579";
+/******/ 	__webpack_require__.h = "f3b10a4962b47dae2f65";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12195,8 +12195,45 @@
 	
 	                            console.log('xx', node, this.name);
 	
-	                            node.addEventListener('click', function() { window[formattingOption.jsEditor](); });
 	
+	
+	                            // compose
+	                            let formatAdapter = {
+	                                node: node,
+	                            };
+	
+	
+	                            if (formattingOption.jsOnAdd)
+	                            {
+	                                if (window[formattingOption.jsOnAdd] && typeof window[formattingOption.jsOnAdd] === 'function')
+	                                {
+	                                    // call
+	                                    window[formattingOption.jsOnAdd](formatAdapter);
+	                                }
+	                                else
+	                                {
+	                                    if (MimotoX.debug) console.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
+	                                }
+	                            }
+	
+	                            // connect
+	                            if (formattingOption.jsOnEdit)
+	                            {
+	                                node.addEventListener('click', function()
+	                                {
+	                                    if (window[formattingOption.jsOnEdit] && typeof window[formattingOption.jsOnEdit] === 'function')
+	                                    {
+	                                        // call
+	                                        window[formattingOption.jsOnEdit](formatAdapter);
+	                                    }
+	                                    else
+	                                    {
+	                                        if (MimotoX.debug) console.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
+	                                    }
+	                                });
+	                            }
+	
+	                            // style
 	                            node.style['cursor'] = 'pointer';
 	
 	                            return node;
@@ -12218,14 +12255,6 @@
 	                    break;
 	            }
 	        }
-	
-	
-	        console.warn(Quill.imports);
-	
-	        // 1. build options
-	        // 1. add options
-	
-	
 	
 	    },
 	
@@ -12595,53 +12624,6 @@
 	            placeholder: 'Start typing', // #todo
 	            formats: formats
 	        });
-	
-	        // function editInfocard(e)
-	        // {
-	        //     console.log('editInfocard');
-	        //
-	        //     // 1. range meeveranderen met delta's
-	        //
-	        //     let range = quill.getSelection();
-	        //
-	        //     console.log('range', range);
-	        //
-	        //     if (range) {
-	        //         let aFormats = quill.getFormat(range);
-	        //
-	        //         if (!aFormats.infocard) {
-	        //             console.log('Set format ...');
-	        //
-	                        //let popup = Mimoto.popup('/Mimoto.Aimless/form/infocard');
-	        //
-	        //             //console.log('popup', popup);
-	        //
-	        //             //popup.addEventListener('data', function() { } );
-	        //
-	        //
-	        //             // 2. after addition -> trigger javascript to add functionality to edit
-	        //
-	        //
-	        //             let value = 'infocard.3'; // 1. get from popup
-	        //
-	        //             // set format
-	        //             quill.format('infocard', value, 'user');
-	        //         }
-	        //         else {
-	        //             // clear format
-	        //             quill.format('infocard', false, 'user');
-	        //         }
-	        //     }
-	        // }
-	        //
-	        //
-	        // if (this._sPropertySelector === 'article.1.body')
-	        // {
-	        //     let toolbarModule = quill.getModule('toolbar');
-	        //
-	        //     toolbarModule.addHandler('infocard', editInfocard);
-	        // }
-	
 	
 	
 	        // configure

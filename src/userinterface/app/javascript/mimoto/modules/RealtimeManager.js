@@ -200,8 +200,45 @@ module.exports.prototype = {
 
                             console.log('xx', node, this.name);
 
-                            node.addEventListener('click', function() { window[formattingOption.jsEditor](); });
 
+
+                            // compose
+                            let formatAdapter = {
+                                node: node,
+                            };
+
+
+                            if (formattingOption.jsOnAdd)
+                            {
+                                if (window[formattingOption.jsOnAdd] && typeof window[formattingOption.jsOnAdd] === 'function')
+                                {
+                                    // call
+                                    window[formattingOption.jsOnAdd](formatAdapter);
+                                }
+                                else
+                                {
+                                    if (MimotoX.debug) console.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
+                                }
+                            }
+
+                            // connect
+                            if (formattingOption.jsOnEdit)
+                            {
+                                node.addEventListener('click', function()
+                                {
+                                    if (window[formattingOption.jsOnEdit] && typeof window[formattingOption.jsOnEdit] === 'function')
+                                    {
+                                        // call
+                                        window[formattingOption.jsOnEdit](formatAdapter);
+                                    }
+                                    else
+                                    {
+                                        if (MimotoX.debug) console.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
+                                    }
+                                });
+                            }
+
+                            // style
                             node.style['cursor'] = 'pointer';
 
                             return node;
@@ -223,14 +260,6 @@ module.exports.prototype = {
                     break;
             }
         }
-
-
-        console.warn(Quill.imports);
-
-        // 1. build options
-        // 1. add options
-
-
 
     },
 

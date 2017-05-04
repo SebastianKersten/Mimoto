@@ -69,9 +69,22 @@ class FormattingOption
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--jsEditor',
+                    'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--jsOnAdd',
                     // ---
-                    'name' => 'jsEditor',
+                    'name' => 'jsOnAdd',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--jsOnEdit',
+                    // ---
+                    'name' => 'jsOnEdit',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
@@ -169,6 +182,8 @@ class FormattingOption
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'name'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'type'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'tagName'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'jsOnAdd'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'jsOnEdit'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'attributes')
             ]
         );
@@ -217,8 +232,14 @@ class FormattingOption
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'jsEditor', CoreConfig::MIMOTO_FORMATTINGOPTION.'--jsEditor',
-            'Javascript editor function', 'Enter the javascript function name', "This function is call when this formatting option is added en when its clicked."
+            $form, 'jsOnAdd', CoreConfig::MIMOTO_FORMATTINGOPTION.'--jsOnAdd',
+            "Javascript function for 'add' event", 'Enter the javascript function name', "This function is called when this formatting option is added."
+        );
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'jsOnEdit', CoreConfig::MIMOTO_FORMATTINGOPTION.'--jsOnEdit',
+            "Javascript function for 'edit' event", 'Enter the javascript function name', "This function is called when this formatting option is clicked."
         );
 
         CoreFormUtils::addField_groupEnd($form, 'editorhooks');

@@ -55,8 +55,27 @@ function unhighlightComment(nCommentId)
     });
 }
 
-function helloFromCustomFunction(NodeConfig)
+function helloFromCustomFunctionAdd(NodeConfig)
 {
-    console.log('Hi! from custom publisher function');
+    console.log('Hi! from custom publisher onAdd function');
+
+    // 1. check if id is set
+    // 2. call popup, or
+    // 3. create comment
+
+    let popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
+}
+
+function helloFromCustomFunctionEdit(NodeConfig)
+{
+    console.log('Hi! from custom publisher onEdit function');
+
+    // 1. check if id is set
+    // 2. call popup, or
+    // 3. create comment
+
+    let popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
+
+    // 4. delete formatting options (als mogelijke feedback van popup)
 }
 
