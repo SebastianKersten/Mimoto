@@ -63,7 +63,7 @@ function helloFromCustomFunctionAdd(NodeConfig)
     // 2. call popup, or
     // 3. create comment
 
-    let popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
+    //let popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
 }
 
 function helloFromCustomFunctionEdit(NodeConfig)
@@ -77,5 +77,6 @@ function helloFromCustomFunctionEdit(NodeConfig)
     let popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
 
     // 4. delete formatting options (als mogelijke feedback van popup)
+    // 5. onInit (wanneer het op de dom geplaatst worden vanuit een saved state
 }
 
