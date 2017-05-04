@@ -48,6 +48,8 @@ div.MimotoPublisher-footer {
     color: #858585;
 }
 
+
+
 span.infocard {
     color: $fuzzy-wuzzy-brown;
     font-weight: bold;
@@ -62,11 +64,10 @@ span.infocard::after {
     background: url('/static/images/infocard.png') 0 0 no-repeat;
     background-size: 19px 19px;
     background-position: right 0 center;
-}
-
-span.infocard:hover{
     cursor: pointer;
 }
+
+
 
 .ql-infocard::after {
     content: '';
@@ -79,3 +80,34 @@ span.infocard:hover{
     background: url('/static/images/infocard.png') 0 0 no-repeat;
     background-size: 19px 19px;
 }
+
+
+
+
+span.boldPurple {
+    color: $color-notification-warning;
+    font-weight: bold;
+}
+
+.ql-boldPurple::after {
+    content: 'X';
+    vertical-align: middle;
+    padding-top: 4px;
+    color: #ffffff;
+}
+
+
+
+//
+//span.boldPink {
+//    color: #FF9999;
+//    font-weight: bold;
+//    font-style: italic;
+//}
+//
+//.ql-boldPurple::after {
+//    content: 'X';
+//    vertical-align: middle;
+//    padding-top: 4px;
+//    color: #ffffff;
+//}

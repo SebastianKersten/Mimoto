@@ -56,6 +56,45 @@ class FormattingOption
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--tagName',
+                    // ---
+                    'name' => 'tagName',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--jsEditor',
+                    // ---
+                    'name' => 'jsEditor',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--toolbar',
+                    // ---
+                    'name' => 'toolbar',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'--attributes',
                     // ---
                     'name' => 'attributes',
@@ -101,7 +140,7 @@ class FormattingOption
 
         // blocks
         $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-blockquote'] = (object) array('name' => 'blockquote');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-header'] = (object) array('name' => 'header');
+        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-header'] = (object) array('name' => 'header', 'toolbar' => '{ "header": [1, 2, false] }');
         $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-indent'] = (object) array('name' => 'indent');
         $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-list'] = (object) array('name' => 'list');
         $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-align'] = (object) array('name' => 'align');
@@ -129,6 +168,7 @@ class FormattingOption
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'name'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'type'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'tagName'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_FORMATTINGOPTION, 'attributes')
             ]
         );
@@ -150,20 +190,38 @@ class FormattingOption
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_FORMATTINGOPTION);
 
         // setup
-        CoreFormUtils::addField_title($form, 'Property', '', "Formatting options can be used to add more functionality or styles to your texts. Think about a custom way of higlighting or functionality like comments.");
+        CoreFormUtils::addField_title($form, 'Formatting', '', "Formatting options can be used to add more functionality or styles to your texts. Think about a custom way of higlighting or functionality like comments.");
         CoreFormUtils::addField_groupStart($form);
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'name', CoreConfig::MIMOTO_ENTITYPROPERTY.'--name',
+            $form, 'name', CoreConfig::MIMOTO_FORMATTINGOPTION.'--name',
             'Name', 'Formatting option name', 'The name should be unique'
         );
         self::setNameValidation($field);
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'tagName', CoreConfig::MIMOTO_FORMATTINGOPTION.'--tagName',
+            'Tag name', 'Enter the tag name', "For instance 'span', 'div', 'a', etc."
+        );
+        self::setTagNameValidation($field);
 
 
         $form->addValue('fields', self::getField_type());
 
         CoreFormUtils::addField_groupEnd($form);
+
+
+        CoreFormUtils::addField_groupStart($form, 'Editor hooks', 'editorhooks');
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'jsEditor', CoreConfig::MIMOTO_FORMATTINGOPTION.'--jsEditor',
+            'Javascript editor function', 'Enter the javascript function name', "This function is call when this formatting option is added en when its clicked."
+        );
+
+        CoreFormUtils::addField_groupEnd($form, 'editorhooks');
 
         // send
         return $form;
@@ -187,7 +245,7 @@ class FormattingOption
         $validationRule->setId(CoreConfig::COREFORM_FORMATTINGOPTION.'--name_value_validation2');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
-        $validationRule->setValue('errorMessage', "The property name can't be empty");
+        $validationRule->setValue('errorMessage', "The name can't be empty");
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
 
@@ -259,6 +317,24 @@ class FormattingOption
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^(inline|block|embeds)$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Get field: tagName
+     */
+    private static function setTagNameValidation($field)
+    {
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::COREFORM_FORMATTINGOPTION.'--name_value_validation2');
+        $validationRule->setValue('type', 'minchars');
+        $validationRule->setValue('value', 1);
+        $validationRule->setValue('errorMessage', "The tag name can't be empty");
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
 

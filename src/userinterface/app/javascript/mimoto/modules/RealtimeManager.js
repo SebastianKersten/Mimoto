@@ -150,7 +150,11 @@ module.exports.prototype = {
      */
     _configureEditor: function(aFormattingOptions)
     {
-        if (MimotoX.debug) console.log('Configuring editor ...');
+        if (MimotoX.debug) console.log('Configuring editor ...', aFormattingOptions);
+
+
+
+        let classes = {};
 
 
         // add formatting options
@@ -161,49 +165,79 @@ module.exports.prototype = {
             let formattingOption = aFormattingOptions[nFormattingOptionIndex];
 
 
-            console.log('Fromatting options ' + nFormattingOptionIndex, JSON.stringify(formattingOption, null, 2));
+            console.log('Formatting options ' + nFormattingOptionIndex, JSON.stringify(formattingOption, null, 2));
+
+
+            switch(formattingOption.type)
+            {
+                case 'inline':
+
+
+                    classes['item_' + nFormattingOptionIndex] = Quill.import('blots/inline');
+                    //let Inline = Quill.import('blots/inline');
+
+                    //console.warn(Inline);
+
+                    //let customInlineBlot = formattingOption.name;
+
+
+
+                    classes[formattingOption.name] = class extends classes['item_' + nFormattingOptionIndex]
+                    {
+                        static create(value)
+                        {
+
+                            let node = super.create(value);
+
+                            // Sanitize url value if desired
+                            //node.setAttribute('data-mimoto-type-id', value);
+                            node.setAttribute('data-mimoto-format-' + formattingOption.name, value);
+                            node.setAttribute('class', formattingOption.name);
+
+                            // Okay to set other non-format related attributes
+                            // These are invisible to Parchment so must be static
+                            //node.setAttribute('target', 'ohyeah');
+
+                            console.log('xx', node, this.name);
+
+                            node.addEventListener('click', function() { window[formattingOption.jsEditor](); });
+
+                            node.style['cursor'] = 'pointer';
+
+                            return node;
+                        }
+
+                        static formats(node) {
+                            // We will only be called with a node already
+                            // determined to be a Link blot, so we do
+                            // not need to check ourselves
+                            return node.getAttribute('data-mimoto-format-' + formattingOption.name); // 1. type check bij meerdere types
+                        }
+                    }
+
+                    classes[formattingOption.name].blotName = formattingOption.name;
+                    classes[formattingOption.name].tagName = formattingOption.tagName;
+
+                    Quill.register('formats/' + formattingOption.name, classes[formattingOption.name]);
+
+                    break;
+            }
         }
 
+
+        console.warn(Quill.imports);
 
         // 1. build options
         // 1. add options
 
 
 
-
-        let Inline = Quill.import('blots/inline');
-
-        class InfocardBlot extends Inline
-        {
-            static create(value)
-            {
-                let node = super.create();
-
-                // Sanitize url value if desired
-                node.setAttribute('data-mimoto-inline-id', value);
-                node.setAttribute('class', 'infocard');
-
-                // Okay to set other non-format related attributes
-                // These are invisible to Parchment so must be static
-                //node.setAttribute('target', 'ohyeah');
-
-                return node;
-            }
-
-            static formats(node)
-            {
-                // We will only be called with a node already
-                // determined to be a Link blot, so we do
-                // not need to check ourselves
-                return node.getAttribute('data-mimoto-inline-id'); // 1. type check bij meerdere types
-            }
-        }
-
-        InfocardBlot.blotName = 'infocard';
-        InfocardBlot.tagName = 'span';
-
-        Quill.register(InfocardBlot);
     },
+
+
+
+
+
 
     /**
      * Setup editable values
@@ -226,13 +260,11 @@ module.exports.prototype = {
 
             // read
             let sPropertySelector = editableValue.getAttribute('data-mimoto-editable');
-            let editOptions = JSON.parse(editableValue.getAttribute('data-mimoto-editable-options'));
 
             //console.log('editable', sPropertySelector, editOptions, editableValue);
 
-
             // init
-            let realtimeEditor = new RealtimeEditor(this._socket, sPropertySelector, editOptions, editableValue);
+            let realtimeEditor = new RealtimeEditor(this._socket, sPropertySelector, editableValue);
 
 
             // store

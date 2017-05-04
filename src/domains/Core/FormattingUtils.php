@@ -19,15 +19,13 @@ class FormattingUtils
      */
     public static function getCustomFormattingOptions()
     {
-        // 1. get core
-        // 2. get custom
-        // 3. get type
-
-
+        // 1. init
         $aFormattingOptions = [];
 
+        // 2. load
         $aCustomFormattingOptions = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORMATTINGOPTION]);
 
+        // 3. parse
         $nCustomFormattingOptionCount = count($aCustomFormattingOptions);
         for ($nCustomFormattingOptionIndex = 0; $nCustomFormattingOptionIndex < $nCustomFormattingOptionCount; $nCustomFormattingOptionIndex++)
         {
@@ -38,6 +36,8 @@ class FormattingUtils
             $formattingOption = (object) array(
                 'name' => $customFormattingOption->getValue('name'),
                 'type' => $customFormattingOption->getValue('type'),
+                'tagName' => $customFormattingOption->getValue('tagName'),
+                'jsEditor' => $customFormattingOption->getValue('jsEditor'),
                 'attributes' => []
             );
 
@@ -45,7 +45,7 @@ class FormattingUtils
             $aFormattingOptions[] = $formattingOption;
         }
 
-        // send
+        // 4. send
         return $aFormattingOptions;
     }
 

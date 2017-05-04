@@ -19,6 +19,7 @@
         {% for element in pageTitle %}
             <li class="MimotoCMS_interface_Header-breadcrumbs-list-item">
                 <a href="{{ element.url }}" class="MimotoCMS_interface_Header-breadcrumbs-list-item-link">{{ element.label }}</a>
+                {% if not loop.last %}<span class="MimotoCMS_interface_Header-breadcrumbs-list-item-divider">/</span>{% endif %}
             </li>
         {% endfor %}
     </ul>

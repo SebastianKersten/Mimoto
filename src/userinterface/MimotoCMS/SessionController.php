@@ -194,7 +194,10 @@ class SessionController
 
 
         // init
-        $formattingOptions = array();
+        $formattingOptions = (object) array(
+            'toolbar' => [],
+            'formats' => []
+        );
 
 
         // load
@@ -236,8 +239,18 @@ class SessionController
                             // register
                             $registeredFormattingOption = $aRegisteredFormattingOptions[$nFormattingOptionIndex];
 
+
+                            if (!empty($registeredFormattingOption->getValue('toolbar')))
+                            {
+                                $formattingOptions->toolbar[] = json_decode($registeredFormattingOption->getValue('toolbar'));
+                            }
+                            else
+                            {
+                                $formattingOptions->toolbar[] = $registeredFormattingOption->getValue('name');;
+                            }
+
                             // compose
-                            $formattingOptions[] = $registeredFormattingOption->getValue('name');
+                            $formattingOptions->formats[] = $registeredFormattingOption->getValue('name');
                         }
 
                         break;

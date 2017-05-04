@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "669b3fdaf7bc7584e16f";
+/******/ 	__webpack_require__.h = "0d27a5cd83ad5b199579";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -24772,7 +24772,7 @@
 	        {
 	            var sortable = new Sortable(listItem, {
 	                group: 'list_' + nListIndex,
-	                handle: '.MimotoCMS_ListItemModule-handle',
+	                handle: '.js-sortable-draghandle',
 	                dragClass: 'MimotoCMS_ListItemModule--drag',
 	                ghostClass: 'MimotoCMS_ListItemModule--ghost',
 	                // store: {

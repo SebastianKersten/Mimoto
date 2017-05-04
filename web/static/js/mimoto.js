@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "669b3fdaf7bc7584e16f";
+/******/ 	__webpack_require__.h = "0d27a5cd83ad5b199579";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12145,7 +12145,11 @@
 	     */
 	    _configureEditor: function(aFormattingOptions)
 	    {
-	        if (MimotoX.debug) console.log('Configuring editor ...');
+	        if (MimotoX.debug) console.log('Configuring editor ...', aFormattingOptions);
+	
+	
+	
+	        let classes = {};
 	
 	
 	        // add formatting options
@@ -12156,49 +12160,79 @@
 	            let formattingOption = aFormattingOptions[nFormattingOptionIndex];
 	
 	
-	            console.log('Fromatting options ' + nFormattingOptionIndex, JSON.stringify(formattingOption, null, 2));
+	            console.log('Formatting options ' + nFormattingOptionIndex, JSON.stringify(formattingOption, null, 2));
+	
+	
+	            switch(formattingOption.type)
+	            {
+	                case 'inline':
+	
+	
+	                    classes['item_' + nFormattingOptionIndex] = Quill.import('blots/inline');
+	                    //let Inline = Quill.import('blots/inline');
+	
+	                    //console.warn(Inline);
+	
+	                    //let customInlineBlot = formattingOption.name;
+	
+	
+	
+	                    classes[formattingOption.name] = class extends classes['item_' + nFormattingOptionIndex]
+	                    {
+	                        static create(value)
+	                        {
+	
+	                            let node = super.create(value);
+	
+	                            // Sanitize url value if desired
+	                            //node.setAttribute('data-mimoto-type-id', value);
+	                            node.setAttribute('data-mimoto-format-' + formattingOption.name, value);
+	                            node.setAttribute('class', formattingOption.name);
+	
+	                            // Okay to set other non-format related attributes
+	                            // These are invisible to Parchment so must be static
+	                            //node.setAttribute('target', 'ohyeah');
+	
+	                            console.log('xx', node, this.name);
+	
+	                            node.addEventListener('click', function() { window[formattingOption.jsEditor](); });
+	
+	                            node.style['cursor'] = 'pointer';
+	
+	                            return node;
+	                        }
+	
+	                        static formats(node) {
+	                            // We will only be called with a node already
+	                            // determined to be a Link blot, so we do
+	                            // not need to check ourselves
+	                            return node.getAttribute('data-mimoto-format-' + formattingOption.name); // 1. type check bij meerdere types
+	                        }
+	                    }
+	
+	                    classes[formattingOption.name].blotName = formattingOption.name;
+	                    classes[formattingOption.name].tagName = formattingOption.tagName;
+	
+	                    Quill.register('formats/' + formattingOption.name, classes[formattingOption.name]);
+	
+	                    break;
+	            }
 	        }
 	
+	
+	        console.warn(Quill.imports);
 	
 	        // 1. build options
 	        // 1. add options
 	
 	
 	
-	
-	        let Inline = Quill.import('blots/inline');
-	
-	        class InfocardBlot extends Inline
-	        {
-	            static create(value)
-	            {
-	                let node = super.create();
-	
-	                // Sanitize url value if desired
-	                node.setAttribute('data-mimoto-inline-id', value);
-	                node.setAttribute('class', 'infocard');
-	
-	                // Okay to set other non-format related attributes
-	                // These are invisible to Parchment so must be static
-	                //node.setAttribute('target', 'ohyeah');
-	
-	                return node;
-	            }
-	
-	            static formats(node)
-	            {
-	                // We will only be called with a node already
-	                // determined to be a Link blot, so we do
-	                // not need to check ourselves
-	                return node.getAttribute('data-mimoto-inline-id'); // 1. type check bij meerdere types
-	            }
-	        }
-	
-	        InfocardBlot.blotName = 'infocard';
-	        InfocardBlot.tagName = 'span';
-	
-	        Quill.register(InfocardBlot);
 	    },
+	
+	
+	
+	
+	
 	
 	    /**
 	     * Setup editable values
@@ -12221,13 +12255,11 @@
 	
 	            // read
 	            let sPropertySelector = editableValue.getAttribute('data-mimoto-editable');
-	            let editOptions = JSON.parse(editableValue.getAttribute('data-mimoto-editable-options'));
 	
 	            //console.log('editable', sPropertySelector, editOptions, editableValue);
 	
-	
 	            // init
-	            let realtimeEditor = new RealtimeEditor(this._socket, sPropertySelector, editOptions, editableValue);
+	            let realtimeEditor = new RealtimeEditor(this._socket, sPropertySelector, editableValue);
 	
 	
 	            // store
@@ -12276,6 +12308,7 @@
 	    _socket: null,
 	
 	    _sPropertySelector: null,
+	    _valueContainer: null,
 	    _otid: null,
 	
 	
@@ -12292,135 +12325,26 @@
 	    /**
 	     * Constructor
 	     */
-	    __construct: function(socket, sPropertySelector, editOptions, editableValue)
+	    __construct: function(socket, sPropertySelector, valueContainer)
 	    {
 	        // register
 	        this._socket = socket;
 	        this._sPropertySelector = sPropertySelector;
+	        this._valueContainer = valueContainer;
 	
-	
-	
-	
+	        // register
 	        var classRoot = this;
 	
-	
-	        document.showPending = function()
-	        {
-	            console.log('pending', JSON.stringify(classRoot._deltaPending, null, 2));
-	        };
-	
-	
-	        document.sendPending = function()
-	        {
-	            console.log('Sending pending ...');
-	            classRoot._sendPending();
-	        };
-	
-	        document.showBuffer = function()
-	        {
-	            console.warn('buffer', JSON.stringify(classRoot._deltaBuffer, null, 2));
-	        };
-	
-	
-	
+	        // configure
 	        this._socket.on('baseDocument', function(delta) { classRoot._socketOnBaseDocument(delta); });
 	        this._socket.on('ot-self', function(delta) { classRoot._socketSelfOT(delta); });
 	        this._socket.on('ot-other', function(delta) { classRoot._socketOtherOT(delta); });
 	        this._socket.on('selectionChange', function(delta) { classRoot._socketOnSelectionChange(delta); });
 	        this._socket.on('message', function(sMessage) { classRoot._socketOnMessage(sMessage); });
 	
-	
-	        // init
-	        var formats = null;
-	        var toolbar = null;
-	
-	
-	        if (editOptions) {
-	
-	            //console.log('editOptions', editOptions);
-	
-	            if (editOptions.options && editOptions.options.formats) {
-	                formats = editOptions.options.formats;
-	                toolbar = editOptions.options.formats;
-	            }
-	        }
-	
-	        //console.log('formats', formats);
-	
-	
-	        // create
-	        this._quill = new Quill(editableValue, {
-	            theme: 'bubble',
-	            modules: {
-	                toolbar: [
-	                    [{ 'header': [1, 2, false]}],
-	                    ['infocard'],
-	                    formats
-	                ],
-	                history: {
-	                    delay: 2000,
-	                    maxStack: 500,
-	                    userOnly: true
-	                }
-	            },
-	            placeholder: 'Start typing',
-	            formats: ['bold', 'italic', 'underline', 'header', 'infocard']
-	        });
-	
-	
-	        let toolbarModule = this._quill.getModule('toolbar');
-	        toolbarModule.addHandler('infocard', editInfocard);
-	
-	
-	        function editInfocard(e)
-	        {
-	            console.log('editInfocard');
-	
-	            // 1. range meeveranderen met delta's
-	
-	            let range = classRoot._quill.getSelection();
-	
-	            if (range)
-	            {
-	                var aFormats = classRoot._quill.getFormat(range);
-	
-	                if (!aFormats.infocard)
-	                {
-	                    console.log('Set format ...');
-	
-	                    var popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
-	
-	                    //console.log('popup', popup);
-	
-	                    //popup.addEventListener('data', function() { } );
-	
-	
-	                    // 2. after addition -> trigger javascript to add functionality to edit
-	
-	
-	                    var value = 'infocard.3'; // 1. get from popup
-	
-	                    // set format
-	                    classRoot._quill.format('infocard', value, 'user');
-	                }
-	                else
-	                {
-	                    // clear format
-	                    classRoot._quill.format('infocard', false, 'user');
-	                }
-	            };
-	        }
-	
-	        // listen
-	        this._quill.on('selection-change', function() { classRoot._onSelectionChange(); });
-	        this._quill.on('text-change', function(delta, oldContents, source) { classRoot._onTextChange(delta, oldContents, source); } );
-	
-	
-	        this._socket.emit('edit', this._sPropertySelector);
+	        // send edit request
+	        this._socket.emit('edit', this._sPropertySelector); // #todo - rename to "request.edit"
 	    },
-	
-	
-	
 	
 	    _socketOnBaseDocument: function(baseDocument)
 	    {
@@ -12431,6 +12355,7 @@
 	        this._baseDocument = baseDocument;
 	
 	        // show content
+	        this._quill = this._setupEditor(baseDocument.formattingOptions);
 	        this._quill.setContents(baseDocument.content);
 	    },
 	
@@ -12634,8 +12559,99 @@
 	
 	        // send
 	        this._socket.emit('ot', this._deltaPending);
-	    }
+	    },
 	
+	
+	    _setupEditor: function(formattingOptions)
+	    {
+	        console.log('Setup formattingOptions', formattingOptions);
+	
+	
+	        // register
+	        let classRoot = this;
+	
+	        // init
+	        var toolbar = null;
+	        var formats = null;
+	
+	
+	        if (formattingOptions)
+	        {
+	            if (formattingOptions.toolbar && formattingOptions.toolbar.length > 0) toolbar = formattingOptions.toolbar;
+	            if (formattingOptions.formats && formattingOptions.formats.length > 0) formats = formattingOptions.formats;
+	        }
+	
+	        // create
+	        let quill = new Quill(this._valueContainer, {
+	            theme: 'bubble',
+	            modules: {
+	                toolbar: toolbar,
+	                history: {
+	                    delay: 2000,
+	                    maxStack: 500,
+	                    userOnly: true
+	                }
+	            },
+	            placeholder: 'Start typing', // #todo
+	            formats: formats
+	        });
+	
+	        // function editInfocard(e)
+	        // {
+	        //     console.log('editInfocard');
+	        //
+	        //     // 1. range meeveranderen met delta's
+	        //
+	        //     let range = quill.getSelection();
+	        //
+	        //     console.log('range', range);
+	        //
+	        //     if (range) {
+	        //         let aFormats = quill.getFormat(range);
+	        //
+	        //         if (!aFormats.infocard) {
+	        //             console.log('Set format ...');
+	        //
+	                        //let popup = Mimoto.popup('/Mimoto.Aimless/form/infocard');
+	        //
+	        //             //console.log('popup', popup);
+	        //
+	        //             //popup.addEventListener('data', function() { } );
+	        //
+	        //
+	        //             // 2. after addition -> trigger javascript to add functionality to edit
+	        //
+	        //
+	        //             let value = 'infocard.3'; // 1. get from popup
+	        //
+	        //             // set format
+	        //             quill.format('infocard', value, 'user');
+	        //         }
+	        //         else {
+	        //             // clear format
+	        //             quill.format('infocard', false, 'user');
+	        //         }
+	        //     }
+	        // }
+	        //
+	        //
+	        // if (this._sPropertySelector === 'article.1.body')
+	        // {
+	        //     let toolbarModule = quill.getModule('toolbar');
+	        //
+	        //     toolbarModule.addHandler('infocard', editInfocard);
+	        // }
+	
+	
+	
+	        // configure
+	        quill.on('selection-change', function() { classRoot._onSelectionChange(); });
+	        quill.on('text-change', function(delta, oldContents, source) { classRoot._onTextChange(delta, oldContents, source); } );
+	
+	
+	        // send
+	        return quill;
+	    }
 	
 	}
 

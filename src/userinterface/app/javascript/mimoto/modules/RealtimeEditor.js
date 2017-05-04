@@ -32,6 +32,7 @@ module.exports.prototype = {
     _socket: null,
 
     _sPropertySelector: null,
+    _valueContainer: null,
     _otid: null,
 
 
@@ -48,135 +49,26 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function(socket, sPropertySelector, editOptions, editableValue)
+    __construct: function(socket, sPropertySelector, valueContainer)
     {
         // register
         this._socket = socket;
         this._sPropertySelector = sPropertySelector;
+        this._valueContainer = valueContainer;
 
-
-
-
+        // register
         var classRoot = this;
 
-
-        document.showPending = function()
-        {
-            console.log('pending', JSON.stringify(classRoot._deltaPending, null, 2));
-        };
-
-
-        document.sendPending = function()
-        {
-            console.log('Sending pending ...');
-            classRoot._sendPending();
-        };
-
-        document.showBuffer = function()
-        {
-            console.warn('buffer', JSON.stringify(classRoot._deltaBuffer, null, 2));
-        };
-
-
-
+        // configure
         this._socket.on('baseDocument', function(delta) { classRoot._socketOnBaseDocument(delta); });
         this._socket.on('ot-self', function(delta) { classRoot._socketSelfOT(delta); });
         this._socket.on('ot-other', function(delta) { classRoot._socketOtherOT(delta); });
         this._socket.on('selectionChange', function(delta) { classRoot._socketOnSelectionChange(delta); });
         this._socket.on('message', function(sMessage) { classRoot._socketOnMessage(sMessage); });
 
-
-        // init
-        var formats = null;
-        var toolbar = null;
-
-
-        if (editOptions) {
-
-            //console.log('editOptions', editOptions);
-
-            if (editOptions.options && editOptions.options.formats) {
-                formats = editOptions.options.formats;
-                toolbar = editOptions.options.formats;
-            }
-        }
-
-        //console.log('formats', formats);
-
-
-        // create
-        this._quill = new Quill(editableValue, {
-            theme: 'bubble',
-            modules: {
-                toolbar: [
-                    [{ 'header': [1, 2, false]}],
-                    ['infocard'],
-                    formats
-                ],
-                history: {
-                    delay: 2000,
-                    maxStack: 500,
-                    userOnly: true
-                }
-            },
-            placeholder: 'Start typing',
-            formats: ['bold', 'italic', 'underline', 'header', 'infocard']
-        });
-
-
-        let toolbarModule = this._quill.getModule('toolbar');
-        toolbarModule.addHandler('infocard', editInfocard);
-
-
-        function editInfocard(e)
-        {
-            console.log('editInfocard');
-
-            // 1. range meeveranderen met delta's
-
-            let range = classRoot._quill.getSelection();
-
-            if (range)
-            {
-                var aFormats = classRoot._quill.getFormat(range);
-
-                if (!aFormats.infocard)
-                {
-                    console.log('Set format ...');
-
-                    var popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
-
-                    //console.log('popup', popup);
-
-                    //popup.addEventListener('data', function() { } );
-
-
-                    // 2. after addition -> trigger javascript to add functionality to edit
-
-
-                    var value = 'infocard.3'; // 1. get from popup
-
-                    // set format
-                    classRoot._quill.format('infocard', value, 'user');
-                }
-                else
-                {
-                    // clear format
-                    classRoot._quill.format('infocard', false, 'user');
-                }
-            };
-        }
-
-        // listen
-        this._quill.on('selection-change', function() { classRoot._onSelectionChange(); });
-        this._quill.on('text-change', function(delta, oldContents, source) { classRoot._onTextChange(delta, oldContents, source); } );
-
-
-        this._socket.emit('edit', this._sPropertySelector);
+        // send edit request
+        this._socket.emit('edit', this._sPropertySelector); // #todo - rename to "request.edit"
     },
-
-
-
 
     _socketOnBaseDocument: function(baseDocument)
     {
@@ -187,6 +79,7 @@ module.exports.prototype = {
         this._baseDocument = baseDocument;
 
         // show content
+        this._quill = this._setupEditor(baseDocument.formattingOptions);
         this._quill.setContents(baseDocument.content);
     },
 
@@ -390,7 +283,98 @@ module.exports.prototype = {
 
         // send
         this._socket.emit('ot', this._deltaPending);
-    }
+    },
 
+
+    _setupEditor: function(formattingOptions)
+    {
+        console.log('Setup formattingOptions', formattingOptions);
+
+
+        // register
+        let classRoot = this;
+
+        // init
+        var toolbar = null;
+        var formats = null;
+
+
+        if (formattingOptions)
+        {
+            if (formattingOptions.toolbar && formattingOptions.toolbar.length > 0) toolbar = formattingOptions.toolbar;
+            if (formattingOptions.formats && formattingOptions.formats.length > 0) formats = formattingOptions.formats;
+        }
+
+        // create
+        let quill = new Quill(this._valueContainer, {
+            theme: 'bubble',
+            modules: {
+                toolbar: toolbar,
+                history: {
+                    delay: 2000,
+                    maxStack: 500,
+                    userOnly: true
+                }
+            },
+            placeholder: 'Start typing', // #todo
+            formats: formats
+        });
+
+        // function editInfocard(e)
+        // {
+        //     console.log('editInfocard');
+        //
+        //     // 1. range meeveranderen met delta's
+        //
+        //     let range = quill.getSelection();
+        //
+        //     console.log('range', range);
+        //
+        //     if (range) {
+        //         let aFormats = quill.getFormat(range);
+        //
+        //         if (!aFormats.infocard) {
+        //             console.log('Set format ...');
+        //
+                        //let popup = Mimoto.popup('/Mimoto.Aimless/form/infocard');
+        //
+        //             //console.log('popup', popup);
+        //
+        //             //popup.addEventListener('data', function() { } );
+        //
+        //
+        //             // 2. after addition -> trigger javascript to add functionality to edit
+        //
+        //
+        //             let value = 'infocard.3'; // 1. get from popup
+        //
+        //             // set format
+        //             quill.format('infocard', value, 'user');
+        //         }
+        //         else {
+        //             // clear format
+        //             quill.format('infocard', false, 'user');
+        //         }
+        //     }
+        // }
+        //
+        //
+        // if (this._sPropertySelector === 'article.1.body')
+        // {
+        //     let toolbarModule = quill.getModule('toolbar');
+        //
+        //     toolbarModule.addHandler('infocard', editInfocard);
+        // }
+
+
+
+        // configure
+        quill.on('selection-change', function() { classRoot._onSelectionChange(); });
+        quill.on('text-change', function(delta, oldContents, source) { classRoot._onTextChange(delta, oldContents, source); } );
+
+
+        // send
+        return quill;
+    }
 
 }

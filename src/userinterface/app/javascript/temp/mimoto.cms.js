@@ -10376,7 +10376,7 @@
 	        {
 	            var sortable = new Sortable(listItem, {
 	                group: 'list_' + nListIndex,
-	                handle: '.MimotoCMS_ListItemModule-handle',
+	                handle: '.js-sortable-draghandle',
 	                dragClass: 'MimotoCMS_ListItemModule--drag',
 	                ghostClass: 'MimotoCMS_ListItemModule--ghost',
 	                // store: {

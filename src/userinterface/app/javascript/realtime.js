@@ -193,7 +193,7 @@ socketIO.on('connection', function(client)
 
 
         console.log('deltaIndex of client = ' + change.nCurrentlyKnownDeltaIndex);
-        console.log('current deltaIndex = ' + (baseDocument.nDeltaIndex - 1));
+        console.log('current deltaIndex = ' + baseDocument.nDeltaIndex);
 
 
         if (change.nCurrentlyKnownDeltaIndex < baseDocument.nDeltaIndex - 1)
@@ -215,7 +215,7 @@ socketIO.on('connection', function(client)
                 // register
                 var deltaFromHistory = baseDocument.aDeltas[nIndex];
 
-                console.log('deltaFromHistory', deltaFromHistory);
+                //console.log('deltaFromHistory', deltaFromHistory);
 
                 console.log('> delta before', delta);
                 delta = new QuillDelta(deltaFromHistory.transform(delta, false));
@@ -224,7 +224,7 @@ socketIO.on('connection', function(client)
 
             //change.delta
 
-            console.log('Correction finished...', JSON.stringify(delta, null, 2));
+            //console.log('Correction finished...', JSON.stringify(delta, null, 2));
         }
         else
         {

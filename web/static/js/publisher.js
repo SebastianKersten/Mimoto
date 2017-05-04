@@ -55,37 +55,8 @@ function unhighlightComment(nCommentId)
     });
 }
 
-function setupEditabeField()
+function helloFromCustomFunction(NodeConfig)
 {
-    // register
-    var editor = document.getElementById('editor');
-    
-    // setup
-    editor.contentEditable = true;
-    
-    // listen to changes
-    //editor.onchange(function(){ console.log(editor.innerHTML); });
-    //$("body").on('DOMSubtreeModified', "mydiv", function() { });
-    
-    // https://www.w3schools.com/jsref/met_document_createdocumentfragment.asp
-    // https://developer.mozilla.org/en/docs/Web/HTML/Element/figure
-    // https://gist.github.com/kentliau/2fbc9124a50c254cad9e
-    
-    // var contents = document.querySelectorAll("[contenteditable=true]");
-    // [].forEach.call(contents, function (content) {
-    //     // When you click on item, record into `data-initial-text` content of this item.
-    //     content.addEventListener("focus", function () {
-    //         content.setAttribute("data-initial-text", content.innerHTML);
-    //     });
-    //     // When you leave an item...
-    //     content.addEventListener("blur", function () {
-    //         // ...if content is different...
-    //         if (content.getAttribute("data-initial-text") !== content.innerHTML) {
-    //             // ... do something.
-    //             console.log("New data when content change.");
-    //             console.log(content.innerHTML);
-    //         }
-    //     });
-    // });
-    
+    console.log('Hi! from custom publisher function');
 }
+

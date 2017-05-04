@@ -388,6 +388,11 @@ class FormService
                             if (!$bConnectionFound) $entity->removeValue($field->propertyName, $currentConnection);
                         }
                     }
+                    else
+                    {
+                        // empty the whole collection
+                        $entity->setValue($field->propertyName, []);
+                    }
 
                     // reload after adding new connections
                     //$aCurrentConnections = $entity->getValue($field->propertyName, true);
