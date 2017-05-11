@@ -17,8 +17,7 @@
         "sendgrid/sendgrid": "~5.0.7",
         "james-heinrich/getid3": "~1.9",
         "symfony/security": "^3.2",
-        "wisembly/elephant.io": "^3.2",
-        "brianlmoon/net_gearman": "dev-master"
+        "wisembly/elephant.io": "^3.2"
     },
     "autoload": {
         "psr-4": {
