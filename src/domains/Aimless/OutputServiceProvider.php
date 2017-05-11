@@ -30,6 +30,9 @@ class OutputServiceProvider implements ServiceProviderInterface
         $app->get ('/Mimoto.Aimless/form/{sFormName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderForm');
 
 
+        $app->post('/mimoto.data/render', 'Mimoto\\Aimless\\MimotoAimlessController::render');
+
+
         $app->post('/Mimoto.Aimless/realtime/collaboration', 'Mimoto\\Aimless\\MimotoAimlessController::authenticateUser');
 
 

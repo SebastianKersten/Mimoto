@@ -29,6 +29,42 @@ class MimotoAimlessController
 {
 
     /**
+     * Render data
+     */
+    public function render(Application $app, Request $request)
+    {
+        // register
+        $sEntityTypeName    = $request->get('sEntityTypeName');
+        $nEntityId          = $request->get('nEntityId');
+        $sComponentName     = $request->get('sComponentName');
+        $sWrapperName       = $request->get('sWrapperName');
+        $sPropertySelector  = $request->get('sPropertySelector');
+        $nConnectionId      = $request->get('nConnectionId');
+
+
+        // load
+        $entity = Mimoto::service('data')->get($sEntityTypeName, $nEntityId);
+
+        // search
+        $connection = $this->_getConnection($sEntityTypeName, $nEntityId, $sPropertySelector, $nConnectionId);
+
+
+        if (!empty($sWrapperName))
+        {
+            // create
+            $component = Mimoto::service('output')->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
+        }
+        else
+        {
+            // create
+            $component = Mimoto::service('output')->createComponent($sComponentName, $entity, $connection);
+        }
+
+        // render and send
+        return $component->render();
+    }
+
+    /**
      * Get view based on entity type and entity id and formatted by component id
      * @param Application $app
      * @param string $sEntityType
@@ -263,13 +299,14 @@ class MimotoAimlessController
     }
 
 
-    private function _getConnection($sEntityType, $nEntityId, $sPropertySelector)
+    private function _getConnection($sEntityType, $nEntityId, $sPropertySelector, $nConnectionId = null)
     {
         // init
         $connection = null;
 
         // verify
-        if (!empty($sPropertySelector)) {
+        if (!empty($sPropertySelector))
+        {
             // split
             $aPropertySelectorElements = explode('.', $sPropertySelector);
 
@@ -282,8 +319,10 @@ class MimotoAimlessController
             $eParent = Mimoto::service('data')->get($sParentEntityTypeName, $xParentEntityId);
 
             // validate
-            if (!empty($eParent) && $eParent->hasProperty($sParentPropertyName)) {
-                if ($eParent->getPropertyType($sParentPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION) {
+            if (!empty($eParent) && $eParent->hasProperty($sParentPropertyName))
+            {
+                if ($eParent->getPropertyType($sParentPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+                {
                     // read
                     $aConnections = $eParent->getValue($sParentPropertyName, true);
 
@@ -293,6 +332,8 @@ class MimotoAimlessController
                         // register
                         $parentConnection = $aConnections[$nConnectionIndex];
 
+
+
                         // verify
                         if ($parentConnection->getChildEntityTypeName() == $sEntityType && $parentConnection->getChildId() == $nEntityId) {
                             // register
@@ -301,6 +342,14 @@ class MimotoAimlessController
                         }
                     }
                 }
+            }
+        }
+        else
+        {
+            if (!empty($nConnectionId))
+            {
+                // 1. load connection
+                $connection = MimotoDataUtils::getConnectionById($nConnectionId);
             }
         }
 

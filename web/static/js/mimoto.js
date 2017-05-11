@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "f3b10a4962b47dae2f65";
+/******/ 	__webpack_require__.h = "2da465b6ff51e1c64f38";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -10629,6 +10629,62 @@
 	    // ----------------------------------------------------------------------------
 	
 	
+	
+	    /**
+	     * Load component NEW
+	     */
+	    loadComponentNEW: function ($container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
+	    {
+	        // compose
+	        let data = {
+	            sEntityTypeName: sEntityTypeName,
+	            nEntityId: nEntityId,
+	            sComponentName: sComponentName,
+	            sWrapperName: null,
+	            sPropertySelector: sPropertySelector,
+	            nConnectionId: nConnectionId
+	        };
+	
+	        // execute
+	        $.ajax({
+	            type: 'POST',
+	            url: '/mimoto.data/render',
+	            data: data,
+	            dataType: 'html',
+	            success: function (data) {
+	                $($container).append(data);
+	            }
+	        });
+	    },
+	
+	    /**
+	     * Load wrapper NEW
+	     */
+	    loadWrapperNEW: function ($container, sEntityTypeName, nId, sWrapperName, sComponentName, sPropertySelector, nConnectionId)
+	    {
+	        // compose
+	        let data = {
+	            sEntityTypeName: sEntityTypeName,
+	            sEntityId: nEntityId,
+	            sComponentName: sComponentName,
+	            sWrapperName: sWrapperName,
+	            sPropertySelector: sPropertySelector,
+	            nConnectionId: nConnectionId
+	        };
+	
+	        // execute
+	        $.ajax({
+	            type: 'POST',
+	            url: '/mimoto.data/render',
+	            data: data,
+	            dataType: 'html',
+	            success: function (data) {
+	                $($container).append(data);
+	            }
+	        });
+	    },
+	
+	
 	    /**
 	     * Load component
 	     */
@@ -10636,7 +10692,7 @@
 	    {
 	        // default
 	        var sPropertySelector = (!sPropertySelector) ? '' : '/' + sPropertySelector;
-	    
+	
 	        // execute
 	        $.ajax({
 	            type: 'GET',
@@ -10656,7 +10712,10 @@
 	    {
 	        // default
 	        var sPropertySelector = (!sPropertySelector) ? '' : '/' + sPropertySelector;
-	        
+	
+	
+	        // 1. connection.connectionId
+	
 	        // execute
 	        $.ajax({
 	            type: 'GET',
@@ -11399,7 +11458,7 @@
 	                var mls_filter = $($container).attr("data-mimoto-filter");
 	                
 	                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
-	            
+	
 	            
 	                // --- handle added items ---
 	            
@@ -11520,28 +11579,36 @@
 	                    var mls_contains = $($container).attr("data-mimoto-contains");
 	                    var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
 	                    var mls_filter = $($container).attr("data-mimoto-filter");
-	                    
-	                    
+	
+	
+	                    console.warn('mls_filter = ' + mls_filter);
 	                    
 	                    if (mls_filter)
 	                    {
 	                        mls_filter = $.parseJSON(mls_filter);
 	                        
 	                        var bFilterApproved = true;
-	                        if (mls_filter) {
-	                            for (var s in mls_filter) {
+	                        if (mls_filter)
+	                        {
+	                            for (var s in mls_filter)
+	                            {
 	                                var bPropertyFound = false;
-	                                for (var j = 0; j < aChanges.length; j++) {
+	                                for (var j = 0; j < aChanges.length; j++)
+	                                {
 	                                    // register
 	                                    var property = aChanges[j];
-	                
-	                                    if (property.propertyName == s) {
+	
+	                                    if (property.propertyName === s)
+	                                    {
 	                                        bPropertyFound = true;
 	                                        break;
 	                                    }
 	                                }
-	            
-	                                if (!(bPropertyFound && property.value == mls_filter[s])) {
+	
+	                                console.log('Prpoerty check: ', property.value, '!=', mls_filter[s]);
+	
+	                                if (bPropertyFound && property.value != mls_filter[s])
+	                                {
 	                                    bFilterApproved = false;
 	                                    break;
 	                                }
@@ -11551,21 +11618,30 @@
 	                        // load
 	                        if (bFilterApproved)
 	                        {
-	                            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
-	    
-	                            if (mls_wrapper)
+	                            console.log('bFilterApproved ...', $container, connection);
+	
+	                            // search
+	                            let $aSubitems = $("[data-mimoto-connection='" + connection.connectionId + "']", $container);
+	
+	                            // verify if item already exists
+	                            if ($aSubitems.length === 0)
 	                            {
-	                                MimotoX.utils.loadWrapper($container, sEntityType, nEntityId, mls_wrapper, mls_component.name);
-	                            }
-	                            else
-	                            {
-	                                if (mls_component.name)
+	                                var mls_wrapper = $($container).attr("data-mimoto-wrapper");
+	
+	                                if (mls_wrapper)
 	                                {
-	                                    MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+	                                    MimotoX.utils.loadWrapperNEW($container, sEntityType, nEntityId, mls_wrapper, mls_component.name, null, connection.connectionId);
+	                                }
+	                                else {
+	                                    if (mls_component.name)
+	                                    {
+	                                        MimotoX.utils.loadComponentNEW($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
+	                                    }
 	                                }
 	                            }
 	                        }
-	                        else {
+	                        else
+	                        {
 	                            // search
 	                            var aSubitems = $("[data-mimoto-id='" + sEntityIdentifier + "']", $container);
 	        
@@ -12145,11 +12221,14 @@
 	     */
 	    _configureEditor: function(aFormattingOptions)
 	    {
-	        if (MimotoX.debug) console.log('Configuring editor ...', aFormattingOptions);
+	        if (MimotoX.debug) console.log('Configuring editor ...');
 	
 	
-	
+	        // init
 	        let classes = {};
+	
+	        // register
+	        let classRoot = this;
 	
 	
 	        // add formatting options
@@ -12205,15 +12284,11 @@
 	
 	                            if (formattingOption.jsOnAdd)
 	                            {
-	                                if (window[formattingOption.jsOnAdd] && typeof window[formattingOption.jsOnAdd] === 'function')
-	                                {
-	                                    // call
-	                                    window[formattingOption.jsOnAdd](formatAdapter);
-	                                }
-	                                else
-	                                {
-	                                    if (MimotoX.debug) console.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
-	                                }
+	                                // execute
+	                                let bResult = classRoot._executeEventHandler(formattingOption.jsOnAdd, formatAdapter);
+	
+	                                // report
+	                                if (!bResult) if (MimotoX.debug) console.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
 	                            }
 	
 	                            // connect
@@ -12221,21 +12296,18 @@
 	                            {
 	                                node.addEventListener('click', function()
 	                                {
-	                                    if (window[formattingOption.jsOnEdit] && typeof window[formattingOption.jsOnEdit] === 'function')
-	                                    {
-	                                        // call
-	                                        window[formattingOption.jsOnEdit](formatAdapter);
-	                                    }
-	                                    else
-	                                    {
-	                                        if (MimotoX.debug) console.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
-	                                    }
+	                                    // execute
+	                                    let bResult = classRoot._executeEventHandler(formattingOption.jsOnEdit, formatAdapter);
+	
+	                                    // report
+	                                    if (!bResult) if (MimotoX.debug) console.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
 	                                });
+	
+	                                // style
+	                                node.style['cursor'] = 'pointer';
 	                            }
 	
-	                            // style
-	                            node.style['cursor'] = 'pointer';
-	
+	                            // send
 	                            return node;
 	                        }
 	
@@ -12294,7 +12366,48 @@
 	            // store
 	            this._aRealtimeEditors.push(realtimeEditor);
 	        }
+	    },
+	
+	    /**
+	     * Setup editable values
+	     * @private
+	     */
+	    _executeEventHandler: function(sHandler, formatAdapter)
+	    {
+	        // split
+	        let aMethodElements = sHandler.split('.');
+	
+	        // validate
+	        let fHandler = window;
+	        let bExecuted = false;
+	        let nMethodElementCount = aMethodElements.length;
+	        for (let nMethodElementIndex = 0; nMethodElementIndex < nMethodElementCount; nMethodElementIndex++)
+	        {
+	            // register
+	            fHandler = fHandler[aMethodElements[nMethodElementIndex]];
+	
+	            // verify
+	            if (nMethodElementIndex === nMethodElementCount - 1)
+	            {
+	                // validate
+	                if (fHandler && typeof fHandler === 'function')
+	                {
+	                    // execute
+	                    fHandler(formatAdapter);
+	                    bExecuted = true;
+	                    break;
+	                }
+	            }
+	            else
+	            {
+	                if (!fHandler) break;
+	            }
+	        }
+	
+	        // send
+	        return bExecuted;
 	    }
+	
 	
 	}
 

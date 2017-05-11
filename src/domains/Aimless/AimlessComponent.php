@@ -480,7 +480,6 @@ class AimlessComponent
         $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' data-mimoto-connection="'.$this->_connection->getId().'"' : '';
         $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' data-mimoto-sortindex="'.$this->_connection->getSortIndex().'"' : '';
 
-
         if ($sPropertySelector !== null)
         {
             // cleanup
@@ -751,7 +750,6 @@ class AimlessComponent
     {
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $this->_entity->getEntityTypeName();
-
 
         // get component file
         $sComponentFile = $this->_OutputService->getComponentFile($sTemplateName, $this->_entity);

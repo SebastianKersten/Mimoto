@@ -8,7 +8,6 @@
 
 // Mimoto classes
 let MimotoX = require('mimoto/modules/MimotoX');
-let RealtimeManagerX = require('mimoto/modules/RealtimeManagerX');
 
 
 /**

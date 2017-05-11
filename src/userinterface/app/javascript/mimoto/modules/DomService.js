@@ -592,7 +592,7 @@ module.exports.prototype = {
                 var mls_filter = $($container).attr("data-mimoto-filter");
                 
                 if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
-            
+
             
                 // --- handle added items ---
             
@@ -713,28 +713,36 @@ module.exports.prototype = {
                     var mls_contains = $($container).attr("data-mimoto-contains");
                     var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
                     var mls_filter = $($container).attr("data-mimoto-filter");
-                    
-                    
+
+
+                    console.warn('mls_filter = ' + mls_filter);
                     
                     if (mls_filter)
                     {
                         mls_filter = $.parseJSON(mls_filter);
                         
                         var bFilterApproved = true;
-                        if (mls_filter) {
-                            for (var s in mls_filter) {
+                        if (mls_filter)
+                        {
+                            for (var s in mls_filter)
+                            {
                                 var bPropertyFound = false;
-                                for (var j = 0; j < aChanges.length; j++) {
+                                for (var j = 0; j < aChanges.length; j++)
+                                {
                                     // register
                                     var property = aChanges[j];
-                
-                                    if (property.propertyName == s) {
+
+                                    if (property.propertyName === s)
+                                    {
                                         bPropertyFound = true;
                                         break;
                                     }
                                 }
-            
-                                if (!(bPropertyFound && property.value == mls_filter[s])) {
+
+                                console.log('Prpoerty check: ', property.value, '!=', mls_filter[s]);
+
+                                if (bPropertyFound && property.value != mls_filter[s])
+                                {
                                     bFilterApproved = false;
                                     break;
                                 }
@@ -744,21 +752,30 @@ module.exports.prototype = {
                         // load
                         if (bFilterApproved)
                         {
-                            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
-    
-                            if (mls_wrapper)
+                            console.log('bFilterApproved ...', $container, connection);
+
+                            // search
+                            let $aSubitems = $("[data-mimoto-connection='" + connection.connectionId + "']", $container);
+
+                            // verify if item already exists
+                            if ($aSubitems.length === 0)
                             {
-                                MimotoX.utils.loadWrapper($container, sEntityType, nEntityId, mls_wrapper, mls_component.name);
-                            }
-                            else
-                            {
-                                if (mls_component.name)
+                                var mls_wrapper = $($container).attr("data-mimoto-wrapper");
+
+                                if (mls_wrapper)
                                 {
-                                    MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+                                    MimotoX.utils.loadWrapperNEW($container, sEntityType, nEntityId, mls_wrapper, mls_component.name, null, connection.connectionId);
+                                }
+                                else {
+                                    if (mls_component.name)
+                                    {
+                                        MimotoX.utils.loadComponentNEW($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
+                                    }
                                 }
                             }
                         }
-                        else {
+                        else
+                        {
                             // search
                             var aSubitems = $("[data-mimoto-id='" + sEntityIdentifier + "']", $container);
         

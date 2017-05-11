@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "f3b10a4962b47dae2f65";
+/******/ 	__webpack_require__.h = "2da465b6ff51e1c64f38";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);

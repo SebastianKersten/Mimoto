@@ -22,6 +22,9 @@ use ElephantIO\Client;
 use ElephantIO\Engine\SocketIO\Version1X;
 use ElephantIO\Exception\ServerConnectionFailureException;
 
+// Brian L. Moon classes
+use Net_Gearman_Manager;
+
 
 /**
  * WorkerController
@@ -30,6 +33,15 @@ use ElephantIO\Exception\ServerConnectionFailureException;
  */
 class WorkerController
 {
+
+    public function overview(Application $app)
+    {
+        $gearmanManager = new Net_Gearman_Manager('127.0.0.1');
+
+        $workers = $gearmanManager->workers();
+
+        Mimoto::error($workers);
+    }
 
     public function data(Request $request, Application $app)
     {
@@ -101,13 +113,30 @@ class WorkerController
             //unset($client);
         });
 
+        var_dump($worker);
+
+
 
         // run
+        //while ($this->xxx() && $worker->work());
         while ($worker->work());
 
 
         // output
         return new Response();
+    }
+
+    public function xxx()
+    {
+
+        $time = date('YmdHis');
+
+        echo 'Poging -----> '.$time.'\n';
+
+
+        return $time < '20170510102700';
+
+        //return true;
     }
 
     public function slack(Request $request, Application $app)

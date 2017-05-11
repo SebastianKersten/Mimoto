@@ -484,4 +484,40 @@ class MimotoDataUtils
         // send
         return $value;
     }
+
+    public static function getConnectionById($nConnectionId)
+    {
+        // load all connections
+        $stmt = Mimoto::service('database')->prepare(
+            "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTION."` WHERE ".
+            "id = :id "
+        );
+        $params = array(
+            ':id' => $nConnectionId
+        );
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll();
+
+        if (count($aResults) != 1) Mimoto::service('log')->error("Connection not found", "The connection with id=`$nConnectionId` cannot be found", true);
+
+        // read
+        $connectionData = $aResults[0];
+
+        // create
+        $connection = new MimotoEntityConnection();
+
+        // setup
+        $connection->setId($connectionData['id']);
+        $connection->setParentEntityTypeId($connectionData['parent_entity_type_id']);
+        $connection->setParentId($connectionData['parent_id']);
+        $connection->setParentPropertyId($connectionData['parent_property_id']);
+        $connection->setChildEntityTypeId($connectionData['child_entity_type_id']);
+        $connection->setChildId($connectionData['child_id']);
+        $connection->setSortIndex($connectionData['sortindex']);
+
+        // send
+        return $connection;
+    }
 }

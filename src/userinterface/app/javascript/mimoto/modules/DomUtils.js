@@ -37,6 +37,62 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
+
+    /**
+     * Load component NEW
+     */
+    loadComponentNEW: function ($container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
+    {
+        // compose
+        let data = {
+            sEntityTypeName: sEntityTypeName,
+            nEntityId: nEntityId,
+            sComponentName: sComponentName,
+            sWrapperName: null,
+            sPropertySelector: sPropertySelector,
+            nConnectionId: nConnectionId
+        };
+
+        // execute
+        $.ajax({
+            type: 'POST',
+            url: '/mimoto.data/render',
+            data: data,
+            dataType: 'html',
+            success: function (data) {
+                $($container).append(data);
+            }
+        });
+    },
+
+    /**
+     * Load wrapper NEW
+     */
+    loadWrapperNEW: function ($container, sEntityTypeName, nId, sWrapperName, sComponentName, sPropertySelector, nConnectionId)
+    {
+        // compose
+        let data = {
+            sEntityTypeName: sEntityTypeName,
+            sEntityId: nEntityId,
+            sComponentName: sComponentName,
+            sWrapperName: sWrapperName,
+            sPropertySelector: sPropertySelector,
+            nConnectionId: nConnectionId
+        };
+
+        // execute
+        $.ajax({
+            type: 'POST',
+            url: '/mimoto.data/render',
+            data: data,
+            dataType: 'html',
+            success: function (data) {
+                $($container).append(data);
+            }
+        });
+    },
+
+
     /**
      * Load component
      */
@@ -44,7 +100,7 @@ module.exports.prototype = {
     {
         // default
         var sPropertySelector = (!sPropertySelector) ? '' : '/' + sPropertySelector;
-    
+
         // execute
         $.ajax({
             type: 'GET',
@@ -64,7 +120,10 @@ module.exports.prototype = {
     {
         // default
         var sPropertySelector = (!sPropertySelector) ? '' : '/' + sPropertySelector;
-        
+
+
+        // 1. connection.connectionId
+
         // execute
         $.ajax({
             type: 'GET',

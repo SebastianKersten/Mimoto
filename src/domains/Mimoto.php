@@ -71,10 +71,30 @@ class Mimoto
 
 
 
+        // --- installation ---
+
+        $app->get ('/mimoto.cms/setup', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::welcome');
+        // werkt alleen als config.php niet bestaat én geen users
+        // check connection
+
+
+        // Slack worker - vars - abstract - actions
+        // opslaan in config.php
+
+        // rollen: superuser
+
+
+        // configuration/roles
+        // configuration/services
+        // #uitleg over locatie browser? folder?
+
+        // overview screen met icons, uitleg en button naar vervolgpagina
+
+
+
 
 
         // --- access control ---
-
 
         $app->post('/mimoto.cms', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::login');
         $app->get ('/mimoto.cms/connect', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::connect'); // retrun domain & port
@@ -85,7 +105,9 @@ class Mimoto
         $app->get ('/mimoto.cms/recent/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::recent');
 
 
-        //
+        // --- runtime ---
+
+        $app->get ('/mimoto.cms/configuration/gearman', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::overview');
         $app->get ('/mimoto.cms/workers/data', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::data');
         $app->get ('/mimoto.cms/workers/slack', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::slack');
 

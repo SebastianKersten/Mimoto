@@ -67,7 +67,7 @@ $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app, false);
 
 
-// run in debgu mode
+// run in debug mode
 Mimoto::runInDebugMode(true);
 
 // send

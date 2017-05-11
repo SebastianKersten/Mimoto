@@ -20,7 +20,7 @@ module.exports = function (env)
             new webpack.ExtendedAPIPlugin()
         ],
         resolve: {
-            modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components', 'src/userinterface/MimotoCMS/modules', 'src/userinterface/app/javascript/utils'],
+            modulesDirectories: ['node_modules', 'src/userinterface/MimotoCMS/components', 'src/userinterface/MimotoCMS/modules'],
             extensions: ['', '.js'],
             alias: {
                 'jquery-ui': 'jquery-ui-dist/jquery-ui.js'
@@ -28,7 +28,8 @@ module.exports = function (env)
         },
         entry: {
             'mimoto.cms': [jsSrc + '/app/javascript/mimoto.cms.js'],
-            'mimoto': [jsSrc + '/app/javascript/mimoto.js']
+            'mimoto': [jsSrc + '/app/javascript/mimoto.js'],
+            'publisher': [jsSrc + '/publisher/base.js']
         },
         output: {
           path: jsDest,

@@ -150,11 +150,14 @@ module.exports.prototype = {
      */
     _configureEditor: function(aFormattingOptions)
     {
-        if (MimotoX.debug) console.log('Configuring editor ...', aFormattingOptions);
+        if (MimotoX.debug) console.log('Configuring editor ...');
 
 
-
+        // init
         let classes = {};
+
+        // register
+        let classRoot = this;
 
 
         // add formatting options
@@ -210,15 +213,11 @@ module.exports.prototype = {
 
                             if (formattingOption.jsOnAdd)
                             {
-                                if (window[formattingOption.jsOnAdd] && typeof window[formattingOption.jsOnAdd] === 'function')
-                                {
-                                    // call
-                                    window[formattingOption.jsOnAdd](formatAdapter);
-                                }
-                                else
-                                {
-                                    if (MimotoX.debug) console.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
-                                }
+                                // execute
+                                let bResult = classRoot._executeEventHandler(formattingOption.jsOnAdd, formatAdapter);
+
+                                // report
+                                if (!bResult) if (MimotoX.debug) console.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
                             }
 
                             // connect
@@ -226,21 +225,18 @@ module.exports.prototype = {
                             {
                                 node.addEventListener('click', function()
                                 {
-                                    if (window[formattingOption.jsOnEdit] && typeof window[formattingOption.jsOnEdit] === 'function')
-                                    {
-                                        // call
-                                        window[formattingOption.jsOnEdit](formatAdapter);
-                                    }
-                                    else
-                                    {
-                                        if (MimotoX.debug) console.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
-                                    }
+                                    // execute
+                                    let bResult = classRoot._executeEventHandler(formattingOption.jsOnEdit, formatAdapter);
+
+                                    // report
+                                    if (!bResult) if (MimotoX.debug) console.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
                                 });
+
+                                // style
+                                node.style['cursor'] = 'pointer';
                             }
 
-                            // style
-                            node.style['cursor'] = 'pointer';
-
+                            // send
                             return node;
                         }
 
@@ -299,6 +295,47 @@ module.exports.prototype = {
             // store
             this._aRealtimeEditors.push(realtimeEditor);
         }
+    },
+
+    /**
+     * Setup editable values
+     * @private
+     */
+    _executeEventHandler: function(sHandler, formatAdapter)
+    {
+        // split
+        let aMethodElements = sHandler.split('.');
+
+        // validate
+        let fHandler = window;
+        let bExecuted = false;
+        let nMethodElementCount = aMethodElements.length;
+        for (let nMethodElementIndex = 0; nMethodElementIndex < nMethodElementCount; nMethodElementIndex++)
+        {
+            // register
+            fHandler = fHandler[aMethodElements[nMethodElementIndex]];
+
+            // verify
+            if (nMethodElementIndex === nMethodElementCount - 1)
+            {
+                // validate
+                if (fHandler && typeof fHandler === 'function')
+                {
+                    // execute
+                    fHandler(formatAdapter);
+                    bExecuted = true;
+                    break;
+                }
+            }
+            else
+            {
+                if (!fHandler) break;
+            }
+        }
+
+        // send
+        return bExecuted;
     }
+
 
 }
