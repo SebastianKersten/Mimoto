@@ -35,10 +35,16 @@
     p {
         margin-bottom: 20px;
     }
+
+    pre, .ql-syntax {
+        border: 1px solid #c5c5c5 !important;
+        background-color: #fafafa !important;
+        color: #858585 !important;
+    }
 }
 
 
 .ql-editor, .ql-container{
-    overflow-y: auto;
+    overflow-y: visible;
     height: auto;
 }
