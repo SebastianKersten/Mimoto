@@ -10,6 +10,7 @@ var Sortable = require('sortablejs'); // https://github.com/RubaXa/Sortable
 
 var Dropzone = require('dropzone');
 var Flatpickr = require('flatpickr');
+var Quill = require('quill');
 
 Dropzone.autoDiscover = false;
 
@@ -39,7 +40,7 @@ module.exports.prototype = {
         this._sCurrentOpenForm = '';
         this._aMediaFields = [];
         this._aDatePicker = [];
-        this._aRichTextFields = [];
+        this._aTextblockFields = [];
     },
 
 
@@ -1013,7 +1014,7 @@ module.exports.prototype = {
 
 
 
-    setupRichTextField: function(sRichTextFieldId, sFlatRichTextFieldId, sInputFieldId)
+    setupTextblock: function(sFieldId, sFlatFieldId, sInputFieldId, sPlaceHolder)
     {
         // read
         var currentForm = this._aForms[this._sCurrentOpenForm];
@@ -1031,82 +1032,54 @@ module.exports.prototype = {
         var fieldInput = $("input", field);
 
         // setup
-        var richTextField = {
-            domElement: document.getElementById(sRichTextFieldId),
-            sImageFieldId: sRichTextFieldId,
-            field: field
+        var textblockField = {
+            domElement: document.getElementById(sFieldId),
+            sFieldId: sFieldId,
+            field: field,
+            fieldInput: fieldInput
         };
 
         // store
-        this._aRichTextFields[sRichTextFieldId] = richTextField;
+        this._aTextblockFields[sFieldId] = textblockField;
 
 
         // register
         var classRoot = document;
 
 
-
-        // var socket = io();
-        // $('form').submit(function(){
-        //     socket.emit('chat message', $('#m').val());
-        //     $('#m').val('');
-        //     return false;
-        // });
-        //
-        // socket.on('chat message', function(msg){
-        //     $('#messages').append($('<li>').text(msg));
-        // });
+        let valueContainer = document.getElementById('js-' + sFlatFieldId + '-textblock-container');
+        let $valueHolder = $('js-' + sFlatFieldId + '-textblock-value', $form);
 
 
-        richTextField.quill = new Mimoto.modules.Quill('#' + sFlatRichTextFieldId, {
-            theme: 'snow' // 'bubble'
+        // create
+        textblockField.quill = new Quill(valueContainer, {
+            theme: 'bubble',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block'],
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }]
+                ],
+                history: {
+                    delay: 2000,
+                    maxStack: 500,
+                    userOnly: true
+                }
+            },
+            placeholder: sPlaceHolder || '', // #todo
+            formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'header', 'list']
         });
 
-        // prepare deltas
-        richTextField.deltaPending = new Mimoto.modules.QuillDelta();
-        richTextField.deltaBuffer = new Mimoto.modules.QuillDelta();
+
+        // 1. set initial value
+        fieldInput.val(valueContainer.getElementsByClassName("ql-editor")[0].innerHTML);
 
 
-        richTextField.quill.on('text-change', function(delta, oldContents, source)
+        textblockField.quill.on('text-change', function(delta, oldContents, source)
         {
-            // if (source == 'api') {
-            //     console.log("An API call triggered this change.");
-            // } else if (source == 'user') {
-            //     console.log("A user action triggered this change.", delta, oldDelta);
-            // }
-
-
-            // var contents = richTextField.quill.getContents();
-            //
-            // console.log('contents', contents);
-            //
-            // var html = "contents = " + JSON.stringify(contents, null, 2);
-            //
-            // if (delta) {
-            //     console.log('change', delta);
-            //     html = "change = " + JSON.stringify(delta, null, 2) + "\n\n" + html;
-            // }
-            // console.log('html', html);
-
-
-
-            // 1. set timer
-            // 2. move buffer to pending
-            // 3. save original state of content
-            // 4. save all OTs since original state
-            // 5. on source, just parse OTs
-
-
-            console.log('change = ' + JSON.stringify(delta, null, 2), '\nprevious contents = ' + JSON.stringify(oldContents, null, 2));
-
-            richTextField.deltaBuffer.push(delta);
-
-            console.log('Delta after', richTextField.deltaBuffer, oldContents);
+            textblockField.fieldInput.val(valueContainer.getElementsByClassName("ql-editor")[0].innerHTML);
         });
-
-
-        richTextField.quill.insertText(0, 'abc');
-
     },
 
     _startAutosave: function(form)

@@ -1,5 +1,15 @@
+{% set sFieldId = Mimoto.meta('type')~"."~Mimoto.meta('id') %}
+{% set sFlatFieldId = Mimoto.meta('type')~Mimoto.meta('id') %}
+
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "textblock"} %}
+
     {% block form_component_element %}
-        <textarea {{ Mimoto.input() }} class="MimotoCMS_forms_input_Textblock js-textblock" name="" placeholder="{{ Mimoto.render('placeholder') }}">{{ Mimoto.value() }}</textarea>
+
+        <div id="js-{{ sFlatFieldId }}-textblock-container" class="MimotoCMS_forms_input_Textblock">{{ Mimoto.value() }}</div>
+
+        <input {{ Mimoto.input() }} type="hidden" id=".js-{{ sFlatFieldId }}-textblock-value"/>
+
+        <script>MimotoX.utils.registerRequest(Mimoto.form.setupTextblock, '{{ sFieldId }}', '{{ sFlatFieldId }}', '{{ Mimoto.fieldId() }}', '{{ Mimoto.render('placeholder') }}');</script>
     {% endblock %}
+
 {% endembed %}

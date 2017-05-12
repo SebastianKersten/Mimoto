@@ -29,7 +29,7 @@ class OutputServiceProvider implements ServiceProviderInterface
         $app->get ('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sComponentName}/{sPropertySelector}', 'Mimoto\\Aimless\\MimotoAimlessController::renderWrapperView')->value('sPropertySelector', '');
         $app->get ('/Mimoto.Aimless/form/{sFormName}', 'Mimoto\\Aimless\\MimotoAimlessController::renderForm');
 
-
+        // new -> replacement for '/Mimoto.Aimless/data' and '/Mimoto.Aimless/wrapper' #todo replace
         $app->post('/mimoto.data/render', 'Mimoto\\Aimless\\MimotoAimlessController::render');
 
 

@@ -453,11 +453,6 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF,
-                'file' => 'MimotoCMS/components/forms/input/TextRTF/TextRTF.twig',
-                'conditionals' => []
-            ),
-            (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX,
                 'file' => 'MimotoCMS/components/forms/input/Checkbox/Checkbox.twig',
                 'conditionals' => []

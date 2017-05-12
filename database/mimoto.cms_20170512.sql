@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : utf-8
 
- Date: 05/02/2017 17:46:06 PM
+ Date: 05/12/2017 09:49:37 AM
 */
 
 SET NAMES utf8mb4;
@@ -66,7 +66,7 @@ CREATE TABLE `_Mimoto_connection` (
   `child_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=269 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_contentsection`
@@ -91,7 +91,7 @@ CREATE TABLE `_Mimoto_entity` (
   `isAbstract` enum('0','1') DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_entityproperty`
@@ -104,7 +104,7 @@ CREATE TABLE `_Mimoto_entityproperty` (
   `subtype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_entitypropertysetting`
@@ -118,7 +118,7 @@ CREATE TABLE `_Mimoto_entitypropertysetting` (
   `markup` text COLLATE utf8_unicode_ci,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_file`
@@ -136,7 +136,7 @@ CREATE TABLE `_Mimoto_file` (
   `originalName` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_form`
@@ -296,22 +296,6 @@ CREATE TABLE `_Mimoto_form_input_textline` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
---  Table structure for `_Mimoto_form_input_textrtf`
--- ----------------------------
-DROP TABLE IF EXISTS `_Mimoto_form_input_textrtf`;
-CREATE TABLE `_Mimoto_form_input_textrtf` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `placeholder` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `optional` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `regexp` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `maxchars` int(10) unsigned DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
 --  Table structure for `_Mimoto_form_input_video`
 -- ----------------------------
 DROP TABLE IF EXISTS `_Mimoto_form_input_video`;
@@ -413,10 +397,14 @@ DROP TABLE IF EXISTS `_Mimoto_formattingoption`;
 CREATE TABLE `_Mimoto_formattingoption` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
+  `tagName` varchar(255) DEFAULT NULL,
+  `toolbar` varchar(255) DEFAULT NULL,
+  `jsOnAdd` varchar(255) DEFAULT NULL,
+  `jsOnEdit` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_formattingoptionattribute`
@@ -472,7 +460,7 @@ CREATE TABLE `_Mimoto_notification` (
   `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 --  Table structure for `_Mimoto_selection`
@@ -508,53 +496,5 @@ CREATE TABLE `_Mimoto_user` (
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
--- ----------------------------
---  Table structure for `article`
--- ----------------------------
-DROP TABLE IF EXISTS `article`;
-CREATE TABLE `article` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `body` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `lede` text COLLATE utf8_unicode_ci,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
---  Table structure for `comment`
--- ----------------------------
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE `comment` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `message` text COLLATE utf8_unicode_ci,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
---  Table structure for `components`
--- ----------------------------
-DROP TABLE IF EXISTS `components`;
-CREATE TABLE `components` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- ----------------------------
---  Table structure for `infocard`
--- ----------------------------
-DROP TABLE IF EXISTS `infocard`;
-CREATE TABLE `infocard` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `link` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `summary` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -33,7 +33,6 @@ use Mimoto\Core\entities\InputRadiobutton;
 use Mimoto\Core\entities\InputTextline;
 use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputTextblock;
-use Mimoto\Core\entities\InputTextRTF;
 use Mimoto\Core\entities\InputList;
 use Mimoto\Core\entities\InputImage;
 use Mimoto\Core\entities\InputVideo;
@@ -111,7 +110,6 @@ class CoreConfig
     // input
     const MIMOTO_FORM_INPUT_TEXTLINE            = '_Mimoto_form_input_textline';
     const MIMOTO_FORM_INPUT_TEXTBLOCK           = '_Mimoto_form_input_textblock';
-    const MIMOTO_FORM_INPUT_TEXTRTF             = '_Mimoto_form_input_textrtf';
     const MIMOTO_FORM_INPUT_CHECKBOX            = '_Mimoto_form_input_checkbox';
     const MIMOTO_FORM_INPUT_MULTISELECT         = '_Mimoto_form_input_multiselect';
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_Mimoto_form_input_radiobutton';
@@ -187,7 +185,6 @@ class CoreConfig
     // input
     const COREFORM_INPUT_TEXTLINE       = '_Mimoto_coreform_input_textline';
     const COREFORM_INPUT_TEXTBLOCK      = '_Mimoto_coreform_input_textblock';
-    const COREFORM_INPUT_TEXTRTF        = '_Mimoto_coreform_input_textrtf';
     const COREFORM_INPUT_CHECKBOX       = '_Mimoto_coreform_input_checkbox';
     const COREFORM_INPUT_MULTISELECT    = '_Mimoto_coreform_input_multiselect';
     const COREFORM_INPUT_RADIOBUTTON    = '_Mimoto_coreform_input_radiobutton';
@@ -274,7 +271,6 @@ class CoreConfig
             InputTextline::getStructure(),
             InputList::getStructure(),
             InputTextblock::getStructure(),
-            InputTextRTF::getStructure(),
             InputCheckbox::getStructure(),
             InputMultiSelect::getStructure(),
             InputRadiobutton::getStructure(),
@@ -350,7 +346,6 @@ class CoreConfig
             InputRadiobutton::getFormStructure(),
             InputTextBlock::getFormStructure(),
             InputTextline::getFormStructure(),
-            InputTextRTF::getFormStructure(),
             InputVideo::getFormStructure(),
             InputColorPicker::getFormStructure(),
             InputDatePicker::getFormStructure()
