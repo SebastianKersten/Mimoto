@@ -1057,7 +1057,7 @@ module.exports.prototype = {
             modules: {
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote', 'code-block'],
+                    ['blockquote', 'code-block', 'link'],
                     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
                     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                     [{ 'indent': '-1'}, { 'indent': '+1' }],
@@ -1069,7 +1069,7 @@ module.exports.prototype = {
                 }
             },
             placeholder: sPlaceHolder || '', // #todo
-            formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'header', 'list', 'indent']
+            formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
         });
 
 
