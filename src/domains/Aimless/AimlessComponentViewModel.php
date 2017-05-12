@@ -151,6 +151,12 @@ class AimlessComponentViewModel
     // visibity and styling options
 
 
+    public function isEmpty($sPropertySelector)
+    {
+        return $this->_component->isEmpty($sPropertySelector);
+    }
+
+
 
     // --- empty ---
 

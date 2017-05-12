@@ -947,7 +947,22 @@ class AimlessComponent
 
 
 
+    public function isEmpty($sPropertySelector)
+    {
+        if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
+        {
+            return empty($this->data($sPropertySelector));
+        }
+        else
+        {
+            if (isset($this->_aSelections[$sPropertySelector]))
+            {
+                return $this->_aSelections[$sPropertySelector]->aEntities->isEmpty();
+            }
+        }
 
+        return true;
+    }
 
 
     public function hideWhenEmpty($sPropertySelector)
