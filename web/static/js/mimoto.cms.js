@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "a042cf1167b77e7b012a";
+/******/ 	__webpack_require__.h = "7618de0a9ae59d1a7bcb";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -47399,7 +47399,8 @@
 	                    ['bold', 'italic', 'underline', 'strike'],
 	                    ['blockquote', 'code-block'],
 	                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-	                    [{ 'list': 'ordered'}, { 'list': 'bullet' }]
+	                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+	                    [{ 'indent': '-1'}, { 'indent': '+1' }],
 	                ],
 	                history: {
 	                    delay: 2000,
@@ -47408,7 +47409,7 @@
 	                }
 	            },
 	            placeholder: sPlaceHolder || '', // #todo
-	            formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'header', 'list']
+	            formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'header', 'list', 'indent']
 	        });
 	
 	

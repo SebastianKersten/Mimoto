@@ -1,6 +1,6 @@
 #{$pr-interface}_Menu {
     position: fixed;
-    z-index: $z-navigation;
+    z-index: $z-navigation-mobile;
     top: 50px;
     left: 0;
     display: none;
@@ -11,6 +11,7 @@
     background-color: $cod-gray;
 
     @include breakpoint(large up) {
+        z-index: $z-navigation;
         top: $header-height;
         bottom: 0;
         display: block;
