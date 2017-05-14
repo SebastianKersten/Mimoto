@@ -19,13 +19,11 @@
                         <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progress">
                             <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
                         </div>
-                        <div class="MimotoCMS_forms_input_ImageUpload-preview-button">
-                            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
-                        </div>
                     </div>
                 </div>
             </div>
             <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}" class=".js-{{ sFlatImageFieldId }}-image-upload-value"/>
+            <div id="image-upload-delete-{{ sFlatImageFieldId }}" class="MimotoCMS_forms_input_ImageUpload-delete {% if Mimoto.value() is empty %}hidden{% endif %}">Remove image</div>
         </div>
         <script>MimotoX.utils.registerRequest(Mimoto.form.setupImageField, '{{ sImagefieldId }}', '{{ sFlatImageFieldId }}', '{{ Mimoto.fieldId() }}');</script>
     {% endblock %}

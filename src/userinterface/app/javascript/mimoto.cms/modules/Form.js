@@ -434,7 +434,7 @@ module.exports.prototype = {
                         }
                         else if (form.responseSettings.onSuccess.closePopup)
                         {
-                            Mimoto.popup.close();
+                            MimotoX.closePopup();
                         }
                         else if (form.responseSettings.onSuccess.reloadPopup)
                         {
@@ -751,16 +751,19 @@ module.exports.prototype = {
         // register
         var field = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
         var fieldInput = $("input", field);
-    
+
         // setup
         var mediaField = {
             sImageFieldShowPreviewClass: 'MimotoCMS_forms_input_ImageUpload--show-preview',
             sImageFieldShowPreviewImageClass: 'MimotoCMS_forms_input_ImageUpload--show-preview-image',
             domElement: document.getElementById(sImageFieldId),
             sImageFieldId: sImageFieldId,
-            field: field
+            field: field,
+            fieldInput: fieldInput,
+            $removeButton: $('#image-upload-delete-' + sFlatImageFieldId, $form),
+            $previewImage: $('#js-' + sFlatImageFieldId + '-previewimage', $form)
         };
-        
+
         // store
         this._aMediaFields[sImageFieldId] = mediaField;
         
@@ -813,14 +816,35 @@ module.exports.prototype = {
     
         mediaField.dropzone.on('success', function (file, serverResponse)
         {
-            // set value
+            // connect value
             fieldInput.val(serverResponse.file_id);
 
-            classRoot._startAutosave(currentForm);
+            // show
+            mediaField.$removeButton.removeClass('hidden');
 
+            // hide
             mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
 
+            // save
+            classRoot._startAutosave(currentForm);
+
         }.bind(this));
+
+
+        mediaField.$removeButton.on('click', function() {
+
+            console.log('click');
+
+            // clear value
+            mediaField.fieldInput.val('');
+
+            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewClass);
+            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewImageClass);
+
+            // hide
+            mediaField.$removeButton.addClass('hidden');
+            mediaField.$previewImage.attr('src', '');
+        });
 
 
         var classRoot = this;

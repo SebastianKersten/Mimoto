@@ -148,7 +148,7 @@ class SessionController
         // 1. for realtime editing
 
         // do nothing is user not logged in
-        if (!$app['session']->get('is_user')) return '';
+        if (!$app['session']->get('is_user')) return Mimoto::service('messages')->response(false, 401);;
 
 
         // setup socket connection
@@ -194,10 +194,7 @@ class SessionController
 
 
         // init
-        $formattingOptions = (object) array(
-            'toolbar' => [],
-            'formats' => []
-        );
+        $formattingOptions = FormattingUtils::initFormattingOptions();
 
 
         // load
@@ -229,30 +226,8 @@ class SessionController
                     // verify
                     if ($setting->getValue('key') == EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS)
                     {
-                        // read
-                        $aRegisteredFormattingOptions = $setting->getValue('formattingOptions');
-
                         // compose
-                        $nFormattingOptionCount = count($aRegisteredFormattingOptions);
-                        for ($nFormattingOptionIndex = 0; $nFormattingOptionIndex < $nFormattingOptionCount; $nFormattingOptionIndex++)
-                        {
-                            // register
-                            $registeredFormattingOption = $aRegisteredFormattingOptions[$nFormattingOptionIndex];
-
-
-                            if (!empty($registeredFormattingOption->getValue('toolbar')))
-                            {
-                                $formattingOptions->toolbar[] = json_decode($registeredFormattingOption->getValue('toolbar'));
-                            }
-                            else
-                            {
-                                $formattingOptions->toolbar[] = $registeredFormattingOption->getValue('name');;
-                            }
-
-                            // compose
-                            $formattingOptions->formats[] = $registeredFormattingOption->getValue('name');
-                        }
-
+                        $formattingOptions = FormattingUtils::composeFormattingOptions($setting, $formattingOptions);
                         break;
                     }
                 }

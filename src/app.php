@@ -64,7 +64,7 @@ Mimoto::setGlobalValue('app', $app);
 // setup
 $app['debug'] = true;
 $app['twig'] = $twig;
-$app['Mimoto'] = new \Mimoto\Mimoto($app, false);
+$app['Mimoto'] = new \Mimoto\Mimoto($app, true);
 
 
 // run in debug mode

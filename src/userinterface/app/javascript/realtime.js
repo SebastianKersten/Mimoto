@@ -14,8 +14,8 @@ var QuillDelta = require("quill-delta");
 var aClients = [];
 var aRooms = [];
 
-// var Memcached = require('memcached');
-// var memcached = new Memcached('127.0.0.1:11211');
+var Memcached = require('memcached');
+var memcached = new Memcached('127.0.0.1:11211');
 
 
 // app.get('/reset', function(req, res){
@@ -141,10 +141,15 @@ socketIO.on('connection', function(client)
                     // init
                     var dBaseDocument = new QuillDelta().insert(response.content);
 
+
+                    let aPropertySelectorElements = sPropertySelector.split('.');
+
+
                     // setup and store in memory
                     aRooms[sPropertySelector] = {
                         sPropertySelector: sPropertySelector,
                         formattingOptions: response.formattingOptions,
+                        formattingOptionsKey: 'formattingOptions:' + aPropertySelectorElements[0] + '.' + aPropertySelectorElements[2],
                         content: dBaseDocument,
                         nDeltaIndex: 0,
                         aDeltas: []
@@ -286,17 +291,27 @@ http.listen(4000, function(){
 
 _broadcastBaseDocument = function(client, sPropertySelector)
 {
-    // prepare
-    var baseDocument = {
-        sPropertySelector: sPropertySelector,
-        formattingOptions: aRooms[sPropertySelector].formattingOptions,
-        content: aRooms[sPropertySelector].content,
-        nDeltaIndex: aRooms[sPropertySelector].nDeltaIndex
-    };
+    // 1. read most recent formatting options
+    memcached.get(
+        aRooms[sPropertySelector].formattingOptionsKey,
+        function (err, data)
+        {
+            // update
+            if (data) aRooms[sPropertySelector].formattingOptions = JSON.parse(data);
 
-    // send
-    client.emit('baseDocument', baseDocument);
-}
+            // 2. prepare
+            let baseDocument = {
+                sPropertySelector: sPropertySelector,
+                formattingOptions: aRooms[sPropertySelector].formattingOptions,
+                content: aRooms[sPropertySelector].content,
+                nDeltaIndex: aRooms[sPropertySelector].nDeltaIndex
+            };
+
+            // 3. send
+            client.emit('baseDocument', baseDocument);
+        }
+    );
+};
 
 
 

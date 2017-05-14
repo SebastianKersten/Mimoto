@@ -405,6 +405,12 @@ class CoreConfig
                 )
             ),
             (object) array(
+                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'.updated',
+                'service' => 'Aimless',
+                'request' => 'onFormattingChanged',
+                'type' => 'sync'
+            ),
+            (object) array(
                 'trigger' => '*.updated',
                 'service' => 'Aimless',
                 'request' => 'dataUpdate',

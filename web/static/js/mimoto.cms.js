@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "76442daa39df2842ef26";
+/******/ 	__webpack_require__.h = "d8549257f3faa7337e76";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -45379,7 +45379,7 @@
 	     */
 	    entityNew: function()
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/entity/new");
+	        var popup = MimotoX.popup("/mimoto.cms/entity/new");
 	
 	        //popup.on('success') = popup.close();
 	    },
@@ -45392,7 +45392,7 @@
 	    //         data: data,
 	    //         dataType: 'json'
 	    //     }).done(function(data) {
-	    //         Mimoto.popup.close();
+	    //         MimotoX.closePopup();
 	    //     });
 	    // },
 	
@@ -45403,7 +45403,7 @@
 	
 	    entityEdit: function(nEntityId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/entity/' + nEntityId + '/edit');
+	        MimotoX.popup('/mimoto.cms/entity/' + nEntityId + '/edit');
 	    },
 	
 	    entityUpdate: function(nEntityId, data)
@@ -45414,7 +45414,7 @@
 	            data: data,
 	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
-	                Mimoto.popup.close();
+	                MimotoX.closePopup();
 	            }
 	        });
 	    },
@@ -45438,7 +45438,7 @@
 	
 	    entityPropertyNew: function(nEntityId)
 	    {
-	        Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
+	        MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/property/new");
 	    },
 	
 	    entityPropertyCreate: function(nEntityId, data)
@@ -45449,14 +45449,14 @@
 	            data: data,
 	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
-	                Mimoto.popup.close();
+	                MimotoX.closePopup();
 	            }
 	        });
 	    },
 	
 	    entityPropertyEdit: function(nEntityPropertyId)
 	    {
-	        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
+	        MimotoX.popup("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
 	    },
 	    
 	    entityPropertyDelete:  function(nEntityPropertyId, sEntityPropertyName)
@@ -45477,7 +45477,7 @@
 	    
 	    entityPropertySettingEdit: function(nEntityPropertySettingId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
+	        MimotoX.popup('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
 	    },
 	
 	
@@ -45530,7 +45530,7 @@
 	     */
 	    entityComponentNew: function(nEntityId)
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
+	        var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
 	        
 	        //popup.on('success') = popup.close();
 	    },
@@ -45542,7 +45542,7 @@
 	    
 	    componentEdit: function(nComponentId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
+	        MimotoX.popup('/mimoto.cms/component/' + nComponentId + '/edit');
 	    },
 	    
 	    componentDelete: function(nComponentId)
@@ -45561,12 +45561,12 @@
 	    
 	    componentConditionalNew: function(nComponentId)
 	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/conditional/new');
+	        var popup = MimotoX.popup('/mimoto.cms/component/' + nComponentId + '/conditional/new');
 	    },
 	    
 	    componentConditionalEdit: function(nComponentConditionalId)
 	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
+	        var popup = MimotoX.popup('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
 	    },
 	    
 	    componentConditionalDelete: function(nComponentConditionalId)
@@ -45592,7 +45592,7 @@
 	    //  */
 	    // eNew: function(nEntityId)
 	    // {
-	    //     var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
+	    //     var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
 	    //
 	    //     // Mimoto.Aimless/data/
 	    //
@@ -45607,7 +45607,7 @@
 	     */
 	    selectionNew: function()
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/selection/new");
+	        var popup = MimotoX.popup("/mimoto.cms/selection/new");
 	    },
 	    
 	    selectionView: function(nSelectionId)
@@ -45617,7 +45617,7 @@
 	    
 	    selectionEdit: function(nSelectionId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/edit');
+	        MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/edit');
 	    },
 	    
 	    selectionDelete: function(nSelectionId)
@@ -45635,12 +45635,12 @@
 	    
 	    selectionRuleNew: function(nSelectionId)
 	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
+	        var popup = MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
 	    },
 	    
 	    selectionRuleEdit: function(nSelectionRuleId)
 	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
+	        var popup = MimotoX.popup('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
 	    },
 	    
 	    selectionRuleDelete: function(nSelectionRuleId)
@@ -45663,7 +45663,7 @@
 	     */
 	    formattingOptionNew: function()
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/formattingOption/new");
+	        var popup = MimotoX.popup("/mimoto.cms/formattingOption/new");
 	    },
 	
 	    formattingOptionView: function(nItemId)
@@ -45673,7 +45673,7 @@
 	
 	    formattingOptionEdit: function(nItemId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/formattingOption/' + nItemId + '/edit');
+	        MimotoX.popup('/mimoto.cms/formattingOption/' + nItemId + '/edit');
 	    },
 	
 	    formattingOptionDelete: function(nItemId)
@@ -45691,12 +45691,12 @@
 	
 	    formattingOptionAttributeNew: function(nItemId)
 	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/formattingOption/' + nItemId + '/formattingOptionAttribute/new');
+	        var popup = MimotoX.popup('/mimoto.cms/formattingOption/' + nItemId + '/formattingOptionAttribute/new');
 	    },
 	
 	    formattingOptionAttributeEdit: function(nItemId)
 	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/formattingOptionAttribute/' + nItemId + '/edit');
+	        var popup = MimotoX.popup('/mimoto.cms/formattingOptionAttribute/' + nItemId + '/edit');
 	    },
 	
 	    formattingOptionAttributeDelete: function(nItemId)
@@ -45719,7 +45719,7 @@
 	     */
 	    userNew: function()
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/user/new");
+	        var popup = MimotoX.popup("/mimoto.cms/user/new");
 	    },
 	
 	    userView: function(nUserId)
@@ -45729,7 +45729,7 @@
 	
 	    userEdit: function(nUserId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/user/' + nUserId + '/edit');
+	        MimotoX.popup('/mimoto.cms/user/' + nUserId + '/edit');
 	    },
 	
 	    userDelete: function(nUserId)
@@ -45751,7 +45751,7 @@
 	     */
 	    layoutNew: function()
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/layout/new");
+	        var popup = MimotoX.popup("/mimoto.cms/layout/new");
 	    },
 	    
 	    layoutView: function(nLayoutId)
@@ -45761,7 +45761,7 @@
 	    
 	    layoutEdit: function(nLayoutId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/layout/' + nLayoutId + '/edit');
+	        MimotoX.popup('/mimoto.cms/layout/' + nLayoutId + '/edit');
 	    },
 	    
 	    layoutDelete: function(nLayoutId)
@@ -45779,12 +45779,12 @@
 	    
 	    layoutContainerNew: function(nLayoutId)
 	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/layout/' + nLayoutId + '/layoutcontainer/new');
+	        var popup = MimotoX.popup('/mimoto.cms/layout/' + nLayoutId + '/layoutcontainer/new');
 	    },
 	    
 	    layoutContainerEdit: function(nLayoutContainerId)
 	    {
-	        var popup = Mimoto.popup.open('/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/edit');
+	        var popup = MimotoX.popup('/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/edit');
 	    },
 	    
 	    layoutContainerDelete: function(nLayoutContainerId)
@@ -45807,7 +45807,7 @@
 	     */
 	    contentSectionNew: function()
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/contentsection/new");
+	        var popup = MimotoX.popup("/mimoto.cms/contentsection/new");
 	    },
 	    
 	    contentSectionView: function(nContentSectionId)
@@ -45817,7 +45817,7 @@
 	    
 	    contentSectionEdit: function(nContentSectionId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
+	        MimotoX.popup('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
 	    },
 	    contentSectionDelete: function(nContentSectionId, sContentSectionName)
 	    {
@@ -45874,7 +45874,7 @@
 	     */
 	    entityFormNew: function(nEntityId)
 	    {
-	        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/form/new");
+	        var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/form/new");
 	        
 	        //popup.on('success') = popup.close();
 	    },
@@ -45897,7 +45897,7 @@
 	    
 	    formEdit: function(nFormId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
+	        MimotoX.popup('/mimoto.cms/form/' + nFormId + '/edit');
 	    },
 	    
 	    formDelete: function(nFormId)
@@ -45913,7 +45913,7 @@
 	    
 	    formFieldNew_TypeSelector: function(nFormId)
 	    {
-	        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/field/new');
+	        MimotoX.popup('/mimoto.cms/form/' + nFormId + '/field/new');
 	    },
 	    
 	    formFieldNew_FieldForm: function(nFormId, nFormFieldTypeId)
@@ -45948,7 +45948,7 @@
 	        
 	        console.log(sURL);
 	        
-	        var popup = Mimoto.popup.open(sURL);
+	        var popup = MimotoX.popup(sURL);
 	        
 	        // 1. return root of the popup (or root object)
 	        // 2. connect content of the popup (onload) to the popup object
@@ -46774,7 +46774,7 @@
 	                        }
 	                        else if (form.responseSettings.onSuccess.closePopup)
 	                        {
-	                            Mimoto.popup.close();
+	                            MimotoX.closePopup();
 	                        }
 	                        else if (form.responseSettings.onSuccess.reloadPopup)
 	                        {
@@ -47091,16 +47091,19 @@
 	        // register
 	        var field = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
 	        var fieldInput = $("input", field);
-	    
+	
 	        // setup
 	        var mediaField = {
 	            sImageFieldShowPreviewClass: 'MimotoCMS_forms_input_ImageUpload--show-preview',
 	            sImageFieldShowPreviewImageClass: 'MimotoCMS_forms_input_ImageUpload--show-preview-image',
 	            domElement: document.getElementById(sImageFieldId),
 	            sImageFieldId: sImageFieldId,
-	            field: field
+	            field: field,
+	            fieldInput: fieldInput,
+	            $removeButton: $('#image-upload-delete-' + sFlatImageFieldId, $form),
+	            $previewImage: $('#js-' + sFlatImageFieldId + '-previewimage', $form)
 	        };
-	        
+	
 	        // store
 	        this._aMediaFields[sImageFieldId] = mediaField;
 	        
@@ -47153,14 +47156,35 @@
 	    
 	        mediaField.dropzone.on('success', function (file, serverResponse)
 	        {
-	            // set value
+	            // connect value
 	            fieldInput.val(serverResponse.file_id);
 	
-	            classRoot._startAutosave(currentForm);
+	            // show
+	            mediaField.$removeButton.removeClass('hidden');
 	
+	            // hide
 	            mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
 	
+	            // save
+	            classRoot._startAutosave(currentForm);
+	
 	        }.bind(this));
+	
+	
+	        mediaField.$removeButton.on('click', function() {
+	
+	            console.log('click');
+	
+	            // clear value
+	            mediaField.fieldInput.val('');
+	
+	            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewClass);
+	            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewImageClass);
+	
+	            // hide
+	            mediaField.$removeButton.addClass('hidden');
+	            mediaField.$previewImage.attr('src', '');
+	        });
 	
 	
 	        var classRoot = this;

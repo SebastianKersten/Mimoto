@@ -30996,7 +30996,7 @@
 	    //         data: data,
 	    //         dataType: 'json'
 	    //     }).done(function(data) {
-	    //         Mimoto.popup.close();
+	    //         MimotoX.closePopup();
 	    //     });
 	    // },
 	
@@ -31018,7 +31018,7 @@
 	            data: data,
 	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
-	                Mimoto.popup.close();
+                    MimotoX.closePopup();
 	            }
 	        });
 	    },
@@ -31053,7 +31053,7 @@
 	            data: data,
 	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
-	                Mimoto.popup.close();
+                    MimotoX.closePopup();
 	            }
 	        });
 	    },
@@ -32286,7 +32286,7 @@
 	                        }
 	                        else if (form.responseSettings.onSuccess.closePopup)
 	                        {
-	                            Mimoto.popup.close();
+                                MimotoX.closePopup();
 	                        }
 	                        else if (form.responseSettings.onSuccess.reloadPopup)
 	                        {

@@ -5,13 +5,16 @@ namespace Mimoto\Aimless;
 
 // Mimoto classes
 use Mimoto\Core\entities\ComponentConditional;
+use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\FormattingUtils;
 use Mimoto\Core\entities\Component;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\EntityConfig\EntityConfigUtils;
 use Mimoto\Data\MimotoDataUtils;
+
 use Mimoto\Form\FormService;
 use Mimoto\Log\LogService;
 
@@ -433,6 +436,7 @@ class OutputService
             case 'onEntityPropertyCreated':         Mimoto::service('config')->onEntityPropertyCreated($data); break;
             case 'onEntityPropertyUpdated':         Mimoto::service('config')->onEntityPropertyUpdated($data); break;
             case 'onEntityPropertySettingUpdated':  Mimoto::service('config')->onEntityPropertySettingUpdated($data); break;
+            case 'onFormattingChanged':             $this->onFormattingChanged($data); break;
 
             default:
                 
@@ -923,4 +927,30 @@ class OutputService
                 return;
             }
     }
+
+    /**
+     * Handle formatting updates
+     * @param MimotoEntity $eEntityPropertySetting
+     */
+    private function onFormattingChanged(MimotoEntity $eEntityPropertySetting)
+    {
+        // 1. verify
+        if ($eEntityPropertySetting->getValue('key') != EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS) return;
+
+        // 2. get the setting's property
+        $eEntityProperty = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings', $eEntityPropertySetting);
+
+        // 3. get the property's entity
+        $eEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
+
+        // 4. compose memcache key
+        $sKeyFormattingOptions = EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS.':'.$eEntity->getValue('name').'.'.$eEntityProperty->getValue('name');
+
+        // 5. store in cache
+        if (Mimoto::service('cache')->isEnabled())
+        {
+            Mimoto::service('cache')->setValue($sKeyFormattingOptions, json_encode(FormattingUtils::composeFormattingOptions($eEntityPropertySetting)));
+        }
+    }
+
 }

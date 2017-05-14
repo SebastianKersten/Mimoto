@@ -15,7 +15,7 @@ use Mimoto\Mimoto;
 class FormattingUtils
 {
     /**
-     * Init structure
+     * Get custom formatting options
      */
     public static function getCustomFormattingOptions()
     {
@@ -48,6 +48,55 @@ class FormattingUtils
 
         // 4. send
         return $aFormattingOptions;
+    }
+
+    /**
+     * Init formatting options
+     */
+    public static function initFormattingOptions()
+    {
+        return (object) array(
+            'toolbar' => [],
+            'formats' => []
+        );
+    }
+
+    /**
+     * Compose formatting options
+     */
+    public static function composeFormattingOptions($eEntityPropertySettingWithFormattingOptions, $formattingOptions = null)
+    {
+        // verify or init
+        if (empty($formattingOptions)) $formattingOptions = FormattingUtils::initFormattingOptions();
+
+
+        // read
+        $aRegisteredFormattingOptions = $eEntityPropertySettingWithFormattingOptions->getValue('formattingOptions');
+
+        // compose
+        $nFormattingOptionCount = count($aRegisteredFormattingOptions);
+        for ($nFormattingOptionIndex = 0; $nFormattingOptionIndex < $nFormattingOptionCount; $nFormattingOptionIndex++)
+        {
+            // register
+            $registeredFormattingOption = $aRegisteredFormattingOptions[$nFormattingOptionIndex];
+
+
+            if (!empty($registeredFormattingOption->getValue('toolbar')))
+            {
+                $formattingOptions->toolbar[] = json_decode($registeredFormattingOption->getValue('toolbar'));
+            }
+            else
+            {
+                $formattingOptions->toolbar[] = $registeredFormattingOption->getValue('name');;
+            }
+
+            // compose
+            $formattingOptions->formats[] = $registeredFormattingOption->getValue('name');
+        }
+
+
+        // send
+        return $formattingOptions;
     }
 
 }
