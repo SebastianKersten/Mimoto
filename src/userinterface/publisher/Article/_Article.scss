@@ -42,11 +42,19 @@ div.MimotoPublisher-Article-header {
 }
 
 div.MimotoPublisher-Article-title {
-    margin: 0 200px 30px 100px;
+    margin: 0 50px 30px 50px;
     font-size: 48px;
     line-height: 50px;
     font-weight: bold;
     font-family: "Futura PT W02 Book", sans-serif;
+}
+
+@include breakpoint(medium up) {
+
+    div.MimotoPublisher-Article-title {
+        margin: 0 200px 30px 100px;
+        overflow: visible;
+    }
 }
 
 img.MimotoPublisher-Article-headerImage {
@@ -58,6 +66,11 @@ img.MimotoPublisher-Article-headerImage {
 .ql-editor, .ql-container{
     overflow-y: auto;
     height: auto;
+}
+
+.ql-editor {
+    padding: 0;
+    line-height: inherit;
 }
 
 div.MimotoPublisher-Article-body {

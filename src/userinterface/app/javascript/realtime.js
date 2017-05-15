@@ -8,8 +8,8 @@ var socketIOMimoto = require('socket.io')(httpMimoto);
 
 var runner = require("child_process");
 
-var QuillDelta = require("quill-delta");
 
+var QuillDelta = require("quill-delta");
 
 var aClients = [];
 var aRooms = [];
@@ -138,19 +138,16 @@ socketIO.on('connection', function(client)
                     // convert
                     response = JSON.parse(response);
 
-                    // init
-                    var dBaseDocument = new QuillDelta().insert(response.content);
-
-
+                    // prepare
                     let aPropertySelectorElements = sPropertySelector.split('.');
-
 
                     // setup and store in memory
                     aRooms[sPropertySelector] = {
                         sPropertySelector: sPropertySelector,
                         formattingOptions: response.formattingOptions,
                         formattingOptionsKey: 'formattingOptions:' + aPropertySelectorElements[0] + '.' + aPropertySelectorElements[2],
-                        content: dBaseDocument,
+                        content: response.content,
+                        contentAsDelta: null,
                         nDeltaIndex: 0,
                         aDeltas: []
                     };
@@ -165,6 +162,12 @@ socketIO.on('connection', function(client)
             // send
             _broadcastBaseDocument(client, sPropertySelector);
         }
+    });
+
+    client.on('setContentAsDelta', function(data)
+    {
+        // store
+        aRooms[data.sPropertySelector].contentAsDelta = new QuillDelta(data.contentAsDelta);
     });
 
     client.on('ot', function(change)
@@ -186,8 +189,6 @@ socketIO.on('connection', function(client)
 
         // register
         var baseDocument = aRooms[sPropertySelector];
-
-
 
 
 
@@ -250,13 +251,12 @@ socketIO.on('connection', function(client)
 
         //console.log(JSON.stringify(aRooms[sPropertySelector].aDeltas[nNewDeltaIndex], null, 2));
 
-
         // update data
-        baseDocument.content = baseDocument.content.compose(delta);
+        baseDocument.contentAsDelta = baseDocument.contentAsDelta.compose(delta);
 
 
 
-        //console.log('baseDocument on server', JSON.stringify(baseDocument.content, null, 2));
+        //console.log('baseDocument on server', JSON.stringify(baseDocument.contentAsDelta, null, 2));
 
 
 
@@ -304,6 +304,7 @@ _broadcastBaseDocument = function(client, sPropertySelector)
                 sPropertySelector: sPropertySelector,
                 formattingOptions: aRooms[sPropertySelector].formattingOptions,
                 content: aRooms[sPropertySelector].content,
+                contentAsDelta: aRooms[sPropertySelector].contentAsDelta,
                 nDeltaIndex: aRooms[sPropertySelector].nDeltaIndex
             };
 
@@ -375,6 +376,54 @@ socketIOMimoto.on('connection', function(server)
     {
         console.log('data.created');
         socketIO.emit('data.created', data);
+    });
+
+    server.on("formattingOptions.changed", function(data)
+    {
+
+        console.log('formattingOptions.changed', JSON.stringify(data, null, 2));
+console.log(aClients);
+
+        for (let sPropertySelector in socketIO.sockets.adapter.rooms)
+        {
+            if (sPropertySelector.substr(0, data.entityName.length + 1) == data.entityName + '.' &&
+                sPropertySelector.substr(sPropertySelector.length - data.entityPropertyName.length - 1) == '.' + data.entityPropertyName &&
+                sPropertySelector.length > (data.entityName.length + data.entityPropertyName.length + 2)
+            )
+            {
+                // 1. get all clients
+                var aClientsInRoom = socketIO.sockets.adapter.rooms[sPropertySelector].sockets;
+
+                for (var clientId in aClientsInRoom)
+                {
+                    console.log('clientId', clientId);
+
+                    // register
+                    var client = aClients[clientId];
+
+
+                    _broadcastBaseDocument(client, sPropertySelector);
+
+                    // let nClientCount = aClients.length;
+                    // for (let nClientIndex = 0; nClientIndex < nClientCount; nClientIndex++)
+                    // {
+                    //     // register
+                    //     var client = aClients[nClientIndex];
+                    //
+                    //     if (client.id == clientId)
+                    //     {
+                    //         console.log('Client connected ' + clientId);
+                    //
+                    //         console.log(client);
+                    //
+                    //         _broadcastBaseDocument(client, sPropertySelector);
+                    //     }
+                    // }
+
+
+                }
+            }
+        }
     });
 
 });

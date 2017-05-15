@@ -29,6 +29,7 @@ module.exports.prototype = {
 
     // connection
     _socket: null,
+    _sGateway: null,
 
 
     // ----------------------------------------------------------------------------
@@ -43,6 +44,9 @@ module.exports.prototype = {
     {
         // log
         if (MimotoX.debug) console.log('Connecting user');
+
+        // store
+        this._sGateway = sGateway;
 
 
         if (!sGateway)
@@ -62,13 +66,18 @@ module.exports.prototype = {
                         classRoot._configureEditor(resultData.formattingOptions);
                     }
 
-                    classRoot._connect(resultData.gateway);
+                    // store
+                    classRoot._sGateway = resultData.gateway;
+
+                    // connect
+                    classRoot._connect();
                 }
             });
         }
         else
         {
-            this._connect(sGateway);
+            // connect
+            this._connect();
         }
     },
 
@@ -79,16 +88,20 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
-    _connect: function(sGateway)
+    _connect: function()
     {
+        // register
+
+
         // setup
-        this._socket = new io(sGateway);
+        this._socket = new io(this._sGateway);
 
         // register
         let classRoot = this;
 
         // logon events
         this._socket.on('connect', function() { classRoot._socketOnConnect(); });
+        this._socket.on('connect_failed', function() { classRoot._socketConnectFailed(); });
         this._socket.on('disconnect', function() { classRoot._socketOnDisconnect(); });
         this._socket.on('logon', function(data) { classRoot._socketOnLogon(data); });
 
@@ -119,6 +132,12 @@ module.exports.prototype = {
                 //console.log('Authenticate request finished');
             }
         });
+
+    },
+
+    _socketConnectFailed: function()
+    {
+        console.log('You are logged off .. trying to connect ...');
 
     },
 

@@ -117,6 +117,7 @@ class AssetController
     private function setHeaderForJavascript()
     {
         header("Content-type: application/javascript; charset: UTF-8");
+        header("X-Content-Type-Options: nosniff");
     }
 
     /**

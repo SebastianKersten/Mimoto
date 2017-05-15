@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "d8549257f3faa7337e76";
+/******/ 	__webpack_require__.h = "ae76cb6a1782a5e781ee";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12100,6 +12100,7 @@
 	
 	    // connection
 	    _socket: null,
+	    _sGateway: null,
 	
 	
 	    // ----------------------------------------------------------------------------
@@ -12114,6 +12115,9 @@
 	    {
 	        // log
 	        if (MimotoX.debug) console.log('Connecting user');
+	
+	        // store
+	        this._sGateway = sGateway;
 	
 	
 	        if (!sGateway)
@@ -12133,13 +12137,18 @@
 	                        classRoot._configureEditor(resultData.formattingOptions);
 	                    }
 	
-	                    classRoot._connect(resultData.gateway);
+	                    // store
+	                    classRoot._sGateway = resultData.gateway;
+	
+	                    // connect
+	                    classRoot._connect();
 	                }
 	            });
 	        }
 	        else
 	        {
-	            this._connect(sGateway);
+	            // connect
+	            this._connect();
 	        }
 	    },
 	
@@ -12150,16 +12159,20 @@
 	    // ----------------------------------------------------------------------------
 	
 	
-	    _connect: function(sGateway)
+	    _connect: function()
 	    {
+	        // register
+	
+	
 	        // setup
-	        this._socket = new io(sGateway);
+	        this._socket = new io(this._sGateway);
 	
 	        // register
 	        let classRoot = this;
 	
 	        // logon events
 	        this._socket.on('connect', function() { classRoot._socketOnConnect(); });
+	        this._socket.on('connect_failed', function() { classRoot._socketConnectFailed(); });
 	        this._socket.on('disconnect', function() { classRoot._socketOnDisconnect(); });
 	        this._socket.on('logon', function(data) { classRoot._socketOnLogon(data); });
 	
@@ -12190,6 +12203,12 @@
 	                //console.log('Authenticate request finished');
 	            }
 	        });
+	
+	    },
+	
+	    _socketConnectFailed: function()
+	    {
+	        console.log('You are logged off .. trying to connect ...');
 	
 	    },
 	
@@ -12496,9 +12515,41 @@
 	        // register
 	        this._baseDocument = baseDocument;
 	
+	
+	        //console.warn('baseDocument', baseDocument);
+	
+	
+	        // determine
+	        let bContentAsDelta = baseDocument.contentAsDelta;
+	
+	
+	        if (!bContentAsDelta)
+	        {
+	            // reset
+	            this._valueContainer.innerHTML = baseDocument.content;
+	        }
+	
 	        // show content
 	        this._quill = this._setupEditor(baseDocument.formattingOptions);
-	        this._quill.setContents(baseDocument.content);
+	
+	        if (bContentAsDelta)
+	        {
+	            //console.warn('contentAsDelta FROM SERVER', baseDocument.contentAsDelta);
+	            this._quill.setContents(baseDocument.contentAsDelta);
+	        }
+	
+	
+	        if (!bContentAsDelta)
+	        {
+	            let data = {
+	                sPropertySelector: this._sPropertySelector,
+	                contentAsDelta: this._quill.getContents()
+	            };
+	
+	            //console.log('data after conversion', data);
+	
+	            this._socket.emit('setContentAsDelta', data);
+	        }
 	    },
 	
 	
@@ -12513,6 +12564,9 @@
 	
 	        // register
 	        this._baseDocument.nDeltaIndex = parsedDelta.nNewDeltaIndex;
+	
+	        //console.warn('SELF: this._baseDocument.nDeltaIndex', this._baseDocument.nDeltaIndex);
+	
 	
 	        // reset
 	        this._deltaPending = null;
@@ -12546,6 +12600,7 @@
 	        // register
 	        this._baseDocument.nDeltaIndex = parsedDelta.nNewDeltaIndex;
 	
+	        //console.warn('OTHER: this._baseDocument.nDeltaIndex', this._baseDocument.nDeltaIndex);
 	
 	
 	        // 1. convert

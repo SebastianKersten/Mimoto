@@ -78,9 +78,41 @@ module.exports.prototype = {
         // register
         this._baseDocument = baseDocument;
 
+
+        //console.warn('baseDocument', baseDocument);
+
+
+        // determine
+        let bContentAsDelta = baseDocument.contentAsDelta;
+
+
+        if (!bContentAsDelta)
+        {
+            // reset
+            this._valueContainer.innerHTML = baseDocument.content;
+        }
+
         // show content
         this._quill = this._setupEditor(baseDocument.formattingOptions);
-        this._quill.setContents(baseDocument.content);
+
+        if (bContentAsDelta)
+        {
+            //console.warn('contentAsDelta FROM SERVER', baseDocument.contentAsDelta);
+            this._quill.setContents(baseDocument.contentAsDelta);
+        }
+
+
+        if (!bContentAsDelta)
+        {
+            let data = {
+                sPropertySelector: this._sPropertySelector,
+                contentAsDelta: this._quill.getContents()
+            };
+
+            //console.log('data after conversion', data);
+
+            this._socket.emit('setContentAsDelta', data);
+        }
     },
 
 
@@ -95,6 +127,9 @@ module.exports.prototype = {
 
         // register
         this._baseDocument.nDeltaIndex = parsedDelta.nNewDeltaIndex;
+
+        //console.warn('SELF: this._baseDocument.nDeltaIndex', this._baseDocument.nDeltaIndex);
+
 
         // reset
         this._deltaPending = null;
@@ -128,6 +163,7 @@ module.exports.prototype = {
         // register
         this._baseDocument.nDeltaIndex = parsedDelta.nNewDeltaIndex;
 
+        //console.warn('OTHER: this._baseDocument.nDeltaIndex', this._baseDocument.nDeltaIndex);
 
 
         // 1. convert

@@ -13,7 +13,6 @@
     "require": {
         "silex/silex": "~1.3",
         "twig/twig": "~1.0",
-        "pusher/pusher-php-server": "^2.6",
         "sendgrid/sendgrid": "~5.0.7",
         "james-heinrich/getid3": "~1.9",
         "symfony/security": "^3.2",

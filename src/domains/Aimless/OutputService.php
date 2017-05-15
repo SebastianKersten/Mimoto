@@ -915,17 +915,16 @@ class OutputService
             $sSlackMessage = ">*$sTitle*\n>```$sMessage```\n>_From: $sDispatcher"."_";
 
 
-            // $result =
             // execute
             $client->doBackground("sendSlackNotification", json_encode(array(
                 'channel' => $config->channel,
                 'message' => $sSlackMessage
             )));
-            }
-            catch (\Exception $e)
-            {
-                return;
-            }
+        }
+        catch (\Exception $e)
+        {
+            return;
+        }
     }
 
     /**
@@ -950,6 +949,22 @@ class OutputService
         if (Mimoto::service('cache')->isEnabled())
         {
             Mimoto::service('cache')->setValue($sKeyFormattingOptions, json_encode(FormattingUtils::composeFormattingOptions($eEntityPropertySetting)));
+        }
+
+
+        // setup socket connection
+        $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+
+        try
+        {
+            // broadcast update
+            $client->initialize();
+            $client->emit('formattingOptions.changed', ['entityName' => $eEntity->getValue('name'), 'entityPropertyName' => $eEntityProperty->getValue('name')]);
+            $client->close();
+        }
+        catch (ServerConnectionFailureException $e)
+        {
+            echo 'Server Connection Failure!!';
         }
     }
 
