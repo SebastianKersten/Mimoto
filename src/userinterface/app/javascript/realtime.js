@@ -337,6 +337,10 @@ socketIOMimoto.on('connection', function(server)
 
         //console.log(aClients);
 
+        // validate
+        if (!aClients[data.socketId]) return;
+
+
         aClients[data.socketId].user = data.user;
         aClients[data.socketId].emit('logon', data);
 
@@ -382,7 +386,7 @@ socketIOMimoto.on('connection', function(server)
     {
 
         console.log('formattingOptions.changed', JSON.stringify(data, null, 2));
-console.log(aClients);
+
 
         for (let sPropertySelector in socketIO.sockets.adapter.rooms)
         {

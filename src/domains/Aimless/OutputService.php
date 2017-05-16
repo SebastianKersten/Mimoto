@@ -232,7 +232,7 @@ class OutputService
             }
         }
 
-        Mimoto::service('log')->error("Template `$sComponentName` not found", "I con't find the template you are looking for", true);
+        Mimoto::service('log')->error("Template `$sComponentName` not found", "I can't find the template you are looking for", true);
 
 
         // 1. broadcast webevent for debugging purposes
