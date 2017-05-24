@@ -17,7 +17,3 @@
     php_value max_input_time 200
 
 </IfModule>
-
-<IfModule mod_headers.c>
-  Header unset X-Content-Type-Options
-</IfModule>

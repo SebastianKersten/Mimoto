@@ -656,6 +656,23 @@ class AimlessComponent
         }
     }
 
+    /**
+     * Get the current user
+     * @return MimotoEntity
+     */
+    public function user()
+    {
+
+
+        // init
+        return Mimoto::currentUser();
+
+
+        // 1. check if already created in session
+        // 2. load user
+        // 3. create viewmodel
+        // 4. return
+    }
 
     public function form($sKey = null)
     {

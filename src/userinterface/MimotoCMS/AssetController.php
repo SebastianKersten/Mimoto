@@ -154,8 +154,14 @@ class AssetController
         // compose
         $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/static/'.$sFile;
 
+        // open the file in a binary mode
+        $fp = fopen($sFile, 'rb');
+
+        // send the right headers
+        header("Content-Length: " . filesize($sFile));
+
         // load and send
-        return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
+        return (file_exists($sFile)) ? fpassthru($fp) : 'File not found';
     }
 
     /**
@@ -168,7 +174,13 @@ class AssetController
         // compose
         $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/dynamic/'.$sFile;
 
+        // open the file in a binary mode
+        $fp = fopen($sFile, 'rb');
+
+        // send the right headers
+        header("Content-Length: " . filesize($sFile));
+
         // load and send
-        return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
+        return (file_exists($sFile)) ? fpassthru($fp) : 'File not found';
     }
 }

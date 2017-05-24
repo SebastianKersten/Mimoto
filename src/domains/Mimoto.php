@@ -14,6 +14,7 @@ use Mimoto\Log\LogServiceProvider;
 use Mimoto\User\UserServiceProvider;
 use Mimoto\Selection\SelectionServiceProvider;
 use Mimoto\Message\MessageServiceProvider;
+//use Mimoto\Page\PageServiceProvider;
 use Mimoto\UserInterface\MimotoCMS\SessionController;
 
 // Silex classes
@@ -32,6 +33,8 @@ use Silex\Provider\SecurityServiceProvider;
  */
 class Mimoto
 {
+    // silex
+    public static $_app;
 
     private static $_aServices = [];
     private static $_aValues = [];
@@ -51,6 +54,10 @@ class Mimoto
      */
     public function __construct($app, $bEnableCache = false)
     {
+        // register
+        Mimoto::$_app = $app;
+
+
         // setup templates
         $app['twig']->getLoader()->addPath(dirname(dirname(__FILE__)) . '/userinterface');
 
@@ -68,6 +75,7 @@ class Mimoto
         $app->register(new ActionServiceProvider());
         $app->register(new SelectionServiceProvider());
         $app->register(new MessageServiceProvider());
+        //$app->register(new PageServiceProvider());
 
 
 
@@ -331,6 +339,14 @@ class Mimoto
         self::$_bDebugMode = $bDebugMode;
     }
 
+    public static function currentUser()
+    {
+        // do nothing is user not logged in
+        if (!Mimoto::$_app['session']->get('is_user')) return null;
+
+
+        //Mimoto::error(Mimoto::$_app['session']->get('user'));
+    }
 
     public static function output($sTitle, $data = null, $bScream = false)
     {

@@ -92,6 +92,11 @@ class AimlessComponentViewModel
         return $this->_component->meta($sPropertyName);
     }
 
+    public function user()
+    {
+        return $this->_component->user();
+    }
+
     public function form($sKey = null)
     {
         return $this->_component->form($sKey);

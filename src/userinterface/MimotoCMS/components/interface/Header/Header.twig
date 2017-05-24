@@ -27,9 +27,9 @@
     <ul class="MimotoCMS_interface_Header-menu">
         <li class="MimotoCMS_interface_Header-menu-item">
             <a href="/mimoto.cms/account" class="MimotoCMS_interface_Header-menu-user">
-                <span class="MimotoCMS_interface_Header-menu-user-text" data-mimoto-value="_Mimoto_user.{{ Mimoto.globalValue('app').session.get('user').id }}.name">{{ Mimoto.globalValue('app').session.get('user').name }}</span>
+                <span class="MimotoCMS_interface_Header-menu-user-text" {{ Mimoto.user.realtime('name') }}>{{ Mimoto.user.data('name') }}</span>
                 <figure class="MimotoCMS_interface_Header-menu-user-figure">
-                    <img data-mimoto-image="_Mimoto_user.{{ Mimoto.globalValue('app').session.get('user').id }}.avatar" src="{{ Mimoto.globalValue('app').session.get('user').avatar }}" class="MimotoCMS_interface_Header-menu-user-image"/>
+                    <img {{ Mimoto.user.realtime('avatar') }} src="{{ Mimoto.user.data('avatar') }}" class="MimotoCMS_interface_Header-menu-user-image"/>
                 </figure>
             </a>
         </li>
@@ -51,3 +51,5 @@
         </li>
     </ul>
 </header>
+
+{{ Mimoto.user }}

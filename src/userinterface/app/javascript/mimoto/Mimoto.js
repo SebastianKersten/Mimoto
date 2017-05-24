@@ -113,7 +113,7 @@ module.exports.prototype = {
 
             link.type = 'text/css';
             link.rel = 'stylesheet';
-            link.href = '/static/css/mimoto.cms.css';
+            link.href = 'mimoto.cms/static/css/mimoto.cms.css';
 
             head.appendChild(link);
 
