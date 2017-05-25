@@ -1,0 +1,57 @@
+{%
+    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
+        id: 'componentdetails',
+        tabs: [
+            {
+                label: 'Formatting option',
+                panel_id: 'panel_detail_info'
+            }
+        ]
+    }
+%}
+    {% block panels %}
+
+        <!-- structure -->
+
+        <div id="panel_detail_info" class="MimotoCMS_pages_formattingoptions_Detail__panel">
+
+            <div class="MimotoCMS_pages_formattingoptions_Detail_Structure">
+
+                <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__meta">
+                    <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__meta_info">
+
+                        <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+                        <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__type" {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</div>
+
+                    </div>
+
+                    <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__meta_menu">
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.formattingOptionEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="MimotoCMS_pages_formattingoptions_Detail__block">
+
+                <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__attributes_empty" {{ Mimoto.showWhenEmpty('attributes') }}>
+                    <div>This formatting options has no attributes.<br>Add them here if your project requires them.</div>
+                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new attribute', icon:'plus', onclick:"Mimoto.CMS.formattingOptionAttributeNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
+                </div>
+
+                <div {{ Mimoto.hideWhenEmpty('attributes') }}>
+                    <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__attributes_container" {{ Mimoto.realtime('attributes', 'MimotoCMS_formattingoptions_Detail-Attribute') }}>
+                        {{ Mimoto.render('attributes', 'MimotoCMS_formattingoptions_Detail-Attribute') }}
+                    </div>
+
+                    <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__attributes_menu">
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new attribute', icon:'plus', onclick:"Mimoto.CMS.formattingOptionAttributeNew('" ~ Mimoto.meta('id') ~ "');" }) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    {% endblock %}
+{% endembed %}

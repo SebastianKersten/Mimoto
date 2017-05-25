@@ -1,7 +1,7 @@
 {
     "name": "momkai/mimoto",
     "description": "A realtime fluid data management microframework",
-    "keywords": ["microframework", "realtime", "data", "templating"],
+    "keywords": ["microframework", "realtime", "data", "templating", "websocket"],
     "homepage": "http://momkai.com/mimoto",
     "license": "Apache-2.0",
     "authors": [
