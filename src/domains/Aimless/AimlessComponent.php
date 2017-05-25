@@ -658,20 +658,24 @@ class AimlessComponent
 
     /**
      * Get the current user
-     * @return MimotoEntity
+     * @return UserViewModel
      */
     public function user()
     {
-
-
         // init
-        return Mimoto::currentUser();
+        $eUser = Mimoto::currentUser();
 
+        // validate
+        if (empty($eUser)) return null;
 
-        // 1. check if already created in session
-        // 2. load user
-        // 3. create viewmodel
-        // 4. return
+        // create
+        $component = Mimoto::service('output')->createComponent('', $eUser);
+
+        // wrap into viewmodel
+        $viewModel = new UserViewModel($component);
+
+        // send
+        return $viewModel;
     }
 
     public function form($sKey = null)

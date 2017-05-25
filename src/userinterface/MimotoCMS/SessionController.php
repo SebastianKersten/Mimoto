@@ -148,7 +148,7 @@ class SessionController
         // 1. for realtime editing
 
         // do nothing is user not logged in
-        if (!$app['session']->get('is_user')) return Mimoto::service('messages')->response(false, 401);;
+        if (!$app['session']->get('is_user')) return Mimoto::service('messages')->response(false, 200);;
 
 
         // setup socket connection

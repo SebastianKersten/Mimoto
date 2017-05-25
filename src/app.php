@@ -57,10 +57,6 @@ Mimoto::setValue('popup.layout.default', 'MimotoCMS_layout_Popup'); // uit gener
 //Mimoto::registerService('mail');
 
 
-// temp solution
-Mimoto::setGlobalValue('app', $app);
-
-
 // setup
 $app['debug'] = true;
 $app['twig'] = $twig;

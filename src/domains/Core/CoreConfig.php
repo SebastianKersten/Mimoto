@@ -9,6 +9,7 @@ use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\User;
+use Mimoto\Core\entities\UserRole;
 use Mimoto\Core\entities\FormattingOption;
 use Mimoto\Core\entities\FormattingOptionAttribute;
 use Mimoto\Core\entities\Component;
@@ -89,7 +90,10 @@ class CoreConfig
     // functionality
     const MIMOTO_ACTION                         = '_Mimoto_action';
     const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';
+
     const MIMOTO_USER                           = '_Mimoto_user';
+    const MIMOTO_USER_GROUP                     = '_Mimoto_user_group';
+    const MIMOTO_USER_ROLE                      = '_Mimoto_user_role';
 
     // search
     const MIMOTO_SELECTION                      = '_Mimoto_selection';
@@ -162,6 +166,8 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
     const COREFORM_USER                         = '_Mimoto_coreform_user';
+    const COREFORM_USER_ROLE                    = '_Mimoto_coreform_user_role';
+    const COREFORM_USER_GROUP                   = '_Mimoto_coreform_user_group';
 
     const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentSection';
     const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
@@ -232,6 +238,7 @@ class CoreConfig
 
             // users
             User::getStructure(),
+            UserRole::getStructure(),
 
             // search
             Selection::getStructure(),
@@ -304,6 +311,7 @@ class CoreConfig
 
             // users
             User::getFormStructure(),
+            UserRole::getFormStructure(),
 
             // search
             Selection::getFormStructure(),

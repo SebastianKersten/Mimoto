@@ -5,6 +5,7 @@ namespace Mimoto;
 
 // Mimoto classes
 use Mimoto\Action\ActionServiceProvider;
+use Mimoto\Core\CoreConfig;
 use Mimoto\Event\EventServiceProvider;
 use Mimoto\Aimless\OutputServiceProvider;
 use Mimoto\Data\EntityServiceProvider;
@@ -34,7 +35,8 @@ use Silex\Provider\SecurityServiceProvider;
 class Mimoto
 {
     // silex
-    public static $_app;
+    private static $_app;
+    private static $_currentUser;
 
     private static $_aServices = [];
     private static $_aValues = [];
@@ -341,11 +343,27 @@ class Mimoto
 
     public static function currentUser()
     {
-        // do nothing is user not logged in
+        // 1. do nothing if user not logged in
         if (!Mimoto::$_app['session']->get('is_user')) return null;
 
+        // 2. verify
+        if (empty(self::$_currentUser))
+        {
+            // 2a. read
+            $nUserId = self::$_currentUser = Mimoto::$_app['session']->get('user')->id;
 
-        //Mimoto::error(Mimoto::$_app['session']->get('user'));
+            // 2b. load
+            $eUser = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER, $nUserId);
+
+            // 2c. do nothing if user does not exist
+            if (empty($eUser)) return null;
+
+            // 2d. store
+            self::$_currentUser = $eUser;
+        }
+
+        // 3. send
+        return self::$_currentUser;
     }
 
     public static function output($sTitle, $data = null, $bScream = false)
