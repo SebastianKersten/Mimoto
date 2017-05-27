@@ -133,7 +133,10 @@ class Mimoto
         // main menu
         $app->get('/mimoto.cms/entities', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::viewEntityOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/selections', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::viewSelectionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/configuration', 'Mimoto\\UserInterface\\MimotoCMS\\ConfigurationController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/configuration/formatting', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/configuration/userroles', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/configuration/services', 'Mimoto\\UserInterface\\MimotoCMS\\ServicesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/layouts', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::viewLayoutOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/contentsections', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::viewContentSectionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -203,6 +206,13 @@ class Mimoto
 //        $app->get ('/mimoto.cms/selection/{nSelectionId}/rule/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 //        $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 //        $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+        // User roles
+        $app->get ('/mimoto.cms/configuration/userrole/new', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/userrole/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/userrole/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/userrole/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
 
 
         // Layout

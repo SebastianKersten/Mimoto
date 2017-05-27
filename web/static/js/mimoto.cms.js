@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "41cee7d4d08e192d0a7e";
+/******/ 	__webpack_require__.h = "253b4a789bfa10007f5e";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -45699,19 +45699,58 @@
 	        var popup = MimotoX.popup('/mimoto.cms/formattingOptionAttribute/' + nItemId + '/edit');
 	    },
 	
-	    formattingOptionAttributeDelete: function(nItemId)
+	    formattingOptionAttributeDelete: function(nItemId, sFormattingOptionName)
 	    {
-	        MimotoX.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/formattingOptionAttribute/' + nItemId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
+	        var response = confirm("Are you sure you want to delete the formatting option '" + sFormattingOptionName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+	        if (response == true)
+	        {
+	            MimotoX.utils.callAPI({
+	                type: 'get',
+	                url: '/mimoto.cms/formattingOptionAttribute/' + nItemId + '/delete',
+	                data: null,
+	                dataType: 'json',
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
 	    },
 	
+	
+	    /**
+	     * User roles
+	     */
+	    userRoleNew: function()
+	    {
+	        var popup = MimotoX.popup("/mimoto.cms/configuration/userrole/new");
+	    },
+	
+	    userRoleView: function(nItemId)
+	    {
+	        window.open('/mimoto.cms/configuration/userrole/' + nItemId + '/view', '_self');
+	    },
+	
+	    userRoleEdit: function(nItemId)
+	    {
+	        MimotoX.popup('/mimoto.cms/configuration/userrole/' + nItemId + '/edit');
+	    },
+	
+	    userRoleDelete: function(nItemId, sUserRoleName)
+	    {
+	        var response = confirm("Are you sure you want to delete the user role '" + sUserRoleName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+	        if (response == true)
+	        {
+	            MimotoX.utils.callAPI({
+	                type: 'get',
+	                url: '/mimoto.cms/configuration/userrole/' + nItemId + '/delete',
+	                data: null,
+	                dataType: 'json',
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
+	    },
 	
 	
 	    /**

@@ -32,87 +32,86 @@
         </ul>
         #}
 
-        <ul class="MimotoCMS_interface_Menu-group">
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/entities" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-drafts'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Data structure</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/contentsections" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Content sections</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/pages" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Pages</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/datasets" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Datasets</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/api" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">API</span>
-                </a>
-            </li>
-            {#<li class="MimotoCMS_interface_Menu-item">#}
-                {#<a href="/mimoto.cms/flows" class="MimotoCMS_interface_Menu-item-link">#}
-                    {#<svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>#}
-                    {#<span class="MimotoCMS_interface_Menu-item-text">Flows</span>#}
-                {#</a>#}
-            {#</li>#}
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/layouts" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Layouts</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/selections" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-arrow'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Data selections</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/actions" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-schedule'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Actions</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/users" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-team'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Users</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="MimotoCMS_interface_Menu-group">
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/configuration" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-tools'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Configuration</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/configuration/formatting" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-tools'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Formatting</span>
-                </a>
-            </li>
-            <li class="MimotoCMS_interface_Menu-item">
-                <a href="/mimoto.cms/configuration/services" class="MimotoCMS_interface_Menu-item-link">
-                    <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-tools'/></svg>
-                    <span class="MimotoCMS_interface_Menu-item-text">Services</span>
-                </a>
-            </li>
+        {% if Mimoto.user.hasRole('_Mimoto_superuser') %}
+
+            <ul class="MimotoCMS_interface_Menu-group">
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/entities" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-drafts'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Data structure</span>
+                    </a>
+                </li>
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/contentsections" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Content sections</span>
+                    </a>
+                </li>
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/pages" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Pages</span>
+                    </a>
+                </li>
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/datasets" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Datasets</span>
+                    </a>
+                </li>
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/api" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">API</span>
+                    </a>
+                </li>
+                {#<li class="MimotoCMS_interface_Menu-item">#}
+                    {#<a href="/mimoto.cms/flows" class="MimotoCMS_interface_Menu-item-link">#}
+                        {#<svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>#}
+                        {#<span class="MimotoCMS_interface_Menu-item-text">Flows</span>#}
+                    {#</a>#}
+                {#</li>#}
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/layouts" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Layouts</span>
+                    </a>
+                </li>
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/selections" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-arrow'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Data selections</span>
+                    </a>
+                </li>
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/actions" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-schedule'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Actions</span>
+                    </a>
+                </li>
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/users" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-team'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Users</span>
+                    </a>
+                </li>
+            </ul>
+
+        {% endif %}
+
+        <ul>
+
+            {% if Mimoto.user.hasRole('_Mimoto_superuser') %}
+
+                <li class="MimotoCMS_interface_Menu-item">
+                    <a href="/mimoto.cms/configuration" class="MimotoCMS_interface_Menu-item-link">
+                        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-tools'/></svg>
+                        <span class="MimotoCMS_interface_Menu-item-text">Configuration</span>
+                    </a>
+                </li>
+
+            {% endif %}
+
             <li class="MimotoCMS_interface_Menu-item">
                 <a href="/mimoto.cms/heartbeat" class="MimotoCMS_interface_Menu-item-link">
                     <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-drafts'/></svg>

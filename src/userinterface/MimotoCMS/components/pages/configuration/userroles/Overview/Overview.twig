@@ -1,5 +1,5 @@
-{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add custom formatting option', icon:'plus', onclick:"Mimoto.CMS.formattingOptionNew('formattingOption');" }) }}
+{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add user role', icon:'plus', onclick:"Mimoto.CMS.userRoleNew('userRole');" }) }}
 
-<ul class="MimotoCMS_pages_formattingoptions_Overview__container js-list js-list-sortable" {{ Mimoto.realtime('formattingOptions', 'Mimoto.CMS_formattingoptions_Overview_ListItem') }}>
-    {{ Mimoto.render('formattingOptions', 'Mimoto.CMS_formattingoptions_Overview_ListItem') }}
+<ul class="MimotoCMS_pages_configuration_userroles_Overview__container js-list js-list-sortable" {{ Mimoto.realtime('userRoles', 'Mimoto.CMS_configuration_userroles_Overview_ListItem') }}>
+    {{ Mimoto.render('userRoles', 'Mimoto.CMS_configuration_userroles_Overview_ListItem') }}
 </ul>

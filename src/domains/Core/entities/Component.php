@@ -207,6 +207,14 @@ class Component
             ),
 
 
+            // configuration
+            (object) array(
+                'name' => 'Mimoto.CMS_configuration_Overview',
+                'file' => 'MimotoCMS/components/pages/configuration/Configuration.twig',
+                'conditionals' => []
+            ),
+
+
             // formatting options
 
             (object) array(
@@ -227,6 +235,25 @@ class Component
             (object) array(
                 'name' => 'MimotoCMS_formattingoptions_Detail-Attribute',
                 'file' => 'MimotoCMS/components/pages/formattingoptions/Detail/Attribute/Attribute.twig',
+                'conditionals' => []
+            ),
+
+
+            // user roles
+
+            (object) array(
+                'name' => 'Mimoto.CMS_configuration_userroles_Overview',
+                'file' => 'MimotoCMS/components/pages/configuration/userroles/Overview/Overview.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_configuration_userroles_Overview_ListItem',
+                'file' => 'MimotoCMS/components/pages/configuration/userroles/Overview/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_configuration_userroles_Detail',
+                'file' => 'MimotoCMS/components/pages/configuration/userroles/Detail/Detail.twig',
                 'conditionals' => []
             ),
 

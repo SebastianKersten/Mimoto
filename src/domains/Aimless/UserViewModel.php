@@ -38,25 +38,53 @@ class UserViewModel extends AimlessComponentViewModel
     // ----------------------------------------------------------------------------
 
 
-    public function hasRole($xRoles)
+    public function hasRole()
     {
-        // 1. allowed: string or array -> place in separate values
-        // 2. check string and trhow in array
-        // 3. check array
-        // 4. check with user object
+        // init
+        $bValidated = true;
+
 
         // load
         $eUser = $this->_component->getEntity();
 
         // read
-        $eRoles = $eUser->getValue('roles');
+        $aRoles = $eUser->getValue('roles');
 
-        // check
+        // init
+        $aRolesNames = [];
 
+        // collect
+        $nRoleCount = count($aRoles);
+        for ($nRoleIndex = 0; $nRoleIndex < $nRoleCount; $nRoleIndex++)
+        {
+            // register
+            $eRole = $aRoles[$nRoleIndex];
 
+            // read and overwrite
+            $aRolesNames[] = $eRole->getValue('name');
+        }
 
+        // register
+        $aRequestedRoles = func_get_args();
 
-        return true;
+        // parse
+        $nRequestedRoleCount = count($aRequestedRoles);
+        for ($nRequestedRoleIndex = 0; $nRequestedRoleIndex < $nRequestedRoleCount; $nRequestedRoleIndex++)
+        {
+            // register
+            $sRequestedRole = $aRequestedRoles[$nRequestedRoleIndex];
+
+            // verify
+            if (!in_array($sRequestedRole, $aRolesNames))
+            {
+                $bValidated = false;
+                break;
+            }
+
+        }
+        
+        // send
+        return $bValidated;
     }
 
 }
