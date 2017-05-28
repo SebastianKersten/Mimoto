@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "253b4a789bfa10007f5e";
+/******/ 	__webpack_require__.h = "1a5721cff6c53f708ca1";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -124,6 +124,7 @@
 	
 	    // config
 	    debug: null,
+	    autoloadCSS: null,
 	    gateway: null,
 	
 	    // caching
@@ -146,6 +147,7 @@
 	
 	        // configure
 	        this.debug = false;
+	        this.autoloadCSS = true,
 	        this.version = '';
 	    },
 	
@@ -191,15 +193,17 @@
 	        if (!document.getElementById('MimotoCMS'))
 	        {
 	
-	            var head = document.head;
-	            var link = document.createElement('link');
+	            if (this.autoloadCSS)
+	            {
+	                var head = document.head;
+	                var link = document.createElement('link');
 	
-	            link.type = 'text/css';
-	            link.rel = 'stylesheet';
-	            link.href = 'mimoto.cms/static/css/mimoto.cms.css';
+	                link.type = 'text/css';
+	                link.rel = 'stylesheet';
+	                link.href = '/mimoto.cms/static/css/mimoto.cms.css';
 	
-	            head.appendChild(link);
-	
+	                head.appendChild(link);
+	            }
 	
 	
 	            var rootElement = document.createElement('div');

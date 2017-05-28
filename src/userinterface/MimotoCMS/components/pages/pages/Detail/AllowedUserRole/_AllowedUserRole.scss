@@ -1,0 +1,24 @@
+div.MimotoCMS_pages_pages_Detail_AllowedUserRole {
+
+    display: inline-block;
+
+    & > a, & > span {
+        padding: 8px 18px;
+    }
+
+    & > a {
+        color: #ffffff;
+        background-color: $sinbad;
+        text-decoration: none;
+    }
+
+    & > a:hover {
+        text-decoration: underline;
+    }
+
+    & > span {
+        color: #000000;
+        background-color: #f1f1f1;
+        font-style: italic;
+    }
+}

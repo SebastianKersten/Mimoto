@@ -13,8 +13,6 @@
     "require": {
         "silex/silex": "~1.3",
         "twig/twig": "~1.0",
-        "sendgrid/sendgrid": "~5.0.7",
-        "james-heinrich/getid3": "~1.9",
         "symfony/security": "^3.2",
         "wisembly/elephant.io": "^3.2"
     },
@@ -37,6 +35,7 @@
             "Mimoto\\Aimless\\": "./src/domains/Aimless",
             "Mimoto\\Mail\\": "./src/domains/Mail",
             "Mimoto\\Cache\\": "./src/domains/Cache",
+            "Mimoto\\Session\\": "./src/domains/Session",
             "Mimoto\\tests\\": "./tests"
         }
     }

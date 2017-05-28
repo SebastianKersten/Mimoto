@@ -98,7 +98,25 @@ class User
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
-                )
+                ),
+//                (object) array(
+//                    'id' => CoreConfig::MIMOTO_USER.'--settings',
+//                    // ---
+//                    'name' => 'settings',
+//                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+//                    'settings' => [
+//                        'allowedEntityTypes' => (object) array(
+//                            'key' => 'allowedEntityTypes',
+//                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+//                            'value' => [CoreConfig::MIMOTO_USER_SETTING]
+//                        ),
+//                        'allowDuplicates' => (object) array(
+//                            'key' => 'allowDuplicates',
+//                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+//                            'value' => CoreConfig::DATA_VALUE_FALSE
+//                        )
+//                    ]
+//                )
             ]
         );
     }
@@ -224,7 +242,7 @@ class User
 
 
     /**
-     * Get field: allowedEntityTypes
+     * Get field: user roles
      */
     private static function getField_userRoles()
     {
@@ -240,6 +258,26 @@ class User
         $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_USER_ROLE]);
 
 
+        //if (Mimoto::user()->hasRole('superuser'))
+        {
+            $aCoreUserRoles = [
+                (object)array('label' => 'Mimoto Superuser', 'id' => CoreConfig::MIMOTO_USER_ROLE . '-superuser')
+            ];
+
+            $nCoreUserRoleCount = count($aCoreUserRoles);
+            for ($nCoreUserRoleIndex = 0; $nCoreUserRoleIndex < $nCoreUserRoleCount; $nCoreUserRoleIndex++) {
+                // register
+                $coreUserRole = $aCoreUserRoles[$nCoreUserRoleIndex];
+
+                // load
+                $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER_ROLE, $coreUserRole->id);
+
+                // store
+                $aEntities[] = $entity;
+            }
+        }
+
+
         $nEntityCount = count($aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)
         {
@@ -252,14 +290,6 @@ class User
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
             $field->addValue('options', $option);
         }
-
-
-//        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-//        $option->setId(CoreConfig::COREFORM_USER.'--roles_value_options-_Mimoto_superuser');
-//        $option->setValue('label', 'Mimoto: superuser');
-//        $option->setValue('value', '_Mimoto_root.'.'._Mimoto_root--superuser');
-//        $field->addValue('options', $option);
-
 
         // send
         return $field;

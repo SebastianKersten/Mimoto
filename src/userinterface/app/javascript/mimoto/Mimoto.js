@@ -41,6 +41,7 @@ module.exports.prototype = {
 
     // config
     debug: null,
+    autoloadCSS: null,
     gateway: null,
 
     // caching
@@ -63,6 +64,7 @@ module.exports.prototype = {
 
         // configure
         this.debug = false;
+        this.autoloadCSS = true,
         this.version = '';
     },
 
@@ -108,15 +110,17 @@ module.exports.prototype = {
         if (!document.getElementById('MimotoCMS'))
         {
 
-            var head = document.head;
-            var link = document.createElement('link');
+            if (this.autoloadCSS)
+            {
+                var head = document.head;
+                var link = document.createElement('link');
 
-            link.type = 'text/css';
-            link.rel = 'stylesheet';
-            link.href = 'mimoto.cms/static/css/mimoto.cms.css';
+                link.type = 'text/css';
+                link.rel = 'stylesheet';
+                link.href = '/mimoto.cms/static/css/mimoto.cms.css';
 
-            head.appendChild(link);
-
+                head.appendChild(link);
+            }
 
 
             var rootElement = document.createElement('div');

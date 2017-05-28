@@ -98,34 +98,34 @@ class EntityPropertyForm_Value_formattingOptions
 
             // inline
 
-            (object) array('label' => 'Bold', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-bold'),
-            (object) array('label' => 'Italic', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-italic'),
-            (object) array('label' => 'Underline', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-underline'),
-            (object) array('label' => 'Strikethrough', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-strike'),
-            (object) array('label' => 'Superscript/Subscript', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-script'),
-            (object) array('label' => 'Inline Code', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-code'),
-            (object) array('label' => 'Link', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-link'),
+            (object) array('label' => 'Bold', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-bold'),
+            (object) array('label' => 'Italic', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-italic'),
+            (object) array('label' => 'Underline', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-underline'),
+            (object) array('label' => 'Strikethrough', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-strike'),
+            (object) array('label' => 'Superscript/Subscript', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-script'),
+            (object) array('label' => 'Inline Code', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-code'),
+            (object) array('label' => 'Link', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-link'),
 
-            (object) array('label' => 'Color', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-color'),
-            (object) array('label' => 'Background Color', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-background'),
-            (object) array('label' => 'Font', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-font'),
-            (object) array('label' => 'Size', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-size'),
+            (object) array('label' => 'Color', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-color'),
+            (object) array('label' => 'Background Color', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-background'),
+            (object) array('label' => 'Font', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-font'),
+            (object) array('label' => 'Size', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-size'),
 
             // block
 
-            (object) array('label' => 'Blockquote', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-blockquote'),
-            (object) array('label' => 'Header', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-header'),
-            (object) array('label' => 'Indent', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-indent'),
-            (object) array('label' => 'List', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-list'),
-            (object) array('label' => 'Text Alignment', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-align'),
-            (object) array('label' => 'Text Direction', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-direction'),
-            (object) array('label' => 'Code Block', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-code-block'),
+            (object) array('label' => 'Blockquote', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-blockquote'),
+            (object) array('label' => 'Header', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header'),
+            (object) array('label' => 'Indent', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-indent'),
+            (object) array('label' => 'List', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-list'),
+            (object) array('label' => 'Text Alignment', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-align'),
+            (object) array('label' => 'Text Direction', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-direction'),
+            (object) array('label' => 'Code Block', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-code-block'),
 
             // embeds
 
-            (object) array('label' => 'Formula', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-formula'),
-            (object) array('label' => 'Image', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-image'),
-            (object) array('label' => 'Video', 'id' => CoreConfig::COREFORM_FORMATTINGOPTION.'-video')
+            (object) array('label' => 'Formula', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-formula'),
+            (object) array('label' => 'Image', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-image'),
+            (object) array('label' => 'Video', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-video')
         ];
 
 

@@ -139,31 +139,31 @@ class FormattingOption
         $aData = [];
 
         // inline
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-bold'] = (object) array('name' => 'bold');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-italic'] = (object) array('name' => 'italic');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-underline'] = (object) array('name' => 'underline');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-strike'] = (object) array('name' => 'strike');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-script'] = (object) array('name' => 'script');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-code'] = (object) array('name' => 'code');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-link'] = (object) array('name' => 'link');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-color'] = (object) array('name' => 'color');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-background'] = (object) array('name' => 'background');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-font'] = (object) array('name' => 'font');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-size'] = (object) array('name' => 'size');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-bold'] = (object) array('name' => 'bold');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-italic'] = (object) array('name' => 'italic');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-underline'] = (object) array('name' => 'underline');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-strike'] = (object) array('name' => 'strike');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-script'] = (object) array('name' => 'script');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-code'] = (object) array('name' => 'code');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-link'] = (object) array('name' => 'link');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-color'] = (object) array('name' => 'color');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-background'] = (object) array('name' => 'background');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-font'] = (object) array('name' => 'font');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-size'] = (object) array('name' => 'size');
 
         // blocks
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-blockquote'] = (object) array('name' => 'blockquote');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-header'] = (object) array('name' => 'header', 'toolbar' => '{ "header": [1, 2, false] }');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-indent'] = (object) array('name' => 'indent');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-list'] = (object) array('name' => 'list');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-align'] = (object) array('name' => 'align');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-direction'] = (object) array('name' => 'direction');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-code-block'] = (object) array('name' => 'code-block');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-blockquote'] = (object) array('name' => 'blockquote');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header'] = (object) array('name' => 'header', 'toolbar' => '{ "header": [1, 2, false] }');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-indent'] = (object) array('name' => 'indent');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-list'] = (object) array('name' => 'list');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-align'] = (object) array('name' => 'align');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-direction'] = (object) array('name' => 'direction');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-code-block'] = (object) array('name' => 'code-block');
 
         // embeds
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-formula'] = (object) array('name' => 'formula');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-image'] = (object) array('name' => 'image');
-        $aData[CoreConfig::COREFORM_FORMATTINGOPTION.'-video'] = (object) array('name' => 'video');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-formula'] = (object) array('name' => 'formula');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-image'] = (object) array('name' => 'image');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-video'] = (object) array('name' => 'video');
 
         // send
         return $aData[$sItemId];

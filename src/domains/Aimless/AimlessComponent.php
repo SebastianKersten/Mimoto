@@ -663,7 +663,7 @@ class AimlessComponent
     public function user()
     {
         // init
-        $eUser = Mimoto::currentUser();
+        $eUser = Mimoto::service('session')->currentUser();
 
         // validate
         if (empty($eUser)) return null;
@@ -801,22 +801,25 @@ class AimlessComponent
         $sModuleFile = $this->_OutputService->getComponentFile($sModuleName);
 
         // create
-        $viewModel = new AimlessModuleViewModel($this);
+        $viewModel = new AimlessComponentViewModel($this);
+
+        // init
+        $aVars = array($this->_aVars);
 
         // compose
-        $this->_aVars['Mimoto'] = $viewModel;
+        $aVars['Mimoto'] = $viewModel;
 
         // add custom values
         if (!empty($customValues))
         {
             foreach ($customValues as $key => $value)
             {
-                $this->_aVars[$key] = $value;
+                $aVars[$key] = $value;
             }
         }
 
         // output
-        return $this->_TwigService->render($sModuleFile, $this->_aVars);
+        return $this->_TwigService->render($sModuleFile, $aVars);
     }
 
 

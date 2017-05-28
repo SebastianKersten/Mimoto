@@ -1,5 +1,10 @@
-{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add user role', icon:'plus', onclick:"Mimoto.CMS.userRoleNew('userRole');" }) }}
-
-<ul class="MimotoCMS_pages_configuration_userroles_Overview__container js-list js-list-sortable" {{ Mimoto.realtime('userRoles', 'Mimoto.CMS_configuration_userroles_Overview_ListItem') }}>
-    {{ Mimoto.render('userRoles', 'Mimoto.CMS_configuration_userroles_Overview_ListItem') }}
-</ul>
+{{
+    Mimoto.module('Mimoto.CMS.ListModule',
+    {
+        button_label: 'Add user role',
+        button_icon: 'plus',
+        button_onclick: "Mimoto.CMS.userRoleNew();",
+        property_name: 'userRoles',
+        listitem_component: 'Mimoto.CMS_configuration_userroles_Overview_ListItem'
+    })
+}}

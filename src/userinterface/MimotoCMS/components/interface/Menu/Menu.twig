@@ -32,7 +32,7 @@
         </ul>
         #}
 
-        {% if Mimoto.user.hasRole('_Mimoto_superuser') %}
+        {% if Mimoto.user.hasRole('superuser') %}
 
             <ul class="MimotoCMS_interface_Menu-group">
                 <li class="MimotoCMS_interface_Menu-item">
@@ -99,9 +99,9 @@
 
         {% endif %}
 
-        <ul>
+        <ul class="MimotoCMS_interface_Menu-group">
 
-            {% if Mimoto.user.hasRole('_Mimoto_superuser') %}
+            {% if Mimoto.user.hasRole('superuser') %}
 
                 <li class="MimotoCMS_interface_Menu-item">
                     <a href="/mimoto.cms/configuration" class="MimotoCMS_interface_Menu-item-link">

@@ -46,6 +46,19 @@ class UserRole
     }
 
 
+    public static function getData($sItemId)
+    {
+        // init
+        $aData = [];
+
+        // inline
+        $aData[CoreConfig::MIMOTO_USER_ROLE.'-superuser'] = (object) array('name' => 'superuser');
+
+        // send
+        return $aData[$sItemId];
+    }
+
+
 
     // ----------------------------------------------------------------------------
     // --- Form -------------------------------------------------------------------

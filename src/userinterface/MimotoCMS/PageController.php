@@ -16,15 +16,15 @@ use Silex\Application;
 
 
 /**
- * UserRolesController
+ * PageController
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class UserRolesController
+class PageController
 {
 
     /**
-     * View user role overview
+     * View page overview
      * @return string The rendered html output
      */
     public function overview()
@@ -33,17 +33,13 @@ class UserRolesController
         $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_configuration_userroles_Overview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('MimotoCMS_pages_Overview', $eRoot));
 
         // 3. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
-                    "label" => 'Configuration',
-                    "url" => '/mimoto.cms/configuration'
-                ),
-                (object) array(
-                    "label" => 'User roles',
-                    "url" => '/mimoto.cms/configuration/userroles'
+                    "label" => 'Pages',
+                    "url" => '/mimoto.cms/pages'
                 )
             )
         );
@@ -53,10 +49,10 @@ class UserRolesController
     }
 
     /**
-     * View new user role form
+     * View new page form
      * @return string The rendered html output
      */
-    public function userRoleNew()
+    public function pageNew()
     {
         // 1. init popup
         $popup = Mimoto::service('output')->createPopup();
@@ -66,10 +62,10 @@ class UserRolesController
 
         // 3. setup form
         $component->addForm(
-            CoreConfig::COREFORM_USER_ROLE,
+            CoreConfig::COREFORM_PAGE,
             null,
             [
-                'onCreatedConnectTo' => CoreConfig::MIMOTO_ROOT.'.'.CoreConfig::MIMOTO_ROOT.'.userRoles',
+                'onCreatedConnectTo' => CoreConfig::MIMOTO_ROOT.'.'.CoreConfig::MIMOTO_ROOT.'.pages',
                 'response' => ['onSuccess' => ['closePopup' => true]]
             ]
         );
@@ -82,22 +78,22 @@ class UserRolesController
     }
 
     /**
-     * View user role
+     * View page
      * @return string The rendered html output
      */
-    public function userRoleView(Application $app, $nItemId)
+    public function pageView(Application $app, $nItemId)
     {
         // 1. init page
         $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
-        $eUserRole = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER_ROLE, $nItemId);
+        $ePage = Mimoto::service('data')->get(CoreConfig::MIMOTO_PAGE, $nItemId);
 
         // 3. validate data
-        if (empty($eUserRole)) return $app->redirect("/mimoto.cms/configuration/userroles");
+        if (empty($ePage)) return $app->redirect("/mimoto.cms/pages");
 
         // 4. create
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_configuration_userroles_Detail', $eUserRole);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_pages_Detail', $ePage);
 
         // 5. connect
         $page->addComponent('content', $component);
@@ -105,16 +101,12 @@ class UserRolesController
         // 6. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
-                    "label" => 'Configuration',
-                    "url" => '/mimoto.cms/configuration'
+                    "label" => 'Pages',
+                    "url" => '/mimoto.cms/pages'
                 ),
                 (object) array(
-                    "label" => 'User roles',
-                    "url" => '/mimoto.cms/configuration/userroles'
-                ),
-                (object) array(
-                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_USER_ROLE.'.'.$eUserRole->getId().'.name">'.$eUserRole->getValue('name').'</span>',
-                    "url" => '/mimoto.cms/configuration/userrole/'.$eUserRole->getId().'/view'
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_FORMATTINGOPTION.'.'.$ePage->getId().'.name">'.$ePage->getValue('name').'</span>',
+                    "url" => '/mimoto.cms/page/'.$ePage->getId().'/view'
                 )
             )
         );
@@ -123,24 +115,30 @@ class UserRolesController
         return $page->render();
     }
 
-    public function userRoleEdit(Application $app, $nItemId)
+    /**
+     * Edit page
+     * @param Application $app
+     * @param $nItemId
+     * @return mixed
+     */
+    public function pageEdit(Application $app, $nItemId)
     {
         // 1. init popup
         $popup = Mimoto::service('output')->createPopup();
 
         // 2. load
-        $eUserRole = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER_ROLE, $nItemId);
+        $ePage = Mimoto::service('data')->get(CoreConfig::MIMOTO_PAGE, $nItemId);
 
         // 3. validate
-        if (empty($eUserRole)) return $app->redirect("/mimoto.cms/configuration/userroles");
+        if (empty($ePage)) return $app->redirect("/mimoto.cms/pages");
 
         // 4. create
         $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
         // 5. setup
         $component->addForm(
-            CoreConfig::COREFORM_USER_ROLE,
-            $eUserRole,
+            CoreConfig::COREFORM_PAGE,
+            $ePage,
             [
                 'response' => ['onSuccess' => ['closePopup' => true]]
             ]
@@ -153,16 +151,22 @@ class UserRolesController
         return $popup->render();
     }
 
-    public function userRoleDelete(Application $app, $nItemId)
+    /**
+     * Delete page
+     * @param Application $app
+     * @param $nItemId
+     * @return mixed
+     */
+    public function pageDelete(Application $app, $nItemId)
     {
         // 1. load
-        $eUserRole = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER_ROLE, $nItemId);
+        $ePage = Mimoto::service('data')->get(CoreConfig::MIMOTO_PAGE, $nItemId);
 
         // 2. delete
-        Mimoto::service('data')->delete($eUserRole);
+        Mimoto::service('data')->delete($ePage);
 
         // 3. output
-        return Mimoto::service('messages')->response((object) array('result' => 'User role deleted! '.date("Y.m.d H:i:s")), 200);
+        return Mimoto::service('messages')->response((object) array('result' => 'Page deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 }

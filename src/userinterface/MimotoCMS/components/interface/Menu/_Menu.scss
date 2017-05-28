@@ -26,7 +26,8 @@
     display: block;
 }
 
-    #{$pr-interface}_Menu-content {
+    div.MimotoCMS_interface_Menu-content {
+
         @include breakpoint(large up) {
             position: absolute;
             top: 0;
@@ -49,6 +50,7 @@
 
             &:last-child {
                 border-bottom: 0;
+                margin-bottom: 30px;
             }
         }
 

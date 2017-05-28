@@ -7,12 +7,10 @@
         sublabel: 'id='~Mimoto.meta('id'),
         sublabel_realtime: '',
         button_label: 'View',
-        button_action: "Mimoto.CMS.userRoleView(" ~ Mimoto.meta('id') ~ ");",
+        button_action: "Mimoto.CMS.pageView(" ~ Mimoto.meta('id') ~ ");",
         button_type: 'secondary',
-        button_icon: '',
         button2_label: 'Delete',
-        button2_action: "Mimoto.CMS.userRoleDelete(" ~ Mimoto.meta('id') ~ ", '" ~ Mimoto.data('name') ~ "');",
-        button2_type: 'alert',
-        button2_icon: '',
+        button2_action: "Mimoto.CMS.pageDelete(" ~ Mimoto.meta('id') ~ ", '" ~ Mimoto.data('name') ~ "');",
+        button2_type: 'alert'
     })
 }}

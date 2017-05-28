@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "253b4a789bfa10007f5e";
+/******/ 	__webpack_require__.h = "1a5721cff6c53f708ca1";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -45663,30 +45663,34 @@
 	     */
 	    formattingOptionNew: function()
 	    {
-	        var popup = MimotoX.popup("/mimoto.cms/formattingOption/new");
+	        var popup = MimotoX.popup("/mimoto.cms/configuration/formattingOption/new");
 	    },
 	
 	    formattingOptionView: function(nItemId)
 	    {
-	        window.open('/mimoto.cms/formattingOption/' + nItemId + '/view', '_self');
+	        window.open('/mimoto.cms/configuration/formattingOption/' + nItemId + '/view', '_self');
 	    },
 	
 	    formattingOptionEdit: function(nItemId)
 	    {
-	        MimotoX.popup('/mimoto.cms/formattingOption/' + nItemId + '/edit');
+	        MimotoX.popup('/mimoto.cms/configuration/formattingOption/' + nItemId + '/edit');
 	    },
 	
-	    formattingOptionDelete: function(nItemId)
+	    formattingOptionDelete: function(nItemId, sFormattingOptionName)
 	    {
-	        MimotoX.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/formattingOption/' + nItemId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
+	        var response = confirm("Are you sure you want to delete the formatting option '" + sFormattingOptionName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+	        if (response == true)
+	        {
+	            MimotoX.utils.callAPI({
+	                type: 'get',
+	                url: '/mimoto.cms/configuration/formattingOption/' + nItemId + '/delete',
+	                data: null,
+	                dataType: 'json',
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
 	    },
 	
 	    formattingOptionAttributeNew: function(nItemId)
@@ -45722,17 +45726,17 @@
 	     */
 	    userRoleNew: function()
 	    {
-	        var popup = MimotoX.popup("/mimoto.cms/configuration/userrole/new");
+	        var popup = MimotoX.popup("/mimoto.cms/configuration/userRole/new");
 	    },
 	
 	    userRoleView: function(nItemId)
 	    {
-	        window.open('/mimoto.cms/configuration/userrole/' + nItemId + '/view', '_self');
+	        window.open('/mimoto.cms/configuration/userRole/' + nItemId + '/view', '_self');
 	    },
 	
 	    userRoleEdit: function(nItemId)
 	    {
-	        MimotoX.popup('/mimoto.cms/configuration/userrole/' + nItemId + '/edit');
+	        MimotoX.popup('/mimoto.cms/configuration/userRole/' + nItemId + '/edit');
 	    },
 	
 	    userRoleDelete: function(nItemId, sUserRoleName)
@@ -45742,7 +45746,7 @@
 	        {
 	            MimotoX.utils.callAPI({
 	                type: 'get',
-	                url: '/mimoto.cms/configuration/userrole/' + nItemId + '/delete',
+	                url: '/mimoto.cms/configuration/userRole/' + nItemId + '/delete',
 	                data: null,
 	                dataType: 'json',
 	                success: function (resultData, resultStatus, resultSomething) {
@@ -45751,6 +45755,82 @@
 	            });
 	        }
 	    },
+	
+	
+	
+	    /**
+	     * Pages
+	     */
+	    entityXNew: function(sEntityTypeName)
+	    {
+	        var popup = MimotoX.popup('/mimoto.cms/entityX/' + sEntityTypeName + '/new');
+	    },
+	
+	    entityXView: function(sEntityTypeName, nItemId, sFolder)
+	    {
+	        sFolder = (sFolder) ? sFolder + '/' : '';
+	
+	        window.open('/mimoto.cms/' + sFolder + 'entityX/' + sEntityTypeName + '/' + nItemId + '/view', '_self');
+	    },
+	
+	    entityXEdit: function(sEntityTypeName, nItemId)
+	    {
+	        MimotoX.popup('/mimoto.cms/entityX/' + sEntityTypeName + '/' + nItemId + '/edit');
+	    },
+	
+	    entityXDelete: function(sEntityTypeName, nItemId, sItemName)
+	    {
+	        var response = confirm("Are you sure you want to delete the " + sEntityTypeName + " '" + sItemName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+	        if (response == true)
+	        {
+	            MimotoX.utils.callAPI({
+	                type: 'get',
+	                url: '/mimoto.cms/entityX/' + sEntityTypeName + '/' + nItemId + '/delete',
+	                data: null,
+	                dataType: 'json',
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
+	    },
+	
+	
+	    /**
+	     * Pages - TEMP
+	     */
+	    pageNew: function()
+	    {
+	        var popup = MimotoX.popup("/mimoto.cms/page/new");
+	    },
+	
+	    pageView: function(nItemId)
+	    {
+	        window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
+	    },
+	
+	    pageEdit: function(nItemId)
+	    {
+	        MimotoX.popup('/mimoto.cms/page/' + nItemId + '/edit');
+	    },
+	
+	    pageDelete: function(nItemId, sPageName)
+	    {
+	        var response = confirm("Are you sure you want to delete the page '" + sPageName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+	        if (response == true)
+	        {
+	            MimotoX.utils.callAPI({
+	                type: 'get',
+	                url: '/mimoto.cms/page/' + nItemId + '/delete',
+	                data: null,
+	                dataType: 'json',
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
+	    },
+	
 	
 	
 	    /**

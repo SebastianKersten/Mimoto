@@ -47,6 +47,12 @@ class AimlessComponentViewModel
         return $this->_component->data($sPropertySelector, $bGetConnectionInfo);
     }
 
+    // new API (replaces data)
+    public function rawData($sPropertySelector, $bGetConnectionInfo = false)
+    {
+        $this->data($sPropertySelector, $bGetConnectionInfo = false);
+    }
+
     public function render($sPropertySelector, $sComponentName = null, $customValues = null)
     {
         return $this->_component->data($sPropertySelector, false, true, $sComponentName, null, $customValues);
@@ -109,7 +115,8 @@ class AimlessComponentViewModel
 
     public function module($sModuleName, $values = [])
     {
-        return MimotoAimlessUtils::getModule($sModuleName, $values);
+        return $this->_component->module($sModuleName, $values);
+        //return MimotoAimlessUtils::getModule($sModuleName, $values);
     }
 
     public function reloadOnChange()

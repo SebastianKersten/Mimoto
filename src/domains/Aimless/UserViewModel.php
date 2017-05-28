@@ -38,6 +38,11 @@ class UserViewModel extends AimlessComponentViewModel
     // ----------------------------------------------------------------------------
 
 
+    /**
+     * Check if the user has been assigned specific roles
+     * Multiple params possible (arg1, arg2, etc)
+     * @return bool
+     */
     public function hasRole()
     {
         // init
@@ -82,7 +87,7 @@ class UserViewModel extends AimlessComponentViewModel
             }
 
         }
-        
+
         // send
         return $bValidated;
     }

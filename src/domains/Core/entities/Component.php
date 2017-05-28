@@ -219,22 +219,22 @@ class Component
 
             (object) array(
                 'name' => 'Mimoto.CMS_formattingoptions_Overview',
-                'file' => 'MimotoCMS/components/pages/formattingoptions/Overview/Overview.twig',
+                'file' => 'MimotoCMS/components/pages/configuration/formattingoptions/Overview/Overview.twig',
                 'conditionals' => []
             ),
             (object) array(
                 'name' => 'Mimoto.CMS_formattingoptions_Overview_ListItem',
-                'file' => 'MimotoCMS/components/pages/formattingoptions/Overview/ListItem/ListItem.twig',
+                'file' => 'MimotoCMS/components/pages/configuration/formattingoptions/Overview/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'MimotoCMS_formattingoptions_Detail',
-                'file' => 'MimotoCMS/components/pages/formattingoptions/Detail/Detail.twig',
+                'name' => 'MimotoCMS_configuration_formattingoptions_Detail',
+                'file' => 'MimotoCMS/components/pages/configuration/formattingoptions/Detail/Detail.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'MimotoCMS_formattingoptions_Detail-Attribute',
-                'file' => 'MimotoCMS/components/pages/formattingoptions/Detail/Attribute/Attribute.twig',
+                'name' => 'MimotoCMS_configuration_formattingoptions_Detail-Attribute',
+                'file' => 'MimotoCMS/components/pages/configuration/formattingoptions/Detail/Attribute/Attribute.twig',
                 'conditionals' => []
             ),
 
@@ -284,33 +284,9 @@ class Component
 
             // api
 
-            (object) array(
-                'name' => 'Mimoto.CMS_api_APIOverview',
-                'file' => 'MimotoCMS/components/pages/api/APIOverview/APIOverview.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_api_APIOverview_ListItem',
-                'file' => 'MimotoCMS/components/pages/api/APIOverview/ListItem/ListItem.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_api_APIDetail',
-                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIDetail.twig',
-                'conditionals' => []
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS_api_APIDetail-APIContainer',
-                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIContainer/APIContainer.twig',
-                'conditionals' => []
-            ),
-
-
-            // pages
-
 //            (object) array(
-//                'name' => 'Mimoto.CMS_pages_PageOverview',
-//                'file' => 'MimotoCMS/components/pages/pages/APIOverview/APIOverview.twig',
+//                'name' => 'Mimoto.CMS_api_APIOverview',
+//                'file' => 'MimotoCMS/components/pages/api/APIOverview/APIOverview.twig',
 //                'conditionals' => []
 //            ),
 //            (object) array(
@@ -328,6 +304,30 @@ class Component
 //                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIContainer/APIContainer.twig',
 //                'conditionals' => []
 //            ),
+
+
+            // pages
+
+            (object) array(
+                'name' => 'MimotoCMS_pages_Overview',
+                'file' => 'MimotoCMS/components/pages/pages/Overview/Overview.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_pages_Overview-ListItem',
+                'file' => 'MimotoCMS/components/pages/pages/Overview/ListItem/ListItem.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_pages_Detail',
+                'file' => 'MimotoCMS/components/pages/pages/Detail/Detail.twig',
+                'conditionals' => []
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_pages_Detail-AllowedUserRole',
+                'file' => 'MimotoCMS/components/pages/pages/Detail/AllowedUserRole/AllowedUserRole.twig',
+                'conditionals' => []
+            ),
 
 
             // content sections
@@ -582,6 +582,11 @@ class Component
 
             // modules
 
+            (object) array(
+                'name' => 'Mimoto.CMS.ListModule',
+                'file' => 'MimotoCMS/modules/ListModule/ListModule.twig',
+                'conditionals' => []
+            ),
             (object) array(
                 'name' => 'Mimoto.CMS.ListItemModule',
                 'file' => 'MimotoCMS/modules/ListItemModule/ListItemModule.twig',

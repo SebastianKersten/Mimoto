@@ -97,7 +97,7 @@ class FormattingOptionController
         if (empty($eFormattingOption)) return $app->redirect("/mimoto.cms/configuration/formatting");
 
         // 4. create
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_formattingoptions_Detail', $eFormattingOption);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_configuration_formattingoptions_Detail', $eFormattingOption);
 
         // 5. connect
         $page->addComponent('content', $component);
