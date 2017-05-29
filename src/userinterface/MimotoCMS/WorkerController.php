@@ -67,7 +67,7 @@ class WorkerController
         $worker = new GearmanWorker();
 
         // setup
-        $worker->addServer();
+        $worker->addServer(Mimoto::value('config')->gearman->server_address);
         $worker->addFunction("sendUpdate", function($job)
         {
             // init
@@ -160,7 +160,7 @@ class WorkerController
         $worker = new GearmanWorker();
 
         // setup
-        $worker->addServer();
+        $worker->addServer(Mimoto::value('config')->gearman->server_address);
         $worker->addFunction("sendSlackNotification", function ($job) {
 
 

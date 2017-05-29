@@ -15,10 +15,17 @@
             'username' => '',
             'password' => ''
         ),
+        'socketio' => (object) array(
+            'clientgateway' => 'http://127.0.0.1:4000',
+            'workergateway' => 'http://127.0.0.1:4001',
+        ),
         'slack' => (object) array
         (
             'webhook' => ''
         ),
+        'gearman' => (object) array(
+                'server_address' => '127.0.0.1'
+            ),
         'media' => (object) array
         (
             'upload_dir' => 'dynamic/'

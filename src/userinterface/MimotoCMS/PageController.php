@@ -105,7 +105,7 @@ class PageController
                     "url" => '/mimoto.cms/pages'
                 ),
                 (object) array(
-                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_FORMATTINGOPTION.'.'.$ePage->getId().'.name">'.$ePage->getValue('name').'</span>',
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_PAGE.'.'.$ePage->getId().'.name">'.$ePage->getValue('name').'</span>',
                     "url" => '/mimoto.cms/page/'.$ePage->getId().'/view'
                 )
             )

@@ -9,7 +9,7 @@ An ultra fast, fluid and realtime data management microframework
 
 - Mimoto uses Gearman async 
 - Node JS
-
+- Memcached
 
 # Basic instalation
 

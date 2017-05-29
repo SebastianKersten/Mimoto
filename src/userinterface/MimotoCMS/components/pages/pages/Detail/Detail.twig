@@ -41,6 +41,28 @@
 
                         </div>
 
+                        <div class="MimotoCMS_pages_pages_Detail-Route">
+
+                            This page uses the following route:
+
+                            <div class="MimotoCMS_pages_pages_Detail-UserRoles-empty" {{ Mimoto.showWhenEmpty('allowedUserRoles') }}>
+                                Available to view by anyone!
+                            </div>
+
+                            <div {{ Mimoto.hideWhenEmpty('allowedUserRoles') }}>
+                                <div class="MimotoCMS_pages_pages_Detail-UserRoles-container js-list js-list-sortable" {{ Mimoto.realtime('allowedUserRoles', 'MimotoCMS_pages_Detail-AllowedUserRole') }}>
+                                    {{ Mimoto.render('allowedUserRoles', 'MimotoCMS_pages_Detail-AllowedUserRole') }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {#<div class="MimotoCMS_pages_pages_Detail-BaseComponent">#}
+
+                            {#Base component or layout:#}
+
+                        {#</div>#}
+
                     </div>
 
                     <div class="MimotoCMS_pages_pages_Detail_Structure__meta_menu">

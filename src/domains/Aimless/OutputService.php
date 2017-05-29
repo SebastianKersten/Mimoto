@@ -866,7 +866,7 @@ class OutputService
         try
         {
             // setup
-            $client->addServer();
+            $client->addServer(Mimoto::value('config')->gearman->server_address);
 
             // $result =
             // execute
@@ -899,7 +899,7 @@ class OutputService
         try
         {
             // setup
-            $client->addServer();
+            $client->addServer(Mimoto::value('config')->gearman->server_address);
 
 
             // register
