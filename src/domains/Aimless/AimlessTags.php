@@ -22,9 +22,9 @@ class AimlessTags
 {
 
 
-    var $_entity = null;
-    var $_sPropertyName = null;
-    var $_editOptions = null;
+    private $_entity = null;
+    private $_sPropertyName = null;
+    private $_editOptions = null;
 
 
     const ATTRIBUTE_PREFIX = 'data-mimoto-';
