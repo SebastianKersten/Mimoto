@@ -224,6 +224,24 @@ class AimlessComponent
                 // #todo - in geval van getStructure (connections -> anders oppakken
                 // #todo - connections in ViewModel gooien
 
+//                if ($this->_entity->getPropertyType($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY
+//                {
+//                    $eItem = $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
+//
+//                    // validate
+//                    if (empty($eUser)) return null;
+//
+//                    // create
+//                    $component = Mimoto::service('output')->createComponent('', $eUser);
+//
+//                    // wrap into viewmodel
+//                    $viewModel = new UserViewModel($component);
+//
+//                    // send
+//                    return $viewModel;
+//                }
+
+
                 return $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
             }
 

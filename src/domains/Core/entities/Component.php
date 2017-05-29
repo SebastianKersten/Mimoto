@@ -386,7 +386,7 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'MimotoCMS_users_UserDetail',
+                'name' => 'MimotoCMS_users_Detail',
                 'file' => 'MimotoCMS/components/pages/users/Detail/Detail.twig',
                 'conditionals' => []
             ),

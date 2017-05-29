@@ -1,0 +1,16 @@
+{{
+    Mimoto.module('Mimoto.CMS.ListItemModule',
+    {
+        realtime: Mimoto.realtime(),
+        label: Mimoto.data('name'),
+        label_realtime: Mimoto.realtime('name'),
+        sublabel: Mimoto.data('email'),
+        sublabel_realtime: '',
+        button_label: 'View',
+        button_action: 'Mimoto.CMS.userView('~Mimoto.meta('id')~');',
+        button_type: 'secondary',
+        button2_label: 'Delete',
+        button2_action: 'Mimoto.CMS.userDelete('~Mimoto.meta('id')~');',
+        button2_type: 'alert'
+    })
+}}
