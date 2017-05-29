@@ -2,17 +2,17 @@
 
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__data">
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__name" {{ Mimoto.realtime('name') }}>
-             {{ Mimoto.render('name') }}
+             {{ Mimoto.data('name') }}
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__type">
             {% if Mimoto.data('subtype') == 'image' or Mimoto.data('subtype') == 'video' or Mimoto.data('subtype') == 'audio' or Mimoto.data('subtype') == 'file' %}
-                <div {{ Mimoto.realtime('subtype') }}>{{ Mimoto.render('subtype') }}</div>
+                <div {{ Mimoto.realtime('subtype') }}>{{ Mimoto.data('subtype') }}</div>
             {% else %}
-                <div {{ Mimoto.realtime('type') }}>{{ Mimoto.render('type') }}</div>
+                <div {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</div>
             {% endif %}
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Mimoto.realtime('settings') }}>
-            {{ Mimoto.render('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { propertySubtype:Mimoto.data('subtype') }) }}
+            {{ Mimoto.data('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { propertySubtype:Mimoto.data('subtype') }) }}
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">

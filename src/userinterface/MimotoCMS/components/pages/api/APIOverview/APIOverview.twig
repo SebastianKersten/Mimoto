@@ -1,5 +1,5 @@
 {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new', icon:'plus', onclick:"Mimoto.CMS.contentNew('"~Mimoto.meta('id')~"');" }) }}
 
 <ul class="MimotoCMS_pages_content_ContentOverview-container js-list js-list-sortable" {{ Mimoto.realtime('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}>
-    {{ Mimoto.render('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}
+    {{ Mimoto.data('contentItems', 'Mimoto.CMS_content_ContentOverview_ListItem') }}
 </ul>

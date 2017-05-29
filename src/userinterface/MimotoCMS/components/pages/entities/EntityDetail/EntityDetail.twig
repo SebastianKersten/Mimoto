@@ -79,7 +79,7 @@
 
                     <div {{ Mimoto.hideWhenEmpty('properties') }}>
                         <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}>
-                            {{ Mimoto.render('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
+                            {{ Mimoto.data('properties', 'Mimoto.CMS_entities_EntityDetail-EntityProperty') }}
                         </ul>
 
                         <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
@@ -151,7 +151,7 @@
 
                 <div {{ Mimoto.hideWhenEmpty('forms') }}>
                     <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}>
-                        {{ Mimoto.render('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}
+                        {{ Mimoto.data('forms', 'Mimoto.CMS_entities_EntityDetail-Form') }}
                     </ul>
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
@@ -194,7 +194,7 @@
 
                 <div {{ Mimoto.hideWhenEmpty('components') }}>
                     <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}>
-                        {{ Mimoto.render('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}
+                        {{ Mimoto.data('components', 'Mimoto.CMS_entities_EntityDetail-ComponentListItem') }}
                     </ul>
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
@@ -213,7 +213,7 @@
                 <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-container">
                     <code>{{ "<div "|escape }}<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Mimoto.realtime() }}' }}</span>&gt;</code>
                     <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties" {{ Mimoto.realtime('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}>
-                        {{ Mimoto.render('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}
+                        {{ Mimoto.data('properties', 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample') }}
                     </div>
                     <code>{{ "</div>"|escape }}</code>
                 </div>

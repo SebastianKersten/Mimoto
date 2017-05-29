@@ -1,7 +1,7 @@
 <div class="TheTimeline_Moment" {{ Mimoto.realtime() }}>
-    <div class="TheTimeline_Moment-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</div>
-    <div class="TheTimeline_Moment-shortDescription" {{ Mimoto.realtime('shortDescription') }}>{{ Mimoto.render('shortDescription') }}</div>
-    <div class="TheTimeline_Moment-date js-date" {{ Mimoto.hideWhenEmpty('date') }} {{ Mimoto.realtime('date') }}>{{ Mimoto.render('date') }}</div>
-    <div class="TheTimeline_Moment-importance js-importance" {{ Mimoto.realtime('importance') }}>{{ Mimoto.render('importance') }}</div>
+    <div class="TheTimeline_Moment-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+    <div class="TheTimeline_Moment-shortDescription" {{ Mimoto.realtime('shortDescription') }}>{{ Mimoto.data('shortDescription') }}</div>
+    <div class="TheTimeline_Moment-date js-date" {{ Mimoto.hideWhenEmpty('date') }} {{ Mimoto.realtime('date') }}>{{ Mimoto.data('date') }}</div>
+    <div class="TheTimeline_Moment-importance js-importance" {{ Mimoto.realtime('importance') }}>{{ Mimoto.data('importance') }}</div>
     <script>{{ Mimoto.jsListen('date', 'TheTimeline', 'TheTimeline.positionMoments') }}</script>
 </div>

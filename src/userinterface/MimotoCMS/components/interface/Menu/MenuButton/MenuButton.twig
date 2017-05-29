@@ -3,6 +3,6 @@
 <li class="MimotoCMS_interface_Menu-item" {{ Mimoto.realtime() }}>
     <a href="/mimoto.cms/content/{{ Mimoto.meta('id') }}" class="MimotoCMS_interface_Menu-item-link">
         <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-{{ sIcon }}'/></svg>
-        <span class="MimotoCMS_interface_Menu-item-text" {{ Mimoto.realtime('name') }}>{{ Mimoto.render('name') }}</span>
+        <span class="MimotoCMS_interface_Menu-item-text" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
     </a>
 </li>

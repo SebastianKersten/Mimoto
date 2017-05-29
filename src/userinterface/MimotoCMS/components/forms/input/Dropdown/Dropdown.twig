@@ -5,7 +5,7 @@
         <div class="MimotoCMS_forms_input_Dropdown-container">
             <select {{ Mimoto.input() }} class="MimotoCMS_forms_input_Dropdown js-dropdown">
                 <option value=""></option> {# check if field is optional, if selection made, disable this null-option #}
-                {{ Mimoto.render('options', '_Mimoto_form_input_dropdown--option', { value: Mimoto.value() }) }}
+                {{ Mimoto.data('options', '_Mimoto_form_input_dropdown--option', { value: Mimoto.value() }) }}
             </select>
             <svg class="MimotoCMS_forms_input_Dropdown-icon"><use xlink:href="#ico-arrow"></use></svg>
         </div>

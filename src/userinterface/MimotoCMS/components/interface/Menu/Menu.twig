@@ -5,7 +5,7 @@
 
 
         <ul class="MimotoCMS_interface_Menu-group" {{ Mimoto.hideWhenEmpty('contentSections') }} {{ Mimoto.realtime('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}>
-            {{ Mimoto.render('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}
+            {{ Mimoto.data('contentSections.{isHiddenFromMenu=0}', 'MimotoCMS_interface_Menu_MenuButton') }}
         </ul>
 
 

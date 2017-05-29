@@ -208,13 +208,19 @@ class AimlessComponent
         //$sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
 
 
+
         if (!empty($this->_entity))
         {
 
             // read and send
-            if (!$bRenderData)
+            if (
+                !$bRenderData
+                && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE
+                && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO
+                && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO
+                && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE
+            )
             {
-
                 // #todo - in geval van getStructure (connections -> anders oppakken
                 // #todo - connections in ViewModel gooien
 

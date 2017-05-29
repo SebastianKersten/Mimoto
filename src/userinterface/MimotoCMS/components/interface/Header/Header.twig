@@ -29,7 +29,7 @@
             <a href="/mimoto.cms/account" class="MimotoCMS_interface_Header-menu-user">
                 <span class="MimotoCMS_interface_Header-menu-user-text" {{ Mimoto.user.realtime('name') }}>{{ Mimoto.user.data('name') }}</span>
                 <figure class="MimotoCMS_interface_Header-menu-user-figure">
-                    <img {{ Mimoto.user.realtime('avatar') }} src="{{ Mimoto.user.render('avatar') }}" class="MimotoCMS_interface_Header-menu-user-image"/>
+                    <img {{ Mimoto.user.realtime('avatar') }} src="{{ Mimoto.user.data('avatar', true) }}" class="MimotoCMS_interface_Header-menu-user-image"/>
                 </figure>
             </a>
         </li>

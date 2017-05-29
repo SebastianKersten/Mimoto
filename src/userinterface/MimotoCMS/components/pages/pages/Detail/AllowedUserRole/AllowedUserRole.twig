@@ -2,8 +2,8 @@
 
     {# check if the user role is a core feature #}
     {% if ('_Mimoto_user_role-' in Mimoto.meta('id')) %}
-        <span {{ Mimoto.realtime('name') }}>{{ Mimoto.render('name') }}</span>
+        <span {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
     {% else %}
-        <a href="/mimoto.cms/configuration/userrole/{{ Mimoto.meta('id') }}/view" {{ Mimoto.realtime('name') }}>{{ Mimoto.render('name') }}</a>
+        <a href="/mimoto.cms/configuration/userrole/{{ Mimoto.meta('id') }}/view" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</a>
     {% endif %}
 </div>

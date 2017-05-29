@@ -42,21 +42,30 @@ class AimlessComponentViewModel
     // ----------------------------------------------------------------------------
 
 
-    public function data($sPropertySelector, $bGetConnectionInfo = false)
+    public function data($sPropertySelector, $sComponentName = null, $options = null)
     {
-        return $this->_component->data($sPropertySelector, $bGetConnectionInfo);
+        $customValues = (!empty($options) && !empty($options['customValues'])) ? $options['customValues'] : null;
+        $bGetConnectionInfo = (!empty($options) && !empty($options['getConnectionInfo'])) ? $options['getConnectionInfo'] : false;
+
+        return $this->_component->data($sPropertySelector, $bGetConnectionInfo, !empty($sComponentName), $sComponentName, null, $customValues);
     }
+
+
+//    public function data($sPropertySelector, $bGetConnectionInfo = false)
+//    {
+//        return $this->_component->data($sPropertySelector, $bGetConnectionInfo);
+//    }
 
     // new API (replaces data)
-    public function rawData($sPropertySelector, $bGetConnectionInfo = false)
-    {
-        $this->data($sPropertySelector, $bGetConnectionInfo = false);
-    }
+//    public function rawData($sPropertySelector, $bGetConnectionInfo = false)
+//    {
+//        $this->data($sPropertySelector, $bGetConnectionInfo = false);
+//    }
 
-    public function render($sPropertySelector, $sComponentName = null, $customValues = null)
-    {
-        return $this->_component->data($sPropertySelector, false, true, $sComponentName, null, $customValues);
-    }
+//    public function render($sPropertySelector, $sComponentName = null, $customValues = null)
+//    {
+//        return $this->_component->data($sPropertySelector, false, true, $sComponentName, null, $customValues);
+//    }
 
     public function renderWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
     {

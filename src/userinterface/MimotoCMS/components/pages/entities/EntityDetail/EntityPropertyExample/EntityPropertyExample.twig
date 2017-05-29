@@ -3,12 +3,12 @@
     {% if Mimoto.data('subtype') == "image" %}
 
         &lt;img <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">
-        {{ '{{ ' }}Mimoto.realtime(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Mimoto.realtime('name') }}>{{ "'"~Mimoto.data('name')~"'" }}</span>) {{ ' }}' }}</span> src="<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ ' }}Mimoto.render(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Mimoto.realtime('name') }}>{{ "'"~Mimoto.data('name')~"'" }}</span>){{ ' }}' }}</span>" /&gt;
+        {{ '{{ ' }}Mimoto.realtime(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Mimoto.realtime('name') }}>{{ "'"~Mimoto.data('name')~"'" }}</span>) {{ ' }}' }}</span> src="<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ ' }}Mimoto.data(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Mimoto.realtime('name') }}>{{ "'"~Mimoto.data('name')~"'" }}</span>){{ ' }}' }}</span>" /&gt;
 
     {% else %}
 
         &lt;div&nbsp;<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">
-        {{ '{{ ' }}Mimoto.realtime(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Mimoto.realtime('name') }} >{{ "'"~Mimoto.data('name')~"'" }}</span>) {{ ' }}' }}</span>&gt;<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ ' }}Mimoto.render(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Mimoto.realtime('name') }}>{{ "'"~Mimoto.data('name')~"'" }}</span>){{ ' }}' }}</span>&lt;/div&gt;
+        {{ '{{ ' }}Mimoto.realtime(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Mimoto.realtime('name') }} >{{ "'"~Mimoto.data('name')~"'" }}</span>) {{ ' }}' }}</span>&gt;<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ ' }}Mimoto.data(<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-value" {{ Mimoto.realtime('name') }}>{{ "'"~Mimoto.data('name')~"'" }}</span>){{ ' }}' }}</span>&lt;/div&gt;
 
     {% endif %}
 

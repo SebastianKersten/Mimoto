@@ -9,7 +9,7 @@
 
         <input {{ Mimoto.input() }} type="hidden" id=".js-{{ sFlatFieldId }}-textblock-value"/>
 
-        <script>MimotoX.utils.registerRequest(Mimoto.form.setupTextblock, '{{ sFieldId }}', '{{ sFlatFieldId }}', '{{ Mimoto.fieldId() }}', '{{ Mimoto.render('placeholder') }}');</script>
+        <script>MimotoX.utils.registerRequest(Mimoto.form.setupTextblock, '{{ sFieldId }}', '{{ sFlatFieldId }}', '{{ Mimoto.fieldId() }}', '{{ Mimoto.data('placeholder') }}');</script>
     {% endblock %}
 
 {% endembed %}
