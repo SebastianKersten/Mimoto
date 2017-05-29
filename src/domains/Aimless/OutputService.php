@@ -888,7 +888,7 @@ class OutputService
      * @param type $sEvent
      * @param type $data
      */
-    private function sendSlackNotification($entity, $config)
+    private function sendSlackNotification(MimotoEntity $entity, $config)
     {
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;

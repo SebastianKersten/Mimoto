@@ -541,7 +541,7 @@ class EntityRepository
         return $aParentEntities;
     }
 
-    private function cleanupChildren($entity)
+    private function cleanupChildren(MimotoEntity $entity)
     {
         // load
         $aChildren = $this->getAllChildren($entity);

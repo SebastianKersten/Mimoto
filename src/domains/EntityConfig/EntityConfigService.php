@@ -154,7 +154,7 @@ class EntityConfigService
 
 
 
-    public function entityCreateTable($entity)
+    public function entityCreateTable(MimotoEntity $entity)
     {
         // 1. read entity name
         $sEntityName = $entity->getValue('name');

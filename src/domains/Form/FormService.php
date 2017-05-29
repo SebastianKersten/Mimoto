@@ -496,7 +496,7 @@ class FormService
     }
 
 
-    public function getFormFieldValues($form, $entity, $aFields = null, $nEntityId = null)
+    public function getFormFieldValues(MimotoEntity $form, $entity, $aFields = null, $nEntityId = null)
     {
         // 1. register fields
         $aFormFields = (!empty($aFields)) ? $aFields : $form->getValue('fields');

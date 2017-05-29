@@ -8,6 +8,7 @@ use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
+use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
@@ -161,7 +162,7 @@ class EntityProperty
     /**
      * Get field: name
      */
-    private static function setNameValidation($field)
+    private static function setNameValidation(MimotoEntity $field)
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);

@@ -868,7 +868,7 @@ class AimlessComponent
      * @param null $aFieldVars
      * @return string
      */
-    private function renderCollectionItem($entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null, $customValues = null)
+    private function renderCollectionItem(MimotoEntity $entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null, $customValues = null)
     {
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
@@ -932,7 +932,7 @@ class AimlessComponent
      * @param $aFieldVars
      * @return AimlessInput
      */
-    private function renderCollectionItemAsInput($sTemplateName, $eField, $connection, $aFormFields)
+    private function renderCollectionItemAsInput($sTemplateName, MimotoEntity $eField, $connection, $aFormFields)
     {
         // init
         $bFormFieldFound = false;
