@@ -113,7 +113,7 @@ class WorkerController
             //unset($client);
         });
 
-        var_dump($worker);
+        var_dump($worker, true);
 
 
 
