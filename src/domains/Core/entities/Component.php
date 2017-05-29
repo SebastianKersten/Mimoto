@@ -186,23 +186,23 @@ class Component
             // selections
 
             (object) array(
-                'name' => 'Mimoto.CMS_selections_SelectionOverview',
-                'file' => 'MimotoCMS/components/pages/selections/SelectionOverview/SelectionOverview.twig',
+                'name' => 'Mimoto.CMS_selections_Overview',
+                'file' => 'MimotoCMS/components/pages/selections/Overview/Overview.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_selections_SelectionOverview_ListItem',
-                'file' => 'MimotoCMS/components/pages/selections/SelectionOverview/ListItem/ListItem.twig',
+                'name' => 'Mimoto.CMS_selections_Overview_ListItem',
+                'file' => 'MimotoCMS/components/pages/selections/Overview/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_selections_SelectionDetail',
-                'file' => 'MimotoCMS/components/pages/selections/SelectionDetail/SelectionDetail.twig',
+                'name' => 'Mimoto.CMS_selections_Detail',
+                'file' => 'MimotoCMS/components/pages/selections/Detail/Detail.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_selections_SelectionDetail-Rule',
-                'file' => 'MimotoCMS/components/pages/selections/SelectionDetail/SelectionRule/SelectionRule.twig',
+                'name' => 'Mimoto.CMS_selections_Detail-Rule',
+                'file' => 'MimotoCMS/components/pages/selections/Detail/SRule/Rule.twig',
                 'conditionals' => []
             ),
 

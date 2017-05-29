@@ -7,9 +7,25 @@ An ultra fast, fluid and realtime data management microframework
 
 # Requirements
 
-- Mimoto uses Gearman async 
+- composer
+- npm
+- Mimoto uses Gearman async manager 
 - Node JS
 - Memcached
+
+# Starting up the reakltime feature
+
+Run event worker
+```
+curl http://mimoto.aimless/mimoto.cms/workers/data
+```
+
+Run realtime server script
+```
+node src/userinterface/app/javascript/realtime.js
+```
+
+
 
 # Basic instalation
 

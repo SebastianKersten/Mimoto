@@ -13,18 +13,18 @@
 
         <!-- structure -->
 
-        <div id="panel_selectiondetail_info" class="MimotoCMS_pages_selections_SelectionDetail__panel">
+        <div id="panel_selectiondetail_info" class="MimotoCMS_pages_selections_Detail__panel">
 
-            <div class="MimotoCMS_pages_selections_SelectionDetail_Structure">
+            <div class="MimotoCMS_pages_selections_Detail_Structure">
 
-                <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta">
-                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta_info">
+                <div class="MimotoCMS_pages_selections_Detail_Structure__meta">
+                    <div class="MimotoCMS_pages_selections_Detail_Structure__meta_info">
 
-                        <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__selectionname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+                        <div class="MimotoCMS_pages_selections_Detail_Structure__selectionname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
 
                     </div>
 
-                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__meta_menu">
+                    <div class="MimotoCMS_pages_selections_Detail_Structure__meta_menu">
                         {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.selectionEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
                     </div>
 
@@ -32,19 +32,19 @@
 
             </div>
 
-            <div class="MimotoCMS_pages_selections_SelectionDetail__block">
+            <div class="MimotoCMS_pages_selections_Detail__block">
 
-                <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_empty" {{ Mimoto.showWhenEmpty('rules') }}>
+                <div class="MimotoCMS_pages_selections_Detail_Structure__rules_empty" {{ Mimoto.showWhenEmpty('rules') }}>
                     <div>This selection has no rules yet.<br>Don't hesitate one minute more, start adding one!</div>
                     <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new rule', icon:'plus', onclick:"Mimoto.CMS.selectionRuleNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('rules') }}>
-                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_container" {{ Mimoto.realtime('rules', 'Mimoto.CMS_selections_SelectionDetail-Rule') }}>
-                        {{ Mimoto.render('rules', 'Mimoto.CMS_selections_SelectionDetail-Rule') }}
+                    <div class="MimotoCMS_pages_selections_Detail_Structure__rules_container" {{ Mimoto.realtime('rules', 'Mimoto.CMS_selections_Detail-Rule') }}>
+                        {{ Mimoto.render('rules', 'Mimoto.CMS_selections_Detail-Rule') }}
                     </div>
 
-                    <div class="MimotoCMS_pages_selections_SelectionDetail_Structure__rules_menu">
+                    <div class="MimotoCMS_pages_selections_Detail_Structure__rules_menu">
                         {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new rule', icon:'plus', onclick:"Mimoto.CMS.selectionRuleNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
