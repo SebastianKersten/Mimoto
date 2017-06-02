@@ -25,7 +25,7 @@
         ),
         'gearman' => (object) array(
                 'server_address' => '127.0.0.1'
-            ),
+        ),
         'media' => (object) array
         (
             'upload_dir' => 'dynamic/'

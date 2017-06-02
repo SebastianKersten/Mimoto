@@ -44,6 +44,23 @@ $twig = new Twig_Environment($loader, array(
 ));
 
 
+// https://silex.sensiolabs.org/doc/1.3/providers/translation.html
+
+//$app->register(new Silex\Provider\TranslationServiceProvider(), array(
+//    'locale_fallbacks' => array('en'),
+//));
+//
+//use Symfony\Component\Translation\Loader\YamlFileLoader;
+//
+//$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+//    $translator->addLoader('yaml', new YamlFileLoader());
+//
+//    $translator->addResource('yaml', __DIR__.'/locales/en.yml', 'en');
+//    $translator->addResource('yaml', __DIR__.'/locales/nl.yml', 'nl');
+//
+//    return $translator;
+//}));
+
 
 // connect
 Mimoto::setService('database', new PDO("mysql:host=".Mimoto::value('config')->mysql->host.";dbname=".Mimoto::value('config')->mysql->dbname, Mimoto::value('config')->mysql->username, Mimoto::value('config')->mysql->password));

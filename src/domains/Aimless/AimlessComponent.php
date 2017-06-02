@@ -221,8 +221,12 @@ class AimlessComponent
                 && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE
             )
             {
-                // #todo - in geval van getStructure (connections -> anders oppakken
-                // #todo - connections in ViewModel gooien
+                // 1. in geval van getStructure (connections -> anders oppakken
+
+
+
+                // 1. connections in ViewModel gooien
+
 
 //                if ($this->_entity->getPropertyType($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY
 //                {

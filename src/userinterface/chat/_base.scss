@@ -1,0 +1,20 @@
+@import "base_slide";
+@import "Course/Course";
+@import "Overview/Overview";
+@import "slides/Image/Image";
+@import "slides/Video/Video";
+@import "slides/Text/Text";
+@import "slides/Grid/Grid";
+
+
+body.GridPrototype {
+    background-color: #E5E4E4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}

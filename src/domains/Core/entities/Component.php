@@ -598,6 +598,11 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
+                'name' => 'Mimoto.CMS.GroupButtonModule',
+                'file' => 'MimotoCMS/modules/GroupButtonModule/GroupButtonModule.twig',
+                'conditionals' => []
+            ),
+            (object) array(
                 'name' => 'Mimoto.CMS.TabmenuModule',
                 'file' => 'MimotoCMS/modules/TabmenuModule/TabmenuModule.twig',
                 'conditionals' => []

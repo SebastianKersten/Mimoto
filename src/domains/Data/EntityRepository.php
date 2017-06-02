@@ -189,7 +189,7 @@ class EntityRepository
                 if ($bFirst) { $bFirst = false; $sQuery .= ' WHERE '; } else { $sQuery .= ', '; }
 
                 // compose
-                $sQuery .= $sKey.' = :'.$sKey;
+                $sQuery .= '`'.$sKey.'` = :'.$sKey;
 
                 // add
                 $params[':'.$sKey] = $value;

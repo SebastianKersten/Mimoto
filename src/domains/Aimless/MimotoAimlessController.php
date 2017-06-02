@@ -180,7 +180,8 @@ class MimotoAimlessController
             $eFile->setValue('name', $sNewFileName);
 
             // move to correct location
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $sTargetFile)) {
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $sTargetFile))
+            {
                 // analyze
                 $aImageInfo = getimagesize($sTargetFile);
 
@@ -200,7 +201,9 @@ class MimotoAimlessController
 
                 // send success
                 return new JsonResponse($imageDataResponse, 200);
-            } else {
+            }
+            else
+            {
                 // send error
                 return new JsonResponse((object)array('result' => 'Image NOT uploaded! ' . date("Y.m.d H:i:s")), 500);
             }
