@@ -54,6 +54,14 @@ class Mimoto
     const AIMLESS = 'aimless';
 
 
+
+    public static function isInDebugMode()
+    {
+        return self::$_bDebugMode;
+    }
+
+
+
     /**
      * Constructor
      * @param Application $app

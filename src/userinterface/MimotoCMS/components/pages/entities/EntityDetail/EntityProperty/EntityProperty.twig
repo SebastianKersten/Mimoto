@@ -11,8 +11,8 @@
                 <div {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</div>
             {% endif %}
         </div>
-        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Mimoto.realtime('settings') }}>
-            {{ Mimoto.data('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { propertySubtype:Mimoto.data('subtype') }) }}
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Mimoto.realtime('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting') }}>
+            {{ Mimoto.data('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { customValues: { propertySubtype:Mimoto.data('subtype') }}) }}
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">

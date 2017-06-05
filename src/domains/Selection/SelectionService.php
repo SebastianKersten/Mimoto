@@ -62,8 +62,19 @@ class SelectionService
     // ----------------------------------------------------------------------------
     // --- Public methods----------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
+    /**
+     * @return Selection
+     */
+    public function create()
+    {
+        // init
+        return new Selection();
+    }
+
+
+
     /**
      * Get form by its name
      */
@@ -87,7 +98,7 @@ class SelectionService
                 (!$bSearchById && $selectionConfig->name == $sSelectionNameOrId))
             {
                 // store
-                $selection = $selectionConfig;
+                $selection = $this->buildSelectionFromConfig($selectionConfig);
                 break;
             }
         }
@@ -110,42 +121,15 @@ class SelectionService
         $aSelections = [];
 
         // init
-        $aAllSelections = [];
+        $aAllSelections = $this->loadRawSelectionData();
         $aAllSelectionRuleConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTION);
-        $aAllSelectionRules = [];
+        $aAllSelectionRules = $this->loadRawSelectionRuleData();
         $aAllSelectionRuleSettingsConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTIONRULE);
 
 
-        // load all selections
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_SELECTION.'`');
-        $params = array();
-        $stmt->execute($params);
 
-        foreach ($stmt as $row)
-        {
-            // compose and store
-            $aAllSelections[] = (object) array(
-                'id' => $row['id'],
-                'name' => $row['name'],
-                'created' => $row['created'],
-                'rules' => []
-            );
-        }
+        // --- compose ---
 
-        // load all selection rules
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_SELECTIONRULE.'`');
-        $params = array();
-        $stmt->execute($params);
-
-        foreach ($stmt as $row)
-        {
-            // compose and store
-            $aAllSelectionRules[] = (object) array(
-                'id' => $row['id'],
-                'type' => $row['type'],
-                'created' => $row['created'],
-            );
-        }
 
         // build
         $nSelectionCount = count($aAllSelections);
@@ -253,12 +237,91 @@ class SelectionService
             }
         }
 
-        $aSelections = [];
-        //Mimoto::error($aSelections);
-
-
         // send
         return $aSelections;
+    }
+
+    private function loadRawSelectionData()
+    {
+        // init
+        $aAllSelections = [];
+
+        // load all selections
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_SELECTION.'`');
+        $params = array();
+        $stmt->execute($params);
+
+        foreach ($stmt as $row)
+        {
+            // compose and store
+            $aAllSelections[] = (object) array(
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'created' => $row['created'],
+                'rules' => []
+            );
+        }
+
+        // send
+        return $aAllSelections;
+    }
+
+    private function loadRawSelectionRuleData()
+    {
+        // init
+        $aAllSelectionRules = [];
+
+        // load all selection rules
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `' . CoreConfig::MIMOTO_SELECTIONRULE . '`');
+        $params = array();
+        $stmt->execute($params);
+
+        foreach ($stmt as $row) {
+            // compose and store
+            $aAllSelectionRules[] = (object)array(
+                'id' => $row['id'],
+                'type' => $row['type'],
+                'created' => $row['created'],
+            );
+        }
+
+        // send
+        return $aAllSelectionRules;
+    }
+
+
+    private function buildSelectionFromConfig($selectionConfig)
+    {
+        // init
+        $selection = new Selection();
+
+        // setup
+        $selection->setName($selectionConfig->name);
+
+        // parse rules
+        $nRuleCount = count($selectionConfig->rules);
+        for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
+        {
+            // register
+            $ruleConfig = $selectionConfig->rules[$nRuleIndex];
+
+            // init
+            $rule = $selection->addRule();
+
+            // setup
+            switch($ruleConfig->type)
+            {
+                case 'type':
+
+                    $rule->setEntityType($ruleConfig->entity->entity_type_id);
+                    break;
+            }
+        }
+        //Mimoto::output('$selectionConfig', $selectionConfig);
+        //Mimoto::error($selection);
+
+        // send
+        return $selection;
     }
 
 }

@@ -235,6 +235,13 @@ class OutputService
         Mimoto::service('log')->error("Template `$sComponentName` not found", "I can't find the template you are looking for", true);
 
 
+
+        //Notice: Undefined index: _Mimoto_coreform_formattingoption-header
+        //in /Users/sebastiankersten/Development/Webroot/Mimoto.Aimless/src/domains/Core/entities/FormattingOption.php on line 169
+
+        //Warning: Invalid argument supplied for foreach()
+        //in /Users/sebastiankersten/Development/Webroot/Mimoto.Aimless/src/domains/Data/EntityRepository.php on line 103
+
         // 1. broadcast webevent for debugging purposes
         // 2. standaard report error (error level)
         
@@ -888,7 +895,7 @@ class OutputService
      * @param type $sEvent
      * @param type $data
      */
-    private function sendSlackNotification(MimotoEntity $entity, $config)
+    private function sendSlackNotification(MimotoEntity$entity, $config)
     {
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;

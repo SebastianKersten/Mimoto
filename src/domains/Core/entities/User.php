@@ -254,28 +254,47 @@ class User
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_USER, 'roles');
 
 
-        // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_USER_ROLE]);
+
+
+        // init
+        $selection = Mimoto::service('selection')->create();
+
+        // setup
+        $selection->setEntityType(CoreConfig::MIMOTO_USER_ROLE);
+        //$selection->setPropertyValue('name', 'author');
 
 
         //if (Mimoto::user()->hasRole('superuser'))
         {
-            $aCoreUserRoles = [
-                (object)array('label' => 'Mimoto Superuser', 'id' => CoreConfig::MIMOTO_USER_ROLE . '-superuser')
+            $aCoreUserRoleIds = [
+                CoreConfig::MIMOTO_USER_ROLE.'-superuser'
             ];
 
-            $nCoreUserRoleCount = count($aCoreUserRoles);
-            for ($nCoreUserRoleIndex = 0; $nCoreUserRoleIndex < $nCoreUserRoleCount; $nCoreUserRoleIndex++) {
+            $nCoreUserRoleIdCount = count($aCoreUserRoleIds);
+            for ($nCoreUserRoleIdIndex = 0; $nCoreUserRoleIdIndex < $nCoreUserRoleIdCount; $nCoreUserRoleIdIndex++)
+            {
                 // register
-                $coreUserRole = $aCoreUserRoles[$nCoreUserRoleIndex];
+                $coreUserRoleId = $aCoreUserRoleIds[$nCoreUserRoleIdIndex];
 
-                // load
-                $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER_ROLE, $coreUserRole->id);
+                // add core user roles
+                $rule = $selection->addRule();
 
-                // store
-                $aEntities[] = $entity;
+                // setup
+                $rule->setEntityType(CoreConfig::MIMOTO_USER_ROLE);
+                $rule->setInstanceId($coreUserRoleId);
             }
         }
+
+
+        // load
+        //$aEntities = Mimoto::service('data')->select('articles');
+        //$aEntities = Mimoto::service('data')->select((object) array('entityType'=>'article', 'propertyValues'=>['id'=>'3']));
+        //$aEntities = Mimoto::service('data')->select(['entityType'=>'article']);
+        $aEntities = Mimoto::service('data')->select($selection);
+
+
+        Mimoto::output('I found the following entities (count = '.count($aEntities).')', $aEntities);
+        Mimoto::error('Terminating session :)');
 
 
         $nEntityCount = count($aEntities);

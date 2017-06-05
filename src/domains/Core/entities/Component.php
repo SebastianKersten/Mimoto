@@ -202,7 +202,7 @@ class Component
             ),
             (object) array(
                 'name' => 'Mimoto.CMS_selections_Detail-Rule',
-                'file' => 'MimotoCMS/components/pages/selections/Detail/SRule/Rule.twig',
+                'file' => 'MimotoCMS/components/pages/selections/Detail/Rule/Rule.twig',
                 'conditionals' => []
             ),
 

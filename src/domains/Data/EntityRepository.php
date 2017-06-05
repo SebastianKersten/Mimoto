@@ -9,6 +9,7 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Event\MimotoEvent;
+use Mimoto\Selection\SelectionRule;
 
 
 /**
@@ -215,7 +216,92 @@ class EntityRepository
         // send
         return $aEntities;
     }
-    
+
+
+
+    public function select(EntityConfig $entityConfig, SelectionRule $rule)
+    {
+        // init
+        $aEntities = [];
+
+
+        // validate
+        if (empty($rule->getEntityType()))
+        {
+            // report
+            if (Mimoto::isInDebugMode()) Mimoto::service('log')->warn("Missing selection parameter", "Selection rule is missing an entity type");
+
+            // send
+            return $aEntities;
+        }
+
+
+        if (!empty($rule->getInstanceId()))
+        {
+            $aEntities[] = Mimoto::service('data')->get($rule->getEntityType(), $rule->getInstanceId());
+        }
+        else
+        {
+            // compose
+            $sQuery = 'SELECT * FROM `'.$entityConfig->getMySQLTable().'`';
+            $params = array();
+
+            // read
+            $aRegisteredPropertyValues = $rule->getRegisteredPropertyValues();
+
+            // verify
+            if (!empty($aRegisteredPropertyValues))
+            {
+
+                // 1. #todo replace ` with \`
+
+                $nPropertyValueCount = count($aRegisteredPropertyValues);
+                for ($nPropertyValueIndex = 0; $nPropertyValueIndex < $nPropertyValueCount; $nPropertyValueIndex++)
+                {
+                    // register
+                    $xPropertyName = $aRegisteredPropertyValues[$nPropertyValueIndex];
+
+                    $value = $rule->getPropertyValue($xPropertyName);
+
+                    // convert to label in case of id
+                    $sPropertyName= (MimotoDataUtils::isValidId($xPropertyName)) ? $this->_EntityConfigService->getPropertyNameById($xPropertyName) : $xPropertyName;
+
+
+                    // prepare
+                    $sQuery .= ($nPropertyValueIndex == 0) ? ' WHERE ' : ', ';
+
+                    // compose
+                    $sQuery .= '`'.$sPropertyName.'` = :'.$sPropertyName;
+
+                    // add
+                    $params[':'.$sPropertyName] = $value;
+                }
+            }
+
+            // load
+            $stmt = Mimoto::service('database')->prepare($sQuery);
+            $stmt->execute($params);
+
+            // load
+            $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            // register
+            $nResultCount = count($aResults);
+            for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
+            {
+                // register
+                $aEntities[] = $this->createEntity($entityConfig, $aResults[$nResultIndex]);
+            }
+        }
+
+
+        // send
+        return $aEntities;
+    }
+
+
+
+
     /**
      * Store entity
      * @param MimotoEntity $entity
