@@ -42,30 +42,28 @@ class Selection
             {
                 switch($sKey)
                 {
-                    case 'entityType':
+                    case 'type':
 
-                        $this->setEntityType(is_array($selectionSettings) ? $selectionSettings['entityType'] : $selectionSettings->entityType);
+                        $this->setType(is_array($selectionSettings) ? $selectionSettings['type'] : $selectionSettings->type);
                         break;
 
-                    case 'instanceId':
+                    case 'id':
 
-                        $this->setInstanceId(is_array($selectionSettings) ? $selectionSettings['insgtanceId'] : $selectionSettings->instanceId);
+                        $this->setId(is_array($selectionSettings) ? $selectionSettings['id'] : $selectionSettings->id);
                         break;
 
-                    case 'parentProperty':
+                    case 'property':
 
-                        $this->setParentProperty(is_array($selectionSettings) ? $selectionSettings['parentProperty'] : $selectionSettings->parentProperty);
+                        $this->setProperty(is_array($selectionSettings) ? $selectionSettings['property'] : $selectionSettings->property);
                         break;
 
-                    case 'propertyValues':
+                    case 'values':
 
                         // register
                         $aValues = (is_array($selectionSettings) ? $selectionSettings[$sKey] : $selectionSettings->$sKey);
 
-                        foreach ($aValues as $sPropertyName => $valuetoCompare)
-                        {
-                            $this->setPropertyValue($sPropertyName, $valuetoCompare);
-                        }
+                        // store
+                        foreach ($aValues as $sPropertyName => $valuetoCompare) $this->setValue($sPropertyName, $valuetoCompare);
                         break;
                 }
 
@@ -165,30 +163,30 @@ class Selection
      * Set the entity type
      * @param $xType mixed Reference to the entity type
      */
-    public function setEntityType($xType)
+    public function setType($xType)
     {
         // forward
-        $this->getAliasRule()->setEntityType($xType);
+        $this->getAliasRule()->setType($xType);
     }
 
     /**
      * Set the instance id
      * @param $xId mixed The id
      */
-    public function setInstanceId($xId)
+    public function setId($xId)
     {
         // forward
-        $this->getAliasRule()->setInstanceId($xId);
+        $this->getAliasRule()->setId($xId);
     }
 
     /**
-     * Set the parent property
+     * Set the property containing the entities
      * @param $xParent mixed Reference to the parent property
      */
-    public function setParentProperty($xParent)
+    public function setProperty($xParent)
     {
         // forward
-        $this->getAliasRule()->setParentProperty($xParent);
+        $this->getAliasRule()->setProperty($xParent);
     }
 
     /**
@@ -196,9 +194,9 @@ class Selection
      * @param $xValue mixed Reference to the property
      * @param $sValue string The actual value
      */
-    public function setPropertyValue($xProperty, $sValue)
+    public function setValue($xProperty, $sValue)
     {
-        $this->getAliasRule()->setPropertyValue($xProperty, $sValue);
+        $this->getAliasRule()->setValue($xProperty, $sValue);
     }
 
 

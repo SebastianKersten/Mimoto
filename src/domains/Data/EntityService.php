@@ -173,8 +173,6 @@ class EntityService
         {
             // load
             $selection = Mimoto::service('selection')->getSelection($xSelection);
-
-            echo "Mimoto::service('data')->select() received a string<br>";
         }
         else if ((is_array($xSelection) || is_object($xSelection)))
         {
@@ -182,17 +180,12 @@ class EntityService
             {
                 // register
                 $selection = $xSelection;
-
-                echo "Mimoto::service('data')->select() received a Selection<br>";
             }
             else
             {
                 // create
                 $selection = new Selection($xSelection);
-
-                echo "Mimoto::service('data')->select() received an object or array<br>";
             }
-
         }
 
         // validate
@@ -209,7 +202,10 @@ class EntityService
                 $rule = $aRules[$nRuleIndex];
 
                 // read
-                $sEntityType = $rule->getEntityType();
+                $sEntityType = $rule->getType();
+
+                // validate
+                if (empty($sEntityType)) continue;
 
                 // load
                 $entityConfig = $this->getEntityConfig($sEntityType);
@@ -435,10 +431,7 @@ class EntityService
                 $this->_aEntityConfigs[$sEntityType] = $entityConfig;
             } else
             {
-                if (Mimoto::isInDebugMode())
-                {
-                    Mimoto::service('log')->warn("Requested entity type not found in selection rule", "Sorry, I do not know the entity type '$sEntityType' from a rule in the selection '".$selection->getName()."'");
-                }
+                Mimoto::service('log')->error("Requested entity type not found in selection rule", "Sorry, I do not know the entity type '$sEntityType' from a rule in the selection", true);
             }
         }
 

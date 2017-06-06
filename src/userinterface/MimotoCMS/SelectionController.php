@@ -216,4 +216,20 @@ class SelectionController
         return Mimoto::service('messages')->response((object) array('result' => 'SelectionRule deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
+
+    public function selectionRuleEditEntityType(Application $app, $nSelectionRuleId)
+    {
+        // 1. init popup
+        $popup = Mimoto::service('output')->createPopup();
+
+        // 2. load data
+        $eSelectionRule = Mimoto::service('data')->get(CoreConfig::MIMOTO_SELECTIONRULE, $nSelectionRuleId);
+
+        // 3. validate data
+        if (empty($eSelectionRule)) return $app->redirect("/mimoto.cms/selections");
+
+        // 4. create
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_List');
+    }
+
 }

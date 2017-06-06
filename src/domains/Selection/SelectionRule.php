@@ -13,10 +13,10 @@ class SelectionRule
 {
 
     // properties
-    private $_xEntityType = null;
-    private $_xInstanceId = null;
-    private $_xParentProperty = null;
-    private $_aPropertyValues = [];
+    private $_xType = null;
+    private $_xId = null;
+    private $_xProperty = null;
+    private $_aValues = [];
 
 
 
@@ -27,22 +27,22 @@ class SelectionRule
 
     /**
      * Set the entity type
-     * @param $xType mixed Reference to the entity type
+     * @param $xType mixed Reference to the entity type (name or id)
      */
-    public function setEntityType($xEntityType)
+    public function setType($xType)
     {
         // store
-        $this->_xEntityType = $xEntityType;
+        $this->_xType = $xType;
     }
 
     /**
      * Get the entity type
-     * @return mixed Reference to the entity type
+     * @return mixed Reference to the entity type  (name or id)
      */
-    public function getEntityType()
+    public function getType()
     {
         // send
-        return $this->_xEntityType;
+        return $this->_xType;
     }
 
 
@@ -50,66 +50,66 @@ class SelectionRule
      * Set the instance id
      * @param $xId mixed The id of the instance
      */
-    public function setInstanceId($xInstanceId)
+    public function setId($xId)
     {
         // store
-        $this->_xInstanceId = $xInstanceId;
+        $this->_xId = $xId;
     }
 
     /**
      * Get the instance id
      * @return mixed The id of the instance
      */
-    public function getInstanceId()
+    public function getId()
     {
         // send
-        return $this->_xInstanceId;
+        return $this->_xId;
     }
 
 
     /**
-     * Set the parent property
-     * @param $xParent mixed Reference to the parent property
+     * Set the property containing the entities
+     * @param $xParent mixed Reference to the parent property (name or id)
      */
-    public function setParentProperty($xParentProperty)
+    public function setProperty($xProperty)
     {
         // store
-        $this->_xParentProperty = $xParentProperty;
+        $this->_xProperty = $xProperty;
     }
 
     /**
-     * get the parent property
-     * @return mixed Reference to the parent property
+     * Get the property containing the entities
+     * @return mixed Reference to the parent property (name or id)
      */
-    public function getParentProperty()
+    public function getProperty()
     {
         // send
-        return $this->_xParentProperty;
+        return $this->_xProperty;
     }
 
 
     /**
      * Set a property value (multiple values possible)
-     * @param $xProperty mixed Reference to the property
+     * @param $xProperty mixed Reference to the property (either name or id)
      * @param $value mixed The actual to compare
      */
-    public function setPropertyValue($xProperty, $value)
+    public function setValue($xProperty, $value)
     {
         // store
-        $this->_aPropertyValues[$xProperty] = $value;
+        $this->_aValues[$xProperty] = $value;
     }
 
     /**
      * Get registered property values
      * @return array Containing the property references (either name or id)
      */
-    public function getRegisteredPropertyValues()
+    public function getRegisteredValues()
     {
         // init
         $aRegisteredPropertyValues = [];
 
         // collect
-        foreach ($this->_aPropertyValues as $sKey => $value) { $aRegisteredPropertyValues[] = $sKey; }
+        foreach ($this->_aValues as $sKey => $value) { $aRegisteredPropertyValues[] = $sKey; }
 
         // send
         return $aRegisteredPropertyValues;
@@ -117,13 +117,13 @@ class SelectionRule
 
     /**
      * Get a property value
-     * @param $xProperty mixed Reference to the property
+     * @param $xProperty mixed Reference to the property (either name or id)
      * @return mixed The value to compare
      */
-    public function getPropertyValue($xProperty)
+    public function getValue($xProperty)
     {
         // store
-        return $this->_aPropertyValues[$xProperty];
+        return $this->_aValues[$xProperty];
     }
 
 }

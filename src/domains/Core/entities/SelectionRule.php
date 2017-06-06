@@ -81,8 +81,25 @@ class SelectionRule
                             'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_SELECTION.'--propertyValues',
+                    // ---
+                    'name' => 'propertyValues',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_SELECTIONRULE]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
                 )
-
             ]
         );
     }

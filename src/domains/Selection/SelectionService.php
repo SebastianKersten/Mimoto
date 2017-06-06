@@ -65,12 +65,13 @@ class SelectionService
 
 
     /**
+     * @param $selectionSettings array|object The settings for a quick configuration
      * @return Selection
      */
-    public function create()
+    public function create($selectionSettings = null)
     {
         // init
-        return new Selection();
+        return new Selection($selectionSettings);
     }
 
 
@@ -313,7 +314,7 @@ class SelectionService
             {
                 case 'type':
 
-                    $rule->setEntityType($ruleConfig->entity->entity_type_id);
+                    $rule->setType($ruleConfig->entity->entity_type_id);
                     break;
             }
         }

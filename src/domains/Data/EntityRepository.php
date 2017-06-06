@@ -226,7 +226,7 @@ class EntityRepository
 
 
         // validate
-        if (empty($rule->getEntityType()))
+        if (empty($rule->getType()))
         {
             // report
             if (Mimoto::isInDebugMode()) Mimoto::service('log')->warn("Missing selection parameter", "Selection rule is missing an entity type");
@@ -236,9 +236,49 @@ class EntityRepository
         }
 
 
-        if (!empty($rule->getInstanceId()))
+        if (!empty($rule->getId()))
         {
-            $aEntities[] = Mimoto::service('data')->get($rule->getEntityType(), $rule->getInstanceId());
+            // load
+            $eEntity = Mimoto::service('data')->get($rule->getType(), $rule->getId());
+
+            // validate
+            if (empty($eEntity)) return $aEntities;
+
+
+            // validate
+            if (!empty($rule->getProperty()))
+            {
+                // register
+                $xProperty = $rule->getProperty();
+
+                // convert to label in case of id
+                $sPropertyName = (MimotoDataUtils::isValidId($xProperty)) ? Mimoto::service('config')->getPropertyNameById($xProperty) : $xProperty;
+
+                    // validate
+                if ($eEntity->hasProperty($sPropertyName))
+                {
+                    // register
+                    $sPropertyType = $eEntity->getPropertyType($sPropertyName);
+
+                    switch($sPropertyType)
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                            $aEntities = array_merge($aEntities, $eEntity->getValue($sPropertyName));
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                            $aEntities[] = $eEntity->getValue($sPropertyName);
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                $aEntities[] = $eEntity;
+            }
+
         }
         else
         {
@@ -247,7 +287,7 @@ class EntityRepository
             $params = array();
 
             // read
-            $aRegisteredPropertyValues = $rule->getRegisteredPropertyValues();
+            $aRegisteredPropertyValues = $rule->getRegisteredValues();
 
             // verify
             if (!empty($aRegisteredPropertyValues))
@@ -261,10 +301,10 @@ class EntityRepository
                     // register
                     $xPropertyName = $aRegisteredPropertyValues[$nPropertyValueIndex];
 
-                    $value = $rule->getPropertyValue($xPropertyName);
+                    $value = $rule->getValue($xPropertyName);
 
                     // convert to label in case of id
-                    $sPropertyName= (MimotoDataUtils::isValidId($xPropertyName)) ? $this->_EntityConfigService->getPropertyNameById($xPropertyName) : $xPropertyName;
+                    $sPropertyName= (MimotoDataUtils::isValidId($xPropertyName)) ? Mimoto::service('config')->getPropertyNameById($xPropertyName) : $xPropertyName;
 
 
                     // prepare
@@ -293,7 +333,6 @@ class EntityRepository
                 $aEntities[] = $this->createEntity($entityConfig, $aResults[$nResultIndex]);
             }
         }
-
 
         // send
         return $aEntities;
