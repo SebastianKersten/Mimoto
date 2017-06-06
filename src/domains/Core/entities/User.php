@@ -287,7 +287,7 @@ class User
 
 
         // load
-        //$aEntities = Mimoto::service('data')->select('articles');
+        $aEntities = Mimoto::service('data')->select('articles');
         //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'values'=>['id'=>'3']));
         //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'values'=>(object) array('id'=>'3')));
         //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'id' => 1, 'property'=>'comments'));
@@ -298,30 +298,24 @@ class User
 
 
         // init
-        $commentsSelection = Mimoto::service('selection')->create();
-
-
-        $commentsSelection->setType('article');
-        $commentsSelection->setId(1);
-
-        $commentsSelection->setProperty('comments');
-
-
-
-
-        // geen impliciete
-//        $commentsSelection->setChildType('comment');
-//        $commentsSelection->setChildType(['comment', 'user']);
-//        $commentsSelection->setChildValue('type');
-
-
-        
-        // 3. subselection mogelijk? (set child selection)
-
-        // x. selection als 4e property type
-
-
-        $aEntities = Mimoto::service('data')->select($commentsSelection);
+//        $commentsSelection = Mimoto::service('selection')->create();
+//
+//
+//        $commentsSelection->setType('article');
+//        $commentsSelection->setId(1);
+//
+//        $commentsSelection->setProperty('comments');
+//
+//
+//
+//        $commentsSelection->setChildTypes('comment');
+//        //$commentsSelection->setChildTypes(['comment', 'user']);
+//
+//
+//        $commentsSelection->setChildValue('message', 'Hallo');
+//
+//
+//        $aEntities = Mimoto::service('data')->select($commentsSelection);
 
 
         Mimoto::output('I found the following entities (count = '.count($aEntities).')', $aEntities);

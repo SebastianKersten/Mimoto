@@ -264,13 +264,76 @@ class EntityRepository
                     {
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                            $aEntities = array_merge($aEntities, $eEntity->getValue($sPropertyName));
+                            $aEntities = $eEntity->getValue($sPropertyName);
                             break;
 
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                             $aEntities[] = $eEntity->getValue($sPropertyName);
                             break;
+                    }
+
+                    // verify
+                    if (!empty($rule->getChildTypes()))
+                    {
+                        // register
+                        $aChildTypes = $rule->getChildTypes();
+
+                        // filter
+                        for ($nEntityIndex = 0; $nEntityIndex < count($aEntities); $nEntityIndex++)
+                        {
+                            // register
+                            $eChild = $aEntities[$nEntityIndex];
+
+                            // validate
+                            if (!in_array($eChild->getEntityTypeName(), $aChildTypes))
+                            {
+                                // remove
+                                array_splice($aEntities, $nEntityIndex, 1);
+
+                                // update
+                                $nEntityIndex--;
+                            }
+                        }
+                    }
+
+
+                    // register
+                    $aRegisteredChildValues = $rule->getRegisteredChildValues();
+
+                    // verify
+                    if (!empty($aRegisteredChildValues))
+                    {
+                        // filter
+                        for ($nEntityIndex = 0; $nEntityIndex < count($aEntities); $nEntityIndex++)
+                        {
+                            // register
+                            $eChild = $aEntities[$nEntityIndex];
+
+                            // search
+                            $nValueCount = count($aRegisteredChildValues);
+                            for ($nValueIndex = 0; $nValueIndex < $nValueCount; $nValueIndex++)
+                            {
+                                // register
+                                $xPropertyName = $aRegisteredChildValues[$nValueIndex];
+                                $valueToCompare = $rule->getChildValue($xPropertyName);
+
+                                // convert to label in case of id
+                                $sPropertyName = (MimotoDataUtils::isValidId($xPropertyName)) ? Mimoto::service('config')->getPropertyNameById($xPropertyName) : $xPropertyName;
+
+                                // validate
+                                if (!$eChild->hasProperty($sPropertyName) || $eChild->getValue($sPropertyName) != $valueToCompare)
+                                {
+                                    // remove
+                                    array_splice($aEntities, $nEntityIndex, 1);
+
+                                    // update
+                                    $nEntityIndex--;
+                                    break;
+
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -287,19 +350,19 @@ class EntityRepository
             $params = array();
 
             // read
-            $aRegisteredPropertyValues = $rule->getRegisteredValues();
+            $aRegisteredValues = $rule->getRegisteredValues();
 
             // verify
-            if (!empty($aRegisteredPropertyValues))
+            if (!empty($aRegisteredValues))
             {
 
                 // 1. #todo replace ` with \`
 
-                $nPropertyValueCount = count($aRegisteredPropertyValues);
+                $nPropertyValueCount = count($aRegisteredValues);
                 for ($nPropertyValueIndex = 0; $nPropertyValueIndex < $nPropertyValueCount; $nPropertyValueIndex++)
                 {
                     // register
-                    $xPropertyName = $aRegisteredPropertyValues[$nPropertyValueIndex];
+                    $xPropertyName = $aRegisteredValues[$nPropertyValueIndex];
 
                     $value = $rule->getValue($xPropertyName);
 

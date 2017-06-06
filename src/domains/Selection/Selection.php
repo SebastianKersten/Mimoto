@@ -191,12 +191,34 @@ class Selection
 
     /**
      * Set a rule value (multiple values possible)
-     * @param $xValue mixed Reference to the property
-     * @param $sValue string The actual value
+     * @param $xProperty mixed Reference to the property
+     * @param $value mixed The value to compare
      */
-    public function setValue($xProperty, $sValue)
+    public function setValue($xProperty, $value)
     {
-        $this->getAliasRule()->setValue($xProperty, $sValue);
+        // forward
+        $this->getAliasRule()->setValue($xProperty, $value);
+    }
+
+    /**
+     * Get the child types that are part of the result (multiple types possible)
+     * @param $xTypes string|array The preferred child types (either name or id)
+     */
+    public function setChildTypes($xTypes)
+    {
+        // forward
+        $this->getAliasRule()->setChildTypes($xTypes);
+    }
+
+    /**
+     * Set a child's value (multiple values possible)
+     * @param $xProperty mixed Reference to the property
+     * @param $value mixed The child value to compare
+     */
+    public function setChildValue($xProperty, $value)
+    {
+        // forward
+        $this->getAliasRule()->setChildValue($xProperty, $value);
     }
 
 

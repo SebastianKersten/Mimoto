@@ -17,6 +17,8 @@ class SelectionRule
     private $_xId = null;
     private $_xProperty = null;
     private $_aValues = [];
+    private $_aChildTypes = [];
+    private $_aChildValues = [];
 
 
 
@@ -106,13 +108,13 @@ class SelectionRule
     public function getRegisteredValues()
     {
         // init
-        $aRegisteredPropertyValues = [];
+        $aRegisteredValues = [];
 
         // collect
-        foreach ($this->_aValues as $sKey => $value) { $aRegisteredPropertyValues[] = $sKey; }
+        foreach ($this->_aValues as $sKey => $value) { $aRegisteredValues[] = $sKey; }
 
         // send
-        return $aRegisteredPropertyValues;
+        return $aRegisteredValues;
     }
 
     /**
@@ -126,4 +128,73 @@ class SelectionRule
         return $this->_aValues[$xProperty];
     }
 
+
+    /**
+     * Get the child types that are part of the result (multiple types possible)
+     * @param $xTypes string|array The preferred child types (either name or id)
+     */
+    public function setChildTypes($xTypes)
+    {
+        // verify
+        if (is_string($xTypes))
+        {
+            // store
+            $this->_aChildTypes = [$xTypes];
+        }
+
+        if (is_array($xTypes))
+        {
+            // store
+            $this->_aChildTypes = $xTypes;
+        }
+    }
+
+    /**
+     * Get the child types that are part of the result
+     * @return array the list of allowed child types
+     */
+    public function getChildTypes()
+    {
+        // store
+        return $this->_aChildTypes;
+    }
+
+
+    /**
+     * Set a child's property value(multiple values possible)
+     * @param $xProperty mixed Reference to the property (either name or id)
+     * @param $value mixed The actual to compare
+     */
+    public function setChildValue($xProperty, $value)
+    {
+        // store
+        $this->_aChildValues[$xProperty] = $value;
+    }
+
+    /**
+     * Get registered child's property values
+     * @return array Containing the property references (either name or id)
+     */
+    public function getRegisteredChildValues()
+    {
+        // init
+        $aRegisteredChildValues = [];
+
+        // collect
+        foreach ($this->_aChildValues as $sKey => $value) { $aRegisteredChildValues[] = $sKey; }
+
+        // send
+        return $aRegisteredChildValues;
+    }
+
+    /**
+     * Get a child's property value
+     * @param $xProperty mixed Reference to the property (either name or id)
+     * @return mixed The value to compare
+     */
+    public function getChildValue($xProperty)
+    {
+        // store
+        return $this->_aChildValues[$xProperty];
+    }
 }
