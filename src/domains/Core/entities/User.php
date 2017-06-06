@@ -287,12 +287,12 @@ class User
 
 
         // load
-        $aEntities = Mimoto::service('data')->select('articles');
+        //$aEntities = Mimoto::service('data')->select('articles');
+        //$aEntities = Mimoto::service('data')->select(['type'=>'article']);
         //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'values'=>['id'=>'3']));
         //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'values'=>(object) array('id'=>'3')));
         //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'id' => 1, 'property'=>'comments'));
-        //$aEntities = Mimoto::service('data')->select(['type'=>'article']);
-        //$aEntities = Mimoto::service('data')->select($selection);
+        $aEntities = Mimoto::service('data')->select($selection);
 
 
 
@@ -318,8 +318,8 @@ class User
 //        $aEntities = Mimoto::service('data')->select($commentsSelection);
 
 
-        Mimoto::output('I found the following entities (count = '.count($aEntities).')', $aEntities);
-        Mimoto::error('Terminating session :)');
+//        Mimoto::output('I found the following entities (count = '.count($aEntities).')', $aEntities);
+//        Mimoto::error('Terminating session :)');
 
 
         $nEntityCount = count($aEntities);
