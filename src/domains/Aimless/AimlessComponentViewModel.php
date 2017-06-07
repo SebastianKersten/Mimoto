@@ -92,9 +92,9 @@ class AimlessComponentViewModel
         return $this->_component->editable($sPropertySelector, $options);
     }
 
-    public function selection($sSelectionName)
+    public function selection($sSelectionName, $sComponentName = null)
     {
-        return $this->_component->selection($sSelectionName);
+        return $this->_component->selection($sSelectionName, $sComponentName);
     }
 
     public function component($sComponentAlias)
