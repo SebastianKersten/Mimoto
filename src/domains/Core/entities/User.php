@@ -318,8 +318,8 @@ class User
 //        $aEntities = Mimoto::service('data')->select($commentsSelection);
 
 
-//        Mimoto::output('I found the following entities (count = '.count($aEntities).')', $aEntities);
-//        Mimoto::error('Terminating session :)');
+        //Mimoto::output('I found the following entities (count = '.count($aEntities).')', $aEntities);
+        //Mimoto::error('Terminating session :)');
 
 
         $nEntityCount = count($aEntities);

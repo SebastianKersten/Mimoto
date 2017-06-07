@@ -490,7 +490,7 @@ class AimlessComponent
     }
 
     
-    public function selection($sSelectionName)
+    public function selection($sSelectionName, $sComponentName = null)
     {
         // validate
         if (!isset($this->_aSelections[$sSelectionName])) die("Mimoto says: Selection '$sSelectionName' not defined");
@@ -499,7 +499,7 @@ class AimlessComponent
         $selection = $this->_aSelections[$sSelectionName];
         
         // render and send
-        return $this->renderCollection($selection->aEntities, null, $selection->sComponentName);
+        return $this->renderCollection($selection->aEntities, null, (!empty($sComponentName)) ? $sComponentName : $selection->sComponentName);
     }
 
 
