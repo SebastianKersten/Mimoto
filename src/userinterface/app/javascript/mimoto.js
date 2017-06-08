@@ -11,6 +11,7 @@ var Mimoto = require('./mimoto/Mimoto');
 // init
 window.MimotoX = new Mimoto();
 
+
 // connect
 document.addEventListener('DOMContentLoaded', function () {
 
