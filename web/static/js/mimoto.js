@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "1a5721cff6c53f708ca1";
+/******/ 	__webpack_require__.h = "89da6d66926b665207bc";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -66,6 +66,7 @@
 	
 	// init
 	window.MimotoX = new Mimoto();
+	
 	
 	// connect
 	document.addEventListener('DOMContentLoaded', function () {
@@ -123,6 +124,7 @@
 	    dom: null,
 	
 	    // config
+	    autoLogon: null,
 	    debug: null,
 	    autoloadCSS: null,
 	    gateway: null,
@@ -146,8 +148,9 @@
 	        this.dom = new DomService();
 	
 	        // configure
+	        this.autoLogon = true;
 	        this.debug = false;
-	        this.autoloadCSS = true,
+	        this.autoloadCSS = true;
 	        this.version = '';
 	    },
 	
@@ -169,7 +172,7 @@
 	        MimotoX.utils.parseRequestQueue();
 	
 	        // logon
-	        this._realtimeManager = new RealtimeManager(this.gateway);
+	        if (this.autoLogon) this._realtimeManager = new RealtimeManager(this.gateway);
 	    },
 	
 	    /**

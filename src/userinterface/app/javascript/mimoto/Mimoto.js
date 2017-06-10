@@ -40,6 +40,7 @@ module.exports.prototype = {
     dom: null,
 
     // config
+    autoLogon: null,
     debug: null,
     autoloadCSS: null,
     gateway: null,
