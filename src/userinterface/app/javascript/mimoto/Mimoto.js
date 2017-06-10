@@ -63,8 +63,9 @@ module.exports.prototype = {
         this.dom = new DomService();
 
         // configure
+        this.autoLogon = true;
         this.debug = false;
-        this.autoloadCSS = true,
+        this.autoloadCSS = true;
         this.version = '';
     },
 
@@ -86,7 +87,7 @@ module.exports.prototype = {
         MimotoX.utils.parseRequestQueue();
 
         // logon
-        this._realtimeManager = new RealtimeManager(this.gateway);
+        if (this.autoLogon) this._realtimeManager = new RealtimeManager(this.gateway);
     },
 
     /**
