@@ -104,6 +104,23 @@ class AssetController
         return new Response($this->loadStaticFile('images/mimoto_logo_collapsed.png'));
     }
 
+    // What up with that? public function loadImageAvatar(Application $app)
+    // {
+    //     // 1. prepare output
+    //     $this->setHeaderForImagePNG();
+
+    //     // 2. load and send
+    //     return new Response($this->loadDynamicFile('avatar.png'));
+    // }
+
+    // public function loadColorPickerFile($sFile)
+    // {
+    //     // compose
+    //     $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/static/images/vanderlee-colorpicker/'.$sFile;
+
+    //     // load and send
+    //     return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
+    // }
 
 
     // ----------------------------------------------------------------------------

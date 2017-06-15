@@ -10,7 +10,11 @@ var Sortable = require('sortablejs'); // https://github.com/RubaXa/Sortable
 
 var Dropzone = require('dropzone');
 var Flatpickr = require('flatpickr');
+<<<<<<< HEAD
+var Colorpicker = require('vanderlee-colorpicker');
+=======
 var Quill = require('quill');
+>>>>>>> master
 
 Dropzone.autoDiscover = false;
 
@@ -40,7 +44,12 @@ module.exports.prototype = {
         this._sCurrentOpenForm = '';
         this._aMediaFields = [];
         this._aDatePicker = [];
+<<<<<<< HEAD
+        this._aRichTextFields = [];
+        this._aColorPicker = [];
+=======
         this._aTextblockFields = [];
+>>>>>>> master
     },
 
 
@@ -161,7 +170,7 @@ module.exports.prototype = {
             }
         }
         
-        
+
     },
 
     /**
@@ -1006,6 +1015,77 @@ module.exports.prototype = {
             time_24hr: true,
             'static': true
         });
+    },
+
+    setupColorPicker: function(sColorPickerId, sFlatColorPickerId, sInputFieldId) {
+        // read
+        var currentForm = this._aForms[this._sCurrentOpenForm];
+
+        // validate
+        if (!currentForm) return;
+
+        // 1. locate form in dom
+        var $form = $('form[name="' + currentForm.sName + '"]');
+
+        // register
+        var field = $('[data-aimless-form-field="' + sInputFieldId + '"]', $form);
+        var fieldInput = $("input", field);
+
+        var jsClass = '.js-' + sFlatColorPickerId + '-color-picker';
+
+        var colorPicker = {
+            sColorPickerId: sColorPickerId,
+            field: field,
+            colorPickerInputElement: field[0].querySelector(jsClass + '-input'),
+            colorPickerPreviewElement: field[0].querySelector(jsClass + '-preview'),
+            colorPickerContainerElement: field[0].querySelector(jsClass + '-container')
+        }
+
+        // store
+        this._aColorPicker[sColorPickerId] = colorPicker;
+
+        this._aColorPicker[sColorPickerId].colorPickerInputElement.addEventListener('click', function(clickEvent) {
+            $(jsClass + '-container').colorpicker({
+                stop: updateColor,
+                color: clickEvent.target.getAttribute('value'),
+                okOnEnter: true,
+                parts:  [   '', 'map', 'bar', '',
+                'hsv', 'rgb', '', 'preview',
+                '', ''
+                ],
+                // alpha:  true,
+                layout: {
+                    map:        [0, 1, 1, 5],
+                    bar:        [1, 1, 1, 5],
+                    alpha:      [2, 4, 1, 1],
+                    preview:    [2, 1, 1, 1],
+                    hsv:        [2, 2, 1, 1],
+                    rgb:        [2, 3, 1, 1],
+                }
+            });
+
+            var _this = this;
+
+            function updateColor(stopEvent, data) {
+                clickEvent.target.style.outline = 'none';
+                clickEvent.target.setAttribute('value', data.formatted);
+                _this._aColorPicker[sColorPickerId].colorPickerPreviewElement.style.backgroundColor = data.formatted;
+            }
+            this._aColorPicker[sColorPickerId].colorPickerContainerElement.classList.add('open');
+        }.bind(this));
+
+        this._aColorPicker[sColorPickerId].colorPickerInputElement.addEventListener('input', function(e) {
+            $(jsClass + '-container').colorpicker('setColor', this.value);
+        });
+
+        document.addEventListener('mousedown', function(event) {
+            var isClickInsideContainer = this._aColorPicker[sColorPickerId].colorPickerContainerElement.contains(event.target);
+            var isClickInsideInput = this._aColorPicker[sColorPickerId].colorPickerInputElement == event.target;
+
+            if (!isClickInsideContainer && !isClickInsideInput) {
+                this._aColorPicker[sColorPickerId].colorPickerContainerElement.classList.remove('open');
+            }
+        }.bind(this));
     },
 
     _getInputFieldType: function($component)

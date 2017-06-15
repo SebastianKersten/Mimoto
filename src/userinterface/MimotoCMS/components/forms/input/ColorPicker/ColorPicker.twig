@@ -1,11 +1,21 @@
+{% set sColorPickerId = Aimless.meta('type')~"."~Aimless.meta('id') %}
+{% set sFlatColorPickerId = Aimless.meta('type')~Aimless.meta('id') %}
+
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "colorpicker" } %}
     {% block form_component_element %}
 
-        <div>color rectangle</div>
-        <div>button die popup opent</div>
+        <div class="MimotoCMS_forms_input_ColorPicker js-{{ sFlatColorPickerId }}-color-picker">
+            <div class="MimotoCMS_forms_FormComponent-element-container MimotoCMS_forms_FormComponent-element-container--has-prefix">
+                <input {{ Aimless.input() }} type="type" class="MimotoCMS_forms_input_ColorPicker-input MimotoCMS_forms_input_Textline js-{{ sFlatColorPickerId }}-color-picker-input" value="{{ Aimless.value() }}" />
+                <span class="MimotoCMS_forms_FormComponent-element-prefix">
+                    <span class="MimotoCMS_forms_input_ColorPicker-preview js-{{ sFlatColorPickerId }}-color-picker-preview" style="background-color: #{{ Aimless.value() }};"></span>
+                    #
+                </span>
+            </div>
 
-        input wordt "hidden"
-        <input {{ Mimoto.input() }} type="type" class="MimotoCMS_forms_input_ColorPicker" value="{{ Mimoto.value() }}"/>
-
+            <div class="MimotoCMS_forms_input_ColorPicker-wrapper js-{{ sFlatColorPickerId }}-color-picker-container">
+            </div>
+            <script>Mimoto.Aimless.utils.registerRequest(Mimoto.form.setupColorPicker, '{{ sColorPickerId }}', '{{ sFlatColorPickerId }}', '{{ Aimless.fieldId() }}');</script>
+        </div>
     {% endblock %}
 {% endembed %}

@@ -1,3 +1,60 @@
-div.MimotoCMS_forms_input_ColorPicker {
+#{$pr-input}_ColorPicker {
+    position: relative;
 
+    &-wrapper,
+    &-wrapper > * {
+        max-height: 0;
+        transition: all 1s;
+        overflow: hidden;
+        border-color: #c5c5c5;
+    }
+
+    &-wrapper.open,
+    &-wrapper.open > * {
+        max-height: 1000px;
+    }
+
+    &-wrapper:not(.open) > * {
+        border-color: #c5c5c5;
+    }
+
+    &-wrapper::before {
+    }
+
+    &-input {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 50px;
+        margin: 0 0 10px;
+        padding: 14px 15px;
+        font-family: $font-family-helvetica;
+        font-size: rem-calc(14px);
+        line-height: rem-calc(20px);
+        color: $black;
+        border: 1px solid $pale-slate;
+        outline: none;
+        background: $alabaster;
+        transition: all 100ms ease-out;
+
+        &:focus {
+            border-color: $tower-gray;
+            background: $white;
+
+            + #{$pr-forms}_FormComponent-element-prefix {
+                border-color: $tower-gray;
+                background: $white;
+            }
+        }
+    }
+
+    &-preview {
+        position: relative;
+        top: 14px;
+        float: left;
+        display: block;
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
 }
