@@ -172,7 +172,7 @@ class FormService
         $aValues = $requestData->values;
 
         // 3. load form
-        $form = Mimoto::service('forms')->getFormByName($sFormName);
+        $form = Mimoto::service('input')->getFormByName($sFormName);
 
         // 4. load
         $xParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
@@ -201,7 +201,7 @@ class FormService
 
 
         // 4. prepare
-        $formFieldValues = Mimoto::service('forms')->getFormFieldValues($form, $entity, null, $entity->getId()); // todo - strip values
+        $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity, null, $entity->getId()); // todo - strip values
 
         // get all vars and entities
         $nFieldCount = count($formFieldValues->fields);
@@ -388,6 +388,11 @@ class FormService
                             if (!$bConnectionFound) $entity->removeValue($field->propertyName, $currentConnection);
                         }
                     }
+                    else
+                    {
+                        // empty the whole collection
+                        $entity->setValue($field->propertyName, []);
+                    }
 
                     // reload after adding new connections
                     //$aCurrentConnections = $entity->getValue($field->propertyName, true);
@@ -480,7 +485,7 @@ class FormService
         if ($bIsNew)
         {
             // 1. load
-            $formFieldValues = Mimoto::service('forms')->getFormFieldValues($form, $entity);
+            $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity);
 
             // 2. define
             $formResponse->newPublicKey = Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues));
@@ -491,7 +496,7 @@ class FormService
     }
 
 
-    public function getFormFieldValues($form, $entity, $aFields = null, $nEntityId = null)
+    public function getFormFieldValues(MimotoEntity $form, $entity, $aFields = null, $nEntityId = null)
     {
         // 1. register fields
         $aFormFields = (!empty($aFields)) ? $aFields : $form->getValue('fields');
@@ -625,7 +630,6 @@ class FormService
             case CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON: return CoreConfig::COREFORM_INPUT_RADIOBUTTON; break;
             case CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK: return CoreConfig::COREFORM_INPUT_TEXTBLOCK; break;
             case CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE: return CoreConfig::COREFORM_INPUT_TEXTLINE; break;
-            case CoreConfig::MIMOTO_FORM_INPUT_TEXTRTF: return CoreConfig::COREFORM_INPUT_TEXTRTF; break;
             case CoreConfig::MIMOTO_FORM_INPUT_VIDEO: return CoreConfig::COREFORM_INPUT_VIDEO; break;
             case CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER: return CoreConfig::COREFORM_INPUT_COLORPICKER; break;
             case CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER: return CoreConfig::COREFORM_INPUT_DATEPICKER; break;

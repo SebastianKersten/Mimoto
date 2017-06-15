@@ -1,0 +1,36 @@
+<?php
+
+    $config = (object) array
+    (
+        'general' => (object) array
+        (
+            'project_root' => dirname(dirname(__FILE__)).'/',
+            'web_root' => dirname(dirname(__FILE__)).'/web/',
+            'public_root' => '/'
+        ),
+        'mysql' => (object) array
+        (
+            'host' => '',
+            'dbname' => '',
+            'username' => '',
+            'password' => ''
+        ),
+        'socketio' => (object) array(
+            'clientgateway' => 'http://127.0.0.1:4000',
+            'workergateway' => 'http://127.0.0.1:4001',
+        ),
+        'slack' => (object) array
+        (
+            'webhook' => ''
+        ),
+        'gearman' => (object) array(
+                'server_address' => '127.0.0.1'
+        ),
+        'media' => (object) array
+        (
+            'upload_dir' => 'dynamic/'
+        )
+    );
+
+    return $config;
+

@@ -11,7 +11,6 @@
 @import 'forms/input/List/ListItem/ListItem';
 @import 'forms/input/RadioButton/RadioButton';
 @import 'forms/input/Textblock/Textblock';
-@import 'forms/input/TextRTF/TextRTF';
 @import 'forms/input/Textline/Textline';
 @import 'forms/input/Video/Video';
 
@@ -33,21 +32,16 @@
 @import 'pages/content/Content';
 @import 'pages/contentsections/ContentSections';
 @import 'pages/selections/Selections';
+@import 'pages/configuration/Configuration';
 @import 'pages/users/Users';
 @import 'pages/layouts/Layouts';
 @import 'pages/api/API';
+@import 'pages/pages/Pages';
+
 
 @import '../modules/modules';
 
-@import '../../publisher/base';
-@import '../../publisher/Article/Article';
-@import '../../publisher/Author/Author';
-@import '../../publisher/Feed/Feed';
-@import '../../publisher/FeedItem/FeedItem';
-@import '../../publisher/FeedItem/FeedItemExplainer';
-@import '../../publisher/Comment/Comment';
-@import '../../publisher/Editor/Editor';
 
-@import '../../thetimeline/base';
-
-@import '../../grid/base';
+div.mimoto_cms {
+    z-index: 19761019;
+}

@@ -10,31 +10,37 @@
     }
 }
 
-    #{$pr-interface}_Header-breadcrumbs-list-item {
-        display: inline-block;
-        white-space: nowrap;
-        color: $dusty-gray;
+#{$pr-interface}_Header-breadcrumbs-list-item {
+    display: inline-block;
+    white-space: nowrap;
+    color: $dusty-gray;
 
-        &:hover {
-            color: $black;
-        }
-
-        &:not(:last-child) {
-            #{$pr-interface}_Header-breadcrumbs-list-item-link::after {
-                margin: 0 7px;
-                content: '/';
-                color: $dusty-gray;
-            }
-        }
+    &:hover {
+        color: $black;
     }
 
-        #{$pr-interface}_Header-breadcrumbs-list-item-link {
-            display: block;
-            font-size: rem-calc(17px);
-            line-height: rem-calc(20px);
-            text-decoration: none;
-            color: inherit;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
+    &:last-child {
+        color: $tower-gray;
+    }
+}
+
+#{$pr-interface}_Header-breadcrumbs-list-item-link {
+    display: inline-block;
+    font-size: rem-calc(17px);
+    line-height: rem-calc(20px);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+span.MimotoCMS_interface_Header-breadcrumbs-list-item-divider {
+    display: inline-block;
+    font-size: rem-calc(17px);
+    line-height: rem-calc(20px);
+    color: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

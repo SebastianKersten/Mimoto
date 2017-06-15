@@ -8,13 +8,13 @@
         </div>
         <div class="MimotoCMS_ListItemModule-menu">
             {% if button2_label is not empty %}
-                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button2_label, onclick:button2_action, types:[button2_type] }) }}
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button2_label, onclick:button2_action, types:[button2_type], icon:button2_icon }) }}
             {% endif %}
-            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, types:[button_type] }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, types:[button_type], icon:button_icon }) }}
         </div>
 
         {% if sortable is empty or sortable %}
-            <div class="MimotoCMS_ListItemModule-handle">
+            <div class="MimotoCMS_ListItemModule-handle js-sortable-draghandle">
                 <div class="MimotoCMS_ListItemModule-handle-dot"></div>
                 <div class="MimotoCMS_ListItemModule-handle-dot"></div>
                 <div class="MimotoCMS_ListItemModule-handle-dot"></div>

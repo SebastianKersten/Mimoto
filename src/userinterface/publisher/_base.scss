@@ -1,3 +1,11 @@
+@import 'Article/Article';
+@import 'Author/Author';
+@import 'Feed/Feed';
+@import 'FeedItem/FeedItem';
+@import 'FeedItem/FeedItemExplainer';
+@import 'Comment/Comment';
+
+
 body.MimotoPublisher {
     background-color: #E5E4E4;
     margin: 0;
@@ -38,3 +46,67 @@ div.MimotoPublisher-footer {
     text-align: center;
     color: #858585;
 }
+
+
+
+span.infocard {
+    color: $fuzzy-wuzzy-brown;
+    font-weight: bold;
+
+}
+span.infocard::after {
+    content: '';
+    display: inline-block;
+    width: 23px;
+    height: 19px;
+    vertical-align: sub;
+    background: url('/static/images/infocard.png') 0 0 no-repeat;
+    background-size: 19px 19px;
+    background-position: right 0 center;
+    cursor: pointer;
+}
+
+
+
+.ql-infocard::after {
+    content: '';
+    padding-top: 4px;
+    padding-left: 19px;
+    color: #ffffff;
+    width: 19px;
+    height: 19px;
+    vertical-align: middle;
+    background: url('/static/images/infocard.png') 0 0 no-repeat;
+    background-size: 19px 19px;
+}
+
+
+
+
+span.boldPurple {
+    color: $color-notification-warning;
+    font-weight: bold;
+}
+
+.ql-boldPurple::after {
+    content: 'X';
+    vertical-align: middle;
+    padding-top: 4px;
+    color: #ffffff;
+}
+
+
+
+//
+//span.boldPink {
+//    color: #FF9999;
+//    font-weight: bold;
+//    font-style: italic;
+//}
+//
+//.ql-boldPurple::after {
+//    content: 'X';
+//    vertical-align: middle;
+//    padding-top: 4px;
+//    color: #ffffff;
+//}

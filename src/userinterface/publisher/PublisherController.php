@@ -46,6 +46,11 @@ class PublisherController
         return $page->render();
     }
 
+
+
+
+
+
     public function addComment(Application $app, Request $request, $nArticleId)
     {
         // 1. init page

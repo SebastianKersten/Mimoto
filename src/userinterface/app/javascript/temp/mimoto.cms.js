@@ -10376,7 +10376,7 @@
 	        {
 	            var sortable = new Sortable(listItem, {
 	                group: 'list_' + nListIndex,
-	                handle: '.MimotoCMS_ListItemModule-handle',
+	                handle: '.js-sortable-draghandle',
 	                dragClass: 'MimotoCMS_ListItemModule--drag',
 	                ghostClass: 'MimotoCMS_ListItemModule--ghost',
 	                // store: {
@@ -29259,7 +29259,7 @@
 	        // init
 	        var classRoot = this;
 	        
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'GET',
 	            url: '/mimoto.cms/notifications/count',
 	            data: null,
@@ -30996,7 +30996,7 @@
 	    //         data: data,
 	    //         dataType: 'json'
 	    //     }).done(function(data) {
-	    //         Mimoto.popup.close();
+	    //         MimotoX.closePopup();
 	    //     });
 	    // },
 	
@@ -31012,13 +31012,13 @@
 	
 	    entityUpdate: function(nEntityId, data)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'POST',
 	            url: "/mimoto.cms/entity/" + nEntityId + "/update",
 	            data: data,
 	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
-	                Mimoto.popup.close();
+                    MimotoX.closePopup();
 	            }
 	        });
 	    },
@@ -31028,7 +31028,7 @@
 	        var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
 	        if (response == true) {
 	    
-	            Mimoto.Aimless.utils.callAPI({
+	            MimotoX.utils.callAPI({
 	                type: 'GET',
 	                url: "/mimoto.cms/entity/" + nEntityId + "/delete",
 	                //data: data,
@@ -31047,13 +31047,13 @@
 	
 	    entityPropertyCreate: function(nEntityId, data)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'POST',
 	            url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
 	            data: data,
 	            dataType: 'json',
 	            success: function(resultData, resultStatus, resultSomething) {
-	                Mimoto.popup.close();
+                    MimotoX.closePopup();
 	            }
 	        });
 	    },
@@ -31068,7 +31068,7 @@
 	        var response = confirm("Are you sure you want to delete the property '" + sEntityPropertyName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
 	        if (response == true) {
 	            // 11. send data
-	            Mimoto.Aimless.utils.callAPI({
+	            MimotoX.utils.callAPI({
 	                type: 'get',
 	                url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
 	                success: function (resultData, resultStatus, resultSomething) {
@@ -31100,7 +31100,7 @@
 	        });
 	
 	        // 11. send data
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'GET',
 	            url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
 	            data: null,
@@ -31117,7 +31117,7 @@
 	    notificationsCloseAll: function()
 	    {
 	        // 11. send data
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'GET',
 	            url: '/mimoto.cms/notifications/closeall',
 	            data: null,
@@ -31151,7 +31151,7 @@
 	    
 	    componentDelete: function(nComponentId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/component/" + nComponentId + "/delete",
 	            data: null,
@@ -31175,7 +31175,7 @@
 	    
 	    componentConditionalDelete: function(nComponentConditionalId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/componentconditional/' + nComponentConditionalId + '/delete',
 	            data: null,
@@ -31226,7 +31226,7 @@
 	    
 	    selectionDelete: function(nSelectionId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
 	            data: null,
@@ -31249,7 +31249,7 @@
 	    
 	    selectionRuleDelete: function(nSelectionRuleId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
 	            data: null,
@@ -31281,7 +31281,7 @@
 	    
 	    layoutDelete: function(nLayoutId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/layout/' + nLayoutId + '/delete',
 	            data: null,
@@ -31304,7 +31304,7 @@
 	    
 	    layoutContainerDelete: function(nLayoutContainerId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/delete',
 	            data: null,
@@ -31338,7 +31338,7 @@
 	    {
 	        var response = confirm("Are you sure you want to delete the content section called '" + sContentSectionName + "'?\n\nALL RELATED DATA WILL BE LOST!!\n\n(Don't say I didn't warn you!)");
 	        if (response == true) {
-	            Mimoto.Aimless.utils.callAPI({
+	            MimotoX.utils.callAPI({
 	                type: 'get',
 	                url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
 	                data: null,
@@ -31368,7 +31368,7 @@
 	    {
 	        var response = confirm("Are you sure you want to delete this item?");
 	        if (response == true) {
-	            Mimoto.Aimless.utils.callAPI({
+	            MimotoX.utils.callAPI({
 	                type: 'get',
 	                url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/delete',
 	                data: null,
@@ -31394,7 +31394,7 @@
 	    
 	    entityFormAutogenerate: function(nEntityId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/entity/" + nEntityId + "/form/autogenerate",
 	            success: function(resultData, resultStatus, resultSomething) {
@@ -31415,7 +31415,7 @@
 	    
 	    formDelete: function(nFormId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/form/" + nFormId + "/delete",
 	            success: function(resultData, resultStatus, resultSomething) {
@@ -31443,7 +31443,7 @@
 	    
 	    formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
 	    {
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
 	            data: null,
@@ -31494,7 +31494,7 @@
 	        // execute
 	        var response = confirm("Are you sure you want to delete this item?");
 	        if (response == true) {
-	            Mimoto.Aimless.utils.callAPI({
+	            MimotoX.utils.callAPI({
 	                type: 'get',
 	                url: '/mimoto.cms/formfield/' + listInfo.sInputFieldType + '/' + listInfo.sInputFieldId + '/remove/' + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
 	                data: null,
@@ -31770,7 +31770,7 @@
 	                layer_popup.scrollTop = 0;
 	                
 	                // update
-	                Mimoto.Aimless.utils.parseRequestQueue();
+	                MimotoX.utils.parseRequestQueue();
 	            }
 	        });
 	    },
@@ -32189,7 +32189,7 @@
 	        
 	        
 	        // 11. send data
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: form.sMethod,
 	            url: form.sAction,
 	            data: JSON.stringify(requestData),
@@ -32286,7 +32286,7 @@
 	                        }
 	                        else if (form.responseSettings.onSuccess.closePopup)
 	                        {
-	                            Mimoto.popup.close();
+                                MimotoX.closePopup();
 	                        }
 	                        else if (form.responseSettings.onSuccess.reloadPopup)
 	                        {
@@ -32670,7 +32670,7 @@
 	        }.bind(this));
 	    
 	        
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
 	            success: function(resultData, resultStatus, resultSomething)
@@ -32769,7 +32769,7 @@
 	        // register
 	        var classRoot = document;
 	        
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
 	            success: function(resultData, resultStatus, resultSomething)
@@ -32847,7 +32847,7 @@
 	        if (!sPropertySelector || !nConnectionId || !nCurrentSortindex) return;
 	        
 	        // store
-	        Mimoto.Aimless.utils.callAPI({
+	        MimotoX.utils.callAPI({
 	            type: 'get',
 	            url: '/mimoto.cms/form/list/sort/' + sPropertySelector + '/' + nConnectionId + '/' + nOldIndex + '/' + nNewIndex,
 	            success: function(resultData, resultStatus, resultSomething)

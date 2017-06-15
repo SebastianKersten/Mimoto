@@ -4,11 +4,25 @@
 @import 'Pagecontent/Pagecontent';
 @import 'Popup/Popup';
 
-div.layer_application {
+div.MimotoCMS {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     overflow: auto;
+    z-index: 19761019;
+}
+
+div.mimoto_layer_application {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+}
+
+body.mimoto_layer_application {
+    overflow: hidden;
 }

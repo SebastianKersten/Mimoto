@@ -3,7 +3,7 @@
     {% if propertySubtype == 'image' or propertySubtype=='video' or propertySubtype=='audio' or propertySubtype=='file' %}
         <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">default settings</span>
     {% else %}
-        {{ Mimoto.render('key') }}
+        {{ Mimoto.data('key') }}
     {% endif %}
 
     <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu">
@@ -19,24 +19,39 @@
             </div>
             <div {{ Mimoto.hideWhenEmpty('allowedEntityType') }}>
                 <div {{ Mimoto.realtime('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
-                    {{ Mimoto.render('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
+                    {{ Mimoto.data('allowedEntityType', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
                 </div>
             </div>
         {% endif %}
     {% elseif Mimoto.data('key') == 'allowedEntityTypes' %}
+
         <div {{ Mimoto.showWhenEmpty('allowedEntityTypes') }}>
             <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">any type</span>
         </div>
         <div {{ Mimoto.hideWhenEmpty('allowedEntityTypes') }}>
             [
                 <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__allowedEntityTypes" {{ Mimoto.realtime('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}>
-                    {{ Mimoto.render('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
+                    {{ Mimoto.data('allowedEntityTypes', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType') }}
                 </div>
             ]
         </div>
+
     {% elseif Mimoto.data('key') == 'allowDuplicates' %}
         <div {{ Mimoto.realtime('value') }}>{% if Mimoto.data('value') %}true{% else %}false{% endif %}</div>
+    {% elseif Mimoto.data('key') == 'formattingOptions' %}
+
+        <div {{ Mimoto.showWhenEmpty('formattingOptions') }}>
+            <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">no formatting</span>
+        </div>
+        <div {{ Mimoto.hideWhenEmpty('formattingOptions') }}>
+            [
+            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__formattingOptions js-list js-list-sortable" {{ Mimoto.realtime('formattingOptions', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingFormattingOption') }}>
+                {{ Mimoto.data('formattingOptions', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingFormattingOption') }}
+            </div>
+            ]
+        </div>
+
     {% else %}
-        <div {{ Mimoto.realtime('value') }}>{{ Mimoto.render('value') }}</div>
+        <div {{ Mimoto.realtime('value') }}>{{ Mimoto.data('value') }}</div>
     {% endif %}
 </div>

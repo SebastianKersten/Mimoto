@@ -59,6 +59,7 @@ class EntityConfig
 
     // property settings keys
     const SETTING_VALUE_TYPE                    = 'type';
+    const SETTING_VALUE_FORMATTINGOPTIONS        = 'formattingOptions';
     const SETTING_ENTITY_ALLOWEDENTITYTYPE      = 'allowedEntityType';
     const SETTING_COLLECTION_ALLOWEDENTITYTYPES = 'allowedEntityTypes';
     const SETTING_COLLECTION_ALLOWDUPLICATES    = 'allowDuplicates';

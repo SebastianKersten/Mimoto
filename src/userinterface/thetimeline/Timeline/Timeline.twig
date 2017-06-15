@@ -4,9 +4,9 @@
 
     <div id="TheTimeline-container" class="TheTimeline-container">
         <svg id="TheTimeline-canvas" class="TheTimeline-canvas"></svg>
-        <div class="TheTimeline-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.render('name') }}</div>
+        <div class="TheTimeline-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
         <div id="TheTimeline-moments" class="TheTimeline-moments" {{ Mimoto.realtime('moments', 'moment') }}>
-            {{ Mimoto.render('moments', 'moment') }}
+            {{ Mimoto.data('moments', 'moment') }}
         </div>
     </div>
 

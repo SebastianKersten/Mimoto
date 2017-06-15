@@ -7,6 +7,7 @@ namespace Mimoto\Data;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Selection\Selection;
 use Mimoto\Selection\SelectionRuleTypes;
 
 
@@ -157,7 +158,71 @@ class EntityService
         // send
         return $entity;
     }
-    
+
+    /**
+     * Get all entities
+     */
+    public function select($xSelection)
+    {
+        // init
+        $aRequestedEntities = [];
+        $selection = null;
+
+
+        if (is_string($xSelection))
+        {
+            // load
+            $selection = Mimoto::service('selection')->getSelection($xSelection);
+        }
+        else if ((is_array($xSelection) || is_object($xSelection)))
+        {
+            if ($xSelection instanceof Selection)
+            {
+                // register
+                $selection = $xSelection;
+            }
+            else
+            {
+                // create
+                $selection = new Selection($xSelection);
+            }
+        }
+
+        // validate
+        if ($selection instanceof Selection)
+        {
+            // register
+            $aRules = $selection->getRules();
+
+            // parse rules
+            $nRuleCount = count($aRules);
+            for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
+            {
+                // register
+                $rule = $aRules[$nRuleIndex];
+
+                // read
+                $sEntityType = $rule->getType();
+
+                // validate
+                if (empty($sEntityType)) continue;
+
+                // load
+                $entityConfig = $this->getEntityConfig($sEntityType);
+
+                // load
+                $aRequestedEntities = array_merge($aRequestedEntities, $this->_entityRepository->select($entityConfig, $rule));
+            }
+
+            // 2. remove duplicates
+        }
+
+
+        //Mimoto::error($aRequestedEntities);
+
+        // send
+        return $aRequestedEntities;
+    }
     
     /**
      * Get all entities
@@ -251,39 +316,39 @@ class EntityService
         return $aRequestedEntities;
     }
 
-    public function select($sSelectionNameOrId)
-    {
-        // init
-        $aRequestedEntities = [];
-
-        // load
-        $selection = Mimoto::service('selection')->getSelection($sSelectionNameOrId);
-
-        // validate
-        if (empty($selection)) return $aRequestedEntities;
-
-
-        // search
-        $nRuleCount = count($selection->rules);
-        for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
-        {
-            // register
-            $rule = $selection->rules[$nRuleIndex];
-
-            // compose
-            $criteria = array(
-                SelectionRuleTypes::TYPE => Mimoto::service('config')->getEntityNameById($rule->entity_type_id),
-                SelectionRuleTypes::INSTANCE => $rule->instance_id,
-                SelectionRuleTypes::CHILDOF => $rule->property_id,
-            );
-
-            // load and register
-            $aRequestedEntities = array_merge(Mimoto::service('data')->find($criteria), $aRequestedEntities);
-        }
-
-        // send
-        return $aRequestedEntities;
-    }
+//    public function select($sSelectionNameOrId)
+//    {
+//        // init
+//        $aRequestedEntities = [];
+//
+//        // load
+//        $selection = Mimoto::service('selection')->getSelection($sSelectionNameOrId);
+//
+//        // validate
+//        if (empty($selection)) return $aRequestedEntities;
+//
+//
+//        // search
+//        $nRuleCount = count($selection->rules);
+//        for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
+//        {
+//            // register
+//            $rule = $selection->rules[$nRuleIndex];
+//
+//            // compose
+//            $criteria = array(
+//                SelectionRuleTypes::TYPE => Mimoto::service('config')->getEntityNameById($rule->entity_type_id),
+//                SelectionRuleTypes::INSTANCE => $rule->instance_id,
+//                SelectionRuleTypes::CHILDOF => $rule->property_id,
+//            );
+//
+//            // load and register
+//            $aRequestedEntities = array_merge(Mimoto::service('data')->find($criteria), $aRequestedEntities);
+//        }
+//
+//        // send
+//        return $aRequestedEntities;
+//    }
     
     
     /**
@@ -343,5 +408,35 @@ class EntityService
 
         return $this->_entityRepository->delete($entityConfig, $entity);
     }
-    
+
+
+    /**
+     * Get entity config by name
+     * @param $sEntityType mixed
+     * @return mixed
+     */
+    public function getEntityConfig($xEntityType)
+    {
+        // verify and convert
+        $sEntityType = (MimotoDataUtils::isValidId($xEntityType)) ? $this->_EntityConfigService->getEntityNameById($xEntityType) : $xEntityType;
+
+        // verify
+        if (!isset($this->_aEntityConfigs[$sEntityType]))
+        {
+
+            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
+
+            if ($entityConfig !== false)
+            {
+                $this->_aEntityConfigs[$sEntityType] = $entityConfig;
+            } else
+            {
+                Mimoto::service('log')->error("Requested entity type not found in selection rule", "Sorry, I do not know the entity type '$sEntityType' from a rule in the selection", true);
+            }
+        }
+
+        // send
+        return $this->_aEntityConfigs[$sEntityType];
+    }
+
 }

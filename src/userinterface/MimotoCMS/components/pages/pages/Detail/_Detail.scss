@@ -1,0 +1,114 @@
+@import 'AllowedUserRole/AllowedUserRole';
+
+
+div.MimotoCMS_pages_pages_Detail__panel {
+    margin-bottom: 25px;
+    background-color: #ffffff;
+    padding: 15px;
+    max-width: 800px;
+}
+
+div.MimotoCMS_pages_pages_Detail_Structure {
+    position: relative;
+    background-color: #ffffff;
+}
+
+div.MimotoCMS_pages_pages_Detail_Structure__meta {
+
+    padding: 10px 15px 15px 15px;
+    margin-bottom: 5px;
+    background-color: $offwhite;
+    display: flex;
+    flex-wrap: nowrap;
+
+    & > a {
+        color: $tower-gray;
+    }
+
+    &>div.MimotoCMS_pages_pages_Detail_Structure__meta_info {
+        flex-grow: 5;
+    }
+
+    &>div.MimotoCMS_pages_pages_Detail_Structure__meta_menu {
+        flex-grow: 1;
+        text-align: right;
+        padding-top: 5px;
+    }
+
+    div.MimotoCMS_pages_pages_Detail_Structure__name {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    div.MimotoCMS_pages_pages_Detail_Structure__type {
+        font-style: italic;
+        color: $tower-gray;
+    }
+
+}
+
+div.MimotoCMS_pages_pages_Detail-UserRoles {
+
+    & > a {
+        color: $tower-gray;
+    }
+}
+
+div.MimotoCMS_pages_pages_Detail-UserRoles-empty {
+    font-style: italic;
+}
+
+div.MimotoCMS_pages_pages_Detail-UserRoles-container {
+    margin: 15px 0;
+
+    & > div {
+        margin-right: 3px;
+    }
+
+    & > div:last-child {
+        margin-right: 0;
+    }
+}
+
+div.MimotoCMS_pages_pages_Detail-Route {
+    margin-top: 35px;
+}
+
+
+div.MimotoCMS_pages_pages_Detail__block {
+    padding: 15px 15px 10px 15px;
+    background-color: $offwhite;
+}
+
+
+div.MimotoCMS_pages_pages_Detail_Structure__attributes_empty {
+
+    display: flex;
+    flex-wrap: nowrap;
+
+    &>div:first-child {
+        flex-grow: 5;
+    }
+
+    &>div:last-child {
+        flex-grow: 1;
+        text-align: right;
+    }
+}
+
+div.MimotoCMS_pages_pages_Detail_Structure__attributes_menu {
+    padding: 20px 0 10px 0;
+    text-align: left;
+}
+
+div.MimotoCMS_pages_pages_Detail_Structure__attributes_container {
+
+    &>div {
+        margin-bottom: 5px;
+    }
+
+    &>div:last-child {
+        margin-bottom: 0;
+    }
+
+}

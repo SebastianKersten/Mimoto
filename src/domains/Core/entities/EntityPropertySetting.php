@@ -26,6 +26,7 @@ class EntityPropertySetting
             'extends' => null,
             'forms' => [
                 CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE,
+                CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_FORMATTINGOPTIONS,
                 CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE,
                 CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES,
                 CoreConfig::COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES
@@ -67,6 +68,24 @@ class EntityPropertySetting
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'--formattingOptions',
+                    // ---
+                    'name' => 'formattingOptions',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => 'array',
+                            'value' => [CoreConfig::MIMOTO_FORMATTINGOPTION]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'value' => CoreConfig::DATA_VALUE_FALSE,
+                            'type' => CoreConfig::DATA_TYPE_BOOLEAN
                         )
                     ]
                 ),

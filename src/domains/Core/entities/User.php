@@ -80,7 +80,43 @@ class User
                             'value' => CoreConfig::MIMOTO_FILE
                         )
                     ]
-                )
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_USER.'--roles',
+                    // ---
+                    'name' => 'roles',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_USER_ROLE]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+//                (object) array(
+//                    'id' => CoreConfig::MIMOTO_USER.'--settings',
+//                    // ---
+//                    'name' => 'settings',
+//                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+//                    'settings' => [
+//                        'allowedEntityTypes' => (object) array(
+//                            'key' => 'allowedEntityTypes',
+//                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+//                            'value' => [CoreConfig::MIMOTO_USER_SETTING]
+//                        ),
+//                        'allowDuplicates' => (object) array(
+//                            'key' => 'allowDuplicates',
+//                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+//                            'value' => CoreConfig::DATA_VALUE_FALSE
+//                        )
+//                    ]
+//                )
             ]
         );
     }
@@ -148,7 +184,15 @@ class User
             'Avatar'
         );
 
-        CoreFormUtils::addField_groupEnd($form);
+
+        // --- permissions
+
+        CoreFormUtils::addField_groupStart($form, 'Permissions', 'permissions');
+
+        $form->addValue('fields', self::getField_userRoles());
+
+        CoreFormUtils::addField_groupEnd($form, 'permissions');
+
 
         // send
         return $form;
@@ -195,5 +239,105 @@ class User
         // send
         return $field;
     }
+
+
+    /**
+     * Get field: user roles
+     */
+    private static function getField_userRoles()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, CoreConfig::COREFORM_USER, 'roles');
+        $field->setValue('label', 'User roles');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_USER, 'roles');
+
+
+
+
+        // init
+        $selection = Mimoto::service('selection')->create();
+
+        // setup
+        $selection->setType(CoreConfig::MIMOTO_USER_ROLE);
+        //$selection->setValue('name', 'author');
+
+
+        //if (Mimoto::user()->hasRole('superuser'))
+        {
+            $aCoreUserRoleIds = [
+                CoreConfig::MIMOTO_USER_ROLE.'-superuser'
+            ];
+
+            $nCoreUserRoleIdCount = count($aCoreUserRoleIds);
+            for ($nCoreUserRoleIdIndex = 0; $nCoreUserRoleIdIndex < $nCoreUserRoleIdCount; $nCoreUserRoleIdIndex++)
+            {
+                // register
+                $coreUserRoleId = $aCoreUserRoleIds[$nCoreUserRoleIdIndex];
+
+                // add core user roles
+                $rule = $selection->addRule();
+
+                // setup
+                $rule->setType(CoreConfig::MIMOTO_USER_ROLE);
+                $rule->setId($coreUserRoleId);
+            }
+        }
+
+
+        // load
+        //$aEntities = Mimoto::service('data')->select('articles');
+        //$aEntities = Mimoto::service('data')->select(['type'=>'article']);
+        //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'values'=>['id'=>'3']));
+        //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'values'=>(object) array('id'=>'3')));
+        //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'id' => 1, 'property'=>'comments'));
+        $aEntities = Mimoto::service('data')->select($selection);
+
+
+
+
+        // init
+//        $commentsSelection = Mimoto::service('selection')->create();
+//
+//
+//        $commentsSelection->setType('article');
+//        $commentsSelection->setId(1);
+//
+//        $commentsSelection->setProperty('comments');
+//
+//
+//
+//        $commentsSelection->setChildTypes('comment');
+//        //$commentsSelection->setChildTypes(['comment', 'user']);
+//
+//
+//        $commentsSelection->setChildValue('message', 'Hallo');
+//
+//
+//        $aEntities = Mimoto::service('data')->select($commentsSelection);
+
+
+        //Mimoto::output('I found the following entities (count = '.count($aEntities).')', $aEntities);
+        //Mimoto::error('Terminating session :)');
+
+
+        $nEntityCount = count($aEntities);
+        for ($i = 0; $i < $nEntityCount; $i++)
+        {
+            // register
+            $entity = $aEntities[$i];
+
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option->setId(CoreConfig::COREFORM_USER.'--roles_value_options-'.$entity->getId());
+            $option->setValue('label', $entity->getValue('name'));
+            $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
+            $field->addValue('options', $option);
+        }
+
+        // send
+        return $field;
+    }
+
 
 }

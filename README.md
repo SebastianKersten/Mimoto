@@ -1,9 +1,76 @@
-UNDER CONSTRUCTION - Made public for development reasons. Stay tuned!
+*DISCLAIMER* - This project is still very much under construction. Stay _tuned_!
+
 
 # Mimoto
-Realtime fluid data management by _Sebastian Kersten_ 
+An ultra fast, fluid and realtime data management microframework 
 
-This project uses **Aimless**, an _Entity Oriented Programming_ protocol, for creating a live updating interface (with the help of Pusher).
+
+# Requirements
+
+- composer
+- npm
+- Mimoto uses Gearman async manager 
+- Node JS
+- Memcached
+
+# Starting up the reakltime feature
+
+Run event worker
+```
+curl http://mimoto.aimless/mimoto.cms/workers/data
+```
+
+Run realtime server script
+```
+node src/userinterface/app/javascript/realtime.js
+```
+
+
+
+# Basic instalation
+
+Go to the root of the project and  
+
+```
+composer update
+```
+
+```
+npm install
+```
+
+
+*Todo* change to json and auto-read
+
+```
+cp config.php.dist config.php
+```
+
+
+# Realtime data broadcasting
+
+Fire up the Gearman worker and make sure it keeps running in the background.
+
+```
+curl "http://mimoto.aimless/mimoto.cms/workers/data
+```
+
+# Get notification via Slack 
+
+Add a channel webhook to your `config.php` and fire up the Slack Gearman worker and make sure it keeps running in the background.
+
+```
+curl "http://mimoto.aimless/mimoto.cms/workers/slack
+```
+
+
+
+
+
+
+
+
+Mimoto is an _Entity Oriented Programming_ protocol that allows you to easily create a realtime interface.
 
 
 ## Definitions
@@ -18,257 +85,6 @@ This project uses **Aimless**, an _Entity Oriented Programming_ protocol, for cr
 Mimoto is typecasted
 
 
-## Experiments
-
-* [Cache article](http://maidoprojects/memcache)
-* [View all articles in cache](http://maidoprojects/memcachemonitor/article)
-
-
-## Some Aimless stuff
-
-> This will be explained later
-
-##### onUpdate
-
-* data-mimoto-id
-* data-mimoto-value
-
-##### onCreated
-
-* data-mimoto-contains
-* data-mimoto-filter
-
-
-## Actions
-
-    {
-        "trigger": "project.updated",
-        "service": "Aimless",
-        "request": "dataUpdate",
-        "type": "async",
-        "config":
-        {
-            "properties":
-            [
-                "name", 
-                "description",
-
-                "client.name", 
-                "agency.name", 
-                "projectmanager.name",
-
-                "subprojects"
-            ]
-        }
-    }
-
-
-## Configurating Mimoto.Aimless_backup_201611161715.js
-
-Custom events
-
-```javascript
-var sEvent = 'project.*.added';
-Mimoto.Aimless.subscribe(sEvent, doSomethingOnAdd);
-
-function doSomethingOnAdd(data)
-{
-    // do something custom
-}
-```
-
-
-
-## Using forms
-
-```
-public function addForm($sFormName, $xData = null, $options = null)
-{
-
-    // optional:
-    // $sKey, $sFormName, $data, $sLayout = null, $sComponentName = null
-    
-    // default
-    $sKey = (!empty($options) && !empty($options['key'])) ? $options['key'] : self::PRIMARY_FORM;
-    
-    // store
-    $this->_aFormConfigs[$sKey] = (object) array(
-        'sFormName' => $sFormName,
-        'xData' => $xData,
-        'sLayout' => (!empty($options) && !empty($options['layout'])) ? $options['layout'] : '',
-        'sTheme' => (!empty($options) && !empty($options['theme'])) ? $options['theme'] : '',
-        'options' => $options
-    );
-```
-
-## Textline features
-
-```
-<div class="form-component">
-    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"></span></label>
-    <div class="form-component-content">
-      <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Mimoto.value() }}" />
-      </div>
-      <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
-    </div>
-  </div>
-
-  <div class="form-component form-component--validating">
-    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"></span></label>
-    <div class="form-component-content">
-      <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Mimoto.value() }}" />
-      </div>
-      <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
-    </div>
-  </div>
-
-  <div class="form-component form-component--validated">
-    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"><svg class="form-component-title-icon-svg"><use xlink:href='#checkmark'/></svg></span></label>
-    <div class="form-component-content">
-      <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Mimoto.value() }}" />
-      </div>
-      <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
-    </div>
-  </div>
-
-  <div class="form-component form-component--has-error">
-    <label for="" class="form-component-title">Campagne naam <span class="form-component-title-icon"><span class="form-component-title-icon"><svg class="form-component-title-icon-svg"><use xlink:href='#checkmark'/></svg></span></span></label>
-    <div class="form-component-content">
-      <div class="form-component-element">
-        <input type="text" class="form-component-element-input" placeholder="" value="{{ Mimoto.value() }}" />
-        <p class="form-component-element-error">De tekst bevat ongeldige tekens, alleen cijfers en letters zijn toegestaan.</p>
-      </div>
-      <p class="form-component-element-description">Mag geen scheldwoorden bevatten</p>
-    </div>
-  </div>
-```
-
-## Using forms
-
-Create a new form with the form editor in `/mimoto.cms` and use the name of that form to show it.
-
-```
-Example form layout met cancel en submit
-
-En hoe dit te connecten in een controller
-```
-
-
-## feature wishlist
-
-- Grouping of components by using `/` in the name or by using a grouping entity/mechanism
-
-
-## Form field settings #todo
-
-```
-if ($field->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
-            {
-                $sRenderedForm .= '<script>Mimoto.form.registerInputField("'.$field->getAimlessId().'")</script>';
-
-                // <script>Mimoto.form.registerInputField('{{ name }}'{% if validation is not empty %}, {{ validation }}{% endif %})</script>
-                //  een field heeft settings:
-
-                // _mimoto_inputfield
-                // _mimoto_inputfieldsetting
-            }
-```
-
-
-## Radiobutton features
-
-```
-
-<div class="form-component">
-  <p class="form-component-title">Is dit een radiobutton? <span class="form-component-title-information">(optioneel)</span></p>
-
-  <div class="form-component-content form-component-content--no-description">
-    <div class="form-component-element">
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
-        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
-      </div>
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
-        <label for="maybe" class="form-component-element-label">Misschien wel</label>
-      </div>
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
-        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="form-component">
-  <p class="form-component-title">Is dit een radiobutton? <span class="form-component-title-information">(optioneel)</span><span class="js-form-component-title-icon form-component-title-icon icon icon-loading"></span></p>
-
-  <div class="form-component-content">
-    <div class="form-component-element">
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
-        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
-      </div>
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
-        <label for="maybe" class="form-component-element-label">Misschien wel</label>
-      </div>
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
-        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
-      </div>
-    </div>
-    <p class="form-component-description">Kies één van de opties</p>
-  </div>
-</div>
-
-<div class="form-component form-component--is-validated">
-  <p class="form-component-title">Is dit een radiobutton? <span class="form-component-title-information">(optioneel)</span><span class="js-form-component-title-icon form-component-title-icon icon icon-checkmark"></span></p>
-
-  <div class="form-component-content form-component-content--no-description">
-    <div class="form-component-element">
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
-        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
-      </div>
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
-        <label for="maybe" class="form-component-element-label">Misschien wel</label>
-      </div>
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
-        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="form-component form-component--has-error">
-  <p class="form-component-title">Is dit een radiobutton? <span class="form-component-title-information">(optioneel)</span><span class="js-form-component-title-icon form-component-title-icon icon icon-warning"></span></p>
-
-  <div class="form-component-content form-component-content--no-description">
-    <div class="form-component-element">
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="yes" class="form-radiobutton"/>
-        <label for="yes" class="form-component-element-label">Ja, maar alleen vandaag</label>
-      </div>
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="maybe" class="form-radiobutton"/>
-        <label for="maybe" class="form-component-element-label">Misschien wel</label>
-      </div>
-      <div class="form-component-element-container">
-        <input type="radio" name="radiobutton" id="no" class="form-radiobutton"/>
-        <label for="no" class="form-component-element-label">Waarschijnlijk niet</label>
-      </div>
-      <p class="form-component-element-error">U moet één van de waardes kiezen.</p>
-    </div>
-  </div>
-</div>
-```
-
 ## Debugging tools
 
 Mimoto.CMs has it's built in developer debugging console at `/mimoto.cms/notifications`
@@ -281,7 +97,6 @@ Mimoto::service('log')->silent('Another silent test', "Does it live update?");
 Mimoto::service('log')->warn('Some warning', "Something probably needs your attention");
 Mimoto::service('log')->error('uh-oh, an error', "Your code is broken. Please fix");
 ```
-
 
 ## Auto counters
 Aimless has support for aesy to implement counters for for instance new notifications. In the below example when a notification is created, or a notificatin changes it's state from `open` to `closed`, Aimless will automatically update the counter and even update the presentation of the counter (in this case by hiding the counter when the count hits zero) 

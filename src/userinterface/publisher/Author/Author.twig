@@ -6,7 +6,7 @@
     <br>
     <br>
     <div class="example_article" {{ Mimoto.realtime() }}>
-        <i><span {{ Mimoto.realtime('name') }}>{{ Mimoto.render('name') }}</span></i><br><br>
-        <img class="example_avatar" src="{{ Mimoto.render('avatar') }}" {{ Mimoto.realtime('avatar') }}>
+        <i><span {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span></i><br><br>
+        <img class="example_avatar" src="{{ Mimoto.data('avatar') }}" {{ Mimoto.realtime('avatar') }}>
     </div>
 {% endblock %}

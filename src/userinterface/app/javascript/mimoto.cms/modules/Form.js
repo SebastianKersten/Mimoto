@@ -10,7 +10,11 @@ var Sortable = require('sortablejs'); // https://github.com/RubaXa/Sortable
 
 var Dropzone = require('dropzone');
 var Flatpickr = require('flatpickr');
+<<<<<<< HEAD
 var Colorpicker = require('vanderlee-colorpicker');
+=======
+var Quill = require('quill');
+>>>>>>> master
 
 Dropzone.autoDiscover = false;
 
@@ -40,8 +44,12 @@ module.exports.prototype = {
         this._sCurrentOpenForm = '';
         this._aMediaFields = [];
         this._aDatePicker = [];
+<<<<<<< HEAD
         this._aRichTextFields = [];
         this._aColorPicker = [];
+=======
+        this._aTextblockFields = [];
+>>>>>>> master
     },
 
 
@@ -338,7 +346,7 @@ module.exports.prototype = {
         
         
         // 11. send data
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: form.sMethod,
             url: form.sAction,
             data: JSON.stringify(requestData),
@@ -435,13 +443,17 @@ module.exports.prototype = {
                         }
                         else if (form.responseSettings.onSuccess.closePopup)
                         {
-                            Mimoto.popup.close();
+                            MimotoX.closePopup();
                         }
                         else if (form.responseSettings.onSuccess.reloadPopup)
                         {
                             Mimoto.popup.replace(form.responseSettings.onSuccess.reloadPopup);
                         }
-                        
+                        else if (form.responseSettings.onSuccess.dispatchEvent)
+                        {
+                            
+                            console.log('form.responseSettings.onSuccess.dispatchEvent', form.responseSettings.onSuccess.dispatchEvent);
+                        }
                     }
                 }
             }
@@ -625,6 +637,7 @@ module.exports.prototype = {
         
         field.$input.on('input', function(e)
         {
+            var form = field.sFormId;
             var sFormName = field.sFormId;
             var value = $(this).val();
 
@@ -634,18 +647,22 @@ module.exports.prototype = {
 
             classRoot._validateInputField(field);
 
+            classRoot._startAutosave(form, field);
         });
     
         field.$input.on('change', function(e)
         {
+            var form = field.sFormId;
             var sFormName = field.sFormId;
             var value = $(this).val();
             
             // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
         
             // #todo change reference to sInputFieldId / addEventListener / removeEventListener
-        
+
             classRoot._validateInputField(field);
+
+            classRoot._startAutosave(form);
         });
     },
 
@@ -743,16 +760,19 @@ module.exports.prototype = {
         // register
         var field = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
         var fieldInput = $("input", field);
-    
+
         // setup
         var mediaField = {
             sImageFieldShowPreviewClass: 'MimotoCMS_forms_input_ImageUpload--show-preview',
             sImageFieldShowPreviewImageClass: 'MimotoCMS_forms_input_ImageUpload--show-preview-image',
             domElement: document.getElementById(sImageFieldId),
             sImageFieldId: sImageFieldId,
-            field: field
+            field: field,
+            fieldInput: fieldInput,
+            $removeButton: $('#image-upload-delete-' + sFlatImageFieldId, $form),
+            $previewImage: $('#js-' + sFlatImageFieldId + '-previewimage', $form)
         };
-        
+
         // store
         this._aMediaFields[sImageFieldId] = mediaField;
         
@@ -805,21 +825,40 @@ module.exports.prototype = {
     
         mediaField.dropzone.on('success', function (file, serverResponse)
         {
-            // set value
+            // connect value
             fieldInput.val(serverResponse.file_id);
-        
-            setTimeout(function ()
-            {
-                mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
-                
-                console.warn(file);
-                console.warn(serverResponse);
-                
-            }.bind(this), 100);
+
+            // show
+            mediaField.$removeButton.removeClass('hidden');
+
+            // hide
+            mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
+
+            // save
+            classRoot._startAutosave(currentForm);
+
         }.bind(this));
-    
+
+
+        mediaField.$removeButton.on('click', function() {
+
+            console.log('click');
+
+            // clear value
+            mediaField.fieldInput.val('');
+
+            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewClass);
+            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewImageClass);
+
+            // hide
+            mediaField.$removeButton.addClass('hidden');
+            mediaField.$previewImage.attr('src', '');
+        });
+
+
+        var classRoot = this;
         
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
             success: function(resultData, resultStatus, resultSomething)
@@ -906,19 +945,18 @@ module.exports.prototype = {
             
             // load video
             video.load();
-            
-            
-            setTimeout(function () {
-                mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
-                
-            }.bind(this), 100);
+
+            classRoot._startAutosave(currentForm);
+
+            mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
+
         }.bind(this));
         
         
         // register
         var classRoot = document;
         
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
             success: function(resultData, resultStatus, resultSomething)
@@ -1067,7 +1105,7 @@ module.exports.prototype = {
         if (!sPropertySelector || !nConnectionId || !nCurrentSortindex) return;
         
         // store
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/form/list/sort/' + sPropertySelector + '/' + nConnectionId + '/' + nOldIndex + '/' + nNewIndex,
             success: function(resultData, resultStatus, resultSomething)
@@ -1080,7 +1118,7 @@ module.exports.prototype = {
 
 
 
-    setupRichTextField: function(sRichTextFieldId, sFlatRichTextFieldId, sInputFieldId)
+    setupTextblock: function(sFieldId, sFlatFieldId, sInputFieldId, sPlaceHolder)
     {
         // read
         var currentForm = this._aForms[this._sCurrentOpenForm];
@@ -1098,82 +1136,81 @@ module.exports.prototype = {
         var fieldInput = $("input", field);
 
         // setup
-        var richTextField = {
-            domElement: document.getElementById(sRichTextFieldId),
-            sImageFieldId: sRichTextFieldId,
-            field: field
+        var textblockField = {
+            domElement: document.getElementById(sFieldId),
+            sFieldId: sFieldId,
+            field: field,
+            fieldInput: fieldInput
         };
 
         // store
-        this._aRichTextFields[sRichTextFieldId] = richTextField;
+        this._aTextblockFields[sFieldId] = textblockField;
 
 
         // register
         var classRoot = document;
 
 
-
-        // var socket = io();
-        // $('form').submit(function(){
-        //     socket.emit('chat message', $('#m').val());
-        //     $('#m').val('');
-        //     return false;
-        // });
-        //
-        // socket.on('chat message', function(msg){
-        //     $('#messages').append($('<li>').text(msg));
-        // });
+        let valueContainer = document.getElementById('js-' + sFlatFieldId + '-textblock-container');
+        let $valueHolder = $('js-' + sFlatFieldId + '-textblock-value', $form);
 
 
-        richTextField.quill = new Mimoto.modules.Quill('#' + sFlatRichTextFieldId, {
-            theme: 'snow' // 'bubble'
+        // create
+        textblockField.quill = new Quill(valueContainer, {
+            theme: 'bubble',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block', 'link'],
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+                ],
+                history: {
+                    delay: 2000,
+                    maxStack: 500,
+                    userOnly: true
+                }
+            },
+            placeholder: sPlaceHolder || '', // #todo
+            formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
         });
 
-        // prepare deltas
-        richTextField.deltaPending = new Mimoto.modules.QuillDelta();
-        richTextField.deltaBuffer = new Mimoto.modules.QuillDelta();
+
+        // 1. set initial value
+        fieldInput.val(valueContainer.getElementsByClassName("ql-editor")[0].innerHTML);
 
 
-        richTextField.quill.on('text-change', function(delta, oldContents, source)
+        textblockField.quill.on('text-change', function(delta, oldContents, source)
         {
-            // if (source == 'api') {
-            //     console.log("An API call triggered this change.");
-            // } else if (source == 'user') {
-            //     console.log("A user action triggered this change.", delta, oldDelta);
-            // }
-
-
-            // var contents = richTextField.quill.getContents();
-            //
-            // console.log('contents', contents);
-            //
-            // var html = "contents = " + JSON.stringify(contents, null, 2);
-            //
-            // if (delta) {
-            //     console.log('change', delta);
-            //     html = "change = " + JSON.stringify(delta, null, 2) + "\n\n" + html;
-            // }
-            // console.log('html', html);
-
-
-
-            // 1. set timer
-            // 2. move buffer to pending
-            // 3. save original state of content
-            // 4. save all OTs since original state
-            // 5. on source, just parse OTs
-
-
-            console.log('change = ' + JSON.stringify(delta, null, 2), '\nprevious contents = ' + JSON.stringify(oldContents, null, 2));
-
-            richTextField.deltaBuffer.push(delta);
-
-            console.log('Delta after', richTextField.deltaBuffer, oldContents);
+            textblockField.fieldInput.val(valueContainer.getElementsByClassName("ql-editor")[0].innerHTML);
         });
+    },
 
+    _startAutosave: function(form)
+    {
 
-        richTextField.quill.insertText(0, 'abc');
+        console.log('Autosave ', form);
+        return;
 
+        if (!form.autosaveTimer)
+        {
+
+            var classRoot = this;
+
+            form.autosaveTimer = setTimeout(function(){ classRoot._executeAutoSave(form); }, 1000);
+        }
+    },
+
+    _executeAutoSave: function(form)
+    {
+        // cleanup
+        clearTimeout(form.autosaveTimer);
+        delete(form.autosaveTimer);
+
+        console.log('Auto saving ... ');
+
+        this.submit(form.sName);
     }
     
 };

@@ -9,6 +9,7 @@ use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Event\MimotoEvent;
+use Mimoto\Selection\SelectionRule;
 
 
 /**
@@ -77,11 +78,14 @@ class EntityRepository
         {
 
 
+
             // 1. hoe ophalen core data
-            // 2. aparte functie (kent alle types)
+            // 2. aparte functie (kent alle types - registerClass by key)
             // 3. create default -> setId() en setName()
 
             // TEMP - ease and quick fix
+
+
 
             // prepare
             $entityData = array(
@@ -92,7 +96,21 @@ class EntityRepository
             // create
             $entity = $this->createEntity($entityConfig, $entityData);
 
-            if ($entity->hasProperty('name')) $entity->setValue('name', $nEntityId);
+
+            $coreData = CoreConfig::getCoreData($entityConfig->getId(), $nEntityId);
+
+            if ($coreData !== false)
+            {
+                foreach ($coreData as $sPropertyName => $value)
+                {
+                    $entity->setValue($sPropertyName, $value);
+                }
+            }
+            else
+            {
+                if ($entity->hasProperty('name')) $entity->setValue('name', $nEntityId);
+            }
+
 
 
             //$entity->setValue('name', $entityConfig->getName()); // note: niet op alles van toepassing, dus niet te gebruiken
@@ -172,7 +190,7 @@ class EntityRepository
                 if ($bFirst) { $bFirst = false; $sQuery .= ' WHERE '; } else { $sQuery .= ', '; }
 
                 // compose
-                $sQuery .= $sKey.' = :'.$sKey;
+                $sQuery .= '`'.$sKey.'` = :'.$sKey;
 
                 // add
                 $params[':'.$sKey] = $value;
@@ -198,7 +216,194 @@ class EntityRepository
         // send
         return $aEntities;
     }
-    
+
+
+
+    public function select(EntityConfig $entityConfig, SelectionRule $rule)
+    {
+        // init
+        $aEntities = [];
+
+
+        // validate
+        if (empty($rule->getType()))
+        {
+            // report
+            if (Mimoto::isInDebugMode()) Mimoto::service('log')->warn("Missing selection parameter", "Selection rule is missing an entity type");
+
+            // send
+            return $aEntities;
+        }
+
+
+        if (!empty($rule->getId()))
+        {
+            // load
+            $eEntity = Mimoto::service('data')->get($rule->getType(), $rule->getId());
+
+            // validate
+            if (empty($eEntity)) return $aEntities;
+
+
+            // validate
+            if (!empty($rule->getProperty()))
+            {
+                // register
+                $xProperty = $rule->getProperty();
+
+                // convert to label in case of id
+                $sPropertyName = (MimotoDataUtils::isValidId($xProperty)) ? Mimoto::service('config')->getPropertyNameById($xProperty) : $xProperty;
+
+                    // validate
+                if ($eEntity->hasProperty($sPropertyName))
+                {
+                    // register
+                    $sPropertyType = $eEntity->getPropertyType($sPropertyName);
+
+                    switch($sPropertyType)
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                            $aEntities = $eEntity->getValue($sPropertyName);
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                            $aEntities[] = $eEntity->getValue($sPropertyName);
+                            break;
+                    }
+
+                    // verify
+                    if (!empty($rule->getChildTypes()))
+                    {
+                        // register
+                        $aChildTypes = $rule->getChildTypes();
+
+                        // filter
+                        for ($nEntityIndex = 0; $nEntityIndex < count($aEntities); $nEntityIndex++)
+                        {
+                            // register
+                            $eChild = $aEntities[$nEntityIndex];
+
+                            // validate
+                            if (!in_array($eChild->getEntityTypeName(), $aChildTypes))
+                            {
+                                // remove
+                                array_splice($aEntities, $nEntityIndex, 1);
+
+                                // update
+                                $nEntityIndex--;
+                            }
+                        }
+                    }
+
+
+                    // register
+                    $aRegisteredChildValues = $rule->getRegisteredChildValues();
+
+                    // verify
+                    if (!empty($aRegisteredChildValues))
+                    {
+                        // filter
+                        for ($nEntityIndex = 0; $nEntityIndex < count($aEntities); $nEntityIndex++)
+                        {
+                            // register
+                            $eChild = $aEntities[$nEntityIndex];
+
+                            // search
+                            $nValueCount = count($aRegisteredChildValues);
+                            for ($nValueIndex = 0; $nValueIndex < $nValueCount; $nValueIndex++)
+                            {
+                                // register
+                                $xPropertyName = $aRegisteredChildValues[$nValueIndex];
+                                $valueToCompare = $rule->getChildValue($xPropertyName);
+
+                                // convert to label in case of id
+                                $sPropertyName = (MimotoDataUtils::isValidId($xPropertyName)) ? Mimoto::service('config')->getPropertyNameById($xPropertyName) : $xPropertyName;
+
+                                // validate
+                                if (!$eChild->hasProperty($sPropertyName) || $eChild->getValue($sPropertyName) != $valueToCompare)
+                                {
+                                    // remove
+                                    array_splice($aEntities, $nEntityIndex, 1);
+
+                                    // update
+                                    $nEntityIndex--;
+                                    break;
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                $aEntities[] = $eEntity;
+            }
+
+        }
+        else
+        {
+            // compose
+            $sQuery = 'SELECT * FROM `'.$entityConfig->getMySQLTable().'`';
+            $params = array();
+
+            // read
+            $aRegisteredValues = $rule->getRegisteredValues();
+
+            // verify
+            if (!empty($aRegisteredValues))
+            {
+
+                // 1. #todo replace ` with \`
+
+                $nPropertyValueCount = count($aRegisteredValues);
+                for ($nPropertyValueIndex = 0; $nPropertyValueIndex < $nPropertyValueCount; $nPropertyValueIndex++)
+                {
+                    // register
+                    $xPropertyName = $aRegisteredValues[$nPropertyValueIndex];
+
+                    $value = $rule->getValue($xPropertyName);
+
+                    // convert to label in case of id
+                    $sPropertyName= (MimotoDataUtils::isValidId($xPropertyName)) ? Mimoto::service('config')->getPropertyNameById($xPropertyName) : $xPropertyName;
+
+
+                    // prepare
+                    $sQuery .= ($nPropertyValueIndex == 0) ? ' WHERE ' : ', ';
+
+                    // compose
+                    $sQuery .= '`'.$sPropertyName.'` = :'.$sPropertyName;
+
+                    // add
+                    $params[':'.$sPropertyName] = $value;
+                }
+            }
+
+            // load
+            $stmt = Mimoto::service('database')->prepare($sQuery);
+            $stmt->execute($params);
+
+            // load
+            $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            // register
+            $nResultCount = count($aResults);
+            for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
+            {
+                // register
+                $aEntities[] = $this->createEntity($entityConfig, $aResults[$nResultIndex]);
+            }
+        }
+
+        // send
+        return $aEntities;
+    }
+
+
+
+
     /**
      * Store entity
      * @param MimotoEntity $entity
@@ -524,7 +729,7 @@ class EntityRepository
         return $aParentEntities;
     }
 
-    private function cleanupChildren($entity)
+    private function cleanupChildren(MimotoEntity $entity)
     {
         // load
         $aChildren = $this->getAllChildren($entity);

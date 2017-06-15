@@ -38,10 +38,10 @@ class CacheServiceProvider implements ServiceProviderInterface
             if ($this->_bEnableCache)
             {
                 // init
-                $memcache = new \Memcache;
+                $memcache = new \Memcached;
 
                 // connect
-                $memcache->connect('localhost', 11211);
+                $memcache->addServer('localhost', 11211);
 
                 // if ($bResult) #todo - only start on success
             }

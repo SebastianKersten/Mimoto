@@ -5,15 +5,24 @@ namespace Mimoto\Aimless;
 
 // Mimoto classes
 use Mimoto\Core\entities\ComponentConditional;
+use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\FormattingUtils;
 use Mimoto\Core\entities\Component;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\EntityConfig\EntityConfigUtils;
 use Mimoto\Data\MimotoDataUtils;
+
 use Mimoto\Form\FormService;
 use Mimoto\Log\LogService;
+
+// ElephantIO classes
+use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version1X;
+use ElephantIO\Exception\ServerConnectionFailureException;
+
 
 
 /**
@@ -223,8 +232,15 @@ class OutputService
             }
         }
 
-        Mimoto::service('log')->error("Template `$sComponentName` not found", "I con't find the template you are looking for", true);
+        Mimoto::service('log')->error("Template `$sComponentName` not found", "I can't find the template you are looking for", true);
 
+
+
+        //Notice: Undefined index: _Mimoto_coreform_formattingoption-header
+        //in /Users/sebastiankersten/Development/Webroot/Mimoto.Aimless/src/domains/Core/entities/FormattingOption.php on line 169
+
+        //Warning: Invalid argument supplied for foreach()
+        //in /Users/sebastiankersten/Development/Webroot/Mimoto.Aimless/src/domains/Data/EntityRepository.php on line 103
 
         // 1. broadcast webevent for debugging purposes
         // 2. standaard report error (error level)
@@ -427,6 +443,7 @@ class OutputService
             case 'onEntityPropertyCreated':         Mimoto::service('config')->onEntityPropertyCreated($data); break;
             case 'onEntityPropertyUpdated':         Mimoto::service('config')->onEntityPropertyUpdated($data); break;
             case 'onEntityPropertySettingUpdated':  Mimoto::service('config')->onEntityPropertySettingUpdated($data); break;
+            case 'onFormattingChanged':             $this->onFormattingChanged($data); break;
 
             default:
                 
@@ -801,12 +818,12 @@ class OutputService
 
 
 
-        if (!empty($data->changes)) { $this->sendPusherEvent('Aimless', 'data.changed', $data); }
+        if (!empty($data->changes)) { $this->sendSocketIOEvent('Aimless', 'data.changed', $data); }
         
         /**
          * Exaamples:
-         * $this->sendPusherEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
-         * $this->sendPusherEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));
+         * $this->sendSocketIOEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
+         * $this->sendSocketIOEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));
          */
     }
     
@@ -836,7 +853,7 @@ class OutputService
         Mimoto::service('messages')->registerModification('data.created', $data);
 
         // send
-        $this->sendPusherEvent('Aimless', 'data.created', $data);
+        $this->sendSocketIOEvent('Aimless', 'data.created', $data);
     }
     
     /**
@@ -845,11 +862,10 @@ class OutputService
      * @param type $sEvent
      * @param type $data
      */
-    private function sendPusherEvent($sChannel, $sEvent, $data)
+    private function sendSocketIOEvent($sChannel, $sEvent, $data)
     {
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;
-
 
         // init
         $client= new \GearmanClient();
@@ -857,7 +873,7 @@ class OutputService
         try
         {
             // setup
-            $client->addServer();
+            $client->addServer(Mimoto::value('config')->gearman->server_address);
 
             // $result =
             // execute
@@ -879,7 +895,7 @@ class OutputService
      * @param type $sEvent
      * @param type $data
      */
-    private function sendSlackNotification($entity, $config)
+    private function sendSlackNotification(MimotoEntity$entity, $config)
     {
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;
@@ -890,7 +906,7 @@ class OutputService
         try
         {
             // setup
-            $client->addServer();
+            $client->addServer(Mimoto::value('config')->gearman->server_address);
 
 
             // register
@@ -906,16 +922,57 @@ class OutputService
             $sSlackMessage = ">*$sTitle*\n>```$sMessage```\n>_From: $sDispatcher"."_";
 
 
-            // $result =
             // execute
             $client->doBackground("sendSlackNotification", json_encode(array(
                 'channel' => $config->channel,
                 'message' => $sSlackMessage
             )));
-            }
-            catch (\Exception $e)
-            {
-                return;
-            }
+        }
+        catch (\Exception $e)
+        {
+            return;
+        }
     }
+
+    /**
+     * Handle formatting updates
+     * @param MimotoEntity $eEntityPropertySetting
+     */
+    private function onFormattingChanged(MimotoEntity $eEntityPropertySetting)
+    {
+        // 1. verify
+        if ($eEntityPropertySetting->getValue('key') != EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS) return;
+
+        // 2. get the setting's property
+        $eEntityProperty = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings', $eEntityPropertySetting);
+
+        // 3. get the property's entity
+        $eEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
+
+        // 4. compose memcache key
+        $sKeyFormattingOptions = EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS.':'.$eEntity->getValue('name').'.'.$eEntityProperty->getValue('name');
+
+        // 5. store in cache
+        if (Mimoto::service('cache')->isEnabled())
+        {
+            Mimoto::service('cache')->setValue($sKeyFormattingOptions, json_encode(FormattingUtils::composeFormattingOptions($eEntityPropertySetting)));
+        }
+
+
+        // setup socket connection
+        $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+
+        try
+        {
+            // broadcast update
+            $client->initialize();
+            $client->emit('formattingOptions.changed', ['entityName' => $eEntity->getValue('name'), 'entityPropertyName' => $eEntityProperty->getValue('name')]);
+            $client->close();
+        }
+        catch (ServerConnectionFailureException $e)
+        {
+            echo 'Server Connection Failure!!';
+        }
+    }
+
 }

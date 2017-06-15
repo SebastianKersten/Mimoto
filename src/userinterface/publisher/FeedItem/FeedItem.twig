@@ -3,13 +3,13 @@
         <div class="MimotoPublisher-FeedItem-titlecontainer">
             <h1 class="MimotoPublisher-FeedItem-title">
                 <span class="MimotoPublisher-FeedItem-title">
-                    <a href="/publisher/article/{{ Mimoto.meta('id') }}" {{ Mimoto.realtime('title') }}>{{ Mimoto.render('title') }}</a>
+                    <a href="/publisher/article/{{ Mimoto.meta('id') }}" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</a>
                 </span>
             </h1>
         </div>
-        <img class="MimotoPublisher-FeedItem-headerImage" src="{{ Mimoto.render('headerImage') }}" {{ Mimoto.realtime('headerImage') }}>
+        <img class="MimotoPublisher-FeedItem-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }}>
     </div>
     <div class="MimotoPublisher-FeedItem-lede" {{ Mimoto.realtime('lede') }}>
-        {{ Mimoto.render('lede') }} .. <a href="/publisher/article/{{ Mimoto.meta('id') }}">lees meer</a>
+        {{ Mimoto.data('lede') }} .. <a href="/publisher/article/{{ Mimoto.meta('id') }}">lees meer</a>
     </div>
 </div>

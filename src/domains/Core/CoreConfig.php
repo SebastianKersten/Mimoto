@@ -9,6 +9,9 @@ use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
 use Mimoto\Core\entities\User;
+use Mimoto\Core\entities\UserRole;
+use Mimoto\Core\entities\FormattingOption;
+use Mimoto\Core\entities\FormattingOptionAttribute;
 use Mimoto\Core\entities\Component;
 use Mimoto\Core\entities\ComponentConditional;
 use Mimoto\Core\entities\Layout;
@@ -17,6 +20,7 @@ use Mimoto\Core\entities\File;
 use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
 use Mimoto\Core\entities\ContentSection;
+use Mimoto\Core\entities\Page;
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\Input;
 use Mimoto\Core\entities\InputOption;
@@ -31,7 +35,6 @@ use Mimoto\Core\entities\InputRadiobutton;
 use Mimoto\Core\entities\InputTextline;
 use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputTextblock;
-use Mimoto\Core\entities\InputTextRTF;
 use Mimoto\Core\entities\InputList;
 use Mimoto\Core\entities\InputImage;
 use Mimoto\Core\entities\InputVideo;
@@ -40,6 +43,7 @@ use Mimoto\Core\entities\InputDatePicker;
 use Mimoto\Core\entities\Notification;
 
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
+use Mimoto\Core\forms\EntityPropertyForm_Value_formattingOptions;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
@@ -75,15 +79,21 @@ class CoreConfig
     // views
     const MIMOTO_COMPONENT                      = '_Mimoto_component';
     const MIMOTO_COMPONENTCONDITIONAL           = '_Mimoto_componentconditional';
-    const MIMOTO_PAGE                           = '_Mimoto_page';
     const MIMOTO_DATASET                        = '_Mimoto_dataset';
     const MIMOTO_LAYOUT                         = '_Mimoto_layout';
     const MIMOTO_LAYOUTCONTAINER                = '_Mimoto_layoutcontainer';
 
+    // text
+    const MIMOTO_FORMATTINGOPTION               = '_Mimoto_formattingoption';
+    const MIMOTO_FORMATTINGOPTIONATTRIBUTE      = '_Mimoto_formattingoptionattribute';
+
     // functionality
     const MIMOTO_ACTION                         = '_Mimoto_action';
     const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';
+
     const MIMOTO_USER                           = '_Mimoto_user';
+    const MIMOTO_USER_GROUP                     = '_Mimoto_user_group';
+    const MIMOTO_USER_ROLE                      = '_Mimoto_user_role';
 
     // search
     const MIMOTO_SELECTION                      = '_Mimoto_selection';
@@ -95,6 +105,10 @@ class CoreConfig
     // content
     const MIMOTO_CONTENTSECTION                 = '_Mimoto_contentsection';
 
+    const MIMOTO_PAGE                           = '_Mimoto_page';
+    const MIMOTO_ROUTE                          = '_Mimoto_coreform_route';
+    const MIMOTO_ROUTE_ELEMENT                  = '_Mimoto_coreform_route_element';
+
     // forms
     const MIMOTO_FORM                           = '_Mimoto_form';
     const MIMOTO_FORM_INPUT                     = '_Mimoto_form_input';
@@ -104,7 +118,6 @@ class CoreConfig
     // input
     const MIMOTO_FORM_INPUT_TEXTLINE            = '_Mimoto_form_input_textline';
     const MIMOTO_FORM_INPUT_TEXTBLOCK           = '_Mimoto_form_input_textblock';
-    const MIMOTO_FORM_INPUT_TEXTRTF             = '_Mimoto_form_input_textrtf';
     const MIMOTO_FORM_INPUT_CHECKBOX            = '_Mimoto_form_input_checkbox';
     const MIMOTO_FORM_INPUT_MULTISELECT         = '_Mimoto_form_input_multiselect';
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_Mimoto_form_input_radiobutton';
@@ -151,11 +164,18 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTY       = '_Mimoto_coreform__entityProperty';
 
     const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE                     = '_Mimoto_coreform__entityPropertySetting_value_type';
+    const COREFORM_ENTITYPROPERTYSETTING_VALUE_FORMATTINGOPTIONS        = '_Mimoto_coreform__entityPropertySetting_value_formattingoptions';
     const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE       = '_Mimoto_coreform__entityPropertySetting_entity_allowedEntityType';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
+    const COREFORM_PAGE                         = '_Mimoto_coreform_page';
+    const COREFORM_ROUTE                        = '_Mimoto_coreform_route';
+    const COREFORM_ROUTE_ELEMENT                = '_Mimoto_coreform_route_element';
+
     const COREFORM_USER                         = '_Mimoto_coreform_user';
+    const COREFORM_USER_ROLE                    = '_Mimoto_coreform_user_role';
+    const COREFORM_USER_GROUP                   = '_Mimoto_coreform_user_group';
 
     const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentSection';
     const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
@@ -167,6 +187,9 @@ class CoreConfig
     const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
     const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform_form_inputValidation';
 
+    const COREFORM_FORMATTINGOPTION             = '_Mimoto_coreform_formattingoption';
+    const COREFORM_FORMATTINGOPTIONATTRIBUTE    = '_Mimoto_coreform_formattingoptionattribute';
+
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
 
     const COREFORM_SELECTION                    = '_Mimoto_coreform_selection';
@@ -176,7 +199,6 @@ class CoreConfig
     // input
     const COREFORM_INPUT_TEXTLINE       = '_Mimoto_coreform_input_textline';
     const COREFORM_INPUT_TEXTBLOCK      = '_Mimoto_coreform_input_textblock';
-    const COREFORM_INPUT_TEXTRTF        = '_Mimoto_coreform_input_textrtf';
     const COREFORM_INPUT_CHECKBOX       = '_Mimoto_coreform_input_checkbox';
     const COREFORM_INPUT_MULTISELECT    = '_Mimoto_coreform_input_multiselect';
     const COREFORM_INPUT_RADIOBUTTON    = '_Mimoto_coreform_input_radiobutton';
@@ -224,6 +246,7 @@ class CoreConfig
 
             // users
             User::getStructure(),
+            UserRole::getStructure(),
 
             // search
             Selection::getStructure(),
@@ -237,8 +260,13 @@ class CoreConfig
             Layout::getStructure(),
             LayoutContainer::getStructure(),
 
+            // formatting
+            FormattingOption::getStructure(),
+            FormattingOptionAttribute::getStructure(),
+
             // content
             File::getStructure(),
+            Page::getStructure(),
             ContentSection::getStructure(),
 
             // forms
@@ -259,7 +287,6 @@ class CoreConfig
             InputTextline::getStructure(),
             InputList::getStructure(),
             InputTextblock::getStructure(),
-            InputTextRTF::getStructure(),
             InputCheckbox::getStructure(),
             InputMultiSelect::getStructure(),
             InputRadiobutton::getStructure(),
@@ -286,12 +313,14 @@ class CoreConfig
             Entity::getFormStructure(),
             EntityProperty::getFormStructure(),
             EntityPropertyForm_Value_type::getFormStructure(),
+            EntityPropertyForm_Value_formattingOptions::getFormStructure(),
             EntityPropertyForm_Entity_allowedEntityType::getFormStructure(),
             EntityPropertyForm_Collection_allowedEntityTypes::getFormStructure(),
             EntityPropertyForm_Collection_allowDuplicates::getFormStructure(),
 
             // users
             User::getFormStructure(),
+            UserRole::getFormStructure(),
 
             // search
             Selection::getFormStructure(),
@@ -305,7 +334,12 @@ class CoreConfig
             Layout::getFormStructure(),
             LayoutContainer::getFormStructure(),
 
+            // formatting
+            FormattingOption::getFormStructure(),
+            //FormattingOptionAttribute::getFormStructure(),
+
             // content
+            Page::getFormStructure(),
             ContentSection::getFormStructure(),
 
             // forms
@@ -330,7 +364,6 @@ class CoreConfig
             InputRadiobutton::getFormStructure(),
             InputTextBlock::getFormStructure(),
             InputTextline::getFormStructure(),
-            InputTextRTF::getFormStructure(),
             InputVideo::getFormStructure(),
             InputColorPicker::getFormStructure(),
             InputDatePicker::getFormStructure()
@@ -388,6 +421,12 @@ class CoreConfig
                 'config' => (object) array(
                     'channel' => 'mimoto_notifications'
                 )
+            ),
+            (object) array(
+                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'.updated',
+                'service' => 'Aimless',
+                'request' => 'onFormattingChanged',
+                'type' => 'sync'
             ),
             (object) array(
                 'trigger' => '*.updated',
@@ -477,6 +516,19 @@ class CoreConfig
 
         // send
         return $aSelections;
+    }
+
+    public static function getCoreData($sEntityTypeName, $sItemId)
+    {
+        // #todo - make generic
+
+        switch($sEntityTypeName)
+        {
+            case CoreConfig::MIMOTO_FORMATTINGOPTION: return FormattingOption::getData($sItemId); break;
+            case CoreConfig::MIMOTO_USER_ROLE: return UserRole::getData($sItemId); break;
+        }
+
+        return false;
     }
 
 }

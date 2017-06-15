@@ -16,6 +16,7 @@ require_once __DIR__.'/../src/routing.php';
 // start
 $app->run();
 
+
 //$after = memory_get_usage();
 //$time_end = microtime_float();
 //$time = $time_end - $time_start;

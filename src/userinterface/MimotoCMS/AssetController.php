@@ -29,7 +29,7 @@ class AssetController
         $this->setHeaderForJavascript();
 
         // 2. load and send
-        return new Response($this->loadStaticFile('js/mimoto.aimless.js'));
+        return new Response($this->loadStaticFile('js/mimoto.js'));
     }
 
     public function loadJavascriptMimotoCMS(Application $app)
@@ -104,24 +104,23 @@ class AssetController
         return new Response($this->loadStaticFile('images/mimoto_logo_collapsed.png'));
     }
 
-    public function loadImageAvatar(Application $app)
-    {
-        // 1. prepare output
-        $this->setHeaderForImagePNG();
+    // What up with that? public function loadImageAvatar(Application $app)
+    // {
+    //     // 1. prepare output
+    //     $this->setHeaderForImagePNG();
 
-        // 2. load and send
-        return new Response($this->loadDynamicFile('avatar.png'));
-    }
+    //     // 2. load and send
+    //     return new Response($this->loadDynamicFile('avatar.png'));
+    // }
 
-    public function loadColorPickerFile($sFile)
-    {
-        // compose
-        $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/static/images/vanderlee-colorpicker/'.$sFile;
+    // public function loadColorPickerFile($sFile)
+    // {
+    //     // compose
+    //     $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/static/images/vanderlee-colorpicker/'.$sFile;
 
-        // load and send
-        return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
-    }
-
+    //     // load and send
+    //     return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
+    // }
 
 
     // ----------------------------------------------------------------------------
@@ -135,6 +134,7 @@ class AssetController
     private function setHeaderForJavascript()
     {
         header("Content-type: application/javascript; charset: UTF-8");
+        header("X-Content-Type-Options: ");
     }
 
     /**
@@ -171,8 +171,14 @@ class AssetController
         // compose
         $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/static/'.$sFile;
 
+        // open the file in a binary mode
+        $fp = fopen($sFile, 'rb');
+
+        // send the right headers
+        header("Content-Length: " . filesize($sFile));
+
         // load and send
-        return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
+        return (file_exists($sFile)) ? fpassthru($fp) : 'File not found';
     }
 
     /**
@@ -185,7 +191,13 @@ class AssetController
         // compose
         $sFile = dirname(dirname(dirname(dirname(__FILE__)))).'/web/dynamic/'.$sFile;
 
+        // open the file in a binary mode
+        $fp = fopen($sFile, 'rb');
+
+        // send the right headers
+        header("Content-Length: " . filesize($sFile));
+
         // load and send
-        return (file_exists($sFile)) ? file_get_contents($sFile) : 'File not found';
+        return (file_exists($sFile)) ? fpassthru($fp) : 'File not found';
     }
 }

@@ -5,6 +5,7 @@ namespace Mimoto;
 
 // Mimoto classes
 use Mimoto\Action\ActionServiceProvider;
+use Mimoto\Core\CoreConfig;
 use Mimoto\Event\EventServiceProvider;
 use Mimoto\Aimless\OutputServiceProvider;
 use Mimoto\Data\EntityServiceProvider;
@@ -14,7 +15,13 @@ use Mimoto\Log\LogServiceProvider;
 use Mimoto\User\UserServiceProvider;
 use Mimoto\Selection\SelectionServiceProvider;
 use Mimoto\Message\MessageServiceProvider;
+use Mimoto\Session\SessionServiceProvider as MimotoSessionServiceProvider;
+//use Mimoto\Page\PageServiceProvider;
+
 use Mimoto\UserInterface\MimotoCMS\SessionController;
+
+use Mimoto\Aimless\UserViewModel; // move this to a central setup (output-service)
+
 
 // Silex classes
 use Silex\Application;
@@ -32,6 +39,8 @@ use Silex\Provider\SecurityServiceProvider;
  */
 class Mimoto
 {
+    // silex
+    private static $_app;
 
     private static $_aServices = [];
     private static $_aValues = [];
@@ -45,12 +54,24 @@ class Mimoto
     const AIMLESS = 'aimless';
 
 
+
+    public static function isInDebugMode()
+    {
+        return self::$_bDebugMode;
+    }
+
+
+
     /**
      * Constructor
      * @param Application $app
      */
     public function __construct($app, $bEnableCache = false)
     {
+        // register
+        Mimoto::$_app = $app;
+
+
         // setup templates
         $app['twig']->getLoader()->addPath(dirname(dirname(__FILE__)) . '/userinterface');
 
@@ -68,6 +89,29 @@ class Mimoto
         $app->register(new ActionServiceProvider());
         $app->register(new SelectionServiceProvider());
         $app->register(new MessageServiceProvider());
+        $app->register(new MimotoSessionServiceProvider());
+        //$app->register(new PageServiceProvider());
+
+
+
+        // --- installation ---
+
+        $app->get ('/mimoto.cms/setup', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::welcome');
+        // werkt alleen als config.php niet bestaat én geen users
+        // check connection
+
+
+        // Slack worker - vars - abstract - actions
+        // opslaan in config.php
+
+        // rollen: superuser
+
+
+        // configuration/roles
+        // configuration/services
+        // #uitleg over locatie browser? folder?
+
+        // overview screen met icons, uitleg en button naar vervolgpagina
 
 
 
@@ -75,12 +119,21 @@ class Mimoto
 
         // --- access control ---
 
-
         $app->post('/mimoto.cms', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::login');
+        $app->get ('/mimoto.cms/connect', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::connect'); // retrun domain & port
         $app->get ('/mimoto.cms/logout', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logout');
 
+        $app->get ('/mimoto.cms/initialize', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::initialize');
         $app->get ('/mimoto.cms/logon', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logon');
         $app->get ('/mimoto.cms/recent/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::recent');
+
+
+        // --- runtime ---
+
+        $app->get ('/mimoto.cms/configuration/gearman', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::overview');
+        $app->get ('/mimoto.cms/workers/data', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::data');
+        $app->get ('/mimoto.cms/workers/slack', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::slack');
+
 
 
 
@@ -93,13 +146,17 @@ class Mimoto
         // main menu
         $app->get('/mimoto.cms/entities', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::viewEntityOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/selections', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::viewSelectionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/configuration', 'Mimoto\\UserInterface\\MimotoCMS\\ConfigurationController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/configuration/formatting', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/configuration/userroles', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/configuration/services', 'Mimoto\\UserInterface\\MimotoCMS\\ServicesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/layouts', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::viewLayoutOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/contentsections', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::viewContentSectionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/users', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::viewUserOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/api', 'Mimoto\\UserInterface\\MimotoCMS\\APIController::viewAPIOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/mimoto.cms/flows', 'Mimoto\\UserInterface\\MimotoCMS\\FlowController::viewFlowOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get('/mimoto.cms/pages', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::viewPageOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/mimoto.cms/pages', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         //$app->get('/mimoto.cms/messages', 'Mimoto\\UserInterface\\MimotoCMS\\MessageController::viewMessages');
         //$app->get('/mimoto.cms/contacts', 'Mimoto\\UserInterface\\MimotoCMS\\ContactController::viewContacts');
@@ -151,6 +208,38 @@ class Mimoto
         $app->get ('/mimoto.cms/selection/{nSelectionId}/rule/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+
+        // Formatting options
+        $app->get ('/mimoto.cms/configuration/formattingOption/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/formattingOption/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/formattingOption/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/formattingOption/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+//        $app->get ('/mimoto.cms/selection/{nSelectionId}/rule/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+//        $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+//        $app->get ('/mimoto.cms/selectionrule/{nSelectionRuleId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+
+        // User roles
+        $app->get ('/mimoto.cms/entityX/userRole/new', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/userRole/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/entityX/userRole/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/entityX/userRole/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+
+        // User roles
+        $app->get ('/mimoto.cms/configuration/userRole/new', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/userRole/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/userRole/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/configuration/userRole/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+        // User pages
+        $app->get ('/mimoto.cms/page/new', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/page/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/page/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/mimoto.cms/page/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
 
         // Layout
         $app->get ('/mimoto.cms/layout/new', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -210,7 +299,7 @@ class Mimoto
         // --- assets ---
 
         // javascript
-        $app->get('/mimoto.cms/static/js/mimoto.aimless.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimotoAimless');
+        $app->get('/mimoto.cms/static/js/mimoto.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimotoAimless');
         $app->get('/mimoto.cms/static/js/mimoto.cms.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimotoCMS');
 
         // stylesheets
@@ -225,7 +314,7 @@ class Mimoto
         // images
         $app->get('/mimoto.cms/static/images/mimoto_logo.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogo');
         $app->get('/mimoto.cms/static/images/mimoto_logo_collapsed.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogoCollapsed');
-        $app->get('/mimoto.cms/dynamic/avatar.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageAvatar');
+        // what up with that? $app->get('/mimoto.cms/dynamic/avatar.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageAvatar'); 
         $app->get('/mimoto.cms/static/images/vanderlee-colorpicker/{sFile}', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadColorPickerFile');
     }
 
@@ -290,6 +379,23 @@ class Mimoto
         self::$_bDebugMode = $bDebugMode;
     }
 
+    public static function user()
+    {
+        // init
+        $eUser = Mimoto::service('session')->currentUser();
+
+        // validate
+        if (empty($eUser)) return null;
+
+        // create
+        $component = Mimoto::service('output')->createComponent('', $eUser);
+
+        // wrap into viewmodel
+        $viewModel = new UserViewModel($component);
+
+        // send
+        return $viewModel;
+    }
 
     public static function output($sTitle, $data = null, $bScream = false)
     {

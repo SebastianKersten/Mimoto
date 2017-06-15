@@ -1,5 +1,5 @@
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "radio-button"} %}
     {% block form_component_element %}
-        {{ Mimoto.render('options', '_Mimoto_form_input_radiobutton--option', { value: Mimoto.value(), fieldId: Mimoto.meta('id'), input: Mimoto.input() }) }}
+        {{ Mimoto.data('options', '_Mimoto_form_input_radiobutton--option', { customValues: { value: Mimoto.value(), fieldId: Mimoto.meta('id'), input: Mimoto.input() }}) }}
     {% endblock %}
 {% endembed %}

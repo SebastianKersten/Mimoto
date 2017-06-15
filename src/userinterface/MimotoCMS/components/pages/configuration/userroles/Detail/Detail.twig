@@ -1,0 +1,38 @@
+{%
+    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
+        id: 'componentdetails',
+        tabs: [
+            {
+                label: 'User role',
+                panel_id: 'panel_detail_info'
+            }
+        ]
+    }
+%}
+    {% block panels %}
+
+        <!-- structure -->
+
+        <div id="panel_detail_info" class="MimotoCMS_pages_configuration_userroles_Detail__panel">
+
+            <div class="MimotoCMS_pages_configuration_userroles_Detail_Structure">
+
+                <div class="MimotoCMS_pages_configuration_userroles_Detail_Structure__meta">
+                    <div class="MimotoCMS_pages_configuration_userroles_Detail_Structure__meta_info">
+
+                        <div class="MimotoCMS_pages_configuration_userroles_Detail_Structure__name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+
+                    </div>
+
+                    <div class="MimotoCMS_pages_configuration_userroles_Detail_Structure__meta_menu">
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.userRoleEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endblock %}
+{% endembed %}

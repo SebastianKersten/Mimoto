@@ -139,7 +139,7 @@ class CoreFormUtils
         $itemForm->setValue('label', 'Label');
 
         // connect form
-        $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_FORM_INPUTVALIDATION);
+        $connectedForm = Mimoto::service('input')->getFormByName(CoreConfig::COREFORM_FORM_INPUTVALIDATION);
         $itemForm->setValue('form', $connectedForm);
         $field->addValue('options', $itemForm);
 
@@ -181,7 +181,7 @@ class CoreFormUtils
         $itemForm->setValue('label', 'Label');
 
         // connect form
-        $connectedForm = Mimoto::service('forms')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
+        $connectedForm = Mimoto::service('input')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
         $itemForm->setValue('form', $connectedForm);
         $field->addValue('options', $itemForm);
 

@@ -42,15 +42,30 @@ class AimlessComponentViewModel
     // ----------------------------------------------------------------------------
 
 
-    public function data($sPropertySelector, $bGetConnectionInfo = false)
+    public function data($sPropertySelector, $sComponentName = null, $options = null)
     {
-        return $this->_component->data($sPropertySelector, $bGetConnectionInfo);
+        $customValues = (!empty($options) && !empty($options['customValues'])) ? $options['customValues'] : null;
+        $bGetConnectionInfo = (!empty($options) && !empty($options['getConnectionInfo'])) ? $options['getConnectionInfo'] : false;
+
+        return $this->_component->data($sPropertySelector, $bGetConnectionInfo, !empty($sComponentName), $sComponentName, null, $customValues);
     }
 
-    public function render($sPropertySelector, $sComponentName = null, $customValues = null)
-    {
-        return $this->_component->data($sPropertySelector, false, true, $sComponentName, null, $customValues);
-    }
+
+//    public function data($sPropertySelector, $bGetConnectionInfo = false)
+//    {
+//        return $this->_component->data($sPropertySelector, $bGetConnectionInfo);
+//    }
+
+    // new API (replaces data)
+//    public function rawData($sPropertySelector, $bGetConnectionInfo = false)
+//    {
+//        $this->data($sPropertySelector, $bGetConnectionInfo = false);
+//    }
+
+//    public function render($sPropertySelector, $sComponentName = null, $customValues = null)
+//    {
+//        return $this->_component->data($sPropertySelector, false, true, $sComponentName, null, $customValues);
+//    }
 
     public function renderWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
     {
@@ -77,9 +92,9 @@ class AimlessComponentViewModel
         return $this->_component->editable($sPropertySelector, $options);
     }
 
-    public function selection($sSelectionName)
+    public function selection($sSelectionName, $sComponentName = null)
     {
-        return $this->_component->selection($sSelectionName);
+        return $this->_component->selection($sSelectionName, $sComponentName);
     }
 
     public function component($sComponentAlias)
@@ -90,6 +105,11 @@ class AimlessComponentViewModel
     public function meta($sPropertyName)
     {
         return $this->_component->meta($sPropertyName);
+    }
+
+    public function user()
+    {
+        return $this->_component->user();
     }
 
     public function form($sKey = null)
@@ -104,7 +124,8 @@ class AimlessComponentViewModel
 
     public function module($sModuleName, $values = [])
     {
-        return MimotoAimlessUtils::getModule($sModuleName, $values);
+        return $this->_component->module($sModuleName, $values);
+        //return MimotoAimlessUtils::getModule($sModuleName, $values);
     }
 
     public function reloadOnChange()
@@ -149,6 +170,12 @@ class AimlessComponentViewModel
 
 
     // visibity and styling options
+
+
+    public function isEmpty($sPropertySelector)
+    {
+        return $this->_component->isEmpty($sPropertySelector);
+    }
 
 
 

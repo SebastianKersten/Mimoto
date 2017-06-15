@@ -7,6 +7,7 @@ namespace Mimoto\Core\entities;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
+use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
@@ -65,7 +66,7 @@ class Entity
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
-                            'key' => 'allowedEntityType',
+                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => CoreConfig::MIMOTO_ENTITY
                         )

@@ -39,7 +39,7 @@ module.exports.prototype = {
      */
     entityNew: function()
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/entity/new");
+        var popup = MimotoX.popup("/mimoto.cms/entity/new");
 
         //popup.on('success') = popup.close();
     },
@@ -52,7 +52,7 @@ module.exports.prototype = {
     //         data: data,
     //         dataType: 'json'
     //     }).done(function(data) {
-    //         Mimoto.popup.close();
+    //         MimotoX.closePopup();
     //     });
     // },
 
@@ -63,18 +63,18 @@ module.exports.prototype = {
 
     entityEdit: function(nEntityId)
     {
-        Mimoto.popup.open('/mimoto.cms/entity/' + nEntityId + '/edit');
+        MimotoX.popup('/mimoto.cms/entity/' + nEntityId + '/edit');
     },
 
     entityUpdate: function(nEntityId, data)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'POST',
             url: "/mimoto.cms/entity/" + nEntityId + "/update",
             data: data,
             dataType: 'json',
             success: function(resultData, resultStatus, resultSomething) {
-                Mimoto.popup.close();
+                MimotoX.closePopup();
             }
         });
     },
@@ -84,7 +84,7 @@ module.exports.prototype = {
         var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
         if (response == true) {
     
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'GET',
                 url: "/mimoto.cms/entity/" + nEntityId + "/delete",
                 //data: data,
@@ -98,25 +98,25 @@ module.exports.prototype = {
 
     entityPropertyNew: function(nEntityId)
     {
-        Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/property/new");
+        MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/property/new");
     },
 
     entityPropertyCreate: function(nEntityId, data)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'POST',
             url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
             data: data,
             dataType: 'json',
             success: function(resultData, resultStatus, resultSomething) {
-                Mimoto.popup.close();
+                MimotoX.closePopup();
             }
         });
     },
 
     entityPropertyEdit: function(nEntityPropertyId)
     {
-        Mimoto.popup.open("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
+        MimotoX.popup("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
     },
     
     entityPropertyDelete:  function(nEntityPropertyId, sEntityPropertyName)
@@ -124,7 +124,7 @@ module.exports.prototype = {
         var response = confirm("Are you sure you want to delete the property '" + sEntityPropertyName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
         if (response == true) {
             // 11. send data
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'get',
                 url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
                 success: function (resultData, resultStatus, resultSomething) {
@@ -137,7 +137,7 @@ module.exports.prototype = {
     
     entityPropertySettingEdit: function(nEntityPropertySettingId)
     {
-        Mimoto.popup.open('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
+        MimotoX.popup('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
     },
 
 
@@ -156,7 +156,7 @@ module.exports.prototype = {
         });
 
         // 11. send data
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'GET',
             url: '/mimoto.cms/notifications/' + nNotificationId + '/close',
             data: null,
@@ -173,7 +173,7 @@ module.exports.prototype = {
     notificationsCloseAll: function()
     {
         // 11. send data
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'GET',
             url: '/mimoto.cms/notifications/closeall',
             data: null,
@@ -190,7 +190,7 @@ module.exports.prototype = {
      */
     entityComponentNew: function(nEntityId)
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
+        var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
         
         //popup.on('success') = popup.close();
     },
@@ -202,12 +202,12 @@ module.exports.prototype = {
     
     componentEdit: function(nComponentId)
     {
-        Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/edit');
+        MimotoX.popup('/mimoto.cms/component/' + nComponentId + '/edit');
     },
     
     componentDelete: function(nComponentId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/component/" + nComponentId + "/delete",
             data: null,
@@ -221,17 +221,17 @@ module.exports.prototype = {
     
     componentConditionalNew: function(nComponentId)
     {
-        var popup = Mimoto.popup.open('/mimoto.cms/component/' + nComponentId + '/conditional/new');
+        var popup = MimotoX.popup('/mimoto.cms/component/' + nComponentId + '/conditional/new');
     },
     
     componentConditionalEdit: function(nComponentConditionalId)
     {
-        var popup = Mimoto.popup.open('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
+        var popup = MimotoX.popup('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
     },
     
     componentConditionalDelete: function(nComponentConditionalId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/componentconditional/' + nComponentConditionalId + '/delete',
             data: null,
@@ -252,7 +252,7 @@ module.exports.prototype = {
     //  */
     // eNew: function(nEntityId)
     // {
-    //     var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/component/new");
+    //     var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
     //
     //     // Mimoto.Aimless/data/
     //
@@ -267,7 +267,7 @@ module.exports.prototype = {
      */
     selectionNew: function()
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/selection/new");
+        var popup = MimotoX.popup("/mimoto.cms/selection/new");
     },
     
     selectionView: function(nSelectionId)
@@ -277,12 +277,12 @@ module.exports.prototype = {
     
     selectionEdit: function(nSelectionId)
     {
-        Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/edit');
+        MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/edit');
     },
     
     selectionDelete: function(nSelectionId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
             data: null,
@@ -295,17 +295,17 @@ module.exports.prototype = {
     
     selectionRuleNew: function(nSelectionId)
     {
-        var popup = Mimoto.popup.open('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
+        var popup = MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
     },
     
     selectionRuleEdit: function(nSelectionRuleId)
     {
-        var popup = Mimoto.popup.open('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
+        var popup = MimotoX.popup('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
     },
     
     selectionRuleDelete: function(nSelectionRuleId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
             data: null,
@@ -319,11 +319,186 @@ module.exports.prototype = {
 
 
     /**
+     * Formatting options
+     */
+    formattingOptionNew: function()
+    {
+        var popup = MimotoX.popup("/mimoto.cms/configuration/formattingOption/new");
+    },
+
+    formattingOptionView: function(nItemId)
+    {
+        window.open('/mimoto.cms/configuration/formattingOption/' + nItemId + '/view', '_self');
+    },
+
+    formattingOptionEdit: function(nItemId)
+    {
+        MimotoX.popup('/mimoto.cms/configuration/formattingOption/' + nItemId + '/edit');
+    },
+
+    formattingOptionDelete: function(nItemId, sFormattingOptionName)
+    {
+        var response = confirm("Are you sure you want to delete the formatting option '" + sFormattingOptionName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+        if (response == true)
+        {
+            MimotoX.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/configuration/formattingOption/' + nItemId + '/delete',
+                data: null,
+                dataType: 'json',
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
+    },
+
+    formattingOptionAttributeNew: function(nItemId)
+    {
+        var popup = MimotoX.popup('/mimoto.cms/formattingOption/' + nItemId + '/formattingOptionAttribute/new');
+    },
+
+    formattingOptionAttributeEdit: function(nItemId)
+    {
+        var popup = MimotoX.popup('/mimoto.cms/formattingOptionAttribute/' + nItemId + '/edit');
+    },
+
+    formattingOptionAttributeDelete: function(nItemId, sFormattingOptionName)
+    {
+        var response = confirm("Are you sure you want to delete the formatting option '" + sFormattingOptionName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+        if (response == true)
+        {
+            MimotoX.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/formattingOptionAttribute/' + nItemId + '/delete',
+                data: null,
+                dataType: 'json',
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
+    },
+
+
+    /**
+     * User roles
+     */
+    userRoleNew: function()
+    {
+        var popup = MimotoX.popup("/mimoto.cms/configuration/userRole/new");
+    },
+
+    userRoleView: function(nItemId)
+    {
+        window.open('/mimoto.cms/configuration/userRole/' + nItemId + '/view', '_self');
+    },
+
+    userRoleEdit: function(nItemId)
+    {
+        MimotoX.popup('/mimoto.cms/configuration/userRole/' + nItemId + '/edit');
+    },
+
+    userRoleDelete: function(nItemId, sUserRoleName)
+    {
+        var response = confirm("Are you sure you want to delete the user role '" + sUserRoleName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+        if (response == true)
+        {
+            MimotoX.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/configuration/userRole/' + nItemId + '/delete',
+                data: null,
+                dataType: 'json',
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
+    },
+
+
+
+    /**
+     * Pages
+     */
+    entityXNew: function(sEntityTypeName)
+    {
+        var popup = MimotoX.popup('/mimoto.cms/entityX/' + sEntityTypeName + '/new');
+    },
+
+    entityXView: function(sEntityTypeName, nItemId, sFolder)
+    {
+        sFolder = (sFolder) ? sFolder + '/' : '';
+
+        window.open('/mimoto.cms/' + sFolder + 'entityX/' + sEntityTypeName + '/' + nItemId + '/view', '_self');
+    },
+
+    entityXEdit: function(sEntityTypeName, nItemId)
+    {
+        MimotoX.popup('/mimoto.cms/entityX/' + sEntityTypeName + '/' + nItemId + '/edit');
+    },
+
+    entityXDelete: function(sEntityTypeName, nItemId, sItemName)
+    {
+        var response = confirm("Are you sure you want to delete the " + sEntityTypeName + " '" + sItemName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+        if (response == true)
+        {
+            MimotoX.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/entityX/' + sEntityTypeName + '/' + nItemId + '/delete',
+                data: null,
+                dataType: 'json',
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
+    },
+
+
+    /**
+     * Pages - TEMP
+     */
+    pageNew: function()
+    {
+        var popup = MimotoX.popup("/mimoto.cms/page/new");
+    },
+
+    pageView: function(nItemId)
+    {
+        window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
+    },
+
+    pageEdit: function(nItemId)
+    {
+        MimotoX.popup('/mimoto.cms/page/' + nItemId + '/edit');
+    },
+
+    pageDelete: function(nItemId, sPageName)
+    {
+        var response = confirm("Are you sure you want to delete the page '" + sPageName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
+        if (response == true)
+        {
+            MimotoX.utils.callAPI({
+                type: 'get',
+                url: '/mimoto.cms/page/' + nItemId + '/delete',
+                data: null,
+                dataType: 'json',
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
+    },
+
+
+
+    /**
      * Users
      */
     userNew: function()
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/user/new");
+        var popup = MimotoX.popup("/mimoto.cms/user/new");
     },
 
     userView: function(nUserId)
@@ -333,12 +508,12 @@ module.exports.prototype = {
 
     userEdit: function(nUserId)
     {
-        Mimoto.popup.open('/mimoto.cms/user/' + nUserId + '/edit');
+        MimotoX.popup('/mimoto.cms/user/' + nUserId + '/edit');
     },
 
     userDelete: function(nUserId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/user/' + nUserId + '/delete',
             data: null,
@@ -355,7 +530,7 @@ module.exports.prototype = {
      */
     layoutNew: function()
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/layout/new");
+        var popup = MimotoX.popup("/mimoto.cms/layout/new");
     },
     
     layoutView: function(nLayoutId)
@@ -365,12 +540,12 @@ module.exports.prototype = {
     
     layoutEdit: function(nLayoutId)
     {
-        Mimoto.popup.open('/mimoto.cms/layout/' + nLayoutId + '/edit');
+        MimotoX.popup('/mimoto.cms/layout/' + nLayoutId + '/edit');
     },
     
     layoutDelete: function(nLayoutId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/layout/' + nLayoutId + '/delete',
             data: null,
@@ -383,17 +558,17 @@ module.exports.prototype = {
     
     layoutContainerNew: function(nLayoutId)
     {
-        var popup = Mimoto.popup.open('/mimoto.cms/layout/' + nLayoutId + '/layoutcontainer/new');
+        var popup = MimotoX.popup('/mimoto.cms/layout/' + nLayoutId + '/layoutcontainer/new');
     },
     
     layoutContainerEdit: function(nLayoutContainerId)
     {
-        var popup = Mimoto.popup.open('/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/edit');
+        var popup = MimotoX.popup('/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/edit');
     },
     
     layoutContainerDelete: function(nLayoutContainerId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: '/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/delete',
             data: null,
@@ -411,7 +586,7 @@ module.exports.prototype = {
      */
     contentSectionNew: function()
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/contentsection/new");
+        var popup = MimotoX.popup("/mimoto.cms/contentsection/new");
     },
     
     contentSectionView: function(nContentSectionId)
@@ -421,13 +596,13 @@ module.exports.prototype = {
     
     contentSectionEdit: function(nContentSectionId)
     {
-        Mimoto.popup.open('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
+        MimotoX.popup('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
     },
     contentSectionDelete: function(nContentSectionId, sContentSectionName)
     {
         var response = confirm("Are you sure you want to delete the content section called '" + sContentSectionName + "'?\n\nALL RELATED DATA WILL BE LOST!!\n\n(Don't say I didn't warn you!)");
         if (response == true) {
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'get',
                 url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
                 data: null,
@@ -445,11 +620,13 @@ module.exports.prototype = {
      */
     contentNew: function(nContentId)
     {
+        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
         window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
     },
     
     contentEdit: function(nContentId, sContentTypeName, nContentItemId)
     {
+        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit');
         window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
     },
     
@@ -457,7 +634,7 @@ module.exports.prototype = {
     {
         var response = confirm("Are you sure you want to delete this item?");
         if (response == true) {
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'get',
                 url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/delete',
                 data: null,
@@ -476,14 +653,14 @@ module.exports.prototype = {
      */
     entityFormNew: function(nEntityId)
     {
-        var popup = Mimoto.popup.open("/mimoto.cms/entity/" + nEntityId + "/form/new");
+        var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/form/new");
         
         //popup.on('success') = popup.close();
     },
     
     entityFormAutogenerate: function(nEntityId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/entity/" + nEntityId + "/form/autogenerate",
             success: function(resultData, resultStatus, resultSomething) {
@@ -499,12 +676,12 @@ module.exports.prototype = {
     
     formEdit: function(nFormId)
     {
-        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/edit');
+        MimotoX.popup('/mimoto.cms/form/' + nFormId + '/edit');
     },
     
     formDelete: function(nFormId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/form/" + nFormId + "/delete",
             success: function(resultData, resultStatus, resultSomething) {
@@ -515,7 +692,7 @@ module.exports.prototype = {
     
     formFieldNew_TypeSelector: function(nFormId)
     {
-        Mimoto.popup.open('/mimoto.cms/form/' + nFormId + '/field/new');
+        MimotoX.popup('/mimoto.cms/form/' + nFormId + '/field/new');
     },
     
     formFieldNew_FieldForm: function(nFormId, nFormFieldTypeId)
@@ -532,7 +709,7 @@ module.exports.prototype = {
     
     formFieldDelete:  function(nFormFieldTypeId, nFormFieldId)
     {
-        Mimoto.Aimless.utils.callAPI({
+        MimotoX.utils.callAPI({
             type: 'get',
             url: "/mimoto.cms/formfield/" + nFormFieldTypeId + '/' + nFormFieldId + '/delete',
             data: null,
@@ -550,7 +727,7 @@ module.exports.prototype = {
         
         console.log(sURL);
         
-        var popup = Mimoto.popup.open(sURL);
+        var popup = MimotoX.popup(sURL);
         
         // 1. return root of the popup (or root object)
         // 2. connect content of the popup (onload) to the popup object
@@ -583,7 +760,7 @@ module.exports.prototype = {
         // execute
         var response = confirm("Are you sure you want to delete this item?");
         if (response == true) {
-            Mimoto.Aimless.utils.callAPI({
+            MimotoX.utils.callAPI({
                 type: 'get',
                 url: '/mimoto.cms/formfield/' + listInfo.sInputFieldType + '/' + listInfo.sInputFieldId + '/remove/' + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId,
                 data: null,

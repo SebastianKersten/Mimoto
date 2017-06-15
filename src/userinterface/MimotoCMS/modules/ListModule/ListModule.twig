@@ -1,3 +1,5 @@
-<ul class="MimotoCMS_ListModule">
-    {% block listmodule_content %}{% endblock %}
+{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button_label, icon:button_icon, onclick:button_onclick }) }}
+
+<ul class="MimotoCMS_modules_ListModule-container js-list js-list-sortable" {{ Mimoto.realtime(property_name, listitem_component) }}>
+    {{ Mimoto.data(property_name, listitem_component) }}
 </ul>

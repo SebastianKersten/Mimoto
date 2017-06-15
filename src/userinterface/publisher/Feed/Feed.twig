@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="MimotoPublisher_Feed-container" {{ Mimoto.realtime('contentItems', 'feeditem') }}>
-        {{ Mimoto.render('contentItems', 'feeditem') }}
+        {{ Mimoto.data('contentItems', 'feeditem') }}
     </div>
 
 {% endblock %}

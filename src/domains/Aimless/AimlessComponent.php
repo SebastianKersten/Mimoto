@@ -208,15 +208,43 @@ class AimlessComponent
         //$sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
 
 
+
         if (!empty($this->_entity))
         {
 
             // read and send
-            if (!$bRenderData)
+            if (
+                !$bRenderData
+                && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE
+                && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO
+                && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_AUDIO
+                && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE
+            )
             {
+                // 1. in geval van getStructure (connections -> anders oppakken
 
-                // #todo - in geval van getStructure (connections -> anders oppakken
-                // #todo - connections in ViewModel gooien
+
+
+                // 1. connections in ViewModel gooien
+
+
+//                if ($this->_entity->getPropertyType($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY
+//                {
+//                    $eItem = $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
+//
+//                    // validate
+//                    if (empty($eUser)) return null;
+//
+//                    // create
+//                    $component = Mimoto::service('output')->createComponent('', $eUser);
+//
+//                    // wrap into viewmodel
+//                    $viewModel = new UserViewModel($component);
+//
+//                    // send
+//                    return $viewModel;
+//                }
+
 
                 return $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
             }
@@ -462,7 +490,7 @@ class AimlessComponent
     }
 
     
-    public function selection($sSelectionName)
+    public function selection($sSelectionName, $sComponentName = null)
     {
         // validate
         if (!isset($this->_aSelections[$sSelectionName])) die("Mimoto says: Selection '$sSelectionName' not defined");
@@ -471,7 +499,7 @@ class AimlessComponent
         $selection = $this->_aSelections[$sSelectionName];
         
         // render and send
-        return $this->renderCollection($selection->aEntities, null, $selection->sComponentName);
+        return $this->renderCollection($selection->aEntities, null, (!empty($sComponentName)) ? $sComponentName : $selection->sComponentName);
     }
 
 
@@ -479,7 +507,6 @@ class AimlessComponent
     {
         $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' data-mimoto-connection="'.$this->_connection->getId().'"' : '';
         $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' data-mimoto-sortindex="'.$this->_connection->getSortIndex().'"' : '';
-
 
         if ($sPropertySelector !== null)
         {
@@ -657,6 +684,27 @@ class AimlessComponent
         }
     }
 
+    /**
+     * Get the current user
+     * @return UserViewModel
+     */
+    public function user()
+    {
+        // init
+        $eUser = Mimoto::service('session')->currentUser();
+
+        // validate
+        if (empty($eUser)) return null;
+
+        // create
+        $component = Mimoto::service('output')->createComponent('', $eUser);
+
+        // wrap into viewmodel
+        $viewModel = new UserViewModel($component);
+
+        // send
+        return $viewModel;
+    }
 
     public function form($sKey = null)
     {
@@ -752,7 +800,6 @@ class AimlessComponent
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $this->_entity->getEntityTypeName();
 
-
         // get component file
         $sComponentFile = $this->_OutputService->getComponentFile($sTemplateName, $this->_entity);
 
@@ -782,22 +829,25 @@ class AimlessComponent
         $sModuleFile = $this->_OutputService->getComponentFile($sModuleName);
 
         // create
-        $viewModel = new AimlessModuleViewModel($this);
+        $viewModel = new AimlessComponentViewModel($this);
+
+        // init
+        $aVars = array($this->_aVars);
 
         // compose
-        $this->_aVars['Mimoto'] = $viewModel;
+        $aVars['Mimoto'] = $viewModel;
 
         // add custom values
         if (!empty($customValues))
         {
             foreach ($customValues as $key => $value)
             {
-                $this->_aVars[$key] = $value;
+                $aVars[$key] = $value;
             }
         }
 
         // output
-        return $this->_TwigService->render($sModuleFile, $this->_aVars);
+        return $this->_TwigService->render($sModuleFile, $aVars);
     }
 
 
@@ -840,7 +890,7 @@ class AimlessComponent
      * @param null $aFieldVars
      * @return string
      */
-    private function renderCollectionItem($entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null, $customValues = null)
+    private function renderCollectionItem(MimotoEntity $entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null, $customValues = null)
     {
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
@@ -904,7 +954,7 @@ class AimlessComponent
      * @param $aFieldVars
      * @return AimlessInput
      */
-    private function renderCollectionItemAsInput($sTemplateName, $eField, $connection, $aFormFields)
+    private function renderCollectionItemAsInput($sTemplateName, MimotoEntity $eField, $connection, $aFormFields)
     {
         // init
         $bFormFieldFound = false;
@@ -949,7 +999,22 @@ class AimlessComponent
 
 
 
+    public function isEmpty($sPropertySelector)
+    {
+        if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
+        {
+            return empty($this->data($sPropertySelector));
+        }
+        else
+        {
+            if (isset($this->_aSelections[$sPropertySelector]))
+            {
+                return $this->_aSelections[$sPropertySelector]->aEntities->isEmpty();
+            }
+        }
 
+        return true;
+    }
 
 
     public function hideWhenEmpty($sPropertySelector)

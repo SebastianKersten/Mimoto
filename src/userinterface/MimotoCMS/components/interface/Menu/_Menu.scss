@@ -1,6 +1,6 @@
 #{$pr-interface}_Menu {
     position: fixed;
-    z-index: $z-navigation;
+    z-index: $z-navigation-mobile;
     top: 50px;
     left: 0;
     display: none;
@@ -11,6 +11,7 @@
     background-color: $cod-gray;
 
     @include breakpoint(large up) {
+        z-index: $z-navigation;
         top: $header-height;
         bottom: 0;
         display: block;
@@ -25,7 +26,8 @@
     display: block;
 }
 
-    #{$pr-interface}_Menu-content {
+    div.MimotoCMS_interface_Menu-content {
+
         @include breakpoint(large up) {
             position: absolute;
             top: 0;
@@ -48,6 +50,7 @@
 
             &:last-child {
                 border-bottom: 0;
+                margin-bottom: 30px;
             }
         }
 

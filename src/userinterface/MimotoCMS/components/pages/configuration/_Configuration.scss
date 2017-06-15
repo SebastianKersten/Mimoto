@@ -1,0 +1,9 @@
+@import 'userroles/UserRoles';
+@import 'formattingoptions/FormattingOptions';
+
+div.MimotoCMS_pages_Configuration {
+
+    & a {
+        color: #000000;
+    }
+}

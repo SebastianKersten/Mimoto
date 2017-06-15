@@ -44,6 +44,23 @@ $twig = new Twig_Environment($loader, array(
 ));
 
 
+// https://silex.sensiolabs.org/doc/1.3/providers/translation.html
+
+//$app->register(new Silex\Provider\TranslationServiceProvider(), array(
+//    'locale_fallbacks' => array('en'),
+//));
+//
+//use Symfony\Component\Translation\Loader\YamlFileLoader;
+//
+//$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+//    $translator->addLoader('yaml', new YamlFileLoader());
+//
+//    $translator->addResource('yaml', __DIR__.'/locales/en.yml', 'en');
+//    $translator->addResource('yaml', __DIR__.'/locales/nl.yml', 'nl');
+//
+//    return $translator;
+//}));
+
 
 // connect
 Mimoto::setService('database', new PDO("mysql:host=".Mimoto::value('config')->mysql->host.";dbname=".Mimoto::value('config')->mysql->dbname, Mimoto::value('config')->mysql->username, Mimoto::value('config')->mysql->password));
@@ -53,18 +70,8 @@ Mimoto::setService('twig', $twig);
 Mimoto::setValue('page.layout.default', 'MimotoCMS_layout_Page');
 Mimoto::setValue('popup.layout.default', 'MimotoCMS_layout_Popup'); // uit general 'layouts' sectie
 
-// configure Pusher
-Mimoto::setGlobalValue('pusher.auth_key', Mimoto::value('config')->pusher->auth_key);
-Mimoto::setGlobalValue('pusher.cluster', Mimoto::value('config')->pusher->cluster);
-Mimoto::setGlobalValue('pusher.host', Mimoto::value('config')->pusher->host);
-Mimoto::setGlobalValue('pusher.encrypted', Mimoto::value('config')->pusher->encrypted);
-Mimoto::setGlobalValue('pusher.authEndpoint', Mimoto::value('config')->pusher->authEndPoint);
 
 //Mimoto::registerService('mail');
-
-
-// temp solution
-Mimoto::setGlobalValue('app', $app);
 
 
 // setup
@@ -73,8 +80,9 @@ $app['twig'] = $twig;
 $app['Mimoto'] = new \Mimoto\Mimoto($app, false);
 
 
-// run in debgu mode
+// run in debug mode
 Mimoto::runInDebugMode(true);
+//Mimoto::enableCache(true);
 
 // send
 return $app;

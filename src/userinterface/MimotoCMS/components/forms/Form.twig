@@ -3,7 +3,7 @@
         {{ Mimoto.form() }}
     </div>
     <div class="MimotoCMS_forms_Form__menu">
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:"Cancel", types:['text'], onclick:"Mimoto.popup.close();" }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:"Cancel", types:['text'], onclick:"MimotoX.closePopup();" }) }}
         <span {{ Mimoto.submit() }}>
             {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:"Save" }) }}
         </span>

@@ -252,6 +252,11 @@ class EntityController
                 $sFormName = CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE;
                 break;
 
+            case EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS:
+
+                $sFormName = CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_FORMATTINGOPTIONS;
+                break;
+
             case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
                 $sFormName = CoreConfig::COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE;

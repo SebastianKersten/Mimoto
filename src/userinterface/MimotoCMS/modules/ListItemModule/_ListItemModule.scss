@@ -5,13 +5,13 @@ li.MimotoCMS_ListItemModule {
     flex: 0 0 100%;
     min-width: 0;
 
-    @include breakpoint(medium up) {
-        flex-basis: calc(50% - 5px);
-    }
-
-    @include breakpoint(xlarge up) {
-        flex-basis: calc(33% - 5px);
-    }
+    //@include breakpoint(medium up) {
+    //    flex-basis: calc(50% - 5px);
+    //}
+    //
+    //@include breakpoint(xlarge up) {
+    //    flex-basis: calc(33% - 5px);
+    //}
 }
 
     .MimotoCMS_ListItemModule-content {
