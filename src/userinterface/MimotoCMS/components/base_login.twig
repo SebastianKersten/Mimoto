@@ -43,7 +43,7 @@
             <input type="hidden" name="request" value="{{ requestedPage }}">
             <fieldset>
                 <legend>email</legend>
-                <input type="test" name="username" id="username" value="{{ username }}" class="username" />
+                <input type="test" name="username" id="username" value="{{ username|default('') }}" class="username" />
             </fieldset>
             <fieldset>
                 <legend>password</legend>
