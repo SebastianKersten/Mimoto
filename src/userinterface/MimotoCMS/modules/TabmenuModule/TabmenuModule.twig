@@ -2,7 +2,7 @@
 {% set tabmenu_id = "Mimoto_Modules_Tabmenu__"~id %}
 <div id="{{ tabmenu_id }}" class="MimotoCMS_modules_Tabmenu">
     <div class="MimotoCMS_modules_Tabmenu__menu">
-        {% for tab in tabs %}<div id="{{ tabmenu_id }}_{{ loop.index }}" class="MimotoCMS_modules_Tabmenu__menu_tab {% if loop.first %}active{% endif %} {% if secondary %}secondary{% endif %}">{{ tab.label }}</div>{% endfor %}
+        {% for tab in tabs %}<div id="{{ tabmenu_id }}_{{ loop.index }}" class="MimotoCMS_modules_Tabmenu__menu_tab {% if loop.first %}active{% endif %} {% if secondary is defined and secondary is not empty %}secondary{% endif %}">{{ tab.label }}</div>{% endfor %}
     </div>
     <div class="MimotoCMS_modules_Tabmenu__panels">
         {% block panels %}{% endblock %}
