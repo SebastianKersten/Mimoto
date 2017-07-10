@@ -36,6 +36,34 @@ class PublisherController
 
     public function viewArticle(Application $app, $nArticleId)
     {
+        // 1. create
+        $selection = Mimoto::service('selection')->create();
+
+        // 2. setup
+        $selection->setType('article');
+        $selection->setIdAsVar('nArticleId');
+
+        // 3. apply
+        $selection->applyVar('nArticleId', $nArticleId);
+
+
+
+        // a. single or multiple?
+
+
+        $aArticles = Mimoto::service('data')->select($selection);
+
+
+        Mimoto::error($aArticles);
+
+
+
+
+
+
+        // --- original
+
+
         // 1. load data
         $eArticle = Mimoto::service('data')->get('article', $nArticleId);
 
@@ -45,11 +73,6 @@ class PublisherController
         // 3. output
         return $page->render();
     }
-
-
-
-
-
 
     public function addComment(Application $app, Request $request, $nArticleId)
     {

@@ -100,7 +100,7 @@ class Selection
 
 
     /**
-     * Check if the selection allows duplicate entires
+     * Check if the selection allows duplicate entries
      * @return boolean If false, duplicates are filtered from the result
      */
     public function getAllowDuplicates()
@@ -122,7 +122,7 @@ class Selection
 
     
     // ----------------------------------------------------------------------------
-    // --- Public methods----------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
 
 
@@ -152,6 +152,23 @@ class Selection
         return $this->_aRules;
     }
 
+    /**
+     * Apply a variable
+     */
+    public function applyVar($sVarName, $value)
+    {
+        // forward to all rules
+        $nRuleCount = count($this->_aRules);
+        for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
+        {
+            // register
+            $rule = $this->_aRules[$nRuleIndex];
+
+            // forward
+            $rule->applyVar($sVarName, $value);
+        }
+    }
+
 
 
     // ----------------------------------------------------------------------------
@@ -170,6 +187,16 @@ class Selection
     }
 
     /**
+     * Set the entity type as variable
+     * @param $sVarName string The name of the variable
+     */
+    public function setTypeAsVar($sVarName)
+    {
+        // forward
+        $this->getAliasRule()->setTypeAsVar($sVarName);
+    }
+
+    /**
      * Set the instance id
      * @param $xId mixed The id
      */
@@ -180,6 +207,16 @@ class Selection
     }
 
     /**
+     * Set the instance id as variable
+     * @param $sVarName string The name of the variable
+     */
+    public function setIdAsVar($sVarName)
+    {
+        // forward
+        $this->getAliasRule()->setIdAsVar($sVarName);
+    }
+
+    /**
      * Set the property containing the entities
      * @param $xParent mixed Reference to the parent property
      */
@@ -187,6 +224,16 @@ class Selection
     {
         // forward
         $this->getAliasRule()->setProperty($xParent);
+    }
+
+    /**
+     * Set the property containing the entities as variable
+     * @param $sVarName string The name of the variable
+     */
+    public function setPropertyAsVar($sVarName)
+    {
+        // forward
+        $this->getAliasRule()->setPropertyAsVar($sVarName);
     }
 
     /**
@@ -201,13 +248,34 @@ class Selection
     }
 
     /**
-     * Get the child types that are part of the result (multiple types possible)
+     * Set a rule value (multiple values possible) as variable
+     * @param $xProperty mixed Reference to the property
+     * @param $sVarName string The name of the variable
+     */
+    public function setValueAsVar($xProperty, $sVarName)
+    {
+        // forward
+        $this->getAliasRule()->setValueAsVar($xProperty, $sVarName);
+    }
+
+    /**
+     * Set the child types that are part of the result (multiple types possible)
      * @param $xTypes string|array The preferred child types (either name or id)
      */
     public function setChildTypes($xTypes)
     {
         // forward
         $this->getAliasRule()->setChildTypes($xTypes);
+    }
+
+    /**
+     * Set the child types that are part of the result (multiple types possible) as variable
+     * @param $sVarName string The name of the variable
+     */
+    public function setChildTypesAsVar($sVarName)
+    {
+        // forward
+        $this->getAliasRule()->setChildTypesAsVar($sVarName);
     }
 
     /**
@@ -219,6 +287,17 @@ class Selection
     {
         // forward
         $this->getAliasRule()->setChildValue($xProperty, $value);
+    }
+
+    /**
+     * Set a child's value (multiple values possible) as variable
+     * @param $xProperty mixed Reference to the property
+     * @param $sVarName string The name of the variable
+     */
+    public function setChildValueAsVar($xProperty, $sVarName)
+    {
+        // forward
+        $this->getAliasRule()->setChildValueAsVar($xProperty, $sVarName);
     }
 
 

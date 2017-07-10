@@ -19,6 +19,7 @@ class SelectionRule
     private $_aValues = [];
     private $_aChildTypes = [];
     private $_aChildValues = [];
+    private $_aVarNames = [];
 
 
 
@@ -35,6 +36,16 @@ class SelectionRule
     {
         // store
         $this->_xType = $xType;
+    }
+
+    /**
+     * Set the entity type as variable
+     * @param $sVarName string The name of the variable
+     */
+    public function setTypeAsVar($sVarName)
+    {
+        // store
+        $this->_aVarNames[$sVarName] = (object) array('key' => 'type');
     }
 
     /**
@@ -59,6 +70,16 @@ class SelectionRule
     }
 
     /**
+     * Set the instance id as variable
+     * @param $sVarName string The name of the variable
+     */
+    public function setIdAsVar($sVarName)
+    {
+        // store
+        $this->_aVarNames[$sVarName] = (object) array('key' => 'id');
+    }
+
+    /**
      * Get the instance id
      * @return mixed The id of the instance
      */
@@ -77,6 +98,16 @@ class SelectionRule
     {
         // store
         $this->_xProperty = $xProperty;
+    }
+
+    /**
+     * Set the property containing the entities as variable
+     * @param $sVarName string The name of the variable
+     */
+    public function setPropertyAsVar($sVarName)
+    {
+        // store
+        $this->_aVarNames[$sVarName] = (object) array('key' => 'property');
     }
 
     /**
@@ -99,6 +130,17 @@ class SelectionRule
     {
         // store
         $this->_aValues[$xProperty] = $value;
+    }
+
+    /**
+     * Set a rule value (multiple values possible) as variable
+     * @param $xProperty mixed Reference to the property
+     * @param $sVarName string The name of the variable
+     */
+    public function setValueAsVar($xProperty, $sVarName)
+    {
+        // store
+        $this->_aVarNames[$sVarName] = (object) array('key' => 'value', 'property' => $xProperty);
     }
 
     /**
@@ -150,6 +192,16 @@ class SelectionRule
     }
 
     /**
+     * Set the child types that are part of the result (multiple types possible) as variable
+     * @param $sVarName string The name of the variable
+     */
+    public function setChildTypesAsVar($sVarName)
+    {
+        // store
+        $this->_aVarNames[$sVarName] = (object) array('key' => 'childType');
+    }
+
+    /**
      * Get the child types that are part of the result
      * @return array the list of allowed child types
      */
@@ -169,6 +221,17 @@ class SelectionRule
     {
         // store
         $this->_aChildValues[$xProperty] = $value;
+    }
+
+    /**
+     * Set a child's value (multiple values possible) as variable
+     * @param $xProperty mixed Reference to the property
+     * @param $sVarName string The name of the variable
+     */
+    public function setChildValueAsVar($xProperty, $sVarName)
+    {
+        // store
+        $this->_aVarNames[$sVarName] = (object) array('key' => 'childValue', 'property' => $xProperty);
     }
 
     /**
@@ -197,4 +260,35 @@ class SelectionRule
         // store
         return $this->_aChildValues[$xProperty];
     }
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Apply a variable
+     */
+    public function applyVar($sVarName, $value)
+    {
+        // validate
+        if (!isset($this->_aVarNames[$sVarName]) || empty($this->_aVarNames[$sVarName])) return;
+
+        // register
+        $variable = $this->_aVarNames[$sVarName];
+
+        // store value
+        switch($variable->key)
+        {
+            case 'type':        $this->setType($value); break;
+            case 'id':          $this->setId($value); break;
+            case 'property':    $this->setProperty($value); break;
+            case 'value':       $this->setValue($variable->property, $value); break;
+            case 'childType':   $this->setChildTypes($value); break;
+            case 'childValue':  $this->setChildValue($variable->property, $value); break;
+        }
+    }
+
 }

@@ -133,6 +133,7 @@ class Mimoto
         $app->get ('/mimoto.cms/configuration/gearman', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::overview');
         $app->get ('/mimoto.cms/workers/data', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::data');
         $app->get ('/mimoto.cms/workers/slack', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::slack');
+        $app->get ('/mimoto.cms/heartbeat', 'Mimoto\\UserInterface\\MimotoCMS\\HeartbeatController::viewOverview');
 
 
 

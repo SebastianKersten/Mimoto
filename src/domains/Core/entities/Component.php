@@ -119,6 +119,15 @@ class Component
             ),
 
 
+            // heartbeat
+
+            (object) array(
+                'name' => 'Mimoto.CMS_heartbeat_Overview',
+                'file' => 'MimotoCMS/components/pages/heartbeat/Overview.twig',
+                'conditionals' => []
+            ),
+
+
             // entities
 
             (object) array(
