@@ -12,45 +12,63 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * OutputContainer
+ * Output
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class OutputContainer
+class Output
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_OUTPUT_CONTAINER,
+            'id' => CoreConfig::MIMOTO_OUTPUT,
             // ---
-            'name' => CoreConfig::MIMOTO_OUTPUT_CONTAINER,
+            'name' => CoreConfig::MIMOTO_OUTPUT,
             'extends' => null,
-            'forms' => [CoreConfig::MIMOTO_OUTPUT_CONTAINER],
+            'forms' => [CoreConfig::MIMOTO_OUTPUT],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--name',
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--component',
                     // ---
-                    'name' => 'name',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_ROUTE.'--output',
-                    // ---
-                    'name' => 'output',
+                    'name' => 'component',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
                             'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => CoreConfig::MIMOTO_OUTPUT
+                            'value' => CoreConfig::MIMOTO_COMPONENT
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_OUTPUT.'--selection',
+                    // ---
+                    'name' => 'selection',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => CoreConfig::MIMOTO_SELECTION
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_OUTPUT.'--containers',
+                    // ---
+                    'name' => 'containers',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_OUTPUT_CONTAINER]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
                 )
@@ -76,12 +94,13 @@ class OutputContainer
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_OUTPUT_CONTAINER,
-            'name' => CoreConfig::MIMOTO_OUTPUT_CONTAINER,
+            'id' => CoreConfig::MIMOTO_OUTPUT,
+            'name' => CoreConfig::MIMOTO_OUTPUT,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_OUTPUT_CONTAINER, 'name'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_OUTPUT_CONTAINER, 'output'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_OUTPUT, 'component'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_OUTPUT, 'selection'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_OUTPUT, 'containers')
             ]
         );
     }

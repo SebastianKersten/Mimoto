@@ -23,6 +23,8 @@ use Mimoto\Core\entities\ContentSection;
 use Mimoto\Core\entities\Route;
 use Mimoto\Core\entities\RoutePath;
 use Mimoto\Core\entities\RoutePathElement;
+use Mimoto\Core\entities\Output;
+use Mimoto\Core\entities\OutputContainer;
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\Input;
 use Mimoto\Core\entities\InputOption;
@@ -105,6 +107,8 @@ class CoreConfig
     const MIMOTO_ROUTE                          = '_Mimoto_route';
     const MIMOTO_ROUTE_PATH                     = '_Mimoto_route_path';
     const MIMOTO_ROUTE_PATH_ELEMENT             = '_Mimoto_route_path_element';
+    const MIMOTO_OUTPUT                         = '_Mimoto_output';
+    const MIMOTO_OUTPUT_CONTAINER               = '_Mimoto_output_container';
 
     // media
     const MIMOTO_FILE                           = '_Mimoto_file';
@@ -269,6 +273,8 @@ class CoreConfig
             Route::getStructure(),
             RoutePath::getStructure(),
             RoutePathElement::getStructure(),
+            Output::getStructure(),
+            OutputContainer::getStructure(),
             ContentSection::getStructure(),
 
             // forms
@@ -344,6 +350,8 @@ class CoreConfig
             Route::getFormStructure(),
             RoutePath::getFormStructure(),
             RoutePathElement::getFormStructure(),
+            Output::getFormStructure(),
+            OutputContainer::getFormStructure(),
             ContentSection::getFormStructure(),
 
             // forms

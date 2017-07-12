@@ -57,6 +57,19 @@ class Route
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_ROUTE.'--output',
+                    // ---
+                    'name' => 'output',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => CoreConfig::MIMOTO_OUTPUT
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_ROUTE.'--allowedUserRoles',
                     // ---
                     'name' => 'allowedUserRoles',

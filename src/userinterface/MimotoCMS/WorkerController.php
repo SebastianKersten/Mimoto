@@ -73,6 +73,8 @@ class WorkerController
             // init
             $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
 
+            // 1. gooi in globals
+
             // read
             $workload = json_decode($job->workload());
 

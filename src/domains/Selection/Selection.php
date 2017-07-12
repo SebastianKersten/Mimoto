@@ -3,6 +3,11 @@
 // classpath
 namespace Mimoto\Selection;
 
+// Mimoto classes
+use Mimoto\Mimoto;
+use Mimoto\Core\CoreConfig;
+use Mimoto\Data\MimotoEntity;
+
 
 /**
  * Selection
@@ -37,36 +42,57 @@ class Selection
         // validate
         if (!empty($selectionSettings))
         {
-            // convert
-            foreach ($selectionSettings as $sKey => $value)
+            if ($selectionSettings instanceof MimotoEntity && $selectionSettings->getEntityTypeName() == CoreConfig::MIMOTO_SELECTION)
             {
-                switch($sKey)
+                // translate
+                $eSelection = $selectionSettings;
+
+                // read
+                $aRules = $eSelection->getValue('rules');
+
+                // parse rules
+                $nRuleCount = count($aRules);
+                for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
                 {
-                    case 'type':
+                    // register
+                    $eRule = $aRules[$nRuleIndex];
 
-                        $this->setType(is_array($selectionSettings) ? $selectionSettings['type'] : $selectionSettings->type);
-                        break;
 
-                    case 'id':
-
-                        $this->setId(is_array($selectionSettings) ? $selectionSettings['id'] : $selectionSettings->id);
-                        break;
-
-                    case 'property':
-
-                        $this->setProperty(is_array($selectionSettings) ? $selectionSettings['property'] : $selectionSettings->property);
-                        break;
-
-                    case 'values':
-
-                        // register
-                        $aValues = (is_array($selectionSettings) ? $selectionSettings[$sKey] : $selectionSettings->$sKey);
-
-                        // store
-                        foreach ($aValues as $sPropertyName => $valuetoCompare) $this->setValue($sPropertyName, $valuetoCompare);
-                        break;
                 }
+            }
+            else
+            {
+                // convert
+                foreach ($selectionSettings as $sKey => $value)
+                {
+                    switch($sKey)
+                    {
+                        case 'type':
 
+                            $this->setType(is_array($selectionSettings) ? $selectionSettings['type'] : $selectionSettings->type);
+                            break;
+
+                        case 'id':
+
+                            $this->setId(is_array($selectionSettings) ? $selectionSettings['id'] : $selectionSettings->id);
+                            break;
+
+                        case 'property':
+
+                            $this->setProperty(is_array($selectionSettings) ? $selectionSettings['property'] : $selectionSettings->property);
+                            break;
+
+                        case 'values':
+
+                            // register
+                            $aValues = (is_array($selectionSettings) ? $selectionSettings[$sKey] : $selectionSettings->$sKey);
+
+                            // store
+                            foreach ($aValues as $sPropertyName => $valuetoCompare) $this->setValue($sPropertyName, $valuetoCompare);
+                            break;
+                    }
+
+                }
             }
         }
     }

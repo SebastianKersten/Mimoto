@@ -30,20 +30,6 @@ class SelectionRule
             'forms' => [CoreConfig::COREFORM_SELECTIONRULE],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--type',
-                    // ---
-                    'name' => 'type',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-
-                (object) array(
                     'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--entity',
                     // ---
                     'name' => 'entity',
@@ -51,21 +37,44 @@ class SelectionRule
                     'settings' => [
                         'allowedEntityType' => (object) array(
                             'key' => 'allowedEntityType',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY, // #todo - allow array
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => CoreConfig::MIMOTO_ENTITY
                         )
                     ]
                 ),
+
+
+//                case 'type':        $this->setType($value); break;
+//                case 'id':          $this->setId($value); break;
+//                case 'property':    $this->setProperty($value); break;
+//                case 'value':       $this->setValue($variable->property, $value); break;
+//                case 'childType':   $this->setChildTypes($value); break;
+//                case 'childValue':
+
+
                 (object) array(
                     'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--instance',
+                    // ---
+                    'name' => 'entity',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => 'allowedEntityType',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => null
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--property',
                     // ---
                     'name' => 'instance',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
                             'key' => 'allowedEntityType',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY, // #todo - allow array
-                            'value' => null
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
                         )
                     ]
                 ),

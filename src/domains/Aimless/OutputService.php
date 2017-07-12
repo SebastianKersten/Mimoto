@@ -308,7 +308,7 @@ class OutputService
         $selection->setIdAsVar('nArticleId');
 
 
-        
+
 
 
 
@@ -325,9 +325,12 @@ class OutputService
 
             // read
             $ePath = $eRoute->getValue('path');
+            $eOutput = $eRoute->getValue('output');
+            $eComponent = $eOutput->getValue('component');
+            $eSelection = $eOutput->getValue('selection');
 
             // validate
-            if (empty($ePath)) continue;
+            if (empty($ePath) || empty($eOutput) || empty($eComponent)) continue;
 
 
             // read
@@ -357,38 +360,52 @@ class OutputService
                 }
             }
 
-            echo '/^'.$sPathRegExp.'$/U';
-
             // verify
             if (preg_match('/'.$sPathRegExp.'/U', $sPath, $aMatches))
             {
                 // remove full match
                 array_splice($aMatches, 1, 1);
 
-                // find variables
-                $nMatchCount = count($aMatches);
-                for ($nMatchIndex = 1; $nMatchIndex < $nMatchCount; $nMatchIndex++)
+                // init
+                $eInstance = null;
+
+                // verify
+                if (!empty($eSelection))
                 {
-                    // register
-                    $matchValue = $aMatches[$nMatchIndex];
+                    // create
+                    //$selection = Mimoto::service('selection')->create($eSelection);
 
-                    // register
-                    $ePathElement = $aPathElements[$nMatchIndex];
-
-                    if ($ePathElement->getValue('type') == 'variable')
+                    // find variables
+                    $nMatchCount = count($aMatches);
+                    for ($nMatchIndex = 1; $nMatchIndex < $nMatchCount; $nMatchIndex++)
                     {
-                        $selection->applyVar($ePathElement->getValue('value'), $matchValue);
+                        // register
+                        $matchValue = $aMatches[$nMatchIndex];
+
+                        // register
+                        $ePathElement = $aPathElements[$nMatchIndex];
+
+                        if ($ePathElement->getValue('type') == 'variable')
+                        {
+                            $selection->applyVar($ePathElement->getValue('value'), $matchValue);
+                        }
                     }
+
+                    // load
+                    $aItems = Mimoto::service('data')->select($selection);
+
+                    // get first
+                    $eInstance = (count($aItems) > 0) ? $aItems[0] : null;
                 }
 
-
-                $aSelection = Mimoto::service('data')->select($selection);
-
-
-                Mimoto::error($aSelection);
+                // init
+                $component = Mimoto::service('output')->createComponent($eComponent->getValue('name'), $eInstance);
 
 
+                // b. container selections can be []
 
+                // output
+                return $component->render();
             }
 
 
