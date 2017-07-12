@@ -142,7 +142,7 @@ class Root
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_PAGE]
+                            'value' => [CoreConfig::MIMOTO_ROUTE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

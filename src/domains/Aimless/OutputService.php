@@ -298,6 +298,106 @@ class OutputService
     }
 
 
+    public function renderRoute($sPath)
+    {
+        // 1. create
+        $selection = Mimoto::service('selection')->create();
+
+        // 2. setup
+        $selection->setType('article');
+        $selection->setIdAsVar('nArticleId');
+
+
+        
+
+
+
+        // load
+        $aRoutes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_ROUTE]);
+
+
+
+        $nRouteCount = count($aRoutes);
+        for ($nRouteIndex = 0; $nRouteIndex < $nRouteCount; $nRouteIndex++)
+        {
+            // register
+            $eRoute = $aRoutes[$nRouteIndex];
+
+            // read
+            $ePath = $eRoute->getValue('path');
+
+            // validate
+            if (empty($ePath)) continue;
+
+
+            // read
+            $aPathElements = $ePath->getValue('elements');
+
+            // init
+            $sPathRegExp = '';
+
+            // compose
+            $nPathElementCount = count($aPathElements);
+            for ($nPathElementIndex = 0; $nPathElementIndex < $nPathElementCount; $nPathElementIndex++)
+            {
+                // register
+                $ePathElement = $aPathElements[$nPathElementIndex];
+
+                switch($ePathElement->getValue('type'))
+                {
+                    case 'static':
+
+                        $sPathRegExp .= '('.preg_replace('/\//', '\/', $ePathElement->getValue('value')).')';
+                        break;
+
+                    case 'variable':
+
+                        $sPathRegExp .= '(.*+)';
+                        break;
+                }
+            }
+
+            echo '/^'.$sPathRegExp.'$/U';
+
+            // verify
+            if (preg_match('/'.$sPathRegExp.'/U', $sPath, $aMatches))
+            {
+                // remove full match
+                array_splice($aMatches, 1, 1);
+
+                // find variables
+                $nMatchCount = count($aMatches);
+                for ($nMatchIndex = 1; $nMatchIndex < $nMatchCount; $nMatchIndex++)
+                {
+                    // register
+                    $matchValue = $aMatches[$nMatchIndex];
+
+                    // register
+                    $ePathElement = $aPathElements[$nMatchIndex];
+
+                    if ($ePathElement->getValue('type') == 'variable')
+                    {
+                        $selection->applyVar($ePathElement->getValue('value'), $matchValue);
+                    }
+                }
+
+
+                $aSelection = Mimoto::service('data')->select($selection);
+
+
+                Mimoto::error($aSelection);
+
+
+
+            }
+
+
+        }
+
+
+        Mimoto::error('Route not found .. need to output 404');
+
+    }
 
 
     private function loadComponents()

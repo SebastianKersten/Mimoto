@@ -13,24 +13,25 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * Page
+ * Route
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class Page
+class Route
 {
 
     public static function getStructure()
     {
-        return (object) array(
-            'id' => CoreConfig::MIMOTO_PAGE,
+        return (object) array
+        (
+            'id' => CoreConfig::MIMOTO_ROUTE,
             // ---
-            'name' => CoreConfig::MIMOTO_PAGE,
+            'name' => CoreConfig::MIMOTO_ROUTE,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_PAGE],
+            'forms' => [CoreConfig::MIMOTO_ROUTE],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_PAGE.'--name',
+                    'id' => CoreConfig::MIMOTO_ROUTE.'--name',
                     // ---
                     'name' => 'name',
                     'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
@@ -43,20 +44,20 @@ class Page
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_PAGE.'--route',
+                    'id' => CoreConfig::MIMOTO_ROUTE.'--path',
                     // ---
-                    'name' => 'route',
+                    'name' => 'path',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
                             'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => CoreConfig::MIMOTO_ROUTE
+                            'value' => CoreConfig::MIMOTO_ROUTE_PATH
                         )
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_PAGE.'--allowedUserRoles',
+                    'id' => CoreConfig::MIMOTO_ROUTE.'--allowedUserRoles',
                     // ---
                     'name' => 'allowedUserRoles',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
@@ -90,11 +91,11 @@ class Page
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_PAGE,
-            'name' => CoreConfig::COREFORM_PAGE,
+            'id' => CoreConfig::MIMOTO_ROUTE,
+            'name' => CoreConfig::MIMOTO_ROUTE,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_PAGE, 'name')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_ROUTE, 'name')
             ]
         );
     }
@@ -105,7 +106,7 @@ class Page
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_PAGE);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_ROUTE);
 
         // setup
         CoreFormUtils::addField_title($form, 'Page', '', "");
@@ -113,7 +114,7 @@ class Page
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'name', CoreConfig::MIMOTO_PAGE.'--name',
+            $form, 'name', CoreConfig::MIMOTO_ROUTE.'--name',
             'Name', "The page name", ''
         );
         self::setNameValidation($field);
@@ -147,7 +148,7 @@ class Page
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_PAGE.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_ROUTE.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");
@@ -168,7 +169,7 @@ class Page
         $field->setValue('label', 'User roles');
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_PAGE, 'allowedUserRoles');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ROUTE, 'allowedUserRoles');
 
 
         // load
@@ -202,7 +203,7 @@ class Page
             $entity = $aEntities[$i];
 
             $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-            $option->setId(CoreConfig::COREFORM_PAGE.'--allowedUserRoles_value_options-'.$entity->getId());
+            $option->setId(CoreConfig::MIMOTO_ROUTE.'--allowedUserRoles_value_options-'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
             $field->addValue('options', $option);

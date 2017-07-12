@@ -20,7 +20,9 @@ use Mimoto\Core\entities\File;
 use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
 use Mimoto\Core\entities\ContentSection;
-use Mimoto\Core\entities\Page;
+use Mimoto\Core\entities\Route;
+use Mimoto\Core\entities\RoutePath;
+use Mimoto\Core\entities\RoutePathElement;
 use Mimoto\Core\entities\Form;
 use Mimoto\Core\entities\Input;
 use Mimoto\Core\entities\InputOption;
@@ -99,15 +101,16 @@ class CoreConfig
     const MIMOTO_SELECTION                      = '_Mimoto_selection';
     const MIMOTO_SELECTIONRULE                  = '_Mimoto_selectionrule';
 
+    // routes
+    const MIMOTO_ROUTE                          = '_Mimoto_route';
+    const MIMOTO_ROUTE_PATH                     = '_Mimoto_route_path';
+    const MIMOTO_ROUTE_PATH_ELEMENT             = '_Mimoto_route_path_element';
+
     // media
     const MIMOTO_FILE                           = '_Mimoto_file';
 
     // content
     const MIMOTO_CONTENTSECTION                 = '_Mimoto_contentsection';
-
-    const MIMOTO_PAGE                           = '_Mimoto_page';
-    const MIMOTO_ROUTE                          = '_Mimoto_coreform_route';
-    const MIMOTO_ROUTE_ELEMENT                  = '_Mimoto_coreform_route_element';
 
     // forms
     const MIMOTO_FORM                           = '_Mimoto_form';
@@ -169,9 +172,6 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
-    const COREFORM_PAGE                         = '_Mimoto_coreform_page';
-    const COREFORM_ROUTE                        = '_Mimoto_coreform_route';
-    const COREFORM_ROUTE_ELEMENT                = '_Mimoto_coreform_route_element';
 
     const COREFORM_USER                         = '_Mimoto_coreform_user';
     const COREFORM_USER_ROLE                    = '_Mimoto_coreform_user_role';
@@ -266,7 +266,9 @@ class CoreConfig
 
             // content
             File::getStructure(),
-            Page::getStructure(),
+            Route::getStructure(),
+            RoutePath::getStructure(),
+            RoutePathElement::getStructure(),
             ContentSection::getStructure(),
 
             // forms
@@ -339,7 +341,9 @@ class CoreConfig
             //FormattingOptionAttribute::getFormStructure(),
 
             // content
-            Page::getFormStructure(),
+            Route::getFormStructure(),
+            RoutePath::getFormStructure(),
+            RoutePathElement::getFormStructure(),
             ContentSection::getFormStructure(),
 
             // forms

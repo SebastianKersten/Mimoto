@@ -29,6 +29,7 @@ use Silex\Provider\SessionServiceProvider;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Silex\Provider\SecurityServiceProvider;
 
 
@@ -315,6 +316,31 @@ class Mimoto
         // images
         $app->get('/mimoto.cms/static/images/mimoto_logo.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogo');
         $app->get('/mimoto.cms/static/images/mimoto_logo_collapsed.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogoCollapsed');
+
+
+        $app->error(function (\Exception $e, $code) use ($app) {
+
+            switch ($code)
+            {
+                case 404:
+
+                    // render and output
+                    return Mimoto::service('output')->renderRoute(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+                    break;
+
+                default:
+
+                    if ($app['debug']) {
+                        // in debug mode we want to get the regular error message
+                        return;
+                    }
+
+                    $message = 'We are sorry, but something went terribly wrong.';
+            }
+
+            return new Response($message);
+        });
     }
 
 
