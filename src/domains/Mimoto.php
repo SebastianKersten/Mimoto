@@ -324,9 +324,28 @@ class Mimoto
             {
                 case 404:
 
-                    // render and output
-                    return Mimoto::service('output')->renderRoute(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+                    // register
+                    $sRoute = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+                    // render and output
+                    $result = Mimoto::service('output')->renderRoute($sRoute);
+
+                    if ($result !== false)
+                    {
+                        return $result;
+                    }
+                    else
+                    {
+                        // handle
+                        if (!empty(Mimoto::service('route')))
+                        {
+                            return Mimoto::service('route')->render($app, $sRoute);
+                        }
+                        else
+                        {
+                            Mimoto::error('Route not found .. need to output 404');
+                        }
+                    }
                     break;
 
                 default:
