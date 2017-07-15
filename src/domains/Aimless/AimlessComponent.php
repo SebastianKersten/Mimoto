@@ -939,10 +939,10 @@ class AimlessComponent
      * @param $entity
      * @return AimlessComponent
      */
-    private function renderCollectionItemAsComponent($sTemplateName, $entity, $connection, $nItemIndex = null, $nItemIndex = null)
+    private function renderCollectionItemAsComponent($sTemplateName, $entity, $connection, $nItemIndex = null)
     {
         // create and send
-        return $this->_OutputService->createComponent($sTemplateName, $entity, $connection, $nItemIndex, $nItemIndex);
+        return $this->_OutputService->createComponent($sTemplateName, $entity, $connection, $nItemIndex);
     }
 
     /**
