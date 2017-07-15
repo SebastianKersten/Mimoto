@@ -411,9 +411,7 @@ class OutputService
 
         }
 
-
-        Mimoto::error('Route not found .. need to output 404');
-
+        return false;
     }
 
 
