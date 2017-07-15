@@ -44,6 +44,7 @@ class AimlessComponent
     protected $_mapping;
 
     protected $_connection;
+    protected $_nItemIndex;
 
 
     const PRIMARY_FORM = 'primary_form'; // #todo - explain
@@ -81,13 +82,14 @@ class AimlessComponent
      * @param EntityService $DataService
      * @param Twig $TwigService
      */
-    public function __construct($sComponentName, MimotoEntity $entity = null, $connection = null, $sWrapperName = null, OutputService $OutputService, EntityService $DataService, LogService $LogService, $TwigService)
+    public function __construct($sComponentName, MimotoEntity $entity = null, $connection = null, $sWrapperName = null, $nItemIndex = null, OutputService $OutputService, EntityService $DataService, LogService $LogService, $TwigService)
     {
         // register
         $this->_sComponentName = $sComponentName;
         $this->_entity = $entity;
         $this->_connection = $connection;
         $this->_sWrapperName = $sWrapperName;
+        $this->_nItemIndex = $nItemIndex;
 
         // register
         $this->_OutputService = $OutputService;
@@ -806,6 +808,14 @@ class AimlessComponent
         // create
         $viewModel = new AimlessComponentViewModel($this);
 
+        // add loop info
+        if (!empty($this->_nItemIndex))
+        {
+            $viewModel->loop = (object) array(
+                'index' => $this->_nItemIndex
+            );
+        }
+
         // compose
         $this->_aVars['Mimoto'] = $viewModel;
 
@@ -875,7 +885,7 @@ class AimlessComponent
             $connection = (!empty($aConnections) && !empty($aConnections[$i])) ? $aConnections[$i] : null;
 
             // render
-            $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput, $sWrapperName, $customValues);
+            $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput, $sWrapperName, $customValues, $i);
         }
         
         // send
@@ -890,7 +900,7 @@ class AimlessComponent
      * @param null $aFieldVars
      * @return string
      */
-    private function renderCollectionItem(MimotoEntity $entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null, $customValues = null)
+    private function renderCollectionItem(MimotoEntity $entity, $connection, $sComponentName = null, $aFieldVars = null, $bRenderInputFieldsAsInput = false, $sWrapperName = null, $customValues = null, $nItemIndex = null)
     {
         // revert to default
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $entity->getEntityTypeName();
@@ -902,17 +912,17 @@ class AimlessComponent
         // create
         if ($bRenderInputFieldsAsInput && $entity->typeOf(CoreConfig::MIMOTO_FORM_INPUT))
         {
-            $component = $this->renderCollectionItemAsInput($sTemplateName, $entity, $connection, $aFieldVars);
+            $component = $this->renderCollectionItemAsInput($sTemplateName, $entity, $connection, $aFieldVars, $nItemIndex);
         }
         else
         {
             if (!empty($sWrapperName))
             {
-                $component = $this->renderCollectionItemAsComponentWrapper($sTemplateName, $entity, $connection, $sWrapperName);
+                $component = $this->renderCollectionItemAsComponentWrapper($sTemplateName, $entity, $connection, $sWrapperName, $nItemIndex);
             }
             else
             {
-                $component = $this->renderCollectionItemAsComponent($sTemplateName, $entity, $connection);
+                $component = $this->renderCollectionItemAsComponent($sTemplateName, $entity, $connection, $nItemIndex);
             }
         }
 
@@ -929,10 +939,10 @@ class AimlessComponent
      * @param $entity
      * @return AimlessComponent
      */
-    private function renderCollectionItemAsComponent($sTemplateName, $entity, $connection)
+    private function renderCollectionItemAsComponent($sTemplateName, $entity, $connection, $nItemIndex = null, $nItemIndex = null)
     {
         // create and send
-        return $this->_OutputService->createComponent($sTemplateName, $entity, $connection);
+        return $this->_OutputService->createComponent($sTemplateName, $entity, $connection, $nItemIndex, $nItemIndex);
     }
 
     /**
@@ -941,10 +951,10 @@ class AimlessComponent
      * @param $entity
      * @return AimlessComponent
      */
-    private function renderCollectionItemAsComponentWrapper($sComponentName, $entity, $connection, $sWrapperName)
+    private function renderCollectionItemAsComponentWrapper($sComponentName, $entity, $connection, $sWrapperName, $nItemIndex = null)
     {
         // create and send
-        return $this->_OutputService->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
+        return $this->_OutputService->createWrapper($sWrapperName, $sComponentName, $entity, $connection, $nItemIndex);
     }
 
     /**
@@ -954,7 +964,7 @@ class AimlessComponent
      * @param $aFieldVars
      * @return AimlessInput
      */
-    private function renderCollectionItemAsInput($sTemplateName, MimotoEntity $eField, $connection, $aFormFields)
+    private function renderCollectionItemAsInput($sTemplateName, MimotoEntity $eField, $connection, $aFormFields, $nItemIndex = null)
     {
         // init
         $bFormFieldFound = false;
@@ -979,7 +989,7 @@ class AimlessComponent
         if (!$bFormFieldFound) $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please add a value to input field with <b>id=".$eField->getId()."</b> and type=".$eField->getEntityTypeName(), 'AimlessComponent', true);
 
         // create and send
-        return $this->_OutputService->createInput($sTemplateName, $eField, $connection, $formField->key, $formField->value);
+        return $this->_OutputService->createInput($sTemplateName, $eField, $connection, $formField->key, $formField->value, $nItemIndex);
     }
 
     /**

@@ -96,7 +96,7 @@ class OutputService
         if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('output')->createPage() documentation [link]");
 
         // init and send
-        return new AimlessComponent($sComponentName, $entity, null, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, null, null, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -122,7 +122,7 @@ class OutputService
         if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('output')->createPopup() documentation [link]");
 
         // init and send
-        return new AimlessComponent($sComponentName, $entity, null, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, null, null, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -131,10 +131,10 @@ class OutputService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessComponent
      */
-    public function createComponent($sComponentName, $entity = null, $connection = null)
+    public function createComponent($sComponentName, $entity = null, $connection = null, $nItemIndex = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, null, $nItemIndex, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -143,10 +143,10 @@ class OutputService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessComponent
      */
-    public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null)
+    public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null, $nItemIndex = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $nItemIndex, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -155,10 +155,10 @@ class OutputService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessInput
      */
-    public function createInput($sComponentName, $entity = null, $connection = null, $sFieldName = null, $value = null)
+    public function createInput($sComponentName, $entity = null, $connection = null, $sFieldName = null, $value = null, $nItemIndex = null)
     {
         // init and send
-        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $nItemIndex, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
     }
 
     /**
