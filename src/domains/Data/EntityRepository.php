@@ -664,22 +664,26 @@ class EntityRepository
             // register
             $parent = $aParents[$nParentIndex];
 
-            // remove
-            switch(Mimoto::service('config')->getPropertyTypeById($parent->propertyId))
+            // #fix - Temp workaround for broken garbage collection
+            if (!empty($parent->entity))
             {
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                // remove
+                switch(Mimoto::service('config')->getPropertyTypeById($parent->propertyId))
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-                    $parent->entity->setValue($parent->propertyName, null);
-                    break;
+                        $parent->entity->setValue($parent->propertyName, null);
+                        break;
 
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                    $parent->entity->removeValue($parent->propertyName, $entity);
-                    break;
+                        $parent->entity->removeValue($parent->propertyName, $entity);
+                        break;
+                }
+
+                // store
+                Mimoto::service('data')->store($parent->entity);
             }
-
-            // store
-            Mimoto::service('data')->store($parent->entity);
         }
     }
 
