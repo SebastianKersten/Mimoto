@@ -96,7 +96,18 @@
 
         <div id="panel_entitydetail_instances" class="MimotoCMS_modules_Tabmenu__panel hidden">
 
-            Currently in beta and very raw (no primary labels or realtime updates yet)
+            <b><i>Currently in beta and very raw (no primary labels or realtime updates yet)</i></b><br>
+            <br>
+
+            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__usage">
+                {% if entityStructure.hasTable %}
+                    This entity has {{ entityStructure.instanceCount }} instance{% if entityStructure.instanceCount != 1 %}s{%  endif %}
+                {% else %}
+                    This entity has no table of its own and is only used for extension purposes
+                {% endif %}
+            </div>
+
+            <br>
 
             <div class="MimotoCMS_pages_entities_EntityDetail_Instances">
                 <div class="MimotoCMS_pages_entities_EntityDetail_Instances__container">
