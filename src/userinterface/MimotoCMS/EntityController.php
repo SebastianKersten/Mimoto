@@ -86,13 +86,16 @@ class EntityController
         // 4. create content
         $component = Mimoto::service('output')->createComponent('Mimoto.CMS_entities_EntityDetail', $eEntity);
 
-        // 5. add instances
-        //$component->addSelection('instances', Mimoto::service('data')->select(['type' => $eEntity->getValue('name')]));
+        // 5. load
+        $aInstances = (count($eEntity->getValue('properties'))) ? Mimoto::service('data')->select(['type' => $eEntity->getValue('name')]) : [];
 
-        // 6. setup content
+        // 6. add instances
+        $component->addSelection('instances', $aInstances);
+
+        // 7. setup content
         $component->setVar('entityStructure', $this->getEntityStructure($eEntity));
 
-        // 7. setup page
+        // 8. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => 'Entities',
@@ -105,10 +108,10 @@ class EntityController
             )
         );
 
-        // 8. connect
+        // 9. connect
         $page->addComponent('content', $component);
 
-        // 9. output
+        // 10. output
         return $page->render();
     }
 
