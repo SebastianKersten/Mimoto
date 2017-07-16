@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "6e5f616a076e9a8581be";
+/******/ 	__webpack_require__.h = "a7db7c7729742e1cb7c1";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -45489,6 +45489,21 @@
 	            MimotoX.utils.callAPI({
 	                type: 'get',
 	                url: "/mimoto.cms/instance/" + sEntityType + "/" + nId + "/delete",
+	                success: function (resultData, resultStatus, resultSomething) {
+	                    console.log(resultData);
+	                }
+	            });
+	        }
+	    },
+	
+	    instanceDeleteAll:  function(sEntityType)
+	    {
+	        var response = confirm("Are you sure you want to delete ALL instances of type '" + sEntityType + "?");
+	        if (response == true) {
+	            // 11. send data
+	            MimotoX.utils.callAPI({
+	                type: 'get',
+	                url: "/mimoto.cms/instance/" + sEntityType + "/all/delete",
 	                success: function (resultData, resultStatus, resultSomething) {
 	                    console.log(resultData);
 	                }

@@ -156,6 +156,21 @@ module.exports.prototype = {
         }
     },
 
+    instanceDeleteAll:  function(sEntityType)
+    {
+        var response = confirm("Are you sure you want to delete ALL instances of type '" + sEntityType + "?");
+        if (response == true) {
+            // 11. send data
+            MimotoX.utils.callAPI({
+                type: 'get',
+                url: "/mimoto.cms/instance/" + sEntityType + "/all/delete",
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
+    },
+
 
     notificationClose: function(sEntityType, nNotificationId)
     {

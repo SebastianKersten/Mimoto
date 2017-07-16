@@ -298,11 +298,31 @@ class EntityController
         // 1. load
         $eInstance = Mimoto::service('data')->get($sEntityType, $nId);
 
-        // 2. delete property
+        // 2. delete
         Mimoto::service('data')->delete($eInstance);
 
         // 3. send
         return Mimoto::service('messages')->response((object) array('result' => 'Instance '.$sEntityType.'.'.$nId.' deleted! '.date("Y.m.d H:i:s")), 200);
+    }
+
+    public function instanceDeleteAll(Application $app, $sEntityType)
+    {
+        // 1. init
+        $aInstances = Mimoto::service('data')->select(['type' => $sEntityType]);
+
+        // 2. delete
+        $nInstanceCount = count($aInstances);
+        for ($nInstanceIndex = 0; $nInstanceIndex < $nInstanceCount; $nInstanceIndex++)
+        {
+            // 2a. load
+            $eInstance = $aInstances[$nInstanceIndex];
+
+            // 2b. delete
+            Mimoto::service('data')->delete($eInstance);
+        }
+
+        // 3. send
+        return Mimoto::service('messages')->response((object) array('result' => 'All instances of type '.$sEntityType.' deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 
