@@ -96,27 +96,27 @@
 
         <div id="panel_entitydetail_instances" class="MimotoCMS_modules_Tabmenu__panel hidden">
 
-            <b><i>Currently in beta and very raw (no primary labels or realtime updates yet)</i></b><br>
-            <br>
+            {#<b><i>Currently in beta and very raw (no primary labels or realtime updates yet)</i></b><br>#}
+            {#<br>#}
 
-            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__usage">
-                {% if entityStructure.hasTable %}
-                    This entity has {{ entityStructure.instanceCount }} instance{% if entityStructure.instanceCount != 1 %}s{%  endif %}
-                {% else %}
-                    This entity has no table of its own and is only used for extension purposes
-                {% endif %}
-            </div>
+            {#<div class="MimotoCMS_pages_entities_EntityDetail_Structure__usage">#}
+                {#{% if entityStructure.hasTable %}#}
+                    {#This entity has {{ entityStructure.instanceCount }} instance{% if entityStructure.instanceCount != 1 %}s{%  endif %}#}
+                {#{% else %}#}
+                    {#This entity has no table of its own and is only used for extension purposes#}
+                {#{% endif %}#}
+            {#</div>#}
 
-            <br>
+            {#<br>#}
 
-            <div class="MimotoCMS_pages_entities_EntityDetail_Instances">
-                <div class="MimotoCMS_pages_entities_EntityDetail_Instances__container">
-                    {{ Mimoto.selection('instances', 'MimotoCMS_entities_EntityDetail_EntityInstance') }}
-                </div>
-            </div>
+            {#<div class="MimotoCMS_pages_entities_EntityDetail_Instances">#}
+                {#<div class="MimotoCMS_pages_entities_EntityDetail_Instances__container">#}
+                    {#{{ Mimoto.selection('instances', 'MimotoCMS_entities_EntityDetail_EntityInstance') }}#}
+                {#</div>#}
+            {#</div>#}
 
-            <br>
-            <a href="javascript:Mimoto.CMS.instanceDeleteAll('{{ Mimoto.meta('name') }}');">Delete all</a> instances of entity type `{{ Mimoto.data('name') }}`
+            {#<br>#}
+            {#<a href="javascript:Mimoto.CMS.instanceDeleteAll('{{ Mimoto.meta('name') }}');">Delete all</a> instances of entity type `{{ Mimoto.data('name') }}`#}
         </div>
 
         <!-- more -->
