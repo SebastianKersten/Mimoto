@@ -805,16 +805,20 @@ class EntityRepository
             // convert
             $sChildEntityTypeName = Mimoto::service('config')->getEntityNameById($result['child_entity_type_id']);
 
-            // compose
-            $child = (object) array(
-                'entity' => Mimoto::service('data')->get($sChildEntityTypeName, $result['child_id']),
-                'parentPropertyId' => $result['parent_property_id'],
-                'parentPropertyName' => Mimoto::service('config')->getPropertyNameById($result['parent_property_id'])
+            // #fix - Temp workaround for broken garbage collection
+            if (!empty($sChildEntityTypeName))
+            {
+                // compose
+                $child = (object) array(
+                    'entity' => Mimoto::service('data')->get($sChildEntityTypeName, $result['child_id']),
+                    'parentPropertyId' => $result['parent_property_id'],
+                    'parentPropertyName' => Mimoto::service('config')->getPropertyNameById($result['parent_property_id'])
 
-            );
+                );
 
-            // get
-            $aChildEntities[] = $child;
+                // get
+                $aChildEntities[] = $child;
+            }
         }
 
         // send

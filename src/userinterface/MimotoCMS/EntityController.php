@@ -298,10 +298,10 @@ class EntityController
         // 1. load
         $eInstance = Mimoto::service('data')->get($sEntityType, $nId);
 
-        // 5. delete property
+        // 2. delete property
         Mimoto::service('data')->delete($eInstance);
 
-        // 6. send
+        // 3. send
         return Mimoto::service('messages')->response((object) array('result' => 'Instance '.$sEntityType.'.'.$nId.' deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
