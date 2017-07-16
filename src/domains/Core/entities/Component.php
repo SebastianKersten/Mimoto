@@ -166,6 +166,11 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
+                'name' => 'MimotoCMS_entities_EntityDetail_EntityInstance',
+                'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityInstance/EntityInstance.twig',
+                'conditionals' => []
+            ),
+            (object) array(
                 'name' => 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample',
                 'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertyExample/EntityPropertyExample.twig',
                 'conditionals' => []

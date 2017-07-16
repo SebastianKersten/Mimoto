@@ -141,6 +141,21 @@ module.exports.prototype = {
     },
 
 
+    instanceDelete:  function(sEntityType, nId)
+    {
+        var response = confirm("Are you sure you want to delete the instance '" + sEntityType + "." + nId + "'?");
+        if (response == true) {
+            // 11. send data
+            MimotoX.utils.callAPI({
+                type: 'get',
+                url: "/mimoto.cms/instance/" + sEntityType + "/" + nId + "/delete",
+                success: function (resultData, resultStatus, resultSomething) {
+                    console.log(resultData);
+                }
+            });
+        }
+    },
+
 
     notificationClose: function(sEntityType, nNotificationId)
     {

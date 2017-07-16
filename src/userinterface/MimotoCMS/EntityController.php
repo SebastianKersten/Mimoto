@@ -86,10 +86,13 @@ class EntityController
         // 4. create content
         $component = Mimoto::service('output')->createComponent('Mimoto.CMS_entities_EntityDetail', $eEntity);
 
-        // 5. setup content
+        // 5. add instances
+        $component->addSelection('instances', Mimoto::service('data')->select(['type' => $eEntity->getValue('name')]));
+
+        // 6. setup content
         $component->setVar('entityStructure', $this->getEntityStructure($eEntity));
 
-        // 6. setup page
+        // 7. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
                     "label" => 'Entities',
@@ -102,10 +105,10 @@ class EntityController
             )
         );
 
-        // 7. connect
+        // 8. connect
         $page->addComponent('content', $component);
 
-        // 8. output
+        // 9. output
         return $page->render();
     }
 
@@ -289,6 +292,18 @@ class EntityController
         return $component->render();
     }
 
+
+    public function instanceDelete(Application $app, $sEntityType, $nId)
+    {
+        // 1. load
+        $eInstance = Mimoto::service('data')->get($sEntityType, $nId);
+
+        // 5. delete property
+        Mimoto::service('data')->delete($eInstance);
+
+        // 6. send
+        return Mimoto::service('messages')->response((object) array('result' => 'Instance '.$sEntityType.'.'.$nId.' deleted! '.date("Y.m.d H:i:s")), 200);
+    }
 
 
 

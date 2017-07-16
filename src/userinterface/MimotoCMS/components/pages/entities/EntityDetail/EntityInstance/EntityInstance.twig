@@ -1,0 +1,17 @@
+{{
+    Mimoto.module('Mimoto.CMS.ListItemModule',
+    {
+        realtime: Mimoto.realtime(),
+        label: Mimoto.getValueBySortindex(),
+        label_realtime: Mimoto.getRealtimeValueBySortindex(),
+
+        button_label: 'Delete',
+        button_action: 'Mimoto.CMS.instanceDelete(\'' ~ Mimoto.meta('type') ~ '\', ' ~ Mimoto.meta('id') ~ ');',
+        button_type: 'alert',
+
+        sortable: false
+    })
+}}
+{#button_label: 'View',#}
+{#button_action: 'Mimoto.CMS.instanceView('~Mimoto.meta('id')~');',#}
+{#button_type: 'secondary',#}

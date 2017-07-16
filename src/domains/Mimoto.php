@@ -181,6 +181,10 @@ class Mimoto
         // EntityPropertySetting
         $app->get('/mimoto.cms/entitypropertysetting/{nEntityPropertySettingId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertySettingEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
+        // Instance
+        $app->get ('/mimoto.cms/instance/{sEntityType}/{nId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::instanceDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+
 
         // User
         $app->get ('/mimoto.cms/user/new', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::userNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');

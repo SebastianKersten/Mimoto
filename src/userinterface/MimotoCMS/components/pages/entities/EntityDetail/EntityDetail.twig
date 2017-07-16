@@ -97,12 +97,9 @@
         <div id="panel_entitydetail_instances" class="MimotoCMS_modules_Tabmenu__panel hidden">
 
             <div class="MimotoCMS_pages_entities_EntityDetail_Instances">
-                [search fields]
-                <br>
-                <br>
-                {#<div class="MimotoCMS_pages_entities_EntityDetail_Properties__container" {{ Mimoto.realtime('instances') }}>
-                    {{ Mimoto.data('instances') }}
-                </div>#}
+                <div class="MimotoCMS_pages_entities_EntityDetail_Instances__container">
+                    {{ Mimoto.selection('instances', 'MimotoCMS_entities_EntityDetail_EntityInstance') }}
+                </div>
             </div>
 
         </div>
