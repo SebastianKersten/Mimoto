@@ -337,6 +337,10 @@ class Mimoto
 
                     if ($result !== false)
                     {
+                        // if instanceof Responseoverride
+                        //return new Response('Error', 404 /* ignored */, array('X-Status-Code' => 200));
+
+
                         return $result;
                     }
                     else

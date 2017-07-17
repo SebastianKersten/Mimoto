@@ -207,6 +207,9 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         // 8. store
         if (!$this->_bTrackChanges) { $this->_data->persistentCollection[$nSortIndex] = clone $connection; }
         $this->_data->currentCollection[$nSortIndex] = $connection;
+
+        // 9. send
+        return $connection;
     }
 
     /**
