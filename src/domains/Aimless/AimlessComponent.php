@@ -683,6 +683,7 @@ class AimlessComponent
             case 'type': return $this->_entity->getEntityTypeName();
             case 'typeid': return $this->_entity->getEntityTypeId();
             case 'created': return $this->_entity->getCreated();
+            case 'connectionid': return $this->_connection->getId();
         }
     }
 
