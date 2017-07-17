@@ -747,7 +747,7 @@ class EntityConfigRepository
                         }
 
                         // prepare
-                        $settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES] = (isset($property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]) && $property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value === 'true') ? true : false;
+                        $settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES] = (isset($property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]) && $property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value === 'true') ? true : false;$settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES] = (isset($property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]) && ($property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value == 'true' || $property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value == '1' || $property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value)) ? true : false;
 
                         // setup
                         $entityConfig->setCollectionAsProperty($property->name, $property->id, $settings);
