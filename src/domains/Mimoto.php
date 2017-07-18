@@ -337,18 +337,18 @@ class Mimoto
 
                     if ($result !== false)
                     {
-                        // if instanceof Responseoverride
-                        //return new Response('Error', 404 /* ignored */, array('X-Status-Code' => 200));
-
-
-                        return $result;
+                        // if instanceof Response override
+                        return new Response($result, 404 /* ignored */, array('X-Status-Code' => 200));
                     }
                     else
                     {
                         // handle
                         if (!empty(Mimoto::service('route')))
                         {
-                            return Mimoto::service('route')->render($app, $sRoute);
+                            // render custom route
+                            $result = Mimoto::service('route')->render($app, $sRoute);
+
+                            return new Response($result, 404 /* ignored */, array('X-Status-Code' => 200));
                         }
                         else
                         {
