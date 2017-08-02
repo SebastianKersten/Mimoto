@@ -14,11 +14,11 @@ use Silex\ServiceProviderInterface;
 
 
 /**
- * EntityServiceProider
+ * DataServiceProider
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class EntityServiceProvider implements ServiceProviderInterface
+class DataServiceProvider implements ServiceProviderInterface
 {
     
     // config
@@ -68,10 +68,10 @@ class EntityServiceProvider implements ServiceProviderInterface
 
 
         // register
-        $app['Mimoto.Data'] = $app['Mimoto.EntityService'] = $app->share(function($app) {
+        $app['Mimoto.Data'] = $app['Mimoto.DataService'] = $app->share(function($app) {
 
             // init
-            $service = new EntityService
+            $service = new DataService
             (
                 $this->_aEntityConfigs,
                 new EntityRepository($app['Mimoto.EventService']),

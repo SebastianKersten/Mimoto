@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "93dafa291dd31af4b409";
+/******/ 	__webpack_require__.h = "bc0c18d061575fd7970b";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -47,7 +47,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(75);
+	module.exports = __webpack_require__(76);
 
 
 /***/ },
@@ -10328,7 +10328,8 @@
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */
+/* 20 */,
+/* 21 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -10344,7 +10345,6 @@
 
 
 /***/ },
-/* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
@@ -10386,7 +10386,8 @@
 /* 60 */,
 /* 61 */,
 /* 62 */,
-/* 63 */
+/* 63 */,
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -21285,10 +21286,10 @@
 	/***/ })
 	/******/ ]);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(64).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(65).Buffer))
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -21301,9 +21302,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(65)
-	var ieee754 = __webpack_require__(66)
-	var isArray = __webpack_require__(67)
+	var base64 = __webpack_require__(66)
+	var ieee754 = __webpack_require__(67)
+	var isArray = __webpack_require__(68)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -23084,7 +23085,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -23204,7 +23205,7 @@
 
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -23294,7 +23295,7 @@
 
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -23305,13 +23306,13 @@
 
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var diff = __webpack_require__(69);
-	var equal = __webpack_require__(70);
-	var extend = __webpack_require__(73);
-	var op = __webpack_require__(74);
+	var diff = __webpack_require__(70);
+	var equal = __webpack_require__(71);
+	var extend = __webpack_require__(74);
+	var op = __webpack_require__(75);
 	
 	
 	var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
@@ -23625,7 +23626,7 @@
 
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports) {
 
 	/**
@@ -24329,12 +24330,12 @@
 
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(71);
-	var isArguments = __webpack_require__(72);
+	var objectKeys = __webpack_require__(72);
+	var isArguments = __webpack_require__(73);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -24429,7 +24430,7 @@
 
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -24444,7 +24445,7 @@
 
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -24470,7 +24471,7 @@
 
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24562,11 +24563,11 @@
 
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var equal = __webpack_require__(70);
-	var extend = __webpack_require__(73);
+	var equal = __webpack_require__(71);
+	var extend = __webpack_require__(74);
 	
 	
 	var lib = {
@@ -24707,17 +24708,17 @@
 
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//'use strict'; #note SK - do not uncomment
 	
-	__webpack_require__(76);
+	__webpack_require__(77);
 	
 	
-	var HeaderView = __webpack_require__(77);
-	var ButtonUtils = __webpack_require__(78);
-	var Sortable = __webpack_require__(79); // https://github.com/RubaXa/Sortable
+	var HeaderView = __webpack_require__(78);
+	var ButtonUtils = __webpack_require__(79);
+	var Sortable = __webpack_require__(80); // https://github.com/RubaXa/Sortable
 	
 	
 	if (typeof Mimoto == "undefined") Mimoto = {};
@@ -24726,14 +24727,14 @@
 	
 	//Mimoto = require('./mimoto.cms/Mimoto');
 	
-	Mimoto.CMS = __webpack_require__(80);
-	Mimoto.modules.Tabmenu = __webpack_require__(81);
-	Mimoto.modules.Popup = __webpack_require__(82);
-	Mimoto.modules.Page = __webpack_require__(83);
-	Mimoto.modules.Form = __webpack_require__(84);
-	Mimoto.modules.Quill = __webpack_require__(63);
-	Mimoto.modules.QuillDelta = __webpack_require__(68);
-	Mimoto.modules.Sortable = __webpack_require__(79);
+	Mimoto.CMS = __webpack_require__(81);
+	Mimoto.modules.Tabmenu = __webpack_require__(82);
+	Mimoto.modules.Popup = __webpack_require__(83);
+	Mimoto.modules.Page = __webpack_require__(84);
+	Mimoto.modules.Form = __webpack_require__(85);
+	Mimoto.modules.Quill = __webpack_require__(64);
+	Mimoto.modules.QuillDelta = __webpack_require__(69);
+	Mimoto.modules.Sortable = __webpack_require__(80);
 	
 	// init
 	Mimoto.CMS = new Mimoto.CMS();
@@ -24839,7 +24840,7 @@
 
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery UI - v1.12.1 - 2016-09-14
@@ -43550,7 +43551,7 @@
 	}));
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -43762,7 +43763,7 @@
 
 
 /***/ },
-/* 78 */
+/* 79 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -43847,7 +43848,7 @@
 
 
 /***/ },
-/* 79 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**!
@@ -45335,7 +45336,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -46178,7 +46179,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46306,7 +46307,7 @@
 
 
 /***/ },
-/* 82 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
@@ -46434,7 +46435,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
 
 /***/ },
-/* 83 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/**
@@ -46484,7 +46485,7 @@
 
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -46495,11 +46496,11 @@
 	
 	'use strict';
 	
-	var Sortable = __webpack_require__(79); // https://github.com/RubaXa/Sortable
+	var Sortable = __webpack_require__(80); // https://github.com/RubaXa/Sortable
 	
-	var Dropzone = __webpack_require__(85);
-	var Flatpickr = __webpack_require__(86);
-	var Quill = __webpack_require__(63);
+	var Dropzone = __webpack_require__(86);
+	var Flatpickr = __webpack_require__(87);
+	var Quill = __webpack_require__(64);
 	
 	Dropzone.autoDiscover = false;
 	
@@ -47627,7 +47628,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery, module) {
@@ -49398,10 +49399,10 @@
 	
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(20)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(21)(module)))
 
 /***/ },
-/* 86 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };

@@ -22,8 +22,12 @@ use Symfony\Component\HttpFoundation\Request;
 class SetupController
 {
     
-    public function setup(Request $request, Application $app)
+    public function welcome(Request $request, Application $app)
     {
+
+        //Mimoto::service('database')->
+
+
 
         // 1. ask for mysql info
         // 2. ask for project name?

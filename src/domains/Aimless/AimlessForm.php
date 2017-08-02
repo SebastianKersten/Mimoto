@@ -32,7 +32,7 @@ class AimlessForm extends AimlessComponent
      * @param string $sComponentName
      * @param MimotoEntity $entity
      * @param OutputService $OutputService
-     * @param EntityService $DataService
+     * @param DataService $DataService
      * @param Twig $TwigService
      */
     public function __construct($sFormName, $entity, $aOptions, $OutputService, $DataService, $FormService, $LogService, $TwigService)

@@ -57,7 +57,7 @@ module.exports.prototype = {
             // 2. authenticate
             MimotoX.utils.callAPI({
                 type: 'get',
-                url: '/mimoto.cms/initialize',
+                url: '/' + MimotoX.projectName + '/initialize',
                 dataType: 'json',
                 success: function(resultData, resultStatus, resultSomething)
                 {
@@ -124,7 +124,7 @@ module.exports.prototype = {
         // 2. authenticate
         MimotoX.utils.callAPI({
             type: 'get',
-            url: '/mimoto.cms/logon',
+            url: '/' + MimotoX.projectName + '/logon',
             data: { id: this._socket.id },
             dataType: 'json',
             success: function(resultData, resultStatus, resultSomething)

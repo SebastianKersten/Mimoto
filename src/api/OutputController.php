@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace Mimoto\Aimless;
+namespace Mimoto\api;
 
 // Mimoto classes
 use Mimoto\Mimoto;
@@ -21,11 +21,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 /**
- * MimotoAimlessController
+ * OutputController
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class MimotoAimlessController
+class OutputController
 {
 
     /**

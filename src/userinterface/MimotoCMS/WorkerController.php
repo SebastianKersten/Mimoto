@@ -64,6 +64,10 @@ class WorkerController
         //$GLOBALS['socketIOClient']->initialize(true);
 
         // init
+        //$client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+
+
+        // init
         $worker = new GearmanWorker();
 
         // setup

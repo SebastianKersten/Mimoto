@@ -10,6 +10,7 @@
 // Mimoto classes
 let DomUtils = require('./modules/DomUtils');
 let DomService = require('./modules/DomService');
+let DataService = require('./modules/DataService');
 let RealtimeManager = require('./modules/RealtimeManager');
 
 
@@ -38,6 +39,7 @@ module.exports.prototype = {
     // api
     utils: null,
     dom: null,
+    data: null,
 
     // config
     autoLogon: null,
@@ -47,6 +49,9 @@ module.exports.prototype = {
 
     // caching
     version: null,
+
+    // project
+    projectName: 'mimoto',
 
 
     // ----------------------------------------------------------------------------
@@ -62,6 +67,7 @@ module.exports.prototype = {
         // setup
         this.utils = new DomUtils();
         this.dom = new DomService();
+        this.data = new DataService();
 
         // configure
         this.autoLogon = true;
@@ -102,12 +108,8 @@ module.exports.prototype = {
         MimotoX.dom.registerEventListener(sPropertySelector, scope, fJavascriptDelegate);
     },
 
-    popup: function(sURL, bLoadInIFrame = false)
+    popup: function(sURL, postData, bLoadInIFrame = false)
     {
-        console.log('sURL', sURL);
-
-
-
 
         if (!document.getElementById('MimotoCMS'))
         {
@@ -119,7 +121,7 @@ module.exports.prototype = {
 
                 link.type = 'text/css';
                 link.rel = 'stylesheet';
-                link.href = '/mimoto.cms/static/css/mimoto.cms.css';
+                link.href = '/mimoto/static/css/mimoto.cms.css';
 
                 head.appendChild(link);
             }
@@ -184,6 +186,8 @@ module.exports.prototype = {
         $.ajax({
             url: sURL,
             dataType: 'html',
+            method: (postData) ? 'post' : 'get',
+            data: postData,
             success: function(data, textStatus, jqXHR) {
 
                 //jQuery(selecteur).html(jqXHR.responseText);
@@ -219,7 +223,7 @@ module.exports.prototype = {
         // 4. hide others
         // 5. popup layout
         // 6. load css
-        // 7. load mimoto.cms.js (general create, update, delete api in deze javascript
+        // 7. load mimoto.js (general create, update, delete api in deze javascript
         // 8. Mimoto.data.create('type', id)
 
 

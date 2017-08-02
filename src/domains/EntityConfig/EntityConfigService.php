@@ -400,6 +400,28 @@ class EntityConfigService
         }
         else
         {
+            if (!MimotoDataUtils::isValidId($sParentEntityTypeId))
+            {
+                if (MimotoDataUtils::isValidEntityName($sParentEntityTypeId))
+                {
+                    // convert
+                    $sParentEntityTypeId = Mimoto::service('config')->getEntityIdByName($sParentEntityTypeId);
+                }
+            }
+
+            if (!MimotoDataUtils::isValidId($sParentPropertyId))
+            {
+                if (MimotoDataUtils::validatePropertyName($sParentPropertyId))
+                {
+                    // convert
+                    $sParentPropertyId = Mimoto::service('config')->getPropertyIdByName($sParentPropertyId);
+                }
+            }
+
+            // validate
+            if (empty($sParentEntityTypeId) || empty($sParentPropertyId)) return null;
+
+
             // load all connections
             $stmt = Mimoto::service('database')->prepare(
                 "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTION."` WHERE ".

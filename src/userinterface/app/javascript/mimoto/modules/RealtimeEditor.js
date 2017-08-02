@@ -92,6 +92,8 @@ module.exports.prototype = {
             this._valueContainer.innerHTML = baseDocument.content;
         }
 
+        console.warn('baseDocument.formattingOptions', baseDocument.formattingOptions);
+
         // show content
         this._quill = this._setupEditor(baseDocument.formattingOptions);
 

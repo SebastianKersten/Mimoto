@@ -102,6 +102,7 @@ class CoreConfig
     // search
     const MIMOTO_SELECTION                      = '_Mimoto_selection';
     const MIMOTO_SELECTIONRULE                  = '_Mimoto_selectionrule';
+    const MIMOTO_SELECTIONRULEVALUE             = '_Mimoto_selectionrulevalue';
 
     // routes
     const MIMOTO_ROUTE                          = '_Mimoto_route';

@@ -12,11 +12,11 @@ use Mimoto\Selection\SelectionRuleTypes;
 
 
 /**
- * EntityService
+ * DataService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class EntityService
+class DataService
 {
     
     // config

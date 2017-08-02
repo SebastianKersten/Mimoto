@@ -17,7 +17,8 @@
         "wisembly/elephant.io": "^3.2",
         "symfony/translation": "^3.3",
         "symfony/config": "^3.3",
-        "symfony/yaml": "^3.3"
+        "symfony/yaml": "^3.3",
+        "kraken-io/kraken-php": "^1.6"
     },
     "autoload": {
         "psr-4": {
@@ -39,7 +40,8 @@
             "Mimoto\\Mail\\": "./src/domains/Mail",
             "Mimoto\\Cache\\": "./src/domains/Cache",
             "Mimoto\\Session\\": "./src/domains/Session",
-            "Mimoto\\tests\\": "./tests"
+            "Mimoto\\tests\\": "./tests",
+            "Mimoto\\api\\": "./src/api"
         }
     }
 }

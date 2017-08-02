@@ -31,22 +31,9 @@ class SelectionRule
             'properties' => [
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--typeAsVar',
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--valueAsVar',
                     // ---
-                    'name' => 'typeAsVar',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => null
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--typeVarName',
-                    // ---
-                    'name' => 'typeVarName',
+                    'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
@@ -56,6 +43,7 @@ class SelectionRule
                         )
                     ]
                 ),
+
                 (object) array(
                     'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--type',
                     // ---
@@ -71,35 +59,14 @@ class SelectionRule
                 ),
 
 
-                // ---
+//                case 'type':        $this->setType($value); break;
+//                case 'id':          $this->setId($value); break;
+//                case 'property':    $this->setProperty($value); break;
+//                case 'value':       $this->setValue($variable->property, $value); break;
+//                case 'childType':   $this->setChildTypes($value); break;
+//                case 'childValue':
 
 
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--idAsVar',
-                    // ---
-                    'name' => 'idAsVar',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => null
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--idVarName',
-                    // ---
-                    'name' => 'idVarName',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--instance',
                     // ---
@@ -113,101 +80,34 @@ class SelectionRule
                         )
                     ]
                 ),
-
-
-                // ---
-
-
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--propertyAsVar',
-                    // ---
-                    'name' => 'propertyAsVar',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => null
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--propertyVarName',
-                    // ---
-                    'name' => 'propertyVarName',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--property',
                     // ---
-                    'name' => 'property',
+                    'name' => 'entityProperty',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
                             'key' => 'allowedEntityType',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY, // #todo - allow array
                             'value' => CoreConfig::MIMOTO_ENTITYPROPERTY
                         )
                     ]
                 ),
-
-
-                // ---
-
-
                 (object) array(
                     'id' => CoreConfig::MIMOTO_SELECTION.'--values',
                     // ---
-                    'name' => 'values',
+                    'name' => 'propertyValues',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTIONRULEVALUE]
+                            'value' => [CoreConfig::MIMOTO_SELECTIONRULE_VALUE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_FALSE
-                        )
-                    ]
-                ),
-
-
-                // ---
-
-
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--childTypeAsVar',
-                    // ---
-                    'name' => 'childTypeAsVar',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => null
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--childTypeVarName',
-                    // ---
-                    'name' => 'childTypeVarName',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
                 ),
@@ -224,21 +124,16 @@ class SelectionRule
                         )
                     ]
                 ),
-
-
-                // ---
-
-
                 (object) array(
                     'id' => CoreConfig::MIMOTO_SELECTION.'--childValues',
                     // ---
-                    'name' => 'childValues',
+                    'name' => 'propertyValues',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTIONRULEVALUE]
+                            'value' => [CoreConfig::MIMOTO_SELECTIONRULE_VALUE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -273,20 +168,10 @@ class SelectionRule
             'name' => CoreConfig::COREFORM_SELECTIONRULE,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'typeAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'typeVarName'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'type'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'idAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'idVarName'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'entity'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'instance'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'propertyAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'propertyVarName'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'property'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'values'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'chidlTypeAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'childTypeVarName'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'childType'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'childValues')
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'entityProperty')
             ]
         );
     }

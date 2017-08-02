@@ -132,7 +132,7 @@ socketIO.on('connection', function(client)
             // load
             runner.exec
             (
-                "curl http://mimoto.aimless/mimoto.cms/recent/" + sPropertySelector,
+                "curl http://mimoto.aimless/mimoto/recent/" + sPropertySelector,
                 function (error, response, stderr)
                 {
                     // convert

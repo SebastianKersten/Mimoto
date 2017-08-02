@@ -128,6 +128,14 @@ class Component
             ),
 
 
+            // api
+            (object) array(
+                'name' => 'MimotoCMS_popups_Select',
+                'file' => 'MimotoCMS/components/popups/Select/Select.twig',
+                'conditionals' => []
+            ),
+
+
             // entities
 
             (object) array(

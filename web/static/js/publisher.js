@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "93dafa291dd31af4b409";
+/******/ 	__webpack_require__.h = "bc0c18d061575fd7970b";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -48,37 +48,7 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(87);
-
-
-/***/ },
-
-/***/ 87:
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto.Publisher - Demo - How to build a publication platform
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	
-	'use strict';
-	
-	
-	// Publisher demo classes
-	let Publisher = __webpack_require__(88);
-	
-	
-	/**
-	 * Auto run
-	 */
-	document.addEventListener('DOMContentLoaded', function ()
-	{
-	    // init
-	    window.Publisher = new Publisher();
-	
-	}, false);
+	module.exports = __webpack_require__(88);
 
 
 /***/ },
@@ -96,9 +66,39 @@
 	'use strict';
 	
 	
+	// Publisher demo classes
+	let Publisher = __webpack_require__(89);
+	
+	
+	/**
+	 * Auto run
+	 */
+	document.addEventListener('DOMContentLoaded', function ()
+	{
+	    // init
+	    window.Publisher = new Publisher();
+	
+	}, false);
+
+
+/***/ },
+
+/***/ 89:
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto.Publisher - Demo - How to build a publication platform
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	
+	'use strict';
+	
+	
 	// Mimoto classes
-	let Article = __webpack_require__(89);
-	let Editor = __webpack_require__(90);
+	let Article = __webpack_require__(90);
+	let Editor = __webpack_require__(91);
 	
 	
 	module.exports = function() {
@@ -175,7 +175,7 @@
 
 /***/ },
 
-/***/ 89:
+/***/ 90:
 /***/ function(module, exports) {
 
 	/**
@@ -302,7 +302,7 @@
 
 /***/ },
 
-/***/ 90:
+/***/ 91:
 /***/ function(module, exports) {
 
 	/**

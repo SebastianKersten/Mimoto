@@ -172,9 +172,7 @@ class SelectionService
                                 $bSettingFound = false;
 
                                 // init
-                                $newSelectionRule = (object) array(
-                                    'type' => $rule->type
-                                );
+                                $newSelectionRule = (object) array();
 
                                 $nSelectionRuleSettingCount = count($aAllSelectionRuleSettingsConnections[$rule->id]);
                                 for ($nSelectionRuleSettingIndex = 0; $nSelectionRuleSettingIndex < $nSelectionRuleSettingCount; $nSelectionRuleSettingIndex++)
@@ -206,7 +204,7 @@ class SelectionService
                                             $bSettingFound = true;
                                             break;
 
-                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--entityProperty':
+                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--property':
 
                                             $newSelectionRule->entityProperty = (object) array(
                                                 'property_type_id' => $selectionRuleSetting->child_id,
@@ -281,7 +279,12 @@ class SelectionService
             // compose and store
             $aAllSelectionRules[] = (object)array(
                 'id' => $row['id'],
-                'type' => $row['type'],
+                'typeAsVar' => $row['typeAsVar'],
+                'typeVarName' => $row['typeVarName'],
+                'idAsVar' => $row['idAsVar'],
+                'idVarName' => $row['idVarName'],
+                'propertyAsVar' => $row['propertyAsVar'],
+                'propertyVarName' => $row['propertyVarName'],
                 'created' => $row['created'],
             );
         }

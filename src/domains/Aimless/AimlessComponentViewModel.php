@@ -230,6 +230,9 @@ class AimlessComponentViewModel
     }
 
 
+    // data-mimoto-display-showonempty="article.3.comments"
+
+
 //    public function showWhenNotEmpty($sPropertySelector)
 //    {
 //        return $this->_component->showWhenNotEmpty($sPropertySelector);
@@ -429,7 +432,7 @@ class AimlessComponentViewModel
 
 //
 //Mimoto.styleWhenEquals(‘type’, ‘regular’, ‘background-color:#ff9900’)
-//Mimoto.classWhenEquals(‘type’, ‘regular’, ‘your-bam-class’)
+//Mimoto.classWhenEquals(‘type’, ‘regular’, ‘your-bem-class’)
 //
 //> Mimoto.styleWhenEquals(‘subprojects.{type=x}’, 2, ‘background-color:#ff9900’)
 //

@@ -34,7 +34,7 @@ class OutputService
 {
     
     // services
-    private $_EntityService;
+    private $_DataService;
     private $_OutputService;
     private $_LogService;
     private $_TwigService;
@@ -53,10 +53,10 @@ class OutputService
     /**
      * Constructor
      */
-    public function __construct($EntityService, FormService $FormService, LogService $LogService, $TwigService)
+    public function __construct($DataService, FormService $FormService, LogService $LogService, $TwigService)
     {
         // register
-        $this->_EntityService = $EntityService;
+        $this->_DataService = $DataService;
         $this->_FormService = $FormService;
         $this->_OutputService = $this;
         $this->_LogService = $LogService;
@@ -96,7 +96,7 @@ class OutputService
         if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('output')->createPage() documentation [link]");
 
         // init and send
-        return new AimlessComponent($sComponentName, $entity, null, null, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, null, null, null, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -122,7 +122,7 @@ class OutputService
         if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('output')->createPopup() documentation [link]");
 
         // init and send
-        return new AimlessComponent($sComponentName, $entity, null, null, null, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, null, null, null, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -134,7 +134,7 @@ class OutputService
     public function createComponent($sComponentName, $entity = null, $connection = null, $nItemIndex = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, null, $nItemIndex, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, null, $nItemIndex, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -146,7 +146,7 @@ class OutputService
     public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null, $nItemIndex = null)
     {
         // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $nItemIndex, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $nItemIndex, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -158,7 +158,7 @@ class OutputService
     public function createInput($sComponentName, $entity = null, $connection = null, $sFieldName = null, $value = null, $nItemIndex = null)
     {
         // init and send
-        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $nItemIndex, $this->_OutputService, $this->_EntityService, $this->_LogService, $this->_TwigService);
+        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $nItemIndex, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
     }
 
     /**
@@ -170,7 +170,7 @@ class OutputService
     public function createForm($sFormName, $xData, $options = null)
     {
         // init and send
-        return new AimlessForm($sFormName, $xData, $options, $this->_OutputService, $this->_EntityService, $this->_FormService, $this->_LogService, $this->_TwigService);
+        return new AimlessForm($sFormName, $xData, $options, $this->_OutputService, $this->_DataService, $this->_FormService, $this->_LogService, $this->_TwigService);
     }
 
 
@@ -786,7 +786,7 @@ class OutputService
 
 
                                 // load
-                                $entity = $this->_EntityService->get($connection->getChildEntityTypeName(), $connection->getChildId());
+                                $entity = $this->_DataService->get($connection->getChildEntityTypeName(), $connection->getChildId());
 
                                 // load
                                 $aCollectionItemPropertyNames = $entity->getPropertyNames();

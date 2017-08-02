@@ -8,7 +8,7 @@ use Mimoto\Mimoto;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
-use Mimoto\Data\EntityService;
+use Mimoto\Data\DataService;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Log\LogService;
 

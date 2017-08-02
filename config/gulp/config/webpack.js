@@ -29,6 +29,7 @@ module.exports = function (env)
         entry: {
             'mimoto.cms': [jsSrc + '/app/javascript/mimoto.cms.js'],
             'mimoto': [jsSrc + '/app/javascript/mimoto.js'],
+            'realtime' : [jsSrc + '/app/javascript/realtime.js'],
             'publisher': [jsSrc + '/publisher/base.js']
         },
         output: {
