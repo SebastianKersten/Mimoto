@@ -43,7 +43,7 @@ class OutputController
 
 
         // load
-        $entity = Mimoto::service('data')->get($sEntityTypeName, $nEntityId);
+        $eEntity = Mimoto::service('data')->get($sEntityTypeName, $nEntityId);
 
         // search
         $connection = $this->_getConnection($sEntityTypeName, $nEntityId, $sPropertySelector, $nConnectionId);
@@ -52,12 +52,12 @@ class OutputController
         if (!empty($sWrapperName))
         {
             // create
-            $component = Mimoto::service('output')->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
+            $component = Mimoto::service('output')->createWrapper($sWrapperName, $sComponentName, $eEntity, $connection);
         }
         else
         {
             // create
-            $component = Mimoto::service('output')->createComponent($sComponentName, $entity, $connection);
+            $component = Mimoto::service('output')->createComponent($sComponentName, $eEntity, $connection);
         }
 
         // render and send

@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "bc0c18d061575fd7970b";
+/******/ 	__webpack_require__.h = "924c328dc79f6a639dac";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -95,7 +95,8 @@
 	let DomUtils = __webpack_require__(4);
 	let DomService = __webpack_require__(5);
 	let DataService = __webpack_require__(6);
-	let RealtimeManager = __webpack_require__(7);
+	let DisplayService = __webpack_require__(7);
+	let RealtimeManager = __webpack_require__(8);
 	
 	
 	/**
@@ -124,6 +125,7 @@
 	    utils: null,
 	    dom: null,
 	    data: null,
+	    display: null,
 	
 	    // config
 	    autoLogon: null,
@@ -151,7 +153,6 @@
 	        // setup
 	        this.utils = new DomUtils();
 	        this.dom = new DomService();
-	        this.data = new DataService();
 	
 	        // configure
 	        this.autoLogon = true;
@@ -173,6 +174,11 @@
 	    startup: function()
 	    {
 	        if (this.debug) console.log('Mimoto starting up ...');
+	
+	        // parse interface
+	        this.data = new DataService();
+	        this.display = new DisplayService();
+	
 	
 	        // update
 	        MimotoX.utils.parseRequestQueue();
@@ -10962,30 +10968,29 @@
 	        // validate
 	        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
 	        
-	        
+	        //console.clear();
 	        console.log('Aimless - data.created (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
 	        console.log(data);
-	        
-	    
+	
 	    
 	        // setup
-	        var mls_container = data.entityType;
+	        var sEntityType = data.entityType;
 	    
 	        // register
 	        var classRoot = module.exports.prototype;
-	    
-	    
+	
 	    
 	        // --- component level ---
 	    
 	        // search
-	        var aComponents = $("[data-mimoto-contains='" + mls_container + "']");
-	    
+	        var aComponents = $("[data-mimoto-contains='" + sEntityType + "']");
+	
+	
 	        aComponents.each( function(index, $container)
 	        {
 	            // read
 	            var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
-	            var mls_sortorder = $($container).attr("data-mimoto-sortorder"); // #todo
+	            var mls_sortorder = $($container).attr("data-mimoto--sortorder"); // #todo
 	            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
 	            var mls_contains = $($container).attr("data-mimoto-contains");
 	            
@@ -10997,6 +11002,8 @@
 	            }
 	            else
 	            {
+	                console.log('Requesting component ...', data.entityType, data.entityId);
+	
 	                if (mls_component.name)
 	                {
 	                    MimotoX.utils.loadComponent($container, data.entityType, data.entityId, mls_component.name, mls_contains);
@@ -11006,15 +11013,16 @@
 	    
 	        
 	        // --- selection level ---
-	        
+	
+	
 	        // search
-	        var aComponents = $("[data-mimoto-selection='" + mls_container + "']");
+	        var aComponents = $("[data-mimoto-selection='" + sEntityType + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
 	            // read
 	            var mls_component = classRoot._getComponentName($($component).attr("data-mimoto-component"));
-	            var mls_sortorder = $($component).attr("data-mimoto-sortorder"); // #todo
+	            var mls_sortorder = $($component).attr("data-mimoto--sortorder"); // #todo
 	            var mls_wrapper = $($component).attr("data-mimoto-wrapper");
 	    
 	            if (mls_wrapper)
@@ -11037,7 +11045,7 @@
 	    
 	    
 	        // search
-	        var aComponents = $("[data-mimoto-count='" + mls_container + "']");
+	        var aComponents = $("[data-mimoto-count='" + sEntityType + "']");
 	    
 	        aComponents.each( function(index, $component)
 	        {
@@ -11076,7 +11084,7 @@
 	    
 	    
 	        // // search
-	        // var aComponents = $("[data-mimoto-showonempty='" + mls_container + "']");
+	        // var aComponents = $("[data-mimoto-display-showonempty='" + mls_container + "']");
 	        //
 	        // aComponents.each( function(index, $component)
 	        // {
@@ -11238,7 +11246,7 @@
 	            if (!change.value)
 	            {
 	                // search
-	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
 	                aComponents.each( function(index, $component)
 	                {
@@ -11246,7 +11254,7 @@
 	                });
 	    
 	                // search
-	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
 	                aComponents.each( function(index, $component)
 	                {
@@ -11256,7 +11264,7 @@
 	            else
 	            {
 	                // search
-	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
 	                aComponents.each( function(index, $component)
 	                {
@@ -11264,7 +11272,7 @@
 	                });
 	    
 	                // search
-	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	    
 	                aComponents.each( function(index, $component)
 	                {
@@ -11395,7 +11403,7 @@
 	            if (!change.entity)
 	            {
 	                // search
-	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -11403,7 +11411,7 @@
 	                });
 	            
 	                // search
-	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -11413,7 +11421,7 @@
 	            else
 	            {
 	                // search
-	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -11421,7 +11429,7 @@
 	                });
 	            
 	                // search
-	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -11616,7 +11624,7 @@
 	                                    }
 	                                }
 	
-	                                console.log('Prpoerty check: ', property.value, '!=', mls_filter[s]);
+	                                console.log('Property check: ', property.value, '!=', mls_filter[s]);
 	
 	                                if (bPropertyFound && property.value != mls_filter[s])
 	                                {
@@ -11734,7 +11742,7 @@
 	            if (change.collection.count == 0)
 	            {
 	                // search
-	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	                
 	                aComponents.each( function(index, $component)
 	                {
@@ -11742,7 +11750,7 @@
 	                });
 	            
 	                // search
-	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -11752,7 +11760,7 @@
 	            else
 	            {
 	                // search
-	                var aComponents = $("[data-mimoto-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -11760,7 +11768,7 @@
 	                });
 	            
 	                // search
-	                var aComponents = $("[data-mimoto-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
 	            
 	                aComponents.each( function(index, $component)
 	                {
@@ -12110,6 +12118,9 @@
 	    __construct: function()
 	    {
 	
+	
+	
+	
 	    },
 	
 	
@@ -12202,6 +12213,1393 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Mimoto - Display Service for realtime data management
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	module.exports = function() {
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	
+	    // data tags
+	    TAG_MIMOTO_VALUE:      'data-mimoto-value',
+	    TAG_MIMOTO_ENTITY:     'data-mimoto-entity',
+	    TAG_MIMOTO_COLLECTION: 'data-mimoto-collection',
+	    TAG_MIMOTO_IMAGE:      'data-mimoto-image',
+	    TAG_MIMOTO_VIDEO:      'data-mimoto-video',
+	    TAG_MIMOTO_AUDIO:      'data-mimoto-audio',
+	
+	    TAG_MIMOTO_ID:         'data-mimoto-id',
+	
+	    // display tags
+	    TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:        'data-mimoto-display-showwhenempty',
+	    TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
+	    TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:    'data-mimoto-display-addclasswhenempty',
+	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY: 'data-mimoto-display-removeclasswhenempty',
+	
+	    // utility tags
+	    TAG_MIMOTO_COUNT: 'data-mimoto-count',
+	
+	    // setting tags
+	    TAG_SETTING_MIMOTO_FILTER:     'data-mimoto-filter',
+	    TAG_SETTING_MIMOTO_COMPONENT:  'data-mimoto-component',
+	    TAG_SETTING_MIMOTO_CONNECTION: 'data-mimoto-connection',
+	    TAG_SETTING_MIMOTO_SORTINDEX:  'data-mimoto-sortindex',
+	    TAG_SETTING_MIMOTO_WRAPPER:    'data-mimoto-wrapper',
+	
+	    // directive tags
+	    TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE: 'data-mimoto-reloadonchange',
+	
+	    // elements
+	    _aTaggedItems: [],
+	    _aTaggedProperties: [],
+	
+	
+	
+	    
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function()
+	    {
+	        console.log('Display service starting ...');
+	        let nStartTime = Date.now();
+	
+	        // register
+	        let aTags = this._collectAllTaggedElements();
+	
+	        let nEndTime = Date.now();
+	        console.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+	
+	
+	
+	        console.log('aTags', aTags);
+	
+	
+	
+	        this._prepareAllTaggedElements(aTags);
+	
+	        nEndTime = Date.now();
+	        console.log('End of preparation phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+	
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Collect all tagged elements from document
+	     * @returns aTags array All tagged elements grouped by tag type
+	     * @private
+	     */
+	    _collectAllTaggedElements: function()
+	    {
+	        // 1. init
+	        let aTags = [];
+	
+	        // 2. prepare
+	        let aPrimaryTags = [
+	
+	            // data tags
+	            this.TAG_MIMOTO_VALUE,
+	            this.TAG_MIMOTO_ENTITY,
+	            this.TAG_MIMOTO_COLLECTION,
+	            this.TAG_MIMOTO_IMAGE,
+	            this.TAG_MIMOTO_VIDEO,
+	            this.TAG_MIMOTO_AUDIO,
+	            this.TAG_MIMOTO_ID,
+	
+	            // display tags
+	            this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY,
+	
+	            // utility tags
+	            this.TAG_MIMOTO_COUNT
+	        ];
+	
+	        // 3. collect
+	        let nPrimaryTagCount = aPrimaryTags.length;
+	        for (let nPrimaryTagIndex = 0; nPrimaryTagIndex < nPrimaryTagCount; nPrimaryTagIndex++)
+	        {
+	            // 3a. register
+	            let sPrimaryTag = aPrimaryTags[nPrimaryTagIndex];
+	
+	            // 3b. find and store
+	            aTags[sPrimaryTag] = document.querySelectorAll('[' + sPrimaryTag + ']');
+	        }
+	
+	        // 4. send
+	        return aTags;
+	    },
+	
+	    _prepareAllTaggedElements: function(aTags)
+	    {
+	        // 1. parse all tag types
+	        for (let sTag in aTags)
+	        {
+	            // register
+	            let aElements = aTags[sTag];
+	
+	            // prepare
+	            let nElementCount = aElements.length;
+	            for (let nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++)
+	            {
+	                // register
+	                let element = aElements[nElementIndex];
+	
+	                // init and register
+	                let taggedItem = {
+	                    sTag: sTag,
+	                    sPropertySelector: element.getAttribute(sTag),
+	                    element: element
+	                };
+	
+	                // read tag specific settings
+	                switch(sTag)
+	                {
+	                    case this.TAG_MIMOTO_ID:
+	
+	                        // verify and register
+	                        taggedItem.sEntitySelector = element.getAttribute(this.TAG_MIMOTO_ID);
+	
+	                        console.log('Item', taggedItem);
+	
+	                    case this.TAG_MIMOTO_ENTITY:
+	                    case this.TAG_MIMOTO_COLLECTION:
+	
+	
+	                        // validate
+	                        if (!element.hasAttribute(this.TAG_SETTING_MIMOTO_COMPONENT))
+	                        {
+	                            if (MimotoX.debug) console.warn('Element', element, 'is missing a component setting', this.TAG_SETTING_MIMOTO_COMPONENT);
+	                            continue;
+	                        }
+	
+	                        // register
+	                        taggedItem.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
+	
+	
+	                        // verify
+	                        if (sTag === this.TAG_MIMOTO_ENTITY)
+	                        {
+	                            // verify and register
+	                            if (element.hasAttribute(this.TAG_SETTING_MIMOTO_CONNECTION))
+	                            {
+	                                taggedItem.nConnectionId = element.getAttribute(this.TAG_SETTING_MIMOTO_CONNECTION);
+	                            }
+	
+	                            // verify and register
+	                            if (element.hasAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX))
+	                            {
+	                                taggedItem.nSortIndex = element.getAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX);
+	                            }
+	
+	                            // verify and register
+	                            if (element.hasAttribute(this.TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE))
+	                            {
+	                                taggedItem.bReloadOnChange = true;
+	                            }
+	                        }
+	
+	                        // verify
+	                        if (sTag === this.TAG_MIMOTO_COLLECTION && element.hasAttribute(this.TAG_SETTING_MIMOTO_FILTER))
+	                        {
+	                            // register
+	                            taggedItem.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
+	                        }
+	
+	
+	
+	                        console.log('Property', taggedItem);
+	
+	                        break;
+	                }
+	            }
+	        }
+	
+	        // send
+	        return 'xxx';
+	    },
+	
+	
+	
+	
+	    /**
+	     * Handle data CHANGED
+	     */
+	    onDataChanged: function(data, sChannel)
+	    {
+	        // validate
+	        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
+	        
+	        
+	        console.log('Aimless - data.changed (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
+	        console.log(data);
+	        
+	        
+	        // compose
+	        var sEntityIdentifier = data.entityType + '.' + data.entityId;
+	        
+	        // update
+	        module.exports.prototype._updateValues(sEntityIdentifier, data.changes);
+	        module.exports.prototype._updateEntities(data.entityType, data.entityId, data.changes);
+	        module.exports.prototype._updateCollections(data.entityType, data.entityId, data.changes, data.connections);
+	        module.exports.prototype._updateSelections(data.entityType, data.entityId, data.changes);
+	        module.exports.prototype._updateInputFields(sEntityIdentifier, data.changes);
+	        module.exports.prototype._updateCounters(data.entityType, data.changes);
+	
+	        module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
+	    },
+	    
+	    /**
+	     * Handle data CREATED
+	     */
+	    onDataCreated: function(data, sChannel)
+	    {
+	        // validate
+	        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
+	        
+	        //console.clear();
+	        console.log('Aimless - data.created (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
+	        console.log(data);
+	
+	    
+	        // setup
+	        var sEntityType = data.entityType;
+	    
+	        // register
+	        var classRoot = module.exports.prototype;
+	
+	    
+	        // --- component level ---
+	    
+	        // search
+	        var aComponents = $("[data-mimoto-contains='" + sEntityType + "']");
+	
+	
+	        aComponents.each( function(index, $container)
+	        {
+	            // read
+	            var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	            var mls_sortorder = $($container).attr("data-mimoto--sortorder"); // #todo
+	            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
+	            var mls_contains = $($container).attr("data-mimoto-contains");
+	            
+	            console.warn('mls_contains = ' + mls_contains);
+	            
+	            if (mls_wrapper)
+	            {
+	                MimotoX.utils.loadWrapper($container, data.entityType, data.entityId, mls_wrapper, mls_component.name, mls_contains);
+	            }
+	            else
+	            {
+	                console.log('Requesting component ...', data.entityType, data.entityId);
+	
+	                if (mls_component.name)
+	                {
+	                    MimotoX.utils.loadComponent($container, data.entityType, data.entityId, mls_component.name, mls_contains);
+	                }
+	            }
+	        });
+	    
+	        
+	        // --- selection level ---
+	
+	
+	        // search
+	        var aComponents = $("[data-mimoto-selection='" + sEntityType + "']");
+	    
+	        aComponents.each( function(index, $component)
+	        {
+	            // read
+	            var mls_component = classRoot._getComponentName($($component).attr("data-mimoto-component"));
+	            var mls_sortorder = $($component).attr("data-mimoto--sortorder"); // #todo
+	            var mls_wrapper = $($component).attr("data-mimoto-wrapper");
+	    
+	            if (mls_wrapper)
+	            {
+	                MimotoX.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
+	            }
+	            else
+	            {
+	                if (mls_component.name)
+	                {
+	                    MimotoX.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
+	                }
+	        
+	            }
+	        });
+	    
+	    
+	    
+	        // --- data-mimoto-count (onCreate) ---
+	    
+	    
+	        // search
+	        var aComponents = $("[data-mimoto-count='" + sEntityType + "']");
+	    
+	        aComponents.each( function(index, $component)
+	        {
+	        
+	            var mls_config = $($component).attr("data-mimoto-config");
+	        
+	            if (mls_config) { mls_config = $.parseJSON(mls_config); }
+	        
+	        
+	            // read
+	            var nCurrentCount = parseInt($($component).text());
+	        
+	            // update
+	            nCurrentCount = nCurrentCount + 1;
+	        
+	            // output
+	            $($component).text(nCurrentCount);
+	        
+	        
+	            if (mls_config.toggleClasses)
+	            {
+	                for (var sKey in mls_config.toggleClasses)
+	                {
+	                    if (sKey == 'onZero' && nCurrentCount == 0)
+	                    {
+	                        $($component).addClass(mls_config.toggleClasses[sKey]);
+	                    }
+	                    else
+	                    {
+	                        $($component).removeClass(mls_config.toggleClasses[sKey]);
+	                    }
+	                }
+	            }
+	        
+	        });
+	    
+	    
+	        // // search
+	        // var aComponents = $("[data-mimoto-display-showonempty='" + mls_container + "']");
+	        //
+	        // aComponents.each( function(index, $component)
+	        // {
+	        //     $($component).css({"display": ""});
+	        // });
+	
+	        var sEntityIdentifier = data.entityType + '.' + data.entityId;
+	        module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
+	    },
+	    
+	    onPageChange: function (data)
+	    {
+	        //Maido.page.change(data.url) ;//, data.config); -> load in iframe
+	    },
+	    
+	    onComponentLoad: function (data)
+	    {
+	        // o.a. remote dashboard control -> target = panel id
+	    },
+	    
+	    onPopupOpen: function (data)
+	    {
+	        // o.a. remote messages
+	        //Maido.popup.open(data.url);
+	        // voorzien van URL voor inhoud
+	        // use delegate -> MimotoLivescreen.onPopup = delegate(data)
+	        // kan form bevatten
+	    
+	        //call option, zoals popup, met URL van popup-view of form
+	    },
+	    
+	    
+	    
+	    
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	    
+	    
+	    /**
+	     * Change altered values currently present on the DOM
+	     * @private
+	     */
+	    _updateValues: function (sEntityIdentifier, changes)
+	    {
+	    
+	        // skip if no changes
+	        if (!changes) return;
+	        
+	        
+	        // search
+	        var aValues = $("[data-mimoto-value]");
+	        
+	        aValues.each( function(nIndex, $component)
+	        {
+	            // read
+	            var mls_value = $($component).attr("data-mimoto-value");
+	        
+	            // determine
+	            var nOriginPos = mls_value.indexOf('[');
+	            var bHasOrigin = (nOriginPos !== -1) ;
+	        
+	            // verify
+	            if (bHasOrigin)
+	            {
+	                var mls_value_origin = mls_value.substr(nOriginPos + 1, mls_value.length - nOriginPos - 2);
+	                var mls_value = mls_value.substr(0, nOriginPos);
+	            }
+	        
+	        
+	            // parse modified values
+	            for (var i = 0; i < changes.length; i++)
+	            {
+	                // register
+	                var change = changes[i];
+	            
+	                // collection
+	                if (change.changes) continue;
+	                
+	            
+	                if (!bHasOrigin)
+	                {
+	                    // === value ===
+	                
+	                    // Case 1: "project.3.name"
+	                    // Action: change project.3.name
+	                    // ------
+	                    // 1. find "project.3.name"
+	                    // 2. change value
+	                
+	                    if (mls_value === (sEntityIdentifier + '.' + change.propertyName))
+	                    {
+	                        // output
+	                        $($component).text(change.value);
+	                    }
+	                }
+	                else
+	                {
+	                    // === entity ===
+	                
+	                    // Case 2: - "project.3.client.name[client.17.name]"
+	                    // Action: change client.17.name
+	                    // ------
+	                    // 1. find "client.17.name" of "[client.17.name]"
+	                    // 2. change value
+	                
+	                
+	                    if (mls_value_origin ===  (sEntityIdentifier + '.' + change.propertyName))
+	                    {
+	                        // output
+	                        $($component).text(change.value);
+	                    }
+	                    else
+	                    {
+	                    
+	                        // Case 3: "project.3.client.name[client.17.name]"
+	                        // Action: change client to 8
+	                        // ------
+	                        // 1. find "project.3.client.name"
+	                        // 2. change "[client.17.name]" into "[client.8.name]"
+	                        // 3. change value
+	                    
+	                        // Case 4: "project.3.agency.name[agency.name]" (no agency set)
+	                        // Action: set agency to 5
+	                        // ------
+	                        // 1. find "project.3.agency" ------> (ignor rest?)
+	                        // 2. change to: "project.3.agency.name[agency.5.name]"
+	                        // 3. change value
+	                    
+	                        if (mls_value ===  (sEntityIdentifier + '.' + change.propertyName))
+	                        {
+	                            // output
+	                            $($component).text(change.value);
+	                        
+	                            // compose new
+	                            var new_mls_value_origin = change.origin.entityType;
+	                            if (change.origin.entityId) new_mls_value_origin += '.' + change.origin.entityId;
+	                            new_mls_value_origin += '.' + change.origin.propertyName;
+	                        
+	                            // update dom
+	                            $($component).attr('data-mimoto-value', mls_value + '[' + new_mls_value_origin + ']');
+	                        }
+	                    }
+	                }
+	            }
+	        });
+	    
+	    
+	    
+	        // parse modified values
+	        for (var i = 0; i < changes.length; i++)
+	        {
+	            // register
+	            var change = changes[i];
+	    
+	            // validate
+	            if (change.type != 'value') continue;
+	            
+	            if (!change.value)
+	            {
+	                // search
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	    
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	    
+	                // search
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	    
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            }
+	            else
+	            {
+	                // search
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	    
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	    
+	                // search
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	    
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            }
+	            
+	            
+	        }
+	    },
+	    
+	    /**
+	     * Update entities
+	     * @param string sEntityIdentifier
+	     * @param aray changes
+	     * @private
+	     */
+	    _updateEntities: function (sEntityType, nEntityId, aChanges)
+	    {
+	        // register
+	        var classRoot = this;
+	        
+	        // compose
+	        var sEntityIdentifier = sEntityType + '.' + nEntityId;
+	    
+	    
+	        // --- force reload components
+	        
+	        var aComponents = $("[data-mimoto-id='" + sEntityIdentifier + "']");
+	        aComponents.each(function (nIndex, $component)
+	        {
+	            // read
+	            var mls_reloadOnChange = $($component).attr("data-mimoto-reloadonchange");
+	            
+	            
+	            if (mls_reloadOnChange == 'true')
+	            {
+	                var mls_component = classRoot._getComponentName($($component).attr("data-mimoto-component"));
+	                var mls_wrapper = $($component).attr("data-mimoto-wrapper");
+	    
+	                if (mls_wrapper)
+	                {
+	                    MimotoX.utils.updateWrapper($component, sEntityType, nEntityId, mls_wrapper, mls_component.name);
+	                }
+	                else
+	                {
+	                    if (mls_component.name)
+	                    {
+	                        MimotoX.utils.updateComponent($component, sEntityType, nEntityId, mls_component.name);
+	                    }
+	                }
+	            }
+	        });
+	        
+	        
+	        
+	        // --- apply entityProperty changes
+	        
+	        
+	        // parse modified values
+	        for (var i = 0; i < aChanges.length; i++)
+	        {
+	            // register
+	            var change = aChanges[i];
+	            
+	            // validate
+	            if (change.type != 'entity') continue;
+	    
+	    
+	            /**
+	             * Reatime image swap feature
+	             */
+	            if (change.subtype && change.subtype == 'image')
+	            {
+	                // search
+	                var aImages = $("[data-mimoto-image='" + sEntityIdentifier + "." + change.propertyName + "']");
+	
+	                if (change.entity && change.entity.file)
+	                {
+	                    // compose
+	                    var sImageSrc = change.entity.file.path + change.entity.file.name;
+	                    
+	                    // parse
+	                    aImages.each(function (nIndex, $image)
+	                    {
+	                        // swap
+	                        $($image).attr('src', sImageSrc);
+	                    });
+	                }
+	            }
+	            
+	            
+	            
+	            // collect
+	            var aContainers = $("[data-mimoto-entity='" + sEntityIdentifier + "." + change.propertyName + "']");
+	            
+	            aContainers.each(function (nIndex, $container)
+	            {
+	                // read
+	                var mls_entity = $($container).attr("data-mimoto-entity");
+	                var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	                
+	                // register
+	                var item = change.entity;
+	                
+	                if (!item || !item.connection.id)
+	                {
+	                    $($container).empty();
+	                }
+	                else
+	                {
+	                    // load
+	                    MimotoX.utils.loadEntity($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
+	                }
+	            });
+	        }
+	    
+	        // parse modified values
+	        for (var i = 0; i < aChanges.length; i++)
+	        {
+	            // register
+	            var change = aChanges[i];
+	        
+	            // validate
+	            if (change.type != 'entity') continue;
+	            
+	        
+	            if (!change.entity)
+	            {
+	                // search
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            
+	                // search
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            }
+	            else
+	            {
+	                // search
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            
+	                // search
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            }
+	        
+	        
+	        }
+	    },
+	    
+	    /**
+	     * Update collections
+	     * @param string sEntityIdentifier
+	     * @param aray changes
+	     * @private
+	     */
+	    _updateCollections: function (sEntityType, nEntityId, aChanges, aConnections)
+	    {
+	        // register
+	        var classRoot = this;
+	        
+	        
+	        // compose
+	        var sEntityIdentifier = sEntityType + '.' + nEntityId;
+	        
+	        // parse modified values
+	        for (var i = 0; i < aChanges.length; i++)
+	        {
+	            // register
+	            var change = aChanges[i];
+	            
+	            // collection
+	            if (!change.collection) continue;
+	            
+	            // collect
+	            var aContainers = $("[data-mimoto-contains='" + sEntityIdentifier + "." + change.propertyName + "']");
+	        
+	        
+	            aContainers.each(function(nIndex, $container)
+	            {
+	                // read
+	                var mls_contains = $($container).attr("data-mimoto-contains");
+	                var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	                var mls_filter = $($container).attr("data-mimoto-filter");
+	                
+	                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
+	
+	            
+	                // --- handle added items ---
+	            
+	                if (change.collection.added) {
+	                
+	                    for (var iAdded = 0; iAdded < change.collection.added.length; iAdded++) {
+	                    
+	                        // register
+	                        var item = change.collection.added[iAdded];
+	                    
+	                        var bFilterApproved = true;
+	                        if (mls_filter) {
+	                            for (var s in item.data) {
+	                                if (mls_filter[s] && item.data[s] != mls_filter[s]) {
+	                                    bFilterApproved = false;
+	                                    break;
+	                                }
+	                            }
+	                        }
+	                        
+	                        // 1. #todo check if the component is already there (and duplicate items are allowed OR connection-id's
+	                    
+	                        // load
+	                        if (bFilterApproved)
+	                        {
+	                            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
+	    
+	                            if (mls_wrapper)
+	                            {
+	                                MimotoX.utils.loadWrapper($container, item.connection.childEntityTypeName, item.connection.childId, mls_wrapper, mls_component.name, mls_contains);
+	                            }
+	                            else
+	                            {
+	                                if (mls_component !== undefined)
+	                                {
+	                                    MimotoX.utils.loadComponent($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name, mls_contains);
+	                                }
+	                            }
+	                        }
+	                    }
+	                }
+	            
+	                if (change.collection.removed)
+	                {
+	                    for (var iRemoved = 0; iRemoved < change.collection.removed.length; iRemoved++)
+	                    {
+	                    
+	                        // register
+	                        var item = change.collection.removed[iRemoved];
+	                    
+	                        // find
+	                        var $item = $("[data-mimoto-id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $container);
+	                    
+	                        // delete
+	                        $item.remove();
+	                    }
+	                }
+	                
+	                
+	                
+	                // --- change list item order
+	                
+	                if (change.collection && change.collection.connections)
+	                {
+	                    // init
+	                    var $previousItem = null;
+	                    
+	                    var nConnectionCount = change.collection.connections.length;
+	                    for (var nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
+	                    {
+	                        // register
+	                        var connection = change.collection.connections[nConnectionIndex];
+	                        
+	                        // register
+	                        var $currentItem = $('[data-mimoto-connection="' + connection.id + '"]', $container);
+	                        $currentItem.attr('data-mimoto-sortindex', connection.sortindex);
+	                        
+	                        // verify
+	                        if (nConnectionIndex == 0)
+	                        {
+	                            // move
+	                            $($container).prepend($currentItem[0]);
+	                        }
+	                        else
+	                        {
+	                            // move
+	                            $($currentItem[0]).insertAfter($previousItem);
+	                        }
+	
+	                        // update
+	                        $previousItem = $currentItem[0]
+	                    }
+	                }
+	            
+	            });
+	        }
+	    
+	    
+	        // --- Parse modified values ---
+	        
+	        
+	        // verify
+	        if (aConnections)
+	        {
+	            var nConnectionCount = aConnections.length;
+	            for (var nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
+	            {
+	                // register
+	                var connection = aConnections[nConnectionIndex];
+	
+	                // search
+	                var aContainers = $("[data-mimoto-contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
+	                
+	                
+	                aContainers.each(function(nIndex, $container)
+	                {
+	                    // read
+	                    var mls_contains = $($container).attr("data-mimoto-contains");
+	                    var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	                    var mls_filter = $($container).attr("data-mimoto-filter");
+	
+	
+	                    console.warn('mls_filter = ' + mls_filter);
+	                    
+	                    if (mls_filter)
+	                    {
+	                        mls_filter = $.parseJSON(mls_filter);
+	                        
+	                        var bFilterApproved = true;
+	                        if (mls_filter)
+	                        {
+	                            for (var s in mls_filter)
+	                            {
+	                                var bPropertyFound = false;
+	                                for (var j = 0; j < aChanges.length; j++)
+	                                {
+	                                    // register
+	                                    var property = aChanges[j];
+	
+	                                    if (property.propertyName === s)
+	                                    {
+	                                        bPropertyFound = true;
+	                                        break;
+	                                    }
+	                                }
+	
+	                                console.log('Property check: ', property.value, '!=', mls_filter[s]);
+	
+	                                if (bPropertyFound && property.value != mls_filter[s])
+	                                {
+	                                    bFilterApproved = false;
+	                                    break;
+	                                }
+	                            }
+	                        }
+	    
+	                        // load
+	                        if (bFilterApproved)
+	                        {
+	                            console.log('bFilterApproved ...', $container, connection);
+	
+	                            // search
+	                            let $aSubitems = $("[data-mimoto-connection='" + connection.connectionId + "']", $container);
+	
+	                            // verify if item already exists
+	                            if ($aSubitems.length === 0)
+	                            {
+	                                var mls_wrapper = $($container).attr("data-mimoto-wrapper");
+	
+	                                if (mls_wrapper)
+	                                {
+	                                    MimotoX.utils.loadWrapperNEW($container, sEntityType, nEntityId, mls_wrapper, mls_component.name, null, connection.connectionId);
+	                                }
+	                                else {
+	                                    if (mls_component.name)
+	                                    {
+	                                        MimotoX.utils.loadComponentNEW($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
+	                                    }
+	                                }
+	                            }
+	                        }
+	                        else
+	                        {
+	                            // search
+	                            var aSubitems = $("[data-mimoto-id='" + sEntityIdentifier + "']", $container);
+	        
+	                            aSubitems.each(function (nIndex, $component) {
+	            
+	                                // 2. add connection id
+	                                // 3. check if connection id exists
+	            
+	                                // delete
+	                                $component.remove();
+	                            });
+	                        }
+	                    }
+	                    
+	                    // change item based on component
+	                    if (mls_component.conditionals.length > 0)
+	                    {
+	                        // verify
+	                        var bShouldToggle = false;
+	                        var nConditionalCount = mls_component.conditionals.length;
+	                        for (var nConditionalIndex = 0; nConditionalIndex < nConditionalCount; nConditionalIndex++)
+	                        {
+	                            for (var nChangeIndex = 0; nChangeIndex < aChanges.length; nChangeIndex++) {
+	                                // register
+	                                var property = aChanges[nChangeIndex];
+	        
+	                                if (property.propertyName == mls_component.conditionals[nConditionalIndex]) {
+	                                    bShouldToggle = true;
+	                                    break;
+	                                }
+	                            }
+	                        }
+	                        
+	                        if (bShouldToggle)
+	                        {
+	                            // search
+	                            var aSubitems = $("[data-mimoto-id='" + sEntityIdentifier + "']", $container);
+	    
+	                            aSubitems.each(function (nIndex, $component)
+	                            {
+	                                // delete current
+	                                $component.remove();
+	                                
+	                                // reload with new template
+	                                //MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+	    
+	                                var mls_wrapper = $($container).attr("data-mimoto-wrapper");
+	    
+	                                if (mls_wrapper)
+	                                {
+	                                    MimotoX.utils.loadWrapper($container, sEntityType, nEntityId, mls_wrapper, mls_component.name);
+	                                }
+	                                else
+	                                {
+	                                    if (mls_component.name)
+	                                    {
+	                                        MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+	                                    }
+	                                }
+	                            });
+	                        }
+	                    }
+	                    
+	                    
+	                });
+	            }
+	        }
+	    
+	    
+	        // parse modified values
+	        for (var i = 0; i < aChanges.length; i++)
+	        {
+	            // register
+	            var change = aChanges[i];
+	        
+	            // validate
+	            if (change.type != 'collection') continue;
+	        
+	            if (change.collection.count == 0)
+	            {
+	                // search
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	                
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            
+	                // search
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            }
+	            else
+	            {
+	                // search
+	                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "");
+	                });
+	            
+	                // search
+	                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
+	            
+	                aComponents.each( function(index, $component)
+	                {
+	                    $($component).css("display", "none");
+	                });
+	            }
+	        
+	        
+	        }
+	    },
+	    
+	    /**
+	     * Update selections collections by moving or removing altered items
+	     * @param changes
+	     * @private
+	     */
+	    _updateSelections: function (sEntityType, sEntityId, changes)
+	    {
+	        // register
+	        var classRoot = this;
+	        
+	        
+	        // parse modified values
+	        for (var i = 0; i < changes.length; i++)
+	        {
+	            // register
+	            var change = changes[i];
+	        
+	        
+	            var aContainers = $("[data-mimoto-selection='" + sEntityType + "']");
+	        
+	        
+	            aContainers.each(function(nIndex, $container)
+	            {
+	                // read
+	                var mls_selection = $($container).attr("data-mimoto-selection");
+	                var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+	                var mls_filter = $($container).attr("data-mimoto-filter");
+	            
+	                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
+	            
+	            
+	                // 1. read data-mimoto-id's van items binnen component
+	            
+	            
+	                var aSubitems = $("[data-mimoto-id='" + sEntityType + '.' + sEntityId + "']", $container);
+	            
+	            
+	                aSubitems.each(function(nIndex, $subitem)
+	                {
+	                    var bFilterApproved = true;
+	                    if (mls_filter)
+	                    {
+	                        for (var s in mls_filter)
+	                        {
+	                            if (mls_filter[s] && change.value != mls_filter[s]) {
+	                                bFilterApproved = false;
+	                                break;
+	                            }
+	                        }
+	                    }
+	                
+	                    // load
+	                    if (!bFilterApproved) { $subitem.remove(); }
+	                
+	                });
+	            
+	            });
+	        }
+	    },
+	    
+	    /**
+	     * Update input fields
+	     * @private
+	     */
+	    _updateInputFields: function (sEntityIdentifier, changes)
+	    {
+	        // search
+	        var aValues = $("[data-mimoto-form-field-input]");
+	        
+	        aValues.each( function(nIndex, $component)
+	        {
+	            // read
+	            var mls_form_field_input = $($component).attr("data-mimoto-form-field-input");
+	        
+	            // determine
+	            var nOriginPos = mls_form_field_input.indexOf('[');
+	            var bHasOrigin = (nOriginPos !== -1) ;
+	        
+	            // verify
+	            if (bHasOrigin)
+	            {
+	                var mls_value_origin = mls_form_field_input.substr(nOriginPos + 1, mls_form_field_input.length - nOriginPos - 2);
+	                var mls_form_field_input = mls_form_field_input.substr(0, nOriginPos);
+	            }
+	        
+	        
+	            // parse modified values
+	            for (var i = 0; i < changes.length; i++)
+	            {
+	                // register
+	                var change = changes[i];
+	            
+	                // collection
+	                if (change.changes) continue;
+	            
+	            
+	                if (!bHasOrigin)
+	                {
+	                    if (mls_form_field_input === (sEntityIdentifier + '.' + change.propertyName))
+	                    {
+	                        Mimoto.form._setInputFieldValue($component, change.value);
+	                    }
+	                }
+	            }
+	        });
+	    },
+	    
+	    _updateCounters: function (sEntityType, changes)
+	    {
+	    
+	        // search
+	        var aComponents = $("[data-mimoto-count='" + sEntityType + "']");
+	    
+	        aComponents.each( function(index, $component)
+	        {
+	        
+	            var mls_filter = $($component).attr("data-mimoto-filter");
+	        
+	            if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
+	        
+	        
+	            // parse modified values
+	            for (var i = 0; i < changes.length; i++)
+	            {
+	                // register
+	                var change = changes[i];
+	            
+	                var bFilterApproved = true;
+	                if (mls_filter)
+	                {
+	                    for (var s in mls_filter)
+	                    {
+	                        if (mls_filter[s] && change.value != mls_filter[s]) {
+	                            bFilterApproved = false;
+	                            break;
+	                        }
+	                    }
+	                }
+	            
+	                // load
+	                if (!bFilterApproved)
+	                {
+	                    var mls_config = $($component).attr("data-mimoto-config");
+	                
+	                    if (mls_config) { mls_config = $.parseJSON(mls_config); }
+	                
+	                
+	                    // read
+	                    var nCurrentCount = parseInt($($component).text());
+	                
+	                    // update
+	                    nCurrentCount = Math.max(0, nCurrentCount - 1);
+	                
+	                    // output
+	                    $($component).text(nCurrentCount);
+	                
+	                
+	                    if (mls_config.toggleClasses)
+	                    {
+	                        for (var sKey in mls_config.toggleClasses)
+	                        {
+	                            if (sKey == 'onZero' && nCurrentCount == 0)
+	                            {
+	                                $($component).addClass(mls_config.toggleClasses[sKey]);
+	                            }
+	                            else
+	                            {
+	                                $($component).removeClass(mls_config.toggleClasses[sKey]);
+	                            }
+	                        }
+	                    }
+	                }
+	            
+	            }
+	        
+	        });
+	    },
+	
+	    _triggerJavascriptListeners: function(sEntityIdentifier, aChanges)
+	    {
+	        console.log('_triggerJavascriptListeners triggered ...');
+	
+	        // validate
+	        if (!this._aEventListeners || !aChanges) return;
+	
+	        // parse modified values
+	        var nChangeCount = aChanges.length;
+	        for (var nChangeIndex = 0; nChangeIndex < nChangeCount; nChangeIndex++)
+	        {
+	            // register
+	            var change = aChanges[nChangeIndex];
+	
+	            // find event listeners
+	            var nListenerCount = this._aEventListeners.length;
+	            for (var nListenerIndex = 0; nListenerIndex < nListenerCount; nListenerIndex++)
+	            {
+	                // register
+	                var listener = this._aEventListeners[nListenerIndex];
+	
+	                if (listener.sPropertySelector == sEntityIdentifier + '.' + change.propertyName)
+	                {
+	                    // execute
+	                    listener.fJavascriptDelegate.apply(listener.scope, change);
+	                }
+	            }
+	        }
+	    },
+	    
+	    /**
+	     * Get component name and conditionals
+	     * Format of the value "subproject_phase" or "subproject_phase[phase]"
+	     * @param sValue
+	     * @private
+	     */
+	    _getComponentName: function (sComponentInfo)
+	    {
+	        // init
+	        var component = {};
+	    
+	        
+	        if (!sComponentInfo)
+	        {
+	            component.name = '';
+	            component.conditionals = [];
+	        }
+	        else
+	        {
+	            // search
+	            var nComponentNameConditionalsPos = sComponentInfo.indexOf('[');
+	    
+	            if (nComponentNameConditionalsPos != -1)
+	            {
+	                // strip
+	                var sComponentConditionals = sComponentInfo.substring(nComponentNameConditionalsPos + 1, sComponentInfo.length - 1);
+	        
+	                // store
+	                component.name = sComponentInfo.substr(0, nComponentNameConditionalsPos);
+	                component.conditionals = (sComponentConditionals) ? sComponentConditionals.split(',') : [];
+	            }
+	            else
+	            {
+	                // store
+	                component.name = sComponentInfo;
+	                component.conditionals = [];
+	            }
+	        }
+	    
+	        // send
+	        return component;
+	    },
+	    
+	    /**
+	     * Validate if data modifications already have been locally handled parsed
+	     * @param messageID
+	     * @returns boolean
+	     * @private
+	     */
+	    _validateMessage: function (aParsedMessages, message, sChannel)
+	    {
+	        // init
+	        var bHasBeenParsed = false;
+	        
+	        // default
+	        if (!sChannel) sChannel = 'webevent';
+	        
+	        if (!aParsedMessages[message.uid])
+	        {
+	            // register
+	            message.channel = sChannel;
+	            
+	            // store
+	            aParsedMessages[message.uid] = message;
+	        }
+	        else
+	        {
+	            if (aParsedMessages[message.uid].channel != sChannel)
+	            {
+	                bHasBeenParsed = true;
+	            }
+	        }
+	    
+	        // auto cleanup older messages
+	        var nAgeInSeconds = 5 * 60; // set to 5 minutes
+	        for (var sUID in aParsedMessages)
+	        {
+	            // register
+	            var parsedMessage = aParsedMessages[sUID];
+	            
+	            // check and remove
+	            if (parseInt(message.timestamp) - parseInt(parsedMessage.timestamp) > nAgeInSeconds)
+	            {
+	                delete aParsedMessages[parsedMessage.uid];
+	            }
+	        }
+	        
+	        // send
+	        return bHasBeenParsed;
+	    }
+	    
+	    
+	}
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
 	/**
 	 * Mimoto - RealtimeManager - Manages realtime updates and collaboration
 	 *
@@ -12212,13 +13610,13 @@
 	
 	
 	// Mimoto classes
-	var RealtimeEditor = __webpack_require__(8);
+	var RealtimeEditor = __webpack_require__(9);
 	
 	// Socket.io classes
-	var io = __webpack_require__(9);
+	var io = __webpack_require__(10);
 	
 	// Quill classes
-	var Quill = __webpack_require__(64);
+	var Quill = __webpack_require__(65);
 	
 	
 	
@@ -12565,7 +13963,7 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12578,11 +13976,11 @@
 	
 	
 	// Socket.io classes
-	var io = __webpack_require__(9);
+	var io = __webpack_require__(10);
 	
 	// Quill classes
-	var Quill = __webpack_require__(64);
-	var QuillDelta = __webpack_require__(69);
+	var Quill = __webpack_require__(65);
+	var QuillDelta = __webpack_require__(70);
 	
 	
 	module.exports = function(socket, sPropertySelector, editOptions, editableValue) {
@@ -12942,7 +14340,7 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -12950,10 +14348,10 @@
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(10);
-	var parser = __webpack_require__(16);
-	var Manager = __webpack_require__(27);
-	var debug = __webpack_require__(12)('socket.io-client');
+	var url = __webpack_require__(11);
+	var parser = __webpack_require__(17);
+	var Manager = __webpack_require__(28);
+	var debug = __webpack_require__(13)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -13052,12 +14450,12 @@
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(27);
-	exports.Socket = __webpack_require__(58);
+	exports.Manager = __webpack_require__(28);
+	exports.Socket = __webpack_require__(59);
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -13065,8 +14463,8 @@
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(11);
-	var debug = __webpack_require__(12)('socket.io-client:url');
+	var parseuri = __webpack_require__(12);
+	var debug = __webpack_require__(13)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -13139,7 +14537,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 	/**
@@ -13184,7 +14582,7 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -13194,7 +14592,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(14);
+	exports = module.exports = __webpack_require__(15);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -13365,10 +14763,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -13554,7 +14952,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -13570,7 +14968,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(15);
+	exports.humanize = __webpack_require__(16);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -13760,7 +15158,7 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	/**
@@ -13915,7 +15313,7 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -13923,11 +15321,11 @@
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(17)('socket.io-parser');
-	var json = __webpack_require__(20);
-	var Emitter = __webpack_require__(23);
-	var binary = __webpack_require__(24);
-	var isBuf = __webpack_require__(26);
+	var debug = __webpack_require__(18)('socket.io-parser');
+	var json = __webpack_require__(21);
+	var Emitter = __webpack_require__(24);
+	var binary = __webpack_require__(25);
+	var isBuf = __webpack_require__(27);
 	
 	/**
 	 * Protocol version.
@@ -14325,7 +15723,7 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -14335,7 +15733,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(18);
+	exports = module.exports = __webpack_require__(19);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -14499,7 +15897,7 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -14515,7 +15913,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(19);
+	exports.humanize = __webpack_require__(20);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -14702,7 +16100,7 @@
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	/**
@@ -14833,14 +16231,14 @@
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(22);
+	  var isLoader = "function" === "function" && __webpack_require__(23);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -15739,10 +17137,10 @@
 	  }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -15758,7 +17156,7 @@
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -15766,7 +17164,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	
@@ -15936,7 +17334,7 @@
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -15945,8 +17343,8 @@
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(25);
-	var isBuf = __webpack_require__(26);
+	var isArray = __webpack_require__(26);
+	var isBuf = __webpack_require__(27);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -16084,7 +17482,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -16093,7 +17491,7 @@
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -16113,7 +17511,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -16121,15 +17519,15 @@
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(28);
-	var Socket = __webpack_require__(58);
-	var Emitter = __webpack_require__(59);
-	var parser = __webpack_require__(16);
-	var on = __webpack_require__(61);
-	var bind = __webpack_require__(62);
-	var debug = __webpack_require__(12)('socket.io-client:manager');
-	var indexOf = __webpack_require__(56);
-	var Backoff = __webpack_require__(63);
+	var eio = __webpack_require__(29);
+	var Socket = __webpack_require__(59);
+	var Emitter = __webpack_require__(60);
+	var parser = __webpack_require__(17);
+	var on = __webpack_require__(62);
+	var bind = __webpack_require__(63);
+	var debug = __webpack_require__(13)('socket.io-client:manager');
+	var indexOf = __webpack_require__(57);
+	var Backoff = __webpack_require__(64);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -16679,19 +18077,19 @@
 
 
 /***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	module.exports = __webpack_require__(29);
-
-
-/***/ },
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
 	module.exports = __webpack_require__(30);
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	module.exports = __webpack_require__(31);
 	
 	/**
 	 * Exports parser
@@ -16699,25 +18097,25 @@
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(37);
+	module.exports.parser = __webpack_require__(38);
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(31);
-	var Emitter = __webpack_require__(46);
-	var debug = __webpack_require__(50)('engine.io-client:socket');
-	var index = __webpack_require__(56);
-	var parser = __webpack_require__(37);
-	var parseuri = __webpack_require__(11);
-	var parsejson = __webpack_require__(57);
-	var parseqs = __webpack_require__(47);
+	var transports = __webpack_require__(32);
+	var Emitter = __webpack_require__(47);
+	var debug = __webpack_require__(51)('engine.io-client:socket');
+	var index = __webpack_require__(57);
+	var parser = __webpack_require__(38);
+	var parseuri = __webpack_require__(12);
+	var parsejson = __webpack_require__(58);
+	var parseqs = __webpack_require__(48);
 	
 	/**
 	 * Module exports.
@@ -16849,9 +18247,9 @@
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(36);
-	Socket.transports = __webpack_require__(31);
-	Socket.parser = __webpack_require__(37);
+	Socket.Transport = __webpack_require__(37);
+	Socket.transports = __webpack_require__(32);
+	Socket.parser = __webpack_require__(38);
 	
 	/**
 	 * Creates transport of the given type.
@@ -17448,17 +18846,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(32);
-	var XHR = __webpack_require__(34);
-	var JSONP = __webpack_require__(53);
-	var websocket = __webpack_require__(54);
+	var XMLHttpRequest = __webpack_require__(33);
+	var XHR = __webpack_require__(35);
+	var JSONP = __webpack_require__(54);
+	var websocket = __webpack_require__(55);
 	
 	/**
 	 * Export transports.
@@ -17508,12 +18906,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 	
-	var hasCORS = __webpack_require__(33);
+	var hasCORS = __webpack_require__(34);
 	
 	module.exports = function (opts) {
 	  var xdomain = opts.xdomain;
@@ -17552,7 +18950,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 	
@@ -17575,18 +18973,18 @@
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(32);
-	var Polling = __webpack_require__(35);
-	var Emitter = __webpack_require__(46);
-	var inherit = __webpack_require__(48);
-	var debug = __webpack_require__(50)('engine.io-client:polling-xhr');
+	var XMLHttpRequest = __webpack_require__(33);
+	var Polling = __webpack_require__(36);
+	var Emitter = __webpack_require__(47);
+	var inherit = __webpack_require__(49);
+	var debug = __webpack_require__(51)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -18006,19 +19404,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(36);
-	var parseqs = __webpack_require__(47);
-	var parser = __webpack_require__(37);
-	var inherit = __webpack_require__(48);
-	var yeast = __webpack_require__(49);
-	var debug = __webpack_require__(50)('engine.io-client:polling');
+	var Transport = __webpack_require__(37);
+	var parseqs = __webpack_require__(48);
+	var parser = __webpack_require__(38);
+	var inherit = __webpack_require__(49);
+	var yeast = __webpack_require__(50);
+	var debug = __webpack_require__(51)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -18031,7 +19429,7 @@
 	 */
 	
 	var hasXHR2 = (function () {
-	  var XMLHttpRequest = __webpack_require__(32);
+	  var XMLHttpRequest = __webpack_require__(33);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -18257,15 +19655,15 @@
 
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(37);
-	var Emitter = __webpack_require__(46);
+	var parser = __webpack_require__(38);
+	var Emitter = __webpack_require__(47);
 	
 	/**
 	 * Module exports.
@@ -18420,22 +19818,22 @@
 
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(38);
-	var hasBinary = __webpack_require__(39);
-	var sliceBuffer = __webpack_require__(41);
-	var after = __webpack_require__(42);
-	var utf8 = __webpack_require__(43);
+	var keys = __webpack_require__(39);
+	var hasBinary = __webpack_require__(40);
+	var sliceBuffer = __webpack_require__(42);
+	var after = __webpack_require__(43);
+	var utf8 = __webpack_require__(44);
 	
 	var base64encoder;
 	if (global && global.ArrayBuffer) {
-	  base64encoder = __webpack_require__(44);
+	  base64encoder = __webpack_require__(45);
 	}
 	
 	/**
@@ -18493,7 +19891,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(45);
+	var Blob = __webpack_require__(46);
 	
 	/**
 	 * Encodes a packet.
@@ -19036,7 +20434,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 	
@@ -19061,7 +20459,7 @@
 
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -19069,7 +20467,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(40);
+	var isArray = __webpack_require__(41);
 	
 	/**
 	 * Module exports.
@@ -19127,7 +20525,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -19136,7 +20534,7 @@
 
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports) {
 
 	/**
@@ -19171,7 +20569,7 @@
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports) {
 
 	module.exports = after
@@ -19205,7 +20603,7 @@
 
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -19441,10 +20839,10 @@
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	/*
@@ -19517,7 +20915,7 @@
 
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -19620,7 +21018,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -19789,7 +21187,7 @@
 
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports) {
 
 	/**
@@ -19832,7 +21230,7 @@
 
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports) {
 
 	
@@ -19844,7 +21242,7 @@
 	};
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -19918,7 +21316,7 @@
 
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -19928,7 +21326,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(51);
+	exports = module.exports = __webpack_require__(52);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -20099,10 +21497,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -20118,7 +21516,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(52);
+	exports.humanize = __webpack_require__(53);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -20308,7 +21706,7 @@
 
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports) {
 
 	/**
@@ -20463,7 +21861,7 @@
 
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -20471,8 +21869,8 @@
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(35);
-	var inherit = __webpack_require__(48);
+	var Polling = __webpack_require__(36);
+	var inherit = __webpack_require__(49);
 	
 	/**
 	 * Module exports.
@@ -20701,24 +22099,24 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(36);
-	var parser = __webpack_require__(37);
-	var parseqs = __webpack_require__(47);
-	var inherit = __webpack_require__(48);
-	var yeast = __webpack_require__(49);
-	var debug = __webpack_require__(50)('engine.io-client:websocket');
+	var Transport = __webpack_require__(37);
+	var parser = __webpack_require__(38);
+	var parseqs = __webpack_require__(48);
+	var inherit = __webpack_require__(49);
+	var yeast = __webpack_require__(50);
+	var debug = __webpack_require__(51)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	var NodeWebSocket;
 	if (typeof window === 'undefined') {
 	  try {
-	    NodeWebSocket = __webpack_require__(55);
+	    NodeWebSocket = __webpack_require__(56);
 	  } catch (e) { }
 	}
 	
@@ -20993,13 +22391,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports) {
 
 	
@@ -21014,7 +22412,7 @@
 	};
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -21052,7 +22450,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -21060,13 +22458,13 @@
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(16);
-	var Emitter = __webpack_require__(59);
-	var toArray = __webpack_require__(60);
-	var on = __webpack_require__(61);
-	var bind = __webpack_require__(62);
-	var debug = __webpack_require__(12)('socket.io-client:socket');
-	var hasBin = __webpack_require__(39);
+	var parser = __webpack_require__(17);
+	var Emitter = __webpack_require__(60);
+	var toArray = __webpack_require__(61);
+	var on = __webpack_require__(62);
+	var bind = __webpack_require__(63);
+	var debug = __webpack_require__(13)('socket.io-client:socket');
+	var hasBin = __webpack_require__(40);
 	
 	/**
 	 * Module exports.
@@ -21477,7 +22875,7 @@
 
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -21646,7 +23044,7 @@
 
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports) {
 
 	module.exports = toArray
@@ -21665,7 +23063,7 @@
 
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports) {
 
 	
@@ -21695,7 +23093,7 @@
 
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports) {
 
 	/**
@@ -21724,7 +23122,7 @@
 
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports) {
 
 	
@@ -21815,7 +23213,7 @@
 
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -32714,10 +34112,10 @@
 	/***/ })
 	/******/ ]);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(65).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(66).Buffer))
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -32730,9 +34128,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(66)
-	var ieee754 = __webpack_require__(67)
-	var isArray = __webpack_require__(68)
+	var base64 = __webpack_require__(67)
+	var ieee754 = __webpack_require__(68)
+	var isArray = __webpack_require__(69)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -34513,7 +35911,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -34633,7 +36031,7 @@
 
 
 /***/ },
-/* 67 */
+/* 68 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -34723,7 +36121,7 @@
 
 
 /***/ },
-/* 68 */
+/* 69 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -34734,13 +36132,13 @@
 
 
 /***/ },
-/* 69 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var diff = __webpack_require__(70);
-	var equal = __webpack_require__(71);
-	var extend = __webpack_require__(74);
-	var op = __webpack_require__(75);
+	var diff = __webpack_require__(71);
+	var equal = __webpack_require__(72);
+	var extend = __webpack_require__(75);
+	var op = __webpack_require__(76);
 	
 	
 	var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
@@ -35054,7 +36452,7 @@
 
 
 /***/ },
-/* 70 */
+/* 71 */
 /***/ function(module, exports) {
 
 	/**
@@ -35758,12 +37156,12 @@
 
 
 /***/ },
-/* 71 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(72);
-	var isArguments = __webpack_require__(73);
+	var objectKeys = __webpack_require__(73);
+	var isArguments = __webpack_require__(74);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -35858,7 +37256,7 @@
 
 
 /***/ },
-/* 72 */
+/* 73 */
 /***/ function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -35873,7 +37271,7 @@
 
 
 /***/ },
-/* 73 */
+/* 74 */
 /***/ function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -35899,7 +37297,7 @@
 
 
 /***/ },
-/* 74 */
+/* 75 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -35991,11 +37389,11 @@
 
 
 /***/ },
-/* 75 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var equal = __webpack_require__(71);
-	var extend = __webpack_require__(74);
+	var equal = __webpack_require__(72);
+	var extend = __webpack_require__(75);
 	
 	
 	var lib = {

@@ -10,7 +10,8 @@
 // Mimoto classes
 let DomUtils = require('./modules/DomUtils');
 let DomService = require('./modules/DomService');
-let DataService = require('./modules/DataService');
+let DataService = require('./modules/data/DataService');
+let DisplayService = require('./modules/display/DisplayService');
 let RealtimeManager = require('./modules/RealtimeManager');
 
 
@@ -40,6 +41,7 @@ module.exports.prototype = {
     utils: null,
     dom: null,
     data: null,
+    display: null,
 
     // config
     autoLogon: null,
@@ -67,7 +69,6 @@ module.exports.prototype = {
         // setup
         this.utils = new DomUtils();
         this.dom = new DomService();
-        this.data = new DataService();
 
         // configure
         this.autoLogon = true;
@@ -89,6 +90,11 @@ module.exports.prototype = {
     startup: function()
     {
         if (this.debug) console.log('Mimoto starting up ...');
+
+        // parse interface
+        this.data = new DataService();
+        this.display = new DisplayService();
+
 
         // update
         MimotoX.utils.parseRequestQueue();

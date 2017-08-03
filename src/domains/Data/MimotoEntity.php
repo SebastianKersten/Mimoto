@@ -404,11 +404,11 @@ class MimotoEntity
 
 
     /**
-     * Get Aimless value of a property or subproperty
+     * Get the property selector for a property or subproperty
      * @param string $sPropertyName
      * @return string
      */
-    public function getAimlessValue($sPropertyName)
+    public function getPropertySelector($sPropertyName)
     {
         // find
         $nSeperatorPos = strpos($sPropertyName, '.');
@@ -445,7 +445,7 @@ class MimotoEntity
      * Get Aimless id of an entity
      * @return string
      */
-    public function getAimlessId()
+    public function getEntitySelector()
     {
         return $this->getEntityTypeName().'.'.$this->getId();
     }

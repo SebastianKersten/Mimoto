@@ -22,6 +22,8 @@ class KrakenService extends MimotoService
         // https://kraken.io/docs/generating-image-sets
 
 
+        // entity: kraken_job - kraken_job_id = value, image = entity
+
 
         require_once("Kraken.php");
 

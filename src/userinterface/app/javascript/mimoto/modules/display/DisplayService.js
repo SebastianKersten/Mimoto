@@ -1,5 +1,5 @@
 /**
- * Mimoto.CMS - Form handling
+ * Mimoto - Display Service for realtime data management
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -14,12 +14,44 @@ module.exports = function() {
 };
 
 module.exports.prototype = {
-    
-    
-    _aParsedMessages: [],
-    _aEventListeners: [],
-    
 
+
+    // data tags
+    TAG_MIMOTO_VALUE:      'data-mimoto-value',
+    TAG_MIMOTO_ENTITY:     'data-mimoto-entity',
+    TAG_MIMOTO_COLLECTION: 'data-mimoto-collection',
+    TAG_MIMOTO_IMAGE:      'data-mimoto-image',
+    TAG_MIMOTO_VIDEO:      'data-mimoto-video',
+    TAG_MIMOTO_AUDIO:      'data-mimoto-audio',
+
+    TAG_MIMOTO_ID:         'data-mimoto-id',
+
+    // display tags
+    TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:        'data-mimoto-display-showwhenempty',
+    TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
+    TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:    'data-mimoto-display-addclasswhenempty',
+    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY: 'data-mimoto-display-removeclasswhenempty',
+
+    // utility tags
+    TAG_MIMOTO_COUNT: 'data-mimoto-count',
+
+    // setting tags
+    TAG_SETTING_MIMOTO_FILTER:     'data-mimoto-filter',
+    TAG_SETTING_MIMOTO_COMPONENT:  'data-mimoto-component',
+    TAG_SETTING_MIMOTO_CONNECTION: 'data-mimoto-connection',
+    TAG_SETTING_MIMOTO_SORTINDEX:  'data-mimoto-sortindex',
+    TAG_SETTING_MIMOTO_WRAPPER:    'data-mimoto-wrapper',
+
+    // directive tags
+    TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE: 'data-mimoto-reloadonchange',
+
+    // elements
+    _aTaggedItems: [],
+    _aTaggedProperties: [],
+
+
+
+    
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -30,24 +62,172 @@ module.exports.prototype = {
      */
     __construct: function()
     {
-        this._aEventListeners = [];
+        console.log('Display service starting ...');
+        let nStartTime = Date.now();
+
+        // register
+        let aTags = this._collectAllTaggedElements();
+
+        let nEndTime = Date.now();
+        console.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+
+
+
+        console.log('aTags', aTags);
+
+
+
+        this._prepareAllTaggedElements(aTags);
+
+        nEndTime = Date.now();
+        console.log('End of preparation phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+
     },
 
-    registerEventListener: function(sPropertySelector, scope, fJavascriptDelegate)
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Collect all tagged elements from document
+     * @returns aTags array All tagged elements grouped by tag type
+     * @private
+     */
+    _collectAllTaggedElements: function()
     {
-        this._aEventListeners.push(
+        // 1. init
+        let aTags = [];
+
+        // 2. prepare
+        let aPrimaryTags = [
+
+            // data tags
+            this.TAG_MIMOTO_VALUE,
+            this.TAG_MIMOTO_ENTITY,
+            this.TAG_MIMOTO_COLLECTION,
+            this.TAG_MIMOTO_IMAGE,
+            this.TAG_MIMOTO_VIDEO,
+            this.TAG_MIMOTO_AUDIO,
+            this.TAG_MIMOTO_ID,
+
+            // display tags
+            this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY,
+            this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
+            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY,
+            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY,
+
+            // utility tags
+            this.TAG_MIMOTO_COUNT
+        ];
+
+        // 3. collect
+        let nPrimaryTagCount = aPrimaryTags.length;
+        for (let nPrimaryTagIndex = 0; nPrimaryTagIndex < nPrimaryTagCount; nPrimaryTagIndex++)
+        {
+            // 3a. register
+            let sPrimaryTag = aPrimaryTags[nPrimaryTagIndex];
+
+            // 3b. find and store
+            aTags[sPrimaryTag] = document.querySelectorAll('[' + sPrimaryTag + ']');
+        }
+
+        // 4. send
+        return aTags;
+    },
+
+    _prepareAllTaggedElements: function(aTags)
+    {
+        // 1. parse all tag types
+        for (let sTag in aTags)
+        {
+            // register
+            let aElements = aTags[sTag];
+
+            // prepare
+            let nElementCount = aElements.length;
+            for (let nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++)
             {
-                sPropertySelector: sPropertySelector,
-                scope: scope,
-                fJavascriptDelegate: fJavascriptDelegate
+                // register
+                let element = aElements[nElementIndex];
+
+                // init and register
+                let taggedItem = {
+                    sTag: sTag,
+                    sPropertySelector: element.getAttribute(sTag),
+                    element: element
+                };
+
+                // read tag specific settings
+                switch(sTag)
+                {
+                    case this.TAG_MIMOTO_ID:
+
+                        // verify and register
+                        taggedItem.sEntitySelector = element.getAttribute(this.TAG_MIMOTO_ID);
+
+                        console.log('Item', taggedItem);
+
+                    case this.TAG_MIMOTO_ENTITY:
+                    case this.TAG_MIMOTO_COLLECTION:
+
+
+                        // validate
+                        if (!element.hasAttribute(this.TAG_SETTING_MIMOTO_COMPONENT))
+                        {
+                            if (MimotoX.debug) console.warn('Element', element, 'is missing a component setting', this.TAG_SETTING_MIMOTO_COMPONENT);
+                            continue;
+                        }
+
+                        // register
+                        taggedItem.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
+
+
+                        // verify
+                        if (sTag === this.TAG_MIMOTO_ENTITY)
+                        {
+                            // verify and register
+                            if (element.hasAttribute(this.TAG_SETTING_MIMOTO_CONNECTION))
+                            {
+                                taggedItem.nConnectionId = element.getAttribute(this.TAG_SETTING_MIMOTO_CONNECTION);
+                            }
+
+                            // verify and register
+                            if (element.hasAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX))
+                            {
+                                taggedItem.nSortIndex = element.getAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX);
+                            }
+
+                            // verify and register
+                            if (element.hasAttribute(this.TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE))
+                            {
+                                taggedItem.bReloadOnChange = true;
+                            }
+                        }
+
+                        // verify
+                        if (sTag === this.TAG_MIMOTO_COLLECTION && element.hasAttribute(this.TAG_SETTING_MIMOTO_FILTER))
+                        {
+                            // register
+                            taggedItem.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
+                        }
+
+
+
+                        console.log('Property', taggedItem);
+
+                        break;
+                }
             }
-        );
+        }
+
+        // send
+        return 'xxx';
     },
 
 
-    // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
-    // ----------------------------------------------------------------------------
 
 
     /**

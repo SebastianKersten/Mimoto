@@ -507,6 +507,12 @@ class AimlessComponent
 
     public function realtime($sPropertySelector = null, $sComponentName = null, $sWrapperName = null)
     {
+
+
+        // 1. move to util functie
+
+
+
         $sConnection = (!empty($this->_connection) && !is_nan($this->_connection->getId())) ? ' data-mimoto-connection="'.$this->_connection->getId().'"' : '';
         $sSortIndex = (!empty($this->_connection) && !is_nan($this->_connection->getSortIndex())) ? ' data-mimoto-sortindex="'.$this->_connection->getSortIndex().'"' : '';
 
@@ -542,8 +548,25 @@ class AimlessComponent
                 $sComponent = (!empty($sComponentName)) ? ' data-mimoto-component="'.$sComponentName.'"' : '';
                 $sWrapper = (!empty($sWrapperName)) ? ' data-mimoto-wrapper="'.$sWrapperName.'"' : '';
 
+
+
+                $sContainer = '';
+                switch($this->_entity->getPropertyType($sPropertyName))
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                        $sContainer = 'data-mimoto-entity="'.$this->_entity->getPropertySelector($sPropertyName).'"';
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                        $sContainer = 'data-mimoto-collection="'.$this->_entity->getPropertySelector($sPropertyName).'"';
+                        break;
+                }
+
+
                 // send
-                return 'data-mimoto-contains="'.$this->_entity->getAimlessValue($sPropertyName).'"'.$sFilter.$sComponent.$sWrapper;
+                return $sContainer.$sFilter.$sComponent.$sWrapper;
             }
             else
             if (isset($this->_aSelections[$sPropertyName]))
@@ -559,8 +582,26 @@ class AimlessComponent
                 $sComponentConditionals = Mimoto::service('output')->getComponentConditionalsAsString($sComponentName);
                 $sComponentName .= $sComponentConditionals;
 
-                // compose
+
+
                 $sComponent = ' data-mimoto-component="'.$sComponentName.'"';
+
+
+                // compose
+                switch($this->_entity->getPropertyType($sPropertyName))
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                        $sComponent = ' data-mimoto-component="'.$sComponentName.'"';
+                        break;
+                }
+
+
                 $sWrapper = (!empty($sWrapperName)) ? ' data-mimoto-wrapper="'.$sWrapperName.'"' : '';
 
                 // send
@@ -586,7 +627,7 @@ class AimlessComponent
             $sWrapper = (!empty($this->_sWrapperName)) ? ' data-mimoto-wrapper="'.$this->_sWrapperName.'"' : '';
 
 
-            return 'data-mimoto-id="'.$this->_entity->getAimlessId().'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
+            return 'data-mimoto-id="'.$this->_entity->getEntitySelector().'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
         }
         else
         {
@@ -601,7 +642,7 @@ class AimlessComponent
                     if ($this->_entity->getPropertySubtype($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE
                         && empty($sComponentName))
                     {
-                        return 'data-mimoto-image="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
+                        return 'data-mimoto-image="'.$this->_entity->getPropertySelector($sPropertySelector).'"';
                     }
                     else
                     {
@@ -610,14 +651,14 @@ class AimlessComponent
                         $sComponent = (!empty($sComponentName)) ? ' data-mimoto-component="'.$sComponentName.'"' : '';
                         $sWrapper = (!empty($sWrapperName)) ? ' data-mimoto-wrapper="'.$sWrapperName.'"' : '';
 
-                        return 'data-mimoto-entity="'.$this->_entity->getAimlessValue($sPropertySelector).'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
+                        return 'data-mimoto-entity="'.$this->_entity->getPropertySelector($sPropertySelector).'"'.$sConnection.$sSortIndex.$sComponent.$sWrapper;
                     }
 
                     break;
 
                 default:
 
-                    return 'data-mimoto-value="'.$this->_entity->getAimlessValue($sPropertySelector).'"';
+                    return 'data-mimoto-value="'.$this->_entity->getPropertySelector($sPropertySelector).'"';
             }
         }
     }
@@ -805,7 +846,8 @@ class AimlessComponent
 
         // get component file
         $sComponentFile = $this->_OutputService->getComponentFile($sTemplateName, $this->_entity);
-
+//        Mimoto::error($this->_entity);
+//        Mimoto::error($sComponentFile);
         // create
         $viewModel = new AimlessComponentViewModel($this);
 
@@ -1035,7 +1077,7 @@ class AimlessComponent
         {
             $sDisplayState = (empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
 
-            return 'data-mimoto-hideonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+            return 'data-mimoto-display-hidewhenempty="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'" '.$sDisplayState;
         }
         else
         {
@@ -1043,7 +1085,7 @@ class AimlessComponent
             {
                 $sDisplayState = ($this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
 
-                return 'data-mimoto-hideonempty="'.$sPropertySelector.'" '.$sDisplayState;
+                return 'data-mimoto-display-hidewhenempty="'.$sPropertySelector.'" '.$sDisplayState;
             }
         }
 
@@ -1069,7 +1111,7 @@ class AimlessComponent
         {
             $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
 
-            return 'data-mimoto-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+            return 'data-mimoto-display-showwhenempty="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'" '.$sDisplayState;
         }
         else
         {
@@ -1077,7 +1119,7 @@ class AimlessComponent
             {
                 $sDisplayState = (!$this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
 
-                return 'data-mimoto-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
+                return 'data-mimoto-display-showwhenempty="'.$sPropertySelector.'" '.$sDisplayState;
             }
         }
 

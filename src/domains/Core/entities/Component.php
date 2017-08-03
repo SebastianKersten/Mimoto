@@ -581,22 +581,22 @@ class Component
             // notification center
 
             (object) array(
-                'name' => 'Mimoto.CMS_notifications_NotificationOverview',
+                'name' => 'MimotoCMS_notifications_NotificationOverview',
                 'file' => 'MimotoCMS/components/pages/notifications/NotificationOverview/NotificationOverview.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_notifications_NotificationOverviewSmall',
+                'name' => 'MimotoCMS_notifications_NotificationOverviewSmall',
                 'file' => 'MimotoCMS/components/pages/notifications/NotificationOverviewSmall/NotificationOverviewSmall.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_notifications_Notification',
+                'name' => 'MimotoCMS_notifications_Notification',
                 'file' => 'MimotoCMS/components/pages/notifications/Notification/Notification.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_notifications_NotificationSmall',
+                'name' => 'MimotoCMS_notifications_NotificationSmall',
                 'file' => 'MimotoCMS/components/pages/notifications/NotificationSmall/NotificationSmall.twig',
                 'conditionals' => []
             ),

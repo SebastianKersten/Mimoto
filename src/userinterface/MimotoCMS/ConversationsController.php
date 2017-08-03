@@ -29,7 +29,7 @@ class ConversationsController
 //        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_conversations_ConversationOverview');
 //
 //        // setup
-//        $component->addSelection('conversations', $aNotifications, 'Mimoto.CMS_notifications_Notification');
+//        $component->addSelection('conversations', $aNotifications, 'MimotoCMS_notifications_Notification');
 //
 //        // setup page
 //        $component->setVar('pageTitle', array(

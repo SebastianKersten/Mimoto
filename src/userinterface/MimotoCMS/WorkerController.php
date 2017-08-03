@@ -34,6 +34,9 @@ use Net_Gearman_Manager;
 class WorkerController
 {
 
+    private $_socketIOClient = null;
+
+
     public function overview(Application $app)
     {
         $gearmanManager = new Net_Gearman_Manager('127.0.0.1');
@@ -60,11 +63,9 @@ class WorkerController
         flush();
 
 
-        //$GLOBALS['socketIOClient'] = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
-        //$GLOBALS['socketIOClient']->initialize(true);
-
-        // init
-        //$client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+        // setup connection
+        $this->_socketIOClient = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+        $this->_socketIOClient->initialize(false);
 
 
         // init
@@ -74,11 +75,6 @@ class WorkerController
         $worker->addServer(Mimoto::value('config')->gearman->server_address);
         $worker->addFunction("sendUpdate", function($job)
         {
-            // init
-            $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
-
-            // 1. gooi in globals
-
             // read
             $workload = json_decode($job->workload());
 
@@ -95,13 +91,14 @@ class WorkerController
                 ob_flush();
                 flush();
 
-                $client->initialize();
-                $client->emit($workload->sEvent, $aData);
-                $client->close();
+//                $client->initialize();
+                $this->_socketIOClient->emit($workload->sEvent, $aData);
+//                $client->close();
             }
             catch (ServerConnectionFailureException $e)
             {
                 echo '\n\nServer Connection Failure!!\n\n';
+                // todo - reconnect?
             }
 
             // output
@@ -113,10 +110,7 @@ class WorkerController
             // output
             ob_flush();
             flush();
-
-
-            // temp, keepalive is better
-            //unset($client);
+            //die();
         });
 
         var_dump($worker, true);

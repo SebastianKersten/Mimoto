@@ -17,7 +17,7 @@
 
         <script src="/static/js/publisher.js"></script>
 
-        {#{% if !Mimoto.editMode %}<script scr="yourinfocardscript"></script>{% endif %}#}
+        {#{% if !Mimoto.editMode | Mimoto.isMode('edit') %}<script scr="yourinfocardscript"></script>{% endif %}#}
 
 
         <script>

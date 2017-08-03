@@ -205,7 +205,7 @@ class AimlessComponentViewModel
 //            {
 //                $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
 //
-//                return 'data-mimoto-showonempty="'.$this->_entity->getAimlessId().'.'.$sPropertySelector.'" '.$sDisplayState;
+//                return 'data-mimoto-display-showonempty="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'" '.$sDisplayState;
 //            }
 //            else
 //            {
@@ -213,7 +213,7 @@ class AimlessComponentViewModel
 //                {
 //                    $sDisplayState = (!$this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
 //
-//                    return 'data-mimoto-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
+//                    return 'data-mimoto-display-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
 //                }
 //            }
 //

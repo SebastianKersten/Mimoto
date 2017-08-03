@@ -1,5 +1,5 @@
-<div class="MimotoCMS_pages_notifications_NotificationOverview__container" {{ Mimoto.realtime('notifications.{state="open"}', 'Mimoto.CMS_notifications_Notification') }}>
-    {{ Mimoto.data('notifications.{state="open"}', 'Mimoto.CMS_notifications_Notification') }}
+<div class="MimotoCMS_pages_notifications_NotificationOverview__container" {{ Mimoto.realtime('notifications.{state="open"}', 'MimotoCMS_notifications_Notification') }}>
+    {{ Mimoto.data('notifications.{state="open"}', 'MimotoCMS_notifications_Notification') }}
 </div>
 
 <div class="MimotoCMS_pages_notifications_NotificationOverview__empty" onclick="Mimoto.CMS.notificationsCloseAll()" {{ Mimoto.showWhenEmpty('notifications') }}>
