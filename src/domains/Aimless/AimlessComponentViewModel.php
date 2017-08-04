@@ -230,6 +230,19 @@ class AimlessComponentViewModel
     }
 
 
+    public function addClassWhenValue($sPropertySelector, $xValue, $xClasses)
+    {
+        return $this->_component->addClassWhenValue($sPropertySelector, $xValue, $xClasses);
+    }
+
+    public function addClassWhenEmpty($sPropertySelector, $xClasses)
+    {
+        return $this->_component->addClassWhenEmpty($sPropertySelector, $xClasses);
+    }
+
+
+
+
     // data-mimoto-display-showonempty="article.3.comments"
 
 

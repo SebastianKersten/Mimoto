@@ -1092,6 +1092,95 @@ class AimlessComponent
         return '';
     }
 
+    public function addClassWhenEmpty($sPropertySelector, $xClasses)
+    {
+//        // init
+//        $aClasses = [];
+//
+//
+//        if (is_array($xClasses))
+//        {
+//
+//        }
+//
+//
+//
+//        $instructions = (object) array(
+//            classes
+//        );
+
+
+
+        if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
+        {
+            $sDisplayState = (empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
+
+            return 'data-mimoto-display-addclasswhenempty="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'" '.$sDisplayState;
+        }
+        else
+        {
+            if (isset($this->_aSelections[$sPropertySelector]))
+            {
+                $sDisplayState = ($this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
+
+                return 'data-mimoto-display-addclasswhenempty="'.$sPropertySelector.'" '.$sDisplayState;
+            }
+        }
+
+        return '';
+    }
+
+    public function addClassWhenValue($sPropertySelector, $value, $xClasses)
+    {
+        // init
+        $aClasses = [];
+
+
+        if (is_array($xClasses))
+        {
+            foreach ($xClasses as $sKey => $sValue)
+            {
+                if (is_string($xClasses[$sKey]) && is_string($sValue)) $aClasses[] = $sValue;
+            }
+        }
+        else if (is_string($xClasses))
+        {
+            $aClasses[] = $xClasses;
+        }
+
+
+
+        $instructions = (object) array(
+            'aClasses' => $aClasses,
+            'value' => $value
+        );
+
+
+        return 'data-mimoto-display-addclasswhenvalue="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
+//
+//
+//        if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
+//        {
+//            $sDisplayState = (empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
+//
+//            return 'data-mimoto-display-addclasswhenempty="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'" '.$sDisplayState;
+//        }
+//        else
+//        {
+//            if (isset($this->_aSelections[$sPropertySelector]))
+//            {
+//                $sDisplayState = ($this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
+//
+//                return 'data-mimoto-display-addclasswhenempty="'.$sPropertySelector.'" '.$sDisplayState;
+//            }
+//        }
+
+//        return '';
+    }
+
+
+
+
     public function showWhenEmpty($sPropertySelector)
     {
 

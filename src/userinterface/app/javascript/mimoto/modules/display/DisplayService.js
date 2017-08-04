@@ -31,9 +31,11 @@ module.exports.prototype = {
     TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
     TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:    'data-mimoto-display-addclasswhenempty',
     TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY: 'data-mimoto-display-removeclasswhenempty',
+    TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:    'data-mimoto-display-addclasswhenvalue',
+    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE: 'data-mimoto-display-removeclasswhenvalue',
 
     // utility tags
-    TAG_MIMOTO_COUNT: 'data-mimoto-count',
+    TAG_MATH_MIMOTO_COUNT: 'data-mimoto-count',
 
     // setting tags
     TAG_SETTING_MIMOTO_FILTER:     'data-mimoto-filter',
@@ -48,6 +50,7 @@ module.exports.prototype = {
     // elements
     _aTaggedItems: [],
     _aTaggedProperties: [],
+    _aSelectors: [],
 
 
 
@@ -62,28 +65,153 @@ module.exports.prototype = {
      */
     __construct: function()
     {
+        // 1. add core css classes
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = '.Mimoto_CoreCSS_hidden { display: none; }';
+        document.getElementsByTagName('head')[0].appendChild(style);
+
+
+        // 2. prepare interface
+        this.parseInterface(document);
+    },
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+
+    parseInterface: function(element)
+    {
         console.log('Display service starting ...');
         let nStartTime = Date.now();
 
         // register
-        let aTags = this._collectAllTaggedElements();
+        let aTags = this._collectAllTagsFromElement(element);
 
         let nEndTime = Date.now();
         console.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
 
-
-
-        console.log('aTags', aTags);
-
-
-
-        this._prepareAllTaggedElements(aTags);
+        this._aSelectors = this._prepareAllTaggedElements(aTags);
 
         nEndTime = Date.now();
         console.log('End of preparation phase .. took ', nEndTime - nStartTime  + ' milliseconds');
 
+
+        console.warn('aTags', aTags);
+        console.log('aSelectors', this._aSelectors);
     },
 
+
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    onDataChange: function(data)
+    {
+        console.error('data', data);
+
+
+        let sEntitySelector = data.entityType + '.' + data.entityId;
+
+
+        if (data.changes && data.changes.length > 0)
+        {
+
+            let nChangeCount = data.changes.length;
+            for (let nChangeIndex = 0; nChangeIndex < nChangeCount; nChangeIndex++)
+            {
+                // register
+                let change = data.changes[nChangeIndex];
+
+                let sPropertySelector = sEntitySelector + '.' + change.propertyName;
+
+                // search
+                if (this._aSelectors[sPropertySelector])
+                {
+
+                    console.log('found ' + sPropertySelector, this._aSelectors[sPropertySelector]);
+
+
+                    // register
+                    let aRegisteredElements = this._aSelectors[sPropertySelector];
+
+                    // parse elements
+                    let nElementCount = aRegisteredElements.length;
+                    for (let nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++)
+                    {
+                        // register
+                        let registeredElement = aRegisteredElements[nElementIndex];
+
+                        switch(registeredElement.sTag)
+                        {
+                            case this.TAG_MIMOTO_VALUE:
+
+                                if (change.type === 'value')
+                                {
+                                    // 1. also allow delta's and keep track of delta-index
+                                    // 2. what about innerHTML (setting per property)
+
+
+                                    // parse list of found elements and check for data.changes
+
+
+                                    // hideOnEmpty in aparte helper functie
+
+
+                                    registeredElement.element.innerText = change.value;
+                                }
+                                break;
+
+                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
+
+                                console.log('Realtime TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE');
+
+                                if (change.value == registeredElement.instructions.value)
+                                {
+                                    console.log('Value is identical ...');
+
+                                    let nClassCount = registeredElement.instructions.aClasses.length;
+                                    for (let nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++)
+                                    {
+                                        registeredElement.element.classList.add(registeredElement.instructions.aClasses[nClassIndex]);
+                                    }
+                                }
+                                else
+                                {
+                                    console.log('No identical value ... just passing through ..');
+
+                                    let nClassCount = registeredElement.instructions.aClasses.length;
+                                    for (let nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++)
+                                    {
+                                        registeredElement.element.classList.remove(registeredElement.instructions.aClasses[nClassIndex]);
+                                    }
+                                }
+
+
+
+                                break;
+                        }
+
+
+
+                    }
+
+
+                }
+            }
+
+        }
+
+
+
+
+    },
 
 
     // ----------------------------------------------------------------------------
@@ -93,10 +221,11 @@ module.exports.prototype = {
 
     /**
      * Collect all tagged elements from document
+     * @param element The element to be parsed
      * @returns aTags array All tagged elements grouped by tag type
      * @private
      */
-    _collectAllTaggedElements: function()
+    _collectAllTagsFromElement: function(element)
     {
         // 1. init
         let aTags = [];
@@ -118,9 +247,11 @@ module.exports.prototype = {
             this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
             this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY,
             this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY,
+            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE,
+            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE,
 
             // utility tags
-            this.TAG_MIMOTO_COUNT
+            this.TAG_MATH_MIMOTO_COUNT
         ];
 
         // 3. collect
@@ -131,7 +262,7 @@ module.exports.prototype = {
             let sPrimaryTag = aPrimaryTags[nPrimaryTagIndex];
 
             // 3b. find and store
-            aTags[sPrimaryTag] = document.querySelectorAll('[' + sPrimaryTag + ']');
+            aTags[sPrimaryTag] = element.querySelectorAll('[' + sPrimaryTag + ']');
         }
 
         // 4. send
@@ -140,7 +271,11 @@ module.exports.prototype = {
 
     _prepareAllTaggedElements: function(aTags)
     {
-        // 1. parse all tag types
+        // 1. init
+        let aSelectors = [];
+
+
+        // 2. parse all tag types
         for (let sTag in aTags)
         {
             // register
@@ -153,22 +288,67 @@ module.exports.prototype = {
                 // register
                 let element = aElements[nElementIndex];
 
+
+                let sPropertySelector = element.getAttribute(sTag);
+
+
                 // init and register
                 let taggedItem = {
                     sTag: sTag,
-                    sPropertySelector: element.getAttribute(sTag),
+                    sPropertySelector: sPropertySelector,
                     element: element
                 };
+
+
+                // exctract instructions
+                let nInstructionPos = sPropertySelector.indexOf('|');
+                if (nInstructionPos !== -1)
+                {
+                    taggedItem.sPropertySelector = sPropertySelector.substr(0, nInstructionPos);
+                    taggedItem.instructions = JSON.parse(sPropertySelector.substr(nInstructionPos + 1));
+                }
+
+
+
+
+                // 1. wat te doen met het taggedItem?
+
+
+                // verify or init
+                if (!aSelectors[taggedItem.sPropertySelector]) aSelectors[taggedItem.sPropertySelector] = [];
+
+                // register
+                aSelectors[taggedItem.sPropertySelector].push(taggedItem);
+
 
                 // read tag specific settings
                 switch(sTag)
                 {
+                    case this.TAG_MIMOTO_VALUE:
+
+
+                        //console.log('Value', taggedItem);
+                        break;
+
                     case this.TAG_MIMOTO_ID:
 
                         // verify and register
                         taggedItem.sEntitySelector = element.getAttribute(this.TAG_MIMOTO_ID);
 
-                        console.log('Item', taggedItem);
+                        //console.log('Item', taggedItem);
+
+
+
+                        // 1. voeg settings van entity en collection toe
+                        // 1. register items
+                        // 2. register containers
+                        // 3. register values
+                        // 4. wordt al gedaan
+
+                        // 5. register by propertySelector aPropertySelectors en aEntitySelectors
+
+                        break;
+
 
                     case this.TAG_MIMOTO_ENTITY:
                     case this.TAG_MIMOTO_COLLECTION:
@@ -216,7 +396,45 @@ module.exports.prototype = {
 
 
 
-                        console.log('Property', taggedItem);
+                        //console.log('Property', taggedItem);
+
+                        break;
+
+                    case this.TAG_MATH_MIMOTO_COUNT:
+
+                        //console.log('Count', taggedItem);
+
+                        break;
+
+
+                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
+
+                        console.log('TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY - initial execute here');
+
+                        break;
+
+                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
+
+                        console.log('TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE - initial execute here');
+
+
+                        if (taggedItem.element.innerText == taggedItem.instructions.value)
+                        {
+                            console.log('Value is identical ...');
+
+                            let nClassCount = taggedItem.instructions.aClasses.length;
+
+                            for (let nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++)
+                            {
+                                console.log(taggedItem.instructions.aClasses[nClassIndex]);
+
+                                taggedItem.element.classList.add(taggedItem.instructions.aClasses[nClassIndex]);
+                            }
+                        }
+                        else
+                        {
+                            console.log('No identical value ... just passing through ..');
+                        }
 
                         break;
                 }
@@ -224,7 +442,7 @@ module.exports.prototype = {
         }
 
         // send
-        return 'xxx';
+        return aSelectors;
     },
 
 

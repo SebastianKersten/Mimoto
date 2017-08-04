@@ -92,7 +92,9 @@ class WorkerController
                 flush();
 
 //                $client->initialize();
+                echo "======\n";
                 $this->_socketIOClient->emit($workload->sEvent, $aData);
+                echo "======\n";
 //                $client->close();
             }
             catch (ServerConnectionFailureException $e)

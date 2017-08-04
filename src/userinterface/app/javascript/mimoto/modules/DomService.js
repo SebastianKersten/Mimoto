@@ -62,7 +62,11 @@ module.exports.prototype = {
         console.log('Aimless - data.changed (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
         console.log(data);
         
-        
+
+        MimotoX.display.onDataChange(data);
+        return;
+
+
         // compose
         var sEntityIdentifier = data.entityType + '.' + data.entityId;
         
