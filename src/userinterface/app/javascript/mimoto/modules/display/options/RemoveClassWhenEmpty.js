@@ -1,5 +1,5 @@
 /**
- * Mimoto - Display option - HideWhenEmpty
+ * Mimoto - Display option - RemoveClassWhenEmpty
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -26,13 +26,13 @@ module.exports.prototype = {
         // 2. verify and toggle
         if (value.length == 0)
         {
-            // 2a. hide
-            displayUtils.hideElement(directive.element);
+            // 2a. remove
+            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
         }
         else
         {
-            // 2b. show
-            displayUtils.showElement(directive.element);
+            // 2b. add
+            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
         }
     }
 

@@ -6,6 +6,7 @@ namespace Mimoto\Aimless;
 // Mimoto classes
 use Mimoto\Mimoto;
 use Mimoto\Aimless\MimotoAimlessUtils;
+use Mimoto\Aimless\DisplayOptionUtils;
 
 
 /**
@@ -182,79 +183,216 @@ class AimlessComponentViewModel
     // --- empty ---
 
 
-    public function showWhenEmpty($sPropertySelector)
-    {
-        return $this->_component->showWhenEmpty($sPropertySelector);
+//    public function showWhenEmpty($sPropertySelector)
+//    {
+//        return $this->_component->showWhenEmpty($sPropertySelector);
+////
+////            public function showWhenEmpty($sPropertySelector)
+////        {
+////
+////    //            // cleanup
+////    //            $nSeparatorPos = strpos($sPropertySelector, '.');
+////    //
+////    //
+////    //        $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
+////    //        $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);
+////    //
+////    //            // compose
+////    //            $sFilter = (!empty($selector->conditionals)) ? " data-mimoto-filter='".json_encode($selector->conditionals)."'" : '';
+////
+////
+////
+////            if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
+////            {
+////                $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
+////
+////                return 'data-mimoto-display-showonempty="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'" '.$sDisplayState;
+////            }
+////            else
+////            {
+////                if (isset($this->_aSelections[$sPropertySelector]))
+////                {
+////                    $sDisplayState = (!$this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
+////
+////                    return 'data-mimoto-display-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
+////                }
+////            }
+////
+////            return '';
+////        }
 //
-//            public function showWhenEmpty($sPropertySelector)
-//        {
-//
-//    //            // cleanup
-//    //            $nSeparatorPos = strpos($sPropertySelector, '.');
-//    //
-//    //
-//    //        $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
-//    //        $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);
-//    //
-//    //            // compose
-//    //            $sFilter = (!empty($selector->conditionals)) ? " data-mimoto-filter='".json_encode($selector->conditionals)."'" : '';
 //
 //
-//
-//            if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
-//            {
-//                $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
-//
-//                return 'data-mimoto-display-showonempty="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'" '.$sDisplayState;
-//            }
-//            else
-//            {
-//                if (isset($this->_aSelections[$sPropertySelector]))
-//                {
-//                    $sDisplayState = (!$this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
-//
-//                    return 'data-mimoto-display-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
-//                }
-//            }
-//
-//            return '';
-//        }
+//    }
+
+//    public function hideWhenEmpty($sPropertySelector)
+//    {
+//        return $this->_component->hideWhenEmpty($sPropertySelector);
+//    }
 
 
 
-    }
+    // --- Show and hide
+
 
     public function hideWhenEmpty($sPropertySelector)
     {
-        return $this->_component->hideWhenEmpty($sPropertySelector);
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY, $sPropertySelector, $this->_component);
     }
 
-
-    public function addClassWhenValue($sPropertySelector, $xValue, $xClasses)
+    public function hideWhenNotEmpty($sPropertySelector)
     {
-        return $this->_component->addClassWhenValue($sPropertySelector, $xValue, $xClasses);
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY, $sPropertySelector, $this->_component);
     }
+
+    public function hideWhenValue($sPropertySelector, $xValues)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_HIDEWHENVALUE, $sPropertySelector, $this->_component, $xValues);
+    }
+
+    public function hideWhenNotValue($sPropertySelector, $xValues)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE, $sPropertySelector, $this->_component, $xValues);
+    }
+
+    public function hideWhenRegex($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_HIDEWHENREGEX, $sPropertySelector, $this->_component, $xValues);
+    }
+
+    public function hideWhenNotRegex($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX, $sPropertySelector, $this->_component, $xValues);
+    }
+
+
+    // ---
+
+
+    public function showWhenEmpty($sPropertySelector)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY, $sPropertySelector, $this->_component);
+    }
+
+    public function showWhenNotEmpty($sPropertySelector)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY, $sPropertySelector, $this->_component);
+    }
+
+    public function showWhenValue($sPropertySelector, $xValues)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_SHOWWHENVALUE, $sPropertySelector, $this->_component, $xValues);
+    }
+
+    public function showWhenNotValue($sPropertySelector, $xValues)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE, $sPropertySelector, $this->_component, $xValues);
+    }
+
+    public function showWhenRegex($sPropertySelector, $xValues)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_SHOWWHENREGEX, $sPropertySelector, $this->_component, $xValues);
+    }
+
+    public function showWhenNotRegex($sPropertySelector, $xValues)
+    {
+        // compose and send
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX, $sPropertySelector, $this->_component, $xValues);
+    }
+
+
+
+    // --- Add and remove CSS classes
+
 
     public function addClassWhenEmpty($sPropertySelector, $xClasses)
     {
-        return $this->_component->addClassWhenEmpty($sPropertySelector, $xClasses);
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY, $sPropertySelector, $this->_component, $xClasses);
+    }
+
+    public function addClassWhenNotEmpty($sPropertySelector, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY, $sPropertySelector, $this->_component, $xClasses);
+    }
+
+    public function addClassWhenValue($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE, $sPropertySelector, $this->_component, $xClasses, $xValues);
+    }
+
+    public function addClassWhenNotValue($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE, $sPropertySelector, $this->_component, $xClasses, $xValues);
+    }
+
+    public function addClassWhenRegex($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX, $sPropertySelector, $this->_component, $xClasses, $xValues);
+    }
+
+    public function addClassWhenNotRegex($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX, $sPropertySelector, $this->_component, $xClasses, $xValues);
     }
 
 
+    // ---
 
 
-    // data-mimoto-display-showonempty="article.3.comments"
+    public function removeClassWhenEmpty($sPropertySelector, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY, $sPropertySelector, $this->_component, $xClasses);
+    }
+
+    public function removeClassWhenNotEmpty($sPropertySelector, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY, $sPropertySelector, $this->_component, $xClasses);
+    }
+
+    public function removeClassWhenValue($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE, $sPropertySelector, $this->_component, $xClasses, $xValues);
+    }
+
+    public function removeClassWhenNotValue($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE, $sPropertySelector, $this->_component, $xClasses, $xValues);
+    }
+
+    public function removeClassWhenRegex($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX, $sPropertySelector, $this->_component, $xClasses, $xValues);
+    }
+
+    public function removeClassWhenNotRegex($sPropertySelector, $xValues, $xClasses)
+    {
+        // compose and send
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX, $sPropertySelector, $this->_component, $xClasses, $xValues);
+    }
 
 
-//    public function showWhenNotEmpty($sPropertySelector)
-//    {
-//        return $this->_component->showWhenNotEmpty($sPropertySelector);
-//    }
-//
-//    public function hideWhenNotEmpty($sPropertySelector)
-//    {
-//        return $this->_component->hideWhenNotEmpty($sPropertySelector);
-//    }
 
 
 

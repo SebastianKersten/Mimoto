@@ -1,5 +1,5 @@
 /**
- * Mimoto - Display option - HideWhenEmpty
+ * Mimoto - Display option - RemoveClassWhenRegex
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -24,15 +24,15 @@ module.exports.prototype = {
         let displayUtils = new DisplayUtils();
 
         // 2. verify and toggle
-        if (value.length == 0)
+        if (displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
         {
-            // 2a. hide
-            displayUtils.hideElement(directive.element);
+            // 2a. remove
+            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
         }
         else
         {
-            // 2b. show
-            displayUtils.showElement(directive.element);
+            // 2b. add
+            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
         }
     }
 

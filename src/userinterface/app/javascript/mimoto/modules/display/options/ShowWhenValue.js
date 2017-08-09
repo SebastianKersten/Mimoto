@@ -1,5 +1,5 @@
 /**
- * Mimoto - Display option - HideWhenEmpty
+ * Mimoto - Display option - RemoveClassWhenValue
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -24,15 +24,15 @@ module.exports.prototype = {
         let displayUtils = new DisplayUtils();
 
         // 2. verify and toggle
-        if (value.length == 0)
+        if (displayUtils.hasAnyMatch(value, directive.instructions.values))
         {
-            // 2a. hide
-            displayUtils.hideElement(directive.element);
+            // 2a. show
+            displayUtils.showElement(directive.element);
         }
         else
         {
-            // 2b. show
-            displayUtils.showElement(directive.element);
+            // 2b. hide
+            displayUtils.hideElement(directive.element);
         }
     }
 

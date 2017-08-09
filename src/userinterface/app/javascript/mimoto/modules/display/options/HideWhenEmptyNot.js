@@ -1,5 +1,5 @@
 /**
- * Mimoto - Display option - HideWhenEmpty
+ * Mimoto - Display option - HideWhenNotEmpty
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -24,7 +24,7 @@ module.exports.prototype = {
         let displayUtils = new DisplayUtils();
 
         // 2. verify and toggle
-        if (value.length == 0)
+        if (value.length !== 0)
         {
             // 2a. hide
             displayUtils.hideElement(directive.element);

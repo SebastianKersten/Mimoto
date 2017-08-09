@@ -26,13 +26,13 @@ module.exports.prototype = {
         // 2. verify and toggle
         if (value.length == 0)
         {
-            // 2a. hide
-            displayUtils.hideElement(directive.element);
+            // 2a. show
+            displayUtils.showElement(directive.element);
         }
         else
         {
-            // 2b. show
-            displayUtils.showElement(directive.element);
+            // 2b. hide
+            displayUtils.hideElement(directive.element);
         }
     }
 

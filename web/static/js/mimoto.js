@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "f9e4d42ddefe0c332914";
+/******/ 	__webpack_require__.h = "9fd1828bdaf5060692d3";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -96,7 +96,7 @@
 	let DomService = __webpack_require__(5);
 	let DataService = __webpack_require__(6);
 	let DisplayService = __webpack_require__(7);
-	let RealtimeManager = __webpack_require__(8);
+	let RealtimeManager = __webpack_require__(23);
 	
 	
 	/**
@@ -12226,6 +12226,36 @@
 	'use strict';
 	
 	
+	// Mimoto display classes
+	let HideWhenEmpty = __webpack_require__(8);
+	let HideWhenEmptyNot = __webpack_require__(10);
+	let HideWhenValue = __webpack_require__(92);
+	let HideWhenValueNot = __webpack_require__(93);
+	let HideWhenRegex = __webpack_require__(94);
+	let HideWhenRegexNot = __webpack_require__(95);
+	
+	let ShowWhenEmpty = __webpack_require__(11);
+	let ShowWhenEmptyNot = __webpack_require__(12);
+	let ShowWhenValue = __webpack_require__(96);
+	let ShowWhenValueNot = __webpack_require__(97);
+	let ShowWhenRegex = __webpack_require__(98);
+	let ShowWhenRegexNot = __webpack_require__(99);
+	
+	let AddClassWhenEmpty = __webpack_require__(13);
+	let AddClassWhenEmptyNot = __webpack_require__(14);
+	let AddClassWhenValue = __webpack_require__(13);
+	let AddClassWhenValueNot = __webpack_require__(15);
+	let AddClassWhenRegex = __webpack_require__(16);
+	let AddClassWhenRegexNot = __webpack_require__(17);
+	
+	let RemoveClassWhenEmpty = __webpack_require__(18);
+	let RemoveClassWhenEmptyNot = __webpack_require__(19);
+	let RemoveClassWhenValue = __webpack_require__(18);
+	let RemoveClassWhenValueNot = __webpack_require__(20);
+	let RemoveClassWhenRegex = __webpack_require__(21);
+	let RemoveClassWhenRegexNot = __webpack_require__(22);
+	
+	
 	module.exports = function() {
 	
 	    // start
@@ -12246,12 +12276,33 @@
 	    TAG_MIMOTO_ID:         'data-mimoto-id',
 	
 	    // display tags
-	    TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:        'data-mimoto-display-showwhenempty',
 	    TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
+	    TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:     'data-mimoto-display-hidewhennotempty',
+	    TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:        'data-mimoto-display-hidewhenvalue',
+	    TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:     'data-mimoto-display-hidewhennotvalue',
+	    TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:        'data-mimoto-display-hidewhenregex',
+	    TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:     'data-mimoto-display-hidewhennotregex',
+	
+	    TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:        'data-mimoto-display-showwhenempty',
+	    TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:     'data-mimoto-display-showwhennotempty',
+	    TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:        'data-mimoto-display-showwhenvalue',
+	    TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:     'data-mimoto-display-showwhennotvalue',
+	    TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:        'data-mimoto-display-showwhenregex',
+	    TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:     'data-mimoto-display-showwhennotregex',
+	
 	    TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:    'data-mimoto-display-addclasswhenempty',
-	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY: 'data-mimoto-display-removeclasswhenempty',
+	    TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY: 'data-mimoto-display-addclasswhennotempty',
 	    TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:    'data-mimoto-display-addclasswhenvalue',
-	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE: 'data-mimoto-display-removeclasswhenvalue',
+	    TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE: 'data-mimoto-display-addclasswhennotvalue',
+	    TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:    'data-mimoto-display-addclasswhenregex',
+	    TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX: 'data-mimoto-display-addclasswhennotregex',
+	
+	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:    'data-mimoto-display-removeclasswhenempty',
+	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY: 'data-mimoto-display-removeclasswhennotempty',
+	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:    'data-mimoto-display-removeclasswhenvalue',
+	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE: 'data-mimoto-display-removeclasswhennotvalue',
+	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:    'data-mimoto-display-removeclasswhenregex',
+	    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX: 'data-mimoto-display-removeclasswhennotregex',
 	
 	    // utility tags
 	    TAG_MATH_MIMOTO_COUNT: 'data-mimoto-count',
@@ -12272,6 +12323,9 @@
 	    _aSelectors: [],
 	
 	
+	    // classes
+	    _aDisplayOptionClasses: [],
+	
 	
 	    
 	    // ----------------------------------------------------------------------------
@@ -12289,6 +12343,36 @@
 	        style.type = 'text/css';
 	        style.innerHTML = '.Mimoto_CoreCSS_hidden { display: none; }';
 	        document.getElementsByTagName('head')[0].appendChild(style);
+	
+	
+	        // prepare
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY] = HideWhenEmpty;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY] = HideWhenEmptyNot;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE] = HideWhenValue;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE] = HideWhenValueNot;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX] = HideWhenRegex;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX] = HideWhenRegexNot;
+	
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY] = ShowWhenEmpty;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY] = ShowWhenEmptyNot;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE] = ShowWhenValue;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE] = ShowWhenValueNot;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX] = ShowWhenRegex;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX] = ShowWhenRegexNot;
+	
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY] = AddClassWhenEmpty;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY] = AddClassWhenEmptyNot;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE] = AddClassWhenValue;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE] = AddClassWhenValueNot;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX] = AddClassWhenRegex;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX] = AddClassWhenRegexNot;
+	
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY] = RemoveClassWhenEmpty;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY] = RemoveClassWhenEmptyNot;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE] = RemoveClassWhenValue;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE] = RemoveClassWhenValueNot;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX] = RemoveClassWhenRegex;
+	        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX] = RemoveClassWhenRegexNot;
 	
 	
 	        // 2. prepare interface
@@ -12348,6 +12432,7 @@
 	                // register
 	                let change = data.changes[nChangeIndex];
 	
+	                // compose
 	                let sPropertySelector = sEntitySelector + '.' + change.propertyName;
 	
 	                // search
@@ -12358,17 +12443,21 @@
 	
 	
 	                    // register
-	                    let aRegisteredElements = this._aSelectors[sPropertySelector];
+	                    let aDirectives = this._aSelectors[sPropertySelector];
 	
 	                    // parse elements
-	                    let nElementCount = aRegisteredElements.length;
+	                    let nElementCount = aDirectives.length;
 	                    for (let nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++)
 	                    {
 	                        // register
-	                        let registeredElement = aRegisteredElements[nElementIndex];
+	                        let directive = aDirectives[nElementIndex];
 	
-	                        switch(registeredElement.sTag)
+	
+	                        switch(directive.sTag)
 	                        {
+	
+	                            // --- values updates
+	
 	                            case this.TAG_MIMOTO_VALUE:
 	
 	                                if (change.type === 'value')
@@ -12383,41 +12472,79 @@
 	                                    // hideOnEmpty in aparte helper functie
 	
 	
-	                                    registeredElement.element.innerText = change.value;
+	                                    directive.element.innerText = change.value;
 	                                }
 	                                break;
 	
+	                            case this.TAG_MIMOTO_ENTITY:
+	
+	
+	                                break;
+	
+	                            case this.TAG_MIMOTO_COLLECTION:
+	
+	
+	                                break;
+	
+	
+	                            // --- display updates
+	
+	                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:
+	                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
+	
+	                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:
+	                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
+	
+	                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
+	                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
+	
+	                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
+	                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
+	
+	                                // init
+	                                let currentValue = null;
+	
+	                                switch(change.type)
+	                                {
+	                                    case 'value': currentValue = change.value; break;
+	                                    case 'entity': currentValue = change.value; break;
+	                                    case 'collection': currentValue = change.value; break;
+	                                }
+	
+	                                // execute
+	                                new this._aDisplayOptionClasses[directive.sTag](directive, currentValue);
+	
+	                                break;
+	
+	                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:
+	                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
+	                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:
+	                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
+	
+	                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:
+	                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
+	                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:
+	                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
+	
 	                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
+	                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
+	                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
+	                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
 	
-	                                console.log('Realtime TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE');
+	                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
+	                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
+	                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
+	                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
 	
-	                                if (change.value == registeredElement.instructions.value)
+	                                    // verify
+	                                if (change.type === 'value')
 	                                {
-	                                    console.log('Value is identical ...');
-	
-	                                    let nClassCount = registeredElement.instructions.aClasses.length;
-	                                    for (let nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++)
-	                                    {
-	                                        registeredElement.element.classList.add(registeredElement.instructions.aClasses[nClassIndex]);
-	                                    }
+	                                    // execute
+	                                    new this._aDisplayOptionClasses[directive.sTag](directive, change.value);
 	                                }
-	                                else
-	                                {
-	                                    console.log('No identical value ... just passing through ..');
-	
-	                                    let nClassCount = registeredElement.instructions.aClasses.length;
-	                                    for (let nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++)
-	                                    {
-	                                        registeredElement.element.classList.remove(registeredElement.instructions.aClasses[nClassIndex]);
-	                                    }
-	                                }
-	
-	
 	
 	                                break;
 	                        }
-	
-	
 	
 	                    }
 	
@@ -12426,10 +12553,6 @@
 	            }
 	
 	        }
-	
-	
-	
-	
 	    },
 	
 	
@@ -12449,7 +12572,7 @@
 	        // 1. init
 	        let aTags = [];
 	
-	        // 2. prepare
+	        // 2. prepare (the order is important, because first the changes are implemented, and afterwards the display)
 	        let aPrimaryTags = [
 	
 	            // data tags
@@ -12462,12 +12585,33 @@
 	            this.TAG_MIMOTO_ID,
 	
 	            // display tags
-	            this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY,
 	            this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE,
+	            this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE,
+	            this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX,
+	            this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX,
+	
+	            this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE,
+	            this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE,
+	            this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX,
+	            this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX,
+	
 	            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY,
-	            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY,
 	            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE,
+	            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE,
+	            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX,
+	            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX,
+	
+	            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY,
+	            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY,
 	            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE,
+	            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE,
+	            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX,
+	            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX,
 	
 	            // utility tags
 	            this.TAG_MATH_MIMOTO_COUNT
@@ -12512,7 +12656,7 @@
 	
 	
 	                // init and register
-	                let taggedItem = {
+	                let directive = {
 	                    sTag: sTag,
 	                    sPropertySelector: sPropertySelector,
 	                    element: element
@@ -12523,21 +12667,18 @@
 	                let nInstructionPos = sPropertySelector.indexOf('|');
 	                if (nInstructionPos !== -1)
 	                {
-	                    taggedItem.sPropertySelector = sPropertySelector.substr(0, nInstructionPos);
-	                    taggedItem.instructions = JSON.parse(sPropertySelector.substr(nInstructionPos + 1));
+	                    directive.sPropertySelector = sPropertySelector.substr(0, nInstructionPos);
+	                    directive.instructions = JSON.parse(sPropertySelector.substr(nInstructionPos + 1));
 	                }
 	
 	
 	
 	
-	                // 1. wat te doen met het taggedItem?
-	
-	
 	                // verify or init
-	                if (!aSelectors[taggedItem.sPropertySelector]) aSelectors[taggedItem.sPropertySelector] = [];
+	                if (!aSelectors[directive.sPropertySelector]) aSelectors[directive.sPropertySelector] = [];
 	
 	                // register
-	                aSelectors[taggedItem.sPropertySelector].push(taggedItem);
+	                aSelectors[directive.sPropertySelector].push(directive);
 	
 	
 	                // read tag specific settings
@@ -12546,15 +12687,15 @@
 	                    case this.TAG_MIMOTO_VALUE:
 	
 	
-	                        //console.log('Value', taggedItem);
+	                        //console.log('Value', directive);
 	                        break;
 	
 	                    case this.TAG_MIMOTO_ID:
 	
 	                        // verify and register
-	                        taggedItem.sEntitySelector = element.getAttribute(this.TAG_MIMOTO_ID);
+	                        directive.sEntitySelector = element.getAttribute(this.TAG_MIMOTO_ID);
 	
-	                        //console.log('Item', taggedItem);
+	                        //console.log('Item', directive);
 	
 	
 	
@@ -12581,7 +12722,7 @@
 	                        }
 	
 	                        // register
-	                        taggedItem.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
+	                        directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
 	
 	
 	                        // verify
@@ -12590,19 +12731,19 @@
 	                            // verify and register
 	                            if (element.hasAttribute(this.TAG_SETTING_MIMOTO_CONNECTION))
 	                            {
-	                                taggedItem.nConnectionId = element.getAttribute(this.TAG_SETTING_MIMOTO_CONNECTION);
+	                                directive.nConnectionId = element.getAttribute(this.TAG_SETTING_MIMOTO_CONNECTION);
 	                            }
 	
 	                            // verify and register
 	                            if (element.hasAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX))
 	                            {
-	                                taggedItem.nSortIndex = element.getAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX);
+	                                directive.nSortIndex = element.getAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX);
 	                            }
 	
 	                            // verify and register
 	                            if (element.hasAttribute(this.TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE))
 	                            {
-	                                taggedItem.bReloadOnChange = true;
+	                                directive.bReloadOnChange = true;
 	                            }
 	                        }
 	
@@ -12610,49 +12751,78 @@
 	                        if (sTag === this.TAG_MIMOTO_COLLECTION && element.hasAttribute(this.TAG_SETTING_MIMOTO_FILTER))
 	                        {
 	                            // register
-	                            taggedItem.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
+	                            directive.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
 	                        }
 	
 	
 	
-	                        //console.log('Property', taggedItem);
+	                        //console.log('Property', directive);
 	
 	                        break;
 	
 	                    case this.TAG_MATH_MIMOTO_COUNT:
 	
-	                        //console.log('Count', taggedItem);
+	                        //console.log('Count', directive);
 	
 	                        break;
 	
+	
+	                    // --- display updates
+	
+	                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:
+	                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
+	
+	                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:
+	                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
 	
 	                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
+	                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
 	
-	                        console.log('TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY - initial execute here');
+	                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
+	                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
+	
+	                        // init
+	                        // let currentValue = null;
+	                        //
+	                        // switch(directive.instructions.propertyType)
+	                        // {
+	                        //     case 'value': currentValue = element.innerText; break;
+	                        //     //case 'entity': currentValue = change.value; break;
+	                        //     //case 'collection': currentValue = change.value; break;
+	                        // }
+	                        //
+	                        // // execute
+	                        // new this._aDisplayOptionClasses[directive.sTag](directive, currentValue);
 	
 	                        break;
 	
+	                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:
+	                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
+	                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:
+	                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
+	
+	                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:
+	                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
+	                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:
+	                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
+	
 	                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
+	                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
+	                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
+	                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
 	
-	                        console.log('TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE - initial execute here');
+	                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
+	                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
+	                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
+	                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
 	
-	
-	                        if (taggedItem.element.innerText == taggedItem.instructions.value)
+	                        // verify
+	                        if (directive.instructions.propertyType === 'value')
 	                        {
-	                            console.log('Value is identical ...');
+	                            console.log('');
 	
-	                            let nClassCount = taggedItem.instructions.aClasses.length;
-	
-	                            for (let nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++)
-	                            {
-	                                console.log(taggedItem.instructions.aClasses[nClassIndex]);
-	
-	                                taggedItem.element.classList.add(taggedItem.instructions.aClasses[nClassIndex]);
-	                            }
-	                        }
-	                        else
-	                        {
-	                            console.log('No identical value ... just passing through ..');
+	                            // execute
+	                            new this._aDisplayOptionClasses[directive.sTag](directive, element.innerText);
 	                        }
 	
 	                        break;
@@ -13823,6 +13993,748 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Mimoto - Display option - HideWhenEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (value.length == 0)
+	        {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	/**
+	 * Mimoto - Display Service utils
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	module.exports = function() {
+	
+	
+	};
+	
+	module.exports.prototype = {
+	
+	    // match types
+	    MATCH_TYPE_EMPTY: 'match_type_empty',
+	    MATCH_TYPE_VALUE: 'match_type_value',
+	    MATCH_TYPE_REGEX: 'match_type_regex',
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    addClassesToElement: function(element, aClasses)
+	    {
+	        let nClassCount = aClasses.length;
+	        for (let nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++) {
+	            element.classList.add(aClasses[nClassIndex]);
+	        }
+	    },
+	
+	    removeClassesFromElement: function(element, aClasses)
+	    {
+	        let nClassCount = aClasses.length;
+	        for (let nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++)
+	        {
+	            element.classList.remove(aClasses[nClassIndex]);
+	        }
+	    },
+	
+	    hideElement: function(element)
+	    {
+	        element.classList.add('Mimoto_CoreCSS_hidden');
+	    },
+	
+	    showElement: function(element)
+	    {
+	        element.classList.remove('Mimoto_CoreCSS_hidden');
+	    },
+	
+	
+	    hasAnyMatch: function(value, aValues)
+	    {
+	        return this._hasMatch(value, aValues, this.MATCH_TYPE_VALUE);
+	    },
+	
+	    hasAnyRegexMatch: function(value, aValues)
+	    {
+	        return this._hasMatch(value, aValues, this.MATCH_TYPE_REGEX);
+	    },
+	
+	
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    _hasMatch: function(value, aValues, sMatchType)
+	    {
+	        // 1. init
+	        let bMatchFound = false;
+	
+	        // 2. find
+	        let nValueCount = aValues.length;
+	        for (let nValueIndex = 0; nValueIndex < nValueCount; nValueIndex++)
+	        {
+	            switch(sMatchType)
+	            {
+	                case this.MATCH_TYPE_VALUE:
+	
+	                    // verify
+	                    if (value == aValues[nValueIndex])
+	                    {
+	                        bMatchFound = true;
+	                        continue;
+	                    }
+	                    break;
+	
+	                case this.MATCH_TYPE_REGEX:
+	
+	                    // init
+	                    let regex = new RegExp(aValues[nValueIndex], 'g');
+	
+	                    // verify
+	                    if (regex.test(value))
+	                    {
+	                        bMatchFound = true;
+	                        continue;
+	                    }
+	                    break;
+	            }
+	        }
+	
+	        // 3. send
+	        return bMatchFound;
+	    }
+	
+	}
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (value.length !== 0)
+	        {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (value.length !== 0)
+	        {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (value.length == 0)
+	        {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (displayUtils.hasAnyMatch(value, directive.instructions.values))
+	        {
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // init
+	        let displayUtils = new DisplayUtils();
+	
+	        // verify
+	        if (value.length !== 0)
+	        {
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (!displayUtils.hasAnyMatch(value, directive.instructions.values))
+	        {
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
+	        {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenRegexNot
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (!displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
+	        {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (displayUtils.hasAnyMatch(value, directive.instructions.values))
+	        {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // init
+	        let displayUtils = new DisplayUtils();
+	
+	        // verify
+	        if (value.length !== 0)
+	        {
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (!displayUtils.hasAnyMatch(value, directive.instructions.values))
+	        {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
+	        {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (!displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
+	        {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	        else
+	        {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Mimoto - RealtimeManager - Manages realtime updates and collaboration
 	 *
 	 * @author Sebastian Kersten (@supertaboo)
@@ -13832,13 +14744,13 @@
 	
 	
 	// Mimoto classes
-	var RealtimeEditor = __webpack_require__(9);
+	var RealtimeEditor = __webpack_require__(24);
 	
 	// Socket.io classes
-	var io = __webpack_require__(10);
+	var io = __webpack_require__(25);
 	
 	// Quill classes
-	var Quill = __webpack_require__(65);
+	var Quill = __webpack_require__(80);
 	
 	
 	
@@ -14185,7 +15097,7 @@
 
 
 /***/ },
-/* 9 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14198,11 +15110,11 @@
 	
 	
 	// Socket.io classes
-	var io = __webpack_require__(10);
+	var io = __webpack_require__(25);
 	
 	// Quill classes
-	var Quill = __webpack_require__(65);
-	var QuillDelta = __webpack_require__(70);
+	var Quill = __webpack_require__(80);
+	var QuillDelta = __webpack_require__(85);
 	
 	
 	module.exports = function(socket, sPropertySelector, editOptions, editableValue) {
@@ -14562,7 +15474,7 @@
 
 
 /***/ },
-/* 10 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -14570,10 +15482,10 @@
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(11);
-	var parser = __webpack_require__(17);
-	var Manager = __webpack_require__(28);
-	var debug = __webpack_require__(13)('socket.io-client');
+	var url = __webpack_require__(26);
+	var parser = __webpack_require__(32);
+	var Manager = __webpack_require__(43);
+	var debug = __webpack_require__(28)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -14672,12 +15584,12 @@
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(28);
-	exports.Socket = __webpack_require__(59);
+	exports.Manager = __webpack_require__(43);
+	exports.Socket = __webpack_require__(74);
 
 
 /***/ },
-/* 11 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -14685,8 +15597,8 @@
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(12);
-	var debug = __webpack_require__(13)('socket.io-client:url');
+	var parseuri = __webpack_require__(27);
+	var debug = __webpack_require__(28)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -14759,7 +15671,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 12 */
+/* 27 */
 /***/ function(module, exports) {
 
 	/**
@@ -14804,7 +15716,7 @@
 
 
 /***/ },
-/* 13 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -14814,7 +15726,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(15);
+	exports = module.exports = __webpack_require__(30);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -14985,10 +15897,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
 
 /***/ },
-/* 14 */
+/* 29 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -15174,7 +16086,7 @@
 
 
 /***/ },
-/* 15 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -15190,7 +16102,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(16);
+	exports.humanize = __webpack_require__(31);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -15380,7 +16292,7 @@
 
 
 /***/ },
-/* 16 */
+/* 31 */
 /***/ function(module, exports) {
 
 	/**
@@ -15535,7 +16447,7 @@
 
 
 /***/ },
-/* 17 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -15543,11 +16455,11 @@
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(18)('socket.io-parser');
-	var json = __webpack_require__(21);
-	var Emitter = __webpack_require__(24);
-	var binary = __webpack_require__(25);
-	var isBuf = __webpack_require__(27);
+	var debug = __webpack_require__(33)('socket.io-parser');
+	var json = __webpack_require__(36);
+	var Emitter = __webpack_require__(39);
+	var binary = __webpack_require__(40);
+	var isBuf = __webpack_require__(42);
 	
 	/**
 	 * Protocol version.
@@ -15945,7 +16857,7 @@
 
 
 /***/ },
-/* 18 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -15955,7 +16867,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(19);
+	exports = module.exports = __webpack_require__(34);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -16119,7 +17031,7 @@
 
 
 /***/ },
-/* 19 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -16135,7 +17047,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(20);
+	exports.humanize = __webpack_require__(35);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -16322,7 +17234,7 @@
 
 
 /***/ },
-/* 20 */
+/* 35 */
 /***/ function(module, exports) {
 
 	/**
@@ -16453,14 +17365,14 @@
 
 
 /***/ },
-/* 21 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(23);
+	  var isLoader = "function" === "function" && __webpack_require__(38);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -17359,10 +18271,10 @@
 	  }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)(module), (function() { return this; }())))
 
 /***/ },
-/* 22 */
+/* 37 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -17378,7 +18290,7 @@
 
 
 /***/ },
-/* 23 */
+/* 38 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -17386,7 +18298,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 24 */
+/* 39 */
 /***/ function(module, exports) {
 
 	
@@ -17556,7 +18468,7 @@
 
 
 /***/ },
-/* 25 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -17565,8 +18477,8 @@
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(26);
-	var isBuf = __webpack_require__(27);
+	var isArray = __webpack_require__(41);
+	var isBuf = __webpack_require__(42);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -17704,7 +18616,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 26 */
+/* 41 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -17713,7 +18625,7 @@
 
 
 /***/ },
-/* 27 */
+/* 42 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -17733,7 +18645,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 28 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -17741,15 +18653,15 @@
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(29);
-	var Socket = __webpack_require__(59);
-	var Emitter = __webpack_require__(60);
-	var parser = __webpack_require__(17);
-	var on = __webpack_require__(62);
-	var bind = __webpack_require__(63);
-	var debug = __webpack_require__(13)('socket.io-client:manager');
-	var indexOf = __webpack_require__(57);
-	var Backoff = __webpack_require__(64);
+	var eio = __webpack_require__(44);
+	var Socket = __webpack_require__(74);
+	var Emitter = __webpack_require__(75);
+	var parser = __webpack_require__(32);
+	var on = __webpack_require__(77);
+	var bind = __webpack_require__(78);
+	var debug = __webpack_require__(28)('socket.io-client:manager');
+	var indexOf = __webpack_require__(72);
+	var Backoff = __webpack_require__(79);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -18299,19 +19211,19 @@
 
 
 /***/ },
-/* 29 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(30);
+	module.exports = __webpack_require__(45);
 
 
 /***/ },
-/* 30 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(31);
+	module.exports = __webpack_require__(46);
 	
 	/**
 	 * Exports parser
@@ -18319,25 +19231,25 @@
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(38);
+	module.exports.parser = __webpack_require__(53);
 
 
 /***/ },
-/* 31 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(32);
-	var Emitter = __webpack_require__(47);
-	var debug = __webpack_require__(51)('engine.io-client:socket');
-	var index = __webpack_require__(57);
-	var parser = __webpack_require__(38);
-	var parseuri = __webpack_require__(12);
-	var parsejson = __webpack_require__(58);
-	var parseqs = __webpack_require__(48);
+	var transports = __webpack_require__(47);
+	var Emitter = __webpack_require__(62);
+	var debug = __webpack_require__(66)('engine.io-client:socket');
+	var index = __webpack_require__(72);
+	var parser = __webpack_require__(53);
+	var parseuri = __webpack_require__(27);
+	var parsejson = __webpack_require__(73);
+	var parseqs = __webpack_require__(63);
 	
 	/**
 	 * Module exports.
@@ -18469,9 +19381,9 @@
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(37);
-	Socket.transports = __webpack_require__(32);
-	Socket.parser = __webpack_require__(38);
+	Socket.Transport = __webpack_require__(52);
+	Socket.transports = __webpack_require__(47);
+	Socket.parser = __webpack_require__(53);
 	
 	/**
 	 * Creates transport of the given type.
@@ -19068,17 +19980,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 32 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(33);
-	var XHR = __webpack_require__(35);
-	var JSONP = __webpack_require__(54);
-	var websocket = __webpack_require__(55);
+	var XMLHttpRequest = __webpack_require__(48);
+	var XHR = __webpack_require__(50);
+	var JSONP = __webpack_require__(69);
+	var websocket = __webpack_require__(70);
 	
 	/**
 	 * Export transports.
@@ -19128,12 +20040,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 33 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 	
-	var hasCORS = __webpack_require__(34);
+	var hasCORS = __webpack_require__(49);
 	
 	module.exports = function (opts) {
 	  var xdomain = opts.xdomain;
@@ -19172,7 +20084,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 34 */
+/* 49 */
 /***/ function(module, exports) {
 
 	
@@ -19195,18 +20107,18 @@
 
 
 /***/ },
-/* 35 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(33);
-	var Polling = __webpack_require__(36);
-	var Emitter = __webpack_require__(47);
-	var inherit = __webpack_require__(49);
-	var debug = __webpack_require__(51)('engine.io-client:polling-xhr');
+	var XMLHttpRequest = __webpack_require__(48);
+	var Polling = __webpack_require__(51);
+	var Emitter = __webpack_require__(62);
+	var inherit = __webpack_require__(64);
+	var debug = __webpack_require__(66)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -19626,19 +20538,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 36 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(37);
-	var parseqs = __webpack_require__(48);
-	var parser = __webpack_require__(38);
-	var inherit = __webpack_require__(49);
-	var yeast = __webpack_require__(50);
-	var debug = __webpack_require__(51)('engine.io-client:polling');
+	var Transport = __webpack_require__(52);
+	var parseqs = __webpack_require__(63);
+	var parser = __webpack_require__(53);
+	var inherit = __webpack_require__(64);
+	var yeast = __webpack_require__(65);
+	var debug = __webpack_require__(66)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -19651,7 +20563,7 @@
 	 */
 	
 	var hasXHR2 = (function () {
-	  var XMLHttpRequest = __webpack_require__(33);
+	  var XMLHttpRequest = __webpack_require__(48);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -19877,15 +20789,15 @@
 
 
 /***/ },
-/* 37 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(38);
-	var Emitter = __webpack_require__(47);
+	var parser = __webpack_require__(53);
+	var Emitter = __webpack_require__(62);
 	
 	/**
 	 * Module exports.
@@ -20040,22 +20952,22 @@
 
 
 /***/ },
-/* 38 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(39);
-	var hasBinary = __webpack_require__(40);
-	var sliceBuffer = __webpack_require__(42);
-	var after = __webpack_require__(43);
-	var utf8 = __webpack_require__(44);
+	var keys = __webpack_require__(54);
+	var hasBinary = __webpack_require__(55);
+	var sliceBuffer = __webpack_require__(57);
+	var after = __webpack_require__(58);
+	var utf8 = __webpack_require__(59);
 	
 	var base64encoder;
 	if (global && global.ArrayBuffer) {
-	  base64encoder = __webpack_require__(45);
+	  base64encoder = __webpack_require__(60);
 	}
 	
 	/**
@@ -20113,7 +21025,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(46);
+	var Blob = __webpack_require__(61);
 	
 	/**
 	 * Encodes a packet.
@@ -20656,7 +21568,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 39 */
+/* 54 */
 /***/ function(module, exports) {
 
 	
@@ -20681,7 +21593,7 @@
 
 
 /***/ },
-/* 40 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -20689,7 +21601,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(41);
+	var isArray = __webpack_require__(56);
 	
 	/**
 	 * Module exports.
@@ -20747,7 +21659,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 41 */
+/* 56 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -20756,7 +21668,7 @@
 
 
 /***/ },
-/* 42 */
+/* 57 */
 /***/ function(module, exports) {
 
 	/**
@@ -20791,7 +21703,7 @@
 
 
 /***/ },
-/* 43 */
+/* 58 */
 /***/ function(module, exports) {
 
 	module.exports = after
@@ -20825,7 +21737,7 @@
 
 
 /***/ },
-/* 44 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -21061,10 +21973,10 @@
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)(module), (function() { return this; }())))
 
 /***/ },
-/* 45 */
+/* 60 */
 /***/ function(module, exports) {
 
 	/*
@@ -21137,7 +22049,7 @@
 
 
 /***/ },
-/* 46 */
+/* 61 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -21240,7 +22152,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 47 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -21409,7 +22321,7 @@
 
 
 /***/ },
-/* 48 */
+/* 63 */
 /***/ function(module, exports) {
 
 	/**
@@ -21452,7 +22364,7 @@
 
 
 /***/ },
-/* 49 */
+/* 64 */
 /***/ function(module, exports) {
 
 	
@@ -21464,7 +22376,7 @@
 	};
 
 /***/ },
-/* 50 */
+/* 65 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21538,7 +22450,7 @@
 
 
 /***/ },
-/* 51 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -21548,7 +22460,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(52);
+	exports = module.exports = __webpack_require__(67);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -21719,10 +22631,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
 
 /***/ },
-/* 52 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -21738,7 +22650,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(53);
+	exports.humanize = __webpack_require__(68);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -21928,7 +22840,7 @@
 
 
 /***/ },
-/* 53 */
+/* 68 */
 /***/ function(module, exports) {
 
 	/**
@@ -22083,7 +22995,7 @@
 
 
 /***/ },
-/* 54 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -22091,8 +23003,8 @@
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(36);
-	var inherit = __webpack_require__(49);
+	var Polling = __webpack_require__(51);
+	var inherit = __webpack_require__(64);
 	
 	/**
 	 * Module exports.
@@ -22321,24 +23233,24 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 55 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(37);
-	var parser = __webpack_require__(38);
-	var parseqs = __webpack_require__(48);
-	var inherit = __webpack_require__(49);
-	var yeast = __webpack_require__(50);
-	var debug = __webpack_require__(51)('engine.io-client:websocket');
+	var Transport = __webpack_require__(52);
+	var parser = __webpack_require__(53);
+	var parseqs = __webpack_require__(63);
+	var inherit = __webpack_require__(64);
+	var yeast = __webpack_require__(65);
+	var debug = __webpack_require__(66)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	var NodeWebSocket;
 	if (typeof window === 'undefined') {
 	  try {
-	    NodeWebSocket = __webpack_require__(56);
+	    NodeWebSocket = __webpack_require__(71);
 	  } catch (e) { }
 	}
 	
@@ -22613,13 +23525,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 56 */
+/* 71 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 57 */
+/* 72 */
 /***/ function(module, exports) {
 
 	
@@ -22634,7 +23546,7 @@
 	};
 
 /***/ },
-/* 58 */
+/* 73 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -22672,7 +23584,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 59 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -22680,13 +23592,13 @@
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(17);
-	var Emitter = __webpack_require__(60);
-	var toArray = __webpack_require__(61);
-	var on = __webpack_require__(62);
-	var bind = __webpack_require__(63);
-	var debug = __webpack_require__(13)('socket.io-client:socket');
-	var hasBin = __webpack_require__(40);
+	var parser = __webpack_require__(32);
+	var Emitter = __webpack_require__(75);
+	var toArray = __webpack_require__(76);
+	var on = __webpack_require__(77);
+	var bind = __webpack_require__(78);
+	var debug = __webpack_require__(28)('socket.io-client:socket');
+	var hasBin = __webpack_require__(55);
 	
 	/**
 	 * Module exports.
@@ -23097,7 +24009,7 @@
 
 
 /***/ },
-/* 60 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -23266,7 +24178,7 @@
 
 
 /***/ },
-/* 61 */
+/* 76 */
 /***/ function(module, exports) {
 
 	module.exports = toArray
@@ -23285,7 +24197,7 @@
 
 
 /***/ },
-/* 62 */
+/* 77 */
 /***/ function(module, exports) {
 
 	
@@ -23315,7 +24227,7 @@
 
 
 /***/ },
-/* 63 */
+/* 78 */
 /***/ function(module, exports) {
 
 	/**
@@ -23344,7 +24256,7 @@
 
 
 /***/ },
-/* 64 */
+/* 79 */
 /***/ function(module, exports) {
 
 	
@@ -23435,7 +24347,7 @@
 
 
 /***/ },
-/* 65 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -34334,10 +35246,10 @@
 	/***/ })
 	/******/ ]);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(66).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(81).Buffer))
 
 /***/ },
-/* 66 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -34350,9 +35262,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(67)
-	var ieee754 = __webpack_require__(68)
-	var isArray = __webpack_require__(69)
+	var base64 = __webpack_require__(82)
+	var ieee754 = __webpack_require__(83)
+	var isArray = __webpack_require__(84)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -36133,7 +37045,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 67 */
+/* 82 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -36253,7 +37165,7 @@
 
 
 /***/ },
-/* 68 */
+/* 83 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -36343,7 +37255,7 @@
 
 
 /***/ },
-/* 69 */
+/* 84 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -36354,13 +37266,13 @@
 
 
 /***/ },
-/* 70 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var diff = __webpack_require__(71);
-	var equal = __webpack_require__(72);
-	var extend = __webpack_require__(75);
-	var op = __webpack_require__(76);
+	var diff = __webpack_require__(86);
+	var equal = __webpack_require__(87);
+	var extend = __webpack_require__(90);
+	var op = __webpack_require__(91);
 	
 	
 	var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
@@ -36674,7 +37586,7 @@
 
 
 /***/ },
-/* 71 */
+/* 86 */
 /***/ function(module, exports) {
 
 	/**
@@ -37378,12 +38290,12 @@
 
 
 /***/ },
-/* 72 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(73);
-	var isArguments = __webpack_require__(74);
+	var objectKeys = __webpack_require__(88);
+	var isArguments = __webpack_require__(89);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -37478,7 +38390,7 @@
 
 
 /***/ },
-/* 73 */
+/* 88 */
 /***/ function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -37493,7 +38405,7 @@
 
 
 /***/ },
-/* 74 */
+/* 89 */
 /***/ function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -37519,7 +38431,7 @@
 
 
 /***/ },
-/* 75 */
+/* 90 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37611,11 +38523,11 @@
 
 
 /***/ },
-/* 76 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var equal = __webpack_require__(72);
-	var extend = __webpack_require__(75);
+	var equal = __webpack_require__(87);
+	var extend = __webpack_require__(90);
 	
 	
 	var lib = {
@@ -37753,6 +38665,366 @@
 	
 	
 	module.exports = lib;
+
+
+/***/ },
+/* 92 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (displayUtils.hasAnyMatch(value, directive.instructions.values))
+	        {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 93 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (!displayUtils.hasAnyMatch(value, directive.instructions.values))
+	        {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
+	        {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenRegexNot
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (!displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
+	        {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (displayUtils.hasAnyMatch(value, directive.instructions.values))
+	        {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (!displayUtils.hasAnyMatch(value, directive.instructions.values))
+	        {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
+	        {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 99 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify and toggle
+	        if (!displayUtils.hasAnyRegexMatch(value, directive.instructions.values))
+	        {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	}
 
 
 /***/ }

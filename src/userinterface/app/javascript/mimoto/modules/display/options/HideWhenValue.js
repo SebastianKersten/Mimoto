@@ -1,5 +1,5 @@
 /**
- * Mimoto - Display option - HideWhenEmpty
+ * Mimoto - Display option - AddClassWhenValue
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -24,7 +24,7 @@ module.exports.prototype = {
         let displayUtils = new DisplayUtils();
 
         // 2. verify and toggle
-        if (value.length == 0)
+        if (displayUtils.hasAnyMatch(value, directive.instructions.values))
         {
             // 2a. hide
             displayUtils.hideElement(directive.element);

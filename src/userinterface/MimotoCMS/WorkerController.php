@@ -19,7 +19,9 @@ use GearmanWorker;
 
 // ElephantIO classes
 use ElephantIO\Client;
+use ElephantIO\Engine\SocketIO\Version0X;
 use ElephantIO\Engine\SocketIO\Version1X;
+use ElephantIO\Engine\SocketIO\Version2X;
 use ElephantIO\Exception\ServerConnectionFailureException;
 
 // Brian L. Moon classes
@@ -34,7 +36,15 @@ use Net_Gearman_Manager;
 class WorkerController
 {
 
-    private $_socketIOClient = null;
+    //private $_socketIOClient = null;
+    private $_socket = null;
+    private $_loop = null;
+    private $_connector = null;
+    private $_connection = null;
+
+
+    private $_emitter = null;
+
 
 
     public function overview(Application $app)
@@ -65,7 +75,7 @@ class WorkerController
 
         // setup connection
         $this->_socketIOClient = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
-        $this->_socketIOClient->initialize(false);
+        //$this->_socketIOClient->initialize(false);
 
 
         // init
@@ -85,23 +95,9 @@ class WorkerController
                 $aData[$sKey] = $value;
             }
 
-            try
-            {
-                // output
-                ob_flush();
-                flush();
-
-//                $client->initialize();
-                echo "======\n";
-                $this->_socketIOClient->emit($workload->sEvent, $aData);
-                echo "======\n";
-//                $client->close();
-            }
-            catch (ServerConnectionFailureException $e)
-            {
-                echo '\n\nServer Connection Failure!!\n\n';
-                // todo - reconnect?
-            }
+            $this->_socketIOClient->initialize(false);
+            $this->_socketIOClient->emit($workload->sEvent, $aData);
+            $this->_socketIOClient->close();
 
             // output
             echo "Socket.io event (".date('Y.m.d H:i:s').")\n";
