@@ -1,5 +1,5 @@
 /**
- * Mimoto - Display option - RemoveClassWhenNotValue
+ * Mimoto - Display option - ShowWhenNotValue
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -23,8 +23,11 @@ module.exports.prototype = {
         // 1. init
         let displayUtils = new DisplayUtils();
 
-        // 2. verify and toggle
-        if (!displayUtils.hasAnyMatch(value, directive.instructions.values))
+        // 2. verify
+        let bValidated = (value !== undefined) ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+
+        // 3. toggle
+        if (bValidated)
         {
             // 2a. show
             displayUtils.showElement(directive.element);

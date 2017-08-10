@@ -64,21 +64,20 @@ module.exports.prototype = {
         
 
         MimotoX.display.onDataChange(data);
-        return;
 
 
         // compose
-        var sEntityIdentifier = data.entityType + '.' + data.entityId;
-        
-        // update
-        module.exports.prototype._updateValues(sEntityIdentifier, data.changes);
-        module.exports.prototype._updateEntities(data.entityType, data.entityId, data.changes);
-        module.exports.prototype._updateCollections(data.entityType, data.entityId, data.changes, data.connections);
-        module.exports.prototype._updateSelections(data.entityType, data.entityId, data.changes);
-        module.exports.prototype._updateInputFields(sEntityIdentifier, data.changes);
-        module.exports.prototype._updateCounters(data.entityType, data.changes);
-
-        module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
+        // var sEntityIdentifier = data.entityType + '.' + data.entityId;
+        //
+        // // update
+        // module.exports.prototype._updateValues(sEntityIdentifier, data.changes);
+        // module.exports.prototype._updateEntities(data.entityType, data.entityId, data.changes);
+        // module.exports.prototype._updateCollections(data.entityType, data.entityId, data.changes, data.connections);
+        // module.exports.prototype._updateSelections(data.entityType, data.entityId, data.changes);
+        // module.exports.prototype._updateInputFields(sEntityIdentifier, data.changes);
+        // module.exports.prototype._updateCounters(data.entityType, data.changes);
+        //
+        // module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
     },
     
     /**

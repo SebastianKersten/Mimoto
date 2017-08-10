@@ -106,7 +106,7 @@ class DisplayOptionUtils
             case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
             case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
 
-                // no special instructions
+                $instructions->initialState = $component->isEmpty($sPropertyName);
                 break;
 
             case self::TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:

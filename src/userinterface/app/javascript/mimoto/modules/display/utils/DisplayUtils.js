@@ -64,6 +64,23 @@ module.exports.prototype = {
         return this._hasMatch(value, aValues, this.MATCH_TYPE_REGEX);
     },
 
+    isEmpty: function(value)
+    {
+        return value.length == 0;
+    },
+
+    getInitialState: function(directive)
+    {
+        // 1. init
+        let bValidated = false;
+
+        // 2. validate and set
+        if (directive.instructions.initialState !== undefined) bValidated = directive.instructions.initialState;
+
+        // 3. send
+        return bValidated;
+    },
+
 
 
     // ----------------------------------------------------------------------------
