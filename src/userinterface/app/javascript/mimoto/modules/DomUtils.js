@@ -41,10 +41,10 @@ module.exports.prototype = {
     /**
      * Load component NEW
      */
-    loadComponentNEW: function ($container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
+    loadComponentNEW: function (container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
     {
         // compose
-        let data = {
+        let requestData = {
             sEntityTypeName: sEntityTypeName,
             nEntityId: nEntityId,
             sComponentName: sComponentName,
@@ -53,16 +53,58 @@ module.exports.prototype = {
             nConnectionId: nConnectionId
         };
 
-        // execute
-        $.ajax({
-            type: 'POST',
-            url: '/mimoto.data/render',
-            data: data,
-            dataType: 'html',
-            success: function (data) {
-                $($container).append(data);
+
+        // init
+        let request = new XMLHttpRequest();
+
+        // setup
+        request.onreadystatechange = function()
+        {
+            if(request.readyState === 4)
+            {
+                if(request.status === 200)
+                {
+
+                    // convert
+                    //var response = JSON.parse(request.responseText);
+                    let response = request.responseText;
+
+                    // init
+                    let parser = new DOMParser();
+                    let newDocument = parser.parseFromString(response, "text/html");
+
+                    // isolate
+                    let element = newDocument.querySelector('body').firstChild;
+
+                    // register directives
+                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+
+                    // add to dom
+                    container.append(element);
+                }
             }
-        });
+        };
+
+        // prepare
+        request.open('post', '/mimoto.data/render', true);
+
+        // setup
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+
+        // prepare
+        let sRequestData = '';
+        for (let sKey in requestData)
+        {
+            if (requestData[sKey])
+            {
+                if (sRequestData.length !== 0) sRequestData += '&';
+                sRequestData += sKey + '=' + requestData[sKey];
+            }
+        }
+
+        // send
+        request.send(sRequestData);
     },
 
     /**
@@ -85,50 +127,6 @@ module.exports.prototype = {
             type: 'POST',
             url: '/mimoto.data/render',
             data: data,
-            dataType: 'html',
-            success: function (data) {
-                $($container).append(data);
-            }
-        });
-    },
-
-
-    /**
-     * Load component
-     */
-    loadComponent: function ($container, sEntityTypeName, nId, sComponentName, sPropertySelector)
-    {
-        // default
-        var sPropertySelector = (!sPropertySelector) ? '' : '/' + sPropertySelector;
-
-        // execute
-        $.ajax({
-            type: 'GET',
-            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sComponentName + sPropertySelector,
-            data: null,
-            dataType: 'html',
-            success: function (data) {
-                $($container).append(data);
-            }
-        });
-    },
-    
-    /**
-     * Load wrapper
-     */
-    loadWrapper: function ($container, sEntityTypeName, nId, sWrapper, sComponentName, sPropertySelector)
-    {
-        // default
-        var sPropertySelector = (!sPropertySelector) ? '' : '/' + sPropertySelector;
-
-
-        // 1. connection.connectionId
-
-        // execute
-        $.ajax({
-            type: 'GET',
-            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponentName) ? '/' + sComponent : '') + sPropertySelector,
-            data: null,
             dataType: 'html',
             success: function (data) {
                 $($container).append(data);

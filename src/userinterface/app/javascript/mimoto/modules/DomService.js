@@ -80,140 +80,140 @@ module.exports.prototype = {
         // module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
     },
     
-    /**
-     * Handle data CREATED
-     */
-    onDataCreated: function(data, sChannel)
-    {
-        // validate
-        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
+    // /**
+    //  * Handle data CREATED
+    //  */
+    // onDataCreated: function(data, sChannel)
+    // {
+    //     // validate
+    //     if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
+    //
+    //     //console.clear();
+    //     console.log('Aimless - data.created (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
+    //     console.log(data);
+    //
+    //
+    //     // setup
+    //     var sEntityType = data.entityType;
+    //
+    //     // register
+    //     var classRoot = module.exports.prototype;
+    //
+    //
+    //     // --- component level ---
+    //
+    //     // search
+    //     var aComponents = $("[data-mimoto-contains='" + sEntityType + "']");
+    //
+    //
+    //     aComponents.each( function(index, $container)
+    //     {
+    //         // read
+    //         var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
+    //         var mls_sortorder = $($container).attr("data-mimoto--sortorder"); // #todo
+    //         var mls_wrapper = $($container).attr("data-mimoto-wrapper");
+    //         var mls_contains = $($container).attr("data-mimoto-contains");
+    //
+    //         console.warn('mls_contains = ' + mls_contains);
+    //
+    //         if (mls_wrapper)
+    //         {
+    //             MimotoX.utils.loadWrapper($container, data.entityType, data.entityId, mls_wrapper, mls_component.name, mls_contains);
+    //         }
+    //         else
+    //         {
+    //             console.log('Requesting component ...', data.entityType, data.entityId);
+    //
+    //             if (mls_component.name)
+    //             {
+    //                 MimotoX.utils.loadComponent($container, data.entityType, data.entityId, mls_component.name, mls_contains);
+    //             }
+    //         }
+    //     });
+    
         
-        //console.clear();
-        console.log('Aimless - data.created (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
-        console.log(data);
-
-    
-        // setup
-        var sEntityType = data.entityType;
-    
-        // register
-        var classRoot = module.exports.prototype;
-
-    
-        // --- component level ---
-    
-        // search
-        var aComponents = $("[data-mimoto-contains='" + sEntityType + "']");
-
-
-        aComponents.each( function(index, $container)
-        {
-            // read
-            var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
-            var mls_sortorder = $($container).attr("data-mimoto--sortorder"); // #todo
-            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
-            var mls_contains = $($container).attr("data-mimoto-contains");
-            
-            console.warn('mls_contains = ' + mls_contains);
-            
-            if (mls_wrapper)
-            {
-                MimotoX.utils.loadWrapper($container, data.entityType, data.entityId, mls_wrapper, mls_component.name, mls_contains);
-            }
-            else
-            {
-                console.log('Requesting component ...', data.entityType, data.entityId);
-
-                if (mls_component.name)
-                {
-                    MimotoX.utils.loadComponent($container, data.entityType, data.entityId, mls_component.name, mls_contains);
-                }
-            }
-        });
-    
-        
-        // --- selection level ---
-
-
-        // search
-        var aComponents = $("[data-mimoto-selection='" + sEntityType + "']");
-    
-        aComponents.each( function(index, $component)
-        {
-            // read
-            var mls_component = classRoot._getComponentName($($component).attr("data-mimoto-component"));
-            var mls_sortorder = $($component).attr("data-mimoto--sortorder"); // #todo
-            var mls_wrapper = $($component).attr("data-mimoto-wrapper");
-    
-            if (mls_wrapper)
-            {
-                MimotoX.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
-            }
-            else
-            {
-                if (mls_component.name)
-                {
-                    MimotoX.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
-                }
-        
-            }
-        });
-    
-    
-    
-        // --- data-mimoto-count (onCreate) ---
-    
-    
-        // search
-        var aComponents = $("[data-mimoto-count='" + sEntityType + "']");
-    
-        aComponents.each( function(index, $component)
-        {
-        
-            var mls_config = $($component).attr("data-mimoto-config");
-        
-            if (mls_config) { mls_config = $.parseJSON(mls_config); }
-        
-        
-            // read
-            var nCurrentCount = parseInt($($component).text());
-        
-            // update
-            nCurrentCount = nCurrentCount + 1;
-        
-            // output
-            $($component).text(nCurrentCount);
-        
-        
-            if (mls_config.toggleClasses)
-            {
-                for (var sKey in mls_config.toggleClasses)
-                {
-                    if (sKey == 'onZero' && nCurrentCount == 0)
-                    {
-                        $($component).addClass(mls_config.toggleClasses[sKey]);
-                    }
-                    else
-                    {
-                        $($component).removeClass(mls_config.toggleClasses[sKey]);
-                    }
-                }
-            }
-        
-        });
-    
-    
-        // // search
-        // var aComponents = $("[data-mimoto-display-showonempty='" + mls_container + "']");
-        //
-        // aComponents.each( function(index, $component)
-        // {
-        //     $($component).css({"display": ""});
-        // });
-
-        var sEntityIdentifier = data.entityType + '.' + data.entityId;
-        module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
-    },
+    //     // --- selection level ---
+    //
+    //
+    //     // search
+    //     var aComponents = $("[data-mimoto-selection='" + sEntityType + "']");
+    //
+    //     aComponents.each( function(index, $component)
+    //     {
+    //         // read
+    //         var mls_component = classRoot._getComponentName($($component).attr("data-mimoto-component"));
+    //         var mls_sortorder = $($component).attr("data-mimoto--sortorder"); // #todo
+    //         var mls_wrapper = $($component).attr("data-mimoto-wrapper");
+    //
+    //         if (mls_wrapper)
+    //         {
+    //             MimotoX.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
+    //         }
+    //         else
+    //         {
+    //             if (mls_component.name)
+    //             {
+    //                 MimotoX.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
+    //             }
+    //
+    //         }
+    //     });
+    //
+    //
+    //
+    //     // --- data-mimoto-count (onCreate) ---
+    //
+    //
+    //     // search
+    //     var aComponents = $("[data-mimoto-count='" + sEntityType + "']");
+    //
+    //     aComponents.each( function(index, $component)
+    //     {
+    //
+    //         var mls_config = $($component).attr("data-mimoto-config");
+    //
+    //         if (mls_config) { mls_config = $.parseJSON(mls_config); }
+    //
+    //
+    //         // read
+    //         var nCurrentCount = parseInt($($component).text());
+    //
+    //         // update
+    //         nCurrentCount = nCurrentCount + 1;
+    //
+    //         // output
+    //         $($component).text(nCurrentCount);
+    //
+    //
+    //         if (mls_config.toggleClasses)
+    //         {
+    //             for (var sKey in mls_config.toggleClasses)
+    //             {
+    //                 if (sKey == 'onZero' && nCurrentCount == 0)
+    //                 {
+    //                     $($component).addClass(mls_config.toggleClasses[sKey]);
+    //                 }
+    //                 else
+    //                 {
+    //                     $($component).removeClass(mls_config.toggleClasses[sKey]);
+    //                 }
+    //             }
+    //         }
+    //
+    //     });
+    //
+    //
+    //     // // search
+    //     // var aComponents = $("[data-mimoto-display-showonempty='" + mls_container + "']");
+    //     //
+    //     // aComponents.each( function(index, $component)
+    //     // {
+    //     //     $($component).css({"display": ""});
+    //     // });
+    //
+    //     var sEntityIdentifier = data.entityType + '.' + data.entityId;
+    //     module.exports.prototype._triggerJavascriptListeners(sEntityIdentifier, data.changes);
+    // },
     
     onPageChange: function (data)
     {
@@ -248,102 +248,92 @@ module.exports.prototype = {
      * Change altered values currently present on the DOM
      * @private
      */
-    _updateValues: function (sEntityIdentifier, changes)
-    {
-    
+    _updateValues: function (sEntityIdentifier, changes) {
+
         // skip if no changes
         if (!changes) return;
-        
-        
+
+
         // search
         var aValues = $("[data-mimoto-value]");
-        
-        aValues.each( function(nIndex, $component)
-        {
+
+        aValues.each(function (nIndex, $component) {
             // read
             var mls_value = $($component).attr("data-mimoto-value");
-        
+
             // determine
             var nOriginPos = mls_value.indexOf('[');
-            var bHasOrigin = (nOriginPos !== -1) ;
-        
+            var bHasOrigin = (nOriginPos !== -1);
+
             // verify
-            if (bHasOrigin)
-            {
+            if (bHasOrigin) {
                 var mls_value_origin = mls_value.substr(nOriginPos + 1, mls_value.length - nOriginPos - 2);
                 var mls_value = mls_value.substr(0, nOriginPos);
             }
-        
-        
+
+
             // parse modified values
-            for (var i = 0; i < changes.length; i++)
-            {
+            for (var i = 0; i < changes.length; i++) {
                 // register
                 var change = changes[i];
-            
+
                 // collection
                 if (change.changes) continue;
-                
-            
-                if (!bHasOrigin)
-                {
+
+
+                if (!bHasOrigin) {
                     // === value ===
-                
+
                     // Case 1: "project.3.name"
                     // Action: change project.3.name
                     // ------
                     // 1. find "project.3.name"
                     // 2. change value
-                
-                    if (mls_value === (sEntityIdentifier + '.' + change.propertyName))
-                    {
+
+                    if (mls_value === (sEntityIdentifier + '.' + change.propertyName)) {
                         // output
                         $($component).text(change.value);
                     }
                 }
-                else
-                {
+                else {
                     // === entity ===
-                
+
                     // Case 2: - "project.3.client.name[client.17.name]"
                     // Action: change client.17.name
                     // ------
                     // 1. find "client.17.name" of "[client.17.name]"
                     // 2. change value
-                
-                
-                    if (mls_value_origin ===  (sEntityIdentifier + '.' + change.propertyName))
-                    {
+
+
+                    if (mls_value_origin === (sEntityIdentifier + '.' + change.propertyName)) {
                         // output
                         $($component).text(change.value);
                     }
-                    else
-                    {
-                    
+                    else {
+
                         // Case 3: "project.3.client.name[client.17.name]"
                         // Action: change client to 8
                         // ------
                         // 1. find "project.3.client.name"
                         // 2. change "[client.17.name]" into "[client.8.name]"
                         // 3. change value
-                    
+
                         // Case 4: "project.3.agency.name[agency.name]" (no agency set)
                         // Action: set agency to 5
                         // ------
                         // 1. find "project.3.agency" ------> (ignor rest?)
                         // 2. change to: "project.3.agency.name[agency.5.name]"
                         // 3. change value
-                    
-                        if (mls_value ===  (sEntityIdentifier + '.' + change.propertyName))
-                        {
+
+                        if (mls_value === (sEntityIdentifier + '.' + change.propertyName)) {
                             // output
                             $($component).text(change.value);
-                        
+
                             // compose new
                             var new_mls_value_origin = change.origin.entityType;
                             if (change.origin.entityId) new_mls_value_origin += '.' + change.origin.entityId;
                             new_mls_value_origin += '.' + change.origin.propertyName;
-                        
+
                             // update dom
                             $($component).attr('data-mimoto-value', mls_value + '[' + new_mls_value_origin + ']');
                         }
@@ -351,58 +341,8 @@ module.exports.prototype = {
                 }
             }
         });
-    
-    
-    
-        // parse modified values
-        for (var i = 0; i < changes.length; i++)
-        {
-            // register
-            var change = changes[i];
-    
-            // validate
-            if (change.type != 'value') continue;
-            
-            if (!change.value)
-            {
-                // search
-                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-    
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "none");
-                });
-    
-                // search
-                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-    
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "");
-                });
-            }
-            else
-            {
-                // search
-                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-    
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "");
-                });
-    
-                // search
-                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-    
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "none");
-                });
-            }
-            
-            
-        }
     },
+
     
     /**
      * Update entities
@@ -508,56 +448,6 @@ module.exports.prototype = {
                     MimotoX.utils.loadEntity($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
                 }
             });
-        }
-    
-        // parse modified values
-        for (var i = 0; i < aChanges.length; i++)
-        {
-            // register
-            var change = aChanges[i];
-        
-            // validate
-            if (change.type != 'entity') continue;
-            
-        
-            if (!change.entity)
-            {
-                // search
-                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-            
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "none");
-                });
-            
-                // search
-                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-            
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "");
-                });
-            }
-            else
-            {
-                // search
-                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-            
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "");
-                });
-            
-                // search
-                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-            
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "none");
-                });
-            }
-        
-        
         }
     },
     
@@ -847,56 +737,6 @@ module.exports.prototype = {
                     
                 });
             }
-        }
-    
-    
-        // parse modified values
-        for (var i = 0; i < aChanges.length; i++)
-        {
-            // register
-            var change = aChanges[i];
-        
-            // validate
-            if (change.type != 'collection') continue;
-        
-            if (change.collection.count == 0)
-            {
-                // search
-                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-                
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "none");
-                });
-            
-                // search
-                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-            
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "");
-                });
-            }
-            else
-            {
-                // search
-                var aComponents = $("[data-mimoto-display-hideonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-            
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "");
-                });
-            
-                // search
-                var aComponents = $("[data-mimoto-display-showonempty='" + sEntityIdentifier + '.' + change.propertyName + "']");
-            
-                aComponents.each( function(index, $component)
-                {
-                    $($component).css("display", "none");
-                });
-            }
-        
-        
         }
     },
     

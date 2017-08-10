@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "4b0de231f6028813bb34";
+/******/ 	__webpack_require__.h = "ac172dea11fbfa215e16";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -48,12 +48,12 @@
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(88);
+	module.exports = __webpack_require__(112);
 
 
 /***/ },
 
-/***/ 88:
+/***/ 112:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -67,7 +67,7 @@
 	
 	
 	// Publisher demo classes
-	let Publisher = __webpack_require__(89);
+	let Publisher = __webpack_require__(113);
 	
 	
 	/**
@@ -83,7 +83,7 @@
 
 /***/ },
 
-/***/ 89:
+/***/ 113:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -97,8 +97,8 @@
 	
 	
 	// Mimoto classes
-	let Article = __webpack_require__(90);
-	let Editor = __webpack_require__(91);
+	let Article = __webpack_require__(114);
+	let Editor = __webpack_require__(115);
 	
 	
 	module.exports = function() {
@@ -175,7 +175,7 @@
 
 /***/ },
 
-/***/ 90:
+/***/ 114:
 /***/ function(module, exports) {
 
 	/**
@@ -302,7 +302,7 @@
 
 /***/ },
 
-/***/ 91:
+/***/ 115:
 /***/ function(module, exports) {
 
 	/**

@@ -107,7 +107,7 @@ module.exports.prototype = {
 
         // data events
         this._socket.on('data.changed', function(data) { MimotoX.dom.onDataChanged(data); });
-        this._socket.on('data.created', function(data) { MimotoX.dom.onDataCreated(data); });
+        //this._socket.on('data.created', function(data) { MimotoX.dom.onDataCreated(data); });
 
         // user interface events
         this._socket.on('page.change', function(data) { MimotoX.dom.onPageChange(data); });

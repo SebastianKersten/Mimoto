@@ -182,7 +182,7 @@ module.exports.prototype = {
         // 9. collect value
         aNotifications.each( function(index, $component) {
             // init
-            $($component).remove();
+            //$($component).remove();
         });
 
         // 11. send data

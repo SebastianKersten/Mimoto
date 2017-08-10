@@ -66,7 +66,14 @@ module.exports.prototype = {
 
     isEmpty: function(value)
     {
-        return value.length == 0;
+        if (!isNaN(parseInt(value)))
+        {
+            return value == 0;
+        }
+        else
+        {
+            return value.length == 0;
+        }
     },
 
     getInitialState: function(directive)
