@@ -24,7 +24,7 @@ module.exports.prototype = {
         let displayUtils = new DisplayUtils();
 
         // 2. verify
-        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 
         // 3. toggle
         if (bValidated)

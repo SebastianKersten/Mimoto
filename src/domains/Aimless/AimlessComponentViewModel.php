@@ -180,57 +180,6 @@ class AimlessComponentViewModel
 
 
 
-    // --- empty ---
-
-
-//    public function showWhenEmpty($sPropertySelector)
-//    {
-//        return $this->_component->showWhenEmpty($sPropertySelector);
-////
-////            public function showWhenEmpty($sPropertySelector)
-////        {
-////
-////    //            // cleanup
-////    //            $nSeparatorPos = strpos($sPropertySelector, '.');
-////    //
-////    //
-////    //        $sSubpropertySelector = substr($sPropertySelector, $nSeparatorPos + 1);
-////    //        $selector = MimotoDataUtils::getConditionalsAndSubselector($sSubpropertySelector);
-////    //
-////    //            // compose
-////    //            $sFilter = (!empty($selector->conditionals)) ? " data-mimoto-filter='".json_encode($selector->conditionals)."'" : '';
-////
-////
-////
-////            if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
-////            {
-////                $sDisplayState = (!empty($this->data($sPropertySelector))) ? 'style="display:none"' : '';
-////
-////                return 'data-mimoto-display-showonempty="'.$this->_entity->getEntitySelector().'.'.$sPropertySelector.'" '.$sDisplayState;
-////            }
-////            else
-////            {
-////                if (isset($this->_aSelections[$sPropertySelector]))
-////                {
-////                    $sDisplayState = (!$this->_aSelections[$sPropertySelector]->aEntities->isEmpty()) ? 'style="display:none"' : '';
-////
-////                    return 'data-mimoto-display-showonempty="'.$sPropertySelector.'" '.$sDisplayState;
-////                }
-////            }
-////
-////            return '';
-////        }
-//
-//
-//
-//    }
-
-//    public function hideWhenEmpty($sPropertySelector)
-//    {
-//        return $this->_component->hideWhenEmpty($sPropertySelector);
-//    }
-
-
 
     // --- Show and hide
 
@@ -398,210 +347,60 @@ class AimlessComponentViewModel
 
     // --- equals ---
 
-
 //    public function showWhenEquals($sPropertySelector, $value)
-//    {
-//        //return $this->_component->showWhenEquals($sPropertySelector);
-//    }
-//
 //    public function hideWhenEquals($sPropertySelector, $value)
-//    {
-//        //return $this->_component->hideWhenEquals($sPropertySelector);
-//    }
-//
-
 //    public function showWhenNotEquals($sPropertySelector, $value)
-//    {
-//        return $this->_component->showWhenNotEquals($sPropertySelector);
-//    }
-//
 //    public function hideWhenNotEquals($sPropertySelector, $value)
-//    {
-//        return $this->_component->hideWhenNotEquals($sPropertySelector);
-//    }
-
-
 //    public function showWhenGreaterThan($sPropertySelector, $value)
-//    {
-//        return $this->_component->showWhenGreaterThan($sPropertySelector);
-//    }
-//
 //    public function hideWhenGreaterThan($sPropertySelector, $value)
-//    {
-//        return $this->_component->showWhenGreaterThan($sPropertySelector);
-//    }
-
-
 //    public function showWhenLessThan($sPropertySelector, $value)
-//    {
-//        return $this->_component->showWhenSmallerThan($sPropertySelector);
-//    }
-//
 //    public function hideWhenLessThan($sPropertySelector, $value)
-//    {
-//        return $this->_component->hideWhenSmallerThan($sPropertySelector);
-//    }
-
 //    public function showWhenGreaterOrEqual($sPropertySelector, $value)
-//    {
-//        return $this->_component->showWhenSmallerThan($sPropertySelector);
-//    }
-
 //    public function hideWhenGreaterOrEqual($sPropertySelector, $value)
-//    {
-//        return $this->_component->hideWhenSmallerThan($sPropertySelector);
-//    }
-
 //    public function showWhenLessOrEqual($sPropertySelector, $value)
-//    {
-//        return $this->_component->showWhenSmallerThan($sPropertySelector);
-//    }
-
 //    public function hideWhenLessOrEqual($sPropertySelector, $value)
-//    {
-//        return $this->_component->hideWhenSmallerThan($sPropertySelector);
-//    }
 
 
 
     // --- style ---
 
-
 //    public function styleWhenEmpty($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenEmpty($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function styleWhenNotEmpty($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenEmpty($sPropertySelector, $value, $sStyle);
-//    }
-
-
 //    public function styleWhenEquals($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenEquals($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function styleWhenNotEquals($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenNotEquals($sPropertySelector, $value, $sStyle);
-//    }
-
-
 //    public function styleWhenGreaterThan($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function styleWhenNotGreaterThan($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenNotGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-
 //    public function styleWhenGreaterOrEqual($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function styleWhenNotGreaterOrEqual($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenNotGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-
 //    public function styleWhenLessOrEqual($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function styleWhenNotLessOrEqual($sPropertySelector, $value, $sStyle)
-//    {
-//        return $this->_component->styleWhenNotGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-
 
 
     // --- class ---
 
-
 //    public function classWhenEmpty($sPropertySelector, $sClass) // #todo - args
-//    {
-//        return $this->_component->styleWhenEmpty($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function classWhenNotEmpty($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenEmpty($sPropertySelector, $value, $sStyle);
-//    }
-
-
 //    public function classWhenEquals($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenEquals($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function classWhenNotEquals($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenNotEquals($sPropertySelector, $value, $sStyle);
-//    }
-
-
 //    public function classWhenGreaterThan($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function classWhenNotGreaterThan($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenNotGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-
 //    public function classWhenGreaterOrEqual($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function classWhenNotGreaterOrEqual($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenNotGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-
 //    public function classWhenLessOrEqual($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
-//
 //    public function classWhenNotLessOrEqual($sPropertySelector, $value, $sClass)
-//    {
-//        return $this->_component->styleWhenNotGreaterThan($sPropertySelector, $value, $sStyle);
-//    }
 
 
 
 // Mimoto.classWhenInArray('???') ? hoe werkt dit? meegeven als twigVar?
 
+//
+//  Mimoto.styleWhenEquals(‘type’, ‘regular’, ‘background-color:#ff9900’)
+//
+//  Mimoto.styleWhenEquals(‘subprojects.{type=x}’, 2, ‘background-color:#ff9900’)
+//
+//  Mimoto.styleWhenEquals(‘parent, ‘regular’, ‘background-color:#ff9900’)
+//
+//  Mimoto.loadWhenEquals(‘type’, ‘explainer’, ‘/your/api/with/html/output’)
 
-//
-//Mimoto.styleWhenEquals(‘type’, ‘regular’, ‘background-color:#ff9900’)
-//Mimoto.classWhenEquals(‘type’, ‘regular’, ‘your-bem-class’)
-//
-//> Mimoto.styleWhenEquals(‘subprojects.{type=x}’, 2, ‘background-color:#ff9900’)
-//
-//> Mimoto.styleWhenGreater
-//
-
-//
-//
-//Mimoto.styleWhenEquals(‘parent, ‘regular’, ‘background-color:#ff9900’)
-//
-//
-//Mimoto.loadWhenEquals(‘type’, ‘explainer’, ‘/your/api/with/html/output’)
-
-    private function comparePropertyToValue()
-    {
-
-
-
-    }
 
 }

@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "91f747bfabe381a11137";
+/******/ 	__webpack_require__.h = "9d3ca42c36b3e9cd4ac3";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -14539,7 +14539,7 @@
 	        let displayUtils = new DisplayUtils();
 	
 	        // 2. verify
-	        let bValidated = (value !== undefined) ? displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	        let bValidated = (value !== undefined) ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 	
 	        // 3. toggle
 	        if (bValidated)
@@ -14587,7 +14587,7 @@
 	        let displayUtils = new DisplayUtils();
 	
 	        // 2. verify
-	        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 	
 	        // 3. toggle
 	        if (bValidated)
@@ -14779,7 +14779,7 @@
 	        let displayUtils = new DisplayUtils();
 	
 	        // 2. verify
-	        let bValidated = (value !== undefined) ? displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	        let bValidated = (value !== undefined) ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 	
 	        // 3. toggle
 	        if (bValidated)
@@ -14827,7 +14827,7 @@
 	        let displayUtils = new DisplayUtils();
 	
 	        // 2. verify
-	        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 	
 	        // 3. toggle
 	        if (bValidated)
@@ -38908,7 +38908,7 @@
 	        let displayUtils = new DisplayUtils();
 	
 	        // 2. verify
-	        let bValidated = (value !== undefined) ? displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	        let bValidated = (value !== undefined) ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 	
 	        // 3. toggle
 	        if (bValidated)
@@ -38956,7 +38956,7 @@
 	        let displayUtils = new DisplayUtils();
 	
 	        // 2. verify
-	        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 	
 	        // 3. toggle
 	        if (bValidated)
@@ -39100,7 +39100,7 @@
 	        let displayUtils = new DisplayUtils();
 	
 	        // 2. verify
-	        let bValidated = (value !== undefined) ? displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	        let bValidated = (value !== undefined) ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 	
 	        // 3. toggle
 	        if (bValidated)
@@ -39148,7 +39148,7 @@
 	        let displayUtils = new DisplayUtils();
 	
 	        // 2. verify
-	        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	        let bValidated = (value !== undefined) ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
 	
 	        // 3. toggle
 	        if (bValidated)

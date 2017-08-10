@@ -102,55 +102,56 @@ class DisplayOptionUtils
         switch($sAction)
         {
             case self::TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
             case self::TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
             case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
             case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
 
                 $instructions->initialState = $component->isEmpty($sPropertyName);
                 break;
 
+            case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
+            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
+            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
+            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
+
+                $instructions->initialState = !$component->isEmpty($sPropertyName);
+                break;
+
             case self::TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:
+            case self::TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:
+            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
+            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
+
+                $instructions->values = self::prepareValues($xValues);
+                $instructions->initialState = self::isValue($component->data($sPropertyName), $instructions->values);
+                break;
+
             case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
+            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
+            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
+            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
+
+                $instructions->values = self::prepareValues($xValues);
+                $instructions->initialState = !self::isValue($component->data($sPropertyName), $instructions->values);
+                break;
+
             case self::TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:
             case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
-
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
             case self::TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:
             case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
 
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
+                $instructions->patterns = self::prepareValues($xValues);
+                $instructions->initialState = self::isRegex($component->data($sPropertyName), $instructions->patterns);
+                break;
+
+
             case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
             case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
-
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
             case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
             case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
 
-                // init
-                $aValues = [];
-
-                if (is_array($xValues))
-                {
-                    foreach ($xValues as $sKey => $sValue)
-                    {
-                        if (is_string($xValues[$sKey]) && is_string($sValue)) $aValues[] = $sValue;
-                    }
-                }
-                else if (is_string($xValues))
-                {
-                    $aValues[] = $xValues;
-                }
-
-                // store
-                $instructions->values = $aValues;
-
+                $instructions->patterns = self::prepareValues($xValues);
+                $instructions->initialState = !self::isRegex($component->data($sPropertyName), $instructions->patterns);
                 break;
         }
 
@@ -163,6 +164,70 @@ class DisplayOptionUtils
 
         // 4. compose and send
         return $sAction.'="'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
+    }
+
+
+    private static function prepareValues($xValues)
+    {
+        // init
+        $aValues = [];
+
+        if (is_array($xValues))
+        {
+            foreach ($xValues as $sKey => $sValue)
+            {
+                if (is_string($xValues[$sKey]) && is_string($sValue)) $aValues[] = $sValue;
+            }
+        }
+        else if (is_string($xValues))
+        {
+            $aValues[] = $xValues;
+        }
+
+        // send
+        return $aValues;
+    }
+
+    private static function isValue($value, $aValues)
+    {
+        // 1. init
+        $bValidated = false;
+
+        // 2. find
+        $nValueCount = count($aValues);
+        for ($nValueIndex = 0; $nValueIndex < $nValueCount; $nValueIndex++)
+        {
+            if ($value == $aValues[$nValueIndex])
+            {
+                // toggle
+                $bValidated = true;
+                break;
+            }
+        }
+
+        // 3. send
+        return $bValidated;
+    }
+
+    private static function isRegex($value, $aPatterns)
+    {
+        // 1. init
+        $bValidated = false;
+
+        // 2. find
+        $nPatternCount = count($aPatterns);
+        for ($nPatternIndex = 0; $nPatternIndex < $nPatternCount; $nPatternIndex++)
+        {
+            if (preg_match('/'.$aPatterns[$nPatternIndex].'/g', $value))
+            {
+                // toggle
+                $bValidated = true;
+                break;
+            }
+        }
+
+        // 3. send
+        return $bValidated;
     }
 
 }
