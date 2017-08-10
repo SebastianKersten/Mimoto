@@ -58,7 +58,7 @@ class AimlessForm extends AimlessComponent
     public function render($customValues = null)
     {
         // 1. load form
-        $form = $this->_FormService->getFormByName($this->_sFormName);
+        $form = $this->_FormService->getFormByName($this->_sFormName, $this->_entity);
 
         // 2. register fields
         $aFields = $form->getValue('fields');

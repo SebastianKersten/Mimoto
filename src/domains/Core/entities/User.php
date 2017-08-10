@@ -149,7 +149,7 @@ class User
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eUser = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_USER);
@@ -189,7 +189,7 @@ class User
 
         CoreFormUtils::addField_groupStart($form, 'Permissions', 'permissions');
 
-        $form->addValue('fields', self::getField_userRoles());
+        $form->addValue('fields', self::getField_userRoles($eUser));
 
         CoreFormUtils::addField_groupEnd($form, 'permissions');
 
@@ -244,7 +244,7 @@ class User
     /**
      * Get field: user roles
      */
-    private static function getField_userRoles()
+    private static function getField_userRoles($eUser = null)
     {
         // 1. create and setup field
         $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, CoreConfig::COREFORM_USER, 'roles');
@@ -252,8 +252,6 @@ class User
 
         // 2. connect value
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_USER, 'roles');
-
-
 
 
         // init
@@ -264,22 +262,29 @@ class User
         //$selection->setValue('name', 'author');
 
 
-        if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || Mimoto::user()->hasRole('admin'))
+        if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || Mimoto::user()->hasRole('admin') || self::userHasRole($eUser, 'contenteditor'))
         {
             // init
             $aCoreUserRoleIds = [CoreConfig::MIMOTO_USER_ROLE.'-contenteditor'];
 
             // verify
-            if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser'))
+            if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || self::userHasRole($eUser, 'admin'))
             {
                 // add permissions
                 array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-admin');
 
                 // verify
-                if (Mimoto::user()->hasRole('owner'))
+                if (Mimoto::user()->hasRole('owner') || self::userHasRole($eUser, 'superuser'))
                 {
                     // add permissions
-                    array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-superuser', CoreConfig::MIMOTO_USER_ROLE.'-owner');
+                    array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-superuser');
+
+                    // verify
+                    if (Mimoto::user()->hasRole('owner'))
+                    {
+                        // add permissions
+                        array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-owner');
+                    }
                 }
             }
 
@@ -353,4 +358,38 @@ class User
     }
 
 
+    private static function userHasRole($eUser, $sRole)
+    {
+        // 1. init
+        $bHasRole = false;
+
+        // 2. validate
+        if (empty($eUser)) return $bHasRole;
+
+
+        // ---
+
+
+        // 3. read
+        $aRoles = $eUser->getValue('roles');
+
+        // 4. find
+        $nRoleCount = count($aRoles);
+        for ($nRoleIndex = 0; $nRoleIndex < $nRoleCount; $nRoleIndex++)
+        {
+            // register
+            $eRole = $aRoles[$nRoleIndex];
+
+            // verify
+            if ($eRole->getValue('name') == $sRole)
+            {
+                // toglle
+                $bHasRole = true;
+                break;
+            }
+        }
+
+        // 5. send
+        return $bHasRole;
+    }
 }

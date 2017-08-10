@@ -67,7 +67,7 @@ class FormService
     /**
      * Get form by its name
      */
-    public function getFormByName($sFormName)
+    public function getFormByName($sFormName, $eEntity = null)
     {
         $nFormConfigCount = count($this->_aFormConfigs);
         for ($nFormConfigIndex = 0; $nFormConfigIndex < $nFormConfigCount; $nFormConfigIndex++)
@@ -80,7 +80,7 @@ class FormService
                 if (isset($formConfig->class) && substr($sFormName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
                 {
                     // load form
-                    $form = call_user_func(array($formConfig->class, 'getForm'));
+                    $form = call_user_func(array($formConfig->class, 'getForm'), $eEntity);
                 }
                 else
                 {

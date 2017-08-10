@@ -55,7 +55,7 @@ class UserRole
         $aData[CoreConfig::MIMOTO_USER_ROLE.'-owner'] = (object) array('name' => 'owner');
         $aData[CoreConfig::MIMOTO_USER_ROLE.'-superuser'] = (object) array('name' => 'superuser');
         $aData[CoreConfig::MIMOTO_USER_ROLE.'-admin'] = (object) array('name' => 'admin');
-        $aData[CoreConfig::MIMOTO_USER_ROLE.'-contenteditor'] = (object) array('name' => 'content editor');
+        $aData[CoreConfig::MIMOTO_USER_ROLE.'-contenteditor'] = (object) array('name' => 'contenteditor');
 
         // send
         return $aData[$sItemId];
