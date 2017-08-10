@@ -49,6 +49,15 @@ class SessionController
             // open login screen
             return $app->redirect('/mimoto.cms' . $sRequestedPage);
         }
+        else
+        {
+            // validate user permissions
+            if (!(Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || Mimoto::user()->hasRole('admin') || Mimoto::user()->hasRole('contenteditor')))
+            {
+                // logout
+                return $app->redirect('/mimoto.cms/logout');
+            }
+        }
     }
 
     /**

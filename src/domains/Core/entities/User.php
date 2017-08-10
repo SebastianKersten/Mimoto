@@ -264,11 +264,24 @@ class User
         //$selection->setValue('name', 'author');
 
 
-        //if (Mimoto::user()->hasRole('superuser'))
+        if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || Mimoto::user()->hasRole('admin'))
         {
-            $aCoreUserRoleIds = [
-                CoreConfig::MIMOTO_USER_ROLE.'-superuser'
-            ];
+            // init
+            $aCoreUserRoleIds = [CoreConfig::MIMOTO_USER_ROLE.'-contenteditor'];
+
+            // verify
+            if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser'))
+            {
+                // add permissions
+                array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-admin');
+
+                // verify
+                if (Mimoto::user()->hasRole('owner'))
+                {
+                    // add permissions
+                    array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-superuser', CoreConfig::MIMOTO_USER_ROLE.'-owner');
+                }
+            }
 
             $nCoreUserRoleIdCount = count($aCoreUserRoleIds);
             for ($nCoreUserRoleIdIndex = 0; $nCoreUserRoleIdIndex < $nCoreUserRoleIdCount; $nCoreUserRoleIdIndex++)

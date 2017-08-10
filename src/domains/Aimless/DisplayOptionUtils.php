@@ -101,6 +101,10 @@ class DisplayOptionUtils
         // 1. add action specific data
         switch($sAction)
         {
+            case self::TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:
+            case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
+            case self::TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:
+            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
             case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
             case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
             case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:

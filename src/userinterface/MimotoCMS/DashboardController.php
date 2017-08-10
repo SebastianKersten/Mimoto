@@ -56,6 +56,17 @@ class DashboardController
         }
         else
         {
+            // validate user permissions
+            if (!(Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || Mimoto::user()->hasRole('admin') || Mimoto::user()->hasRole('contenteditor')))
+            {
+                // logout
+                return $app->redirect('/mimoto.cms/logout');
+            }
+
+
+            // ---
+
+
             // 1. init page
             $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
