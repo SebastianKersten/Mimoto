@@ -418,7 +418,7 @@ $app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $ev
 
         //console.log('Console.update - filtered');
 
-        // 1. data-mimoto-contains="project.3.subprojects" wordt niet meegestuurd bij wie het object hoort
+        // 1. data-mimoto-collection="project.3.subprojects" wordt niet meegestuurd bij wie het object hoort
         // 2. partOf
         // 3. zoek naar connectietabellen
 
@@ -429,15 +429,15 @@ $app['dispatcher']->addListener(UserEvents::AFTER_INSERT, function(UserEvent $ev
 //
 //
 //        // search
-//        var aComponents = $("[data-mimoto-contains='" + mls_container + "']");
+//        var aComponents = $("[data-mimoto-collection='" + mls_container + "']");
 //
 //        aComponents.each( function(index, $component)
 //        {
 //
-//            console.log('In data-mimoto-contains for updating information');
+//            console.log('In data-mimoto-collection for updating information');
 //
 //            // read
-//            var mls_contains = $($component).attr("data-mimoto-contains");
+//            var mls_contains = $($component).attr("data-mimoto-collection");
 //
 //            console.log(mls_contains);
 //

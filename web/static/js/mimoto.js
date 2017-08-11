@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "a3f8641c62e5c84b8bb7";
+/******/ 	__webpack_require__.h = "cb354a0f399cedc42d19";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -10984,7 +10984,7 @@
 	    //     // --- component level ---
 	    //
 	    //     // search
-	    //     var aComponents = $("[data-mimoto-contains='" + sEntityType + "']");
+	    //     var aComponents = $("[data-mimoto-collection='" + sEntityType + "']");
 	    //
 	    //
 	    //     aComponents.each( function(index, $container)
@@ -10993,7 +10993,7 @@
 	    //         var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
 	    //         var mls_sortorder = $($container).attr("data-mimoto--sortorder"); // #todo
 	    //         var mls_wrapper = $($container).attr("data-mimoto-wrapper");
-	    //         var mls_contains = $($container).attr("data-mimoto-contains");
+	    //         var mls_contains = $($container).attr("data-mimoto-collection");
 	    //
 	    //         console.warn('mls_contains = ' + mls_contains);
 	    //
@@ -11357,13 +11357,13 @@
 	            if (!change.collection) continue;
 	            
 	            // collect
-	            var aContainers = $("[data-mimoto-contains='" + sEntityIdentifier + "." + change.propertyName + "']");
+	            var aContainers = $("[data-mimoto-collection='" + sEntityIdentifier + "." + change.propertyName + "']");
 	        
 	        
 	            aContainers.each(function(nIndex, $container)
 	            {
 	                // read
-	                var mls_contains = $($container).attr("data-mimoto-contains");
+	                var mls_contains = $($container).attr("data-mimoto-collection");
 	                var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
 	                var mls_filter = $($container).attr("data-mimoto-filter");
 	                
@@ -11480,13 +11480,13 @@
 	                var connection = aConnections[nConnectionIndex];
 	
 	                // search
-	                var aContainers = $("[data-mimoto-contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
+	                var aContainers = $("[data-mimoto-collection='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
 	                
 	                
 	                aContainers.each(function(nIndex, $container)
 	                {
 	                    // read
-	                    var mls_contains = $($container).attr("data-mimoto-contains");
+	                    var mls_contains = $($container).attr("data-mimoto-collection");
 	                    var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
 	                    var mls_filter = $($container).attr("data-mimoto-filter");
 	

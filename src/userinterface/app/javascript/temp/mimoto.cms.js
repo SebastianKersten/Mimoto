@@ -32839,7 +32839,7 @@
 	    _changeOrder: function(htmlParentElement, htmlChildElement, nOldIndex, nNewIndex)
 	    {
 	        // register
-	        var sPropertySelector = htmlParentElement.getAttribute('data-mimoto-contains');
+	        var sPropertySelector = htmlParentElement.getAttribute('data-mimoto-collection');
 	        var nConnectionId = htmlChildElement.getAttribute('data-mimoto-connection');
 	        var nCurrentSortindex = htmlChildElement.getAttribute('data-mimoto-sortindex');
 	        

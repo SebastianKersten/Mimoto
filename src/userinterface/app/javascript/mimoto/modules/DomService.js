@@ -103,7 +103,7 @@ module.exports.prototype = {
     //     // --- component level ---
     //
     //     // search
-    //     var aComponents = $("[data-mimoto-contains='" + sEntityType + "']");
+    //     var aComponents = $("[data-mimoto-collection='" + sEntityType + "']");
     //
     //
     //     aComponents.each( function(index, $container)
@@ -112,7 +112,7 @@ module.exports.prototype = {
     //         var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
     //         var mls_sortorder = $($container).attr("data-mimoto--sortorder"); // #todo
     //         var mls_wrapper = $($container).attr("data-mimoto-wrapper");
-    //         var mls_contains = $($container).attr("data-mimoto-contains");
+    //         var mls_contains = $($container).attr("data-mimoto-collection");
     //
     //         console.warn('mls_contains = ' + mls_contains);
     //
@@ -476,13 +476,13 @@ module.exports.prototype = {
             if (!change.collection) continue;
             
             // collect
-            var aContainers = $("[data-mimoto-contains='" + sEntityIdentifier + "." + change.propertyName + "']");
+            var aContainers = $("[data-mimoto-collection='" + sEntityIdentifier + "." + change.propertyName + "']");
         
         
             aContainers.each(function(nIndex, $container)
             {
                 // read
-                var mls_contains = $($container).attr("data-mimoto-contains");
+                var mls_contains = $($container).attr("data-mimoto-collection");
                 var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
                 var mls_filter = $($container).attr("data-mimoto-filter");
                 
@@ -599,13 +599,13 @@ module.exports.prototype = {
                 var connection = aConnections[nConnectionIndex];
 
                 // search
-                var aContainers = $("[data-mimoto-contains='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
+                var aContainers = $("[data-mimoto-collection='" + connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName + "']");
                 
                 
                 aContainers.each(function(nIndex, $container)
                 {
                     // read
-                    var mls_contains = $($container).attr("data-mimoto-contains");
+                    var mls_contains = $($container).attr("data-mimoto-collection");
                     var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
                     var mls_filter = $($container).attr("data-mimoto-filter");
 
