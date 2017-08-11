@@ -18,9 +18,7 @@
         "symfony/translation": "^3.3",
         "symfony/config": "^3.3",
         "symfony/yaml": "^3.3",
-        "kraken-io/kraken-php": "^1.6",
-        "react/socket": "^0.8",
-        "rase/socket.io-emitter": "^0.7"
+        "kraken-io/kraken-php": "^1.6"
     },
     "autoload": {
         "psr-4": {
