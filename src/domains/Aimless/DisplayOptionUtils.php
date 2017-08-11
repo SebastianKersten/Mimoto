@@ -218,7 +218,9 @@ class DisplayOptionUtils
         $nPatternCount = count($aPatterns);
         for ($nPatternIndex = 0; $nPatternIndex < $nPatternCount; $nPatternIndex++)
         {
-            if (preg_match('/'.$aPatterns[$nPatternIndex].'/g', $value))
+            $sPattern = "/".$aPatterns[$nPatternIndex]."/";
+
+            if (preg_match($sPattern, $value))
             {
                 // toggle
                 $bValidated = true;
