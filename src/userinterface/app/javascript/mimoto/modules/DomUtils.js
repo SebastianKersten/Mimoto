@@ -212,7 +212,7 @@ module.exports.prototype = {
                         {
                             case 'data.created':
 
-                                MimotoX.dom.onDataCreated(dataModification.data, 'direct');
+                                //MimotoX.dom.onDataCreated(dataModification.data, 'direct');
                                 break;
 
                             case 'data.changed':

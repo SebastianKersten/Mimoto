@@ -170,7 +170,7 @@ module.exports.prototype = {
 
     parseInterface: function(element)
     {
-        console.log('Display Service startup ...', element);
+        console.log('Display Service startup ...');
         let nStartTime = Date.now();
 
         // register
@@ -328,6 +328,24 @@ module.exports.prototype = {
                         //console.log('Item', directive);
 
 
+                        // verify and register
+                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_CONNECTION))
+                        {
+                            directive.nConnectionId = element.getAttribute(this.TAG_SETTING_MIMOTO_CONNECTION);
+                        }
+
+                        // verify and register
+                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX))
+                        {
+                            directive.nSortIndex = element.getAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX);
+                        }
+
+                        // verify and register
+                        if (element.hasAttribute(this.TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE))
+                        {
+                            directive.bReloadOnChange = true;
+                        }
+
 
                         // 1. voeg settings van entity en collection toe
                         // 1. register items
@@ -354,28 +372,6 @@ module.exports.prototype = {
                         // register
                         directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
 
-
-                        // verify
-                        if (sTag === this.TAG_MIMOTO_ENTITY)
-                        {
-                            // verify and register
-                            if (element.hasAttribute(this.TAG_SETTING_MIMOTO_CONNECTION))
-                            {
-                                directive.nConnectionId = element.getAttribute(this.TAG_SETTING_MIMOTO_CONNECTION);
-                            }
-
-                            // verify and register
-                            if (element.hasAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX))
-                            {
-                                directive.nSortIndex = element.getAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX);
-                            }
-
-                            // verify and register
-                            if (element.hasAttribute(this.TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE))
-                            {
-                                directive.bReloadOnChange = true;
-                            }
-                        }
 
                         // verify
                         if (sTag === this.TAG_MIMOTO_COLLECTION && element.hasAttribute(this.TAG_SETTING_MIMOTO_FILTER))
@@ -455,7 +451,7 @@ module.exports.prototype = {
     onDataChange: function(data)
     {
         //console.error('data', data);
-        console.warn('Now in onDataChange ...');
+        //console.warn('Now in onDataChange ...');
 
 
         let sEntitySelector = data.entityType + '.' + data.entityId;
@@ -486,6 +482,16 @@ module.exports.prototype = {
                         let directive = aDirectives[nElementIndex];
 
                         console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector);
+
+
+                        if (!directive.element)
+                        {
+                            console.error('Element does not exist anymore .. cleaning up ..');
+                        }
+
+
+
+
 
                         switch(directive.sTag)
                         {
@@ -567,19 +573,36 @@ module.exports.prototype = {
                                         // 1. register
                                         let item = change.collection.removed[nRemovedIndex];
 
-                                        // 2. find
-                                        let element = directive.element.querySelector('[data-mimoto-id="' + item.connection.childEntityTypeName + "." + item.connection.childId + '"][data-mimoto-connection="' + item.connection.id + '"]');
+                                        // 2. compose
+                                        let sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
 
-                                        console.error('this._aSelectors', this._aSelectors);
-                                        console.log('Selector to remove', item.connection.childEntityTypeName + "." + item.connection.childId);
+                                        // 3. find
+                                        let element = directive.element.querySelector('[data-mimoto-id="' + sEntitySelector + '"][data-mimoto-connection="' + item.connection.id + '"]');
 
-                                        if (this._aSelectors[item.connection.childEntityTypeName + "." + item.connection.childId])
+                                        // 4. verify
+                                        if (this._aSelectors[sEntitySelector])
                                         {
-                                            console.warn('#todo - cleanup directives with correct item and connectionid');
-                                            console.log('Directive for element was found', item.connection.childEntityTypeName + "." + item.connection.childId);
+                                            console.log(JSON.stringify(this._aSelectors[sEntitySelector], 2));
+
+                                            // 4b. find
+                                            let nCleanupCount = this._aSelectors[sEntitySelector].length;
+                                            for (let nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++)
+                                            {
+                                                // register
+                                                let cleanupCandidate = this._aSelectors[sEntitySelector][nCleanupIndex];
+
+                                                if (cleanupCandidate.nConnectionId == item.connection.id)
+                                                {
+                                                    console.log('Gevonden', cleanupCandidate);
+                                                    this._aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
+                                                    nCleanupIndex--;
+                                                }
+                                            }
+
+                                            console.log(JSON.stringify(this._aSelectors[sEntitySelector], 2));
                                         }
 
-                                        // 3. verify and delete
+                                        // 5. verify and delete
                                         if (element) directive.element.removeChild(element);
                                     }
                                 }
