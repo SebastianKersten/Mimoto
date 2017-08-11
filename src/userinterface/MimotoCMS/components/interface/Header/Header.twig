@@ -27,7 +27,7 @@
     <ul class="MimotoCMS_interface_Header-menu">
         <li class="MimotoCMS_interface_Header-menu-item">
             <a href="/mimoto.cms/account" class="MimotoCMS_interface_Header-menu-user">
-                <span class="MimotoCMS_interface_Header-menu-user-text" {{ Mimoto.user.realtime('name') }} {{ Mimoto.user.addClassWhenRegex('name', '^Seb[0-9]+', 'test-name-red') }}><mimoto-data>{{ Mimoto.user.data('name') }}</mimoto-data></span>
+                <span class="MimotoCMS_interface_Header-menu-user-text" {{ Mimoto.user.realtime('name') }}><mimoto-data>{{ Mimoto.user.data('name') }}</mimoto-data></span>
                 <figure class="MimotoCMS_interface_Header-menu-user-figure">
                     <img {{ Mimoto.user.realtime('avatar') }} src="{{ Mimoto.user.data('avatar', true) }}" class="MimotoCMS_interface_Header-menu-user-image"/>
                 </figure>
