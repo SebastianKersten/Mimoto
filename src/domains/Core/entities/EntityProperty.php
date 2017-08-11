@@ -126,7 +126,7 @@ class EntityProperty
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInstance = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTY);
@@ -142,8 +142,9 @@ class EntityProperty
         );
         self::setNameValidation($field);
 
+        // only show when unset
+        if (empty($eInstance) || empty($eInstance->getValue('type'))) $form->addValue('fields', self::getField_type());
 
-        $form->addValue('fields', self::getField_type());
 
         CoreFormUtils::addField_groupEnd($form);
 

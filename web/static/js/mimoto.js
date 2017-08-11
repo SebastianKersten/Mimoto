@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "9dba35a3ab5651e878c4";
+/******/ 	__webpack_require__.h = "19605c1bd187536ca9bd";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12397,6 +12397,12 @@
 	                        }
 	
 	                        // verify and register
+	                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_COMPONENT))
+	                        {
+	                            directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
+	                        }
+	
+	                        // verify and register
 	                        if (element.hasAttribute(this.TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE))
 	                        {
 	                            directive.bReloadOnChange = true;
@@ -12506,10 +12512,7 @@
 	
 	    onDataChange: function(data)
 	    {
-	        //console.error('data', data);
-	        //console.warn('Now in onDataChange ...');
-	
-	
+	        // compose
 	        let sEntitySelector = data.entityType + '.' + data.entityId;
 	
 	
@@ -12537,16 +12540,7 @@
 	                        // register
 	                        let directive = aDirectives[nElementIndex];
 	
-	                        console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector);
-	
-	
-	                        if (!directive.element)
-	                        {
-	                            console.error('Element does not exist anymore .. cleaning up ..');
-	                        }
-	
-	
-	
+	                        console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
 	
 	
 	                        switch(directive.sTag)
@@ -12636,36 +12630,39 @@
 	                                        let element = directive.element.querySelector('[data-mimoto-id="' + sEntitySelector + '"][data-mimoto-connection="' + item.connection.id + '"]');
 	
 	                                        // 4. verify
-	                                        if (this._aSelectors[sEntitySelector])
+	                                        if (element && this._aSelectors[sEntitySelector])
 	                                        {
-	                                            console.log(JSON.stringify(this._aSelectors[sEntitySelector], 2));
-	
 	                                            // 4b. find
 	                                            let nCleanupCount = this._aSelectors[sEntitySelector].length;
 	                                            for (let nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++)
 	                                            {
+	
+	
 	                                                // register
 	                                                let cleanupCandidate = this._aSelectors[sEntitySelector][nCleanupIndex];
 	
+	                                                // verify
 	                                                if (cleanupCandidate.nConnectionId == item.connection.id)
 	                                                {
-	                                                    console.log('Gevonden', cleanupCandidate);
+	                                                    // remove
 	                                                    this._aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
-	                                                    nCleanupIndex--;
+	
+	                                                    // correct
+	                                                    if (this._aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
+	
+	                                                    // cleanup
+	                                                    if (this._aSelectors[sEntitySelector].length === 0)
+	                                                    {
+	                                                        delete this._aSelectors[sEntitySelector];
+	                                                        break;
+	                                                    }
 	                                                }
 	                                            }
 	
-	                                            console.log(JSON.stringify(this._aSelectors[sEntitySelector], 2));
+	                                            directive.element.removeChild(element);
 	                                        }
-	
-	                                        // 5. verify and delete
-	                                        if (element) directive.element.removeChild(element);
 	                                    }
 	                                }
-	
-	
-	
-	
 	                                break;
 	
 	
