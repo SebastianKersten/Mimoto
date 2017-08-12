@@ -118,7 +118,7 @@ class InputCheckbox
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputCheckbox = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_CHECKBOX);
@@ -155,7 +155,7 @@ class InputCheckbox
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputCheckbox);
 
         // send
         return $form;

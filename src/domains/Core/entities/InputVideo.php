@@ -92,7 +92,7 @@ class InputVideo
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputVideo = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_VIDEO);
@@ -119,7 +119,7 @@ class InputVideo
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputVideo);
 
         // send
         return $form;

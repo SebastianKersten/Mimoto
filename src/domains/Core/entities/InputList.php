@@ -93,7 +93,7 @@ class InputList
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputList = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_LIST);
@@ -123,7 +123,7 @@ class InputList
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputList);
 
         // send
         return $form;

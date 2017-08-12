@@ -120,7 +120,7 @@ class InputTextblock
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputTextblock = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_TEXTBLOCK);
@@ -155,7 +155,7 @@ class InputTextblock
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputTextblock);
 
         // send
         return $form;

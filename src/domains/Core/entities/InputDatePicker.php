@@ -95,7 +95,7 @@ class InputDatePicker
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputDatePicker = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_DATEPICKER);
@@ -122,7 +122,7 @@ class InputDatePicker
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputDatePicker);
 
         // send
         return $form;

@@ -95,7 +95,7 @@ class InputRadiobutton
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputRadiobutton = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_RADIOBUTTON);
@@ -122,7 +122,7 @@ class InputRadiobutton
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputRadiobutton);
 
         // send
         return $form;

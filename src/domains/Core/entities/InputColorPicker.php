@@ -95,7 +95,7 @@ class InputColorPicker
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputColorPicker = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_COLORPICKER);
@@ -122,7 +122,7 @@ class InputColorPicker
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputColorPicker);
 
         // send
         return $form;

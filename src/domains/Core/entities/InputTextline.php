@@ -123,7 +123,7 @@ class InputTextline
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputTextline = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_TEXTLINE);
@@ -165,7 +165,7 @@ class InputTextline
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputTextline);
 
         // send
         return $form;

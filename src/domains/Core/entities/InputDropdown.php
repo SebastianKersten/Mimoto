@@ -103,7 +103,7 @@ class InputDropdown
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputDropdown = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_DROPDOWN);
@@ -130,7 +130,7 @@ class InputDropdown
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputDropdown);
 
         // send
         return $form;

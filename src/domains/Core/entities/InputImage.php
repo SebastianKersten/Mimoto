@@ -100,7 +100,7 @@ class InputImage
     /**
      * Get form
      */
-    public static function getForm()
+    public static function getForm($eInputImage = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_IMAGE);
@@ -129,7 +129,7 @@ class InputImage
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form);
+        CoreFormUtils::addFieldsValueInput($form, $eInputImage);
 
         // send
         return $form;

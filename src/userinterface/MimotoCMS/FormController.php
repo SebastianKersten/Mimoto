@@ -432,20 +432,29 @@ class FormController
         // 2. create content
         $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
-        // 3. content
+        // 3. auto create and connect
+        $eInputField = Mimoto::service('data')->create($nFormFieldTypeId);
+        
+        Mimoto::service('data')->store($eInputField);
+        $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
+        $eForm->addValue('fields', $eInputField);
+        Mimoto::service('data')->store($eForm);
+
+
+        // 4. content
         $component->addForm(
             Mimoto::service('input')->getCoreFormByEntityTypeId($nFormFieldTypeId),
-            null,
+            $eInputField,
             [
-                'onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields',
+                //'onCreatedConnectTo' => CoreConfig::MIMOTO_FORM . '.' . $nFormId . '.fields',
                 'response' => ['onSuccess' => ['closePopup' => true]]
             ]
         );
 
-        // 4. connect
+        // 5. inject
         $popup->addComponent('content', $component);
 
-        // 5. output
+        // 6. output
         return $component->render();
     }
 

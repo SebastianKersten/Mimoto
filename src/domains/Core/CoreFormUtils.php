@@ -58,10 +58,13 @@ class CoreFormUtils
     /**
      * Get value input
      */
-    public static function addFieldsValueInput(MimotoEntity $form)
+    public static function addFieldsValueInput(MimotoEntity $form, $eInput = null)
     {
         // register
         $sFormId = $form->getId();
+
+        // validate
+        if (empty($eInput)) return;
 
         // load
         $sParentEntityId = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
@@ -72,6 +75,12 @@ class CoreFormUtils
         // 1. get parent (pass from form to field to this form where it is needed!)
         // 2. get parent properties
         // 3. get property id's
+
+
+
+        $eParentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eInput);
+        $eParentEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eParentForm);
+
 
 
 
@@ -87,40 +96,32 @@ class CoreFormUtils
 
         // 1. create and setup field
         $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, $sFormId, 'value');
-        $field->setValue('label', 'Value');
+        $field->setValue('label', 'Connect to property');
         $field->setValue('description', 'Connect to this entity\'s property');
 
         // 2. connect to property
         self::addValueToField($field, $sParentEntityId, 'value');
 
-        // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
-        $nEntityCount = count($aEntities);
-        for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
+        // read
+        $aEntityProperties = $eParentEntity->getValue('properties');
+        $nEntityPropertyCount = count($aEntityProperties);
+        for ($nEntityPropertyIndex = 0; $nEntityPropertyIndex < $nEntityPropertyCount; $nEntityPropertyIndex++)
         {
             // register
-            $entity = $aEntities[$nEntityIndex];
+            $entityProperty = $aEntityProperties[$nEntityPropertyIndex];
 
-            // read
-            $aEntityProperties = $entity->getValue('properties');
-            $nEntityPropertyCount = count($aEntityProperties);
-            for ($nEntityPropertyIndex = 0; $nEntityPropertyIndex < $nEntityPropertyCount; $nEntityPropertyIndex++)
-            {
-                // register
-                $entityProperty = $aEntityProperties[$nEntityPropertyIndex];
-
-                // compose
-                $sLabel = $entity->getValue('name').'.'.$entityProperty->getValue('name');
+            // compose
+            $sLabel = $entityProperty->getValue('name');
 
 
-                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
-                $option->setValue('label', $sLabel);
-                $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
+            $option->setValue('label', $sLabel);
+            $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
 
-                $field->addValue('options', $option);
-            }
+            $field->addValue('options', $option);
         }
+
         $form->addValue('fields', $field);
 
         // create
