@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "eb63517f1659f0e40995";
+/******/ 	__webpack_require__.h = "2d9df189b315cc0c8f13";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -11314,130 +11314,12 @@
 	    {
 	        // register
 	        var classRoot = this;
-	        
-	        
+	
+	
 	        // compose
 	        var sEntityIdentifier = sEntityType + '.' + nEntityId;
-	        
-	        // parse modified values
-	        for (var i = 0; i < aChanges.length; i++)
-	        {
-	            // register
-	            var change = aChanges[i];
-	            
-	            // collection
-	            if (!change.collection) continue;
-	            
-	            // collect
-	            var aContainers = $("[data-mimoto-collection='" + sEntityIdentifier + "." + change.propertyName + "']");
-	        
-	        
-	            aContainers.each(function(nIndex, $container)
-	            {
-	                // read
-	                var mls_contains = $($container).attr("data-mimoto-collection");
-	                var mls_component = classRoot._getComponentName($($container).attr("data-mimoto-component"));
-	                var mls_filter = $($container).attr("data-mimoto-filter");
-	                
-	                if (mls_filter) { mls_filter = $.parseJSON(mls_filter); }
 	
-	            
-	                // --- handle added items ---
-	            
-	                if (change.collection.added) {
-	                
-	                    for (var iAdded = 0; iAdded < change.collection.added.length; iAdded++) {
-	                    
-	                        // register
-	                        var item = change.collection.added[iAdded];
-	                    
-	                        var bFilterApproved = true;
-	                        if (mls_filter) {
-	                            for (var s in item.data) {
-	                                if (mls_filter[s] && item.data[s] != mls_filter[s]) {
-	                                    bFilterApproved = false;
-	                                    break;
-	                                }
-	                            }
-	                        }
-	                        
-	                        // 1. #todo check if the component is already there (and duplicate items are allowed OR connection-id's
-	                    
-	                        // load
-	                        if (bFilterApproved)
-	                        {
-	                            var mls_wrapper = $($container).attr("data-mimoto-wrapper");
-	    
-	                            if (mls_wrapper)
-	                            {
-	                                MimotoX.utils.loadWrapper($container, item.connection.childEntityTypeName, item.connection.childId, mls_wrapper, mls_component.name, mls_contains);
-	                            }
-	                            else
-	                            {
-	                                if (mls_component !== undefined)
-	                                {
-	                                    MimotoX.utils.loadComponent($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name, mls_contains);
-	                                }
-	                            }
-	                        }
-	                    }
-	                }
-	            
-	                if (change.collection.removed)
-	                {
-	                    for (var iRemoved = 0; iRemoved < change.collection.removed.length; iRemoved++)
-	                    {
-	                    
-	                        // register
-	                        var item = change.collection.removed[iRemoved];
-	                    
-	                        // find
-	                        var $item = $("[data-mimoto-id='" + item.connection.childEntityTypeName + "." + item.connection.childId + "']", $container);
-	                    
-	                        // delete
-	                        $item.remove();
-	                    }
-	                }
-	                
-	                
-	                
-	                // --- change list item order
-	                
-	                if (change.collection && change.collection.connections)
-	                {
-	                    // init
-	                    var $previousItem = null;
-	                    
-	                    var nConnectionCount = change.collection.connections.length;
-	                    for (var nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
-	                    {
-	                        // register
-	                        var connection = change.collection.connections[nConnectionIndex];
-	                        
-	                        // register
-	                        var $currentItem = $('[data-mimoto-connection="' + connection.id + '"]', $container);
-	                        $currentItem.attr('data-mimoto-sortindex', connection.sortindex);
-	                        
-	                        // verify
-	                        if (nConnectionIndex == 0)
-	                        {
-	                            // move
-	                            $($container).prepend($currentItem[0]);
-	                        }
-	                        else
-	                        {
-	                            // move
-	                            $($currentItem[0]).insertAfter($previousItem);
-	                        }
 	
-	                        // update
-	                        $previousItem = $currentItem[0]
-	                    }
-	                }
-	            
-	            });
-	        }
-	    
 	    
 	        // --- Parse modified values ---
 	        
@@ -12035,6 +11917,11 @@
 	'use strict';
 	
 	
+	// Mimoto data manipulation classes
+	let CollectionAddItems = __webpack_require__(347);
+	let CollectionRemoveItems = __webpack_require__(348);
+	let CollectionChangeSortOrder = __webpack_require__(349);
+	
 	// Mimoto display classes
 	let HideWhenEmpty = __webpack_require__(8);
 	let HideWhenEmptyNot = __webpack_require__(10);
@@ -12548,91 +12435,14 @@
 	
 	                            case this.TAG_MIMOTO_COLLECTION:
 	
+	                                // 1. verify and add items
+	                                if (change.collection.added) new CollectionAddItems(directive, change.collection.added);
 	
-	                                if (change.collection.added) {
+	                                // 2. verify and remove items
+	                                if (change.collection.removed) new CollectionRemoveItems(directive, change.collection.removed, this._aSelectors);
 	
-	                                    for (var iAdded = 0; iAdded < change.collection.added.length; iAdded++) {
-	
-	                                        // register
-	                                        var item = change.collection.added[iAdded];
-	
-	                                        var bFilterApproved = true;
-	                                        if (directive.aFilterValues) {
-	                                            for (var s in item.data) {
-	                                                if (directive.aFilterValues[s] && item.data[s] != directive.aFilterValues[s]) {
-	                                                    bFilterApproved = false;
-	                                                    break;
-	                                                }
-	                                            }
-	                                        }
-	
-	
-	
-	                                        // 1. check if the component is already there (and duplicate items are allowed OR connection-id's
-	
-	
-	
-	                                        // load
-	                                        if (bFilterApproved)
-	                                        {
-	                                            if (directive.sComponentName !== undefined)
-	                                            {
-	                                                MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
-	
-	                                            }
-	                                        }
-	                                    }
-	                                }
-	
-	                                if (change.collection.removed)
-	                                {
-	                                    let nRemovedCount = change.collection.removed.length;
-	                                    for (let nRemovedIndex = 0; nRemovedIndex < nRemovedCount; nRemovedIndex++)
-	                                    {
-	
-	                                        // 1. register
-	                                        let item = change.collection.removed[nRemovedIndex];
-	
-	                                        // 2. compose
-	                                        let sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
-	
-	                                        // 3. find
-	                                        let element = directive.element.querySelector('[data-mimoto-id="' + sEntitySelector + '"][data-mimoto-connection="' + item.connection.id + '"]');
-	
-	                                        // 4. verify
-	                                        if (element && this._aSelectors[sEntitySelector])
-	                                        {
-	                                            // 4b. find
-	                                            let nCleanupCount = this._aSelectors[sEntitySelector].length;
-	                                            for (let nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++)
-	                                            {
-	
-	
-	                                                // register
-	                                                let cleanupCandidate = this._aSelectors[sEntitySelector][nCleanupIndex];
-	
-	                                                // verify
-	                                                if (cleanupCandidate.nConnectionId == item.connection.id)
-	                                                {
-	                                                    // remove
-	                                                    this._aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
-	
-	                                                    // correct
-	                                                    if (this._aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
-	
-	                                                    // cleanup
-	                                                    if (this._aSelectors[sEntitySelector].length === 0)
-	                                                    {
-	                                                        delete this._aSelectors[sEntitySelector];
-	                                                        break;
-	                                                    }
-	                                                }
-	                                            }
-	
-	                                            directive.element.removeChild(element);
-	                                        }
-	                                    }
-	                                }
+	                                // 3. verify and change sort order
+	                                if (change.collection.connections) new CollectionChangeSortOrder(directive, change.collection.connections);
 	
 	                                break;
 	
@@ -12851,6 +12661,28 @@
 	
 	        // 3. send
 	        return bValidated;
+	    },
+	
+	    passesFilter: function(directive, item)
+	    {
+	        // 1. init
+	        let bFilterApproved = true;
+	
+	        // 2. verify
+	        if (directive.aFilterValues)
+	        {
+	            // check
+	            for (let sKey in item.data) {
+	                if (directive.aFilterValues[sKey] && item.data[sKey] != directive.aFilterValues[sKey])
+	                {
+	                    bFilterApproved = false;
+	                    break;
+	                }
+	            }
+	        }
+	
+	        // 3. send
+	        return bFilterApproved;
 	    },
 	
 	
@@ -37846,6 +37678,430 @@
 	
 	
 	module.exports = lib;
+
+
+/***/ },
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Data manipulation - CollectionAddItems
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, aAddedItems)
+	{
+	    // start
+	    this.__construct(directive, aAddedItems);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, aAddedItems)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. add items
+	        aAddedItems.forEach(function(item)
+	        {
+	
+	            // #todo - check if the component is already there (and duplicate items are allowed OR connection-id's
+	
+	            // validate
+	            if (displayUtils.passesFilter(directive, item))
+	            {
+	                if (directive.sComponentName !== undefined)
+	                {
+	                    MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+	                }
+	            }
+	        });
+	    }
+	
+	}
+
+
+/***/ },
+/* 348 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Data manipulation - CollectionRemoveItems
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	let DisplayService = __webpack_require__(7);
+	
+	
+	module.exports = function(directive, aRemovedItems, aSelectors)
+	{
+	    // start
+	    this.__construct(directive, aRemovedItems, aSelectors);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, aRemovedItems, aSelectors)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. add items
+	        aRemovedItems.forEach(function(item)
+	        {
+	            // 2. compose
+	            let sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
+	
+	            // 3. find
+	            let element = directive.element.querySelector('[' + DisplayService.TAG_MIMOTO_ID + '="' + sEntitySelector + '"][' + DisplayService.TAG_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
+	
+	            // 4. verify
+	            if (element && aSelectors[sEntitySelector])
+	            {
+	                // 4b. find
+	                let nCleanupCount = aSelectors[sEntitySelector].length;
+	                for (let nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++)
+	                {
+	
+	
+	                    // register
+	                    let cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
+	
+	                    // verify
+	                    if (cleanupCandidate.nConnectionId == item.connection.id)
+	                    {
+	                        // remove
+	                        aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
+	
+	                        // correct
+	                        if (aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
+	
+	                        // cleanup
+	                        if (aSelectors[sEntitySelector].length === 0)
+	                        {
+	                            delete aSelectors[sEntitySelector];
+	                            break;
+	                        }
+	                    }
+	                }
+	
+	                directive.element.removeChild(element);
+	            }
+	        });
+	    }
+	
+	}
+
+
+/***/ },
+/* 349 */
+/***/ function(module, exports) {
+
+	/**
+	 * Mimoto - Data manipulation - CollectionChangeSortOrder
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	module.exports = function(directive, aConnections)
+	{
+	    // start
+	    this.__construct(directive, aConnections);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, aConnections)
+	    {
+	        // 1. init
+	        let previousElement = null;
+	
+	        // 2. change order
+	        aConnections.forEach(function(connection, nConnectionIndex)
+	        {
+	            // register
+	            let currentElement = directive.element.querySelector('[' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + connection.id + '"]');
+	            currentElement.setAttribute(MimotoX.display.TAG_SETTING_MIMOTO_SORTINDEX, connection.sortindex);
+	
+	            // verify
+	            if (nConnectionIndex == 0)
+	            {
+	                directive.element.insertBefore(currentElement, directive.element.firstChild);
+	            }
+	            else
+	            {
+	                directive.element.insertBefore(currentElement, previousElement.nextSibling);
+	            }
+	
+	            // update
+	            previousElement = currentElement;
+	        });
+	    }
+	
+	}
 
 
 /***/ }

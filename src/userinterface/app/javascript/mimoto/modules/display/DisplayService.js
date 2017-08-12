@@ -7,6 +7,11 @@
 'use strict';
 
 
+// Mimoto data manipulation classes
+let CollectionAddItems = require('./data/CollectionAddItems');
+let CollectionRemoveItems = require('./data/CollectionRemoveItems');
+let CollectionChangeSortOrder = require('./data/CollectionChangeSortOrder');
+
 // Mimoto display classes
 let HideWhenEmpty = require('./options/HideWhenEmpty');
 let HideWhenEmptyNot = require('./options/HideWhenEmptyNot');
@@ -520,91 +525,14 @@ module.exports.prototype = {
 
                             case this.TAG_MIMOTO_COLLECTION:
 
+                                // 1. verify and add items
+                                if (change.collection.added) new CollectionAddItems(directive, change.collection.added);
 
-                                if (change.collection.added) {
+                                // 2. verify and remove items
+                                if (change.collection.removed) new CollectionRemoveItems(directive, change.collection.removed, this._aSelectors);
 
-                                    for (var iAdded = 0; iAdded < change.collection.added.length; iAdded++) {
-
-                                        // register
-                                        var item = change.collection.added[iAdded];
-
-                                        var bFilterApproved = true;
-                                        if (directive.aFilterValues) {
-                                            for (var s in item.data) {
-                                                if (directive.aFilterValues[s] && item.data[s] != directive.aFilterValues[s]) {
-                                                    bFilterApproved = false;
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-
-
-                                        // 1. check if the component is already there (and duplicate items are allowed OR connection-id's
-
-
-
-                                        // load
-                                        if (bFilterApproved)
-                                        {
-                                            if (directive.sComponentName !== undefined)
-                                            {
-                                                MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
-
-                                            }
-                                        }
-                                    }
-                                }
-
-                                if (change.collection.removed)
-                                {
-                                    let nRemovedCount = change.collection.removed.length;
-                                    for (let nRemovedIndex = 0; nRemovedIndex < nRemovedCount; nRemovedIndex++)
-                                    {
-
-                                        // 1. register
-                                        let item = change.collection.removed[nRemovedIndex];
-
-                                        // 2. compose
-                                        let sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
-
-                                        // 3. find
-                                        let element = directive.element.querySelector('[data-mimoto-id="' + sEntitySelector + '"][data-mimoto-connection="' + item.connection.id + '"]');
-
-                                        // 4. verify
-                                        if (element && this._aSelectors[sEntitySelector])
-                                        {
-                                            // 4b. find
-                                            let nCleanupCount = this._aSelectors[sEntitySelector].length;
-                                            for (let nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++)
-                                            {
-
-
-                                                // register
-                                                let cleanupCandidate = this._aSelectors[sEntitySelector][nCleanupIndex];
-
-                                                // verify
-                                                if (cleanupCandidate.nConnectionId == item.connection.id)
-                                                {
-                                                    // remove
-                                                    this._aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
-
-                                                    // correct
-                                                    if (this._aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
-
-                                                    // cleanup
-                                                    if (this._aSelectors[sEntitySelector].length === 0)
-                                                    {
-                                                        delete this._aSelectors[sEntitySelector];
-                                                        break;
-                                                    }
-                                                }
-                                            }
-
-                                            directive.element.removeChild(element);
-                                        }
-                                    }
-                                }
+                                // 3. verify and change sort order
+                                if (change.collection.connections) new CollectionChangeSortOrder(directive, change.collection.connections);
 
                                 break;
 

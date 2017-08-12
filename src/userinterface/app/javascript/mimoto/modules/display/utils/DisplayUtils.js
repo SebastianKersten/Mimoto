@@ -88,6 +88,28 @@ module.exports.prototype = {
         return bValidated;
     },
 
+    passesFilter: function(directive, item)
+    {
+        // 1. init
+        let bFilterApproved = true;
+
+        // 2. verify
+        if (directive.aFilterValues)
+        {
+            // check
+            for (let sKey in item.data) {
+                if (directive.aFilterValues[sKey] && item.data[sKey] != directive.aFilterValues[sKey])
+                {
+                    bFilterApproved = false;
+                    break;
+                }
+            }
+        }
+
+        // 3. send
+        return bFilterApproved;
+    },
+
 
 
     // ----------------------------------------------------------------------------
