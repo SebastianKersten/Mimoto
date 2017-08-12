@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "2d9df189b315cc0c8f13";
+/******/ 	__webpack_require__.h = "0eb3a488f5143d7ba7a0";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -96,7 +96,7 @@
 	let DomService = __webpack_require__(5);
 	let DataService = __webpack_require__(6);
 	let DisplayService = __webpack_require__(7);
-	let RealtimeManager = __webpack_require__(31);
+	let RealtimeManager = __webpack_require__(34);
 	
 	
 	/**
@@ -10714,60 +10714,153 @@
 	        // send
 	        request.send(sRequestData);
 	    },
-	    
-	    /**
-	     * Load entity
-	     */
-	    loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
+	
+	    updateComponent: function(elementToReplace, sEntitySelector, sComponentName, nConnectionId)
 	    {
-	        $.ajax({
-	            type: 'GET',
-	            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-	            data: null,
-	            dataType: 'html',
-	            success: function (data) {
-	                
-	                // delete
-	                $($container).empty();
-	                
-	                // output
-	                $($container).append(data);
-	            }
-	        });
-	    },
-	    
-	    /**
-	     * Load wrapper
-	     */
-	    updateWrapper: function ($component, sEntityTypeName, nId, sWrapper, sComponent)
-	    {
-	        $.ajax({
-	            type: 'GET',
-	            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
-	            data: null,
-	            dataType: 'html',
-	            success: function (data)
+	        console.log('elementToReplace', elementToReplace, sEntitySelector, sComponentName, nConnectionId);
+	
+	        //this.loadComponent(null, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId, elementToReplace)
+	
+	
+	        // $.ajax({
+	        //     type: 'GET',
+	        //     url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+	        //     data: null,
+	        //     dataType: 'html',
+	        //     success: function (data)
+	        //     {
+	        //         // replace
+	        //         $($component).replaceWith(data);
+	        //     }
+	        // });
+	
+	
+	        // splite
+	        let aEntitySelectorElements = sEntitySelector.split('.');
+	
+	
+	        // compose
+	        let requestData = {
+	            sEntityTypeName: aEntitySelectorElements[0],
+	            nEntityId: aEntitySelectorElements[1],
+	            sComponentName: sComponentName,
+	            nConnectionId: nConnectionId
+	        };
+	
+	
+	        // init
+	        let request = new XMLHttpRequest();
+	
+	        // setup
+	        request.onreadystatechange = function()
+	        {
+	            if(request.readyState === 4)
 	            {
-	                // replace
-	                $($component).replaceWith(data);
+	                if(request.status === 200)
+	                {
+	
+	                    // convert
+	                    //var response = JSON.parse(request.responseText);
+	                    let response = request.responseText;
+	
+	                    // init
+	                    let parser = new DOMParser();
+	                    let newDocument = parser.parseFromString(response, "text/html");
+	
+	                    // isolate
+	                    let element = newDocument.querySelector('body').firstChild;
+	
+	                    // register directives
+	                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+	
+	                    // get parent
+	                    let container = elementToReplace.parentNode;
+	
+	                    // add new
+	                    container.insertBefore(element, elementToReplace);
+	
+	                    // remove old
+	                    container.removeChild(elementToReplace);
+	                }
 	            }
-	        });
-	    },
-	    
-	    updateComponent: function($component, sEntityTypeName, nId, sTemplate)
-	    {
-	        $.ajax({
-	            type: 'GET',
-	            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-	            data: null,
-	            dataType: 'html',
-	            success: function (data)
+	        };
+	
+	        // prepare
+	        request.open('post', '/mimoto/output/component', true);
+	
+	
+	        // setup
+	        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	
+	        // prepare
+	        let sRequestData = '';
+	        for (let sKey in requestData)
+	        {
+	            if (requestData[sKey])
 	            {
-	                // replace
-	                $($component).replaceWith(data);
+	                if (sRequestData.length !== 0) sRequestData += '&';
+	                sRequestData += sKey + '=' + requestData[sKey];
 	            }
-	        });
+	        }
+	
+	        // send
+	        request.send(sRequestData);
 	    },
+	
+	    
+	    // /**
+	    //  * Load entity
+	    //  */
+	    // loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
+	    // {
+	    //     $.ajax({
+	    //         type: 'GET',
+	    //         url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+	    //         data: null,
+	    //         dataType: 'html',
+	    //         success: function (data) {
+	    //
+	    //             // delete
+	    //             $($container).empty();
+	    //
+	    //             // output
+	    //             $($container).append(data);
+	    //         }
+	    //     });
+	    // },
+	    
+	    // /**
+	    //  * Load wrapper
+	    //  */
+	    // updateWrapper: function ($component, sEntityTypeName, nId, sWrapper, sComponent)
+	    // {
+	    //     $.ajax({
+	    //         type: 'GET',
+	    //         url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
+	    //         data: null,
+	    //         dataType: 'html',
+	    //         success: function (data)
+	    //         {
+	    //             // replace
+	    //             $($component).replaceWith(data);
+	    //         }
+	    //     });
+	    // },
+	    
+	    // updateComponent: function($component, sEntityTypeName, nId, sTemplate)
+	    // {
+	    //     $.ajax({
+	    //         type: 'GET',
+	    //         url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+	    //         data: null,
+	    //         dataType: 'html',
+	    //         success: function (data)
+	    //         {
+	    //             // replace
+	    //             $($component).replaceWith(data);
+	    //         }
+	    //     });
+	    // },
 	    
 	    callAPI: function(request)
 	    {
@@ -10912,8 +11005,8 @@
 	        if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
 	        
 	        
-	        console.log('Aimless - data.changed (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
-	        console.log(data);
+	        //console.log('Aimless - data.changed (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
+	        //console.log(data);
 	        
 	
 	        MimotoX.display.onDataChange(data);
@@ -11918,38 +12011,38 @@
 	
 	
 	// Mimoto data manipulation classes
-	let CollectionAddItems = __webpack_require__(347);
-	let CollectionRemoveItems = __webpack_require__(348);
-	let CollectionChangeSortOrder = __webpack_require__(349);
+	let CollectionAddItems = __webpack_require__(8);
+	let CollectionRemoveItems = __webpack_require__(10);
+	let CollectionChangeSortOrder = __webpack_require__(11);
 	
 	// Mimoto display classes
-	let HideWhenEmpty = __webpack_require__(8);
-	let HideWhenEmptyNot = __webpack_require__(10);
-	let HideWhenRegex = __webpack_require__(11);
-	let HideWhenRegexNot = __webpack_require__(12);
-	let HideWhenValue = __webpack_require__(13);
-	let HideWhenValueNot = __webpack_require__(14);
+	let HideWhenEmpty = __webpack_require__(12);
+	let HideWhenEmptyNot = __webpack_require__(13);
+	let HideWhenRegex = __webpack_require__(14);
+	let HideWhenRegexNot = __webpack_require__(15);
+	let HideWhenValue = __webpack_require__(16);
+	let HideWhenValueNot = __webpack_require__(17);
 	
-	let ShowWhenEmpty = __webpack_require__(15);
-	let ShowWhenEmptyNot = __webpack_require__(16);
-	let ShowWhenRegex = __webpack_require__(17);
-	let ShowWhenRegexNot = __webpack_require__(18);
-	let ShowWhenValue = __webpack_require__(19);
-	let ShowWhenValueNot = __webpack_require__(20);
+	let ShowWhenEmpty = __webpack_require__(18);
+	let ShowWhenEmptyNot = __webpack_require__(19);
+	let ShowWhenRegex = __webpack_require__(20);
+	let ShowWhenRegexNot = __webpack_require__(21);
+	let ShowWhenValue = __webpack_require__(22);
+	let ShowWhenValueNot = __webpack_require__(23);
 	
-	let AddClassWhenEmpty = __webpack_require__(21);
-	let AddClassWhenEmptyNot = __webpack_require__(22);
-	let AddClassWhenRegex = __webpack_require__(23);
-	let AddClassWhenRegexNot = __webpack_require__(24);
-	let AddClassWhenValue = __webpack_require__(21);
-	let AddClassWhenValueNot = __webpack_require__(25);
+	let AddClassWhenEmpty = __webpack_require__(24);
+	let AddClassWhenEmptyNot = __webpack_require__(25);
+	let AddClassWhenRegex = __webpack_require__(26);
+	let AddClassWhenRegexNot = __webpack_require__(27);
+	let AddClassWhenValue = __webpack_require__(24);
+	let AddClassWhenValueNot = __webpack_require__(28);
 	
-	let RemoveClassWhenEmpty = __webpack_require__(26);
-	let RemoveClassWhenEmptyNot = __webpack_require__(27);
-	let RemoveClassWhenRegex = __webpack_require__(28);
-	let RemoveClassWhenRegexNot = __webpack_require__(29);
-	let RemoveClassWhenValue = __webpack_require__(26);
-	let RemoveClassWhenValueNot = __webpack_require__(30);
+	let RemoveClassWhenEmpty = __webpack_require__(29);
+	let RemoveClassWhenEmptyNot = __webpack_require__(30);
+	let RemoveClassWhenRegex = __webpack_require__(31);
+	let RemoveClassWhenRegexNot = __webpack_require__(32);
+	let RemoveClassWhenValue = __webpack_require__(29);
+	let RemoveClassWhenValueNot = __webpack_require__(33);
 	
 	
 	module.exports = function() {
@@ -12370,9 +12463,52 @@
 	
 	    onDataChange: function(data)
 	    {
+	
+	        console.log('data', data);
+	
+	
+	
+	
+	
 	        // compose
 	        let sEntitySelector = data.entityType + '.' + data.entityId;
 	
+	
+	        // --- entity changes
+	
+	
+	        if (this._aSelectors[sEntitySelector])
+	        {
+	            console.log('Entity is registered', this._aSelectors[sEntitySelector]);
+	
+	            if (data.changes && data.changes.length > 0)
+	            {
+	                // register
+	                let aDirectives = this._aSelectors[sEntitySelector];
+	
+	
+	                // parse elements
+	                let nDirectiveCount = aDirectives.length;
+	                for (let nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++)
+	                {
+	                    // register
+	                    let directive = aDirectives[nDirectiveIndex];
+	
+	                    // verify
+	                    if (directive.bReloadOnChange)
+	                    {
+	                        console.log('bReloadOnChange!', directive.element);
+	
+	                        MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
+	                    }
+	
+	                }
+	            }
+	        }
+	
+	
+	
+	        // --- property changes
 	
 	        if (data.changes && data.changes.length > 0)
 	        {
@@ -12407,6 +12543,8 @@
 	                            // --- values updates
 	
 	                            case this.TAG_MIMOTO_VALUE:
+	
+	
 	
 	                                if (change.type === 'value')
 	                                {
@@ -12526,7 +12664,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
-	 * Mimoto - Display option - HideWhenEmpty
+	 * Mimoto - Data manipulation - CollectionAddItems
 	 *
 	 * @author Sebastian Kersten (@supertaboo)
 	 */
@@ -12537,33 +12675,34 @@
 	let DisplayUtils = __webpack_require__(9);
 	
 	
-	module.exports = function(directive, value)
+	module.exports = function(directive, aAddedItems)
 	{
 	    // start
-	    this.__construct(directive, value);
+	    this.__construct(directive, aAddedItems);
 	};
 	
 	module.exports.prototype = {
 	
-	    __construct: function(directive, value)
+	    __construct: function(directive, aAddedItems)
 	    {
 	        // 1. init
 	        let displayUtils = new DisplayUtils();
 	
-	        // 2. verify
-	        let bValidated = (value !== undefined) ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	        // 2. add items
+	        aAddedItems.forEach(function(item)
+	        {
 	
-	        // 3. toggle
-	        if (bValidated)
-	        {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	        else
-	        {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
+	            // #todo - check if the component is already there (and duplicate items are allowed OR connection-id's
+	
+	            // validate
+	            if (displayUtils.passesFilter(directive, item))
+	            {
+	                if (directive.sComponentName !== undefined)
+	                {
+	                    MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+	                }
+	            }
+	        });
 	    }
 	
 	}
@@ -12740,6 +12879,182 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
+	 * Mimoto - Data manipulation - CollectionRemoveItems
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	let DisplayService = __webpack_require__(7);
+	
+	
+	module.exports = function(directive, aRemovedItems, aSelectors)
+	{
+	    // start
+	    this.__construct(directive, aRemovedItems, aSelectors);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, aRemovedItems, aSelectors)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. add items
+	        aRemovedItems.forEach(function(item)
+	        {
+	            // 2. compose
+	            let sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
+	
+	            // 3. find
+	            let element = directive.element.querySelector('[' + DisplayService.TAG_MIMOTO_ID + '="' + sEntitySelector + '"][' + DisplayService.TAG_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
+	
+	            // 4. verify
+	            if (element && aSelectors[sEntitySelector])
+	            {
+	                // 4b. find
+	                let nCleanupCount = aSelectors[sEntitySelector].length;
+	                for (let nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++)
+	                {
+	
+	
+	                    // register
+	                    let cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
+	
+	                    // verify
+	                    if (cleanupCandidate.nConnectionId == item.connection.id)
+	                    {
+	                        // remove
+	                        aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
+	
+	                        // correct
+	                        if (aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
+	
+	                        // cleanup
+	                        if (aSelectors[sEntitySelector].length === 0)
+	                        {
+	                            delete aSelectors[sEntitySelector];
+	                            break;
+	                        }
+	                    }
+	                }
+	
+	                directive.element.removeChild(element);
+	            }
+	        });
+	    }
+	
+	}
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	/**
+	 * Mimoto - Data manipulation - CollectionChangeSortOrder
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	module.exports = function(directive, aConnections)
+	{
+	    // start
+	    this.__construct(directive, aConnections);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, aConnections)
+	    {
+	        // 1. init
+	        let previousElement = null;
+	
+	        // 2. change order
+	        aConnections.forEach(function(connection, nConnectionIndex)
+	        {
+	            // register
+	            let currentElement = directive.element.querySelector('[' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + connection.id + '"]');
+	            currentElement.setAttribute(MimotoX.display.TAG_SETTING_MIMOTO_SORTINDEX, connection.sortindex);
+	
+	            // verify
+	            if (nConnectionIndex == 0)
+	            {
+	                directive.element.insertBefore(currentElement, directive.element.firstChild);
+	            }
+	            else
+	            {
+	                directive.element.insertBefore(currentElement, previousElement.nextSibling);
+	            }
+	
+	            // update
+	            previousElement = currentElement;
+	        });
+	    }
+	
+	}
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	
+	let DisplayUtils = __webpack_require__(9);
+	
+	
+	module.exports = function(directive, value)
+	{
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function(directive, value)
+	    {
+	        // 1. init
+	        let displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        let bValidated = (value !== undefined) ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated)
+	        {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	        else
+	        {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	}
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
 	 * Mimoto - Display option - HideWhenNotEmpty
 	 *
 	 * @author Sebastian Kersten (@supertaboo)
@@ -12784,7 +13099,7 @@
 
 
 /***/ },
-/* 11 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12832,7 +13147,7 @@
 
 
 /***/ },
-/* 12 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12880,7 +13195,7 @@
 
 
 /***/ },
-/* 13 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12928,7 +13243,7 @@
 
 
 /***/ },
-/* 14 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -12976,7 +13291,7 @@
 
 
 /***/ },
-/* 15 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13024,7 +13339,7 @@
 
 
 /***/ },
-/* 16 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13072,7 +13387,7 @@
 
 
 /***/ },
-/* 17 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13120,7 +13435,7 @@
 
 
 /***/ },
-/* 18 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13168,7 +13483,7 @@
 
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13216,7 +13531,7 @@
 
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13264,7 +13579,7 @@
 
 
 /***/ },
-/* 21 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13312,7 +13627,7 @@
 
 
 /***/ },
-/* 22 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13360,7 +13675,7 @@
 
 
 /***/ },
-/* 23 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13408,7 +13723,7 @@
 
 
 /***/ },
-/* 24 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13456,7 +13771,7 @@
 
 
 /***/ },
-/* 25 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13504,7 +13819,7 @@
 
 
 /***/ },
-/* 26 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13552,7 +13867,7 @@
 
 
 /***/ },
-/* 27 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13600,7 +13915,7 @@
 
 
 /***/ },
-/* 28 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13648,7 +13963,7 @@
 
 
 /***/ },
-/* 29 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13696,7 +14011,7 @@
 
 
 /***/ },
-/* 30 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13744,7 +14059,7 @@
 
 
 /***/ },
-/* 31 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -13757,13 +14072,13 @@
 	
 	
 	// Mimoto classes
-	var RealtimeEditor = __webpack_require__(32);
+	var RealtimeEditor = __webpack_require__(35);
 	
 	// Socket.io classes
-	var io = __webpack_require__(33);
+	var io = __webpack_require__(36);
 	
 	// Quill classes
-	var Quill = __webpack_require__(88);
+	var Quill = __webpack_require__(91);
 	
 	
 	
@@ -14110,7 +14425,7 @@
 
 
 /***/ },
-/* 32 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -14123,11 +14438,11 @@
 	
 	
 	// Socket.io classes
-	var io = __webpack_require__(33);
+	var io = __webpack_require__(36);
 	
 	// Quill classes
-	var Quill = __webpack_require__(88);
-	var QuillDelta = __webpack_require__(93);
+	var Quill = __webpack_require__(91);
+	var QuillDelta = __webpack_require__(96);
 	
 	
 	module.exports = function(socket, sPropertySelector, editOptions, editableValue) {
@@ -14487,7 +14802,7 @@
 
 
 /***/ },
-/* 33 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -14495,10 +14810,10 @@
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(34);
-	var parser = __webpack_require__(40);
-	var Manager = __webpack_require__(51);
-	var debug = __webpack_require__(36)('socket.io-client');
+	var url = __webpack_require__(37);
+	var parser = __webpack_require__(43);
+	var Manager = __webpack_require__(54);
+	var debug = __webpack_require__(39)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -14597,12 +14912,12 @@
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(51);
-	exports.Socket = __webpack_require__(82);
+	exports.Manager = __webpack_require__(54);
+	exports.Socket = __webpack_require__(85);
 
 
 /***/ },
-/* 34 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -14610,8 +14925,8 @@
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(35);
-	var debug = __webpack_require__(36)('socket.io-client:url');
+	var parseuri = __webpack_require__(38);
+	var debug = __webpack_require__(39)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -14684,7 +14999,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 35 */
+/* 38 */
 /***/ function(module, exports) {
 
 	/**
@@ -14729,7 +15044,7 @@
 
 
 /***/ },
-/* 36 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -14739,7 +15054,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(38);
+	exports = module.exports = __webpack_require__(41);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -14910,10 +15225,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
 
 /***/ },
-/* 37 */
+/* 40 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -15099,7 +15414,7 @@
 
 
 /***/ },
-/* 38 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -15115,7 +15430,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(39);
+	exports.humanize = __webpack_require__(42);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -15305,7 +15620,7 @@
 
 
 /***/ },
-/* 39 */
+/* 42 */
 /***/ function(module, exports) {
 
 	/**
@@ -15460,7 +15775,7 @@
 
 
 /***/ },
-/* 40 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -15468,11 +15783,11 @@
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(41)('socket.io-parser');
-	var json = __webpack_require__(44);
-	var Emitter = __webpack_require__(47);
-	var binary = __webpack_require__(48);
-	var isBuf = __webpack_require__(50);
+	var debug = __webpack_require__(44)('socket.io-parser');
+	var json = __webpack_require__(47);
+	var Emitter = __webpack_require__(50);
+	var binary = __webpack_require__(51);
+	var isBuf = __webpack_require__(53);
 	
 	/**
 	 * Protocol version.
@@ -15870,7 +16185,7 @@
 
 
 /***/ },
-/* 41 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -15880,7 +16195,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(42);
+	exports = module.exports = __webpack_require__(45);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -16044,7 +16359,7 @@
 
 
 /***/ },
-/* 42 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -16060,7 +16375,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(43);
+	exports.humanize = __webpack_require__(46);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -16247,7 +16562,7 @@
 
 
 /***/ },
-/* 43 */
+/* 46 */
 /***/ function(module, exports) {
 
 	/**
@@ -16378,14 +16693,14 @@
 
 
 /***/ },
-/* 44 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(46);
+	  var isLoader = "function" === "function" && __webpack_require__(49);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -17284,10 +17599,10 @@
 	  }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
 
 /***/ },
-/* 45 */
+/* 48 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -17303,7 +17618,7 @@
 
 
 /***/ },
-/* 46 */
+/* 49 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -17311,7 +17626,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 47 */
+/* 50 */
 /***/ function(module, exports) {
 
 	
@@ -17481,7 +17796,7 @@
 
 
 /***/ },
-/* 48 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -17490,8 +17805,8 @@
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(49);
-	var isBuf = __webpack_require__(50);
+	var isArray = __webpack_require__(52);
+	var isBuf = __webpack_require__(53);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -17629,7 +17944,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 49 */
+/* 52 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -17638,7 +17953,7 @@
 
 
 /***/ },
-/* 50 */
+/* 53 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -17658,7 +17973,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 51 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -17666,15 +17981,15 @@
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(52);
-	var Socket = __webpack_require__(82);
-	var Emitter = __webpack_require__(83);
-	var parser = __webpack_require__(40);
-	var on = __webpack_require__(85);
-	var bind = __webpack_require__(86);
-	var debug = __webpack_require__(36)('socket.io-client:manager');
-	var indexOf = __webpack_require__(80);
-	var Backoff = __webpack_require__(87);
+	var eio = __webpack_require__(55);
+	var Socket = __webpack_require__(85);
+	var Emitter = __webpack_require__(86);
+	var parser = __webpack_require__(43);
+	var on = __webpack_require__(88);
+	var bind = __webpack_require__(89);
+	var debug = __webpack_require__(39)('socket.io-client:manager');
+	var indexOf = __webpack_require__(83);
+	var Backoff = __webpack_require__(90);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -18224,19 +18539,19 @@
 
 
 /***/ },
-/* 52 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(53);
+	module.exports = __webpack_require__(56);
 
 
 /***/ },
-/* 53 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(54);
+	module.exports = __webpack_require__(57);
 	
 	/**
 	 * Exports parser
@@ -18244,25 +18559,25 @@
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(61);
+	module.exports.parser = __webpack_require__(64);
 
 
 /***/ },
-/* 54 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(55);
-	var Emitter = __webpack_require__(70);
-	var debug = __webpack_require__(74)('engine.io-client:socket');
-	var index = __webpack_require__(80);
-	var parser = __webpack_require__(61);
-	var parseuri = __webpack_require__(35);
-	var parsejson = __webpack_require__(81);
-	var parseqs = __webpack_require__(71);
+	var transports = __webpack_require__(58);
+	var Emitter = __webpack_require__(73);
+	var debug = __webpack_require__(77)('engine.io-client:socket');
+	var index = __webpack_require__(83);
+	var parser = __webpack_require__(64);
+	var parseuri = __webpack_require__(38);
+	var parsejson = __webpack_require__(84);
+	var parseqs = __webpack_require__(74);
 	
 	/**
 	 * Module exports.
@@ -18394,9 +18709,9 @@
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(60);
-	Socket.transports = __webpack_require__(55);
-	Socket.parser = __webpack_require__(61);
+	Socket.Transport = __webpack_require__(63);
+	Socket.transports = __webpack_require__(58);
+	Socket.parser = __webpack_require__(64);
 	
 	/**
 	 * Creates transport of the given type.
@@ -18993,17 +19308,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 55 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(56);
-	var XHR = __webpack_require__(58);
-	var JSONP = __webpack_require__(77);
-	var websocket = __webpack_require__(78);
+	var XMLHttpRequest = __webpack_require__(59);
+	var XHR = __webpack_require__(61);
+	var JSONP = __webpack_require__(80);
+	var websocket = __webpack_require__(81);
 	
 	/**
 	 * Export transports.
@@ -19053,12 +19368,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 56 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 	
-	var hasCORS = __webpack_require__(57);
+	var hasCORS = __webpack_require__(60);
 	
 	module.exports = function (opts) {
 	  var xdomain = opts.xdomain;
@@ -19097,7 +19412,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 57 */
+/* 60 */
 /***/ function(module, exports) {
 
 	
@@ -19120,18 +19435,18 @@
 
 
 /***/ },
-/* 58 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(56);
-	var Polling = __webpack_require__(59);
-	var Emitter = __webpack_require__(70);
-	var inherit = __webpack_require__(72);
-	var debug = __webpack_require__(74)('engine.io-client:polling-xhr');
+	var XMLHttpRequest = __webpack_require__(59);
+	var Polling = __webpack_require__(62);
+	var Emitter = __webpack_require__(73);
+	var inherit = __webpack_require__(75);
+	var debug = __webpack_require__(77)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -19551,19 +19866,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 59 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(60);
-	var parseqs = __webpack_require__(71);
-	var parser = __webpack_require__(61);
-	var inherit = __webpack_require__(72);
-	var yeast = __webpack_require__(73);
-	var debug = __webpack_require__(74)('engine.io-client:polling');
+	var Transport = __webpack_require__(63);
+	var parseqs = __webpack_require__(74);
+	var parser = __webpack_require__(64);
+	var inherit = __webpack_require__(75);
+	var yeast = __webpack_require__(76);
+	var debug = __webpack_require__(77)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -19576,7 +19891,7 @@
 	 */
 	
 	var hasXHR2 = (function () {
-	  var XMLHttpRequest = __webpack_require__(56);
+	  var XMLHttpRequest = __webpack_require__(59);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -19802,15 +20117,15 @@
 
 
 /***/ },
-/* 60 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(61);
-	var Emitter = __webpack_require__(70);
+	var parser = __webpack_require__(64);
+	var Emitter = __webpack_require__(73);
 	
 	/**
 	 * Module exports.
@@ -19965,22 +20280,22 @@
 
 
 /***/ },
-/* 61 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(62);
-	var hasBinary = __webpack_require__(63);
-	var sliceBuffer = __webpack_require__(65);
-	var after = __webpack_require__(66);
-	var utf8 = __webpack_require__(67);
+	var keys = __webpack_require__(65);
+	var hasBinary = __webpack_require__(66);
+	var sliceBuffer = __webpack_require__(68);
+	var after = __webpack_require__(69);
+	var utf8 = __webpack_require__(70);
 	
 	var base64encoder;
 	if (global && global.ArrayBuffer) {
-	  base64encoder = __webpack_require__(68);
+	  base64encoder = __webpack_require__(71);
 	}
 	
 	/**
@@ -20038,7 +20353,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(69);
+	var Blob = __webpack_require__(72);
 	
 	/**
 	 * Encodes a packet.
@@ -20581,7 +20896,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 62 */
+/* 65 */
 /***/ function(module, exports) {
 
 	
@@ -20606,7 +20921,7 @@
 
 
 /***/ },
-/* 63 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -20614,7 +20929,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(64);
+	var isArray = __webpack_require__(67);
 	
 	/**
 	 * Module exports.
@@ -20672,7 +20987,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 64 */
+/* 67 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -20681,7 +20996,7 @@
 
 
 /***/ },
-/* 65 */
+/* 68 */
 /***/ function(module, exports) {
 
 	/**
@@ -20716,7 +21031,7 @@
 
 
 /***/ },
-/* 66 */
+/* 69 */
 /***/ function(module, exports) {
 
 	module.exports = after
@@ -20750,7 +21065,7 @@
 
 
 /***/ },
-/* 67 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -20986,10 +21301,10 @@
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
 
 /***/ },
-/* 68 */
+/* 71 */
 /***/ function(module, exports) {
 
 	/*
@@ -21062,7 +21377,7 @@
 
 
 /***/ },
-/* 69 */
+/* 72 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -21165,7 +21480,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 70 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -21334,7 +21649,7 @@
 
 
 /***/ },
-/* 71 */
+/* 74 */
 /***/ function(module, exports) {
 
 	/**
@@ -21377,7 +21692,7 @@
 
 
 /***/ },
-/* 72 */
+/* 75 */
 /***/ function(module, exports) {
 
 	
@@ -21389,7 +21704,7 @@
 	};
 
 /***/ },
-/* 73 */
+/* 76 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -21463,7 +21778,7 @@
 
 
 /***/ },
-/* 74 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -21473,7 +21788,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(75);
+	exports = module.exports = __webpack_require__(78);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -21644,10 +21959,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
 
 /***/ },
-/* 75 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -21663,7 +21978,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(76);
+	exports.humanize = __webpack_require__(79);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -21853,7 +22168,7 @@
 
 
 /***/ },
-/* 76 */
+/* 79 */
 /***/ function(module, exports) {
 
 	/**
@@ -22008,7 +22323,7 @@
 
 
 /***/ },
-/* 77 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -22016,8 +22331,8 @@
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(59);
-	var inherit = __webpack_require__(72);
+	var Polling = __webpack_require__(62);
+	var inherit = __webpack_require__(75);
 	
 	/**
 	 * Module exports.
@@ -22246,24 +22561,24 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 78 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(60);
-	var parser = __webpack_require__(61);
-	var parseqs = __webpack_require__(71);
-	var inherit = __webpack_require__(72);
-	var yeast = __webpack_require__(73);
-	var debug = __webpack_require__(74)('engine.io-client:websocket');
+	var Transport = __webpack_require__(63);
+	var parser = __webpack_require__(64);
+	var parseqs = __webpack_require__(74);
+	var inherit = __webpack_require__(75);
+	var yeast = __webpack_require__(76);
+	var debug = __webpack_require__(77)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	var NodeWebSocket;
 	if (typeof window === 'undefined') {
 	  try {
-	    NodeWebSocket = __webpack_require__(79);
+	    NodeWebSocket = __webpack_require__(82);
 	  } catch (e) { }
 	}
 	
@@ -22538,13 +22853,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 79 */
+/* 82 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 80 */
+/* 83 */
 /***/ function(module, exports) {
 
 	
@@ -22559,7 +22874,7 @@
 	};
 
 /***/ },
-/* 81 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -22597,7 +22912,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 82 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -22605,13 +22920,13 @@
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(40);
-	var Emitter = __webpack_require__(83);
-	var toArray = __webpack_require__(84);
-	var on = __webpack_require__(85);
-	var bind = __webpack_require__(86);
-	var debug = __webpack_require__(36)('socket.io-client:socket');
-	var hasBin = __webpack_require__(63);
+	var parser = __webpack_require__(43);
+	var Emitter = __webpack_require__(86);
+	var toArray = __webpack_require__(87);
+	var on = __webpack_require__(88);
+	var bind = __webpack_require__(89);
+	var debug = __webpack_require__(39)('socket.io-client:socket');
+	var hasBin = __webpack_require__(66);
 	
 	/**
 	 * Module exports.
@@ -23022,7 +23337,7 @@
 
 
 /***/ },
-/* 83 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -23191,7 +23506,7 @@
 
 
 /***/ },
-/* 84 */
+/* 87 */
 /***/ function(module, exports) {
 
 	module.exports = toArray
@@ -23210,7 +23525,7 @@
 
 
 /***/ },
-/* 85 */
+/* 88 */
 /***/ function(module, exports) {
 
 	
@@ -23240,7 +23555,7 @@
 
 
 /***/ },
-/* 86 */
+/* 89 */
 /***/ function(module, exports) {
 
 	/**
@@ -23269,7 +23584,7 @@
 
 
 /***/ },
-/* 87 */
+/* 90 */
 /***/ function(module, exports) {
 
 	
@@ -23360,7 +23675,7 @@
 
 
 /***/ },
-/* 88 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -34259,10 +34574,10 @@
 	/***/ })
 	/******/ ]);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(89).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(92).Buffer))
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -34275,9 +34590,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(90)
-	var ieee754 = __webpack_require__(91)
-	var isArray = __webpack_require__(92)
+	var base64 = __webpack_require__(93)
+	var ieee754 = __webpack_require__(94)
+	var isArray = __webpack_require__(95)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -36058,7 +36373,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -36178,7 +36493,7 @@
 
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -36268,7 +36583,7 @@
 
 
 /***/ },
-/* 92 */
+/* 95 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -36279,13 +36594,13 @@
 
 
 /***/ },
-/* 93 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var diff = __webpack_require__(94);
-	var equal = __webpack_require__(95);
-	var extend = __webpack_require__(98);
-	var op = __webpack_require__(99);
+	var diff = __webpack_require__(97);
+	var equal = __webpack_require__(98);
+	var extend = __webpack_require__(101);
+	var op = __webpack_require__(102);
 	
 	
 	var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
@@ -36599,7 +36914,7 @@
 
 
 /***/ },
-/* 94 */
+/* 97 */
 /***/ function(module, exports) {
 
 	/**
@@ -37303,12 +37618,12 @@
 
 
 /***/ },
-/* 95 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(96);
-	var isArguments = __webpack_require__(97);
+	var objectKeys = __webpack_require__(99);
+	var isArguments = __webpack_require__(100);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -37403,7 +37718,7 @@
 
 
 /***/ },
-/* 96 */
+/* 99 */
 /***/ function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -37418,7 +37733,7 @@
 
 
 /***/ },
-/* 97 */
+/* 100 */
 /***/ function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -37444,7 +37759,7 @@
 
 
 /***/ },
-/* 98 */
+/* 101 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37536,11 +37851,11 @@
 
 
 /***/ },
-/* 99 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var equal = __webpack_require__(95);
-	var extend = __webpack_require__(98);
+	var equal = __webpack_require__(98);
+	var extend = __webpack_require__(101);
 	
 	
 	var lib = {
@@ -37678,430 +37993,6 @@
 	
 	
 	module.exports = lib;
-
-
-/***/ },
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */,
-/* 177 */,
-/* 178 */,
-/* 179 */,
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */,
-/* 220 */,
-/* 221 */,
-/* 222 */,
-/* 223 */,
-/* 224 */,
-/* 225 */,
-/* 226 */,
-/* 227 */,
-/* 228 */,
-/* 229 */,
-/* 230 */,
-/* 231 */,
-/* 232 */,
-/* 233 */,
-/* 234 */,
-/* 235 */,
-/* 236 */,
-/* 237 */,
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */,
-/* 248 */,
-/* 249 */,
-/* 250 */,
-/* 251 */,
-/* 252 */,
-/* 253 */,
-/* 254 */,
-/* 255 */,
-/* 256 */,
-/* 257 */,
-/* 258 */,
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
-/* 293 */,
-/* 294 */,
-/* 295 */,
-/* 296 */,
-/* 297 */,
-/* 298 */,
-/* 299 */,
-/* 300 */,
-/* 301 */,
-/* 302 */,
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */,
-/* 312 */,
-/* 313 */,
-/* 314 */,
-/* 315 */,
-/* 316 */,
-/* 317 */,
-/* 318 */,
-/* 319 */,
-/* 320 */,
-/* 321 */,
-/* 322 */,
-/* 323 */,
-/* 324 */,
-/* 325 */,
-/* 326 */,
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */,
-/* 331 */,
-/* 332 */,
-/* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */,
-/* 337 */,
-/* 338 */,
-/* 339 */,
-/* 340 */,
-/* 341 */,
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Data manipulation - CollectionAddItems
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	
-	let DisplayUtils = __webpack_require__(9);
-	
-	
-	module.exports = function(directive, aAddedItems)
-	{
-	    // start
-	    this.__construct(directive, aAddedItems);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function(directive, aAddedItems)
-	    {
-	        // 1. init
-	        let displayUtils = new DisplayUtils();
-	
-	        // 2. add items
-	        aAddedItems.forEach(function(item)
-	        {
-	
-	            // #todo - check if the component is already there (and duplicate items are allowed OR connection-id's
-	
-	            // validate
-	            if (displayUtils.passesFilter(directive, item))
-	            {
-	                if (directive.sComponentName !== undefined)
-	                {
-	                    MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
-	                }
-	            }
-	        });
-	    }
-	
-	}
-
-
-/***/ },
-/* 348 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Data manipulation - CollectionRemoveItems
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	
-	let DisplayUtils = __webpack_require__(9);
-	let DisplayService = __webpack_require__(7);
-	
-	
-	module.exports = function(directive, aRemovedItems, aSelectors)
-	{
-	    // start
-	    this.__construct(directive, aRemovedItems, aSelectors);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function(directive, aRemovedItems, aSelectors)
-	    {
-	        // 1. init
-	        let displayUtils = new DisplayUtils();
-	
-	        // 2. add items
-	        aRemovedItems.forEach(function(item)
-	        {
-	            // 2. compose
-	            let sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
-	
-	            // 3. find
-	            let element = directive.element.querySelector('[' + DisplayService.TAG_MIMOTO_ID + '="' + sEntitySelector + '"][' + DisplayService.TAG_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
-	
-	            // 4. verify
-	            if (element && aSelectors[sEntitySelector])
-	            {
-	                // 4b. find
-	                let nCleanupCount = aSelectors[sEntitySelector].length;
-	                for (let nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++)
-	                {
-	
-	
-	                    // register
-	                    let cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
-	
-	                    // verify
-	                    if (cleanupCandidate.nConnectionId == item.connection.id)
-	                    {
-	                        // remove
-	                        aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
-	
-	                        // correct
-	                        if (aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
-	
-	                        // cleanup
-	                        if (aSelectors[sEntitySelector].length === 0)
-	                        {
-	                            delete aSelectors[sEntitySelector];
-	                            break;
-	                        }
-	                    }
-	                }
-	
-	                directive.element.removeChild(element);
-	            }
-	        });
-	    }
-	
-	}
-
-
-/***/ },
-/* 349 */
-/***/ function(module, exports) {
-
-	/**
-	 * Mimoto - Data manipulation - CollectionChangeSortOrder
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	
-	module.exports = function(directive, aConnections)
-	{
-	    // start
-	    this.__construct(directive, aConnections);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function(directive, aConnections)
-	    {
-	        // 1. init
-	        let previousElement = null;
-	
-	        // 2. change order
-	        aConnections.forEach(function(connection, nConnectionIndex)
-	        {
-	            // register
-	            let currentElement = directive.element.querySelector('[' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + connection.id + '"]');
-	            currentElement.setAttribute(MimotoX.display.TAG_SETTING_MIMOTO_SORTINDEX, connection.sortindex);
-	
-	            // verify
-	            if (nConnectionIndex == 0)
-	            {
-	                directive.element.insertBefore(currentElement, directive.element.firstChild);
-	            }
-	            else
-	            {
-	                directive.element.insertBefore(currentElement, previousElement.nextSibling);
-	            }
-	
-	            // update
-	            previousElement = currentElement;
-	        });
-	    }
-	
-	}
 
 
 /***/ }

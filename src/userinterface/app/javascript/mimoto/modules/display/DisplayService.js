@@ -460,9 +460,52 @@ module.exports.prototype = {
 
     onDataChange: function(data)
     {
+
+        console.log('data', data);
+
+
+
+
+
         // compose
         let sEntitySelector = data.entityType + '.' + data.entityId;
 
+
+        // --- entity changes
+
+
+        if (this._aSelectors[sEntitySelector])
+        {
+            console.log('Entity is registered', this._aSelectors[sEntitySelector]);
+
+            if (data.changes && data.changes.length > 0)
+            {
+                // register
+                let aDirectives = this._aSelectors[sEntitySelector];
+
+
+                // parse elements
+                let nDirectiveCount = aDirectives.length;
+                for (let nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++)
+                {
+                    // register
+                    let directive = aDirectives[nDirectiveIndex];
+
+                    // verify
+                    if (directive.bReloadOnChange)
+                    {
+                        console.log('bReloadOnChange!', directive.element);
+
+                        MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
+                    }
+
+                }
+            }
+        }
+
+
+
+        // --- property changes
 
         if (data.changes && data.changes.length > 0)
         {
@@ -497,6 +540,8 @@ module.exports.prototype = {
                             // --- values updates
 
                             case this.TAG_MIMOTO_VALUE:
+
+
 
                                 if (change.type === 'value')
                                 {

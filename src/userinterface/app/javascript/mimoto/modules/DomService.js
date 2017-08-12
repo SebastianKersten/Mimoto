@@ -59,8 +59,8 @@ module.exports.prototype = {
         if (module.exports.prototype._validateMessage(module.exports.prototype._aParsedMessages, data.messageID, sChannel) !== false) return;
         
         
-        console.log('Aimless - data.changed (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
-        console.log(data);
+        //console.log('Aimless - data.changed (via ' + ((sChannel) ? sChannel : 'webevent') + ')');
+        //console.log(data);
         
 
         MimotoX.display.onDataChange(data);

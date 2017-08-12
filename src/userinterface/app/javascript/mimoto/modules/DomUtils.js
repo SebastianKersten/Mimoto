@@ -105,60 +105,153 @@ module.exports.prototype = {
         // send
         request.send(sRequestData);
     },
-    
-    /**
-     * Load entity
-     */
-    loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
+
+    updateComponent: function(elementToReplace, sEntitySelector, sComponentName, nConnectionId)
     {
-        $.ajax({
-            type: 'GET',
-            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-            data: null,
-            dataType: 'html',
-            success: function (data) {
-                
-                // delete
-                $($container).empty();
-                
-                // output
-                $($container).append(data);
-            }
-        });
-    },
-    
-    /**
-     * Load wrapper
-     */
-    updateWrapper: function ($component, sEntityTypeName, nId, sWrapper, sComponent)
-    {
-        $.ajax({
-            type: 'GET',
-            url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
-            data: null,
-            dataType: 'html',
-            success: function (data)
+        console.log('elementToReplace', elementToReplace, sEntitySelector, sComponentName, nConnectionId);
+
+        //this.loadComponent(null, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId, elementToReplace)
+
+
+        // $.ajax({
+        //     type: 'GET',
+        //     url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+        //     data: null,
+        //     dataType: 'html',
+        //     success: function (data)
+        //     {
+        //         // replace
+        //         $($component).replaceWith(data);
+        //     }
+        // });
+
+
+        // splite
+        let aEntitySelectorElements = sEntitySelector.split('.');
+
+
+        // compose
+        let requestData = {
+            sEntityTypeName: aEntitySelectorElements[0],
+            nEntityId: aEntitySelectorElements[1],
+            sComponentName: sComponentName,
+            nConnectionId: nConnectionId
+        };
+
+
+        // init
+        let request = new XMLHttpRequest();
+
+        // setup
+        request.onreadystatechange = function()
+        {
+            if(request.readyState === 4)
             {
-                // replace
-                $($component).replaceWith(data);
+                if(request.status === 200)
+                {
+
+                    // convert
+                    //var response = JSON.parse(request.responseText);
+                    let response = request.responseText;
+
+                    // init
+                    let parser = new DOMParser();
+                    let newDocument = parser.parseFromString(response, "text/html");
+
+                    // isolate
+                    let element = newDocument.querySelector('body').firstChild;
+
+                    // register directives
+                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+
+                    // get parent
+                    let container = elementToReplace.parentNode;
+
+                    // add new
+                    container.insertBefore(element, elementToReplace);
+
+                    // remove old
+                    container.removeChild(elementToReplace);
+                }
             }
-        });
-    },
-    
-    updateComponent: function($component, sEntityTypeName, nId, sTemplate)
-    {
-        $.ajax({
-            type: 'GET',
-            url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-            data: null,
-            dataType: 'html',
-            success: function (data)
+        };
+
+        // prepare
+        request.open('post', '/mimoto/output/component', true);
+
+
+        // setup
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        // prepare
+        let sRequestData = '';
+        for (let sKey in requestData)
+        {
+            if (requestData[sKey])
             {
-                // replace
-                $($component).replaceWith(data);
+                if (sRequestData.length !== 0) sRequestData += '&';
+                sRequestData += sKey + '=' + requestData[sKey];
             }
-        });
+        }
+
+        // send
+        request.send(sRequestData);
     },
+
+    
+    // /**
+    //  * Load entity
+    //  */
+    // loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
+    // {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+    //         data: null,
+    //         dataType: 'html',
+    //         success: function (data) {
+    //
+    //             // delete
+    //             $($container).empty();
+    //
+    //             // output
+    //             $($container).append(data);
+    //         }
+    //     });
+    // },
+    
+    // /**
+    //  * Load wrapper
+    //  */
+    // updateWrapper: function ($component, sEntityTypeName, nId, sWrapper, sComponent)
+    // {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
+    //         data: null,
+    //         dataType: 'html',
+    //         success: function (data)
+    //         {
+    //             // replace
+    //             $($component).replaceWith(data);
+    //         }
+    //     });
+    // },
+    
+    // updateComponent: function($component, sEntityTypeName, nId, sTemplate)
+    // {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
+    //         data: null,
+    //         dataType: 'html',
+    //         success: function (data)
+    //         {
+    //             // replace
+    //             $($component).replaceWith(data);
+    //         }
+    //     });
+    // },
     
     callAPI: function(request)
     {

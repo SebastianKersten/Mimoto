@@ -70,18 +70,22 @@ class OutputController
     /**
      * Get view based on entity type and entity id and formatted by component id
      * @param Application $app
-     * @param string $sEntityType
-     * @param int $nEntityId
-     * @param string $sComponentId
+     * @param Request $request
      * @return html Rendered twig template
      */
-    public function renderEntityView(Application $app, $sEntityType, $nEntityId, $sComponentName, $sPropertySelector = null)
+    public function renderEntityView(Application $app, Request $request)
     {
+        // register
+        $sEntityType    = $request->get('sEntityTypeName');
+        $nEntityId      = $request->get('nEntityId');
+        $sComponentName = $request->get('sComponentName');
+        $nConnectionId  = $request->get('nConnectionId');
+
         // load
         $entity = Mimoto::service('data')->get($sEntityType, $nEntityId);
 
         // search
-        $connection = $this->_getConnection($sEntityType, $nEntityId, $sPropertySelector);
+        $connection = MimotoDataUtils::getConnectionById($nConnectionId);
 
         // create
         $component = Mimoto::service('output')->createComponent($sComponentName, $entity, $connection);
@@ -90,20 +94,20 @@ class OutputController
         return $component->render();
     }
 
-    public function renderWrapperView(Application $app, $sEntityType, $nEntityId, $sWrapperName, $sComponentName = null, $sPropertySelector = null)
-    {
-        // load
-        $entity = Mimoto::service('data')->get($sEntityType, $nEntityId);
-
-        // search
-        $connection = $this->_getConnection($sEntityType, $nEntityId, $sPropertySelector);
-
-        // create
-        $component = Mimoto::service('output')->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
-
-        // render and send
-        return $component->render();
-    }
+//    public function renderWrapperView(Application $app, $sEntityType, $nEntityId, $sWrapperName, $sComponentName = null, $sPropertySelector = null)
+//    {
+//        // load
+//        $entity = Mimoto::service('data')->get($sEntityType, $nEntityId);
+//
+//        // search
+//        $connection = $this->_getConnection($sEntityType, $nEntityId, $sPropertySelector);
+//
+//        // create
+//        $component = Mimoto::service('output')->createWrapper($sWrapperName, $sComponentName, $entity, $connection);
+//
+//        // render and send
+//        return $component->render();
+//    }
 
     /**
      * Parse

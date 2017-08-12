@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "2d9df189b315cc0c8f13";
+/******/ 	__webpack_require__.h = "0eb3a488f5143d7ba7a0";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -47,7 +47,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(100);
+	module.exports = __webpack_require__(103);
 
 
 /***/ },
@@ -10353,7 +10353,10 @@
 /* 42 */,
 /* 43 */,
 /* 44 */,
-/* 45 */
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -10369,9 +10372,6 @@
 
 
 /***/ },
-/* 46 */,
-/* 47 */,
-/* 48 */,
 /* 49 */,
 /* 50 */,
 /* 51 */,
@@ -10411,7 +10411,10 @@
 /* 85 */,
 /* 86 */,
 /* 87 */,
-/* 88 */
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -21310,10 +21313,10 @@
 	/***/ })
 	/******/ ]);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(89).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(92).Buffer))
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -21326,9 +21329,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(90)
-	var ieee754 = __webpack_require__(91)
-	var isArray = __webpack_require__(92)
+	var base64 = __webpack_require__(93)
+	var ieee754 = __webpack_require__(94)
+	var isArray = __webpack_require__(95)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -23109,7 +23112,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports) {
 
 	'use strict'
@@ -23229,7 +23232,7 @@
 
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -23319,7 +23322,7 @@
 
 
 /***/ },
-/* 92 */
+/* 95 */
 /***/ function(module, exports) {
 
 	var toString = {}.toString;
@@ -23330,13 +23333,13 @@
 
 
 /***/ },
-/* 93 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var diff = __webpack_require__(94);
-	var equal = __webpack_require__(95);
-	var extend = __webpack_require__(98);
-	var op = __webpack_require__(99);
+	var diff = __webpack_require__(97);
+	var equal = __webpack_require__(98);
+	var extend = __webpack_require__(101);
+	var op = __webpack_require__(102);
 	
 	
 	var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
@@ -23650,7 +23653,7 @@
 
 
 /***/ },
-/* 94 */
+/* 97 */
 /***/ function(module, exports) {
 
 	/**
@@ -24354,12 +24357,12 @@
 
 
 /***/ },
-/* 95 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(96);
-	var isArguments = __webpack_require__(97);
+	var objectKeys = __webpack_require__(99);
+	var isArguments = __webpack_require__(100);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -24454,7 +24457,7 @@
 
 
 /***/ },
-/* 96 */
+/* 99 */
 /***/ function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -24469,7 +24472,7 @@
 
 
 /***/ },
-/* 97 */
+/* 100 */
 /***/ function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -24495,7 +24498,7 @@
 
 
 /***/ },
-/* 98 */
+/* 101 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24587,11 +24590,11 @@
 
 
 /***/ },
-/* 99 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var equal = __webpack_require__(95);
-	var extend = __webpack_require__(98);
+	var equal = __webpack_require__(98);
+	var extend = __webpack_require__(101);
 	
 	
 	var lib = {
@@ -24732,17 +24735,17 @@
 
 
 /***/ },
-/* 100 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//'use strict'; #note SK - do not uncomment
 	
-	__webpack_require__(101);
+	__webpack_require__(104);
 	
 	
-	var HeaderView = __webpack_require__(102);
-	var ButtonUtils = __webpack_require__(103);
-	var Sortable = __webpack_require__(104); // https://github.com/RubaXa/Sortable
+	var HeaderView = __webpack_require__(105);
+	var ButtonUtils = __webpack_require__(106);
+	var Sortable = __webpack_require__(107); // https://github.com/RubaXa/Sortable
 	
 	
 	if (typeof Mimoto == "undefined") Mimoto = {};
@@ -24751,14 +24754,14 @@
 	
 	//Mimoto = require('./mimoto.cms/Mimoto');
 	
-	Mimoto.CMS = __webpack_require__(105);
-	Mimoto.modules.Tabmenu = __webpack_require__(106);
-	Mimoto.modules.Popup = __webpack_require__(107);
-	Mimoto.modules.Page = __webpack_require__(108);
-	Mimoto.modules.Form = __webpack_require__(109);
-	Mimoto.modules.Quill = __webpack_require__(88);
-	Mimoto.modules.QuillDelta = __webpack_require__(93);
-	Mimoto.modules.Sortable = __webpack_require__(104);
+	Mimoto.CMS = __webpack_require__(108);
+	Mimoto.modules.Tabmenu = __webpack_require__(109);
+	Mimoto.modules.Popup = __webpack_require__(110);
+	Mimoto.modules.Page = __webpack_require__(111);
+	Mimoto.modules.Form = __webpack_require__(112);
+	Mimoto.modules.Quill = __webpack_require__(91);
+	Mimoto.modules.QuillDelta = __webpack_require__(96);
+	Mimoto.modules.Sortable = __webpack_require__(107);
 	
 	// init
 	Mimoto.CMS = new Mimoto.CMS();
@@ -24864,7 +24867,7 @@
 
 
 /***/ },
-/* 101 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! jQuery UI - v1.12.1 - 2016-09-14
@@ -43575,7 +43578,7 @@
 	}));
 
 /***/ },
-/* 102 */
+/* 105 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -43787,7 +43790,7 @@
 
 
 /***/ },
-/* 103 */
+/* 106 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -43872,7 +43875,7 @@
 
 
 /***/ },
-/* 104 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**!
@@ -45360,7 +45363,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 105 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -46203,7 +46206,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 106 */
+/* 109 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46331,7 +46334,7 @@
 
 
 /***/ },
-/* 107 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
@@ -46459,7 +46462,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
 
 /***/ },
-/* 108 */
+/* 111 */
 /***/ function(module, exports) {
 
 	/**
@@ -46509,7 +46512,7 @@
 
 
 /***/ },
-/* 109 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -46520,11 +46523,11 @@
 	
 	'use strict';
 	
-	var Sortable = __webpack_require__(104); // https://github.com/RubaXa/Sortable
+	var Sortable = __webpack_require__(107); // https://github.com/RubaXa/Sortable
 	
-	var Dropzone = __webpack_require__(110);
-	var Flatpickr = __webpack_require__(111);
-	var Quill = __webpack_require__(88);
+	var Dropzone = __webpack_require__(113);
+	var Flatpickr = __webpack_require__(114);
+	var Quill = __webpack_require__(91);
 	
 	Dropzone.autoDiscover = false;
 	
@@ -47632,7 +47635,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 110 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery, module) {
@@ -49403,10 +49406,10 @@
 	
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(45)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(48)(module)))
 
 /***/ },
-/* 111 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
