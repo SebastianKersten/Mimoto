@@ -39,9 +39,9 @@ module.exports.prototype = {
 
 
     /**
-     * Load component NEW
+     * Load component
      */
-    loadComponentNEW: function (container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
+    loadComponent: function (container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
     {
         // compose
         let requestData = {
@@ -91,7 +91,6 @@ module.exports.prototype = {
         // setup
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-
         // prepare
         let sRequestData = '';
         for (let sKey in requestData)
@@ -105,33 +104,6 @@ module.exports.prototype = {
 
         // send
         request.send(sRequestData);
-    },
-
-    /**
-     * Load wrapper NEW
-     */
-    loadWrapperNEW: function ($container, sEntityTypeName, nId, sWrapperName, sComponentName, sPropertySelector, nConnectionId)
-    {
-        // compose
-        let data = {
-            sEntityTypeName: sEntityTypeName,
-            sEntityId: nEntityId,
-            sComponentName: sComponentName,
-            sWrapperName: sWrapperName,
-            sPropertySelector: sPropertySelector,
-            nConnectionId: nConnectionId
-        };
-
-        // execute
-        $.ajax({
-            type: 'POST',
-            url: '/mimoto.data/render',
-            data: data,
-            dataType: 'html',
-            success: function (data) {
-                $($container).append(data);
-            }
-        });
     },
     
     /**

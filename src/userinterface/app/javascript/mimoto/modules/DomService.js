@@ -664,7 +664,7 @@ module.exports.prototype = {
                                 else {
                                     if (mls_component.name)
                                     {
-                                        MimotoX.utils.loadComponentNEW($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
+                                        MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
                                     }
                                 }
                             }

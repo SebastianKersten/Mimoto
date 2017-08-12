@@ -68,20 +68,20 @@ class AimlessComponentViewModel
 //        return $this->_component->data($sPropertySelector, false, true, $sComponentName, null, $customValues);
 //    }
 
-    public function renderWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
-    {
-        return $this->_component->data($sPropertySelector, false, true, $sComponentName, $sWrapperName);
-    }
+//    public function renderWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
+//    {
+//        return $this->_component->data($sPropertySelector, false, true, $sComponentName, $sWrapperName);
+//    }
 
     public function realtime($sPropertySelector = null, $sComponentName = null)
     {
         return $this->_component->realtime($sPropertySelector, $sComponentName);
     }
 
-    public function realtimeWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
-    {
-        return $this->_component->realtime($sPropertySelector, $sComponentName, $sWrapperName);
-    }
+//    public function realtimeWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
+//    {
+//        return $this->_component->realtime($sPropertySelector, $sComponentName, $sWrapperName);
+//    }
 
     public function jsListen($sPropertySelector, $scope, $fJavascriptDelegate)
     {

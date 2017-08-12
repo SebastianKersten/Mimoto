@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "c730b12dbb8f51e6f35d";
+/******/ 	__webpack_require__.h = "eb63517f1659f0e40995";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -10648,9 +10648,9 @@
 	
 	
 	    /**
-	     * Load component NEW
+	     * Load component
 	     */
-	    loadComponentNEW: function (container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
+	    loadComponent: function (container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
 	    {
 	        // compose
 	        let requestData = {
@@ -10700,7 +10700,6 @@
 	        // setup
 	        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	
-	
 	        // prepare
 	        let sRequestData = '';
 	        for (let sKey in requestData)
@@ -10714,33 +10713,6 @@
 	
 	        // send
 	        request.send(sRequestData);
-	    },
-	
-	    /**
-	     * Load wrapper NEW
-	     */
-	    loadWrapperNEW: function ($container, sEntityTypeName, nId, sWrapperName, sComponentName, sPropertySelector, nConnectionId)
-	    {
-	        // compose
-	        let data = {
-	            sEntityTypeName: sEntityTypeName,
-	            sEntityId: nEntityId,
-	            sComponentName: sComponentName,
-	            sWrapperName: sWrapperName,
-	            sPropertySelector: sPropertySelector,
-	            nConnectionId: nConnectionId
-	        };
-	
-	        // execute
-	        $.ajax({
-	            type: 'POST',
-	            url: '/mimoto.data/render',
-	            data: data,
-	            dataType: 'html',
-	            success: function (data) {
-	                $($container).append(data);
-	            }
-	        });
 	    },
 	    
 	    /**
@@ -11545,7 +11517,7 @@
 	                                else {
 	                                    if (mls_component.name)
 	                                    {
-	                                        MimotoX.utils.loadComponentNEW($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
+	                                        MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
 	                                    }
 	                                }
 	                            }
@@ -12149,7 +12121,6 @@
 	    TAG_SETTING_MIMOTO_COMPONENT:  'data-mimoto-component',
 	    TAG_SETTING_MIMOTO_CONNECTION: 'data-mimoto-connection',
 	    TAG_SETTING_MIMOTO_SORTINDEX:  'data-mimoto-sortindex',
-	    TAG_SETTING_MIMOTO_WRAPPER:    'data-mimoto-wrapper',
 	
 	    // directive tags
 	    TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE: 'data-mimoto-reloadonchange',
@@ -12402,12 +12373,6 @@
 	                            directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
 	                        }
 	
-	                        // verify and register
-	                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_WRAPPER))
-	                        {
-	                            directive.sWrapperName = element.getAttribute(this.TAG_SETTING_MIMOTO_WRAPPER);
-	                        }
-	
 	
 	
 	                        // verify and register
@@ -12449,14 +12414,8 @@
 	                            directive.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
 	                        }
 	
-	                        // verify and register
-	                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_WRAPPER))
-	                        {
-	                            directive.sWrapperName = element.getAttribute(this.TAG_SETTING_MIMOTO_WRAPPER);
-	                        }
 	
-	
-	                        console.log('directive', directive);
+	                        //console.log('directive', directive);
 	
 	                        break;
 	
@@ -12552,7 +12511,7 @@
 	                        // register
 	                        let directive = aDirectives[nElementIndex];
 	
-	                        console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
+	                        //console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
 	
 	
 	                        switch(directive.sTag)
@@ -12589,7 +12548,6 @@
 	
 	                            case this.TAG_MIMOTO_COLLECTION:
 	
-	                                console.warn('COLLECTION CHANGED!');
 	
 	                                if (change.collection.added) {
 	
@@ -12609,22 +12567,18 @@
 	                                        }
 	
 	
-	                                        // 1. #todo check if the component is already there (and duplicate items are allowed OR connection-id's
+	
+	                                        // 1. check if the component is already there (and duplicate items are allowed OR connection-id's
+	
+	
 	
 	                                        // load
 	                                        if (bFilterApproved)
 	                                        {
-	                                            if (directive.sWrapperName !== undefined)
+	                                            if (directive.sComponentName !== undefined)
 	                                            {
-	                                                MimotoX.utils.loadWrapperNEW(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sWrapperName, directive.sComponentName, directive.sPropertySelector, item.connection.id);
-	                                            }
-	                                            else
-	                                            {
-	                                                if (directive.sComponentName !== undefined)
-	                                                {
-	                                                    MimotoX.utils.loadComponentNEW(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+	                                                MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
 	
-	                                                }
 	                                            }
 	                                        }
 	                                    }

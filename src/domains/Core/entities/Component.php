@@ -442,13 +442,13 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormDetail-FormFieldWrapper',
-                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormFieldWrapper/FormFieldWrapper.twig',
+                'name' => 'Mimoto.CMS_forms_FormDetail-FormField',
+                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormField.twig',
                 'conditionals' => []
             ),
             (object) array(
                 'name' => 'Mimoto.CMS_forms_FormDetail-FormFieldValue',
-                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormFieldWrapper/FormFieldValue/FormFieldValue.twig',
+                'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormFieldValue/FormFieldValue.twig',
                 'conditionals' => []
             ),
 

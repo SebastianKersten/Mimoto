@@ -93,7 +93,6 @@ module.exports.prototype = {
     TAG_SETTING_MIMOTO_COMPONENT:  'data-mimoto-component',
     TAG_SETTING_MIMOTO_CONNECTION: 'data-mimoto-connection',
     TAG_SETTING_MIMOTO_SORTINDEX:  'data-mimoto-sortindex',
-    TAG_SETTING_MIMOTO_WRAPPER:    'data-mimoto-wrapper',
 
     // directive tags
     TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE: 'data-mimoto-reloadonchange',
@@ -346,12 +345,6 @@ module.exports.prototype = {
                             directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
                         }
 
-                        // verify and register
-                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_WRAPPER))
-                        {
-                            directive.sWrapperName = element.getAttribute(this.TAG_SETTING_MIMOTO_WRAPPER);
-                        }
-
 
 
                         // verify and register
@@ -393,14 +386,8 @@ module.exports.prototype = {
                             directive.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
                         }
 
-                        // verify and register
-                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_WRAPPER))
-                        {
-                            directive.sWrapperName = element.getAttribute(this.TAG_SETTING_MIMOTO_WRAPPER);
-                        }
 
-
-                        console.log('directive', directive);
+                        //console.log('directive', directive);
 
                         break;
 
@@ -496,7 +483,7 @@ module.exports.prototype = {
                         // register
                         let directive = aDirectives[nElementIndex];
 
-                        console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
+                        //console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
 
 
                         switch(directive.sTag)
@@ -533,7 +520,6 @@ module.exports.prototype = {
 
                             case this.TAG_MIMOTO_COLLECTION:
 
-                                console.warn('COLLECTION CHANGED!');
 
                                 if (change.collection.added) {
 
@@ -553,22 +539,18 @@ module.exports.prototype = {
                                         }
 
 
-                                        // 1. #todo check if the component is already there (and duplicate items are allowed OR connection-id's
+
+                                        // 1. check if the component is already there (and duplicate items are allowed OR connection-id's
+
+
 
                                         // load
                                         if (bFilterApproved)
                                         {
-                                            if (directive.sWrapperName !== undefined)
+                                            if (directive.sComponentName !== undefined)
                                             {
-                                                MimotoX.utils.loadWrapperNEW(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sWrapperName, directive.sComponentName, directive.sPropertySelector, item.connection.id);
-                                            }
-                                            else
-                                            {
-                                                if (directive.sComponentName !== undefined)
-                                                {
-                                                    MimotoX.utils.loadComponentNEW(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+                                                MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
 
-                                                }
                                             }
                                         }
                                     }
