@@ -58,30 +58,41 @@ class CoreFormUtils
     /**
      * Get value input
      */
-    public static function addFieldsValueInput(MimotoEntity $form, $eInput = null)
+    public static function addFieldsValueInput(MimotoEntity $form, $eInstance = null)
     {
         // register
         $sFormId = $form->getId();
 
-        // validate
-        if (empty($eInput)) return;
 
         // load
         $sParentEntityId = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
 
-        // #todo
-
-        // 1. get parent (pass from form to field to this form where it is needed!)
-        // 2. get parent properties
-        // 3. get property id's
+        // init
+        $aParentEntities = [];
 
 
+        // verify
+        if (!empty($eInstance))
+        {
+            // collect
+            $eParentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eInstance);
+            $eParentEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eParentForm);
 
-        $eParentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eInput);
-        $eParentEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eParentForm);
+            // register
+            $aParentEntities = array($eParentEntity);
+        }
+        else
+        {
+            // init
+            $selection = Mimoto::service('selection')->create();
 
+            // setup
+            $selection->setType(CoreConfig::MIMOTO_ENTITY);
 
+            // select
+            $aParentEntities = Mimoto::service('data')->select($selection);
+        }
 
 
 
@@ -102,26 +113,39 @@ class CoreFormUtils
         // 2. connect to property
         self::addValueToField($field, $sParentEntityId, 'value');
 
-        // read
-        $aEntityProperties = $eParentEntity->getValue('properties');
-        $nEntityPropertyCount = count($aEntityProperties);
-        for ($nEntityPropertyIndex = 0; $nEntityPropertyIndex < $nEntityPropertyCount; $nEntityPropertyIndex++)
+
+        // 1. loop all
+
+
+        $nParentEntityCount = count($aParentEntities);
+        for ($nParentEntityIndex = 0; $nParentEntityIndex < $nParentEntityCount; $nParentEntityIndex++)
         {
             // register
-            $entityProperty = $aEntityProperties[$nEntityPropertyIndex];
+            $eParentEntity = $aParentEntities[$nParentEntityIndex];
 
-            // compose
-            $sLabel = $entityProperty->getValue('name');
+            // read
+            $aEntityProperties = $eParentEntity->getValue('properties');
+            $nEntityPropertyCount = count($aEntityProperties);
+            for ($nEntityPropertyIndex = 0; $nEntityPropertyIndex < $nEntityPropertyCount; $nEntityPropertyIndex++)
+            {
+                // register
+                $entityProperty = $aEntityProperties[$nEntityPropertyIndex];
 
+                // compose
+                $sLabel = (!empty($eInstance)) ? $entityProperty->getValue('name') : $eParentEntity->getValue('name').'.'.$entityProperty->getValue('name');
 
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-            $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
-            $option->setValue('label', $sLabel);
-            $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
+                // create input options
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
+                $option->setValue('label', $sLabel);
+                $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
 
-            $field->addValue('options', $option);
+                // store input option
+                $field->addValue('options', $option);
+            }
         }
 
+        // store
         $form->addValue('fields', $field);
 
         // create

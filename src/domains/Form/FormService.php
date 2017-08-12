@@ -210,6 +210,7 @@ class FormService
         // 4. prepare
         $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity, null, $entity->getId()); // todo - strip values
 
+
         // get all vars and entities
         $nFieldCount = count($formFieldValues->fields);
         for ($nFieldIndex = 0; $nFieldIndex < $nFieldCount; $nFieldIndex++)
@@ -231,6 +232,7 @@ class FormService
 //        {
 //            Mimoto::service('log')->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
 //        }
+
 
 
         $formResponse = (object) array( //new MimotoFormResponse();
