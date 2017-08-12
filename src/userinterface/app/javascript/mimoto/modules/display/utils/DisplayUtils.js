@@ -66,6 +66,11 @@ module.exports.prototype = {
 
     isEmpty: function(value)
     {
+        if (value === null)
+        {
+            return true;
+        }
+        else
         if (!isNaN(parseInt(value)))
         {
             return value == 0;

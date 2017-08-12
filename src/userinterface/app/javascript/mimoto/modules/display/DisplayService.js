@@ -471,13 +471,12 @@ module.exports.prototype = {
         let sEntitySelector = data.entityType + '.' + data.entityId;
 
 
+
         // --- entity changes
 
 
         if (this._aSelectors[sEntitySelector])
         {
-            console.log('Entity is registered', this._aSelectors[sEntitySelector]);
-
             if (data.changes && data.changes.length > 0)
             {
                 // register
@@ -494,8 +493,6 @@ module.exports.prototype = {
                     // verify
                     if (directive.bReloadOnChange)
                     {
-                        console.log('bReloadOnChange!', directive.element);
-
                         MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
                     }
 
@@ -566,6 +563,8 @@ module.exports.prototype = {
                             case this.TAG_MIMOTO_ENTITY:
 
 
+                                //console.log();
+
                                 break;
 
                             case this.TAG_MIMOTO_COLLECTION:
@@ -602,7 +601,7 @@ module.exports.prototype = {
                                 switch(change.type)
                                 {
                                     case 'value': currentValue = change.value; break;
-                                    case 'entity': currentValue = change.value; break;
+                                    case 'entity': currentValue = change.entity; break;
                                     case 'collection': currentValue = change.collection.count; break;
                                 }
 

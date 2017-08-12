@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "e09651e4a15d8231eae7";
+/******/ 	__webpack_require__.h = "a0000d81f348da746074";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12474,13 +12474,12 @@
 	        let sEntitySelector = data.entityType + '.' + data.entityId;
 	
 	
+	
 	        // --- entity changes
 	
 	
 	        if (this._aSelectors[sEntitySelector])
 	        {
-	            console.log('Entity is registered', this._aSelectors[sEntitySelector]);
-	
 	            if (data.changes && data.changes.length > 0)
 	            {
 	                // register
@@ -12497,8 +12496,6 @@
 	                    // verify
 	                    if (directive.bReloadOnChange)
 	                    {
-	                        console.log('bReloadOnChange!', directive.element);
-	
 	                        MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
 	                    }
 	
@@ -12569,6 +12566,8 @@
 	                            case this.TAG_MIMOTO_ENTITY:
 	
 	
+	                                //console.log();
+	
 	                                break;
 	
 	                            case this.TAG_MIMOTO_COLLECTION:
@@ -12605,7 +12604,7 @@
 	                                switch(change.type)
 	                                {
 	                                    case 'value': currentValue = change.value; break;
-	                                    case 'entity': currentValue = change.value; break;
+	                                    case 'entity': currentValue = change.entity; break;
 	                                    case 'collection': currentValue = change.collection.count; break;
 	                                }
 	
@@ -12780,6 +12779,11 @@
 	
 	    isEmpty: function(value)
 	    {
+	        if (value === null)
+	        {
+	            return true;
+	        }
+	        else
 	        if (!isNaN(parseInt(value)))
 	        {
 	            return value == 0;
