@@ -186,7 +186,7 @@ class MimotoDataUtils
                     $sExpressionValue = true;
 
                     // update
-                    if (preg_match('/!/', $sExpression, $matches, PREG_OFFSET_CAPTURE))
+                    if (preg_match('/!/', $sExpression, $matches, PREG_OFFSET_CAPTURE) === 1)
                     {
                         $sExpression = preg_replace('/!/', '', $sExpression);
                         $sExpressionValue = false;

@@ -136,18 +136,17 @@ class DisplayOptionUtils
                 break;
 
             case self::TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:
-            case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
             case self::TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
+            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
+            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
 
                 $instructions->patterns = self::prepareValues($xValues);
                 $instructions->initialState = self::isRegex($component->data($sPropertyName), $instructions->patterns);
                 break;
 
-
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
+            case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
+            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
             case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
             case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
 
                 $instructions->patterns = self::prepareValues($xValues);
@@ -220,7 +219,7 @@ class DisplayOptionUtils
         {
             $sPattern = "/".$aPatterns[$nPatternIndex]."/";
 
-            if (preg_match($sPattern, $value))
+            if (preg_match($sPattern, $value) == 1)
             {
                 // toggle
                 $bValidated = true;
