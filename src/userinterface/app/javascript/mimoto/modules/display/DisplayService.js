@@ -472,37 +472,8 @@ module.exports.prototype = {
 
 
 
-        // --- entity changes
 
-
-        if (this._aSelectors[sEntitySelector])
-        {
-            if (data.changes && data.changes.length > 0)
-            {
-                // register
-                let aDirectives = this._aSelectors[sEntitySelector];
-
-
-                // parse elements
-                let nDirectiveCount = aDirectives.length;
-                for (let nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++)
-                {
-                    // register
-                    let directive = aDirectives[nDirectiveIndex];
-
-                    // verify
-                    if (directive.bReloadOnChange)
-                    {
-                        MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
-                    }
-
-                }
-            }
-        }
-
-
-
-        // --- property changes
+        // --- value changes
 
         if (data.changes && data.changes.length > 0)
         {
@@ -649,6 +620,72 @@ module.exports.prototype = {
                 }
             }
 
+        }
+
+
+
+        // --- entity changes
+
+
+        if (this._aSelectors[sEntitySelector])
+        {
+            if (data.changes && data.changes.length > 0)
+            {
+                // register
+                let aDirectives = this._aSelectors[sEntitySelector];
+
+
+                // parse elements
+                let nDirectiveCount = aDirectives.length;
+                for (let nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++)
+                {
+                    // register
+                    let directive = aDirectives[nDirectiveIndex];
+
+                    // verify
+                    if (directive.bReloadOnChange)
+                    {
+                        MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
+                    }
+
+                }
+            }
+        }
+
+
+
+        // --- selection changes
+
+
+        if (data.connections && data.connections.length > 0)
+        {
+            console.log('data.connections', data.connections);
+
+            let nConnectionCount = data.connections.length;
+            for (let nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
+            {
+                // register
+                let connection = data.connections[nConnectionIndex];
+
+                // compose
+                let sPropertySelector = connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName;
+
+                // verify
+                if (this._aSelectors[sPropertySelector])
+                {
+                    // register
+                    let aDirectives = this._aSelectors[sPropertySelector];
+
+
+                    // 1. execute directive
+                    // 2. pass value
+
+                    console.log('Known collection / selection', aDirectives);
+                }
+            }
+
+
+            // 1. check if entity exists
         }
     }
     

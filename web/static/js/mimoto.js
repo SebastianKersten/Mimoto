@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "a0000d81f348da746074";
+/******/ 	__webpack_require__.h = "04038deff55a9a8b18d5";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12475,37 +12475,8 @@
 	
 	
 	
-	        // --- entity changes
 	
-	
-	        if (this._aSelectors[sEntitySelector])
-	        {
-	            if (data.changes && data.changes.length > 0)
-	            {
-	                // register
-	                let aDirectives = this._aSelectors[sEntitySelector];
-	
-	
-	                // parse elements
-	                let nDirectiveCount = aDirectives.length;
-	                for (let nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++)
-	                {
-	                    // register
-	                    let directive = aDirectives[nDirectiveIndex];
-	
-	                    // verify
-	                    if (directive.bReloadOnChange)
-	                    {
-	                        MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
-	                    }
-	
-	                }
-	            }
-	        }
-	
-	
-	
-	        // --- property changes
+	        // --- value changes
 	
 	        if (data.changes && data.changes.length > 0)
 	        {
@@ -12652,6 +12623,72 @@
 	                }
 	            }
 	
+	        }
+	
+	
+	
+	        // --- entity changes
+	
+	
+	        if (this._aSelectors[sEntitySelector])
+	        {
+	            if (data.changes && data.changes.length > 0)
+	            {
+	                // register
+	                let aDirectives = this._aSelectors[sEntitySelector];
+	
+	
+	                // parse elements
+	                let nDirectiveCount = aDirectives.length;
+	                for (let nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++)
+	                {
+	                    // register
+	                    let directive = aDirectives[nDirectiveIndex];
+	
+	                    // verify
+	                    if (directive.bReloadOnChange)
+	                    {
+	                        MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
+	                    }
+	
+	                }
+	            }
+	        }
+	
+	
+	
+	        // --- selection changes
+	
+	
+	        if (data.connections && data.connections.length > 0)
+	        {
+	            console.log('data.connections', data.connections);
+	
+	            let nConnectionCount = data.connections.length;
+	            for (let nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
+	            {
+	                // register
+	                let connection = data.connections[nConnectionIndex];
+	
+	                // compose
+	                let sPropertySelector = connection.parentEntityType + "." + connection.parentId + "." + connection.parentPropertyName;
+	
+	                // verify
+	                if (this._aSelectors[sPropertySelector])
+	                {
+	                    // register
+	                    let aDirectives = this._aSelectors[sPropertySelector];
+	
+	
+	                    // 1. execute directive
+	                    // 2. pass value
+	
+	                    console.log('Known collection / selection', aDirectives);
+	                }
+	            }
+	
+	
+	            // 1. check if entity exists
 	        }
 	    }
 	    
