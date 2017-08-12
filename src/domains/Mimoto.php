@@ -76,6 +76,10 @@ class Mimoto
         // setup templates
         $app['twig']->getLoader()->addPath(dirname(dirname(__FILE__)) . '/userinterface');
 
+        // configure defaults
+        Mimoto::setValue('page.layout.default', 'MimotoCMS_layout_Page');
+        Mimoto::setValue('popup.layout.default', 'MimotoCMS_layout_Popup');
+
         // setup Silex services
         $app->register(new SessionServiceProvider());
 

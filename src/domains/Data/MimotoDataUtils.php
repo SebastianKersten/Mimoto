@@ -133,7 +133,7 @@ class MimotoDataUtils
     
     public static function hasExpression($sPropertySelector)
     {
-        return (preg_match("/^{[a-zA-Z0-9=\"']*?}$/", $sPropertySelector));
+        return (preg_match("/^{[a-zA-Z0-9=\"',!]*?}$/", $sPropertySelector));
     }
     
     public static function getConditionalsAndSubselector($sPropertySelector)
@@ -147,30 +147,58 @@ class MimotoDataUtils
         // verify
         if (MimotoDataUtils::hasExpression($sPropertySelector))
         {
-            
+
             // 1. query, with && en || support, comma separated
             // 2. Example: {phase="archived"}
             
-            // register
+            // strip { and }
             $sExpression = substr($sPropertySelector, 1, strlen($sPropertySelector) - 2);
-            $aExpressionElements = explode('=', $sExpression);
 
-            // update
-            $sExpressionKey = trim($aExpressionElements[0]);
-            $sExpressionValue = trim($aExpressionElements[1]);
-            
-            // register
-            $sFirstChar = $sExpressionValue[0];
-            $sLastChar = $sExpressionValue[strlen($sExpressionValue) - 1];
-            
-            // cleanup
-            if (($sFirstChar === "'" && $sLastChar === "'") || ($sFirstChar == '"' && $sLastChar == '"'))
+            // isolate individual expressions
+            $aExpressions = explode(',', $sExpression);
+
+
+            foreach($aExpressions as $sKey => $sExpression)
             {
-                $sExpressionValue = substr($sExpressionValue, 1, strlen($sExpressionValue) - 2);
+                // handle expression: xxx=yyy
+                if (strpos($sExpression, '='))
+                {
+                    $aExpressionElements = explode('=', $sExpression);
+
+                    // update
+                    $sExpressionKey = trim($aExpressionElements[0]);
+                    $sExpressionValue = trim($aExpressionElements[1]);
+
+                    // register
+                    $sFirstChar = $sExpressionValue[0];
+                    $sLastChar = $sExpressionValue[strlen($sExpressionValue) - 1];
+
+                    // cleanup
+                    if (($sFirstChar === "'" && $sLastChar === "'") || ($sFirstChar == '"' && $sLastChar == '"'))
+                    {
+                        $sExpressionValue = substr($sExpressionValue, 1, strlen($sExpressionValue) - 2);
+                    }
+                }
+                // handle boolean
+                else
+                {
+                    // init
+                    $sExpressionValue = true;
+
+                    // update
+                    if (preg_match('/!/', $sExpression, $matches, PREG_OFFSET_CAPTURE))
+                    {
+                        $sExpression = preg_replace('/!/', '', $sExpression);
+                        $sExpressionValue = false;
+                    }
+
+                    // cleanup
+                    $sExpressionKey = trim($sExpression);
+                }
+
+                // store
+                $selector->conditionals[$sExpressionKey] = $sExpressionValue;
             }
-            
-            // store
-            $selector->conditionals[$sExpressionKey] = $sExpressionValue;
         }
         
         // send

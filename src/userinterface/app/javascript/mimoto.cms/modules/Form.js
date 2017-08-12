@@ -1090,7 +1090,7 @@ module.exports.prototype = {
     _startAutosave: function(form)
     {
 
-        console.log('Autosave ', form);
+        //console.log('Autosave ', form);
         return;
 
         if (!form.autosaveTimer)

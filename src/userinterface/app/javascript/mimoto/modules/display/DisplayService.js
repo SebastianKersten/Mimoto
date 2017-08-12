@@ -347,6 +347,14 @@ module.exports.prototype = {
                         }
 
                         // verify and register
+                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_WRAPPER))
+                        {
+                            directive.sWrapperName = element.getAttribute(this.TAG_SETTING_MIMOTO_WRAPPER);
+                        }
+
+
+
+                        // verify and register
                         if (element.hasAttribute(this.TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE))
                         {
                             directive.bReloadOnChange = true;
@@ -378,7 +386,6 @@ module.exports.prototype = {
                         // register
                         directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
 
-
                         // verify
                         if (sTag === this.TAG_MIMOTO_COLLECTION && element.hasAttribute(this.TAG_SETTING_MIMOTO_FILTER))
                         {
@@ -386,9 +393,14 @@ module.exports.prototype = {
                             directive.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
                         }
 
+                        // verify and register
+                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_WRAPPER))
+                        {
+                            directive.sWrapperName = element.getAttribute(this.TAG_SETTING_MIMOTO_WRAPPER);
+                        }
 
 
-                        //console.log('Property', directive);
+                        console.log('directive', directive);
 
                         break;
 
@@ -507,6 +519,10 @@ module.exports.prototype = {
 
 
                                     directive.element.innerText = change.value;
+
+
+
+
                                 }
                                 break;
 
@@ -516,6 +532,8 @@ module.exports.prototype = {
                                 break;
 
                             case this.TAG_MIMOTO_COLLECTION:
+
+                                console.warn('COLLECTION CHANGED!');
 
                                 if (change.collection.added) {
 
@@ -540,20 +558,18 @@ module.exports.prototype = {
                                         // load
                                         if (bFilterApproved)
                                         {
-                                            //var mls_wrapper = $($container).attr("data-mimoto-wrapper");
-
-                                            // if (mls_wrapper)
-                                            // {
-                                            //     MimotoX.utils.loadWrapper($container, item.connection.childEntityTypeName, item.connection.childId, mls_wrapper, mls_component.name, mls_contains);
-                                            // }
-                                            // else
-                                            // {
+                                            if (directive.sWrapperName !== undefined)
+                                            {
+                                                MimotoX.utils.loadWrapperNEW(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sWrapperName, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+                                            }
+                                            else
+                                            {
                                                 if (directive.sComponentName !== undefined)
                                                 {
                                                     MimotoX.utils.loadComponentNEW(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
 
                                                 }
-                                            //}
+                                            }
                                         }
                                     }
                                 }
@@ -607,6 +623,7 @@ module.exports.prototype = {
                                         }
                                     }
                                 }
+
                                 break;
 
 

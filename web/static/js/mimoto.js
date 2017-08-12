@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "cb354a0f399cedc42d19";
+/******/ 	__webpack_require__.h = "c730b12dbb8f51e6f35d";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12403,6 +12403,14 @@
 	                        }
 	
 	                        // verify and register
+	                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_WRAPPER))
+	                        {
+	                            directive.sWrapperName = element.getAttribute(this.TAG_SETTING_MIMOTO_WRAPPER);
+	                        }
+	
+	
+	
+	                        // verify and register
 	                        if (element.hasAttribute(this.TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE))
 	                        {
 	                            directive.bReloadOnChange = true;
@@ -12434,7 +12442,6 @@
 	                        // register
 	                        directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
 	
-	
 	                        // verify
 	                        if (sTag === this.TAG_MIMOTO_COLLECTION && element.hasAttribute(this.TAG_SETTING_MIMOTO_FILTER))
 	                        {
@@ -12442,9 +12449,14 @@
 	                            directive.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
 	                        }
 	
+	                        // verify and register
+	                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_WRAPPER))
+	                        {
+	                            directive.sWrapperName = element.getAttribute(this.TAG_SETTING_MIMOTO_WRAPPER);
+	                        }
 	
 	
-	                        //console.log('Property', directive);
+	                        console.log('directive', directive);
 	
 	                        break;
 	
@@ -12563,6 +12575,10 @@
 	
 	
 	                                    directive.element.innerText = change.value;
+	
+	
+	
+	
 	                                }
 	                                break;
 	
@@ -12572,6 +12588,8 @@
 	                                break;
 	
 	                            case this.TAG_MIMOTO_COLLECTION:
+	
+	                                console.warn('COLLECTION CHANGED!');
 	
 	                                if (change.collection.added) {
 	
@@ -12596,20 +12614,18 @@
 	                                        // load
 	                                        if (bFilterApproved)
 	                                        {
-	                                            //var mls_wrapper = $($container).attr("data-mimoto-wrapper");
-	
-	                                            // if (mls_wrapper)
-	                                            // {
-	                                            //     MimotoX.utils.loadWrapper($container, item.connection.childEntityTypeName, item.connection.childId, mls_wrapper, mls_component.name, mls_contains);
-	                                            // }
-	                                            // else
-	                                            // {
+	                                            if (directive.sWrapperName !== undefined)
+	                                            {
+	                                                MimotoX.utils.loadWrapperNEW(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sWrapperName, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+	                                            }
+	                                            else
+	                                            {
 	                                                if (directive.sComponentName !== undefined)
 	                                                {
 	                                                    MimotoX.utils.loadComponentNEW(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
 	
 	                                                }
-	                                            //}
+	                                            }
 	                                        }
 	                                    }
 	                                }
@@ -12663,6 +12679,7 @@
 	                                        }
 	                                    }
 	                                }
+	
 	                                break;
 	
 	

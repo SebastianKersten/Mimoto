@@ -66,9 +66,6 @@ $twig = new Twig_Environment($loader, array(
 Mimoto::setService('database', new PDO("mysql:host=".Mimoto::value('config')->mysql->host.";dbname=".Mimoto::value('config')->mysql->dbname, Mimoto::value('config')->mysql->username, Mimoto::value('config')->mysql->password));
 Mimoto::setService('twig', $twig);
 
-// configure
-Mimoto::setValue('page.layout.default', 'MimotoCMS_layout_Page');
-Mimoto::setValue('popup.layout.default', 'MimotoCMS_layout_Popup'); // uit general 'layouts' sectie
 
 
 //Mimoto::registerService('mail');

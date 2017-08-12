@@ -434,7 +434,7 @@ class FormController
 
         // 3. auto create and connect
         $eInputField = Mimoto::service('data')->create($nFormFieldTypeId);
-        
+
         Mimoto::service('data')->store($eInputField);
         $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
         $eForm->addValue('fields', $eInputField);
