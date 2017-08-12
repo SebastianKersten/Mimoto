@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "0eb3a488f5143d7ba7a0";
+/******/ 	__webpack_require__.h = "e09651e4a15d8231eae7";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12888,7 +12888,6 @@
 	
 	
 	let DisplayUtils = __webpack_require__(9);
-	let DisplayService = __webpack_require__(7);
 	
 	
 	module.exports = function(directive, aRemovedItems, aSelectors)
@@ -12911,7 +12910,7 @@
 	            let sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
 	
 	            // 3. find
-	            let element = directive.element.querySelector('[' + DisplayService.TAG_MIMOTO_ID + '="' + sEntitySelector + '"][' + DisplayService.TAG_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
+	            let element = directive.element.querySelector('[' + MimotoX.display.TAG_MIMOTO_ID + '="' + sEntitySelector + '"][' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
 	
 	            // 4. verify
 	            if (element && aSelectors[sEntitySelector])
@@ -12920,8 +12919,6 @@
 	                let nCleanupCount = aSelectors[sEntitySelector].length;
 	                for (let nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++)
 	                {
-	
-	
 	                    // register
 	                    let cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
 	

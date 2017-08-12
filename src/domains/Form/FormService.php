@@ -197,6 +197,13 @@ class FormService
 
             // load
             $entity = Mimoto::service('data')->get($sEntityName, $requestData->entityId);
+
+            // validate
+            if (empty($entity))
+            {
+                Mimoto::service('log')->error('Entity missing', "The entity you are looking for seems to be missing. It could be deleted by another user while you were also editing it.");
+                die();
+            }
         }
 
 
