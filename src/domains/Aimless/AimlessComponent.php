@@ -447,7 +447,7 @@ class AimlessComponent
         }
 
         // 5. create component
-        $component = $this->_OutputService->createComponent($sComponentName, $xValue, $connection);
+        $component = Mimoto::service('output')->createComponent($sComponentName, $xValue, $connection);
 
         // 6. forward vars
         foreach ($this->_aVars as $sKey => $value) $component->setVar($sKey, $value);
@@ -798,7 +798,7 @@ class AimlessComponent
         if (!empty($this->_sWrapperName))
         {
             // get component file
-            $sWrapperFile = $this->_OutputService->getComponentFile($this->_sWrapperName, $this->_entity);
+            $sWrapperFile = Mimoto::service('output')->getComponentFile($this->_sWrapperName, $this->_entity);
 
             // create
             $viewModel = new AimlessWrapperViewModel($this, $this->_sComponentName);
@@ -855,7 +855,7 @@ class AimlessComponent
         $sTemplateName = (!empty($sComponentName)) ? $sComponentName : $this->_entity->getEntityTypeName();
 
         // get component file
-        $sComponentFile = $this->_OutputService->getComponentFile($sTemplateName, $this->_entity);
+        $sComponentFile = Mimoto::service('output')->getComponentFile($sTemplateName, $this->_entity);
 //        Mimoto::error($this->_entity);
 //        Mimoto::error($sComponentFile);
         // create
@@ -889,7 +889,7 @@ class AimlessComponent
     public function module($sModuleName, $customValues = null)
     {
         // get module file
-        $sModuleFile = $this->_OutputService->getComponentFile($sModuleName);
+        $sModuleFile = Mimoto::service('output')->getComponentFile($sModuleName);
 
         // create
         $viewModel = new AimlessComponentViewModel($this);
