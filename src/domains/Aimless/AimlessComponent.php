@@ -395,7 +395,7 @@ class AimlessComponent
      * @param string $sComponentName
      * @return mixed|string Either a rendered component or a value
      */
-    private function renderEntityProperty($sPropertySelector, $sComponentName = null, $customValues = null)
+    private function renderEntityProperty($sPropertySelector, $sComponentName = null, $sWrapperName = null, $customValues = null)
     {
         // special render output
         switch($this->_entity->getPropertySubtype($sPropertySelector))
