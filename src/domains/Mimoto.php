@@ -481,10 +481,10 @@ class Mimoto
         // validate
         if (!self::$_bDebugMode) return;
 
-        echo '<div style="background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px; width:100%;">';
+        echo '<div style="position:absolute; top:0; left: 0;display:inline-block; background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px;">';
         echo '<div>';
         echo '<h2><b style="font-size:larger;">Error</b></h2><hr style="border:0;height:1px;background:#ffffff">';
-        echo '<pre style="overflow:scroll">';
+        echo '<pre>';
         if (empty($data))
         {
             echo "<i style='font-style:italic'>No data provided</i>";

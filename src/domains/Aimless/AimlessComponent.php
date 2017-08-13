@@ -416,6 +416,7 @@ class AimlessComponent
 
         // 1. read
         $xValue = $this->_entity->getValue($sPropertySelector);
+        $connection = $this->_entity->getValue($sPropertySelector, true);
 
         // 2. output if no entity connected or entity's subproperty is empty
         if (empty($xValue)) return '';
@@ -440,7 +441,7 @@ class AimlessComponent
         }
 
         // 5. create component
-        $component = $this->_OutputService->createComponent($sComponentName, $xValue);
+        $component = $this->_OutputService->createComponent($sComponentName, $xValue, $connection);
 
         // 6. render and send
         return $component->render($customValues);
