@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "04038deff55a9a8b18d5";
+/******/ 	__webpack_require__.h = "308034b8f48d610b2797";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -338,6 +338,21 @@
 	
 	        // unlock background for scrolling
 	        document.body.classList.remove('mimoto_layer_application');
+	    },
+	
+	    log: function()
+	    {
+	        if (this.debug === true) console.log.apply(null, arguments);
+	    },
+	
+	    warn: function()
+	    {
+	        if (this.debug === true) console.warn.apply(null, arguments);
+	    },
+	
+	    error: function()
+	    {
+	        if (this.debug === true) console.error.apply(null, arguments);
 	    }
 	
 	}
@@ -12177,23 +12192,23 @@
 	
 	    parseInterface: function(element)
 	    {
-	        console.log('Display Service startup ...');
+	        MimotoX.log('Display Service startup ...');
 	        let nStartTime = Date.now();
 	
 	        // register
 	        let aTags = this._collectAllTagsFromElement(element);
 	
 	        let nEndTime = Date.now();
-	        //console.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+	        //MimotoX.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
 	
 	        this._aSelectors = this._prepareAllTaggedElements(aTags, this._aSelectors);
 	
 	        nEndTime = Date.now();
-	        console.log('Display Service startup took ' + (nEndTime - nStartTime) + ' milliseconds in total');
+	        MimotoX.log('Display Service startup took ' + (nEndTime - nStartTime) + ' milliseconds in total');
 	
 	
-	        //console.warn('aTags', aTags);
-	        //console.log('aSelectors', this._aSelectors);
+	        //MimotoX.warn('aTags', aTags);
+	        //MimotoX.log('aSelectors', this._aSelectors);
 	    },
 	
 	
@@ -12324,7 +12339,7 @@
 	                    case this.TAG_MIMOTO_VALUE:
 	
 	
-	                        //console.log('Value', directive);
+	                        //MimotoX.log('Value', directive);
 	                        break;
 	
 	                    case this.TAG_MIMOTO_ID:
@@ -12332,7 +12347,7 @@
 	                        // verify and register
 	                        directive.sEntitySelector = element.getAttribute(this.TAG_MIMOTO_ID);
 	
-	                        //console.log('Item', directive);
+	                        //MimotoX.log('Item', directive);
 	
 	
 	                        // verify and register
@@ -12380,7 +12395,7 @@
 	                        // validate
 	                        if (!element.hasAttribute(this.TAG_SETTING_MIMOTO_COMPONENT))
 	                        {
-	                            if (MimotoX.debug) console.warn('Element', element, 'is missing a component setting', this.TAG_SETTING_MIMOTO_COMPONENT);
+	                            MimotoX.warn('Element', element, 'is missing a component setting', this.TAG_SETTING_MIMOTO_COMPONENT);
 	                            continue;
 	                        }
 	
@@ -12395,13 +12410,13 @@
 	                        }
 	
 	
-	                        //console.log('directive', directive);
+	                        //MimotoX.log('directive', directive);
 	
 	                        break;
 	
 	                    case this.TAG_MATH_MIMOTO_COUNT:
 	
-	                        //console.log('Count', directive);
+	                        //MimotoX.log('Count', directive);
 	
 	                        break;
 	
@@ -12464,7 +12479,7 @@
 	    onDataChange: function(data)
 	    {
 	
-	        console.log('data', data);
+	        MimotoX.log('data', data);
 	
 	
 	
@@ -12502,7 +12517,7 @@
 	                        // register
 	                        let directive = aDirectives[nElementIndex];
 	
-	                        //console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
+	                        //MimotoX.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
 	
 	
 	                        switch(directive.sTag)
@@ -12537,7 +12552,7 @@
 	                            case this.TAG_MIMOTO_ENTITY:
 	
 	
-	                                //console.log();
+	                                //MimotoX.log();
 	
 	                                break;
 	
@@ -12662,7 +12677,7 @@
 	
 	        if (data.connections && data.connections.length > 0)
 	        {
-	            console.log('data.connections', data.connections);
+	            MimotoX.log('data.connections', data.connections);
 	
 	            let nConnectionCount = data.connections.length;
 	            for (let nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
@@ -12683,7 +12698,7 @@
 	                    // 1. execute directive
 	                    // 2. pass value
 	
-	                    console.log('Known collection / selection', aDirectives);
+	                    MimotoX.log('Known collection / selection', aDirectives);
 	                }
 	            }
 	
@@ -14145,7 +14160,7 @@
 	    __construct: function(sGateway)
 	    {
 	        // log
-	        if (MimotoX.debug) console.log('Connecting user');
+	        MimotoX.log('Connecting user');
 	
 	        // store
 	        this._sGateway = sGateway;
@@ -14220,8 +14235,8 @@
 	    _socketOnConnect: function()
 	    {
 	        // 1. logon with php
-	        if (MimotoX.debug) console.log('User connected.');
-	        if (MimotoX.debug) console.log('Logging on user ...');
+	        MimotoX.log('User connected.');
+	        MimotoX.log('Logging on user ...');
 	
 	        // 2. authenticate
 	        MimotoX.utils.callAPI({
@@ -14245,7 +14260,7 @@
 	
 	    _socketOnDisconnect: function()
 	    {
-	        if (MimotoX.debug) console.warn('Connection with server was lost .. reconnecting ..');
+	        MimotoX.warn('Connection with server was lost .. reconnecting ..');
 	
 	        // cleanup
 	        delete this._aRealtimeEditors;
@@ -14259,8 +14274,8 @@
 	     */
 	    _socketOnLogon: function(data)
 	    {
-	        if (MimotoX.debug) console.log('User `' + data.user.name + '` is logged on.');
-	        if (MimotoX.debug) console.log('===========================================================');
+	        MimotoX.log('User `' + data.user.name + '` is logged on.');
+	        MimotoX.log('===========================================================');
 	
 	        // connect editable values
 	        this._setupEditableValues();
@@ -14271,7 +14286,7 @@
 	     */
 	    _configureEditor: function(aFormattingOptions)
 	    {
-	        if (MimotoX.debug) console.log('Configuring editor ...');
+	        MimotoX.log('Configuring editor ...');
 	
 	
 	        // init
@@ -14338,7 +14353,7 @@
 	                                let bResult = classRoot._executeEventHandler(formattingOption.jsOnAdd, formatAdapter);
 	
 	                                // report
-	                                if (!bResult) if (MimotoX.debug) console.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
+	                                if (!bResult) MimotoX.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
 	                            }
 	
 	                            // connect
@@ -14350,7 +14365,7 @@
 	                                    let bResult = classRoot._executeEventHandler(formattingOption.jsOnEdit, formatAdapter);
 	
 	                                    // report
-	                                    if (!bResult) if (MimotoX.debug) console.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
+	                                    if (!bResult) MimotoX.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
 	                                });
 	
 	                                // style

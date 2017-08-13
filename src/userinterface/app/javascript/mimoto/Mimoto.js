@@ -254,6 +254,21 @@ module.exports.prototype = {
 
         // unlock background for scrolling
         document.body.classList.remove('mimoto_layer_application');
+    },
+
+    log: function()
+    {
+        if (this.debug === true) console.log.apply(null, arguments);
+    },
+
+    warn: function()
+    {
+        if (this.debug === true) console.warn.apply(null, arguments);
+    },
+
+    error: function()
+    {
+        if (this.debug === true) console.error.apply(null, arguments);
     }
 
 }

@@ -174,23 +174,23 @@ module.exports.prototype = {
 
     parseInterface: function(element)
     {
-        console.log('Display Service startup ...');
+        MimotoX.log('Display Service startup ...');
         let nStartTime = Date.now();
 
         // register
         let aTags = this._collectAllTagsFromElement(element);
 
         let nEndTime = Date.now();
-        //console.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+        //MimotoX.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
 
         this._aSelectors = this._prepareAllTaggedElements(aTags, this._aSelectors);
 
         nEndTime = Date.now();
-        console.log('Display Service startup took ' + (nEndTime - nStartTime) + ' milliseconds in total');
+        MimotoX.log('Display Service startup took ' + (nEndTime - nStartTime) + ' milliseconds in total');
 
 
-        //console.warn('aTags', aTags);
-        //console.log('aSelectors', this._aSelectors);
+        //MimotoX.warn('aTags', aTags);
+        //MimotoX.log('aSelectors', this._aSelectors);
     },
 
 
@@ -321,7 +321,7 @@ module.exports.prototype = {
                     case this.TAG_MIMOTO_VALUE:
 
 
-                        //console.log('Value', directive);
+                        //MimotoX.log('Value', directive);
                         break;
 
                     case this.TAG_MIMOTO_ID:
@@ -329,7 +329,7 @@ module.exports.prototype = {
                         // verify and register
                         directive.sEntitySelector = element.getAttribute(this.TAG_MIMOTO_ID);
 
-                        //console.log('Item', directive);
+                        //MimotoX.log('Item', directive);
 
 
                         // verify and register
@@ -377,7 +377,7 @@ module.exports.prototype = {
                         // validate
                         if (!element.hasAttribute(this.TAG_SETTING_MIMOTO_COMPONENT))
                         {
-                            if (MimotoX.debug) console.warn('Element', element, 'is missing a component setting', this.TAG_SETTING_MIMOTO_COMPONENT);
+                            MimotoX.warn('Element', element, 'is missing a component setting', this.TAG_SETTING_MIMOTO_COMPONENT);
                             continue;
                         }
 
@@ -392,13 +392,13 @@ module.exports.prototype = {
                         }
 
 
-                        //console.log('directive', directive);
+                        //MimotoX.log('directive', directive);
 
                         break;
 
                     case this.TAG_MATH_MIMOTO_COUNT:
 
-                        //console.log('Count', directive);
+                        //MimotoX.log('Count', directive);
 
                         break;
 
@@ -461,7 +461,7 @@ module.exports.prototype = {
     onDataChange: function(data)
     {
 
-        console.log('data', data);
+        MimotoX.log('data', data);
 
 
 
@@ -499,7 +499,7 @@ module.exports.prototype = {
                         // register
                         let directive = aDirectives[nElementIndex];
 
-                        //console.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
+                        //MimotoX.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
 
 
                         switch(directive.sTag)
@@ -534,7 +534,7 @@ module.exports.prototype = {
                             case this.TAG_MIMOTO_ENTITY:
 
 
-                                //console.log();
+                                //MimotoX.log();
 
                                 break;
 
@@ -659,7 +659,7 @@ module.exports.prototype = {
 
         if (data.connections && data.connections.length > 0)
         {
-            console.log('data.connections', data.connections);
+            MimotoX.log('data.connections', data.connections);
 
             let nConnectionCount = data.connections.length;
             for (let nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
@@ -680,7 +680,7 @@ module.exports.prototype = {
                     // 1. execute directive
                     // 2. pass value
 
-                    console.log('Known collection / selection', aDirectives);
+                    MimotoX.log('Known collection / selection', aDirectives);
                 }
             }
 

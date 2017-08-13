@@ -43,7 +43,7 @@ module.exports.prototype = {
     __construct: function(sGateway)
     {
         // log
-        if (MimotoX.debug) console.log('Connecting user');
+        MimotoX.log('Connecting user');
 
         // store
         this._sGateway = sGateway;
@@ -118,8 +118,8 @@ module.exports.prototype = {
     _socketOnConnect: function()
     {
         // 1. logon with php
-        if (MimotoX.debug) console.log('User connected.');
-        if (MimotoX.debug) console.log('Logging on user ...');
+        MimotoX.log('User connected.');
+        MimotoX.log('Logging on user ...');
 
         // 2. authenticate
         MimotoX.utils.callAPI({
@@ -143,7 +143,7 @@ module.exports.prototype = {
 
     _socketOnDisconnect: function()
     {
-        if (MimotoX.debug) console.warn('Connection with server was lost .. reconnecting ..');
+        MimotoX.warn('Connection with server was lost .. reconnecting ..');
 
         // cleanup
         delete this._aRealtimeEditors;
@@ -157,8 +157,8 @@ module.exports.prototype = {
      */
     _socketOnLogon: function(data)
     {
-        if (MimotoX.debug) console.log('User `' + data.user.name + '` is logged on.');
-        if (MimotoX.debug) console.log('===========================================================');
+        MimotoX.log('User `' + data.user.name + '` is logged on.');
+        MimotoX.log('===========================================================');
 
         // connect editable values
         this._setupEditableValues();
@@ -169,7 +169,7 @@ module.exports.prototype = {
      */
     _configureEditor: function(aFormattingOptions)
     {
-        if (MimotoX.debug) console.log('Configuring editor ...');
+        MimotoX.log('Configuring editor ...');
 
 
         // init
@@ -236,7 +236,7 @@ module.exports.prototype = {
                                 let bResult = classRoot._executeEventHandler(formattingOption.jsOnAdd, formatAdapter);
 
                                 // report
-                                if (!bResult) if (MimotoX.debug) console.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
+                                if (!bResult) MimotoX.log('Cannot find onAdd formatting function `' + formattingOption.jsOnAdd + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
                             }
 
                             // connect
@@ -248,7 +248,7 @@ module.exports.prototype = {
                                     let bResult = classRoot._executeEventHandler(formattingOption.jsOnEdit, formatAdapter);
 
                                     // report
-                                    if (!bResult) if (MimotoX.debug) console.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
+                                    if (!bResult) MimotoX.log('Cannot find onEdit formatting function `' + formattingOption.jsOnEdit + '`. Check the admin /mimoto.cms/configuration/formatting to check is you are using the correct function name');
                                 });
 
                                 // style
