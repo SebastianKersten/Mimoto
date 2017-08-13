@@ -129,6 +129,12 @@ class AimlessComponent
         // register
         $this->_aVars[$sKey] = $value;
     }
+
+    public function getVar($sKey)
+    {
+        // register
+        return (isset($this->_aVars[$sKey])) ? $this->_aVars[$sKey] : null;
+    }
     
     public function addSelection($sKey, $aEntities, $sComponentName = null)
     {
@@ -443,7 +449,10 @@ class AimlessComponent
         // 5. create component
         $component = $this->_OutputService->createComponent($sComponentName, $xValue, $connection);
 
-        // 6. render and send
+        // 6. forward vars
+        foreach ($this->_aVars as $sKey => $value) $component->setVar($sKey, $value);
+
+        // 7. render and send
         return $component->render($customValues);
     }
 
@@ -985,8 +994,14 @@ class AimlessComponent
      */
     private function renderCollectionItemAsComponent($sTemplateName, $entity, $connection, $nItemIndex = null)
     {
-        // create and send
-        return $this->_OutputService->createComponent($sTemplateName, $entity, $connection, $nItemIndex);
+        // 1. create
+        $component = Mimoto::service('output')->createComponent($sTemplateName, $entity, $connection, $nItemIndex);
+
+        // 2. forward vars
+        foreach ($this->_aVars as $sKey => $value) $component->setVar($sKey, $value);
+
+        // 3. send
+        return $component;
     }
 
     /**
@@ -997,8 +1012,14 @@ class AimlessComponent
      */
     private function renderCollectionItemAsComponentWrapper($sComponentName, $entity, $connection, $sWrapperName, $nItemIndex = null)
     {
-        // create and send
-        return $this->_OutputService->createWrapper($sWrapperName, $sComponentName, $entity, $connection, $nItemIndex);
+        // 1. create
+        $wrapper = Mimoto::service('output')->createWrapper($sWrapperName, $sComponentName, $entity, $connection, $nItemIndex);
+
+        // 2. forward vars
+        foreach ($this->_aVars as $sKey => $value) $wrapper->setVar($sKey, $value);
+
+        // 3. send
+        return $wrapper;
     }
 
     /**
@@ -1032,8 +1053,15 @@ class AimlessComponent
         // validate
         if (!$bFormFieldFound) $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please add a value to input field with <b>id=".$eField->getId()."</b> and type=".$eField->getEntityTypeName(), 'AimlessComponent', true);
 
-        // create and send
-        return $this->_OutputService->createInput($sTemplateName, $eField, $connection, $formField->key, $formField->value, $nItemIndex);
+
+        // 1. input
+        $input = Mimoto::service('output')->createInput($sTemplateName, $eField, $connection, $formField->key, $formField->value, $nItemIndex);
+
+        // 2. forward vars
+        foreach ($this->_aVars as $sKey => $value) $input->setVar($sKey, $value);
+
+        // 3. send
+        return $input;
     }
 
     /**
@@ -1045,7 +1073,10 @@ class AimlessComponent
     private function renderForm($sFormName, $xValues, $options)
     {
         // create
-        $component = $this->_OutputService->createForm($sFormName, $xValues, $options);
+        $component = Mimoto::service('output')->createForm($sFormName, $xValues, $options);
+
+        // forward vars
+        foreach ($this->_aVars as $sKey => $value) $component->setVar($sKey, $value);
 
         // output
         return $component->render(); //$this->_aVars); // #todo - pass vars for rendering
