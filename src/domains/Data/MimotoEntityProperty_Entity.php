@@ -145,6 +145,9 @@ class MimotoEntityProperty_Entity extends MimotoEntityProperty implements Mimoto
 
         // 4. store
         $this->_data->currentEntity = $connection;
+
+        // 5. send
+        return $connection;
     }
 
     /**
