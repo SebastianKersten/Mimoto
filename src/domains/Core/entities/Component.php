@@ -4,6 +4,7 @@
 namespace Mimoto\Core\entities;
 
 // Mimoto classes
+use Mimoto\Core\Validation;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
@@ -38,7 +39,10 @@ class Component
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
-                    ]
+                    ],
+                    'validation' => (object) array(
+                        'type' => Validation::UNIQUE
+                    )
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_COMPONENT.'--file',
@@ -280,16 +284,16 @@ class Component
             ),
 
 
-            // layouts
+            // components
 
             (object) array(
-                'name' => 'Mimoto.CMS_layouts_LayoutOverview',
-                'file' => 'MimotoCMS/components/pages/layouts/LayoutOverview/LayoutOverview.twig',
+                'name' => 'Mimoto.CMS_components_ComponentOverview',
+                'file' => 'MimotoCMS/components/pages/components/ComponentOverview/ComponentOverview.twig',
                 'conditionals' => []
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_layouts_LayoutOverview_ListItem',
-                'file' => 'MimotoCMS/components/pages/layouts/LayoutOverview/ListItem/ListItem.twig',
+                'name' => 'Mimoto.CMS_components_ComponentOverview_ListItem',
+                'file' => 'MimotoCMS/components/pages/components/ComponentOverview/ListItem/ListItem.twig',
                 'conditionals' => []
             ),
             (object) array(
@@ -625,10 +629,15 @@ class Component
                 'conditionals' => []
             ),
             (object) array(
+                'name' => 'MimotoCMS.SectionModule',
+                'file' => 'MimotoCMS/modules/SectionModule/SectionModule.twig',
+                'conditionals' => []
+            ),
+            (object) array(
                 'name' => 'Mimoto.CMS.TabmenuModule',
                 'file' => 'MimotoCMS/modules/TabmenuModule/TabmenuModule.twig',
                 'conditionals' => []
-            ),
+            )
 
         ];
 

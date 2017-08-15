@@ -1,0 +1,14 @@
+<div class="SectionModule">
+    <div class="SectionModule-header">
+        <div class="SectionModule-name">
+            <h1>{{ sTitle }}</h1>
+        </div>
+        <div class="SectionModule-menu">
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:sButtonLabel, icon:sButtonIcon, onclick:sButtonOnClick }) }}
+        </div>
+    </div>
+
+    <ul class="MimotoCMS_pages_components_ComponentOverview__container js-list js-list-sortable" {{ Mimoto.realtime('components', 'Mimoto.CMS_components_ComponentOverview_ListItem') }}>
+        {{ Mimoto.data('layouts', 'Mimoto.CMS_components_ComponentOverview_ListItem') }}
+    </ul>
+</div>

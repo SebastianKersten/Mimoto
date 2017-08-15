@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "308034b8f48d610b2797";
+/******/ 	__webpack_require__.h = "0ce50b4588d54524c777";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -45584,7 +45584,7 @@
 	    
 	    
 	    /**
-	     * Create new component
+	     * Create new component and connect to entity
 	     */
 	    entityComponentNew: function(nEntityId)
 	    {
@@ -45592,7 +45592,15 @@
 	        
 	        //popup.on('success') = popup.close();
 	    },
-	    
+	
+	    /**
+	     * Create new component
+	     */
+	    componentNew: function(nEntityId)
+	    {
+	        MimotoX.page("/mimoto.cms/component/new");
+	    },
+	
 	    componentView: function(nComponentId)
 	    {
 	        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');

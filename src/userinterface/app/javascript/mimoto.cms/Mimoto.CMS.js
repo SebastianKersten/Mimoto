@@ -216,7 +216,7 @@ module.exports.prototype = {
     
     
     /**
-     * Create new component
+     * Create new component and connect to entity
      */
     entityComponentNew: function(nEntityId)
     {
@@ -224,7 +224,15 @@ module.exports.prototype = {
         
         //popup.on('success') = popup.close();
     },
-    
+
+    /**
+     * Create new component
+     */
+    componentNew: function(nEntityId)
+    {
+        MimotoX.page("/mimoto.cms/component/new");
+    },
+
     componentView: function(nComponentId)
     {
         window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');

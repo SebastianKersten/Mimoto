@@ -114,7 +114,7 @@ module.exports.prototype = {
         MimotoX.dom.registerEventListener(sPropertySelector, scope, fJavascriptDelegate);
     },
 
-    popup: function(sURL, postData, bLoadInIFrame = false)
+    popup: function(sURL, postData, bLoadInIFrame)
     {
 
         if (!document.getElementById('MimotoCMS'))
@@ -254,6 +254,15 @@ module.exports.prototype = {
 
         // unlock background for scrolling
         document.body.classList.remove('mimoto_layer_application');
+    },
+
+    page: function(sURL)
+    {
+        // 1. auto return on save?
+        // 2. add information about context (for example: section, group title, ...)
+
+
+        window.open(sURL, '_self');
     },
 
     log: function()

@@ -1,0 +1,49 @@
+div.SectionModule {
+    margin-bottom: 25px;
+}
+
+div.SectionModule-header {
+    display: flex;
+    align-items: flex-end;
+
+    padding-bottom: 5px;
+    border-bottom: 1px solid $silver;
+}
+
+    div.SectionModule-name {
+        flex-grow: 1;
+        margin-right: 10px;
+        color: $gray;
+
+        & > h1 {
+            font-size: 24px;
+        }
+    }
+
+    div.SectionModule-menu {
+        flex: none;
+        padding-bottom: 5px;
+    }
+
+
+
+//
+//
+//ul.MimotoCMS_pages_components_ComponentOverview__container {
+//
+//    display: flex;
+//    flex-direction: row;
+//    flex-wrap: wrap;
+//    position: relative;
+//    margin-bottom: 25px;
+//    margin-top: 30px;
+//
+//    &>li {
+//        margin-bottom: 5px;
+//        margin-right: 5px;
+//    }
+//
+//    &>li:last-child {
+//        margin-bottom: 0;
+//    }
+//}

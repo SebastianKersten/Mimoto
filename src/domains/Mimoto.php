@@ -159,7 +159,7 @@ class Mimoto
         $app->get('/'.$sProjectName.'.cms/configuration/formatting', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/configuration/userroles', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/configuration/services', 'Mimoto\\UserInterface\\MimotoCMS\\ServicesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get('/'.$sProjectName.'.cms/layouts', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::viewLayoutOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/'.$sProjectName.'.cms/components', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::viewComponentOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/contentsections', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::viewContentSectionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/users', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::viewUserOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -205,6 +205,7 @@ class Mimoto
 
         // Component
         $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/component/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/component/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/component/{nComponentId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/component/{nComponentId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/component/{nComponentId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');

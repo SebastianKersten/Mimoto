@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "308034b8f48d610b2797";
+/******/ 	__webpack_require__.h = "0ce50b4588d54524c777";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -198,7 +198,7 @@
 	        MimotoX.dom.registerEventListener(sPropertySelector, scope, fJavascriptDelegate);
 	    },
 	
-	    popup: function(sURL, postData, bLoadInIFrame = false)
+	    popup: function(sURL, postData, bLoadInIFrame)
 	    {
 	
 	        if (!document.getElementById('MimotoCMS'))
@@ -338,6 +338,15 @@
 	
 	        // unlock background for scrolling
 	        document.body.classList.remove('mimoto_layer_application');
+	    },
+	
+	    page: function(sURL)
+	    {
+	        // 1. auto return on save?
+	        // 2. add information about context (for example: section, group title, ...)
+	
+	
+	        window.open(sURL, '_self');
 	    },
 	
 	    log: function()

@@ -152,15 +152,15 @@ class Root
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ROOT.'--layouts',
+                    'id' => CoreConfig::MIMOTO_ROOT.'--components',
                     // ---
-                    'name' => 'layouts',
+                    'name' => 'components',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_LAYOUT]
+                            'value' => [CoreConfig::MIMOTO_COMPONENT, CoreConfig::MIMOTO_LAYOUT]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
