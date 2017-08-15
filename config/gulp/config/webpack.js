@@ -27,7 +27,7 @@ module.exports = function (env)
             }
         },
         entry: {
-            'mimoto.cms': [jsSrc + '/app/javascript/mimoto.cms.js'],
+            'mimoto.cms': ['babel-polyfill', jsSrc + '/app/javascript/mimoto.cms.js'],
             'mimoto': [jsSrc + '/app/javascript/mimoto.js'],
             'realtime' : [jsSrc + '/app/javascript/realtime.js'],
             'publisher': [jsSrc + '/publisher/base.js']
@@ -36,6 +36,15 @@ module.exports = function (env)
           path: jsDest,
           filename: '[name].js',
           publicPath: publicPath
+        },
+        module: {
+            loaders: [
+                {
+                    test: /\.js$/, // Check for all js files
+                    exclude: /node_modules/,
+                    loader: 'babel-loader'
+                }
+            ]
         }
 
     };
