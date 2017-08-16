@@ -13,33 +13,33 @@ let CollectionRemoveItems = require('./data/CollectionRemoveItems');
 let CollectionChangeSortOrder = require('./data/CollectionChangeSortOrder');
 
 // Mimoto display classes
-let HideWhenEmpty = require('./options/HideWhenEmpty');
-let HideWhenEmptyNot = require('./options/HideWhenEmptyNot');
-let HideWhenRegex = require('./options/HideWhenRegex');
-let HideWhenRegexNot = require('./options/HideWhenRegexNot');
-let HideWhenValue = require('./options/HideWhenValue');
-let HideWhenValueNot = require('./options/HideWhenValueNot');
+let HideWhenEmpty = require('./directives/HideWhenEmpty');
+let HideWhenEmptyNot = require('./directives/HideWhenEmptyNot');
+let HideWhenRegex = require('./directives/HideWhenRegex');
+let HideWhenRegexNot = require('./directives/HideWhenRegexNot');
+let HideWhenValue = require('./directives/HideWhenValue');
+let HideWhenValueNot = require('./directives/HideWhenValueNot');
 
-let ShowWhenEmpty = require('./options/ShowWhenEmpty');
-let ShowWhenEmptyNot = require('./options/ShowWhenEmptyNot');
-let ShowWhenRegex = require('./options/ShowWhenRegex');
-let ShowWhenRegexNot = require('./options/ShowWhenRegexNot');
-let ShowWhenValue = require('./options/ShowWhenValue');
-let ShowWhenValueNot = require('./options/ShowWhenValueNot');
+let ShowWhenEmpty = require('./directives/ShowWhenEmpty');
+let ShowWhenEmptyNot = require('./directives/ShowWhenEmptyNot');
+let ShowWhenRegex = require('./directives/ShowWhenRegex');
+let ShowWhenRegexNot = require('./directives/ShowWhenRegexNot');
+let ShowWhenValue = require('./directives/ShowWhenValue');
+let ShowWhenValueNot = require('./directives/ShowWhenValueNot');
 
-let AddClassWhenEmpty = require('./options/AddClassWhenValue');
-let AddClassWhenEmptyNot = require('./options/AddClassWhenEmptyNot');
-let AddClassWhenRegex = require('./options/AddClassWhenRegex');
-let AddClassWhenRegexNot = require('./options/AddClassWhenRegexNot');
-let AddClassWhenValue = require('./options/AddClassWhenValue');
-let AddClassWhenValueNot = require('./options/AddClassWhenValueNot');
+let AddClassWhenEmpty = require('./directives/AddClassWhenValue');
+let AddClassWhenEmptyNot = require('./directives/AddClassWhenEmptyNot');
+let AddClassWhenRegex = require('./directives/AddClassWhenRegex');
+let AddClassWhenRegexNot = require('./directives/AddClassWhenRegexNot');
+let AddClassWhenValue = require('./directives/AddClassWhenValue');
+let AddClassWhenValueNot = require('./directives/AddClassWhenValueNot');
 
-let RemoveClassWhenEmpty = require('./options/RemoveClassWhenValue');
-let RemoveClassWhenEmptyNot = require('./options/RemoveClassWhenEmptyNot');
-let RemoveClassWhenRegex = require('./options/RemoveClassWhenRegex');
-let RemoveClassWhenRegexNot = require('./options/RemoveClassWhenRegexNot');
-let RemoveClassWhenValue = require('./options/RemoveClassWhenValue');
-let RemoveClassWhenValueNot = require('./options/RemoveClassWhenValueNot');
+let RemoveClassWhenEmpty = require('./directives/RemoveClassWhenValue');
+let RemoveClassWhenEmptyNot = require('./directives/RemoveClassWhenEmptyNot');
+let RemoveClassWhenRegex = require('./directives/RemoveClassWhenRegex');
+let RemoveClassWhenRegexNot = require('./directives/RemoveClassWhenRegexNot');
+let RemoveClassWhenValue = require('./directives/RemoveClassWhenValue');
+let RemoveClassWhenValueNot = require('./directives/RemoveClassWhenValueNot');
 
 
 module.exports = function() {

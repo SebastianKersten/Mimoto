@@ -1,19 +1,20 @@
 @import 'LayoutContainer/LayoutContainer';
+@import 'ComponentTemplate/ComponentTemplate';
 
 
-div.MimotoCMS_pages_layouts_LayoutDetail__panel {
+div.MimotoCMS_pages_components_ComponentDetail__panel {
     margin-bottom: 25px;
     background-color: #ffffff;
     padding: 15px;
     max-width: 800px;
 }
 
-div.MimotoCMS_pages_layouts_LayoutDetail_Structure {
+div.MimotoCMS_pages_components_ComponentDetail_Structure {
     position: relative;
     background-color: #ffffff;
 }
 
-div.MimotoCMS_pages_layouts_LayoutDetail_Structure__meta {
+div.MimotoCMS_pages_components_ComponentDetail_Structure__meta {
 
     padding: 10px 15px 15px 15px;
     margin-bottom: 5px;
@@ -25,22 +26,22 @@ div.MimotoCMS_pages_layouts_LayoutDetail_Structure__meta {
         color: $tower-gray;
     }
 
-    &>div.MimotoCMS_pages_layouts_LayoutDetail_Structure__meta_info {
+    &>div.MimotoCMS_pages_components_ComponentDetail_Structure__meta_info {
         flex-grow: 5;
     }
 
-    &>div.MimotoCMS_pages_layouts_LayoutDetail_Structure__meta_menu {
+    &>div.MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu {
         flex-grow: 1;
         text-align: right;
         padding-top: 5px;
     }
 
-    div.MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutname {
+    div.MimotoCMS_pages_components_ComponentDetail_Structure__layoutname {
         font-size: 24px;
         font-weight: bold;
     }
 
-    div.MimotoCMS_pages_layouts_LayoutDetail_Structure__componentfile {
+    div.MimotoCMS_pages_components_ComponentDetail_Structure__componentfile {
         font-style: italic;
         color: $tower-gray;
     }
@@ -48,13 +49,13 @@ div.MimotoCMS_pages_layouts_LayoutDetail_Structure__meta {
 }
 
 
-div.MimotoCMS_pages_layouts_LayoutDetail__block {
+div.MimotoCMS_pages_components_ComponentDetail__block {
     padding: 15px 15px 10px 15px;
     background-color: $offwhite;
 }
 
 
-div.MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_empty {
+div.MimotoCMS_pages_components_ComponentDetail_Structure__templates_empty {
 
     display: flex;
     flex-wrap: nowrap;
@@ -69,12 +70,12 @@ div.MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_empty {
     }
 }
 
-div.MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_menu {
+div.MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu {
     padding: 20px 0 10px 0;
     text-align: left;
 }
 
-div.MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_container {
+div.MimotoCMS_pages_components_ComponentDetail_Structure__templates {
 
     &>div {
         margin-bottom: 5px;

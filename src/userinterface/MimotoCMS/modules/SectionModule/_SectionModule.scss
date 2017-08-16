@@ -25,25 +25,21 @@ div.SectionModule-header {
         padding-bottom: 5px;
     }
 
+ul.SectionModule-container {
 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    margin-bottom: 25px;
+    margin-top: 30px;
 
-//
-//
-//ul.MimotoCMS_pages_components_ComponentOverview__container {
-//
-//    display: flex;
-//    flex-direction: row;
-//    flex-wrap: wrap;
-//    position: relative;
-//    margin-bottom: 25px;
-//    margin-top: 30px;
-//
-//    &>li {
-//        margin-bottom: 5px;
-//        margin-right: 5px;
-//    }
-//
-//    &>li:last-child {
-//        margin-bottom: 0;
-//    }
-//}
+    &>li {
+        margin-bottom: 5px;
+        margin-right: 5px;
+    }
+
+    &>li:last-child {
+        margin-bottom: 0;
+    }
+}

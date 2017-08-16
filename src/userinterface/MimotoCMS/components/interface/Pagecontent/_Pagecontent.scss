@@ -1,11 +1,14 @@
-#{$pr-mimoto}_Pagecontent {
-    position: absolute;
+section.MimotoCMS_Pagecontent {
+    //    position: absolute;
     z-index: $z-pagecontent;
     top: $header-height-collapsed;
     right: 0;
     bottom: 0;
     left: 0;
     padding: 20px;
+
+    position: fixed;
+    overflow: scroll;
 
     @include breakpoint(large up) {
         top: $header-height;

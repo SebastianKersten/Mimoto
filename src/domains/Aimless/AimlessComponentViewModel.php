@@ -186,6 +186,37 @@ class AimlessComponentViewModel
 
 
 
+    // --- Data manipulation
+
+
+    public function editValue()
+    {
+
+    }
+
+    public function createAndConnect($sType, $xPropertySelector, $options = null)
+    {
+        // convert to $xPropertySelector
+
+
+        return 'data-mimoto data-mimoto-createandconnect="component.3.templates|{type:xxx}"';
+
+        // compose and send
+        return DataUtils::createAndConnect($sType, $xPropertySelector, $this->_component, $options);
+
+        // delete
+    }
+
+    public function selectAndConnect($xSelection, $sPropertySelector, $options)
+    {
+        // convert into selection (name or config)
+    }
+
+
+
+
+
+
     // --- Show and hide
 
 

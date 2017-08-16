@@ -1,5 +1,5 @@
 /**
- * Mimoto.CMS - Data service
+ * Mimoto.CMS - Data service for data manipulation
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -27,7 +27,7 @@ module.exports.prototype = {
      */
     __construct: function()
     {
-
+        MimotoX.log('Initializing data service ...');
 
 
 
@@ -38,6 +38,55 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
+
+
+    page: null,
+    popup: null,
+    hidden: null,
+
+
+
+    //editValue:
+
+
+    // hidden
+    // popup
+    // page (default)
+
+    // Mimoto.page.createAndConnect
+    // Mimoto.page.createConnectAndEdit(form)
+    // Mimoto.setValue('type', 'archived')
+    // Mimoto.editValue('type')
+    // Mimoto.delete(sEntitySelector, true) // true is confirm
+
+    // Mimoto.create(type, connectto, {values: [defaultvalues]})
+    // Mimoto.read(data?)
+    // Mimoto.edit(property of entity selector, (formname)) -> later custom forms or individual fields (feedback op not supported form)
+    // Mimoto.update(propertyselector, 'value')
+    // Mimoto.delete(entityselector, bDontConfirm) -> onInit=confirmMethod, onSubmit:waiting, onSuccess, onError, onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing
+    // Mimoto.move(entitySelector, [new parent/parents]
+    // Mimoto.copy(entitySelector, [new parent/parents]
+    // Mimoto.select(entitySelector, sSelectionName, [new parent or parents], params in vorm van Selection)
+    // Mimoto.createAndAdd(type, propertySelector, {values: [defaultvalues]})
+    // Mimoto.selectAndAdd(sSelectionName, sPropertySelector) -> mapping meegeven, default oplossing in core
+    // Mimoto.remove(sPropertySelector)
+    // Mimoto.collaborate(sPropertySelector)
+
+    // Mimoto.api('/api/action') -> ActionFlow
+
+    // feedback op actie
+    // success, error + message
+
+    // Mimoto.clear()
+    // Mimoto.select('project.3.client', 'all_clients', { additional info or filter })
+
+
+    createAndConnect: function(sType, sPropertySelector, options) // -> sets onclick
+    {
+        MimotoX.log('Clicked on createAndConnect .. start the call');
+    },
+
+
 
 
     /**
@@ -100,6 +149,11 @@ module.exports.prototype = {
         // Mimoto.data.addValue('selectionRule.3.type', {type:'_Mimoto_entity'});
 
     },
+
+
+    // 1. delete
+    // 2. create
+
 
     /**
      * Handle data CHANGED

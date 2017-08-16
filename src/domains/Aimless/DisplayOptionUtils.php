@@ -162,7 +162,7 @@ class DisplayOptionUtils
         $instructions->propertyType = $component->getPropertyType($sPropertyName);
 
         // 4. compose and send
-        return $sAction.'="'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
+        return 'data-mimoto '.$sAction.'="'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
     }
 
 

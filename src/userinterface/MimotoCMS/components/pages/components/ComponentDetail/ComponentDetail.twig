@@ -3,8 +3,8 @@
         id: 'componentdetails',
         tabs: [
             {
-                label: 'Layout structure',
-                panel_id: 'panel_layoutdetail_info'
+                label: 'Component structure',
+                panel_id: 'panel_ComponentDetail_info'
             }
         ]
     }
@@ -13,19 +13,18 @@
 
         <!-- structure -->
 
-        <div id="panel_layoutdetail_info" class="MimotoCMS_pages_layouts_LayoutDetail__panel">
+        <div id="panel_ComponentDetail_info" class="MimotoCMS_pages_components_ComponentDetail__panel">
 
-            <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure">
+            <div class="MimotoCMS_pages_components_ComponentDetail_Structure">
 
-                <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__meta">
-                    <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__meta_info">
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta">
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_info">
 
-                        <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
-                        <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__componentfile" {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
 
                     </div>
 
-                    <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__meta_menu">
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
                         {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.layoutEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
                     </div>
 
@@ -33,20 +32,20 @@
 
             </div>
 
-            <div class="MimotoCMS_pages_layouts_LayoutDetail__block">
+            <div class="MimotoCMS_pages_components_ComponentDetail__block">
 
-                <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_empty" {{ Mimoto.showWhenEmpty('containers') }}>
-                    <div>This layout has no containers yet.<br>Add one. Now! I'm not kidding, Do it!</div>
-                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new container', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__templates_empty" {{ Mimoto.showWhenEmpty('templates') }}>
+                    <div>This component has no templates yet.<br>Add one. Now! I'm not kidding, Do it .. or you won't be able to use this component!</div>
+                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', onclick:"Mimoto.CMS.componentTemplateNew('" ~ Mimoto.meta('id') ~ "');", directive:Mimoto.createAndConnect('_Mimoto_componenttemplate', 'templates') }) }}</div>
                 </div>
 
-                <div {{ Mimoto.hideWhenEmpty('containers') }}>
-                    <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_container" {{ Mimoto.realtime('containers', 'Mimoto.CMS_layouts_LayoutDetail-LayoutContainer') }}>
-                        {{ Mimoto.data('containers', 'Mimoto.CMS_layouts_LayoutDetail-LayoutContainer') }}
+                <div {{ Mimoto.hideWhenEmpty('templates') }}>
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__templates" {{ Mimoto.realtime('templates', 'Mimoto.CMS_components_ComponentDetail-Template') }}>
+                        {{ Mimoto.data('templates', 'Mimoto.CMS_components_ComponentDetail-Template') }}
                     </div>
 
-                    <div class="MimotoCMS_pages_layouts_LayoutDetail_Structure__layoutcontainers_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new container', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Mimoto.meta('id') ~ "');" }) }}
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu">
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Mimoto.meta('id') ~ "');", directive:Mimoto.createAndConnect('_Mimoto_componenttemplate', 'templates') }) }}
                     </div>
                 </div>
 

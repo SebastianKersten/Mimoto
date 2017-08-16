@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <ul class="MimotoCMS_pages_components_ComponentOverview__container js-list js-list-sortable" {{ Mimoto.realtime('components', 'Mimoto.CMS_components_ComponentOverview_ListItem') }}>
-        {{ Mimoto.data('layouts', 'Mimoto.CMS_components_ComponentOverview_ListItem') }}
+    <ul class="SectionModule-container js-list js-list-sortable" {{ Mimoto.realtime(sDataSelector, sComponentName) }}>
+        {{ Mimoto.data(sDataSelector, sComponentName) }}
     </ul>
 </div>

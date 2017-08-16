@@ -82,6 +82,7 @@ class CoreConfig
 
     // views
     const MIMOTO_COMPONENT                      = '_Mimoto_component';
+    const MIMOTO_COMPONENTTEMPLATE              = '_Mimoto_componenttemplate';
     const MIMOTO_COMPONENTCONDITIONAL           = '_Mimoto_componentconditional';
     const MIMOTO_DATASET                        = '_Mimoto_dataset';
     const MIMOTO_LAYOUT                         = '_Mimoto_layout';

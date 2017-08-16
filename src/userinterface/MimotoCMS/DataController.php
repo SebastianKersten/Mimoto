@@ -17,40 +17,26 @@ use Silex\Application;
 
 
 /**
- * ComponentController
+ * DataController
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class ComponentController
+class DataController
 {
 
     /**
      * View component overview
      * @return string The rendered html output
      */
-    public function viewComponentOverview()
+    public function createAndConnect(Application $app, Request $request)
     {
-        // 1. init page
-        $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
-        // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_components_ComponentOverview', $eRoot));
 
-        // 3. setup page
-        $page->setVar('pageTitle', array(
-                (object) array(
-                    "label" => 'Components and layouts',
-                    "url" => '/mimoto.cms/components'
-                )
-            )
-        );
+        // 1. wat openen? page or popup? create = page
+        // 2. select = popup
 
-        // 4. output
-        return $page->render();
-    }
 
-    public function componentNew(Application $app, $nEntityId = null)
-    {
+
         // 1. validate
         if (!MimotoDataUtils::isValidId($nEntityId)) $app->redirect('/mimoto.cms');
 
@@ -112,7 +98,7 @@ class ComponentController
         if (empty($eComponent)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
-        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_components_ComponentDetail', $eComponent);
+        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_entities_EntityDetail-ComponentDetail', $eComponent);
 
         // 6. connect
         $page->addComponent('content', $component);

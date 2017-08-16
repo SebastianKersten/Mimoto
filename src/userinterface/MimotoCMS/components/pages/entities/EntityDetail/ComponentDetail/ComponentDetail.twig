@@ -21,7 +21,7 @@
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_info">
 
                         <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
-                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentfile" {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
+                        {#<div class="MimotoCMS_pages_components_ComponentDetail_Structure__componentfile" {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>#}
 
                     </div>
 
@@ -35,26 +35,26 @@
 
             <div class="MimotoCMS_pages_components_ComponentDetail__block">
 
-                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_empty" {{ Mimoto.showWhenEmpty('conditionals') }}>
-                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_explanation">
-                        This component has no conditionals, but since this is optional I'm not
-                        going to bother you too much about it. Remember however that this opens
-                        the powerful feature to render for example a feed with multiple types of
-                        items, all with different templates but for you as a developer still only
-                        <u>one</u> line of code!
-                    </div>
-                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
-                </div>
+                {#<div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_empty" {{ Mimoto.showWhenEmpty('conditionals') }}>#}
+                    {#<div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_explanation">#}
+                        {#This component has no conditionals, but since this is optional I'm not#}
+                        {#going to bother you too much about it. Remember however that this opens#}
+                        {#the powerful feature to render for example a feed with multiple types of#}
+                        {#items, all with different templates but for you as a developer still only#}
+                        {#<u>one</u> line of code!#}
+                    {#</div>#}
+                    {#<div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>#}
+                {#</div>#}
 
-                <div {{ Mimoto.hideWhenEmpty('conditionals') }}>
-                    <ul class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container js-list js-list-sortable" {{ Mimoto.realtime('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}>
-                        {{ Mimoto.data('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}
-                    </ul>
+                {#<div {{ Mimoto.hideWhenEmpty('templates') }}>#}
+                    {#<ul class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_container js-list js-list-sortable" {{ Mimoto.realtime('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}>#}
+                        {#{{ Mimoto.data('conditionals', 'Mimoto.CMS_entities_EntityDetail-ComponentConditional') }}#}
+                    {#</ul>#}
 
-                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}
-                    </div>
-                </div>
+                    {#<div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_menu">#}
+                        {#{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}#}
+                    {#</div>#}
+                {#</div>#}
 
             </div>
         </div>

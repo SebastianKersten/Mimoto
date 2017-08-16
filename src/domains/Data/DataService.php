@@ -315,41 +315,6 @@ class DataService
         // send
         return $aRequestedEntities;
     }
-
-//    public function select($sSelectionNameOrId)
-//    {
-//        // init
-//        $aRequestedEntities = [];
-//
-//        // load
-//        $selection = Mimoto::service('selection')->getSelection($sSelectionNameOrId);
-//
-//        // validate
-//        if (empty($selection)) return $aRequestedEntities;
-//
-//
-//        // search
-//        $nRuleCount = count($selection->rules);
-//        for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
-//        {
-//            // register
-//            $rule = $selection->rules[$nRuleIndex];
-//
-//            // compose
-//            $criteria = array(
-//                SelectionRuleTypes::TYPE => Mimoto::service('config')->getEntityNameById($rule->entity_type_id),
-//                SelectionRuleTypes::INSTANCE => $rule->instance_id,
-//                SelectionRuleTypes::CHILDOF => $rule->property_id,
-//            );
-//
-//            // load and register
-//            $aRequestedEntities = array_merge(Mimoto::service('data')->find($criteria), $aRequestedEntities);
-//        }
-//
-//        // send
-//        return $aRequestedEntities;
-//    }
-    
     
     /**
      * Store entity via main repository
@@ -409,13 +374,53 @@ class DataService
         return $this->_entityRepository->delete($entityConfig, $entity);
     }
 
+    /**
+     * Create entity
+     * @param string $sEntityType
+     * @param array $aParentEntitySelectionConfigs Contains object with 'type', 'id' and 'property'
+     * @return MimotoEntity The entity
+     */
+    public function createAndConnect($sEntityType, $aParentEntitySelectionConfigs)
+    {
+        // 1. create
+        $eEntity = Mimoto::service('data')->create($sEntityType);
+
+        // 2. store
+        Mimoto::service('data')->store($eEntity);
+
+        // 3. connect to parents
+        $nParentCount = count($aParentEntitySelectionConfigs);
+        for ($nParentIndex = 0; $nParentIndex < $nParentCount; $nParentIndex++)
+        {
+            // a. register
+            $parent = $aParentEntitySelectionConfigs[$nParentIndex];
+
+            // b. load
+            $eParent = Mimoto::service('data')->get($parent->type, $parent->type);
+
+            // c. verify
+            if (!empty($eParent))
+            {
+                // I. add
+                $eParent->addValue($parent->property, $eEntity);
+
+                // II. store
+                Mimoto::service('data')->store($eParent);
+            }
+        }
+
+        // 4. send
+        return $eEntity;
+    }
+
+
 
     /**
      * Get entity config by name
      * @param $sEntityType mixed
      * @return mixed
      */
-    public function getEntityConfig($xEntityType)
+    public function getEntityConfig($xEntityType) // #todo - move to config
     {
         // verify and convert
         $sEntityType = (MimotoDataUtils::isValidId($xEntityType)) ? $this->_EntityConfigService->getEntityNameById($xEntityType) : $xEntityType;

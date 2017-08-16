@@ -4,6 +4,7 @@
 namespace Mimoto\EntityConfig;
 
 // Mimoto classes
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
@@ -15,6 +16,41 @@ use Mimoto\Core\CoreConfig;
  */
 class EntityConfigUtils
 {
+
+
+    /**
+     * Load raw connection data
+     * @param string Parent entity type id
+     * @return array Entity connections (grouped by parentId)
+     */
+    public static function loadRawEntityData($sEntityTypeName)
+    {
+        // init
+        $aRawInstances = [];
+
+        // load all templates
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$sEntityTypeName.'`');
+        $params = array();
+        $stmt->execute($params);
+
+        // copy
+        foreach ($stmt as $row)
+        {
+            $rawInstance = [];
+
+            foreach ($row as $sKey => $value)
+            {
+                if (is_string($sKey)) $rawInstance[$sKey] = $value;
+            }
+
+            // store
+            $aRawInstances[] = $rawInstance;
+        }
+
+        // send
+        return $aRawInstances;
+    }
+
 
     /**
      * Load raw connection data

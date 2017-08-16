@@ -37,21 +37,23 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "abf4fc0eac0aecfecba0";
+/******/ 	__webpack_require__.h = "35a811db2c6bad381f24";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -75,7 +77,8 @@
 	}, true);
 
 /***/ }),
-/* 2 */
+
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
@@ -336,7 +339,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
 
 /***/ }),
-/* 3 */
+
+/***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10595,7 +10599,8 @@
 
 
 /***/ }),
-/* 4 */
+
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -10898,7 +10903,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 5 */
+
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -11703,11 +11709,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 6 */
+
+/***/ 6:
 /***/ (function(module, exports) {
 
 	/**
-	 * Mimoto.CMS - Data service
+	 * Mimoto.CMS - Data service for data manipulation
 	 *
 	 * @author Sebastian Kersten (@supertaboo)
 	 */
@@ -11730,12 +11737,58 @@
 	    /**
 	     * Constructor
 	     */
-	    __construct: function __construct() {},
+	    __construct: function __construct() {
+	        MimotoX.log('Initializing data service ...');
+	    },
 	
 	    // ----------------------------------------------------------------------------
 	    // --- Public methods ---------------------------------------------------------
 	    // ----------------------------------------------------------------------------
 	
+	
+	    page: null,
+	    popup: null,
+	    hidden: null,
+	
+	    //editValue:
+	
+	
+	    // hidden
+	    // popup
+	    // page (default)
+	
+	    // Mimoto.page.createAndConnect
+	    // Mimoto.page.createConnectAndEdit(form)
+	    // Mimoto.setValue('type', 'archived')
+	    // Mimoto.editValue('type')
+	    // Mimoto.delete(sEntitySelector, true) // true is confirm
+	
+	    // Mimoto.create(type, connectto, {values: [defaultvalues]})
+	    // Mimoto.read(data?)
+	    // Mimoto.edit(property of entity selector, (formname)) -> later custom forms or individual fields (feedback op not supported form)
+	    // Mimoto.update(propertyselector, 'value')
+	    // Mimoto.delete(entityselector, bDontConfirm) -> onInit=confirmMethod, onSubmit:waiting, onSuccess, onError, onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing
+	    // Mimoto.move(entitySelector, [new parent/parents]
+	    // Mimoto.copy(entitySelector, [new parent/parents]
+	    // Mimoto.select(entitySelector, sSelectionName, [new parent or parents], params in vorm van Selection)
+	    // Mimoto.createAndAdd(type, propertySelector, {values: [defaultvalues]})
+	    // Mimoto.selectAndAdd(sSelectionName, sPropertySelector) -> mapping meegeven, default oplossing in core
+	    // Mimoto.remove(sPropertySelector)
+	    // Mimoto.collaborate(sPropertySelector)
+	
+	    // Mimoto.api('/api/action') -> ActionFlow
+	
+	    // feedback op actie
+	    // success, error + message
+	
+	    // Mimoto.clear()
+	    // Mimoto.select('project.3.client', 'all_clients', { additional info or filter })
+	
+	
+	    createAndConnect: function createAndConnect(sType, sPropertySelector, options) // -> sets onclick
+	    {
+	        MimotoX.log('Clicked on createAndConnect .. start the call');
+	    },
 	
 	    /**
 	     * Handle data CHANGED
@@ -11791,6 +11844,10 @@
 	        // Mimoto.data.addValue('selectionRule.3.type', {type:'_Mimoto_entity'});
 	    },
 	
+	    // 1. delete
+	    // 2. create
+	
+	
 	    /**
 	     * Handle data CHANGED
 	     */
@@ -11808,7 +11865,8 @@
 	};
 
 /***/ }),
-/* 7 */
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -11826,33 +11884,33 @@
 	var CollectionChangeSortOrder = __webpack_require__(11);
 	
 	// Mimoto display classes
-	var HideWhenEmpty = __webpack_require__(12);
-	var HideWhenEmptyNot = __webpack_require__(13);
-	var HideWhenRegex = __webpack_require__(14);
-	var HideWhenRegexNot = __webpack_require__(15);
-	var HideWhenValue = __webpack_require__(16);
-	var HideWhenValueNot = __webpack_require__(17);
+	var HideWhenEmpty = __webpack_require__(680);
+	var HideWhenEmptyNot = __webpack_require__(681);
+	var HideWhenRegex = __webpack_require__(682);
+	var HideWhenRegexNot = __webpack_require__(683);
+	var HideWhenValue = __webpack_require__(684);
+	var HideWhenValueNot = __webpack_require__(685);
 	
-	var ShowWhenEmpty = __webpack_require__(18);
-	var ShowWhenEmptyNot = __webpack_require__(19);
-	var ShowWhenRegex = __webpack_require__(20);
-	var ShowWhenRegexNot = __webpack_require__(21);
-	var ShowWhenValue = __webpack_require__(22);
-	var ShowWhenValueNot = __webpack_require__(23);
+	var ShowWhenEmpty = __webpack_require__(686);
+	var ShowWhenEmptyNot = __webpack_require__(687);
+	var ShowWhenRegex = __webpack_require__(688);
+	var ShowWhenRegexNot = __webpack_require__(689);
+	var ShowWhenValue = __webpack_require__(690);
+	var ShowWhenValueNot = __webpack_require__(691);
 	
-	var AddClassWhenEmpty = __webpack_require__(24);
-	var AddClassWhenEmptyNot = __webpack_require__(25);
-	var AddClassWhenRegex = __webpack_require__(26);
-	var AddClassWhenRegexNot = __webpack_require__(27);
-	var AddClassWhenValue = __webpack_require__(24);
-	var AddClassWhenValueNot = __webpack_require__(28);
+	var AddClassWhenEmpty = __webpack_require__(692);
+	var AddClassWhenEmptyNot = __webpack_require__(693);
+	var AddClassWhenRegex = __webpack_require__(694);
+	var AddClassWhenRegexNot = __webpack_require__(695);
+	var AddClassWhenValue = __webpack_require__(692);
+	var AddClassWhenValueNot = __webpack_require__(696);
 	
-	var RemoveClassWhenEmpty = __webpack_require__(29);
-	var RemoveClassWhenEmptyNot = __webpack_require__(30);
-	var RemoveClassWhenRegex = __webpack_require__(31);
-	var RemoveClassWhenRegexNot = __webpack_require__(32);
-	var RemoveClassWhenValue = __webpack_require__(29);
-	var RemoveClassWhenValueNot = __webpack_require__(33);
+	var RemoveClassWhenEmpty = __webpack_require__(697);
+	var RemoveClassWhenEmptyNot = __webpack_require__(698);
+	var RemoveClassWhenRegex = __webpack_require__(699);
+	var RemoveClassWhenRegexNot = __webpack_require__(700);
+	var RemoveClassWhenValue = __webpack_require__(697);
+	var RemoveClassWhenValueNot = __webpack_require__(701);
 	
 	module.exports = function () {
 	
@@ -12377,7 +12435,8 @@
 	};
 
 /***/ }),
-/* 8 */
+
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12418,7 +12477,8 @@
 	};
 
 /***/ }),
-/* 9 */
+
+/***/ 9:
 /***/ (function(module, exports) {
 
 	/**
@@ -12556,7 +12616,8 @@
 	};
 
 /***/ }),
-/* 10 */
+
+/***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12620,7 +12681,8 @@
 	};
 
 /***/ }),
-/* 11 */
+
+/***/ 11:
 /***/ (function(module, exports) {
 
 	/**
@@ -12663,887 +12725,8 @@
 	};
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
 
-	/**
-	 * Mimoto - Display option - HideWhenEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenNotEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenNotRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenNotValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenNotEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenNotRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenNotValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenNotEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenNotRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenNotValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenNotEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenNotRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenNotValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(9);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-/* 34 */
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -13898,7 +13081,8 @@
 	};
 
 /***/ }),
-/* 35 */
+
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -14237,7 +13421,8 @@
 	};
 
 /***/ }),
-/* 36 */
+
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -14352,7 +13537,8 @@
 
 
 /***/ }),
-/* 37 */
+
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -14434,7 +13620,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 38 */
+
+/***/ 38:
 /***/ (function(module, exports) {
 
 	/**
@@ -14479,7 +13666,8 @@
 
 
 /***/ }),
-/* 39 */
+
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -14663,7 +13851,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
 
 /***/ }),
-/* 40 */
+
+/***/ 40:
 /***/ (function(module, exports) {
 
 	// shim for using process in browser
@@ -14853,7 +14042,8 @@
 
 
 /***/ }),
-/* 41 */
+
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -15059,7 +14249,8 @@
 
 
 /***/ }),
-/* 42 */
+
+/***/ 42:
 /***/ (function(module, exports) {
 
 	/**
@@ -15214,7 +14405,8 @@
 
 
 /***/ }),
-/* 43 */
+
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -15624,7 +14816,8 @@
 
 
 /***/ }),
-/* 44 */
+
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -15798,7 +14991,8 @@
 
 
 /***/ }),
-/* 45 */
+
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -16001,7 +15195,8 @@
 
 
 /***/ }),
-/* 46 */
+
+/***/ 46:
 /***/ (function(module, exports) {
 
 	/**
@@ -16132,7 +15327,8 @@
 
 
 /***/ }),
-/* 47 */
+
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
@@ -17041,7 +16237,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
 
 /***/ }),
-/* 48 */
+
+/***/ 48:
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -17057,7 +16254,8 @@
 
 
 /***/ }),
-/* 49 */
+
+/***/ 49:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -17065,7 +16263,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 50 */
+
+/***/ 50:
 /***/ (function(module, exports) {
 
 	
@@ -17235,7 +16434,8 @@
 
 
 /***/ }),
-/* 51 */
+
+/***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -17383,7 +16583,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 52 */
+
+/***/ 52:
 /***/ (function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -17392,7 +16593,8 @@
 
 
 /***/ }),
-/* 53 */
+
+/***/ 53:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -17412,7 +16614,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 54 */
+
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -17978,7 +17181,8 @@
 
 
 /***/ }),
-/* 55 */
+
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -17986,7 +17190,8 @@
 
 
 /***/ }),
-/* 56 */
+
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -18002,7 +17207,8 @@
 
 
 /***/ }),
-/* 57 */
+
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -18747,7 +17953,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 58 */
+
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -18807,7 +18014,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 59 */
+
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
@@ -18851,7 +18059,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 60 */
+
+/***/ 60:
 /***/ (function(module, exports) {
 
 	
@@ -18874,7 +18083,8 @@
 
 
 /***/ }),
-/* 61 */
+
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -19305,7 +18515,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 62 */
+
+/***/ 62:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -19556,7 +18767,8 @@
 
 
 /***/ }),
-/* 63 */
+
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -19719,7 +18931,8 @@
 
 
 /***/ }),
-/* 64 */
+
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -20335,7 +19548,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 65 */
+
+/***/ 65:
 /***/ (function(module, exports) {
 
 	
@@ -20360,7 +19574,8 @@
 
 
 /***/ }),
-/* 66 */
+
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -20426,7 +19641,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 67 */
+
+/***/ 67:
 /***/ (function(module, exports) {
 
 	/**
@@ -20461,7 +19677,8 @@
 
 
 /***/ }),
-/* 68 */
+
+/***/ 68:
 /***/ (function(module, exports) {
 
 	module.exports = after
@@ -20495,7 +19712,8 @@
 
 
 /***/ }),
-/* 69 */
+
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -20734,7 +19952,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
 
 /***/ }),
-/* 70 */
+
+/***/ 70:
 /***/ (function(module, exports) {
 
 	/*
@@ -20807,7 +20026,8 @@
 
 
 /***/ }),
-/* 71 */
+
+/***/ 71:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -20910,7 +20130,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 72 */
+
+/***/ 72:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -21079,7 +20300,8 @@
 
 
 /***/ }),
-/* 73 */
+
+/***/ 73:
 /***/ (function(module, exports) {
 
 	/**
@@ -21122,7 +20344,8 @@
 
 
 /***/ }),
-/* 74 */
+
+/***/ 74:
 /***/ (function(module, exports) {
 
 	
@@ -21134,7 +20357,8 @@
 	};
 
 /***/ }),
-/* 75 */
+
+/***/ 75:
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -21208,7 +20432,8 @@
 
 
 /***/ }),
-/* 76 */
+
+/***/ 76:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -21392,7 +20617,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
 
 /***/ }),
-/* 77 */
+
+/***/ 77:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -21598,7 +20824,8 @@
 
 
 /***/ }),
-/* 78 */
+
+/***/ 78:
 /***/ (function(module, exports) {
 
 	/**
@@ -21753,7 +20980,8 @@
 
 
 /***/ }),
-/* 79 */
+
+/***/ 79:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -21991,7 +21219,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 80 */
+
+/***/ 80:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -22283,13 +21512,15 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 81 */
+
+/***/ 81:
 /***/ (function(module, exports) {
 
 	/* (ignored) */
 
 /***/ }),
-/* 82 */
+
+/***/ 82:
 /***/ (function(module, exports) {
 
 	
@@ -22304,7 +21535,8 @@
 	};
 
 /***/ }),
-/* 83 */
+
+/***/ 83:
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -22342,7 +21574,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 84 */
+
+/***/ 84:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -22767,7 +22000,8 @@
 
 
 /***/ }),
-/* 85 */
+
+/***/ 85:
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -22936,7 +22170,8 @@
 
 
 /***/ }),
-/* 86 */
+
+/***/ 86:
 /***/ (function(module, exports) {
 
 	module.exports = toArray
@@ -22955,7 +22190,8 @@
 
 
 /***/ }),
-/* 87 */
+
+/***/ 87:
 /***/ (function(module, exports) {
 
 	
@@ -22985,7 +22221,8 @@
 
 
 /***/ }),
-/* 88 */
+
+/***/ 88:
 /***/ (function(module, exports) {
 
 	/**
@@ -23014,7 +22251,8 @@
 
 
 /***/ }),
-/* 89 */
+
+/***/ 89:
 /***/ (function(module, exports) {
 
 	
@@ -23105,7 +22343,8 @@
 
 
 /***/ }),
-/* 90 */
+
+/***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -34341,7 +33580,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(91).Buffer))
 
 /***/ }),
-/* 91 */
+
+/***/ 91:
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -36137,7 +35377,8 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 92 */
+
+/***/ 92:
 /***/ (function(module, exports) {
 
 	'use strict'
@@ -36257,7 +35498,8 @@
 
 
 /***/ }),
-/* 93 */
+
+/***/ 93:
 /***/ (function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -36347,7 +35589,8 @@
 
 
 /***/ }),
-/* 94 */
+
+/***/ 94:
 /***/ (function(module, exports) {
 
 	var toString = {}.toString;
@@ -36358,7 +35601,8 @@
 
 
 /***/ }),
-/* 95 */
+
+/***/ 95:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var diff = __webpack_require__(96);
@@ -36678,7 +35922,8 @@
 
 
 /***/ }),
-/* 96 */
+
+/***/ 96:
 /***/ (function(module, exports) {
 
 	/**
@@ -37382,7 +36627,8 @@
 
 
 /***/ }),
-/* 97 */
+
+/***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
@@ -37482,7 +36728,8 @@
 
 
 /***/ }),
-/* 98 */
+
+/***/ 98:
 /***/ (function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -37497,7 +36744,8 @@
 
 
 /***/ }),
-/* 99 */
+
+/***/ 99:
 /***/ (function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -37523,7 +36771,8 @@
 
 
 /***/ }),
-/* 100 */
+
+/***/ 100:
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -37615,7 +36864,8 @@
 
 
 /***/ }),
-/* 101 */
+
+/***/ 101:
 /***/ (function(module, exports, __webpack_require__) {
 
 	var equal = __webpack_require__(97);
@@ -37759,6 +37009,909 @@
 	module.exports = lib;
 
 
+/***/ }),
+
+/***/ 680:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 681:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 682:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 683:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 684:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 685:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 686:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 687:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 688:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 689:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 690:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 691:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 692:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 693:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 694:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 695:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 696:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 697:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 698:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 699:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 700:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+
+/***/ 701:
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
 /***/ })
-/******/ ]);
+
+/******/ });
 //# sourceMappingURL=mimoto.js.map
