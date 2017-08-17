@@ -43,13 +43,13 @@ module.exports.prototype = {
                     let cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
 
                     // verify
-                    if (cleanupCandidate.nConnectionId == item.connection.id)
+                    if (cleanupCandidate && cleanupCandidate.nConnectionId == item.connection.id)
                     {
                         // remove
                         aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
 
                         // correct
-                        if (aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
+                        nCleanupIndex--;
 
                         // cleanup
                         if (aSelectors[sEntitySelector].length === 0)

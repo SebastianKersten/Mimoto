@@ -417,18 +417,16 @@ module.exports.prototype = {
                     case this.DIRECTIVE_MIMOTO_DATA_EDIT:
 
                         // configure
-                        directive.element.addEventListener('click', function(sPropertySelector, sFormName, options, e)
+                        directive.element.addEventListener('click', function(sEntitySelector, sFormName, options, e)
                         {
                             // forward
-                            MimotoX.data.edit(sPropertySelector, sFormName, options);
+                            MimotoX.data.edit(sEntitySelector, sFormName, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
 
                         break;
 
                     case this.DIRECTIVE_MIMOTO_DATA_ADD:
-
-                        console.log('DIRECTIVE_MIMOTO_DATA_ADD');
 
                         // configure
                         directive.element.addEventListener('click', function(sPropertySelector, sFormName, options, e)
@@ -439,6 +437,16 @@ module.exports.prototype = {
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
 
                         break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_REMOVE:
+
+                        // configure
+                        directive.element.addEventListener('click', function(sEntitySelector, options, e)
+                        {
+                            // forward
+                            MimotoX.data.remove(sEntitySelector, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.options), true);
 
                         break;
 

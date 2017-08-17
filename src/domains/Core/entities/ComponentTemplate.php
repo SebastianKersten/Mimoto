@@ -26,7 +26,7 @@ class ComponentTemplate
             // ---
             'name' => CoreConfig::MIMOTO_COMPONENTTEMPLATE,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_COMPONENT],
+            'forms' => [CoreConfig::COREFORM_COMPONENTTEMPLATE],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_COMPONENTTEMPLATE.'--file',
@@ -82,12 +82,12 @@ class ComponentTemplate
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_COMPONENT,
-            'name' => CoreConfig::COREFORM_COMPONENT,
+            'id' => CoreConfig::COREFORM_COMPONENTTEMPLATE,
+            'name' => CoreConfig::COREFORM_COMPONENTTEMPLATE,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_COMPONENT, 'file'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_COMPONENT, 'conditionals')
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_COMPONENTTEMPLATE, 'file'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_COMPONENTTEMPLATE, 'conditionals')
             ]
         );
     }
@@ -98,7 +98,7 @@ class ComponentTemplate
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_COMPONENT);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_COMPONENTTEMPLATE);
 
         // setup
         CoreFormUtils::addField_title($form, 'Component', '', "The key element in presenting data is the 'component'. These are twig files that use the Aimless protocol to read and render the data, with the support of realtime updates to any client.");
@@ -134,7 +134,7 @@ class ComponentTemplate
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_COMPONENT.'--file_value_validation1');
+        $validationRule->setId(CoreConfig::COREFORM_COMPONENTTEMPLATE.'--file_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");

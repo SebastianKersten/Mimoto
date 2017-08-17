@@ -17,8 +17,9 @@ class DataManipulationUtils
 {
 
     // tags
-    const MIMOTO_DATA_EDIT  = 'data-mimoto-edit';
-    const MIMOTO_DATA_ADD   = 'data-mimoto-add';
+    const MIMOTO_DATA_EDIT   = 'data-mimoto-edit';
+    const MIMOTO_DATA_ADD    = 'data-mimoto-add';
+    const MIMOTO_DATA_REMOVE = 'data-mimoto-remove';
 
 
 
@@ -35,14 +36,23 @@ class DataManipulationUtils
         if (empty($instructions)) $instructions = (object) array();
 
         // 2. complete selector
-        $sPropertySelector = $component->getPropertySelector($sPropertyName);
+        if (empty($sPropertyName))
+        {
+            $sSelector = $component->meta('type').'.'.$component->meta('id');
+        }
+        else
+        {
+            $sSelector = $component->getPropertySelector($sPropertyName);
+
+            // setup
+            $instructions->propertyType = $component->getPropertyType($sPropertyName);
+        }
 
         // 3. setup
-        $instructions->propertyType = $component->getPropertyType($sPropertyName);
         if (!empty($options)) $instructions->options = $options;
 
         // 4. compose and send
-        return 'data-mimoto '.$sDirective.'="'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
+        return 'data-mimoto '.$sDirective.'="'.$sSelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
     }
 
 }

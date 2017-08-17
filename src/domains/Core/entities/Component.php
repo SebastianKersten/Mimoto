@@ -433,6 +433,24 @@ class Component
                     )
                 ]
             ),
+            (object) array(
+                'name' => 'Mimoto.CMS_components_ComponentDetail-Template',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/components/ComponentDetail/ComponentTemplate/ComponentTemplate.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'Mimoto.CMS_components_ComponentDetail-Conditional',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/components/ComponentDetail/ComponentConditional/ComponentConditional.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
 
 
             // api

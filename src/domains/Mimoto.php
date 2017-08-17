@@ -148,6 +148,7 @@ class Mimoto
         // --- data manipulation
         $app->post('/'.$sProjectName.'/data/edit', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::edit');
         $app->post('/'.$sProjectName.'/data/add', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::add');
+        $app->post('/'.$sProjectName.'/data/remove', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::remove');
 
 
 

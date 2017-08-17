@@ -1,0 +1,58 @@
+{% set bConfiguredCorrectly = true %}
+
+<li class="MimotoCMS_pages_components_ComponentConditional" {{ Mimoto.realtime() }} data-mimoto-reloadonchange="true">
+
+    <div class="MimotoCMS_pages_components_ComponentConditional__data">
+        <div class="MimotoCMS_pages_components_ComponentConditional__name">
+
+            {% if Mimoto.data('type') == 'entityType' %}
+                {% if Mimoto.data('entityType') is empty %}
+                    Please provide an entity type ..
+                    {% set bConfiguredCorrectly = false %}
+                {% else %}
+                    When the type of the entity is "<span {{ Mimoto.realtime('entityType.name') }}>{{ Mimoto.data('entityType.name') }}</span>"
+                {% endif %}
+            {% elseif Mimoto.data('type') == 'propertyValue' %}
+                {% if Mimoto.data('entityProperty') is empty %}
+                    Please provide a property ..
+                    {% set bConfiguredCorrectly = false %}
+                {% else %}
+                    When the property
+                    "<span {{ Mimoto.realtime('entityProperty.name') }}>{{ Mimoto.data('entityProperty.name') }}</span>"
+                    equals "<span {{ Mimoto.realtime('value') }} >{{ Mimoto.data('value') }}</span>"
+                {% endif %}
+            {% else %}
+                This conditional hasn't been configured correctly yet .. please edit!
+                {% set bConfiguredCorrectly = false %}
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="MimotoCMS_pages_components_ComponentConditional__menu">
+
+        {% if bConfiguredCorrectly %}
+            {% set sButtonLabel = 'Edit' %}
+            {% set sButtonType = 'secondary' %}
+        {% else %}
+            {% set sButtonLabel = 'Fix' %}
+            {% set sButtonType = 'alert' %}
+        {% endif %}
+
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:sButtonLabel, types:['small', sButtonType], onclick:"Mimoto.CMS.componentConditionalEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.componentConditionalDelete('" ~ Mimoto.meta('id') ~ "');" }) }}
+    </div>
+    <div class="MimotoCMS_pages_components_ComponentConditional__menu-handle">
+        <div class="MimotoCMS_ListItemModule-handle js-sortable-draghandle">
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+        </div>
+    </div>
+</li>

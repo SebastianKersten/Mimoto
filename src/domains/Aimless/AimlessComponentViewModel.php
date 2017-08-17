@@ -226,21 +226,15 @@ class AimlessComponentViewModel
 
     }
 
-
-    public function remove()
-    {
-
-    }
-
-    public function edit($sPropertySelector, $sFormName, $options = null)
+    public function edit($sFormName, $options = null)
     {
         // 1. prepare
         $instructions = (object) array(
             'form' => $sFormName
         );
 
-        // build and output
-        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDIT, $sPropertySelector, $this->_component, $instructions, $options);
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDIT, null, $this->_component, $instructions, $options);
     }
 
     public function add($sPropertySelector, $sFormName, $options = null)
@@ -250,9 +244,20 @@ class AimlessComponentViewModel
             'form' => $sFormName
         );
 
-        // build and output
+        // 2. build and output
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_ADD, $sPropertySelector, $this->_component, $instructions, $options);
     }
+
+    public function remove($options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array();
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_REMOVE, null, $this->_component, $instructions, $options);
+    }
+
+
 
     public function collaborate()
     {
@@ -263,6 +268,8 @@ class AimlessComponentViewModel
     {
         // convert into selection (name or config)
     }
+
+
 
 
 

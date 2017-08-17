@@ -396,7 +396,7 @@ class DataService
             $parent = $aParentEntitySelectionConfigs[$nParentIndex];
 
             // b. load
-            $eParent = Mimoto::service('data')->get($parent->type, $parent->type);
+            $eParent = Mimoto::service('data')->get($parent->type, $parent->id);
 
             // c. verify
             if (!empty($eParent))

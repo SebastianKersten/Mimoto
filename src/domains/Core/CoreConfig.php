@@ -13,6 +13,7 @@ use Mimoto\Core\entities\UserRole;
 use Mimoto\Core\entities\FormattingOption;
 use Mimoto\Core\entities\FormattingOptionAttribute;
 use Mimoto\Core\entities\Component;
+use Mimoto\Core\entities\ComponentTemplate;
 use Mimoto\Core\entities\ComponentConditional;
 use Mimoto\Core\entities\Layout;
 use Mimoto\Core\entities\LayoutContainer;
@@ -188,6 +189,7 @@ class CoreConfig
     const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
 
     const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
+    const COREFORM_COMPONENTTEMPLATE            = '_Mimoto_coreform__componenttemplate';
     const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentConditional';
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
     const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
@@ -260,6 +262,7 @@ class CoreConfig
 
             // views
             Component::getStructure(),
+            ComponentTemplate::getStructure(),
             ComponentConditional::getStructure(),
 
             // views
@@ -338,6 +341,7 @@ class CoreConfig
 
             // views
             Component::getFormStructure(),
+            ComponentTemplate::getFormStructure(),
             ComponentConditional::getFormStructure(),
 
             // views

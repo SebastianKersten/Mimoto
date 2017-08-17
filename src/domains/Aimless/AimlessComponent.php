@@ -719,16 +719,16 @@ class AimlessComponent
 
     /**
      * Get entity's meta information 'id' or 'created'
-     * @param type $sPropertyName The entity's meta information 'id' or 'created'
+     * @param string $sKey The entity's meta information 'id' or 'created'
      * @return string
      */
-    public function meta($sPropertyName)
+    public function meta($sKey)
     {
         // validate
         if (empty($this->_entity)) return;
 
 
-        switch(strtolower($sPropertyName))
+        switch(strtolower($sKey))
         {
             case 'id': return $this->_entity->getId();
             case 'type': return $this->_entity->getEntityTypeName();

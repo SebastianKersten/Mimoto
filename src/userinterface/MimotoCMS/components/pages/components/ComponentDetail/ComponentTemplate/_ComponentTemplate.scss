@@ -1,72 +1,29 @@
-li.MimotoCMS_pages_components_ComponentConditional {
+div.MimotoCMS_pages_components_ComponentTemplate {
 
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
 
     background-color: #f5f5f5;
 
-    & > div {
-        overflow: hidden;
-    }
+    padding: 15px
+}
 
-    & > div:last-child {
-        text-align: right;
-        padding-right: 0;
-    }
+div.MimotoCMS_pages_components_ComponentTemplate-info {
+    flex: auto;
+}
 
-    div.MimotoCMS_pages_components_ComponentConditional__data {
+    div.MimotoCMS_pages_components_ComponentTemplate-fileName {
 
-        flex-grow: 10;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
 
-        width: 75%;
-
-        div.MimotoCMS_pages_components_ComponentConditional__name {
-
-            flex-grow: 2;
-
-            padding: 7px 10px 4px 10px;
-            vertical-align: top;
-            color: #000000;
-            width: 28%;
-
-            & > a {
-                text-decoration: none;
-                color: $tower-gray;
-            }
-
-            & > a:hover {
-                text-decoration: underline;
-            }
-        }
-
-        div.MimotoCMS_pages_components_ComponentConditional__type {
-
-            flex-grow: 0;
-
-            padding: 3px 10px 4px 10px;
-            vertical-align: top;
-            background-color: #f5f5f5;
-            color: #000000;
-            width: 17%;
+        &.empty {
+            font-style: italic;
+            color: $tower-gray;
         }
     }
 
-    div.MimotoCMS_pages_components_ComponentConditional__menu {
-        white-space: nowrap;
-        padding: 5px;
-        flex-grow: 1;
-        width: 20%;
-        text-align: right;
-    }
-
-    div.MimotoCMS_pages_components_ComponentConditional__menu-handle {
-        padding: 7px 0 0 0;
-        flex-direction: row;
-        width: 5%;
-        display: inline-block;
-    }
+div.MimotoCMS_pages_components_ComponentTemplate-menu {
+    flex: none;
+    text-align: right;
 }

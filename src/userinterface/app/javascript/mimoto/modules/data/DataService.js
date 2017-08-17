@@ -45,12 +45,12 @@ module.exports.prototype = {
     hidden: null,
 
 
-    edit: function(sPropertySelector, sFormName, options) {
+    edit: function(sEntitySelector, sFormName, options) {
 
-        console.log('Editing the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
+        console.log('Editing the property .. ' + sEntitySelector + ' with ' + sFormName, 'options:', options);
 
         let postData = {
-            sPropertySelector: sPropertySelector,
+            sEntitySelector: sEntitySelector,
             sFormName: sFormName,
             options: options
         };
@@ -74,7 +74,7 @@ module.exports.prototype = {
 
 
 
-    remove: function(sEntityselector, options)
+    remove: function(sEntitySelector, options)
     {
         // bDontConfirm
         // onInit=confirmMethod,
@@ -82,6 +82,26 @@ module.exports.prototype = {
         // onSuccess,
         // onError,
         // onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing)
+
+
+        console.log('Remove this entity .. ' + sEntitySelector);
+
+        let postData = {
+            sEntitySelector: sEntitySelector,
+            options: options
+        };
+
+
+        MimotoX.utils.callAPI({
+            type: 'POST',
+            url: '/mimoto/data/remove',
+            data: postData,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething)
+            {
+                console.log('Item removed', resultData);
+            }
+        });
     },
 
     update: function(sPropertySelector, value)

@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "92d2ca44bcf659c0c040";
+/******/ 	__webpack_require__.h = "377c71516553edfbadc5";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -11743,12 +11743,12 @@
 	    popup: null,
 	    hidden: null,
 	
-	    edit: function edit(sPropertySelector, sFormName, options) {
+	    edit: function edit(sEntitySelector, sFormName, options) {
 	
-	        console.log('Editing the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
+	        console.log('Editing the property .. ' + sEntitySelector + ' with ' + sFormName, 'options:', options);
 	
 	        var postData = {
-	            sPropertySelector: sPropertySelector,
+	            sEntitySelector: sEntitySelector,
 	            sFormName: sFormName,
 	            options: options
 	        };
@@ -11769,13 +11769,31 @@
 	        MimotoX.popup('/mimoto/data/add', postData);
 	    },
 	
-	    remove: function remove(sEntityselector, options) {
+	    remove: function remove(sEntitySelector, options) {
 	        // bDontConfirm
 	        // onInit=confirmMethod,
 	        // onSubmit:waiting,
 	        // onSuccess,
 	        // onError,
 	        // onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing)
+	
+	
+	        console.log('Remove this entity .. ' + sEntitySelector);
+	
+	        var postData = {
+	            sEntitySelector: sEntitySelector,
+	            options: options
+	        };
+	
+	        MimotoX.utils.callAPI({
+	            type: 'POST',
+	            url: '/mimoto/data/remove',
+	            data: postData,
+	            dataType: 'json',
+	            success: function success(resultData, resultStatus, resultSomething) {
+	                console.log('Item removed', resultData);
+	            }
+	        });
 	    },
 	
 	    update: function update(sPropertySelector, value) {},
@@ -12207,16 +12225,14 @@
 	                    case this.DIRECTIVE_MIMOTO_DATA_EDIT:
 	
 	                        // configure
-	                        directive.element.addEventListener('click', function (sPropertySelector, sFormName, options, e) {
+	                        directive.element.addEventListener('click', function (sEntitySelector, sFormName, options, e) {
 	                            // forward
-	                            MimotoX.data.edit(sPropertySelector, sFormName, options);
+	                            MimotoX.data.edit(sEntitySelector, sFormName, options);
 	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
 	
 	                        break;
 	
 	                    case this.DIRECTIVE_MIMOTO_DATA_ADD:
-	
-	                        console.log('DIRECTIVE_MIMOTO_DATA_ADD');
 	
 	                        // configure
 	                        directive.element.addEventListener('click', function (sPropertySelector, sFormName, options, e) {
@@ -12225,6 +12241,14 @@
 	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
 	
 	                        break;
+	
+	                    case this.DIRECTIVE_MIMOTO_DATA_REMOVE:
+	
+	                        // configure
+	                        directive.element.addEventListener('click', function (sEntitySelector, options, e) {
+	                            // forward
+	                            MimotoX.data.remove(sEntitySelector, options);
+	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.options), true);
 	
 	                        break;
 	
@@ -12684,12 +12708,12 @@
 	                    var cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
 	
 	                    // verify
-	                    if (cleanupCandidate.nConnectionId == item.connection.id) {
+	                    if (cleanupCandidate && cleanupCandidate.nConnectionId == item.connection.id) {
 	                        // remove
 	                        aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
 	
 	                        // correct
-	                        if (aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
+	                        nCleanupIndex--;
 	
 	                        // cleanup
 	                        if (aSelectors[sEntitySelector].length === 0) {
