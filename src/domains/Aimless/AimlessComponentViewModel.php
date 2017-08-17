@@ -184,6 +184,14 @@ class AimlessComponentViewModel
     }
 
 
+    /**
+     * Helper class to avoid flickers in interface because of show/hide features
+     */
+    public function init()
+    {
+        return 'Mimoto_hidden';
+    }
+
 
 
     // --- Data manipulation
@@ -218,10 +226,6 @@ class AimlessComponentViewModel
 
     }
 
-    public function add($sPropertySelector,  $sFormName)
-    {
-
-    }
 
     public function remove()
     {
@@ -237,6 +241,17 @@ class AimlessComponentViewModel
 
         // build and output
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDIT, $sPropertySelector, $this->_component, $instructions, $options);
+    }
+
+    public function add($sPropertySelector, $sFormName, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'form' => $sFormName
+        );
+
+        // build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_ADD, $sPropertySelector, $this->_component, $instructions, $options);
     }
 
     public function collaborate()

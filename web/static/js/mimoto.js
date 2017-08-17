@@ -37,23 +37,21 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "1ba4e3a5137dfbf2a325";
+/******/ 	__webpack_require__.h = "92d2ca44bcf659c0c040";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
 /***/ }),
-
-/***/ 1:
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -77,8 +75,7 @@
 	}, true);
 
 /***/ }),
-
-/***/ 2:
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
@@ -95,7 +92,7 @@
 	var DomService = __webpack_require__(5);
 	var DataService = __webpack_require__(6);
 	var DisplayService = __webpack_require__(7);
-	var RealtimeManager = __webpack_require__(8);
+	var RealtimeManager = __webpack_require__(34);
 	
 	/**
 	 * Class MimotoStartup
@@ -339,8 +336,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
 
 /***/ }),
-
-/***/ 3:
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10599,8 +10595,7 @@
 
 
 /***/ }),
-
-/***/ 4:
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -10903,8 +10898,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-
-/***/ 5:
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {/**
@@ -11709,8 +11703,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-
-/***/ 6:
+/* 6 */
 /***/ (function(module, exports) {
 
 	/**
@@ -11754,7 +11747,26 @@
 	
 	        console.log('Editing the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
 	
-	        MimotoX.popup('/mimoto/data/edit'); // -> call by post
+	        var postData = {
+	            sPropertySelector: sPropertySelector,
+	            sFormName: sFormName,
+	            options: options
+	        };
+	
+	        MimotoX.popup('/mimoto/data/edit', postData);
+	    },
+	
+	    add: function add(sPropertySelector, sFormName, options) {
+	
+	        console.log('Adding something to the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
+	
+	        var postData = {
+	            sPropertySelector: sPropertySelector,
+	            sFormName: sFormName,
+	            options: options
+	        };
+	
+	        MimotoX.popup('/mimoto/data/add', postData);
 	    },
 	
 	    remove: function remove(sEntityselector, options) {
@@ -11849,8 +11861,7 @@
 	};
 
 /***/ }),
-
-/***/ 7:
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -11863,38 +11874,38 @@
 	
 	// Mimoto data manipulation classes
 	
-	var CollectionAddItems = __webpack_require__(654);
-	var CollectionRemoveItems = __webpack_require__(656);
-	var CollectionChangeSortOrder = __webpack_require__(657);
+	var CollectionAddItems = __webpack_require__(8);
+	var CollectionRemoveItems = __webpack_require__(10);
+	var CollectionChangeSortOrder = __webpack_require__(11);
 	
 	// Mimoto display classes
-	var HideWhenEmpty = __webpack_require__(658);
-	var HideWhenEmptyNot = __webpack_require__(659);
-	var HideWhenRegex = __webpack_require__(660);
-	var HideWhenRegexNot = __webpack_require__(661);
-	var HideWhenValue = __webpack_require__(662);
-	var HideWhenValueNot = __webpack_require__(663);
+	var HideWhenEmpty = __webpack_require__(12);
+	var HideWhenEmptyNot = __webpack_require__(13);
+	var HideWhenRegex = __webpack_require__(14);
+	var HideWhenRegexNot = __webpack_require__(15);
+	var HideWhenValue = __webpack_require__(16);
+	var HideWhenValueNot = __webpack_require__(17);
 	
-	var ShowWhenEmpty = __webpack_require__(664);
-	var ShowWhenEmptyNot = __webpack_require__(665);
-	var ShowWhenRegex = __webpack_require__(666);
-	var ShowWhenRegexNot = __webpack_require__(667);
-	var ShowWhenValue = __webpack_require__(668);
-	var ShowWhenValueNot = __webpack_require__(669);
+	var ShowWhenEmpty = __webpack_require__(18);
+	var ShowWhenEmptyNot = __webpack_require__(19);
+	var ShowWhenRegex = __webpack_require__(20);
+	var ShowWhenRegexNot = __webpack_require__(21);
+	var ShowWhenValue = __webpack_require__(22);
+	var ShowWhenValueNot = __webpack_require__(23);
 	
-	var AddClassWhenEmpty = __webpack_require__(670);
-	var AddClassWhenEmptyNot = __webpack_require__(671);
-	var AddClassWhenRegex = __webpack_require__(672);
-	var AddClassWhenRegexNot = __webpack_require__(673);
-	var AddClassWhenValue = __webpack_require__(670);
-	var AddClassWhenValueNot = __webpack_require__(674);
+	var AddClassWhenEmpty = __webpack_require__(24);
+	var AddClassWhenEmptyNot = __webpack_require__(25);
+	var AddClassWhenRegex = __webpack_require__(26);
+	var AddClassWhenRegexNot = __webpack_require__(27);
+	var AddClassWhenValue = __webpack_require__(24);
+	var AddClassWhenValueNot = __webpack_require__(28);
 	
-	var RemoveClassWhenEmpty = __webpack_require__(675);
-	var RemoveClassWhenEmptyNot = __webpack_require__(676);
-	var RemoveClassWhenRegex = __webpack_require__(677);
-	var RemoveClassWhenRegexNot = __webpack_require__(678);
-	var RemoveClassWhenValue = __webpack_require__(675);
-	var RemoveClassWhenValueNot = __webpack_require__(679);
+	var RemoveClassWhenEmpty = __webpack_require__(29);
+	var RemoveClassWhenEmptyNot = __webpack_require__(30);
+	var RemoveClassWhenRegex = __webpack_require__(31);
+	var RemoveClassWhenRegexNot = __webpack_require__(32);
+	var RemoveClassWhenValue = __webpack_require__(29);
+	var RemoveClassWhenValueNot = __webpack_require__(33);
 	
 	module.exports = function () {
 	
@@ -12195,11 +12206,9 @@
 	
 	                    case this.DIRECTIVE_MIMOTO_DATA_EDIT:
 	
-	                        console.log('DIRECTIVE_MIMOTO_DATA_EDIT - init');
-	
+	                        // configure
 	                        directive.element.addEventListener('click', function (sPropertySelector, sFormName, options, e) {
-	                            console.log('DIRECTIVE_MIMOTO_DATA_EDIT - click!', sPropertySelector);
-	
+	                            // forward
 	                            MimotoX.data.edit(sPropertySelector, sFormName, options);
 	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
 	
@@ -12208,6 +12217,14 @@
 	                    case this.DIRECTIVE_MIMOTO_DATA_ADD:
 	
 	                        console.log('DIRECTIVE_MIMOTO_DATA_ADD');
+	
+	                        // configure
+	                        directive.element.addEventListener('click', function (sPropertySelector, sFormName, options, e) {
+	                            // forward
+	                            MimotoX.data.add(sPropertySelector, sFormName, options);
+	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
+	
+	                        break;
 	
 	                        break;
 	
@@ -12447,8 +12464,1173 @@
 	};
 
 /***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 8:
+	/**
+	 * Mimoto - Data manipulation - CollectionAddItems
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, aAddedItems) {
+	    // start
+	    this.__construct(directive, aAddedItems);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, aAddedItems) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. add items
+	        aAddedItems.forEach(function (item) {
+	
+	            // #todo - check if the component is already there (and duplicate items are allowed OR connection-id's
+	
+	            // validate
+	            if (displayUtils.passesFilter(directive, item)) {
+	                if (directive.sComponentName !== undefined) {
+	                    MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+	                }
+	            }
+	        });
+	    }
+	
+	};
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+	/**
+	 * Mimoto - Display Service utils
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function () {};
+	
+	module.exports.prototype = {
+	
+	    // match types
+	    MATCH_TYPE_EMPTY: 'match_type_empty',
+	    MATCH_TYPE_VALUE: 'match_type_value',
+	    MATCH_TYPE_REGEX: 'match_type_regex',
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    addClassesToElement: function addClassesToElement(element, aClasses) {
+	        var nClassCount = aClasses.length;
+	        for (var nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++) {
+	            element.classList.add(aClasses[nClassIndex]);
+	        }
+	    },
+	
+	    removeClassesFromElement: function removeClassesFromElement(element, aClasses) {
+	        var nClassCount = aClasses.length;
+	        for (var nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++) {
+	            element.classList.remove(aClasses[nClassIndex]);
+	        }
+	    },
+	
+	    hideElement: function hideElement(element) {
+	        element.classList.add('Mimoto_CoreCSS_hidden');
+	    },
+	
+	    showElement: function showElement(element) {
+	        element.classList.remove('Mimoto_CoreCSS_hidden');
+	    },
+	
+	    hasAnyMatch: function hasAnyMatch(value, aValues) {
+	        return this._hasMatch(value, aValues, this.MATCH_TYPE_VALUE);
+	    },
+	
+	    hasAnyRegexMatch: function hasAnyRegexMatch(value, aValues) {
+	        return this._hasMatch(value, aValues, this.MATCH_TYPE_REGEX);
+	    },
+	
+	    isEmpty: function isEmpty(value) {
+	        if (value === null) {
+	            return true;
+	        } else if (!isNaN(parseInt(value))) {
+	            return value == 0;
+	        } else {
+	            return value.length == 0;
+	        }
+	    },
+	
+	    getInitialState: function getInitialState(directive) {
+	        // 1. init
+	        var bValidated = false;
+	
+	        // 2. validate and set
+	        if (directive.instructions.initialState !== undefined) bValidated = directive.instructions.initialState;
+	
+	        // 3. send
+	        return bValidated;
+	    },
+	
+	    passesFilter: function passesFilter(directive, item) {
+	        // 1. init
+	        var bFilterApproved = true;
+	
+	        // 2. verify
+	        if (directive.aFilterValues) {
+	            // check
+	            for (var sKey in item.data) {
+	                if (directive.aFilterValues[sKey] && item.data[sKey] != directive.aFilterValues[sKey]) {
+	                    bFilterApproved = false;
+	                    break;
+	                }
+	            }
+	        }
+	
+	        // 3. send
+	        return bFilterApproved;
+	    },
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Private methods --------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    _hasMatch: function _hasMatch(value, aValues, sMatchType) {
+	        // 1. init
+	        var bMatchFound = false;
+	
+	        // 2. find
+	        var nValueCount = aValues.length;
+	        for (var nValueIndex = 0; nValueIndex < nValueCount; nValueIndex++) {
+	            switch (sMatchType) {
+	                case this.MATCH_TYPE_VALUE:
+	
+	                    // verify
+	                    if (value == aValues[nValueIndex]) {
+	                        bMatchFound = true;
+	                        continue;
+	                    }
+	                    break;
+	
+	                case this.MATCH_TYPE_REGEX:
+	
+	                    // init
+	                    var regex = new RegExp(aValues[nValueIndex], 'g');
+	
+	                    // verify
+	                    if (regex.test(value)) {
+	                        bMatchFound = true;
+	                        continue;
+	                    }
+	                    break;
+	            }
+	        }
+	
+	        // 3. send
+	        return bMatchFound;
+	    }
+	
+	};
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Data manipulation - CollectionRemoveItems
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, aRemovedItems, aSelectors) {
+	    // start
+	    this.__construct(directive, aRemovedItems, aSelectors);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, aRemovedItems, aSelectors) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. add items
+	        aRemovedItems.forEach(function (item) {
+	            // 2. compose
+	            var sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
+	
+	            // 3. find
+	            var element = directive.element.querySelector('[' + MimotoX.display.TAG_MIMOTO_ID + '="' + sEntitySelector + '"][' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
+	
+	            // 4. verify
+	            if (element && aSelectors[sEntitySelector]) {
+	                // 4b. find
+	                var nCleanupCount = aSelectors[sEntitySelector].length;
+	                for (var nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++) {
+	                    // register
+	                    var cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
+	
+	                    // verify
+	                    if (cleanupCandidate.nConnectionId == item.connection.id) {
+	                        // remove
+	                        aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
+	
+	                        // correct
+	                        if (aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
+	
+	                        // cleanup
+	                        if (aSelectors[sEntitySelector].length === 0) {
+	                            delete aSelectors[sEntitySelector];
+	                            break;
+	                        }
+	                    }
+	                }
+	
+	                directive.element.removeChild(element);
+	            }
+	        });
+	    }
+	
+	};
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports) {
+
+	/**
+	 * Mimoto - Data manipulation - CollectionChangeSortOrder
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function (directive, aConnections) {
+	    // start
+	    this.__construct(directive, aConnections);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, aConnections) {
+	        // 1. init
+	        var previousElement = null;
+	
+	        // 2. change order
+	        aConnections.forEach(function (connection, nConnectionIndex) {
+	            // register
+	            var currentElement = directive.element.querySelector('[' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + connection.id + '"]');
+	            currentElement.setAttribute(MimotoX.display.TAG_SETTING_MIMOTO_SORTINDEX, connection.sortindex);
+	
+	            // verify
+	            if (nConnectionIndex == 0) {
+	                directive.element.insertBefore(currentElement, directive.element.firstChild);
+	            } else {
+	                directive.element.insertBefore(currentElement, previousElement.nextSibling);
+	            }
+	
+	            // update
+	            previousElement = currentElement;
+	        });
+	    }
+	
+	};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - HideWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. hide
+	            displayUtils.hideElement(directive.element);
+	        } else {
+	            // 2b. show
+	            displayUtils.showElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - ShowWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. show
+	            displayUtils.showElement(directive.element);
+	        } else {
+	            // 2b. hide
+	            displayUtils.hideElement(directive.element);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - AddClassWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotEmpty
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotRegex
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/**
+	 * Mimoto - Display option - RemoveClassWhenNotValue
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	var DisplayUtils = __webpack_require__(9);
+	
+	module.exports = function (directive, value) {
+	    // start
+	    this.__construct(directive, value);
+	};
+	
+	module.exports.prototype = {
+	
+	    __construct: function __construct(directive, value) {
+	        // 1. init
+	        var displayUtils = new DisplayUtils();
+	
+	        // 2. verify
+	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
+	
+	        // 3. toggle
+	        if (bValidated) {
+	            // 2a. remove
+	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
+	        } else {
+	            // 2b. add
+	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
+	        }
+	    }
+	
+	};
+
+/***/ }),
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12471,13 +13653,13 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var RealtimeEditor = __webpack_require__(9);
+	var RealtimeEditor = __webpack_require__(35);
 	
 	// Socket.io classes
-	var io = __webpack_require__(10);
+	var io = __webpack_require__(36);
 	
 	// Quill classes
-	var Quill = __webpack_require__(64);
+	var Quill = __webpack_require__(90);
 	
 	module.exports = function (sGateway) {
 	    // start
@@ -12803,8 +13985,7 @@
 	};
 
 /***/ }),
-
-/***/ 9:
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -12817,11 +13998,11 @@
 	
 	// Socket.io classes
 	
-	var io = __webpack_require__(10);
+	var io = __webpack_require__(36);
 	
 	// Quill classes
-	var Quill = __webpack_require__(64);
-	var QuillDelta = __webpack_require__(69);
+	var Quill = __webpack_require__(90);
+	var QuillDelta = __webpack_require__(95);
 	
 	module.exports = function (socket, sPropertySelector, editOptions, editableValue) {
 	
@@ -13143,8 +14324,7 @@
 	};
 
 /***/ }),
-
-/***/ 10:
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -13152,10 +14332,10 @@
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(11);
-	var parser = __webpack_require__(17);
-	var Manager = __webpack_require__(28);
-	var debug = __webpack_require__(13)('socket.io-client');
+	var url = __webpack_require__(37);
+	var parser = __webpack_require__(43);
+	var Manager = __webpack_require__(54);
+	var debug = __webpack_require__(39)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -13254,13 +14434,12 @@
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(28);
-	exports.Socket = __webpack_require__(58);
+	exports.Manager = __webpack_require__(54);
+	exports.Socket = __webpack_require__(84);
 
 
 /***/ }),
-
-/***/ 11:
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -13268,8 +14447,8 @@
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(12);
-	var debug = __webpack_require__(13)('socket.io-client:url');
+	var parseuri = __webpack_require__(38);
+	var debug = __webpack_require__(39)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -13342,8 +14521,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 12:
+/* 38 */
 /***/ (function(module, exports) {
 
 	/**
@@ -13388,8 +14566,7 @@
 
 
 /***/ }),
-
-/***/ 13:
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -13399,7 +14576,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(15);
+	exports = module.exports = __webpack_require__(41);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -13570,11 +14747,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
 
 /***/ }),
-
-/***/ 14:
+/* 40 */
 /***/ (function(module, exports) {
 
 	// shim for using process in browser
@@ -13764,8 +14940,7 @@
 
 
 /***/ }),
-
-/***/ 15:
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -13781,7 +14956,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(16);
+	exports.humanize = __webpack_require__(42);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -13971,8 +15146,7 @@
 
 
 /***/ }),
-
-/***/ 16:
+/* 42 */
 /***/ (function(module, exports) {
 
 	/**
@@ -14127,8 +15301,7 @@
 
 
 /***/ }),
-
-/***/ 17:
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -14136,11 +15309,11 @@
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(18)('socket.io-parser');
-	var json = __webpack_require__(21);
-	var Emitter = __webpack_require__(24);
-	var binary = __webpack_require__(25);
-	var isBuf = __webpack_require__(27);
+	var debug = __webpack_require__(44)('socket.io-parser');
+	var json = __webpack_require__(47);
+	var Emitter = __webpack_require__(50);
+	var binary = __webpack_require__(51);
+	var isBuf = __webpack_require__(53);
 	
 	/**
 	 * Protocol version.
@@ -14538,8 +15711,7 @@
 
 
 /***/ }),
-
-/***/ 18:
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -14549,7 +15721,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(19);
+	exports = module.exports = __webpack_require__(45);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -14713,8 +15885,7 @@
 
 
 /***/ }),
-
-/***/ 19:
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -14730,7 +15901,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(20);
+	exports.humanize = __webpack_require__(46);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -14917,8 +16088,7 @@
 
 
 /***/ }),
-
-/***/ 20:
+/* 46 */
 /***/ (function(module, exports) {
 
 	/**
@@ -15049,15 +16219,14 @@
 
 
 /***/ }),
-
-/***/ 21:
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(23);
+	  var isLoader = "function" === "function" && __webpack_require__(49);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -15956,11 +17125,10 @@
 	  }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
 
 /***/ }),
-
-/***/ 22:
+/* 48 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -15976,8 +17144,7 @@
 
 
 /***/ }),
-
-/***/ 23:
+/* 49 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -15985,8 +17152,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-
-/***/ 24:
+/* 50 */
 /***/ (function(module, exports) {
 
 	
@@ -16156,8 +17322,7 @@
 
 
 /***/ }),
-
-/***/ 25:
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -16166,8 +17331,8 @@
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(26);
-	var isBuf = __webpack_require__(27);
+	var isArray = __webpack_require__(52);
+	var isBuf = __webpack_require__(53);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -16305,8 +17470,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 26:
+/* 52 */
 /***/ (function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -16315,8 +17479,7 @@
 
 
 /***/ }),
-
-/***/ 27:
+/* 53 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -16336,8 +17499,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 28:
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -16345,15 +17507,15 @@
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(29);
-	var Socket = __webpack_require__(58);
-	var Emitter = __webpack_require__(59);
-	var parser = __webpack_require__(17);
-	var on = __webpack_require__(61);
-	var bind = __webpack_require__(62);
-	var debug = __webpack_require__(13)('socket.io-client:manager');
-	var indexOf = __webpack_require__(56);
-	var Backoff = __webpack_require__(63);
+	var eio = __webpack_require__(55);
+	var Socket = __webpack_require__(84);
+	var Emitter = __webpack_require__(85);
+	var parser = __webpack_require__(43);
+	var on = __webpack_require__(87);
+	var bind = __webpack_require__(88);
+	var debug = __webpack_require__(39)('socket.io-client:manager');
+	var indexOf = __webpack_require__(82);
+	var Backoff = __webpack_require__(89);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -16903,21 +18065,19 @@
 
 
 /***/ }),
-
-/***/ 29:
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(30);
+	module.exports = __webpack_require__(56);
 
 
 /***/ }),
-
-/***/ 30:
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(31);
+	module.exports = __webpack_require__(57);
 	
 	/**
 	 * Exports parser
@@ -16925,26 +18085,25 @@
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(38);
+	module.exports.parser = __webpack_require__(64);
 
 
 /***/ }),
-
-/***/ 31:
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(32);
-	var Emitter = __webpack_require__(46);
-	var debug = __webpack_require__(50)('engine.io-client:socket');
-	var index = __webpack_require__(56);
-	var parser = __webpack_require__(38);
-	var parseuri = __webpack_require__(12);
-	var parsejson = __webpack_require__(57);
-	var parseqs = __webpack_require__(47);
+	var transports = __webpack_require__(58);
+	var Emitter = __webpack_require__(72);
+	var debug = __webpack_require__(76)('engine.io-client:socket');
+	var index = __webpack_require__(82);
+	var parser = __webpack_require__(64);
+	var parseuri = __webpack_require__(38);
+	var parsejson = __webpack_require__(83);
+	var parseqs = __webpack_require__(73);
 	
 	/**
 	 * Module exports.
@@ -17076,9 +18235,9 @@
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(37);
-	Socket.transports = __webpack_require__(32);
-	Socket.parser = __webpack_require__(38);
+	Socket.Transport = __webpack_require__(63);
+	Socket.transports = __webpack_require__(58);
+	Socket.parser = __webpack_require__(64);
 	
 	/**
 	 * Creates transport of the given type.
@@ -17675,18 +18834,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 32:
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(33);
-	var XHR = __webpack_require__(35);
-	var JSONP = __webpack_require__(53);
-	var websocket = __webpack_require__(54);
+	var XMLHttpRequest = __webpack_require__(59);
+	var XHR = __webpack_require__(61);
+	var JSONP = __webpack_require__(79);
+	var websocket = __webpack_require__(80);
 	
 	/**
 	 * Export transports.
@@ -17736,13 +18894,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 33:
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 	
-	var hasCORS = __webpack_require__(34);
+	var hasCORS = __webpack_require__(60);
 	
 	module.exports = function (opts) {
 	  var xdomain = opts.xdomain;
@@ -17781,8 +18938,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 34:
+/* 60 */
 /***/ (function(module, exports) {
 
 	
@@ -17805,19 +18961,18 @@
 
 
 /***/ }),
-
-/***/ 35:
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(33);
-	var Polling = __webpack_require__(36);
-	var Emitter = __webpack_require__(46);
-	var inherit = __webpack_require__(48);
-	var debug = __webpack_require__(50)('engine.io-client:polling-xhr');
+	var XMLHttpRequest = __webpack_require__(59);
+	var Polling = __webpack_require__(62);
+	var Emitter = __webpack_require__(72);
+	var inherit = __webpack_require__(74);
+	var debug = __webpack_require__(76)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -18237,20 +19392,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 36:
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(37);
-	var parseqs = __webpack_require__(47);
-	var parser = __webpack_require__(38);
-	var inherit = __webpack_require__(48);
-	var yeast = __webpack_require__(49);
-	var debug = __webpack_require__(50)('engine.io-client:polling');
+	var Transport = __webpack_require__(63);
+	var parseqs = __webpack_require__(73);
+	var parser = __webpack_require__(64);
+	var inherit = __webpack_require__(74);
+	var yeast = __webpack_require__(75);
+	var debug = __webpack_require__(76)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -18263,7 +19417,7 @@
 	 */
 	
 	var hasXHR2 = (function () {
-	  var XMLHttpRequest = __webpack_require__(33);
+	  var XMLHttpRequest = __webpack_require__(59);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -18489,16 +19643,15 @@
 
 
 /***/ }),
-
-/***/ 37:
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(38);
-	var Emitter = __webpack_require__(46);
+	var parser = __webpack_require__(64);
+	var Emitter = __webpack_require__(72);
 	
 	/**
 	 * Module exports.
@@ -18653,23 +19806,22 @@
 
 
 /***/ }),
-
-/***/ 38:
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(39);
-	var hasBinary = __webpack_require__(40);
-	var sliceBuffer = __webpack_require__(41);
-	var after = __webpack_require__(42);
-	var utf8 = __webpack_require__(43);
+	var keys = __webpack_require__(65);
+	var hasBinary = __webpack_require__(66);
+	var sliceBuffer = __webpack_require__(67);
+	var after = __webpack_require__(68);
+	var utf8 = __webpack_require__(69);
 	
 	var base64encoder;
 	if (global && global.ArrayBuffer) {
-	  base64encoder = __webpack_require__(44);
+	  base64encoder = __webpack_require__(70);
 	}
 	
 	/**
@@ -18727,7 +19879,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(45);
+	var Blob = __webpack_require__(71);
 	
 	/**
 	 * Encodes a packet.
@@ -19270,8 +20422,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 39:
+/* 65 */
 /***/ (function(module, exports) {
 
 	
@@ -19296,8 +20447,7 @@
 
 
 /***/ }),
-
-/***/ 40:
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -19305,7 +20455,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(26);
+	var isArray = __webpack_require__(52);
 	
 	/**
 	 * Module exports.
@@ -19363,8 +20513,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 41:
+/* 67 */
 /***/ (function(module, exports) {
 
 	/**
@@ -19399,8 +20548,7 @@
 
 
 /***/ }),
-
-/***/ 42:
+/* 68 */
 /***/ (function(module, exports) {
 
 	module.exports = after
@@ -19434,8 +20582,7 @@
 
 
 /***/ }),
-
-/***/ 43:
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -19671,11 +20818,10 @@
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
 
 /***/ }),
-
-/***/ 44:
+/* 70 */
 /***/ (function(module, exports) {
 
 	/*
@@ -19748,8 +20894,7 @@
 
 
 /***/ }),
-
-/***/ 45:
+/* 71 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -19852,8 +20997,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 46:
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -20022,8 +21166,7 @@
 
 
 /***/ }),
-
-/***/ 47:
+/* 73 */
 /***/ (function(module, exports) {
 
 	/**
@@ -20066,8 +21209,7 @@
 
 
 /***/ }),
-
-/***/ 48:
+/* 74 */
 /***/ (function(module, exports) {
 
 	
@@ -20079,8 +21221,7 @@
 	};
 
 /***/ }),
-
-/***/ 49:
+/* 75 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -20154,8 +21295,7 @@
 
 
 /***/ }),
-
-/***/ 50:
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -20165,7 +21305,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(51);
+	exports = module.exports = __webpack_require__(77);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -20336,11 +21476,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
 
 /***/ }),
-
-/***/ 51:
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -20356,7 +21495,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(52);
+	exports.humanize = __webpack_require__(78);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -20546,8 +21685,7 @@
 
 
 /***/ }),
-
-/***/ 52:
+/* 78 */
 /***/ (function(module, exports) {
 
 	/**
@@ -20702,8 +21840,7 @@
 
 
 /***/ }),
-
-/***/ 53:
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -20711,8 +21848,8 @@
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(36);
-	var inherit = __webpack_require__(48);
+	var Polling = __webpack_require__(62);
+	var inherit = __webpack_require__(74);
 	
 	/**
 	 * Module exports.
@@ -20941,25 +22078,24 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 54:
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(37);
-	var parser = __webpack_require__(38);
-	var parseqs = __webpack_require__(47);
-	var inherit = __webpack_require__(48);
-	var yeast = __webpack_require__(49);
-	var debug = __webpack_require__(50)('engine.io-client:websocket');
+	var Transport = __webpack_require__(63);
+	var parser = __webpack_require__(64);
+	var parseqs = __webpack_require__(73);
+	var inherit = __webpack_require__(74);
+	var yeast = __webpack_require__(75);
+	var debug = __webpack_require__(76)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	var NodeWebSocket;
 	if (typeof window === 'undefined') {
 	  try {
-	    NodeWebSocket = __webpack_require__(55);
+	    NodeWebSocket = __webpack_require__(81);
 	  } catch (e) { }
 	}
 	
@@ -21234,15 +22370,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 55:
+/* 81 */
 /***/ (function(module, exports) {
 
 	/* (ignored) */
 
 /***/ }),
-
-/***/ 56:
+/* 82 */
 /***/ (function(module, exports) {
 
 	
@@ -21257,8 +22391,7 @@
 	};
 
 /***/ }),
-
-/***/ 57:
+/* 83 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -21296,8 +22429,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 58:
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -21305,13 +22437,13 @@
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(17);
-	var Emitter = __webpack_require__(59);
-	var toArray = __webpack_require__(60);
-	var on = __webpack_require__(61);
-	var bind = __webpack_require__(62);
-	var debug = __webpack_require__(13)('socket.io-client:socket');
-	var hasBin = __webpack_require__(40);
+	var parser = __webpack_require__(43);
+	var Emitter = __webpack_require__(85);
+	var toArray = __webpack_require__(86);
+	var on = __webpack_require__(87);
+	var bind = __webpack_require__(88);
+	var debug = __webpack_require__(39)('socket.io-client:socket');
+	var hasBin = __webpack_require__(66);
 	
 	/**
 	 * Module exports.
@@ -21722,8 +22854,7 @@
 
 
 /***/ }),
-
-/***/ 59:
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -21892,8 +23023,7 @@
 
 
 /***/ }),
-
-/***/ 60:
+/* 86 */
 /***/ (function(module, exports) {
 
 	module.exports = toArray
@@ -21912,8 +23042,7 @@
 
 
 /***/ }),
-
-/***/ 61:
+/* 87 */
 /***/ (function(module, exports) {
 
 	
@@ -21943,8 +23072,7 @@
 
 
 /***/ }),
-
-/***/ 62:
+/* 88 */
 /***/ (function(module, exports) {
 
 	/**
@@ -21973,8 +23101,7 @@
 
 
 /***/ }),
-
-/***/ 63:
+/* 89 */
 /***/ (function(module, exports) {
 
 	
@@ -22065,8 +23192,7 @@
 
 
 /***/ }),
-
-/***/ 64:
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -33299,11 +34425,10 @@
 	/***/ })
 	/******/ ]);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(65).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(91).Buffer))
 
 /***/ }),
-
-/***/ 65:
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -33316,9 +34441,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(66)
-	var ieee754 = __webpack_require__(67)
-	var isArray = __webpack_require__(68)
+	var base64 = __webpack_require__(92)
+	var ieee754 = __webpack_require__(93)
+	var isArray = __webpack_require__(94)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -35099,8 +36224,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-
-/***/ 66:
+/* 92 */
 /***/ (function(module, exports) {
 
 	'use strict'
@@ -35220,8 +36344,7 @@
 
 
 /***/ }),
-
-/***/ 67:
+/* 93 */
 /***/ (function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -35311,8 +36434,7 @@
 
 
 /***/ }),
-
-/***/ 68:
+/* 94 */
 /***/ (function(module, exports) {
 
 	var toString = {}.toString;
@@ -35323,14 +36445,13 @@
 
 
 /***/ }),
-
-/***/ 69:
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var diff = __webpack_require__(70);
-	var equal = __webpack_require__(71);
-	var extend = __webpack_require__(74);
-	var op = __webpack_require__(75);
+	var diff = __webpack_require__(96);
+	var equal = __webpack_require__(97);
+	var extend = __webpack_require__(100);
+	var op = __webpack_require__(101);
 	
 	
 	var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
@@ -35644,8 +36765,7 @@
 
 
 /***/ }),
-
-/***/ 70:
+/* 96 */
 /***/ (function(module, exports) {
 
 	/**
@@ -36349,13 +37469,12 @@
 
 
 /***/ }),
-
-/***/ 71:
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(72);
-	var isArguments = __webpack_require__(73);
+	var objectKeys = __webpack_require__(98);
+	var isArguments = __webpack_require__(99);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -36450,8 +37569,7 @@
 
 
 /***/ }),
-
-/***/ 72:
+/* 98 */
 /***/ (function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -36466,8 +37584,7 @@
 
 
 /***/ }),
-
-/***/ 73:
+/* 99 */
 /***/ (function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -36493,8 +37610,7 @@
 
 
 /***/ }),
-
-/***/ 74:
+/* 100 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -36586,12 +37702,11 @@
 
 
 /***/ }),
-
-/***/ 75:
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var equal = __webpack_require__(71);
-	var extend = __webpack_require__(74);
+	var equal = __webpack_require__(97);
+	var extend = __webpack_require__(100);
 	
 	
 	var lib = {
@@ -36731,1199 +37846,6 @@
 	module.exports = lib;
 
 
-/***/ }),
-
-/***/ 654:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Data manipulation - CollectionAddItems
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, aAddedItems) {
-	    // start
-	    this.__construct(directive, aAddedItems);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, aAddedItems) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. add items
-	        aAddedItems.forEach(function (item) {
-	
-	            // #todo - check if the component is already there (and duplicate items are allowed OR connection-id's
-	
-	            // validate
-	            if (displayUtils.passesFilter(directive, item)) {
-	                if (directive.sComponentName !== undefined) {
-	                    MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
-	                }
-	            }
-	        });
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 655:
-/***/ (function(module, exports) {
-
-	/**
-	 * Mimoto - Display Service utils
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	module.exports = function () {};
-	
-	module.exports.prototype = {
-	
-	    // match types
-	    MATCH_TYPE_EMPTY: 'match_type_empty',
-	    MATCH_TYPE_VALUE: 'match_type_value',
-	    MATCH_TYPE_REGEX: 'match_type_regex',
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Public methods ---------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    addClassesToElement: function addClassesToElement(element, aClasses) {
-	        var nClassCount = aClasses.length;
-	        for (var nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++) {
-	            element.classList.add(aClasses[nClassIndex]);
-	        }
-	    },
-	
-	    removeClassesFromElement: function removeClassesFromElement(element, aClasses) {
-	        var nClassCount = aClasses.length;
-	        for (var nClassIndex = 0; nClassIndex < nClassCount; nClassIndex++) {
-	            element.classList.remove(aClasses[nClassIndex]);
-	        }
-	    },
-	
-	    hideElement: function hideElement(element) {
-	        element.classList.add('Mimoto_CoreCSS_hidden');
-	    },
-	
-	    showElement: function showElement(element) {
-	        element.classList.remove('Mimoto_CoreCSS_hidden');
-	    },
-	
-	    hasAnyMatch: function hasAnyMatch(value, aValues) {
-	        return this._hasMatch(value, aValues, this.MATCH_TYPE_VALUE);
-	    },
-	
-	    hasAnyRegexMatch: function hasAnyRegexMatch(value, aValues) {
-	        return this._hasMatch(value, aValues, this.MATCH_TYPE_REGEX);
-	    },
-	
-	    isEmpty: function isEmpty(value) {
-	        if (value === null) {
-	            return true;
-	        } else if (!isNaN(parseInt(value))) {
-	            return value == 0;
-	        } else {
-	            return value.length == 0;
-	        }
-	    },
-	
-	    getInitialState: function getInitialState(directive) {
-	        // 1. init
-	        var bValidated = false;
-	
-	        // 2. validate and set
-	        if (directive.instructions.initialState !== undefined) bValidated = directive.instructions.initialState;
-	
-	        // 3. send
-	        return bValidated;
-	    },
-	
-	    passesFilter: function passesFilter(directive, item) {
-	        // 1. init
-	        var bFilterApproved = true;
-	
-	        // 2. verify
-	        if (directive.aFilterValues) {
-	            // check
-	            for (var sKey in item.data) {
-	                if (directive.aFilterValues[sKey] && item.data[sKey] != directive.aFilterValues[sKey]) {
-	                    bFilterApproved = false;
-	                    break;
-	                }
-	            }
-	        }
-	
-	        // 3. send
-	        return bFilterApproved;
-	    },
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Private methods --------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    _hasMatch: function _hasMatch(value, aValues, sMatchType) {
-	        // 1. init
-	        var bMatchFound = false;
-	
-	        // 2. find
-	        var nValueCount = aValues.length;
-	        for (var nValueIndex = 0; nValueIndex < nValueCount; nValueIndex++) {
-	            switch (sMatchType) {
-	                case this.MATCH_TYPE_VALUE:
-	
-	                    // verify
-	                    if (value == aValues[nValueIndex]) {
-	                        bMatchFound = true;
-	                        continue;
-	                    }
-	                    break;
-	
-	                case this.MATCH_TYPE_REGEX:
-	
-	                    // init
-	                    var regex = new RegExp(aValues[nValueIndex], 'g');
-	
-	                    // verify
-	                    if (regex.test(value)) {
-	                        bMatchFound = true;
-	                        continue;
-	                    }
-	                    break;
-	            }
-	        }
-	
-	        // 3. send
-	        return bMatchFound;
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 656:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Data manipulation - CollectionRemoveItems
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, aRemovedItems, aSelectors) {
-	    // start
-	    this.__construct(directive, aRemovedItems, aSelectors);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, aRemovedItems, aSelectors) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. add items
-	        aRemovedItems.forEach(function (item) {
-	            // 2. compose
-	            var sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
-	
-	            // 3. find
-	            var element = directive.element.querySelector('[' + MimotoX.display.TAG_MIMOTO_ID + '="' + sEntitySelector + '"][' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
-	
-	            // 4. verify
-	            if (element && aSelectors[sEntitySelector]) {
-	                // 4b. find
-	                var nCleanupCount = aSelectors[sEntitySelector].length;
-	                for (var nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++) {
-	                    // register
-	                    var cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
-	
-	                    // verify
-	                    if (cleanupCandidate.nConnectionId == item.connection.id) {
-	                        // remove
-	                        aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
-	
-	                        // correct
-	                        if (aSelectors[sEntitySelector].length > 0) nCleanupIndex--;
-	
-	                        // cleanup
-	                        if (aSelectors[sEntitySelector].length === 0) {
-	                            delete aSelectors[sEntitySelector];
-	                            break;
-	                        }
-	                    }
-	                }
-	
-	                directive.element.removeChild(element);
-	            }
-	        });
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 657:
-/***/ (function(module, exports) {
-
-	/**
-	 * Mimoto - Data manipulation - CollectionChangeSortOrder
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	module.exports = function (directive, aConnections) {
-	    // start
-	    this.__construct(directive, aConnections);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, aConnections) {
-	        // 1. init
-	        var previousElement = null;
-	
-	        // 2. change order
-	        aConnections.forEach(function (connection, nConnectionIndex) {
-	            // register
-	            var currentElement = directive.element.querySelector('[' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + connection.id + '"]');
-	            currentElement.setAttribute(MimotoX.display.TAG_SETTING_MIMOTO_SORTINDEX, connection.sortindex);
-	
-	            // verify
-	            if (nConnectionIndex == 0) {
-	                directive.element.insertBefore(currentElement, directive.element.firstChild);
-	            } else {
-	                directive.element.insertBefore(currentElement, previousElement.nextSibling);
-	            }
-	
-	            // update
-	            previousElement = currentElement;
-	        });
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 658:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 659:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenNotEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 660:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 661:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenNotRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 662:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 663:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - HideWhenNotValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. hide
-	            displayUtils.hideElement(directive.element);
-	        } else {
-	            // 2b. show
-	            displayUtils.showElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 664:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 665:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenNotEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 666:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 667:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenNotRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 668:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 669:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - ShowWhenNotValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. show
-	            displayUtils.showElement(directive.element);
-	        } else {
-	            // 2b. hide
-	            displayUtils.hideElement(directive.element);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 670:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 671:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenNotEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 672:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 673:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenNotRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 674:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - AddClassWhenNotValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 675:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 676:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenNotEmpty
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.isEmpty(value) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 677:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 678:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenNotRegex
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyRegexMatch(value, directive.instructions.patterns) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
-/***/ }),
-
-/***/ 679:
-/***/ (function(module, exports, __webpack_require__) {
-
-	/**
-	 * Mimoto - Display option - RemoveClassWhenNotValue
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	var DisplayUtils = __webpack_require__(655);
-	
-	module.exports = function (directive, value) {
-	    // start
-	    this.__construct(directive, value);
-	};
-	
-	module.exports.prototype = {
-	
-	    __construct: function __construct(directive, value) {
-	        // 1. init
-	        var displayUtils = new DisplayUtils();
-	
-	        // 2. verify
-	        var bValidated = value !== undefined ? !displayUtils.hasAnyMatch(value, directive.instructions.values) : displayUtils.getInitialState(directive);
-	
-	        // 3. toggle
-	        if (bValidated) {
-	            // 2a. remove
-	            displayUtils.removeClassesFromElement(directive.element, directive.instructions.classes);
-	        } else {
-	            // 2b. add
-	            displayUtils.addClassesToElement(directive.element, directive.instructions.classes);
-	        }
-	    }
-	
-	};
-
 /***/ })
-
-/******/ });
+/******/ ]);
 //# sourceMappingURL=mimoto.js.map

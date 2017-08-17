@@ -24,21 +24,98 @@ use Silex\Application;
 class DataController
 {
 
+    public function edit(Application $app, Request $request)
+    {
+        // 1. register
+        $sPropertySelector = $request->get('sPropertySelector');
+        $sFormName = $request->get('sFormName');
+
+        // 2. extract
+        $sEntity = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
+        $nInstanceId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sPropertySelector);
+
+        // 3. load
+        $eEntity = Mimoto::service('data')->get($sEntity, $nInstanceId);
+
+
+        // ---
+
+
+        // 4. init page
+        $popup = Mimoto::service('output')->createPopup();
+
+        // 3. create content
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+
+        // 7. setup content
+        $component->addForm(
+            $sFormName,
+            $eEntity,
+            [
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
+
+        // 4. connect
+        $popup->addComponent('content', $component);
+
+        // 5. output
+        return $popup->render();
+    }
+
     /**
-     * View component overview
+     * .......
      * @return string The rendered html output
      */
-    public function createAndAdd(Application $app, Request $request)
+    public function add(Application $app, Request $request)
     {
+        // 1. register
+        $sPropertySelector = $request->get('sPropertySelector');
+        $sFormName = $request->get('sFormName');
+
+        // 2. extract
+        $sEntity = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
+        $nInstanceId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sPropertySelector);
+        $sPropertyName = MimotoDataUtils::getPropertyFromFromEntityPropertySelector($sPropertySelector);
+
+        // 3. setup
+        $aParentEntities[] = [(object) array('type' => CoreConfig::MIMOTO_ENTITY, 'id' => $nInstanceId, 'property' => $sPropertyName)];
 
 
-        // 1. wat openen? page or popup? create = page
-        // 2. select = popup
+        // get parent
+
+        // 3. load
+        $eEntity = Mimoto::service('data')->createAndConnect(CoreConfig::MIMOTO_COMPONENT, $aParentEntities);
 
 
 
-        // 1. validate
-        if (!MimotoDataUtils::isValidId($nEntityId)) $app->redirect('/mimoto.cms');
+
+        // 6. create and connect
+        $eComponent =
+
+
+
+
+        // 4. init page
+        $popup = Mimoto::service('output')->createPopup();
+
+        // 3. create content
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+
+        // 7. setup content
+        $component->addForm(
+            $sFormName,
+            $eEntity,
+            [
+                'response' => ['onSuccess' => ['closePopup' => true]]
+            ]
+        );
+
+        // 4. connect
+        $popup->addComponent('content', $component);
+
+        // 5. output
+        return $popup->render();
 
 
         // ---
@@ -60,11 +137,10 @@ class DataController
         // 5. verify and add
         if (MimotoDataUtils::isValidId($nEntityId))
         {
-            $aParentEntities[] = (object) array('type' => CoreConfig::MIMOTO_ENTITY, 'id' => $nEntityId, 'property' => 'components');
+
         }
 
-        // 6. create and connect
-        $eComponent = Mimoto::service('data')->createAndConnect(CoreConfig::MIMOTO_COMPONENT, $aParentEntities);
+
 
 
         // ---

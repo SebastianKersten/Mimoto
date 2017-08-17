@@ -49,8 +49,30 @@ module.exports.prototype = {
 
         console.log('Editing the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
 
-        MimotoX.popup('/mimoto/data/edit'); // -> call by post
+        let postData = {
+            sPropertySelector: sPropertySelector,
+            sFormName: sFormName,
+            options: options
+        };
+
+        MimotoX.popup('/mimoto/data/edit', postData);
     },
+
+    add: function(sPropertySelector, sFormName, options) {
+
+        console.log('Adding something to the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
+
+        let postData = {
+            sPropertySelector: sPropertySelector,
+            sFormName: sFormName,
+            options: options
+        };
+
+        MimotoX.popup('/mimoto/data/add', postData);
+    },
+
+
+
 
     remove: function(sEntityselector, options)
     {

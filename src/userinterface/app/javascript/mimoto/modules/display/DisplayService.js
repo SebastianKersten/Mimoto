@@ -430,6 +430,16 @@ module.exports.prototype = {
 
                         console.log('DIRECTIVE_MIMOTO_DATA_ADD');
 
+                        // configure
+                        directive.element.addEventListener('click', function(sPropertySelector, sFormName, options, e)
+                        {
+                            // forward
+                            MimotoX.data.add(sPropertySelector, sFormName, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
+
+                        break;
+
                         break;
 
 

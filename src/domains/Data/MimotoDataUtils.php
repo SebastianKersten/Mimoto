@@ -225,10 +225,10 @@ class MimotoDataUtils
      * @param $Selector
      * @return string
      */
-    public static function getEntityTypeFromEntityInstanceSelector($Selector)
+    public static function getEntityTypeFromEntityInstanceSelector($sSelector)
     {
         // split
-        $aParts = explode('.', $Selector);
+        $aParts = explode('.', $sSelector);
 
         // send
         return $aParts[0];
@@ -251,6 +251,20 @@ class MimotoDataUtils
 
         // send
         return $aParts[1];
+    }
+
+    /**
+     * Get property from entityProperty-selector
+     * @param $Selector
+     * @return string
+     */
+    public static function getPropertyFromFromEntityPropertySelector($sEntityPropertySelector)
+    {
+        // split
+        $aParts = explode('.', $sEntityPropertySelector);
+
+        // send
+        return $aParts[2];
     }
 
     /**

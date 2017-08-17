@@ -145,6 +145,11 @@ class Mimoto
 
 
 
+        // --- data manipulation
+        $app->post('/'.$sProjectName.'/data/edit', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::edit');
+        $app->post('/'.$sProjectName.'/data/add', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::add');
+
+
 
         // --- routes ---
 
