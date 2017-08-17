@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.layoutEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', type:'secondary', directive:Mimoto.edit('name', '_Mimoto_coreform_component') }) }}
                     </div>
 
                 </div>
@@ -36,7 +36,7 @@
 
                 <div class="MimotoCMS_pages_components_ComponentDetail_Structure__templates_empty" {{ Mimoto.showWhenEmpty('templates') }}>
                     <div>This component has no templates yet.<br>Add one. Now! I'm not kidding, Do it .. or you won't be able to use this component!</div>
-                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', onclick:"Mimoto.CMS.componentTemplateNew('" ~ Mimoto.meta('id') ~ "');", directive:Mimoto.createAndConnect('_Mimoto_componenttemplate', 'templates') }) }}</div>
+                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', onclick:"Mimoto.CMS.componentTemplateNew('" ~ Mimoto.meta('id') ~ "');", directive:Mimoto.add('templates', '_Mimoto_coreform_componenttemplate') }) }}</div>
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('templates') }}>
@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Mimoto.meta('id') ~ "');", directive:Mimoto.createAndConnect('_Mimoto_componenttemplate', 'templates') }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', onclick:"Mimoto.CMS.layoutContainerNew('" ~ Mimoto.meta('id') ~ "');", directive:Mimoto.add('templates', '_Mimoto_coreform_componenttemplate') }) }}
                     </div>
                 </div>
 

@@ -280,34 +280,48 @@ class OutputService
         $nComponentCount = count($this->_aComponents);
         for ($nComponentIndex = 0; $nComponentIndex < $nComponentCount; $nComponentIndex++)
         {
-            $template = $this->_aComponents[$nComponentIndex];
+            // register
+            $component = $this->_aComponents[$nComponentIndex];
 
-            if ($template->name === $sComponentName)
+            // verify
+            if ($component->name === $sComponentName)
             {
-                if (count($template->conditionals) > 0)
+                // read
+                $aTemplates = $component->templates;
+
+                // search
+                $nTemplateCount = count($aTemplates);
+                for ($nTemplateIndex = 0; $nTemplateIndex < $nTemplateCount; $nTemplateIndex++)
                 {
-                    // init
-                    $sComponentConditionals = '[';
+                    // register
+                    $template = $aTemplates[$nTemplateIndex];
 
-                    // compose
-                    $nConditionalCount = count($template->conditionals);
-                    for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
+
+                    if (count($template->conditionals) > 0)
                     {
-                        // register
-                        $conditional = $template->conditionals[$nConditionalIndex];
-
-                        // store
-                        $sComponentConditionals .= $conditional->propertyName;
+                        // init
+                        $sComponentConditionals = '[';
 
                         // compose
-                        if ($nConditionalIndex < $nConditionalCount - 1) $sComponentConditionals .= ',';
+                        $nConditionalCount = count($template->conditionals);
+                        for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
+                        {
+                            // register
+                            $conditional = $template->conditionals[$nConditionalIndex];
+
+                            // store
+                            $sComponentConditionals .= $conditional->propertyName;
+
+                            // compose
+                            if ($nConditionalIndex < $nConditionalCount - 1) $sComponentConditionals .= ',';
+                        }
+
+                        // compose
+                        $sComponentConditionals .= ']';
                     }
 
-                    // compose
-                    $sComponentConditionals .= ']';
+                    break;
                 }
-
-                break;
             }
         }
 

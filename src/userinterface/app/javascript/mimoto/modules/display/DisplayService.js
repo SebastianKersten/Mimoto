@@ -51,17 +51,21 @@ module.exports = function() {
 module.exports.prototype = {
 
 
-    // data tags
+    // data directives
     TAG_MIMOTO_VALUE:      'data-mimoto-value',
     TAG_MIMOTO_ENTITY:     'data-mimoto-entity',
     TAG_MIMOTO_COLLECTION: 'data-mimoto-collection',
     TAG_MIMOTO_IMAGE:      'data-mimoto-image',
     TAG_MIMOTO_VIDEO:      'data-mimoto-video',
     TAG_MIMOTO_AUDIO:      'data-mimoto-audio',
-
     TAG_MIMOTO_ID:         'data-mimoto-id',
 
-    // display tags
+    // data manipulation directives
+    DIRECTIVE_MIMOTO_DATA_EDIT:    'data-mimoto-edit',
+    DIRECTIVE_MIMOTO_DATA_ADD:     'data-mimoto-add',
+    DIRECTIVE_MIMOTO_DATA_REMOVE:  'data-mimoto-remove',
+
+    // display directives
     TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
     TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:     'data-mimoto-display-hidewhennotempty',
     TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:        'data-mimoto-display-hidewhenregex',
@@ -214,7 +218,7 @@ module.exports.prototype = {
         // 2. prepare (the order is important, because first the changes are implemented, and afterwards the display)
         let aPrimaryTags = [
 
-            // data tags
+            // data directives
             this.TAG_MIMOTO_VALUE,
             this.TAG_MIMOTO_ENTITY,
             this.TAG_MIMOTO_COLLECTION,
@@ -223,7 +227,12 @@ module.exports.prototype = {
             this.TAG_MIMOTO_AUDIO,
             this.TAG_MIMOTO_ID,
 
-            // display tags
+            // data manipulation directives
+            this.DIRECTIVE_MIMOTO_DATA_EDIT,
+            this.DIRECTIVE_MIMOTO_DATA_ADD,
+            this.DIRECTIVE_MIMOTO_DATA_REMOVE,
+
+            // display directives
             this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
             this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY,
             this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX,
@@ -399,6 +408,27 @@ module.exports.prototype = {
                     case this.TAG_MATH_MIMOTO_COUNT:
 
                         //MimotoX.log('Count', directive);
+
+                        break;
+
+                    // --- data manipulation
+
+
+                    case this.DIRECTIVE_MIMOTO_DATA_EDIT:
+
+                        // configure
+                        directive.element.addEventListener('click', function(sPropertySelector, sFormName, options, e)
+                        {
+                            // forward
+                            MimotoX.data.edit(sPropertySelector, sFormName, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
+
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_ADD:
+
+                        console.log('DIRECTIVE_MIMOTO_DATA_ADD');
 
                         break;
 

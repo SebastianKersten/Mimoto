@@ -194,17 +194,54 @@ class AimlessComponentViewModel
 
     }
 
-    public function createAndConnect($sType, $xPropertySelector, $options = null)
+    public function select($sSelectionName, $xPropertySelector, $options = null)
     {
         // convert to $xPropertySelector
 
 
-        return 'data-mimoto data-mimoto-createandconnect="component.3.templates|{type:xxx}"';
+        return 'data-mimoto data-mimoto-add="component.3.templates|{type:xxx}"';
 
         // compose and send
         return DataUtils::createAndConnect($sType, $xPropertySelector, $this->_component, $options);
 
         // delete
+    }
+
+
+    public function get()
+    {
+        // alias for Mimoto.data
+    }
+
+    public function set()
+    {
+
+    }
+
+    public function add($sPropertySelector,  $sFormName)
+    {
+
+    }
+
+    public function remove()
+    {
+
+    }
+
+    public function edit($sPropertySelector, $sFormName, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'form' => $sFormName
+        );
+
+        // build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDIT, $sPropertySelector, $this->_component, $instructions, $options);
+    }
+
+    public function collaborate()
+    {
+
     }
 
     public function selectAndConnect($xSelection, $sPropertySelector, $options)

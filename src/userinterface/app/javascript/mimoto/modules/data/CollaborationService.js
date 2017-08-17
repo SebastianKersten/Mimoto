@@ -1,5 +1,5 @@
 /**
- * Mimoto.CMS - Data service for data manipulation
+ * Mimoto.CMS - Collaboration service for data manipulation
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -44,13 +44,6 @@ module.exports.prototype = {
     popup: null,
     hidden: null,
 
-
-    edit: function(sPropertySelector, sFormName, options) {
-
-        console.log('Editing the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
-
-        MimotoX.popup('/mimoto/data/edit'); // -> call by post
-    },
 
     remove: function(sEntityselector, options)
     {
