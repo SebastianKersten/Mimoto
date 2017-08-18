@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "377c71516553edfbadc5";
+/******/ 	__webpack_require__.h = "35b91b81889d42c973f7";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -54762,70 +54762,6 @@
 	
 	        //popup.on('success') = popup.close();
 	    },
-	
-	    /**
-	     * Create new component
-	     */
-	    componentNew: function componentNew(nEntityId) {
-	        MimotoX.page("/mimoto.cms/component/new");
-	    },
-	
-	    componentView: function componentView(nComponentId) {
-	        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
-	    },
-	
-	    componentEdit: function componentEdit(nComponentId) {
-	        MimotoX.popup('/mimoto.cms/component/' + nComponentId + '/edit');
-	    },
-	
-	    componentDelete: function componentDelete(nComponentId) {
-	        MimotoX.utils.callAPI({
-	            type: 'get',
-	            url: "/mimoto.cms/component/" + nComponentId + "/delete",
-	            data: null,
-	            dataType: 'json',
-	            success: function success(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	
-	    componentConditionalNew: function componentConditionalNew(nComponentId) {
-	        var popup = MimotoX.popup('/mimoto.cms/component/' + nComponentId + '/conditional/new');
-	    },
-	
-	    componentConditionalEdit: function componentConditionalEdit(nComponentConditionalId) {
-	        var popup = MimotoX.popup('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
-	    },
-	
-	    componentConditionalDelete: function componentConditionalDelete(nComponentConditionalId) {
-	        MimotoX.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/componentconditional/' + nComponentConditionalId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function success(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	
-	    //
-	    //
-	    // /**
-	    //  * Create new component
-	    //  */
-	    // eNew: function(nEntityId)
-	    // {
-	    //     var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
-	    //
-	    //     // Mimoto.Aimless/data/
-	    //
-	    //
-	    //     popup() / page()
-	    // },
-	    //
-	    //
 	
 	    /**
 	     * Selections

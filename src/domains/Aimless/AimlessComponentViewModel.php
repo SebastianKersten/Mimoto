@@ -202,18 +202,6 @@ class AimlessComponentViewModel
 
     }
 
-    public function select($sSelectionName, $xPropertySelector, $options = null)
-    {
-        // convert to $xPropertySelector
-
-
-        return 'data-mimoto data-mimoto-add="component.3.templates|{type:xxx}"';
-
-        // compose and send
-        return DataUtils::createAndConnect($sType, $xPropertySelector, $this->_component, $options);
-
-        // delete
-    }
 
 
     public function get()
@@ -237,7 +225,7 @@ class AimlessComponentViewModel
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDIT, null, $this->_component, $instructions, $options);
     }
 
-    public function add($sPropertySelector, $sFormName, $options = null)
+    public function add($sPropertyName, $sFormName, $options = null)
     {
         // 1. prepare
         $instructions = (object) array(
@@ -245,7 +233,7 @@ class AimlessComponentViewModel
         );
 
         // 2. build and output
-        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_ADD, $sPropertySelector, $this->_component, $instructions, $options);
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_ADD, $sPropertyName, $this->_component, $instructions, $options);
     }
 
     public function remove($options = null)
@@ -257,18 +245,23 @@ class AimlessComponentViewModel
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_REMOVE, null, $this->_component, $instructions, $options);
     }
 
+    public function select($sPropertyName, $sSelectionName, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'selection' => $sSelectionName
+        );
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_SELECT, $sPropertyName, $this->_component, $instructions, $options);
+    }
+
 
 
     public function collaborate()
     {
 
     }
-
-    public function selectAndConnect($xSelection, $sPropertySelector, $options)
-    {
-        // convert into selection (name or config)
-    }
-
 
 
 

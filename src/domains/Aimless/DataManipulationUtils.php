@@ -20,6 +20,7 @@ class DataManipulationUtils
     const MIMOTO_DATA_EDIT   = 'data-mimoto-edit';
     const MIMOTO_DATA_ADD    = 'data-mimoto-add';
     const MIMOTO_DATA_REMOVE = 'data-mimoto-remove';
+    const MIMOTO_DATA_SELECT = 'data-mimoto-select';
 
 
 

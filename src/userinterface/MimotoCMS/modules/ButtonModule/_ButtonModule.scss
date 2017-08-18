@@ -35,6 +35,7 @@
     text-decoration: underline;
     color: #555;
     background-color: inherit;
+    white-space: nowrap;
 
     &:hover {
         color: #000;
@@ -62,6 +63,7 @@
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
+        white-space: nowrap;
     }
 
         .MimotoCMS_ButtonModule-text {
@@ -70,6 +72,7 @@
             font-weight: 500;
             line-height: rem-calc(20px);
             flex: 1 1 auto;
+            white-space: nowrap;
         }
 
         .MimotoCMS_ButtonModule-icon {
