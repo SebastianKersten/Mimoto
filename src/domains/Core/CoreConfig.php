@@ -22,7 +22,6 @@ use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
 use Mimoto\Core\entities\ContentSection;
 use Mimoto\Core\entities\Route;
-use Mimoto\Core\entities\RoutePath;
 use Mimoto\Core\entities\RoutePathElement;
 use Mimoto\Core\entities\Output;
 use Mimoto\Core\entities\OutputContainer;
@@ -108,7 +107,6 @@ class CoreConfig
 
     // routes
     const MIMOTO_ROUTE                          = '_Mimoto_route';
-    const MIMOTO_ROUTE_PATH                     = '_Mimoto_route_path';
     const MIMOTO_ROUTE_PATH_ELEMENT             = '_Mimoto_route_path_element';
     const MIMOTO_OUTPUT                         = '_Mimoto_output';
     const MIMOTO_OUTPUT_CONTAINER               = '_Mimoto_output_container';
@@ -276,7 +274,6 @@ class CoreConfig
             // content
             File::getStructure(),
             Route::getStructure(),
-            RoutePath::getStructure(),
             RoutePathElement::getStructure(),
             Output::getStructure(),
             OutputContainer::getStructure(),
@@ -354,7 +351,6 @@ class CoreConfig
 
             // content
             Route::getFormStructure(),
-            RoutePath::getFormStructure(),
             RoutePathElement::getFormStructure(),
             Output::getFormStructure(),
             OutputContainer::getFormStructure(),

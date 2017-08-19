@@ -515,6 +515,16 @@ class Component
                     )
                 ]
             ),
+            (object) array(
+                'name' => 'MimotoCMS_pages_Detail-PathElement',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/pages/Detail/PathElement/PathElement.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
 
 
             // content sections

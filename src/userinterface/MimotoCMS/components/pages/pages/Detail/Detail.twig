@@ -23,7 +23,19 @@
                         <div class="MimotoCMS_pages_pages_Detail_Structure__name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
                         <br>
 
+                    </div>
 
+                    <div class="MimotoCMS_pages_pages_Detail_Structure__meta_menu">
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_route') }) }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="MimotoCMS_pages_pages_Detail_Structure">
+
+                <div class="MimotoCMS_pages_pages_Detail_Structure__meta">
+                    <div class="MimotoCMS_pages_pages_Detail_Structure__meta_info">
 
                         <div class="MimotoCMS_pages_pages_Detail-UserRoles">
 
@@ -41,41 +53,38 @@
 
                         </div>
 
-                        <div class="MimotoCMS_pages_pages_Detail-Route">
+                        <div class="MimotoCMS_pages_pages_Detail-path">
 
                             This page uses the following route:
 
-                            <div class="MimotoCMS_pages_pages_Detail-UserRoles-empty" {{ Mimoto.showWhenEmpty('allowedUserRoles') }}>
+                            <div class="MimotoCMS_pages_pages_Detail-path-empty" {{ Mimoto.showWhenEmpty('path') }}>
                                 Available to view by anyone!
                             </div>
 
-                            <div {{ Mimoto.hideWhenEmpty('allowedUserRoles') }}>
-                                <div class="MimotoCMS_pages_pages_Detail-UserRoles-container js-list js-list-sortable" {{ Mimoto.realtime('allowedUserRoles', 'MimotoCMS_pages_Detail-AllowedUserRole') }}>
-                                    {{ Mimoto.data('allowedUserRoles', 'MimotoCMS_pages_Detail-AllowedUserRole') }}
+                            <div {{ Mimoto.hideWhenEmpty('path') }}>
+                                <div class="MimotoCMS_pages_pages_Detail-absolutepath">
+                                    <div>/</div>
+                                    <div class="MimotoCMS_pages_pages_Detail-path-container js-list js-list-sortable" {{ Mimoto.realtime('path', 'MimotoCMS_pages_Detail-PathElement') }}>
+                                        {{ Mimoto.data('path', 'MimotoCMS_pages_Detail-PathElement') }}
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="div.MimotoCMS_pages_pages_Detail-path-menu">
+                                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add path element', icon:'plus', directive:Mimoto.add('path', '_Mimoto_route_path_element') }) }}
                             </div>
 
                         </div>
 
+
+
                         {#<div class="MimotoCMS_pages_pages_Detail-BaseComponent">#}
 
-                            {#Base component or layout:#}
+                        {#Base component or layout:#}
 
                         {#</div>#}
-
                     </div>
-
-                    <div class="MimotoCMS_pages_pages_Detail_Structure__meta_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_route') }) }}
-                    </div>
-
                 </div>
-
-            </div>
-
-            <div class="MimotoCMS_pages_pages_Detail_Structure">
-
-
             </div>
 
         </div>

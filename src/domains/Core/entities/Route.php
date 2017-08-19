@@ -47,12 +47,17 @@ class Route
                     'id' => CoreConfig::MIMOTO_ROUTE.'--path',
                     // ---
                     'name' => 'path',
-                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
-                        'allowedEntityType' => (object) array(
-                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => CoreConfig::MIMOTO_ROUTE_PATH
+                            'value' => [CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
                 ),

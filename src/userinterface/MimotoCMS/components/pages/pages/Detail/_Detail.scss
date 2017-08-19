@@ -1,4 +1,5 @@
 @import 'AllowedUserRole/AllowedUserRole';
+@import 'PathElement/PathElement';
 
 
 div.MimotoCMS_pages_pages_Detail__panel {
@@ -70,9 +71,51 @@ div.MimotoCMS_pages_pages_Detail-UserRoles-container {
     }
 }
 
-div.MimotoCMS_pages_pages_Detail-Route {
+div.MimotoCMS_pages_pages_Detail-path {
     margin-top: 35px;
 }
+
+div.MimotoCMS_pages_pages_Detail-path-empty {
+    margin-top: 35px;
+    font-style: italic;
+    color: $tower-gray;
+}
+
+div.MimotoCMS_pages_pages_Detail-absolutepath {
+    margin: 10px 0 15px 0;
+    padding: 10px;
+    display: flex;
+    background-color: #f1f1f1;
+
+    & > div {
+        flex-basis: auto;
+    }
+
+    & > div:first-child {
+        padding: 10px 5px 10px 0;
+    }
+}
+
+div.MimotoCMS_pages_pages_Detail-path-container {
+
+    & > div:first-child {
+        margin-left: 3px;
+    }
+
+    & > div {
+        margin-right: 3px;
+    }
+
+    & > div:last-child {
+        margin-right: 0;
+    }
+}
+
+div.MimotoCMS_pages_pages_Detail-path-menu {
+    padding: 20px 0 10px 0;
+    text-align: left;
+}
+
 
 
 div.MimotoCMS_pages_pages_Detail__block {
