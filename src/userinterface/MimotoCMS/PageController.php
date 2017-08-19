@@ -49,35 +49,6 @@ class PageController
     }
 
     /**
-     * View new page form
-     * @return string The rendered html output
-     */
-    public function pageNew()
-    {
-        // 1. init popup
-        $popup = Mimoto::service('output')->createPopup();
-
-        // 2. create form layout
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
-
-        // 3. setup form
-        $component->addForm(
-            CoreConfig::MIMOTO_ROUTE,
-            null,
-            [
-                'onCreatedConnectTo' => CoreConfig::MIMOTO_ROOT.'.'.CoreConfig::MIMOTO_ROOT.'.pages',
-                'response' => ['onSuccess' => ['closePopup' => true]]
-            ]
-        );
-
-        // 4. connect content
-        $popup->addComponent('content', $component);
-
-        // 5. output
-        return $popup->render();
-    }
-
-    /**
      * View page
      * @return string The rendered html output
      */
@@ -113,60 +84,6 @@ class PageController
 
         // 7. output
         return $page->render();
-    }
-
-    /**
-     * Edit page
-     * @param Application $app
-     * @param $nItemId
-     * @return mixed
-     */
-    public function pageEdit(Application $app, $nItemId)
-    {
-        // 1. init popup
-        $popup = Mimoto::service('output')->createPopup();
-
-        // 2. load
-        $ePage = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROUTE, $nItemId);
-
-        // 3. validate
-        if (empty($ePage)) return $app->redirect("/mimoto.cms/pages");
-
-        // 4. create
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
-
-        // 5. setup
-        $component->addForm(
-            CoreConfig::MIMOTO_ROUTE,
-            $ePage,
-            [
-                'response' => ['onSuccess' => ['closePopup' => true]]
-            ]
-        );
-
-        // 6. connect
-        $popup->addComponent('content', $component);
-
-        // 7. output
-        return $popup->render();
-    }
-
-    /**
-     * Delete page
-     * @param Application $app
-     * @param $nItemId
-     * @return mixed
-     */
-    public function pageDelete(Application $app, $nItemId)
-    {
-        // 1. load
-        $ePage = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROUTE, $nItemId);
-
-        // 2. delete
-        Mimoto::service('data')->delete($ePage);
-
-        // 3. output
-        return Mimoto::service('messages')->response((object) array('result' => 'Page deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 }

@@ -3,8 +3,15 @@
     {
         button_label: 'Add new selection',
         button_icon: 'plus',
-        button_onclick: "Mimoto.CMS.selectionNew();",
+        button_directive: Mimoto.add('selections', '_Mimoto_coreform__selection'),
         property_name: 'selections',
-        listitem_component: 'Mimoto.CMS_selections_Overview_ListItem'
+        listitem_component: 'MimotoCMS_selections_Overview_ListItem'
     })
 }}
+
+<div {{ Mimoto.showWhenEmpty('selections') }}>
+    <b>Start adding selections</b><br>
+    Adding selections to your project allow you to dynamically fetch preconfigured
+    sets of data from within every scope of your project. With the added benefit of
+    out of the box heavy caching.
+</div>

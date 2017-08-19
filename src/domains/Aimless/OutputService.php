@@ -453,109 +453,114 @@ class OutputService
         // check if in memory, else load from mysql:
         
         
-        // init
+        // 1. init
         $aComponents = [];
 
 
-        // load all components
+        // 2. load all components
         $aRawComponents = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_COMPONENT);
         $aRawTemplates = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_COMPONENTTEMPLATE);
         $aRawConditionals = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_COMPONENTCONDITIONAL);
 
-        // load
+        // 3. load all connections
         $aComponentTemplateConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_COMPONENT);
         $aTemplateConditionalConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_COMPONENTTEMPLATE);
 
-        //Mimoto::error($aComponentTemplateConnections);
 
-        // parse components
+
+        // 4. build components data
         $nComponentCount = count($aRawComponents);
         for ($nComponentIndex = 0; $nComponentIndex < $nComponentCount; $nComponentIndex++)
         {
+            // register
+            $rawComponent = $aRawComponents[$nComponentIndex];
+
+            // build
+            $aComponents[] = $component = (object) array(
+                'name' => $rawComponent->name,
+                'templates' => []
+            );
+
+            // verify
+            if (isset($aComponentTemplateConnections[$rawComponent->id]))
+            {
+                // search
+                $nTemplateConnectionCount = count($aComponentTemplateConnections[$rawComponent->id]);
+                for ($nTemplateConnectionIndex = 0; $nTemplateConnectionIndex < $nTemplateConnectionCount; $nTemplateConnectionIndex++)
+                {
+                    // register
+                    $rawTemplateConnection = $aComponentTemplateConnections[$rawComponent->id][$nTemplateConnectionIndex];
+
+                    // find
+                    $nTemplateCount = count($aRawTemplates);
+                    for ($nTemplateIndex = 0; $nTemplateIndex < $nTemplateCount; $nTemplateIndex++)
+                    {
+                        // register
+                        $rawTemplate = $aRawTemplates[$nTemplateIndex];
+
+                        // verify
+                        if ($rawTemplate->id == $rawTemplateConnection->child_id)
+                        {
+                            // add
+                            $template = $component->templates[] = (object) array(
+                                'file' => $rawTemplate->file,
+                                'conditionals' => []
+                            );
+
+                            // verify
+                            if (isset($aTemplateConditionalConnections[$rawTemplate->id]))
+                            {
+                                // search
+                                $nConditionalConnectionCount = count($aTemplateConditionalConnections[$rawTemplate->id]);
+                                for ($nConditionalConnectionIndex = 0; $nConditionalConnectionIndex < $nConditionalConnectionCount; $nConditionalConnectionIndex++)
+                                {
+                                    // register
+                                    $rawConditionalConnection = $aTemplateConditionalConnections[$rawTemplate->id][$nConditionalConnectionIndex];
+
+                                    // find
+                                    $nConditionalCount = count($aRawConditionals);
+                                    for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
+                                    {
+                                        // register
+                                        $rawConditional = $aRawConditionals[$nConditionalIndex];
+
+                                        // add
+                                        $conditional = $template->conditionals[] = (object) array();
+
+                                        if (
+                                            $rawConditional->type == ComponentConditional::ENTITY_TYPE &&
+                                            $rawConditionalConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityType'
+                                        ) {
+                                            // setup
+                                            $conditional->entityName = Mimoto::service('config')->getEntityNameById($rawConditionalConnection->child_id);
+                                            break;
+                                        }
+
+                                        if (
+                                            $rawConditional->type == ComponentConditional::PROPERTY_VALUE &&
+                                            $rawConditionalConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty'
+                                        ) {
+
+                                            // setup
+                                            $conditional->propertyName = Mimoto::service('config')->getPropertyNameById($rawConditionalConnection->child_id);
+                                            $conditional->value = $rawConditional->value;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            array_splice($aRawTemplates, $nTemplateIndex, 1);
+                            break;
+                        }
+                    }
+                }
+
+
+            }
 
         }
-
-        //Mimoto::error($aRawComponents);
-
-
-
-
-
-//
-//        foreach ($stmtConditionals as $conditional)
-//        {
-//            $conditional = (object) array(
-//                'id' => $row['id'],
-//                'type' => $row['type'],
-//                'created' => $row['created']
-//            );
-//
-//            $nTemplateCount = count($aTemplates);
-//            for ($nTemplateIndex = 0; $nTemplateIndex < $nTemplateCount; $nTemplateIndex++)
-//            {
-//                // register
-//                $template = $aTemplates[$nTemplateIndex];
-//
-//                // verify
-//                if (isset($aComponentConditionalConnections[$template->id]))
-//                {
-//                    $nConnectionCount = count($aComponentConditionalConnections[$template->id]);
-//                    for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
-//                    {
-//                        // register
-//                        $rawConnection = $aComponentConditionalConnections[$template->id][$nConnectionIndex];
-//
-//                        // verify
-//                        if ($rawConnection->child_id == $conditional->id)
-//                        {
-//
-//                            if (isset($aEntityPropertyConnections[$rawConnection->child_id]))
-//                            {
-//                                // find
-//                                $nPropertyConnectionCount = count($aEntityPropertyConnections[$rawConnection->child_id]);
-//                                for ($nPropertyConnectionIndex = 0; $nPropertyConnectionIndex < $nPropertyConnectionCount; $nPropertyConnectionIndex++)
-//                                {
-//                                    // register
-//                                    $rawEntityPropertyConnection = $aEntityPropertyConnections[$rawConnection->child_id][$nPropertyConnectionIndex];
-//
-//                                    // verify
-//                                    if ($rawEntityPropertyConnection->parent_id == $rawConnection->child_id)
-//                                    {
-//
-//                                        if (
-//                                            $conditional->type == ComponentConditional::ENTITY_TYPE &&
-//                                            $rawEntityPropertyConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityType'
-//                                        ) {
-//                                            // setup
-//                                            $conditional->entityName = Mimoto::service('config')->getEntityNameById($rawEntityPropertyConnection->child_id);
-//
-//                                            // store
-//                                            $template->conditionals[] = $conditional;
-//                                            break;
-//                                        }
-//
-//                                        if (
-//                                            $conditional->type == ComponentConditional::PROPERTY_VALUE &&
-//                                            $rawEntityPropertyConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty'
-//                                        ) {
-//
-//                                            // setup
-//                                            $conditional->propertyName = Mimoto::service('config')->getPropertyNameById($rawEntityPropertyConnection->child_id);
-//                                            $conditional->value = $row['value'];
-//
-//                                            // store
-//                                            $template->conditionals[] = $conditional;
-//                                            break;
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
+        //Mimoto::error($aComponents);
 
         // add core components
         $aComponents = array_merge($aComponents, Component::getData());

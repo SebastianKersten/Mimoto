@@ -5,7 +5,7 @@
 
 
         {% if Mimoto.user.hasRole('contenteditor') or Mimoto.user.hasRole('owner') or Mimoto.user.hasRole('superuser') or Mimoto.user.hasRole('admin') %}
-            <ul class="MimotoCMS_interface_Menu-group {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('contentSections') }} {{ Mimoto.realtime('contentSections.{!isHiddenFromMenu}', 'MimotoCMS_interface_Menu_MenuButton') }}>
+            <ul class="MimotoCMS_interface_Menu-group" {{ Mimoto.hideWhenEmpty('contentSections') }} {{ Mimoto.realtime('contentSections.{!isHiddenFromMenu}', 'MimotoCMS_interface_Menu_MenuButton') }}>
                 {{ Mimoto.data('contentSections.{!isHiddenFromMenu}', 'MimotoCMS_interface_Menu_MenuButton') }}
             </ul>
         {% endif %}
@@ -44,7 +44,7 @@
                         <a href="/mimoto.cms/entities" class="MimotoCMS_interface_Menu-item-link">
                             <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-drafts'/></svg>
                             {#<span class="MimotoCMS_interface_Menu-item-text">{{ 'MimotoCMS_menu_datastructure'|trans }}</span>#}
-                            <span class="MimotoCMS_interface_Menu-item-text">Data structure</span>
+                            <span class="MimotoCMS_interface_Menu-item-text">Entities</span>
                         </a>
                     </li>
                     <li class="MimotoCMS_interface_Menu-item">
@@ -54,11 +54,14 @@
                         </a>
                     </li>
                     <li class="MimotoCMS_interface_Menu-item">
-                        <a href="/mimoto.cms/contentsections" class="MimotoCMS_interface_Menu-item-link">
-                            <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
-                            <span class="MimotoCMS_interface_Menu-item-text">Content sections</span>
+                        <a href="/mimoto.cms/selections" class="MimotoCMS_interface_Menu-item-link">
+                            <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-arrow'/></svg>
+                            <span class="MimotoCMS_interface_Menu-item-text">Selections</span>
                         </a>
                     </li>
+                </ul>
+                <ul class="MimotoCMS_interface_Menu-group">
+
                     <li class="MimotoCMS_interface_Menu-item">
                         <a href="/mimoto.cms/pages" class="MimotoCMS_interface_Menu-item-link">
                             <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
@@ -66,7 +69,7 @@
                         </a>
                     </li>
                     <li class="MimotoCMS_interface_Menu-item">
-                        <a href="/mimoto.cms/datasets" class="MimotoCMS_interface_Menu-item-link">
+                        <a href="/mimoto.cms/contentsections" class="MimotoCMS_interface_Menu-item-link">
                             <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
                             <span class="MimotoCMS_interface_Menu-item-text">Datasets</span>
                         </a>
@@ -83,12 +86,6 @@
                             {#<span class="MimotoCMS_interface_Menu-item-text">Flows</span>#}
                         {#</a>#}
                     {#</li>#}
-                    <li class="MimotoCMS_interface_Menu-item">
-                        <a href="/mimoto.cms/selections" class="MimotoCMS_interface_Menu-item-link">
-                            <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-arrow'/></svg>
-                            <span class="MimotoCMS_interface_Menu-item-text">Data selections</span>
-                        </a>
-                    </li>
                     <li class="MimotoCMS_interface_Menu-item">
                         <a href="/mimoto.cms/actions" class="MimotoCMS_interface_Menu-item-link">
                             <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-schedule'/></svg>

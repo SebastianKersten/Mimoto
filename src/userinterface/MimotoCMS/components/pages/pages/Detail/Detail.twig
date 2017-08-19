@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_pages_Detail_Structure__meta_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', onclick:"Mimoto.CMS.pageEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_route') }) }}
                     </div>
 
                 </div>

@@ -1,10 +1,16 @@
 <div class="MimotoCMS_pages_components_ComponentTemplate" {{ Mimoto.realtime() }}>
-    <div class="MimotoCMS_pages_components_ComponentTemplate-info">
-        <div class="MimotoCMS_pages_components_ComponentTemplate-fileName" {{ Mimoto.hideWhenEmpty('file') }} {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
-        <div class="MimotoCMS_pages_components_ComponentTemplate-fileName empty" {{ Mimoto.showWhenEmpty('file') }}>No file connected yet</div>
+    <div class="MimotoCMS_pages_components_ComponentTemplate-infocontainer">
+        <div class="MimotoCMS_pages_components_ComponentTemplate-info">
+            <div class="MimotoCMS_pages_components_ComponentTemplate-fileName" {{ Mimoto.hideWhenEmpty('file') }} {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
+            <div class="MimotoCMS_pages_components_ComponentTemplate-fileName empty" {{ Mimoto.showWhenEmpty('file') }}>No file connected yet</div>
+        </div>
+        <div class="MimotoCMS_pages_components_ComponentTemplate-menu">
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Remove', icon:'', types:['small', 'alert'], directive:Mimoto.remove() }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_coreform__componentTemplate') }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add conditional', icon:'', types:['small', 'primary'], directive:Mimoto.add('conditionals', '_Mimoto_coreform__componentConditional') }) }}
+        </div>
     </div>
-    <div class="MimotoCMS_pages_components_ComponentTemplate-menu">
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Remove', icon:'', types:['small', 'alert'], directive:Mimoto.remove() }) }}
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_coreform__componenttemplate') }) }}
+    <div class="MimotoCMS_pages_components_ComponentTemplate-conditionals js-list js-list-sortable" {{ Mimoto.hideWhenEmpty('conditionals') }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_components_ComponentDetail-Conditional') }}>
+        {{ Mimoto.data('conditionals', 'MimotoCMS_components_ComponentDetail-Conditional') }}
     </div>
 </div>

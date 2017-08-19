@@ -373,11 +373,11 @@ class SelectionRule
     private static function getField_entities()
     {
         // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_SELECTIONRULE, 'entity');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_SELECTIONRULE, 'type');
         $field->setValue('label', 'Select the entity type');
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTIONRULE, 'entity');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTIONRULE, 'type');
 
 
         // load

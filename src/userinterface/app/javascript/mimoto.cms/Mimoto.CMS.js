@@ -214,73 +214,17 @@ module.exports.prototype = {
         });
     },
     
-    
-    /**
-     * Create new component and connect to entity
-     */
-    entityComponentNew: function(nEntityId)
-    {
-        var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
-        
-        //popup.on('success') = popup.close();
-    },
 
-    
-    
-    /**
-     * Selections
-     */
-    selectionNew: function()
+
+    componentView: function(nComponentId)
     {
-        var popup = MimotoX.popup("/mimoto.cms/selection/new");
+        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
     },
     
     selectionView: function(nSelectionId)
     {
         window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
     },
-    
-    selectionEdit: function(nSelectionId)
-    {
-        MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/edit');
-    },
-    
-    selectionDelete: function(nSelectionId)
-    {
-        MimotoX.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-    
-    selectionRuleNew: function(nSelectionId)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
-    },
-    
-    selectionRuleEdit: function(nSelectionRuleId)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
-    },
-    
-    selectionRuleDelete: function(nSelectionRuleId)
-    {
-        MimotoX.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-
 
 
     /**

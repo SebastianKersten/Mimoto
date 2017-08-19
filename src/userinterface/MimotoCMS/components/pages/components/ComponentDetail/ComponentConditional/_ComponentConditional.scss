@@ -1,4 +1,4 @@
-li.MimotoCMS_pages_components_ComponentConditional {
+div.MimotoCMS_pages_components_ComponentConditional {
 
     display: flex;
     flex-direction: row;
@@ -22,16 +22,17 @@ li.MimotoCMS_pages_components_ComponentConditional {
         flex-direction: row;
         flex-wrap: wrap;
 
-        width: 75%;
+        
 
         div.MimotoCMS_pages_components_ComponentConditional__name {
 
             flex-grow: 2;
 
-            padding: 7px 10px 4px 10px;
+            padding: 10px 10px 4px 10px;
             vertical-align: top;
-            color: #000000;
-            width: 28%;
+
+            font-style: italic;
+            color: $tower-gray;
 
             & > a {
                 text-decoration: none;
@@ -64,7 +65,7 @@ li.MimotoCMS_pages_components_ComponentConditional {
     }
 
     div.MimotoCMS_pages_components_ComponentConditional__menu-handle {
-        padding: 7px 0 0 0;
+        padding: 8px 0 0 0;
         flex-direction: row;
         width: 5%;
         display: inline-block;

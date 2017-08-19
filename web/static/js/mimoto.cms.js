@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "35b91b81889d42c973f7";
+/******/ 	__webpack_require__.h = "3b5f6415fdb3d6f1ce6c";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -54754,60 +54754,12 @@
 	        });
 	    },
 	
-	    /**
-	     * Create new component and connect to entity
-	     */
-	    entityComponentNew: function entityComponentNew(nEntityId) {
-	        var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
-	
-	        //popup.on('success') = popup.close();
-	    },
-	
-	    /**
-	     * Selections
-	     */
-	    selectionNew: function selectionNew() {
-	        var popup = MimotoX.popup("/mimoto.cms/selection/new");
+	    componentView: function componentView(nComponentId) {
+	        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
 	    },
 	
 	    selectionView: function selectionView(nSelectionId) {
 	        window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
-	    },
-	
-	    selectionEdit: function selectionEdit(nSelectionId) {
-	        MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/edit');
-	    },
-	
-	    selectionDelete: function selectionDelete(nSelectionId) {
-	        MimotoX.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function success(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
-	    },
-	
-	    selectionRuleNew: function selectionRuleNew(nSelectionId) {
-	        var popup = MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
-	    },
-	
-	    selectionRuleEdit: function selectionRuleEdit(nSelectionRuleId) {
-	        var popup = MimotoX.popup('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
-	    },
-	
-	    selectionRuleDelete: function selectionRuleDelete(nSelectionRuleId) {
-	        MimotoX.utils.callAPI({
-	            type: 'get',
-	            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
-	            data: null,
-	            dataType: 'json',
-	            success: function success(resultData, resultStatus, resultSomething) {
-	                console.log(resultData);
-	            }
-	        });
 	    },
 	
 	    /**

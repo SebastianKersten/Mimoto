@@ -210,25 +210,10 @@ class Mimoto
 
 
         // Component
-        $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/component/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/component/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/component/{nComponentId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/component/{nComponentId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/component/{nComponentId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-
-        $app->get ('/'.$sProjectName.'.cms/component/{nComponentId}/conditional/new', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentConditionalNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/componentconditional/{nComponentConditionalId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentConditionalEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/componentconditional/{nComponentConditionalId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::componentConditionalDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         // Selection
-        $app->get ('/'.$sProjectName.'.cms/selection/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/selection/{nSelectionId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/selection/{nSelectionId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/selection/{nSelectionId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-
-        $app->get ('/'.$sProjectName.'.cms/selection/{nSelectionId}/rule/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/selectionrule/{nSelectionRuleId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/selectionrule/{nSelectionRuleId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
 
         // Formatting options
@@ -236,10 +221,6 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/configuration/formattingOption/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/configuration/formattingOption/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/configuration/formattingOption/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::formattingOptionDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-
-//        $app->get ('/'.$sProjectName.'.cms/selection/{nSelectionId}/rule/new', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-//        $app->get ('/'.$sProjectName.'.cms/selectionrule/{nSelectionRuleId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-//        $app->get ('/'.$sProjectName.'.cms/selectionrule/{nSelectionRuleId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\SelectionController::selectionRuleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
 
         // User roles

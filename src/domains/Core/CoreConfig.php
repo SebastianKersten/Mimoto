@@ -189,7 +189,7 @@ class CoreConfig
     const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
 
     const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
-    const COREFORM_COMPONENTTEMPLATE            = '_Mimoto_coreform__componenttemplate';
+    const COREFORM_COMPONENTTEMPLATE            = '_Mimoto_coreform__componentTemplate';
     const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentConditional';
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
     const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
@@ -200,8 +200,8 @@ class CoreConfig
 
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
 
-    const COREFORM_SELECTION                    = '_Mimoto_coreform_selection';
-    const COREFORM_SELECTIONRULE                = '_Mimoto_coreform_selectionRule';
+    const COREFORM_SELECTION                    = '_Mimoto_coreform__selection';
+    const COREFORM_SELECTIONRULE                = '_Mimoto_coreform__selectionRule';
 
 
     // input

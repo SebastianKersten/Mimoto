@@ -10,7 +10,7 @@
         button_action: "Mimoto.CMS.pageView(" ~ Mimoto.meta('id') ~ ");",
         button_type: 'secondary',
         button2_label: 'Delete',
-        button2_action: "Mimoto.CMS.pageDelete(" ~ Mimoto.meta('id') ~ ", '" ~ Mimoto.data('name') ~ "');",
+        button2_directive: Mimoto.remove(),
         button2_type: 'alert'
     })
 }}

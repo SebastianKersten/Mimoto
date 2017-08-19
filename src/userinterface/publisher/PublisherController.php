@@ -28,7 +28,7 @@ class PublisherController
         $eContentSection = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_CONTENTSECTION, 'value' => ['name' => 'Articles']]);
 
         // 2. create template
-        $page = Mimoto::service('output')->createPage('feed', (!empty($eContentSection)) ? $eContentSection[0] : '');
+        $page = Mimoto::service('output')->createPage('Feed', (!empty($eContentSection)) ? $eContentSection[0] : '');
 
         // 3. output
         return $page->render();
@@ -40,7 +40,7 @@ class PublisherController
         $eArticle = Mimoto::service('data')->get('article', $nArticleId);
 
         // 2. create template
-        $page = Mimoto::service('output')->createPage('article', $eArticle);
+        $page = Mimoto::service('output')->createPage('Article', $eArticle);
 
         // 3. output
         return $page->render();
