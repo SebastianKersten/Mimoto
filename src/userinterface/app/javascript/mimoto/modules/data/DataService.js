@@ -72,8 +72,6 @@ module.exports.prototype = {
     },
 
 
-
-
     remove: function(sEntitySelector, options)
     {
         // bDontConfirm
@@ -104,19 +102,29 @@ module.exports.prototype = {
         });
     },
 
+    select: function(sEntitySelector, xSelection, options) {
+
+        console.log('Selecting for property .. ' + sEntitySelector + ' with ' + xSelection, 'options:', options);
+
+        let postData = {
+            sEntitySelector: sEntitySelector,
+            xSelection: xSelection,
+            options: options
+        };
+
+        MimotoX.popup('/mimoto/data/select', postData);
+    },
+
+
+
+
+
+
     update: function(sPropertySelector, value)
     {
 
     },
 
-
-
-
-
-    createAndConnect: function(sType, sPropertySelector, options) // -> sets onclick
-    {
-        MimotoX.log('Clicked on createAndConnect .. start the call');
-    },
 
 
 

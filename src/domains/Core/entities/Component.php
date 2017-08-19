@@ -166,7 +166,7 @@ class Component
                 'name' => 'Mimoto.CMS_entities_EntityOverview',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/entities/EntityOverview/EntityOverview.twig',
+                        'file' => 'MimotoCMS/components/pages/entities/Overview/Overview.twig',
                         'conditionals' => []
                     )
                 ]
@@ -175,7 +175,7 @@ class Component
                 'name' => 'Mimoto.CMS_entities_EntityOverview_ListItem',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/entities/EntityOverview/ListItem/ListItem.twig',
+                        'file' => 'MimotoCMS/components/pages/entities/Overview/ListItem/ListItem.twig',
                         'conditionals' => []
                     )
                 ]

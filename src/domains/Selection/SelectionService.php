@@ -260,13 +260,7 @@ class SelectionService
             $rule = $selection->addRule();
 
             // setup
-            switch($ruleConfig->type)
-            {
-                case 'type':
-
-                    $rule->setType($ruleConfig->entity->entity_type_id);
-                    break;
-            }
+            if (isset($ruleConfig->type)) $rule->setType($ruleConfig->type);
         }
         //Mimoto::output('$selectionConfig', $selectionConfig);
         //Mimoto::error($selection);

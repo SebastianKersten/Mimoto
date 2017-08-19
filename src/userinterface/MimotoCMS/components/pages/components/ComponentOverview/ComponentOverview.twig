@@ -23,4 +23,18 @@
         sMessageOnEmpty: 'xxx'
     })
 }}
-add explainer images
+
+
+{{
+Mimoto.module('MimotoCMS.SectionModule',
+{
+    sTitle:'Input elements',
+    sButtonLabel: 'Add new input elementt',
+    sButtonIcon: 'plus',
+    sDirective: Mimoto.add('layouts', '_Mimoto_coreform__input'),
+    sDataSelector: 'layouts',
+    sComponentName: 'MimotoCMS_components_ComponentOverview_ListItem',
+    sMessageOnEmpty: 'xxx'
+})
+}}
+add explainer images and combine all into one property called `components` (filter by type)

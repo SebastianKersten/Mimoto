@@ -1,20 +1,33 @@
-<div class="MimotoCMS_pages_selections_SelectionDetail-Rule" {{ Mimoto.realtime() }}>
+<div class="MimotoCMS_pages_selections_SelectionDetail-Rule" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
 
     <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__data">
         <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__name">
             <div {{ Mimoto.realtime('type.name') }} >{{ Mimoto.data('type.name') }}</div>
 
 
-            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'type -> select entity', types:['small', 'secondary'], onclick:"MimotoX.data.selectAndAdd('" ~ Mimoto.meta('type') ~ "." ~ Mimoto.meta('id') ~ ".type', 'allEntityTypes');" }) }}
 
-            <div>id (optional)</div>
-            <div>parentProperty (only show when type is set) -> select available properties - entity or collection</div>
-            <div>propertyValues (array met property selection & value input)</div>
+            {#<div>id (optional)</div>#}
+            {#<div>parentProperty (only show when type is set) -> select available properties - entity or collection</div>#}
+            {#<div>propertyValues (array met property selection & value input)</div>#}
+
+            {% if Mimoto.data('typeAsVar') %}
+                Var name for type = {{ Mimoto.data('typeVarName') }}
+            {% else %}
+
+                {% if not Mimoto.empty('type') %}
+                    Type = {{ Mimoto.data('type.name') }}
+                {% else %}
+                    No type selected yet ..
+                {% endif %}
+
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select entity type', types:['small', 'secondary'], directive:Mimoto.select('type', '_Mimoto_all_entities') }) }}
+
+            {% endif %}
 
         </div>
     </div>
     <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__menu">
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.selectionRuleEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.selectionRuleDelete('" ~ Mimoto.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_selectionrule') }) }}
     </div>
 </div>

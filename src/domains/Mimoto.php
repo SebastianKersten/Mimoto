@@ -119,7 +119,7 @@ class Mimoto
         // overview screen met icons, uitleg en button naar vervolgpagina
 
 
-        $app->post('/'.$sProjectName.'/data/select', 'Mimoto\\api\\DataController::select');
+        //$app->post('/'.$sProjectName.'/data/select', 'Mimoto\\api\\DataController::select');
 
 
 
@@ -149,6 +149,7 @@ class Mimoto
         $app->post('/'.$sProjectName.'/data/edit', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::edit');
         $app->post('/'.$sProjectName.'/data/add', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::add');
         $app->post('/'.$sProjectName.'/data/remove', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::remove');
+        $app->post('/'.$sProjectName.'/data/select', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::select');
 
 
 

@@ -146,4 +146,52 @@ class DataController
         return Mimoto::service('messages')->response((object) array('result' => 'Instance deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
+    public function select(Application $app, Request $request)
+    {
+        // 1. register
+        $sEntitySelector = $request->get('sEntitySelector');
+        $xSelection = $request->get('xSelection');
+
+        // 2. extract
+        $sEntity = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sEntitySelector);
+        $nInstanceId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sEntitySelector);
+
+        // 3. load
+        $eEntity = Mimoto::service('data')->get($sEntity, $nInstanceId);
+
+
+        // ---
+
+
+        //Mimoto::error($xSelection);
+        Mimoto::error(Mimoto::service('data')->select($xSelection));
+
+
+        // 4. init page
+        $popup = Mimoto::service('output')->createPopup();
+
+
+        // 1. insert list
+
+
+
+//        // 3. create content
+//        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+//
+//        // 7. setup content
+//        $component->addForm(
+//            $sFormName,
+//            $eEntity,
+//            [
+//                'response' => ['onSuccess' => ['closePopup' => true]]
+//            ]
+//        );
+
+        // 4. connect
+        $popup->addComponent('content', $component);
+
+        // 5. output
+        return $popup->render();
+    }
+
 }

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <div data-js-article="{{ Mimoto.meta('id') }}">
+    <img data-js-article="{{ Mimoto.meta('id') }}">
 
         <div class="MimotoPublisher-Article-lede-container">
             <div class="MimotoPublisher-Article-lede">
@@ -13,9 +13,9 @@
             </div>
         </div>
 
-        <div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+        {#<div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>#}
 
-        <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }}>
+        <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }} ></img>
 
         <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.editable('body') }}>{{ Mimoto.data('body') }}</div>
 
