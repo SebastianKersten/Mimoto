@@ -10,6 +10,7 @@
             {#<div>parentProperty (only show when type is set) -> select available properties - entity or collection</div>#}
             {#<div>propertyValues (array met property selection & value input)</div>#}
 
+            <div>
             {% if Mimoto.data('typeAsVar') %}
                 Var name for type = {{ Mimoto.data('typeVarName') }}
             {% else %}
@@ -23,6 +24,23 @@
                 {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select entity type', types:['small', 'secondary'], directive:Mimoto.select('type', '_Mimoto_all_entities') }) }}
 
             {% endif %}
+            </div>
+
+            <div>
+            {% if Mimoto.data('idAsVar') %}
+                Var name for id = {{ Mimoto.data('idVarName') }}
+            {% else %}
+
+                {% if not Mimoto.empty('instance') %}
+                    Instance = {{ Mimoto.meta('instance.id') }}
+                {% else %}
+                    No type selected yet ..
+                {% endif %}
+
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select instance', types:['small', 'secondary'], directive:Mimoto.select('instance', '_Mimoto_all_instances_of_entity', { vars:[{type:Mimoto.meta('type.id')}] }) }) }}
+
+            {% endif %}
+            </div>
 
         </div>
     </div>

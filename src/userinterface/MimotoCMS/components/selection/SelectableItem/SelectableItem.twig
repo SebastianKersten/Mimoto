@@ -1,0 +1,12 @@
+<div class="MimotoCMS_components_selection_SelectableItem">
+
+    <div class="MimotoCMS_components_selection_SelectableItem-info">
+        <div class="MimotoCMS_components_selection_SelectableItem-info-title" {{ Mimoto.getRealtimeBySortindex() }}>{{ Mimoto.getValueBySortindex() }}</div>
+        <div class="MimotoCMS_components_selection_SelectableItem-info-subtitle" {{ Mimoto.getRealtimeBySortindex(1) }}>{{ Mimoto.getValueBySortindex(1) }}</div>
+    </div>
+
+    <div class="MimotoCMS_components_selection_SelectableItem-menu">
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label: 'Select', directive:Mimoto.set(sPropertySelector, Mimoto.meta('type')~'.'~Mimoto.meta('id')), types: ['secondary', 'small'] }) }}
+    </div>
+
+</div>

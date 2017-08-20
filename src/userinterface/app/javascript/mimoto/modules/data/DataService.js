@@ -102,17 +102,30 @@ module.exports.prototype = {
         });
     },
 
-    select: function(sEntitySelector, xSelection, options) {
+    select: function(sPropertySelector, xSelection, options) {
 
-        console.log('Selecting for property .. ' + sEntitySelector + ' with ' + xSelection, 'options:', options);
+        console.log('Selecting for property .. ' + sPropertySelector + ' with ' + xSelection, 'options:', options);
 
         let postData = {
-            sEntitySelector: sEntitySelector,
+            sPropertySelector: sPropertySelector,
             xSelection: xSelection,
             options: options
         };
 
         MimotoX.popup('/mimoto/data/select', postData);
+    },
+
+    set: function(sPropertySelector, value, options) {
+
+        console.log('Setting value for property .. ' + sPropertySelector + ': ' + value, 'options:', options);
+
+        let postData = {
+            sPropertySelector: sPropertySelector,
+            value: value,
+            options: options
+        };
+
+        MimotoX.popup('/mimoto/data/set', postData);
     },
 
 

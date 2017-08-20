@@ -93,6 +93,11 @@ class AimlessComponentViewModel
         return $this->_component->editable($sPropertySelector, $options);
     }
 
+    public function container($sContainerName)
+    {
+        return $this->_component->renderContainer($sContainerName);
+    }
+
     public function selection($sSelectionName, $sComponentName = null)
     {
         return $this->_component->selection($sSelectionName, $sComponentName);
@@ -206,13 +211,10 @@ class AimlessComponentViewModel
 
     public function get()
     {
-        // alias for Mimoto.data
+        // alias for Mimoto.data?
     }
 
-    public function set()
-    {
 
-    }
 
     public function edit($sFormName, $options = null)
     {
@@ -254,6 +256,17 @@ class AimlessComponentViewModel
 
         // 2. build and output
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_SELECT, $sPropertyName, $this->_component, $instructions, $options);
+    }
+
+    public function set($sPropertyName, $value, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'value' => $value
+        );
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_SET, $sPropertyName, $this->_component, $instructions, $options);
     }
 
 

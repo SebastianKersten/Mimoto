@@ -109,6 +109,15 @@ class Component
                     )
                 ]
             ),
+            (object) array(
+                'name' => 'MimotoCMS_layout_Selection',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/layouts/selection/Selection.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
 
 
             (object) array(
@@ -451,6 +460,21 @@ class Component
                     )
                 ]
             ),
+
+
+
+            (object) array(
+                'name' => 'MimotoCMS_components_selection_SelectableItem',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/selection/SelectableItem/SelectableItem.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+
+
 
 
             // api

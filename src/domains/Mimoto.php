@@ -150,6 +150,7 @@ class Mimoto
         $app->post('/'.$sProjectName.'/data/add', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::add');
         $app->post('/'.$sProjectName.'/data/remove', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::remove');
         $app->post('/'.$sProjectName.'/data/select', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::select');
+        $app->post('/'.$sProjectName.'/data/set', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::set');
 
 
 

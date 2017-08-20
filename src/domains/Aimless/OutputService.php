@@ -131,10 +131,22 @@ class OutputService
      * @param MimotoEntity $entity The data to be combined with the template
      * @return AimlessComponent
      */
-    public function createComponent($sComponentName, $entity = null, $connection = null, $nItemIndex = null)
+    public function create($sComponentName, $entity = null, $connection = null, $nItemIndex = null)
     {
         // init and send
         return new AimlessComponent($sComponentName, $entity, $connection, null, $nItemIndex, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
+    }
+
+    /**
+     * Create component
+     * @param string $sComponentName The name of the registered template
+     * @param MimotoEntity $entity The data to be combined with the template
+     * @return AimlessComponent
+     */
+    public function createComponent($sComponentName, $entity = null, $connection = null, $nItemIndex = null)
+    {
+        // init and send
+        return self::create($sComponentName, $entity, $connection, $nItemIndex);
     }
 
     /**

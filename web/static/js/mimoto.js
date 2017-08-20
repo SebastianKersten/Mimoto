@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "7708a7ffc885eaebf899";
+/******/ 	__webpack_require__.h = "2e02484f7567fc2ab145";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -11796,17 +11796,30 @@
 	        });
 	    },
 	
-	    select: function select(sEntitySelector, xSelection, options) {
+	    select: function select(sPropertySelector, xSelection, options) {
 	
-	        console.log('Selecting for property .. ' + sEntitySelector + ' with ' + xSelection, 'options:', options);
+	        console.log('Selecting for property .. ' + sPropertySelector + ' with ' + xSelection, 'options:', options);
 	
 	        var postData = {
-	            sEntitySelector: sEntitySelector,
+	            sPropertySelector: sPropertySelector,
 	            xSelection: xSelection,
 	            options: options
 	        };
 	
 	        MimotoX.popup('/mimoto/data/select', postData);
+	    },
+	
+	    set: function set(sPropertySelector, value, options) {
+	
+	        console.log('Setting value for property .. ' + sPropertySelector + ': ' + value, 'options:', options);
+	
+	        var postData = {
+	            sPropertySelector: sPropertySelector,
+	            value: value,
+	            options: options
+	        };
+	
+	        MimotoX.popup('/mimoto/data/set', postData);
 	    },
 	
 	    update: function update(sPropertySelector, value) {},
@@ -11955,6 +11968,7 @@
 	    DIRECTIVE_MIMOTO_DATA_ADD: 'data-mimoto-add',
 	    DIRECTIVE_MIMOTO_DATA_REMOVE: 'data-mimoto-remove',
 	    DIRECTIVE_MIMOTO_DATA_SELECT: 'data-mimoto-select',
+	    DIRECTIVE_MIMOTO_DATA_SET: 'data-mimoto-set',
 	
 	    // display directives
 	    TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY: 'data-mimoto-display-hidewhenempty',
@@ -12099,7 +12113,7 @@
 	        this.TAG_MIMOTO_VALUE, this.TAG_MIMOTO_ENTITY, this.TAG_MIMOTO_COLLECTION, this.TAG_MIMOTO_IMAGE, this.TAG_MIMOTO_VIDEO, this.TAG_MIMOTO_AUDIO, this.TAG_MIMOTO_ID,
 	
 	        // data manipulation directives
-	        this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT,
+	        this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT, this.DIRECTIVE_MIMOTO_DATA_SET,
 	
 	        // display directives
 	        this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY, this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY, this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX, this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX, this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE, this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE, this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY, this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY, this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX, this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX, this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE, this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE,
@@ -12264,10 +12278,22 @@
 	                    case this.DIRECTIVE_MIMOTO_DATA_SELECT:
 	
 	                        // configure
-	                        directive.element.addEventListener('click', function (sEntitySelector, xSelection, options, e) {
+	                        directive.element.addEventListener('click', function (sPropertySelector, xSelection, options, e) {
 	                            // forward
-	                            MimotoX.data.select(sEntitySelector, xSelection, options);
+	                            MimotoX.data.select(sPropertySelector, xSelection, options);
 	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.selection, directive.instructions.options), true);
+	
+	                        break;
+	
+	                    case this.DIRECTIVE_MIMOTO_DATA_SET:
+	
+	                        console.log('DIRECTIVE_MIMOTO_DATA_SET');
+	
+	                        // configure
+	                        directive.element.addEventListener('click', function (sPropertySelector, value, options, e) {
+	                            // forward
+	                            MimotoX.data.set(sPropertySelector, value, options);
+	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.value, directive.instructions.options), true);
 	
 	                        break;
 	

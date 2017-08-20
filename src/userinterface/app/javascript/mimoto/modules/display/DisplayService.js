@@ -65,6 +65,7 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DATA_ADD:     'data-mimoto-add',
     DIRECTIVE_MIMOTO_DATA_REMOVE:  'data-mimoto-remove',
     DIRECTIVE_MIMOTO_DATA_SELECT:  'data-mimoto-select',
+    DIRECTIVE_MIMOTO_DATA_SET:     'data-mimoto-set',
 
     // display directives
     TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
@@ -233,6 +234,7 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DATA_ADD,
             this.DIRECTIVE_MIMOTO_DATA_REMOVE,
             this.DIRECTIVE_MIMOTO_DATA_SELECT,
+            this.DIRECTIVE_MIMOTO_DATA_SET,
 
             // display directives
             this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
@@ -455,14 +457,29 @@ module.exports.prototype = {
                     case this.DIRECTIVE_MIMOTO_DATA_SELECT:
 
                         // configure
-                        directive.element.addEventListener('click', function(sEntitySelector, xSelection, options, e)
+                        directive.element.addEventListener('click', function(sPropertySelector, xSelection, options, e)
                         {
                             // forward
-                            MimotoX.data.select(sEntitySelector, xSelection, options);
+                            MimotoX.data.select(sPropertySelector, xSelection, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.selection, directive.instructions.options), true);
 
                         break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_SET:
+
+                        console.log('DIRECTIVE_MIMOTO_DATA_SET');
+
+                        // configure
+                        directive.element.addEventListener('click', function(sPropertySelector, value, options, e)
+                        {
+                            // forward
+                            MimotoX.data.set(sPropertySelector, value, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.value, directive.instructions.options), true);
+
+                        break;
+
 
 
                     // --- display updates

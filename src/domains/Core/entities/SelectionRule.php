@@ -319,6 +319,32 @@ class SelectionRule
             'Var name for the entity type', 'Enter the variable name', 'The variable`s name should be unique'
         );
 
+        CoreFormUtils::addField_checkbox
+        (
+            $form, 'idAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'idAsVar'),
+            'Instance id as variable',
+            'Use a variable to define the id'
+        );
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'idVarName', CoreConfig::MIMOTO_SELECTIONRULE.'--idVarName',
+            'Var name for the instance id', 'Enter the variable name', 'The variable`s name should be unique'
+        );
+
+        CoreFormUtils::addField_checkbox
+        (
+            $form, 'propertyAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'propertyAsVar'),
+            'Property as variable',
+            'Use a variable to define the property'
+        );
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'propertyVarName', CoreConfig::MIMOTO_SELECTIONRULE.'--propertyVarName',
+            'Var name for the property', 'Enter the variable name', 'The variable`s name should be unique'
+        );
+
 
         CoreFormUtils::addField_groupEnd($form);
 

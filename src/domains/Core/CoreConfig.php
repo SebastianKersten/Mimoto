@@ -525,6 +525,17 @@ class CoreConfig
                         SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_ENTITY
                     )
                 ]
+            ),
+            (object)array(
+                'id' => CoreConfig::CORE_PREFIX . '_Mimoto_all_instances_of_entity', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . '_Mimoto_all_instances_of_entity', // internal of external?
+                'label' => 'All instances of entity',
+                'rules' => [
+                    (object)array(
+                        'typeAsVar' => true,
+                        'typeVarName' => 'typeVarName'
+                    )
+                ]
             )
         ];
 

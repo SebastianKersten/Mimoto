@@ -21,6 +21,7 @@ class DataManipulationUtils
     const MIMOTO_DATA_ADD    = 'data-mimoto-add';
     const MIMOTO_DATA_REMOVE = 'data-mimoto-remove';
     const MIMOTO_DATA_SELECT = 'data-mimoto-select';
+    const MIMOTO_DATA_SET    = 'data-mimoto-set';
 
 
 
@@ -43,10 +44,23 @@ class DataManipulationUtils
         }
         else
         {
-            $sSelector = $component->getPropertySelector($sPropertyName);
+            // check if valid selector
+            if (strpos($sPropertyName, '.') === false) // #todo - move to data utils
+            {
+                $sSelector = $component->getPropertySelector($sPropertyName);
 
-            // setup
-            $instructions->propertyType = $component->getPropertyType($sPropertyName);
+                // setup
+                $instructions->propertyType = $component->getPropertyType($sPropertyName);
+            }
+            else
+            {
+
+                $sSelector = $sPropertyName; // #todo - rename
+
+                // #todo - get property type from config service
+            }
+
+
         }
 
         // 3. setup

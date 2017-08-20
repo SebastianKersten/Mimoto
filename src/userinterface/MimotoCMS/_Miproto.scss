@@ -1,0 +1,16 @@
+/**
+ * Miproto - Mimoto`s stylesheet for rapid prototyping
+ */
+
+// define colors
+$miproto-color-background: #ffffff;
+$miproto-color-label: #000000;
+$miproto-color-border: #a1a1a1;
+
+
+a.Miproto-button {
+    padding: 10px 15px;
+    border: 1px solid $miproto-color-border;
+    background-color: $miproto-color-background;
+    color: $miproto-color-label;
+}

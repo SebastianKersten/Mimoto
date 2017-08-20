@@ -1,0 +1,36 @@
+div.MimotoCMS_components_selection_SelectableItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: $white;
+}
+
+div.MimotoCMS_components_selection_SelectableItem-info {
+    flex-basis: auto;
+}
+
+div.MimotoCMS_components_selection_SelectableItem-info-title {
+    font-size: 18px;
+    font-weight: bold;
+    color :#000000;
+}
+
+div.MimotoCMS_components_selection_SelectableItem-info-subtitle {
+    font-style: italic;
+    color: $tower-gray;
+}
+
+div.MimotoCMS_components_selection_SelectableItem-menu {
+
+    flex-basis: auto;
+    white-space: nowrap;
+    text-align: right;
+
+    & > div {
+        margin-right: 3px;
+    }
+    & > div:last-child {
+        margin-right: 0;
+    }
+}
