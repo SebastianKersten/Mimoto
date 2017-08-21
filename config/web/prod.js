@@ -29,7 +29,7 @@ module.exports = function(env) {
                       require('autoprefixer')({
                         browsers: 'last 10 versions'
                       })
-                    ]
+                    ];
                   }
                 }
               },
