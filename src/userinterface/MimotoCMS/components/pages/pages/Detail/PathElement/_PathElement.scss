@@ -1,0 +1,13 @@
+div.MimotoCMS_pages_pages_Detail_PathElement {
+
+    display: inline-block;
+    background-color: $tower-gray;
+    color: #ffffff;
+    padding: 10px 15px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #000000;
+    }
+}
+

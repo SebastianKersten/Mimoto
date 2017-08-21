@@ -93,6 +93,11 @@ class AimlessComponentViewModel
         return $this->_component->editable($sPropertySelector, $options);
     }
 
+    public function container($sContainerName)
+    {
+        return $this->_component->renderContainer($sContainerName);
+    }
+
     public function selection($sSelectionName, $sComponentName = null)
     {
         return $this->_component->selection($sSelectionName, $sComponentName);
@@ -202,67 +207,75 @@ class AimlessComponentViewModel
 
     }
 
-    public function select($sSelectionName, $xPropertySelector, $options = null)
-    {
-        // convert to $xPropertySelector
-
-
-        return 'data-mimoto data-mimoto-add="component.3.templates|{type:xxx}"';
-
-        // compose and send
-        return DataUtils::createAndConnect($sType, $xPropertySelector, $this->_component, $options);
-
-        // delete
-    }
 
 
     public function get()
     {
-        // alias for Mimoto.data
-    }
-
-    public function set()
-    {
-
+        // alias for Mimoto.data?
     }
 
 
-    public function remove()
-    {
 
-    }
-
-    public function edit($sPropertySelector, $sFormName, $options = null)
+    public function edit($sFormName, $options = null)
     {
         // 1. prepare
         $instructions = (object) array(
             'form' => $sFormName
         );
 
-        // build and output
-        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDIT, $sPropertySelector, $this->_component, $instructions, $options);
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDIT, null, $this->_component, $instructions, $options);
     }
 
-    public function add($sPropertySelector, $sFormName, $options = null)
+    public function add($sPropertyName, $sFormName, $options = null)
     {
         // 1. prepare
         $instructions = (object) array(
             'form' => $sFormName
         );
 
-        // build and output
-        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_ADD, $sPropertySelector, $this->_component, $instructions, $options);
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_ADD, $sPropertyName, $this->_component, $instructions, $options);
     }
+
+    public function remove($options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array();
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_REMOVE, null, $this->_component, $instructions, $options);
+    }
+
+    public function select($sPropertyName, $sSelectionName, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'selection' => $sSelectionName
+        );
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_SELECT, $sPropertyName, $this->_component, $instructions, $options);
+    }
+
+    public function set($sPropertyName, $value, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'value' => $value
+        );
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_SET, $sPropertyName, $this->_component, $instructions, $options);
+    }
+
+
 
     public function collaborate()
     {
 
     }
 
-    public function selectAndConnect($xSelection, $sPropertySelector, $options)
-    {
-        // convert into selection (name or config)
-    }
 
 
 

@@ -2,42 +2,42 @@
 
 {% block content %}
 
-    <div data-js-article="{{ Mimoto.meta('id') }}">
+    <img data-js-article="{{ Mimoto.meta('id') }}">
 
         <div class="MimotoPublisher-Article-lede-container">
             <div class="MimotoPublisher-Article-lede">
 
-                <span class="MimotoPublisher-Article-articletype">{% if Mimoto.data('type') == 'explainer' %}Explainer{% else %}Verhaal van de dag{% endif %}</span>
-                 -
+                {#<span class="MimotoPublisher-Article-articletype">{% if Mimoto.data('type') == 'explainer' %}Explainer{% else %}Verhaal van de dag{% endif %}</span>#}
+                 {#-#}
                 <span {{ Mimoto.realtime('lede') }}>{{ Mimoto.data('lede') }}</span>
             </div>
         </div>
 
-        <div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+        {#<div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>#}
 
-        <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }}>
+        <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }} ></img>
 
         <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.editable('body') }}>{{ Mimoto.data('body') }}</div>
 
 
-        <div class="MimotoPublisher-Article-comments">
+        {#<div class="MimotoPublisher-Article-comments">#}
 
-            <h1>Bijdragen</h1>
+            {#<h1>Bijdragen</h1>#}
 
-            <div {{ Mimoto.showWhenEmpty('comments') }} class="MimotoPublisher-Article-comments-container-empty">
-                Er zijn nog geen bijdragen. Vertel als eerste jouw kijk op dit stuk ..
-            </div>
+            {#<div {{ Mimoto.showWhenEmpty('comments') }} class="MimotoPublisher-Article-comments-container-empty">#}
+                {#Er zijn nog geen bijdragen. Vertel als eerste jouw kijk op dit stuk ..#}
+            {#</div>#}
 
-            <div {{ Mimoto.hideWhenEmpty('comments') }} class="MimotoPublisher-Article-comments-container" {{ Mimoto.realtime('comments', 'comment') }}>
-                {{ Mimoto.data('comments', 'comment') }}
-            </div>
+            {#<div {{ Mimoto.hideWhenEmpty('comments') }} class="MimotoPublisher-Article-comments-container" {{ Mimoto.realtime('comments', 'comment') }}>#}
+                {#{{ Mimoto.data('comments', 'comment') }}#}
+            {#</div>#}
 
-            <div class="MimotoPublisher-Article-commentform">
-                <input id="commentForm" type="text" class="MimotoPublisher-Article-comment" />
-                <div class="MimotoPublisher-Article-commentform-button" onclick="Publisher.article.addComment()">Draag bij +</div>
-            </div>
+            {#<div class="MimotoPublisher-Article-commentform">#}
+                {#<input id="commentForm" type="text" class="MimotoPublisher-Article-comment" />#}
+                {#<div class="MimotoPublisher-Article-commentform-button" onclick="Publisher.article.addComment()">Draag bij +</div>#}
+            {#</div>#}
 
-        </div>
+        {#</div>#}
     </div>
 
 {% endblock %}

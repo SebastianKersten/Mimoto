@@ -36,11 +36,11 @@ class EntityConfigUtils
         // copy
         foreach ($stmt as $row)
         {
-            $rawInstance = [];
+            $rawInstance = (object) array();
 
             foreach ($row as $sKey => $value)
             {
-                if (is_string($sKey)) $rawInstance[$sKey] = $value;
+                if (is_string($sKey)) $rawInstance->$sKey = $value;
             }
 
             // store

@@ -13,6 +13,7 @@ use Mimoto\Core\entities\UserRole;
 use Mimoto\Core\entities\FormattingOption;
 use Mimoto\Core\entities\FormattingOptionAttribute;
 use Mimoto\Core\entities\Component;
+use Mimoto\Core\entities\ComponentTemplate;
 use Mimoto\Core\entities\ComponentConditional;
 use Mimoto\Core\entities\Layout;
 use Mimoto\Core\entities\LayoutContainer;
@@ -21,7 +22,6 @@ use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
 use Mimoto\Core\entities\ContentSection;
 use Mimoto\Core\entities\Route;
-use Mimoto\Core\entities\RoutePath;
 use Mimoto\Core\entities\RoutePathElement;
 use Mimoto\Core\entities\Output;
 use Mimoto\Core\entities\OutputContainer;
@@ -107,7 +107,6 @@ class CoreConfig
 
     // routes
     const MIMOTO_ROUTE                          = '_Mimoto_route';
-    const MIMOTO_ROUTE_PATH                     = '_Mimoto_route_path';
     const MIMOTO_ROUTE_PATH_ELEMENT             = '_Mimoto_route_path_element';
     const MIMOTO_OUTPUT                         = '_Mimoto_output';
     const MIMOTO_OUTPUT_CONTAINER               = '_Mimoto_output_container';
@@ -188,6 +187,7 @@ class CoreConfig
     const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
 
     const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
+    const COREFORM_COMPONENTTEMPLATE            = '_Mimoto_coreform__componentTemplate';
     const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentConditional';
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
     const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
@@ -198,8 +198,8 @@ class CoreConfig
 
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
 
-    const COREFORM_SELECTION                    = '_Mimoto_coreform_selection';
-    const COREFORM_SELECTIONRULE                = '_Mimoto_coreform_selectionRule';
+    const COREFORM_SELECTION                    = '_Mimoto_coreform__selection';
+    const COREFORM_SELECTIONRULE                = '_Mimoto_coreform__selectionRule';
 
 
     // input
@@ -260,6 +260,7 @@ class CoreConfig
 
             // views
             Component::getStructure(),
+            ComponentTemplate::getStructure(),
             ComponentConditional::getStructure(),
 
             // views
@@ -273,7 +274,6 @@ class CoreConfig
             // content
             File::getStructure(),
             Route::getStructure(),
-            RoutePath::getStructure(),
             RoutePathElement::getStructure(),
             Output::getStructure(),
             OutputContainer::getStructure(),
@@ -338,6 +338,7 @@ class CoreConfig
 
             // views
             Component::getFormStructure(),
+            ComponentTemplate::getFormStructure(),
             ComponentConditional::getFormStructure(),
 
             // views
@@ -350,7 +351,6 @@ class CoreConfig
 
             // content
             Route::getFormStructure(),
-            RoutePath::getFormStructure(),
             RoutePathElement::getFormStructure(),
             Output::getFormStructure(),
             OutputContainer::getFormStructure(),
@@ -523,6 +523,17 @@ class CoreConfig
                 'rules' => [
                     (object)array(
                         SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_ENTITY
+                    )
+                ]
+            ),
+            (object)array(
+                'id' => CoreConfig::CORE_PREFIX . '_Mimoto_all_instances_of_entity', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . '_Mimoto_all_instances_of_entity', // internal of external?
+                'label' => 'All instances of entity',
+                'rules' => [
+                    (object)array(
+                        'typeAsVar' => true,
+                        'typeVarName' => 'typeVarName'
                     )
                 ]
             )

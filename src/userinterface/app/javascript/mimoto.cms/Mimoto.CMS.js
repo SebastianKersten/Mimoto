@@ -214,146 +214,17 @@ module.exports.prototype = {
         });
     },
     
-    
-    /**
-     * Create new component and connect to entity
-     */
-    entityComponentNew: function(nEntityId)
-    {
-        var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
-        
-        //popup.on('success') = popup.close();
-    },
 
-    /**
-     * Create new component
-     */
-    componentNew: function(nEntityId)
-    {
-        MimotoX.page("/mimoto.cms/component/new");
-    },
 
     componentView: function(nComponentId)
     {
         window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
     },
     
-    componentEdit: function(nComponentId)
-    {
-        MimotoX.popup('/mimoto.cms/component/' + nComponentId + '/edit');
-    },
-    
-    componentDelete: function(nComponentId)
-    {
-        MimotoX.utils.callAPI({
-            type: 'get',
-            url: "/mimoto.cms/component/" + nComponentId + "/delete",
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-    
-    
-    componentConditionalNew: function(nComponentId)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/component/' + nComponentId + '/conditional/new');
-    },
-    
-    componentConditionalEdit: function(nComponentConditionalId)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/componentconditional/' + nComponentConditionalId + '/edit');
-    },
-    
-    componentConditionalDelete: function(nComponentConditionalId)
-    {
-        MimotoX.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/componentconditional/' + nComponentConditionalId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-    
-    
-    
-    
-    //
-    //
-    // /**
-    //  * Create new component
-    //  */
-    // eNew: function(nEntityId)
-    // {
-    //     var popup = MimotoX.popup("/mimoto.cms/entity/" + nEntityId + "/component/new");
-    //
-    //     // Mimoto.Aimless/data/
-    //
-    //
-    //     popup() / page()
-    // },
-    //
-    //
-    
-    /**
-     * Selections
-     */
-    selectionNew: function()
-    {
-        var popup = MimotoX.popup("/mimoto.cms/selection/new");
-    },
-    
     selectionView: function(nSelectionId)
     {
         window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
     },
-    
-    selectionEdit: function(nSelectionId)
-    {
-        MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/edit');
-    },
-    
-    selectionDelete: function(nSelectionId)
-    {
-        MimotoX.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/selection/' + nSelectionId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-    
-    selectionRuleNew: function(nSelectionId)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/selection/' + nSelectionId + '/rule/new');
-    },
-    
-    selectionRuleEdit: function(nSelectionRuleId)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/selectionrule/' + nSelectionRuleId + '/edit');
-    },
-    
-    selectionRuleDelete: function(nSelectionRuleId)
-    {
-        MimotoX.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/selectionrule/' + nSelectionRuleId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-
 
 
     /**
@@ -494,39 +365,9 @@ module.exports.prototype = {
     },
 
 
-    /**
-     * Pages - TEMP
-     */
-    pageNew: function()
-    {
-        var popup = MimotoX.popup("/mimoto.cms/page/new");
-    },
-
     pageView: function(nItemId)
     {
         window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
-    },
-
-    pageEdit: function(nItemId)
-    {
-        MimotoX.popup('/mimoto.cms/page/' + nItemId + '/edit');
-    },
-
-    pageDelete: function(nItemId, sPageName)
-    {
-        var response = confirm("Are you sure you want to delete the page '" + sPageName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-        if (response == true)
-        {
-            MimotoX.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/page/' + nItemId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function (resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
     },
 
 
@@ -566,55 +407,9 @@ module.exports.prototype = {
     /**
      * Layouts
      */
-    layoutNew: function()
-    {
-        var popup = MimotoX.popup("/mimoto.cms/layout/new");
-    },
-    
     layoutView: function(nLayoutId)
     {
         window.open('/mimoto.cms/layout/' + nLayoutId + '/view', '_self');
-    },
-    
-    layoutEdit: function(nLayoutId)
-    {
-        MimotoX.popup('/mimoto.cms/layout/' + nLayoutId + '/edit');
-    },
-    
-    layoutDelete: function(nLayoutId)
-    {
-        MimotoX.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/layout/' + nLayoutId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-    
-    layoutContainerNew: function(nLayoutId)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/layout/' + nLayoutId + '/layoutcontainer/new');
-    },
-    
-    layoutContainerEdit: function(nLayoutContainerId)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/edit');
-    },
-    
-    layoutContainerDelete: function(nLayoutContainerId)
-    {
-        MimotoX.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/layoutcontainer/' + nLayoutContainerId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
     },
     
     

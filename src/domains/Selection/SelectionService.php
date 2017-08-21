@@ -122,175 +122,122 @@ class SelectionService
         $aSelections = [];
 
         // init
-        $aAllSelections = $this->loadRawSelectionData();
+        $aAllSelections = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_SELECTION);
         $aAllSelectionRuleConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTION);
-        $aAllSelectionRules = $this->loadRawSelectionRuleData();
+        $aAllSelectionRules = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_SELECTIONRULE);
         $aAllSelectionRuleSettingsConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTIONRULE);
 
-
+        //Mimoto::error($aAllSelections);
 
         // --- compose ---
 
 
         // build
-        $nSelectionCount = count($aAllSelections);
-        for ($nSelectionIndex = 0; $nSelectionIndex < $nSelectionCount; $nSelectionIndex++)
-        {
-            // register
-            $selection = $aAllSelections[$nSelectionIndex];
-
-            // read
-            $nSelectionId = $selection->id;
-
-            // init
-            $aRules = [];
-
-            // verify
-            if (isset($aAllSelectionRuleConnections[$nSelectionId]))
-            {
-                // connect
-                $nSelectionRuleCount = count($aAllSelectionRuleConnections[$nSelectionId]);
-                for ($nSelectionRuleIndex = 0; $nSelectionRuleIndex < $nSelectionRuleCount; $nSelectionRuleIndex++)
-                {
-                    // register
-                    $selectionRuleConnection = $aAllSelectionRuleConnections[$nSelectionId][$nSelectionRuleIndex];
-
-                    // verify
-                    if ($selectionRuleConnection->parent_id == $selection->id)
-                    {
-                        // search
-                        $nRuleCount = count($aAllSelectionRules);
-                        for ($nRuleIndex = 0;$nRuleIndex < $nRuleCount; $nRuleIndex++)
-                        {
-                            // register
-                            $rule = $aAllSelectionRules[$nRuleIndex];
-
-                            // verify
-                            if ($rule->id == $selectionRuleConnection->child_id)
-                            {
-                                // init
-                                $bSettingFound = false;
-
-                                // init
-                                $newSelectionRule = (object) array();
-
-                                $nSelectionRuleSettingCount = count($aAllSelectionRuleSettingsConnections[$rule->id]);
-                                for ($nSelectionRuleSettingIndex = 0; $nSelectionRuleSettingIndex < $nSelectionRuleSettingCount; $nSelectionRuleSettingIndex++)
-                                {
-                                    // register
-                                    $selectionRuleSetting = $aAllSelectionRuleSettingsConnections[$rule->id][$nSelectionRuleSettingIndex];
-
-
-                                    switch($selectionRuleSetting->parent_property_id)
-                                    {
-                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--entity':
-
-                                            $newSelectionRule->entity = (object) array(
-                                                'entity_type_id' => $selectionRuleSetting->child_id,
-                                                'entity_type_name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_id)
-                                            );
-                                            $bSettingFound = true;
-                                            break;
-
-                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--instance':
-
-                                            $newSelectionRule->instance = $selectionRuleSetting;
-                                            $newSelectionRule->instance = (object) array(
-                                                'entity_type_id' => $selectionRuleSetting->child_entity_type_id,
-                                                'entity_type_name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_entity_type_id),
-                                                'instance_id' => $selectionRuleSetting->child_id
-                                            );
-
-                                            $bSettingFound = true;
-                                            break;
-
-                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--property':
-
-                                            $newSelectionRule->entityProperty = (object) array(
-                                                'property_type_id' => $selectionRuleSetting->child_id,
-                                                'property_type_name' => Mimoto::service('config')->getPropertyNameById($selectionRuleSetting->child_id)
-                                            );
-                                            $bSettingFound = true;
-                                            break;
-
-                                    }
-                                }
-
-                                // verify and add
-                                if ($bSettingFound) $aRules[] = $newSelectionRule;
-
-                            }
-                        }
-                    }
-                }
-            }
-
-            // verify
-            if (count($aRules) > 0)
-            {
-                // store
-                $selection->rules = array_merge($selection->rules, $aRules);
-
-                // store
-                $aSelections[] = $selection;
-            }
-        }
+//        $nSelectionCount = count($aAllSelections);
+//        for ($nSelectionIndex = 0; $nSelectionIndex < $nSelectionCount; $nSelectionIndex++)
+//        {
+//            // register
+//            $selection = $aAllSelections[$nSelectionIndex];
+//
+//            // read
+//            $nSelectionId = $selection->id;
+//
+//            // init
+//            $aRules = [];
+//
+//            // verify
+//            if (isset($aAllSelectionRuleConnections[$nSelectionId]))
+//            {
+//                // connect
+//                $nSelectionRuleCount = count($aAllSelectionRuleConnections[$nSelectionId]);
+//                for ($nSelectionRuleIndex = 0; $nSelectionRuleIndex < $nSelectionRuleCount; $nSelectionRuleIndex++)
+//                {
+//                    // register
+//                    $selectionRuleConnection = $aAllSelectionRuleConnections[$nSelectionId][$nSelectionRuleIndex];
+//
+//                    // verify
+//                    if ($selectionRuleConnection->parent_id == $selection->id)
+//                    {
+//                        // search
+//                        $nRuleCount = count($aAllSelectionRules);
+//                        for ($nRuleIndex = 0;$nRuleIndex < $nRuleCount; $nRuleIndex++)
+//                        {
+//                            // register
+//                            $rule = $aAllSelectionRules[$nRuleIndex];
+//
+//                            // verify
+//                            if ($rule->id == $selectionRuleConnection->child_id)
+//                            {
+//                                // init
+//                                $bSettingFound = false;
+//
+//                                // init
+//                                $newSelectionRule = (object) array();
+//
+//                                $nSelectionRuleSettingCount = count($aAllSelectionRuleSettingsConnections[$rule->id]);
+//                                for ($nSelectionRuleSettingIndex = 0; $nSelectionRuleSettingIndex < $nSelectionRuleSettingCount; $nSelectionRuleSettingIndex++)
+//                                {
+//                                    // register
+//                                    $selectionRuleSetting = $aAllSelectionRuleSettingsConnections[$rule->id][$nSelectionRuleSettingIndex];
+//
+//
+//                                    switch($selectionRuleSetting->parent_property_id)
+//                                    {
+//                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--entity':
+//
+//                                            $newSelectionRule->entity = (object) array(
+//                                                'entity_type_id' => $selectionRuleSetting->child_id,
+//                                                'entity_type_name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_id)
+//                                            );
+//                                            $bSettingFound = true;
+//                                            break;
+//
+//                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--instance':
+//
+//                                            $newSelectionRule->instance = $selectionRuleSetting;
+//                                            $newSelectionRule->instance = (object) array(
+//                                                'entity_type_id' => $selectionRuleSetting->child_entity_type_id,
+//                                                'entity_type_name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_entity_type_id),
+//                                                'instance_id' => $selectionRuleSetting->child_id
+//                                            );
+//
+//                                            $bSettingFound = true;
+//                                            break;
+//
+//                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--property':
+//
+//                                            $newSelectionRule->entityProperty = (object) array(
+//                                                'property_type_id' => $selectionRuleSetting->child_id,
+//                                                'property_type_name' => Mimoto::service('config')->getPropertyNameById($selectionRuleSetting->child_id)
+//                                            );
+//                                            $bSettingFound = true;
+//                                            break;
+//
+//                                    }
+//                                }
+//
+//                                // verify and add
+//                                if ($bSettingFound) $aRules[] = $newSelectionRule;
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            // verify
+//            if (count($aRules) > 0)
+//            {
+//                // store
+//                $selection->rules = array_merge($selection->rules, $aRules);
+//
+//                // store
+//                $aSelections[] = $selection;
+//            }
+//        }
 
         // send
         return $aSelections;
-    }
-
-    private function loadRawSelectionData()
-    {
-        // init
-        $aAllSelections = [];
-
-        // load all selections
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.CoreConfig::MIMOTO_SELECTION.'`');
-        $params = array();
-        $stmt->execute($params);
-
-        foreach ($stmt as $row)
-        {
-            // compose and store
-            $aAllSelections[] = (object) array(
-                'id' => $row['id'],
-                'name' => $row['name'],
-                'created' => $row['created'],
-                'rules' => []
-            );
-        }
-
-        // send
-        return $aAllSelections;
-    }
-
-    private function loadRawSelectionRuleData()
-    {
-        // init
-        $aAllSelectionRules = [];
-
-        // load all selection rules
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `' . CoreConfig::MIMOTO_SELECTIONRULE . '`');
-        $params = array();
-        $stmt->execute($params);
-
-        foreach ($stmt as $row) {
-            // compose and store
-            $aAllSelectionRules[] = (object)array(
-                'id' => $row['id'],
-                'typeAsVar' => $row['typeAsVar'],
-                'typeVarName' => $row['typeVarName'],
-                'idAsVar' => $row['idAsVar'],
-                'idVarName' => $row['idVarName'],
-                'propertyAsVar' => $row['propertyAsVar'],
-                'propertyVarName' => $row['propertyVarName'],
-                'created' => $row['created'],
-            );
-        }
-
-        // send
-        return $aAllSelectionRules;
     }
 
 
@@ -313,13 +260,7 @@ class SelectionService
             $rule = $selection->addRule();
 
             // setup
-            switch($ruleConfig->type)
-            {
-                case 'type':
-
-                    $rule->setType($ruleConfig->entity->entity_type_id);
-                    break;
-            }
+            if (isset($ruleConfig->type)) $rule->setType($ruleConfig->type);
         }
         //Mimoto::output('$selectionConfig', $selectionConfig);
         //Mimoto::error($selection);

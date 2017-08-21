@@ -1,5 +1,6 @@
 @import 'LayoutContainer/LayoutContainer';
 @import 'ComponentTemplate/ComponentTemplate';
+@import 'ComponentConditional/ComponentConditional';
 
 
 div.MimotoCMS_pages_components_ComponentDetail__panel {
@@ -56,18 +57,10 @@ div.MimotoCMS_pages_components_ComponentDetail__block {
 
 
 div.MimotoCMS_pages_components_ComponentDetail_Structure__templates_empty {
-
-    display: flex;
-    flex-wrap: nowrap;
-
-    &>div:first-child {
-        flex-grow: 5;
-    }
-
-    &>div:last-child {
-        flex-grow: 1;
-        text-align: right;
-    }
+    text-align: left;
+    font-style: italic;
+    color: $gray;
+    white-space: normal;
 }
 
 div.MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu {

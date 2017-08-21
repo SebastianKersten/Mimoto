@@ -7,6 +7,7 @@ namespace Mimoto\Core\entities;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
+use Mimoto\Data\MimotoEntity;
 use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
@@ -29,7 +30,7 @@ class RoutePathElement
             'forms' => [CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--type',
+                    'id' => CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type',
                     // ---
                     'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -42,9 +43,22 @@ class RoutePathElement
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--value',
+                    'id' => CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--staticValue',
                     // ---
-                    'name' => 'value',
+                    'name' => 'staticValue',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--varName',
+                    // ---
+                    'name' => 'varName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
@@ -99,21 +113,22 @@ class RoutePathElement
         CoreFormUtils::addField_title($form, 'Path element', '', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");
         CoreFormUtils::addField_groupStart($form);
 
+        $form->addValue('fields', self::getField_type());
+
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'type', CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type',
-            'Name', 'Type', 'The entity name should be unique'
+            $form, 'staticValue', CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--staticValue',
+            'Static part of the path', 'Enter the path`s element'
         );
-        self::setNameValidation($field);
+        //self::setStaticValueValidation($field);
 
-//        $form->addValue('fields', self::getField_extends());
-//
-//        CoreFormUtils::addField_checkbox
-//        (
-//            $form, 'isAbstract', CoreFormUtils::composeFieldName(CoreConfig::COREFORM_ENTITY, 'isAbstract'),
-//            'Configuration',
-//            'Skip dedicated table for this entity'
-//        );
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'varName', CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--varName',
+            'Variable name', 'The variable`s name', "The variable`s name should be unique"
+        );
+        //self::setVarNameValidation($field);
+
 
         CoreFormUtils::addField_groupEnd($form);
 
@@ -129,22 +144,74 @@ class RoutePathElement
 
 
     /**
-     * Set name validation
+     * Get field: type
      */
-    private static function setNameValidation($field)
+    private static function getField_type()
     {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT, 'type');
+        $field->setValue('label', 'Type');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT, 'type');
+
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type_value_options-var');
+        $option->setValue('label', 'Static');
+        $option->setValue('value', 'static');
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type_value_options-var');
+        $option->setValue('label', 'Slash');
+        $option->setValue('value', 'slash');
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type_value_options-static');
+        $option->setValue('label', 'Variable');
+        $option->setValue('value', 'var');
+        $field->addValue('options', $option);
+
+
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation2');
+        $validationRule->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type_value_validation1');
+        $validationRule->setValue('type', 'regex_custom');
+        $validationRule->setValue('value', '^(static|slash|var)$');
+        $validationRule->setValue('errorMessage', 'Select one of the types above');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
+    }
+
+    /**
+     * Set validation for staticValue
+     */
+    private static function setStaticValueValidation(MimotoEntity $field)
+    {
+
+
+        // 1. activate only when type = 'static'
+        // 2. conditional validation
+
+
+
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--staticValue_value_validation2');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
-        $validationRule->setValue('errorMessage', "The entity name can't be empty");
+        $validationRule->setValue('errorMessage', 'The value can`t be empty');
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
 
         // validation rule #2
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_ENTITY.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--staticValue_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
         $validationRule->setValue('errorMessage', 'Name should be in lowerCamelCase, starting with a letter followed by [a-zA-Z0-9-_]');
@@ -156,35 +223,27 @@ class RoutePathElement
     }
 
     /**
-     * Get field: extends
+     * Set validation for varName
      */
-    private static function getField_extends()
+    private static function setVarNameValidation(MimotoEntity $field)
     {
-        // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_ENTITY, 'extends');
-        $field->setValue('label', 'Extend other entity');
-        $field->setValue('description', "Inherit that entity's properties");
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--name_value_validation2');
+        $validationRule->setValue('type', 'minchars');
+        $validationRule->setValue('value', 1);
+        $validationRule->setValue('errorMessage', "The var name can't be empty");
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
 
-        // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ENTITY, 'extends');
-
-
-        // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
-
-        $nEntityCount = count($aEntities);
-        for ($i = 0; $i < $nEntityCount; $i++)
-        {
-            // register
-            $entity = $aEntities[$i];
-
-            //output('$entity->getValue(\'name\')', $entity->getValue('name'));
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-            $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--extends_value_options-valuesettings-collection-'.$entity->getId());
-            $option->setValue('key', $entity->getEntityTypeName().'.'.$entity->getId());
-            $option->setValue('value', $entity->getValue('name'));
-            $field->addValue('options', $option);
-        }
+        // validation rule #2
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--name_value_validation1');
+        $validationRule->setValue('type', 'regex_custom');
+        $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
+        $validationRule->setValue('errorMessage', 'The variable`s name should be in lowerCamelCase, starting with a letter followed by [a-zA-Z0-9-_]');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
 
         // send
         return $field;

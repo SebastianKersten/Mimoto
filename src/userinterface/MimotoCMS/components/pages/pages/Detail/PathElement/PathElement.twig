@@ -1,0 +1,5 @@
+<div class="MimotoCMS_pages_pages_Detail_PathElement js-sortable-draghandle" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }} {{ Mimoto.edit('_Mimoto_route_path_element') }}>
+    {% if Mimoto.data('type') == 'var' %}{ {{ Mimoto.data('varName') }} }{% endif %}
+    {% if Mimoto.data('type') == 'static' %}{{ Mimoto.data('staticValue') }}{% endif %}
+    {% if Mimoto.data('type') == 'slash' %}/{% endif %}
+</div>

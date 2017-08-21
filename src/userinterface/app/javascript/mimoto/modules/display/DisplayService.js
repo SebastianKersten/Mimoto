@@ -41,6 +41,10 @@ let RemoveClassWhenRegexNot = require('./directives/RemoveClassWhenRegexNot');
 let RemoveClassWhenValue = require('./directives/RemoveClassWhenValue');
 let RemoveClassWhenValueNot = require('./directives/RemoveClassWhenValueNot');
 
+// utils
+let DataUtils = require('./utils/DataUtils');
+
+
 
 module.exports = function() {
 
@@ -64,6 +68,8 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DATA_EDIT:    'data-mimoto-edit',
     DIRECTIVE_MIMOTO_DATA_ADD:     'data-mimoto-add',
     DIRECTIVE_MIMOTO_DATA_REMOVE:  'data-mimoto-remove',
+    DIRECTIVE_MIMOTO_DATA_SELECT:  'data-mimoto-select',
+    DIRECTIVE_MIMOTO_DATA_SET:     'data-mimoto-set',
 
     // display directives
     TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
@@ -110,6 +116,9 @@ module.exports.prototype = {
     _aTaggedItems: [],
     _aTaggedProperties: [],
     _aSelectors: [],
+
+    _nDirectiveIndex: 0,
+    _aDirectives: [],
 
 
     // classes
@@ -178,23 +187,99 @@ module.exports.prototype = {
 
     parseInterface: function(element)
     {
-        MimotoX.log('Display Service startup ...');
+        //MimotoX.log('Display Service startup ...');
         let nStartTime = Date.now();
 
         // register
-        let aTags = this._collectAllTagsFromElement(element);
+        let aTags = this._collectDirectives(element);
 
         let nEndTime = Date.now();
-        //MimotoX.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+        MimotoX.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
 
-        this._aSelectors = this._prepareAllTaggedElements(aTags, this._aSelectors);
+        this._prepareAllTaggedElements(aTags);
 
         nEndTime = Date.now();
-        MimotoX.log('Display Service startup took ' + (nEndTime - nStartTime) + ' milliseconds in total');
+        MimotoX.log('Display Service took ' + (nEndTime - nStartTime) + ' milliseconds to process ..');
 
 
         //MimotoX.warn('aTags', aTags);
         //MimotoX.log('aSelectors', this._aSelectors);
+    },
+
+    cleanupDirectives: function(element)
+    {
+        // 1. init
+        let dataUtils = new DataUtils();
+
+
+        // ---
+
+
+        // 2. collect
+        let aDirectives = this._collectDirectives(element);
+
+        // 3. cleanup
+        for (let sDirective in aDirectives)
+        {
+            let nElementCount = aDirectives[sDirective].length;
+            for (let nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++)
+            {
+                // a. register
+                let element = aDirectives[sDirective][nElementIndex];
+
+                // b. read
+                let nDirectiveId = element.getAttribute('data-mimoto');
+
+                // c. read
+                let directive = this._aDirectives[nDirectiveId];
+
+
+
+                // #todo - FIX
+                if (!directive)
+                {
+                    MimotoX.log('element id = ', nDirectiveId, directive, element);
+                    MimotoX.log('Need to handle double value selector xxx.xxx.xxx.xxx[yyy.yyy]');
+                    continue;
+                }
+
+
+                // 1. find in selector array and cleanup
+                let sPropertySelector = directive.sPropertySelector;
+
+                // verify
+                if (this._aSelectors[sPropertySelector])
+                {
+                    let nSelectorCount = this._aSelectors[sPropertySelector].length;
+                    for (let nSelectorIndex = 0; nSelectorIndex < nSelectorCount; nSelectorIndex++)
+                    {
+                        // verify
+                        if (this._aSelectors[sPropertySelector][nSelectorIndex] === directive)
+                        {
+                            // remove
+                            this._aSelectors[sPropertySelector].splice(nSelectorIndex, 1);
+
+                            // verify
+                            if (this._aSelectors[sPropertySelector].length === 0)
+                            {
+                                // cleanup
+                                delete this._aSelectors[sPropertySelector];
+
+                                // solid cleanup of empty spaces
+                                this._aSelectors = dataUtils.cleanupArray(this._aSelectors);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                // f. cleanup
+                delete this._aDirectives[nDirectiveId];
+            }
+        }
+
+        // 4. solid cleanup of empty spaces
+        this._aDirectives = dataUtils.cleanupArray(this._aDirectives);
     },
 
 
@@ -210,13 +295,13 @@ module.exports.prototype = {
      * @returns aTags array All tagged elements grouped by tag type
      * @private
      */
-    _collectAllTagsFromElement: function(element)
+    _collectDirectives: function(element)
     {
         // 1. init
-        let aTags = [];
+        let aDirectives = [];
 
         // 2. prepare (the order is important, because first the changes are implemented, and afterwards the display)
-        let aPrimaryTags = [
+        let aPrimaryDirectives = [
 
             // data directives
             this.TAG_MIMOTO_VALUE,
@@ -231,6 +316,8 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DATA_EDIT,
             this.DIRECTIVE_MIMOTO_DATA_ADD,
             this.DIRECTIVE_MIMOTO_DATA_REMOVE,
+            this.DIRECTIVE_MIMOTO_DATA_SELECT,
+            this.DIRECTIVE_MIMOTO_DATA_SET,
 
             // display directives
             this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
@@ -266,21 +353,24 @@ module.exports.prototype = {
         ];
 
         // 3. collect
-        let nPrimaryTagCount = aPrimaryTags.length;
-        for (let nPrimaryTagIndex = 0; nPrimaryTagIndex < nPrimaryTagCount; nPrimaryTagIndex++)
+        let nPrimaryDirectiveCount = aPrimaryDirectives.length;
+        for (let nPrimaryDirectiveIndex = 0; nPrimaryDirectiveIndex < nPrimaryDirectiveCount; nPrimaryDirectiveIndex++)
         {
             // 3a. register
-            let sPrimaryTag = aPrimaryTags[nPrimaryTagIndex];
+            let sPrimaryDirective = aPrimaryDirectives[nPrimaryDirectiveIndex];
+
+            // 3b. find
+            let aElementsWithDirectives = element.querySelectorAll('[' + sPrimaryDirective + ']');
 
             // 3b. find and store
-            aTags[sPrimaryTag] = element.querySelectorAll('[' + sPrimaryTag + ']');
+            if (aElementsWithDirectives.length > 0) aDirectives[sPrimaryDirective] = aElementsWithDirectives;
         }
 
         // 4. send
-        return aTags;
+        return aDirectives;
     },
 
-    _prepareAllTaggedElements: function(aTags, aSelectors)
+    _prepareAllTaggedElements: function(aTags)
     {
         // 1. parse all directives
         for (let sTag in aTags)
@@ -295,17 +385,19 @@ module.exports.prototype = {
                 // register
                 let element = aElements[nElementIndex];
 
+                // register
+                let nDirectiveId = this._createDirectiveId();
 
+                // read
                 let sPropertySelector = element.getAttribute(sTag);
-
 
                 // init and register
                 let directive = {
+                    id: nDirectiveId,
                     sTag: sTag,
                     sPropertySelector: sPropertySelector,
                     element: element
                 };
-
 
                 // exctract instructions
                 let nInstructionPos = sPropertySelector.indexOf('|');
@@ -315,13 +407,18 @@ module.exports.prototype = {
                     directive.instructions = JSON.parse(sPropertySelector.substr(nInstructionPos + 1));
                 }
 
-
-
                 // verify or init
-                if (!aSelectors[directive.sPropertySelector]) aSelectors[directive.sPropertySelector] = [];
+                if (!this._aSelectors[directive.sPropertySelector]) this._aSelectors[directive.sPropertySelector] = [];
 
                 // register
-                aSelectors[directive.sPropertySelector].push(directive);
+                this._aSelectors[directive.sPropertySelector].push(directive);
+
+
+
+                // store directive
+                element.setAttribute('data-mimoto', nDirectiveId);
+                this._aDirectives[nDirectiveId] = directive;
+
 
 
                 // read tag specific settings
@@ -417,18 +514,16 @@ module.exports.prototype = {
                     case this.DIRECTIVE_MIMOTO_DATA_EDIT:
 
                         // configure
-                        directive.element.addEventListener('click', function(sPropertySelector, sFormName, options, e)
+                        directive.element.addEventListener('click', function(sEntitySelector, sFormName, options, e)
                         {
                             // forward
-                            MimotoX.data.edit(sPropertySelector, sFormName, options);
+                            MimotoX.data.edit(sEntitySelector, sFormName, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
 
                         break;
 
                     case this.DIRECTIVE_MIMOTO_DATA_ADD:
-
-                        console.log('DIRECTIVE_MIMOTO_DATA_ADD');
 
                         // configure
                         directive.element.addEventListener('click', function(sPropertySelector, sFormName, options, e)
@@ -440,7 +535,42 @@ module.exports.prototype = {
 
                         break;
 
+                    case this.DIRECTIVE_MIMOTO_DATA_REMOVE:
+
+                        // configure
+                        directive.element.addEventListener('click', function(sEntitySelector, options, e)
+                        {
+                            // forward
+                            MimotoX.data.remove(sEntitySelector, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.options), true);
+
                         break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_SELECT:
+
+                        // configure
+                        directive.element.addEventListener('click', function(sPropertySelector, xSelection, options, e)
+                        {
+                            // forward
+                            MimotoX.data.select(sPropertySelector, xSelection, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.selection, directive.instructions.options), true);
+
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_SET:
+
+                        // configure
+                        directive.element.addEventListener('click', function(sPropertySelector, value, options, e)
+                        {
+                            // forward
+                            MimotoX.data.set(sPropertySelector, value, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.value, directive.instructions.options), true);
+
+                        break;
+
 
 
                     // --- display updates
@@ -478,14 +608,19 @@ module.exports.prototype = {
                 }
             }
         }
-
-        // send
-        return aSelectors;
     },
 
+    _createDirectiveId: function()
+    {
+        // 1. set
+        let nDirectiveId = this._nDirectiveIndex;
 
+        // 2. update
+        this._nDirectiveIndex++;
 
-
+        // 3. send
+        return nDirectiveId;
+    },
 
 
 
@@ -584,7 +719,7 @@ module.exports.prototype = {
                                 if (change.collection.added) new CollectionAddItems(directive, change.collection.added);
 
                                 // 2. verify and remove items
-                                if (change.collection.removed) new CollectionRemoveItems(directive, change.collection.removed, this._aSelectors);
+                                if (change.collection.removed) new CollectionRemoveItems(directive, change.collection.removed);
 
                                 // 3. verify and change sort order
                                 if (change.collection.connections) new CollectionChangeSortOrder(directive, change.collection.connections);

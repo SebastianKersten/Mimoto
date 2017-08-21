@@ -4,9 +4,9 @@
         sTitle:'Components',
         sButtonLabel: 'Add new component',
         sButtonIcon: 'plus',
-        sButtonOnClick: "Mimoto.CMS.componentNew();",
+        sDirective: Mimoto.add('components', '_Mimoto_coreform__component'),
         sDataSelector: 'components',
-        sComponentName: 'Mimoto.CMS_components_ComponentOverview_ListItem',
+        sComponentName: 'MimotoCMS_components_ComponentOverview_ListItem',
         sMessageOnEmpty: 'xxx'
     })
 }}
@@ -17,10 +17,24 @@
         sTitle:'Layouts',
         sButtonLabel: 'Add new layout',
         sButtonIcon: 'plus',
-        sButtonOnClick: "Mimoto.CMS.layoutNew();",
+        sDirective: Mimoto.add('layouts', '_Mimoto_coreform__layout'),
         sDataSelector: 'layouts',
-        sComponentName: 'Mimoto.CMS_components_ComponentOverview_ListItem',
+        sComponentName: 'MimotoCMS_components_ComponentOverview_ListItem',
         sMessageOnEmpty: 'xxx'
     })
 }}
-dummy images
+
+
+{{
+Mimoto.module('MimotoCMS.SectionModule',
+{
+    sTitle:'Input elements',
+    sButtonLabel: 'Add new input elementt',
+    sButtonIcon: 'plus',
+    sDirective: Mimoto.add('layouts', '_Mimoto_coreform__input'),
+    sDataSelector: 'layouts',
+    sComponentName: 'MimotoCMS_components_ComponentOverview_ListItem',
+    sMessageOnEmpty: 'xxx'
+})
+}}
+add explainer images and combine all into one property called `components` (filter by type)

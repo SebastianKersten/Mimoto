@@ -1,5 +1,5 @@
 section.MimotoCMS_Pagecontent {
-    //    position: absolute;
+    position: absolute;
     z-index: $z-pagecontent;
     top: $header-height-collapsed;
     right: 0;
@@ -7,8 +7,9 @@ section.MimotoCMS_Pagecontent {
     left: 0;
     padding: 20px;
 
-    position: fixed;
-    overflow: scroll;
+    // dont active because it will destroy Quill's bubble tooltip
+    //position: fixed;
+    //overflow: scroll;
 
     @include breakpoint(large up) {
         top: $header-height;

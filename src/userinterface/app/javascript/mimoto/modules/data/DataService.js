@@ -45,12 +45,10 @@ module.exports.prototype = {
     hidden: null,
 
 
-    edit: function(sPropertySelector, sFormName, options) {
-
-        console.log('Editing the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
+    edit: function(sEntitySelector, sFormName, options) {
 
         let postData = {
-            sPropertySelector: sPropertySelector,
+            sEntitySelector: sEntitySelector,
             sFormName: sFormName,
             options: options
         };
@@ -59,8 +57,6 @@ module.exports.prototype = {
     },
 
     add: function(sPropertySelector, sFormName, options) {
-
-        console.log('Adding something to the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
 
         let postData = {
             sPropertySelector: sPropertySelector,
@@ -72,9 +68,7 @@ module.exports.prototype = {
     },
 
 
-
-
-    remove: function(sEntityselector, options)
+    remove: function(sEntitySelector, options)
     {
         // bDontConfirm
         // onInit=confirmMethod,
@@ -82,21 +76,68 @@ module.exports.prototype = {
         // onSuccess,
         // onError,
         // onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing)
+
+
+        console.log('Remove this entity .. ' + sEntitySelector);
+
+        let postData = {
+            sEntitySelector: sEntitySelector,
+            options: options
+        };
+
+
+        MimotoX.utils.callAPI({
+            type: 'POST',
+            url: '/mimoto/data/remove',
+            data: postData,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething)
+            {
+                console.log('Item removed', resultData);
+            }
+        });
     },
+
+    select: function(sPropertySelector, xSelection, options) {
+
+        let postData = {
+            sPropertySelector: sPropertySelector,
+            xSelection: xSelection,
+            options: options
+        };
+
+        MimotoX.popup('/mimoto/data/select', postData);
+    },
+
+    set: function(sPropertySelector, value, options) {
+
+        let postData = {
+            sPropertySelector: sPropertySelector,
+            value: value,
+            options: options
+        };
+
+        MimotoX.utils.callAPI({
+            type: 'post',
+            url: '/mimoto/data/set',
+            data: postData,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                MimotoX.closePopup();
+            }
+        });
+    },
+
+
+
+
+
 
     update: function(sPropertySelector, value)
     {
 
     },
 
-
-
-
-
-    createAndConnect: function(sType, sPropertySelector, options) // -> sets onclick
-    {
-        MimotoX.log('Clicked on createAndConnect .. start the call');
-    },
 
 
 

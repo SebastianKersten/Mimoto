@@ -47,18 +47,10 @@ div.MimotoCMS_pages_selections_Detail__block {
 
 
 div.MimotoCMS_pages_selections_Detail_Structure__rules_empty {
-
-    display: flex;
-    flex-wrap: nowrap;
-
-    &>div:first-child {
-        flex-grow: 5;
-    }
-
-    &>div:last-child {
-        flex-grow: 1;
-        text-align: right;
-    }
+    text-align: left;
+    font-style: italic;
+    color: $gray;
+    white-space: normal;
 }
 
 div.MimotoCMS_pages_selections_Detail_Structure__rules_menu {

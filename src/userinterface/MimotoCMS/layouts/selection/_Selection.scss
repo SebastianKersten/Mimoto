@@ -1,0 +1,22 @@
+div.MimotoCMS_layouts_Selection {
+    padding: 15px;
+}
+
+h1.MimotoCMS_layouts_Selection-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+div.MimotoCMS_layout_Selection-container {
+    margin-top: 15px;
+    padding: 1px;
+    background-color: $mercury;
+
+    & > * {
+        margin-bottom: 1px;
+    }
+
+    & > *:last-child {
+        margin-bottom: 0;
+    }
+}

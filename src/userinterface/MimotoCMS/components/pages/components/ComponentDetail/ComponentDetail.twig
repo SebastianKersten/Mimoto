@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', type:'secondary', directive:Mimoto.edit('name', '_Mimoto_coreform__component') }) }}
+                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', type:'secondary', directive:Mimoto.edit('_Mimoto_coreform__component') }) }}
                     </div>
 
                 </div>
@@ -35,18 +35,17 @@
             <div class="MimotoCMS_pages_components_ComponentDetail__block">
 
                 <div class="MimotoCMS_pages_components_ComponentDetail_Structure__templates_empty" {{ Mimoto.showWhenEmpty('templates') }}>
-                    <div>This component has no templates yet.<br>Add one. Now! I'm not kidding, Do it .. or you won't be able to use this component!</div>
-                    <div>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', directive:Mimoto.add('templates', '_Mimoto_coreform__componenttemplate') }) }}</div>
+                    <div>This component has no templates yet. Add one. Now! I'm not kidding, Do it .. or you won't be able to use this component!</div>
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('templates') }}>
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__templates" {{ Mimoto.realtime('templates', 'Mimoto.CMS_components_ComponentDetail-Template') }}>
                         {{ Mimoto.data('templates', 'Mimoto.CMS_components_ComponentDetail-Template') }}
                     </div>
+                </div>
 
-                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', directive:Mimoto.add('templates', '_Mimoto_coreform__componenttemplate') }) }}
-                    </div>
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu">
+                    {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', directive:Mimoto.add('templates', '_Mimoto_coreform__componentTemplate') }) }}
                 </div>
 
             </div>

@@ -27,7 +27,7 @@ class SelectionRule
             // ---
             'name' => CoreConfig::MIMOTO_SELECTIONRULE,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_SELECTIONRULE],
+            'forms' => [CoreConfig::MIMOTO_SELECTIONRULE],
             'properties' => [
 
                 (object) array(
@@ -44,7 +44,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--typeVarName',
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--typeVarName',
                     // ---
                     'name' => 'typeVarName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -88,7 +88,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--idVarName',
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--idVarName',
                     // ---
                     'name' => 'idVarName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -132,7 +132,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--propertyVarName',
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--propertyVarName',
                     // ---
                     'name' => 'propertyVarName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -199,7 +199,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--childTypeVarName',
+                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--childTypeVarName',
                     // ---
                     'name' => 'childTypeVarName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -269,24 +269,24 @@ class SelectionRule
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_SELECTIONRULE,
-            'name' => CoreConfig::COREFORM_SELECTIONRULE,
+            'id' => CoreConfig::MIMOTO_SELECTIONRULE,
+            'name' => CoreConfig::MIMOTO_SELECTIONRULE,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'typeAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'typeVarName'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'type'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'idAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'idVarName'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'instance'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'propertyAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'propertyVarName'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'property'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'values'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'chidlTypeAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'childTypeVarName'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'childType'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_SELECTIONRULE, 'childValues')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'typeAsVar'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'typeVarName'),
+                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'type'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'idAsVar'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'idVarName'),
+                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'instance'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'propertyAsVar'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'propertyVarName'),
+                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'property'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'values'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'childTypeAsVar'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'childTypeVarName'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'childType'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'childValues')
             ]
         );
     }
@@ -298,18 +298,55 @@ class SelectionRule
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_SELECTIONRULE);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_SELECTIONRULE);
 
         // setup
         CoreFormUtils::addField_title($form, 'Selection rule', '', "Configure a selection rule to select specific sets of data.");
 
-        CoreFormUtils::addField_groupStart($form);
-        $form->addValue('fields', self::getField_type());
-        CoreFormUtils::addField_groupEnd($form);
 
-        CoreFormUtils::addField_groupStart($form, 'Settings the type', 'group_entity');
-        $form->addValue('fields', self::getField_entities());
-        CoreFormUtils::addField_groupEnd($form, 'group_entity');
+        CoreFormUtils::addField_groupStart($form);
+        
+        CoreFormUtils::addField_checkbox
+        (
+            $form, 'typeAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'typeAsVar'),
+            'Type as variable',
+            'Use a variable to define the type'
+        );
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'typeVarName', CoreConfig::MIMOTO_SELECTIONRULE.'--typeVarName',
+            'Var name for the entity type', 'Enter the variable name', 'The variable`s name should be unique'
+        );
+
+        CoreFormUtils::addField_checkbox
+        (
+            $form, 'idAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'idAsVar'),
+            'Instance id as variable',
+            'Use a variable to define the id'
+        );
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'idVarName', CoreConfig::MIMOTO_SELECTIONRULE.'--idVarName',
+            'Var name for the instance id', 'Enter the variable name', 'The variable`s name should be unique'
+        );
+
+        CoreFormUtils::addField_checkbox
+        (
+            $form, 'propertyAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'propertyAsVar'),
+            'Property as variable',
+            'Use a variable to define the property'
+        );
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'propertyVarName', CoreConfig::MIMOTO_SELECTIONRULE.'--propertyVarName',
+            'Var name for the property', 'Enter the variable name', 'The variable`s name should be unique'
+        );
+
+
+        CoreFormUtils::addField_groupEnd($form);
 
 
         // send
@@ -323,85 +360,6 @@ class SelectionRule
     // ----------------------------------------------------------------------------
 
 
-    /**
-     * Get field: type
-     */
-    private static function getField_type()
-    {
-        // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_SELECTIONRULE, 'type');
-        $field->setValue('label', 'Type');
 
-        // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTIONRULE, 'type');
-
-
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_SELECTIONRULE.'--type_value_options-value');
-        $option->setValue('label', 'Child of');
-        $option->setValue('value', SelectionRuleTypes::CHILDOF);
-        $field->addValue('options', $option);
-
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_SELECTIONRULE.'--type_value_options-entity');
-        $option->setValue('label', 'Type');
-        $option->setValue('value', SelectionRuleTypes::TYPE);
-        $field->addValue('options', $option);
-
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_SELECTIONRULE.'--type_value_options-collection');
-        $option->setValue('label', 'Instance');
-        $option->setValue('value', SelectionRuleTypes::INSTANCE);
-        $field->addValue('options', $option);
-
-        // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_SELECTIONRULE.'--type_value_validation1');
-        $validationRule->setValue('type', 'regex_custom');
-        $validationRule->setValue('value', '^('.SelectionRuleTypes::CHILDOF.'|'.SelectionRuleTypes::TYPE.'|'.SelectionRuleTypes::INSTANCE.')$');
-        $validationRule->setValue('errorMessage', 'Select one of the above types');
-        $validationRule->setValue('trigger', 'submit');
-        $field->addValue('validation', $validationRule);
-
-        // send
-        return $field;
-    }
-
-    /**
-     * Get field: entities
-     */
-    private static function getField_entities()
-    {
-        // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_SELECTIONRULE, 'entity');
-        $field->setValue('label', 'Select the entity type');
-
-        // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTIONRULE, 'entity');
-
-
-        // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
-
-        $nEntityCount = count($aEntities);
-        for ($i = 0; $i < $nEntityCount; $i++)
-        {
-            // register
-            $entity = $aEntities[$i];
-
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-            $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entity_value_options-valuesettings-collection-'.$entity->getId());
-            $option->setValue('label', $entity->getValue('name'));
-            $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
-
-            $field->addValue('options', $option);
-        }
-
-        // send
-        return $field;
-    }
-
-
-    // 1. lijst van entityProperty, maar alleen collections
 
 }

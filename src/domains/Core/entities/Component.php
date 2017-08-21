@@ -109,6 +109,15 @@ class Component
                     )
                 ]
             ),
+            (object) array(
+                'name' => 'MimotoCMS_layout_Selection',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/layouts/selection/Selection.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
 
 
             (object) array(
@@ -166,7 +175,7 @@ class Component
                 'name' => 'Mimoto.CMS_entities_EntityOverview',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/entities/EntityOverview/EntityOverview.twig',
+                        'file' => 'MimotoCMS/components/pages/entities/Overview/Overview.twig',
                         'conditionals' => []
                     )
                 ]
@@ -175,7 +184,7 @@ class Component
                 'name' => 'Mimoto.CMS_entities_EntityOverview_ListItem',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/entities/EntityOverview/ListItem/ListItem.twig',
+                        'file' => 'MimotoCMS/components/pages/entities/Overview/ListItem/ListItem.twig',
                         'conditionals' => []
                     )
                 ]
@@ -293,7 +302,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_selections_Overview_ListItem',
+                'name' => 'MimotoCMS_selections_Overview_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/selections/Overview/ListItem/ListItem.twig',
@@ -416,7 +425,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_components_ComponentOverview_ListItem',
+                'name' => 'MimotoCMS_components_ComponentOverview_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/components/ComponentOverview/ListItem/ListItem.twig',
@@ -433,6 +442,39 @@ class Component
                     )
                 ]
             ),
+            (object) array(
+                'name' => 'Mimoto.CMS_components_ComponentDetail-Template',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/components/ComponentDetail/ComponentTemplate/ComponentTemplate.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_components_ComponentDetail-Conditional',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/components/ComponentDetail/ComponentConditional/ComponentConditional.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+
+
+            (object) array(
+                'name' => 'MimotoCMS_components_selection_SelectableItem',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/selection/SelectableItem/SelectableItem.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+
+
 
 
             // api
@@ -497,6 +539,16 @@ class Component
                     )
                 ]
             ),
+            (object) array(
+                'name' => 'MimotoCMS_pages_Detail-PathElement',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/pages/Detail/PathElement/PathElement.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
 
 
             // content sections
