@@ -9,6 +9,10 @@
     $app->post('/publisher/comment/{nCommentId}/unhiglight', 'Mimoto\\UserInterface\\publisher\\PublisherController::unhighlightComment');
     $app->get ('/publisher/editor/{nArticleId}', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewEditor');
 
+
+    $app->get ('/publisher/people', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewPeople');
+
+
     // The Timeline
     $app->get ('/thetimeline/{nTimelineId}', 'Mimoto\\UserInterface\\thetimeline\\TimelineController::viewTimeline');
 

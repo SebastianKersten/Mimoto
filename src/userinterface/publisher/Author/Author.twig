@@ -1,12 +1,6 @@
-{% extends "examples/components/examplebase.twig" %}
-
-{% block content %}
-    <h1>Author</h1>
-    <i>A name and the person's avatar</i><br>
-    <br>
-    <br>
-    <div class="example_article" {{ Mimoto.realtime() }}>
-        <i><span {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span></i><br><br>
-        <img class="example_avatar" src="{{ Mimoto.data('avatar') }}" {{ Mimoto.realtime('avatar') }}>
-    </div>
-{% endblock %}
+<div class="Author" {{ Mimoto.realtime() }}>
+    <span class="Author-firstName" {{ Mimoto.realtime('firstName') }}>{{ Mimoto.data('firstName') }}</span>
+    <span class="Author-lastName" {{ Mimoto.realtime('lastName') }}>{{ Mimoto.data('lastName') }}</span>
+    <div class="Author-email" {{ Mimoto.realtime('email') }}>{{ Mimoto.data('email') }}</div>
+    <div class="Author-button" {{ Mimoto.edit('person') }}>Bewerken</div>
+</div>

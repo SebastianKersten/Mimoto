@@ -522,7 +522,10 @@ class CoreConfig
                 'label' => 'xxx',
                 'rules' => [
                     (object)array(
-                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_ENTITY
+                        SelectionRuleTypes::TYPE => (object) array(
+                            'id' => CoreConfig::MIMOTO_ENTITY,
+                            'name' => CoreConfig::MIMOTO_ENTITY
+                        )
                     )
                 ]
             ),

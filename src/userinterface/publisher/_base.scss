@@ -4,6 +4,7 @@
 @import 'FeedItem/FeedItem';
 @import 'FeedItem/FeedItemExplainer';
 @import 'Comment/Comment';
+@import 'People/People';
 
 
 body.MimotoPublisher {
@@ -39,6 +40,10 @@ div.MimotoPublisher-menu {
         color: #ffffff;
 
     }
+}
+
+div.MimotoPublisher-content {
+    padding-top: 80px;
 }
 
 div.MimotoPublisher-footer {

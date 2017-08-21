@@ -21,6 +21,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PublisherController
 {
+    public function viewPeople(Application $app)
+    {
+        // 1. init
+        $page = Mimoto::service('output')->create('People');
+
+        // 2. fill
+        $page->fillContainer('people', Mimoto::service('data')->select('people'), 'Author');
+
+        // 3. output
+        return $page->render();
+    }
 
     public function viewFeed(Application $app)
     {

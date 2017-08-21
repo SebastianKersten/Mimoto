@@ -1,0 +1,12 @@
+div.People-container {
+    padding: 0 0 100px 0;
+    width: 100%;
+
+    & > div {
+        margin-bottom: 1px;
+    }
+
+    & > div:last-child {
+        margin-bottom: 0;
+    }
+}
