@@ -2,13 +2,6 @@
 
     <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__data">
         <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__name">
-            <div {{ Mimoto.realtime('type.name') }} >{{ Mimoto.data('type.name') }}</div>
-
-
-
-            {#<div>id (optional)</div>#}
-            {#<div>parentProperty (only show when type is set) -> select available properties - entity or collection</div>#}
-            {#<div>propertyValues (array met property selection & value input)</div>#}
 
             <div>
             {% if Mimoto.data('typeAsVar') %}
@@ -16,7 +9,7 @@
             {% else %}
 
                 {% if not Mimoto.empty('type') %}
-                    Type = {{ Mimoto.data('type.name') }}
+                    Type = <span {{ Mimoto.realtime('type.name') }}>{{ Mimoto.data('type.name') }}</span>
                 {% else %}
                     No type selected yet ..
                 {% endif %}
@@ -32,7 +25,7 @@
             {% else %}
 
                 {% if not Mimoto.empty('instance') %}
-                    Instance = {{ Mimoto.meta('instance.id') }}
+                    Instance = <span {{ Mimoto.realtime('instance.id') }}>{{ Mimoto.data('instance.id') }}</span>{{ Mimoto.meta('instance.id') }}
                 {% else %}
                     No type selected yet ..
                 {% endif %}

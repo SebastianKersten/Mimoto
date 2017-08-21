@@ -181,56 +181,110 @@ module.exports.prototype = {
 
 
         // register
-        var layer_overlay = document.getElementById('Mimoto_layer_overlay');
-        var layer_popup = document.getElementById('Mimoto_layer_popup');
+        let layer_overlay = document.getElementById('Mimoto_layer_overlay');
+        let layer_popup = document.getElementById('Mimoto_layer_popup');
+        let popup_content = document.getElementById('Mimoto_popup_content');
 
         // show
         layer_overlay.classList.remove('Mimoto_hidden');
         layer_popup.classList.remove('Mimoto_hidden');
 
 
-        $.ajax({
-            url: sURL,
-            dataType: 'html',
-            method: (postData) ? 'post' : 'get',
-            data: postData,
-            success: function(data, textStatus, jqXHR) {
 
-                //jQuery(selecteur).html(jqXHR.responseText);
-                var response = jQuery(jqXHR.responseText);
-                //var responseScript = response.filter("script");
-                //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
 
-                //popup_content.innerHTML = reponse;
-                $('#Mimoto_popup_content').html(data);
 
-                /*// focus primary input
-                 var primaryInput = document.getElementById('form_field_name');
-                 if (primaryInput)
-                 {
-                 primaryInput.focus();
-                 var val = primaryInput.value;
-                 primaryInput.value = '';
-                 primaryInput.value = val;
-                 }*/
+        // $.ajax({
+        //     url: sURL,
+        //     dataType: 'html',
+        //     method: (postData) ? 'post' : 'get',
+        //     data: postData,
+        //     success: function(data, textStatus, jqXHR) {
+        //
+        //         //jQuery(selecteur).html(jqXHR.responseText);
+        //         var response = jQuery(jqXHR.responseText);
+        //         //var responseScript = response.filter("script");
+        //         //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
+        //
+        //         //popup_content.innerHTML = reponse;
+        //         $('#Mimoto_popup_content').html(data);
+        //
+        //         /*// focus primary input
+        //          var primaryInput = document.getElementById('form_field_name');
+        //          if (primaryInput)
+        //          {
+        //          primaryInput.focus();
+        //          var val = primaryInput.value;
+        //          primaryInput.value = '';
+        //          primaryInput.value = val;
+        //          }*/
+        //
+        //         // reset scroll
+        //         layer_popup.scrollTop = 0;
+        //
+        //         // update
+        //         MimotoX.utils.parseRequestQueue();
+        //     }
+        // });
 
-                // reset scroll
-                layer_popup.scrollTop = 0;
 
-                // update
-                MimotoX.utils.parseRequestQueue();
+
+
+        // init
+        let request = new XMLHttpRequest();
+
+        // setup
+        request.onreadystatechange = function()
+        {
+            if(request.readyState === 4)
+            {
+                if(request.status === 200)
+                {
+
+                    // convert
+                    let response = request.responseText;
+
+                    // init
+                    let parser = new DOMParser();
+                    let newDocument = parser.parseFromString(response, "text/html");
+
+                    // isolate
+                    let element = newDocument.querySelector('body').firstChild;
+
+                    // register directives
+                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+
+                    // reset scroll
+                    layer_popup.scrollTop = 0;
+
+                    // add to dom
+                    popup_content.append(element);
+
+                    // collect and execute scripts
+                    let aResponseScripts = element.querySelectorAll('script');
+                    aResponseScripts.forEach(function(script) { eval(script.text) });
+
+                    // update
+                    MimotoX.utils.parseRequestQueue();
+                }
             }
-        });
+        };
 
+        // prepare
+        request.open((postData) ? 'post' : 'get', sURL, true);
 
-        // 1. dom manager
-        // 2. include Mimoto application layer into dom
-        // 3. add popup
-        // 4. hide others
-        // 5. popup layout
-        // 6. load css
-        // 7. load mimoto.js (general create, update, delete api in deze javascript
-        // 8. Mimoto.data.create('type', id)
+        // setup
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        // prepare
+        let sPostData = '';
+        for (let sKey in postData)
+        {
+            if (sPostData.length !== 0) sPostData += '&';
+            sPostData += sKey + '=' + postData[sKey];
+        }
+
+        // send
+        request.send(sPostData);
 
 
         return {'popup':'xxx'};
@@ -238,12 +292,14 @@ module.exports.prototype = {
 
     closePopup: function()
     {
-        console.log('close!');
-
         // register
         var layer_overlay = document.getElementById('Mimoto_layer_overlay');
         var layer_popup = document.getElementById('Mimoto_layer_popup');
         var popup_content = document.getElementById('Mimoto_popup_content');
+
+
+        // cleanup directives
+        MimotoX.display.cleanupDirectives(popup_content);
 
         // cleanup
         popup_content.innerHTML = '';

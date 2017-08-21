@@ -108,27 +108,13 @@ module.exports.prototype = {
 
     updateComponent: function(elementToReplace, sEntitySelector, sComponentName, nConnectionId)
     {
-        console.log('elementToReplace', elementToReplace, sEntitySelector, sComponentName, nConnectionId);
+        // #todo - FIX
+        if (!elementToReplace) return;
 
-        //this.loadComponent(null, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId, elementToReplace)
-
-
-        // $.ajax({
-        //     type: 'GET',
-        //     url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-        //     data: null,
-        //     dataType: 'html',
-        //     success: function (data)
-        //     {
-        //         // replace
-        //         $($component).replaceWith(data);
-        //     }
-        // });
 
 
         // splite
         let aEntitySelectorElements = sEntitySelector.split('.');
-
 
         // compose
         let requestData = {
@@ -171,7 +157,7 @@ module.exports.prototype = {
                     container.insertBefore(element, elementToReplace);
 
                     // remove old
-                    container.removeChild(elementToReplace);
+                    MimotoX.utils.removeComponent(elementToReplace);
                 }
             }
         };
@@ -198,61 +184,16 @@ module.exports.prototype = {
         request.send(sRequestData);
     },
 
-    
-    // /**
-    //  * Load entity
-    //  */
-    // loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
-    // {
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-    //         data: null,
-    //         dataType: 'html',
-    //         success: function (data) {
-    //
-    //             // delete
-    //             $($container).empty();
-    //
-    //             // output
-    //             $($container).append(data);
-    //         }
-    //     });
-    // },
-    
-    // /**
-    //  * Load wrapper
-    //  */
-    // updateWrapper: function ($component, sEntityTypeName, nId, sWrapper, sComponent)
-    // {
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
-    //         data: null,
-    //         dataType: 'html',
-    //         success: function (data)
-    //         {
-    //             // replace
-    //             $($component).replaceWith(data);
-    //         }
-    //     });
-    // },
-    
-    // updateComponent: function($component, sEntityTypeName, nId, sTemplate)
-    // {
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-    //         data: null,
-    //         dataType: 'html',
-    //         success: function (data)
-    //         {
-    //             // replace
-    //             $($component).replaceWith(data);
-    //         }
-    //     });
-    // },
-    
+    removeComponent: function(element)
+    {
+        // cleanup
+        MimotoX.display.cleanupDirectives(element);
+
+        // remove
+        element.parentNode.removeChild(element);
+    },
+
+
     callAPI: function(request)
     {
         $.ajax({

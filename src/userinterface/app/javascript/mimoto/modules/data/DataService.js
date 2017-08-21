@@ -47,8 +47,6 @@ module.exports.prototype = {
 
     edit: function(sEntitySelector, sFormName, options) {
 
-        console.log('Editing the property .. ' + sEntitySelector + ' with ' + sFormName, 'options:', options);
-
         let postData = {
             sEntitySelector: sEntitySelector,
             sFormName: sFormName,
@@ -59,8 +57,6 @@ module.exports.prototype = {
     },
 
     add: function(sPropertySelector, sFormName, options) {
-
-        console.log('Adding something to the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
 
         let postData = {
             sPropertySelector: sPropertySelector,
@@ -104,8 +100,6 @@ module.exports.prototype = {
 
     select: function(sPropertySelector, xSelection, options) {
 
-        console.log('Selecting for property .. ' + sPropertySelector + ' with ' + xSelection, 'options:', options);
-
         let postData = {
             sPropertySelector: sPropertySelector,
             xSelection: xSelection,
@@ -117,15 +111,21 @@ module.exports.prototype = {
 
     set: function(sPropertySelector, value, options) {
 
-        console.log('Setting value for property .. ' + sPropertySelector + ': ' + value, 'options:', options);
-
         let postData = {
             sPropertySelector: sPropertySelector,
             value: value,
             options: options
         };
 
-        MimotoX.popup('/mimoto/data/set', postData);
+        MimotoX.utils.callAPI({
+            type: 'post',
+            url: '/mimoto/data/set',
+            data: postData,
+            dataType: 'json',
+            success: function(resultData, resultStatus, resultSomething) {
+                MimotoX.closePopup();
+            }
+        });
     },
 
 

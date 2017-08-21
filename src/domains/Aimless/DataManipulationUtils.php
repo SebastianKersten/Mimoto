@@ -67,7 +67,7 @@ class DataManipulationUtils
         if (!empty($options)) $instructions->options = $options;
 
         // 4. compose and send
-        return 'data-mimoto '.$sDirective.'="'.$sSelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
+        return $sDirective.'="'.$sSelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
     }
 
 }

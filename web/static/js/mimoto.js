@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "2e02484f7567fc2ab145";
+/******/ 	__webpack_require__.h = "ac10b6168906028a14b4";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -78,7 +78,7 @@
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function($, jQuery) {/**
+	/**
 	 * Mimoto - An ultra fast, fluid & realtime data management microframework
 	 *
 	 * @author Sebastian Kersten (@supertaboo)
@@ -88,11 +88,11 @@
 	
 	// Mimoto classes
 	
-	var DomUtils = __webpack_require__(4);
+	var DomUtils = __webpack_require__(3);
 	var DomService = __webpack_require__(5);
 	var DataService = __webpack_require__(6);
 	var DisplayService = __webpack_require__(7);
-	var RealtimeManager = __webpack_require__(34);
+	var RealtimeManager = __webpack_require__(35);
 	
 	/**
 	 * Class MimotoStartup
@@ -242,64 +242,112 @@
 	        // register
 	        var layer_overlay = document.getElementById('Mimoto_layer_overlay');
 	        var layer_popup = document.getElementById('Mimoto_layer_popup');
+	        var popup_content = document.getElementById('Mimoto_popup_content');
 	
 	        // show
 	        layer_overlay.classList.remove('Mimoto_hidden');
 	        layer_popup.classList.remove('Mimoto_hidden');
 	
-	        $.ajax({
-	            url: sURL,
-	            dataType: 'html',
-	            method: postData ? 'post' : 'get',
-	            data: postData,
-	            success: function success(data, textStatus, jqXHR) {
+	        // $.ajax({
+	        //     url: sURL,
+	        //     dataType: 'html',
+	        //     method: (postData) ? 'post' : 'get',
+	        //     data: postData,
+	        //     success: function(data, textStatus, jqXHR) {
+	        //
+	        //         //jQuery(selecteur).html(jqXHR.responseText);
+	        //         var response = jQuery(jqXHR.responseText);
+	        //         //var responseScript = response.filter("script");
+	        //         //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
+	        //
+	        //         //popup_content.innerHTML = reponse;
+	        //         $('#Mimoto_popup_content').html(data);
+	        //
+	        //         /*// focus primary input
+	        //          var primaryInput = document.getElementById('form_field_name');
+	        //          if (primaryInput)
+	        //          {
+	        //          primaryInput.focus();
+	        //          var val = primaryInput.value;
+	        //          primaryInput.value = '';
+	        //          primaryInput.value = val;
+	        //          }*/
+	        //
+	        //         // reset scroll
+	        //         layer_popup.scrollTop = 0;
+	        //
+	        //         // update
+	        //         MimotoX.utils.parseRequestQueue();
+	        //     }
+	        // });
 	
-	                //jQuery(selecteur).html(jqXHR.responseText);
-	                var response = jQuery(jqXHR.responseText);
-	                //var responseScript = response.filter("script");
-	                //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
 	
-	                //popup_content.innerHTML = reponse;
-	                $('#Mimoto_popup_content').html(data);
+	        // init
+	        var request = new XMLHttpRequest();
 	
-	                /*// focus primary input
-	                 var primaryInput = document.getElementById('form_field_name');
-	                 if (primaryInput)
-	                 {
-	                 primaryInput.focus();
-	                 var val = primaryInput.value;
-	                 primaryInput.value = '';
-	                 primaryInput.value = val;
-	                 }*/
+	        // setup
+	        request.onreadystatechange = function () {
+	            if (request.readyState === 4) {
+	                if (request.status === 200) {
 	
-	                // reset scroll
-	                layer_popup.scrollTop = 0;
+	                    // convert
+	                    var response = request.responseText;
 	
-	                // update
-	                MimotoX.utils.parseRequestQueue();
+	                    // init
+	                    var parser = new DOMParser();
+	                    var newDocument = parser.parseFromString(response, "text/html");
+	
+	                    // isolate
+	                    var element = newDocument.querySelector('body').firstChild;
+	
+	                    // register directives
+	                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+	
+	                    // reset scroll
+	                    layer_popup.scrollTop = 0;
+	
+	                    // add to dom
+	                    popup_content.append(element);
+	
+	                    // collect and execute scripts
+	                    var aResponseScripts = element.querySelectorAll('script');
+	                    aResponseScripts.forEach(function (script) {
+	                        eval(script.text);
+	                    });
+	
+	                    // update
+	                    MimotoX.utils.parseRequestQueue();
+	                }
 	            }
-	        });
+	        };
 	
-	        // 1. dom manager
-	        // 2. include Mimoto application layer into dom
-	        // 3. add popup
-	        // 4. hide others
-	        // 5. popup layout
-	        // 6. load css
-	        // 7. load mimoto.js (general create, update, delete api in deze javascript
-	        // 8. Mimoto.data.create('type', id)
+	        // prepare
+	        request.open(postData ? 'post' : 'get', sURL, true);
 	
+	        // setup
+	        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	
+	        // prepare
+	        var sPostData = '';
+	        for (var sKey in postData) {
+	            if (sPostData.length !== 0) sPostData += '&';
+	            sPostData += sKey + '=' + postData[sKey];
+	        }
+	
+	        // send
+	        request.send(sPostData);
 	
 	        return { 'popup': 'xxx' };
 	    },
 	
 	    closePopup: function closePopup() {
-	        console.log('close!');
-	
 	        // register
 	        var layer_overlay = document.getElementById('Mimoto_layer_overlay');
 	        var layer_popup = document.getElementById('Mimoto_layer_popup');
 	        var popup_content = document.getElementById('Mimoto_popup_content');
+	
+	        // cleanup directives
+	        MimotoX.display.cleanupDirectives(popup_content);
 	
 	        // cleanup
 	        popup_content.innerHTML = '';
@@ -333,10 +381,251 @@
 	    }
 	
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(3)))
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {/**
+	 * Mimoto.CMS - Form handling
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function () {
+	
+	    // start
+	    this.__construct();
+	};
+	
+	module.exports.prototype = {
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Constructor ------------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Constructor
+	     */
+	    __construct: function __construct() {
+	        this._aRequests = [];
+	    },
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Load component
+	     */
+	    loadComponent: function loadComponent(container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId) {
+	        // compose
+	        var requestData = {
+	            sEntityTypeName: sEntityTypeName,
+	            nEntityId: nEntityId,
+	            sComponentName: sComponentName,
+	            sWrapperName: null,
+	            sPropertySelector: sPropertySelector,
+	            nConnectionId: nConnectionId
+	        };
+	
+	        // init
+	        var request = new XMLHttpRequest();
+	
+	        // setup
+	        request.onreadystatechange = function () {
+	            if (request.readyState === 4) {
+	                if (request.status === 200) {
+	
+	                    // convert
+	                    //var response = JSON.parse(request.responseText);
+	                    var response = request.responseText;
+	
+	                    // init
+	                    var parser = new DOMParser();
+	                    var newDocument = parser.parseFromString(response, "text/html");
+	
+	                    // isolate
+	                    var element = newDocument.querySelector('body').firstChild;
+	
+	                    // register directives
+	                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+	
+	                    // add to dom
+	                    container.append(element);
+	                }
+	            }
+	        };
+	
+	        // prepare
+	        request.open('post', '/mimoto.data/render', true);
+	
+	        // setup
+	        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	
+	        // prepare
+	        var sRequestData = '';
+	        for (var sKey in requestData) {
+	            if (requestData[sKey]) {
+	                if (sRequestData.length !== 0) sRequestData += '&';
+	                sRequestData += sKey + '=' + requestData[sKey];
+	            }
+	        }
+	
+	        // send
+	        request.send(sRequestData);
+	    },
+	
+	    updateComponent: function updateComponent(elementToReplace, sEntitySelector, sComponentName, nConnectionId) {
+	        // #todo - FIX
+	        if (!elementToReplace) return;
+	
+	        // splite
+	        var aEntitySelectorElements = sEntitySelector.split('.');
+	
+	        // compose
+	        var requestData = {
+	            sEntityTypeName: aEntitySelectorElements[0],
+	            nEntityId: aEntitySelectorElements[1],
+	            sComponentName: sComponentName,
+	            nConnectionId: nConnectionId
+	        };
+	
+	        // init
+	        var request = new XMLHttpRequest();
+	
+	        // setup
+	        request.onreadystatechange = function () {
+	            if (request.readyState === 4) {
+	                if (request.status === 200) {
+	
+	                    // convert
+	                    //var response = JSON.parse(request.responseText);
+	                    var response = request.responseText;
+	
+	                    // init
+	                    var parser = new DOMParser();
+	                    var newDocument = parser.parseFromString(response, "text/html");
+	
+	                    // isolate
+	                    var element = newDocument.querySelector('body').firstChild;
+	
+	                    // register directives
+	                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+	
+	                    // get parent
+	                    var container = elementToReplace.parentNode;
+	
+	                    // add new
+	                    container.insertBefore(element, elementToReplace);
+	
+	                    // remove old
+	                    MimotoX.utils.removeComponent(elementToReplace);
+	                }
+	            }
+	        };
+	
+	        // prepare
+	        request.open('post', '/mimoto/output/component', true);
+	
+	        // setup
+	        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	
+	        // prepare
+	        var sRequestData = '';
+	        for (var sKey in requestData) {
+	            if (requestData[sKey]) {
+	                if (sRequestData.length !== 0) sRequestData += '&';
+	                sRequestData += sKey + '=' + requestData[sKey];
+	            }
+	        }
+	
+	        // send
+	        request.send(sRequestData);
+	    },
+	
+	    removeComponent: function removeComponent(element) {
+	        // cleanup
+	        MimotoX.display.cleanupDirectives(element);
+	
+	        // remove
+	        element.parentNode.removeChild(element);
+	    },
+	
+	    callAPI: function callAPI(request) {
+	        $.ajax({
+	            type: request.type,
+	            url: request.url,
+	            data: request.data,
+	            dataType: request.dataType,
+	            success: function success(resultData, resultStatus, resultSomething) {
+	                //console.error(resultData);
+	
+	                // verify and validate
+	                if (resultData.dataModifications && resultData.dataModifications instanceof Array) {
+	                    var nModificationCount = resultData.dataModifications.length;
+	                    for (var nModificationIndex = 0; nModificationIndex < nModificationCount; nModificationIndex++) {
+	                        // register
+	                        var dataModification = resultData.dataModifications[nModificationIndex];
+	
+	                        switch (dataModification.type) {
+	                            case 'data.created':
+	
+	                                //MimotoX.dom.onDataCreated(dataModification.data, 'direct');
+	                                break;
+	
+	                            case 'data.changed':
+	
+	                                MimotoX.dom.onDataChanged(dataModification.data, 'direct');
+	                                break;
+	                        }
+	                    }
+	                }
+	
+	                // forward
+	                request.success(resultData.response, resultStatus, resultSomething);
+	            }
+	        });
+	    },
+	
+	    registerRequest: function registerRequest(sMethod) {
+	        // collect
+	        var aArguments = [];
+	        var nArgumentCount = arguments.length;
+	        for (var nArgumentIndex = 1; nArgumentIndex < nArgumentCount; nArgumentIndex++) {
+	            aArguments.push(arguments[nArgumentIndex]);
+	        }
+	
+	        // compose
+	        var request = {
+	            method: arguments[0],
+	            aArguments: aArguments
+	        };
+	
+	        // store
+	        this._aRequests.push(request);
+	    },
+	
+	    parseRequestQueue: function parseRequestQueue() {
+	        // parse
+	        while (this._aRequests.length > 0) {
+	            // register
+	            var request = this._aRequests.shift();
+	
+	            // execute
+	            request.method.apply(Mimoto.form, request.aArguments);
+	        }
+	    }
+	
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10595,309 +10884,6 @@
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function($) {/**
-	 * Mimoto.CMS - Form handling
-	 *
-	 * @author Sebastian Kersten (@supertaboo)
-	 */
-	
-	'use strict';
-	
-	module.exports = function () {
-	
-	    // start
-	    this.__construct();
-	};
-	
-	module.exports.prototype = {
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Constructor ------------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Constructor
-	     */
-	    __construct: function __construct() {
-	        this._aRequests = [];
-	    },
-	
-	    // ----------------------------------------------------------------------------
-	    // --- Public methods ---------------------------------------------------------
-	    // ----------------------------------------------------------------------------
-	
-	
-	    /**
-	     * Load component
-	     */
-	    loadComponent: function loadComponent(container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId) {
-	        // compose
-	        var requestData = {
-	            sEntityTypeName: sEntityTypeName,
-	            nEntityId: nEntityId,
-	            sComponentName: sComponentName,
-	            sWrapperName: null,
-	            sPropertySelector: sPropertySelector,
-	            nConnectionId: nConnectionId
-	        };
-	
-	        // init
-	        var request = new XMLHttpRequest();
-	
-	        // setup
-	        request.onreadystatechange = function () {
-	            if (request.readyState === 4) {
-	                if (request.status === 200) {
-	
-	                    // convert
-	                    //var response = JSON.parse(request.responseText);
-	                    var response = request.responseText;
-	
-	                    // init
-	                    var parser = new DOMParser();
-	                    var newDocument = parser.parseFromString(response, "text/html");
-	
-	                    // isolate
-	                    var element = newDocument.querySelector('body').firstChild;
-	
-	                    // register directives
-	                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
-	
-	                    // add to dom
-	                    container.append(element);
-	                }
-	            }
-	        };
-	
-	        // prepare
-	        request.open('post', '/mimoto.data/render', true);
-	
-	        // setup
-	        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	
-	        // prepare
-	        var sRequestData = '';
-	        for (var sKey in requestData) {
-	            if (requestData[sKey]) {
-	                if (sRequestData.length !== 0) sRequestData += '&';
-	                sRequestData += sKey + '=' + requestData[sKey];
-	            }
-	        }
-	
-	        // send
-	        request.send(sRequestData);
-	    },
-	
-	    updateComponent: function updateComponent(elementToReplace, sEntitySelector, sComponentName, nConnectionId) {
-	        console.log('elementToReplace', elementToReplace, sEntitySelector, sComponentName, nConnectionId);
-	
-	        //this.loadComponent(null, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId, elementToReplace)
-	
-	
-	        // $.ajax({
-	        //     type: 'GET',
-	        //     url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-	        //     data: null,
-	        //     dataType: 'html',
-	        //     success: function (data)
-	        //     {
-	        //         // replace
-	        //         $($component).replaceWith(data);
-	        //     }
-	        // });
-	
-	
-	        // splite
-	        var aEntitySelectorElements = sEntitySelector.split('.');
-	
-	        // compose
-	        var requestData = {
-	            sEntityTypeName: aEntitySelectorElements[0],
-	            nEntityId: aEntitySelectorElements[1],
-	            sComponentName: sComponentName,
-	            nConnectionId: nConnectionId
-	        };
-	
-	        // init
-	        var request = new XMLHttpRequest();
-	
-	        // setup
-	        request.onreadystatechange = function () {
-	            if (request.readyState === 4) {
-	                if (request.status === 200) {
-	
-	                    // convert
-	                    //var response = JSON.parse(request.responseText);
-	                    var response = request.responseText;
-	
-	                    // init
-	                    var parser = new DOMParser();
-	                    var newDocument = parser.parseFromString(response, "text/html");
-	
-	                    // isolate
-	                    var element = newDocument.querySelector('body').firstChild;
-	
-	                    // register directives
-	                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
-	
-	                    // get parent
-	                    var container = elementToReplace.parentNode;
-	
-	                    // add new
-	                    container.insertBefore(element, elementToReplace);
-	
-	                    // remove old
-	                    container.removeChild(elementToReplace);
-	                }
-	            }
-	        };
-	
-	        // prepare
-	        request.open('post', '/mimoto/output/component', true);
-	
-	        // setup
-	        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	
-	        // prepare
-	        var sRequestData = '';
-	        for (var sKey in requestData) {
-	            if (requestData[sKey]) {
-	                if (sRequestData.length !== 0) sRequestData += '&';
-	                sRequestData += sKey + '=' + requestData[sKey];
-	            }
-	        }
-	
-	        // send
-	        request.send(sRequestData);
-	    },
-	
-	    // /**
-	    //  * Load entity
-	    //  */
-	    // loadEntity: function ($container, sEntityTypeName, nId, sTemplate)
-	    // {
-	    //     $.ajax({
-	    //         type: 'GET',
-	    //         url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-	    //         data: null,
-	    //         dataType: 'html',
-	    //         success: function (data) {
-	    //
-	    //             // delete
-	    //             $($container).empty();
-	    //
-	    //             // output
-	    //             $($container).append(data);
-	    //         }
-	    //     });
-	    // },
-	
-	    // /**
-	    //  * Load wrapper
-	    //  */
-	    // updateWrapper: function ($component, sEntityTypeName, nId, sWrapper, sComponent)
-	    // {
-	    //     $.ajax({
-	    //         type: 'GET',
-	    //         url: '/Mimoto.Aimless/wrapper/' + sEntityTypeName + '/' + nId + '/' + sWrapper + ((sComponent) ? '/' + sComponent : ''),
-	    //         data: null,
-	    //         dataType: 'html',
-	    //         success: function (data)
-	    //         {
-	    //             // replace
-	    //             $($component).replaceWith(data);
-	    //         }
-	    //     });
-	    // },
-	
-	    // updateComponent: function($component, sEntityTypeName, nId, sTemplate)
-	    // {
-	    //     $.ajax({
-	    //         type: 'GET',
-	    //         url: '/Mimoto.Aimless/data/' + sEntityTypeName + '/' + nId + '/' + sTemplate,
-	    //         data: null,
-	    //         dataType: 'html',
-	    //         success: function (data)
-	    //         {
-	    //             // replace
-	    //             $($component).replaceWith(data);
-	    //         }
-	    //     });
-	    // },
-	
-	    callAPI: function callAPI(request) {
-	        $.ajax({
-	            type: request.type,
-	            url: request.url,
-	            data: request.data,
-	            dataType: request.dataType,
-	            success: function success(resultData, resultStatus, resultSomething) {
-	                //console.error(resultData);
-	
-	                // verify and validate
-	                if (resultData.dataModifications && resultData.dataModifications instanceof Array) {
-	                    var nModificationCount = resultData.dataModifications.length;
-	                    for (var nModificationIndex = 0; nModificationIndex < nModificationCount; nModificationIndex++) {
-	                        // register
-	                        var dataModification = resultData.dataModifications[nModificationIndex];
-	
-	                        switch (dataModification.type) {
-	                            case 'data.created':
-	
-	                                //MimotoX.dom.onDataCreated(dataModification.data, 'direct');
-	                                break;
-	
-	                            case 'data.changed':
-	
-	                                MimotoX.dom.onDataChanged(dataModification.data, 'direct');
-	                                break;
-	                        }
-	                    }
-	                }
-	
-	                // forward
-	                request.success(resultData.response, resultStatus, resultSomething);
-	            }
-	        });
-	    },
-	
-	    registerRequest: function registerRequest(sMethod) {
-	        // collect
-	        var aArguments = [];
-	        var nArgumentCount = arguments.length;
-	        for (var nArgumentIndex = 1; nArgumentIndex < nArgumentCount; nArgumentIndex++) {
-	            aArguments.push(arguments[nArgumentIndex]);
-	        }
-	
-	        // compose
-	        var request = {
-	            method: arguments[0],
-	            aArguments: aArguments
-	        };
-	
-	        // store
-	        this._aRequests.push(request);
-	    },
-	
-	    parseRequestQueue: function parseRequestQueue() {
-	        // parse
-	        while (this._aRequests.length > 0) {
-	            // register
-	            var request = this._aRequests.shift();
-	
-	            // execute
-	            request.method.apply(Mimoto.form, request.aArguments);
-	        }
-	    }
-	
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11700,7 +11686,7 @@
 	    }
 	
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
 /* 6 */
@@ -11745,8 +11731,6 @@
 	
 	    edit: function edit(sEntitySelector, sFormName, options) {
 	
-	        console.log('Editing the property .. ' + sEntitySelector + ' with ' + sFormName, 'options:', options);
-	
 	        var postData = {
 	            sEntitySelector: sEntitySelector,
 	            sFormName: sFormName,
@@ -11757,8 +11741,6 @@
 	    },
 	
 	    add: function add(sPropertySelector, sFormName, options) {
-	
-	        console.log('Adding something to the property .. ' + sPropertySelector + ' with ' + sFormName, 'options:', options);
 	
 	        var postData = {
 	            sPropertySelector: sPropertySelector,
@@ -11798,8 +11780,6 @@
 	
 	    select: function select(sPropertySelector, xSelection, options) {
 	
-	        console.log('Selecting for property .. ' + sPropertySelector + ' with ' + xSelection, 'options:', options);
-	
 	        var postData = {
 	            sPropertySelector: sPropertySelector,
 	            xSelection: xSelection,
@@ -11811,15 +11791,21 @@
 	
 	    set: function set(sPropertySelector, value, options) {
 	
-	        console.log('Setting value for property .. ' + sPropertySelector + ': ' + value, 'options:', options);
-	
 	        var postData = {
 	            sPropertySelector: sPropertySelector,
 	            value: value,
 	            options: options
 	        };
 	
-	        MimotoX.popup('/mimoto/data/set', postData);
+	        MimotoX.utils.callAPI({
+	            type: 'post',
+	            url: '/mimoto/data/set',
+	            data: postData,
+	            dataType: 'json',
+	            success: function success(resultData, resultStatus, resultSomething) {
+	                MimotoX.closePopup();
+	            }
+	        });
 	    },
 	
 	    update: function update(sPropertySelector, value) {},
@@ -11946,6 +11932,9 @@
 	var RemoveClassWhenValue = __webpack_require__(29);
 	var RemoveClassWhenValueNot = __webpack_require__(33);
 	
+	// utils
+	var DataUtils = __webpack_require__(34);
+	
 	module.exports = function () {
 	
 	    // start
@@ -12016,6 +12005,9 @@
 	    _aTaggedProperties: [],
 	    _aSelectors: [],
 	
+	    _nDirectiveIndex: 0,
+	    _aDirectives: [],
+	
 	    // classes
 	    _aDisplayOptionClasses: [],
 	
@@ -12073,22 +12065,86 @@
 	
 	
 	    parseInterface: function parseInterface(element) {
-	        MimotoX.log('Display Service startup ...');
+	        //MimotoX.log('Display Service startup ...');
 	        var nStartTime = Date.now();
 	
 	        // register
-	        var aTags = this._collectAllTagsFromElement(element);
+	        var aTags = this._collectDirectives(element);
 	
 	        var nEndTime = Date.now();
-	        //MimotoX.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+	        MimotoX.log('End of registration phase .. took ', nEndTime - nStartTime + ' milliseconds');
 	
-	        this._aSelectors = this._prepareAllTaggedElements(aTags, this._aSelectors);
+	        this._prepareAllTaggedElements(aTags);
 	
 	        nEndTime = Date.now();
-	        MimotoX.log('Display Service startup took ' + (nEndTime - nStartTime) + ' milliseconds in total');
+	        MimotoX.log('Display Service took ' + (nEndTime - nStartTime) + ' milliseconds to process ..');
 	
 	        //MimotoX.warn('aTags', aTags);
 	        //MimotoX.log('aSelectors', this._aSelectors);
+	    },
+	
+	    cleanupDirectives: function cleanupDirectives(element) {
+	        // 1. init
+	        var dataUtils = new DataUtils();
+	
+	        // ---
+	
+	
+	        // 2. collect
+	        var aDirectives = this._collectDirectives(element);
+	
+	        // 3. cleanup
+	        for (var sDirective in aDirectives) {
+	            var nElementCount = aDirectives[sDirective].length;
+	            for (var nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++) {
+	                // a. register
+	                var _element = aDirectives[sDirective][nElementIndex];
+	
+	                // b. read
+	                var nDirectiveId = _element.getAttribute('data-mimoto');
+	
+	                // c. read
+	                var directive = this._aDirectives[nDirectiveId];
+	
+	                // #todo - FIX
+	                if (!directive) {
+	                    MimotoX.log('element id = ', nDirectiveId, directive, _element);
+	                    MimotoX.log('Need to handle double value selector xxx.xxx.xxx.xxx[yyy.yyy]');
+	                    continue;
+	                }
+	
+	                // 1. find in selector array and cleanup
+	                var sPropertySelector = directive.sPropertySelector;
+	
+	                // verify
+	                if (this._aSelectors[sPropertySelector]) {
+	                    var nSelectorCount = this._aSelectors[sPropertySelector].length;
+	                    for (var nSelectorIndex = 0; nSelectorIndex < nSelectorCount; nSelectorIndex++) {
+	                        // verify
+	                        if (this._aSelectors[sPropertySelector][nSelectorIndex] === directive) {
+	                            // remove
+	                            this._aSelectors[sPropertySelector].splice(nSelectorIndex, 1);
+	
+	                            // verify
+	                            if (this._aSelectors[sPropertySelector].length === 0) {
+	                                // cleanup
+	                                delete this._aSelectors[sPropertySelector];
+	
+	                                // solid cleanup of empty spaces
+	                                this._aSelectors = dataUtils.cleanupArray(this._aSelectors);
+	                            }
+	                            break;
+	                        }
+	                    }
+	                }
+	
+	                // f. cleanup
+	                delete this._aDirectives[nDirectiveId];
+	            }
+	        }
+	
+	        // 4. solid cleanup of empty spaces
+	        this._aDirectives = dataUtils.cleanupArray(this._aDirectives);
 	    },
 	
 	    // ----------------------------------------------------------------------------
@@ -12102,12 +12158,12 @@
 	     * @returns aTags array All tagged elements grouped by tag type
 	     * @private
 	     */
-	    _collectAllTagsFromElement: function _collectAllTagsFromElement(element) {
+	    _collectDirectives: function _collectDirectives(element) {
 	        // 1. init
-	        var aTags = [];
+	        var aDirectives = [];
 	
 	        // 2. prepare (the order is important, because first the changes are implemented, and afterwards the display)
-	        var aPrimaryTags = [
+	        var aPrimaryDirectives = [
 	
 	        // data directives
 	        this.TAG_MIMOTO_VALUE, this.TAG_MIMOTO_ENTITY, this.TAG_MIMOTO_COLLECTION, this.TAG_MIMOTO_IMAGE, this.TAG_MIMOTO_VIDEO, this.TAG_MIMOTO_AUDIO, this.TAG_MIMOTO_ID,
@@ -12122,20 +12178,23 @@
 	        this.TAG_MATH_MIMOTO_COUNT];
 	
 	        // 3. collect
-	        var nPrimaryTagCount = aPrimaryTags.length;
-	        for (var nPrimaryTagIndex = 0; nPrimaryTagIndex < nPrimaryTagCount; nPrimaryTagIndex++) {
+	        var nPrimaryDirectiveCount = aPrimaryDirectives.length;
+	        for (var nPrimaryDirectiveIndex = 0; nPrimaryDirectiveIndex < nPrimaryDirectiveCount; nPrimaryDirectiveIndex++) {
 	            // 3a. register
-	            var sPrimaryTag = aPrimaryTags[nPrimaryTagIndex];
+	            var sPrimaryDirective = aPrimaryDirectives[nPrimaryDirectiveIndex];
+	
+	            // 3b. find
+	            var aElementsWithDirectives = element.querySelectorAll('[' + sPrimaryDirective + ']');
 	
 	            // 3b. find and store
-	            aTags[sPrimaryTag] = element.querySelectorAll('[' + sPrimaryTag + ']');
+	            if (aElementsWithDirectives.length > 0) aDirectives[sPrimaryDirective] = aElementsWithDirectives;
 	        }
 	
 	        // 4. send
-	        return aTags;
+	        return aDirectives;
 	    },
 	
-	    _prepareAllTaggedElements: function _prepareAllTaggedElements(aTags, aSelectors) {
+	    _prepareAllTaggedElements: function _prepareAllTaggedElements(aTags) {
 	        // 1. parse all directives
 	        for (var sTag in aTags) {
 	            // register
@@ -12147,10 +12206,15 @@
 	                // register
 	                var element = aElements[nElementIndex];
 	
+	                // register
+	                var nDirectiveId = this._createDirectiveId();
+	
+	                // read
 	                var sPropertySelector = element.getAttribute(sTag);
 	
 	                // init and register
 	                var directive = {
+	                    id: nDirectiveId,
 	                    sTag: sTag,
 	                    sPropertySelector: sPropertySelector,
 	                    element: element
@@ -12164,10 +12228,14 @@
 	                }
 	
 	                // verify or init
-	                if (!aSelectors[directive.sPropertySelector]) aSelectors[directive.sPropertySelector] = [];
+	                if (!this._aSelectors[directive.sPropertySelector]) this._aSelectors[directive.sPropertySelector] = [];
 	
 	                // register
-	                aSelectors[directive.sPropertySelector].push(directive);
+	                this._aSelectors[directive.sPropertySelector].push(directive);
+	
+	                // store directive
+	                element.setAttribute('data-mimoto', nDirectiveId);
+	                this._aDirectives[nDirectiveId] = directive;
 	
 	                // read tag specific settings
 	                switch (sTag) {
@@ -12287,8 +12355,6 @@
 	
 	                    case this.DIRECTIVE_MIMOTO_DATA_SET:
 	
-	                        console.log('DIRECTIVE_MIMOTO_DATA_SET');
-	
 	                        // configure
 	                        directive.element.addEventListener('click', function (sPropertySelector, value, options, e) {
 	                            // forward
@@ -12332,9 +12398,17 @@
 	                }
 	            }
 	        }
+	    },
 	
-	        // send
-	        return aSelectors;
+	    _createDirectiveId: function _createDirectiveId() {
+	        // 1. set
+	        var nDirectiveId = this._nDirectiveIndex;
+	
+	        // 2. update
+	        this._nDirectiveIndex++;
+	
+	        // 3. send
+	        return nDirectiveId;
 	    },
 	
 	    // ----------------------------------------------------------------------------
@@ -12407,7 +12481,7 @@
 	                                if (change.collection.added) new CollectionAddItems(directive, change.collection.added);
 	
 	                                // 2. verify and remove items
-	                                if (change.collection.removed) new CollectionRemoveItems(directive, change.collection.removed, this._aSelectors);
+	                                if (change.collection.removed) new CollectionRemoveItems(directive, change.collection.removed);
 	
 	                                // 3. verify and change sort order
 	                                if (change.collection.connections) new CollectionChangeSortOrder(directive, change.collection.connections);
@@ -12725,14 +12799,14 @@
 	
 	var DisplayUtils = __webpack_require__(9);
 	
-	module.exports = function (directive, aRemovedItems, aSelectors) {
+	module.exports = function (directive, aRemovedItems) {
 	    // start
-	    this.__construct(directive, aRemovedItems, aSelectors);
+	    this.__construct(directive, aRemovedItems);
 	};
 	
 	module.exports.prototype = {
 	
-	    __construct: function __construct(directive, aRemovedItems, aSelectors) {
+	    __construct: function __construct(directive, aRemovedItems) {
 	        // 1. init
 	        var displayUtils = new DisplayUtils();
 	
@@ -12744,32 +12818,8 @@
 	            // 3. find
 	            var element = directive.element.querySelector('[' + MimotoX.display.TAG_MIMOTO_ID + '="' + sEntitySelector + '"][' + MimotoX.display.TAG_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
 	
-	            // 4. verify
-	            if (element && aSelectors[sEntitySelector]) {
-	                // 4b. find
-	                var nCleanupCount = aSelectors[sEntitySelector].length;
-	                for (var nCleanupIndex = 0; nCleanupIndex < nCleanupCount; nCleanupIndex++) {
-	                    // register
-	                    var cleanupCandidate = aSelectors[sEntitySelector][nCleanupIndex];
-	
-	                    // verify
-	                    if (cleanupCandidate && cleanupCandidate.nConnectionId == item.connection.id) {
-	                        // remove
-	                        aSelectors[sEntitySelector].splice(nCleanupIndex, 1);
-	
-	                        // correct
-	                        nCleanupIndex--;
-	
-	                        // cleanup
-	                        if (aSelectors[sEntitySelector].length === 0) {
-	                            delete aSelectors[sEntitySelector];
-	                            break;
-	                        }
-	                    }
-	                }
-	
-	                directive.element.removeChild(element);
-	            }
+	            // 4. cleanup
+	            MimotoX.utils.removeComponent(element);
 	        });
 	    }
 	
@@ -13700,6 +13750,47 @@
 
 /***/ }),
 /* 34 */
+/***/ (function(module, exports) {
+
+	/**
+	 * Mimoto - Data utils
+	 *
+	 * @author Sebastian Kersten (@supertaboo)
+	 */
+	
+	'use strict';
+	
+	module.exports = function () {};
+	
+	module.exports.prototype = {
+	
+	    // ----------------------------------------------------------------------------
+	    // --- Public methods ---------------------------------------------------------
+	    // ----------------------------------------------------------------------------
+	
+	
+	    /**
+	     * Solid cleanup of empty spaces in an array
+	     * @param aArray
+	     * @returns array
+	     */
+	    cleanupArray: function cleanupArray(aArray) {
+	        // 1. cleanup
+	        for (var nDirectiveIndex = 0; nDirectiveIndex < aArray.length; nDirectiveIndex++) {
+	            if (aArray[nDirectiveIndex] === undefined) {
+	                aArray.splice(nDirectiveIndex, 1);
+	                nDirectiveIndex--;
+	            }
+	        }
+	
+	        // 2. send
+	        return aArray;
+	    }
+	
+	};
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -13722,13 +13813,13 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var RealtimeEditor = __webpack_require__(35);
+	var RealtimeEditor = __webpack_require__(36);
 	
 	// Socket.io classes
-	var io = __webpack_require__(36);
+	var io = __webpack_require__(37);
 	
 	// Quill classes
-	var Quill = __webpack_require__(90);
+	var Quill = __webpack_require__(91);
 	
 	module.exports = function (sGateway) {
 	    // start
@@ -14054,7 +14145,7 @@
 	};
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
@@ -14067,11 +14158,11 @@
 	
 	// Socket.io classes
 	
-	var io = __webpack_require__(36);
+	var io = __webpack_require__(37);
 	
 	// Quill classes
-	var Quill = __webpack_require__(90);
-	var QuillDelta = __webpack_require__(95);
+	var Quill = __webpack_require__(91);
+	var QuillDelta = __webpack_require__(96);
 	
 	module.exports = function (socket, sPropertySelector, editOptions, editableValue) {
 	
@@ -14393,7 +14484,7 @@
 	};
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -14401,10 +14492,10 @@
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(37);
-	var parser = __webpack_require__(43);
-	var Manager = __webpack_require__(54);
-	var debug = __webpack_require__(39)('socket.io-client');
+	var url = __webpack_require__(38);
+	var parser = __webpack_require__(44);
+	var Manager = __webpack_require__(55);
+	var debug = __webpack_require__(40)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -14503,12 +14594,12 @@
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(54);
-	exports.Socket = __webpack_require__(84);
+	exports.Manager = __webpack_require__(55);
+	exports.Socket = __webpack_require__(85);
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -14516,8 +14607,8 @@
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(38);
-	var debug = __webpack_require__(39)('socket.io-client:url');
+	var parseuri = __webpack_require__(39);
+	var debug = __webpack_require__(40)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -14590,7 +14681,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
 	/**
@@ -14635,7 +14726,7 @@
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -14645,7 +14736,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(41);
+	exports = module.exports = __webpack_require__(42);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -14816,10 +14907,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(41)))
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	// shim for using process in browser
@@ -15009,7 +15100,7 @@
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -15025,7 +15116,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(42);
+	exports.humanize = __webpack_require__(43);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -15215,7 +15306,7 @@
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports) {
 
 	/**
@@ -15370,7 +15461,7 @@
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -15378,11 +15469,11 @@
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(44)('socket.io-parser');
-	var json = __webpack_require__(47);
-	var Emitter = __webpack_require__(50);
-	var binary = __webpack_require__(51);
-	var isBuf = __webpack_require__(53);
+	var debug = __webpack_require__(45)('socket.io-parser');
+	var json = __webpack_require__(48);
+	var Emitter = __webpack_require__(51);
+	var binary = __webpack_require__(52);
+	var isBuf = __webpack_require__(54);
 	
 	/**
 	 * Protocol version.
@@ -15780,7 +15871,7 @@
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -15790,7 +15881,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(45);
+	exports = module.exports = __webpack_require__(46);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -15954,7 +16045,7 @@
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -15970,7 +16061,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(46);
+	exports.humanize = __webpack_require__(47);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -16157,7 +16248,7 @@
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 	/**
@@ -16288,14 +16379,14 @@
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(49);
+	  var isLoader = "function" === "function" && __webpack_require__(50);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -17194,10 +17285,10 @@
 	  }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)(module), (function() { return this; }())))
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -17213,7 +17304,7 @@
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -17221,7 +17312,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 	
@@ -17391,7 +17482,7 @@
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -17400,8 +17491,8 @@
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(52);
-	var isBuf = __webpack_require__(53);
+	var isArray = __webpack_require__(53);
+	var isBuf = __webpack_require__(54);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -17539,7 +17630,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -17548,7 +17639,7 @@
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -17568,7 +17659,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -17576,15 +17667,15 @@
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(55);
-	var Socket = __webpack_require__(84);
-	var Emitter = __webpack_require__(85);
-	var parser = __webpack_require__(43);
-	var on = __webpack_require__(87);
-	var bind = __webpack_require__(88);
-	var debug = __webpack_require__(39)('socket.io-client:manager');
-	var indexOf = __webpack_require__(82);
-	var Backoff = __webpack_require__(89);
+	var eio = __webpack_require__(56);
+	var Socket = __webpack_require__(85);
+	var Emitter = __webpack_require__(86);
+	var parser = __webpack_require__(44);
+	var on = __webpack_require__(88);
+	var bind = __webpack_require__(89);
+	var debug = __webpack_require__(40)('socket.io-client:manager');
+	var indexOf = __webpack_require__(83);
+	var Backoff = __webpack_require__(90);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -18134,19 +18225,19 @@
 
 
 /***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	
-	module.exports = __webpack_require__(56);
-
-
-/***/ }),
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
 	module.exports = __webpack_require__(57);
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	
+	module.exports = __webpack_require__(58);
 	
 	/**
 	 * Exports parser
@@ -18154,25 +18245,25 @@
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(64);
+	module.exports.parser = __webpack_require__(65);
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(58);
-	var Emitter = __webpack_require__(72);
-	var debug = __webpack_require__(76)('engine.io-client:socket');
-	var index = __webpack_require__(82);
-	var parser = __webpack_require__(64);
-	var parseuri = __webpack_require__(38);
-	var parsejson = __webpack_require__(83);
-	var parseqs = __webpack_require__(73);
+	var transports = __webpack_require__(59);
+	var Emitter = __webpack_require__(73);
+	var debug = __webpack_require__(77)('engine.io-client:socket');
+	var index = __webpack_require__(83);
+	var parser = __webpack_require__(65);
+	var parseuri = __webpack_require__(39);
+	var parsejson = __webpack_require__(84);
+	var parseqs = __webpack_require__(74);
 	
 	/**
 	 * Module exports.
@@ -18304,9 +18395,9 @@
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(63);
-	Socket.transports = __webpack_require__(58);
-	Socket.parser = __webpack_require__(64);
+	Socket.Transport = __webpack_require__(64);
+	Socket.transports = __webpack_require__(59);
+	Socket.parser = __webpack_require__(65);
 	
 	/**
 	 * Creates transport of the given type.
@@ -18903,17 +18994,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(59);
-	var XHR = __webpack_require__(61);
-	var JSONP = __webpack_require__(79);
-	var websocket = __webpack_require__(80);
+	var XMLHttpRequest = __webpack_require__(60);
+	var XHR = __webpack_require__(62);
+	var JSONP = __webpack_require__(80);
+	var websocket = __webpack_require__(81);
 	
 	/**
 	 * Export transports.
@@ -18963,12 +19054,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 	
-	var hasCORS = __webpack_require__(60);
+	var hasCORS = __webpack_require__(61);
 	
 	module.exports = function (opts) {
 	  var xdomain = opts.xdomain;
@@ -19007,7 +19098,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 	
@@ -19030,18 +19121,18 @@
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(59);
-	var Polling = __webpack_require__(62);
-	var Emitter = __webpack_require__(72);
-	var inherit = __webpack_require__(74);
-	var debug = __webpack_require__(76)('engine.io-client:polling-xhr');
+	var XMLHttpRequest = __webpack_require__(60);
+	var Polling = __webpack_require__(63);
+	var Emitter = __webpack_require__(73);
+	var inherit = __webpack_require__(75);
+	var debug = __webpack_require__(77)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -19461,19 +19552,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(63);
-	var parseqs = __webpack_require__(73);
-	var parser = __webpack_require__(64);
-	var inherit = __webpack_require__(74);
-	var yeast = __webpack_require__(75);
-	var debug = __webpack_require__(76)('engine.io-client:polling');
+	var Transport = __webpack_require__(64);
+	var parseqs = __webpack_require__(74);
+	var parser = __webpack_require__(65);
+	var inherit = __webpack_require__(75);
+	var yeast = __webpack_require__(76);
+	var debug = __webpack_require__(77)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -19486,7 +19577,7 @@
 	 */
 	
 	var hasXHR2 = (function () {
-	  var XMLHttpRequest = __webpack_require__(59);
+	  var XMLHttpRequest = __webpack_require__(60);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -19712,15 +19803,15 @@
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(64);
-	var Emitter = __webpack_require__(72);
+	var parser = __webpack_require__(65);
+	var Emitter = __webpack_require__(73);
 	
 	/**
 	 * Module exports.
@@ -19875,22 +19966,22 @@
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(65);
-	var hasBinary = __webpack_require__(66);
-	var sliceBuffer = __webpack_require__(67);
-	var after = __webpack_require__(68);
-	var utf8 = __webpack_require__(69);
+	var keys = __webpack_require__(66);
+	var hasBinary = __webpack_require__(67);
+	var sliceBuffer = __webpack_require__(68);
+	var after = __webpack_require__(69);
+	var utf8 = __webpack_require__(70);
 	
 	var base64encoder;
 	if (global && global.ArrayBuffer) {
-	  base64encoder = __webpack_require__(70);
+	  base64encoder = __webpack_require__(71);
 	}
 	
 	/**
@@ -19948,7 +20039,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(71);
+	var Blob = __webpack_require__(72);
 	
 	/**
 	 * Encodes a packet.
@@ -20491,7 +20582,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports) {
 
 	
@@ -20516,7 +20607,7 @@
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -20524,7 +20615,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(52);
+	var isArray = __webpack_require__(53);
 	
 	/**
 	 * Module exports.
@@ -20582,7 +20673,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports) {
 
 	/**
@@ -20617,7 +20708,7 @@
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports) {
 
 	module.exports = after
@@ -20651,7 +20742,7 @@
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -20887,10 +20978,10 @@
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)(module), (function() { return this; }())))
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports) {
 
 	/*
@@ -20963,7 +21054,7 @@
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -21066,7 +21157,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -21235,7 +21326,7 @@
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports) {
 
 	/**
@@ -21278,7 +21369,7 @@
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports) {
 
 	
@@ -21290,7 +21381,7 @@
 	};
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -21364,7 +21455,7 @@
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {
@@ -21374,7 +21465,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(77);
+	exports = module.exports = __webpack_require__(78);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -21545,10 +21636,10 @@
 	  } catch (e) {}
 	}
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(41)))
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -21564,7 +21655,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(78);
+	exports.humanize = __webpack_require__(79);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -21754,7 +21845,7 @@
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports) {
 
 	/**
@@ -21909,7 +22000,7 @@
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -21917,8 +22008,8 @@
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(62);
-	var inherit = __webpack_require__(74);
+	var Polling = __webpack_require__(63);
+	var inherit = __webpack_require__(75);
 	
 	/**
 	 * Module exports.
@@ -22147,24 +22238,24 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(63);
-	var parser = __webpack_require__(64);
-	var parseqs = __webpack_require__(73);
-	var inherit = __webpack_require__(74);
-	var yeast = __webpack_require__(75);
-	var debug = __webpack_require__(76)('engine.io-client:websocket');
+	var Transport = __webpack_require__(64);
+	var parser = __webpack_require__(65);
+	var parseqs = __webpack_require__(74);
+	var inherit = __webpack_require__(75);
+	var yeast = __webpack_require__(76);
+	var debug = __webpack_require__(77)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	var NodeWebSocket;
 	if (typeof window === 'undefined') {
 	  try {
-	    NodeWebSocket = __webpack_require__(81);
+	    NodeWebSocket = __webpack_require__(82);
 	  } catch (e) { }
 	}
 	
@@ -22439,13 +22530,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports) {
 
 	/* (ignored) */
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports) {
 
 	
@@ -22460,7 +22551,7 @@
 	};
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -22498,7 +22589,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -22506,13 +22597,13 @@
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(43);
-	var Emitter = __webpack_require__(85);
-	var toArray = __webpack_require__(86);
-	var on = __webpack_require__(87);
-	var bind = __webpack_require__(88);
-	var debug = __webpack_require__(39)('socket.io-client:socket');
-	var hasBin = __webpack_require__(66);
+	var parser = __webpack_require__(44);
+	var Emitter = __webpack_require__(86);
+	var toArray = __webpack_require__(87);
+	var on = __webpack_require__(88);
+	var bind = __webpack_require__(89);
+	var debug = __webpack_require__(40)('socket.io-client:socket');
+	var hasBin = __webpack_require__(67);
 	
 	/**
 	 * Module exports.
@@ -22923,7 +23014,7 @@
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -23092,7 +23183,7 @@
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports) {
 
 	module.exports = toArray
@@ -23111,7 +23202,7 @@
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports) {
 
 	
@@ -23141,7 +23232,7 @@
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports) {
 
 	/**
@@ -23170,7 +23261,7 @@
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports) {
 
 	
@@ -23261,7 +23352,7 @@
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -34494,10 +34585,10 @@
 	/***/ })
 	/******/ ]);
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(91).Buffer))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(92).Buffer))
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*!
@@ -34510,9 +34601,9 @@
 	
 	'use strict'
 	
-	var base64 = __webpack_require__(92)
-	var ieee754 = __webpack_require__(93)
-	var isArray = __webpack_require__(94)
+	var base64 = __webpack_require__(93)
+	var ieee754 = __webpack_require__(94)
+	var isArray = __webpack_require__(95)
 	
 	exports.Buffer = Buffer
 	exports.SlowBuffer = SlowBuffer
@@ -36293,7 +36384,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports) {
 
 	'use strict'
@@ -36413,7 +36504,7 @@
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports) {
 
 	exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -36503,7 +36594,7 @@
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports) {
 
 	var toString = {}.toString;
@@ -36514,13 +36605,13 @@
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var diff = __webpack_require__(96);
-	var equal = __webpack_require__(97);
-	var extend = __webpack_require__(100);
-	var op = __webpack_require__(101);
+	var diff = __webpack_require__(97);
+	var equal = __webpack_require__(98);
+	var extend = __webpack_require__(101);
+	var op = __webpack_require__(102);
 	
 	
 	var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
@@ -36834,7 +36925,7 @@
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports) {
 
 	/**
@@ -37538,12 +37629,12 @@
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
-	var objectKeys = __webpack_require__(98);
-	var isArguments = __webpack_require__(99);
+	var objectKeys = __webpack_require__(99);
+	var isArguments = __webpack_require__(100);
 	
 	var deepEqual = module.exports = function (actual, expected, opts) {
 	  if (!opts) opts = {};
@@ -37638,7 +37729,7 @@
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
@@ -37653,7 +37744,7 @@
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
@@ -37679,7 +37770,7 @@
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -37771,11 +37862,11 @@
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var equal = __webpack_require__(97);
-	var extend = __webpack_require__(100);
+	var equal = __webpack_require__(98);
+	var extend = __webpack_require__(101);
 	
 	
 	var lib = {
