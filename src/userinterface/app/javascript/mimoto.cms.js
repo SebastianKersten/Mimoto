@@ -1,5 +1,7 @@
 //'use strict'; #note SK - do not uncomment
 
+import './../scss/mimoto.cms.scss';
+
 require('jquery-ui');
 
 
