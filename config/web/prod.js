@@ -45,7 +45,7 @@ module.exports = function(env) {
       ]
     },
     plugins: [
-      new ExtractTextPlugin('../css/style.css'),
+      new ExtractTextPlugin('../css/[name].min.css'),
       new webpack.LoaderOptionsPlugin({
         minimize: true,
         debug: false
