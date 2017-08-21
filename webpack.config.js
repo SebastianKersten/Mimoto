@@ -1,5 +1,12 @@
 function buildConfig(env) {
-    const target = process.argv[3].substring('--target='.length);
+    var target;
+
+    for (var i = 0; i < process.argv.length; i++) {
+        if (process.argv[i].indexOf('--target=') !== -1) {
+            target = process.argv[i].substring('--target='.length)
+        }
+    }
+
     return require('./config/' + target + '/' + env + '.js')(env)
 }
 
