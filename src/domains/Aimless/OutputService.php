@@ -401,7 +401,11 @@ class OutputService
                         break;
                 }
             }
-            Mimoto::output('RegEx', $sPathRegExp);
+
+
+            //Mimoto::output('RegEx', $sPathRegExp);
+
+
             // verify
             if (preg_match('/'.$sPathRegExp.'/U', $sPath, $aMatches))
             {
@@ -413,12 +417,17 @@ class OutputService
 
 
                 $eOutput = $eRoute->getValue('output');
+
+                
+                if (empty($eOutput)) return false;
+
+
                 $eLayout = $eOutput->getValue('layout');
                 $eSelection = $eOutput->getValue('selection');
 
 
                 // verify
-                if (!empty($eSelection) && !empty($eOutput) && !empty($eComponent))
+                if (!empty($eSelection) && !empty($eOutput) && !empty($eLayout))
                 {
                     // create
                     $selection = Mimoto::service('selection')->create($eSelection);
@@ -447,16 +456,16 @@ class OutputService
                 }
 
 
-                Mimoto::error($eInstance);
+                //Mimoto::error($eLayout->getValue('name'));
 
                 // init
-                $component = Mimoto::service('output')->createComponent($eComponent->getValue('name'), $eInstance);
+                $layout = Mimoto::service('output')->create($eLayout->getValue('name'), $eInstance);
 
 
                 // b. container selections can be []
 
                 // output
-                return $component->render();
+                return $layout->render();
             }
 
 

@@ -59,6 +59,16 @@ class Selection
 
                     #todo --- (and move to separate function)
                     // 1. use same code as colling items from beginning
+
+
+                    $eType = $eRule->getValue('type');
+
+
+                    if (!empty($eType))
+                    {
+                        $this->setType($eType->getValue('name'));
+                    }
+
                 }
             }
             else
