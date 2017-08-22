@@ -11,7 +11,7 @@ module.exports = function() {
         },
         output: {
             path: resolve(__dirname, './../../web/static/js'),
-            filename: '[name].min.js',
+            filename: '[name].js',
             publicPath: '/static/js/' // The bundled files will be available in the browser under this path
         },
         resolve: {

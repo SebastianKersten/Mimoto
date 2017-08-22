@@ -36,7 +36,8 @@ module.exports = function(env) {
                             {
                                 loader: 'sass-loader',
                                 options: {
-                                    sourceMap: true
+                                    sourceMap: true,
+                                    includePaths: ['node_modules/foundation-sites/scss', 'node_modules/flatpickr/dist']
                                 }
                             }
                         ]
@@ -45,7 +46,7 @@ module.exports = function(env) {
             ]
         },
         plugins: [
-            new ExtractTextPlugin('../css/[name].min.css'),
+            new ExtractTextPlugin('../css/[name].css'),
             new webpack.LoaderOptionsPlugin({
                 minimize: true,
                 debug: false
