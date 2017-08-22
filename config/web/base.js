@@ -1,18 +1,22 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = function() {
     return {
         context: resolve(__dirname, './../../src/userinterface/'), // The context is an absolute string to the directory that contains the entry files.
         entry: { // The entry object is where webpack looks to start building the bundle
-            'mimoto.cms': ['babel-polyfill', './app/javascript/mimoto.cms.js'],
-            'mimoto': './app/javascript/mimoto.js',
-            'publisher': './publisher/base.js'
+            'js/mimoto.cms.js': ['babel-polyfill', './app/javascript/mimoto.cms.js'],
+            'js/mimoto.js': './app/javascript/mimoto.js',
+            'js/publisher.js': './publisher/base.js',
+            'css/mimoto.cms.css': './app/scss/mimoto.cms.scss',
+            'css/publisher.css': './app/scss/publisher.scss',
+            'css/thetimeline.css': './app/scss/thetimeline.scss'
         },
         output: {
-            path: resolve(__dirname, './../../web/static/js'),
-            filename: '[name].js',
-            publicPath: '/static/js/' // The bundled files will be available in the browser under this path
+            path: resolve(__dirname, './../../web/static'),
+            filename: '[name]'
         },
         resolve: {
             modules: ['node_modules', 'src/userinterface/MimotoCMS/components', 'src/userinterface/MimotoCMS/modules'],
@@ -30,6 +34,7 @@ module.exports = function() {
             ]
         },
         plugins: [
+            new ExtractTextPlugin('[name]'),
             new webpack.ProvidePlugin({
                 $: "jquery",
                 jQuery: "jquery",

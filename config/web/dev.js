@@ -1,72 +1,64 @@
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const { resolve } = require('path');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const baseConfig = require('./base');
+
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 
 module.exports = function(env) {
     return webpackMerge(baseConfig(), {
         devtool: 'cheap-module-source-map', // https://webpack.js.org/configuration/devtool/
-        devServer: {
-            contentBase: resolve(__dirname, './../../web'), // The folder from where the files get served
-            compress: true, // Enable gzip compression for everything served
-            port: 3100,
-            hot: true
-        },
         module: {
             rules: [
                 {
                     test: /\.scss$/,
-                    use: [
-                        {
-                            loader: 'style-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: true,
-                                importLoaders: 2
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true,
-                                plugins: () => {
-                                    return [
-                                        require('autoprefixer')({
-                                            browsers: 'last 10 versions'
-                                        })
-                                    ];
+                    use: ExtractTextPlugin.extract({
+                        fallback: 'style-loader',
+                        use: [
+                            {
+                                loader: 'css-loader',
+                                options: {
+                                    sourceMap: true,
+                                    importLoaders: 2
+                                }
+                            },
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: true,
+                                    plugins: () => {
+                                        return [
+                                            require('autoprefixer')({
+                                                browsers: 'last 10 versions'
+                                            })
+                                        ];
+                                    }
+                                }
+                            },
+                            {
+                                loader: 'sass-loader',
+                                options: {
+                                    sourceMap: true,
+                                    includePaths: ['node_modules/foundation-sites/scss', 'node_modules/flatpickr/dist']
                                 }
                             }
-                        },
-                        {
-                            loader: 'sass-loader',
-                            options: {
-                                sourceMap: true,
-                                includePaths: ['node_modules/foundation-sites/scss', 'node_modules/flatpickr/dist']
-                            }
-                        }
-                    ]
+                        ]
+                    })
                 }
             ]
         },
         plugins: [
-            new webpack.HotModuleReplacementPlugin(),
-            new webpack.NamedModulesPlugin(),
+            new WriteFilePlugin({
+                log: false,
+                useHashIndex: true
+            }),
             new BrowserSyncPlugin(
                 // BrowserSync options
                 {
-                    // Browse to http://localhost:3000/ during development
-                    host: 'localhost',
                     port: 3000,
-                    // Proxy the Webpack Dev Server endpoint through BrowserSync
-                    proxy: 'http://mimoto.aimless',
-                    open: true
+                    proxy: 'http://mimoto.aimless'
                 },
                 // Plugin options
                 {

@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const baseConfig = require('./base');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 
 module.exports = function(env) {
     return webpackMerge(baseConfig(), {
@@ -46,7 +47,10 @@ module.exports = function(env) {
             ]
         },
         plugins: [
-            new ExtractTextPlugin('../css/[name].css'),
+            new WriteFilePlugin({
+                log: false,
+                useHashIndex: false
+            }),
             new webpack.LoaderOptionsPlugin({
                 minimize: true,
                 debug: false
