@@ -76,7 +76,6 @@ div.MimotoCMS_pages_pages_Detail-path {
 }
 
 div.MimotoCMS_pages_pages_Detail-path-empty {
-    margin-top: 35px;
     font-style: italic;
     color: $tower-gray;
 }
@@ -153,5 +152,9 @@ div.MimotoCMS_pages_pages_Detail_Structure__attributes_container {
     &>div:last-child {
         margin-bottom: 0;
     }
+
+}
+
+div.MimotoCMS_pages_pages_Detail-Output-empty {
 
 }

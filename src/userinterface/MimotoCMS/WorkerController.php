@@ -170,7 +170,7 @@ class WorkerController
                 (
                     "channel" => "#" . $workload->channel,
                     "text" => $workload->message,
-                    "username" => "Mimoto.Aimless",
+                    "username" => "Mimoto",
                     "icon_emoji" => ":ant:"
                 ));
 

@@ -157,18 +157,6 @@ class Component
             ),
 
 
-            // api
-            (object) array(
-                'name' => 'MimotoCMS_popups_Select',
-                'templates' => [
-                    (object) array(
-                        'file' => 'MimotoCMS/components/popups/Select/Select.twig',
-                        'conditionals' => []
-                    )
-                ]
-            ),
-
-
             // entities
 
             (object) array(
@@ -434,6 +422,15 @@ class Component
                 ]
             ),
             (object) array(
+                'name' => 'MimotoCMS_components_ComponentOverview_ListItemLayout',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/components/ComponentOverview/ListItemLayout/ListItemLayout.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
                 'name' => 'Mimoto.CMS_components_ComponentDetail',
                 'templates' => [
                     (object) array(
@@ -461,6 +458,25 @@ class Component
                 ]
             ),
 
+            (object) array(
+                'name' => 'Mimoto.CMS_components_LayoutDetail',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/components/LayoutDetail/LayoutDetail.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+            (object) array(
+                'name' => 'MimotoCMS_components_LayoutDetail-Container',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/components/LayoutDetail/LayoutContainer/LayoutContainer.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
 
 
             (object) array(
@@ -548,6 +564,17 @@ class Component
                     )
                 ]
             ),
+            (object) array(
+                'name' => 'MimotoCMS_pages_Detail-Output',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/pages/Detail/Output/Output.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+
 
 
 

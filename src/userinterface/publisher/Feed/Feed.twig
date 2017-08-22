@@ -2,8 +2,6 @@
 
 {% block content %}
 
-    <div class="MimotoPublisher_Feed-container" {{ Mimoto.realtime('contentItems', 'FeedItem') }}>
-        {{ Mimoto.data('contentItems', 'FeedItem') }}
-    </div>
+    <div class="MimotoPublisher_Feed-container">{{ Mimoto.container('feed') }}</div>
 
 {% endblock %}

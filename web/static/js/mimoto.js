@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "ac10b6168906028a14b4";
+/******/ 	__webpack_require__.h = "9806bc22adcc577fe75c";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -11808,79 +11808,37 @@
 	        });
 	    },
 	
-	    update: function update(sPropertySelector, value) {},
+	    create: function create(sPropertySelector, sEntityName, options) {
 	
-	    // /**
-	    //  * Handle data CHANGED
-	    //  */
-	    // setValue: function(sPropertySelector, xSelection, xVars)
-	    // {
-	    //
-	    //     // 1. xSelection = ..
-	    //     // .. string (name of the predefined selection)
-	    //     // .. json (with query params)
-	    //
-	    //     // 2. xVars = ..
-	    //     // .. object (with vars)
-	    //     // .. string (propertyselector)
-	    // },
-	
-	    selectAndAdd: function selectAndAdd(sPropertySelector, xSelection, xVars) {
-	
-	        console.log(sPropertySelector, xSelection);
-	
-	        var request = {
+	        var postData = {
 	            sPropertySelector: sPropertySelector,
-	            xSelection: xSelection,
-	            xVars: xVars
+	            sEntityName: sEntityName,
+	            options: options
 	        };
 	
-	        MimotoX.popup('/mimoto/data/select', request);
-	
-	        // 1. render component (direct of with mapping)
-	        // 2. mapping info in dom
-	        // 3. open popup
-	        // 4. show result of simple selection (with mapping?)
-	        // 5. connect vars
-	        // 6. select item
-	        // 7. close popup
-	
-	
-	        // 1. setValue(value)
-	        // 2. Mimoto.data.select('article.3.author', )
-	        // 3. selectAndAddToCollection()
-	
-	        // 4. clearValue
-	        // 5. removeValue(connectionId)
-	
-	
-	        // flatten selection and store in Selection definition
-	
-	
-	        // Mimoto.data.selectAndSet('selectionRule.3.type', 'allEntities', {vars});
-	        // Mimoto.data.selectAndSet('selectionRule.3.id', 'allInstancesOfType', {type:<selectionRule.3.type>});
-	        // Mimoto.data.selectAndSet('selectionRule.3.property', 'allPropertiesOfInstance', {type:<selectionRule.3.type>, id:<selectionRule.3.id>});
-	
-	
-	        // Mimoto.data.addValue('selectionRule.3.type', {type:'_Mimoto_entity'});
+	        MimotoX.utils.callAPI({
+	            type: 'post',
+	            url: '/mimoto/data/create',
+	            data: postData,
+	            dataType: 'json',
+	            success: function success(resultData, resultStatus, resultSomething) {}
+	        });
 	    },
 	
-	    // 1. delete
-	    // 2. create
+	    clear: function clear(sPropertySelector, options) {
 	
+	        var postData = {
+	            sPropertySelector: sPropertySelector,
+	            options: options
+	        };
 	
-	    /**
-	     * Handle data CHANGED
-	     */
-	    addValue: function addValue(sPropertySelector, xSelection, xVars) {
-	
-	        // 1. xSelection = ..
-	        // .. string (name of the predefined selection)
-	        // .. json (with query params)
-	
-	        // 2. xVars = ..
-	        // .. object (with vars)
-	        // .. string (propertyselector)
+	        MimotoX.utils.callAPI({
+	            type: 'post',
+	            url: '/mimoto/data/clear',
+	            data: postData,
+	            dataType: 'json',
+	            success: function success(resultData, resultStatus, resultSomething) {}
+	        });
 	    }
 	
 	};
@@ -11958,6 +11916,8 @@
 	    DIRECTIVE_MIMOTO_DATA_REMOVE: 'data-mimoto-remove',
 	    DIRECTIVE_MIMOTO_DATA_SELECT: 'data-mimoto-select',
 	    DIRECTIVE_MIMOTO_DATA_SET: 'data-mimoto-set',
+	    DIRECTIVE_MIMOTO_DATA_CREATE: 'data-mimoto-create',
+	    DIRECTIVE_MIMOTO_DATA_CLEAR: 'data-mimoto-clear',
 	
 	    // display directives
 	    TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY: 'data-mimoto-display-hidewhenempty',
@@ -12169,7 +12129,7 @@
 	        this.TAG_MIMOTO_VALUE, this.TAG_MIMOTO_ENTITY, this.TAG_MIMOTO_COLLECTION, this.TAG_MIMOTO_IMAGE, this.TAG_MIMOTO_VIDEO, this.TAG_MIMOTO_AUDIO, this.TAG_MIMOTO_ID,
 	
 	        // data manipulation directives
-	        this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT, this.DIRECTIVE_MIMOTO_DATA_SET,
+	        this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT, this.DIRECTIVE_MIMOTO_DATA_SET, this.DIRECTIVE_MIMOTO_DATA_CREATE, this.DIRECTIVE_MIMOTO_DATA_CLEAR,
 	
 	        // display directives
 	        this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY, this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY, this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX, this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX, this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE, this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE, this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY, this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY, this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX, this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX, this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE, this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE, this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE, this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE,
@@ -12360,6 +12320,26 @@
 	                            // forward
 	                            MimotoX.data.set(sPropertySelector, value, options);
 	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.value, directive.instructions.options), true);
+	
+	                        break;
+	
+	                    case this.DIRECTIVE_MIMOTO_DATA_CREATE:
+	
+	                        // configure
+	                        directive.element.addEventListener('click', function (sPropertySelector, sEntityName, options, e) {
+	                            // forward
+	                            MimotoX.data.create(sPropertySelector, sEntityName, options);
+	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.entityName, directive.instructions.options), true);
+	
+	                        break;
+	
+	                    case this.DIRECTIVE_MIMOTO_DATA_CLEAR:
+	
+	                        // configure
+	                        directive.element.addEventListener('click', function (sPropertySelector, options, e) {
+	                            // forward
+	                            MimotoX.data.clear(sPropertySelector, options);
+	                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.options), true);
 	
 	                        break;
 	

@@ -22,6 +22,8 @@ class DataManipulationUtils
     const MIMOTO_DATA_REMOVE = 'data-mimoto-remove';
     const MIMOTO_DATA_SELECT = 'data-mimoto-select';
     const MIMOTO_DATA_SET    = 'data-mimoto-set';
+    const MIMOTO_DATA_CREATE = 'data-mimoto-create';
+    const MIMOTO_DATA_CLEAR  = 'data-mimoto-clear';
 
 
 

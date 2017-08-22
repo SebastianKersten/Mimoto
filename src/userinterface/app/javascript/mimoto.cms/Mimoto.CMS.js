@@ -220,6 +220,11 @@ module.exports.prototype = {
     {
         window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
     },
+
+    layoutView: function(nLayoutId)
+    {
+        window.open('/mimoto.cms/layout/' + nLayoutId + '/view', '_self');
+    },
     
     selectionView: function(nSelectionId)
     {
@@ -326,45 +331,6 @@ module.exports.prototype = {
     },
 
 
-
-    /**
-     * Pages
-     */
-    entityXNew: function(sEntityTypeName)
-    {
-        var popup = MimotoX.popup('/mimoto.cms/entityX/' + sEntityTypeName + '/new');
-    },
-
-    entityXView: function(sEntityTypeName, nItemId, sFolder)
-    {
-        sFolder = (sFolder) ? sFolder + '/' : '';
-
-        window.open('/mimoto.cms/' + sFolder + 'entityX/' + sEntityTypeName + '/' + nItemId + '/view', '_self');
-    },
-
-    entityXEdit: function(sEntityTypeName, nItemId)
-    {
-        MimotoX.popup('/mimoto.cms/entityX/' + sEntityTypeName + '/' + nItemId + '/edit');
-    },
-
-    entityXDelete: function(sEntityTypeName, nItemId, sItemName)
-    {
-        var response = confirm("Are you sure you want to delete the " + sEntityTypeName + " '" + sItemName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-        if (response == true)
-        {
-            MimotoX.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/entityX/' + sEntityTypeName + '/' + nItemId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function (resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
-
-
     pageView: function(nItemId)
     {
         window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
@@ -401,15 +367,6 @@ module.exports.prototype = {
                 console.log(resultData);
             }
         });
-    },
-
-    
-    /**
-     * Layouts
-     */
-    layoutView: function(nLayoutId)
-    {
-        window.open('/mimoto.cms/layout/' + nLayoutId + '/view', '_self');
     },
     
     

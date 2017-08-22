@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "ac10b6168906028a14b4";
+/******/ 	__webpack_require__.h = "9806bc22adcc577fe75c";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -54759,6 +54759,10 @@
 	        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
 	    },
 	
+	    layoutView: function layoutView(nLayoutId) {
+	        window.open('/mimoto.cms/layout/' + nLayoutId + '/view', '_self');
+	    },
+	
 	    selectionView: function selectionView(nSelectionId) {
 	        window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
 	    },
@@ -54846,38 +54850,6 @@
 	        }
 	    },
 	
-	    /**
-	     * Pages
-	     */
-	    entityXNew: function entityXNew(sEntityTypeName) {
-	        var popup = MimotoX.popup('/mimoto.cms/entityX/' + sEntityTypeName + '/new');
-	    },
-	
-	    entityXView: function entityXView(sEntityTypeName, nItemId, sFolder) {
-	        sFolder = sFolder ? sFolder + '/' : '';
-	
-	        window.open('/mimoto.cms/' + sFolder + 'entityX/' + sEntityTypeName + '/' + nItemId + '/view', '_self');
-	    },
-	
-	    entityXEdit: function entityXEdit(sEntityTypeName, nItemId) {
-	        MimotoX.popup('/mimoto.cms/entityX/' + sEntityTypeName + '/' + nItemId + '/edit');
-	    },
-	
-	    entityXDelete: function entityXDelete(sEntityTypeName, nItemId, sItemName) {
-	        var response = confirm("Are you sure you want to delete the " + sEntityTypeName + " '" + sItemName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-	        if (response == true) {
-	            MimotoX.utils.callAPI({
-	                type: 'get',
-	                url: '/mimoto.cms/entityX/' + sEntityTypeName + '/' + nItemId + '/delete',
-	                data: null,
-	                dataType: 'json',
-	                success: function success(resultData, resultStatus, resultSomething) {
-	                    console.log(resultData);
-	                }
-	            });
-	        }
-	    },
-	
 	    pageView: function pageView(nItemId) {
 	        window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
 	    },
@@ -54907,13 +54879,6 @@
 	                console.log(resultData);
 	            }
 	        });
-	    },
-	
-	    /**
-	     * Layouts
-	     */
-	    layoutView: function layoutView(nLayoutId) {
-	        window.open('/mimoto.cms/layout/' + nLayoutId + '/view', '_self');
 	    },
 	
 	    /**

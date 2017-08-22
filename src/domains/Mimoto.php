@@ -122,6 +122,12 @@ class Mimoto
         //$app->post('/'.$sProjectName.'/data/select', 'Mimoto\\api\\DataController::select');
 
 
+        // default
+        $app->get('/', function(Request $request) use ($app, $sProjectName) {
+
+            return $app->redirect('/'.$sProjectName.'.cms');
+        });
+
 
 
 
@@ -146,11 +152,13 @@ class Mimoto
 
 
         // --- data manipulation
-        $app->post('/'.$sProjectName.'/data/edit', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::edit');
-        $app->post('/'.$sProjectName.'/data/add', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::add');
-        $app->post('/'.$sProjectName.'/data/remove', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::remove');
-        $app->post('/'.$sProjectName.'/data/select', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::select');
-        $app->post('/'.$sProjectName.'/data/set', 'Mimoto\\UserInterface\\MimotoCMS\\DataController::set');
+        $app->post('/'.$sProjectName.'/data/edit', 'Mimoto\\api\\DataController::edit');
+        $app->post('/'.$sProjectName.'/data/add', 'Mimoto\\api\\DataController::add');
+        $app->post('/'.$sProjectName.'/data/remove', 'Mimoto\\api\\DataController::remove');
+        $app->post('/'.$sProjectName.'/data/select', 'Mimoto\\api\\DataController::select');
+        $app->post('/'.$sProjectName.'/data/set', 'Mimoto\\api\\DataController::set');
+        $app->post('/'.$sProjectName.'/data/create', 'Mimoto\\api\\DataController::create');
+        $app->post('/'.$sProjectName.'/data/clear', 'Mimoto\\api\\DataController::clear');
 
 
 
@@ -226,13 +234,6 @@ class Mimoto
 
 
         // User roles
-        $app->get ('/'.$sProjectName.'.cms/entityX/userRole/new', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/configuration/userRole/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/entityX/userRole/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/entityX/userRole/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-
-
-        // User roles
         $app->get ('/'.$sProjectName.'.cms/configuration/userRole/new', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/configuration/userRole/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/configuration/userRole/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::userRoleEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -246,10 +247,7 @@ class Mimoto
 
 
         // Layout
-        $app->get ('/'.$sProjectName.'.cms/layout/new', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::layoutView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/layoutcontainer/new', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/layoutcontainer/{nLayoutContainerId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -471,7 +469,7 @@ class Mimoto
         // validate
         if (!self::$_bDebugMode) return;
 
-        echo '<div style="position:absolute; top:0; left: 0;display:inline-block; background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px;">';
+        echo '<div style="display:inline-block; background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px; text-overflow: scroll">';
         echo '<div>';
         echo '<h2><b style="font-size:larger;">Error</b></h2><hr style="border:0;height:1px;background:#ffffff">';
         echo '<pre>';

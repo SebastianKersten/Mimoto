@@ -183,7 +183,7 @@ class SelectionService
                                     {
                                         case CoreConfig::MIMOTO_SELECTIONRULE.'--type':
 
-                                            $newSelectionRule->type = $selectionRuleSetting->child_id;
+                                            $newSelectionRule->type = Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_id);
 //                                            $newSelectionRule->type = (object) array(
 //                                                'id' => $selectionRuleSetting->child_id,
 //                                                'name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_id)

@@ -401,8 +401,20 @@ class DataService
             // c. verify
             if (!empty($eParent))
             {
-                // I. add
-                $eParent->addValue($parent->property, $eEntity);
+                switch($eParent->getPropertyType($parent->property))
+                {
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                        // I. add
+                        $eParent->setValue($parent->property, $eEntity);
+                        break;
+
+                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                        // I. add
+                        $eParent->addValue($parent->property, $eEntity);
+                        break;
+                }
 
                 // II. store
                 Mimoto::service('data')->store($eParent);
@@ -422,6 +434,8 @@ class DataService
      */
     public function getEntityConfig($xEntityType) // #todo - move to config
     {
+        //Mimoto::error($xEntityType);
+
         // verify and convert
         $sEntityType = (MimotoDataUtils::isValidId($xEntityType)) ? $this->_EntityConfigService->getEntityNameById($xEntityType) : $xEntityType;
 

@@ -269,6 +269,25 @@ class AimlessComponentViewModel
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_SET, $sPropertyName, $this->_component, $instructions, $options);
     }
 
+    public function create($sPropertyName, $sEntityName, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'entityName' => $sEntityName
+        );
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_CREATE, $sPropertyName, $this->_component, $instructions, $options);
+    }
+
+    public function clear($sPropertyName, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array();
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_CLEAR, $sPropertyName, $this->_component, $instructions, $options);
+    }
 
 
     public function collaborate()

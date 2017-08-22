@@ -25,7 +25,7 @@ class Layout
             // ---
             'name' => CoreConfig::MIMOTO_LAYOUT,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_LAYOUT],
+            'forms' => [CoreConfig::MIMOTO_LAYOUT],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_LAYOUT.'--name',
@@ -94,12 +94,12 @@ class Layout
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_LAYOUT,
-            'name' => CoreConfig::COREFORM_LAYOUT,
+            'id' => CoreConfig::MIMOTO_LAYOUT,
+            'name' => CoreConfig::MIMOTO_LAYOUT,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_LAYOUT, 'name'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_LAYOUT, 'file')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_LAYOUT, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_LAYOUT, 'file')
             ]
         );
     }
@@ -110,7 +110,7 @@ class Layout
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_LAYOUT);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_LAYOUT);
 
         // setup
         CoreFormUtils::addField_title($form, 'Layout', 'Organising your interface', "The key element in presenting data is the 'component'. These are twig files that use the Aimless protocol to read and render the data, with the support of realtime updates to any client.");
@@ -151,7 +151,7 @@ class Layout
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_LAYOUT.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_LAYOUT.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");
@@ -168,7 +168,7 @@ class Layout
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_LAYOUT.'--file_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_LAYOUT.'--file_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");

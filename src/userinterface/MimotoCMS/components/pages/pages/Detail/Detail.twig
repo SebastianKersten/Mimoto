@@ -55,10 +55,10 @@
 
                         <div class="MimotoCMS_pages_pages_Detail-path">
 
-                            This page uses the following route:
+                            This page can be reached on the following path:
 
                             <div class="MimotoCMS_pages_pages_Detail-path-empty" {{ Mimoto.showWhenEmpty('path') }}>
-                                Available to view by anyone!
+                                No path defined yet ...
                             </div>
 
                             <div {{ Mimoto.hideWhenEmpty('path') }}>
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
 
-                            <div class="div.MimotoCMS_pages_pages_Detail-path-menu">
+                            <div class="MimotoCMS_pages_pages_Detail-path-menu">
                                 {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add path element', icon:'plus', directive:Mimoto.add('path', '_Mimoto_route_path_element') }) }}
                             </div>
 
@@ -83,6 +83,33 @@
                         {#Base component or layout:#}
 
                         {#</div>#}
+                    </div>
+                </div>
+            </div>
+
+            <div class="MimotoCMS_pages_pages_Detail_Structure">
+
+                <div class="MimotoCMS_pages_pages_Detail_Structure__meta">
+                    <div class="MimotoCMS_pages_pages_Detail_Structure__meta_info">
+
+                        <div class="MimotoCMS_pages_pages_Detail-Output-empty" {{ Mimoto.showWhenEmpty('output') }}>
+                            What do you want this page to show?
+                            <div class="MimotoCMS_pages_pages_Detail-path-menu">
+                                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Init output', icon:'plus', directive:Mimoto.create('output', '_Mimoto_output') }) }}
+                            </div>
+                        </div>
+
+                        <div {{ Mimoto.hideWhenEmpty('output') }}>
+
+                            <div class="MimotoCMS_pages_pages_Detail-path-container js-list js-list-sortable" {{ Mimoto.realtime('path', 'MimotoCMS_pages_Detail-Output') }}>
+                                {{ Mimoto.data('path', 'MimotoCMS_pages_Detail-Output') }}
+                            </div>
+                            <div class="MimotoCMS_pages_pages_Detail-path-menu">
+                                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Clear output', types:['small', 'alert'], directive:Mimoto.clear('output') }) }}
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>

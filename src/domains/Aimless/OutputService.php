@@ -355,10 +355,8 @@ class OutputService
 
 
 
-
         // load
         $aRoutes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_ROUTE]);
-
 
 
         $nRouteCount = count($aRoutes);
@@ -368,17 +366,13 @@ class OutputService
             $eRoute = $aRoutes[$nRouteIndex];
 
             // read
-            $ePath = $eRoute->getValue('path');
-            $eOutput = $eRoute->getValue('output');
-            $eComponent = $eOutput->getValue('component');
-            $eSelection = $eOutput->getValue('selection');
+            $aPathElements = $eRoute->getValue('path');
 
             // validate
-            if (empty($ePath) || empty($eOutput) || empty($eComponent)) continue;
+            if (empty($aPathElements)) continue;
+            //if (empty($ePath) || empty($eOutput) || empty($eComponent)) continue;
 
 
-            // read
-            $aPathElements = $ePath->getValue('elements');
 
             // init
             $sPathRegExp = '';
@@ -394,24 +388,35 @@ class OutputService
                 {
                     case 'static':
 
-                        $sPathRegExp .= '('.preg_replace('/\//', '\/', $ePathElement->getValue('value')).')';
+                        $sPathRegExp .= '('.preg_replace('/\//', '\/', $ePathElement->getValue('staticValue')).')';
                         break;
 
-                    case 'variable':
+                    case 'var':
 
                         $sPathRegExp .= '(.*+)';
                         break;
+
+                    case 'slash':
+
+                        $sPathRegExp .= '\/';
+                        break;
                 }
             }
-
+            Mimoto::output('RegEx', $sPathRegExp);
             // verify
             if (preg_match('/'.$sPathRegExp.'/U', $sPath, $aMatches))
             {
                 // remove full match
-                array_splice($aMatches, 1, 1);
-
+                array_splice($aMatches, 0, 1);
+                Mimoto::error($aMatches);
                 // init
                 $eInstance = null;
+
+
+                $eOutput = $eRoute->getValue('output');
+                //$eComponent = $eOutput->getValue('component');
+                //$eSelection = $eOutput->getValue('selection');
+
 
                 // verify
                 if (!empty($eSelection))
@@ -429,9 +434,9 @@ class OutputService
                         // register
                         $ePathElement = $aPathElements[$nMatchIndex];
 
-                        if ($ePathElement->getValue('type') == 'variable')
+                        if ($ePathElement->getValue('type') == 'var')
                         {
-                            $selection->applyVar($ePathElement->getValue('value'), $matchValue);
+                            $selection->applyVar($ePathElement->getValue('varName'), $matchValue);
                         }
                     }
 
@@ -441,6 +446,9 @@ class OutputService
                     // get first
                     $eInstance = (count($aItems) > 0) ? $aItems[0] : null;
                 }
+
+
+                Mimoto::error($eInstance);
 
                 // init
                 $component = Mimoto::service('output')->createComponent($eComponent->getValue('name'), $eInstance);
@@ -454,7 +462,7 @@ class OutputService
 
 
         }
-
+        die();
         return false;
     }
 

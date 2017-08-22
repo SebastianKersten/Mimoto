@@ -25,7 +25,7 @@ class LayoutContainer
             // ---
             'name' => CoreConfig::MIMOTO_LAYOUTCONTAINER,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_LAYOUTCONTAINER],
+            'forms' => [CoreConfig::MIMOTO_LAYOUTCONTAINER],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_LAYOUTCONTAINER.'--name',
@@ -62,11 +62,11 @@ class LayoutContainer
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_LAYOUTCONTAINER,
-            'name' => CoreConfig::COREFORM_LAYOUTCONTAINER,
+            'id' => CoreConfig::MIMOTO_LAYOUTCONTAINER,
+            'name' => CoreConfig::MIMOTO_LAYOUTCONTAINER,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_LAYOUTCONTAINER, 'name')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_LAYOUTCONTAINER, 'name')
             ]
         );
     }
@@ -78,7 +78,7 @@ class LayoutContainer
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_LAYOUTCONTAINER);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_LAYOUTCONTAINER);
 
         // setup
         CoreFormUtils::addField_title($form, 'Layout container', 'The layout container is a container for components and is used for buiding pages.');
@@ -105,7 +105,7 @@ class LayoutContainer
     private static function getField_name()
     {
         // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE, CoreConfig::COREFORM_LAYOUTCONTAINER, 'name');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE, CoreConfig::MIMOTO_LAYOUTCONTAINER, 'name');
         $field->setValue('label', 'Name');
 
         // 2. connect value
@@ -113,7 +113,7 @@ class LayoutContainer
 
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_LAYOUTCONTAINER.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_LAYOUTCONTAINER.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', '1');
         $validationRule->setValue('errorMessage', "Please enter the container's name");
@@ -171,7 +171,7 @@ class LayoutContainer
     private static function getField_entityProperty()
     {
         // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_LAYOUTCONTAINER, 'entityProperty');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::MIMOTO_LAYOUTCONTAINER, 'entityProperty');
         $field->setValue('label', 'The property');
         $field->setValue('description', "Select the property you want to connect");
 
@@ -219,7 +219,7 @@ class LayoutContainer
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_LAYOUTCONTAINER.'--entityProperty_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_LAYOUTCONTAINER.'--entityProperty_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Please select one of the properties");
@@ -238,7 +238,7 @@ class LayoutContainer
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_LAYOUTCONTAINER.'--value_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_LAYOUTCONTAINER.'--value_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-zA-Z0-9_-]*$');
         $validationRule->setValue('errorMessage', 'Value can only contain the characters [a-zA-Z0-9-_]');

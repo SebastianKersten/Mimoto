@@ -70,6 +70,8 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DATA_REMOVE:  'data-mimoto-remove',
     DIRECTIVE_MIMOTO_DATA_SELECT:  'data-mimoto-select',
     DIRECTIVE_MIMOTO_DATA_SET:     'data-mimoto-set',
+    DIRECTIVE_MIMOTO_DATA_CREATE:  'data-mimoto-create',
+    DIRECTIVE_MIMOTO_DATA_CLEAR:   'data-mimoto-clear',
 
     // display directives
     TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
@@ -318,6 +320,8 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DATA_REMOVE,
             this.DIRECTIVE_MIMOTO_DATA_SELECT,
             this.DIRECTIVE_MIMOTO_DATA_SET,
+            this.DIRECTIVE_MIMOTO_DATA_CREATE,
+            this.DIRECTIVE_MIMOTO_DATA_CLEAR,
 
             // display directives
             this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
@@ -571,6 +575,29 @@ module.exports.prototype = {
 
                         break;
 
+                    case this.DIRECTIVE_MIMOTO_DATA_CREATE:
+
+                        // configure
+                        directive.element.addEventListener('click', function(sPropertySelector, sEntityName, options, e)
+                        {
+                            // forward
+                            MimotoX.data.create(sPropertySelector, sEntityName, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.entityName, directive.instructions.options), true);
+
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_CLEAR:
+
+                        // configure
+                        directive.element.addEventListener('click', function(sPropertySelector,options, e)
+                        {
+                            // forward
+                            MimotoX.data.clear(sPropertySelector, options);
+
+                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.options), true);
+
+                        break;
 
 
                     // --- display updates
