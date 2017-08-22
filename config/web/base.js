@@ -17,6 +17,7 @@ module.exports = function() {
         output: {
             path: resolve(__dirname, './../../web/static'),
             filename: '[name]'
+            //publicPath: '/static/'
         },
         resolve: {
             modules: ['node_modules', 'src/userinterface/MimotoCMS/components', 'src/userinterface/MimotoCMS/modules'],

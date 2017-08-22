@@ -10,6 +10,20 @@ const WriteFilePlugin = require('write-file-webpack-plugin');
 module.exports = function(env) {
     return webpackMerge(baseConfig(), {
         devtool: 'cheap-module-source-map', // https://webpack.js.org/configuration/devtool/
+        //devServer: {
+        //    contentBase: resolve(__dirname, './../../web'), // The folder from where the files get served
+        //    compress: true, // Enable gzip compression for everything served
+        //    port: 3100,
+        //    hot: true,
+        //    proxy: {
+        //        '*': {
+        //            target: 'http://mimoto.aimless',
+        //            secure: false,
+        //            changeOrigin: true
+        //        }
+        //    },
+        //    historyApiFallback: true
+        //},
         module: {
             rules: [
                 {
@@ -50,6 +64,8 @@ module.exports = function(env) {
             ]
         },
         plugins: [
+            //new webpack.HotModuleReplacementPlugin(),
+            //new webpack.NamedModulesPlugin(),
             new WriteFilePlugin({
                 log: false,
                 useHashIndex: true
@@ -58,13 +74,27 @@ module.exports = function(env) {
                 // BrowserSync options
                 {
                     port: 3000,
-                    proxy: 'http://mimoto.aimless'
+                    proxy: 'http://mimoto.aimless',
+                    open: true
                 },
                 // Plugin options
                 {
                     // Prevent BrowserSync from reloading the page and let Webpack Dev Server take care of this
                     reload: false
                 })
+            //new BrowserSyncPlugin(
+            //    // BrowserSync options
+            //    {
+            //        host: 'localhost',
+            //        port: 3000,
+            //        proxy: 'http://localhost:3100',
+            //        open: true
+            //    },
+            //    // Plugin options
+            //    {
+            //        // Prevent BrowserSync from reloading the page and let Webpack Dev Server take care of this
+            //        reload: false
+            //    })
         ]
     });
 };
