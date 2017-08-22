@@ -370,7 +370,6 @@ class OutputService
 
             // validate
             if (empty($aPathElements)) continue;
-            //if (empty($ePath) || empty($eOutput) || empty($eComponent)) continue;
 
 
 
@@ -408,21 +407,21 @@ class OutputService
             {
                 // remove full match
                 array_splice($aMatches, 0, 1);
-                Mimoto::error($aMatches);
+
                 // init
                 $eInstance = null;
 
 
                 $eOutput = $eRoute->getValue('output');
-                //$eComponent = $eOutput->getValue('component');
-                //$eSelection = $eOutput->getValue('selection');
+                $eLayout = $eOutput->getValue('layout');
+                $eSelection = $eOutput->getValue('selection');
 
 
                 // verify
-                if (!empty($eSelection))
+                if (!empty($eSelection) && !empty($eOutput) && !empty($eComponent))
                 {
                     // create
-                    //$selection = Mimoto::service('selection')->create($eSelection);
+                    $selection = Mimoto::service('selection')->create($eSelection);
 
                     // find variables
                     $nMatchCount = count($aMatches);

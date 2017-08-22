@@ -186,9 +186,6 @@ class CoreConfig
     const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
     const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
 
-    const COREFORM_COMPONENT                    = '_Mimoto_coreform__component';
-    const COREFORM_COMPONENTTEMPLATE            = '_Mimoto_coreform__componentTemplate';
-    const COREFORM_COMPONENTCONDITIONAL         = '_Mimoto_coreform__componentConditional';
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
     const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
     const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform_form_inputValidation';
@@ -516,7 +513,7 @@ class CoreConfig
 //                    )
 //                ]
 //            ),
-            (object)array(
+            (object) array(
                 'id' => CoreConfig::CORE_PREFIX . 'all_entities', // internal of external?
                 'name' => CoreConfig::CORE_PREFIX . 'all_entities', // internal of external?
                 'label' => 'xxx',
@@ -526,6 +523,27 @@ class CoreConfig
                     )
                 ]
             ),
+            (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_layouts', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_layouts', // internal of external?
+                'label' => 'xxx',
+                'rules' => [
+                    (object)array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_LAYOUT
+                    )
+                ]
+            ),
+            (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_selections', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_selections', // internal of external?
+                'label' => 'xxx',
+                'rules' => [
+                    (object)array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_SELECTION
+                    )
+                ]
+            ),
+
             (object)array(
                 'id' => CoreConfig::CORE_PREFIX . '_Mimoto_all_instances_of_entity', // internal of external?
                 'name' => CoreConfig::CORE_PREFIX . '_Mimoto_all_instances_of_entity', // internal of external?

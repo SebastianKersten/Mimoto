@@ -29,15 +29,15 @@ class Output
             'forms' => [CoreConfig::MIMOTO_OUTPUT],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--component',
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--layout',
                     // ---
-                    'name' => 'component',
+                    'name' => 'layout',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
                         'allowedEntityType' => (object) array(
                             'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => CoreConfig::MIMOTO_COMPONENT
+                            'value' => CoreConfig::MIMOTO_LAYOUT
                         )
                     ]
                 ),

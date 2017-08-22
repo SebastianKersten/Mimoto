@@ -1,3 +1,9 @@
 <div class="MimotoCMS_pages_pages_Detail_Output" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
     This is an output .. please add `component` (using Mimoto.select) and a `selection`
+
+    <div {{ Mimoto.realtime('layout.name') }}>{{ Mimoto.data('layout.name') }}</div>
+    {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select layout', directive:Mimoto.select('layout', '_Mimoto_all_layouts') }) }}
+
+    <div {{ Mimoto.realtime('selection.name') }}>{{ Mimoto.data('selection.name') }}</div>
+    {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Set selection', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
 </div>

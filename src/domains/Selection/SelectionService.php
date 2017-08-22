@@ -170,48 +170,51 @@ class SelectionService
                                 // init
                                 $bSettingFound = false;
 
-                                // init
-                                $newSelectionRule = (object) array();
-
-                                $nSelectionRuleSettingCount = count($aAllSelectionRuleSettingsConnections[$rule->id]);
-                                for ($nSelectionRuleSettingIndex = 0; $nSelectionRuleSettingIndex < $nSelectionRuleSettingCount; $nSelectionRuleSettingIndex++)
+                                if (isset($aAllSelectionRuleSettingsConnections[$rule->id]))
                                 {
-                                    // register
-                                    $selectionRuleSetting = $aAllSelectionRuleSettingsConnections[$rule->id][$nSelectionRuleSettingIndex];
+                                    // init
+                                    $newSelectionRule = (object) array();
 
-                                    switch($selectionRuleSetting->parent_property_id)
+                                    $nSelectionRuleSettingCount = count($aAllSelectionRuleSettingsConnections[$rule->id]);
+                                    for ($nSelectionRuleSettingIndex = 0; $nSelectionRuleSettingIndex < $nSelectionRuleSettingCount; $nSelectionRuleSettingIndex++)
                                     {
-                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--type':
+                                        // register
+                                        $selectionRuleSetting = $aAllSelectionRuleSettingsConnections[$rule->id][$nSelectionRuleSettingIndex];
 
-                                            $newSelectionRule->type = Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_id);
+                                        switch($selectionRuleSetting->parent_property_id)
+                                        {
+                                            case CoreConfig::MIMOTO_SELECTIONRULE.'--type':
+
+                                                $newSelectionRule->type = Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_id);
 //                                            $newSelectionRule->type = (object) array(
 //                                                'id' => $selectionRuleSetting->child_id,
 //                                                'name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_id)
 //                                            );
-                                            $bSettingFound = true;
-                                            break;
+                                                $bSettingFound = true;
+                                                break;
 
-                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--instance':
+                                            case CoreConfig::MIMOTO_SELECTIONRULE.'--instance':
 
-                                            $newSelectionRule->instance = $selectionRuleSetting;
-                                            $newSelectionRule->instance = (object) array(
-                                                'entity_type_id' => $selectionRuleSetting->child_entity_type_id,
-                                                'entity_type_name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_entity_type_id),
-                                                'instance_id' => $selectionRuleSetting->child_id
-                                            );
+                                                $newSelectionRule->instance = $selectionRuleSetting;
+                                                $newSelectionRule->instance = (object) array(
+                                                    'entity_type_id' => $selectionRuleSetting->child_entity_type_id,
+                                                    'entity_type_name' => Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_entity_type_id),
+                                                    'instance_id' => $selectionRuleSetting->child_id
+                                                );
 
-                                            $bSettingFound = true;
-                                            break;
+                                                $bSettingFound = true;
+                                                break;
 
-                                        case CoreConfig::MIMOTO_SELECTIONRULE.'--property':
+                                            case CoreConfig::MIMOTO_SELECTIONRULE.'--property':
 
-                                            $newSelectionRule->entityProperty = (object) array(
-                                                'property_type_id' => $selectionRuleSetting->child_id,
-                                                'property_type_name' => Mimoto::service('config')->getPropertyNameById($selectionRuleSetting->child_id)
-                                            );
-                                            $bSettingFound = true;
-                                            break;
+                                                $newSelectionRule->entityProperty = (object) array(
+                                                    'property_type_id' => $selectionRuleSetting->child_id,
+                                                    'property_type_name' => Mimoto::service('config')->getPropertyNameById($selectionRuleSetting->child_id)
+                                                );
+                                                $bSettingFound = true;
+                                                break;
 
+                                        }
                                     }
                                 }
 

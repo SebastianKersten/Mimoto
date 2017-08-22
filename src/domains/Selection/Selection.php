@@ -57,7 +57,8 @@ class Selection
                     // register
                     $eRule = $aRules[$nRuleIndex];
 
-
+                    #todo --- (and move to separate function)
+                    // 1. use same code as colling items from beginning
                 }
             }
             else
