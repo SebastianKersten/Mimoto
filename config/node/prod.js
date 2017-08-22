@@ -14,7 +14,7 @@ module.exports = function(env) {
         beautify: false,
         mangle: {
           screw_ie8: true,
-          keep_fnames: true
+          keep_fnames: false
         },
         compress: {
           screw_ie8: true
