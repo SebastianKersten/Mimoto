@@ -1,8 +1,32 @@
 <div class="MimotoCMS_pages_pages_Detail_Output" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+
+
+
+
+
     This is an output .. please add `component` (using Mimoto.select) and a `selection`
 
 
-    {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select layout', directive:Mimoto.select('layout', '_Mimoto_all_layouts') }) }}
+    <div class="MimotoCMS_pages_pages_Detail_Output-layout">
+        <div>
+
+        </div>
+
+        <div {{ Mimoto.realtime('layout.name') }}>{{ Mimoto.data('layout.name') }}</div>
+
+        <div class="MimotoCMS_pages_pages_Detail_Output-layout-menu">
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select layout', directive:Mimoto.select('layout', '_Mimoto_all_layouts') }) }}
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
 
     <div {{ Mimoto.hideWhenEmpty('layout') }}>
         <div {{ Mimoto.realtime('layout.name') }}>{{ Mimoto.data('layout.name') }}</div>
@@ -18,5 +42,18 @@
     <div {{ Mimoto.hideWhenEmpty('selection') }}>
         <div {{ Mimoto.realtime('selection.name') }}>{{ Mimoto.data('selection.name') }}</div>
         {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Clear selection', types:['small', 'alert'], directive:Mimoto.clear('selection') }) }}
+    </div>
+
+    <br><br>
+    include as module here ...
+
+    <div class="MimotoCMS_pages_pages_Detail_Output-containers">
+        <div class="MimotoCMS_pages_pages_Detail_Output-containers-menu">
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add container content', types:['small', 'secondary'], directive:Mimoto.create('containers', '_Mimoto_outputcontainer') }) }}
+        </div>
+        <div class="MimotoCMS_pages_pages_Detail_Output-containers-container" {{ Mimoto.realtime('containers', 'MimotoCMS_pages_pages_Detail-Output-container') }}>
+            {{ Mimoto.data('containers', 'MimotoCMS_pages_pages_Detail-Output-container') }}
+        </div>
+        containers
     </div>
 </div>

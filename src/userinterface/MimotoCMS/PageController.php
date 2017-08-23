@@ -64,7 +64,7 @@ class PageController
         if (empty($ePage)) return $app->redirect("/mimoto.cms/pages");
 
         // 4. create
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_pages_Detail', $ePage);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_pages_pages_Detail', $ePage);
 
         // 5. connect
         $page->addComponent('content', $component);

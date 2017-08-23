@@ -38,11 +38,39 @@ class Component
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        ),
+                        'validation' => (object) array(
+                            'type' => Validation::UNIQUE
                         )
-                    ],
-                    'validation' => (object) array(
-                        'type' => Validation::UNIQUE
-                    )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_COMPONENT.'--type',
+                    // ---
+                    'name' => 'type',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        ),
+                        'allowedValues' => array(
+                            (object) array(
+                                'label' => 'Component', // replace by translation
+                                'value' => 'component',
+                                'default' => true
+                            ),
+                            (object) array(
+                                'label' => 'Layout', // replace by translation
+                                'value' => 'layout'
+                            ),
+                            (object) array(
+                                'label' => 'Input field', // replace by translation
+                                'value' => 'input'
+                            )
+                        )
+                    ]
                 ),
                 (object) array(
                     'id' => CoreConfig::MIMOTO_COMPONENT.'--templates',
@@ -538,7 +566,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_pages_Detail',
+                'name' => 'MimotoCMS_pages_pages_Detail',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/pages/Detail/Detail.twig',
@@ -547,7 +575,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_pages_Detail-AllowedUserRole',
+                'name' => 'MimotoCMS_pages_pages_Detail-AllowedUserRole',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/pages/Detail/AllowedUserRole/AllowedUserRole.twig',
@@ -556,7 +584,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_pages_Detail-PathElement',
+                'name' => 'MimotoCMS_pages_pages_Detail-PathElement',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/pages/Detail/PathElement/PathElement.twig',
@@ -565,7 +593,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_pages_Detail-Output',
+                'name' => 'MimotoCMS_pages_pages_Detail-Output',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/pages/Detail/Output/Output.twig',
@@ -574,7 +602,15 @@ class Component
                 ]
             ),
 
-
+            (object) array(
+                'name' => 'MimotoCMS_pages_pages_Detail-Output-container',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/pages/Detail/Output/Output.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
 
 
 

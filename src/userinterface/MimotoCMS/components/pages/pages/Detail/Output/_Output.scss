@@ -1,7 +1,27 @@
 div.MimotoCMS_pages_pages_Detail_Output {
 
-    background-color: $tower-gray;
-    color: #ffffff;
     padding: 10px 15px;
 }
 
+
+
+div.MimotoCMS_pages_pages_Detail_Output-containers {
+    background-color: #867ADB;
+}
+
+div.MimotoCMS_pages_pages_Detail_Output-containers-menu {
+    text-align: right;
+}
+
+div.MimotoCMS_pages_pages_Detail_Output-containers-container {
+    background-color: white;
+    padding: 1px;
+
+    & > div {
+        margin-bottom: 1px;
+    }
+
+    & > div:last-child {
+        margin-bottom: 0;
+    }
+}

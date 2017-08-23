@@ -121,12 +121,7 @@ class Mimoto
 
         //$app->post('/'.$sProjectName.'/data/select', 'Mimoto\\api\\DataController::select');
 
-
-        // default
-        $app->get('/', function(Request $request) use ($app, $sProjectName) {
-
-            return $app->redirect('/'.$sProjectName.'.cms');
-        });
+        
 
 
 

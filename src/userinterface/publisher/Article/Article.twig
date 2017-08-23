@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        {#<div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>#}
+        <div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
 
         <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }} ></img>
 

@@ -418,16 +418,20 @@ class OutputService
 
                 $eOutput = $eRoute->getValue('output');
 
-                
+
                 if (empty($eOutput)) return false;
 
 
                 $eLayout = $eOutput->getValue('layout');
                 $eSelection = $eOutput->getValue('selection');
 
+                //Mimoto::error($eLayout);
+
+                if (empty($eLayout)) return false;
+
 
                 // verify
-                if (!empty($eSelection) && !empty($eOutput) && !empty($eLayout))
+                if (!empty($eSelection))
                 {
                     // create
                     $selection = Mimoto::service('selection')->create($eSelection);
