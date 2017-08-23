@@ -35,6 +35,7 @@ module.exports = function() {
             ]
         },
         plugins: [
+            new webpack.ExtendedAPIPlugin(),
             new ExtractTextPlugin('[name]'),
             new webpack.ProvidePlugin({
                 $: "jquery",
