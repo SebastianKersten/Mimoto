@@ -273,6 +273,8 @@ class SelectionRule
      */
     public function applyVar($sVarName, $value)
     {
+        \Mimoto\Mimoto::output('Varname '.$sVarName, $value);
+
         // validate
         if (!isset($this->_aVarNames[$sVarName]) || empty($this->_aVarNames[$sVarName])) return;
 

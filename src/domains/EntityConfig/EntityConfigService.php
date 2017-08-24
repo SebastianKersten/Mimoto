@@ -396,7 +396,15 @@ class EntityConfigService
 
         if (substr($xId, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
         {
-            return $this->_entityConfigRepository->getEntityNameByFormId($xId);
+            // create
+            $eParent = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITY);
+
+            // setup
+            $eParent->setId($xId);
+            $eParent->setValue('name', $this->_entityConfigRepository->getEntityNameByFormId($xId));
+
+            // send
+            return $eParent;
         }
         else
         {

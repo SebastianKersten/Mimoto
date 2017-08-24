@@ -383,6 +383,8 @@ class OutputService
                 // register
                 $ePathElement = $aPathElements[$nPathElementIndex];
 
+                //Mimoto::output('$ePathElement '.$nPathElementIndex, $ePathElement);
+
                 switch($ePathElement->getValue('type'))
                 {
                     case 'static':
@@ -390,14 +392,14 @@ class OutputService
                         $sPathRegExp .= '('.preg_replace('/\//', '\/', $ePathElement->getValue('staticValue')).')';
                         break;
 
+                    case 'slash':
+
+                        $sPathRegExp .= '(\/)';
+                        break;
+
                     case 'var':
 
                         $sPathRegExp .= '(.*+)';
-                        break;
-
-                    case 'slash':
-
-                        $sPathRegExp .= '\/';
                         break;
                 }
             }
@@ -416,17 +418,19 @@ class OutputService
                 $eInstance = null;
 
 
+                // read
                 $eOutput = $eRoute->getValue('output');
 
 
+                // validate #todo - notify in debug mode
                 if (empty($eOutput)) return false;
 
 
                 $eLayout = $eOutput->getValue('layout');
                 $eSelection = $eOutput->getValue('selection');
 
-                //Mimoto::error($eLayout);
 
+                // validate #todo - notify in debug mode
                 if (empty($eLayout)) return false;
 
 
@@ -438,25 +442,32 @@ class OutputService
 
                     // find variables
                     $nMatchCount = count($aMatches);
-                    for ($nMatchIndex = 1; $nMatchIndex < $nMatchCount; $nMatchIndex++)
+                    for ($nMatchIndex = 0; $nMatchIndex < $nMatchCount; $nMatchIndex++)
                     {
                         // register
-                        $matchValue = $aMatches[$nMatchIndex];
+                        $sMatchValue = $aMatches[$nMatchIndex];
 
                         // register
                         $ePathElement = $aPathElements[$nMatchIndex];
 
+
+                        //Mimoto::output('type', $ePathElement->getValue('type'));
+
                         if ($ePathElement->getValue('type') == 'var')
                         {
-                            $selection->applyVar($ePathElement->getValue('varName'), $matchValue);
+                            //Mimoto::error($ePathElement->getValue('varName').' = '.$sMatchValue);
+
+                            $selection->applyVar($ePathElement->getValue('varName'), $sMatchValue);
                         }
                     }
+
+
 
                     // load
                     $aItems = Mimoto::service('data')->select($selection);
 
                     // get first
-                    $eInstance = (count($aItems) > 0) ? $aItems[0] : null;
+                    $eInstance = (count($aItems) > 0) ? $aItems[0] : null; // #todo - don't allow multiple items or notify
                 }
 
 

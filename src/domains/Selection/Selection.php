@@ -61,13 +61,45 @@ class Selection
                     // 1. use same code as colling items from beginning
 
 
-                    $eType = $eRule->getValue('type');
-
-
-                    if (!empty($eType))
+                    // verify
+                    if ($eRule->getValue('typeAsVar') && !empty($eRule->getValue('typeVarName'))) // #todo - validate varname
                     {
-                        $this->setType($eType->getValue('name'));
+                        $this->setTypeAsVar($eRule->getValue('typeVarName'));
                     }
+                    else
+                    {
+                        // read
+                        $eType = $eRule->getValue('type');
+
+                        // validate
+                        if (!empty($eType))
+                        {
+                            $this->setType($eType->getValue('name'));
+                        }
+                    }
+
+                    // verify
+                    if ($eRule->getValue('idAsVar') && !empty($eRule->getValue('idVarName'))) // #todo - validate varname
+                    {
+                        $this->setTypeAsVar($eRule->getValue('idVarName'));
+                    }
+                    else
+                    {
+                        // read
+                        $eInstance = $eRule->getValue('instance');
+
+                        // validate
+                        if (!empty($eInstance))
+                        {
+                            $this->setId($eInstance->getid());
+                        }
+                    }
+
+
+                    // ......
+                    //Mimoto::error($this);
+
+
 
                 }
             }
