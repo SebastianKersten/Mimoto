@@ -65,7 +65,7 @@ class CoreFormUtils
 
 
         // load
-        $sParentEntityId = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
 
         // init
@@ -111,7 +111,7 @@ class CoreFormUtils
         $field->setValue('description', 'Connect to this entity\'s property');
 
         // 2. connect to property
-        self::addValueToField($field, $sParentEntityId, 'value');
+        self::addValueToField($field, $eParent->getValue('name'), 'value');
 
 
         // 1. loop all
@@ -156,7 +156,7 @@ class CoreFormUtils
         $field->setValue('description', 'Add your validation rules');
 
         // connect
-        self::addValueToField($field, $sParentEntityId, 'validation');
+        self::addValueToField($field, $eParent->getValue('name'), 'validation');
 
         // configure
         $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
@@ -187,7 +187,7 @@ class CoreFormUtils
         $sFormId = $form->getId();
 
         // load
-        $sParentEntityId = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
         // create
         $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'options');
@@ -197,7 +197,7 @@ class CoreFormUtils
         $field->setValue('description', 'Provide the options the user can pick from');
 
         // connect
-        self::addValueToField($field, $sParentEntityId, 'options');
+        self::addValueToField($field, $eParent->getValue('name'), 'options');
 
 
         // configure

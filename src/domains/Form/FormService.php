@@ -175,10 +175,10 @@ class FormService
         $form = Mimoto::service('input')->getFormByName($sFormName);
 
         // 4. load
-        $xParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
         // 5. find connected entity
-        $sEntityName = ($xParent instanceof MimotoEntity) ? $xParent->getValue('name') : $xParent;
+        $sEntityName = $eParent->getValue('name');
 
 
         // collect
@@ -511,10 +511,10 @@ class FormService
         $aFormFields = (!empty($aFields)) ? $aFields : $form->getValue('fields');
 
         // read
-        $xParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
         // set
-        $sEntityName = ($xParent instanceof MimotoEntity) ? $xParent->getValue('name') : $xParent;
+        $sEntityName = $eParent->getValue('name');
 
 
         // 1. init
