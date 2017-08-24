@@ -82,24 +82,14 @@ class DataController
         // 3. load
         $eForm = Mimoto::service('input')->getFormByName($sFormName);
 
-
-        // if form name not found -> return error message
-        //Mimoto::error($eForm);
-
-        // 1. what about multiple options
-
-
-        $sNewEntityType = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
-
-
+        // 4. load
+        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
 
         // 5. configure
         $aParentEntitySelectionConfigs = [(object) array('type' => $sInstanceType, 'id' => $nInstanceId, 'property' => $sPropertyName)];
 
-        //Mimoto::error($aParentEntitySelectionConfigs);
-
         // 6. load
-        $eNewEntity = Mimoto::service('data')->createAndConnect($sNewEntityType, $aParentEntitySelectionConfigs);
+        $eNewEntity = Mimoto::service('data')->createAndConnect($eParent->getValue('name'), $aParentEntitySelectionConfigs);
 
 
         // ---
