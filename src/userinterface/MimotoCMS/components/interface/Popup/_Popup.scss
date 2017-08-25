@@ -1,4 +1,4 @@
-div.Mimoto_layer_overlay {
+div.MimotoCMS_layer_overlay {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -10,7 +10,7 @@ div.Mimoto_layer_overlay {
     z-index: 19761019;
 }
 
-div.Mimoto_layer_popup {
+div.MimotoCMS_layer_popup {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -54,6 +54,6 @@ div.MimotoCMS_interface_Popup__title {
   margin-bottom: 20px;
 }
 
-.Mimoto_hidden {
-  display: none;
+.MimotoCMS_hidden {
+    display: none;
 }

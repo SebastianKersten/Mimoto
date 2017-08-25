@@ -1,10 +1,10 @@
-*,
-*::after,
-*::before {
+*[class*="MimotoCMS"],
+*[class*="MimotoCMS"]::after,
+*[class*="MimotoCMS"]::before {
     box-sizing: border-box;
 }
 
-body {
+body[class*="MimotoCMS"] {
     font-family: $font-family-futura;
     font-size: rem-calc(16px);
     line-height: 1.5;
@@ -13,15 +13,21 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-b {
+span[class*="MimotoCMS"] {
+    font-family: $font-family-futura;
+    font-size: rem-calc(16px);
+    line-height: 1.5;
+}
+
+b[class*="MimotoCMS"] {
     font-weight: bold;
 }
 
-.svg-definitions {
+.svg-definitions[class*="MimotoCMS"] {
     display: none;
     visibility: hidden;
 }
 
-.hidden {
+.hidden[class*="MimotoCMS"] {
     display: none !important;
 }

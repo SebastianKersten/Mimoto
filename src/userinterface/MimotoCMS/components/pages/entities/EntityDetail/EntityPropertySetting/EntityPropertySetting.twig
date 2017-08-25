@@ -7,7 +7,7 @@
     {% endif %}
 
     <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu">
-        {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}<a onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Mimoto.meta('id', 'type') }}');">edit</a>{% endif %}
+        {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}<a class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu-link" onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Mimoto.meta('id', 'type') }}');">edit</a>{% endif %}
     </span>
 
     {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}:<br>{% endif %}

@@ -1,4 +1,4 @@
-#{$pr-interface}_Menu {
+nav.MimotoCMS_interface_Menu {
     position: fixed;
     z-index: $z-navigation-mobile;
     top: 50px;
@@ -22,7 +22,7 @@
     }
 }
 
-#{$pr-interface}_Menu--active {
+nav.MimotoCMS_interface_Menu--active {
     display: block;
 }
 
@@ -38,7 +38,7 @@
         }
     }
 
-        #{$pr-interface}_Menu-group {
+        ul.MimotoCMS_interface_Menu-group {
             display: block;
             margin: 0 10px;
             padding: 16px 0;
@@ -54,7 +54,7 @@
             }
         }
 
-            #{$pr-interface}_Menu-item-link {
+            a.MimotoCMS_interface_Menu-item-link {
                 display: flex;
                 text-decoration: none;
                 transition: padding .25s;
@@ -66,16 +66,16 @@
                 }
 
                 &:hover,
-                &#{$pr-interface}_Menu-item-link--active {
+                &a.MimotoCMS_interface_Menu-item-link--active {
                     text-decoration: none;
 
-                    #{$pr-interface}_Menu-item-text {
+                    span.MimotoCMS_interface_Menu-item-text {
                         color: $white;
                     }
                 }
             }
 
-                #{$pr-interface}_Menu-item-icon {
+                svg.MimotoCMS_interface_Menu-item-icon {
                     width: 18px;
                     height: 36px;
                     margin-right: 12px;
@@ -86,7 +86,7 @@
                     flex: 0 0 auto;
                 }
 
-                #{$pr-interface}_Menu-item-text {
+                span.MimotoCMS_interface_Menu-item-text {
                     padding: 8px 0;
                     font-size: rem-calc(17px);
                     line-height: rem-calc(24px);

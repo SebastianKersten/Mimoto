@@ -3,8 +3,18 @@
 //@import 'modules/modules';
 
 
-div.mimoto_cms {
+div.mimoto_cms[class*="MimotoCMS"] {
     z-index: 19761019;
 }
 
-@import 'Miproto';
+.test-name-red {
+    color: #ffffff;
+    background-color: red;
+}
+
+.test-name-whitelabel {
+    color: #ffffff;
+}
+
+
+@import 'MimotoProto';

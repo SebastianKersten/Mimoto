@@ -142,12 +142,12 @@ module.exports.prototype = {
 
             var overlayLayer = document.createElement('div');
             overlayLayer.setAttribute('id', 'Mimoto_layer_overlay');
-            overlayLayer.setAttribute('class', 'Mimoto_layer_overlay Mimoto_hidden');
+            overlayLayer.setAttribute('class', 'MimotoCMS_layer_overlay MimotoCMS_hidden');
             rootElement.appendChild(overlayLayer);
 
             var popupLayer = document.createElement('div');
             popupLayer.setAttribute('id', 'Mimoto_layer_popup');
-            popupLayer.setAttribute('class', 'Mimoto_layer_popup Mimoto_hidden');
+            popupLayer.setAttribute('class', 'MimotoCMS_layer_popup MimotoCMS_hidden');
             rootElement.appendChild(popupLayer);
 
             var popup = document.createElement('div');
@@ -186,8 +186,8 @@ module.exports.prototype = {
         let popup_content = document.getElementById('Mimoto_popup_content');
 
         // show
-        layer_overlay.classList.remove('Mimoto_hidden');
-        layer_popup.classList.remove('Mimoto_hidden');
+        layer_overlay.classList.remove('MimotoCMS_hidden');
+        layer_popup.classList.remove('MimotoCMS_hidden');
 
 
 
@@ -305,8 +305,8 @@ module.exports.prototype = {
         popup_content.innerHTML = '';
 
         // hide
-        layer_overlay.classList.add('Mimoto_hidden');
-        layer_popup.classList.add('Mimoto_hidden');
+        layer_overlay.classList.add('MimotoCMS_hidden');
+        layer_popup.classList.add('MimotoCMS_hidden');
 
         // unlock background for scrolling
         document.body.classList.remove('mimoto_layer_application');

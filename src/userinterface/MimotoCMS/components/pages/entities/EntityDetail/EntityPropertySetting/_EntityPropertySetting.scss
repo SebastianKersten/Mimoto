@@ -31,7 +31,7 @@ span.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu {
     position: absolute;
     right: 10px;
 
-    & > a {
+    & > a.MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu-link {
         color: $tower-gray;
         text-decoration: none;
         cursor: pointer;

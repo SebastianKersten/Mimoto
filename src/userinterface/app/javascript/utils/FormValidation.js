@@ -11,7 +11,7 @@ module.exports = {
         this.textline = this.el.querySelector('.js-textline');
         this.checkboxes = this.el.querySelectorAll('.js-checkbox');
         this.radioButtons = this.el.querySelectorAll('.js-radio-button');
-        this.dropdown = this.el.querySelector('.js-dropdown');
+        this.dropdown = this.el.querySelector('[data-mimotocms-dropdown]');
 
         if (this.textline) {
             this.input = this.textline;

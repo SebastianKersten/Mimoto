@@ -1,73 +1,87 @@
-.MimotoCMS_ButtonModule {
+a.MimotoCMS_ButtonModule {
     display: inline-block;
     padding: 10px 20px;
     cursor: pointer;
     text-decoration: none;
-    color: $white;
     border: 0;
     outline: none;
-    background-color: $black;
+    background-color: #000000;
+    color: #ffffff;
     box-shadow: none;
 
     &:hover {
         text-decoration: none;
+        background-color: $tower-gray;
+    }
+
+    & span.MimotoCMS_ButtonModule-text {
+        color: #ffffff;
     }
 }
 
-.MimotoCMS_ButtonModule--loading {
+a.MimotoCMS_ButtonModule--loading {
     pointer-events: none;
     background-color: rgba($black, .7);
 }
 
-.MimotoCMS_ButtonModule--secondary {
+a.MimotoCMS_ButtonModule--secondary {
+
     background-color: $tower-gray;
+    color: #ffffff;
+    text-decoration: none;
 
     &:hover {
         background-color: $black;
     }
 
-    .MimotoCMS_ButtonModule-icon {
+    svg.MimotoCMS_ButtonModule-icon {
         fill: $white;
     }
 }
 
-.MimotoCMS_ButtonModule--text {
-    text-decoration: underline;
-    color: #555;
-    background-color: inherit;
-    white-space: nowrap;
-    user-select: none;
+a.MimotoCMS_ButtonModule--alert {
 
-    &:hover {
-        color: #000;
-    }
-}
-
-.MimotoCMS_ButtonModule--alert {
     background-color: $fuzzy-wuzzy-brown;
+    color: #ffffff;
 
     &:hover {
         background-color: $black;
     }
 
-    .MimotoCMS_ButtonModule-icon {
+    svg.MimotoCMS_ButtonModule-icon {
         fill: $white;
     }
 }
 
-.MimotoCMS_ButtonModule--small {
+a.MimotoCMS_ButtonModule--small {
     padding: 6px 10px;
     font-size: rem-calc(10px);
+    color: #ffffff;
+    text-decoration: none;
 }
 
-    .MimotoCMS_ButtonModule-content {
+    div.MimotoCMS_ButtonModule-content {
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
         white-space: nowrap;
+        text-decoration: none;
     }
 
-        .MimotoCMS_ButtonModule-text {
+        span.MimotoCMS_ButtonModule--text {
+            text-decoration: underline;
+            color: #555;
+            background-color: inherit;
+            white-space: nowrap;
+            user-select: none;
+
+            &:hover {
+                color: #000;
+            }
+        }
+
+
+        span.MimotoCMS_ButtonModule-text {
             font-family: $font-family-futura;
             font-size: rem-calc(14px);
             font-weight: 500;
@@ -77,7 +91,7 @@
             user-select: none;
         }
 
-        .MimotoCMS_ButtonModule-icon {
+        svg.MimotoCMS_ButtonModule-icon {
             display: block;
             width: 10px;
             height: 10px;
@@ -86,12 +100,13 @@
             flex: 0 0 auto;
         }
 
-        .MimotoCMS_ButtonModule-icon--loading {
+        a.MimotoCMS_ButtonModule-icon--loading {
             width: 12px;
             height: 12px;
             margin: 4px 0 4px 13px;
             stroke: $tower-gray;
         }
 
-        .MimotoCMS_ButtonModule-icon--success {
+        a.MimotoCMS_ButtonModule-icon--success {
+
         }

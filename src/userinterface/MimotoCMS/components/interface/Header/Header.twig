@@ -1,14 +1,14 @@
-<header class="js-header MimotoCMS_interface_Header">
+<header data-mimotocms-header class="MimotoCMS_interface_Header">
     <div class="MimotoCMS_interface_Header-logo-container">
-        <a href="/mimoto.cms"><div class="MimotoCMS_interface_Header-logo"></div></a>
+        <a href="/mimoto.cms" class="MimotoCMS"><div class="MimotoCMS_interface_Header-logo"></div></a>
 
-        <div class="js-navigation-toggle MimotoCMS_interface_Header-navigation-collapse-toggle">
+        <div data-mimotocms-navigation-toggle class="MimotoCMS_interface_Header-navigation-collapse-toggle">
             <svg class="MimotoCMS_interface_Header-navigation-collapse-toggle-icon"><use xlink:href='#ico-arrow'/></svg>
         </div>
     </div>
 
     <div class="MimotoCMS_interface_Header-mobile-navigation-toggle-container">
-        <button class="MimotoCMS_interface_Header-mobile-navigation-toggle js-mobile-navigation-toggle">
+        <button data-mimotocms-mobile-navigation-toggle class="MimotoCMS_interface_Header-mobile-navigation-toggle">
             <span class="MimotoCMS_interface_Header-mobile-navigation-toggle-line"></span>
             <span class="MimotoCMS_interface_Header-mobile-navigation-toggle-line"></span>
             <span class="MimotoCMS_interface_Header-mobile-navigation-toggle-line"></span>
@@ -35,18 +35,18 @@
         </li>
 
         <li class="MimotoCMS_interface_Header-menu-item">
-            <div class="MimotoCMS_interface_Header-menu-dropdown js-dropdown">
+            <div data-mimotocms-dropdown class="MimotoCMS_interface_Header-menu-dropdown">
                 <div id="MimotoCMS_interface_Header_conversation_count" class="MimotoCMS_interface_Header-menu-dropdown-notification hidden" data-mimoto-count="_Mimoto_conversation" data-mimoto-filter='["state":"open"]' data-mimoto-config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
                 <svg class="MimotoCMS_interface_Header-menu-dropdown-icon"><use xlink:href='#ico-header-mail'/></svg>
-                <div class="MimotoCMS_interface_Header-menu-dropdown-content js-dropdown-content js-conversations"></div>
+                <div data-mimotocms-dropdown-content class="MimotoCMS_interface_Header-menu-dropdown-content js-conversations"></div>
             </div>
         </li>
 
         <li class="MimotoCMS_interface_Header-menu-item" onclick="window.open('/mimoto.cms/notifications', '_self');">
-            <div class="MimotoCMS_interface_Header-menu-dropdown js-dropdown">
+            <div data-mimotocms-dropdown class="MimotoCMS_interface_Header-menu-dropdown">
                 <div id="MimotoCMS_interface_Header_notification_count" class="MimotoCMS_interface_Header-menu-dropdown-notification hidden" data-mimoto-count="_Mimoto_notification" data-mimoto-filter='["state":"open"]' data-mimoto-config='{"toggleClasses": {"onZero": "hidden"} }'>0</div>
                 <svg class="MimotoCMS_interface_Header-menu-dropdown-icon"><use xlink:href='#ico-header-message'/></svg>
-                <div class="MimotoCMS_interface_Header-menu-dropdown-content js-dropdown-content js-messages"></div>
+                <div data-mimotocms-dropdown-content class="MimotoCMS_interface_Header-menu-dropdown-content js-messages"></div>
             </div>
         </li>
     </ul>

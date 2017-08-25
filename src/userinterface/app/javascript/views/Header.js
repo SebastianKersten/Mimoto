@@ -27,15 +27,15 @@ module.exports.prototype = {
      */
     setVariables: function () {
 
-        this.navigationToggle = this.el.querySelector('.js-navigation-toggle');
-        this.mobileNavigationToggle = this.el.querySelector('.js-mobile-navigation-toggle');
+        this.navigationToggle = this.el.querySelector('[data-mimotocms-navigation-toggle]');
+        this.mobileNavigationToggle = this.el.querySelector('[data-mimotocms-mobile-navigation-toggle]');
 
         this.body = document.getElementsByTagName('body')[0];
-        this.navigation = document.querySelector('.js-navigation');
+        this.navigation = document.querySelector('[data-mimotocms-navigation]');
 
-        this.dropdowns = this.el.querySelectorAll('.js-dropdown');
-        this.dropdownContentClass = 'js-dropdown-content';
-        this.dropdownContentActiveClass = 'header-menu-dropdown-content--active';
+        this.dropdowns = this.el.querySelectorAll('[data-mimotocms-dropdown]');
+        this.dropdownContentAttribute = 'data-mimotocms-dropdown-content';
+        this.dropdownContentActiveClass = 'MimotoCMS_interface_Header-menu-dropdown-content--active';
 
         this.collapsed = false;
 
@@ -198,8 +198,10 @@ module.exports.prototype = {
         var currentTarget = event.currentTarget;
         var target = event.target;
 
-        if (!target.classList.contains(this.dropdownContentClass))
-            currentTarget.querySelector('.' + this.dropdownContentClass).classList.toggle(this.dropdownContentActiveClass);
+        // #todo - fix this
+
+        if (!target.hasAttribute('dropdownContentAttribute'))
+            currentTarget.querySelector('.' + this.dropdownContentAttribute).classList.toggle(this.dropdownContentActiveClass);
 
     }
 

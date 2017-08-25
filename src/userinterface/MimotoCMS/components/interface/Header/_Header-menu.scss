@@ -1,9 +1,9 @@
-.MimotoCMS_interface_Header-menu {
+ul.MimotoCMS_interface_Header-menu {
     @include clearfix();
     flex: 0 0 auto;
 }
 
-    .MimotoCMS_interface_Header-menu-item {
+    li.MimotoCMS_interface_Header-menu-item {
         display: flex;
         float: right;
         height: $header-height-collapsed;
@@ -14,7 +14,7 @@
         }
     }
 
-        .MimotoCMS_interface_Header-menu-user {
+        a.MimotoCMS_interface_Header-menu-user {
             display: flex;
             color: $dusty-gray;
             align-items: center;
@@ -29,7 +29,7 @@
             }
         }
 
-            .MimotoCMS_interface_Header-menu-user-text {
+            span.MimotoCMS_interface_Header-menu-user-text {
                 display: none;
 
                 @include breakpoint(small up) {
@@ -39,7 +39,7 @@
                 }
             }
 
-                .MimotoCMS_interface_Header-menu-user-text-last-name {
+                span.MimotoCMS_interface_Header-menu-user-text-last-name {
                     display: none;
 
                     @include breakpoint(medium up) {
@@ -47,7 +47,7 @@
                     }
                 }
 
-            .MimotoCMS_interface_Header-menu-user-figure {
+            figure.MimotoCMS_interface_Header-menu-user-figure {
                 display: flex;
                 width: 49px;
                 height: 49px;
@@ -63,7 +63,7 @@
                 }
             }
 
-                .MimotoCMS_interface_Header-menu-user-image {
+                img.MimotoCMS_interface_Header-menu-user-image {
                     display: inline-block;
                     max-width: 49px;
                     max-height: 49px;
@@ -74,7 +74,7 @@
                     }
                 }
 
-        .MimotoCMS_interface_Header-menu-dropdown {
+        div.MimotoCMS_interface_Header-menu-dropdown {
             position: relative;
             display: flex;
             width: $header-height-collapsed;
@@ -86,7 +86,7 @@
             }
         }
 
-            .MimotoCMS_interface_Header-menu-dropdown-icon {
+            svg.MimotoCMS_interface_Header-menu-dropdown-icon {
                 display: block;
                 width: 40px;
                 height: 40px;
@@ -98,7 +98,7 @@
                 }
             }
 
-            .MimotoCMS_interface_Header-menu-dropdown-notification {
+            div.MimotoCMS_interface_Header-menu-dropdown-notification {
                 position: absolute;
                 top: 4px;
                 right: 4px;
@@ -118,7 +118,7 @@
                 }
             }
 
-            .MimotoCMS_interface_Header-menu-dropdown-content {
+            div.MimotoCMS_interface_Header-menu-dropdown-content {
                 position: absolute;
                 top: $header-height-collapsed - 1;
                 right: 0;
@@ -135,6 +135,6 @@
                 }
             }
 
-            .MimotoCMS_interface_Header-menu-dropdown-content--active {
+            div.MimotoCMS_interface_Header-menu-dropdown-content--active {
                 display: block;
             }

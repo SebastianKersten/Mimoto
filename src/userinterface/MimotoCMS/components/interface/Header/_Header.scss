@@ -1,4 +1,4 @@
-#{$pr-interface}_Header {
+header.MimotoCMS_interface_Header {
     position: fixed;
     z-index: $z-header;
     top: 0;
@@ -16,7 +16,7 @@
     }
 }
 
-    #{$pr-interface}_Header-logo-container {
+    div.MimotoCMS_interface_Header-logo-container {
         position: relative;
         z-index: 1;
         flex: 0 0 $header-height-collapsed;
@@ -32,7 +32,7 @@
         }
     }
 
-        #{$pr-interface}_Header-logo {
+        div.MimotoCMS_interface_Header-logo {
             position: absolute;
             top: 0;
             left: 0;
@@ -51,7 +51,7 @@
             }
         }
 
-        #{$pr-interface}_Header-navigation-collapse-toggle {
+        div.MimotoCMS_interface_Header-navigation-collapse-toggle {
             display: none;
 
             @include breakpoint(large up) {
@@ -69,13 +69,13 @@
             }
 
             &:hover {
-                #{$pr-interface}_Header-navigation-collapse-toggle-icon {
+                div.MimotoCMS_interface_Header-navigation-collapse-toggle-icon {
                     fill: $sinbad;
                 }
             }
         }
 
-            #{$pr-interface}_Header-navigation-collapse-toggle-icon {
+            div.MimotoCMS_interface_Header-navigation-collapse-toggle-icon {
                 @include breakpoint(large up) {
                     display: block;
                     width: 6px;
@@ -89,12 +89,3 @@
 @import 'Header-menu';
 @import 'Header-mobile-navigation-toggle';
 
-
-.test-name-red {
-    color: #ffffff;
-    background-color: red;
-}
-
-.test-name-whitelabel {
-    color: #ffffff;
-}

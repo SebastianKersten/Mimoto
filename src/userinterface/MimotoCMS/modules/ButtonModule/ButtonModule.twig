@@ -1,13 +1,8 @@
 {% set classes = '' %}
-{% set element = 'div' %}
 {% set data_attributes = '' %}
 
 {% if types|default([]) %}
     {% set classes = ' MimotoCMS_ButtonModule--' ~ types|join(' MimotoCMS_ButtonModule--') %}
-{% endif %}
-
-{% if link|default('') %}
-    {% set element = 'a' %}
 {% endif %}
 
 {% if attributes|default([]) %}
@@ -19,7 +14,7 @@
     {% endfor %}
 {% endif %}
 
-<{{ element }}{{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_ButtonModule{{ classes }}"{% if onclick %} onclick="{{ onclick }}"{% endif %}{% if icon|default('') %} data-icon="#ico-{{ icon }}"{% endif %} {{ directive|default('') }}>
+<a {{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_ButtonModule{{ classes }}"{% if onclick %} onclick="{{ onclick }}"{% endif %}{% if icon|default('') %} data-icon="#ico-{{ icon }}"{% endif %} {{ directive|default('') }}>
     <div class="MimotoCMS_ButtonModule-content">
         {% if label|default('') %}
             <span class="MimotoCMS_ButtonModule-text">{{ label }}</span>
@@ -28,4 +23,4 @@
             <svg class="MimotoCMS_ButtonModule-icon"><use xlink:href="#ico-{{ icon }}"></use></svg>
         {% endif %}
     </div>
-</{{ element }}>
+</a>

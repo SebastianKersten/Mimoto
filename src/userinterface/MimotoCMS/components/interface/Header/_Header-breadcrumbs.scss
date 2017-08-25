@@ -1,4 +1,4 @@
-#{$pr-interface}_Header-breadcrumbs {
+ul.MimotoCMS_interface_Header-breadcrumbs {
     display: none;
 
     @include breakpoint(large up) {
@@ -10,7 +10,7 @@
     }
 }
 
-#{$pr-interface}_Header-breadcrumbs-list-item {
+li.MimotoCMS_interface_Header-breadcrumbs-list-item {
     display: inline-block;
     white-space: nowrap;
     color: $dusty-gray;
@@ -24,7 +24,7 @@
     }
 }
 
-#{$pr-interface}_Header-breadcrumbs-list-item-link {
+a.MimotoCMS_interface_Header-breadcrumbs-list-item-link {
     display: inline-block;
     font-size: rem-calc(17px);
     line-height: rem-calc(20px);

@@ -33,8 +33,8 @@ Mimoto.form = new Mimoto.modules.Form();
 document.addEventListener('DOMContentLoaded', function () {
 
     // register
-    var navigation = document.querySelector('.js-navigation');
-    var header = document.querySelector('.js-header');
+    var navigation = document.querySelector('[data-mimotocms-navigation]');
+    var header = document.querySelector('[data-mimotocms-header]');
     
     // init
     if (navigation && header) { new HeaderView(header); }

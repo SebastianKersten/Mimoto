@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "9806bc22adcc577fe75c";
+/******/ 	__webpack_require__.h = "3ce0c874ee4469390499";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -33989,8 +33989,8 @@
 	document.addEventListener('DOMContentLoaded', function () {
 	
 	    // register
-	    var navigation = document.querySelector('.js-navigation');
-	    var header = document.querySelector('.js-header');
+	    var navigation = document.querySelector('[data-mimotocms-navigation]');
+	    var header = document.querySelector('[data-mimotocms-header]');
 	
 	    // init
 	    if (navigation && header) {
@@ -52817,15 +52817,15 @@
 	     */
 	    setVariables: function setVariables() {
 	
-	        this.navigationToggle = this.el.querySelector('.js-navigation-toggle');
-	        this.mobileNavigationToggle = this.el.querySelector('.js-mobile-navigation-toggle');
+	        this.navigationToggle = this.el.querySelector('[data-mimotocms-navigation-toggle]');
+	        this.mobileNavigationToggle = this.el.querySelector('[data-mimotocms-mobile-navigation-toggle]');
 	
 	        this.body = document.getElementsByTagName('body')[0];
-	        this.navigation = document.querySelector('.js-navigation');
+	        this.navigation = document.querySelector('[data-mimotocms-navigation]');
 	
-	        this.dropdowns = this.el.querySelectorAll('.js-dropdown');
-	        this.dropdownContentClass = 'js-dropdown-content';
-	        this.dropdownContentActiveClass = 'header-menu-dropdown-content--active';
+	        this.dropdowns = this.el.querySelectorAll('[data-mimotocms-dropdown]');
+	        this.dropdownContentAttribute = 'data-mimotocms-dropdown-content';
+	        this.dropdownContentActiveClass = 'MimotoCMS_interface_Header-menu-dropdown-content--active';
 	
 	        this.collapsed = false;
 	
@@ -52979,7 +52979,9 @@
 	        var currentTarget = event.currentTarget;
 	        var target = event.target;
 	
-	        if (!target.classList.contains(this.dropdownContentClass)) currentTarget.querySelector('.' + this.dropdownContentClass).classList.toggle(this.dropdownContentActiveClass);
+	        // #todo - fix this
+	
+	        if (!target.hasAttribute('dropdownContentAttribute')) currentTarget.querySelector('.' + this.dropdownContentAttribute).classList.toggle(this.dropdownContentActiveClass);
 	    }
 	
 	};
@@ -55251,8 +55253,8 @@
 	        var layer_popup = document.getElementById('Mimoto_layer_popup');
 	
 	        // show
-	        layer_overlay.classList.remove('Mimoto_hidden');
-	        layer_popup.classList.remove('Mimoto_hidden');
+	        layer_overlay.classList.remove('MimotoCMS_hidden');
+	        layer_popup.classList.remove('MimotoCMS_hidden');
 	    },
 	
 	    _loadPopupContent: function _loadPopupContent(sURL) {
@@ -55301,8 +55303,8 @@
 	        popup_content.innerHTML = '';
 	
 	        // hide
-	        layer_overlay.classList.add('Mimoto_hidden');
-	        layer_popup.classList.add('Mimoto_hidden');
+	        layer_overlay.classList.add('MimotoCMS_hidden');
+	        layer_popup.classList.add('MimotoCMS_hidden');
 	    }
 	
 	};

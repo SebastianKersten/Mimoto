@@ -1,37 +1,46 @@
-html, body, button, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video, input {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-  outline: none;
+html[class*="MimotoCMS"], body[class*="MimotoCMS"], button[class*="MimotoCMS"], div[class*="MimotoCMS"], span[class*="MimotoCMS"], applet[class*="MimotoCMS"], object[class*="MimotoCMS"], iframe[class*="MimotoCMS"], h1[class*="MimotoCMS"], h2[class*="MimotoCMS"], h3[class*="MimotoCMS"], h4[class*="MimotoCMS"], h5[class*="MimotoCMS"], h6[class*="MimotoCMS"], p[class*="MimotoCMS"], blockquote[class*="MimotoCMS"], pre[class*="MimotoCMS"], a[class*="MimotoCMS"], abbr[class*="MimotoCMS"], acronym[class*="MimotoCMS"], address[class*="MimotoCMS"], big[class*="MimotoCMS"], cite[class*="MimotoCMS"], code[class*="MimotoCMS"], del[class*="MimotoCMS"], dfn[class*="MimotoCMS"], em[class*="MimotoCMS"], img[class*="MimotoCMS"], ins[class*="MimotoCMS"], kbd[class*="MimotoCMS"], q[class*="MimotoCMS"], s[class*="MimotoCMS"], samp[class*="MimotoCMS"], small[class*="MimotoCMS"], strike[class*="MimotoCMS"], strong[class*="MimotoCMS"], sub[class*="MimotoCMS"], sup[class*="MimotoCMS"], tt[class*="MimotoCMS"], var[class*="MimotoCMS"], b[class*="MimotoCMS"], u[class*="MimotoCMS"], i[class*="MimotoCMS"], center[class*="MimotoCMS"], dl[class*="MimotoCMS"], dt[class*="MimotoCMS"], dd[class*="MimotoCMS"], ol[class*="MimotoCMS"], ul[class*="MimotoCMS"], li[class*="MimotoCMS"], fieldset[class*="MimotoCMS"], form[class*="MimotoCMS"], label[class*="MimotoCMS"], legend[class*="MimotoCMS"], table[class*="MimotoCMS"], caption[class*="MimotoCMS"], tbody[class*="MimotoCMS"], tfoot[class*="MimotoCMS"], thead[class*="MimotoCMS"], tr[class*="MimotoCMS"], th[class*="MimotoCMS"], td[class*="MimotoCMS"], article[class*="MimotoCMS"], aside[class*="MimotoCMS"], canvas[class*="MimotoCMS"], details[class*="MimotoCMS"], embed[class*="MimotoCMS"], figure[class*="MimotoCMS"], figcaption[class*="MimotoCMS"], footer[class*="MimotoCMS"], header[class*="MimotoCMS"], hgroup[class*="MimotoCMS"], menu[class*="MimotoCMS"], nav[class*="MimotoCMS"], output[class*="MimotoCMS"], ruby[class*="MimotoCMS"], section[class*="MimotoCMS"], summary[class*="MimotoCMS"], time[class*="MimotoCMS"], mark[class*="MimotoCMS"], audio[class*="MimotoCMS"], video[class*="MimotoCMS"], input[class*="MimotoCMS"] {
+    outline: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
 }
 
 /* HTML5 display-role reset for older browsers */
 
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-  display: block; }
+article[class*="MimotoCMS"], aside[class*="MimotoCMS"], details[class*="MimotoCMS"], figcaption[class*="MimotoCMS"], figure[class*="MimotoCMS"], footer[class*="MimotoCMS"], header[class*="MimotoCMS"], hgroup[class*="MimotoCMS"], menu[class*="MimotoCMS"], nav[class*="MimotoCMS"], section[class*="MimotoCMS"] {
+    display: block;
+}
 
-body {
-  line-height: 1; }
+body[class*="MimotoCMS"]
+{
+    line-height: 1;
+}
 
-ol, ul {
-  list-style: none; }
+ol[class*="MimotoCMS"], ul[class*="MimotoCMS"]
+{
+    list-style: none;
+}
 
-blockquote, q {
-  quotes: none; }
+blockquote[class*="MimotoCMS"], q[class*="MimotoCMS"]
+{
+    quotes: none;
+}
 
-blockquote {
+blockquote[class*="MimotoCMS"]
+{
   &:before, &:after {
     content: '';
     content: none; } }
 
-q {
+q[class*="MimotoCMS"] {
   &:before, &:after {
     content: '';
     content: none; } }
 
-table {
+table[class*="MimotoCMS"] {
   border-collapse: collapse;
-  border-spacing: 0; }
+  border-spacing: 0;
+}

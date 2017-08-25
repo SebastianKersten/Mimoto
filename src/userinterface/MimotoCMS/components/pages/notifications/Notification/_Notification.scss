@@ -1,7 +1,6 @@
-div.MimotoCMS_pages_notifications_Notification {}
+div.MimotoCMS_pages_notifications_Notification {
 
-.notification {
-    padding: 10px;
+    padding: 15px;
     color: $white;
     background-color: $sinbad;
 
@@ -10,7 +9,7 @@ div.MimotoCMS_pages_notifications_Notification {}
         flex-wrap: nowrap;
     }
 
-    .notification-content {
+    div.MimotoCMS_pages_notifications_Notification-content {
         min-width: 0;
         padding: 0 0 10px;
         word-wrap: break-word;
@@ -20,106 +19,39 @@ div.MimotoCMS_pages_notifications_Notification {}
             padding: 0 10px 0 0;
         }
 
-        .notification-title {
+        div.MimotoCMS_pages_notifications_Notification-title {
             margin-bottom: 10px;
             font-size: rem-calc(18px);
             font-weight: bold;
         }
 
-        .notification-subtitle {
+        div.MimotoCMS_pages_notifications_Notification-subtitle {
             margin-bottom: 10px;
             font-size: rem-calc(14px);
             font-style: italic;
             color: rgba($black, .5);
         }
 
-        .notification-subtitle-timestamp {
+        span.MimotoCMS_pages_notifications_Notification-subtitle-timestamp {
             padding: 0 4px;
             color: $white;
             background-color: rgba($black, .5);
         }
     }
 
-    .notification-button {
+    div.MimotoCMS_pages_notifications_Notification {
         flex: 0 0 auto;
     }
 }
 
-.notification--silent {
+div.MimotoCMS_pages_notifications_Notification--silent {
     background-color: $color-notification-silent;
 }
 
-.notification--warning {
+div.MimotoCMS_pages_notifications_Notification--warning {
     background-color: $color-notification-warning;
 }
 
-.notification--error {
+div.MimotoCMS_pages_notifications_Notification--error {
     background-color: $color-notification-error;
 }
-
-//
-//
-//div.MimotoCMS_pages_notifications_Notification {
-//    display: flex;
-//    justify-content: space-between;
-//    background-color: #9ECECA;
-//    color: #ffffff;
-//    padding: 12px;
-//}
-//
-//    div.MimotoCMS_pages_notifications_Notification__column {
-//        color: #ffffff;
-//    }
-//
-//    div.MimotoCMS_pages_notifications_Notification__column:nth-child(odd) {
-//        margin-right: 10px;
-//    }
-//
-//    div.MimotoCMS_pages_notifications_Notification__title {
-//        font-size: 18px;
-//        font-weight: bold;
-//    }
-//
-//    div.MimotoCMS_pages_notifications_Notification__subtitle {
-//        font-size: 14px;
-//        font-style: italic;
-//        opacity: 0.5;
-//        color: #000000;
-//    }
-//
-//    span.MimotoCMS_pages_notifications_Notification__dispatcher {
-//        font-weight: bold;
-//        color: #000000;
-//    }
-//
-//    span.MimotoCMS_pages_notifications_Notification__timestamp {
-//        background-color: rgba(0, 0, 0, 0.5);
-//        font-size: 12px;
-//        color: #ffffff;
-//        padding: 3px 5px 3px 3px;
-//        margin-left: -2px;
-//    }
-//
-//    div.MimotoCMS_pages_notifications_Notification__message {
-//        margin-top: 10px;
-//    }
-//
-//    div.MimotoCMS_pages_notifications_Notification__message > b {
-//        font-style: italic;
-//        font-weight: bold;
-//        color: #000000;
-//        opacity: 0.5;
-//    }
-//
-//
-//div.MimotoCMS_pages_notifications_Notification.silent {
-//    background-color: #b5b3b4;
-//}
-//
-//div.MimotoCMS_pages_notifications_Notification.warning {
-//    background-color: #867ADB;
-//}
-//
-//div.MimotoCMS_pages_notifications_Notification.error {
-//    background-color: #DF5B57;
-//}
