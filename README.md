@@ -13,7 +13,7 @@ An ultra fast, fluid and realtime data management microframework
 - Node JS
 - Memcached
 
-# Starting up the reakltime feature
+# Starting up the realtime feature
 
 Run event worker
 ```
