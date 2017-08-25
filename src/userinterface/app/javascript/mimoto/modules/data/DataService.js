@@ -160,7 +160,7 @@ module.exports.prototype = {
             data: postData,
             dataType: 'json',
             success: function(resultData, resultStatus, resultSomething) {
-
+                
             }
         });
     },

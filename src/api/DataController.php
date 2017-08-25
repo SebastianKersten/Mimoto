@@ -260,7 +260,19 @@ class DataController
         $eEntity = Mimoto::service('data')->get($sInstanceType, $nInstanceId);
 
         // 5. clear
-        $eEntity->setValue($sPropertyName, null);
+        switch ($eEntity->getPropertyType($sPropertyName))
+        {
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                $eEntity->setValue($sPropertyName, '');
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                $eEntity->setValue($sPropertyName, null);
+                break;
+        }
 
         // 6. store
         Mimoto::service('data')->store($eEntity);

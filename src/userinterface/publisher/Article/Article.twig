@@ -14,7 +14,7 @@
         </div>
 
         <div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
-
+        <button {{ Mimoto.edit('article') }}>Edit</button><button {{ Mimoto.clear('title') }}>Clear title</button>
         <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }} ></img>
 
         <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.collaborate('body') }}>{{ Mimoto.data('body') }}</div>
