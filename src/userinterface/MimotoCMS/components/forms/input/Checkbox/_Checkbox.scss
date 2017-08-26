@@ -1,9 +1,9 @@
-#{$pr-input}_Checkbox-container {
+div.MimotoCMS_forms_input_Checkbox-container {
     position: relative;
     flex: 0 0 auto;
 }
 
-    #{$pr-input}_Checkbox {
+    div.MimotoCMS_forms_input_Checkbox {
         position: relative;
         z-index: 1;
         display: block;
@@ -17,7 +17,7 @@
                 background-color: $white;
             }
 
-            + #{$pr-input}_Checkbox-icon {
+            + svg.MimotoCMS_forms_input_Checkbox-icon {
                 display: block;
             }
         }
@@ -38,7 +38,7 @@
         }
     }
 
-    #{$pr-input}_Checkbox-icon {
+    svg.MimotoCMS_forms_input_Checkbox-icon {
         position: absolute;
         z-index: 2;
         top: -2px;

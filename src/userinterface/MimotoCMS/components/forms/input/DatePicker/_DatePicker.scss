@@ -1,4 +1,4 @@
-#{$pr-input}_DatePicker {
+input.MimotoCMS_forms_input_DatePicker {
     > div {
         width: 100%;
     }
@@ -22,7 +22,7 @@
             border-color: $tower-gray;
             background: $white;
 
-            + #{$pr-forms}_FormComponent-element-prefix {
+            + span.MimotoCMS_forms_FormComponent-element-prefix {
                 border-color: $tower-gray;
                 background: $white;
             }

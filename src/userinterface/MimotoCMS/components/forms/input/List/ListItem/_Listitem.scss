@@ -1,19 +1,19 @@
-#{$pr-input}_ListItem {
+li.MimotoCMS_forms_input_ListItem {
     display: flex;
     padding: 0 20px 0 0;
     border: 1px solid $pale-slate;
     align-items: center;
 }
 
-#{$pr-input}_ListItem--drag {
+li.MimotoCMS_forms_input_ListItem--drag {
     background-color: $white;
 }
 
-#{$pr-input}_ListItem--ghost {
+li.MimotoCMS_forms_input_ListItem--ghost {
     opacity: 0;
 }
 
-    #{$pr-input}_ListItem-figure {
+    figure.MimotoCMS_forms_input_ListItem-figure {
         width: 72px;
         background-repeat: no-repeat;
         background-position: center center;
@@ -22,36 +22,30 @@
         align-self: stretch;
     }
 
-    #{$pr-input}_ListItem-text {
+    div.MimotoCMS_forms_input_ListItem-text {
         padding: 15px 20px;
         flex: 1 1 auto;
         overflow: hidden;
     }
 
-        #{$pr-input}_ListItem-title,
-        #{$pr-input}_ListItem-subtitle {
+        p.MimotoCMS_forms_input_ListItem-title,
+        p.MimotoCMS_forms_input_ListItem-subtitle {
             font-size: rem-calc(14px);
         }
 
-        #{$pr-input}_ListItem-title {
+        p.MimotoCMS_forms_input_ListItem-title {
             font-weight: 500;
             color: $black;
         }
 
-        #{$pr-input}_ListItem-subtitle {
+        p.MimotoCMS_forms_input_ListItem-subtitle {
             color: $gray;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
 
-    #{$pr-input}_ListItem-button {
-        display: flex;
-        align-items: center;
-        flex: 0 0 auto;
-    }
-
-    #{$pr-input}_ListItem-handle {
+    div.MimotoCMS_forms_input_ListItem-handle {
         @include clearfix;
         display: block;
         overflow: hidden;
@@ -62,7 +56,7 @@
         flex: 0 0 auto;
     }
 
-    #{$pr-input}_ListItem-handle-dot {
+    div.MimotoCMS_forms_input_ListItem-handle-dot {
         float: left;
         width: 3px;
         height: 3px;

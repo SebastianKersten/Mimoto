@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "3ce0c874ee4469390499";
+/******/ 	__webpack_require__.h = "580c211bf3fb8b5b5443";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -237,7 +237,7 @@
 	        }
 	
 	        // lock background from scrolling
-	        document.body.classList.add("mimoto_layer_application");
+	        document.body.classList.add("MimotoCMS_layer_application");
 	
 	        // register
 	        var layer_overlay = document.getElementById('Mimoto_layer_overlay');
@@ -357,7 +357,7 @@
 	        layer_popup.classList.add('MimotoCMS_hidden');
 	
 	        // unlock background for scrolling
-	        document.body.classList.remove('mimoto_layer_application');
+	        document.body.classList.remove('MimotoCMS_layer_application');
 	    },
 	
 	    page: function page(sURL) {

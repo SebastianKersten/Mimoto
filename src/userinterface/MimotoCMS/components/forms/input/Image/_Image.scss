@@ -1,38 +1,38 @@
-#{$pr-input}_ImageUpload {
+div.MimotoCMS_forms_input_ImageUpload {
     position: relative;
     margin: 0 0 10px;
     border: 1px solid $pale-slate;
     background-color: $mercury;
 }
 
-#{$pr-input}_ImageUpload--show-preview {
-    #{$pr-input}_ImageUpload-preview {
+div.MimotoCMS_forms_input_ImageUpload--show-preview {
+    div.MimotoCMS_forms_input_ImageUpload-preview {
         display: block;
     }
 }
 
-#{$pr-input}_ImageUpload--hide-upload-progess {
-    #{$pr-input}_ImageUpload-preview-upload-progress {
+div.MimotoCMS_forms_input_ImageUpload--hide-upload-progess {
+    div.MimotoCMS_forms_input_ImageUpload-preview-upload-progress {
         opacity: 0;
     }
 }
 
-#{$pr-input}_ImageUpload--show-preview-image {
-    #{$pr-input}_ImageUpload-preview-image {
+div.MimotoCMS_forms_input_ImageUpload--show-preview-image {
+    img.MimotoCMS_forms_input_ImageUpload-preview-image {
         opacity: 1;
     }
 
-    #{$pr-input}_ImageUpload-trigger {
+    div.MimotoCMS_forms_input_ImageUpload-trigger {
         visibility: hidden;
     }
 }
 
-    #{$pr-input}_ImageUpload-trigger {
+    div.MimotoCMS_forms_input_ImageUpload-trigger {
         padding: 120px 20px;
         cursor: pointer;
     }
 
-        #{$pr-input}_ImageUpload-trigger-button {
+        div.MimotoCMS_forms_input_ImageUpload-trigger-button {
             overflow: hidden;
             width: 35px;
             height: 35px;
@@ -41,7 +41,7 @@
             background-color: $silver-chalice;
         }
 
-            #{$pr-input}_ImageUpload-trigger-button-icon {
+            div.MimotoCMS_forms_input_ImageUpload-trigger-button-icon {
                 display: block;
                 width: 17px;
                 height: 17px;
@@ -49,14 +49,14 @@
                 fill: $mercury;
             }
 
-        #{$pr-input}_ImageUpload-trigger-text {
+        p.MimotoCMS_forms_input_ImageUpload-trigger-text {
             font-size: rem-calc(14px);
             font-weight: 500;
             text-align: center;
             color: rgba($black, .5);
         }
 
-#{$pr-input}_ImageUpload-new-preview-image {
+img.MimotoCMS_forms_input_ImageUpload-new-preview-image {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -65,7 +65,7 @@
     transform: translate(-50%, -50%);
 }
 
-    #{$pr-input}_ImageUpload-preview {
+    div.MimotoCMS_forms_input_ImageUpload-preview {
         position: absolute;
         top: 0;
         left: 0;
@@ -74,7 +74,7 @@
         height: 100%;
     }
 
-        #{$pr-input}_ImageUpload-preview-template {
+        div.MimotoCMS_forms_input_ImageUpload-preview-template {
             position: relative;
             overflow: hidden;
             height: 100%;
@@ -82,13 +82,13 @@
             background-color: $mercury;
         }
 
-        #{$pr-input}_ImageUpload-preview-button {
+        div.MimotoCMS_forms_input_ImageUpload-preview-button {
             position: absolute;
             right: 0;
             bottom: -30px;
         }
 
-        #{$pr-input}_ImageUpload-preview-image {
+        img.MimotoCMS_forms_input_ImageUpload-preview-image {
             position: relative;
             top: 50%;
             display: block;
@@ -99,7 +99,7 @@
             transition: opacity 100ms ease-out;
         }
 
-        #{$pr-input}_ImageUpload-preview-upload-progress {
+        div.MimotoCMS_forms_input_ImageUpload-preview-upload-progress {
             position: absolute;
             z-index: 100;
             top: 50%;
@@ -111,7 +111,7 @@
             transition: opacity 100ms ease-out;
         }
 
-            #{$pr-input}_ImageUpload-preview-upload-progess-bar {
+            div.MimotoCMS_forms_input_ImageUpload-preview-upload-progess-bar {
                 width: 0;
                 height: 20px;
                 border-radius: 10px;

@@ -1,4 +1,4 @@
-#{$pr-input}_Textblock {
+div.MimotoCMS_forms_input_Textblock {
     display: block;
     width: 100%;
     height: 120px;
@@ -48,8 +48,8 @@
     }
 }
 
-
 .ql-editor, .ql-container{
+    //overflow-y: auto;
     overflow-y: visible;
     height: auto;
 }
@@ -58,3 +58,14 @@
     padding: 0;
     line-height: inherit;
 }
+
+//
+//.ql-editor, .ql-container{
+//    overflow-y: visible;
+//    height: auto;
+//}
+//
+//.ql-editor {
+//    padding: 0;
+//    line-height: inherit;
+//}

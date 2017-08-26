@@ -1,11 +1,11 @@
 @import 'MultiSelectOption/MultiSelectOption';
 
-#{$pr-input}_MultiSelect-container {
+div.MimotoCMS_forms_input_MultiSelect-container {
     position: relative;
     flex: 0 0 auto;
 }
 
-    #{$pr-input}_MultiSelect {
+    input.MimotoCMS_forms_input_MultiSelect {
         position: relative;
         z-index: 1;
         width: 20px;
@@ -17,7 +17,7 @@
                 background-color: $white;
             }
 
-            + #{$pr-input}_MultiSelect-icon {
+            + svg.MimotoCMS_forms_input_MultiSelect-icon {
                 display: block;
             }
         }
@@ -38,7 +38,7 @@
         }
     }
 
-    #{$pr-input}_MultiSelect-icon {
+    svg.MimotoCMS_forms_input_MultiSelect-icon {
         position: absolute;
         z-index: 2;
         top: -2px;

@@ -1,51 +1,51 @@
 @include breakpoint(large up) {
     .navigation-collapsed {
-        #{$pr-interface}_Menu,
-        #{$pr-interface}_Header-logo-container {
+        nav.MimotoCMS_interface_Menu,
+        div.MimotoCMS_interface_Header-logo-container {
             width: $navigation-collapsed-width;
         }
 
-        #{$pr-interface}_Header-logo {
+        div.MimotoCMS_interface_Header-logo {
             background-image: url('/mimoto/static/images/mimoto_logo_collapsed.png');
             background-size: 64px 64px;
         }
 
-        #{$pr-interface}_Header-navigation-collapse-toggle {
+        div.MimotoCMS_interface_Header-navigation-collapse-toggle {
             right: -32px;
             transform: rotate(0deg);
         }
 
-        #{$pr-interface}_Header-navigation-collapse-toggle:hover {
-            #{$pr-interface}_Header-navigation-collapse-toggle-icon {
+        div.MimotoCMS_interface_Header-navigation-collapse-toggle:hover {
+            svg.MimotoCMS_interface_Header-navigation-collapse-toggle-icon {
                 fill: $black;
             }
         }
 
-        #{$pr-interface}_Header-navigation-collapse-toggle-icon {
+        svg.MimotoCMS_interface_Header-navigation-collapse-toggle-icon {
             fill: $sinbad;
         }
 
-        #{$pr-interface}_Menu-item-link {
+        a.MimotoCMS_interface_Menu-item-link {
             padding: 0;
         }
 
-        #{$pr-interface}_Menu-item-link:hover,
-        #{$pr-interface}_Menu-item-link--active {
-            #{$pr-interface}_Menu-item-icon {
+        a.MimotoCMS_interface_Menu-item-link:hover,
+        a.MimotoCMS_interface_Menu-item-link--active {
+            svg.MimotoCMS_interface_Menu-item-icon {
                 fill: $white;
             }
         }
 
-        #{$pr-interface}_Menu-item-text {
+        span.MimotoCMS_interface_Menu-item-text {
             display: none;
         }
 
-        #{$pr-interface}_Menu-item-icon {
+        svg.MimotoCMS_interface_Menu-item-icon {
             margin: 0 auto;
             fill: $sinbad;
         }
 
-        #{$pr-mimoto}_Pagecontent {
+        section.MimotoCMS_Pagecontent {
             left: $navigation-collapsed-width;
         }
     }

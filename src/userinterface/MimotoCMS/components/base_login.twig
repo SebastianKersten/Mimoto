@@ -9,22 +9,26 @@
 
     <style>
 
-        body {
+        body.MimotoCMS_Login {
+
+        }
+
+        div.MimotoCMS_Login-screen {
             padding:100px
         }
 
-        h1 {
+        h1.MimotoCMS_Login-header {
             font-weight: bold;
             font-size: 24px;
             margin-bottom: 20px;
         }
 
-        input.username, input.password {
+        input.MimotoCMS_Login-username, input.MimotoCMS_Login-password {
             width: 350px;
             padding: 12px 15px;
         }
 
-        input.submit {
+        input.MimotoCMS_Login-submit {
             padding: 7px 12px;
             margin-top: 30px;
             background-color: #000000;
@@ -34,22 +38,22 @@
     </style>
 
 </head>
-<body>
+<body class="MimotoCMS_Login">
 
-    <div>
-        <h1>Mimoto.CMS</h1>
+    <div class="MimotoCMS_Login-screen">
+        <h1 class="MimotoCMS_Login-header">Mimoto.CMS</h1>
 
-        <form action="/mimoto.cms" method="post">
+        <form action="/mimoto.cms" method="post" class="MimotoCMS">
             <input type="hidden" name="request" value="{{ requestedPage }}">
-            <fieldset>
-                <legend>email</legend>
-                <input type="test" name="username" id="username" value="{{ username }}" class="username" />
+            <fieldset class="MimotoCMS">
+                <legend class="MimotoCMS">email</legend>
+                <input type="test" name="username" id="username" value="{{ username }}" class="MimotoCMS_Login-username" />
             </fieldset>
-            <fieldset>
-                <legend>password</legend>
-                <input type="password" name="password" id="password" class="password" />
+            <fieldset class="MimotoCMS">
+                <legend class="MimotoCMS">password</legend>
+                <input type="password" name="password" id="password" class="MimotoCMS_Login-password" />
             </fieldset>
-            <input type="submit" value="Login" class="submit" />
+            <input type="submit" value="Login" class="MimotoCMS_Login-submit" />
         </form>
 
     </div>

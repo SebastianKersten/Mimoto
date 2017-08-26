@@ -1,8 +1,8 @@
-<div class="form_holder">
+<div class="MimotoCMS_forms_Form-holder">
     <div class="MimotoCMS_forms_Form__fields">
         {{ Mimoto.form() }}
     </div>
-    <div class="MimotoCMS_forms_Form__menu">
+    <div class="MimotoCMS_forms_Form-menu">
         {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:"Cancel", types:['text'], onclick:"MimotoX.closePopup();" }) }}
         <span {{ Mimoto.submit() }}>
             {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:"Save" }) }}

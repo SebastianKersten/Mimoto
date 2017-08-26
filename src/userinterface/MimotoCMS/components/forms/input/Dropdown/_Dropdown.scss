@@ -1,10 +1,10 @@
 @import 'DropdownOption/DropdownOption';
 
-#{$pr-input}_Dropdown-container {
+div.MimotoCMS_forms_input_Dropdown-container {
     position: relative;
 }
 
-    #{$pr-input}_Dropdown {
+    select.MimotoCMS_forms_input_Dropdown {
         display: block;
         width: 100%;
         max-width: none;
@@ -27,7 +27,7 @@
         }
     }
 
-    #{$pr-input}_Dropdown-icon {
+    svg.MimotoCMS_forms_input_Dropdown-icon {
         position: absolute;
         top: 18px;
         right: 15px;
