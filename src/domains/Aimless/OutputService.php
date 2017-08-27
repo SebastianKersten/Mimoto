@@ -344,16 +344,6 @@ class OutputService
 
     public function renderRoute($sPath)
     {
-        // 1. create
-        $selection = Mimoto::service('selection')->create();
-
-        // 2. setup
-        $selection->setType('article');
-        $selection->setIdAsVar('nArticleId');
-
-
-
-
 
         // load
         $aRoutes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_ROUTE]);
@@ -451,12 +441,8 @@ class OutputService
                         $ePathElement = $aPathElements[$nMatchIndex];
 
 
-                        //Mimoto::output('type', $ePathElement->getValue('type'));
-
                         if ($ePathElement->getValue('type') == 'var')
                         {
-                            //Mimoto::error($ePathElement->getValue('varName').' = '.$sMatchValue);
-
                             $selection->applyVar($ePathElement->getValue('varName'), $sMatchValue);
                         }
                     }

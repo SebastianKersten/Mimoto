@@ -58,7 +58,7 @@ class Selection
                     $eRule = $aRules[$nRuleIndex];
 
                     #todo --- (and move to separate function)
-                    // 1. use same code as colling items from beginning
+                    // 1. use same code as building items on boot
 
 
                     // verify
@@ -81,7 +81,7 @@ class Selection
                     // verify
                     if ($eRule->getValue('idAsVar') && !empty($eRule->getValue('idVarName'))) // #todo - validate varname
                     {
-                        $this->setTypeAsVar($eRule->getValue('idVarName'));
+                        $this->setIdAsVar($eRule->getValue('idVarName'));
                     }
                     else
                     {
