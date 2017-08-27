@@ -177,7 +177,7 @@ module.exports.prototype = {
 
 
         // lock background from scrolling
-        document.body.classList.add("MimotoCMS_layer_application");
+        document.body.classList.add("Mimoto_layer_application");
 
 
         // register
@@ -309,7 +309,7 @@ module.exports.prototype = {
         layer_popup.classList.add('MimotoCMS_hidden');
 
         // unlock background for scrolling
-        document.body.classList.remove('MimotoCMS_layer_application');
+        document.body.classList.remove('Mimoto_layer_application');
     },
 
     page: function(sURL)
