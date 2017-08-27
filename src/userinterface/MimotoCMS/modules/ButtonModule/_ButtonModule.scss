@@ -1,4 +1,4 @@
-a.MimotoCMS_ButtonModule {
+a.MimotoCMS_modules_Button {
     display: inline-block;
     padding: 10px 20px;
     cursor: pointer;
@@ -14,17 +14,17 @@ a.MimotoCMS_ButtonModule {
         background-color: $tower-gray;
     }
 
-    & span.MimotoCMS_ButtonModule-text {
+    & span.MimotoCMS_modules_Button-text {
         color: #ffffff;
     }
 }
 
-a.MimotoCMS_ButtonModule--loading {
+a.MimotoCMS_modules_Button--loading {
     pointer-events: none;
     background-color: rgba($black, .7);
 }
 
-a.MimotoCMS_ButtonModule--secondary {
+a.MimotoCMS_modules_Button--secondary {
 
     background-color: $tower-gray;
     color: #ffffff;
@@ -34,13 +34,14 @@ a.MimotoCMS_ButtonModule--secondary {
         background-color: $black;
     }
 
-    svg.MimotoCMS_ButtonModule-icon {
+    svg.MimotoCMS_modules_Button-icon {
         fill: $white;
     }
 }
 
-a.MimotoCMS_ButtonModule--alert {
+a.MimotoCMS_modules_Button--alert {
 
+    text-decoration: none;
     background-color: $fuzzy-wuzzy-brown;
     color: #ffffff;
 
@@ -48,19 +49,19 @@ a.MimotoCMS_ButtonModule--alert {
         background-color: $black;
     }
 
-    svg.MimotoCMS_ButtonModule-icon {
+    svg.MimotoCMS_modules_Button-icon {
         fill: $white;
     }
 }
 
-a.MimotoCMS_ButtonModule--small {
+a.MimotoCMS_modules_Button--small {
     padding: 6px 10px;
     font-size: rem-calc(10px);
     color: #ffffff;
     text-decoration: none;
 }
 
-    div.MimotoCMS_ButtonModule-content {
+    div.MimotoCMS_modules_Button-content {
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
@@ -68,7 +69,7 @@ a.MimotoCMS_ButtonModule--small {
         text-decoration: none;
     }
 
-        span.MimotoCMS_ButtonModule--text {
+        span.MimotoCMS_modules_Button--text {
             text-decoration: underline;
             color: #555;
             background-color: inherit;
@@ -81,7 +82,7 @@ a.MimotoCMS_ButtonModule--small {
         }
 
 
-        span.MimotoCMS_ButtonModule-text {
+        span.MimotoCMS_modules_Button-text {
             font-family: $font-family-futura;
             font-size: rem-calc(14px);
             font-weight: 500;
@@ -91,7 +92,7 @@ a.MimotoCMS_ButtonModule--small {
             user-select: none;
         }
 
-        svg.MimotoCMS_ButtonModule-icon {
+        svg.MimotoCMS_modules_Button-icon {
             display: block;
             width: 10px;
             height: 10px;
@@ -100,13 +101,13 @@ a.MimotoCMS_ButtonModule--small {
             flex: 0 0 auto;
         }
 
-        a.MimotoCMS_ButtonModule-icon--loading {
+        a.MimotoCMS_modules_Button-icon--loading {
             width: 12px;
             height: 12px;
             margin: 4px 0 4px 13px;
             stroke: $tower-gray;
         }
 
-        a.MimotoCMS_ButtonModule-icon--success {
+        a.MimotoCMS_modules_Button-icon--success {
 
         }

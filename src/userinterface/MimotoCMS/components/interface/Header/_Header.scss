@@ -69,13 +69,13 @@ header.MimotoCMS_interface_Header {
             }
 
             &:hover {
-                div.MimotoCMS_interface_Header-navigation-collapse-toggle-icon {
+                svg.MimotoCMS_interface_Header-navigation-collapse-toggle-icon {
                     fill: $sinbad;
                 }
             }
         }
 
-            div.MimotoCMS_interface_Header-navigation-collapse-toggle-icon {
+            svg.MimotoCMS_interface_Header-navigation-collapse-toggle-icon {
                 @include breakpoint(large up) {
                     display: block;
                     width: 6px;

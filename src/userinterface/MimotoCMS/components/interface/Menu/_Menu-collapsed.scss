@@ -1,8 +1,14 @@
 @include breakpoint(large up) {
     .navigation-collapsed {
-        nav.MimotoCMS_interface_Menu,
-        div.MimotoCMS_interface_Header-logo-container {
+
+        nav.MimotoCMS_interface_Menu {
             width: $navigation-collapsed-width;
+        }
+
+        div.MimotoCMS_interface_Header-logo-container {
+            flex: 0 0 $navigation-collapsed-width;
+            width: $navigation-collapsed-width;
+            transition: width .25s;
         }
 
         div.MimotoCMS_interface_Header-logo {

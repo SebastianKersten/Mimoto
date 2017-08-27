@@ -2,12 +2,12 @@
 
 module.exports = {
 
-    loadingClass: 'MimotoCMS_ButtonModule--loading',
+    loadingClass: 'MimotoCMS_modules_Button--loading',
     loadingIcon: '#ico-loading',
-    loadingIconClass: 'MimotoCMS_ButtonModule-icon--loading',
-    successClass: 'MimotoCMS_ButtonModule--success',
+    loadingIconClass: 'MimotoCMS_modules_Button-icon--loading',
+    successClass: 'MimotoCMS_modules_Button--success',
     successIcon: '#ico-checkmark',
-    successIconClass: 'MimotoCMS_ButtonModule-icon--success',
+    successIconClass: 'MimotoCMS_modules_Button-icon--success',
     iconSelector: '.js-button-icon',
 
     addLoadingState: function (button) {

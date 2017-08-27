@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "580c211bf3fb8b5b5443";
+/******/ 	__webpack_require__.h = "835684d2bf997f0ae316";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -52994,12 +52994,12 @@
 	
 	module.exports = {
 	
-	    loadingClass: 'MimotoCMS_ButtonModule--loading',
+	    loadingClass: 'MimotoCMS_modules_Button--loading',
 	    loadingIcon: '#ico-loading',
-	    loadingIconClass: 'MimotoCMS_ButtonModule-icon--loading',
-	    successClass: 'MimotoCMS_ButtonModule--success',
+	    loadingIconClass: 'MimotoCMS_modules_Button-icon--loading',
+	    successClass: 'MimotoCMS_modules_Button--success',
 	    successIcon: '#ico-checkmark',
-	    successIconClass: 'MimotoCMS_ButtonModule-icon--success',
+	    successIconClass: 'MimotoCMS_modules_Button-icon--success',
 	    iconSelector: '.js-button-icon',
 	
 	    addLoadingState: function addLoadingState(button) {
