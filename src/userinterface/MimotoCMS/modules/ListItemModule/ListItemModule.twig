@@ -4,15 +4,17 @@
 
         <div class="MimotoCMS_ListItemModule-info">
             <div class="MimotoCMS_ListItemModule-label" {{ label_realtime }}>{{ label }}</div>
-            <div class="MimotoCMS_ListItemModule-sublabel" {{ sublabel_realtime }}>{{ sublabel }}</div>
+            {% if sublabel is defined %}
+            <div class="MimotoCMS_ListItemModule-sublabel" {% if sublabel_realtime is defined %}{{ sublabel_realtime }}{% endif %}>{{ sublabel }}</div>
+            {% endif %}
         </div>
         <div class="MimotoCMS_ListItemModule-menu">
-            {% if button2_label is not empty %}
-                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button2_label, onclick:button2_action, directive:button2_directive, types:[button2_type], icon:button2_icon }) }}
+            {% if button2_label is defined and button2_label is not empty %}
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button2_label|default(''), onclick:button2_action|default(''), directive:button2_directive|default(''), types:[button2_type|default('')], icon:button2_icon|default('') }) }}
             {% endif %}
-            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button_label, onclick:button_action, directive:button_directive, types:[button_type], icon:button_icon }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button_label|default(''), onclick:button_action|default(''), directive:button_directive|default(''), types:[button_type|default('')], icon:button_icon|default('') }) }}
         </div>
-        {% if sortable is empty or sortable %}
+        {% if sortable is defined and (sortable is empty or sortable) %}
             <div class="MimotoCMS_ListItemModule-handle js-sortable-draghandle">
                 <div class="MimotoCMS_ListItemModule-handle-dot"></div>
                 <div class="MimotoCMS_ListItemModule-handle-dot"></div>

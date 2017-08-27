@@ -15,6 +15,7 @@
         </button>
     </div>
 
+    {% if pageTitle is defined %}
     <ul class="MimotoCMS_interface_Header-breadcrumbs">
         {% for element in pageTitle %}
             <li class="MimotoCMS_interface_Header-breadcrumbs-list-item">
@@ -23,6 +24,7 @@
             </li>
         {% endfor %}
     </ul>
+    {% endif %}
 
     <ul class="MimotoCMS_interface_Header-menu">
         <li class="MimotoCMS_interface_Header-menu-item">

@@ -47,7 +47,7 @@
             <input type="hidden" name="request" value="{{ requestedPage }}">
             <fieldset class="MimotoCMS">
                 <legend class="MimotoCMS">email</legend>
-                <input type="test" name="username" id="username" value="{{ username }}" class="MimotoCMS_Login-username" />
+                <input type="test" name="username" id="username" value="{% if username is defined %}{{ username }}{% endif %}" class="MimotoCMS_Login-username" />
             </fieldset>
             <fieldset class="MimotoCMS">
                 <legend class="MimotoCMS">password</legend>

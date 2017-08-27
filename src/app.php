@@ -17,7 +17,7 @@ if (!$config)
     echo "
     <h1>Installling Mimoto</h1>
     <ol>
-        <li>Make a copy of `config.php.bak` and name it `config.php`</li>
+        <li>Make a copy of `config.php.dist` and name it `config.php`</li>
         <li>Add your MySQL credentials to your `config.php`</li>
         <li>Import the database dump in `/database` in your MySQL</li>
         <li>Add at least 1 user to the `_Mimoto_user` table</li>
@@ -33,7 +33,6 @@ Mimoto::setValue('ProjectConfig.twigroot', 'src/userinterface/');
 
 // init
 $app = new \Silex\Application();
-
 
 
 // setup

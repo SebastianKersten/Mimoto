@@ -14,7 +14,7 @@
     {% endfor %}
 {% endif %}
 
-<a {{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_modules_Button{{ classes }}"{% if onclick %} onclick="{{ onclick }}"{% endif %}{% if icon|default('') %} data-icon="#ico-{{ icon }}"{% endif %} {{ directive|default('') }}>
+<a {{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_modules_Button{{ classes }}"{% if onclick|default('') %} onclick="{{ onclick }}"{% endif %}{% if icon|default('') %} data-icon="#ico-{{ icon }}"{% endif %} {{ directive|default('') }}>
     <div class="MimotoCMS_modules_Button-content">
         {% if label|default('') %}
             <span class="MimotoCMS_modules_Button-text">{{ label }}</span>
