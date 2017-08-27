@@ -19,6 +19,11 @@ div.MimotoCMS_forms_input_Textblock {
     height: auto;
     overflow: visible;
 
+    & * {
+        font-family: $font-family-helvetica;
+        font-size: 14px;
+        line-height: 20px;
+    }
 
     &:focus {
         border-color: $tower-gray;
