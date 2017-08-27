@@ -8,15 +8,16 @@
 
 
 body.MimotoPublisher {
-    background-color: #E5E4E4;
     margin: 0;
     padding: 0;
+    background-color: #E5E4E4;
+    font-size: 18px;
+    font-family: "Futura PT W02 Book", sans-serif;
 }
 
 
 div.MimotoPublisher-menu {
     width: 100%;
-    padding: 15px 25px 15px 25px;
     background-color: #DF5B57;
     position: fixed;
     z-index: 100;
@@ -25,6 +26,7 @@ div.MimotoPublisher-menu {
 
         display: inline-block;
         float: left;
+        padding: 15px 25px 15px 25px;
 
         & > a {
             color: #ffffff;
@@ -32,15 +34,16 @@ div.MimotoPublisher-menu {
             text-decoration: none;
         }
     }
-
-    & > div.MimotoPublisher-menu-logo {
-
-        display: inline-block;
-        float: right;
-        color: #ffffff;
-
-    }
 }
+
+div.MimotoPublisher-menu-logo {
+
+    padding: 15px 25px 15px 25px;
+    display: inline-block;
+    float: right;
+    color: #ffffff;
+}
+
 
 div.MimotoPublisher-content {
     padding-top: 80px;
@@ -115,3 +118,17 @@ span.boldPurple {
 //    padding-top: 4px;
 //    color: #ffffff;
 //}
+
+
+button.MimotoPublisher {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 7px 15px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #000000;
+        color: #ffffff;
+    }
+}

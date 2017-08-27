@@ -11,47 +11,49 @@ div.MimotoCMS_layer_overlay {
 }
 
 div.MimotoCMS_layer_popup {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  overflow: auto;
-  padding: 25px;
-    z-index: 19761019;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: auto;
+    padding: 25px;
+    z-index: 20140505;
 }
 
 div.MimotoCMS_interface_Popup {
-  background-color: #ffffff;
-  border: 1px solid #eeeeee;
-  width: 100%;
-  max-width: 800px;
-  position: relative;
-  left: auto;
-  padding: 5px;
-  margin: 25px auto 30px auto;
+    background-color: #ffffff;
+    border: 1px solid #eeeeee;
+    width: 100%;
+    max-width: 800px;
+    position: relative;
+    left: auto;
+    padding: 5px;
+    margin: 25px auto 30px auto;
 }
 
 div.MimotoCMS_interface_Popup__content {
-  padding: 25px 25px 20px 25px;
-  background-color: #f5f5f5;
+    padding: 25px 25px 20px 25px;
+    background-color: #f5f5f5;
 }
 
 div.MimotoCMS_interface_Popup__closebutton {
-  position: absolute;
-  display: inline-block;
-  padding: 3px 8px 3px 8px;
-  background-color: #ffffff;
-  right: 0;
-  font-size: 12px;
-  color: #858585;
-  cursor: pointer;
+    position: absolute;
+    display: inline-block;
+    padding: 3px 8px 3px 8px;
+    background-color: #ffffff;
+    right: 0;
+    font-size: 12px;
+    color: #858585;
+    cursor: pointer;
+
+
 }
 
 div.MimotoCMS_interface_Popup__title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .MimotoCMS_hidden {

@@ -10,7 +10,7 @@ div.MimotoPublisher-Article-lede-container {
 }
 
 div.MimotoPublisher-Article-lede {
-    padding: 100px 100px 20px 100px;
+    padding: 25px 100px 30px 50px;
     width: 550px;
     font-size: 18px;
     line-height: 30px;
@@ -42,7 +42,7 @@ div.MimotoPublisher-Article-header {
 }
 
 div.MimotoPublisher-Article-title {
-    margin: 0 50px 30px 50px;
+    padding: 0 50px 30px 50px;
     font-size: 48px;
     line-height: 50px;
     font-weight: bold;
@@ -52,7 +52,7 @@ div.MimotoPublisher-Article-title {
 @include breakpoint(medium up) {
 
     div.MimotoPublisher-Article-title {
-        margin: 0 200px 30px 100px;
+        padding: 0 200px 30px 100px;
         overflow: visible;
     }
 }

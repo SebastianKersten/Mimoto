@@ -5,16 +5,21 @@
     <img data-js-article="{{ Mimoto.meta('id') }}">
 
         <div class="MimotoPublisher-Article-lede-container">
+
+
+
             <div class="MimotoPublisher-Article-lede">
+
+                {% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" {{ Mimoto.edit('article') }}>Edit</button>{% endif %}
 
                 {#<span class="MimotoPublisher-Article-articletype">{% if Mimoto.data('type') == 'explainer' %}Explainer{% else %}Verhaal van de dag{% endif %}</span>#}
                  {#-#}
                 <span {{ Mimoto.realtime('lede') }}>{{ Mimoto.data('lede') }}</span>
+
             </div>
         </div>
 
         <div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
-        <button {{ Mimoto.edit('article') }}>Edit</button><button {{ Mimoto.clear('title') }}>Clear title</button>
         <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }} ></img>
 
         <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.collaborate('body') }}>{{ Mimoto.data('body') }}</div>
