@@ -17,8 +17,8 @@
     </div>
 
     <div class="MimotoCMS_pages_pages_Detail_Output-setting" {{ Mimoto.hideWhenEmpty('layout') }}>
-        <div class="MimotoCMS_pages_pages_Detail_Output-setting-info" {{ Mimoto.showWhenEmpty('selection') }}>
-            Optional: Add data
+        <div class="MimotoCMS_pages_pages_Detail_Output-setting-info MimotoCMS_pages_pages_Detail_Output-setting-info-empty" {{ Mimoto.showWhenEmpty('selection') }}>
+            Optional: Add data ..
         </div>
 
         <div {{ Mimoto.realtime('selection.name') }} {{ Mimoto.hideWhenEmpty('selection') }}>
@@ -35,12 +35,21 @@
     {#include as module here ...#}
 
     <div class="MimotoCMS_pages_pages_Detail_Output-containers" {{ Mimoto.hideWhenEmpty('layout') }}>
-        <div class="MimotoCMS_pages_pages_Detail_Output-containers-menu">
-            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add container content', types:['small', 'secondary'], directive:Mimoto.create('containers', '_Mimoto_outputcontainer') }) }}
+
+        <div class="MimotoCMS_pages_pages_Detail_Output-containers-header">
+            <div class="MimotoCMS_pages_pages_Detail_Output-containers-label">Containers</div>
+
+            <div class="MimotoCMS_pages_pages_Detail_Output-containers-menu">
+                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add content to container', types:['small', 'secondary'], directive:Mimoto.create('containers', '_Mimoto_outputcontainer') }) }}
+            </div>
         </div>
-        <div class="MimotoCMS_pages_pages_Detail_Output-containers-container" {{ Mimoto.realtime('containers', 'MimotoCMS_pages_pages_Detail-Output-container') }}>
+
+        <div class="MimotoCMS_pages_pages_Detail_Output-containers-containers-empty" {{ Mimoto.showWhenEmpty('containers') }}>
+            No containers added yet ..
+        </div>
+
+        <div class="MimotoCMS_pages_pages_Detail_Output-containers-containers" {{ Mimoto.realtime('containers', 'MimotoCMS_pages_pages_Detail-Output-container') }} {{ Mimoto.hideWhenEmpty('containers') }}>
             {{ Mimoto.data('containers', 'MimotoCMS_pages_pages_Detail-Output-container') }}
         </div>
-        containers
     </div>
 </div>

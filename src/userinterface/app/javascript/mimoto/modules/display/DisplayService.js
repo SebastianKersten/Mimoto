@@ -725,7 +725,7 @@ module.exports.prototype = {
                                     // hideOnEmpty in aparte helper functie
 
 
-                                    directive.element.innerText = change.value;
+                                    directive.element.innerHTML = change.value;
 
 
 

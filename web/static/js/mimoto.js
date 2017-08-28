@@ -37,7 +37,7 @@
 /******/ 	__webpack_require__.p = "web/static/js/";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "a39eba61de5db656fba7";
+/******/ 	__webpack_require__.h = "5804cf00c1fd8d11d718";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -12445,7 +12445,7 @@
 	                                    // hideOnEmpty in aparte helper functie
 	
 	
-	                                    directive.element.innerText = change.value;
+	                                    directive.element.innerHTML = change.value;
 	                                }
 	                                break;
 	
