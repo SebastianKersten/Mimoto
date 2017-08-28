@@ -1,3 +1,7 @@
+@import '../layouts/layouts';
+@import '../modules/modules';
+@import '../MimotoCMS';
+
 @import 'forms/FormComponent';
 @import 'forms/Form';
 
@@ -38,7 +42,3 @@
 @import 'pages/pages/Pages';
 
 @import 'selection/SelectableItem/SelectableItem';
-
-@import '../layouts/layouts';
-@import '../modules/modules';
-@import '../MimotoCMS';

@@ -1,53 +1,40 @@
 <div class="MimotoCMS_pages_pages_Detail_Output" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
 
-
-
-
-
-    This is an output .. please add `component` (using Mimoto.select) and a `selection`
-
-
-    <div class="MimotoCMS_pages_pages_Detail_Output-layout">
-        <div>
-
+    <div class="MimotoCMS_pages_pages_Detail_Output-setting">
+        <div class="MimotoCMS_pages_pages_Detail_Output-setting-info" {{ Mimoto.showWhenEmpty('layout') }}>
+            Please select a layout or component
         </div>
 
-        <div {{ Mimoto.realtime('layout.name') }}>{{ Mimoto.data('layout.name') }}</div>
+        <div {{ Mimoto.realtime('layout.name') }} {{ Mimoto.hideWhenEmpty('layout') }}>
+            {{ Mimoto.data('layout.name') }}
+        </div>
 
-        <div class="MimotoCMS_pages_pages_Detail_Output-layout-menu">
-            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select layout', directive:Mimoto.select('layout', '_Mimoto_all_layouts') }) }}
+        <div class="MimotoCMS_pages_pages_Detail_Output-setting-menu">
+
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select', directive:Mimoto.select('layout', '_Mimoto_all_layouts') }) }}
+            <div {{ Mimoto.hideWhenEmpty('layout') }}>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Clear', types:['alert'], directive:Mimoto.clear('layout') }) }}</div>
         </div>
     </div>
 
+    <div class="MimotoCMS_pages_pages_Detail_Output-setting" {{ Mimoto.hideWhenEmpty('layout') }}>
+        <div class="MimotoCMS_pages_pages_Detail_Output-setting-info" {{ Mimoto.showWhenEmpty('selection') }}>
+            Optional: Add data
+        </div>
 
+        <div {{ Mimoto.realtime('selection.name') }} {{ Mimoto.hideWhenEmpty('selection') }}>
+            Use data from the selection <a class="MimotoCMS_pages_pages_Detail_Output-setting-info-link" href="/mimoto.cms/selections/{{ Mimoto.meta('selection.id') }}">{{ Mimoto.data('selection.name') }}</a>
+        </div>
 
+        <div class="MimotoCMS_pages_pages_Detail_Output-setting-menu">
 
-
-
-
-
-
-
-    <div {{ Mimoto.hideWhenEmpty('layout') }}>
-        <div {{ Mimoto.realtime('layout.name') }}>{{ Mimoto.data('layout.name') }}</div>
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Clear layout', types:['small', 'alert'], directive:Mimoto.clear('layout') }) }}
+            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
+            <div {{ Mimoto.hideWhenEmpty('selection') }}>{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Clear', types:['alert'], directive:Mimoto.clear('selection') }) }}</div>
+        </div>
     </div>
 
+    {#include as module here ...#}
 
-    <br>
-    <br>
-
-    {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Set selection', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
-
-    <div {{ Mimoto.hideWhenEmpty('selection') }}>
-        <div {{ Mimoto.realtime('selection.name') }}>{{ Mimoto.data('selection.name') }}</div>
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Clear selection', types:['small', 'alert'], directive:Mimoto.clear('selection') }) }}
-    </div>
-
-    <br><br>
-    include as module here ...
-
-    <div class="MimotoCMS_pages_pages_Detail_Output-containers">
+    <div class="MimotoCMS_pages_pages_Detail_Output-containers" {{ Mimoto.hideWhenEmpty('layout') }}>
         <div class="MimotoCMS_pages_pages_Detail_Output-containers-menu">
             {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add container content', types:['small', 'secondary'], directive:Mimoto.create('containers', '_Mimoto_outputcontainer') }) }}
         </div>
