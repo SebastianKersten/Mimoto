@@ -2,7 +2,7 @@ div.MimotoCMS_modules_Tabmenu {
     
 }
 
-div.MimotoCMS_modules_Tabmenu__panel {
+div.MimotoCMS_modules_Tabmenu-panel {
     margin-bottom: 25px;
     background-color: #ffffff;
     padding: 15px;
@@ -16,6 +16,25 @@ div.MimotoCMS_modules_Tabmenu__panel {
     //& a:hover {
     //    color: #000000;
     //}
+}
+
+
+div.MimotoCMS_modules_Tabmenu-panel-menu {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+ul.MimotoCMS_modules_Tabmenu-panel-container {
+    background-color: $wild-sand;
+    padding: 1px;
+
+    & > li {
+        margin-bottom: 1px;
+    }
+
+    & > li:last-child {
+        margin-bottom: 0;
+    }
 }
 
 
@@ -39,6 +58,7 @@ div.MimotoCMS_modules_Tabmenu__menu_tab {
     color: #000000;
     background-color: #dedede;
     font-family: $font-family-futura;
+    user-select: none;
     cursor: pointer;
 
     &:hover {
@@ -57,7 +77,7 @@ div.MimotoCMS_modules_Tabmenu__menu_tab {
     }
 }
 
-div.MimotoCMS_modules_Tabmenu__panels {
+div.MimotoCMS_modules_Tabmenu-panels {
 
     &.hidden {
         display: none;

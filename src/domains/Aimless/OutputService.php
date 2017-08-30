@@ -463,7 +463,47 @@ class OutputService
                 $layout = Mimoto::service('output')->create($eLayout->getValue('name'), $eInstance);
 
 
-                // b. container selections can be []
+                // read
+                $aContainers = $eOutput->get('containers');
+
+                if (!empty($aContainers))
+                {
+                    // parse
+                    $nContainerCount = count($aContainers);
+                    for ($nContainerIndex = 0; $nContainerIndex < $nContainerCount; $nContainerIndex++)
+                    {
+                        // register
+                        $eContainer = $aContainers[$nContainerIndex];
+
+                        // read
+                        $sContainerName = $eContainer->get('name');
+
+                        // validate
+                        if (!empty($sContainerName))
+                        {
+                            // read
+                            $eComponent = $eContainer->get('component');
+
+                            // validate
+                            if (!empty($eComponent))
+                            {
+                                // read
+                                $eSelection = $eContainer->get('selection');
+
+                                // validate
+                                if (!empty($eSelection))
+                                {
+                                    // register
+                                    $sComponentName = $eComponent->get('name');
+                                    $aInstances = Mimoto::service('data')->select($eSelection);
+
+                                    // add
+                                    $layout->fillContainer($sContainerName, $aInstances, $sComponentName);
+                                }
+                            }
+                        }
+                    }
+                }
 
                 // output
                 return $layout->render();
@@ -471,7 +511,7 @@ class OutputService
 
 
         }
-        die();
+        
         return false;
     }
 

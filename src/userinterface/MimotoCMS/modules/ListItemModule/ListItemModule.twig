@@ -14,20 +14,18 @@
             {% endif %}
             {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:button_label|default(''), onclick:button_action|default(''), directive:button_directive|default(''), types:[button_type|default('')], icon:button_icon|default('') }) }}
         </div>
-        {% if sortable is defined and (sortable is empty or sortable) %}
-            <div class="MimotoCMS_ListItemModule-handle js-sortable-draghandle">
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-                <div class="MimotoCMS_ListItemModule-handle-dot"></div>
-            </div>
-        {% endif %}
+        <div class="MimotoCMS_ListItemModule-handle js-sortable-draghandle">
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+            <div class="MimotoCMS_ListItemModule-handle-dot"></div>
+        </div>
     </div>
 
 </li>

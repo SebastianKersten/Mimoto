@@ -534,6 +534,16 @@ class CoreConfig
                 ]
             ),
             (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_components', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_components', // internal of external?
+                'label' => 'xxx',
+                'rules' => [
+                    (object)array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_COMPONENT
+                    )
+                ]
+            ),
+            (object) array(
                 'id' => CoreConfig::CORE_PREFIX . 'all_selections', // internal of external?
                 'name' => CoreConfig::CORE_PREFIX . 'all_selections', // internal of external?
                 'label' => 'xxx',

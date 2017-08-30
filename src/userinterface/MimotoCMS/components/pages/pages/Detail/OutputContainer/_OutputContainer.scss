@@ -1,0 +1,40 @@
+div.MimotoCMS_pages_pages_Detail_OutputContainer {
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    & > * {
+        margin-bottom: 5px;
+    }
+
+    & > *:last-child {
+        margin-bottom: 0;
+    }
+}
+
+div.MimotoCMS_pages_pages_Detail_OutputContainer-setting-info {
+    flex: auto;
+    text-align: left;
+}
+
+div.MimotoCMS_pages_pages_Detail_OutputContainer-setting-info-empty {
+    font-style: italic;
+    color: #858585;
+}
+
+a.MimotoCMS_pages_pages_Detail_OutputContainer-setting-info-link {
+    text-decoration: none;
+    color: $tower-gray;
+    font-style: italic;
+}
+
+div.MimotoCMS_pages_pages_Detail_OutputContainer-setting-menu {
+    flex: auto;
+    text-align: right;
+
+    & > * {
+        float: right;
+        margin-left: 5px;
+    }
+}

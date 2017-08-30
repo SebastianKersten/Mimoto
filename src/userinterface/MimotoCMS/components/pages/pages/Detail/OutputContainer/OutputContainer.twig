@@ -1,0 +1,53 @@
+<div class="MimotoCMS_pages_pages_Detail_OutputContainer" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+
+    <div class="MimotoCMS_pages_pages_Detail_OutputContainer-setting-info">
+
+
+        {# --- name --- #}
+
+        <div class="MimotoCMS_pages_pages_Detail_OutputContainer-setting-info-empty" {{ Mimoto.showWhenEmpty('name') }}>
+            Please enter the name of the container
+        </div>
+
+        <div {{ Mimoto.hideWhenEmpty('name') }}>
+            Name of the container: <span {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
+        </div>
+
+
+        <div {{ Mimoto.hideWhenEmpty('name') }}>
+
+            {# --- component --- #}
+
+            <div class="MimotoCMS_pages_pages_Detail_OutputContainer-setting-info-empty" {{ Mimoto.showWhenEmpty('component') }}>
+                Add a component
+            </div>
+
+            <div {{ Mimoto.hideWhenEmpty('component') }}>
+                Display using the component <a href="/mimoto.cms/components" class="MimotoCMS_pages_pages_Detail_OutputContainer-setting-info-link" {{ Mimoto.realtime('component.name') }}>{{ Mimoto.data('component.name') }}</a>
+            </div>
+
+
+            {# --- selection --- #}
+
+            <div class="MimotoCMS_pages_pages_Detail_OutputContainer-setting-info-empty" {{ Mimoto.showWhenEmpty('selection') }}>
+                Add a selection
+            </div>
+
+            <div {{ Mimoto.hideWhenEmpty('selection') }}>
+                Use data from the selection <a href="/mimoto.cms/components" class="MimotoCMS_pages_pages_Detail_OutputContainer-setting-info-link" {{ Mimoto.realtime('selection.name') }}>{{ Mimoto.data('selection.name') }}</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="MimotoCMS_pages_pages_Detail_OutputContainer-setting-menu">
+
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit name', directive:Mimoto.edit('_Mimoto_output_container') }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Selection', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Component', directive:Mimoto.select('component', '_Mimoto_all_components') }) }}
+
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Remove', types:['alert'], directive:Mimoto.remove() }) }}
+    </div>
+
+</div>

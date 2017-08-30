@@ -4,7 +4,7 @@
     <div class="MimotoCMS_modules_Tabmenu__menu">
         {% for tab in tabs %}<div id="{{ tabmenu_id }}_{{ loop.index }}" class="MimotoCMS_modules_Tabmenu__menu_tab {% if loop.first %}active{% endif %} {% if secondary|default('') %}secondary{% endif %}">{{ tab.label }}</div>{% endfor %}
     </div>
-    <div class="MimotoCMS_modules_Tabmenu__panels">
+    <div class="MimotoCMS_modules_Tabmenu-panels">
         {% block panels %}{% endblock %}
     </div>
 </div>

@@ -246,15 +246,23 @@ class MimotoEntity
     // ----------------------------------------------------------------------------
     // --- Public methods - data --------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
+    /**
+     * Alias for get()
+     */
+    public function getValue($sPropertySelector, $bGetConnectionInfo = false, $bGetPersistentValue = false)
+    {
+        return $this->get($sPropertySelector, $bGetConnectionInfo, $bGetPersistentValue);
+    }
+
     /**
      * Get the value of a property
      * @param string $sPropertySelector
      * @param boolean $bGetConnectionInformation The storable value, in case of an entity or collection. Default is false
      * @return mixed xValue
      */
-    public function getValue($sPropertySelector, $bGetConnectionInfo = false, $bGetPersistentValue = false)
+    public function get($sPropertySelector, $bGetConnectionInfo = false, $bGetPersistentValue = false)
     {
         // load
         $property = $this->getProperty($sPropertySelector);

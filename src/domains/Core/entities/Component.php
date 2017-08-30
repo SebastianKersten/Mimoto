@@ -432,7 +432,7 @@ class Component
             // components
 
             (object) array(
-                'name' => 'Mimoto.CMS_components_ComponentOverview',
+                'name' => 'MimotoCMS_components_ComponentOverview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/components/ComponentOverview/ComponentOverview.twig',
@@ -606,7 +606,7 @@ class Component
                 'name' => 'MimotoCMS_pages_pages_Detail-Output-container',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/pages/Detail/Output/Output.twig',
+                        'file' => 'MimotoCMS/components/pages/pages/Detail/OutputContainer/OutputContainer.twig',
                         'conditionals' => []
                     )
                 ]
@@ -1054,15 +1054,6 @@ class Component
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/modules/GroupButtonModule/GroupButtonModule.twig',
-                        'conditionals' => []
-                    )
-                ]
-            ),
-            (object) array(
-                'name' => 'MimotoCMS.SectionModule',
-                'templates' => [
-                    (object) array(
-                        'file' => 'MimotoCMS/modules/SectionModule/SectionModule.twig',
                         'conditionals' => []
                     )
                 ]
