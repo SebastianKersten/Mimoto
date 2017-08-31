@@ -1,0 +1,34 @@
+div.MimotoCMS_entities_overview_Entity {
+
+    flex: auto;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    padding: 15px 15px 20px 20px;
+    background-color: #ffffff;
+    min-width: 300px;
+
+}
+
+div.MimotoCMS_entities_overview_Entity-info {
+    flex: auto;
+    text-align: left;
+}
+
+    div.MimotoCMS_entities_overview_Entity-name {
+        font-size: 20px;
+        font-weight: bold;
+        color: $tower-gray;
+    }
+
+    div.MimotoCMS_entities_overview_Entity-properties {
+        padding: 10px 20px 15px 20px;
+    }
+
+div.MimotoCMS_entities_overview_Entity-menu {
+    flex: auto;
+    text-align: right;
+}

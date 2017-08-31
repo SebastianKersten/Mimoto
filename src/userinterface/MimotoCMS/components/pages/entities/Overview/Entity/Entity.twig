@@ -1,0 +1,11 @@
+<div class="MimotoCMS_entities_overview_Entity" {{ Mimoto.realtime() }}>
+
+    <div class="MimotoCMS_entities_overview_Entity-info">
+        <div class="MimotoCMS_entities_overview_Entity-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+        <div class="MimotoCMS_entities_overview_Entity-properties" {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityOverview_EntityProperty') }}>{{ Mimoto.data('properties', 'MimotoCMS_entities_EntityOverview_EntityProperty') }}</div>
+    </div>
+
+    <div class="MimotoCMS_entities_overview_Entity-menu">
+        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'View', onclick:'Mimoto.CMS.entityView('~Mimoto.meta('id')~');', types:['secondary'], icon:'' }) }}
+    </div>
+</div>

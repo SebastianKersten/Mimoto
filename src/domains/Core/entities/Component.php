@@ -197,10 +197,19 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityOverview_ListItem',
+                'name' => 'MimotoCMS_entities_EntityOverview_Entity',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/entities/Overview/ListItem/ListItem.twig',
+                        'file' => 'MimotoCMS/components/pages/entities/Overview/Entity/Entity.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_entities_EntityOverview_EntityProperty',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/entities/Overview/EntityProperty/EntityProperty.twig',
                         'conditionals' => []
                     )
                 ]

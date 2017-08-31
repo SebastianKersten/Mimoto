@@ -1,0 +1,11 @@
+<div class="MimotoCMS_entities_overview_EntityProperty" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+    <span class="MimotoCMS_entities_overview_EntityProperty-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
+    <span class="MimotoCMS_entities_overview_EntityProperty-type"> -
+        {% if Mimoto.data('subtype') is not empty %}
+            <span {{ Mimoto.realtime('subtype') }}>{{ Mimoto.data('subtype') }}</span>
+        {% else %}
+            <span {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</span>
+        {% endif %}
+    </span>
+
+</div>
