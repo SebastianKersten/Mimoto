@@ -296,8 +296,10 @@ class Mimoto
         // --- assets ---
 
         // javascript
-        $app->get('/'.$sProjectName.'/static/js/mimoto.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimotoAimless');
+        $app->get('/'.$sProjectName.'/static/js/mimoto.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimoto');
+        $app->get('/'.$sProjectName.'/static/js/mimoto.js.map', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMapMimoto');
         $app->get('/'.$sProjectName.'/static/js/mimoto.cms.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimotoCMS');
+        $app->get('/'.$sProjectName.'/static/js/mimoto.cms.js.map', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMapMimotoCMS');
 
         // stylesheets
         $app->get('/'.$sProjectName.'/static/css/mimoto.cms.css', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadStylesheetMimotoCMS');

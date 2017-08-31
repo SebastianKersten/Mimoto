@@ -109,25 +109,27 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
         // 1. forward request todo - full support in case of subselector after conditionals
         if (!empty($sSubpropertySelector)) { $this->forwardSetValue($sSubpropertySelector, $xValue); return; }
 
+        // 2. auto correct
+        if ($xValue === null) $xValue = [];
 
-        // 2. validate
+        // 3. validate
         if (!is_array($xValue)) Mimoto::service('log')->error("Incorrect value for collection property", "The property " . $this->_config->name . " only accepts arrays when using setValue()", true);
 
-        // 3. init
+        // 4. init
         if (!$this->_bTrackChanges) { $this->_data->persistentCollection = []; }
         $this->_data->currentCollection = [];
 
-        // 4. store
+        // 5. store
         $nItemCount = count($xValue);
         for ($nItemIndex = 0; $nItemIndex < $nItemCount; $nItemIndex++)
         {
-            // 4a. register
+            // a. register
             $item = $xValue[$nItemIndex];
 
-            // 4b. create connection
+            // b. create connection
             $connection = MimotoDataUtils::createConnection($item, $this->getParentEntityTypeId(), $this->_config->id, $this->getParentId(), $this->_config->settings->allowedEntityTypes, null, $this->_config->name);
 
-            // 4c. store
+            // c. store
             if (!empty($connection))
             {
                 if (!$this->_bTrackChanges) { $this->_data->persistentCollection[$nItemIndex] = clone $connection; }

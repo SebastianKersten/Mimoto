@@ -23,13 +23,22 @@ class AssetController
     // ----------------------------------------------------------------------------
 
 
-    public function loadJavascriptMimotoAimless(Application $app)
+    public function loadJavascriptMimoto(Application $app)
     {
         // 1. prepare output
         $this->setHeaderForJavascript();
 
         // 2. load and send
         return new Response($this->loadStaticFile('js/mimoto.js'));
+    }
+
+    public function loadJavascriptMapMimoto(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForJavascript();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('js/mimoto.js.map'));
     }
 
     public function loadJavascriptMimotoCMS(Application $app)
@@ -39,6 +48,15 @@ class AssetController
 
         // 2. load and send
         return new Response($this->loadStaticFile('js/mimoto.cms.js'));
+    }
+
+    public function loadJavascriptMapMimotoCMS(Application $app)
+    {
+        // 1. prepare output
+        $this->setHeaderForJavascript();
+
+        // 2. load and send
+        return new Response($this->loadStaticFile('js/mimoto.cms.js.map'));
     }
 
     public function loadStylesheetMimotoCMS(Application $app)
