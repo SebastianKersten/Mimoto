@@ -68,7 +68,7 @@ module.exports.prototype = {
     },
 
 
-    remove: function(sEntitySelector, options)
+    remove: function(sEntitySelector, nConnectionId, options)
     {
         // bDontConfirm
         // onInit=confirmMethod,
@@ -78,12 +78,13 @@ module.exports.prototype = {
         // onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing)
 
 
-        console.log('Remove this entity .. ' + sEntitySelector);
-
         let postData = {
             sEntitySelector: sEntitySelector,
+            nConnectionId: nConnectionId,
             options: options
         };
+
+        console.log('remove', sEntitySelector, nConnectionId);
 
 
         MimotoX.utils.callAPI({

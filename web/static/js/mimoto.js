@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "92afcb7bfba5ada1e91f";
+/******/ 	__webpack_require__.h = "8081029250b4eec3b4b9";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -38866,12 +38866,12 @@ module.exports.prototype = {
 
             var overlayLayer = document.createElement('div');
             overlayLayer.setAttribute('id', 'Mimoto_layer_overlay');
-            overlayLayer.setAttribute('class', 'MimotoCMS_layer_overlay MimotoCMS_hidden');
+            overlayLayer.setAttribute('class', 'MimotoCMS_layer_overlay Mimoto_CoreCSS_hidden');
             rootElement.appendChild(overlayLayer);
 
             var popupLayer = document.createElement('div');
             popupLayer.setAttribute('id', 'Mimoto_layer_popup');
-            popupLayer.setAttribute('class', 'MimotoCMS_layer_popup MimotoCMS_hidden');
+            popupLayer.setAttribute('class', 'MimotoCMS_layer_popup Mimoto_CoreCSS_hidden');
             rootElement.appendChild(popupLayer);
 
             var popup = document.createElement('div');
@@ -38906,8 +38906,8 @@ module.exports.prototype = {
         var popup_content = document.getElementById('Mimoto_popup_content');
 
         // show
-        layer_overlay.classList.remove('MimotoCMS_hidden');
-        layer_popup.classList.remove('MimotoCMS_hidden');
+        layer_overlay.classList.remove('Mimoto_CoreCSS_hidden');
+        layer_popup.classList.remove('Mimoto_CoreCSS_hidden');
 
         // $.ajax({
         //     url: sURL,
@@ -39014,8 +39014,8 @@ module.exports.prototype = {
         popup_content.innerHTML = '';
 
         // hide
-        layer_overlay.classList.add('MimotoCMS_hidden');
-        layer_popup.classList.add('MimotoCMS_hidden');
+        layer_overlay.classList.add('Mimoto_CoreCSS_hidden');
+        layer_popup.classList.add('Mimoto_CoreCSS_hidden');
 
         // unlock background for scrolling
         document.body.classList.remove('Mimoto_layer_application');
@@ -40156,7 +40156,7 @@ module.exports.prototype = {
         MimotoX.popup('/mimoto/data/add', postData);
     },
 
-    remove: function remove(sEntitySelector, options) {
+    remove: function remove(sEntitySelector, nConnectionId, options) {
         // bDontConfirm
         // onInit=confirmMethod,
         // onSubmit:waiting,
@@ -40165,12 +40165,13 @@ module.exports.prototype = {
         // onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing)
 
 
-        console.log('Remove this entity .. ' + sEntitySelector);
-
         var postData = {
             sEntitySelector: sEntitySelector,
+            nConnectionId: nConnectionId,
             options: options
         };
+
+        console.log('remove', sEntitySelector, nConnectionId);
 
         MimotoX.utils.callAPI({
             type: 'POST',
@@ -40701,11 +40702,24 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_DATA_REMOVE:
 
+                        // init
+                        var nConnectionId = null;
+
+                        // find parent
+                        var elParent = this._findParentWithType('data-mimoto-id', directive.element);
+
+                        // get connection id
+                        if (elParent && elParent.getAttribute('data-mimoto-id') === directive.sPropertySelector) {
+                            if (elParent.hasAttribute('data-mimoto-connection')) {
+                                nConnectionId = elParent.getAttribute('data-mimoto-connection');
+                            }
+                        }
+
                         // configure
-                        directive.element.addEventListener('click', function (sEntitySelector, options, e) {
+                        directive.element.addEventListener('click', function (sEntitySelector, nConnectionId, options, e) {
                             // forward
-                            MimotoX.data.remove(sEntitySelector, options);
-                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.options), true);
+                            MimotoX.data.remove(sEntitySelector, nConnectionId, options);
+                        }.bind(directive.element, directive.sPropertySelector, nConnectionId, directive.instructions.options), true);
 
                         break;
 
@@ -40988,8 +41002,18 @@ module.exports.prototype = {
 
             // 1. check if entity exists
         }
-    }
+    },
 
+    _findParentWithType: function _findParentWithType(sType, element) {
+        // init
+        var parent = element;
+
+        // bubble up
+        while (parent && !parent.hasAttribute(sType)) {
+            parent = parent.parentNode;
+        } // send
+        return parent;
+    }
 };
 
 /***/ }),

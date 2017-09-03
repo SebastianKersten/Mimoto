@@ -59,8 +59,8 @@ module.exports.prototype = {
         var layer_popup = document.getElementById('Mimoto_layer_popup');
     
         // show
-        layer_overlay.classList.remove('MimotoCMS_hidden');
-        layer_popup.classList.remove('MimotoCMS_hidden');
+        layer_overlay.classList.remove('Mimoto_CoreCSS_hidden');
+        layer_popup.classList.remove('Mimoto_CoreCSS_hidden');
     },
     
     _loadPopupContent: function(sURL)
@@ -111,8 +111,8 @@ module.exports.prototype = {
         popup_content.innerHTML = '';
     
         // hide
-        layer_overlay.classList.add('MimotoCMS_hidden');
-        layer_popup.classList.add('MimotoCMS_hidden');
+        layer_overlay.classList.add('Mimoto_CoreCSS_hidden');
+        layer_popup.classList.add('Mimoto_CoreCSS_hidden');
     }
 
 };

@@ -541,13 +541,28 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_DATA_REMOVE:
 
+                        // init
+                        let nConnectionId = null;
+
+                        // find parent
+                        let elParent = this._findParentWithType('data-mimoto-id', directive.element);
+
+                        // get connection id
+                        if (elParent && elParent.getAttribute('data-mimoto-id') === directive.sPropertySelector)
+                        {
+                            if (elParent.hasAttribute('data-mimoto-connection'))
+                            {
+                                nConnectionId = elParent.getAttribute('data-mimoto-connection');
+                            }
+                        }
+
                         // configure
-                        directive.element.addEventListener('click', function(sEntitySelector, options, e)
+                        directive.element.addEventListener('click', function(sEntitySelector, nConnectionId, options, e)
                         {
                             // forward
-                            MimotoX.data.remove(sEntitySelector, options);
+                            MimotoX.data.remove(sEntitySelector, nConnectionId, options);
 
-                        }.bind(directive.element, directive.sPropertySelector, directive.instructions.options), true);
+                        }.bind(directive.element, directive.sPropertySelector, nConnectionId, directive.instructions.options), true);
 
                         break;
 
@@ -889,6 +904,19 @@ module.exports.prototype = {
 
             // 1. check if entity exists
         }
-    }
-    
+    },
+
+
+
+    _findParentWithType: function(sType, element)
+    {
+        // init
+        let parent = element;
+
+        // bubble up
+        while (parent && !parent.hasAttribute(sType)) parent = parent.parentNode;
+
+        // send
+        return parent;
+    },
 }

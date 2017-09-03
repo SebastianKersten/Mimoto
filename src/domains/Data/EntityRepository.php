@@ -636,20 +636,73 @@ class EntityRepository
      * Delete entity
      * @param entity $entity
      */
-    public function delete(EntityConfig $entityConfig, MimotoEntity $entity)
+    public function delete(EntityConfig $entityConfig, MimotoEntity $entity, $nConnectionId = null)
     {
-        // cleanup parent
-        $this->cleanupParents($entity);
+        // 1. init
+        $bDeleteForever = false;
 
-        // cleanup children
-        $this->cleanupChildren($entity);
 
-        // cleanup entity
-        $stmt = Mimoto::service('database')->prepare('DELETE FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
-        $params = array(
-            ':id' => $entity->getId()
-        );
-        $stmt->execute($params);
+        // 2. verify
+        if (!empty($nConnectionId))
+        {
+            // 1. search
+            $connection = MimotoDataUtils::getConnectionById($nConnectionId);
+
+            // 2. get parent
+            $eParent = Mimoto::service('data')->get($connection->getParentEntityTypeName(), $connection->getParentId());
+
+            // 3. register
+            $sPropertyName = $connection->getParentPropertyName();
+
+            // remove
+            switch($eParent->getPropertyType($sPropertyName))
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                    $eParent->set($sPropertyName, null);
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                    $eParent->remove($sPropertyName, $connection);
+                    break;
+            }
+
+            // store
+            Mimoto::service('data')->store($eParent);
+
+
+            // ---
+
+
+            // load
+            $aParents = $this->getAllParents($entity);
+
+            // verify and toggle
+            if (count($aParents) == 0) $bDeleteForever = true;
+        }
+        else {
+            // cleanup parent
+            $this->cleanupParents($entity);
+
+            // toggle
+            $bDeleteForever = true;
+        }
+
+
+        // verify
+        if ($bDeleteForever)
+        {
+            // cleanup children
+            $this->cleanupChildren($entity);
+
+            // cleanup entity
+            $stmt = Mimoto::service('database')->prepare('DELETE FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
+            $params = array(
+                ':id' => $entity->getId()
+            );
+            $stmt->execute($params);
+        }
     }
 
     private function cleanupParents(MimotoEntity $entity)

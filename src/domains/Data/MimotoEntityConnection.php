@@ -30,11 +30,25 @@ class MimotoEntityConnection
     private $_xParentEntityTypeId;
 
     /**
+     * The name of the parent's Entity type
+     *
+     * @var string
+     */
+    private $_sParentEntityTypeName;
+
+    /**
      * The id of the parent's EntityProperty to which the item is connected
      *
      * @var mixed
      */
     private $_xParentPropertyId;
+
+    /**
+     * The name of the parent's EntityProperty to which the item is connected
+     *
+     * @var mixed
+     */
+    private $_sParentPropertyName;
 
     /**
      * The id of the parent of the connected item
@@ -115,11 +129,22 @@ class MimotoEntityConnection
     public function getParentEntityTypeId() { return $this->_xParentEntityTypeId; }
 
     /**
+     * Get the name of the child's Entity type
+     *
+     * @return string
+     */
+    public function getParentEntityTypeName() { return $this->_sParentEntityTypeName; }
+
+    /**
      * Set the id of the parent's Entity type
      *
      * @param mixed
      */
-    public function setParentEntityTypeId($xParentEntityTypeId) { $this->_xParentEntityTypeId = $xParentEntityTypeId; }
+    public function setParentEntityTypeId($xParentEntityTypeId)
+    {
+        $this->_xParentEntityTypeId = $xParentEntityTypeId;
+        $this->_sParentEntityTypeName = Mimoto::service('config')->getEntityNameById($xParentEntityTypeId);
+    }
 
 
     /**
@@ -130,11 +155,23 @@ class MimotoEntityConnection
     public function getParentPropertyId() { return $this->_xParentPropertyId; }
 
     /**
+     * Get the id of the parent's EntityProperty to which the item is connected
+     *
+     * @return mixed
+     */
+    public function getParentPropertyName() { return $this->_sParentPropertyName; }
+
+
+    /**
      * Set the id of the parent's EntityProperty to which the item is connected
      *
      * @param mixed
      */
-    public function setParentPropertyId($xParentPropertyId) { $this->_xParentPropertyId = $xParentPropertyId; }
+    public function setParentPropertyId($xParentPropertyId)
+    {
+        $this->_xParentPropertyId = $xParentPropertyId;
+        $this->_sParentPropertyName = Mimoto::service('config')->getPropertyNameById($xParentPropertyId);
+    }
 
 
     /**

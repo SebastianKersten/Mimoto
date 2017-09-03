@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "92afcb7bfba5ada1e91f";
+/******/ 	__webpack_require__.h = "8081029250b4eec3b4b9";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -64764,8 +64764,8 @@ module.exports.prototype = {
         var layer_popup = document.getElementById('Mimoto_layer_popup');
 
         // show
-        layer_overlay.classList.remove('MimotoCMS_hidden');
-        layer_popup.classList.remove('MimotoCMS_hidden');
+        layer_overlay.classList.remove('Mimoto_CoreCSS_hidden');
+        layer_popup.classList.remove('Mimoto_CoreCSS_hidden');
     },
 
     _loadPopupContent: function _loadPopupContent(sURL) {
@@ -64814,8 +64814,8 @@ module.exports.prototype = {
         popup_content.innerHTML = '';
 
         // hide
-        layer_overlay.classList.add('MimotoCMS_hidden');
-        layer_popup.classList.add('MimotoCMS_hidden');
+        layer_overlay.classList.add('Mimoto_CoreCSS_hidden');
+        layer_popup.classList.add('Mimoto_CoreCSS_hidden');
     }
 
 };

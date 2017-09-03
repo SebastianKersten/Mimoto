@@ -2212,6 +2212,11 @@ div.MimotoCMS_entities_overview_Entity-name {
   font-weight: bold;
   color: #9dbab7; }
 
+div.MimotoCMS_entities_overview_Entity-properties-empty {
+  padding: 10px 20px 15px 0;
+  font-style: italic;
+  color: #858585; }
+
 div.MimotoCMS_entities_overview_Entity-properties {
   padding: 10px 20px 15px 20px; }
 
@@ -3428,7 +3433,7 @@ div.MimotoCMS_interface_Popup__title {
   font-weight: bold;
   margin-bottom: 20px; }
 
-.MimotoCMS_hidden {
+.Mimoto_CoreCSS_hidden {
   display: none; }
 
 div.MimotoCMS {

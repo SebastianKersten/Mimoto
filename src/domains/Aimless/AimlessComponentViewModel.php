@@ -194,7 +194,7 @@ class AimlessComponentViewModel
      */
     public function init()
     {
-        return 'MimotoCMS_hidden';
+        return 'Mimoto_CoreCSS_hidden';
     }
 
 

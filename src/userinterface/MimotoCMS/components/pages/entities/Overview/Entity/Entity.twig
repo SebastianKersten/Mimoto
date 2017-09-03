@@ -2,7 +2,9 @@
 
     <div class="MimotoCMS_entities_overview_Entity-info">
         <div class="MimotoCMS_entities_overview_Entity-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
-        <div class="MimotoCMS_entities_overview_Entity-properties" {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityOverview_EntityProperty') }}>{{ Mimoto.data('properties', 'MimotoCMS_entities_EntityOverview_EntityProperty') }}</div>
+
+        <div class="MimotoCMS_entities_overview_Entity-properties-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('properties') }}>No properties added yet</div>
+        <div class="MimotoCMS_entities_overview_Entity-properties {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('properties') }} {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityOverview_EntityProperty') }}>{{ Mimoto.data('properties', 'MimotoCMS_entities_EntityOverview_EntityProperty') }}</div>
     </div>
 
     <div class="MimotoCMS_entities_overview_Entity-menu">

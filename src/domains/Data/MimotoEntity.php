@@ -319,12 +319,20 @@ class MimotoEntity
     }
 
     /**
+     * Alias for remove()
+     */
+    public function removeValue($sPropertySelector, $xValue, $sEntityType = null)
+    {
+        return $this->remove($sPropertySelector, $xValue, $sEntityType);
+    }
+
+    /**
      * Remove a value from a property
      * @param string $sPropertySelector
      * @param mixed $xValue
      * @param string|null $sEntityType
      */
-    public function removeValue($sPropertySelector, $xValue, $sEntityType = null)
+    public function remove($sPropertySelector, $xValue, $sEntityType = null)
     {
         // load
         $property = $this->getProperty($sPropertySelector);

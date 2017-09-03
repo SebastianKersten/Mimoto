@@ -24,6 +24,12 @@ div.MimotoCMS_entities_overview_Entity-info {
         color: $tower-gray;
     }
 
+    div.MimotoCMS_entities_overview_Entity-properties-empty {
+        padding: 10px 20px 15px 0;
+        font-style: italic;
+        color: #858585;
+    }
+
     div.MimotoCMS_entities_overview_Entity-properties {
         padding: 10px 20px 15px 20px;
     }

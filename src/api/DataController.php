@@ -122,6 +122,7 @@ class DataController
     {
         // 1. register
         $sEntitySelector = $request->get('sEntitySelector');
+        $nConnectionId = $request->get('nConnectionId');
 
         // 2. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sEntitySelector);
@@ -131,7 +132,7 @@ class DataController
         $eEntity = Mimoto::service('data')->get($sInstanceType, $nInstanceId);
 
         // 4. remove
-        Mimoto::service('data')->delete($eEntity);
+        Mimoto::service('data')->delete($eEntity, $nConnectionId);
 
         // 5. output
         return Mimoto::service('messages')->response((object) array('result' => 'Instance deleted! '.date("Y.m.d H:i:s")), 200);
