@@ -138,6 +138,9 @@ class Route
         self::setNameValidation($field);
 
 
+        CoreFormUtils::addField_groupEnd($form);
+
+
         // --- permissions
 
         CoreFormUtils::addField_groupStart($form, 'Permissions', 'permissions');
