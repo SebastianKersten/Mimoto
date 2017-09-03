@@ -21,10 +21,12 @@ if (!$config)
         <li>Add your MySQL credentials to your `config.php`</li>
         <li>Import the database dump in `/database` in your MySQL</li>
         <li>Add at least 1 user to the `_Mimoto_user` table:<br>
-            <br>
-            INSERT INTO `_Mimoto_user`(`id`, `name`, `email`, `password`, `created`) VALUES (1, 'Sebastian Kersten', 'sebastian@momkai.com', 'test', NULL);<br>
-            and<br>
-            INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_property_id`, `child_entity_type_id`, `child_id`, `sortindex`) VALUES ('_Mimoto_user', '1', '_Mimoto_user--roles', '_Mimoto_user_role', '_Mimoto_user_role-owner', 0);
+<br>
+INSERT INTO `_Mimoto_user`(`id`, `name`, `email`, `password`, `created`) VALUES (1, 'Sebastian Kersten', 'sebastian@momkai.com', 'test', NULL);<br>
+and<br>
+INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_property_id`, `child_entity_type_id`, `child_id`, `sortindex`) VALUES ('_Mimoto_user', '1', '_Mimoto_user--roles', '_Mimoto_user_role', '_Mimoto_user_role-owner', 0);<br
+<br>
+Your email address also functions as your username to login to the cms
         </li>
     </ol>";
     die();
