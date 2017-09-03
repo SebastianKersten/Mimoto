@@ -245,6 +245,7 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/page/{nItemId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/page/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/page/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/page/create', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::createPageFromNonExistingPath')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
 
         // Layout
@@ -328,10 +329,10 @@ class Mimoto
                 case 404:
 
                     // register
-                    $sRoute = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                    $sPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
                     // render and output
-                    $result = Mimoto::service('output')->renderRoute($sRoute);
+                    $result = Mimoto::service('output')->renderRoute($sPath);
 
                     if ($result !== false)
                     {
@@ -344,13 +345,30 @@ class Mimoto
                         if (!empty(Mimoto::service('route')))
                         {
                             // render custom route
-                            $result = Mimoto::service('route')->render($app, $sRoute);
+                            $result = Mimoto::service('route')->render($app, $sPath);
 
                             return new Response($result, 404 /* ignored */, array('X-Status-Code' => 200));
                         }
                         else
                         {
-                            Mimoto::error('Route not found .. need to output 404');
+                            $sRole = null;
+
+                            if (Mimoto::user()->hasRole('superuser')) $sRole = 'superuser';
+                            if (Mimoto::user()->hasRole('owner')) $sRole = 'owner';
+
+
+                            if (!empty($sRole))
+                            {
+                                $sQuestion = 'This page doens`t exist yet, but since you have `'.$sRole.'` permissions I can offer you the following:<br><br>';
+                                $sQuestion .= 'Would you like to create a page with the path `'.$sPath.'`?<br><br>';
+                                $sQuestion .= '<a href="/mimoto.cms/page/create?path='.$sPath.'">Yes please!</a>';
+
+                                $message = $sQuestion;
+                            }
+                            else
+                            {
+                                Mimoto::error('Route not found .. need to output 404');
+                            }
                         }
                     }
                     break;

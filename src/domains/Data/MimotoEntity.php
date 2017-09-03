@@ -271,13 +271,21 @@ class MimotoEntity
         // forward and send
         return $property->getValue($bGetConnectionInfo, $sSubpropertySelector, $bGetPersistentValue);
     }
-    
+
+    /**
+     * Alias for set()
+     */
+    public function setValue($sPropertySelector, $xValue)
+    {
+        return $this->set($sPropertySelector, $xValue);
+    }
+
     /**
      * Set the value of a property
      * @param string $sPropertySelector
      * @param mixed xValue
      */
-    public function setValue($sPropertySelector, $xValue)
+    public function set($sPropertySelector, $xValue)
     {
         // load
         $property = $this->getProperty($sPropertySelector);
@@ -288,11 +296,19 @@ class MimotoEntity
     }
 
     /**
+     * Alias for add()
+     */
+    public function addValue($sPropertySelector, $xValue, $sEntityType = null)
+    {
+        return $this->add($sPropertySelector, $xValue, $sEntityType);
+    }
+
+    /**
      * Add a value to a property
      * @param string $sPropertySelector
      * @param mixed $xValue
      */
-    public function addValue($sPropertySelector, $xValue, $sEntityType = null)
+    public function add($sPropertySelector, $xValue, $sEntityType = null)
     {
         // load
         $property = $this->getProperty($sPropertySelector);
