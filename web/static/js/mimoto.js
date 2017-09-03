@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "08d5aa8a344a3883861b";
+/******/ 	__webpack_require__.h = "8cd07d3d8b7a1dd488e8";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -40267,6 +40267,8 @@ module.exports.prototype = {
 var CollectionAddItems = __webpack_require__(473);
 var CollectionRemoveItems = __webpack_require__(474);
 var CollectionChangeSortOrder = __webpack_require__(475);
+var EntitySetItem = __webpack_require__(543);
+var EntityUnsetItem = __webpack_require__(544);
 
 // Mimoto display classes
 var HideWhenEmpty = __webpack_require__(476);
@@ -40871,8 +40873,12 @@ module.exports.prototype = {
 
                             case this.TAG_MIMOTO_ENTITY:
 
-                                //MimotoX.log();
-
+                                // 1. verify and add items
+                                if (change.entity) {
+                                    new EntitySetItem(directive, change.entity);
+                                } else {
+                                    new EntityUnsetItem(directive);
+                                }
                                 break;
 
                             case this.TAG_MIMOTO_COLLECTION:
@@ -46747,6 +46753,86 @@ Backoff.prototype.setJitter = function(jitter){
 };
 
 
+
+/***/ }),
+/* 526 */,
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - Data manipulation - EntitySetItem
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+var DisplayUtils = __webpack_require__(21);
+
+module.exports = function (directive, item) {
+    // start
+    this.__construct(directive, item);
+};
+
+module.exports.prototype = {
+
+    __construct: function __construct(directive, item) {
+        // 1. init
+        var displayUtils = new DisplayUtils();
+
+        // 2. set item
+        if (directive.sComponentName !== undefined) {
+            MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+        }
+    }
+
+};
+
+/***/ }),
+/* 544 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - Data manipulation - EntityUnsetItem
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+var DisplayUtils = __webpack_require__(21);
+
+module.exports = function (directive, item) {
+    // start
+    this.__construct(directive, item);
+};
+
+module.exports.prototype = {
+
+    __construct: function __construct(directive, item) {
+        // 1. clear node
+        directive.element.innerHTML = '';
+    }
+
+};
 
 /***/ })
 /******/ ]);

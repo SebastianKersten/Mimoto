@@ -91,8 +91,8 @@ class PageController
         // 1. read
         $sPath = $request->get('path');
 
-        // 2. validate or redirect
-        if (empty($sPath)) return $app->redirect('/mimoto.cms');
+        // 2. validate
+        if (empty($sPath)) return $app->redirect('/mimoto.cms'); // #todo - improve
 
         // 3. split
         $aPathElements = explode('/', $sPath);
@@ -108,7 +108,7 @@ class PageController
         $eRoute = Mimoto::service('data')->create(Coreconfig::MIMOTO_ROUTE);
 
         // 6. setup
-        $eRoute->set('name', 'Created from non-existing path: '.$sPath);
+        $eRoute->set('name', 'Created from non-existing path: '.$sPath); // #todo - improve security
 
         // 7. create path
         $nPathElementCount = count($aPathElements);
@@ -116,6 +116,8 @@ class PageController
         {
             // a. register
             $sPathElement = $aPathElements[$nPathElementIndex];
+
+            if (empty($sPathElement)) continue;
 
             // b. create
             $ePathElement = Mimoto::service('data')->create(Coreconfig::MIMOTO_ROUTE_PATH_ELEMENT);

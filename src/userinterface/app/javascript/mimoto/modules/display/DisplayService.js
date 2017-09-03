@@ -11,6 +11,8 @@
 let CollectionAddItems = require('./data/CollectionAddItems');
 let CollectionRemoveItems = require('./data/CollectionRemoveItems');
 let CollectionChangeSortOrder = require('./data/CollectionChangeSortOrder');
+let EntitySetItem = require('./data/EntitySetItem');
+let EntityUnsetItem = require('./data/EntityUnsetItem');
 
 // Mimoto display classes
 let HideWhenEmpty = require('./directives/HideWhenEmpty');
@@ -750,9 +752,15 @@ module.exports.prototype = {
 
                             case this.TAG_MIMOTO_ENTITY:
 
-
-                                //MimotoX.log();
-
+                                // 1. verify and add items
+                                if (change.entity)
+                                {
+                                    new EntitySetItem(directive, change.entity);
+                                }
+                                else
+                                {
+                                    new EntityUnsetItem(directive);
+                                }
                                 break;
 
                             case this.TAG_MIMOTO_COLLECTION:
