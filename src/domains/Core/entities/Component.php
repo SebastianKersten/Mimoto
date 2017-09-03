@@ -101,6 +101,16 @@ class Component
 
             // interface
             (object) array(
+                'name' => 'MimotoCMS_layout_Setup',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/base_setup.twig',
+                        'conditionals' => []
+                    )
+                ]
+
+            ),
+            (object) array(
                 'name' => 'MimotoCMS_layout_Login',
                 'templates' => [
                     (object) array(

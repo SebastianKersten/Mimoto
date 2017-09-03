@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>Mimoto.CMS</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="/mimoto/static/css/mimoto.cms.css">
+
+    <style>
+
+        body.MimotoCMS_Setup {
+
+        }
+
+        div.MimotoCMS_Setup-screen {
+            padding:100px
+        }
+
+        h1.MimotoCMS_Setup-header {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form.MimotoCMS > fieldset {
+            margin-bottom: 10px;
+        }
+
+        form.MimotoCMS > fieldset:last-child {
+            margin-bottom: 0;
+        }
+
+        input.MimotoCMS_Setup-textfield, input.MimotoCMS_Setup-password {
+            width: 350px;
+            padding: 12px 15px;
+        }
+
+        input.MimotoCMS_Setup-submit {
+            padding: 7px 12px;
+            margin-top: 30px;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+    </style>
+
+</head>
+<body class="MimotoCMS_Setup">
+
+    <div class="MimotoCMS_Setup-screen">
+        <h1 class="MimotoCMS_Setup-header">Mimoto.CMS - Setup</h1>
+
+        <form action="/mimoto.cms/setup" method="post" class="MimotoCMS">
+            <fieldset class="MimotoCMS">
+                <legend class="MimotoCMS">Full name</legend>
+                <input type="text" name="fullname" id="fullname" value="{% if fullname is defined %}{{ fullname }}{% endif %}" class="MimotoCMS_Setup-textfield" />
+            </fieldset>
+            <fieldset class="MimotoCMS">
+                <legend class="MimotoCMS">Email</legend>
+                <input type="text" name="email" id="email" value="{% if username is defined %}{{ username }}{% endif %}" class="MimotoCMS_Setup-textfield" />
+            </fieldset>
+            <fieldset class="MimotoCMS">
+                <legend class="MimotoCMS">password</legend>
+                <input type="password" name="password" id="password" class="MimotoCMS_Setup-password" />
+            </fieldset>
+            <input type="submit" value="Create user as owner" class="MimotoCMS_Setup-submit" />
+        </form>
+
+    </div>
+
+</body>
+</html>
