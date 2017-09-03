@@ -2221,11 +2221,39 @@ div.MimotoCMS_entities_overview_Entity-properties {
   padding: 10px 20px 15px 20px; }
 
 div.MimotoCMS_entities_overview_Entity-menu {
-  -webkit-box-flex: 1;
-  -webkit-flex: auto;
-      -ms-flex: auto;
-          flex: auto;
-  text-align: right; }
+  float: right; }
+
+div.MimotoCMS_ListItemModule-sorthandlecontainer {
+  display: inline-block;
+  float: right;
+  padding-top: 7px;
+  padding-left: 10px; }
+
+div.MimotoCMS_entities_overview_Entity-sorthandle {
+  display: inline-block;
+  overflow: hidden;
+  width: 10px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 2px;
+  cursor: move;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto; }
+
+div.MimotoCMS_entities_overview_Entity-sorthandledot {
+  float: left;
+  width: 3px;
+  height: 3px;
+  margin: 0 1px 2px;
+  background-color: #9dbab7; }
+
+div.MimotoCMS_ListItemModule--drag {
+  background-color: #fff; }
+
+div.MimotoCMS_ListItemModule--ghost {
+  opacity: 0; }
 
 span.MimotoCMS_entities_overview_EntityProperty-name {
   color: #000000; }
