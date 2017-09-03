@@ -48,6 +48,9 @@ class Mimoto
     private static $_aGlobalValues = [];
 
     private static $_bDebugMode = false;
+    private static $_bCacheOutputToFile = false;
+
+    private static $_nExecutionTimeStart = null;
 
 
     const DATA = 'data';
@@ -69,6 +72,9 @@ class Mimoto
      */
     public function __construct($app, $bEnableCache = false, $sProjectName = 'mimoto')
     {
+        // register
+        self::$_nExecutionTimeStart = microtime(true);
+
         // register
         Mimoto::$_app = $app;
 
@@ -485,4 +491,10 @@ class Mimoto
         //throw new \Exception('oh oh, computer says oops!');
         die();
     }
+
+    public static function executionTime()
+    {
+        return microtime(true) - self::$_nExecutionTimeStart;
+    }
+
 }
