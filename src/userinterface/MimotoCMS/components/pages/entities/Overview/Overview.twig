@@ -1,4 +1,4 @@
-{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();", types:['secondary'] }) }}
+{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new entity', icon:'plus', onclick:"Mimoto.CMS.entityNew();", types:['secondary'] }) }}
 
 <div class="MimotoCMS_pages_entities_EntityOverview__container js-list js-list-sortable" {{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}>
     {{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}

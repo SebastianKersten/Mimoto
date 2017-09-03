@@ -395,11 +395,8 @@ class OutputService
             }
 
 
-            //Mimoto::output('RegEx', $sPathRegExp);
-
-
             // verify
-            if (preg_match('/'.$sPathRegExp.'/U', $sPath, $aMatches))
+            if (preg_match('/^\/'.$sPathRegExp.'$/U', $sPath, $aMatches))
             {
                 // remove full match
                 array_splice($aMatches, 0, 1);

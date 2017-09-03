@@ -3,9 +3,9 @@
         {{ Mimoto.form() }}
     </div>
     <div class="MimotoCMS_forms_Form-menu">
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:"Cancel", types:['text'], onclick:"MimotoX.closePopup();" }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:"Cancel", types:['text'], onclick:"MimotoX.closePopup();" }) }}
         <span {{ Mimoto.submit() }}>
-            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:"Save" }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:"Save" }) }}
         </span>
     </div>
 </div>

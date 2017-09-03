@@ -25,7 +25,7 @@ class ContentSectionController
         $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_contentsections_ContentSectionOverview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('MimotoCMS_contentsections_ContentSectionOverview', $eRoot));
 
         // 3. setup page
         $page->setVar('pageTitle', array(
@@ -77,7 +77,7 @@ class ContentSectionController
         if (empty($eContentSection)) return $app->redirect("/mimoto.cms/contentsections");
 
         // 4. create content
-        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_contentsections_ContentSectionDetail', $eContentSection);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_contentsections_ContentSectionDetail', $eContentSection);
 
         // 5. connect
         $page->addComponent('content', $component);

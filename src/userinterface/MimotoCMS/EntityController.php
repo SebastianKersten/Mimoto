@@ -31,7 +31,7 @@ class EntityController
         $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_entities_EntityOverview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('MimotoCMS_entities_EntityOverview', $eRoot));
         
         // 3. setup page
         $page->setVar('pageTitle', array(
@@ -84,7 +84,7 @@ class EntityController
         if (empty($eEntity)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
-        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_entities_EntityDetail', $eEntity);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_entities_EntityDetail', $eEntity);
 
         // 5. load
         //$aInstances = (count($eEntity->getValue('properties'))) ? Mimoto::service('data')->select(['type' => $eEntity->getValue('name')]) : [];

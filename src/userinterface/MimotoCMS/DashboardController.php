@@ -71,7 +71,7 @@ class DashboardController
             $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
             // 2. create content
-            $component = Mimoto::service('output')->createComponent('Mimoto.CMS_dashboard_Overview');
+            $component = Mimoto::service('output')->createComponent('MimotoCMS_dashboard_Overview');
 
             // 3. connect
             $page->addComponent('content', $component);

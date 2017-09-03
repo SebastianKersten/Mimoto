@@ -38,17 +38,17 @@
 
         {% if Mimoto.typeOf('_Mimoto_form_input') %}
             <div {{ Mimoto.showWhenEmpty('value') }}>
-                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Connect value', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('type') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Connect value', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('type') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
             </div>
 
             <div {{ Mimoto.hideWhenEmpty('value') }}>
-                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
             </div>
         {% else %}
-            {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
         {% endif %}
 
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldDelete('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldDelete('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
 
     </div>
 </li>

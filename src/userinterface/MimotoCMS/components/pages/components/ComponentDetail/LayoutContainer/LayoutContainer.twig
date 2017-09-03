@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__menu">
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.layoutContainerEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.layoutContainerDelete('" ~ Mimoto.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.layoutContainerEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.layoutContainerDelete('" ~ Mimoto.meta('id') ~ "');" }) }}
     </div>
 </div>

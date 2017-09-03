@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', type:'secondary', directive:Mimoto.edit('_Mimoto_component') }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', type:'secondary', directive:Mimoto.edit('_Mimoto_component') }) }}
                     </div>
 
                 </div>
@@ -39,13 +39,13 @@
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('templates') }}>
-                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__templates" {{ Mimoto.realtime('templates', 'Mimoto.CMS_components_ComponentDetail-Template') }}>
-                        {{ Mimoto.data('templates', 'Mimoto.CMS_components_ComponentDetail-Template') }}
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__templates" {{ Mimoto.realtime('templates', 'MimotoCMS_components_ComponentDetail-Template') }}>
+                        {{ Mimoto.data('templates', 'MimotoCMS_components_ComponentDetail-Template') }}
                     </div>
                 </div>
 
                 <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu">
-                    {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add template', icon:'plus', directive:Mimoto.add('templates', '_Mimoto_componenttemplate') }) }}
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add template', icon:'plus', directive:Mimoto.add('templates', '_Mimoto_componenttemplate') }) }}
                 </div>
 
             </div>

@@ -33,7 +33,7 @@ class SelectionController
         $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('output')->createComponent('Mimoto.CMS_selections_Overview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('MimotoCMS_selections_Overview', $eRoot));
 
         // 3. setup page
         $page->setVar('pageTitle', array(
@@ -64,7 +64,7 @@ class SelectionController
         if (empty($eSelection)) return $app->redirect("/mimoto.cms/selections");
 
         // 4. create
-        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_selections_Detail', $eSelection);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_selections_Detail', $eSelection);
 
         // 5. connect
         $page->addComponent('content', $component);

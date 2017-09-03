@@ -56,7 +56,7 @@ class ContentController
             case ContentSection::TYPE_GROUP:
 
                 // 5d. create component
-                $component = Mimoto::service('output')->createComponent('Mimoto.CMS_content_ContentOverview', $eContentSectionEntity);
+                $component = Mimoto::service('output')->createComponent('MimotoCMS_content_ContentOverview', $eContentSectionEntity);
 
                 // 5e. setup content
                 $component->setVar('nContentSectionId', $nContentId);

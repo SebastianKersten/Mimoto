@@ -286,7 +286,7 @@ class FormController
         if (empty($eForm)) return $app->redirect("/mimoto.cms/forms");
 
         // 4. create content
-        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_forms_FormDetail', $eForm);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_forms_FormDetail', $eForm);
 
         // 5. setup page
 //        $page->setVar('pageTitle', array(
@@ -356,7 +356,7 @@ class FormController
         $popup = Mimoto::service('output')->createPopup();
 
         // 2. create content
-        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_forms_FormDetail_TypeSelector');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_forms_FormDetail_TypeSelector');
 
 
         // ----------

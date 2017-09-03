@@ -162,7 +162,7 @@ class Component
             // dashboard
 
             (object) array(
-                'name' => 'Mimoto.CMS_dashboard_Overview',
+                'name' => 'MimotoCMS_dashboard_Overview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/dashboard/Overview.twig',
@@ -175,7 +175,7 @@ class Component
             // heartbeat
 
             (object) array(
-                'name' => 'Mimoto.CMS_heartbeat_Overview',
+                'name' => 'MimotoCMS_heartbeat_Overview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/heartbeat/Overview.twig',
@@ -188,7 +188,7 @@ class Component
             // entities
 
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityOverview',
+                'name' => 'MimotoCMS_entities_EntityOverview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/entities/Overview/Overview.twig',
@@ -215,7 +215,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail',
+                'name' => 'MimotoCMS_entities_EntityDetail',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityDetail.twig',
@@ -224,7 +224,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityProperty',
+                'name' => 'MimotoCMS_entities_EntityDetail-EntityProperty',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityProperty/EntityProperty.twig',
@@ -233,7 +233,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting',
+                'name' => 'MimotoCMS_entities_EntityDetail-EntityPropertySetting',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertySetting/EntityPropertySetting.twig',
@@ -242,7 +242,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType',
+                'name' => 'MimotoCMS_entities_EntityDetail-EntityPropertySettingAllowedEntityType',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertySettingAllowedEntityType/EntityPropertySettingAllowedEntityType.twig',
@@ -251,7 +251,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-EntityPropertySettingFormattingOption',
+                'name' => 'MimotoCMS_entities_EntityDetail-EntityPropertySettingFormattingOption',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertySettingFormattingOption/EntityPropertySettingFormattingOption.twig',
@@ -269,7 +269,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail_EntityPropertyExample',
+                'name' => 'MimotoCMS_entities_EntityDetail_EntityPropertyExample',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/entities/EntityDetail/EntityPropertyExample/EntityPropertyExample.twig',
@@ -278,7 +278,7 @@ class Component
                 ]
             ),
 //            (object) array(
-//                'name' => 'Mimoto.CMS_entities_EntityDetail-ComponentListItem',
+//                'name' => 'MimotoCMS_entities_EntityDetail-ComponentListItem',
 //                'templates' => [
 //                    (object) array(
 //                        'file' => 'MimotoCMS/components/pages/entities/EntityDetail/ComponentListItem/ComponentListItem.twig',
@@ -287,7 +287,7 @@ class Component
 //                ]
 //            ),
 //            (object) array(
-//                'name' => 'Mimoto.CMS_entities_EntityDetail-ComponentDetail',
+//                'name' => 'MimotoCMS_entities_EntityDetail-ComponentDetail',
 //                'templates' => [
 //                    (object) array(
 //                        'file' => 'MimotoCMS/components/pages/entities/EntityDetail/ComponentDetail/ComponentDetail.twig',
@@ -296,7 +296,7 @@ class Component
 //                ]
 //            ),
 //            (object) array(
-//                'name' => 'Mimoto.CMS_entities_EntityDetail-ComponentConditional',
+//                'name' => 'MimotoCMS_entities_EntityDetail-ComponentConditional',
 //                'templates' => [
 //                    (object) array(
 //                        'file' => 'MimotoCMS/components/pages/entities/EntityDetail/ComponentDetail/ComponentConditional/ComponentConditional.twig',
@@ -305,7 +305,7 @@ class Component
 //                ]
 //            ),
             (object) array(
-                'name' => 'Mimoto.CMS_entities_EntityDetail-Form',
+                'name' => 'MimotoCMS_entities_EntityDetail-Form',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/entities/EntityDetail/Form/Form.twig',
@@ -318,7 +318,7 @@ class Component
             // selections
 
             (object) array(
-                'name' => 'Mimoto.CMS_selections_Overview',
+                'name' => 'MimotoCMS_selections_Overview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/selections/Overview/Overview.twig',
@@ -336,7 +336,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_selections_Detail',
+                'name' => 'MimotoCMS_selections_Detail',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/selections/Detail/Detail.twig',
@@ -345,7 +345,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_selections_Detail-Rule',
+                'name' => 'MimotoCMS_selections_Detail-Rule',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/selections/Detail/Rule/Rule.twig',
@@ -357,7 +357,7 @@ class Component
 
             // configuration
             (object) array(
-                'name' => 'Mimoto.CMS_configuration_Overview',
+                'name' => 'MimotoCMS_configuration_Overview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/configuration/Configuration.twig',
@@ -370,7 +370,7 @@ class Component
             // formatting options
 
             (object) array(
-                'name' => 'Mimoto.CMS_formattingoptions_Overview',
+                'name' => 'MimotoCMS_formattingoptions_Overview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/configuration/formattingoptions/Overview/Overview.twig',
@@ -379,7 +379,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_formattingoptions_Overview_ListItem',
+                'name' => 'MimotoCMS_formattingoptions_Overview_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/configuration/formattingoptions/Overview/ListItem/ListItem.twig',
@@ -410,7 +410,7 @@ class Component
             // user roles
 
             (object) array(
-                'name' => 'Mimoto.CMS_configuration_userroles_Overview',
+                'name' => 'MimotoCMS_configuration_userroles_Overview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/configuration/userroles/Overview/Overview.twig',
@@ -419,7 +419,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_configuration_userroles_Overview_ListItem',
+                'name' => 'MimotoCMS_configuration_userroles_Overview_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/configuration/userroles/Overview/ListItem/ListItem.twig',
@@ -468,7 +468,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_components_ComponentDetail',
+                'name' => 'MimotoCMS_components_ComponentDetail',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/components/ComponentDetail/ComponentDetail.twig',
@@ -477,7 +477,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_components_ComponentDetail-Template',
+                'name' => 'MimotoCMS_components_ComponentDetail-Template',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/components/ComponentDetail/ComponentTemplate/ComponentTemplate.twig',
@@ -496,7 +496,7 @@ class Component
             ),
 
             (object) array(
-                'name' => 'Mimoto.CMS_components_LayoutDetail',
+                'name' => 'MimotoCMS_components_LayoutDetail',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/components/LayoutDetail/LayoutDetail.twig',
@@ -533,22 +533,22 @@ class Component
             // api
 
 //            (object) array(
-//                'name' => 'Mimoto.CMS_api_APIOverview',
+//                'name' => 'MimotoCMS_api_APIOverview',
 //                'file' => 'MimotoCMS/components/pages/api/APIOverview/APIOverview.twig',
 //                'conditionals' => []
 //            ),
 //            (object) array(
-//                'name' => 'Mimoto.CMS_api_APIOverview_ListItem',
+//                'name' => 'MimotoCMS_api_APIOverview_ListItem',
 //                'file' => 'MimotoCMS/components/pages/api/APIOverview/ListItem/ListItem.twig',
 //                'conditionals' => []
 //            ),
 //            (object) array(
-//                'name' => 'Mimoto.CMS_api_APIDetail',
+//                'name' => 'MimotoCMS_api_APIDetail',
 //                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIDetail.twig',
 //                'conditionals' => []
 //            ),
 //            (object) array(
-//                'name' => 'Mimoto.CMS_api_APIDetail-APIContainer',
+//                'name' => 'MimotoCMS_api_APIDetail-APIContainer',
 //                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIContainer/APIContainer.twig',
 //                'conditionals' => []
 //            ),
@@ -626,7 +626,7 @@ class Component
             // content sections
 
             (object) array(
-                'name' => 'Mimoto.CMS_contentsections_ContentSectionOverview',
+                'name' => 'MimotoCMS_contentsections_ContentSectionOverview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionOverview/ContentSectionOverview.twig',
@@ -635,7 +635,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_contentsections_ContentSectionOverview_ListItem',
+                'name' => 'MimotoCMS_contentsections_ContentSectionOverview_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionOverview/ListItem/ListItem.twig',
@@ -644,7 +644,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_contentsections_ContentSectionDetail',
+                'name' => 'MimotoCMS_contentsections_ContentSectionDetail',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionDetail/ContentSectionDetail.twig',
@@ -657,7 +657,7 @@ class Component
             // content
 
             (object) array(
-                'name' => 'Mimoto.CMS_content_ContentOverview',
+                'name' => 'MimotoCMS_content_ContentOverview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/content/ContentOverview/ContentOverview.twig',
@@ -666,7 +666,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_content_ContentOverview_ListItem',
+                'name' => 'MimotoCMS_content_ContentOverview_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/content/ContentOverview/ListItem/ListItem.twig',
@@ -680,7 +680,7 @@ class Component
             // actions
 
             (object) array(
-                'name' => 'Mimoto.CMS_actions_ActionOverview',
+                'name' => 'MimotoCMS_actions_ActionOverview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/actions/Overview.twig',
@@ -724,7 +724,7 @@ class Component
             // forms
 
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormOverview',
+                'name' => 'MimotoCMS_forms_FormOverview',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/forms/FormOverview/FormOverview.twig',
@@ -733,7 +733,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormOverview_ListItem',
+                'name' => 'MimotoCMS_forms_FormOverview_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/forms/FormOverview/ListItem/ListItem.twig',
@@ -742,7 +742,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormDetail',
+                'name' => 'MimotoCMS_forms_FormDetail',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormDetail.twig',
@@ -751,7 +751,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormDetail_TypeSelector',
+                'name' => 'MimotoCMS_forms_FormDetail_TypeSelector',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormFieldTypeSelector/FormFieldTypeSelector.twig',
@@ -760,7 +760,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormDetail_TypeSelector_ListItem',
+                'name' => 'MimotoCMS_forms_FormDetail_TypeSelector_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/forms/FormDetaiFormFieldTypeSelector/ListItem/ListItem.twig',
@@ -769,7 +769,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormDetail-FormField',
+                'name' => 'MimotoCMS_forms_FormDetail-FormField',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormField.twig',
@@ -778,7 +778,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS_forms_FormDetail-FormFieldValue',
+                'name' => 'MimotoCMS_forms_FormDetail-FormFieldValue',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/forms/FormDetail/FormField/FormFieldValue/FormFieldValue.twig',
@@ -792,12 +792,12 @@ class Component
 
 
 //            (object) array(
-//                'name' => 'Mimoto.CMS_form_Popup',
+//                'name' => 'MimotoCMS_form_Popup',
 //                'file' => 'MimotoCMS/components/forms/FormPopup.twig',
 //                'conditionals' => []
 //            ),
 //            (object) array(
-//                'name' => 'Mimoto.CMS_form_Page',
+//                'name' => 'MimotoCMS_form_Page',
 //                'file' => 'MimotoCMS/components/forms/FormPage.twig',
 //                'conditionals' => []
 //            ),
@@ -1032,7 +1032,7 @@ class Component
             // modules
 
             (object) array(
-                'name' => 'Mimoto.CMS.ListModule',
+                'name' => 'MimotoCMS_modules_List',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/modules/ListModule/ListModule.twig',
@@ -1041,7 +1041,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS.ListItemModule',
+                'name' => 'MimotoCMS_modules_ListItem',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/modules/ListItemModule/ListItemModule.twig',
@@ -1050,7 +1050,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS.ButtonModule',
+                'name' => 'MimotoCMS_modules_Button',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/modules/ButtonModule/ButtonModule.twig',
@@ -1059,16 +1059,7 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'Mimoto.CMS.GroupButtonModule',
-                'templates' => [
-                    (object) array(
-                        'file' => 'MimotoCMS/modules/GroupButtonModule/GroupButtonModule.twig',
-                        'conditionals' => []
-                    )
-                ]
-            ),
-            (object) array(
-                'name' => 'Mimoto.CMS.TabmenuModule',
+                'name' => 'MimotoCMS_modules_Tabmenu',
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/modules/TabmenuModule/TabmenuModule.twig',

@@ -14,7 +14,7 @@
                     No type selected yet ..
                 {% endif %}
 
-                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select entity type', types:['small', 'secondary'], directive:Mimoto.select('type', '_Mimoto_all_entities') }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select entity type', types:['small', 'secondary'], directive:Mimoto.select('type', '_Mimoto_all_entities') }) }}
 
             {% endif %}
             </div>
@@ -30,7 +30,7 @@
                     No type selected yet ..
                 {% endif %}
 
-                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Select instance', types:['small', 'secondary'], directive:Mimoto.select('instance', '_Mimoto_all_instances_of_entity', { vars:[{type:Mimoto.meta('type.id')}] }) }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select instance', types:['small', 'secondary'], directive:Mimoto.select('instance', '_Mimoto_all_instances_of_entity', { vars:[{type:Mimoto.meta('type.id')}] }) }) }}
 
             {% endif %}
             </div>
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__menu">
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() }) }}
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_selectionrule') }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_selectionrule') }) }}
     </div>
 </div>

@@ -11,13 +11,13 @@
                 <div {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</div>
             {% endif %}
         </div>
-        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Mimoto.realtime('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting') }}>
-            {{ Mimoto.data('settings', 'Mimoto.CMS_entities_EntityDetail-EntityPropertySetting', { customValues: { propertySubtype:Mimoto.data('subtype') }}) }}
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Mimoto.realtime('settings', 'MimotoCMS_entities_EntityDetail-EntityPropertySetting') }}>
+            {{ Mimoto.data('settings', 'MimotoCMS_entities_EntityDetail-EntityPropertySetting', { customValues: { propertySubtype:Mimoto.data('subtype') }}) }}
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.entityPropertyDelete('" ~ Mimoto.meta('id') ~ "', '" ~ Mimoto.data('name') ~ "');" }) }}
-        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.entityPropertyDelete('" ~ Mimoto.meta('id') ~ "', '" ~ Mimoto.data('name') ~ "');" }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu-handle">
         <div class="MimotoCMS_ListItemModule-handle js-sortable-draghandle">

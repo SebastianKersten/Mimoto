@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_pages_Detail_Structure__meta_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_route') }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_route') }) }}
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="MimotoCMS_pages_pages_Detail-path-menu">
-                                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add path element', icon:'plus', directive:Mimoto.add('path', '_Mimoto_route_path_element') }) }}
+                                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add path element', icon:'plus', directive:Mimoto.add('path', '_Mimoto_route_path_element') }) }}
                             </div>
 
                         </div>
@@ -95,7 +95,7 @@
                         <div class="MimotoCMS_pages_pages_Detail-Output-empty" {{ Mimoto.showWhenEmpty('output') }}>
                             What do you want this page to show?
                             <div class="MimotoCMS_pages_pages_Detail-path-menu">
-                                {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Init output', icon:'plus', directive:Mimoto.create('output', '_Mimoto_output') }) }}
+                                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Init output', icon:'plus', directive:Mimoto.create('output', '_Mimoto_output') }) }}
                             </div>
                         </div>
 
@@ -105,7 +105,7 @@
                                 {{ Mimoto.data('output', 'MimotoCMS_pages_pages_Detail-Output') }}
                             </div>
                             {#<div class="MimotoCMS_pages_pages_Detail-path-menu">#}
-                                {#{{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Clear output', types:['small', 'alert'], directive:Mimoto.clear('output') }) }}#}
+                                {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear output', types:['small', 'alert'], directive:Mimoto.clear('output') }) }}#}
                             {#</div>#}
 
                         </div>

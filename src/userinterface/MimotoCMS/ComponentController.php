@@ -61,7 +61,7 @@ class ComponentController
         if (empty($eComponent)) return $app->redirect("/mimoto.cms/entities");
 
         // 4. create content
-        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_components_ComponentDetail', $eComponent);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_components_ComponentDetail', $eComponent);
 
         // 6. connect
         $page->addComponent('content', $component);
@@ -82,7 +82,7 @@ class ComponentController
         if (empty($eLayout)) return $app->redirect("/mimoto.cms/components");
 
         // 4. create content
-        $component = Mimoto::service('output')->createComponent('Mimoto.CMS_components_LayoutDetail', $eLayout);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_components_LayoutDetail', $eLayout);
 
         // 6. connect
         $page->addComponent('content', $component);

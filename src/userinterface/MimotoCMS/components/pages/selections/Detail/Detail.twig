@@ -25,7 +25,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_selections_Detail_Structure__meta_menu">
-                        {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_coreform__selection') }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_coreform__selection') }) }}
                     </div>
 
                 </div>
@@ -39,13 +39,13 @@
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('rules') }}>
-                    <div class="MimotoCMS_pages_selections_Detail_Structure__rules_container" {{ Mimoto.realtime('rules', 'Mimoto.CMS_selections_Detail-Rule') }}>
-                        {{ Mimoto.data('rules', 'Mimoto.CMS_selections_Detail-Rule') }}
+                    <div class="MimotoCMS_pages_selections_Detail_Structure__rules_container" {{ Mimoto.realtime('rules', 'MimotoCMS_selections_Detail-Rule') }}>
+                        {{ Mimoto.data('rules', 'MimotoCMS_selections_Detail-Rule') }}
                     </div>
                 </div>
 
                 <div class="MimotoCMS_pages_selections_Detail_Structure__rules_menu">
-                    {{ Mimoto.module('Mimoto.CMS.ButtonModule', { label:'Add new rule', icon:'plus', directive:Mimoto.add('rules', '_Mimoto_selectionrule') }) }}
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new rule', icon:'plus', directive:Mimoto.add('rules', '_Mimoto_selectionrule') }) }}
                 </div>
 
             </div>
