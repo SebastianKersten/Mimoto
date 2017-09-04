@@ -137,7 +137,7 @@ class EntityRepository
             // load
             $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            //if ($entityConfig->getName() == CoreConfig::MIMOTO_CONTENTSECTION)
+            //if ($entityConfig->getName() == CoreConfig::MIMOTO_DATASET)
             //{
              //   Mimoto::output('$aResults', $aResults);
             //}

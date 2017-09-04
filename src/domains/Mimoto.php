@@ -177,7 +177,6 @@ class Mimoto
         $app->get('/'.$sProjectName.'.cms/configuration/userroles', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/configuration/services', 'Mimoto\\UserInterface\\MimotoCMS\\ServicesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/components', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::viewComponentOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get('/'.$sProjectName.'.cms/contentsections', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::viewContentSectionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/users', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::viewUserOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/api', 'Mimoto\\UserInterface\\MimotoCMS\\APIController::viewAPIOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -256,10 +255,8 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/layoutcontainer/{nLayoutContainerId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         // Content
-        $app->get ('/'.$sProjectName.'.cms/contentsection/new', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/contentsection/{nContentSectionId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/contentsection/{nContentSectionId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/contentsection/{nContentSectionId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ContentSectionController::contentSectionDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/datasets', 'Mimoto\\UserInterface\\MimotoCMS\\DatasetController::viewDatasetOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/dataset/{nDatasetId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\DatasetController::datasetView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         $app->get ('/'.$sProjectName.'.cms/content/{nContentId}', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/content/{nContentId}/new', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -351,12 +348,18 @@ class Mimoto
                         }
                         else
                         {
+                            // init
                             $sRole = null;
 
-                            if (Mimoto::user()->hasRole('superuser')) $sRole = 'superuser';
-                            if (Mimoto::user()->hasRole('owner')) $sRole = 'owner';
+                            // validate
+                            if (!empty(Mimoto::user()))
+                            {
+                                // check
+                                if (Mimoto::user()->hasRole('superuser')) $sRole = 'superuser';
+                                if (Mimoto::user()->hasRole('owner')) $sRole = 'owner';
+                            }
 
-
+                            // validate
                             if (!empty($sRole))
                             {
                                 $sQuestion = 'This page doens`t exist yet, but since you have `'.$sRole.'` permissions I can offer you the following:<br><br>';

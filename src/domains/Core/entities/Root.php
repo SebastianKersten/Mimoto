@@ -116,15 +116,15 @@ class Root
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ROOT.'--contentSections',
+                    'id' => CoreConfig::MIMOTO_ROOT.'--datasets',
                     // ---
-                    'name' => 'contentSections',
+                    'name' => 'datasets',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_CONTENTSECTION]
+                            'value' => [CoreConfig::MIMOTO_DATASET]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

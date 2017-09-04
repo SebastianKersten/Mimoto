@@ -72,6 +72,11 @@ nav.MimotoCMS_interface_Menu--active {
                     span.MimotoCMS_interface_Menu-item-text {
                         color: $white;
                     }
+
+                    span.MimotoCMS_interface_Menu-item-text-empty {
+                        color: $white;
+                        font-style: italic;
+                    }
                 }
             }
 
@@ -93,4 +98,14 @@ nav.MimotoCMS_interface_Menu--active {
                     color: $sinbad;
                     transition: color .05s;
                     flex: 1 1 auto;
+                }
+
+                span.MimotoCMS_interface_Menu-item-text-empty {
+                    padding: 8px 0;
+                    font-size: rem-calc(17px);
+                    line-height: rem-calc(24px);
+                    color: $mercury;
+                    transition: color .05s;
+                    flex: 1 1 auto;
+                    font-style: italic;
                 }

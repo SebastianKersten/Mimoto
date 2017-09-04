@@ -3,6 +3,7 @@
 <li class="MimotoCMS_interface_Menu-item" {{ Mimoto.realtime() }}>
     <a href="/mimoto.cms/content/{{ Mimoto.meta('id') }}" class="MimotoCMS_interface_Menu-item-link">
         <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-{{ sIcon }}'/></svg>
-        <span class="MimotoCMS_interface_Menu-item-text" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
+        <span class="MimotoCMS_interface_Menu-item-text-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('name') }}>Unnamed dataset</span>
+        <span class="MimotoCMS_interface_Menu-item-text {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('name') }} {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
     </a>
 </li>

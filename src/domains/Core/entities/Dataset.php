@@ -11,11 +11,11 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * ContentSection
+ * Dataset
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class ContentSection
+class Dataset
 {
     const TYPE_ITEM = 'item';
     const TYPE_GROUP = 'group';
@@ -24,14 +24,14 @@ class ContentSection
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_CONTENTSECTION,
+            'id' => CoreConfig::MIMOTO_DATASET,
             // ---
-            'name' => CoreConfig::MIMOTO_CONTENTSECTION,
+            'name' => CoreConfig::MIMOTO_DATASET,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_CONTENTSECTION],
+            'forms' => [CoreConfig::MIMOTO_DATASET],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--name',
+                    'id' => CoreConfig::MIMOTO_DATASET.'--name',
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -44,7 +44,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--form',
+                    'id' => CoreConfig::MIMOTO_DATASET.'--form',
                     // ---
                     'name' => 'form',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -57,7 +57,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--isHiddenFromMenu',
+                    'id' => CoreConfig::MIMOTO_DATASET.'--isHiddenFromMenu',
                     // ---
                     'name' => 'isHiddenFromMenu',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -70,7 +70,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--type',
+                    'id' => CoreConfig::MIMOTO_DATASET.'--type',
                     // ---
                     'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -83,7 +83,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--contentItem',
+                    'id' => CoreConfig::MIMOTO_DATASET.'--contentItem',
                     // ---
                     'name' => 'contentItem',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -96,7 +96,7 @@ class ContentSection
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_CONTENTSECTION.'--contentItems',
+                    'id' => CoreConfig::MIMOTO_DATASET.'--contentItems',
                     // ---
                     'name' => 'contentItems',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
@@ -135,14 +135,14 @@ class ContentSection
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_CONTENTSECTION,
-            'name' => CoreConfig::COREFORM_CONTENTSECTION,
+            'id' => CoreConfig::MIMOTO_DATASET,
+            'name' => CoreConfig::MIMOTO_DATASET,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'name'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'type'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'form'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_CONTENTSECTION, 'isHiddenFromMenu')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_DATASET, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_DATASET, 'type'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_DATASET, 'form'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_DATASET, 'isHiddenFromMenu')
             ]
         );
     }
@@ -153,15 +153,15 @@ class ContentSection
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_CONTENTSECTION);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_DATASET);
 
         // setup
-        CoreFormUtils::addField_title($form, 'Content section', '', "With content sections you allow different groups of users to enter actual content via the CMS. Content sections are added to the side menu by default but can be hidden if their only purpose is to use them as centralized helper values.");
+        CoreFormUtils::addField_title($form, 'Dataset', '', "With datasets you allow different groups of users to enter content via the CMS. Datasets are added to the side menu by default but can be hidden if their only purpose is to use them as centralized helper values.");
         CoreFormUtils::addField_groupStart($form);
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'name', CoreConfig::MIMOTO_CONTENTSECTION.'--name',
+            $form, 'name', CoreConfig::MIMOTO_DATASET.'--name',
             'Name', 'Enter the name', 'The content name is preferably unique'
         );
         self::setNameValidation($field);
@@ -171,7 +171,7 @@ class ContentSection
 
         CoreFormUtils::addField_checkbox
         (
-            $form, 'isHiddenFromMenu', CoreConfig::MIMOTO_CONTENTSECTION.'--isHiddenFromMenu',
+            $form, 'isHiddenFromMenu', CoreConfig::MIMOTO_DATASET.'--isHiddenFromMenu',
             'Visibility',
             'Hide from menu'
         );
@@ -213,31 +213,31 @@ class ContentSection
     private static function getField_type()
     {
         // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::COREFORM_CONTENTSECTION, 'type');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::MIMOTO_DATASET, 'type');
         $field->setValue('label', 'Type');
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_CONTENTSECTION, 'type');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_DATASET, 'type');
 
 
         // 3b. set options
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-item');
-        $option->setValue('value', ContentSection::TYPE_ITEM);
+        $option->setId(CoreConfig::MIMOTO_DATASET.'--type_value_options-item');
+        $option->setValue('value', Dataset::TYPE_ITEM);
         $option->setValue('label', 'Item');
         $field->addValue('options', $option);
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_options-group');
-        $option->setValue('value', ContentSection::TYPE_GROUP);
+        $option->setId(CoreConfig::MIMOTO_DATASET.'--type_value_options-group');
+        $option->setValue('value', Dataset::TYPE_GROUP);
         $option->setValue('label', 'Group');
         $field->addValue('options', $option);
 
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::MIMOTO_CONTENTSECTION.'--type_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_DATASET.'--type_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
-        $validationRule->setValue('value', '^('.ContentSection::TYPE_ITEM.'|'.ContentSection::TYPE_GROUP.')$');
+        $validationRule->setValue('value', '^('.Dataset::TYPE_ITEM.'|'.Dataset::TYPE_GROUP.')$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
@@ -252,12 +252,12 @@ class ContentSection
     private static function getField_form()
     {
         // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::COREFORM_CONTENTSECTION, 'form');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, CoreConfig::MIMOTO_DATASET, 'form');
         $field->setValue('label', 'Form');
         $field->setValue('description', "What form would you like to use?");
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_CONTENTSECTION, 'form');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_DATASET, 'form');
 
 
         // load
@@ -271,7 +271,7 @@ class ContentSection
 
             //output('$entity->getValue(\'name\')', $entity->getValue('name'));
             $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-            $option->setId(CoreConfig::COREFORM_CONTENTSECTION.'--form_value_options-valuesettings-collection-'.$entity->getId());
+            $option->setId(CoreConfig::MIMOTO_DATASET.'--form_value_options-valuesettings-collection-'.$entity->getId());
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));
             $field->addValue('options', $option);
@@ -279,7 +279,7 @@ class ContentSection
 
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_CONTENTSECTION.'--form_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_DATASET.'--form_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Please select a form");

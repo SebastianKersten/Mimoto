@@ -1,0 +1,39 @@
+{%
+    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
+        id: 'componentdetails',
+        tabs: [
+            {
+                label: 'Dataset',
+                panel_id: 'panel_contentsectiondetail_info'
+            }
+        ]
+    }
+%}
+    {% block panels %}
+
+        <!-- structure -->
+
+        <div id="panel_contentsectiondetail_info" class="MimotoCMS_pages_datasets_DatasetDetail__panel">
+
+            <div class="MimotoCMS_pages_datasets_DatasetDetail_Structure">
+
+                <div class="MimotoCMS_pages_datasets_DatasetDetail_Structure__meta">
+                    <div class="MimotoCMS_pages_datasets_DatasetDetail_Structure__meta_info">
+
+                        <div class="MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectionname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+                        <div class="MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectiontype" {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</div>
+                        <div class="MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectionformname" {{ Mimoto.realtime('form.name') }}>{{ Mimoto.data('form.name') }}</div>
+
+                    </div>
+
+                    <div class="MimotoCMS_pages_datasets_DatasetDetail_Structure__meta_menu">
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_dataset'), type:'secondary' }) }}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    {% endblock %}
+{% endembed %}

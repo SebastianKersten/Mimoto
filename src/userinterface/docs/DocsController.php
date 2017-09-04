@@ -25,7 +25,7 @@ class DocsController
     public function viewDocs(Application $app)
     {
         // 1. load data
-        $eContentSection = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_CONTENTSECTION, 'value' => ['name' => 'Courses']]);
+        $eContentSection = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_DATASET, 'value' => ['name' => 'Courses']]);
 
         // 2. create template
         $page = Mimoto::service('output')->createPage('courseOverview', (!empty($eContentSection)) ? $eContentSection[0] : '');

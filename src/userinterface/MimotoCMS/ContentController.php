@@ -4,7 +4,7 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
-use Mimoto\Core\entities\ContentSection;
+use Mimoto\Core\entities\Dataset;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
@@ -27,7 +27,7 @@ class ContentController
         $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
-        $eContentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
+        $eContentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_DATASET, $nContentId);
 
         // 3. validate data
         if (empty($eContentSectionEntity)) return $app->redirect("/mimoto.cms");
@@ -40,7 +40,7 @@ class ContentController
         // 5. toggle between contentItem and contentGroup
         switch($sType)
         {
-            case ContentSection::TYPE_ITEM:
+            case Dataset::TYPE_ITEM:
 
                 // 5a. read current value (could also be empty)
                 $contentItem = $eContentSectionEntity->getValue('contentItem');
@@ -49,11 +49,11 @@ class ContentController
                 $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
 
                 // 5c. setup form
-                $component->addForm($sFormName, $contentItem, ['onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItem']);
+                $component->addForm($sFormName, $contentItem, ['onCreatedConnectTo' => CoreConfig::MIMOTO_DATASET.'.'.$nContentId.'.contentItem']);
 
                 break;
 
-            case ContentSection::TYPE_GROUP:
+            case Dataset::TYPE_GROUP:
 
                 // 5d. create component
                 $component = Mimoto::service('output')->createComponent('MimotoCMS_content_ContentOverview', $eContentSectionEntity);
@@ -91,10 +91,10 @@ class ContentController
         $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
-        $eContentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
+        $eContentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_DATASET, $nContentId);
 
         // 3. validate data
-        if (empty($eContentSectionEntity)) return $app->redirect("/mimoto.cms/contentsections");
+        if (empty($eContentSectionEntity)) return $app->redirect("/mimoto.cms/datasets");
 
         // 4. read properties
         //$sName = $eContentSectionEntity->getValue('name');
@@ -137,7 +137,7 @@ class ContentController
 //            $sFormName,
 //            $eNewEntity,
 //            [
-//                //'onCreatedConnectTo' => CoreConfig::MIMOTO_CONTENTSECTION.'.'.$nContentId.'.contentItems',
+//                //'onCreatedConnectTo' => CoreConfig::MIMOTO_DATASET.'.'.$nContentId.'.contentItems',
 //                'response' => [
 //                    'onSuccess' => [
 //                        'loadPage' => '/mimoto.cms/content/'.$nContentId
@@ -173,10 +173,10 @@ class ContentController
         $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load config data
-        $contentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_CONTENTSECTION, $nContentId);
+        $contentSectionEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_DATASET, $nContentId);
 
         // 3. validate config data
-        if (empty($contentSectionEntity)) return $app->redirect("/mimoto.cms/contentsections");
+        if (empty($contentSectionEntity)) return $app->redirect("/mimoto.cms/datasets");
 
         // 4. read properties
         $sName = $contentSectionEntity->getValue('name');

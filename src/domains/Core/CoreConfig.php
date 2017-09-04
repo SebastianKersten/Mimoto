@@ -20,7 +20,7 @@ use Mimoto\Core\entities\LayoutContainer;
 use Mimoto\Core\entities\File;
 use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
-use Mimoto\Core\entities\ContentSection;
+use Mimoto\Core\entities\Dataset;
 use Mimoto\Core\entities\Route;
 use Mimoto\Core\entities\RoutePathElement;
 use Mimoto\Core\entities\Output;
@@ -84,7 +84,6 @@ class CoreConfig
     const MIMOTO_COMPONENT                      = '_Mimoto_component';
     const MIMOTO_COMPONENTTEMPLATE              = '_Mimoto_componenttemplate';
     const MIMOTO_COMPONENTCONDITIONAL           = '_Mimoto_componentconditional';
-    const MIMOTO_DATASET                        = '_Mimoto_dataset';
     const MIMOTO_LAYOUT                         = '_Mimoto_layout';
     const MIMOTO_LAYOUTCONTAINER                = '_Mimoto_layoutcontainer';
 
@@ -115,7 +114,7 @@ class CoreConfig
     const MIMOTO_FILE                           = '_Mimoto_file';
 
     // content
-    const MIMOTO_CONTENTSECTION                 = '_Mimoto_contentsection';
+    const MIMOTO_DATASET                        = '_Mimoto_dataset';
 
     // forms
     const MIMOTO_FORM                           = '_Mimoto_form';
@@ -182,7 +181,6 @@ class CoreConfig
     const COREFORM_USER_ROLE                    = '_Mimoto_coreform_user_role';
     const COREFORM_USER_GROUP                   = '_Mimoto_coreform_user_group';
 
-    const COREFORM_CONTENTSECTION               = '_Mimoto_coreform__contentSection';
     const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
     const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
 
@@ -274,7 +272,7 @@ class CoreConfig
             RoutePathElement::getStructure(),
             Output::getStructure(),
             OutputContainer::getStructure(),
-            ContentSection::getStructure(),
+            Dataset::getStructure(),
 
             // forms
             Form::getStructure(),
@@ -351,7 +349,7 @@ class CoreConfig
             RoutePathElement::getFormStructure(),
             Output::getFormStructure(),
             OutputContainer::getFormStructure(),
-            ContentSection::getFormStructure(),
+            Dataset::getFormStructure(),
 
             // forms
             Form::getFormStructure(),
@@ -482,7 +480,7 @@ class CoreConfig
                         'notifications',
                         'entities',
                         'users',
-                        'contentSections',
+                        'datasets',
                         'selections',
 
                         'contentItem',

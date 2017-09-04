@@ -633,31 +633,31 @@ class Component
 
 
 
-            // content sections
+            // datasets
 
             (object) array(
-                'name' => 'MimotoCMS_contentsections_ContentSectionOverview',
+                'name' => 'MimotoCMS_datasets_DatasetOverview',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionOverview/ContentSectionOverview.twig',
+                        'file' => 'MimotoCMS/components/pages/datasets/DatasetOverview/DatasetOverview.twig',
                         'conditionals' => []
                     )
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_contentsections_ContentSectionOverview_ListItem',
+                'name' => 'MimotoCMS_datasets_DatasetOverview_ListItem',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionOverview/ListItem/ListItem.twig',
+                        'file' => 'MimotoCMS/components/pages/datasets/DatasetOverview/ListItem/ListItem.twig',
                         'conditionals' => []
                     )
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_contentsections_ContentSectionDetail',
+                'name' => 'MimotoCMS_datasets_DatasetDetail',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/contentsections/ContentSectionDetail/ContentSectionDetail.twig',
+                        'file' => 'MimotoCMS/components/pages/datasets/DatasetDetail/DatasetDetail.twig',
                         'conditionals' => []
                     )
                 ]

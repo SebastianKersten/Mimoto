@@ -372,36 +372,11 @@ module.exports.prototype = {
     
     
     /**
-     * Content sections
+     * Datasets
      */
-    contentSectionNew: function()
+    datasetView: function(nDatasetId)
     {
-        var popup = MimotoX.popup("/mimoto.cms/contentsection/new");
-    },
-    
-    contentSectionView: function(nContentSectionId)
-    {
-        window.open('/mimoto.cms/contentsection/' + nContentSectionId + '/view', '_self');
-    },
-    
-    contentSectionEdit: function(nContentSectionId)
-    {
-        MimotoX.popup('/mimoto.cms/contentsection/' + nContentSectionId + '/edit');
-    },
-    contentSectionDelete: function(nContentSectionId, sContentSectionName)
-    {
-        var response = confirm("Are you sure you want to delete the content section called '" + sContentSectionName + "'?\n\nALL RELATED DATA WILL BE LOST!!\n\n(Don't say I didn't warn you!)");
-        if (response == true) {
-            MimotoX.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/contentsection/' + nContentSectionId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function (resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
+        window.open('/mimoto.cms/dataset/' + nDatasetId + '/view', '_self');
     },
     
     
