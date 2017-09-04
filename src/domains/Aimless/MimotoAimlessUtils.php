@@ -22,7 +22,16 @@ class MimotoAimlessUtils
     
     public static function formatAimlessSubvalue($sEntityType, $nId, $sPropertyName)
     {
-        return '['.$sEntityType.'.'.$nId.'.'.$sPropertyName.']';
+        // setup
+        $instructions = (object) array(
+            'origin' => $sEntityType.'.'.$nId.'.'.$sPropertyName
+        );
+
+        // convert and send
+        return '|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8');
+
+
+        //return '['.$sEntityType.'.'.$nId.'.'.$sPropertyName.']';
     }
     
     public static function formatAimlessSubvalueWithoutId($sEntityType, $sPropertyName)

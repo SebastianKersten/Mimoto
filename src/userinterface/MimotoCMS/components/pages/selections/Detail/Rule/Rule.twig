@@ -1,25 +1,25 @@
-<div class="MimotoCMS_pages_selections_SelectionDetail-Rule" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+<div class="MimotoCMS_pages_selections_SelectionDetail-Rule" {{ Mimoto.realtime() }} {#{{ Mimoto.reloadOnChange() }}#}>
 
-    <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__data">
-        <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__name">
+    <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-data">
 
-            <div>
-            {% if Mimoto.data('typeAsVar') %}
-                Var name for type = {{ Mimoto.data('typeVarName') }}
+        <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-setting">
+        {% if Mimoto.data('typeAsVar') %}
+            Var name for type = {{ Mimoto.data('typeVarName') }}
+        {% else %}
+
+            {% if not Mimoto.empty('type') %}
+                Type = <span {{ Mimoto.realtime('type.name') }}>{{ Mimoto.data('type.name') }}</span>
             {% else %}
-
-                {% if not Mimoto.empty('type') %}
-                    Type = <span {{ Mimoto.realtime('type.name') }}>{{ Mimoto.data('type.name') }}</span>
-                {% else %}
-                    No type selected yet ..
-                {% endif %}
-
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select entity type', types:['small', 'secondary'], directive:Mimoto.select('type', '_Mimoto_all_entities') }) }}
-
+                No type selected yet ..
             {% endif %}
-            </div>
 
-            <div>
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select entity type', types:['small', 'secondary'], directive:Mimoto.select('type', '_Mimoto_all_entities') }) }}
+
+        {% endif %}
+        </div>
+
+        {% if Mimoto.data('typeAsVar') or not Mimoto.isEmpty('type') %}
+            <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-setting">
             {% if Mimoto.data('idAsVar') %}
                 Var name for id = {{ Mimoto.data('idVarName') }}
             {% else %}
@@ -27,17 +27,17 @@
                 {% if not Mimoto.empty('instance') %}
                     Instance = <span {{ Mimoto.realtime('instance.id') }}>{{ Mimoto.data('instance.id') }}</span>{{ Mimoto.meta('instance.id') }}
                 {% else %}
-                    No type selected yet ..
+                    No instance selected yet ..
                 {% endif %}
 
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select instance', types:['small', 'secondary'], directive:Mimoto.select('instance', '_Mimoto_all_instances_of_entity', { vars:[{type:Mimoto.meta('type.id')}] }) }) }}
 
             {% endif %}
             </div>
+        {% endif %}
 
-        </div>
     </div>
-    <div class="MimotoCMS_pages_selections_SelectionDetail-Rule__menu">
+    <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-menu">
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() }) }}
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_selectionrule') }) }}
     </div>
