@@ -461,10 +461,23 @@ class MimotoEntity
             // compose
             if (MimotoDataUtils::isEntity($entity))
             {
-                $sAimlessValue .= MimotoAimlessUtils::formatAimlessSubvalue($sMainPropertyName, $entity->getId(), $sSubPropertyName);
+                // setup
+                $instructions = (object) array(
+                    'alias' => $sAimlessValue,
+                    'origin' => $entity->getEntityTypeName().'.'.$entity->getId().'.'.$sSubPropertyName
+                );
+
+                // replace
+                $sAimlessValue = $this->getEntityTypeName().'.'.$this->getId().'.'.$sMainPropertyName;
+
+                // compose, convert and send
+                $sAimlessValue .= '|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8');
             }
             else
             {
+                // 1. fix empty entity property
+
+
                 $sAimlessValue .= MimotoAimlessUtils::formatAimlessSubvalueWithoutId($sMainPropertyName, $sSubPropertyName);
             }
         }

@@ -824,6 +824,33 @@ class OutputService
                                 'data' => []
                             );
 
+
+                            // --- add value properties
+
+                            // register
+                            $eChildEntity = $aModifiedValues[$sMainPropertyName]->added[0]->getEntity();
+
+                            // register
+                            $aChildEntityProperties = $eChildEntity->getPropertyNames();
+
+                            // parse values
+                            $nChildPropertyCount = count($aChildEntityProperties);
+                            for ($nChildPropertyIndex = 0; $nChildPropertyIndex < $nChildPropertyCount; $nChildPropertyIndex++)
+                            {
+                                // register
+                                $sChildProperty = $aChildEntityProperties[$nChildPropertyIndex];
+
+                                // filter
+                                if ($eChildEntity->getPropertyType($sChildProperty) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                                {
+                                    $valueForBroadcast->entity->data[$sChildProperty] = $eChildEntity->get($sChildProperty);
+                                }
+                            }
+
+
+                            // ---
+
+
                             // broadcast media
                             switch($sPropertySubtype)
                             {

@@ -6,9 +6,11 @@ namespace Mimoto\Aimless;
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoDataUtils;
+use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Aimless\AimlessInputViewModel;
+use Mimoto\Selection\Selection;
 
 
 /**
@@ -47,7 +49,96 @@ class AimlessInput extends AimlessComponent
 
     public function input()
     {
-        return 'data-mimoto-form-field-input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"';
+        // init
+        $sFormattingOptions = '';
+
+        // split
+        $aPropertySelectorElements = explode('.', $this->_sFieldId);
+
+
+        // ---
+
+
+        // load
+        $aEntities = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_ENTITY, 'values' => ['name' => $aPropertySelectorElements[0]]]);
+
+        // validate
+        if (count($aEntities) == 1)
+        {
+            // register
+            $eEntity = $aEntities[0];
+
+            // read
+            $aProperties = $eEntity->get('properties');
+
+            // find
+            $nPropertyCount = count($aProperties);
+            for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
+            {
+                // register
+                $eProperty = $aProperties[$nPropertyIndex];
+
+                // verify
+                if ($eProperty->get('name') == $aPropertySelectorElements[2])
+                {
+                    // read
+                    $aSettings = $eProperty->get('settings');
+
+                    // find
+                    $nSettingCount = count($aSettings);
+                    for ($nSettingIndex = 0; $nSettingIndex < $nSettingCount; $nSettingIndex++)
+                    {
+                        // register
+                        $eSetting = $aSettings[$nSettingIndex];
+
+                        // verify
+                        if ($eSetting->get('key') == EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS)
+                        {
+                            // read
+                            $aFormattingOptions = $eSetting->get('formattingOptions');
+
+                            // verify
+                            if (count($aFormattingOptions) > 0)
+                            {
+                                // init
+                                $formattingOptions = (object) array(
+                                    'toolbar' => [],
+                                    'formats' => []
+                                );
+
+                                // find
+                                $nFormattingOptionCount = count($aFormattingOptions);
+                                for ($nFormattingOptionIndex = 0; $nFormattingOptionIndex < $nFormattingOptionCount; $nFormattingOptionIndex++)
+                                {
+                                    // register
+                                    $eFormattingOption = $aFormattingOptions[$nFormattingOptionIndex];
+
+                                    // register
+                                    $formattingOptions->toolbar[] = $eFormattingOption->get('name');
+                                    $formattingOptions->formats[] = $eFormattingOption->get('name');
+
+
+//                                    ['bold', 'italic', 'underline', 'strike'],
+//                                    ['blockquote', 'code-block', 'link'],
+//                                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+//                                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+//                                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+
+//                                    formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
+                                }
+
+                                // convert
+                                $sFormattingOptions = ' data-mimoto-input-formattingoptions="'.htmlentities(json_encode($formattingOptions), ENT_QUOTES, 'UTF-8').'"';
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // compose and send
+        return 'data-mimoto-form-field-input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"'.$sFormattingOptions;
     }
 
     public function fieldId()

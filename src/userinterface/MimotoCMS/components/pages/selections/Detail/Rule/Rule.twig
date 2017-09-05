@@ -2,6 +2,9 @@
 
     <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-data">
 
+
+
+
         <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-setting">
         {% if Mimoto.data('typeAsVar') %}
             Var name for type = {{ Mimoto.data('typeVarName') }}
@@ -14,6 +17,7 @@
             {% endif %}
 
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select entity type', types:['small', 'secondary'], directive:Mimoto.select('type', '_Mimoto_all_entities') }) }}
+            <span {{ Mimoto.hideWhenEmpty('type') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'alert'], directive:Mimoto.clear('type') }) }}</span>
 
         {% endif %}
         </div>
@@ -31,10 +35,22 @@
                 {% endif %}
 
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select instance', types:['small', 'secondary'], directive:Mimoto.select('instance', '_Mimoto_all_instances_of_entity', { vars:[{type:Mimoto.meta('type.id')}] }) }) }}
+                <span {{ Mimoto.hideWhenEmpty('type') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'alert'], directive:Mimoto.clear('instance') }) }}</span>
 
             {% endif %}
             </div>
         {% endif %}
+
+
+        <br>
+        // 1. add values<br>
+        <br>
+        or<br>
+        <br>
+        // a. add property<br>
+        // b. add child types<br>
+        // c. add child values<br>
+        <br>
 
     </div>
     <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-menu">

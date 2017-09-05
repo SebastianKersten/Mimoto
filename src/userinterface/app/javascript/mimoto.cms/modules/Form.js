@@ -311,7 +311,7 @@ module.exports.prototype = {
 
         // console.log('Sending ' + form.sAction + ' ' + form.sMethod);
         // console.log(aValues);
-        // console.error(requestData);
+        console.error(requestData);
         // console.log('------');
         
         
@@ -1055,17 +1055,40 @@ module.exports.prototype = {
         let $valueHolder = $('js-' + sFlatFieldId + '-textblock-value', $form);
 
 
+        //console.warn('fieldInput', fieldInput.attr('data-mimoto-input-formattingoptions'));
+        //var fieldForFormattingOptions = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
+
+
+
+
+        // init
+        var toolbar = null;
+        var formats = null;
+
+        var sFormattingOptions = fieldInput.attr('data-mimoto-input-formattingoptions');
+
+        if (sFormattingOptions)
+        {
+            var formattingOptions = JSON.parse(sFormattingOptions);
+
+            toolbar = formattingOptions.toolbar;
+            formats = formattingOptions.formats;
+        }
+
+
+
         // create
         textblockField.quill = new Quill(valueContainer, {
             theme: 'bubble',
             modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote', 'code-block', 'link'],
-                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    [{ 'indent': '-1'}, { 'indent': '+1' }],
-                ],
+                toolbar: toolbar,
+                // toolbar: [
+                //     ['bold', 'italic', 'underline', 'strike'],
+                //     ['blockquote', 'code-block', 'link'],
+                //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                //     [{ 'indent': '-1'}, { 'indent': '+1' }],
+                // ],
                 history: {
                     delay: 2000,
                     maxStack: 500,
@@ -1073,7 +1096,8 @@ module.exports.prototype = {
                 }
             },
             placeholder: sPlaceHolder || '', // #todo
-            formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
+            // formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
+            formats: formats
         });
 
 

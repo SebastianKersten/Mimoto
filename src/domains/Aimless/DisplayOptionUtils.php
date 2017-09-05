@@ -17,33 +17,33 @@ class DisplayOptionUtils
 {
 
     // tags
-    const TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY              = 'data-mimoto-display-hidewhenempty';
-    const TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY           = 'data-mimoto-display-hidewhennotempty';
-    const TAG_MIMOTO_DISPLAY_HIDEWHENVALUE              = 'data-mimoto-display-hidewhenvalue';
-    const TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE           = 'data-mimoto-display-hidewhennotvalue';
-    const TAG_MIMOTO_DISPLAY_HIDEWHENREGEX              = 'data-mimoto-display-hidewhenregex';
-    const TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX           = 'data-mimoto-display-hidewhennotregex';
+    const DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY              = 'data-mimoto-display-hidewhenempty';
+    const DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY           = 'data-mimoto-display-hidewhennotempty';
+    const DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE              = 'data-mimoto-display-hidewhenvalue';
+    const DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE           = 'data-mimoto-display-hidewhennotvalue';
+    const DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX              = 'data-mimoto-display-hidewhenregex';
+    const DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX           = 'data-mimoto-display-hidewhennotregex';
 
-    const TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY              = 'data-mimoto-display-showwhenempty';
-    const TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY           = 'data-mimoto-display-showwhennotempty';
-    const TAG_MIMOTO_DISPLAY_SHOWWHENVALUE              = 'data-mimoto-display-showwhenvalue';
-    const TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE           = 'data-mimoto-display-showwhennotvalue';
-    const TAG_MIMOTO_DISPLAY_SHOWWHENREGEX              = 'data-mimoto-display-showwhenregex';
-    const TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX           = 'data-mimoto-display-showwhennotregex';
+    const DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY              = 'data-mimoto-display-showwhenempty';
+    const DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY           = 'data-mimoto-display-showwhennotempty';
+    const DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE              = 'data-mimoto-display-showwhenvalue';
+    const DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE           = 'data-mimoto-display-showwhennotvalue';
+    const DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX              = 'data-mimoto-display-showwhenregex';
+    const DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX           = 'data-mimoto-display-showwhennotregex';
 
-    const TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY          = 'data-mimoto-display-addclasswhenempty';
-    const TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY       = 'data-mimoto-display-addclasswhennotempty';
-    const TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE          = 'data-mimoto-display-addclasswhenvalue';
-    const TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE       = 'data-mimoto-display-addclasswhennotvalue';
-    const TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX          = 'data-mimoto-display-addclasswhenregex';
-    const TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX       = 'data-mimoto-display-addclasswhennotregex';
+    const DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY          = 'data-mimoto-display-addclasswhenempty';
+    const DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY       = 'data-mimoto-display-addclasswhennotempty';
+    const DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE          = 'data-mimoto-display-addclasswhenvalue';
+    const DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE       = 'data-mimoto-display-addclasswhennotvalue';
+    const DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX          = 'data-mimoto-display-addclasswhenregex';
+    const DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX       = 'data-mimoto-display-addclasswhennotregex';
 
-    const TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY       = 'data-mimoto-display-removeclasswhenempty';
-    const TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY    = 'data-mimoto-display-removeclasswhennotempty';
-    const TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE       = 'data-mimoto-display-removeclasswhenvalue';
-    const TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE    = 'data-mimoto-display-removeclasswhennotvalue';
-    const TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX       = 'data-mimoto-display-removeclasswhenregex';
-    const TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX    = 'data-mimoto-display-removeclasswhennotregex';
+    const DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY       = 'data-mimoto-display-removeclasswhenempty';
+    const DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY    = 'data-mimoto-display-removeclasswhennotempty';
+    const DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE       = 'data-mimoto-display-removeclasswhenvalue';
+    const DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE    = 'data-mimoto-display-removeclasswhennotvalue';
+    const DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX       = 'data-mimoto-display-removeclasswhenregex';
+    const DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX    = 'data-mimoto-display-removeclasswhennotregex';
 
 
 
@@ -101,53 +101,53 @@ class DisplayOptionUtils
         // 1. add action specific data
         switch($sAction)
         {
-            case self::TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
 
                 $instructions->initialState = $component->isEmpty($sPropertyName);
                 break;
 
-            case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
 
                 $instructions->initialState = !$component->isEmpty($sPropertyName);
                 break;
 
-            case self::TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
 
                 $instructions->values = self::prepareValues($xValues);
                 $instructions->initialState = self::isValue($component->data($sPropertyName), $instructions->values);
                 break;
 
-            case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
 
                 $instructions->values = self::prepareValues($xValues);
                 $instructions->initialState = !self::isValue($component->data($sPropertyName), $instructions->values);
                 break;
 
-            case self::TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
 
                 $instructions->patterns = self::prepareValues($xValues);
                 $instructions->initialState = self::isRegex($component->data($sPropertyName), $instructions->patterns);
                 break;
 
-            case self::TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
-            case self::TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
-            case self::TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
-            case self::TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
+            case self::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
 
                 $instructions->patterns = self::prepareValues($xValues);
                 $instructions->initialState = !self::isRegex($component->data($sPropertyName), $instructions->patterns);

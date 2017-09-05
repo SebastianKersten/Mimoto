@@ -36,6 +36,7 @@ Your email address also functions as your username to login to the cms
 Mimoto::setValue('config', $config);
 Mimoto::setValue('ProjectConfig.root', __DIR__ . '/../');
 Mimoto::setValue('ProjectConfig.twigroot', 'src/userinterface/');
+Mimoto::setValue('ProjectConfig.serviceroot', 'src/services/');
 
 
 // init

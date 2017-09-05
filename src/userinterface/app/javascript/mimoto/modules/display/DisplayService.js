@@ -58,13 +58,13 @@ module.exports.prototype = {
 
 
     // data directives
-    TAG_MIMOTO_VALUE:      'data-mimoto-value',
-    TAG_MIMOTO_ENTITY:     'data-mimoto-entity',
-    TAG_MIMOTO_COLLECTION: 'data-mimoto-collection',
-    TAG_MIMOTO_IMAGE:      'data-mimoto-image',
-    TAG_MIMOTO_VIDEO:      'data-mimoto-video',
-    TAG_MIMOTO_AUDIO:      'data-mimoto-audio',
-    TAG_MIMOTO_ID:         'data-mimoto-id',
+    DIRECTIVE_MIMOTO_VALUE:      'data-mimoto-value',
+    DIRECTIVE_MIMOTO_ENTITY:     'data-mimoto-entity',
+    DIRECTIVE_MIMOTO_COLLECTION: 'data-mimoto-collection',
+    DIRECTIVE_MIMOTO_IMAGE:      'data-mimoto-image',
+    DIRECTIVE_MIMOTO_VIDEO:      'data-mimoto-video',
+    DIRECTIVE_MIMOTO_AUDIO:      'data-mimoto-audio',
+    DIRECTIVE_MIMOTO_ID:         'data-mimoto-id',
 
     // data manipulation directives
     DIRECTIVE_MIMOTO_DATA_EDIT:    'data-mimoto-edit',
@@ -76,42 +76,42 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DATA_CLEAR:   'data-mimoto-clear',
 
     // display directives
-    TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
-    TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:     'data-mimoto-display-hidewhennotempty',
-    TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:        'data-mimoto-display-hidewhenregex',
-    TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:     'data-mimoto-display-hidewhennotregex',
-    TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:        'data-mimoto-display-hidewhenvalue',
-    TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:     'data-mimoto-display-hidewhennotvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:     'data-mimoto-display-hidewhennotempty',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX:        'data-mimoto-display-hidewhenregex',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:     'data-mimoto-display-hidewhennotregex',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE:        'data-mimoto-display-hidewhenvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:     'data-mimoto-display-hidewhennotvalue',
 
-    TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:        'data-mimoto-display-showwhenempty',
-    TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:     'data-mimoto-display-showwhennotempty',
-    TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:        'data-mimoto-display-showwhenregex',
-    TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:     'data-mimoto-display-showwhennotregex',
-    TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:        'data-mimoto-display-showwhenvalue',
-    TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:     'data-mimoto-display-showwhennotvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY:        'data-mimoto-display-showwhenempty',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:     'data-mimoto-display-showwhennotempty',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX:        'data-mimoto-display-showwhenregex',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:     'data-mimoto-display-showwhennotregex',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE:        'data-mimoto-display-showwhenvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:     'data-mimoto-display-showwhennotvalue',
 
-    TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:    'data-mimoto-display-addclasswhenempty',
-    TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY: 'data-mimoto-display-addclasswhennotempty',
-    TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:    'data-mimoto-display-addclasswhenregex',
-    TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX: 'data-mimoto-display-addclasswhennotregex',
-    TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:    'data-mimoto-display-addclasswhenvalue',
-    TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE: 'data-mimoto-display-addclasswhennotvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:    'data-mimoto-display-addclasswhenempty',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY: 'data-mimoto-display-addclasswhennotempty',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:    'data-mimoto-display-addclasswhenregex',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX: 'data-mimoto-display-addclasswhennotregex',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:    'data-mimoto-display-addclasswhenvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE: 'data-mimoto-display-addclasswhennotvalue',
 
-    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:    'data-mimoto-display-removeclasswhenempty',
-    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY: 'data-mimoto-display-removeclasswhennotempty',
-    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:    'data-mimoto-display-removeclasswhenregex',
-    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX: 'data-mimoto-display-removeclasswhennotregex',
-    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:    'data-mimoto-display-removeclasswhenvalue',
-    TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE: 'data-mimoto-display-removeclasswhennotvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:    'data-mimoto-display-removeclasswhenempty',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY: 'data-mimoto-display-removeclasswhennotempty',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:    'data-mimoto-display-removeclasswhenregex',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX: 'data-mimoto-display-removeclasswhennotregex',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:    'data-mimoto-display-removeclasswhenvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE: 'data-mimoto-display-removeclasswhennotvalue',
 
     // utility tags
-    TAG_MATH_MIMOTO_COUNT: 'data-mimoto-count',
+    DIRECTIVE_MATH_MIMOTO_COUNT: 'data-mimoto-count',
 
     // setting tags
-    TAG_SETTING_MIMOTO_FILTER:     'data-mimoto-filter',
-    TAG_SETTING_MIMOTO_COMPONENT:  'data-mimoto-component',
-    TAG_SETTING_MIMOTO_CONNECTION: 'data-mimoto-connection',
-    TAG_SETTING_MIMOTO_SORTINDEX:  'data-mimoto-sortindex',
+    DIRECTIVE_SETTING_MIMOTO_FILTER:     'data-mimoto-filter',
+    DIRECTIVE_SETTING_MIMOTO_COMPONENT:  'data-mimoto-component',
+    DIRECTIVE_SETTING_MIMOTO_CONNECTION: 'data-mimoto-connection',
+    DIRECTIVE_SETTING_MIMOTO_SORTINDEX:  'data-mimoto-sortindex',
 
     // directive tags
     TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE: 'data-mimoto-reloadonchange',
@@ -148,33 +148,33 @@ module.exports.prototype = {
 
 
         // prepare
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY] = HideWhenEmpty;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY] = HideWhenEmptyNot;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX] = HideWhenRegex;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX] = HideWhenRegexNot;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE] = HideWhenValue;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE] = HideWhenValueNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY] = HideWhenEmpty;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY] = HideWhenEmptyNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX] = HideWhenRegex;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX] = HideWhenRegexNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE] = HideWhenValue;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE] = HideWhenValueNot;
 
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY] = ShowWhenEmpty;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY] = ShowWhenEmptyNot;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX] = ShowWhenRegex;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX] = ShowWhenRegexNot;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE] = ShowWhenValue;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE] = ShowWhenValueNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY] = ShowWhenEmpty;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY] = ShowWhenEmptyNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX] = ShowWhenRegex;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX] = ShowWhenRegexNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE] = ShowWhenValue;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE] = ShowWhenValueNot;
 
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY] = AddClassWhenEmpty;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY] = AddClassWhenEmptyNot;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX] = AddClassWhenRegex;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX] = AddClassWhenRegexNot;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE] = AddClassWhenValue;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE] = AddClassWhenValueNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY] = AddClassWhenEmpty;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY] = AddClassWhenEmptyNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX] = AddClassWhenRegex;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX] = AddClassWhenRegexNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE] = AddClassWhenValue;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE] = AddClassWhenValueNot;
 
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY] = RemoveClassWhenEmpty;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY] = RemoveClassWhenEmptyNot;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX] = RemoveClassWhenRegex;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX] = RemoveClassWhenRegexNot;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE] = RemoveClassWhenValue;
-        this._aDisplayOptionClasses[this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE] = RemoveClassWhenValueNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY] = RemoveClassWhenEmpty;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY] = RemoveClassWhenEmptyNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX] = RemoveClassWhenRegex;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX] = RemoveClassWhenRegexNot;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE] = RemoveClassWhenValue;
+        this._aDisplayOptionClasses[this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE] = RemoveClassWhenValueNot;
 
 
         // 2. prepare interface
@@ -308,13 +308,13 @@ module.exports.prototype = {
         let aPrimaryDirectives = [
 
             // data directives
-            this.TAG_MIMOTO_VALUE,
-            this.TAG_MIMOTO_ENTITY,
-            this.TAG_MIMOTO_COLLECTION,
-            this.TAG_MIMOTO_IMAGE,
-            this.TAG_MIMOTO_VIDEO,
-            this.TAG_MIMOTO_AUDIO,
-            this.TAG_MIMOTO_ID,
+            this.DIRECTIVE_MIMOTO_VALUE,
+            this.DIRECTIVE_MIMOTO_ENTITY,
+            this.DIRECTIVE_MIMOTO_COLLECTION,
+            this.DIRECTIVE_MIMOTO_IMAGE,
+            this.DIRECTIVE_MIMOTO_VIDEO,
+            this.DIRECTIVE_MIMOTO_AUDIO,
+            this.DIRECTIVE_MIMOTO_ID,
 
             // data manipulation directives
             this.DIRECTIVE_MIMOTO_DATA_EDIT,
@@ -326,36 +326,36 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DATA_CLEAR,
 
             // display directives
-            this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY,
-            this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY,
-            this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX,
-            this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX,
-            this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE,
-            this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE,
+            this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY,
+            this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY,
+            this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX,
+            this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX,
+            this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE,
+            this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE,
 
-            this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY,
-            this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY,
-            this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX,
-            this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX,
-            this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE,
-            this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE,
+            this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY,
+            this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY,
+            this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX,
+            this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX,
+            this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE,
+            this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE,
 
-            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY,
-            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY,
-            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX,
-            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX,
-            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE,
-            this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE,
+            this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY,
+            this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY,
+            this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX,
+            this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX,
+            this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE,
+            this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE,
 
-            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY,
-            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY,
-            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX,
-            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX,
-            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE,
-            this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE,
+            this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY,
+            this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY,
+            this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX,
+            this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX,
+            this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE,
+            this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE,
 
             // utility tags
-            this.TAG_MATH_MIMOTO_COUNT
+            this.DIRECTIVE_MATH_MIMOTO_COUNT
         ];
 
         // 3. collect
@@ -376,13 +376,13 @@ module.exports.prototype = {
         return aDirectives;
     },
 
-    _prepareAllTaggedElements: function(aTags)
+    _prepareAllTaggedElements: function(aDirectives)
     {
         // 1. parse all directives
-        for (let sTag in aTags)
+        for (let sDirective in aDirectives)
         {
             // register
-            let aElements = aTags[sTag];
+            let aElements = aDirectives[sDirective];
 
             // prepare
             let nElementCount = aElements.length;
@@ -395,12 +395,12 @@ module.exports.prototype = {
                 let nDirectiveId = this._createDirectiveId();
 
                 // read
-                let sPropertySelector = element.getAttribute(sTag);
+                let sPropertySelector = element.getAttribute(sDirective);
 
                 // init and register
                 let directive = {
                     id: nDirectiveId,
-                    sTag: sTag,
+                    sDirective: sDirective,
                     sPropertySelector: sPropertySelector,
                     element: element
                 };
@@ -428,38 +428,44 @@ module.exports.prototype = {
 
 
                 // read tag specific settings
-                switch(sTag)
+                switch(sDirective)
                 {
-                    case this.TAG_MIMOTO_VALUE:
+                    case this.DIRECTIVE_MIMOTO_VALUE:
+
+                        if (directive.instructions && directive.instructions.origin)
+                        {
+                            MimotoX.warn('origin for', directive.sPropertySelector, 'is', directive.instructions.origin);
+                            MimotoX.warn('alias for', directive.sPropertySelector, 'is', directive.instructions.alias);
+                        }
 
 
-                        //MimotoX.log('Value', directive);
+
                         break;
 
-                    case this.TAG_MIMOTO_ID:
+                    case this.DIRECTIVE_MIMOTO_ID:
 
                         // verify and register
-                        directive.sEntitySelector = element.getAttribute(this.TAG_MIMOTO_ID);
+                        directive.sEntitySelector = element.getAttribute(this.DIRECTIVE_MIMOTO_ID);
 
                         //MimotoX.log('Item', directive);
 
 
                         // verify and register
-                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_CONNECTION))
+                        if (element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_CONNECTION))
                         {
-                            directive.nConnectionId = element.getAttribute(this.TAG_SETTING_MIMOTO_CONNECTION);
+                            directive.nConnectionId = element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_CONNECTION);
                         }
 
                         // verify and register
-                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX))
+                        if (element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_SORTINDEX))
                         {
-                            directive.nSortIndex = element.getAttribute(this.TAG_SETTING_MIMOTO_SORTINDEX);
+                            directive.nSortIndex = element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_SORTINDEX);
                         }
 
                         // verify and register
-                        if (element.hasAttribute(this.TAG_SETTING_MIMOTO_COMPONENT))
+                        if (element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT))
                         {
-                            directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
+                            directive.sComponentName = element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT);
                         }
 
 
@@ -482,25 +488,25 @@ module.exports.prototype = {
                         break;
 
 
-                    case this.TAG_MIMOTO_ENTITY:
-                    case this.TAG_MIMOTO_COLLECTION:
+                    case this.DIRECTIVE_MIMOTO_ENTITY:
+                    case this.DIRECTIVE_MIMOTO_COLLECTION:
 
 
                         // validate
-                        if (!element.hasAttribute(this.TAG_SETTING_MIMOTO_COMPONENT))
+                        if (!element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT))
                         {
-                            MimotoX.warn('Element', element, 'is missing a component setting', this.TAG_SETTING_MIMOTO_COMPONENT);
+                            MimotoX.warn('Element', element, 'is missing a component setting', this.DIRECTIVE_SETTING_MIMOTO_COMPONENT);
                             continue;
                         }
 
                         // register
-                        directive.sComponentName = element.getAttribute(this.TAG_SETTING_MIMOTO_COMPONENT);
+                        directive.sComponentName = element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT);
 
                         // verify
-                        if (sTag === this.TAG_MIMOTO_COLLECTION && element.hasAttribute(this.TAG_SETTING_MIMOTO_FILTER))
+                        if (sDirective === this.DIRECTIVE_MIMOTO_COLLECTION && element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_FILTER))
                         {
                             // register
-                            directive.aFilterValues = JSON.parse(element.getAttribute(this.TAG_SETTING_MIMOTO_FILTER));
+                            directive.aFilterValues = JSON.parse(element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_FILTER));
                         }
 
 
@@ -508,7 +514,7 @@ module.exports.prototype = {
 
                         break;
 
-                    case this.TAG_MATH_MIMOTO_COUNT:
+                    case this.DIRECTIVE_MATH_MIMOTO_COUNT:
 
                         //MimotoX.log('Count', directive);
 
@@ -619,35 +625,35 @@ module.exports.prototype = {
 
                     // --- display updates
 
-                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:
-                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
-                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:
-                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
-                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:
-                    case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
 
-                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:
-                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
-                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:
-                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
-                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:
-                    case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
 
-                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
-                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
-                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
-                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
-                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
-                    case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
 
-                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
-                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
-                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
-                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
-                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
-                    case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
+                    case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
 
-                        new this._aDisplayOptionClasses[directive.sTag](directive);
+                        new this._aDisplayOptionClasses[directive.sDirective](directive);
                         break;
                 }
             }
@@ -718,15 +724,22 @@ module.exports.prototype = {
                         // register
                         let directive = aDirectives[nElementIndex];
 
-                        //MimotoX.log('---------- directive', directive.sTag, 'for', directive.sPropertySelector, directive);
+                        //MimotoX.log('---------- directive', directive.sDirective, 'for', directive.sPropertySelector, directive);
 
 
-                        switch(directive.sTag)
+                        switch(directive.sDirective)
                         {
 
                             // --- values updates
 
-                            case this.TAG_MIMOTO_VALUE:
+                            case this.DIRECTIVE_MIMOTO_VALUE:
+
+                                // 1. if type = entity
+                                // 2. look for changed fields
+                                // 3. check alias
+                                // 4. output full change object
+
+                                console.warn('DIRECTIVE_MIMOTO_VALUE - check origins from separate array', change);
 
 
 
@@ -744,13 +757,14 @@ module.exports.prototype = {
 
                                     directive.element.innerHTML = change.value;
 
-
-
-
                                 }
                                 break;
 
-                            case this.TAG_MIMOTO_ENTITY:
+                            case this.DIRECTIVE_MIMOTO_ENTITY:
+
+                                // 1. check if alias of type value
+                                console.warn('DIRECTIVE_MIMOTO_ENTITY', change);
+
 
                                 // 1. verify and add items
                                 if (change.entity)
@@ -763,7 +777,7 @@ module.exports.prototype = {
                                 }
                                 break;
 
-                            case this.TAG_MIMOTO_COLLECTION:
+                            case this.DIRECTIVE_MIMOTO_COLLECTION:
 
                                 // 1. verify and add items
                                 if (change.collection.added) new CollectionAddItems(directive, change.collection.added);
@@ -779,17 +793,17 @@ module.exports.prototype = {
 
                             // --- display updates
 
-                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENEMPTY:
-                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
 
-                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENEMPTY:
-                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:
 
-                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
-                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
 
-                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
-                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
 
                                 // init
                                 let currentValue = null;
@@ -802,38 +816,38 @@ module.exports.prototype = {
                                 }
 
                                 // execute
-                                new this._aDisplayOptionClasses[directive.sTag](directive, currentValue);
+                                new this._aDisplayOptionClasses[directive.sDirective](directive, currentValue);
 
                                 break;
 
-                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENREGEX:
-                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
-                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENVALUE:
-                            case this.TAG_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:
 
-                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENREGEX:
-                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
-                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENVALUE:
-                            case this.TAG_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
-
-
-                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
-                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
-                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
-                            case this.TAG_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:
 
 
-                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
-                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
-                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
-                            case this.TAG_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:
+
+
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:
+                            case this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:
 
 
                                 // verify
                                 if (change.type === 'value')
                                 {
                                     // execute
-                                    new this._aDisplayOptionClasses[directive.sTag](directive, change.value);
+                                    new this._aDisplayOptionClasses[directive.sDirective](directive, change.value);
                                 }
 
                                 break;

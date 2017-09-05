@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "bff8fc443650b332acf9";
+/******/ 	__webpack_require__.h = "7991dbb461ff664258c7";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -65142,7 +65142,7 @@ module.exports.prototype = {
 
         // console.log('Sending ' + form.sAction + ' ' + form.sMethod);
         // console.log(aValues);
-        // console.error(requestData);
+        console.error(requestData);
         // console.log('------');
 
 
@@ -65782,11 +65782,35 @@ module.exports.prototype = {
         var valueContainer = document.getElementById('js-' + sFlatFieldId + '-textblock-container');
         var $valueHolder = $('js-' + sFlatFieldId + '-textblock-value', $form);
 
+        //console.warn('fieldInput', fieldInput.attr('data-mimoto-input-formattingoptions'));
+        //var fieldForFormattingOptions = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
+
+
+        // init
+        var toolbar = null;
+        var formats = null;
+
+        var sFormattingOptions = fieldInput.attr('data-mimoto-input-formattingoptions');
+
+        if (sFormattingOptions) {
+            var formattingOptions = JSON.parse(sFormattingOptions);
+
+            toolbar = formattingOptions.toolbar;
+            formats = formattingOptions.formats;
+        }
+
         // create
         textblockField.quill = new Quill(valueContainer, {
             theme: 'bubble',
             modules: {
-                toolbar: [['bold', 'italic', 'underline', 'strike'], ['blockquote', 'code-block', 'link'], [{ 'header': [1, 2, 3, 4, 5, 6, false] }], [{ 'list': 'ordered' }, { 'list': 'bullet' }], [{ 'indent': '-1' }, { 'indent': '+1' }]],
+                toolbar: toolbar,
+                // toolbar: [
+                //     ['bold', 'italic', 'underline', 'strike'],
+                //     ['blockquote', 'code-block', 'link'],
+                //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                //     [{ 'indent': '-1'}, { 'indent': '+1' }],
+                // ],
                 history: {
                     delay: 2000,
                     maxStack: 500,
@@ -65794,7 +65818,8 @@ module.exports.prototype = {
                 }
             },
             placeholder: sPlaceHolder || '', // #todo
-            formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
+            // formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
+            formats: formats
         });
 
         // 1. set initial value
