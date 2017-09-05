@@ -2713,6 +2713,9 @@ li.MimotoCMS_pages_forms_FormDetail-FormField {
         -ms-flex-positive: 1;
             flex-grow: 1;
     text-align: right; }
+    li.MimotoCMS_pages_forms_FormDetail-FormField div.MimotoCMS_pages_forms_FormDetail-FormField__menu > a {
+      float: right;
+      margin-left: 5px; }
     li.MimotoCMS_pages_forms_FormDetail-FormField div.MimotoCMS_pages_forms_FormDetail-FormField__menu > div {
       float: right;
       margin-left: 10px; }
@@ -3160,12 +3163,12 @@ figure.MimotoCMS_interface_Header-menu-user-figure {
 
 img.MimotoCMS_interface_Header-menu-user-image {
   display: inline-block;
-  max-width: 49px;
-  max-height: 49px; }
+  width: 49px;
+  height: 49px; }
   @media screen and (min-width: 46.875em) {
     img.MimotoCMS_interface_Header-menu-user-image {
-      max-width: 63px;
-      max-height: 63px; } }
+      width: 63px;
+      height: 63px; } }
 
 div.MimotoCMS_interface_Header-menu-dropdown {
   position: relative;

@@ -405,24 +405,24 @@ module.exports.prototype = {
             /**
              * Reatime image swap feature
              */
-            if (change.subtype && change.subtype == 'image')
-            {
-                // search
-                var aImages = $("[data-mimoto-image='" + sEntityIdentifier + "." + change.propertyName + "']");
-
-                if (change.entity && change.entity.file)
-                {
-                    // compose
-                    var sImageSrc = change.entity.file.path + change.entity.file.name;
-                    
-                    // parse
-                    aImages.each(function (nIndex, $image)
-                    {
-                        // swap
-                        $($image).attr('src', sImageSrc);
-                    });
-                }
-            }
+            // if (change.subtype && change.subtype == 'image')
+            // {
+            //     // search
+            //     var aImages = $("[data-mimoto-image='" + sEntityIdentifier + "." + change.propertyName + "']");
+            //
+            //     if (change.entity && change.entity.file)
+            //     {
+            //         // compose
+            //         var sImageSrc = change.entity.file.path + change.entity.file.name;
+            //
+            //         // parse
+            //         aImages.each(function (nIndex, $image)
+            //         {
+            //             // swap
+            //             $($image).attr('src', sImageSrc);
+            //         });
+            //     }
+            // }
             
             
             

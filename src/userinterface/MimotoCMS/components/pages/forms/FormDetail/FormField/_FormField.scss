@@ -39,6 +39,11 @@ li.MimotoCMS_pages_forms_FormDetail-FormField {
 
         text-align: right;
 
+        & > a {
+            float: right;
+            margin-left: 5px;
+        }
+
         & > div {
             float: right;
             margin-left: 10px;

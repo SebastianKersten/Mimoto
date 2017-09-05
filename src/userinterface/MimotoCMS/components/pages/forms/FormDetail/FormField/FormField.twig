@@ -36,6 +36,8 @@
             </div>
         </div>
 
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldDelete('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
+
         {% if Mimoto.typeOf('_Mimoto_form_input') %}
             <div {{ Mimoto.showWhenEmpty('value') }}>
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Connect value', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('type') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
@@ -47,8 +49,6 @@
         {% else %}
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.formFieldEdit('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
         {% endif %}
-
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.formFieldDelete('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
 
     </div>
 </li>

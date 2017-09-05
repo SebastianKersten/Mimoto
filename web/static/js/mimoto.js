@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "beb516650bbaf4a1dd7e";
+/******/ 	__webpack_require__.h = "f0a43a36b8fc11dbc690";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -39662,21 +39662,25 @@ module.exports.prototype = {
             /**
              * Reatime image swap feature
              */
-            if (change.subtype && change.subtype == 'image') {
-                // search
-                var aImages = $("[data-mimoto-image='" + sEntityIdentifier + "." + change.propertyName + "']");
+            // if (change.subtype && change.subtype == 'image')
+            // {
+            //     // search
+            //     var aImages = $("[data-mimoto-image='" + sEntityIdentifier + "." + change.propertyName + "']");
+            //
+            //     if (change.entity && change.entity.file)
+            //     {
+            //         // compose
+            //         var sImageSrc = change.entity.file.path + change.entity.file.name;
+            //
+            //         // parse
+            //         aImages.each(function (nIndex, $image)
+            //         {
+            //             // swap
+            //             $($image).attr('src', sImageSrc);
+            //         });
+            //     }
+            // }
 
-                if (change.entity && change.entity.file) {
-                    // compose
-                    var sImageSrc = change.entity.file.path + change.entity.file.name;
-
-                    // parse
-                    aImages.each(function (nIndex, $image) {
-                        // swap
-                        $($image).attr('src', sImageSrc);
-                    });
-                }
-            }
 
             // collect
             var aContainers = $("[data-mimoto-entity='" + sEntityIdentifier + "." + change.propertyName + "']");
@@ -40535,7 +40539,9 @@ module.exports.prototype = {
         var aPrimaryDirectives = [
 
         // data directives
-        this.DIRECTIVE_MIMOTO_VALUE, this.DIRECTIVE_MIMOTO_ENTITY, this.DIRECTIVE_MIMOTO_COLLECTION, this.DIRECTIVE_MIMOTO_IMAGE, this.DIRECTIVE_MIMOTO_VIDEO, this.DIRECTIVE_MIMOTO_AUDIO, this.DIRECTIVE_MIMOTO_ID,
+        this.DIRECTIVE_MIMOTO_VALUE, this.DIRECTIVE_MIMOTO_ENTITY, this.DIRECTIVE_MIMOTO_COLLECTION,
+        //this.DIRECTIVE_MIMOTO_IMAGE,
+        this.DIRECTIVE_MIMOTO_VIDEO, this.DIRECTIVE_MIMOTO_AUDIO, this.DIRECTIVE_MIMOTO_ID,
 
         // data manipulation directives
         this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT, this.DIRECTIVE_MIMOTO_DATA_SET, this.DIRECTIVE_MIMOTO_DATA_CREATE, this.DIRECTIVE_MIMOTO_DATA_CLEAR,

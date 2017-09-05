@@ -311,7 +311,7 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_VALUE,
             this.DIRECTIVE_MIMOTO_ENTITY,
             this.DIRECTIVE_MIMOTO_COLLECTION,
-            this.DIRECTIVE_MIMOTO_IMAGE,
+            //this.DIRECTIVE_MIMOTO_IMAGE,
             this.DIRECTIVE_MIMOTO_VIDEO,
             this.DIRECTIVE_MIMOTO_AUDIO,
             this.DIRECTIVE_MIMOTO_ID,

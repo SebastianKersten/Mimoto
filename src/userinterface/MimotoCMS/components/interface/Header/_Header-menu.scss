@@ -65,12 +65,12 @@ ul.MimotoCMS_interface_Header-menu {
 
                 img.MimotoCMS_interface_Header-menu-user-image {
                     display: inline-block;
-                    max-width: 49px;
-                    max-height: 49px;
+                    width: 49px;
+                    height: 49px;
 
                     @include breakpoint(large up) {
-                        max-width: 63px;
-                        max-height: 63px;
+                        width: 63px;
+                        height: 63px;
                     }
                 }
 
