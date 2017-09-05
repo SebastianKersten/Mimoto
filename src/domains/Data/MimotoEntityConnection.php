@@ -265,7 +265,17 @@ class MimotoEntityConnection
      *
      * @return MimotoEntity
      */
-    public function getEntity() { return $this->_entity; }
+    public function getEntity()
+    {
+        // verify
+        if (empty($this->_entity))
+        {
+            // load
+            $this->_entity = Mimoto::service('data')->get($this->getChildEntityTypeName(), $this->getChildId());
+        }
+
+        return $this->_entity;
+    }
 
     /**
      * Set the connected entity

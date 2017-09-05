@@ -1,9 +1,9 @@
-<li class="MimotoCMS_ListItemModule" {{ realtime }}>
+<li class="MimotoCMS_ListItemModule" {{ realtime|default('') }}>
 
     <div class="MimotoCMS_ListItemModule-content">
 
         <div class="MimotoCMS_ListItemModule-info">
-            <div class="MimotoCMS_ListItemModule-label" {{ label_realtime }}>{{ label }}</div>
+            <div class="MimotoCMS_ListItemModule-label" {{ label_realtime|default('') }}>{{ label|default('') }}</div>
             {% if sublabel is defined %}
             <div class="MimotoCMS_ListItemModule-sublabel" {% if sublabel_realtime is defined %}{{ sublabel_realtime }}{% endif %}>{{ sublabel }}</div>
             {% endif %}

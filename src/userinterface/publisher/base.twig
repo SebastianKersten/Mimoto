@@ -6,39 +6,9 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-
-
         <link rel="stylesheet" type="text/css" href="/static/css/publisher.css">
-
-
-        <script type="text/javascript" src="/mimoto/static/js/mimoto.js"></script>
-        <script type="text/javascript" src="/mimoto/static/js/mimoto.cms.js"></script>
-
-
-
-
-        {#<script src="/static/js/publisher.js"></script>#}
-
-        {#{% if !Mimoto.editMode | Mimoto.isMode('edit') %}<script scr="yourinfocardscript"></script>{% endif %}#}
-
-
-        <script>
-
-            MimotoX.debug = true;
-
-            document.addEventListener('DOMContentLoaded', function ()
-            {
-                //var popup = MimotoX.popup('/mimoto.cms/contentsection/1/edit'); // #next -> form for infocard
-
-                //console.log('popup', popup);
-
-                //console.log('Version = ' + MimotoX.version);
-
-            }, false);
-
-        </script>
-
     </head>
+
     <body class="MimotoPublisher">
         <div class="MimotoPublisher-menu">
             <div class="MimotoPublisher-menu-home"><a href="/publisher">Home</a></div>
@@ -48,5 +18,32 @@
         <div class="MimotoPublisher-footer">
             Built on top of Mimoto<br>The ultra fast, fluid & realtime data management microframework
         </div>
+
+
+
+
+
+
+        {#<script src="/static/js/publisher.js"></script>#}
+
+        {#{% if !Mimoto.editMode | Mimoto.isMode('edit') %}<script scr="yourinfocardscript"></script>{% endif %}#}
+
+        <script type="text/javascript" src="/mimoto/static/js/mimoto.js"></script>
+        <script type="text/javascript" src="/mimoto/static/js/mimoto.cms.js"></script>
+        <script>
+
+            MimotoX.debug = true;
+
+//            document.addEventListener('DOMContentLoaded', function ()
+//            {
+//                //var popup = MimotoX.popup('/mimoto.cms/contentsection/1/edit'); // #next -> form for infocard
+//
+//                //console.log('popup', popup);
+//
+//                //console.log('Version = ' + MimotoX.version);
+//
+//            }, false);
+
+        </script>
     </body>
 </html>

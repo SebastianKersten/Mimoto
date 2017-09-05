@@ -3,8 +3,8 @@
     <div class="MimotoCMS_forms_FormComponent-header">
         <label for="" class="MimotoCMS_forms_FormComponent-title">{{ Mimoto.data('label') }} {# {% if Mimoto.data('value.optional') %}<span class="MimotoCMS_forms_FormComponent-title-information">(optioneel)</span>{% endif %}#}<svg class="js-error-icon MimotoCMS_forms_FormComponent-title-icon"><use xlink:href=""></use></svg></label>
         {% if button|default(false) %}
-            <div class="MimotoCMS_forms_FormComponent-button {{ buttonClass }}">
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label: buttonLabel, icon:buttonIcon, types:['small', 'secondary'], onclick:buttonOnClick|default('') }) }}
+            <div class="MimotoCMS_forms_FormComponent-button {{ buttonClass|default('') }}">
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label: buttonLabel|default(''), icon:buttonIcon|default(''), types:['small', 'secondary'], onclick:buttonOnClick|default('') }) }}
             </div>
         {% endif %}
     </div>
