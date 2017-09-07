@@ -3,7 +3,7 @@
 
 {% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "video", button:true, buttonLabel:'Upload video', buttonIcon:'', buttonClass:'js-'~sFlatVideoFieldId~'-video-upload-trigger' } %}
 
-    {% block form_component_element %}
+    {% block form_component %}
         <div id="{{ Mimoto.meta('type')~"."~Mimoto.meta('id') }}">
             <div class="MimotoCMS_forms_input_VideoUpload js-{{ sFlatVideoFieldId }}-video-upload">
 

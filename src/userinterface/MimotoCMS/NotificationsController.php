@@ -99,10 +99,10 @@ class NotificationsController
     public function getNotificationCount(Application $app)
     {
         // load
-        $aNotifications = Mimoto::service('data')->find([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'value' => ['state' => 'open'] ]);
+        $aNotifications = Mimoto::service('data')->select([ 'type' => CoreConfig::MIMOTO_NOTIFICATION, 'values' => ['state' => 'open'] ]);
 
         // create
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_notifications_NotificationOverviewSmall');
+        $component = Mimoto::service('output')->create('MimotoCMS_notifications_NotificationOverviewSmall');
 
         // setup
         $component->addSelection('notifications', $aNotifications, 'MimotoCMS_notifications_NotificationSmall');

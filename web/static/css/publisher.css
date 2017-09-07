@@ -2092,7 +2092,7 @@ table[class*="MimotoCMS"] {
 
 @font-face {
   font-family: 'Futura PT W02 Book';
-  src: url("/mimoto/static/fonts/futura/94fe45a6-9447-4224-aa0f-fa09fe58c702.eot?#iefix");
+  src: url("/mimoto/static/fonts/futura/94fe45a6-9447-4224-aa0f-fa09fe58c702.eot");
   src: url("/mimoto/static/fonts/futura/94fe45a6-9447-4224-aa0f-fa09fe58c702.eot?#iefix") format("eot"), url("/mimoto/static/fonts/futura/cb9d11fa-bd41-4bd9-8b8f-34ccfc8a80a2.woff2") format("woff2"), url("/mimoto/static/fonts/futura/475da8bf-b453-41ee-ab0e-bd9cb250e218.woff") format("woff"), url("/mimoto/static/fonts/futura/4d6d50ec-b049-44ba-a001-e847c3e2dc79.ttf") format("truetype"); }
 
 *[class*="MimotoCMS"],

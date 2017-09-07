@@ -10,9 +10,9 @@
         </div>
         <div class="MimotoCMS_ListItemModule-menu">
             {% if button2_label is defined and button2_label is not empty %}
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label:button2_label|default(''), onclick:button2_action|default(''), directive:button2_directive|default(''), types:[button2_type|default('')], icon:button2_icon|default('') }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:button2_label|default(''), link:button2_link|default(''), onclick:button2_action|default(''), directive:button2_directive|default(''), types:[button2_type|default('')], icon:button2_icon|default('') }) }}
             {% endif %}
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:button_label|default(''), onclick:button_action|default(''), directive:button_directive|default(''), types:[button_type|default('')], icon:button_icon|default('') }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:button_label|default(''), link:button_link|default(''), onclick:button_action|default(''), directive:button_directive|default(''), types:[button_type|default('')], icon:button_icon|default('') }) }}
         </div>
         <div class="MimotoCMS_ListItemModule-handle js-sortable-draghandle">
             <div class="MimotoCMS_ListItemModule-handle-dot"></div>

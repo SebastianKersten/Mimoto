@@ -118,12 +118,12 @@ module.exports.prototype = {
     _socketOnConnect: function()
     {
         // 1. logon with php
-        MimotoX.log('User connected.');
+        MimotoX.log('User connected'); // (socket id = ' + this._socket.id + ')');
         MimotoX.log('Logging on user ...');
 
         // 2. authenticate
         MimotoX.utils.callAPI({
-            type: 'get',
+            type: 'post',
             url: '/' + MimotoX.projectName + '/logon',
             data: { id: this._socket.id },
             dataType: 'json',
@@ -169,7 +169,7 @@ module.exports.prototype = {
      */
     _configureEditor: function(aFormattingOptions)
     {
-        MimotoX.log('Configuring editor ...');
+        //MimotoX.log('Configuring editor ...');
 
 
         // init
@@ -187,7 +187,7 @@ module.exports.prototype = {
             let formattingOption = aFormattingOptions[nFormattingOptionIndex];
 
 
-            console.log('Formatting options ' + nFormattingOptionIndex, JSON.stringify(formattingOption, null, 2));
+            //console.log('Formatting options ' + nFormattingOptionIndex, JSON.stringify(formattingOption, null, 2));
 
 
             switch(formattingOption.type)

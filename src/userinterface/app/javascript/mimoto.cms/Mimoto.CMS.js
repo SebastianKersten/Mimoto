@@ -43,7 +43,7 @@ module.exports.prototype = {
 
         //popup.on('success') = popup.close();
     },
-    
+
     // entityCreate: function(data)
     // {
     //     $.ajax({
@@ -83,7 +83,7 @@ module.exports.prototype = {
     {
         var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
         if (response == true) {
-    
+
             MimotoX.utils.callAPI({
                 type: 'GET',
                 url: "/mimoto.cms/entity/" + nEntityId + "/delete",
@@ -175,7 +175,7 @@ module.exports.prototype = {
     notificationClose: function(sEntityType, nNotificationId)
     {
         // 1. remove 8 and 9 (will be handled by the api call response)
-        
+
         // 8. find field
         var aNotifications = $("[data-mimoto-id='" + sEntityType + '.' + nNotificationId + "']");
 
@@ -235,20 +235,12 @@ module.exports.prototype = {
     /**
      * Formatting options
      */
-    formattingOptionNew: function()
-    {
-        var popup = MimotoX.popup("/mimoto.cms/configuration/formattingOption/new");
-    },
-
     formattingOptionView: function(nItemId)
     {
         window.open('/mimoto.cms/configuration/formattingOption/' + nItemId + '/view', '_self');
     },
 
-    formattingOptionEdit: function(nItemId)
-    {
-        MimotoX.popup('/mimoto.cms/configuration/formattingOption/' + nItemId + '/edit');
-    },
+
 
     formattingOptionDelete: function(nItemId, sFormattingOptionName)
     {
@@ -369,16 +361,7 @@ module.exports.prototype = {
         });
     },
     
-    
-    
-    /**
-     * Datasets
-     */
-    datasetView: function(nDatasetId)
-    {
-        window.open('/mimoto.cms/dataset/' + nDatasetId + '/view', '_self');
-    },
-    
+
     
     /**
      * Content sections

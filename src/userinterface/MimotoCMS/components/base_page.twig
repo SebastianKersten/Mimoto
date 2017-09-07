@@ -5,16 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-    <script type="text/javascript" src="/mimoto/static/js/mimoto.js"></script>
-    <script type="text/javascript" src="/mimoto/static/js/mimoto.cms.js"></script>
-
-    <script>
-        MimotoX.autoloadCSS = false;
-        MimotoX.debug = true;
-    </script>
-
-    <link rel="stylesheet" type="text/css" href="/mimoto/static/css/mimoto.cms.css">
+    <link rel="stylesheet" type="text/css" href="/mimoto/mimoto.cms.css" />
 
 </head>
 <body class="MimotoCMS">
@@ -32,6 +23,13 @@
     </div>
 
     {% include "MimotoCMS/components/interface/Popup/Popup.twig" %}
+
+    <script type="text/javascript" src="/mimoto/mimoto.js"></script>
+
+    <script>
+        MimotoX.autoloadCSS = false;
+        MimotoX.debug = true;
+    </script>
 
 </body>
 </html>

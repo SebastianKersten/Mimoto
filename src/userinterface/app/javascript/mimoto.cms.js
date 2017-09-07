@@ -1,6 +1,6 @@
 //'use strict'; #note SK - do not uncomment
 
-require('jquery-ui');
+//require('jquery-ui');
 
 
 var HeaderView = require('./views/Header');

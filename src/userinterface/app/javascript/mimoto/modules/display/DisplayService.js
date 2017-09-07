@@ -14,6 +14,9 @@ let CollectionChangeSortOrder = require('./data/CollectionChangeSortOrder');
 let EntitySetItem = require('./data/EntitySetItem');
 let EntityUnsetItem = require('./data/EntityUnsetItem');
 
+// Mimoto input classes
+let Form = require('./input/Form');
+
 // Mimoto display classes
 let HideWhenEmpty = require('./directives/HideWhenEmpty');
 let HideWhenEmptyNot = require('./directives/HideWhenEmptyNot');
@@ -75,34 +78,38 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DATA_CREATE:  'data-mimoto-create',
     DIRECTIVE_MIMOTO_DATA_CLEAR:   'data-mimoto-clear',
 
+    // input directives
+    DIRECTIVE_MIMOTO_FORM:        'data-mimoto-form',
+    DIRECTIVE_MIMOTO_FORM_SUBMIT: 'data-mimoto-form-submit',
+
     // display directives
-    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY:        'data-mimoto-display-hidewhenempty',
-    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:     'data-mimoto-display-hidewhennotempty',
-    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX:        'data-mimoto-display-hidewhenregex',
-    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:     'data-mimoto-display-hidewhennotregex',
-    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE:        'data-mimoto-display-hidewhenvalue',
-    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:     'data-mimoto-display-hidewhennotvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY:             'data-mimoto-display-hidewhenempty',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:          'data-mimoto-display-hidewhennotempty',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX:             'data-mimoto-display-hidewhenregex',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX:          'data-mimoto-display-hidewhennotregex',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE:             'data-mimoto-display-hidewhenvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE:          'data-mimoto-display-hidewhennotvalue',
 
-    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY:        'data-mimoto-display-showwhenempty',
-    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:     'data-mimoto-display-showwhennotempty',
-    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX:        'data-mimoto-display-showwhenregex',
-    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:     'data-mimoto-display-showwhennotregex',
-    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE:        'data-mimoto-display-showwhenvalue',
-    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:     'data-mimoto-display-showwhennotvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY:             'data-mimoto-display-showwhenempty',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY:          'data-mimoto-display-showwhennotempty',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX:             'data-mimoto-display-showwhenregex',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX:          'data-mimoto-display-showwhennotregex',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE:             'data-mimoto-display-showwhenvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE:          'data-mimoto-display-showwhennotvalue',
 
-    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:    'data-mimoto-display-addclasswhenempty',
-    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY: 'data-mimoto-display-addclasswhennotempty',
-    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:    'data-mimoto-display-addclasswhenregex',
-    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX: 'data-mimoto-display-addclasswhennotregex',
-    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:    'data-mimoto-display-addclasswhenvalue',
-    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE: 'data-mimoto-display-addclasswhennotvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:         'data-mimoto-display-addclasswhenempty',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:      'data-mimoto-display-addclasswhennotempty',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX:         'data-mimoto-display-addclasswhenregex',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX:      'data-mimoto-display-addclasswhennotregex',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE:         'data-mimoto-display-addclasswhenvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE:      'data-mimoto-display-addclasswhennotvalue',
 
-    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:    'data-mimoto-display-removeclasswhenempty',
-    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY: 'data-mimoto-display-removeclasswhennotempty',
-    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:    'data-mimoto-display-removeclasswhenregex',
-    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX: 'data-mimoto-display-removeclasswhennotregex',
-    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:    'data-mimoto-display-removeclasswhenvalue',
-    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE: 'data-mimoto-display-removeclasswhennotvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:      'data-mimoto-display-removeclasswhenempty',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:   'data-mimoto-display-removeclasswhennotempty',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX:      'data-mimoto-display-removeclasswhenregex',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX:   'data-mimoto-display-removeclasswhennotregex',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:      'data-mimoto-display-removeclasswhenvalue',
+    DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:   'data-mimoto-display-removeclasswhennotvalue',
 
     // utility tags
     DIRECTIVE_MATH_MIMOTO_COUNT: 'data-mimoto-count',
@@ -127,6 +134,9 @@ module.exports.prototype = {
 
     // classes
     _aDisplayOptionClasses: [],
+
+    // forms
+    _aForms: [],
 
 
     
@@ -234,6 +244,10 @@ module.exports.prototype = {
                 // b. read
                 let nDirectiveId = element.getAttribute('data-mimoto');
 
+
+                // $todo - support array
+
+
                 // c. read
                 let directive = this._aDirectives[nDirectiveId];
 
@@ -311,7 +325,7 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_VALUE,
             this.DIRECTIVE_MIMOTO_ENTITY,
             this.DIRECTIVE_MIMOTO_COLLECTION,
-            //this.DIRECTIVE_MIMOTO_IMAGE,
+            this.DIRECTIVE_MIMOTO_IMAGE,
             this.DIRECTIVE_MIMOTO_VIDEO,
             this.DIRECTIVE_MIMOTO_AUDIO,
             this.DIRECTIVE_MIMOTO_ID,
@@ -324,6 +338,10 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DATA_SET,
             this.DIRECTIVE_MIMOTO_DATA_CREATE,
             this.DIRECTIVE_MIMOTO_DATA_CLEAR,
+
+            // intput directives
+            this.DIRECTIVE_MIMOTO_FORM,
+            this.DIRECTIVE_MIMOTO_FORM_SUBMIT,
 
             // display directives
             this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY,
@@ -420,11 +438,36 @@ module.exports.prototype = {
                 this._aSelectors[directive.sPropertySelector].push(directive);
 
 
+                // ---
+
 
                 // store directive
-                element.setAttribute('data-mimoto', nDirectiveId);
+                if (element.hasAttribute('data-mimoto'))
+                {
+                    let xRegisteredIds = element.getAttribute('data-mimoto');
+
+                    if (!xRegisteredIds) // empty
+                    {
+                        element.setAttribute('data-mimoto', nDirectiveId);
+                    }
+                    else
+                    if (!isNaN(xRegisteredIds)) // single id
+                    {
+                        element.setAttribute('data-mimoto', JSON.stringify([parseInt(xRegisteredIds), nDirectiveId]));
+                    }
+                    else // multiple ids
+                    {
+                        element.setAttribute('data-mimoto', JSON.stringify(JSON.parse(xRegisteredIds).push(nDirectiveId)));
+                    }
+                }
+                else
+                {
+                    element.setAttribute('data-mimoto', nDirectiveId);
+                }
                 this._aDirectives[nDirectiveId] = directive;
 
+
+                // ---
 
 
                 // read tag specific settings
@@ -623,7 +666,45 @@ module.exports.prototype = {
                         break;
 
 
-                    // --- display updates
+
+                    // --- input directives
+
+                    case this.DIRECTIVE_MIMOTO_FORM:
+
+                        console.warn('DIRECTIVE_MIMOTO_FORM', directive.element);
+
+                        // init
+                        let form = new Form(directive.element);
+
+
+                        // store
+                        this._aForms.push(form);
+
+                        // 1. create form
+                        // 2. add input fields
+                        // 3. add submit (indien erin, dan meteen, indien erbuiten met naam, search form, open form)
+
+                        // if (element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_CONNECTION))
+
+
+                        break;
+
+
+                    case this.DIRECTIVE_MIMOTO_FORM_SUBMIT:
+
+                        console.warn('DIRECTIVE_MIMOTO_FORM_SUBMIT', directive);
+
+
+                        // 1. create form
+                        // 2. add input fields
+                        // 3. add submit (indien erin, dan meteen, indien erbuiten met naam, search form, open form)
+
+                        // if (element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_CONNECTION))
+
+
+                        break;
+
+                    // --- display directives
 
                     case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY:
                     case this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:

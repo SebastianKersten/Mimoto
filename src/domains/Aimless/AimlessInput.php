@@ -44,7 +44,8 @@ class AimlessInput extends AimlessComponent
 
     public function field()
     {
-        return 'data-mimoto-form-field="'.$this->_sFieldId.'"';
+        // compose and send
+        return 'data-mimoto-form-field="'.$this->_sFieldId.'" data-mimoto-form-field-type="'.$this->_entity->getEntitySelector().'"';
     }
 
     public function input()
@@ -263,7 +264,7 @@ class AimlessInput extends AimlessComponent
         // 3. derde parameter
 
         // connect
-        $sRenderedField .= '<script>MimotoX.utils.registerRequest(Mimoto.form.registerInputField, "'.$this->_sFieldId.'", '.json_encode($settings).')</script>';
+        //$sRenderedField .= '<script>MimotoX.utils.registerRequest(Mimoto.form.registerInputField, "'.$this->_sFieldId.'", '.json_encode($settings).')</script>';
 
         // output
         return $sRenderedField;

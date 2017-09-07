@@ -333,7 +333,7 @@ socketIOMimoto.on('connection', function(server)
 
     server.on("logon", function (data)
     {
-        //console.log('Logon', JSON.stringify(data, null, 2));
+        //console.log('Logging on ...', JSON.stringify(data, null, 2));
 
         //console.log(aClients);
 

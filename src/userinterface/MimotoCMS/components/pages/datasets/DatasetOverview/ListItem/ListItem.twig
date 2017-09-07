@@ -12,7 +12,7 @@
         sublabel: 'type='~Mimoto.data('type')~', form='~sFormInfo,
         sublabel_realtime:  Mimoto.realtime('type'),
         button_label: 'View',
-        button_action: 'Mimoto.CMS.datasetView('~Mimoto.meta('id')~');',
+        button_link: '/mimoto.cms/dataset/' ~ Mimoto.meta('id') ~ '/view',
         button_type: 'secondary',
         button2_label: 'Delete',
         button2_directive: Mimoto.remove(),

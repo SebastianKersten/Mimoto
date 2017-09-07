@@ -188,9 +188,6 @@ class CoreConfig
     const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
     const COREFORM_FORM_INPUTVALIDATION         = '_Mimoto_coreform_form_inputValidation';
 
-    const COREFORM_FORMATTINGOPTION             = '_Mimoto_coreform_formattingoption';
-    const COREFORM_FORMATTINGOPTIONATTRIBUTE    = '_Mimoto_coreform_formattingoptionattribute';
-
     const COREFORM_FILE                         = '_Mimoto_coreform_file';
 
     const COREFORM_SELECTION                    = '_Mimoto_coreform__selection';

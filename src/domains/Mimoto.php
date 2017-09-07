@@ -139,7 +139,7 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/logout', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logout');
 
         $app->get ('/'.$sProjectName.'/initialize', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::initialize');
-        $app->get ('/'.$sProjectName.'/logon', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logon');
+        $app->post('/'.$sProjectName.'/logon', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::logon');
         $app->get ('/'.$sProjectName.'/recent/{sPropertySelector}', 'Mimoto\\UserInterface\\MimotoCMS\\SessionController::recent');
 
 
@@ -300,13 +300,13 @@ class Mimoto
         // --- assets ---
 
         // javascript
-        $app->get('/'.$sProjectName.'/static/js/mimoto.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimoto');
-        $app->get('/'.$sProjectName.'/static/js/mimoto.js.map', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMapMimoto');
-        $app->get('/'.$sProjectName.'/static/js/mimoto.cms.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimotoCMS');
-        $app->get('/'.$sProjectName.'/static/js/mimoto.cms.js.map', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMapMimotoCMS');
+        $app->get('/'.$sProjectName.'/mimoto.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimoto');
+        $app->get('/'.$sProjectName.'/mimoto.js.map', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMapMimoto');
+        $app->get('/'.$sProjectName.'/mimoto.cms.js', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMimotoCMS');
+        $app->get('/'.$sProjectName.'/mimoto.cms.js.map', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadJavascriptMapMimotoCMS');
 
         // stylesheets
-        $app->get('/'.$sProjectName.'/static/css/mimoto.cms.css', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadStylesheetMimotoCMS');
+        $app->get('/'.$sProjectName.'/mimoto.cms.css', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadStylesheetMimotoCMS');
 
         // fonts
         $app->get('/'.$sProjectName.'/static/fonts/futura/4d6d50ec-b049-44ba-a001-e847c3e2dc79.ttf', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadFontFuturaTtf');

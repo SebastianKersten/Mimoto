@@ -87,14 +87,19 @@ class AimlessForm extends AimlessComponent
         $jsonResponseSettings = (isset($this->_aOptions['response'])) ? json_encode($this->_aOptions['response']) : '{}';
 
 
-        // init
-        $sRenderedForm = '<form name="'.$this->_sFormName.'">';// action="'.$sAction.'" method="'.$sMethod.'">';
-        $sRenderedForm .= '<script>MimotoX.utils.registerRequest(Mimoto.form.open, "'.$this->_sFormName.'", "'.$sAction.'", "'.$sMethod.'", '.($form->getValue('realtimeCollaborationMode') ? 'true' : 'false').', \''.$jsonResponseSettings.'\')</script>';
+        // 1. autosave (= also realtime collaboration)
+        // 2. responseInstructions (connect, close popup, instruction editor on form)
+        // 3. public key
+        // 4. entity id
 
+
+        // init
+        $sRenderedForm = '<form data-mimoto-form="'.$form->getEntityTypeName().'.'.$form->getId().'" data-mimoto-form-name=“'.$this->_sFormName.'" data-mimoto-form-publickey="'.Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues)).'" data-mimoto-form-autosave="true">';
+        //$sRenderedForm = '<form name="'.$this->_sFormName.'">';// action="'.$sAction.'" method="'.$sMethod.'">';
+//        $sRenderedForm .= '<script>MimotoX.utils.registerRequest(Mimoto.form.open, "'.$this->_sFormName.'", "'.$sAction.'", "'.$sMethod.'", '.($form->getValue('realtimeCollaborationMode') ? 'true' : 'false').', \''.$jsonResponseSettings.'\')</script>';
 
 
         // add security
-        $sRenderedForm .= '<input type="hidden" name="Mimoto.PublicKey" value="'.Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues)).'">';
         $sRenderedForm .= '<input type="hidden" name="Mimoto.EntityId" value="'.$formFieldValues->entityId.'">';
 
         // add instructions
@@ -108,7 +113,7 @@ class AimlessForm extends AimlessComponent
 
         // finish
         $sRenderedForm .= '</form>';
-        $sRenderedForm .= '<script>MimotoX.utils.registerRequest(Mimoto.form.close, "'.$this->_sFormName.'");</script>';
+//        $sRenderedForm .= '<script>MimotoX.utils.registerRequest(Mimoto.form.close, "'.$this->_sFormName.'");</script>';
 
         // output
         return $sRenderedForm;

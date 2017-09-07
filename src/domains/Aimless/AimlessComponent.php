@@ -638,18 +638,21 @@ class AimlessComponent
                 $sComponent = ' data-mimoto-component="'.$sComponentName.'"';
 
 
-                // compose
-                switch($this->_entity->getPropertyType($sPropertyName))
+                if (!empty($this->_entity)) // #todo - is this still needed?
                 {
-                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                    // compose
+                    switch($this->_entity->getPropertyType($sPropertyName))
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
 
-                        break;
+                            break;
 
-                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                        $sComponent = ' data-mimoto-component="'.$sComponentName.'"';
-                        break;
+                            $sComponent = ' data-mimoto-component="'.$sComponentName.'"';
+                            break;
+                    }
                 }
 
 
@@ -789,7 +792,7 @@ class AimlessComponent
         $eUser = Mimoto::service('session')->currentUser();
 
         // validate
-        if (empty($eUser)) $eUser = Mimoto::service('data')->create(CoreConfig::MIMOTO_USER);
+        if (empty($eUser)) $eUser = Mimoto::service('data')->create(CoreConfig::MIMOTO_US);
 
         // create
         $component = Mimoto::service('output')->createComponent('', $eUser);

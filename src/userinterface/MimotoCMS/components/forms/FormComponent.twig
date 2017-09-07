@@ -1,9 +1,9 @@
-<div {{ Mimoto.field() }} class="MimotoCMS_forms_FormComponent js-form-component{% if type|default('') %} js-form-component-{{ type }}{% endif %}" {{ Mimoto.realtime() }}>
+<div class="MimotoCMS_forms_FormComponent" {{ Mimoto.field() }} {{ Mimoto.realtime() }}>
 
     <div class="MimotoCMS_forms_FormComponent-header">
         <label for="" class="MimotoCMS_forms_FormComponent-title">{{ Mimoto.data('label') }} {# {% if Mimoto.data('value.optional') %}<span class="MimotoCMS_forms_FormComponent-title-information">(optioneel)</span>{% endif %}#}<svg class="js-error-icon MimotoCMS_forms_FormComponent-title-icon"><use xlink:href=""></use></svg></label>
         {% if button|default(false) %}
-            <div class="MimotoCMS_forms_FormComponent-button {{ buttonClass|default('') }}">
+            <div class="MimotoCMS_forms_FormComponent-button" {{ buttonClass|default('') }}">
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label: buttonLabel|default(''), icon:buttonIcon|default(''), types:['small', 'secondary'], onclick:buttonOnClick|default('') }) }}
             </div>
         {% endif %}
@@ -11,11 +11,11 @@
 
     <div class="MimotoCMS_forms_FormComponent-content {% if not Mimoto.data('description')|default('') %}MimotoCMS_forms_FormComponent-content--no-description{% endif %}">
 
-        <div class="MimotoCMS_forms_FormComponent-element js-error-parent">
+        <div class="MimotoCMS_forms_FormComponent-element">
 
-            {% block form_component_element %}{% endblock %}
+            {% block form_component %}{% endblock %}
 
-            <p {{ Mimoto.error() }} class="MimotoCMS_forms_FormComponent-element-error"></p>
+            <p class="MimotoCMS_forms_FormComponent-element-error" {{ Mimoto.error() }}></p>
 
         </div>
 
@@ -25,3 +25,4 @@
 
     </div>
 </div>
+

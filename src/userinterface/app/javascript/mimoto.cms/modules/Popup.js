@@ -93,9 +93,6 @@ module.exports.prototype = {
     
                 // reset scroll
                 layer_popup.scrollTop = 0;
-                
-                // update
-                MimotoX.utils.parseRequestQueue();
             }
         });
     },

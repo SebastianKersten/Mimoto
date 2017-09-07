@@ -21,9 +21,9 @@ module.exports = function() {
         },
         resolve: {
             modules: ['node_modules', 'src/userinterface/MimotoCMS/components', 'src/userinterface/MimotoCMS/modules'],
-            alias: {
-                'jquery-ui': resolve('node_modules', 'jquery-ui-dist/jquery-ui.js')
-            }
+            // alias: {
+            //     'jquery-ui': resolve('node_modules', 'jquery-ui-dist/jquery-ui.js')
+            // }
         },
         module: {
             rules: [
@@ -36,12 +36,12 @@ module.exports = function() {
         },
         plugins: [
             new webpack.ExtendedAPIPlugin(),
-            new ExtractTextPlugin('[name]'),
-            new webpack.ProvidePlugin({
-                $: "jquery",
-                jQuery: "jquery",
-                "window.jQuery": "jquery"
-            })
+            new ExtractTextPlugin('[name]')
+            // new webpack.ProvidePlugin({
+            //     $: "jquery",
+            //     jQuery: "jquery",
+            //     "window.jQuery": "jquery"
+            // })
         ]
     };
 };

@@ -194,78 +194,75 @@ module.exports.prototype = {
     },
 
 
-    callAPI: function(request)
+    callAPI: function(apiRequest)
     {
-        $.ajax({
-            type: request.type,
-            url: request.url,
-            data: request.data,
-            dataType: request.dataType,
-            success: function (resultData, resultStatus, resultSomething)
+        // compose
+        let requestData = apiRequest.data;
+
+        // init
+        let request = new XMLHttpRequest();
+
+        // setup
+        request.onreadystatechange = function()
+        {
+            if(request.readyState === 4)
             {
-                //console.error(resultData);
-
-                // verify and validate
-                if (resultData.dataModifications && resultData.dataModifications instanceof Array)
+                if(request.status === 200)
                 {
-                    var nModificationCount = resultData.dataModifications.length;
-                    for (var nModificationIndex = 0; nModificationIndex < nModificationCount; nModificationIndex++)
+
+                    // convert
+                    let response = JSON.parse(request.responseText);
+
+                    // verify and validate
+                    if (response.dataModifications && response.dataModifications instanceof Array)
                     {
-                        // register
-                        var dataModification = resultData.dataModifications[nModificationIndex];
-
-                        switch(dataModification.type)
+                        var nModificationCount = response.dataModifications.length;
+                        for (var nModificationIndex = 0; nModificationIndex < nModificationCount; nModificationIndex++)
                         {
-                            case 'data.created':
+                            // register
+                            var dataModification = response.dataModifications[nModificationIndex];
 
-                                //MimotoX.dom.onDataCreated(dataModification.data, 'direct');
-                                break;
+                            switch(dataModification.type)
+                            {
+                                case 'data.created':
 
-                            case 'data.changed':
+                                    //MimotoX.dom.onDataCreated(dataModification.data, 'direct');
+                                    break;
 
-                                MimotoX.dom.onDataChanged(dataModification.data, 'direct');
-                                break;
+                                case 'data.changed':
+
+                                    MimotoX.dom.onDataChanged(dataModification.data, 'direct');
+                                    break;
+                            }
                         }
                     }
-                }
 
-                // forward
-                request.success(resultData.response, resultStatus, resultSomething);
+                    // forward
+                    apiRequest.success(response.response, response.status, response.statusText);
+                }
             }
-        });
-    },
-    
-    registerRequest: function(sMethod)
-    {
-        // collect
-        var aArguments = [];
-        var nArgumentCount = arguments.length;
-        for (var nArgumentIndex = 1; nArgumentIndex < nArgumentCount; nArgumentIndex++)
-        {
-            aArguments.push(arguments[nArgumentIndex]);
-        }
-        
-        // compose
-        var request = {
-            method: arguments[0],
-            aArguments: aArguments
         };
-        
-        // store
-        this._aRequests.push(request);
-    },
-    
-    parseRequestQueue: function()
-    {
-        // parse
-        while (this._aRequests.length > 0)
+
+        // prepare
+        request.open(apiRequest.type || 'get', apiRequest.url, true);
+
+
+        // setup
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        // prepare
+        let sRequestData = '';
+        for (let sKey in requestData)
         {
-            // register
-            var request = this._aRequests.shift();
-            
-            // execute
-            request.method.apply(Mimoto.form, request.aArguments);
+            if (requestData[sKey])
+            {
+                if (sRequestData.length !== 0) sRequestData += '&';
+                sRequestData += sKey + '=' + requestData[sKey];
+            }
         }
+
+        // send
+        request.send(sRequestData);
     }
     
 }

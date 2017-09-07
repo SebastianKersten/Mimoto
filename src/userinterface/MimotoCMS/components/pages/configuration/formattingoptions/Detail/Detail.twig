@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__meta_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', onclick:"Mimoto.CMS.formattingOptionEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_formattingoption'), type:'secondary' }) }}
                     </div>
 
                 </div>

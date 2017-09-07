@@ -95,10 +95,6 @@ module.exports.prototype = {
         this.data = new DataService();
         this.display = new DisplayService();
 
-
-        // update
-        MimotoX.utils.parseRequestQueue();
-
         // logon
         if (this.autoLogon) this._realtimeManager = new RealtimeManager(this.gateway);
     },
@@ -262,9 +258,6 @@ module.exports.prototype = {
                     // collect and execute scripts
                     let aResponseScripts = element.querySelectorAll('script');
                     aResponseScripts.forEach(function(script) { eval(script.text) });
-
-                    // update
-                    MimotoX.utils.parseRequestQueue();
                 }
             }
         };
