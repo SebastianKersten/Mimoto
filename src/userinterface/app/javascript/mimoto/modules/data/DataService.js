@@ -27,7 +27,7 @@ module.exports.prototype = {
      */
     __construct: function()
     {
-        MimotoX.log('Initializing data service ...');
+        Mimoto.log('Initializing data service ...');
 
 
 
@@ -53,7 +53,7 @@ module.exports.prototype = {
             options: options
         };
 
-        MimotoX.popup('/mimoto/data/edit', postData);
+        Mimoto.popup('/mimoto/data/edit', postData);
     },
 
     add: function(sPropertySelector, sFormName, options) {
@@ -64,7 +64,7 @@ module.exports.prototype = {
             options: options
         };
 
-        MimotoX.popup('/mimoto/data/add', postData);
+        Mimoto.popup('/mimoto/data/add', postData);
     },
 
 
@@ -87,7 +87,7 @@ module.exports.prototype = {
         console.log('remove', sEntitySelector, nConnectionId);
 
 
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'POST',
             url: '/mimoto/data/remove',
             data: postData,
@@ -107,7 +107,7 @@ module.exports.prototype = {
             options: options
         };
 
-        MimotoX.popup('/mimoto/data/select', postData);
+        Mimoto.popup('/mimoto/data/select', postData);
     },
 
     set: function(sPropertySelector, value, options) {
@@ -118,13 +118,13 @@ module.exports.prototype = {
             options: options
         };
 
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: '/mimoto/data/set',
             data: postData,
             dataType: 'json',
             success: function(resultData, resultStatus, resultSomething) {
-                MimotoX.closePopup();
+                Mimoto.closePopup();
             }
         });
     },
@@ -137,7 +137,7 @@ module.exports.prototype = {
             options: options
         };
 
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: '/mimoto/data/create',
             data: postData,
@@ -155,7 +155,7 @@ module.exports.prototype = {
             options: options
         };
 
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: '/mimoto/data/clear',
             data: postData,

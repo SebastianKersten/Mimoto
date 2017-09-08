@@ -30,10 +30,10 @@ module.exports.prototype = {
             let sEntitySelector = item.connection.childEntityTypeName + "." + item.connection.childId;
 
             // 3. find
-            let element = directive.element.querySelector('[' + MimotoX.display.DIRECTIVE_MIMOTO_ID + '="' + sEntitySelector + '"][' + MimotoX.display.DIRECTIVE_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
+            let element = directive.element.querySelector('[' + Mimoto.display.DIRECTIVE_MIMOTO_ID + '="' + sEntitySelector + '"][' + Mimoto.display.DIRECTIVE_SETTING_MIMOTO_CONNECTION + '="' + item.connection.id + '"]');
 
             // 4. cleanup
-            MimotoX.utils.removeComponent(element);
+            Mimoto.utils.removeComponent(element);
         });
     }
 

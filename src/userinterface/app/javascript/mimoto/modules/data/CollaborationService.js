@@ -27,7 +27,7 @@ module.exports.prototype = {
      */
     __construct: function()
     {
-        MimotoX.log('Initializing data service ...');
+        Mimoto.log('Initializing data service ...');
 
 
 
@@ -66,7 +66,7 @@ module.exports.prototype = {
 
     createAndConnect: function(sType, sPropertySelector, options) // -> sets onclick
     {
-        MimotoX.log('Clicked on createAndConnect .. start the call');
+        Mimoto.log('Clicked on createAndConnect .. start the call');
     },
 
 
@@ -102,7 +102,7 @@ module.exports.prototype = {
             xVars: xVars
         };
 
-        MimotoX.popup('/mimoto/data/select', request);
+        Mimoto.popup('/mimoto/data/select', request);
 
         // 1. render component (direct of with mapping)
         // 2. mapping info in dom

@@ -13,6 +13,6 @@
             {#<p>input wordt "hidden"</p>#}
             <input {{ Mimoto.input() }} type="text" class="MimotoCMS_forms_input_DatePicker-input js-{{ sFlatDatePickerId }}-date-picker-input" value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-value="{{ Mimoto.value() }}" data-dp-format="{{ sFRDateFormat }}"/>
         </div>
-        <script>MimotoX.utils.registerRequest(Mimoto.form.setupDatePicker, '{{ sDatePickerId }}', '{{ sFlatDatePickerId }}', '{{ Mimoto.fieldId() }}');</script>
+        <script>Mimoto.utils.registerRequest(Mimoto.form.setupDatePicker, '{{ sDatePickerId }}', '{{ sFlatDatePickerId }}', '{{ Mimoto.fieldId() }}');</script>
     {% endblock %}
 {% endembed %}

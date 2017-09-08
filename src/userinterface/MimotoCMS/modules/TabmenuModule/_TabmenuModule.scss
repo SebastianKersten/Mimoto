@@ -71,9 +71,8 @@ div.MimotoCMS_modules_Tabmenu__menu_tab {
         background-color: #ffffff;
     }
 
-    &.secondary {
-        background-color: inherit;
-        color: #ff0000;
+    &.hidden {
+        display: none;
     }
 }
 

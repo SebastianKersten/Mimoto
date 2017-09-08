@@ -2,8 +2,8 @@
     {{ Mimoto.data('notifications.{state="open"}', 'MimotoCMS_notifications_Notification') }}
 </div>
 
-<div class="MimotoCMS_pages_notifications_NotificationOverview__empty" onclick="Mimoto.CMS.notificationsCloseAll()" {{ Mimoto.showWhenEmpty('notifications') }}>
+<div class="MimotoCMS_pages_notifications_NotificationOverview__empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('notifications') }}>
     Congratulations! In a world flooded with task lists, agenda items and pending requests, at least this list is empty for now. No actions needed!
 </div>
 
-<span class="MimotoCMS_pages_notifications_NotificationOverview__clearall" onclick="Mimoto.CMS.notificationsCloseAll()" {{ Mimoto.hideWhenEmpty('notifications') }}>Clear all</span>
+<span class="MimotoCMS_pages_notifications_NotificationOverview__clearall {{ Mimoto.init() }}" {{ Mimoto.api('/mimoto.cms/notifications/closeall') }} {{ Mimoto.hideWhenEmpty('notifications') }}>Clear all</span>

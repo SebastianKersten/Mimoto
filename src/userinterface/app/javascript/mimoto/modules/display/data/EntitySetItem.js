@@ -26,7 +26,7 @@ module.exports.prototype = {
         // 2. set item
         if (directive.sComponentName !== undefined)
         {
-            MimotoX.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+            Mimoto.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
         }
     }
 

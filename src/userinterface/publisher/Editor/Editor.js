@@ -50,7 +50,7 @@ module.exports.prototype = {
         //let my_blot = Parchment.find(NodeConfig.node);
 
 
-        //let popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
+        //let popup = Mimoto.popup('/Mimoto.Aimless/form/infocard');
     },
 
     onInfocardEdit: function(NodeConfig)
@@ -61,7 +61,7 @@ module.exports.prototype = {
         // 2. call popup, or
         // 3. create comment
 
-        let popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
+        let popup = Mimoto.popup('/Mimoto.Aimless/form/infocard');
 
         // 4. delete formatting options (als mogelijke feedback van popup)
         // 5. onInit (wanneer het op de dom geplaatst worden vanuit een saved state

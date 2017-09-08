@@ -1,31 +1,8 @@
-{% if tabs is empty %}Mimoto says: Please add an array called 'tabs'. See documentation for more info.{% endif %}
-{% set tabmenu_id = "Mimoto_Modules_Tabmenu__"~id %}
-<div id="{{ tabmenu_id }}" class="MimotoCMS_modules_Tabmenu">
-    <div class="MimotoCMS_modules_Tabmenu__menu">
-        {% for tab in tabs %}<div id="{{ tabmenu_id }}_{{ loop.index }}" class="MimotoCMS_modules_Tabmenu__menu_tab {% if loop.first %}active{% endif %} {% if secondary|default('') %}secondary{% endif %}">{{ tab.label }}</div>{% endfor %}
+<div data-mimotocms-tabmenu class="MimotoCMS_modules_Tabmenu">
+    <div data-mimotocms-tabmenu-tab-container class="MimotoCMS_modules_Tabmenu__menu">
+        <div data-mimotocms-tabmenu-tab-template class="MimotoCMS_modules_Tabmenu__menu_tab hidden"></div>
     </div>
     <div class="MimotoCMS_modules_Tabmenu-panels">
         {% block panels %}{% endblock %}
     </div>
 </div>
-<script>
-
-    // init
-    var aTabs = [];
-
-    {% for tab in tabs %}
-
-        var tab = {
-            id: '{{ tabmenu_id }}_{{ loop.index }}',
-            label: '{{ tab.label }}',
-            panel_id: '{{ tab.panel_id }}'
-        };
-
-        aTabs.push(tab);
-
-    {% endfor %}
-
-    // setup
-    var tabmenu = new Mimoto.modules.Tabmenu('{{ tabmenu_id }}', aTabs);
-
-</script>

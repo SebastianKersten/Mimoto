@@ -16,7 +16,7 @@ use Mimoto\Aimless\AimlessComponent;
 class DataManipulationUtils
 {
 
-    // tags
+    // manipulation
     const MIMOTO_DATA_EDIT   = 'data-mimoto-edit';
     const MIMOTO_DATA_ADD    = 'data-mimoto-add';
     const MIMOTO_DATA_REMOVE = 'data-mimoto-remove';
@@ -24,6 +24,9 @@ class DataManipulationUtils
     const MIMOTO_DATA_SET    = 'data-mimoto-set';
     const MIMOTO_DATA_CREATE = 'data-mimoto-create';
     const MIMOTO_DATA_CLEAR  = 'data-mimoto-clear';
+
+    // utils
+    const MIMOTO_DATA_API    = 'data-mimoto-api';
 
 
 

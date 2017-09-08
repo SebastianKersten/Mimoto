@@ -60,13 +60,13 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "193ff019239dc258b145";
+/******/ 	__webpack_require__.h = "d5b3bc59fa4aa84623bb";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 528);
+/******/ 	return __webpack_require__(__webpack_require__.s = 520);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -3159,16 +3159,16 @@ module.exports.EventEmitter = EventEmitter;
 
 /***/ }),
 
-/***/ 528:
+/***/ 520:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(54);
-module.exports = __webpack_require__(529);
+module.exports = __webpack_require__(521);
 
 
 /***/ }),
 
-/***/ 529:
+/***/ 521:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3182,7 +3182,7 @@ module.exports = __webpack_require__(529);
 
 // Publisher demo classes
 
-var Publisher = __webpack_require__(530);
+var Publisher = __webpack_require__(522);
 
 /**
  * Auto run
@@ -3194,7 +3194,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ 530:
+/***/ 522:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3208,8 +3208,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Mimoto classes
 
-var Article = __webpack_require__(531);
-var Editor = __webpack_require__(532);
+var Article = __webpack_require__(523);
+var Editor = __webpack_require__(524);
 
 module.exports = function () {
 
@@ -3273,7 +3273,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 531:
+/***/ 523:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3321,7 +3321,7 @@ module.exports.prototype = {
         var commentForm = document.getElementById('commentForm');
 
         // call
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: "/publisher/article/" + this._nArticleId + "/comment/add",
             data: { message: commentForm.value },
@@ -3339,7 +3339,7 @@ module.exports.prototype = {
      */
     reportComment: function reportComment(nCommentId) {
         // call
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: "/publisher/comment/" + nCommentId + "/remove",
             data: { message: commentForm.value },
@@ -3356,7 +3356,7 @@ module.exports.prototype = {
      */
     highlightComment: function highlightComment(nCommentId) {
         // call
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: "/publisher/comment/" + nCommentId + "/highlight",
             data: null,
@@ -3373,7 +3373,7 @@ module.exports.prototype = {
      */
     unhighlightComment: function unhighlightComment(nCommentId) {
         // call
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: "/publisher/comment/" + nCommentId + "/unhighlight",
             data: null,
@@ -3388,7 +3388,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 532:
+/***/ 524:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3433,7 +3433,7 @@ module.exports.prototype = {
         //let my_blot = Parchment.find(NodeConfig.node);
 
 
-        //let popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
+        //let popup = Mimoto.popup('/Mimoto.Aimless/form/infocard');
     },
 
     onInfocardEdit: function onInfocardEdit(NodeConfig) {
@@ -3443,7 +3443,7 @@ module.exports.prototype = {
         // 2. call popup, or
         // 3. create comment
 
-        var popup = MimotoX.popup('/Mimoto.Aimless/form/infocard');
+        var popup = Mimoto.popup('/Mimoto.Aimless/form/infocard');
 
         // 4. delete formatting options (als mogelijke feedback van popup)
         // 5. onInit (wanneer het op de dom geplaatst worden vanuit een saved state

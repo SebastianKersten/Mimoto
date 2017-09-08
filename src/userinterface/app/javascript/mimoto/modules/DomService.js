@@ -63,7 +63,7 @@ module.exports.prototype = {
         //console.log(data);
         
 
-        MimotoX.display.onDataChange(data);
+        Mimoto.display.onDataChange(data);
 
 
         // compose
@@ -118,7 +118,7 @@ module.exports.prototype = {
     //
     //         if (mls_wrapper)
     //         {
-    //             MimotoX.utils.loadWrapper($container, data.entityType, data.entityId, mls_wrapper, mls_component.name, mls_contains);
+    //             Mimoto.utils.loadWrapper($container, data.entityType, data.entityId, mls_wrapper, mls_component.name, mls_contains);
     //         }
     //         else
     //         {
@@ -126,7 +126,7 @@ module.exports.prototype = {
     //
     //             if (mls_component.name)
     //             {
-    //                 MimotoX.utils.loadComponent($container, data.entityType, data.entityId, mls_component.name, mls_contains);
+    //                 Mimoto.utils.loadComponent($container, data.entityType, data.entityId, mls_component.name, mls_contains);
     //             }
     //         }
     //     });
@@ -147,13 +147,13 @@ module.exports.prototype = {
     //
     //         if (mls_wrapper)
     //         {
-    //             MimotoX.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
+    //             Mimoto.utils.loadWrapper($component, idata.entityType, data.entityId, mls_wrapper, mls_component.name);
     //         }
     //         else
     //         {
     //             if (mls_component.name)
     //             {
-    //                 MimotoX.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
+    //                 Mimoto.utils.loadComponent($component, data.entityType, data.entityId, mls_component.name);
     //             }
     //
     //         }
@@ -375,13 +375,13 @@ module.exports.prototype = {
     
                 if (mls_wrapper)
                 {
-                    MimotoX.utils.updateWrapper($component, sEntityType, nEntityId, mls_wrapper, mls_component.name);
+                    Mimoto.utils.updateWrapper($component, sEntityType, nEntityId, mls_wrapper, mls_component.name);
                 }
                 else
                 {
                     if (mls_component.name)
                     {
-                        MimotoX.utils.updateComponent($component, sEntityType, nEntityId, mls_component.name);
+                        Mimoto.utils.updateComponent($component, sEntityType, nEntityId, mls_component.name);
                     }
                 }
             }
@@ -445,7 +445,7 @@ module.exports.prototype = {
                 else
                 {
                     // load
-                    MimotoX.utils.loadEntity($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
+                    Mimoto.utils.loadEntity($container, item.connection.childEntityTypeName, item.connection.childId, mls_component.name);
                 }
             });
         }
@@ -541,12 +541,12 @@ module.exports.prototype = {
 
                                 if (mls_wrapper)
                                 {
-                                    MimotoX.utils.loadWrapperNEW($container, sEntityType, nEntityId, mls_wrapper, mls_component.name, null, connection.connectionId);
+                                    Mimoto.utils.loadWrapperNEW($container, sEntityType, nEntityId, mls_wrapper, mls_component.name, null, connection.connectionId);
                                 }
                                 else {
                                     if (mls_component.name)
                                     {
-                                        MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
+                                        Mimoto.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name, null, connection.connectionId);
                                     }
                                 }
                             }
@@ -597,19 +597,19 @@ module.exports.prototype = {
                                 $component.remove();
                                 
                                 // reload with new template
-                                //MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+                                //Mimoto.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
     
                                 var mls_wrapper = $($container).attr("data-mimoto-wrapper");
     
                                 if (mls_wrapper)
                                 {
-                                    MimotoX.utils.loadWrapper($container, sEntityType, nEntityId, mls_wrapper, mls_component.name);
+                                    Mimoto.utils.loadWrapper($container, sEntityType, nEntityId, mls_wrapper, mls_component.name);
                                 }
                                 else
                                 {
                                     if (mls_component.name)
                                     {
-                                        MimotoX.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
+                                        Mimoto.utils.loadComponent($container, sEntityType, nEntityId, mls_component.name);
                                     }
                                 }
                             });

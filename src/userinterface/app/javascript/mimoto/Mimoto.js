@@ -107,7 +107,7 @@ module.exports.prototype = {
      */
     listen: function(sPropertySelector, scope, fJavascriptDelegate)
     {
-        MimotoX.dom.registerEventListener(sPropertySelector, scope, fJavascriptDelegate);
+        Mimoto.dom.registerEventListener(sPropertySelector, scope, fJavascriptDelegate);
     },
 
     popup: function(sURL, postData, bLoadInIFrame)
@@ -155,7 +155,7 @@ module.exports.prototype = {
 
             var closeButtonElement = document.createElement('div');
             closeButtonElement.setAttribute('class', 'MimotoCMS_interface_Popup__closebutton');
-            closeButtonElement.setAttribute('onclick', 'MimotoX.closePopup();');
+            closeButtonElement.setAttribute('onclick', 'Mimoto.closePopup();');
 
             var closeButtonLabel = document.createTextNode('Close');
             closeButtonElement.appendChild(closeButtonLabel);
@@ -218,7 +218,7 @@ module.exports.prototype = {
         //         layer_popup.scrollTop = 0;
         //
         //         // update
-        //         MimotoX.utils.parseRequestQueue();
+        //         Mimoto.utils.parseRequestQueue();
         //     }
         // });
 
@@ -247,7 +247,7 @@ module.exports.prototype = {
                     let element = newDocument.querySelector('body').firstChild;
 
                     // register directives
-                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
 
                     // reset scroll
                     layer_popup.scrollTop = 0;
@@ -292,7 +292,7 @@ module.exports.prototype = {
 
 
         // cleanup directives
-        MimotoX.display.cleanupDirectives(popup_content);
+        Mimoto.display.cleanupDirectives(popup_content);
 
         // cleanup
         popup_content.innerHTML = '';

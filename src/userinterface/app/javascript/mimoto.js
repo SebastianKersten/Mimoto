@@ -6,17 +6,19 @@
 
 
 // Mimoto classes
-var Mimoto = require('./mimoto/Mimoto');
+var ClassMimoto = require('./mimoto/Mimoto');
 
 // init
-window.MimotoX = new Mimoto();
+window.Mimoto = new ClassMimoto();
 
 
 // connect
 document.addEventListener('DOMContentLoaded', function () {
 
-    MimotoX.version = __webpack_hash__;
+    // register
+    Mimoto.version = __webpack_hash__;
 
-    MimotoX.startup();
+    // startup
+    Mimoto.startup();
 
 }, true);

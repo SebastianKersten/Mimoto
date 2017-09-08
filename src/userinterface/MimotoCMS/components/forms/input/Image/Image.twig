@@ -25,7 +25,7 @@
             <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}" class=".js-{{ sFlatImageFieldId }}-image-upload-value"/>
             <div id="image-upload-delete-{{ sFlatImageFieldId }}" class="MimotoCMS_forms_input_ImageUpload-delete {% if Mimoto.value() is empty %}hidden{% endif %}">Remove image</div>
         </div>
-        <script>MimotoX.utils.registerRequest(Mimoto.form.setupImageField, '{{ sImagefieldId }}', '{{ sFlatImageFieldId }}', '{{ Mimoto.fieldId() }}');</script>
+        <script>Mimoto.utils.registerRequest(Mimoto.form.setupImageField, '{{ sImagefieldId }}', '{{ sFlatImageFieldId }}', '{{ Mimoto.fieldId() }}');</script>
     {% endblock %}
 
 {% endembed %}

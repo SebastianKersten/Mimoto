@@ -113,6 +113,7 @@ module.exports.prototype = {
 
     // utility tags
     DIRECTIVE_MATH_MIMOTO_COUNT: 'data-mimoto-count',
+    DIRECTIVE_MIMOTO_API: 'data-mimoto-api',
 
     // setting tags
     DIRECTIVE_SETTING_MIMOTO_FILTER:     'data-mimoto-filter',
@@ -201,23 +202,23 @@ module.exports.prototype = {
 
     parseInterface: function(element)
     {
-        //MimotoX.log('Display Service startup ...');
+        //Mimoto.log('Display Service startup ...');
         let nStartTime = Date.now();
 
         // register
         let aTags = this._collectDirectives(element);
 
         let nEndTime = Date.now();
-        MimotoX.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
+        Mimoto.log('End of registration phase .. took ', nEndTime - nStartTime  + ' milliseconds');
 
         this._prepareAllTaggedElements(aTags);
 
         nEndTime = Date.now();
-        MimotoX.log('Display Service took ' + (nEndTime - nStartTime) + ' milliseconds to process ..');
+        Mimoto.log('Display Service took ' + (nEndTime - nStartTime) + ' milliseconds to process ..');
 
 
-        //MimotoX.warn('aTags', aTags);
-        //MimotoX.log('aSelectors', this._aSelectors);
+        //Mimoto.warn('aTags', aTags);
+        //Mimoto.log('aSelectors', this._aSelectors);
     },
 
     cleanupDirectives: function(element)
@@ -256,8 +257,8 @@ module.exports.prototype = {
                 // #todo - FIX
                 if (!directive)
                 {
-                    MimotoX.log('element id = ', nDirectiveId, directive, element);
-                    MimotoX.log('Need to handle double value selector xxx.xxx.xxx.xxx[yyy.yyy]');
+                    Mimoto.log('element id = ', nDirectiveId, directive, element);
+                    Mimoto.log('Need to handle double value selector xxx.xxx.xxx.xxx[yyy.yyy]');
                     continue;
                 }
 
@@ -373,7 +374,8 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE,
 
             // utility tags
-            this.DIRECTIVE_MATH_MIMOTO_COUNT
+            this.DIRECTIVE_MATH_MIMOTO_COUNT,
+            this.DIRECTIVE_MIMOTO_API
         ];
 
         // 3. collect
@@ -477,8 +479,8 @@ module.exports.prototype = {
 
                         if (directive.instructions && directive.instructions.origin)
                         {
-                            MimotoX.warn('origin for', directive.sPropertySelector, 'is', directive.instructions.origin);
-                            MimotoX.warn('alias for', directive.sPropertySelector, 'is', directive.instructions.alias);
+                            Mimoto.warn('origin for', directive.sPropertySelector, 'is', directive.instructions.origin);
+                            Mimoto.warn('alias for', directive.sPropertySelector, 'is', directive.instructions.alias);
                         }
 
 
@@ -490,7 +492,7 @@ module.exports.prototype = {
                         // verify and register
                         directive.sEntitySelector = element.getAttribute(this.DIRECTIVE_MIMOTO_ID);
 
-                        //MimotoX.log('Item', directive);
+                        //Mimoto.log('Item', directive);
 
 
                         // verify and register
@@ -538,7 +540,7 @@ module.exports.prototype = {
                         // validate
                         if (!element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT))
                         {
-                            MimotoX.warn('Element', element, 'is missing a component setting', this.DIRECTIVE_SETTING_MIMOTO_COMPONENT);
+                            Mimoto.warn('Element', element, 'is missing a component setting', this.DIRECTIVE_SETTING_MIMOTO_COMPONENT);
                             continue;
                         }
 
@@ -553,13 +555,13 @@ module.exports.prototype = {
                         }
 
 
-                        //MimotoX.log('directive', directive);
+                        //Mimoto.log('directive', directive);
 
                         break;
 
                     case this.DIRECTIVE_MATH_MIMOTO_COUNT:
 
-                        //MimotoX.log('Count', directive);
+                        //Mimoto.log('Count', directive);
 
                         break;
 
@@ -572,7 +574,7 @@ module.exports.prototype = {
                         directive.element.addEventListener('click', function(sEntitySelector, sFormName, options, e)
                         {
                             // forward
-                            MimotoX.data.edit(sEntitySelector, sFormName, options);
+                            Mimoto.data.edit(sEntitySelector, sFormName, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
 
@@ -584,7 +586,7 @@ module.exports.prototype = {
                         directive.element.addEventListener('click', function(sPropertySelector, sFormName, options, e)
                         {
                             // forward
-                            MimotoX.data.add(sPropertySelector, sFormName, options);
+                            Mimoto.data.add(sPropertySelector, sFormName, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.form, directive.instructions.options), true);
 
@@ -611,7 +613,7 @@ module.exports.prototype = {
                         directive.element.addEventListener('click', function(sEntitySelector, nConnectionId, options, e)
                         {
                             // forward
-                            MimotoX.data.remove(sEntitySelector, nConnectionId, options);
+                            Mimoto.data.remove(sEntitySelector, nConnectionId, options);
 
                         }.bind(directive.element, directive.sPropertySelector, nConnectionId, directive.instructions.options), true);
 
@@ -623,7 +625,7 @@ module.exports.prototype = {
                         directive.element.addEventListener('click', function(sPropertySelector, xSelection, options, e)
                         {
                             // forward
-                            MimotoX.data.select(sPropertySelector, xSelection, options);
+                            Mimoto.data.select(sPropertySelector, xSelection, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.selection, directive.instructions.options), true);
 
@@ -635,7 +637,7 @@ module.exports.prototype = {
                         directive.element.addEventListener('click', function(sPropertySelector, value, options, e)
                         {
                             // forward
-                            MimotoX.data.set(sPropertySelector, value, options);
+                            Mimoto.data.set(sPropertySelector, value, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.value, directive.instructions.options), true);
 
@@ -647,7 +649,7 @@ module.exports.prototype = {
                         directive.element.addEventListener('click', function(sPropertySelector, sEntityName, options, e)
                         {
                             // forward
-                            MimotoX.data.create(sPropertySelector, sEntityName, options);
+                            Mimoto.data.create(sPropertySelector, sEntityName, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.entityName, directive.instructions.options), true);
 
@@ -659,7 +661,7 @@ module.exports.prototype = {
                         directive.element.addEventListener('click', function(sPropertySelector,options, e)
                         {
                             // forward
-                            MimotoX.data.clear(sPropertySelector, options);
+                            Mimoto.data.clear(sPropertySelector, options);
 
                         }.bind(directive.element, directive.sPropertySelector, directive.instructions.options), true);
 
@@ -736,6 +738,27 @@ module.exports.prototype = {
 
                         new this._aDisplayOptionClasses[directive.sDirective](directive);
                         break;
+
+
+                    case this.DIRECTIVE_MIMOTO_API:
+
+                        // configure
+                        directive.element.addEventListener('click', function(sEntitySelector, sURL, options, e)
+                        {
+                            // 2. authenticate
+                            Mimoto.utils.callAPI({
+                                type: 'get',
+                                url: sURL,
+                                //data: { id: this._socket.id },
+                                //dataType: 'json',
+                                success: function(resultData, resultStatus, resultSomething)
+                                {
+                                    Mimoto.log('Call to ' + sURL + ' executed!');
+                                }
+                            });
+
+                        }.bind(directive.element, directive.sEntitySelector, directive.instructions.url), true);
+
                 }
             }
         }
@@ -767,7 +790,7 @@ module.exports.prototype = {
     onDataChange: function(data)
     {
 
-        MimotoX.log('data', data);
+        Mimoto.log('data', data);
 
 
 
@@ -805,7 +828,7 @@ module.exports.prototype = {
                         // register
                         let directive = aDirectives[nElementIndex];
 
-                        //MimotoX.log('---------- directive', directive.sDirective, 'for', directive.sPropertySelector, directive);
+                        //Mimoto.log('---------- directive', directive.sDirective, 'for', directive.sPropertySelector, directive);
 
 
                         switch(directive.sDirective)
@@ -965,7 +988,7 @@ module.exports.prototype = {
                     // verify
                     if (directive.bReloadOnChange)
                     {
-                        MimotoX.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
+                        Mimoto.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
                     }
 
                 }
@@ -979,7 +1002,7 @@ module.exports.prototype = {
 
         if (data.connections && data.connections.length > 0)
         {
-            MimotoX.log('data.connections', data.connections);
+            Mimoto.log('data.connections', data.connections);
 
             let nConnectionCount = data.connections.length;
             for (let nConnectionIndex = 0; nConnectionIndex < nConnectionCount; nConnectionIndex++)
@@ -1000,7 +1023,7 @@ module.exports.prototype = {
                     // 1. execute directive
                     // 2. pass value
 
-                    MimotoX.log('Known collection / selection', aDirectives);
+                    Mimoto.log('Known collection / selection', aDirectives);
                 }
             }
 

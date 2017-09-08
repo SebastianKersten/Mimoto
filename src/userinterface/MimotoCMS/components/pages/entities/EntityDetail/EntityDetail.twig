@@ -1,33 +1,10 @@
-{% set extends = Mimoto.data('extends.name') %}
-{# set extends_id = Mimoto.meta('extends.id') #}{# todo #}
-{% set extends_id = Mimoto.meta('id') %}{# todo #}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
 
-
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'entitydetails',
-        tabs: [
-            {
-                label: 'Structure',
-                panel_id: 'panel_entitydetail_structure'
-            },
-            {
-                label: 'Instances',
-                panel_id: 'panel_entitydetail_instances'
-            },
-            {
-                label: 'More',
-                panel_id: 'panel_entitydetail_more',
-                secondary: true
-            }
-        ]
-    }
-%}
     {% block panels %}
 
         <!-- structure -->
 
-        <div id="panel_entitydetail_structure" class="MimotoCMS_modules_Tabmenu-panel">
+        <div data-mimotocms-tabmenu-tab="Structure" class="MimotoCMS_modules_Tabmenu-panel">
 
             <div class="MimotoCMS_pages_entities_EntityDetail_Structure">
 
@@ -94,7 +71,7 @@
 
         <!-- instances -->
 
-        <div id="panel_entitydetail_instances" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-tab="Instances" class="MimotoCMS_modules_Tabmenu-panel hidden">
 
             <b><i>Currently in beta and very raw (no primary labels or realtime updates yet)</i></b><br>
             <br>
@@ -122,7 +99,7 @@
 
         <!-- more -->
 
-        <div id="panel_entitydetail_more" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-tab="More" class="MimotoCMS_modules_Tabmenu-panel hidden">
 
             <b>Danger zone!</b><br>
             <br>
@@ -135,22 +112,13 @@
 {% endembed %}
 
 
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'entityforms',
-        tabs: [
-            {
-                label: 'Forms',
-                panel_id: 'panel_entityforms'
-            }
-        ]
-    }
-%}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+
     {% block panels %}
 
         <!-- forms -->
 
-        <div id="panel_entityforms" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-tab="Forms" class="MimotoCMS_modules_Tabmenu-panel hidden">
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
@@ -181,22 +149,13 @@
 {% endembed %}
 
 
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'entitycomponents',
-        tabs: [
-            {
-                label: 'Components',
-                panel_id: 'panel_entitycomponents'
-            }
-        ]
-    }
-%}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+
     {% block panels %}
 
         <!-- components -->
 
-        <div id="panel_entitycomponents" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-tab="Components" class="MimotoCMS_modules_Tabmenu-panel hidden">
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 

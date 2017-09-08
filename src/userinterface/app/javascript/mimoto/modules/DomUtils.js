@@ -77,7 +77,7 @@ module.exports.prototype = {
                     let element = newDocument.querySelector('body').firstChild;
 
                     // register directives
-                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
 
                     // add to dom
                     container.append(element);
@@ -148,7 +148,7 @@ module.exports.prototype = {
                     let element = newDocument.querySelector('body').firstChild;
 
                     // register directives
-                    MimotoX.display.parseInterface(newDocument.querySelector('body'));
+                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
 
                     // get parent
                     let container = elementToReplace.parentNode;
@@ -157,7 +157,7 @@ module.exports.prototype = {
                     container.insertBefore(element, elementToReplace);
 
                     // remove old
-                    MimotoX.utils.removeComponent(elementToReplace);
+                    Mimoto.utils.removeComponent(elementToReplace);
                 }
             }
         };
@@ -187,7 +187,7 @@ module.exports.prototype = {
     removeComponent: function(element)
     {
         // cleanup
-        MimotoX.display.cleanupDirectives(element);
+        Mimoto.display.cleanupDirectives(element);
 
         // remove
         element.parentNode.removeChild(element);
@@ -226,12 +226,12 @@ module.exports.prototype = {
                             {
                                 case 'data.created':
 
-                                    //MimotoX.dom.onDataCreated(dataModification.data, 'direct');
+                                    //Mimoto.dom.onDataCreated(dataModification.data, 'direct');
                                     break;
 
                                 case 'data.changed':
 
-                                    MimotoX.dom.onDataChanged(dataModification.data, 'direct');
+                                    Mimoto.dom.onDataChanged(dataModification.data, 'direct');
                                     break;
                             }
                         }

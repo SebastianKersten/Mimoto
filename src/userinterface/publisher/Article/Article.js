@@ -51,7 +51,7 @@ module.exports.prototype = {
         let commentForm = document.getElementById('commentForm');
 
         // call
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: "/publisher/article/" + this._nArticleId + "/comment/add",
             data: {message: commentForm.value},
@@ -70,7 +70,7 @@ module.exports.prototype = {
     reportComment: function(nCommentId)
     {
         // call
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: "/publisher/comment/" + nCommentId + "/remove",
             data: {message: commentForm.value},
@@ -88,7 +88,7 @@ module.exports.prototype = {
     highlightComment: function(nCommentId)
     {
         // call
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: "/publisher/comment/" + nCommentId + "/highlight",
             data: null,
@@ -106,7 +106,7 @@ module.exports.prototype = {
     unhighlightComment: function(nCommentId)
     {
         // call
-        MimotoX.utils.callAPI({
+        Mimoto.utils.callAPI({
             type: 'post',
             url: "/publisher/comment/" + nCommentId + "/unhighlight",
             data: null,

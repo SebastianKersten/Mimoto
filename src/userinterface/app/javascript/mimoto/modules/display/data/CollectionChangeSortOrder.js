@@ -24,8 +24,8 @@ module.exports.prototype = {
         aConnections.forEach(function(connection, nConnectionIndex)
         {
             // register
-            let currentElement = directive.element.querySelector('[' + MimotoX.display.DIRECTIVE_SETTING_MIMOTO_CONNECTION + '="' + connection.id + '"]');
-            currentElement.setAttribute(MimotoX.display.DIRECTIVE_SETTING_MIMOTO_SORTINDEX, connection.sortindex);
+            let currentElement = directive.element.querySelector('[' + Mimoto.display.DIRECTIVE_SETTING_MIMOTO_CONNECTION + '="' + connection.id + '"]');
+            currentElement.setAttribute(Mimoto.display.DIRECTIVE_SETTING_MIMOTO_SORTINDEX, connection.sortindex);
 
             // verify
             if (nConnectionIndex == 0)

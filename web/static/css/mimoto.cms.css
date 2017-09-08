@@ -1044,9 +1044,8 @@ div.MimotoCMS_modules_Tabmenu__menu_tab {
     cursor: default;
     text-decoration: none;
     background-color: #ffffff; }
-  div.MimotoCMS_modules_Tabmenu__menu_tab.secondary {
-    background-color: inherit;
-    color: #ff0000; }
+  div.MimotoCMS_modules_Tabmenu__menu_tab.hidden {
+    display: none; }
 
 div.MimotoCMS_modules_Tabmenu-panels.hidden {
   display: none; }

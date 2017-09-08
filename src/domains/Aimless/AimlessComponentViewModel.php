@@ -295,8 +295,16 @@ class AimlessComponentViewModel
 
     }
 
-
-
+    public function api($sURL, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'url' => $sURL
+        );
+        
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_API, null, $this->_component, $instructions, $options);
+    }
 
 
 
