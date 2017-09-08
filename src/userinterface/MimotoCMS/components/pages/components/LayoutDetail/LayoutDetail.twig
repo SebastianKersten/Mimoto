@@ -1,19 +1,10 @@
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'LayoutDetails',
-        tabs: [
-            {
-                label: 'Layout structure',
-                panel_id: 'panel_LayoutDetail_info'
-            }
-        ]
-    }
-%}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+
     {% block panels %}
 
         <!-- structure -->
 
-        <div id="panel_LayoutDetail_info" class="MimotoCMS_pages_components_LayoutDetail__panel">
+        <div data-mimotocms-tabmenu-tab="Layout structure" class="MimotoCMS_pages_components_LayoutDetail__panel">
 
             <div class="MimotoCMS_pages_components_LayoutDetail_Structure">
 

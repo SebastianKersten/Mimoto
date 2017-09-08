@@ -1,19 +1,10 @@
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'componentdetails',
-        tabs: [
-            {
-                label: 'User role',
-                panel_id: 'panel_detail_info'
-            }
-        ]
-    }
-%}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+
     {% block panels %}
 
         <!-- structure -->
 
-        <div id="panel_detail_info" class="MimotoCMS_pages_configuration_userroles_Detail__panel">
+        <div data-mimotocms-tabmenu-tab="User roles" class="MimotoCMS_pages_configuration_userroles_Detail__panel">
 
             <div class="MimotoCMS_pages_configuration_userroles_Detail_Structure">
 

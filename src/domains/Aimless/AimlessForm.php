@@ -100,9 +100,6 @@ class AimlessForm extends AimlessComponent
             'data-mimoto-form-publickey="'.Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues)).'" '.
             'data-mimoto-form-actions="'.htmlentities(json_encode($jsonActions), ENT_QUOTES, 'UTF-8').'" '.
             'data-mimoto-form-autosave="true">';
-            //$sRenderedForm = '<form name="'.$this->_sFormName.'">';// action="'.$sAction.'" method="'.$sMethod.'">';
-//        $sRenderedForm .= '<script>Mimoto.utils.registerRequest(Mimoto.form.open, "'.$this->_sFormName.'", "'.$sAction.'", "'.$sMethod.'", '.($form->getValue('realtimeCollaborationMode') ? 'true' : 'false').', \''.$jsonResponseSettings.'\')</script>';
-
 
         // add security
         $sRenderedForm .= '<input type="hidden" name="Mimoto.EntityId" value="'.$formFieldValues->entityId.'">';
@@ -118,7 +115,6 @@ class AimlessForm extends AimlessComponent
 
         // finish
         $sRenderedForm .= '</form>';
-//        $sRenderedForm .= '<script>Mimoto.utils.registerRequest(Mimoto.form.close, "'.$this->_sFormName.'");</script>';
 
         // output
         return $sRenderedForm;

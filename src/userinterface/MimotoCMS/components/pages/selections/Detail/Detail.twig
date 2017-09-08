@@ -1,19 +1,8 @@
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'componentdetails',
-        tabs: [
-            {
-                label: 'Selection structure',
-                panel_id: 'panel_selectiondetail_info'
-            }
-        ]
-    }
-%}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+
     {% block panels %}
 
-        <!-- structure -->
-
-        <div id="panel_selectiondetail_info" class="MimotoCMS_pages_selections_Detail__panel">
+        <div data-mimotocms-tabmenu-tab="Selection structure" class="MimotoCMS_pages_selections_Detail__panel">
 
             <div class="MimotoCMS_pages_selections_Detail_Structure">
 
@@ -52,4 +41,5 @@
         </div>
 
     {% endblock %}
+
 {% endembed %}

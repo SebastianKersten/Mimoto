@@ -1,19 +1,10 @@
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'componentdetails',
-        tabs: [
-            {
-                label: 'Component structure',
-                panel_id: 'panel_ComponentDetail_info'
-            }
-        ]
-    }
-%}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+
     {% block panels %}
 
         <!-- structure -->
 
-        <div id="panel_ComponentDetail_info" class="MimotoCMS_pages_components_ComponentDetail__panel">
+        <div data-mimotocms-tabmenu-tab="Component structure" class="MimotoCMS_pages_components_ComponentDetail__panel">
 
             <div class="MimotoCMS_pages_components_ComponentDetail_Structure">
 

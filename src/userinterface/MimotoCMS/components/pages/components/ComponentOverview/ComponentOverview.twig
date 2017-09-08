@@ -1,28 +1,10 @@
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'components',
-        tabs: [
-            {
-                label: 'Components',
-                panel_id: 'panel_components_components'
-            },
-            {
-                label: 'Layouts',
-                panel_id: 'panel_components_layouts'
-            },
-            {
-                label: 'Input elements',
-                panel_id: 'panel_components_inputelements',
-                secondary: true
-            }
-        ]
-    }
-%}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+
     {% block panels %}
 
         {# components #}
 
-        <div id="panel_components_components" class="MimotoCMS_modules_Tabmenu-panel">
+        <div data-mimotocms-tabmenu-tab="Components" class="MimotoCMS_modules_Tabmenu-panel">
 
 
             <div class="MimotoCMS_modules_Tabmenu-panel-menu">
@@ -38,7 +20,7 @@
 
         {# layouts #}
 
-        <div id="panel_components_layouts" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-tab="Layouts" class="MimotoCMS_modules_Tabmenu-panel hidden">
 
             <div class="MimotoCMS_modules_Tabmenu-panel-menu">
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('layouts', '_Mimoto_layout') }) }}
@@ -53,9 +35,9 @@
 
         {# input elements #}
 
-        <div id="panel_components_inputelements" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-tab="Input elements" class="MimotoCMS_modules_Tabmenu-panel hidden">
 
-            {#add explainer images and combine all into one property called `components` (filter by type)#}
+            Support for custom input fields coming soon ..
 
         </div>
 

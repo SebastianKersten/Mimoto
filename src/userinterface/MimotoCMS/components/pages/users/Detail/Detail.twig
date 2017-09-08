@@ -1,19 +1,8 @@
-{%
-    embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" with {
-        id: 'userdetails',
-        tabs: [
-            {
-                label: 'User details',
-                panel_id: 'panel_userdetails_info'
-            }
-        ]
-    }
-%}
+{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+
     {% block panels %}
 
-        <!-- structure -->
-
-        <div id="panel_userdetails_info" class="MimotoCMS_pages_users_UserDetail__panel">
+        <div data-mimotocms-tabmenu-tab="User details" class="MimotoCMS_pages_users_UserDetail__panel">
 
             <div class="MimotoCMS_pages_users_UserDetail_Structure">
 
@@ -37,4 +26,5 @@
         </div>
 
     {% endblock %}
+
 {% endembed %}
