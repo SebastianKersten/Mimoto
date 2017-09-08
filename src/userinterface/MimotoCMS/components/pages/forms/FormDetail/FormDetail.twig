@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="MimotoCMS_pages_forms_FormDetail_Structure__meta_menu">
-                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', onclick:"Mimoto.CMS.formEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', onclick:"MimotoCMS.formEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
                 </div>
 
             </div>
@@ -33,7 +33,7 @@
 
                 <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_empty" {{ Mimoto.showWhenEmpty('fields') }}>
                     <div>This forms has no fields yet.<br>Go ahead, start adding them!</div>
-                    <div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
+                    <div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new field', icon:'plus', onclick:"MimotoCMS.formFieldNew_TypeSelector('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('fields') }}>
@@ -42,7 +42,7 @@
                     </ul>
 
                     <div class="MimotoCMS_pages_forms_FormDetail_Structure__fields_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new field', icon:'plus', onclick:"Mimoto.CMS.formFieldNew_TypeSelector('" ~ Mimoto.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new field', icon:'plus', onclick:"MimotoCMS.formFieldNew_TypeSelector('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
 

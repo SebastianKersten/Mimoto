@@ -7,10 +7,10 @@
         sublabel: Mimoto.meta('id'),
         sublabel_realtime:  '',
         button_label: 'Edit',
-        button_action: 'Mimoto.CMS.contentEdit(\''~nContentSectionId~'\', \''~Mimoto.meta('type')~'\', '~Mimoto.meta('id')~');',
+        button2_href: '/mimoto.cms/content/' ~ nContentSectionId ~ '/' ~ Mimoto.meta('type') ~ '/' ~ Mimoto.meta('id') ~ '/edit',
         button_type: 'secondary',
         button2_label: 'Delete',
-        button2_action: 'Mimoto.CMS.contentDelete(\''~nContentSectionId~'\', \''~Mimoto.meta('type')~'\', '~Mimoto.meta('id')~');',
+        button2_directive: Mimoto.remove(),
         button2_type: 'alert'
     })
 }}

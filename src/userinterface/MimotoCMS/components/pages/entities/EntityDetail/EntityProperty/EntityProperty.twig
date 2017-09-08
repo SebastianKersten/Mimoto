@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"Mimoto.CMS.entityPropertyDelete('" ~ Mimoto.meta('id') ~ "', '" ~ Mimoto.data('name') ~ "');" }) }}
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], onclick:"Mimoto.CMS.entityPropertyEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"MimotoCMS.entityPropertyDelete('" ~ Mimoto.meta('id') ~ "', '" ~ Mimoto.data('name') ~ "');" }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], onclick:"MimotoCMS.entityPropertyEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu-handle">
         <div class="MimotoCMS_ListItemModule-handle js-sortable-draghandle">

@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', onclick:"Mimoto.CMS.componentEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', onclick:"MimotoCMS.componentEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
                     </div>
 
                 </div>
@@ -43,7 +43,7 @@
                         {#items, all with different templates but for you as a developer still only#}
                         {#<u>one</u> line of code!#}
                     {#</div>#}
-                    {#<div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>#}
+                    {#<div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditional', icon:'plus', onclick:"MimotoCMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>#}
                 {#</div>#}
 
                 {#<div {{ Mimoto.hideWhenEmpty('templates') }}>#}
@@ -52,7 +52,7 @@
                     {#</ul>#}
 
                     {#<div class="MimotoCMS_pages_components_ComponentDetail_Structure__conditionals_menu">#}
-                        {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditional', icon:'plus', onclick:"Mimoto.CMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}#}
+                        {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditional', icon:'plus', onclick:"MimotoCMS.componentConditionalNew('" ~ Mimoto.meta('id') ~ "');" }) }}#}
                     {#</div>#}
                 {#</div>#}
 

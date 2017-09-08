@@ -37,7 +37,7 @@
 
                 <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__attributes_empty" {{ Mimoto.showWhenEmpty('attributes') }}>
                     <div>This formatting options has no attributes.<br>Add them here if your project requires them.</div>
-                    <div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new attribute', icon:'plus', onclick:"Mimoto.CMS.formattingOptionAttributeNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
+                    <div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new attribute', icon:'plus', onclick:"MimotoCMS.formattingOptionAttributeNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('attributes') }}>
@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_formattingoptions_Detail_Structure__attributes_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new attribute', icon:'plus', onclick:"Mimoto.CMS.formattingOptionAttributeNew('" ~ Mimoto.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new attribute', icon:'plus', onclick:"MimotoCMS.formattingOptionAttributeNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
                 </div>
 
