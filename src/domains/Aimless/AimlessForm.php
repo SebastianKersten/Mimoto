@@ -78,7 +78,7 @@ class AimlessForm extends AimlessComponent
         else
         {
             // prepare
-            $sAction = '/Mimoto.Aimless/form/'.$this->_sFormName;
+            $sAction = '/mimoto/form/'.$this->_sFormName;
             $sMethod = 'POST';
         }
 
@@ -95,20 +95,13 @@ class AimlessForm extends AimlessComponent
 
         // init
         $sRenderedForm = '<form data-mimoto-form="'.$form->getEntityTypeName().'.'.$form->getId().'" '.
-            'data-mimoto-form-name=“'.$this->_sFormName.'" '.
-            'data-mimoto-form-instance=“'.$formFieldValues->entityId.'" '.
+            'data-mimoto-form-name="'.$this->_sFormName.'" '.
+            'data-mimoto-form-action="'.$sAction.'" '.
+            'data-mimoto-form-method="'.$sMethod.'" '.
+            'data-mimoto-form-instanceid="'.$formFieldValues->entityId.'" '.
             'data-mimoto-form-publickey="'.Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues)).'" '.
             'data-mimoto-form-actions="'.htmlentities(json_encode($jsonActions), ENT_QUOTES, 'UTF-8').'" '.
             'data-mimoto-form-autosave="true">';
-
-        // add security
-        $sRenderedForm .= '<input type="hidden" name="Mimoto.EntityId" value="'.$formFieldValues->entityId.'">';
-
-        // add instructions
-        if (!empty($this->_aOptions) && !empty($this->_aOptions['onCreatedConnectTo']))
-        {
-            $sRenderedForm .= '<input type="hidden" name="Mimoto.onCreated:connectTo" value="'.$this->_aOptions['onCreatedConnectTo'].'">';
-        }
 
         // render form
         $sRenderedForm .= parent::renderCollection($aFields, null, null, $formFieldValues->fields, true);

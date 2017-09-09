@@ -165,38 +165,37 @@ class FormService
 
     public function parseForm($sFormName, Request $request)
     {
-        // 1. load request data
-        $requestData = json_decode($request->getContent());
+        // 1. register
+        $sPublicKey = $request->get('publicKey');
+        $nInstanceId = $request->get('instanceId');
+        $changedFields = json_decode($request->get('changedFields'));
 
-        // 2. register values
-        $aValues = $requestData->values;
-
-        // 3. load form
+        // 2. load form
         $form = Mimoto::service('input')->getFormByName($sFormName);
 
-        // 4. load
+        // 3. load
         $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
-        // 5. find connected entity
+        // 4. find connected entity
         $sEntityName = $eParent->getValue('name');
 
 
-        // collect
-        if (empty($requestData->entityId))
+        // 5. collect
+        if (empty($nInstanceId))
         {
             // create
             $entity = Mimoto::service('data')->create($sEntityName);
         }
         else
         {
-            if (!MimotoDataUtils::isValidId($requestData->entityId))
+            if (!MimotoDataUtils::isValidId($nInstanceId))
             {
-                Mimoto::service('log')->error('Invalid id on form submit', "The form with name <b>".$sFormName."</b> has an incorrect id `".$requestData->entityId."`");
+                Mimoto::service('log')->error('Invalid id on form submit', "The form with name <b>".$sFormName."</b> has an incorrect instance id `".$nInstanceId."`");
                 die();
             }
 
             // load
-            $entity = Mimoto::service('data')->get($sEntityName, $requestData->entityId);
+            $entity = Mimoto::service('data')->get($sEntityName, $nInstanceId);
 
             // validate
             if (empty($entity))
@@ -207,11 +206,11 @@ class FormService
         }
 
 
-        // 4. prepare
+        // 6. prepare
         $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity, null, $entity->getId()); // todo - strip values
 
 
-        // get all vars and entities
+        // 7. get all vars and entities
         $nFieldCount = count($formFieldValues->fields);
         for ($nFieldIndex = 0; $nFieldIndex < $nFieldCount; $nFieldIndex++)
         {
@@ -222,13 +221,15 @@ class FormService
             $sFieldKey = $field->key;
 
             // validate is value was passed
-            $field->newValue = (isset($aValues->$sFieldKey)) ? $aValues->$sFieldKey : $field->newValue = null;
+            if (isset($changedFields->$sFieldKey))
+            {
+                $field->newValue = $changedFields->$sFieldKey;
+            }
         }
 
 
         // 5. authenticate #todo
-        $sPublicKey = $requestData->publicKey;
-//        if ($sPublicKey !== Mimoto::service('users')->getUserPublicKey(json_encode($formVars->connectedEntities)))
+//        if ($sPublicKey !== Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues->connectedEntities)))
 //        {
 //            Mimoto::service('log')->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
 //        }
@@ -248,6 +249,9 @@ class FormService
         {
             // register
             $field = $formFieldValues->fields[$nFieldIndex];
+
+            // skip if no new value passed
+            if (!isset($field->newValue)) continue;
 
             // validate
             if (!$entity->hasProperty($field->propertyName)) Mimoto::service('log')->error('Unknown property on submit form', "The form with name <b>".$sFormName."</b> tries to store an unknown property", true);

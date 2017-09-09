@@ -52,18 +52,7 @@ div.MimotoCMS_pages_entities_EntityDetail_Structure__usage {
 }
 
 div.MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty {
-
-    display: flex;
-    flex-wrap: nowrap;
-
-    &>div:first-child {
-        flex-grow: 5;
-    }
-
-    &>div:last-child {
-        flex-grow: 1;
-        text-align: right;
-    }
+    margin-bottom: 10px;
 }
 
 div.MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu {

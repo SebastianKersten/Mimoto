@@ -5,10 +5,10 @@
         label: Mimoto.data('name'),
         label_realtime: Mimoto.realtime('name'),
         button_label: 'View',
-        button_action: 'Mimoto.CMS.formView('~Mimoto.meta('id')~');',
+        button_link: '/mimoto.cms/form/' ~ Mimoto.meta('id') ~ '/view',
         button_type: 'secondary',
         button2_label: 'Delete',
-        button2_action: 'Mimoto.CMS.formDelete('~Mimoto.meta('id')~');',
+        button2_directive: Mimoto.remove(),
         button2_type: 'alert'
     })
 }}

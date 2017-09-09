@@ -1,5 +1,5 @@
 /**
- * Mimoto - InputField
+ * Mimoto - FormField
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -7,31 +7,39 @@
 'use strict';
 
 
-module.exports = function(sFieldSelector, elInputField) {
+module.exports = function(elFormField) {
+
+    // events
+    this.CHANGED = 'changed';
 
     // start
-    this.__construct(sFieldSelector, elInputField);
+    this.__construct(elFormField);
 };
 
 module.exports.prototype = {
 
 
     // form field directives
+    DIRECTIVE_MIMOTO_FORM_FIELD_VALUE: 'data-mimoto-form-field-value',
     DIRECTIVE_MIMOTO_FORM_FIELD_TYPE:  'data-mimoto-form-field-type',
     DIRECTIVE_MIMOTO_FORM_FIELD_INPUT: 'data-mimoto-form-field-input',
     DIRECTIVE_MIMOTO_FORM_FIELD_ERROR: 'data-mimoto-form-field-error',
 
     // settings
     _sType: null,
-    _sFieldSelector: null,
+    _elFormField: null,
 
     // elements
     _elInput: null,
     _elError: null,
 
     // state
-    _bHasChanged: false,
+    _bHasChanges: false,
     _bHasPendingChanges: false,
+
+    _persistantValue: null,
+    _currentValue: null,
+    _pendingValue: null,
 
 
 
@@ -43,13 +51,25 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function(sFieldSelector, elInputField)
+    __construct: function(elFormField)
     {
         // store
-        this._sFieldSelector = sFieldSelector;
+        this._elFormField = elFormField;
 
         // parse
-        this._parseInputField(elInputField);
+        this._parseFormField(elFormField);
+    },
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getFieldValue: function()
+    {
+        return this._elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE);
     },
 
 
@@ -59,9 +79,69 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
-    getValue: function()
+    hasChanges: function()
     {
+        return this._bHasChanges;
+    },
 
+    getChanges: function()
+    {
+        // copy
+        this._pendingValue = this._currentValue;
+        this._bHasPendingChanges = true;
+
+        // toggle
+        this._bHasChanges = false;
+
+        // send
+        return this._pendingValue;
+    },
+
+    acceptChanges: function()
+    {
+        Mimoto.log('acceptChanges');
+        // verify
+        if (this._bHasPendingChanges)
+        {
+            Mimoto.log('Has pending changes');
+            // accept
+            this._persistantValue = this._pendingValue;
+            this._pendingValue = null;
+
+            // toggle
+            this._bHasPendingChanges = false;
+        }
+
+        // broadcast
+        if (this._bHasChanges) this._broadcastChanges();
+    },
+
+    updatePropertySelector: function(sOldSelector, sNewSelector)
+    {
+        // collect
+        let aElements = [
+            { el: this._elFormField, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE },
+            { el: this._elInput, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT },
+            { el: this._elInput, attr: 'name' }
+        ];
+
+        // swap
+        let nElementCount = aElements.length;
+        for (let nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++)
+        {
+            // register
+            let element = aElements[nElementIndex];
+
+            // read
+            let sCurrentSelector = element.el.getAttribute(element.attr);
+
+            // compare
+            if (sCurrentSelector.substr(0, sOldSelector.length) === sOldSelector)
+            {
+                // update
+                element.el.setAttribute(element.attr, sNewSelector + sCurrentSelector.substr(sOldSelector.length));
+            }
+        }
     },
 
 
@@ -71,63 +151,77 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
-    _parseInputField: function(elInputField)
+    _parseFormField: function(elFormField)
     {
         // register
-        this._sType = elInputField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
-        this._elInput = elInputField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
-        this._elError = elInputField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
+        this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
+        this._elInput = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
+        this._elError = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
+
+        // store
+        this._persistantValue = this._getValueFromInputField(this._elInput);
+        this._currentValue = this._persistantValue;
+
+        // register
+        let classRoot = this;
+
+        // configure
+        this._elInput.addEventListener('input', function (e) { classRoot._handleInputChange(this.value); });
+        this._elInput.addEventListener('change', function(e) { classRoot._handleInputChange(this.value); });
+    },
+
+    _handleInputChange: function(value)
+    {
+        Mimoto.log('Changed from', this._persistantValue, 'to', value);
+
+
+        //if (_validateValue(value));
+        //classRoot._validateInputField(field);
+
+
+        // this.pendingValue - persistValue
+
+
+        // 1. verify
+        if (value !== this._currentValue)
+        {
+            // a. update
+            this._currentValue = value;
+
+            // b. broadcast
+            this._broadcastChanges();
+        }
+        else
+        {
+            // toggle
+            this._bHasChanges = false;
+        }
 
 
     },
 
-    _connectInputField: function(field)
+    _broadcastChanges: function()
     {
-        // register
-        var classRoot = this;
+        // toggle
+        this._bHasChanges = true;
 
-
-        field.$input.on('input', function(e)
-        {
-            var form = field.sFormId;
-            var sFormName = field.sFormId;
-            var value = $(this).val();
-
-            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
-
-            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
-
-            classRoot._validateInputField(field);
-
-            classRoot._startAutosave(form, field);
-        });
-
-        field.$input.on('change', function(e)
-        {
-            var form = field.sFormId;
-            var sFormName = field.sFormId;
-            var value = $(this).val();
-
-            // Mimoto.Aimless.realtime.registerChange(sFormName, field.sName, value);
-
-            // #todo change reference to sInputFieldId / addEventListener / removeEventListener
-
-            classRoot._validateInputField(field);
-
-            classRoot._startAutosave(form);
-        });
+        // broadcast
+        this._elFormField.dispatchEvent(new Event(this.CHANGED));
     },
 
 
-
-
-    _getValueFromInputField: function($component)
+    _getValueFromInputField: function(elInput)
     {
         // init
-        var value = null;
+        let value = null;
+
+
+
+        return elInput.value;
+
 
         // read type
-        var sAimlessInputType = this._getInputFieldType($component);
+        var sAimlessInputType = 'xxx'; //this._getInputFieldType($component);
 
 
         switch(sAimlessInputType)

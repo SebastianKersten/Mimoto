@@ -366,72 +366,8 @@ module.exports.prototype = {
         //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
         window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
     },
-    
-    contentEdit: function(nContentId, sContentTypeName, nContentItemId)
-    {
-        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit');
-        window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit', '_self');
-    },
-    
-    contentDelete: function(nContentId, sContentTypeName, nContentItemId)
-    {
-        var response = confirm("Are you sure you want to delete this item?");
-        if (response == true) {
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function (resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
-    
-    
-    
-    /**
-     * Create new form
-     */
-    entityFormNew: function(nEntityId)
-    {
-        var popup = Mimoto.popup("/mimoto.cms/entity/" + nEntityId + "/form/new");
-        
-        //popup.on('success') = popup.close();
-    },
-    
-    entityFormAutogenerate: function(nEntityId)
-    {
-        Mimoto.utils.callAPI({
-            type: 'get',
-            url: "/mimoto.cms/entity/" + nEntityId + "/form/autogenerate",
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-    
-    formView: function(nFormId)
-    {
-        window.open('/mimoto.cms/form/' + nFormId + '/view', '_self');
-    },
-    
-    formEdit: function(nFormId)
-    {
-        Mimoto.popup('/mimoto.cms/form/' + nFormId + '/edit');
-    },
-    
-    formDelete: function(nFormId)
-    {
-        Mimoto.utils.callAPI({
-            type: 'get',
-            url: "/mimoto.cms/form/" + nFormId + "/delete",
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
+
+
     
     formFieldNew_TypeSelector: function(nFormId)
     {

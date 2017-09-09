@@ -149,7 +149,7 @@ class AimlessInput extends AimlessComponent
 
     public function error()
     {
-        return 'data-mimoto-form-field-error="'.$this->_sFieldId.'"';
+        return 'data-mimoto-form-field-error';
     }
 
     public function value($bRenderValues = false, $sModuleName = null, $mapping = null, $customVars = null)

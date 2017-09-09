@@ -257,7 +257,15 @@ module.exports.prototype = {
             if (requestData[sKey])
             {
                 if (sRequestData.length !== 0) sRequestData += '&';
-                sRequestData += sKey + '=' + requestData[sKey];
+
+                // register
+                let value = requestData[sKey];
+
+                // convert
+                if (typeof value === 'object') value = JSON.stringify(value);
+
+                // compose
+                sRequestData += sKey + '=' + value;
             }
         }
 

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "d5b3bc59fa4aa84623bb";
+/******/ 	__webpack_require__.h = "c6381785bcfe4c0161c6";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -18870,63 +18870,6 @@ module.exports.prototype = {
     contentNew: function contentNew(nContentId) {
         //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
         window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
-    },
-
-    contentEdit: function contentEdit(nContentId, sContentTypeName, nContentItemId) {
-        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId +'/edit');
-        window.open('/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/edit', '_self');
-    },
-
-    contentDelete: function contentDelete(nContentId, sContentTypeName, nContentItemId) {
-        var response = confirm("Are you sure you want to delete this item?");
-        if (response == true) {
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/content/' + nContentId + '/' + sContentTypeName + '/' + nContentItemId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function success(resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
-
-    /**
-     * Create new form
-     */
-    entityFormNew: function entityFormNew(nEntityId) {
-        var popup = Mimoto.popup("/mimoto.cms/entity/" + nEntityId + "/form/new");
-
-        //popup.on('success') = popup.close();
-    },
-
-    entityFormAutogenerate: function entityFormAutogenerate(nEntityId) {
-        Mimoto.utils.callAPI({
-            type: 'get',
-            url: "/mimoto.cms/entity/" + nEntityId + "/form/autogenerate",
-            success: function success(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-
-    formView: function formView(nFormId) {
-        window.open('/mimoto.cms/form/' + nFormId + '/view', '_self');
-    },
-
-    formEdit: function formEdit(nFormId) {
-        Mimoto.popup('/mimoto.cms/form/' + nFormId + '/edit');
-    },
-
-    formDelete: function formDelete(nFormId) {
-        Mimoto.utils.callAPI({
-            type: 'get',
-            url: "/mimoto.cms/form/" + nFormId + "/delete",
-            success: function success(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
     },
 
     formFieldNew_TypeSelector: function formFieldNew_TypeSelector(nFormId) {

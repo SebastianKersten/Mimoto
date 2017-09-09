@@ -308,48 +308,6 @@ class FormController
         return $page->render();
     }
 
-    public function formEdit(Application $app, $nFormId)
-    {
-        // 1. init popup
-        $popup = Mimoto::service('output')->createPopup();
-
-        // 2. load data
-        $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
-
-        // 3. validate data
-        if (empty($eForm)) return $app->redirect("/mimoto.cms/forms");
-
-        // 4. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
-
-        // 5. setup content
-        $component->addForm(
-            CoreConfig::COREFORM_FORM,
-            $eForm,
-            [
-                'response' => ['onSuccess' => ['closePopup' => true]]
-            ]
-        );
-
-        // 6. connect
-        $popup->addComponent('content', $component);
-
-        // 7. output
-        return $component->render();
-    }
-
-    public function formDelete(Application $app, $nFormId)
-    {
-        // 1. load
-        $eForm = Mimoto::service('data')->get(CoreConfig::MIMOTO_FORM, $nFormId);
-
-        // 2. delete
-        Mimoto::service('data')->delete($eForm);
-
-        // 3. send
-        return Mimoto::service('messages')->response((object) array('result' => 'Form deleted! '.date("Y.m.d H:i:s")), 200);
-    }
-
     public function formFieldNew_fieldTypeSelector(Application $app, $nFormId)
     {
         // 1. init popup

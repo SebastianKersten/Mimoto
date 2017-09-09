@@ -163,6 +163,37 @@ class Mimoto
 
 
 
+
+
+        $app->post('/mimoto/output/component', 'Mimoto\\api\\OutputController::renderEntityView');
+
+
+        // register
+        $app->get ('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}', 'Mimoto\\api\\OutputController::renderEntityView');
+
+        $app->get ('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}/{sPropertySelector}', 'Mimoto\\api\\OutputController::renderEntityView')->value('sPropertySelector', '');
+        $app->get ('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}', 'Mimoto\\api\\OutputController::renderWrapperView');
+        $app->get ('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sPropertySelector}', 'Mimoto\\api\\OutputController::renderWrapperView')->value('sPropertySelector', '');
+        $app->get ('/Mimoto.Aimless/wrapper/{sEntityType}/{nEntityId}/{sWrapperName}/{sComponentName}/{sPropertySelector}', 'Mimoto\\api\\OutputController::renderWrapperView')->value('sPropertySelector', '');
+        $app->get ('/Mimoto.Aimless/form/{sFormName}', 'Mimoto\\api\\OutputController::renderForm');
+
+        // register
+        $app->post('/mimoto/form/{sFormName}', 'Mimoto\\api\\OutputController::parseForm');
+        $app->post('/Mimoto.Aimless/validate/{nValidationId}', 'Mimoto\\api\\OutputController::validateFormField');
+        $app->post('/Mimoto.Aimless/upload/image', 'Mimoto\\api\\OutputController::uploadImage');
+        $app->post('/Mimoto.Aimless/upload/video', 'Mimoto\\api\\OutputController::uploadVideo');
+
+        // new -> replacement for '/Mimoto.Aimless/data' and '/Mimoto.Aimless/wrapper' #todo replace
+        $app->post('/mimoto.data/render', 'Mimoto\\api\\OutputController::render');
+
+
+        $app->post('/Mimoto.Aimless/realtime/collaboration', 'Mimoto\\api\\OutputController::authenticateUser');
+
+
+        $app->get('/Mimoto.Aimless/media/source/{sPropertySelector}', 'Mimoto\\api\\OutputController::getMediaSource');
+
+
+
         // --- routes ---
 
 
@@ -264,11 +295,8 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/content/{nContentId}/{sContentTypeName}/{nContentItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         // Form
-        $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/form/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/form/autogenerate', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formAutogenerate')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/form/{nFormId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/form/{nFormId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/form/{nFormId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         $app->get ('/'.$sProjectName.'.cms/form/{nFormId}/field/new', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldNew_fieldTypeSelector')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/form/{nFormId}/field/new/{nFormFieldTypeId}', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formFieldNew_fieldForm')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');

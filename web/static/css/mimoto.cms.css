@@ -2620,24 +2620,7 @@ div.MimotoCMS_pages_entities_EntityDetail_Structure__usage {
   color: #000000; }
 
 div.MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-      -ms-flex-wrap: nowrap;
-          flex-wrap: nowrap; }
-  div.MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty > div:first-child {
-    -webkit-box-flex: 5;
-    -webkit-flex-grow: 5;
-        -ms-flex-positive: 5;
-            flex-grow: 5; }
-  div.MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty > div:last-child {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-    text-align: right; }
+  margin-bottom: 10px; }
 
 div.MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu {
   padding: 20px 0 10px 0;

@@ -117,23 +117,19 @@
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
                 <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('forms') }}>
-                    <div>This entity has no form yet.<br>Go ahead, start adding one!</div>
-                    <div>
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Auto-generate form', icon:'plus', onclick:"MimotoCMS.entityFormAutogenerate('" ~ Mimoto.meta('id') ~ "');" }) }}
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new form', icon:'plus', onclick:"MimotoCMS.entityFormNew('" ~ Mimoto.meta('id') ~ "');" }) }}
-                    </div>
+                    This entity has no form yet.<br>Go ahead, start adding one!
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('forms') }}>
                     <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('forms', 'MimotoCMS_entities_EntityDetail-Form') }}>
                         {{ Mimoto.data('forms', 'MimotoCMS_entities_EntityDetail-Form') }}
                     </ul>
-
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Auto-generate form', icon:'plus', onclick:"MimotoCMS.entityFormAutogenerate('" ~ Mimoto.meta('id') ~ "');" }) }}
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new form', icon:'plus', onclick:"MimotoCMS.entityFormNew('" ~ Mimoto.meta('id') ~ "');" }) }}
-                    </div>
                 </div>
+
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Auto-generate form', icon:'plus', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/form/autogenerate') }) }}
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new form', icon:'plus', directive:Mimoto.add('forms', '_Mimoto_coreform__form') }) }}
+                    </div>
 
             </div>
 
