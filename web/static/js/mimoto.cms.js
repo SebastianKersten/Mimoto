@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "fc3919c4593625ff4fe8";
+/******/ 	__webpack_require__.h = "23c62330f4d0dfd0d0eb";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -18634,103 +18634,6 @@ module.exports.prototype = {
     // --- Public methods - entity ------------------------------------------------
     // ----------------------------------------------------------------------------
 
-
-    /**
-     * Create new entity
-     */
-    entityNew: function entityNew() {
-        var popup = Mimoto.popup("/mimoto.cms/entity/new");
-
-        //popup.on('success') = popup.close();
-    },
-
-    entityView: function entityView(nEntityId) {
-        window.open('/mimoto.cms/entity/' + nEntityId + '/view', '_self');
-    },
-
-    entityEdit: function entityEdit(nEntityId) {
-        Mimoto.popup('/mimoto.cms/entity/' + nEntityId + '/edit');
-    },
-
-    entityUpdate: function entityUpdate(nEntityId, data) {
-        Mimoto.utils.callAPI({
-            type: 'POST',
-            url: "/mimoto.cms/entity/" + nEntityId + "/update",
-            data: data,
-            dataType: 'json',
-            success: function success(resultData, resultStatus, resultSomething) {
-                Mimoto.closePopup();
-            }
-        });
-    },
-
-    entityDelete: function entityDelete(nEntityId, sEntityName) {
-        var response = confirm("Are you sure you want to delete the entity '" + sEntityName + "'?\n\nALL DATA WILL BE LOST!!\n\n(Really! I'm not kidding!)");
-        if (response == true) {
-
-            Mimoto.utils.callAPI({
-                type: 'GET',
-                url: "/mimoto.cms/entity/" + nEntityId + "/delete",
-                //data: data,
-                dataType: 'json',
-                success: function success(resultData, resultStatus, resultSomething) {
-                    window.open('/mimoto.cms/entities', '_self');
-                }
-            });
-        }
-    },
-
-    entityPropertyNew: function entityPropertyNew(nEntityId) {
-        Mimoto.popup("/mimoto.cms/entity/" + nEntityId + "/property/new");
-    },
-
-    entityPropertyCreate: function entityPropertyCreate(nEntityId, data) {
-        Mimoto.utils.callAPI({
-            type: 'POST',
-            url: "/mimoto.cms/entity/" + nEntityId + "/property/create",
-            data: data,
-            dataType: 'json',
-            success: function success(resultData, resultStatus, resultSomething) {
-                Mimoto.closePopup();
-            }
-        });
-    },
-
-    entityPropertyEdit: function entityPropertyEdit(nEntityPropertyId) {
-        Mimoto.popup("/mimoto.cms/entityproperty/" + nEntityPropertyId + "/edit");
-    },
-
-    entityPropertyDelete: function entityPropertyDelete(nEntityPropertyId, sEntityPropertyName) {
-        var response = confirm("Are you sure you want to delete the property '" + sEntityPropertyName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-        if (response == true) {
-            // 11. send data
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: "/mimoto.cms/entityproperty/" + nEntityPropertyId + "/delete",
-                success: function success(resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
-
-    entityPropertySettingEdit: function entityPropertySettingEdit(nEntityPropertySettingId) {
-        Mimoto.popup('/mimoto.cms/entitypropertysetting/' + nEntityPropertySettingId + '/edit');
-    },
-
-    instanceDelete: function instanceDelete(sEntityType, nId) {
-        var response = confirm("Are you sure you want to delete the instance '" + sEntityType + "." + nId + "'?");
-        if (response == true) {
-            // 11. send data
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: "/mimoto.cms/instance/" + sEntityType + "/" + nId + "/delete",
-                success: function success(resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
 
     instanceDeleteAll: function instanceDeleteAll(sEntityType) {
         var response = confirm("Are you sure you want to delete ALL instances of type '" + sEntityType + "'?");

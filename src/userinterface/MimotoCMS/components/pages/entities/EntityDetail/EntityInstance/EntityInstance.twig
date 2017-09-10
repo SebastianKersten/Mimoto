@@ -6,7 +6,7 @@
         label_realtime: Mimoto.getRealtimeValueBySortindex(),
 
         button_label: 'Delete',
-        button_action: 'Mimoto.CMS.instanceDelete(\'' ~ Mimoto.meta('type') ~ '\', ' ~ Mimoto.meta('id') ~ ');',
+        button_directive: Mimoto.remove(),
         button_type: 'alert',
 
         sortable: false

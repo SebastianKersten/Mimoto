@@ -1072,7 +1072,14 @@ module.exports.prototype = {
         let parent = element;
 
         // bubble up
-        while (parent && !parent.hasAttribute(sType)) parent = parent.parentNode;
+        while (parent && !parent.hasAttribute(sType))
+        {
+            // register
+            parent = parent.parentNode;
+
+            // toggle
+            if (parent === document) return false;
+        }
 
         // send
         return parent;

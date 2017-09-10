@@ -1,3 +1,8 @@
+{% if Mimoto.data('key') == 'type' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_value_type' %}{% endif %}
+{% if Mimoto.data('key') == 'formattingOptions' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_value_formattingoptions' %}{% endif %}
+{% if Mimoto.data('key') == 'allowedEntityType' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_entity_allowedEntityType' %}{% endif %}
+{% if Mimoto.data('key') == 'allowedEntityTypes' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes' %}{% endif %}
+{% if Mimoto.data('key') == 'allowDuplicates' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates' %}{% endif %}
 <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting" {{ Mimoto.realtime() }}>
 
     {% if propertySubtype == 'image' or propertySubtype=='video' or propertySubtype=='audio' or propertySubtype=='file' %}
@@ -7,7 +12,7 @@
     {% endif %}
 
     <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu">
-        {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}<a class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu-link" onclick="Mimoto.CMS.entityPropertySettingEdit('{{ Mimoto.meta('id', 'type') }}');">edit</a>{% endif %}
+        {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}<a class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-menu-link" {{ Mimoto.edit(sFormName) }}>edit</a>{% endif %}
     </span>
 
     {% if propertySubtype!='image' and propertySubtype!='video' and propertySubtype!='audio' and propertySubtype!='file' %}:<br>{% endif %}

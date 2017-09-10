@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "fc3919c4593625ff4fe8";
+/******/ 	__webpack_require__.h = "23c62330f4d0dfd0d0eb";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -27660,8 +27660,14 @@ module.exports.prototype = {
 
         // bubble up
         while (parent && !parent.hasAttribute(sType)) {
+            // register
             parent = parent.parentNode;
-        } // send
+
+            // toggle
+            if (parent === document) return false;
+        }
+
+        // send
         return parent;
     }
 };

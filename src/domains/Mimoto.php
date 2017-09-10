@@ -220,20 +220,7 @@ class Mimoto
 
 
         // Entity
-        $app->get ('/'.$sProjectName.'.cms/entity/new', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-
-        // EntityProperty
-        $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/property/new', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->post('/'.$sProjectName.'.cms/entity/{nEntityId}/property/create', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyCreate')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-
-        $app->get('/'.$sProjectName.'.cms/entityproperty/{nEntityPropertyId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get('/'.$sProjectName.'.cms/entityproperty/{nEntityPropertyId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertyDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-
-        // EntityPropertySetting
-        $app->get('/'.$sProjectName.'.cms/entitypropertysetting/{nEntityPropertySettingId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityPropertySettingEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         // Instance
         $app->get ('/'.$sProjectName.'.cms/instance/{sEntityType}/all/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::instanceDeleteAll')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');

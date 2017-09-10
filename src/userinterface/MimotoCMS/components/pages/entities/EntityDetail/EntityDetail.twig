@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', onclick:"MimotoCMS.entityEdit('" ~ Mimoto.meta('id') ~ "');", types:['secondary'] }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_coreform__entity'), types:['secondary'] }) }}
                     </div>
 
                 </div>
@@ -100,7 +100,7 @@
             <br>
             <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
             <br>
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete entity', icon:'warning', onclick:"MimotoCMS.entityDelete(" ~ Mimoto.meta('id') ~ ", '" ~ Mimoto.data('name') ~ "');", types:['alert'] }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete entity', icon:'warning', directive:Mimoto.remove(), onclick:"window.open('/mimoto.cms/entities', '_self');", types:['alert'] }) }}
         </div>
 
     {% endblock %}
