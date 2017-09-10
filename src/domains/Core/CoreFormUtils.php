@@ -23,7 +23,7 @@ class CoreFormUtils
     /**
      * Init structure
      */
-    public static function initForm($sFormName, $bRealtimeCollaborationMode = false)
+    public static function initForm($sFormName, $bManualSave = false, $bRealtimeCollaborationMode = false)
     {
         // init
         $form = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM);
@@ -31,6 +31,7 @@ class CoreFormUtils
         // setup
         $form->setId($sFormName);
         $form->setValue('name', $sFormName);
+        $form->setValue('manualSave', $bManualSave);
         $form->setValue('realtimeCollaborationMode', $bRealtimeCollaborationMode);
 
         // send

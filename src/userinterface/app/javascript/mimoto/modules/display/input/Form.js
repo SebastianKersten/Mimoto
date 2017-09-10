@@ -27,7 +27,7 @@ module.exports.prototype = {
     _sFormName: '',
     _sAction: '',
     _sMethod: '',
-    _bAutoSave: false,
+    _bManualSave: false,
     _sPublicKey: null,
     _actions: null,
 
@@ -43,7 +43,7 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_FORM_METHOD:     'data-mimoto-form-method',
     DIRECTIVE_MIMOTO_FORM_PUBLICKEY:  'data-mimoto-form-publickey',
     DIRECTIVE_MIMOTO_FORM_INSTANCEID: 'data-mimoto-form-instanceid',
-    DIRECTIVE_MIMOTO_FORM_AUTOSAVE:   'data-mimoto-form-autosave',
+    DIRECTIVE_MIMOTO_FORM_MANUALSAVE: 'data-mimoto-form-manualsave',
     DIRECTIVE_MIMOTO_FORM_ACTIONS:    'data-mimoto-form-actions',
 
     // form field directives
@@ -67,10 +67,14 @@ module.exports.prototype = {
 
 
     // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
 
 
+    _getName: function()
+    {
+        return this._sFormName;
+    },
 
 
 
@@ -81,20 +85,23 @@ module.exports.prototype = {
 
     _parseForm: function(elForm)
     {
-        // 1. register
+        // 1. collect
         this._elForm = elForm;
         this._sFormName = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_NAME);
         this._sAction = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTION);
         this._sMethod = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_METHOD);
         this._sPublicKey = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY);
         this._nInstanceId = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID);
-        this._bAutoSave = (elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_AUTOSAVE) === 'true');
-        this._actions = (elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTIONS) === 'true');
+        this._bManualSave = (elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_MANUALSAVE) === 'true');
 
-        // 2. get fields
+        // 2. collect
+        let sActions = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTIONS);
+        if (sActions.length > 0) this._actions = JSON.parse(sActions);
+
+        // 3. get fields
         let aFormFields = elForm.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD + ']');
 
-        // 3. parse input fields
+        // 4. parse input fields
         let nFormFieldCount = aFormFields.length;
         for (let nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++)
         {
@@ -115,10 +122,8 @@ module.exports.prototype = {
 
     _onFormFieldChanged: function(e)
     {
-        console.log('Form field has CHANGED', this._bAutoSave);
-
         // verify and trigger
-        if (this._bAutoSave) this._startAutosave();
+        if (!this._bManualSave) this._startAutosave();
     },
 
 
@@ -140,7 +145,7 @@ module.exports.prototype = {
         clearTimeout(this._autosaveTimer);
         delete(this._autosaveTimer);
 
-        console.log('Auto saving ... ');
+        Mimoto.log('Auto saving ... ');
 
         this.submit();
     },
@@ -255,34 +260,31 @@ module.exports.prototype = {
         }
 
 
-        //
-        // // 1. #todo get input field value in method
-        // // 2. collaborationMode
-        //
-        //
-        // if (form.responseSettings)
-        // {
-        //     if (form.responseSettings.onSuccess)
-        //     {
-        //         if (form.responseSettings.onSuccess.loadPage)
-        //         {
-        //             window.open(form.responseSettings.onSuccess.loadPage, '_self');
-        //         }
-        //         else if (form.responseSettings.onSuccess.closePopup)
-        //         {
-        //             Mimoto.closePopup();
-        //         }
-        //         else if (form.responseSettings.onSuccess.reloadPopup)
-        //         {
-        //             Mimoto.popup.replace(form.responseSettings.onSuccess.reloadPopup);
-        //         }
-        //         else if (form.responseSettings.onSuccess.dispatchEvent)
-        //         {
-        //
-        //             console.log('form.responseSettings.onSuccess.dispatchEvent', form.responseSettings.onSuccess.dispatchEvent);
-        //         }
-        //     }
-        // }
+        // --- execute actions
+
+
+        if (this._actions.response)
+        {
+            if (this._actions.response.onSuccess)
+            {
+                if (this._actions.response.onSuccess.loadPage)
+                {
+                    window.open(this._actions.response.onSuccess.loadPage, '_self');
+                }
+                else if (this._actions.response.onSuccess.closePopup)
+                {
+                    Mimoto.closePopup();
+                }
+                else if (this._actions.response.onSuccess.reloadPopup)
+                {
+                    Mimoto.popup.replace(this._actions.response.onSuccess.reloadPopup);
+                }
+                else if (this._actions.response.onSuccess.dispatchEvent)
+                {
+                    console.log('form.responseSettings.onSuccess.dispatchEvent', this._actions.response.onSuccess.dispatchEvent);
+                }
+            }
+        }
     }
 
 }

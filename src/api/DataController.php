@@ -82,14 +82,35 @@ class DataController
         // 3. load
         $eForm = Mimoto::service('input')->getFormByName($sFormName);
 
-        // 4. load
-        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
+        // 4. register
+        $bManualSave = $eForm->get('manualSave');
 
-        // 5. configure
-        $aParentEntitySelectionConfigs = [(object) array('type' => $sInstanceType, 'id' => $nInstanceId, 'property' => $sPropertyName)];
+        // 5. setup
+        $aActions = [
+            'response' => ['onSuccess' => ['closePopup' => true]]
+        ];
 
-        // 6. load
-        $eNewEntity = Mimoto::service('data')->createAndConnect($eParent->getValue('name'), $aParentEntitySelectionConfigs);
+        // 6. verify
+        if ($bManualSave)
+        {
+            // a. init
+            $eNewEntity = null;
+
+            // b. setup
+            $aActions['onCreatedConnectTo'] = $sPropertySelector;
+        }
+        else
+        {
+            // I. load
+            $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
+
+            // II. configure
+            $aParentEntitySelectionConfigs = [(object) array('type' => $sInstanceType, 'id' => $nInstanceId, 'property' => $sPropertyName)];
+
+            // III. load
+            $eNewEntity = Mimoto::service('data')->createAndConnect($eParent->getValue('name'), $aParentEntitySelectionConfigs);
+        }
+
 
 
         // ---
@@ -105,9 +126,7 @@ class DataController
         $component->addForm(
             $sFormName,
             $eNewEntity,
-            [
-                'response' => ['onSuccess' => ['closePopup' => true]]
-            ]
+            $aActions
         );
 
         // 10. connect

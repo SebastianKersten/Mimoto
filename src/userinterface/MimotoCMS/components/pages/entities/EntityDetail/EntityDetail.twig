@@ -47,19 +47,18 @@
 
                 <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('properties') }}>
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('properties') }}>
                         <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
-                        <div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new property', icon:'plus', onclick:"MimotoCMS.entityPropertyNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                     </div>
 
-                    <div {{ Mimoto.hideWhenEmpty('properties') }}>
+                    <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('properties') }}>
                         <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityDetail-EntityProperty') }}>
                             {{ Mimoto.data('properties', 'MimotoCMS_entities_EntityDetail-EntityProperty') }}
                         </ul>
+                    </div>
 
-                        <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new property', icon:'plus', onclick:"MimotoCMS.entityPropertyNew('" ~ Mimoto.meta('id') ~ "');" }) }}
-                        </div>
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new property', icon:'plus', onclick:"MimotoCMS.entityPropertyNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                     </div>
 
                 </div>

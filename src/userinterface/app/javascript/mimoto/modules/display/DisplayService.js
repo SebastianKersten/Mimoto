@@ -398,6 +398,11 @@ module.exports.prototype = {
 
     _prepareAllTaggedElements: function(aDirectives)
     {
+        // init
+        let aSubmitButtonDirectives = [];
+        let aForms = [];
+
+
         // 1. parse all directives
         for (let sDirective in aDirectives)
         {
@@ -678,9 +683,11 @@ module.exports.prototype = {
                         // init
                         let form = new Form(directive.element);
 
-
                         // store
                         this._aForms.push(form);
+
+                        // add
+                        aForms.push(form);
 
                         // 1. create form
                         // 2. add input fields
@@ -694,16 +701,8 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_FORM_SUBMIT:
 
-                        console.warn('DIRECTIVE_MIMOTO_FORM_SUBMIT', directive);
-
-
-                        // 1. create form
-                        // 2. add input fields
-                        // 3. add submit (indien erin, dan meteen, indien erbuiten met naam, search form, open form)
-
-                        // if (element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_CONNECTION))
-
-
+                        // add
+                        aSubmitButtonDirectives.push(directive);
                         break;
 
                     // --- display directives
@@ -759,6 +758,39 @@ module.exports.prototype = {
 
                         }.bind(directive.element, directive.sEntitySelector, directive.instructions.url), true);
 
+                }
+            }
+        }
+
+
+        // ---
+
+
+        // connect submit buttons
+        let nSubmitButtonCount = aSubmitButtonDirectives.length;
+        if (nSubmitButtonCount > 0)
+        {
+            for (let nSubmitButtonIndex = 0; nSubmitButtonIndex < nSubmitButtonCount; nSubmitButtonIndex++)
+            {
+                // register
+                let directive = aSubmitButtonDirectives[nSubmitButtonIndex];
+                let elSubmitButton = directive.element;
+
+                // read
+                let sFormName = directive.element.getAttribute(this.DIRECTIVE_MIMOTO_FORM_SUBMIT);
+
+                // connect
+                let nFormCount = aForms.length;
+                for (let nFormIndex = 0; nFormIndex < nFormCount; nFormIndex++)
+                {
+                    // register
+                    let form = aForms[nFormIndex];
+
+                    if (sFormName.length === 0 || sFormName.length > 0 && form.getName() === sFormName)
+                    {
+                        // configure
+                        elSubmitButton.addEventListener('click', function(e) { form.submit(); });
+                    }
                 }
             }
         }

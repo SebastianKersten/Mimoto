@@ -83,14 +83,14 @@ class AimlessForm extends AimlessComponent
         }
 
 
-        // prepare
-        $jsonActions = (isset($this->_aOptions['response'])) ? json_encode($this->_aOptions['response']) : '{}';
-
 
         // 1. autosave (= also realtime collaboration)
         // 2. responseInstructions (connect, close popup, instruction editor on form)
         // 3. public key
         // 4. entity id
+
+
+        $sFormActions = (!empty($this->_aOptions)) ? htmlentities(json_encode($this->_aOptions), ENT_QUOTES, 'UTF-8') : '';
 
 
         // init
@@ -100,8 +100,8 @@ class AimlessForm extends AimlessComponent
             'data-mimoto-form-method="'.$sMethod.'" '.
             'data-mimoto-form-instanceid="'.$formFieldValues->entityId.'" '.
             'data-mimoto-form-publickey="'.Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues)).'" '.
-            'data-mimoto-form-actions="'.htmlentities(json_encode($jsonActions), ENT_QUOTES, 'UTF-8').'" '.
-            'data-mimoto-form-autosave="true">';
+            'data-mimoto-form-actions="'.$sFormActions.'" '.
+            'data-mimoto-form-manualsave="'.(($form->get('manualSave') == 1) ? 'true' : 'false').'">';
 
         // render form
         $sRenderedForm .= parent::renderCollection($aFields, null, null, $formFieldValues->fields, true);

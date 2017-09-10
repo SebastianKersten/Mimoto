@@ -71,16 +71,25 @@ class Form
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM.'--manualSave',
+                    // ---
+                    'name' => 'manualSave',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE // #todo enum "0" of "1"
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_FORM.'--realtimeCollaborationMode',
-                    'created' => CoreConfig::EPOCH,
                     // ---
                     'name' => 'realtimeCollaborationMode',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
-                            'id' => CoreConfig::MIMOTO_FORM.'--realtimeCollaborationMode-type',
-                            'created' => CoreConfig::EPOCH,
-                            // ---
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE // #todo enum "0" of "1"
@@ -192,7 +201,7 @@ class Form
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_FORM);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_FORM, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Form', '', "Using the built in form feature allows you to easily create and edit data based upon your entity configurations.");
@@ -204,6 +213,13 @@ class Form
             'Name', 'Form name', 'The form name should be unique'
         );
         self::setNameValidation($field);
+
+        CoreFormUtils::addField_checkbox
+        (
+            $form, 'manualSave', CoreConfig::MIMOTO_FORM.'--manualSave',
+            'Configuration',
+            'Save form manually'
+        );
 
         CoreFormUtils::addField_groupEnd($form);
 

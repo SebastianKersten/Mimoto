@@ -7,6 +7,11 @@
 'use strict';
 
 
+// Mimoto input classes
+let Textline = require('./fields/Textline');
+let Radiobutton = require('./fields/Radiobutton');
+
+
 module.exports = function(elFormField) {
 
     // events
@@ -30,7 +35,7 @@ module.exports.prototype = {
     _elFormField: null,
 
     // elements
-    _elInput: null,
+    _aInputElements: null,
     _elError: null,
 
     // state
@@ -38,7 +43,6 @@ module.exports.prototype = {
     _bHasPendingChanges: false,
 
     _persistantValue: null,
-    _currentValue: null,
     _pendingValue: null,
 
 
@@ -87,7 +91,7 @@ module.exports.prototype = {
     getChanges: function()
     {
         // copy
-        this._pendingValue = this._currentValue;
+        this._pendingValue = this._input.getValue();
         this._bHasPendingChanges = true;
 
         // toggle
@@ -99,11 +103,9 @@ module.exports.prototype = {
 
     acceptChanges: function()
     {
-        Mimoto.log('acceptChanges');
         // verify
         if (this._bHasPendingChanges)
         {
-            Mimoto.log('Has pending changes');
             // accept
             this._persistantValue = this._pendingValue;
             this._pendingValue = null;
@@ -121,9 +123,20 @@ module.exports.prototype = {
         // collect
         let aElements = [
             { el: this._elFormField, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE },
-            { el: this._elInput, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT },
-            { el: this._elInput, attr: 'name' }
         ];
+
+        // configure
+        let nInputElementCount = this._aInputElements.length;
+        for (let nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++)
+        {
+            // register
+            let elInput = this._aInputElements[nInputElementIndex];
+
+            // register
+            aElements.push({ el: elInput, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT });
+            aElements.push({ el: elInput, attr: 'name' });
+        }
+
 
         // swap
         let nElementCount = aElements.length;
@@ -155,56 +168,59 @@ module.exports.prototype = {
     {
         // register
         this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
-        this._elInput = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
         this._elError = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
 
-        // store
-        this._persistantValue = this._getValueFromInputField(this._elInput);
-        this._currentValue = this._persistantValue;
+        // collect
+        this._aInputElements= elFormField.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
 
-        // register
-        let classRoot = this;
+
+        switch(this._sType)
+        {
+            case '_Mimoto_form_input_textline': this._input = new Textline(this._aInputElements[0]); break;
+            case '_Mimoto_form_input_radiobutton': this._input = new Radiobutton(this._aInputElements); break;
+            default:
+
+                // check if any custom field registered in root
+        }
+
+        // verify or cancel
+        if (!this._input) return;
+
+
+        // store initial value
+        this._persistantValue = this._input.getValue();
 
         // configure
-        this._elInput.addEventListener('input', function (e) { classRoot._handleInputChange(this.value); });
-        this._elInput.addEventListener('change', function(e) { classRoot._handleInputChange(this.value); });
+        let nInputElementCount = this._aInputElements.length;
+        for (let nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++)
+        {
+            // register
+            let elInput = this._aInputElements[nInputElementIndex];
+
+            // configure
+            elInput.addEventListener(this.CHANGED, function(e) { this._handleInputChange(); }.bind(this));
+        }
+
     },
 
-    _handleInputChange: function(value)
+    _handleInputChange: function()
     {
-        Mimoto.log('Changed from', this._persistantValue, 'to', value);
+        Mimoto.log('Changed from', this._persistantValue, 'to', this._input.getValue());
 
 
         //if (_validateValue(value));
         //classRoot._validateInputField(field);
 
 
-        // this.pendingValue - persistValue
+        // toggle
+        this._bHasChanges = true;
 
-
-        // 1. verify
-        if (value !== this._currentValue)
-        {
-            // a. update
-            this._currentValue = value;
-
-            // b. broadcast
-            this._broadcastChanges();
-        }
-        else
-        {
-            // toggle
-            this._bHasChanges = false;
-        }
-
-
+        // broadcast
+        this._broadcastChanges();
     },
 
     _broadcastChanges: function()
     {
-        // toggle
-        this._bHasChanges = true;
-
         // broadcast
         this._elFormField.dispatchEvent(new Event(this.CHANGED));
     },

@@ -169,6 +169,7 @@ class FormService
         $sPublicKey = $request->get('publicKey');
         $nInstanceId = $request->get('instanceId');
         $changedFields = json_decode($request->get('changedFields'));
+        $actions = json_decode($request->get('actions'));
 
         // 2. load form
         $form = Mimoto::service('input')->getFormByName($sFormName);
@@ -449,54 +450,59 @@ class FormService
         }
 
 
-        // auto add to property - #todo - move to separate function
-        $sInstruction = (isset($requestData->onCreatedConnectTo)) ? $requestData->onCreatedConnectTo : null;
-
-
-        if (!empty($sInstruction))
-        {
-            // split
-            $aInstructionParts = explode('.', $sInstruction);
-
-            // register
-            $sInstructionEntityTypeName     = $aInstructionParts[0];
-            $nInstructionEntityId           = $aInstructionParts[1];
-            $sInstructionEntityPropertyName = $aInstructionParts[2];
-
-            // load
-            $eParent = Mimoto::service('data')->get($sInstructionEntityTypeName, $nInstructionEntityId);
-
-            // read
-            $sPropertyType = $eParent->getPropertyType($sInstructionEntityPropertyName);
-
-
-            // validate
-            if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY ||
-                $sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
-            {
-                switch ($sPropertyType)
-                {
-                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-
-                        // add
-                        $eParent->setValue($sInstructionEntityPropertyName, $entity);
-                        break;
-
-                    case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-
-                        // add
-                        $eParent->addValue($sInstructionEntityPropertyName, $entity);
-                        break;
-                }
-
-                // store
-                Mimoto::service('data')->store($eParent);
-            }
-        }
 
         // in case of change selectors due to a newly created entity, redetermine public key
         if ($bIsNew)
         {
+            // auto add to property - #todo - move to separate function
+            $sInstruction = (isset($actions->onCreatedConnectTo)) ? $actions->onCreatedConnectTo : null;
+
+
+            if (!empty($sInstruction))
+            {
+                // split
+                $aInstructionParts = explode('.', $sInstruction);
+
+                // register
+                $sInstructionEntityTypeName     = $aInstructionParts[0];
+                $nInstructionEntityId           = $aInstructionParts[1];
+                $sInstructionEntityPropertyName = $aInstructionParts[2];
+
+                // load
+                $eParent = Mimoto::service('data')->get($sInstructionEntityTypeName, $nInstructionEntityId);
+
+                // read
+                $sPropertyType = $eParent->getPropertyType($sInstructionEntityPropertyName);
+
+
+                // validate
+                if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY ||
+                    $sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+                {
+                    switch ($sPropertyType)
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                            // add
+                            $eParent->setValue($sInstructionEntityPropertyName, $entity);
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                            // add
+                            $eParent->addValue($sInstructionEntityPropertyName, $entity);
+                            break;
+                    }
+
+                    // store
+                    Mimoto::service('data')->store($eParent);
+                }
+            }
+
+
+            // ---
+
+
             // 1. load
             $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity);
 

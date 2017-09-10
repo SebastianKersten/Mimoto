@@ -45,7 +45,7 @@ class AimlessInput extends AimlessComponent
     public function field()
     {
         // compose and send
-        return 'data-mimoto-form-field="'.$this->_entity->getEntitySelector().'" data-mimoto-form-field-value="'.$this->_sFieldId.'"';
+        return 'data-mimoto-form-field="'.$this->_entity->getEntitySelector().'" data-mimoto-form-field-type="'.$this->_entity->getEntityTypeName().'" data-mimoto-form-field-value="'.$this->_sFieldId.'"';
     }
 
     public function input()

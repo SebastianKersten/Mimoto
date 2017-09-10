@@ -123,9 +123,9 @@ class AimlessComponentViewModel
         return $this->_component->form($sKey);
     }
 
-    public function submit($sKey = null)
+    public function submit($sFormName = '')
     {
-        return $this->_component->submit($sKey);
+        return $this->_component->submit($sFormName);
     }
 
     public function module($sModuleName, $values = [])

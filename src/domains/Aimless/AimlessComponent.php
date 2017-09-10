@@ -820,19 +820,10 @@ class AimlessComponent
     }
 
 
-    public function submit($sKey = null)
+    public function submit($sFormName = '')
     {
-        // 1. set default key
-        if ($sKey === null) $sKey = self::PRIMARY_FORM;
-
-        // 2. validate is form was defined
-        if (!isset($this->_aFormConfigs[$sKey])) die("Aimless says: Form '$sKey' not defined");
-
-        // 3. load requested config
-        $formConfig = $this->_aFormConfigs[$sKey];
-
-        // 4. output
-        return 'data-mimoto-form-submit="'.$formConfig->sFormName.'"';
+        // 1. output
+        return 'data-mimoto-form-submit="'.$sFormName.'"';
     }
 
     

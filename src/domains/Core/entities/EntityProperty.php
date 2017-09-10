@@ -129,7 +129,7 @@ class EntityProperty
     public static function getForm($eEntityProperty = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTY);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTY, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Property', '', "Entities are composed of 'properties'. Add properties to your entity and decide what type they are. A property can have three types: <i>value</i>, <i>entity</i> or <i>collection</i>");
