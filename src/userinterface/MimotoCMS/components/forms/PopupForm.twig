@@ -4,8 +4,12 @@
     </div>
     <div class="MimotoCMS_forms_Form-menu">
 
+        {#{% if Mimoto.data('manualSave') %}{{ Mimoto.module('MimotoCMS_modules_Button', { label:"Cancel", types:['text'], onclick:"Mimoto.closePopup();" }) }}{% endif %}#}
+
         {% if Mimoto.data('manualSave') %}
             <span {{ Mimoto.submit() }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:"Save" }) }}</span>
+        {% else %}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:"Done", onclick:"Mimoto.closePopup();" }) }}
         {% endif %}
     </div>
 </div>

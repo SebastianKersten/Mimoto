@@ -148,6 +148,15 @@ class Component
                 ]
             ),
             (object) array(
+                'name' => 'MimotoCMS_layout_PopupForm',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/forms/PopupForm.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
                 'name' => 'MimotoCMS_layout_Selection',
                 'templates' => [
                     (object) array(

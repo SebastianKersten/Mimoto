@@ -8,9 +8,9 @@
 
 
 // Mimoto input classes
-let Textline = require('../../../../../MimotoCMS/components/forms/input/Textline/Textline');
-let Radiobutton = require('../../../../../MimotoCMS/components/forms/input/Radiobutton/Radiobutton');
-let Checkbox = require('../../../../../MimotoCMS/components/forms/input/Checkbox/Checkbox');
+let Textline = require('./input/Textline/Textline');
+let Radiobutton = require('./input/Radiobutton/Radiobutton');
+let Checkbox = require('./input/Checkbox/Checkbox');
 
 
 module.exports = function(elFormField) {

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "d6891fba277d2d52d59d";
+/******/ 	__webpack_require__.h = "b3b54a0a5695d77cf0f5";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -26744,7 +26744,7 @@ var EntitySetItem = __webpack_require__(458);
 var EntityUnsetItem = __webpack_require__(459);
 
 // Mimoto input classes
-var Form = __webpack_require__(460);
+var Form = __webpack_require__(541);
 
 // Mimoto display classes
 var HideWhenEmpty = __webpack_require__(462);
@@ -27822,651 +27822,8 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 460 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto - Form
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-// Mimoto input classes
-
-var FormField = __webpack_require__(461);
-
-module.exports = function (elForm) {
-
-    // start
-    this.__construct(elForm);
-};
-
-module.exports.prototype = {
-
-    // elements
-    _elForm: null,
-    _aFormFields: [],
-
-    // settings
-    _sFormName: '',
-    _sAction: '',
-    _sMethod: '',
-    _bManualSave: false,
-    _sPublicKey: null,
-    _actions: null,
-
-    // state
-    _bHasChanges: false,
-
-    // utils
-    _autosaveTimer: null,
-
-    // form setting directives
-    DIRECTIVE_MIMOTO_FORM_NAME: 'data-mimoto-form-name',
-    DIRECTIVE_MIMOTO_FORM_ACTION: 'data-mimoto-form-action',
-    DIRECTIVE_MIMOTO_FORM_METHOD: 'data-mimoto-form-method',
-    DIRECTIVE_MIMOTO_FORM_PUBLICKEY: 'data-mimoto-form-publickey',
-    DIRECTIVE_MIMOTO_FORM_INSTANCEID: 'data-mimoto-form-instanceid',
-    DIRECTIVE_MIMOTO_FORM_MANUALSAVE: 'data-mimoto-form-manualsave',
-    DIRECTIVE_MIMOTO_FORM_ACTIONS: 'data-mimoto-form-actions',
-
-    // form field directives
-    DIRECTIVE_MIMOTO_FORM_FIELD: 'data-mimoto-form-field',
-
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Constructor
-     */
-    __construct: function __construct(elForm) {
-        this._parseForm(elForm);
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Properties -------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _getName: function _getName() {
-        return this._sFormName;
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _parseForm: function _parseForm(elForm) {
-        // 1. collect
-        this._elForm = elForm;
-        this._sFormName = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_NAME);
-        this._sAction = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTION);
-        this._sMethod = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_METHOD);
-        this._sPublicKey = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY);
-        this._nInstanceId = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID);
-        this._bManualSave = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_MANUALSAVE) === 'true';
-
-        // 2. collect
-        var sActions = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTIONS);
-        if (sActions.length > 0) this._actions = JSON.parse(sActions);
-
-        // 3. get fields
-        var aFormFields = elForm.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD + ']');
-
-        // 4. parse input fields
-        var nFormFieldCount = aFormFields.length;
-        for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
-            // a. register
-            var elFormField = aFormFields[nFormFieldIndex];
-
-            // b. init
-            var formField = new FormField(elFormField);
-
-            // c. configure
-            elFormField.addEventListener('onMimotoFormfieldChanged', this._onFormFieldChanged.bind(this), true);
-
-            // d. store
-            this._aFormFields.push(formField);
-        }
-    },
-
-    _onFormFieldChanged: function _onFormFieldChanged(e) {
-        // verify and trigger
-        if (!this._bManualSave) this._startAutosave();
-    },
-
-    _startAutosave: function _startAutosave() {
-        if (!this._autosaveTimer) {
-            // register
-            var classRoot = this;
-
-            // init
-            this._autosaveTimer = setTimeout(function () {
-                classRoot._executeAutoSave();
-            }, 1000);
-        }
-    },
-
-    _executeAutoSave: function _executeAutoSave() {
-        // cleanup
-        clearTimeout(this._autosaveTimer);
-        delete this._autosaveTimer;
-
-        Mimoto.log('Auto saving ... ');
-
-        this.submit();
-    },
-
-    /**
-     * Submit form
-     */
-    submit: function submit() {
-        // init
-        var aChangedFields = {};
-        var bChangesFound = false;
-
-        // add changed fields
-        var nFormFieldCount = this._aFormFields.length;
-        for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
-            // register
-            var formField = this._aFormFields[nFormFieldIndex];
-
-            // verify
-            if (formField.hasChanges()) {
-                // toggle
-                bChangesFound = true;
-
-                // store
-                aChangedFields[formField.getFieldValue()] = formField.getChanges();
-            }
-        }
-
-        // setup
-        var requestData = {
-            publicKey: this._sPublicKey,
-            instanceId: this._nInstanceId,
-            actions: this._actions,
-            changedFields: aChangedFields
-        };
-
-        // 11. send data
-        Mimoto.utils.callAPI({
-            type: this._sMethod,
-            url: this._sAction,
-            data: requestData,
-            dataType: 'json',
-            success: function (resultData, resultStatus, resultSomething) {
-                Mimoto.log('Form submitted', resultData);
-
-                this._updateForm(resultData);
-            }.bind(this)
-        });
-    },
-
-    _updateForm: function _updateForm(resultData) {
-        if (resultData.errors && resultData.errors.length > 0) {
-            Mimoto.log('Errors were found');
-        } else {
-            Mimoto.log('Form submit SUCCESS');
-
-            // update all fields
-            var nFormFieldCount = this._aFormFields.length;
-            for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
-                // register
-                var formField = this._aFormFields[nFormFieldIndex];
-
-                // forward
-                formField.acceptChanges();
-            }
-        }
-
-        if (resultData.newEntities) {
-            for (var sEntityType in resultData.newEntities) {
-
-                var newEntity = resultData.newEntities[sEntityType];
-
-                // update all fields
-                var _nFormFieldCount = this._aFormFields.length;
-                for (var _nFormFieldIndex = 0; _nFormFieldIndex < _nFormFieldCount; _nFormFieldIndex++) {
-                    // register
-                    var _formField = this._aFormFields[_nFormFieldIndex];
-
-                    // forward
-                    _formField.updatePropertySelector(newEntity.selector, newEntity.id);
-                }
-            }
-        }
-
-        if (resultData.newPublicKey) {
-            // update
-            this._sPublicKey = resultData.newPublicKey;
-            this._elForm.setAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY, this._sPublicKey);
-        }
-
-        if (resultData.newEntityId) {
-            // update
-            this._nInstanceId = parseInt(resultData.newEntityId);
-            this._elForm.setAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID, this._nInstanceId);
-        }
-
-        // --- execute actions
-
-
-        if (this._actions && this._actions.response) {
-            if (this._actions.response.onSuccess) {
-                if (this._actions.response.onSuccess.loadPage) {
-                    window.open(this._actions.response.onSuccess.loadPage, '_self');
-                } else if (this._actions.response.onSuccess.closePopup) {
-                    Mimoto.closePopup();
-                } else if (this._actions.response.onSuccess.reloadPopup) {
-                    Mimoto.popup.replace(this._actions.response.onSuccess.reloadPopup);
-                } else if (this._actions.response.onSuccess.dispatchEvent) {
-                    console.log('form.responseSettings.onSuccess.dispatchEvent', this._actions.response.onSuccess.dispatchEvent);
-                }
-            }
-        }
-    }
-
-};
-
-/***/ }),
-/* 461 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto - FormField
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-// Mimoto input classes
-
-var Textline = __webpack_require__(538);
-var Radiobutton = __webpack_require__(539);
-var Checkbox = __webpack_require__(540);
-
-module.exports = function (elFormField) {
-
-    // start
-    this.__construct(elFormField);
-};
-
-module.exports.prototype = {
-
-    // form field directives
-    DIRECTIVE_MIMOTO_FORM_FIELD_VALUE: 'data-mimoto-form-field-value',
-    DIRECTIVE_MIMOTO_FORM_FIELD_TYPE: 'data-mimoto-form-field-type',
-    DIRECTIVE_MIMOTO_FORM_FIELD_INPUT: 'data-mimoto-form-field-input',
-    DIRECTIVE_MIMOTO_FORM_FIELD_ERROR: 'data-mimoto-form-field-error',
-
-    // settings
-    _sType: null,
-    _elFormField: null,
-
-    // elements
-    _aInputElements: null,
-    _elError: null,
-
-    // state
-    _bHasChanges: false,
-    _bHasPendingChanges: false,
-
-    _persistantValue: null,
-    _pendingValue: null,
-
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Constructor
-     */
-    __construct: function __construct(elFormField) {
-        // store
-        this._elFormField = elFormField;
-
-        // parse
-        this._parseFormField(elFormField);
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Properties -------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    getFieldValue: function getFieldValue() {
-        return this._elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE);
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    hasChanges: function hasChanges() {
-        return this._bHasChanges;
-    },
-
-    getChanges: function getChanges() {
-        // copy
-        this._pendingValue = this._input.getValue();
-        this._bHasPendingChanges = true;
-
-        // toggle
-        this._bHasChanges = false;
-
-        // send
-        return this._pendingValue;
-    },
-
-    acceptChanges: function acceptChanges() {
-        // verify
-        if (this._bHasPendingChanges) {
-            // accept
-            this._persistantValue = this._pendingValue;
-            this._pendingValue = null;
-
-            // toggle
-            this._bHasPendingChanges = false;
-        }
-
-        // broadcast
-        if (this._bHasChanges) this._broadcastChanges();
-    },
-
-    updatePropertySelector: function updatePropertySelector(sOldSelector, sNewSelector) {
-        // collect
-        var aElements = [{ el: this._elFormField, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE }];
-
-        // configure
-        var nInputElementCount = this._aInputElements.length;
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            // register
-            var elInput = this._aInputElements[nInputElementIndex];
-
-            // register
-            aElements.push({ el: elInput, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT });
-            aElements.push({ el: elInput, attr: 'name' });
-        }
-
-        // swap
-        var nElementCount = aElements.length;
-        for (var nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++) {
-            // register
-            var element = aElements[nElementIndex];
-
-            // read
-            var sCurrentSelector = element.el.getAttribute(element.attr);
-
-            // compare
-            if (sCurrentSelector.substr(0, sOldSelector.length) === sOldSelector) {
-                // update
-                element.el.setAttribute(element.attr, sNewSelector + sCurrentSelector.substr(sOldSelector.length));
-            }
-        }
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _parseFormField: function _parseFormField(elFormField) {
-        // register
-        this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
-        this._elError = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
-
-        // collect
-        this._aInputElements = elFormField.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
-
-        switch (this._sType) {
-            case '_Mimoto_form_input_textline':
-                this._input = new Textline(this._aInputElements[0]);break;
-            case '_Mimoto_form_input_radiobutton':
-                this._input = new Radiobutton(this._aInputElements);break;
-            case '_Mimoto_form_input_checkbox':
-                this._input = new Checkbox(this._aInputElements[0]);break;
-            default:
-
-            // check if any custom field registered in root
-        }
-
-        // verify or cancel
-        if (!this._input) return;
-
-        // store initial value
-        this._persistantValue = this._input.getValue();
-
-        // configure
-        var nInputElementCount = this._aInputElements.length;
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            // register
-            var elInput = this._aInputElements[nInputElementIndex];
-
-            // configure
-            elInput.addEventListener('onMimotoInputChanged', function (e) {
-                this._handleInputChange();
-            }.bind(this));
-        }
-    },
-
-    _handleInputChange: function _handleInputChange() {
-        Mimoto.log('Changed from', this._persistantValue, 'to', this._input.getValue());
-
-        //if (_validateValue(value));
-        //classRoot._validateInputField(field);
-
-
-        // filter on actual change or changes pending
-        if (this._bHasPendingChanges && this._input.getValue() === this._pendingValue) return;
-        if (!this._bHasPendingChanges && this._input.getValue() === this._persistantValue) return;
-
-        // toggle
-        this._bHasChanges = true;
-
-        // broadcast
-        this._broadcastChanges();
-    },
-
-    _broadcastChanges: function _broadcastChanges() {
-        // broadcast
-        this._elFormField.dispatchEvent(new Event('onMimotoFormfieldChanged'));
-    },
-
-    _getValueFromInputField: function _getValueFromInputField(elInput) {
-        // init
-        var value = null;
-
-        return elInput.value;
-
-        // read type
-        var sAimlessInputType = 'xxx'; //this._getInputFieldType($component);
-
-
-        switch (sAimlessInputType) {
-            case 'list':
-
-                value = JSON.parse($($component).val());
-                break;
-
-            default:
-
-                // validate
-                if ($($component).is("input")) {
-                    switch ($($component).attr('type')) {
-                        case 'radio':
-
-                            //  fix for handling radiobutton onSubmit en onChange
-                            if ($component.length) {
-                                var aComponents = $component;
-
-                                // collect value
-                                aComponents.each(function (index, $component) {
-                                    if ($($component).prop("checked") === true) {
-                                        value = $($component).val();
-                                    }
-                                });
-                            } else {
-                                if ($($component).prop("checked") === true) {
-                                    value = $($component).val();
-                                }
-                            }
-
-                            break;
-
-                        case 'checkbox':
-
-                            if ($($component).attr('value')) {
-                                if ($($component).prop("checked") === true) {
-                                    value = $($component).val();
-                                }
-                            } else {
-                                value = $($component).prop("checked");
-                            }
-
-                            break;
-
-                        default:
-
-                            value = $($component).val();
-                    }
-                }
-
-                if ($($component).is("select")) {
-                    value = $($component).val();
-                }
-
-                if ($($component).is("textarea")) {
-                    value = $($component).val();
-                }
-
-                break;
-        }
-
-        // send
-        return value;
-    },
-
-    _setInputFieldValue: function _setInputFieldValue($component, value) // #todo - implement
-    {
-        //console.log('value:');
-
-
-        if ($($component).is("input")) {
-            switch ($($component).attr('type')) {
-                case 'radio':
-
-                    // output
-                    $($component).each(function (nIndex, $component) {
-                        $($component).prop('checked', $($component).val() == value);
-                    });
-                    break;
-
-                case 'checkbox':
-
-                    // output
-                    $($component).each(function (nIndex, $component) {
-                        $($component).prop('checked', value);
-                    });
-                    break;
-
-                default:
-
-                    // output
-                    $($component).val(value);
-            }
-        };
-
-        if ($($component).is("select")) {
-            $($component).val(value);
-        }
-
-        if ($($component).is("textarea")) {
-            // output
-            $($component).val(value);
-        }
-    },
-
-    _validateInputField: function _validateInputField(field) {
-        // validae
-        if (!field.settings) return;
-        if (!field.settings.validation) return;
-
-        // init
-        var sErrorMessage = '';
-
-        // check rules
-        var nValidationRuleCount = field.settings.validation.length;
-        var bValid = true;
-        for (var i = 0; i < nValidationRuleCount; i++) {
-            // register
-            var validationRule = field.settings.validation[i];
-
-            // read
-            var value = this._getValueFromInputField(field.$input);
-
-            switch (validationRule.type) {
-                case 'maxchars':
-
-                    // validate
-                    if (value.length > validationRule.value) {
-                        sErrorMessage = validationRule.errorMessage;
-                        bValid = false;
-                    }
-                    break;
-
-                case 'minchars':
-
-                    // validate
-                    if (value.length < validationRule.value) {
-                        sErrorMessage = validationRule.errorMessage;
-                        bValid = false;
-                    }
-                    break;
-
-                case 'regex_custom':
-
-                    // init
-                    var patt = new RegExp(validationRule.value, "g");
-
-                    // validate
-                    if (!patt.test(value)) {
-                        sErrorMessage = validationRule.errorMessage;
-                        bValid = false;
-                    }
-                    break;
-            }
-
-            if (!bValid) break;
-        }
-
-        // update interface
-        if (field.$error) {
-            if (sErrorMessage) {
-                field.$error.text(sErrorMessage);
-                // #todo toggle field icon - zie code David
-            } else {
-                field.$error.text('');
-            }
-        }
-
-        // send
-        return bValid;
-    }
-
-};
-
-/***/ }),
+/* 460 */,
+/* 461 */,
 /* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37566,6 +36923,653 @@ module.exports.prototype = {
 
     _broadcastChange: function _broadcastChange(elInput) {
         this._elInput.dispatchEvent(new Event('onMimotoInputChanged'));
+    }
+
+};
+
+/***/ }),
+/* 541 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - Form
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+// Mimoto input classes
+
+var FormField = __webpack_require__(542);
+
+module.exports = function (elForm) {
+
+    // start
+    this.__construct(elForm);
+};
+
+module.exports.prototype = {
+
+    // elements
+    _elForm: null,
+    _aFormFields: [],
+
+    // settings
+    _sFormName: '',
+    _sAction: '',
+    _sMethod: '',
+    _bManualSave: false,
+    _sPublicKey: null,
+    _actions: null,
+
+    // state
+    _bHasChanges: false,
+
+    // utils
+    _autosaveTimer: null,
+
+    // form setting directives
+    DIRECTIVE_MIMOTO_FORM_NAME: 'data-mimoto-form-name',
+    DIRECTIVE_MIMOTO_FORM_ACTION: 'data-mimoto-form-action',
+    DIRECTIVE_MIMOTO_FORM_METHOD: 'data-mimoto-form-method',
+    DIRECTIVE_MIMOTO_FORM_PUBLICKEY: 'data-mimoto-form-publickey',
+    DIRECTIVE_MIMOTO_FORM_INSTANCEID: 'data-mimoto-form-instanceid',
+    DIRECTIVE_MIMOTO_FORM_MANUALSAVE: 'data-mimoto-form-manualsave',
+    DIRECTIVE_MIMOTO_FORM_ACTIONS: 'data-mimoto-form-actions',
+
+    // form field directives
+    DIRECTIVE_MIMOTO_FORM_FIELD: 'data-mimoto-form-field',
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elForm) {
+        this._parseForm(elForm);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _getName: function _getName() {
+        return this._sFormName;
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _parseForm: function _parseForm(elForm) {
+        // 1. collect
+        this._elForm = elForm;
+        this._sFormName = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_NAME);
+        this._sAction = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTION);
+        this._sMethod = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_METHOD);
+        this._sPublicKey = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY);
+        this._nInstanceId = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID);
+        this._bManualSave = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_MANUALSAVE) === 'true';
+
+        // 2. collect
+        var sActions = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTIONS);
+        if (sActions.length > 0) this._actions = JSON.parse(sActions);
+
+        // 3. get fields
+        var aFormFields = elForm.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD + ']');
+
+        // 4. parse input fields
+        var nFormFieldCount = aFormFields.length;
+        for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
+            // a. register
+            var elFormField = aFormFields[nFormFieldIndex];
+
+            // b. init
+            var formField = new FormField(elFormField);
+
+            // c. configure
+            elFormField.addEventListener('onMimotoFormfieldChanged', this._onFormFieldChanged.bind(this), true);
+
+            // d. store
+            this._aFormFields.push(formField);
+        }
+    },
+
+    _onFormFieldChanged: function _onFormFieldChanged(e) {
+        // verify and trigger
+        if (!this._bManualSave) this._startAutosave();
+    },
+
+    _startAutosave: function _startAutosave() {
+        if (!this._autosaveTimer) {
+            // register
+            var classRoot = this;
+
+            // init
+            this._autosaveTimer = setTimeout(function () {
+                classRoot._executeAutoSave();
+            }, 1000);
+        }
+    },
+
+    _executeAutoSave: function _executeAutoSave() {
+        // cleanup
+        clearTimeout(this._autosaveTimer);
+        delete this._autosaveTimer;
+
+        Mimoto.log('Auto saving ... ');
+
+        this.submit();
+    },
+
+    /**
+     * Submit form
+     */
+    submit: function submit() {
+        // init
+        var aChangedFields = {};
+        var bChangesFound = false;
+
+        // add changed fields
+        var nFormFieldCount = this._aFormFields.length;
+        for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
+            // register
+            var formField = this._aFormFields[nFormFieldIndex];
+
+            // verify
+            if (formField.hasChanges()) {
+                // toggle
+                bChangesFound = true;
+
+                // store
+                aChangedFields[formField.getFieldValue()] = formField.getChanges();
+            }
+        }
+
+        // setup
+        var requestData = {
+            publicKey: this._sPublicKey,
+            instanceId: this._nInstanceId,
+            actions: this._actions,
+            changedFields: aChangedFields
+        };
+
+        // 11. send data
+        Mimoto.utils.callAPI({
+            type: this._sMethod,
+            url: this._sAction,
+            data: requestData,
+            dataType: 'json',
+            success: function (resultData, resultStatus, resultSomething) {
+                Mimoto.log('Form submitted', resultData);
+
+                this._updateForm(resultData);
+            }.bind(this)
+        });
+    },
+
+    _updateForm: function _updateForm(resultData) {
+        if (resultData.errors && resultData.errors.length > 0) {
+            Mimoto.log('Errors were found');
+        } else {
+            Mimoto.log('Form submit SUCCESS');
+
+            // update all fields
+            var nFormFieldCount = this._aFormFields.length;
+            for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
+                // register
+                var formField = this._aFormFields[nFormFieldIndex];
+
+                // forward
+                formField.acceptChanges();
+            }
+        }
+
+        if (resultData.newEntities) {
+            for (var sEntityType in resultData.newEntities) {
+
+                var newEntity = resultData.newEntities[sEntityType];
+
+                // update all fields
+                var _nFormFieldCount = this._aFormFields.length;
+                for (var _nFormFieldIndex = 0; _nFormFieldIndex < _nFormFieldCount; _nFormFieldIndex++) {
+                    // register
+                    var _formField = this._aFormFields[_nFormFieldIndex];
+
+                    // forward
+                    _formField.updatePropertySelector(newEntity.selector, newEntity.id);
+                }
+            }
+        }
+
+        if (resultData.newPublicKey) {
+            // update
+            this._sPublicKey = resultData.newPublicKey;
+            this._elForm.setAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY, this._sPublicKey);
+        }
+
+        if (resultData.newEntityId) {
+            // update
+            this._nInstanceId = parseInt(resultData.newEntityId);
+            this._elForm.setAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID, this._nInstanceId);
+        }
+
+        // --- execute actions
+
+
+        if (this._actions && this._actions.response) {
+            Mimoto.warn('this._actions.response', this._actions.response);
+
+            if (this._actions.response.onSuccess) {
+                if (this._actions.response.onSuccess.loadPage) {
+                    window.open(this._actions.response.onSuccess.loadPage, '_self');
+                } else if (this._actions.response.onSuccess.closePopup) {
+                    Mimoto.closePopup();
+                } else if (this._actions.response.onSuccess.reloadPopup) {
+                    Mimoto.popup.replace(this._actions.response.onSuccess.reloadPopup);
+                } else if (this._actions.response.onSuccess.dispatchEvent) {
+                    console.log('form.responseSettings.onSuccess.dispatchEvent', this._actions.response.onSuccess.dispatchEvent);
+                }
+            }
+        }
+    }
+
+};
+
+/***/ }),
+/* 542 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - FormField
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+// Mimoto input classes
+
+var Textline = __webpack_require__(538);
+var Radiobutton = __webpack_require__(539);
+var Checkbox = __webpack_require__(540);
+
+module.exports = function (elFormField) {
+
+    // start
+    this.__construct(elFormField);
+};
+
+module.exports.prototype = {
+
+    // form field directives
+    DIRECTIVE_MIMOTO_FORM_FIELD_VALUE: 'data-mimoto-form-field-value',
+    DIRECTIVE_MIMOTO_FORM_FIELD_TYPE: 'data-mimoto-form-field-type',
+    DIRECTIVE_MIMOTO_FORM_FIELD_INPUT: 'data-mimoto-form-field-input',
+    DIRECTIVE_MIMOTO_FORM_FIELD_ERROR: 'data-mimoto-form-field-error',
+
+    // settings
+    _sType: null,
+    _elFormField: null,
+
+    // elements
+    _aInputElements: null,
+    _elError: null,
+
+    // state
+    _bHasChanges: false,
+    _bHasPendingChanges: false,
+
+    _persistantValue: null,
+    _pendingValue: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elFormField) {
+        // store
+        this._elFormField = elFormField;
+
+        // parse
+        this._parseFormField(elFormField);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getFieldValue: function getFieldValue() {
+        return this._elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    hasChanges: function hasChanges() {
+        return this._bHasChanges;
+    },
+
+    getChanges: function getChanges() {
+        // copy
+        this._pendingValue = this._input.getValue();
+        this._bHasPendingChanges = true;
+
+        // toggle
+        this._bHasChanges = false;
+
+        // send
+        return this._pendingValue;
+    },
+
+    acceptChanges: function acceptChanges() {
+        // verify
+        if (this._bHasPendingChanges) {
+            // accept
+            this._persistantValue = this._pendingValue;
+            this._pendingValue = null;
+
+            // toggle
+            this._bHasPendingChanges = false;
+        }
+
+        // broadcast
+        if (this._bHasChanges) this._broadcastChanges();
+    },
+
+    updatePropertySelector: function updatePropertySelector(sOldSelector, sNewSelector) {
+        // collect
+        var aElements = [{ el: this._elFormField, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE }];
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            // register
+            var elInput = this._aInputElements[nInputElementIndex];
+
+            // register
+            aElements.push({ el: elInput, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT });
+            aElements.push({ el: elInput, attr: 'name' });
+        }
+
+        // swap
+        var nElementCount = aElements.length;
+        for (var nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++) {
+            // register
+            var element = aElements[nElementIndex];
+
+            // read
+            var sCurrentSelector = element.el.getAttribute(element.attr);
+
+            // compare
+            if (sCurrentSelector.substr(0, sOldSelector.length) === sOldSelector) {
+                // update
+                element.el.setAttribute(element.attr, sNewSelector + sCurrentSelector.substr(sOldSelector.length));
+            }
+        }
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _parseFormField: function _parseFormField(elFormField) {
+        // register
+        this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
+        this._elError = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
+
+        // collect
+        this._aInputElements = elFormField.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
+
+        switch (this._sType) {
+            case '_Mimoto_form_input_textline':
+                this._input = new Textline(this._aInputElements[0]);break;
+            case '_Mimoto_form_input_radiobutton':
+                this._input = new Radiobutton(this._aInputElements);break;
+            case '_Mimoto_form_input_checkbox':
+                this._input = new Checkbox(this._aInputElements[0]);break;
+            default:
+
+            // check if any custom field registered in root
+        }
+
+        // verify or cancel
+        if (!this._input) return;
+
+        // store initial value
+        this._persistantValue = this._input.getValue();
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            // register
+            var elInput = this._aInputElements[nInputElementIndex];
+
+            // configure
+            elInput.addEventListener('onMimotoInputChanged', function (e) {
+                this._handleInputChange();
+            }.bind(this));
+        }
+    },
+
+    _handleInputChange: function _handleInputChange() {
+        Mimoto.log('Changed from', this._persistantValue, 'to', this._input.getValue());
+
+        //if (_validateValue(value));
+        //classRoot._validateInputField(field);
+
+
+        // filter on actual change or changes pending
+        if (this._bHasPendingChanges && this._input.getValue() === this._pendingValue) return;
+        if (!this._bHasPendingChanges && this._input.getValue() === this._persistantValue) return;
+
+        // toggle
+        this._bHasChanges = true;
+
+        // broadcast
+        this._broadcastChanges();
+    },
+
+    _broadcastChanges: function _broadcastChanges() {
+        // broadcast
+        this._elFormField.dispatchEvent(new Event('onMimotoFormfieldChanged'));
+    },
+
+    _getValueFromInputField: function _getValueFromInputField(elInput) {
+        // init
+        var value = null;
+
+        return elInput.value;
+
+        // read type
+        var sAimlessInputType = 'xxx'; //this._getInputFieldType($component);
+
+
+        switch (sAimlessInputType) {
+            case 'list':
+
+                value = JSON.parse($($component).val());
+                break;
+
+            default:
+
+                // validate
+                if ($($component).is("input")) {
+                    switch ($($component).attr('type')) {
+                        case 'radio':
+
+                            //  fix for handling radiobutton onSubmit en onChange
+                            if ($component.length) {
+                                var aComponents = $component;
+
+                                // collect value
+                                aComponents.each(function (index, $component) {
+                                    if ($($component).prop("checked") === true) {
+                                        value = $($component).val();
+                                    }
+                                });
+                            } else {
+                                if ($($component).prop("checked") === true) {
+                                    value = $($component).val();
+                                }
+                            }
+
+                            break;
+
+                        case 'checkbox':
+
+                            if ($($component).attr('value')) {
+                                if ($($component).prop("checked") === true) {
+                                    value = $($component).val();
+                                }
+                            } else {
+                                value = $($component).prop("checked");
+                            }
+
+                            break;
+
+                        default:
+
+                            value = $($component).val();
+                    }
+                }
+
+                if ($($component).is("select")) {
+                    value = $($component).val();
+                }
+
+                if ($($component).is("textarea")) {
+                    value = $($component).val();
+                }
+
+                break;
+        }
+
+        // send
+        return value;
+    },
+
+    _setInputFieldValue: function _setInputFieldValue($component, value) // #todo - implement
+    {
+        //console.log('value:');
+
+
+        if ($($component).is("input")) {
+            switch ($($component).attr('type')) {
+                case 'radio':
+
+                    // output
+                    $($component).each(function (nIndex, $component) {
+                        $($component).prop('checked', $($component).val() == value);
+                    });
+                    break;
+
+                case 'checkbox':
+
+                    // output
+                    $($component).each(function (nIndex, $component) {
+                        $($component).prop('checked', value);
+                    });
+                    break;
+
+                default:
+
+                    // output
+                    $($component).val(value);
+            }
+        };
+
+        if ($($component).is("select")) {
+            $($component).val(value);
+        }
+
+        if ($($component).is("textarea")) {
+            // output
+            $($component).val(value);
+        }
+    },
+
+    _validateInputField: function _validateInputField(field) {
+        // validae
+        if (!field.settings) return;
+        if (!field.settings.validation) return;
+
+        // init
+        var sErrorMessage = '';
+
+        // check rules
+        var nValidationRuleCount = field.settings.validation.length;
+        var bValid = true;
+        for (var i = 0; i < nValidationRuleCount; i++) {
+            // register
+            var validationRule = field.settings.validation[i];
+
+            // read
+            var value = this._getValueFromInputField(field.$input);
+
+            switch (validationRule.type) {
+                case 'maxchars':
+
+                    // validate
+                    if (value.length > validationRule.value) {
+                        sErrorMessage = validationRule.errorMessage;
+                        bValid = false;
+                    }
+                    break;
+
+                case 'minchars':
+
+                    // validate
+                    if (value.length < validationRule.value) {
+                        sErrorMessage = validationRule.errorMessage;
+                        bValid = false;
+                    }
+                    break;
+
+                case 'regex_custom':
+
+                    // init
+                    var patt = new RegExp(validationRule.value, "g");
+
+                    // validate
+                    if (!patt.test(value)) {
+                        sErrorMessage = validationRule.errorMessage;
+                        bValid = false;
+                    }
+                    break;
+            }
+
+            if (!bValid) break;
+        }
+
+        // update interface
+        if (field.$error) {
+            if (sErrorMessage) {
+                field.$error.text(sErrorMessage);
+                // #todo toggle field icon - zie code David
+            } else {
+                field.$error.text('');
+            }
+        }
+
+        // send
+        return bValid;
     }
 
 };

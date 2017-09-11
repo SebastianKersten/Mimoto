@@ -53,35 +53,6 @@ class UserRolesController
     }
 
     /**
-     * View new user role form
-     * @return string The rendered html output
-     */
-    public function userRoleNew()
-    {
-        // 1. init popup
-        $popup = Mimoto::service('output')->createPopup();
-
-        // 2. create form layout
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
-
-        // 3. setup form
-        $component->addForm(
-            CoreConfig::COREFORM_USER_ROLE,
-            null,
-            [
-                'onCreatedConnectTo' => CoreConfig::MIMOTO_ROOT.'.'.CoreConfig::MIMOTO_ROOT.'.userRoles',
-                'response' => ['onSuccess' => ['closePopup' => true]]
-            ]
-        );
-
-        // 4. connect content
-        $popup->addComponent('content', $component);
-
-        // 5. output
-        return $popup->render();
-    }
-
-    /**
      * View user role
      * @return string The rendered html output
      */
@@ -121,48 +92,6 @@ class UserRolesController
 
         // 7. output
         return $page->render();
-    }
-
-    public function userRoleEdit(Application $app, $nItemId)
-    {
-        // 1. init popup
-        $popup = Mimoto::service('output')->createPopup();
-
-        // 2. load
-        $eUserRole = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER_ROLE, $nItemId);
-
-        // 3. validate
-        if (empty($eUserRole)) return $app->redirect("/mimoto.cms/configuration/userroles");
-
-        // 4. create
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
-
-        // 5. setup
-        $component->addForm(
-            CoreConfig::COREFORM_USER_ROLE,
-            $eUserRole,
-            [
-                'response' => ['onSuccess' => ['closePopup' => true]]
-            ]
-        );
-
-        // 6. connect
-        $popup->addComponent('content', $component);
-
-        // 7. output
-        return $popup->render();
-    }
-
-    public function userRoleDelete(Application $app, $nItemId)
-    {
-        // 1. load
-        $eUserRole = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER_ROLE, $nItemId);
-
-        // 2. delete
-        Mimoto::service('data')->delete($eUserRole);
-
-        // 3. output
-        return Mimoto::service('messages')->response((object) array('result' => 'User role deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
 }

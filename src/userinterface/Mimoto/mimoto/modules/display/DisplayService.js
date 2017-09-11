@@ -15,7 +15,7 @@ let EntitySetItem = require('./data/EntitySetItem');
 let EntityUnsetItem = require('./data/EntityUnsetItem');
 
 // Mimoto input classes
-let Form = require('./input/Form');
+let Form = require('../../../../MimotoCMS/components/forms/Form');
 
 // Mimoto display classes
 let HideWhenEmpty = require('./directives/HideWhenEmpty');

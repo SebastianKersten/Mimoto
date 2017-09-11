@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_configuration_userroles_Detail_Structure__meta_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', onclick:"MimotoCMS.userRoleEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_user_role'), type:'secondary' }) }}
                     </div>
 
                 </div>

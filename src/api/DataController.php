@@ -52,14 +52,14 @@ class DataController
         $popup = Mimoto::service('output')->createPopup();
 
         // 6. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form', $eForm);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $eForm);
 
         // 7. setup content
         $component->addForm(
             $sFormName,
             $eEntity,
             [
-                'response' => ['onSuccess' => ['closePopup' => true]]
+                //'response' => ['onSuccess' => ['closePopup' => true]]
             ]
         );
 
@@ -93,7 +93,7 @@ class DataController
 
         // 5. setup
         $aActions = [
-            'response' => ['onSuccess' => ['closePopup' => true]]
+        //    'response' => ['onSuccess' => ['closePopup' => true]]
         ];
 
         // 6. verify
@@ -126,7 +126,7 @@ class DataController
         $popup = Mimoto::service('output')->createPopup();
 
         // 8. create content
-        $component = Mimoto::service('output')->create('MimotoCMS_layout_Form', $eForm);
+        $component = Mimoto::service('output')->create('MimotoCMS_layout_PopupForm', $eForm);
 
         // 9. setup content
         $component->addForm(

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "d6891fba277d2d52d59d";
+/******/ 	__webpack_require__.h = "b3b54a0a5695d77cf0f5";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -18661,28 +18661,6 @@ module.exports.prototype = {
         window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
     },
 
-    /**
-     * Formatting options
-     */
-    formattingOptionView: function formattingOptionView(nItemId) {
-        window.open('/mimoto.cms/configuration/formattingOption/' + nItemId + '/view', '_self');
-    },
-
-    formattingOptionDelete: function formattingOptionDelete(nItemId, sFormattingOptionName) {
-        var response = confirm("Are you sure you want to delete the formatting option '" + sFormattingOptionName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-        if (response == true) {
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/configuration/formattingOption/' + nItemId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function success(resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
-
     formattingOptionAttributeNew: function formattingOptionAttributeNew(nItemId) {
         var popup = Mimoto.popup('/mimoto.cms/formattingOption/' + nItemId + '/formattingOptionAttribute/new');
     },
@@ -18697,36 +18675,6 @@ module.exports.prototype = {
             Mimoto.utils.callAPI({
                 type: 'get',
                 url: '/mimoto.cms/formattingOptionAttribute/' + nItemId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function success(resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
-
-    /**
-     * User roles
-     */
-    userRoleNew: function userRoleNew() {
-        var popup = Mimoto.popup("/mimoto.cms/configuration/userRole/new");
-    },
-
-    userRoleView: function userRoleView(nItemId) {
-        window.open('/mimoto.cms/configuration/userRole/' + nItemId + '/view', '_self');
-    },
-
-    userRoleEdit: function userRoleEdit(nItemId) {
-        Mimoto.popup('/mimoto.cms/configuration/userRole/' + nItemId + '/edit');
-    },
-
-    userRoleDelete: function userRoleDelete(nItemId, sUserRoleName) {
-        var response = confirm("Are you sure you want to delete the user role '" + sUserRoleName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-        if (response == true) {
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/configuration/userRole/' + nItemId + '/delete',
                 data: null,
                 dataType: 'json',
                 success: function success(resultData, resultStatus, resultSomething) {

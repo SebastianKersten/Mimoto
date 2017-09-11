@@ -113,34 +113,6 @@ module.exports.prototype = {
         window.open('/mimoto.cms/selection/' + nSelectionId + '/view', '_self');
     },
 
-
-    /**
-     * Formatting options
-     */
-    formattingOptionView: function(nItemId)
-    {
-        window.open('/mimoto.cms/configuration/formattingOption/' + nItemId + '/view', '_self');
-    },
-
-
-
-    formattingOptionDelete: function(nItemId, sFormattingOptionName)
-    {
-        var response = confirm("Are you sure you want to delete the formatting option '" + sFormattingOptionName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-        if (response == true)
-        {
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/configuration/formattingOption/' + nItemId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function (resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
-
     formattingOptionAttributeNew: function(nItemId)
     {
         var popup = Mimoto.popup('/mimoto.cms/formattingOption/' + nItemId + '/formattingOptionAttribute/new');
@@ -167,43 +139,6 @@ module.exports.prototype = {
             });
         }
     },
-
-
-    /**
-     * User roles
-     */
-    userRoleNew: function()
-    {
-        var popup = Mimoto.popup("/mimoto.cms/configuration/userRole/new");
-    },
-
-    userRoleView: function(nItemId)
-    {
-        window.open('/mimoto.cms/configuration/userRole/' + nItemId + '/view', '_self');
-    },
-
-    userRoleEdit: function(nItemId)
-    {
-        Mimoto.popup('/mimoto.cms/configuration/userRole/' + nItemId + '/edit');
-    },
-
-    userRoleDelete: function(nItemId, sUserRoleName)
-    {
-        var response = confirm("Are you sure you want to delete the user role '" + sUserRoleName + "'?\n\nALL DATA FROM THAT PROPERTY WILL BE LOST!!\n\n(like, forever ..)");
-        if (response == true)
-        {
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: '/mimoto.cms/configuration/userRole/' + nItemId + '/delete',
-                data: null,
-                dataType: 'json',
-                success: function (resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
-                }
-            });
-        }
-    },
-
 
     pageView: function(nItemId)
     {

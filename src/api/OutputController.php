@@ -310,11 +310,10 @@ class OutputController
 
                     // search
                     $nConnectionCount = count($aConnections);
-                    for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++) {
+                    for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
+                    {
                         // register
                         $parentConnection = $aConnections[$nConnectionIndex];
-
-
 
                         // verify
                         if ($parentConnection->getChildEntityTypeName() == $sEntityType && $parentConnection->getChildId() == $nEntityId) {

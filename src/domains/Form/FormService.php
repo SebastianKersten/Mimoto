@@ -749,6 +749,7 @@ class FormService
                 'created' => $row['created'],
                 'name' => $row['name'],
                 'description' => $row['description'],
+                'manualSave' => $row['manualSave'],
                 'realtimeCollaborationMode' => $row['realtimeCollaborationMode'],
                 'customSubmit' => $row['customSubmit'],
                 'action' => $row['action'],

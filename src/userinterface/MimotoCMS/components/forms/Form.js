@@ -265,6 +265,8 @@ module.exports.prototype = {
 
         if (this._actions && this._actions.response)
         {
+            Mimoto.warn('this._actions.response', this._actions.response);
+
             if (this._actions.response.onSuccess)
             {
                 if (this._actions.response.onSuccess.loadPage)

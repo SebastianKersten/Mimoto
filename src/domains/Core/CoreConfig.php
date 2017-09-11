@@ -178,7 +178,6 @@ class CoreConfig
 
 
     const COREFORM_USER                         = '_Mimoto_coreform_user';
-    const COREFORM_USER_ROLE                    = '_Mimoto_coreform_user_role';
     const COREFORM_USER_GROUP                   = '_Mimoto_coreform_user_group';
 
     const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
