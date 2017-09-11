@@ -41,12 +41,18 @@ class DataController
 
         // ---
 
+        // 4. load
+        $eForm = Mimoto::service('input')->getFormByName($sFormName);
 
-        // 4. init page
+
+        // ---
+
+
+        // 5. init page
         $popup = Mimoto::service('output')->createPopup();
 
-        // 3. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+        // 6. create content
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form', $eForm);
 
         // 7. setup content
         $component->addForm(
@@ -57,10 +63,10 @@ class DataController
             ]
         );
 
-        // 4. connect
+        // 8. connect
         $popup->addComponent('content', $component);
 
-        // 5. output
+        // 9. output
         return $popup->render();
     }
 
@@ -120,7 +126,7 @@ class DataController
         $popup = Mimoto::service('output')->createPopup();
 
         // 8. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->create('MimotoCMS_layout_Form', $eForm);
 
         // 9. setup content
         $component->addForm(

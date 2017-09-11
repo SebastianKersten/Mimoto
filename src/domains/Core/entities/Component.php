@@ -376,6 +376,16 @@ class Component
                 ]
             ),
 
+            (object) array(
+                'name' => 'MimotoCMS_configuration_Overview_Section',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/configuration/section/Section.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
 
             // formatting options
 

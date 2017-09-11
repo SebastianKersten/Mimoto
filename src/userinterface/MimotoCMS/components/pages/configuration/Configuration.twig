@@ -1,8 +1,7 @@
 <div class="MimotoCMS_pages_Configuration">
 
-    <ul>
-        <li><a href="/mimoto.cms/configuration/formatting">Formatting</a></li>
-        <li><a href="/mimoto.cms/configuration/userroles">User roles</a></li>
-        <li><a href="/mimoto.cms/configuration/services">Services</a></li>
-    </ul>
+    {{ Mimoto.module('MimotoCMS_configuration_Overview_Section', { sLabel:'Formatting', sURL:'/mimoto.cms/configuration/formatting' }) }}
+    {{ Mimoto.module('MimotoCMS_configuration_Overview_Section', { sLabel:'User roles', sURL:'/mimoto.cms/configuration/userroles' }) }}
+    {{ Mimoto.module('MimotoCMS_configuration_Overview_Section', { sLabel:'Services', sURL:'/mimoto.cms/configuration/services' }) }}
+
 </div>

@@ -1167,7 +1167,7 @@ a.MimotoCMS_modules_Button {
   a.MimotoCMS_modules_Button:hover {
     text-decoration: none;
     background-color: #9dbab7; }
-  a.MimotoCMS_modules_Button span.MimotoCMS_modules_Button--text {
+  a.MimotoCMS_modules_Button a.MimotoCMS_modules_Button--text {
     color: #ffffff;
     background-color: transparent; }
 
@@ -1214,7 +1214,7 @@ div.MimotoCMS_modules_Button-content {
   white-space: nowrap;
   text-decoration: none; }
 
-span.MimotoCMS_modules_Button--text {
+a.MimotoCMS_modules_Button--text {
   text-decoration: underline;
   color: #555;
   background-color: transparent;
@@ -1223,10 +1223,12 @@ span.MimotoCMS_modules_Button--text {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none; }
-  span.MimotoCMS_modules_Button--text:hover {
-    color: #000; }
+  a.MimotoCMS_modules_Button--text:hover {
+    color: #000;
+    background-color: transparent;
+    text-decoration: underline; }
 
-span.MimotoCMS_modules_Button-text {
+a.MimotoCMS_modules_Button--text {
   font-family: "Futura PT W02 Book", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -3703,6 +3705,25 @@ div.MimotoCMS_pages_selections_Detail_Structure__rules_container > div {
 div.MimotoCMS_pages_selections_Detail_Structure__rules_container > div:last-child {
   margin-bottom: 0; }
 
+div.MimotoCMS_pages_configuration_Overview_Section {
+  display: inline-block;
+  background-color: #ffffff; }
+
+div.MimotoCMS_pages_configuration_Overview_Section-image {
+  background-color: #e5e5e5;
+  width: 300px;
+  height: 100px; }
+
+a.MimotoCMS_pages_configuration_Overview_Section-label {
+  display: block;
+  color: #9dbab7;
+  font-size: 20px;
+  padding: 20px 25px;
+  text-decoration: none;
+  cursor: pointer; }
+  a.MimotoCMS_pages_configuration_Overview_Section-label:hover {
+    color: #000000; }
+
 div.MimotoCMS_pages_configuration_userroles_Detail__panel {
   margin-bottom: 25px;
   background-color: #ffffff;
@@ -3875,8 +3896,13 @@ div.MimotoCMS_pages_formattingoptions_Detail_Structure__attributes_container > d
 div.MimotoCMS_pages_formattingoptions_Detail_Structure__attributes_container > div:last-child {
   margin-bottom: 0; }
 
-div.MimotoCMS_pages_Configuration a {
-  color: #000000; }
+div.MimotoCMS_pages_Configuration > div {
+  margin-right: 10px;
+  margin-bottom: 10px; }
+
+div.MimotoCMS_pages_Configuration > div:last-child {
+  margin-right: 0;
+  margin-bottom: 0; }
 
 div.MimotoCMS_pages_users_UserDetail__panel {
   margin-bottom: 25px;

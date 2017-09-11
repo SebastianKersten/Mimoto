@@ -14,7 +14,7 @@ a.MimotoCMS_modules_Button {
         background-color: $tower-gray;
     }
 
-    & span.MimotoCMS_modules_Button--text {
+    & a.MimotoCMS_modules_Button--text {
         color: #ffffff;
         background-color: transparent;
     }
@@ -70,7 +70,7 @@ a.MimotoCMS_modules_Button--small {
         text-decoration: none;
     }
 
-        span.MimotoCMS_modules_Button--text {
+        a.MimotoCMS_modules_Button--text {
             text-decoration: underline;
             color: #555;
             background-color: transparent;
@@ -79,11 +79,13 @@ a.MimotoCMS_modules_Button--small {
 
             &:hover {
                 color: #000;
+                background-color: transparent;
+                text-decoration: underline;
             }
         }
 
 
-        span.MimotoCMS_modules_Button-text {
+        a.MimotoCMS_modules_Button--text {
             font-family: $font-family-futura;
             font-size: 14px;
             font-weight: 500;

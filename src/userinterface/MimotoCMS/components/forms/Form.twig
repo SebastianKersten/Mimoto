@@ -4,9 +4,12 @@
     </div>
     <div class="MimotoCMS_forms_Form-menu">
 
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:"Cancel", types:['text'], onclick:"Mimoto.closePopup();" }) }}
+        {% if Mimoto.data('manualSave') %}{{ Mimoto.module('MimotoCMS_modules_Button', { label:"Cancel", types:['text'], onclick:"Mimoto.closePopup();" }) }}{% endif %}
 
-        {#{% if Mimoto.data('manualSave') %}ManualSave{% endif %}#}
-        <span {{ Mimoto.submit() }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:"Ok" }) }}</span>
+        {% if Mimoto.data('manualSave') %}
+            <span {{ Mimoto.submit() }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:"Save" }) }}</span>
+        {% else %}
+            <span {{ Mimoto.submit(null, { onSuccess:'Mimoto.popup.close()' }) }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:"Ok" }) }}</span>
+        {% endif %}
     </div>
 </div>

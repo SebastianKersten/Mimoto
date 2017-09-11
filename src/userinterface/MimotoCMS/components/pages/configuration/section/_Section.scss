@@ -1,0 +1,23 @@
+div.MimotoCMS_pages_configuration_Overview_Section {
+    display: inline-block;
+    background-color: #ffffff;
+}
+
+div.MimotoCMS_pages_configuration_Overview_Section-image {
+    background-color: #e5e5e5;
+    width: 300px;
+    height: 100px
+}
+
+a.MimotoCMS_pages_configuration_Overview_Section-label {
+    display: block;
+    color: $tower-gray;
+    font-size: 20px;
+    padding: 20px 25px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        color: #000000;
+    }
+}
