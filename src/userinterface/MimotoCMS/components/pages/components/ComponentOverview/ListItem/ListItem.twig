@@ -7,7 +7,7 @@
         sublabel: 'id='~Mimoto.meta('id'),
         sublabel_realtime: '',
         button_label: 'View',
-        button_action: 'Mimoto.CMS.componentView('~Mimoto.meta('id')~');',
+        button_link: '/mimoto.cms/component/' ~ Mimoto.meta('id') ~ '/view',
         button_type: 'secondary',
         button2_label: 'Delete',
         button2_directive: Mimoto.remove(),

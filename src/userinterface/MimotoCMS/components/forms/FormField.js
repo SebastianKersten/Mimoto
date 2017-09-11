@@ -11,6 +11,7 @@
 let Textline = require('./input/Textline/Textline');
 let Radiobutton = require('./input/Radiobutton/Radiobutton');
 let Checkbox = require('./input/Checkbox/Checkbox');
+let MultiSelect = require('./input/MultiSelect/MultiSelect');
 
 
 module.exports = function(elFormField) {
@@ -23,10 +24,11 @@ module.exports.prototype = {
 
 
     // form field directives
-    DIRECTIVE_MIMOTO_FORM_FIELD_VALUE: 'data-mimoto-form-field-value',
-    DIRECTIVE_MIMOTO_FORM_FIELD_TYPE:  'data-mimoto-form-field-type',
-    DIRECTIVE_MIMOTO_FORM_FIELD_INPUT: 'data-mimoto-form-field-input',
-    DIRECTIVE_MIMOTO_FORM_FIELD_ERROR: 'data-mimoto-form-field-error',
+    DIRECTIVE_MIMOTO_FORM_FIELD_VALUE:      'data-mimoto-form-field-value',
+    DIRECTIVE_MIMOTO_FORM_FIELD_TYPE:       'data-mimoto-form-field-type',
+    DIRECTIVE_MIMOTO_FORM_FIELD_INPUT:      'data-mimoto-form-field-input',
+    DIRECTIVE_MIMOTO_FORM_FIELD_ERROR:      'data-mimoto-form-field-error',
+    DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION: 'data-mimoto-form-field-validation',
 
     // settings
     _sType: null,
@@ -35,12 +37,13 @@ module.exports.prototype = {
     // elements
     _aInputElements: null,
     _elError: null,
+    _aValidationRules: [],
 
     // state
     _bHasChanges: false,
     _bHasPendingChanges: false,
 
-    _persistantValue: null,
+    _persistentValue: null,
     _pendingValue: null,
 
 
@@ -105,7 +108,7 @@ module.exports.prototype = {
         if (this._bHasPendingChanges)
         {
             // accept
-            this._persistantValue = this._pendingValue;
+            this._persistentValue = this._pendingValue;
             this._pendingValue = null;
 
             // toggle
@@ -164,30 +167,41 @@ module.exports.prototype = {
 
     _parseFormField: function(elFormField)
     {
-        // register
+        // 1. register
         this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
         this._elError = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
 
-        // collect
+        // 2. collect
         this._aInputElements= elFormField.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
 
-
+        // 3. setup
         switch(this._sType)
         {
             case '_Mimoto_form_input_textline': this._input = new Textline(this._aInputElements[0]); break;
             case '_Mimoto_form_input_radiobutton': this._input = new Radiobutton(this._aInputElements); break;
             case '_Mimoto_form_input_checkbox': this._input = new Checkbox(this._aInputElements[0]); break;
+            case '_Mimoto_form_input_multiselect': this._input = new MultiSelect(this._aInputElements); break;
             default:
 
                 // check if any custom field registered in root
         }
 
-        // verify or cancel
+        // 4. read
+        if (elFormField.hasAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION))
+        {
+            // a. register
+            this._aValidationRules = JSON.parse(elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION));
+        }
+
+        // 5. verify or cancel
         if (!this._input) return;
 
 
+        // ---
+
+
         // store initial value
-        this._persistantValue = this._input.getValue();
+        this._persistentValue = this._input.getValue();
 
         // configure
         let nInputElementCount = this._aInputElements.length;
@@ -204,21 +218,23 @@ module.exports.prototype = {
 
     _handleInputChange: function()
     {
-        Mimoto.log('Changed from', this._persistantValue, 'to', this._input.getValue());
+        Mimoto.log('Changed from', this._persistentValue, 'to', this._input.getValue());
 
 
-        //if (_validateValue(value));
-        //classRoot._validateInputField(field);
+        // 1. validate
+        if (this._aValidationRules.length > 0 && !this._validateInputField()) return;
 
+        // 2. register
+        let testValue = this._input.getValue();
 
-        // filter on actual change or changes pending
-        if (this._bHasPendingChanges && this._input.getValue() === this._pendingValue) return;
-        if (!this._bHasPendingChanges && this._input.getValue() === this._persistantValue) return;
+        // 3. filter on actual change or changes pending
+        if (this._bHasPendingChanges && testValue === this._pendingValue) return;
+        if (!this._bHasPendingChanges && testValue === this._persistentValue) return;
 
-        // toggle
+        // 4. toggle
         this._bHasChanges = true;
 
-        // broadcast
+        // 5. broadcast
         this._broadcastChanges();
     },
 
@@ -228,167 +244,23 @@ module.exports.prototype = {
         this._elFormField.dispatchEvent(new Event('onMimotoFormfieldChanged'));
     },
 
-
-    _getValueFromInputField: function(elInput)
+    _validateInputField: function()
     {
         // init
-        let value = null;
-
-
-
-        return elInput.value;
-
-
-        // read type
-        var sAimlessInputType = 'xxx'; //this._getInputFieldType($component);
-
-
-        switch(sAimlessInputType)
-        {
-            case 'list':
-
-                value = JSON.parse($($component).val());
-                break;
-
-            default:
-
-                // validate
-                if ($($component).is("input"))
-                {
-                    switch($($component).attr('type'))
-                    {
-                        case 'radio':
-
-                            //  fix for handling radiobutton onSubmit en onChange
-                            if ($component.length)
-                            {
-                                var aComponents = $component;
-
-                                // collect value
-                                aComponents.each( function(index, $component)
-                                {
-                                    if ($($component).prop("checked") === true)
-                                    {
-                                        value = $($component).val();
-                                    }
-                                });
-                            }
-                            else
-                            {
-                                if ($($component).prop("checked") === true)
-                                {
-                                    value = $($component).val();
-                                }
-                            }
-
-                            break;
-
-                        case 'checkbox':
-
-                            if ($($component).attr('value'))
-                            {
-                                if ($($component).prop("checked") === true)
-                                {
-                                    value = $($component).val();
-                                }
-                            }
-                            else
-                            {
-                                value = $($component).prop("checked");
-                            }
-
-                            break;
-
-                        default:
-
-                            value = $($component).val();
-                    }
-                }
-
-                if ($($component).is("select"))
-                {
-                    value = $($component).val();
-                }
-
-                if ($($component).is("textarea"))
-                {
-                    value = $($component).val();
-                }
-
-                break;
-        }
-
-        // send
-        return value;
-    },
-
-    _setInputFieldValue: function($component, value) // #todo - implement
-    {
-        //console.log('value:');
-
-
-
-        if ($($component).is("input"))
-        {
-            switch($($component).attr('type'))
-            {
-                case 'radio':
-
-                    // output
-                    $($component).each( function(nIndex, $component)
-                    {
-                        $($component).prop('checked', $($component).val() == value);
-                    });
-                    break;
-
-                case 'checkbox':
-
-                    // output
-                    $($component).each( function(nIndex, $component)
-                    {
-                        $($component).prop('checked', value);
-                    });
-                    break;
-
-                default:
-
-                    // output
-                    $($component).val(value);
-            }
-        };
-
-        if ($($component).is("select"))
-        {
-            $($component).val(value);
-        }
-
-        if ($($component).is("textarea"))
-        {
-            // output
-            $($component).val(value);
-        }
-    },
-
-    _validateInputField: function(field)
-    {
-        // validae
-        if (!field.settings) return;
-        if (!field.settings.validation) return;
-
-        // init
-        var sErrorMessage = '';
+        let sErrorMessage = '';
 
         // check rules
-        var nValidationRuleCount = field.settings.validation.length;
-        var bValid = true;
-        for (var i = 0; i < nValidationRuleCount; i++)
+        let nValidationRuleCount = this._aValidationRules.length;
+        let bValid = true;
+        for (let nValidationRuleIndex = 0; nValidationRuleIndex < nValidationRuleCount; nValidationRuleIndex++)
         {
             // register
-            var validationRule = field.settings.validation[i];
+            let validationRule = this._aValidationRules[nValidationRuleIndex];
 
             // read
-            var value = this._getValueFromInputField(field.$input);
+            let value = this._input.getValue();
 
+            // compare
             switch(validationRule.type)
             {
                 case 'maxchars':
@@ -414,7 +286,7 @@ module.exports.prototype = {
                 case 'regex_custom':
 
                     // init
-                    var patt = new RegExp(validationRule.value, "g");
+                    let patt = new RegExp(validationRule.value, "g");
 
                     // validate
                     if (!patt.test(value))
@@ -429,22 +301,21 @@ module.exports.prototype = {
         }
 
         // update interface
-        if (field.$error)
+        if (this._elError)
         {
             if (sErrorMessage)
             {
-                field.$error.text(sErrorMessage);
+                this._elError.innerHTML = sErrorMessage;
                 // #todo toggle field icon - zie code David
             }
             else
             {
-                field.$error.text('');
+                this._elError.innerHTML = '';
             }
         }
 
         // send
         return bValid;
-    },
-
+    }
 
 }

@@ -97,12 +97,6 @@ module.exports.prototype = {
         }
     },
 
-
-    componentView: function(nComponentId)
-    {
-        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
-    },
-
     layoutView: function(nLayoutId)
     {
         window.open('/mimoto.cms/layout/' + nLayoutId + '/view', '_self');
@@ -144,40 +138,6 @@ module.exports.prototype = {
     {
         window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
     },
-
-
-
-    /**
-     * Users
-     */
-    userNew: function()
-    {
-        var popup = Mimoto.popup("/mimoto.cms/user/new");
-    },
-
-    userView: function(nUserId)
-    {
-        window.open('/mimoto.cms/user/' + nUserId + '/view', '_self');
-    },
-
-    userEdit: function(nUserId)
-    {
-        Mimoto.popup('/mimoto.cms/user/' + nUserId + '/edit');
-    },
-
-    userDelete: function(nUserId)
-    {
-        Mimoto.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/user/' + nUserId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
-    },
-    
 
     
     /**

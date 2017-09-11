@@ -177,9 +177,6 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
 
-    const COREFORM_USER                         = '_Mimoto_coreform_user';
-    const COREFORM_USER_GROUP                   = '_Mimoto_coreform_user_group';
-
     const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
     const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
 

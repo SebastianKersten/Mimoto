@@ -1131,28 +1131,6 @@ li.MimotoCMS_ListItemModule--drag {
 li.MimotoCMS_ListItemModule--ghost {
   opacity: 0; }
 
-ul.MimotoCMS_modules_ListModule-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  position: relative;
-  margin-bottom: 25px;
-  margin-top: 30px; }
-  ul.MimotoCMS_modules_ListModule-container > li {
-    margin-bottom: 5px;
-    margin-right: 5px; }
-  ul.MimotoCMS_modules_ListModule-container > li:last-child {
-    margin-bottom: 0; }
-
 a.MimotoCMS_modules_Button {
   display: inline-block;
   padding: 10px 20px;
@@ -3979,6 +3957,111 @@ div.MimotoCMS_pages_users_UserDetail_Structure__rules_container > div {
 
 div.MimotoCMS_pages_users_UserDetail_Structure__rules_container > div:last-child {
   margin-bottom: 0; }
+
+div.MimotoCMS_users_overview_UserPreview {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 15px 15px 20px 20px;
+  background-color: #ffffff;
+  min-width: 300px; }
+
+div.MimotoCMS_users_overview_UserPreview-info {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
+  text-align: left; }
+
+div.MimotoCMS_users_overview_UserPreview-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #9dbab7; }
+
+div.MimotoCMS_users_overview_UserPreview-email {
+  font-style: italic; }
+
+div.MimotoCMS_users_overview_UserPreview-menu {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto; }
+  div.MimotoCMS_users_overview_UserPreview-menu > * {
+    float: right;
+    margin-left: 3px; }
+  div.MimotoCMS_users_overview_UserPreview-menu > *:first-child {
+    margin-left: 0; }
+
+div.MimotoCMS_ListItemModule-sorthandlecontainer {
+  display: inline-block;
+  padding-top: 5px;
+  padding-left: 10px; }
+
+div.MimotoCMS_users_overview_UserPreview-sorthandle {
+  display: inline-block;
+  overflow: hidden;
+  width: 10px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-top: 2px;
+  cursor: move;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto; }
+
+div.MimotoCMS_users_overview_UserPreview-sorthandledot {
+  float: left;
+  width: 3px;
+  height: 3px;
+  margin: 0 1px 2px;
+  background-color: #9dbab7; }
+
+div.MimotoCMS_ListItemModule--drag {
+  background-color: #fff; }
+
+div.MimotoCMS_ListItemModule--ghost {
+  opacity: 0; }
+
+div.MimotoCMS_pages_users_Overview-container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: stretch;
+  -webkit-align-items: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  margin-bottom: 25px;
+  margin-top: 30px; }
+  div.MimotoCMS_pages_users_Overview-container > div {
+    margin-bottom: 5px;
+    margin-right: 5px; }
 
 div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer {
   display: -webkit-box;

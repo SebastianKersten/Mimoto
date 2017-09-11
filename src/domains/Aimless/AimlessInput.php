@@ -44,8 +44,32 @@ class AimlessInput extends AimlessComponent
 
     public function field()
     {
+        // init
+        $aValidation = [];
+
+        // read
+        $aValidationRules = $this->_entity->get('validation');
+
+        // build
+        $nValidationRuleCount = count($aValidationRules);
+        for ($nValidationRuleIndex = 0; $nValidationRuleIndex < $nValidationRuleCount; $nValidationRuleIndex++)
+        {
+            // register
+            $eValidationRule = $aValidationRules[$nValidationRuleIndex];
+
+            $aValidation[] = (object) array(
+                'type' => $eValidationRule->get('type'),
+                'value' => $eValidationRule->get('value'),
+                'errorMessage' => $eValidationRule->get('errorMessage'),
+                'trigger' => $eValidationRule->get('trigger'),
+            );
+        }
+
+        // setup
+        $sValidationRules = ($nValidationRuleCount > 0) ? ' data-mimoto-form-field-validation="'.htmlentities(json_encode($aValidation), ENT_QUOTES, 'UTF-8').'"': '';
+
         // compose and send
-        return 'data-mimoto-form-field="'.$this->_entity->getEntitySelector().'" data-mimoto-form-field-type="'.$this->_entity->getEntityTypeName().'" data-mimoto-form-field-value="'.$this->_sFieldId.'"';
+        return 'data-mimoto-form-field="'.$this->_entity->getEntitySelector().'" data-mimoto-form-field-type="'.$this->_entity->getEntityTypeName().'" data-mimoto-form-field-value="'.$this->_sFieldId.'"'.$sValidationRules;
     }
 
     public function input()

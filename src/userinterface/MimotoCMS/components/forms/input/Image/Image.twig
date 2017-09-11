@@ -3,7 +3,7 @@
 
 {% embed "MimotoCMS/components/forms/FormField.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonClass:'js-'~sFlatImageFieldId~'-image-upload-trigger' } %}
 
-    {% block form_component %}
+    {% block input %}
         <div id="{{ Mimoto.meta('type')~"."~Mimoto.meta('id') }}">
             <div class="MimotoCMS_forms_input_ImageUpload js-{{ sFlatImageFieldId }}-image-upload">
                 <div class="MimotoCMS_forms_input_ImageUpload-trigger js-{{ sFlatImageFieldId }}-image-upload-trigger">
@@ -25,7 +25,6 @@
             <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}" class=".js-{{ sFlatImageFieldId }}-image-upload-value"/>
             <div id="image-upload-delete-{{ sFlatImageFieldId }}" class="MimotoCMS_forms_input_ImageUpload-delete {% if Mimoto.value() is empty %}hidden{% endif %}">Remove image</div>
         </div>
-        <script>Mimoto.utils.registerRequest(Mimoto.form.setupImageField, '{{ sImagefieldId }}', '{{ sFlatImageFieldId }}', '{{ Mimoto.fieldId() }}');</script>
     {% endblock %}
 
 {% endembed %}

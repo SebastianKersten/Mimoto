@@ -1,10 +1,9 @@
-{{
-    Mimoto.module('MimotoCMS_modules_List',
-    {
-        button_label: 'Add new user',
-        button_icon: 'plus',
-        button_onclick: "Mimoto.CMS.userNew();",
-        property_name: 'users',
-        listitem_component: 'MimotoCMS_users_Overview_ListItem'
-    })
-}}
+{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new entity', icon:'plus', directive:Mimoto.add('users', '_Mimoto_user'), types:['secondary'] }) }}
+
+<div class="MimotoCMS_pages_users_Overview-container js-list js-list-sortable" {{ Mimoto.realtime('users', 'MimotoCMS_users_Overview_UserPreview') }}>
+    {{ Mimoto.data('users', 'MimotoCMS_users_Overview_UserPreview') }}
+</div>
+
+<div class="{{ Mimoto.init()  }}" {{ Mimoto.showWhenEmpty('users') }}>
+    More users is more fun! Invite more people to your project :)
+</div>

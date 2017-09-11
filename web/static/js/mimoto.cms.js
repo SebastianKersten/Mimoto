@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "b3b54a0a5695d77cf0f5";
+/******/ 	__webpack_require__.h = "849bda780a09ee7628d8";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -18649,10 +18649,6 @@ module.exports.prototype = {
         }
     },
 
-    componentView: function componentView(nComponentId) {
-        window.open('/mimoto.cms/component/' + nComponentId + '/view', '_self');
-    },
-
     layoutView: function layoutView(nLayoutId) {
         window.open('/mimoto.cms/layout/' + nLayoutId + '/view', '_self');
     },
@@ -18686,33 +18682,6 @@ module.exports.prototype = {
 
     pageView: function pageView(nItemId) {
         window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
-    },
-
-    /**
-     * Users
-     */
-    userNew: function userNew() {
-        var popup = Mimoto.popup("/mimoto.cms/user/new");
-    },
-
-    userView: function userView(nUserId) {
-        window.open('/mimoto.cms/user/' + nUserId + '/view', '_self');
-    },
-
-    userEdit: function userEdit(nUserId) {
-        Mimoto.popup('/mimoto.cms/user/' + nUserId + '/edit');
-    },
-
-    userDelete: function userDelete(nUserId) {
-        Mimoto.utils.callAPI({
-            type: 'get',
-            url: '/mimoto.cms/user/' + nUserId + '/delete',
-            data: null,
-            dataType: 'json',
-            success: function success(resultData, resultStatus, resultSomething) {
-                console.log(resultData);
-            }
-        });
     },
 
     /**

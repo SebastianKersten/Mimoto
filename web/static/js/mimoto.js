@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "b3b54a0a5695d77cf0f5";
+/******/ 	__webpack_require__.h = "849bda780a09ee7628d8";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -9715,15 +9715,15 @@ function isUndefined(arg) {
  * Module dependencies.
  */
 
-var keys = __webpack_require__(498);
+var keys = __webpack_require__(502);
 var hasBinary = __webpack_require__(228);
-var sliceBuffer = __webpack_require__(499);
-var after = __webpack_require__(500);
-var utf8 = __webpack_require__(501);
+var sliceBuffer = __webpack_require__(503);
+var after = __webpack_require__(504);
+var utf8 = __webpack_require__(505);
 
 var base64encoder;
 if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(502);
+  base64encoder = __webpack_require__(506);
 }
 
 /**
@@ -9781,7 +9781,7 @@ var err = { type: 'error', data: 'parser error' };
  * Create a blob api even for blob builder when vendor prefixes exist
  */
 
-var Blob = __webpack_require__(503);
+var Blob = __webpack_require__(507);
 
 /**
  * Encodes a packet.
@@ -10352,7 +10352,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(486);
+exports = module.exports = __webpack_require__(490);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -10548,7 +10548,7 @@ module.exports = function(a, b){
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(504);
+exports = module.exports = __webpack_require__(508);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -10756,10 +10756,10 @@ function localstorage(){
  * Module dependencies.
  */
 
-var debug = __webpack_require__(488)('socket.io-parser');
+var debug = __webpack_require__(492)('socket.io-parser');
 var json = __webpack_require__(7);
-var Emitter = __webpack_require__(491);
-var binary = __webpack_require__(492);
+var Emitter = __webpack_require__(495);
+var binary = __webpack_require__(496);
 var isBuf = __webpack_require__(224);
 
 /**
@@ -11163,7 +11163,7 @@ function error(data){
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(496);
+var hasCORS = __webpack_require__(500);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -11700,7 +11700,7 @@ module.exports.prototype = {
  * Module dependencies.
  */
 
-var url = __webpack_require__(485);
+var url = __webpack_require__(489);
 var parser = __webpack_require__(181);
 var Manager = __webpack_require__(225);
 var debug = __webpack_require__(152)('socket.io-client');
@@ -11889,7 +11889,7 @@ function isBuf(obj) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(493);
+var eio = __webpack_require__(497);
 var Socket = __webpack_require__(231);
 var Emitter = __webpack_require__(232);
 var parser = __webpack_require__(181);
@@ -11897,7 +11897,7 @@ var on = __webpack_require__(233);
 var bind = __webpack_require__(234);
 var debug = __webpack_require__(152)('socket.io-client:manager');
 var indexOf = __webpack_require__(230);
-var Backoff = __webpack_require__(511);
+var Backoff = __webpack_require__(515);
 
 /**
  * IE6+ hasOwnProperty
@@ -12455,9 +12455,9 @@ Manager.prototype.onreconnect = function () {
  */
 
 var XMLHttpRequest = __webpack_require__(182);
-var XHR = __webpack_require__(497);
-var JSONP = __webpack_require__(506);
-var websocket = __webpack_require__(507);
+var XHR = __webpack_require__(501);
+var JSONP = __webpack_require__(510);
+var websocket = __webpack_require__(511);
 
 /**
  * Export transports.
@@ -12924,7 +12924,7 @@ module.exports = function(arr, obj){
 
 var parser = __webpack_require__(181);
 var Emitter = __webpack_require__(232);
-var toArray = __webpack_require__(510);
+var toArray = __webpack_require__(514);
 var on = __webpack_require__(233);
 var bind = __webpack_require__(234);
 var debug = __webpack_require__(152)('socket.io-client:socket');
@@ -24800,15 +24800,15 @@ module.exports = __webpack_require__(63);
 /***/ })
 /******/ ]);
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(512).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(516).Buffer))
 
 /***/ }),
 /* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var pSlice = Array.prototype.slice;
-var objectKeys = __webpack_require__(518);
-var isArguments = __webpack_require__(519);
+var objectKeys = __webpack_require__(522);
+var isArguments = __webpack_require__(523);
 
 var deepEqual = module.exports = function (actual, expected, opts) {
   if (!opts) opts = {};
@@ -25258,7 +25258,7 @@ var DomUtils = __webpack_require__(451);
 var DomService = __webpack_require__(452);
 var DataService = __webpack_require__(453);
 var DisplayService = __webpack_require__(454);
-var RealtimeManager = __webpack_require__(483);
+var RealtimeManager = __webpack_require__(487);
 
 /**
  * Class MimotoStartup
@@ -26744,39 +26744,39 @@ var EntitySetItem = __webpack_require__(458);
 var EntityUnsetItem = __webpack_require__(459);
 
 // Mimoto input classes
-var Form = __webpack_require__(541);
+var Form = __webpack_require__(460);
 
 // Mimoto display classes
-var HideWhenEmpty = __webpack_require__(462);
-var HideWhenEmptyNot = __webpack_require__(463);
-var HideWhenRegex = __webpack_require__(464);
-var HideWhenRegexNot = __webpack_require__(465);
-var HideWhenValue = __webpack_require__(466);
-var HideWhenValueNot = __webpack_require__(467);
+var HideWhenEmpty = __webpack_require__(466);
+var HideWhenEmptyNot = __webpack_require__(467);
+var HideWhenRegex = __webpack_require__(468);
+var HideWhenRegexNot = __webpack_require__(469);
+var HideWhenValue = __webpack_require__(470);
+var HideWhenValueNot = __webpack_require__(471);
 
-var ShowWhenEmpty = __webpack_require__(468);
-var ShowWhenEmptyNot = __webpack_require__(469);
-var ShowWhenRegex = __webpack_require__(470);
-var ShowWhenRegexNot = __webpack_require__(471);
-var ShowWhenValue = __webpack_require__(472);
-var ShowWhenValueNot = __webpack_require__(473);
+var ShowWhenEmpty = __webpack_require__(472);
+var ShowWhenEmptyNot = __webpack_require__(473);
+var ShowWhenRegex = __webpack_require__(474);
+var ShowWhenRegexNot = __webpack_require__(475);
+var ShowWhenValue = __webpack_require__(476);
+var ShowWhenValueNot = __webpack_require__(477);
 
 var AddClassWhenEmpty = __webpack_require__(219);
-var AddClassWhenEmptyNot = __webpack_require__(474);
-var AddClassWhenRegex = __webpack_require__(475);
-var AddClassWhenRegexNot = __webpack_require__(476);
+var AddClassWhenEmptyNot = __webpack_require__(478);
+var AddClassWhenRegex = __webpack_require__(479);
+var AddClassWhenRegexNot = __webpack_require__(480);
 var AddClassWhenValue = __webpack_require__(219);
-var AddClassWhenValueNot = __webpack_require__(477);
+var AddClassWhenValueNot = __webpack_require__(481);
 
 var RemoveClassWhenEmpty = __webpack_require__(220);
-var RemoveClassWhenEmptyNot = __webpack_require__(478);
-var RemoveClassWhenRegex = __webpack_require__(479);
-var RemoveClassWhenRegexNot = __webpack_require__(480);
+var RemoveClassWhenEmptyNot = __webpack_require__(482);
+var RemoveClassWhenRegex = __webpack_require__(483);
+var RemoveClassWhenRegexNot = __webpack_require__(484);
 var RemoveClassWhenValue = __webpack_require__(220);
-var RemoveClassWhenValueNot = __webpack_require__(481);
+var RemoveClassWhenValueNot = __webpack_require__(485);
 
 // utils
-var DataUtils = __webpack_require__(482);
+var DataUtils = __webpack_require__(486);
 
 module.exports = function () {
 
@@ -27822,9 +27822,915 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 460 */,
-/* 461 */,
+/* 460 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - Form
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+// Mimoto input classes
+
+var FormField = __webpack_require__(461);
+
+module.exports = function (elForm) {
+
+    // start
+    this.__construct(elForm);
+};
+
+module.exports.prototype = {
+
+    // elements
+    _elForm: null,
+    _aFormFields: [],
+
+    // settings
+    _sFormName: '',
+    _sAction: '',
+    _sMethod: '',
+    _bManualSave: false,
+    _sPublicKey: null,
+    _actions: null,
+
+    // state
+    _bHasChanges: false,
+
+    // utils
+    _autosaveTimer: null,
+
+    // form setting directives
+    DIRECTIVE_MIMOTO_FORM_NAME: 'data-mimoto-form-name',
+    DIRECTIVE_MIMOTO_FORM_ACTION: 'data-mimoto-form-action',
+    DIRECTIVE_MIMOTO_FORM_METHOD: 'data-mimoto-form-method',
+    DIRECTIVE_MIMOTO_FORM_PUBLICKEY: 'data-mimoto-form-publickey',
+    DIRECTIVE_MIMOTO_FORM_INSTANCEID: 'data-mimoto-form-instanceid',
+    DIRECTIVE_MIMOTO_FORM_MANUALSAVE: 'data-mimoto-form-manualsave',
+    DIRECTIVE_MIMOTO_FORM_ACTIONS: 'data-mimoto-form-actions',
+
+    // form field directives
+    DIRECTIVE_MIMOTO_FORM_FIELD: 'data-mimoto-form-field',
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elForm) {
+        this._parseForm(elForm);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _getName: function _getName() {
+        return this._sFormName;
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _parseForm: function _parseForm(elForm) {
+        // 1. collect
+        this._elForm = elForm;
+        this._sFormName = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_NAME);
+        this._sAction = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTION);
+        this._sMethod = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_METHOD);
+        this._sPublicKey = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY);
+        this._nInstanceId = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID);
+        this._bManualSave = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_MANUALSAVE) === 'true';
+
+        // 2. collect
+        var sActions = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTIONS);
+        if (sActions.length > 0) this._actions = JSON.parse(sActions);
+
+        // 3. get fields
+        var aFormFields = elForm.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD + ']');
+
+        // 4. parse input fields
+        var nFormFieldCount = aFormFields.length;
+        for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
+            // a. register
+            var elFormField = aFormFields[nFormFieldIndex];
+
+            // b. init
+            var formField = new FormField(elFormField);
+
+            // c. configure
+            elFormField.addEventListener('onMimotoFormfieldChanged', this._onFormFieldChanged.bind(this), true);
+
+            // d. store
+            this._aFormFields.push(formField);
+        }
+    },
+
+    _onFormFieldChanged: function _onFormFieldChanged(e) {
+        // verify and trigger
+        if (!this._bManualSave) this._startAutosave();
+    },
+
+    _startAutosave: function _startAutosave() {
+        if (!this._autosaveTimer) {
+            // register
+            var classRoot = this;
+
+            // init
+            this._autosaveTimer = setTimeout(function () {
+                classRoot._executeAutoSave();
+            }, 1000);
+        }
+    },
+
+    _executeAutoSave: function _executeAutoSave() {
+        // cleanup
+        clearTimeout(this._autosaveTimer);
+        delete this._autosaveTimer;
+
+        Mimoto.log('Auto saving ... ');
+
+        this.submit();
+    },
+
+    /**
+     * Submit form
+     */
+    submit: function submit() {
+        // init
+        var aChangedFields = {};
+        var bChangesFound = false;
+
+        // add changed fields
+        var nFormFieldCount = this._aFormFields.length;
+        for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
+            // register
+            var formField = this._aFormFields[nFormFieldIndex];
+
+            // verify
+            if (formField.hasChanges()) {
+                // toggle
+                bChangesFound = true;
+
+                // store
+                aChangedFields[formField.getFieldValue()] = formField.getChanges();
+            }
+        }
+
+        // setup
+        var requestData = {
+            publicKey: this._sPublicKey,
+            instanceId: this._nInstanceId,
+            actions: this._actions,
+            changedFields: aChangedFields
+        };
+
+        // 11. send data
+        Mimoto.utils.callAPI({
+            type: this._sMethod,
+            url: this._sAction,
+            data: requestData,
+            dataType: 'json',
+            success: function (resultData, resultStatus, resultSomething) {
+                Mimoto.log('Form submitted', resultData);
+
+                this._updateForm(resultData);
+            }.bind(this)
+        });
+    },
+
+    _updateForm: function _updateForm(resultData) {
+        if (resultData.errors && resultData.errors.length > 0) {
+            Mimoto.log('Errors were found');
+        } else {
+            Mimoto.log('Form submit SUCCESS');
+
+            // update all fields
+            var nFormFieldCount = this._aFormFields.length;
+            for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
+                // register
+                var formField = this._aFormFields[nFormFieldIndex];
+
+                // forward
+                formField.acceptChanges();
+            }
+        }
+
+        if (resultData.newEntities) {
+            for (var sEntityType in resultData.newEntities) {
+
+                var newEntity = resultData.newEntities[sEntityType];
+
+                // update all fields
+                var _nFormFieldCount = this._aFormFields.length;
+                for (var _nFormFieldIndex = 0; _nFormFieldIndex < _nFormFieldCount; _nFormFieldIndex++) {
+                    // register
+                    var _formField = this._aFormFields[_nFormFieldIndex];
+
+                    // forward
+                    _formField.updatePropertySelector(newEntity.selector, newEntity.id);
+                }
+            }
+        }
+
+        if (resultData.newPublicKey) {
+            // update
+            this._sPublicKey = resultData.newPublicKey;
+            this._elForm.setAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY, this._sPublicKey);
+        }
+
+        if (resultData.newEntityId) {
+            // update
+            this._nInstanceId = parseInt(resultData.newEntityId);
+            this._elForm.setAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID, this._nInstanceId);
+        }
+
+        // --- execute actions
+
+
+        if (this._actions && this._actions.response) {
+            Mimoto.warn('this._actions.response', this._actions.response);
+
+            if (this._actions.response.onSuccess) {
+                if (this._actions.response.onSuccess.loadPage) {
+                    window.open(this._actions.response.onSuccess.loadPage, '_self');
+                } else if (this._actions.response.onSuccess.closePopup) {
+                    Mimoto.closePopup();
+                } else if (this._actions.response.onSuccess.reloadPopup) {
+                    Mimoto.popup.replace(this._actions.response.onSuccess.reloadPopup);
+                } else if (this._actions.response.onSuccess.dispatchEvent) {
+                    console.log('form.responseSettings.onSuccess.dispatchEvent', this._actions.response.onSuccess.dispatchEvent);
+                }
+            }
+        }
+    }
+
+};
+
+/***/ }),
+/* 461 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - FormField
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+// Mimoto input classes
+
+var Textline = __webpack_require__(462);
+var Radiobutton = __webpack_require__(463);
+var Checkbox = __webpack_require__(464);
+var MultiSelect = __webpack_require__(465);
+
+module.exports = function (elFormField) {
+
+    // start
+    this.__construct(elFormField);
+};
+
+module.exports.prototype = {
+
+    // form field directives
+    DIRECTIVE_MIMOTO_FORM_FIELD_VALUE: 'data-mimoto-form-field-value',
+    DIRECTIVE_MIMOTO_FORM_FIELD_TYPE: 'data-mimoto-form-field-type',
+    DIRECTIVE_MIMOTO_FORM_FIELD_INPUT: 'data-mimoto-form-field-input',
+    DIRECTIVE_MIMOTO_FORM_FIELD_ERROR: 'data-mimoto-form-field-error',
+    DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION: 'data-mimoto-form-field-validation',
+
+    // settings
+    _sType: null,
+    _elFormField: null,
+
+    // elements
+    _aInputElements: null,
+    _elError: null,
+    _aValidationRules: [],
+
+    // state
+    _bHasChanges: false,
+    _bHasPendingChanges: false,
+
+    _persistentValue: null,
+    _pendingValue: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elFormField) {
+        // store
+        this._elFormField = elFormField;
+
+        // parse
+        this._parseFormField(elFormField);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getFieldValue: function getFieldValue() {
+        return this._elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    hasChanges: function hasChanges() {
+        return this._bHasChanges;
+    },
+
+    getChanges: function getChanges() {
+        // copy
+        this._pendingValue = this._input.getValue();
+        this._bHasPendingChanges = true;
+
+        // toggle
+        this._bHasChanges = false;
+
+        // send
+        return this._pendingValue;
+    },
+
+    acceptChanges: function acceptChanges() {
+        // verify
+        if (this._bHasPendingChanges) {
+            // accept
+            this._persistentValue = this._pendingValue;
+            this._pendingValue = null;
+
+            // toggle
+            this._bHasPendingChanges = false;
+        }
+
+        // broadcast
+        if (this._bHasChanges) this._broadcastChanges();
+    },
+
+    updatePropertySelector: function updatePropertySelector(sOldSelector, sNewSelector) {
+        // collect
+        var aElements = [{ el: this._elFormField, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE }];
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            // register
+            var elInput = this._aInputElements[nInputElementIndex];
+
+            // register
+            aElements.push({ el: elInput, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT });
+            aElements.push({ el: elInput, attr: 'name' });
+        }
+
+        // swap
+        var nElementCount = aElements.length;
+        for (var nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++) {
+            // register
+            var element = aElements[nElementIndex];
+
+            // read
+            var sCurrentSelector = element.el.getAttribute(element.attr);
+
+            // compare
+            if (sCurrentSelector.substr(0, sOldSelector.length) === sOldSelector) {
+                // update
+                element.el.setAttribute(element.attr, sNewSelector + sCurrentSelector.substr(sOldSelector.length));
+            }
+        }
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _parseFormField: function _parseFormField(elFormField) {
+        // 1. register
+        this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
+        this._elError = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
+
+        // 2. collect
+        this._aInputElements = elFormField.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
+
+        // 3. setup
+        switch (this._sType) {
+            case '_Mimoto_form_input_textline':
+                this._input = new Textline(this._aInputElements[0]);break;
+            case '_Mimoto_form_input_radiobutton':
+                this._input = new Radiobutton(this._aInputElements);break;
+            case '_Mimoto_form_input_checkbox':
+                this._input = new Checkbox(this._aInputElements[0]);break;
+            case '_Mimoto_form_input_multiselect':
+                this._input = new MultiSelect(this._aInputElements);break;
+            default:
+
+            // check if any custom field registered in root
+        }
+
+        // 4. read
+        if (elFormField.hasAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION)) {
+            // a. register
+            this._aValidationRules = JSON.parse(elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION));
+        }
+
+        // 5. verify or cancel
+        if (!this._input) return;
+
+        // ---
+
+
+        // store initial value
+        this._persistentValue = this._input.getValue();
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            // register
+            var elInput = this._aInputElements[nInputElementIndex];
+
+            // configure
+            elInput.addEventListener('onMimotoInputChanged', function (e) {
+                this._handleInputChange();
+            }.bind(this));
+        }
+    },
+
+    _handleInputChange: function _handleInputChange() {
+        Mimoto.log('Changed from', this._persistentValue, 'to', this._input.getValue());
+
+        // 1. validate
+        if (this._aValidationRules.length > 0 && !this._validateInputField()) return;
+
+        // 2. register
+        var testValue = this._input.getValue();
+
+        // 3. filter on actual change or changes pending
+        if (this._bHasPendingChanges && testValue === this._pendingValue) return;
+        if (!this._bHasPendingChanges && testValue === this._persistentValue) return;
+
+        // 4. toggle
+        this._bHasChanges = true;
+
+        // 5. broadcast
+        this._broadcastChanges();
+    },
+
+    _broadcastChanges: function _broadcastChanges() {
+        // broadcast
+        this._elFormField.dispatchEvent(new Event('onMimotoFormfieldChanged'));
+    },
+
+    _validateInputField: function _validateInputField() {
+        // init
+        var sErrorMessage = '';
+
+        // check rules
+        var nValidationRuleCount = this._aValidationRules.length;
+        var bValid = true;
+        for (var nValidationRuleIndex = 0; nValidationRuleIndex < nValidationRuleCount; nValidationRuleIndex++) {
+            // register
+            var validationRule = this._aValidationRules[nValidationRuleIndex];
+
+            // read
+            var value = this._input.getValue();
+
+            // compare
+            switch (validationRule.type) {
+                case 'maxchars':
+
+                    // validate
+                    if (value.length > validationRule.value) {
+                        sErrorMessage = validationRule.errorMessage;
+                        bValid = false;
+                    }
+                    break;
+
+                case 'minchars':
+
+                    // validate
+                    if (value.length < validationRule.value) {
+                        sErrorMessage = validationRule.errorMessage;
+                        bValid = false;
+                    }
+                    break;
+
+                case 'regex_custom':
+
+                    // init
+                    var patt = new RegExp(validationRule.value, "g");
+
+                    // validate
+                    if (!patt.test(value)) {
+                        sErrorMessage = validationRule.errorMessage;
+                        bValid = false;
+                    }
+                    break;
+            }
+
+            if (!bValid) break;
+        }
+
+        // update interface
+        if (this._elError) {
+            if (sErrorMessage) {
+                this._elError.innerHTML = sErrorMessage;
+                // #todo toggle field icon - zie code David
+            } else {
+                this._elError.innerHTML = '';
+            }
+        }
+
+        // send
+        return bValid;
+    }
+
+};
+
+/***/ }),
 /* 462 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - InputField - Textline
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (elInput) {
+
+    // start
+    this.__construct(elInput);
+};
+
+module.exports.prototype = {
+
+    // dom
+    _elInput: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elInput) {
+        // store
+        this._elInput = elInput;
+
+        // configure
+        this._elInput.addEventListener('input', function (e) {
+            this._broadcastChange(this._elInput);
+        }.bind(this));
+        this._elInput.addEventListener('change', function (e) {
+            this._broadcastChange(this._elInput);
+        }.bind(this));
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getValue: function getValue() {
+        return this._elInput.value;
+    },
+
+    setValue: function setValue(value) {
+        this._elInput.value = value;
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _broadcastChange: function _broadcastChange(elInput) {
+        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
+    }
+
+};
+
+/***/ }),
+/* 463 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - InputField - Radiobutton
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (aInputElements) {
+
+    // start
+    this.__construct(aInputElements);
+};
+
+module.exports.prototype = {
+
+    // dom
+    _aInputElements: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(aInputElements) {
+        var _this = this;
+
+        // store
+        this._aInputElements = aInputElements;
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+
+        var _loop = function _loop(nInputElementIndex) {
+            // register
+            var elInput = _this._aInputElements[nInputElementIndex];
+
+            // configure
+            elInput.addEventListener('input', function (e) {
+                this._broadcastChange(elInput);
+            }.bind(_this));
+            elInput.addEventListener('change', function (e) {
+                this._broadcastChange(elInput);
+            }.bind(_this));
+        };
+
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            _loop(nInputElementIndex);
+        }
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getValue: function getValue() {
+        // init
+        var value = null;
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            // register
+            var _elInput = this._aInputElements[nInputElementIndex];
+
+            // verify
+            if (_elInput.checked) {
+                value = _elInput.value;
+                break;
+            }
+        }
+
+        // send
+        return value;
+    },
+
+    setValue: function setValue(value) {
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            // register
+            var _elInput2 = this._aInputElements[nInputElementIndex];
+
+            // verify
+            if (_elInput2.value == value) {
+                _elInput2.checked = true;
+                break;
+            }
+        }
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _broadcastChange: function _broadcastChange(elInput) {
+        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
+    }
+
+};
+
+/***/ }),
+/* 464 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - InputField - Checkbox
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (elInput) {
+
+    // start
+    this.__construct(elInput);
+};
+
+module.exports.prototype = {
+
+    // dom
+    _elInput: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elInput) {
+        // store
+        this._elInput = elInput;
+
+        // configure
+        this._elInput.addEventListener('input', function (e) {
+            this._broadcastChange(this._elInput);
+        }.bind(this));
+        this._elInput.addEventListener('change', function (e) {
+            this._broadcastChange(this._elInput);
+        }.bind(this));
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getValue: function getValue() {
+        // send
+        return this._elInput.checked;
+    },
+
+    setValue: function setValue(value) {
+
+        this._elInput.checked = value === true;
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _broadcastChange: function _broadcastChange(elInput) {
+        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
+    }
+
+};
+
+/***/ }),
+/* 465 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - InputField - Checkbox
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (aInputElements) {
+
+    // start
+    this.__construct(aInputElements);
+};
+
+module.exports.prototype = {
+
+    // dom
+    _aInputElements: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(aInputElements) {
+        var _this = this;
+
+        // store
+        this._aInputElements = aInputElements;
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+
+        var _loop = function _loop(nInputElementIndex) {
+            // register
+            var elInput = _this._aInputElements[nInputElementIndex];
+
+            // configure
+            elInput.addEventListener('input', function (e) {
+                this._broadcastChange(elInput);
+            }.bind(_this));
+            elInput.addEventListener('change', function (e) {
+                this._broadcastChange(elInput);
+            }.bind(_this));
+        };
+
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            _loop(nInputElementIndex);
+        }
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getValue: function getValue() {
+        // init
+        var aValues = [];
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            // register
+            var _elInput = this._aInputElements[nInputElementIndex];
+
+            // verify
+            if (_elInput.checked) {
+                aValues.push(_elInput.value);
+            }
+        }
+
+        // send
+        return JSON.stringify(aValues);
+    },
+
+    setValue: function setValue(value) {
+        // convert
+        var aValues = value.length > 0 ? JSON.parse(value) : [];
+
+        // configure
+        var nInputElementCount = this._aInputElements.length;
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
+            // register
+            var _elInput2 = this._aInputElements[nInputElementIndex];
+
+            // verify
+            _elInput2.checked = aValues.includes(_elInput2.value);
+        }
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _broadcastChange: function _broadcastChange(elInput) {
+        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
+    }
+
+};
+
+/***/ }),
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27865,7 +28771,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 463 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27906,7 +28812,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 464 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27947,7 +28853,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 465 */
+/* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27988,7 +28894,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 466 */
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28029,7 +28935,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 467 */
+/* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28070,7 +28976,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 468 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28111,7 +29017,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 469 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28152,7 +29058,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 470 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28193,7 +29099,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 471 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28234,7 +29140,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 472 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28275,7 +29181,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 473 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28316,7 +29222,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 474 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28357,7 +29263,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 475 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28398,7 +29304,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 476 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28439,7 +29345,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 477 */
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28480,7 +29386,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 478 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28521,7 +29427,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 479 */
+/* 483 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28562,7 +29468,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 480 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28603,7 +29509,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 481 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28644,7 +29550,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 482 */
+/* 486 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28686,7 +29592,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 483 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28710,7 +29616,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var RealtimeEditor = __webpack_require__(484);
+var RealtimeEditor = __webpack_require__(488);
 
 // Socket.io classes
 var io = __webpack_require__(221);
@@ -29044,7 +29950,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 484 */
+/* 488 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29062,7 +29968,7 @@ var io = __webpack_require__(221);
 
 // Quill classes
 var Quill = __webpack_require__(235);
-var QuillDelta = __webpack_require__(516);
+var QuillDelta = __webpack_require__(520);
 
 module.exports = function (socket, sPropertySelector, editOptions, editableValue) {
 
@@ -29384,7 +30290,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 485 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -29466,7 +30372,7 @@ function url (uri, loc) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 486 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -29482,7 +30388,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(487);
+exports.humanize = __webpack_require__(491);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -29672,7 +30578,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 487 */
+/* 491 */
 /***/ (function(module, exports) {
 
 /**
@@ -29827,7 +30733,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 488 */
+/* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -29837,7 +30743,7 @@ function plural(ms, n, name) {
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(489);
+exports = module.exports = __webpack_require__(493);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -30001,7 +30907,7 @@ function localstorage(){
 
 
 /***/ }),
-/* 489 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30017,7 +30923,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(490);
+exports.humanize = __webpack_require__(494);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -30204,7 +31110,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 490 */
+/* 494 */
 /***/ (function(module, exports) {
 
 /**
@@ -30335,7 +31241,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 491 */
+/* 495 */
 /***/ (function(module, exports) {
 
 
@@ -30505,7 +31411,7 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 492 */
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -30653,19 +31559,19 @@ exports.removeBlobs = function(data, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 493 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(494);
+module.exports = __webpack_require__(498);
 
 
 /***/ }),
-/* 494 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(495);
+module.exports = __webpack_require__(499);
 
 /**
  * Exports parser
@@ -30677,7 +31583,7 @@ module.exports.parser = __webpack_require__(133);
 
 
 /***/ }),
-/* 495 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -30690,7 +31596,7 @@ var debug = __webpack_require__(154)('engine.io-client:socket');
 var index = __webpack_require__(230);
 var parser = __webpack_require__(133);
 var parseuri = __webpack_require__(222);
-var parsejson = __webpack_require__(509);
+var parsejson = __webpack_require__(513);
 var parseqs = __webpack_require__(185);
 
 /**
@@ -31422,7 +32328,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 496 */
+/* 500 */
 /***/ (function(module, exports) {
 
 
@@ -31445,7 +32351,7 @@ try {
 
 
 /***/ }),
-/* 497 */
+/* 501 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -31876,7 +32782,7 @@ function unloadHandler () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 498 */
+/* 502 */
 /***/ (function(module, exports) {
 
 
@@ -31901,7 +32807,7 @@ module.exports = Object.keys || function keys (obj){
 
 
 /***/ }),
-/* 499 */
+/* 503 */
 /***/ (function(module, exports) {
 
 /**
@@ -31936,7 +32842,7 @@ module.exports = function(arraybuffer, start, end) {
 
 
 /***/ }),
-/* 500 */
+/* 504 */
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -31970,7 +32876,7 @@ function noop() {}
 
 
 /***/ }),
-/* 501 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -32210,7 +33116,7 @@ function noop() {}
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)(module), __webpack_require__(1)))
 
 /***/ }),
-/* 502 */
+/* 506 */
 /***/ (function(module, exports) {
 
 /*
@@ -32283,7 +33189,7 @@ function noop() {}
 
 
 /***/ }),
-/* 503 */
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32386,7 +33292,7 @@ module.exports = (function() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 504 */
+/* 508 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -32402,7 +33308,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(505);
+exports.humanize = __webpack_require__(509);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -32592,7 +33498,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 505 */
+/* 509 */
 /***/ (function(module, exports) {
 
 /**
@@ -32747,7 +33653,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 506 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -32985,7 +33891,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 507 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -33002,7 +33908,7 @@ var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(508);
+    NodeWebSocket = __webpack_require__(512);
   } catch (e) { }
 }
 
@@ -33277,13 +34183,13 @@ WS.prototype.check = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 508 */
+/* 512 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 509 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -33321,7 +34227,7 @@ module.exports = function parsejson(data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 510 */
+/* 514 */
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -33340,7 +34246,7 @@ function toArray(list, index) {
 
 
 /***/ }),
-/* 511 */
+/* 515 */
 /***/ (function(module, exports) {
 
 
@@ -33431,7 +34337,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 /***/ }),
-/* 512 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33445,9 +34351,9 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 
-var base64 = __webpack_require__(513)
-var ieee754 = __webpack_require__(514)
-var isArray = __webpack_require__(515)
+var base64 = __webpack_require__(517)
+var ieee754 = __webpack_require__(518)
+var isArray = __webpack_require__(519)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -35228,7 +36134,7 @@ function isnan (val) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 513 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35349,7 +36255,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 514 */
+/* 518 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -35439,7 +36345,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 515 */
+/* 519 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -35450,13 +36356,13 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 516 */
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var diff = __webpack_require__(517);
+var diff = __webpack_require__(521);
 var equal = __webpack_require__(236);
 var extend = __webpack_require__(237);
-var op = __webpack_require__(520);
+var op = __webpack_require__(524);
 
 
 var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
@@ -35770,7 +36676,7 @@ module.exports = Delta;
 
 
 /***/ }),
-/* 517 */
+/* 521 */
 /***/ (function(module, exports) {
 
 /**
@@ -36474,7 +37380,7 @@ function merge_tuples (diffs, start, length) {
 
 
 /***/ }),
-/* 518 */
+/* 522 */
 /***/ (function(module, exports) {
 
 exports = module.exports = typeof Object.keys === 'function'
@@ -36489,7 +37395,7 @@ function shim (obj) {
 
 
 /***/ }),
-/* 519 */
+/* 523 */
 /***/ (function(module, exports) {
 
 var supportsArgumentsClass = (function(){
@@ -36515,7 +37421,7 @@ function unsupported(object){
 
 
 /***/ }),
-/* 520 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var equal = __webpack_require__(236);
@@ -36658,921 +37564,6 @@ Iterator.prototype.peekType = function () {
 
 module.exports = lib;
 
-
-/***/ }),
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
-/* 525 */,
-/* 526 */,
-/* 527 */,
-/* 528 */,
-/* 529 */,
-/* 530 */,
-/* 531 */,
-/* 532 */,
-/* 533 */,
-/* 534 */,
-/* 535 */,
-/* 536 */,
-/* 537 */,
-/* 538 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto - InputField - Textline
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-module.exports = function (elInput) {
-
-    // start
-    this.__construct(elInput);
-};
-
-module.exports.prototype = {
-
-    // dom
-    _elInput: null,
-
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Constructor
-     */
-    __construct: function __construct(elInput) {
-        // store
-        this._elInput = elInput;
-
-        // configure
-        this._elInput.addEventListener('input', function (e) {
-            this._broadcastChange();
-        }.bind(this));
-        this._elInput.addEventListener('change', function (e) {
-            this._broadcastChange();
-        }.bind(this));
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    getValue: function getValue() {
-        return this._elInput.value;
-    },
-
-    setValue: function setValue(value) {
-        this._elInput.value = value;
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _broadcastChange: function _broadcastChange() {
-        this._elInput.dispatchEvent(new Event('onMimotoInputChanged'));
-    }
-
-};
-
-/***/ }),
-/* 539 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto - InputField - Radiobutton
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-module.exports = function (aInputElements) {
-
-    // start
-    this.__construct(aInputElements);
-};
-
-module.exports.prototype = {
-
-    // dom
-    _aInputElements: null,
-
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Constructor
-     */
-    __construct: function __construct(aInputElements) {
-        var _this = this;
-
-        // store
-        this._aInputElements = aInputElements;
-
-        // configure
-        var nInputElementCount = this._aInputElements.length;
-
-        var _loop = function _loop(nInputElementIndex) {
-            // register
-            var elInput = _this._aInputElements[nInputElementIndex];
-
-            // configure
-            elInput.addEventListener('input', function (e) {
-                this._broadcastChange(elInput);
-            }.bind(_this));
-            elInput.addEventListener('change', function (e) {
-                this._broadcastChange(elInput);
-            }.bind(_this));
-        };
-
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            _loop(nInputElementIndex);
-        }
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    getValue: function getValue() {
-        // init
-        var value = null;
-
-        // configure
-        var nInputElementCount = this._aInputElements.length;
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            // register
-            var _elInput = this._aInputElements[nInputElementIndex];
-
-            // verify
-            if (_elInput.checked) {
-                value = _elInput.value;
-                break;
-            }
-        }
-
-        // send
-        return value;
-    },
-
-    setValue: function setValue(value) {
-        // configure
-        var nInputElementCount = this._aInputElements.length;
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            // register
-            var _elInput2 = this._aInputElements[nInputElementIndex];
-
-            // verify
-            if (_elInput2.value == value) {
-                _elInput2.checked = true;
-                break;
-            }
-        }
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _broadcastChange: function _broadcastChange(elInput) {
-        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
-    }
-
-};
-
-/***/ }),
-/* 540 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto - InputField - Checkbox
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-module.exports = function (elInput) {
-
-    // start
-    this.__construct(elInput);
-};
-
-module.exports.prototype = {
-
-    // dom
-    _elInput: null,
-
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Constructor
-     */
-    __construct: function __construct(elInput) {
-        // store
-        this._elInput = elInput;
-
-        // configure
-        this._elInput.addEventListener('input', function (e) {
-            this._broadcastChange();
-        }.bind(this));
-        this._elInput.addEventListener('change', function (e) {
-            this._broadcastChange();
-        }.bind(this));
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    getValue: function getValue() {
-        // send
-        return this._elInput.checked;
-    },
-
-    setValue: function setValue(value) {
-
-        this._elInput.checked = value === true;
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _broadcastChange: function _broadcastChange(elInput) {
-        this._elInput.dispatchEvent(new Event('onMimotoInputChanged'));
-    }
-
-};
-
-/***/ }),
-/* 541 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto - Form
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-// Mimoto input classes
-
-var FormField = __webpack_require__(542);
-
-module.exports = function (elForm) {
-
-    // start
-    this.__construct(elForm);
-};
-
-module.exports.prototype = {
-
-    // elements
-    _elForm: null,
-    _aFormFields: [],
-
-    // settings
-    _sFormName: '',
-    _sAction: '',
-    _sMethod: '',
-    _bManualSave: false,
-    _sPublicKey: null,
-    _actions: null,
-
-    // state
-    _bHasChanges: false,
-
-    // utils
-    _autosaveTimer: null,
-
-    // form setting directives
-    DIRECTIVE_MIMOTO_FORM_NAME: 'data-mimoto-form-name',
-    DIRECTIVE_MIMOTO_FORM_ACTION: 'data-mimoto-form-action',
-    DIRECTIVE_MIMOTO_FORM_METHOD: 'data-mimoto-form-method',
-    DIRECTIVE_MIMOTO_FORM_PUBLICKEY: 'data-mimoto-form-publickey',
-    DIRECTIVE_MIMOTO_FORM_INSTANCEID: 'data-mimoto-form-instanceid',
-    DIRECTIVE_MIMOTO_FORM_MANUALSAVE: 'data-mimoto-form-manualsave',
-    DIRECTIVE_MIMOTO_FORM_ACTIONS: 'data-mimoto-form-actions',
-
-    // form field directives
-    DIRECTIVE_MIMOTO_FORM_FIELD: 'data-mimoto-form-field',
-
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Constructor
-     */
-    __construct: function __construct(elForm) {
-        this._parseForm(elForm);
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Properties -------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _getName: function _getName() {
-        return this._sFormName;
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _parseForm: function _parseForm(elForm) {
-        // 1. collect
-        this._elForm = elForm;
-        this._sFormName = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_NAME);
-        this._sAction = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTION);
-        this._sMethod = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_METHOD);
-        this._sPublicKey = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY);
-        this._nInstanceId = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID);
-        this._bManualSave = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_MANUALSAVE) === 'true';
-
-        // 2. collect
-        var sActions = elForm.getAttribute(this.DIRECTIVE_MIMOTO_FORM_ACTIONS);
-        if (sActions.length > 0) this._actions = JSON.parse(sActions);
-
-        // 3. get fields
-        var aFormFields = elForm.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD + ']');
-
-        // 4. parse input fields
-        var nFormFieldCount = aFormFields.length;
-        for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
-            // a. register
-            var elFormField = aFormFields[nFormFieldIndex];
-
-            // b. init
-            var formField = new FormField(elFormField);
-
-            // c. configure
-            elFormField.addEventListener('onMimotoFormfieldChanged', this._onFormFieldChanged.bind(this), true);
-
-            // d. store
-            this._aFormFields.push(formField);
-        }
-    },
-
-    _onFormFieldChanged: function _onFormFieldChanged(e) {
-        // verify and trigger
-        if (!this._bManualSave) this._startAutosave();
-    },
-
-    _startAutosave: function _startAutosave() {
-        if (!this._autosaveTimer) {
-            // register
-            var classRoot = this;
-
-            // init
-            this._autosaveTimer = setTimeout(function () {
-                classRoot._executeAutoSave();
-            }, 1000);
-        }
-    },
-
-    _executeAutoSave: function _executeAutoSave() {
-        // cleanup
-        clearTimeout(this._autosaveTimer);
-        delete this._autosaveTimer;
-
-        Mimoto.log('Auto saving ... ');
-
-        this.submit();
-    },
-
-    /**
-     * Submit form
-     */
-    submit: function submit() {
-        // init
-        var aChangedFields = {};
-        var bChangesFound = false;
-
-        // add changed fields
-        var nFormFieldCount = this._aFormFields.length;
-        for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
-            // register
-            var formField = this._aFormFields[nFormFieldIndex];
-
-            // verify
-            if (formField.hasChanges()) {
-                // toggle
-                bChangesFound = true;
-
-                // store
-                aChangedFields[formField.getFieldValue()] = formField.getChanges();
-            }
-        }
-
-        // setup
-        var requestData = {
-            publicKey: this._sPublicKey,
-            instanceId: this._nInstanceId,
-            actions: this._actions,
-            changedFields: aChangedFields
-        };
-
-        // 11. send data
-        Mimoto.utils.callAPI({
-            type: this._sMethod,
-            url: this._sAction,
-            data: requestData,
-            dataType: 'json',
-            success: function (resultData, resultStatus, resultSomething) {
-                Mimoto.log('Form submitted', resultData);
-
-                this._updateForm(resultData);
-            }.bind(this)
-        });
-    },
-
-    _updateForm: function _updateForm(resultData) {
-        if (resultData.errors && resultData.errors.length > 0) {
-            Mimoto.log('Errors were found');
-        } else {
-            Mimoto.log('Form submit SUCCESS');
-
-            // update all fields
-            var nFormFieldCount = this._aFormFields.length;
-            for (var nFormFieldIndex = 0; nFormFieldIndex < nFormFieldCount; nFormFieldIndex++) {
-                // register
-                var formField = this._aFormFields[nFormFieldIndex];
-
-                // forward
-                formField.acceptChanges();
-            }
-        }
-
-        if (resultData.newEntities) {
-            for (var sEntityType in resultData.newEntities) {
-
-                var newEntity = resultData.newEntities[sEntityType];
-
-                // update all fields
-                var _nFormFieldCount = this._aFormFields.length;
-                for (var _nFormFieldIndex = 0; _nFormFieldIndex < _nFormFieldCount; _nFormFieldIndex++) {
-                    // register
-                    var _formField = this._aFormFields[_nFormFieldIndex];
-
-                    // forward
-                    _formField.updatePropertySelector(newEntity.selector, newEntity.id);
-                }
-            }
-        }
-
-        if (resultData.newPublicKey) {
-            // update
-            this._sPublicKey = resultData.newPublicKey;
-            this._elForm.setAttribute(this.DIRECTIVE_MIMOTO_FORM_PUBLICKEY, this._sPublicKey);
-        }
-
-        if (resultData.newEntityId) {
-            // update
-            this._nInstanceId = parseInt(resultData.newEntityId);
-            this._elForm.setAttribute(this.DIRECTIVE_MIMOTO_FORM_INSTANCEID, this._nInstanceId);
-        }
-
-        // --- execute actions
-
-
-        if (this._actions && this._actions.response) {
-            Mimoto.warn('this._actions.response', this._actions.response);
-
-            if (this._actions.response.onSuccess) {
-                if (this._actions.response.onSuccess.loadPage) {
-                    window.open(this._actions.response.onSuccess.loadPage, '_self');
-                } else if (this._actions.response.onSuccess.closePopup) {
-                    Mimoto.closePopup();
-                } else if (this._actions.response.onSuccess.reloadPopup) {
-                    Mimoto.popup.replace(this._actions.response.onSuccess.reloadPopup);
-                } else if (this._actions.response.onSuccess.dispatchEvent) {
-                    console.log('form.responseSettings.onSuccess.dispatchEvent', this._actions.response.onSuccess.dispatchEvent);
-                }
-            }
-        }
-    }
-
-};
-
-/***/ }),
-/* 542 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto - FormField
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-// Mimoto input classes
-
-var Textline = __webpack_require__(538);
-var Radiobutton = __webpack_require__(539);
-var Checkbox = __webpack_require__(540);
-
-module.exports = function (elFormField) {
-
-    // start
-    this.__construct(elFormField);
-};
-
-module.exports.prototype = {
-
-    // form field directives
-    DIRECTIVE_MIMOTO_FORM_FIELD_VALUE: 'data-mimoto-form-field-value',
-    DIRECTIVE_MIMOTO_FORM_FIELD_TYPE: 'data-mimoto-form-field-type',
-    DIRECTIVE_MIMOTO_FORM_FIELD_INPUT: 'data-mimoto-form-field-input',
-    DIRECTIVE_MIMOTO_FORM_FIELD_ERROR: 'data-mimoto-form-field-error',
-
-    // settings
-    _sType: null,
-    _elFormField: null,
-
-    // elements
-    _aInputElements: null,
-    _elError: null,
-
-    // state
-    _bHasChanges: false,
-    _bHasPendingChanges: false,
-
-    _persistantValue: null,
-    _pendingValue: null,
-
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Constructor
-     */
-    __construct: function __construct(elFormField) {
-        // store
-        this._elFormField = elFormField;
-
-        // parse
-        this._parseFormField(elFormField);
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Properties -------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    getFieldValue: function getFieldValue() {
-        return this._elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE);
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    hasChanges: function hasChanges() {
-        return this._bHasChanges;
-    },
-
-    getChanges: function getChanges() {
-        // copy
-        this._pendingValue = this._input.getValue();
-        this._bHasPendingChanges = true;
-
-        // toggle
-        this._bHasChanges = false;
-
-        // send
-        return this._pendingValue;
-    },
-
-    acceptChanges: function acceptChanges() {
-        // verify
-        if (this._bHasPendingChanges) {
-            // accept
-            this._persistantValue = this._pendingValue;
-            this._pendingValue = null;
-
-            // toggle
-            this._bHasPendingChanges = false;
-        }
-
-        // broadcast
-        if (this._bHasChanges) this._broadcastChanges();
-    },
-
-    updatePropertySelector: function updatePropertySelector(sOldSelector, sNewSelector) {
-        // collect
-        var aElements = [{ el: this._elFormField, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_VALUE }];
-
-        // configure
-        var nInputElementCount = this._aInputElements.length;
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            // register
-            var elInput = this._aInputElements[nInputElementIndex];
-
-            // register
-            aElements.push({ el: elInput, attr: this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT });
-            aElements.push({ el: elInput, attr: 'name' });
-        }
-
-        // swap
-        var nElementCount = aElements.length;
-        for (var nElementIndex = 0; nElementIndex < nElementCount; nElementIndex++) {
-            // register
-            var element = aElements[nElementIndex];
-
-            // read
-            var sCurrentSelector = element.el.getAttribute(element.attr);
-
-            // compare
-            if (sCurrentSelector.substr(0, sOldSelector.length) === sOldSelector) {
-                // update
-                element.el.setAttribute(element.attr, sNewSelector + sCurrentSelector.substr(sOldSelector.length));
-            }
-        }
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _parseFormField: function _parseFormField(elFormField) {
-        // register
-        this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
-        this._elError = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
-
-        // collect
-        this._aInputElements = elFormField.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
-
-        switch (this._sType) {
-            case '_Mimoto_form_input_textline':
-                this._input = new Textline(this._aInputElements[0]);break;
-            case '_Mimoto_form_input_radiobutton':
-                this._input = new Radiobutton(this._aInputElements);break;
-            case '_Mimoto_form_input_checkbox':
-                this._input = new Checkbox(this._aInputElements[0]);break;
-            default:
-
-            // check if any custom field registered in root
-        }
-
-        // verify or cancel
-        if (!this._input) return;
-
-        // store initial value
-        this._persistantValue = this._input.getValue();
-
-        // configure
-        var nInputElementCount = this._aInputElements.length;
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            // register
-            var elInput = this._aInputElements[nInputElementIndex];
-
-            // configure
-            elInput.addEventListener('onMimotoInputChanged', function (e) {
-                this._handleInputChange();
-            }.bind(this));
-        }
-    },
-
-    _handleInputChange: function _handleInputChange() {
-        Mimoto.log('Changed from', this._persistantValue, 'to', this._input.getValue());
-
-        //if (_validateValue(value));
-        //classRoot._validateInputField(field);
-
-
-        // filter on actual change or changes pending
-        if (this._bHasPendingChanges && this._input.getValue() === this._pendingValue) return;
-        if (!this._bHasPendingChanges && this._input.getValue() === this._persistantValue) return;
-
-        // toggle
-        this._bHasChanges = true;
-
-        // broadcast
-        this._broadcastChanges();
-    },
-
-    _broadcastChanges: function _broadcastChanges() {
-        // broadcast
-        this._elFormField.dispatchEvent(new Event('onMimotoFormfieldChanged'));
-    },
-
-    _getValueFromInputField: function _getValueFromInputField(elInput) {
-        // init
-        var value = null;
-
-        return elInput.value;
-
-        // read type
-        var sAimlessInputType = 'xxx'; //this._getInputFieldType($component);
-
-
-        switch (sAimlessInputType) {
-            case 'list':
-
-                value = JSON.parse($($component).val());
-                break;
-
-            default:
-
-                // validate
-                if ($($component).is("input")) {
-                    switch ($($component).attr('type')) {
-                        case 'radio':
-
-                            //  fix for handling radiobutton onSubmit en onChange
-                            if ($component.length) {
-                                var aComponents = $component;
-
-                                // collect value
-                                aComponents.each(function (index, $component) {
-                                    if ($($component).prop("checked") === true) {
-                                        value = $($component).val();
-                                    }
-                                });
-                            } else {
-                                if ($($component).prop("checked") === true) {
-                                    value = $($component).val();
-                                }
-                            }
-
-                            break;
-
-                        case 'checkbox':
-
-                            if ($($component).attr('value')) {
-                                if ($($component).prop("checked") === true) {
-                                    value = $($component).val();
-                                }
-                            } else {
-                                value = $($component).prop("checked");
-                            }
-
-                            break;
-
-                        default:
-
-                            value = $($component).val();
-                    }
-                }
-
-                if ($($component).is("select")) {
-                    value = $($component).val();
-                }
-
-                if ($($component).is("textarea")) {
-                    value = $($component).val();
-                }
-
-                break;
-        }
-
-        // send
-        return value;
-    },
-
-    _setInputFieldValue: function _setInputFieldValue($component, value) // #todo - implement
-    {
-        //console.log('value:');
-
-
-        if ($($component).is("input")) {
-            switch ($($component).attr('type')) {
-                case 'radio':
-
-                    // output
-                    $($component).each(function (nIndex, $component) {
-                        $($component).prop('checked', $($component).val() == value);
-                    });
-                    break;
-
-                case 'checkbox':
-
-                    // output
-                    $($component).each(function (nIndex, $component) {
-                        $($component).prop('checked', value);
-                    });
-                    break;
-
-                default:
-
-                    // output
-                    $($component).val(value);
-            }
-        };
-
-        if ($($component).is("select")) {
-            $($component).val(value);
-        }
-
-        if ($($component).is("textarea")) {
-            // output
-            $($component).val(value);
-        }
-    },
-
-    _validateInputField: function _validateInputField(field) {
-        // validae
-        if (!field.settings) return;
-        if (!field.settings.validation) return;
-
-        // init
-        var sErrorMessage = '';
-
-        // check rules
-        var nValidationRuleCount = field.settings.validation.length;
-        var bValid = true;
-        for (var i = 0; i < nValidationRuleCount; i++) {
-            // register
-            var validationRule = field.settings.validation[i];
-
-            // read
-            var value = this._getValueFromInputField(field.$input);
-
-            switch (validationRule.type) {
-                case 'maxchars':
-
-                    // validate
-                    if (value.length > validationRule.value) {
-                        sErrorMessage = validationRule.errorMessage;
-                        bValid = false;
-                    }
-                    break;
-
-                case 'minchars':
-
-                    // validate
-                    if (value.length < validationRule.value) {
-                        sErrorMessage = validationRule.errorMessage;
-                        bValid = false;
-                    }
-                    break;
-
-                case 'regex_custom':
-
-                    // init
-                    var patt = new RegExp(validationRule.value, "g");
-
-                    // validate
-                    if (!patt.test(value)) {
-                        sErrorMessage = validationRule.errorMessage;
-                        bValid = false;
-                    }
-                    break;
-            }
-
-            if (!bValid) break;
-        }
-
-        // update interface
-        if (field.$error) {
-            if (sErrorMessage) {
-                field.$error.text(sErrorMessage);
-                // #todo toggle field icon - zie code David
-            } else {
-                field.$error.text('');
-            }
-        }
-
-        // send
-        return bValid;
-    }
-
-};
 
 /***/ })
 /******/ ]);

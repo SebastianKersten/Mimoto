@@ -60,13 +60,13 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "b3b54a0a5695d77cf0f5";
+/******/ 	__webpack_require__.h = "849bda780a09ee7628d8";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 521);
+/******/ 	return __webpack_require__(__webpack_require__.s = 525);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -3159,16 +3159,16 @@ module.exports.EventEmitter = EventEmitter;
 
 /***/ }),
 
-/***/ 521:
+/***/ 525:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(54);
-module.exports = __webpack_require__(522);
+module.exports = __webpack_require__(526);
 
 
 /***/ }),
 
-/***/ 522:
+/***/ 526:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3182,7 +3182,7 @@ module.exports = __webpack_require__(522);
 
 // Publisher demo classes
 
-var Publisher = __webpack_require__(523);
+var Publisher = __webpack_require__(527);
 
 /**
  * Auto run
@@ -3194,7 +3194,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ 523:
+/***/ 527:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3208,8 +3208,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Mimoto classes
 
-var Article = __webpack_require__(524);
-var Editor = __webpack_require__(525);
+var Article = __webpack_require__(528);
+var Editor = __webpack_require__(529);
 
 module.exports = function () {
 
@@ -3273,7 +3273,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 524:
+/***/ 528:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3388,7 +3388,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 525:
+/***/ 529:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

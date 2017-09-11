@@ -1,4 +1,4 @@
-div.MimotoCMS_entities_overview_Entity {
+div.MimotoCMS_users_overview_UserPreview {
 
     flex: auto;
 
@@ -12,39 +12,41 @@ div.MimotoCMS_entities_overview_Entity {
     min-width: 300px;
 }
 
-div.MimotoCMS_entities_overview_Entity-info {
+div.MimotoCMS_users_overview_UserPreview-info {
     flex: auto;
     text-align: left;
 }
 
-    div.MimotoCMS_entities_overview_Entity-name {
+    div.MimotoCMS_users_overview_UserPreview-name {
         font-size: 20px;
         font-weight: bold;
         color: $tower-gray;
     }
 
-    div.MimotoCMS_entities_overview_Entity-properties-empty {
-        padding: 10px 20px 15px 0;
+    div.MimotoCMS_users_overview_UserPreview-email {
         font-style: italic;
-        color: #858585;
     }
 
-    div.MimotoCMS_entities_overview_Entity-properties {
-        padding: 10px 20px 15px 20px;
+div.MimotoCMS_users_overview_UserPreview-menu {
+    flex: auto;
+
+    & > * {
+        float: right;
+        margin-left: 3px;
     }
 
-div.MimotoCMS_entities_overview_Entity-menu {
-    float: right;
+    & > *:first-child {
+        margin-left: 0;
+    }
 }
 
 div.MimotoCMS_ListItemModule-sorthandlecontainer {
     display: inline-block;
-    float: right;
-    padding-top: 7px;
+    padding-top: 5px;
     padding-left: 10px;
 }
 
-div.MimotoCMS_entities_overview_Entity-sorthandle {
+div.MimotoCMS_users_overview_UserPreview-sorthandle {
     display: inline-block;
     overflow: hidden;
     width: 10px;
@@ -55,7 +57,7 @@ div.MimotoCMS_entities_overview_Entity-sorthandle {
     flex: 0 0 auto;
 }
 
-div.MimotoCMS_entities_overview_Entity-sorthandledot {
+div.MimotoCMS_users_overview_UserPreview-sorthandledot {
     float: left;
     width: 3px;
     height: 3px;

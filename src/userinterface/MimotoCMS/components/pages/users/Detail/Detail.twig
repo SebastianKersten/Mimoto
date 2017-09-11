@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_users_UserDetail_Structure__meta_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', onclick:"MimotoCMS.userEdit('" ~ Mimoto.meta('id') ~ "');", type:'secondary' }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_user'), type:'secondary' }) }}
                     </div>
 
                 </div>

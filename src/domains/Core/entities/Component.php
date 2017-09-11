@@ -731,10 +731,10 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_users_Overview_ListItem',
+                'name' => 'MimotoCMS_users_Overview_UserPreview',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/users/Overview/ListItem/ListItem.twig',
+                        'file' => 'MimotoCMS/components/pages/users/Overview/UserPreview/UserPreview.twig',
                         'conditionals' => []
                     )
                 ]
@@ -1060,15 +1060,6 @@ class Component
 
             // modules
 
-            (object) array(
-                'name' => 'MimotoCMS_modules_List',
-                'templates' => [
-                    (object) array(
-                        'file' => 'MimotoCMS/modules/ListModule/ListModule.twig',
-                        'conditionals' => []
-                    )
-                ]
-            ),
             (object) array(
                 'name' => 'MimotoCMS_modules_ListItem',
                 'templates' => [

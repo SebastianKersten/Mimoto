@@ -34,8 +34,8 @@ module.exports.prototype = {
         this._elInput = elInput;
 
         // configure
-        this._elInput.addEventListener('input', function(e) { this._broadcastChange(); }.bind(this));
-        this._elInput.addEventListener('change', function(e) { this._broadcastChange(); }.bind(this));
+        this._elInput.addEventListener('input', function(e) { this._broadcastChange(this._elInput); }.bind(this));
+        this._elInput.addEventListener('change', function(e) { this._broadcastChange(this._elInput); }.bind(this));
     },
 
 
@@ -62,9 +62,9 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
-    _broadcastChange: function()
+    _broadcastChange: function(elInput)
     {
-        this._elInput.dispatchEvent(new Event('onMimotoInputChanged'));
+        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
     }
 
 }

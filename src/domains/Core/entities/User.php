@@ -26,7 +26,7 @@ class User
             // ---
             'name' => CoreConfig::MIMOTO_USER,
             'extends' => null,
-            'forms' => [CoreConfig::COREFORM_USER],
+            'forms' => [CoreConfig::MIMOTO_USER],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_USER.'--name',
@@ -134,14 +134,14 @@ class User
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_USER,
-            'name' => CoreConfig::COREFORM_USER,
+            'id' => CoreConfig::MIMOTO_USER,
+            'name' => CoreConfig::MIMOTO_USER,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_USER, 'name'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_USER, 'email'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_USER, 'password'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_USER, 'avatar')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'email'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'password'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'avatar')
             ]
         );
     }
@@ -152,7 +152,7 @@ class User
     public static function getForm($eUser = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_USER);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_USER, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'User', '', "");
@@ -184,6 +184,8 @@ class User
             'Avatar'
         );
 
+        CoreFormUtils::addField_groupEnd($form);
+
 
         // --- permissions
 
@@ -213,7 +215,7 @@ class User
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_USER.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_USER.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");
@@ -230,7 +232,7 @@ class User
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
-        $validationRule->setId(CoreConfig::COREFORM_USER.'--file_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_USER.'--file_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");
@@ -247,7 +249,7 @@ class User
     private static function getField_userRoles($eUser = null)
     {
         // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, CoreConfig::COREFORM_USER, 'roles');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, CoreConfig::MIMOTO_USER, 'roles');
         $field->setValue('label', 'User roles');
 
         // 2. connect value
@@ -347,7 +349,7 @@ class User
             $entity = $aEntities[$i];
 
             $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-            $option->setId(CoreConfig::COREFORM_USER.'--roles_value_options-'.$entity->getId());
+            $option->setId(CoreConfig::MIMOTO_USER.'--roles_value_options-'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
             $field->addValue('options', $option);

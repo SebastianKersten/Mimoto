@@ -1,0 +1,22 @@
+@import 'UserPreview/UserPreview';
+
+div.MimotoCMS_pages_users_Overview-container {
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    //position: relative;
+    margin-bottom: 25px;
+    margin-top: 30px;
+
+    & > div {
+        margin-bottom: 5px;
+        margin-right: 5px;
+    }
+
+    //&>div:last-child {
+    //    margin-bottom: 0;
+    //    margin-right: 0;
+    //}
+}

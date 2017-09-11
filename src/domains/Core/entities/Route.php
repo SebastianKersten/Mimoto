@@ -186,7 +186,7 @@ class Route
     private static function getField_userRoles()
     {
         // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, CoreConfig::COREFORM_USER, 'allowedUserRoles');
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, CoreConfig::MIMOTO_ROUTE, 'allowedUserRoles');
         $field->setValue('label', 'User roles');
 
         // 2. connect value
