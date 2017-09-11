@@ -1,8 +1,8 @@
-<div class="MimotoCMS_forms_FormComponent-element-container">
+<div class="MimotoCMS_forms_FormField-element-container">
     {% set sInputId = fieldId ~ '-' ~ Mimoto.data('value') %}
     <div class="MimotoCMS_forms_input_MultiSelect-container">
-        <input {{ input }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect js-checkbox" value="{{ Mimoto.data('value') }}" {% for singleValue in value %}{% if singleValue == Mimoto.data('value') %}checked{% endif %}{% endfor %} />
+        <input {{ input }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_MultiSelect" value="{{ Mimoto.data('value') }}" {% for singleValue in value %}{% if singleValue == Mimoto.data('value') %}checked{% endif %}{% endfor %} />
         <svg class="MimotoCMS_forms_input_MultiSelect-icon"><use xlink:href="#ico-checkmark"></use></svg>
     </div>
-    <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ Mimoto.data('label') }}</label>
+    <label for="{{ sInputId }}" class="MimotoCMS_forms_FormField-element-label">{{ Mimoto.data('label') }}</label>
 </div>

@@ -229,12 +229,17 @@ class FormService
         }
 
 
-        // 5. authenticate #todo
-//        if ($sPublicKey !== Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues->connectedEntities)))
-//        {
-//            Mimoto::service('log')->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
-//        }
+        // -- check if form structure and requesting user are still the same as onRender
 
+
+        // 5. validate
+        if ($sPublicKey !== $this->generatePublicKey($formFieldValues))
+        {
+            Mimoto::service('log')->error('No permission to submit form', "The form with name <b>".$sFormName."</b> has an incorrect public key", true);
+        }
+
+
+        // ---
 
 
         $formResponse = (object) array( //new MimotoFormResponse();
@@ -424,18 +429,16 @@ class FormService
         // prepare response
         $bIsNew = (empty($entity->getId())) ? true : false;
 
-
-
         // store
         Mimoto::service('data')->store($entity);
+
+
+        // ---
 
 
         // compose response
         if ($bIsNew)
         {
-            // toggle
-            $bAnyNewEntity = true;
-
             // init if not yet defined
             if (!isset($formResponse->newEntities)) $formResponse->newEntities = [];
 
@@ -447,13 +450,10 @@ class FormService
                 'selector' => $entity->getEntityTypeName().'.'.CoreConfig::ENTITY_NEW,
                 'id' => $entity->getEntityTypeName().'.'.$entity->getId()
             );
-        }
 
 
+            // ---  in case of change selectors due to a newly created entity, redetermine public key
 
-        // in case of change selectors due to a newly created entity, redetermine public key
-        if ($bIsNew)
-        {
             // auto add to property - #todo - move to separate function
             $sInstruction = (isset($actions->onCreatedConnectTo)) ? $actions->onCreatedConnectTo : null;
 
@@ -504,16 +504,15 @@ class FormService
 
 
             // 1. load
-            $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity);
+            $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity, null, $entity->getId());
 
             // 2. define
-            $formResponse->newPublicKey = Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues));
+            $formResponse->newPublicKey = $this->generatePublicKey($formFieldValues);
         }
 
         // send
         return $formResponse;
     }
-
 
     public function getFormFieldValues(MimotoEntity $form, $entity, $aFields = null, $nEntityId = null)
     {
@@ -624,6 +623,25 @@ class FormService
         // send
         return $formFieldValues;
     }
+
+    public function generatePublicKey($formFieldValues)
+    {
+        // clone
+        $baseData = unserialize(serialize($formFieldValues));
+
+        // strip
+        $aFields = $baseData->fields;
+        $nFieldCount = count($aFields);
+        for ($nFieldIndex = 0; $nFieldIndex < $nFieldCount; $nFieldIndex++)
+        {
+            unset($aFields[$nFieldIndex]->value);
+            unset($aFields[$nFieldIndex]->newValue);
+        }
+
+        // send
+        return Mimoto::service('users')->getUserPublicKey(json_encode($baseData));
+    }
+
 
 
     // #todo - get form based on connected entity (= parent.forms)

@@ -1,12 +1,12 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" %}
+{% embed "MimotoCMS/components/forms/FormField.twig" %}
 
     {% block form_component %}
         {% if Mimoto.data('prefix')|default('') %}
-            <div class="MimotoCMS_forms_FormComponent-element-container MimotoCMS_forms_FormComponent-element-container--has-prefix">
+            <div class="MimotoCMS_forms_FormField-element-container MimotoCMS_forms_FormField-element-container--has-prefix">
         {% endif %}
         <input {{ Mimoto.input() }} type="text" class="MimotoCMS_forms_input_Textline" placeholder="{{ Mimoto.data('placeholder') }}" value="{{ Mimoto.value() }}"/>
         {% if Mimoto.data('prefix')|default('') %}
-                <span class="MimotoCMS_forms_FormComponent-element-prefix">{{ Mimoto.data('prefix') }}</span>
+                <span class="MimotoCMS_forms_FormField-element-prefix">{{ Mimoto.data('prefix') }}</span>
             </div>
         {% endif %}
     {% endblock %}

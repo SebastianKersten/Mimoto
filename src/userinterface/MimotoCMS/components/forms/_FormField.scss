@@ -1,23 +1,23 @@
-div.MimotoCMS_forms_FormComponent {
+div.MimotoCMS_forms_FormField {
     position: relative;
     overflow: visible;
     max-width: 1000px;
     margin-bottom: 20px;
 }
 
-div.MimotoCMS_forms_FormComponent--is-validated {
-    .MimotoCMS_forms_FormComponent-title {
+div.MimotoCMS_forms_FormField--is-validated {
+    .MimotoCMS_forms_FormField-title {
         color: $tower-gray;
     }
 }
 
-div.MimotoCMS_forms_FormComponent--has-error {
+div.MimotoCMS_forms_FormField--has-error {
     input.MimotoCMS_forms_input_Textline,
     input.MimotoCMS_forms_input_Textline:focus,
-    input.MimotoCMS_forms_input_Textline:focus + span.MimotoCMS_forms_FormComponent-element-prefix,
+    input.MimotoCMS_forms_input_Textline:focus + span.MimotoCMS_forms_FormField-element-prefix,
     div.MimotoCMS_forms_input_Textblock,
     div.MimotoCMS_forms_input_Textblock:focus,
-    span.MimotoCMS_forms_FormComponent-element-prefix,
+    span.MimotoCMS_forms_FormField-element-prefix,
     select.MimotoCMS_forms_input_Dropdown,
     input.MimotoCMS_forms_input_Checkbox::after,
     input.MimotoCMS_forms_input_RadioButton::after,
@@ -26,13 +26,13 @@ div.MimotoCMS_forms_FormComponent--has-error {
     }
 }
 
-    div.MimotoCMS_forms_FormComponent-header {
+    div.MimotoCMS_forms_FormField-header {
         display: flex;
         padding-right: percentage(1 / 3);
         align-items: center;
     }
 
-        label.MimotoCMS_forms_FormComponent-title {
+        label.MimotoCMS_forms_FormField-title {
             position: relative;
             display: inline-block;
             margin: 0 0 10px;
@@ -44,12 +44,12 @@ div.MimotoCMS_forms_FormComponent--has-error {
             color: rgba($black, .9);
         }
 
-            span.MimotoCMS_forms_FormComponent-title-information {
+            span.MimotoCMS_forms_FormField-title-information {
                 font-family: $font-family-helvetica;
                 color: rgba($black, .5);
             }
 
-            svg.MimotoCMS_forms_FormComponent-title-icon {
+            svg.MimotoCMS_forms_FormField-title-icon {
                 position: absolute;
                 top: -4px;
                 right: 0;
@@ -58,45 +58,45 @@ div.MimotoCMS_forms_FormComponent--has-error {
                 height: 30px;
             }
 
-            svg.MimotoCMS_forms_FormComponent-title-icon--checkmark {
+            svg.MimotoCMS_forms_FormField-title-icon--checkmark {
                 display: block;
                 fill: $tower-gray;
             }
 
-            svg.MimotoCMS_forms_FormComponent-title-icon--warning {
+            svg.MimotoCMS_forms_FormField-title-icon--warning {
                 display: block;
                 fill: $fuzzy-wuzzy-brown;
             }
 
-        div.MimotoCMS_forms_FormComponent-button {
+        div.MimotoCMS_forms_FormField-button {
             display: flex;
             margin: 0 0 10px;
             flex: 1 1 auto;
             justify-content: flex-end;
         }
 
-    div.MimotoCMS_forms_FormComponent-content {
+    div.MimotoCMS_forms_FormField-content {
         display: flex;
         flex-wrap: wrap;
     }
 
-    div.MimotoCMS_forms_FormComponent-content--no-description {
+    div.MimotoCMS_forms_FormField-content--no-description {
         padding: 0 percentage(1 / 3) 0 0;
     }
 
-        div.MimotoCMS_forms_FormComponent-element {
+        div.MimotoCMS_forms_FormField-element {
             width: percentage(2 / 3);
             min-width: 400px;
             flex: 1 1 auto;
         }
 
-            div.MimotoCMS_forms_FormComponent-element-container {
+            div.MimotoCMS_forms_FormField-element-container {
                 display: flex;
                 margin-bottom: 10px;
                 align-items: center;
             }
 
-            div.MimotoCMS_forms_FormComponent-element-container--has-prefix {
+            div.MimotoCMS_forms_FormField-element-container--has-prefix {
                 margin-bottom: 0;
 
                 input.MimotoCMS_forms_input_Textline {
@@ -106,7 +106,7 @@ div.MimotoCMS_forms_FormComponent--has-error {
                 }
             }
 
-                span.MimotoCMS_forms_FormComponent-element-prefix {
+                span.MimotoCMS_forms_FormField-element-prefix {
                     display: block;
                     height: 50px;
                     margin-bottom: 10px;
@@ -125,7 +125,7 @@ div.MimotoCMS_forms_FormComponent--has-error {
                     order: 1;
                 }
 
-                label.MimotoCMS_forms_FormComponent-element-label {
+                label.MimotoCMS_forms_FormField-element-label {
                     display: block;
                     padding: 0 0 0 10px;
                     cursor: pointer;
@@ -135,13 +135,13 @@ div.MimotoCMS_forms_FormComponent--has-error {
                     flex: 0 1 auto;
                 }
 
-            p.MimotoCMS_forms_FormComponent-element-error {
+            p.MimotoCMS_forms_FormField-element-error {
                 margin: 0 0 10px;
                 font-size: rem-calc(13px);
                 color: $fuzzy-wuzzy-brown;
             }
 
-        p.MimotoCMS_forms_FormComponent-description {
+        p.MimotoCMS_forms_FormField-description {
             position: relative;
             width: percentage(1 / 3);
             min-width: 200px;
@@ -163,7 +163,7 @@ div.MimotoCMS_forms_FormComponent--has-error {
             }
         }
 
-            a.MimotoCMS_forms_FormComponent-description-link {
+            a.MimotoCMS_forms_FormField-description-link {
                 text-decoration: underline;
                 color: rgba($black, 5);
             }

@@ -104,7 +104,7 @@ module.exports.prototype = {
 
     _broadcastChange: function(elInput)
     {
-        elInput.dispatchEvent(new Event('changed'));
+        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
     }
 
 }

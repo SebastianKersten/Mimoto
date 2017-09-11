@@ -4,7 +4,7 @@
 namespace Mimoto\User;
 
 // Mimoto classes
-use Mimoto\Core\CoreConfig;
+use Mimoto\Mimoto;
 
 
 /**
@@ -14,8 +14,6 @@ use Mimoto\Core\CoreConfig;
  */
 class UserService
 {
-
-    const USER_ID = 69;
 
 
     // ----------------------------------------------------------------------------
@@ -44,7 +42,7 @@ class UserService
     public function getUserId()
     {
         // send
-        return $sUserId = self::USER_ID;
+        return Mimoto::service('session')->currentUser()->getId();
     }
     
     /**
@@ -53,7 +51,7 @@ class UserService
     public function getUserPublicKey($sExtraSaltyHashThing)
     {
         // example
-        $sUserId = self::USER_ID;
+        $sUserId = $this->getUserId();
         $sPublicKey = md5($sExtraSaltyHashThing.md5($sUserId.'#salthashything')); // #todo get from config file
 
         // send

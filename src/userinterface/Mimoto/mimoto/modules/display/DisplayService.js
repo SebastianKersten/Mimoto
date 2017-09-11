@@ -678,8 +678,6 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_FORM:
 
-                        console.warn('DIRECTIVE_MIMOTO_FORM', directive.element);
-
                         // init
                         let form = new Form(directive.element);
 
@@ -689,13 +687,6 @@ module.exports.prototype = {
                         // add
                         aForms.push(form);
 
-                        // 1. create form
-                        // 2. add input fields
-                        // 3. add submit (indien erin, dan meteen, indien erbuiten met naam, search form, open form)
-
-                        // if (element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_CONNECTION))
-
-
                         break;
 
 
@@ -703,6 +694,7 @@ module.exports.prototype = {
 
                         // add
                         aSubmitButtonDirectives.push(directive);
+
                         break;
 
                     // --- display directives

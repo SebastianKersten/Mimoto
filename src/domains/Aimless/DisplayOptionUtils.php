@@ -178,7 +178,7 @@ class DisplayOptionUtils
                 if (is_string($xValues[$sKey]) && is_string($sValue)) $aValues[] = $sValue;
             }
         }
-        else if (is_string($xValues))
+        else
         {
             $aValues[] = $xValues;
         }

@@ -112,7 +112,7 @@ module.exports.prototype = {
             let formField = new FormField(elFormField);
 
             // c. configure
-            elFormField.addEventListener(formField.CHANGED, this._onFormFieldChanged.bind(this), true);
+            elFormField.addEventListener('onMimotoFormfieldChanged', this._onFormFieldChanged.bind(this), true);
 
             // d. store
             this._aFormFields.push(formField);
@@ -263,7 +263,7 @@ module.exports.prototype = {
         // --- execute actions
 
 
-        if (this._actions.response)
+        if (this._actions && this._actions.response)
         {
             if (this._actions.response.onSuccess)
             {

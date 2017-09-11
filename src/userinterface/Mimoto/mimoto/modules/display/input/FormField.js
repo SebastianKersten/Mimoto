@@ -8,14 +8,12 @@
 
 
 // Mimoto input classes
-let Textline = require('./fields/Textline');
-let Radiobutton = require('./fields/Radiobutton');
+let Textline = require('../../../../../MimotoCMS/components/forms/input/Textline/Textline');
+let Radiobutton = require('../../../../../MimotoCMS/components/forms/input/Radiobutton/Radiobutton');
+let Checkbox = require('../../../../../MimotoCMS/components/forms/input/Checkbox/Checkbox');
 
 
 module.exports = function(elFormField) {
-
-    // events
-    this.CHANGED = 'changed';
 
     // start
     this.__construct(elFormField);
@@ -178,6 +176,7 @@ module.exports.prototype = {
         {
             case '_Mimoto_form_input_textline': this._input = new Textline(this._aInputElements[0]); break;
             case '_Mimoto_form_input_radiobutton': this._input = new Radiobutton(this._aInputElements); break;
+            case '_Mimoto_form_input_checkbox': this._input = new Checkbox(this._aInputElements[0]); break;
             default:
 
                 // check if any custom field registered in root
@@ -198,7 +197,7 @@ module.exports.prototype = {
             let elInput = this._aInputElements[nInputElementIndex];
 
             // configure
-            elInput.addEventListener(this.CHANGED, function(e) { this._handleInputChange(); }.bind(this));
+            elInput.addEventListener('onMimotoInputChanged', function(e) { this._handleInputChange(); }.bind(this));
         }
 
     },
@@ -212,6 +211,10 @@ module.exports.prototype = {
         //classRoot._validateInputField(field);
 
 
+        // filter on actual change or changes pending
+        if (this._bHasPendingChanges && this._input.getValue() === this._pendingValue) return;
+        if (!this._bHasPendingChanges && this._input.getValue() === this._persistantValue) return;
+
         // toggle
         this._bHasChanges = true;
 
@@ -222,7 +225,7 @@ module.exports.prototype = {
     _broadcastChanges: function()
     {
         // broadcast
-        this._elFormField.dispatchEvent(new Event(this.CHANGED));
+        this._elFormField.dispatchEvent(new Event('onMimotoFormfieldChanged'));
     },
 
 

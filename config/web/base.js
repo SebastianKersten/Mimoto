@@ -7,8 +7,8 @@ module.exports = function() {
     return {
         context: resolve(__dirname, './../../src/userinterface/'), // The context is an absolute string to the directory that contains the entry files.
         entry: { // The entry object is where webpack looks to start building the bundle
-            'js/mimoto.cms.js': ['babel-polyfill', './app/javascript/mimoto.cms.js'],
-            'js/mimoto.js': './app/javascript/mimoto.js',
+            'js/mimoto.cms.js': ['babel-polyfill', './MimotoCMS/mimoto.cms.js'],
+            'js/mimoto.js': './Mimoto/mimoto.js',
             'js/publisher.js': './publisher/base.js',
             'css/mimoto.cms.css': './app/scss/mimoto.cms.scss',
             'css/publisher.css': './app/scss/publisher.scss',

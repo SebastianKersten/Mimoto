@@ -1,4 +1,4 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "multiselect"} %}
+{% embed "MimotoCMS/components/forms/FormField.twig" with {"type": "multiselect"} %}
     {% block form_component %}
         {{ Mimoto.data('options', '_Mimoto_form_input_multiselect--option', { customValues: { value: Mimoto.value(), fieldId: Mimoto.meta('id'), input: Mimoto.input() }}) }}
     {% endblock %}

@@ -10,14 +10,10 @@ div.MimotoCMS_pages_forms_FormDetail_Structure {
 div.MimotoCMS_pages_forms_FormDetail_Structure__meta {
 
     padding: 10px 15px 15px 15px;
-    margin-bottom: 5px;
     background-color: $offwhite;
+    margin-bottom: 5px;
     display: flex;
     flex-wrap: nowrap;
-
-    & a {
-        color: $tower-gray;
-    }
 
     &>div.MimotoCMS_pages_forms_FormDetail_Structure__meta_info {
         flex-grow: 5;
@@ -25,13 +21,18 @@ div.MimotoCMS_pages_forms_FormDetail_Structure__meta {
 
     &>div.MimotoCMS_pages_forms_FormDetail_Structure__meta_menu {
         flex-grow: 1;
-        text-align: right;
         padding-top: 5px;
+        text-align: right;
     }
 
     div.MimotoCMS_pages_forms_FormDetail_Structure__formname {
         font-size: 24px;
         font-weight: bold;
+    }
+
+    div.MimotoCMS_pages_forms_FormDetail_Structure__savetype {
+        color: $tower-gray;
+        font-style: italic;
     }
 }
 
@@ -49,17 +50,6 @@ div.MimotoCMS_pages_forms_FormDetail_Structure__usage {
 
 div.MimotoCMS_pages_forms_FormDetail_Structure__fields_empty {
 
-    display: flex;
-    flex-wrap: nowrap;
-
-    &>div:first-child {
-        flex-grow: 5;
-    }
-
-    &>div:last-child {
-        flex-grow: 1;
-        text-align: right;
-    }
 }
 
 div.MimotoCMS_pages_forms_FormDetail_Structure__fields_menu {

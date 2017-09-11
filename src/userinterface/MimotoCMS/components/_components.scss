@@ -2,26 +2,8 @@
 @import '../modules/modules';
 @import '../MimotoCMS';
 
-@import 'forms/FormComponent';
+@import 'forms/FormField';
 @import 'forms/Form';
-
-@import 'forms/input/Checkbox/Checkbox';
-@import 'forms/input/DatePicker/DatePicker';
-@import 'forms/input/MultiSelect/MultiSelect';
-@import 'forms/input/Dropdown/Dropdown';
-@import 'forms/input/Image/Image';
-@import 'forms/input/List/List';
-@import 'forms/input/List/ListItem/ListItem';
-@import 'forms/input/RadioButton/RadioButton';
-@import 'forms/input/Textblock/Textblock';
-@import 'forms/input/Textline/Textline';
-@import 'forms/input/Video/Video';
-
-@import 'forms/output/Title/Title';
-
-@import 'forms/layout/GroupStart/GroupStart';
-@import 'forms/layout/GroupEnd/GroupEnd';
-@import 'forms/layout/Divider/Divider';
 
 @import 'pages/entities/Entities';
 @import 'pages/forms/Forms';

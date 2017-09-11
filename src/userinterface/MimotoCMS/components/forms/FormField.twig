@@ -1,0 +1,28 @@
+<div class="MimotoCMS_forms_FormField" {{ Mimoto.field() }} {{ Mimoto.realtime() }}>
+
+    <div class="MimotoCMS_forms_FormField-header">
+        <label for="" class="MimotoCMS_forms_FormField-title">{{ Mimoto.data('label') }} {# {% if Mimoto.data('value.optional') %}<span class="MimotoCMS_forms_FormField-title-information">(optioneel)</span>{% endif %}#}<svg class="js-error-icon MimotoCMS_forms_FormField-title-icon"><use xlink:href=""></use></svg></label>
+        {% if button|default(false) %}
+            <div class="MimotoCMS_forms_FormField-button" {{ buttonClass|default('') }}">
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label: buttonLabel|default(''), icon:buttonIcon|default(''), types:['small', 'secondary'], onclick:buttonOnClick|default('') }) }}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="MimotoCMS_forms_FormField-content {% if not Mimoto.data('description')|default('') %}MimotoCMS_forms_FormField-content--no-description{% endif %}">
+
+        <div class="MimotoCMS_forms_FormField-element">
+
+            {% block form_component %}{% endblock %}
+
+            <p class="MimotoCMS_forms_FormField-element-error" {{ Mimoto.error() }}></p>
+
+        </div>
+
+        {% if Mimoto.data('description')|default('') %}
+            <p class="MimotoCMS_forms_FormField-description">{{ Mimoto.data('description') }}</p>
+        {% endif %}
+
+    </div>
+</div>
+

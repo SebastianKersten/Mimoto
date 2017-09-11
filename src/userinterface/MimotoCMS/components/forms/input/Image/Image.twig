@@ -1,7 +1,7 @@
 {% set sImagefieldId = Mimoto.meta('type')~"."~Mimoto.meta('id') %}
 {% set sFlatImageFieldId = Mimoto.meta('type')~Mimoto.meta('id') %}
 
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonClass:'js-'~sFlatImageFieldId~'-image-upload-trigger' } %}
+{% embed "MimotoCMS/components/forms/FormField.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonClass:'js-'~sFlatImageFieldId~'-image-upload-trigger' } %}
 
     {% block form_component %}
         <div id="{{ Mimoto.meta('type')~"."~Mimoto.meta('id') }}">

@@ -1,4 +1,4 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "list", button:true, buttonLabel:'Add', buttonIcon:'plus', buttonOnClick:"MimotoCMS.formFieldListItemAdd('"~Mimoto.meta('type')~"', '"~Mimoto.meta('id')~"', '"~Mimoto.fieldId()~"')", target:'page' } %}
+{% embed "MimotoCMS/components/forms/FormField.twig" with {"type": "list", button:true, buttonLabel:'Add', buttonIcon:'plus', buttonOnClick:"MimotoCMS.formFieldListItemAdd('"~Mimoto.meta('type')~"', '"~Mimoto.meta('id')~"', '"~Mimoto.fieldId()~"')", target:'page' } %}
 
     {% block form_component %}
 

@@ -1,12 +1,12 @@
-{% embed "MimotoCMS/components/forms/FormComponent.twig" with {"type": "checkbox"} %}
+{% embed "MimotoCMS/components/forms/FormField.twig" %}
     {% block form_component %}
-        <div class="MimotoCMS_forms_FormComponent-element-container">
+        <div class="MimotoCMS_forms_FormField-element-container">
             <div class="MimotoCMS_forms_input_Checkbox-container">
                 {% set sInputId = Mimoto.meta('type')~'.'~Mimoto.meta('id') %}
-                <input {{ Mimoto.input() }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_Checkbox js-checkbox" {% if Mimoto.value() %}checked{% endif %} />
+                <input {{ Mimoto.input() }} id="{{ sInputId }}" type="checkbox" class="MimotoCMS_forms_input_Checkbox" {% if Mimoto.value() %}checked{% endif %} />
                 <svg class="MimotoCMS_forms_input_Checkbox-icon"><use xlink:href="#ico-checkmark"></use></svg>
             </div>
-            <label for="{{ sInputId }}" class="MimotoCMS_forms_FormComponent-element-label">{{ Mimoto.data('option') }}</label>
+            <label for="{{ sInputId }}" class="MimotoCMS_forms_FormField-element-label">{{ Mimoto.data('option') }}</label>
         </div>
     {% endblock %}
 {% endembed %}

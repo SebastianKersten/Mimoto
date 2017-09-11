@@ -3,9 +3,10 @@
         {{ Mimoto.form() }}
     </div>
     <div class="MimotoCMS_forms_Form-menu">
+
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:"Cancel", types:['text'], onclick:"Mimoto.closePopup();" }) }}
-        <span {{ Mimoto.submit() }}>
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:"Ok" }) }}
-        </span>
+
+        {#{% if Mimoto.data('manualSave') %}ManualSave{% endif %}#}
+        <span {{ Mimoto.submit() }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:"Ok" }) }}</span>
     </div>
 </div>

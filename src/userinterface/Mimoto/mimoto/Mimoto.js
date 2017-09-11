@@ -186,45 +186,6 @@ module.exports.prototype = {
         layer_popup.classList.remove('Mimoto_CoreCSS_hidden');
 
 
-
-
-
-        // $.ajax({
-        //     url: sURL,
-        //     dataType: 'html',
-        //     method: (postData) ? 'post' : 'get',
-        //     data: postData,
-        //     success: function(data, textStatus, jqXHR) {
-        //
-        //         //jQuery(selecteur).html(jqXHR.responseText);
-        //         var response = jQuery(jqXHR.responseText);
-        //         //var responseScript = response.filter("script");
-        //         //jQuery.each(responseScript, function(idx, val) { eval(val.text); } );
-        //
-        //         //popup_content.innerHTML = reponse;
-        //         $('#Mimoto_popup_content').html(data);
-        //
-        //         /*// focus primary input
-        //          var primaryInput = document.getElementById('form_field_name');
-        //          if (primaryInput)
-        //          {
-        //          primaryInput.focus();
-        //          var val = primaryInput.value;
-        //          primaryInput.value = '';
-        //          primaryInput.value = val;
-        //          }*/
-        //
-        //         // reset scroll
-        //         layer_popup.scrollTop = 0;
-        //
-        //         // update
-        //         Mimoto.utils.parseRequestQueue();
-        //     }
-        // });
-
-
-
-
         // init
         let request = new XMLHttpRequest();
 

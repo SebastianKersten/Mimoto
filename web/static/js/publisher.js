@@ -60,13 +60,13 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "23c62330f4d0dfd0d0eb";
+/******/ 	__webpack_require__.h = "5796ec0cf75f8580c01e";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 520);
+/******/ 	return __webpack_require__(__webpack_require__.s = 521);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -3159,38 +3159,12 @@ module.exports.EventEmitter = EventEmitter;
 
 /***/ }),
 
-/***/ 520:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(54);
-module.exports = __webpack_require__(521);
-
-
-/***/ }),
-
 /***/ 521:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/**
- * Mimoto.Publisher - Demo - How to build a publication platform
- *
- * @author Sebastian Kersten (@supertaboo)
- */
+__webpack_require__(54);
+module.exports = __webpack_require__(522);
 
-
-
-// Publisher demo classes
-
-var Publisher = __webpack_require__(522);
-
-/**
- * Auto run
- */
-document.addEventListener('DOMContentLoaded', function () {
-  // init
-  window.Publisher = new Publisher();
-}, false);
 
 /***/ }),
 
@@ -3206,10 +3180,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+// Publisher demo classes
+
+var Publisher = __webpack_require__(523);
+
+/**
+ * Auto run
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  // init
+  window.Publisher = new Publisher();
+}, false);
+
+/***/ }),
+
+/***/ 523:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto.Publisher - Demo - How to build a publication platform
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
 // Mimoto classes
 
-var Article = __webpack_require__(523);
-var Editor = __webpack_require__(524);
+var Article = __webpack_require__(524);
+var Editor = __webpack_require__(525);
 
 module.exports = function () {
 
@@ -3273,7 +3273,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 523:
+/***/ 524:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3388,7 +3388,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 524:
+/***/ 525:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

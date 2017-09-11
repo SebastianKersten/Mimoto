@@ -99,7 +99,7 @@ class AimlessForm extends AimlessComponent
             'data-mimoto-form-action="'.$sAction.'" '.
             'data-mimoto-form-method="'.$sMethod.'" '.
             'data-mimoto-form-instanceid="'.$formFieldValues->entityId.'" '.
-            'data-mimoto-form-publickey="'.Mimoto::service('users')->getUserPublicKey(json_encode($formFieldValues)).'" '.
+            'data-mimoto-form-publickey="'.Mimoto::service('input')->generatePublicKey($formFieldValues).'" '.
             'data-mimoto-form-actions="'.$sFormActions.'" '.
             'data-mimoto-form-manualsave="'.(($form->get('manualSave') == 1) ? 'true' : 'false').'">';
 
