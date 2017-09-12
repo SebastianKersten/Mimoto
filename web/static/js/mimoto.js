@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "45081a3feda3707befb9";
+/******/ 	__webpack_require__.h = "e649402dbf57f73bc724";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -37655,19 +37655,15 @@ module.exports.prototype = {
         // cleanup
         this._elTemplate.parentNode.removeChild(this._elTemplate);
 
-        // // configure
-        // this._dropzone.on('removedfile', function (file)
-        // {
-        //     this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview');
-        //     this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview-image');
-        //
-        //     // set value
-        //     this.setValue(null);
-        //
-        // }.bind(this));
-
         this._dropzone.on('addedfile', function (file) {
-            this._dropzone.removeAllFiles();
+            // remove all previous files
+            for (var nFileIndex = 0; nFileIndex < this._dropzone.files.length; nFileIndex++) {
+                // register
+                var registeredFile = this._dropzone.files[nFileIndex];
+
+                // verify
+                if (registeredFile !== file) this._dropzone.removeFile(registeredFile);
+            }
 
             this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--show-preview');
             this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
@@ -37679,8 +37675,6 @@ module.exports.prototype = {
         this._dropzone.on('complete', function (file) {
 
             Mimoto.warn('File complete', file);
-
-            //this._dropzone.removeAllFiles();
         }.bind(this));
 
         this._dropzone.on('thumbnail', function (file) {
