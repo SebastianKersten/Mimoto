@@ -190,8 +190,10 @@ class ContentController
         if (empty($eEntity)) return $app->redirect('/mimoto.cms/content/'.$nContentId);
 
 
+        $eForm = Mimoto::service('input')->getFormByName($sFormName);
+
         // 6. create page containing a form
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form', $eForm);
 
         // 7. setup form
         $component->addForm(

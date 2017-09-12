@@ -9,10 +9,10 @@ module.exports = function() {
         entry: { // The entry object is where webpack looks to start building the bundle
             'js/mimoto.cms.js': ['babel-polyfill', './MimotoCMS/mimoto.cms.js'],
             'js/mimoto.js': './Mimoto/mimoto.js',
-            'js/publisher.js': './publisher/base.js',
-            'css/mimoto.cms.css': './app/scss/mimoto.cms.scss',
-            'css/publisher.css': './app/scss/publisher.scss',
-            'css/thetimeline.css': './app/scss/thetimeline.scss'
+            'js/publisher.js': './publisher/publisher.js',
+            'css/mimoto.cms.css': './MimotoCMS/mimoto.cms.scss',
+            'css/publisher.css': './publisher/publisher.scss',
+            'css/thetimeline.css': './thetimeline/thetimeline.scss'
         },
         output: {
             path: resolve(__dirname, './../../web/static'),

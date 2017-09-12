@@ -1,28 +1,7 @@
-@import '../layouts/layouts';
-@import '../modules/modules';
-@import '../MimotoCMS';
+@import './pages/pages';
+@import './interface/Interface';
 
-@import 'forms/FormField';
-@import 'forms/Form';
+@import './forms/FormField';
+@import './forms/Form';
 
-@import 'pages/entities/Entities';
-@import 'pages/forms/Forms';
-
-@import 'pages/notifications/Notification/Notification';
-@import 'pages/notifications/NotificationSmall/NotificationSmall';
-@import 'pages/notifications/NotificationOverview/NotificationOverview';
-@import 'pages/notifications/NotificationOverviewSmall/NotificationOverviewSmall';
-
-@import 'interface/Interface';
-@import 'pages/content/Content';
-@import 'pages/datasets/Datasets';
-@import 'pages/selections/Selections';
-@import 'pages/configuration/Configuration';
-@import 'pages/users/Users';
-@import 'pages/components/Components';
-@import 'pages/api/API';
-@import 'pages/pages/Pages';
-
-@import 'selection/SelectableItem/SelectableItem';
-
-@import '~quill/dist/quill.bubble';
+@import './selection/SelectableItem/SelectableItem';

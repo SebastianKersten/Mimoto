@@ -1,0 +1,9 @@
+@import './../../../config/web/common/scss/base';
+
+@import "Timeline/Timeline";
+@import "Moment/Moment";
+
+body.TheTimeline {
+    margin: 0;
+    padding: 0;
+}

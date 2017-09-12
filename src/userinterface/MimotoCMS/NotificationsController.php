@@ -42,27 +42,6 @@ class NotificationsController
         return $page->render();
     }
 
-    public function closeNotification(Application $app, $nNotificationId)
-    {
-        // load
-        $eNotification = Mimoto::service('data')->get(CoreConfig::MIMOTO_NOTIFICATION, $nNotificationId);
-
-        // validate
-        if (empty($eNotification) || $eNotification->getValue('state') != 'open') return new Response('Notification already closed');;
-
-        // change state
-        $eNotification->setValue('state', 'closed');
-
-        // store
-        Mimoto::service('data')->store($eNotification);
-
-        // cleanup (added - temp- for keeping the database empty)
-        Mimoto::service('data')->delete($eNotification);
-
-        // send
-        return Mimoto::service('messages')->response('Notification closed');
-    }
-
     public function closeAllNotifications(Application $app)
     {
         // 1. load

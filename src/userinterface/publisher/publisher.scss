@@ -1,9 +1,11 @@
+@import './../../../config/web/common/scss/base';
+
 @import 'Article/Article';
 @import 'Author/Author';
 @import 'Feed/Feed';
 @import 'FeedItem/FeedItem';
 @import 'FeedItem/FeedItemExplainer';
-@import 'Comment/Comment';
+@import 'Discussion/Discussion';
 @import 'People/People';
 
 
