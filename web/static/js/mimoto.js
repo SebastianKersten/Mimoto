@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "e649402dbf57f73bc724";
+/******/ 	__webpack_require__.h = "9ca27a5f78c642c3b6bb";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -37679,7 +37679,6 @@ module.exports.prototype = {
 
         this._dropzone.on('thumbnail', function (file) {
             this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--show-preview-image');
-            //this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
         }.bind(this));
 
         this._dropzone.on('error', function (file, errorMessage, xhrObject) {
@@ -37694,9 +37693,6 @@ module.exports.prototype = {
 
             // show
             this._elRemoveButton.classList.remove('Mimoto_CoreCSS_hidden');
-
-            // hide
-            //this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
         }.bind(this));
 
         this._elRemoveButton.addEventListener('click', function () {
@@ -37708,25 +37704,17 @@ module.exports.prototype = {
             this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview-image');
 
             // hide
-            this._dropzone.removeAllFiles();
             this._elRemoveButton.classList.add('Mimoto_CoreCSS_hidden');
-            this._elPersistent.setAttribute('src', '');
             this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+
+            // clear
+            this._dropzone.removeAllFiles();
+            this._elPersistent.setAttribute('src', '');
         }.bind(this));
 
         if (this.getValue()) {
-            Mimoto.log('Persistent value found');
-
-            Mimoto.utils.callAPI({
-                type: 'get',
-                url: '/mimoto/media/source/' + this._elInput.getAttribute('data-mimoto-form-field-input'),
-                success: function (resultData, resultStatus, resultSomething) {
-                    if (resultData && resultData.file_id) {
-                        // setup
-                        this._elPersistent.setAttribute('src', resultData.full_path);
-                    }
-                }.bind(this)
-            });
+            // load
+            this._loadPersistentImage();
         } else {
             this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
         }
@@ -37743,10 +37731,10 @@ module.exports.prototype = {
     },
 
     setValue: function setValue(value, bDontBroadcastOnInitialSet) {
+        // update
+        this._elInput.value = value;
 
-        this._elInput.value = value; // #todo show image?
-
-
+        // broadcast
         if (!bDontBroadcastOnInitialSet) this._broadcastChange();
     },
 
@@ -37754,6 +37742,19 @@ module.exports.prototype = {
     // --- Private methods --------------------------------------------------------
     // ----------------------------------------------------------------------------
 
+
+    _loadPersistentImage: function _loadPersistentImage() {
+        Mimoto.utils.callAPI({
+            type: 'get',
+            url: '/mimoto/media/source/' + this._elInput.getAttribute('data-mimoto-form-field-input'),
+            success: function (resultData, resultStatus, resultSomething) {
+                if (resultData && resultData.file_id) {
+                    // setup
+                    this._elPersistent.setAttribute('src', resultData.full_path);
+                }
+            }.bind(this)
+        });
+    },
 
     _broadcastChange: function _broadcastChange() {
         this._elInput.dispatchEvent(new Event('onMimotoInputChanged'));
