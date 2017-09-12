@@ -57,6 +57,7 @@ class AimlessInput extends AimlessComponent
             // register
             $eValidationRule = $aValidationRules[$nValidationRuleIndex];
 
+            // compose
             $aValidation[] = (object) array(
                 'type' => $eValidationRule->get('type'),
                 'value' => $eValidationRule->get('value'),

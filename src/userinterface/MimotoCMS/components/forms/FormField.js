@@ -12,6 +12,7 @@ let Textline = require('./input/Textline/Textline');
 let Radiobutton = require('./input/Radiobutton/Radiobutton');
 let Checkbox = require('./input/Checkbox/Checkbox');
 let MultiSelect = require('./input/MultiSelect/MultiSelect');
+let Image = require('./input/Image/Image');
 
 
 module.exports = function(elFormField) {
@@ -181,6 +182,7 @@ module.exports.prototype = {
             case '_Mimoto_form_input_radiobutton': this._input = new Radiobutton(this._aInputElements); break;
             case '_Mimoto_form_input_checkbox': this._input = new Checkbox(this._aInputElements[0]); break;
             case '_Mimoto_form_input_multiselect': this._input = new MultiSelect(this._aInputElements); break;
+            case '_Mimoto_form_input_image': this._input = new Image(elFormField, this._aInputElements[0]); break;
             default:
 
                 // check if any custom field registered in root

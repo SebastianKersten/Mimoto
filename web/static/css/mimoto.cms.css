@@ -1617,6 +1617,9 @@ div.MimotoCMS_forms_input_ImageUpload--show-preview-image img.MimotoCMS_forms_in
 div.MimotoCMS_forms_input_ImageUpload--show-preview-image div.MimotoCMS_forms_input_ImageUpload-trigger {
   visibility: hidden; }
 
+div.MimotoCMS_forms_input_ImageUpload-fulltrigger {
+  cursor: pointer; }
+
 div.MimotoCMS_forms_input_ImageUpload-trigger {
   padding: 120px 20px;
   cursor: pointer; }

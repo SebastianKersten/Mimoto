@@ -179,9 +179,9 @@ class Mimoto
 
         // register
         $app->post('/mimoto/form/{sFormName}', 'Mimoto\\api\\OutputController::parseForm');
-        $app->post('/Mimoto.Aimless/validate/{nValidationId}', 'Mimoto\\api\\OutputController::validateFormField');
-        $app->post('/Mimoto.Aimless/upload/image', 'Mimoto\\api\\OutputController::uploadImage');
-        $app->post('/Mimoto.Aimless/upload/video', 'Mimoto\\api\\OutputController::uploadVideo');
+        $app->post('/mimoto/form/field/validate/{nValidationId}', 'Mimoto\\api\\OutputController::validateFormField');
+        $app->post('/mimoto/media/upload/image', 'Mimoto\\api\\OutputController::uploadImage');
+        $app->post('/mimoto/media/upload/video', 'Mimoto\\api\\OutputController::uploadVideo');
 
         // new -> replacement for '/Mimoto.Aimless/data' and '/Mimoto.Aimless/wrapper' #todo replace
         $app->post('/mimoto.data/render', 'Mimoto\\api\\OutputController::render');
@@ -190,7 +190,7 @@ class Mimoto
         $app->post('/Mimoto.Aimless/realtime/collaboration', 'Mimoto\\api\\OutputController::authenticateUser');
 
 
-        $app->get('/Mimoto.Aimless/media/source/{sPropertySelector}', 'Mimoto\\api\\OutputController::getMediaSource');
+        $app->get('/mimoto/media/source/{sPropertySelector}', 'Mimoto\\api\\OutputController::getMediaSource');
 
 
 

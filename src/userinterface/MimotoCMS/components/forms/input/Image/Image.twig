@@ -1,30 +1,32 @@
 {% set sImagefieldId = Mimoto.meta('type')~"."~Mimoto.meta('id') %}
 {% set sFlatImageFieldId = Mimoto.meta('type')~Mimoto.meta('id') %}
 
-{% embed "MimotoCMS/components/forms/FormField.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonClass:'js-'~sFlatImageFieldId~'-image-upload-trigger' } %}
+{% embed "MimotoCMS/components/forms/FormField.twig" with {"type": "image", button:true, buttonLabel:'Upload image', buttonIcon:'', buttonAttribute:'data-mimoto-form-input-image-trigger' } %}
 
     {% block input %}
-        <div id="{{ Mimoto.meta('type')~"."~Mimoto.meta('id') }}">
-            <div class="MimotoCMS_forms_input_ImageUpload js-{{ sFlatImageFieldId }}-image-upload">
-                <div class="MimotoCMS_forms_input_ImageUpload-trigger js-{{ sFlatImageFieldId }}-image-upload-trigger">
+        <div data-mimoto-form-input-image-trigger class="MimotoCMS_forms_input_ImageUpload-fulltrigger">
+            <div data-mimoto-form-input-image-upload class="MimotoCMS_forms_input_ImageUpload">
+                <div class="MimotoCMS_forms_input_ImageUpload-trigger">
                     <div class="MimotoCMS_forms_input_ImageUpload-trigger-button"><svg class="MimotoCMS_forms_input_ImageUpload-button-trigger-icon"><use xlink:href="#ico-plus"></use></svg></div>
                     <p class="MimotoCMS_forms_input_ImageUpload-trigger-text">Click here or drop an image</p>
                 </div>
 
-                <img id="js-{{ sFlatImageFieldId }}-previewimage" class="MimotoCMS_forms_input_ImageUpload-new-preview-image" src="">
-
-                <div class="MimotoCMS_forms_input_ImageUpload-preview js-{{ sFlatImageFieldId }}-image-upload-preview">
-                    <div class="MimotoCMS_forms_input_ImageUpload-preview-template js-{{ sFlatImageFieldId }}-image-upload-preview-template">
+                <div data-mimoto-form-input-image-preview class="MimotoCMS_forms_input_ImageUpload-preview">
+                    <div data-mimoto-form-input-image-template class="MimotoCMS_forms_input_ImageUpload-preview-template">
                         <img data-dz-thumbnail class="MimotoCMS_forms_input_ImageUpload-preview-image" />
                         <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progress">
-                            <div class="MimotoCMS_forms_input_ImageUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
+                            <div data-dz-uploadprogress class="MimotoCMS_forms_input_ImageUpload-preview-upload-progess-bar"></div>
                         </div>
                     </div>
                 </div>
+
+                <img data-mimoto-form-input-image-persistent class="MimotoCMS_forms_input_ImageUpload-new-preview-image" src="">
             </div>
-            <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}" class=".js-{{ sFlatImageFieldId }}-image-upload-value"/>
-            <div id="image-upload-delete-{{ sFlatImageFieldId }}" class="MimotoCMS_forms_input_ImageUpload-delete {% if Mimoto.value() is empty %}hidden{% endif %}">Remove image</div>
+
+            <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}"/>
+
         </div>
+        <div data-mimoto-form-input-image-remove class="MimotoCMS_forms_input_ImageUpload-delete {% if Mimoto.value() is empty %}hidden{% endif %}">Remove image</div>
     {% endblock %}
 
 {% endembed %}

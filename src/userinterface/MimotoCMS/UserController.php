@@ -104,7 +104,7 @@ class UserController
             CoreConfig::MIMOTO_USER,
             $eUser,
             [
-                'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/account']]
+//                'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/account']]
             ]
         );
 

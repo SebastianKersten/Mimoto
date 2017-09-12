@@ -1,5 +1,5 @@
 /**
- * Mimoto - InputField
+ * Mimoto - InputField - Image
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -7,35 +7,29 @@
 'use strict';
 
 
-// Dropzone classes
-var Dropzone = require('dropzone');
+let Dropzone = require('dropzone');
 
 
-module.exports = function(sFieldSelector, elInputField) {
+module.exports = function(elFormField, elInput) {
 
     // start
-    this.__construct(sFieldSelector, elInputField);
+    this.__construct(elFormField, elInput);
 };
 
 module.exports.prototype = {
 
-
-    // form field directives
-    DIRECTIVE_MIMOTO_FORM_FIELD_TYPE:  'data-mimoto-form-field-type',
-    DIRECTIVE_MIMOTO_FORM_FIELD_INPUT: 'data-mimoto-form-field-input',
-    DIRECTIVE_MIMOTO_FORM_FIELD_ERROR: 'data-mimoto-form-field-error',
-
-    // settings
-    _sType: null,
-    _sFieldSelector: null,
+    // dom
+    _elFormField: null,
+    _elInput: null,
 
     // elements
-    _elInput: null,
-    _elError: null,
+    _elTemplate: null,
+    _elPreview: null,
+    _elPersistent: null,
+    _elRemoveButton: null,
 
-    // state
-    _bHasChanged: false,
-    _bHasPendingChanges: false,
+    // utils
+    _dropzone: null,
 
 
 
@@ -47,13 +41,135 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function(sFieldSelector, elInputField)
+    __construct: function(elFormField, elInput)
     {
         // store
-        this._sFieldSelector = sFieldSelector;
+        this._elFormField = elFormField;
+        this._elInput = elInput;
 
-        // parse
-        this._parseInputField(elInputField);
+        // register
+        this._elTemplate = elFormField.querySelector('[data-mimoto-form-input-image-template]');
+        this._elPreview = elFormField.querySelector('[data-mimoto-form-input-image-preview]');
+        this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-image-persistent]');
+        this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-image-remove]');
+
+
+        // setup
+        this._dropzone = new Dropzone('[data-mimoto-form-input-image-upload]', {
+            url: '/mimoto/media/upload/image',
+            maxFilesize: 1000,
+            parallelUploads: 20,
+            previewTemplate: this._elTemplate.parentNode.innerHTML,
+            thumbnailWidth: 500,
+            thumbnailHeight: null,
+            previewsContainer: this._elPreview,
+            clickable: '[data-mimoto-form-input-image-trigger]'
+        });
+
+        // cleanup
+        this._elTemplate.parentNode.removeChild(this._elTemplate);
+
+
+        // // configure
+        // this._dropzone.on('removedfile', function (file)
+        // {
+        //     this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview');
+        //     this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview-image');
+        //
+        //     // set value
+        //     this.setValue(null);
+        //
+        // }.bind(this));
+
+        this._dropzone.on('addedfile', function (file)
+        {
+            this._dropzone.removeAllFiles();
+
+            this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--show-preview');
+            this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
+
+            // hide persistent
+            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+
+        }.bind(this));
+
+        this._dropzone.on('complete', function (file) {
+
+            Mimoto.warn('File complete', file);
+
+            //this._dropzone.removeAllFiles();
+
+        }.bind(this));
+
+        this._dropzone.on('thumbnail', function (file)
+        {
+            this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--show-preview-image');
+            //this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
+
+        }.bind(this));
+
+        this._dropzone.on('error', function (file, errorMessage, xhrObject)
+        {
+            Mimoto.log('Error on upload', file, errorMessage, xhrObject);
+
+        }.bind(this));
+
+        this._dropzone.on('success', function (file, serverResponse)
+        {
+            Mimoto.log('serverResponse onSuccess', serverResponse);
+
+
+            // connect value
+            this.setValue(serverResponse.file_id);
+
+            // show
+            this._elRemoveButton.classList.remove('Mimoto_CoreCSS_hidden');
+
+            // hide
+            //this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
+
+        }.bind(this));
+
+
+        this._elRemoveButton.addEventListener('click', function() {
+
+            // clear value
+            this.setValue(null);
+
+            this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview');
+            this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview-image');
+
+            // hide
+            this._dropzone.removeAllFiles();
+            this._elRemoveButton.classList.add('Mimoto_CoreCSS_hidden');
+            this._elPersistent.setAttribute('src', '');
+            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+
+        }.bind(this));
+
+
+        if (this.getValue())
+        {
+            Mimoto.log('Persistent value found');
+
+
+            Mimoto.utils.callAPI({
+                type: 'get',
+                url: '/mimoto/media/source/' + this._elInput.getAttribute('data-mimoto-form-field-input'),
+                success: function(resultData, resultStatus, resultSomething)
+                {
+                    if (resultData && resultData.file_id)
+                    {
+                        // setup
+                        this._elPersistent.setAttribute('src', resultData.full_path);
+                    }
+                }.bind(this)
+            });
+        }
+        else
+        {
+            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+        }
     },
 
 
@@ -65,7 +181,17 @@ module.exports.prototype = {
 
     getValue: function()
     {
+        // send
+        return this._elInput.value;
+    },
 
+    setValue: function(value, bDontBroadcastOnInitialSet)
+    {
+
+        this._elInput.value = value; // #todo show image?
+
+
+        if (!bDontBroadcastOnInitialSet) this._broadcastChange();
     },
 
 
@@ -75,137 +201,9 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
-    setupImageField: function(sImageFieldId, sFlatImageFieldId, sInputFieldId, sImagePath, sImageName, nImageSize)
+    _broadcastChange: function()
     {
-        // read
-        var currentForm = this._aForms[this._sCurrentOpenForm];
-
-        // validate
-        if (!currentForm) return;
-
-
-
-        // 1. locate form in dom
-        var $form = $('form[name="' + currentForm.sName + '"]');
-
-        // register
-        var field = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
-        var fieldInput = $("input", field);
-
-        // setup
-        var mediaField = {
-            sImageFieldShowPreviewClass: 'MimotoCMS_forms_input_ImageUpload--show-preview',
-            sImageFieldShowPreviewImageClass: 'MimotoCMS_forms_input_ImageUpload--show-preview-image',
-            domElement: document.getElementById(sImageFieldId),
-            sImageFieldId: sImageFieldId,
-            field: field,
-            fieldInput: fieldInput,
-            $removeButton: $('#image-upload-delete-' + sFlatImageFieldId, $form),
-            $previewImage: $('#js-' + sFlatImageFieldId + '-previewimage', $form)
-        };
-
-        // store
-        this._aMediaFields[sImageFieldId] = mediaField;
-
-
-        // register
-        var classRoot = document;
-
-
-        // preview template
-        var previewNode = document.querySelector('.js-' + sFlatImageFieldId + '-image-upload-preview-template');
-        var template = previewNode.parentNode.innerHTML;
-        previewNode.id = "";
-        previewNode.parentNode.removeChild(previewNode);
-        mediaField.previewTemplate = template;
-
-        // setup
-        mediaField.dropzone = new Dropzone(mediaField.domElement.querySelector('.js-' + sFlatImageFieldId + '-image-upload'), {
-            url: '/Mimoto.Aimless/upload/image',
-            maxFilesize: 1000,
-            parallelUploads: 20,
-            previewTemplate: mediaField.previewTemplate,
-            thumbnailWidth: 500,
-            thumbnailHeight: null,
-            previewsContainer: '.js-' + sFlatImageFieldId + '-image-upload-preview',
-            clickable: '.js-' + sFlatImageFieldId + '-image-upload-trigger'
-        });
-
-
-        mediaField.dropzone.on('removedfile', function (file)
-        {
-            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewClass);
-            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewImageClass);
-
-            // set value
-            fieldInput.val('');
-
-        }.bind(this));
-
-        mediaField.dropzone.on('addedfile', function (file)
-        {
-            mediaField.dropzone.element.classList.add(mediaField.sImageFieldShowPreviewClass);
-        }.bind(this));
-
-        mediaField.dropzone.on('thumbnail', function (file)
-        {
-            mediaField.dropzone.element.classList.add(mediaField.sImageFieldShowPreviewImageClass);
-        }.bind(this));
-
-        mediaField.dropzone.on('error', function (file, errorMessage, xhrObject) {}.bind(this));
-
-        mediaField.dropzone.on('success', function (file, serverResponse)
-        {
-            // connect value
-            fieldInput.val(serverResponse.file_id);
-
-            // show
-            mediaField.$removeButton.removeClass('hidden');
-
-            // hide
-            mediaField.dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
-
-            // save
-            classRoot._startAutosave(currentForm);
-
-        }.bind(this));
-
-
-        mediaField.$removeButton.on('click', function() {
-
-            console.log('click');
-
-            // clear value
-            mediaField.fieldInput.val('');
-
-            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewClass);
-            mediaField.dropzone.element.classList.remove(mediaField.sImageFieldShowPreviewImageClass);
-
-            // hide
-            mediaField.$removeButton.addClass('hidden');
-            mediaField.$previewImage.attr('src', '');
-        });
-
-
-        var classRoot = this;
-
-        Mimoto.utils.callAPI({
-            type: 'get',
-            url: '/Mimoto.Aimless/media/source/' + sInputFieldId,
-            success: function(resultData, resultStatus, resultSomething)
-            {
-                if (resultData && resultData.file_id)
-                {
-                    // register
-                    var image = document.getElementById('js-' + sFlatImageFieldId + '-previewimage');
-
-                    // setup
-                    image.src = resultData.full_path;
-                }
-            }
-        });
-    },
-
-
+        this._elInput.dispatchEvent(new Event('onMimotoInputChanged'));
+    }
 
 }
