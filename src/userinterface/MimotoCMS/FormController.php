@@ -427,15 +427,21 @@ class FormController
         // 3. validate data
         if (empty($eFormField)) return $app->redirect("/mimoto.cms/forms");
 
-        // 4. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+        // 4. request
+        $sFormName = Mimoto::service('input')->getCoreFormByEntityTypeId($eFormField->getEntityTypeName());
+
+        // 5. load
+        $eForm = Mimoto::service('input')->getFormByName($sFormName);
+
+        // 6. create content
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form', $eForm);
 
         // 5. get parent form
         $eParentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eFormField);
 
         // 6. setup content
         $component->addForm(
-            Mimoto::service('input')->getCoreFormByEntityTypeId($eFormField->getEntityTypeName()),
+            $sFormName,
             $eFormField,
             [
                 'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/form/'.$eParentForm->getId().'/view']]
@@ -545,7 +551,7 @@ class FormController
                         $sURL = '/mimoto.cms/formfield/'.$sInputFieldType.'/'.$sInputFieldId.'/add/'.$sPropertySelector.'/'.$option->getId();
 
                         // output
-                        echo '- <a href="#" style="color:#000000;" onclick="Mimoto.popup.replace(\''.$sURL.'\');">'.$option->getValue('label').'</a><br>';
+                        echo '- <a href="#" style="color:#000000;" onclick="Mimoto.popup(\''.$sURL.'\');">'.$option->getValue('label').'</a><br>';
                     }
                 }
 

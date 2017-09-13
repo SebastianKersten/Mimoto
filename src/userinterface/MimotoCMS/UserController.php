@@ -68,7 +68,7 @@ class UserController
                     "url" => '/mimoto.cms/users'
                 ),
                 (object) array(
-                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_USER.'.'.$eUser->getId().'.name">'.$eUser->getValue('name').'</span>',
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_USER.'.'.$eUser->getId().'.firstName">'.$eUser->getValue('firstName').'</span> <span data-mimoto-value="'.CoreConfig::MIMOTO_USER.'.'.$eUser->getId().'.lastName">'.$eUser->getValue('lastName').'</span>',
                     "url" => '/mimoto.cms/user/'.$eUser->getId().'/view'
                 )
             )
@@ -87,7 +87,8 @@ class UserController
         $eUser = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER, $app['session']->get('user')->id);
 
         // temp - update session info to latest info
-        $app['session']->get('user')->name = $eUser->getValue('name');
+        $app['session']->get('user')->firstName = $eUser->getValue('firstName');
+        $app['session']->get('user')->lastName = $eUser->getValue('lastName');
         $app['session']->get('user')->avatar = '/'.$eUser->getValue('avatar.path').$eUser->getValue('avatar.name');
 
         // 3. validate
@@ -160,7 +161,7 @@ class UserController
                     "url" => '/mimoto.cms/users'
                 ),
                 (object) array(
-                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_USER.'.'.$eUser->getId().'.name">'.$eUser->getValue('name').'</span>',
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_USER.'.'.$eUser->getId().'.firstName">'.$eUser->getValue('firstName').'</span> <span data-mimoto-value="'.CoreConfig::MIMOTO_USER.'.'.$eUser->getId().'.lastName">'.$eUser->getValue('lastName').'</span>',
                     "url" => '/mimoto.cms/user/'.$eUser->getId().'/view'
                 )
             )

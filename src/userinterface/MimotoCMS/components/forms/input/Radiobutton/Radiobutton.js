@@ -7,15 +7,17 @@
 'use strict';
 
 
-module.exports = function(aInputElements) {
+module.exports = function(elFormField, fBroadcast, aInputElements) {
 
     // start
-    this.__construct(aInputElements);
+    this.__construct(elFormField, fBroadcast, aInputElements);
 };
 
 module.exports.prototype = {
 
     // dom
+    _elFormField: null,
+    _fBroadcast: null,
     _aInputElements: null,
 
 
@@ -28,10 +30,14 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function(aInputElements)
+    __construct: function(elFormField, fBroadcast, aInputElements)
     {
         // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
         this._aInputElements = aInputElements;
+
+        Mimoto.log('Radiobutton', elFormField, aInputElements);
 
         // configure
         let nInputElementCount = this._aInputElements.length;
@@ -41,8 +47,8 @@ module.exports.prototype = {
             let elInput = this._aInputElements[nInputElementIndex];
 
             // configure
-            elInput.addEventListener('input', function(e) { this._broadcastChange(elInput); }.bind(this));
-            elInput.addEventListener('change', function(e) { this._broadcastChange(elInput); }.bind(this));
+            elInput.addEventListener('input', function(e) { this._fBroadcast(); }.bind(this));
+            elInput.addEventListener('change', function(e) { this._fBroadcast(); }.bind(this));
         }
     },
 
@@ -93,18 +99,6 @@ module.exports.prototype = {
                 break;
             }
         }
-    },
-
-
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _broadcastChange: function(elInput)
-    {
-        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
     }
 
 }

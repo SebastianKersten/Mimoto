@@ -29,9 +29,22 @@ class User
             'forms' => [CoreConfig::MIMOTO_USER],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_USER.'--name',
+                    'id' => CoreConfig::MIMOTO_USER.'--firstName',
                     // ---
-                    'name' => 'name',
+                    'name' => 'firstName',
+                    'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_USER.'--lastName',
+                    // ---
+                    'name' => 'lastName',
                     'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
@@ -138,7 +151,8 @@ class User
             'name' => CoreConfig::MIMOTO_USER,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'firstName'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'lastName'),
                 CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'email'),
                 CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'password'),
                 CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER, 'avatar')
@@ -160,8 +174,15 @@ class User
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'name', CoreConfig::MIMOTO_USER.'--name',
-            'Name', "The user's name", ''
+            $form, 'firstName', CoreConfig::MIMOTO_USER.'--firstName',
+            'First name', "The user's first name", ''
+        );
+        self::setNameValidation($field);
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'lastName', CoreConfig::MIMOTO_USER.'--lastName',
+            'Last name', "The user's last name", ''
         );
         self::setNameValidation($field);
 
@@ -307,41 +328,9 @@ class User
 
 
         // load
-        //$aEntities = Mimoto::service('data')->select('articles');
-        //$aEntities = Mimoto::service('data')->select(['type'=>'article']);
-        //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'values'=>['id'=>'3']));
-        //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'values'=>(object) array('id'=>'3')));
-        //$aEntities = Mimoto::service('data')->select((object) array('type'=>'article', 'id' => 1, 'property'=>'comments'));
         $aEntities = Mimoto::service('data')->select($selection);
 
-
-
-
-        // init
-//        $commentsSelection = Mimoto::service('selection')->create();
-//
-//
-//        $commentsSelection->setType('article');
-//        $commentsSelection->setId(1);
-//
-//        $commentsSelection->setProperty('comments');
-//
-//
-//
-//        $commentsSelection->setChildTypes('comment');
-//        //$commentsSelection->setChildTypes(['comment', 'user']);
-//
-//
-//        $commentsSelection->setChildValue('message', 'Hallo');
-//
-//
-//        $aEntities = Mimoto::service('data')->select($commentsSelection);
-
-
-        //Mimoto::output('I found the following entities (count = '.count($aEntities).')', $aEntities);
-        //Mimoto::error('Terminating session :)');
-
-
+        // add options
         $nEntityCount = count($aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)
         {

@@ -46,8 +46,6 @@ div.MimotoCMS_interface_Popup__closebutton {
     font-size: 12px;
     color: #858585;
     cursor: pointer;
-
-
 }
 
 div.MimotoCMS_interface_Popup__title {
@@ -57,5 +55,5 @@ div.MimotoCMS_interface_Popup__title {
 }
 
 .Mimoto_CoreCSS_hidden {
-    display: none;
+    visibility: hidden;
 }

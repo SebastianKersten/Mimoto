@@ -96,7 +96,7 @@ class InputList
     public static function getForm($eInputList = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_LIST);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_LIST, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'List');

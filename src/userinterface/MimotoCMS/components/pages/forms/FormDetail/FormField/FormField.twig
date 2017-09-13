@@ -39,11 +39,11 @@
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"MimotoCMS.formFieldDelete('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
 
         {% if Mimoto.typeOf('_Mimoto_form_input') %}
-            <div {{ Mimoto.showWhenEmpty('value') }}>
+            <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('value') }}>
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Connect value', types:['small', 'alert'], onclick:"MimotoCMS.formFieldEdit('" ~ Mimoto.meta('type') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
             </div>
 
-            <div {{ Mimoto.hideWhenEmpty('value') }}>
+            <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('value') }}>
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], onclick:"MimotoCMS.formFieldEdit('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}
             </div>
         {% else %}

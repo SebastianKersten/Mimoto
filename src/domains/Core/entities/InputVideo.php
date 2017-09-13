@@ -95,10 +95,10 @@ class InputVideo
     public static function getForm($eInputVideo = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_VIDEO);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_VIDEO, true);
 
         // setup
-        CoreFormUtils::addField_title($form, 'Textline');
+        CoreFormUtils::addField_title($form, 'Video');
         CoreFormUtils::addField_groupStart($form);
 
         $field = CoreFormUtils::addField_textline

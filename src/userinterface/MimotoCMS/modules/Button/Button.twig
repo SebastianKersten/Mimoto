@@ -5,15 +5,6 @@
     {% set classes = ' MimotoCMS_modules_Button--' ~ types|join(' MimotoCMS_modules_Button--') %}
 {% endif %}
 
-{% if attributes|default([]) %}
-    {% for attribute in attributes %}
-        {% set data_attributes = data_attributes ~ (' data-' ~ attribute.attribute) %}
-        {% if attribute.value %}
-            {% set data_attributes = data_attributes ~ ('="' ~ attribute.value ~ '"') %}
-        {% endif %}
-    {% endfor %}
-{% endif %}
-
 <a {{ data_attributes }} {% if link|default('') %}href="{{ link }}"{% endif %} class="MimotoCMS_modules_Button{{ classes }}"{% if onclick|default('') %} onclick="{{ onclick }}"{% endif %}{% if icon|default('') %} data-icon="#ico-{{ icon }}"{% endif %} {{ directive|default('') }}>
     <div class="MimotoCMS_modules_Button-content">
         {% if label|default('') %}

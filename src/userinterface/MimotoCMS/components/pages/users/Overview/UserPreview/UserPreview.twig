@@ -1,7 +1,10 @@
 <div class="MimotoCMS_users_overview_UserPreview" {{ Mimoto.realtime() }}>
 
     <div class="MimotoCMS_users_overview_UserPreview-info">
-        <div class="MimotoCMS_users_overview_UserPreview-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+        <div class="MimotoCMS_users_overview_UserPreview-name">
+            <span {{ Mimoto.realtime('firstName') }}>{{ Mimoto.data('firstName') }}</span>
+            <span {{ Mimoto.realtime('lastName') }}>{{ Mimoto.data('lastName') }}</span>
+        </div>
         <div class="MimotoCMS_users_overview_UserPreview-email" {{ Mimoto.realtime('email') }}>{{ Mimoto.data('email') }}</div>
     </div>
 
@@ -23,7 +26,7 @@
         </div>
 
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'View', link:'/mimoto.cms/user/' ~ Mimoto.meta('id') ~ '/view', types:['secondary', 'small'], icon:'' }) }}
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', link:'/mimoto.cms/user/' ~ Mimoto.meta('id') ~ '/view', types:['alert', 'small'], icon:'' }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', directive:Mimoto.remove(), types:['alert', 'small'], icon:'' }) }}
 
     </div>
 </div>

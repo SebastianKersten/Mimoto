@@ -98,7 +98,7 @@ class InputDatePicker
     public static function getForm($eInputDatePicker = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_DATEPICKER);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_DATEPICKER, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'DatePicker');

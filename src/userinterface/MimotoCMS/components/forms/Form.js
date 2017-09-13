@@ -279,7 +279,7 @@ module.exports.prototype = {
                 }
                 else if (this._actions.response.onSuccess.reloadPopup)
                 {
-                    Mimoto.popup.replace(this._actions.response.onSuccess.reloadPopup);
+                    Mimoto.popup(this._actions.response.onSuccess.reloadPopup);
                 }
                 else if (this._actions.response.onSuccess.dispatchEvent)
                 {

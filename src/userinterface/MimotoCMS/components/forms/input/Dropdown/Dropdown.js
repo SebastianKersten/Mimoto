@@ -1,5 +1,5 @@
 /**
- * Mimoto - InputField - Textline
+ * Mimoto - InputField - Dropdown
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -38,7 +38,7 @@ module.exports.prototype = {
         this._elInput = elInput;
 
         // configure
-        this._elInput.addEventListener('input', function(e) { this._fBroadcast(); }.bind(this));
+        //this._elInput.addEventListener('input', function(e) { this._fBroadcast(); }.bind(this));
         this._elInput.addEventListener('change', function(e) { this._fBroadcast(); }.bind(this));
     },
 

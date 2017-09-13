@@ -121,7 +121,7 @@ class InputMultiSelect
     public static function getForm($eInputMultiSelect = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_MULTISELECT);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_MULTISELECT, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Multiselect');

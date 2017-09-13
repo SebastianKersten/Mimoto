@@ -121,7 +121,7 @@ class InputCheckbox
     public static function getForm($eInputCheckbox = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_CHECKBOX);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_CHECKBOX, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Checkbox');

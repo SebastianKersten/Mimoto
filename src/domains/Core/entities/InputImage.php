@@ -103,7 +103,7 @@ class InputImage
     public static function getForm($eInputImage = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_IMAGE);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_IMAGE, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Image');

@@ -126,7 +126,7 @@ class InputTextline
     public static function getForm($eInputTextline = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_TEXTLINE);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_TEXTLINE, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Textline');

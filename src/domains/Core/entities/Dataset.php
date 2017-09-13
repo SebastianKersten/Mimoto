@@ -153,7 +153,7 @@ class Dataset
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_DATASET);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_DATASET, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Dataset', '', "With datasets you allow different groups of users to enter content via the CMS. Datasets are added to the side menu by default but can be hidden if their only purpose is to use them as centralized helper values.");

@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new property', icon:'plus', onclick:"MimotoCMS.entityPropertyNew('" ~ Mimoto.meta('id') ~ "');" }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new property', icon:'plus', directive:Mimoto.add('properties', '_Mimoto_coreform__entityProperty') }) }}
                     </div>
 
                 </div>
@@ -89,7 +89,7 @@
             </div>
 
             <br>
-            <a href="javascript:Mimoto.CMS.instanceDeleteAll('{{ Mimoto.data('name') }}');">Delete all</a> instances of entity type `{{ Mimoto.data('name') }}`
+            <a href="javascript:MimotoCMS.instanceDeleteAll('{{ Mimoto.data('name') }}');">Delete all</a> instances of entity type `{{ Mimoto.data('name') }}`
         </div>
 
         <!-- more -->

@@ -13,6 +13,7 @@ let Radiobutton = require('./input/Radiobutton/Radiobutton');
 let Checkbox = require('./input/Checkbox/Checkbox');
 let MultiSelect = require('./input/MultiSelect/MultiSelect');
 let Image = require('./input/Image/Image');
+let Dropdown = require('./input/Dropdown/Dropdown');
 
 
 module.exports = function(elFormField) {
@@ -47,9 +48,18 @@ module.exports.prototype = {
     _persistentValue: null,
     _pendingValue: null,
 
+    _coreInputFields: {
+        '_Mimoto_form_input_textline': Textline,
+        '_Mimoto_form_input_radiobutton': Radiobutton,
+        '_Mimoto_form_input_checkbox': Checkbox,
+        '_Mimoto_form_input_multiselect': MultiSelect,
+        '_Mimoto_form_input_image': Image,
+        '_Mimoto_form_input_dropdown': Dropdown
+    },
 
 
-// ----------------------------------------------------------------------------
+
+    // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
 
@@ -176,46 +186,46 @@ module.exports.prototype = {
         this._aInputElements= elFormField.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
 
         // 3. setup
-        switch(this._sType)
+        let fBroadcast = function(e) { elFormField.dispatchEvent(new Event('onMimotoInputChanged')); }.bind(this);
+
+        // 4. configure
+        elFormField.addEventListener('onMimotoInputChanged', function(e) { this._handleInputChange(); }.bind(this));
+
+        // 5. prepare
+        let aInputElements = (this._aInputElements.length !== 1) ? this._aInputElements : this._aInputElements[0];
+
+        // 6. init
+        if (this._coreInputFields[this._sType])
         {
-            case '_Mimoto_form_input_textline': this._input = new Textline(this._aInputElements[0]); break;
-            case '_Mimoto_form_input_radiobutton': this._input = new Radiobutton(this._aInputElements); break;
-            case '_Mimoto_form_input_checkbox': this._input = new Checkbox(this._aInputElements[0]); break;
-            case '_Mimoto_form_input_multiselect': this._input = new MultiSelect(this._aInputElements); break;
-            case '_Mimoto_form_input_image': this._input = new Image(elFormField, this._aInputElements[0]); break;
-            default:
+            // register
+            let CoreInputField = this._coreInputFields[this._sType];
 
-                // check if any custom field registered in root
+            // init
+            this._input = new CoreInputField(elFormField, fBroadcast, aInputElements);
         }
+        // else if (Mimoto.inputFields([this._sType]))
+        // {
+        //     // 1. check if any custom field registered in root
+        // }
+        // else
+        // {
+        //     // 2. if not, try based in Mimoto.input and Mimoto.value (generalInput)
+        // }
 
-        // 4. read
+
+        // TEMP
+        if (!this._input) return;
+
+
+        // 7. store initial value
+        this._persistentValue = this._input.getValue();
+
+        // 8. setup validation
         if (elFormField.hasAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION))
         {
             // a. register
             this._aValidationRules = JSON.parse(elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION));
         }
-
-        // 5. verify or cancel
-        if (!this._input) return;
-
-
-        // ---
-
-
-        // store initial value
-        this._persistentValue = this._input.getValue();
-
-        // configure
-        let nInputElementCount = this._aInputElements.length;
-        for (let nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++)
-        {
-            // register
-            let elInput = this._aInputElements[nInputElementIndex];
-
-            // configure
-            elInput.addEventListener('onMimotoInputChanged', function(e) { this._handleInputChange(); }.bind(this));
-        }
-
     },
 
     _handleInputChange: function()

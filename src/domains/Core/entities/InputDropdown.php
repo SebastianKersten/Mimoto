@@ -106,7 +106,7 @@ class InputDropdown
     public static function getForm($eInputDropdown = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_DROPDOWN);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_DROPDOWN, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Dropdown');

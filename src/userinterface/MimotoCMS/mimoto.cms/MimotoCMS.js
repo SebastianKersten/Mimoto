@@ -160,7 +160,7 @@ module.exports.prototype = {
     {
         console.log('formFieldNew_FieldForm: nFormId=' + nFormId + ', nFormFieldTypeId=' + nFormFieldTypeId);
         
-        Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
+        Mimoto.popup('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
     },
     
     formFieldEdit: function(nFormFieldTypeId, nFormFieldId)

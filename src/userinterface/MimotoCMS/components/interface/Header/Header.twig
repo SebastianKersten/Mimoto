@@ -29,9 +29,13 @@
     <ul class="MimotoCMS_interface_Header-menu">
         <li class="MimotoCMS_interface_Header-menu-item">
             <a href="/mimoto.cms/account" class="MimotoCMS_interface_Header-menu-user">
-                <span class="MimotoCMS_interface_Header-menu-user-text" {{ Mimoto.user.realtime('name') }} {{ Mimoto.user.addClassWhenRegex('name', '^Se.astian3$', 'test-name-red') }}>{{ Mimoto.user.data('name') }}</span>
+                <span class="MimotoCMS_interface_Header-menu-user-text" {{ Mimoto.user.realtime('firstName') }} {{ Mimoto.user.addClassWhenRegex('firstName', '^Se.astian3$', 'test-name-red') }}>{{ Mimoto.user.data('firstName') }}</span>
+                <span class="MimotoCMS_interface_Header-menu-user-text MimotoCMS_interface_Header-menu-user-text-last-name" {{ Mimoto.user.realtime('lastName') }}>{{ Mimoto.user.data('lastName') }}</span>
                 <figure class="MimotoCMS_interface_Header-menu-user-figure">
-                    <img {{ Mimoto.user.realtime('avatar') }} src="{{ Mimoto.user.data('avatar', true) }}" class="MimotoCMS_interface_Header-menu-user-image"/>
+                    <div class="MimotoCMS_interface_Header-menu-user-fallbackfigure {{ Mimoto.init() }}" {{ Mimoto.user.showWhenEmpty('avatar') }}>
+                        <span>{{ Mimoto.user.data('firstName')|slice(0, 1)|capitalize }}</span><span>{{ Mimoto.user.data('lastName')|slice(0, 1)|capitalize }}</span>
+                    </div>
+                    <img {{ Mimoto.user.realtime('avatar') }} src="{{ Mimoto.user.data('avatar', true) }}" class="MimotoCMS_interface_Header-menu-user-image {{ Mimoto.init() }}" {{ Mimoto.user.hideWhenEmpty('avatar') }}/>
                 </figure>
             </a>
         </li>

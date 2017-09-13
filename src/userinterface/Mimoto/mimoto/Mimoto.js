@@ -181,6 +181,9 @@ module.exports.prototype = {
         let layer_popup = document.getElementById('Mimoto_layer_popup');
         let popup_content = document.getElementById('Mimoto_popup_content');
 
+        // cleanup #todo - temp solution for popup replace
+        popup_content.innerHTML = '';
+
         // show
         layer_overlay.classList.remove('Mimoto_CoreCSS_hidden');
         layer_popup.classList.remove('Mimoto_CoreCSS_hidden');

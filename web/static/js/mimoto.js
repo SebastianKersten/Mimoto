@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "66f7d958973df5bc328a";
+/******/ 	__webpack_require__.h = "a88c55b9e374116d5adf";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -25407,6 +25407,9 @@ module.exports.prototype = {
         var layer_popup = document.getElementById('Mimoto_layer_popup');
         var popup_content = document.getElementById('Mimoto_popup_content');
 
+        // cleanup #todo - temp solution for popup replace
+        popup_content.innerHTML = '';
+
         // show
         layer_overlay.classList.remove('Mimoto_CoreCSS_hidden');
         layer_popup.classList.remove('Mimoto_CoreCSS_hidden');
@@ -28062,7 +28065,7 @@ module.exports.prototype = {
                 } else if (this._actions.response.onSuccess.closePopup) {
                     Mimoto.closePopup();
                 } else if (this._actions.response.onSuccess.reloadPopup) {
-                    Mimoto.popup.replace(this._actions.response.onSuccess.reloadPopup);
+                    Mimoto.popup(this._actions.response.onSuccess.reloadPopup);
                 } else if (this._actions.response.onSuccess.dispatchEvent) {
                     console.log('form.responseSettings.onSuccess.dispatchEvent', this._actions.response.onSuccess.dispatchEvent);
                 }
@@ -28092,6 +28095,7 @@ var Radiobutton = __webpack_require__(463);
 var Checkbox = __webpack_require__(464);
 var MultiSelect = __webpack_require__(465);
 var Image = __webpack_require__(466);
+var Dropdown = __webpack_require__(544);
 
 module.exports = function (elFormField) {
 
@@ -28123,6 +28127,15 @@ module.exports.prototype = {
 
     _persistentValue: null,
     _pendingValue: null,
+
+    _coreInputFields: {
+        '_Mimoto_form_input_textline': Textline,
+        '_Mimoto_form_input_radiobutton': Radiobutton,
+        '_Mimoto_form_input_checkbox': Checkbox,
+        '_Mimoto_form_input_multiselect': MultiSelect,
+        '_Mimoto_form_input_image': Image,
+        '_Mimoto_form_input_dropdown': Dropdown
+    },
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -28231,47 +28244,46 @@ module.exports.prototype = {
         this._aInputElements = elFormField.querySelectorAll('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_INPUT + ']');
 
         // 3. setup
-        switch (this._sType) {
-            case '_Mimoto_form_input_textline':
-                this._input = new Textline(this._aInputElements[0]);break;
-            case '_Mimoto_form_input_radiobutton':
-                this._input = new Radiobutton(this._aInputElements);break;
-            case '_Mimoto_form_input_checkbox':
-                this._input = new Checkbox(this._aInputElements[0]);break;
-            case '_Mimoto_form_input_multiselect':
-                this._input = new MultiSelect(this._aInputElements);break;
-            case '_Mimoto_form_input_image':
-                this._input = new Image(elFormField, this._aInputElements[0]);break;
-            default:
+        var fBroadcast = function (e) {
+            elFormField.dispatchEvent(new Event('onMimotoInputChanged'));
+        }.bind(this);
 
-            // check if any custom field registered in root
+        // 4. configure
+        elFormField.addEventListener('onMimotoInputChanged', function (e) {
+            this._handleInputChange();
+        }.bind(this));
+
+        // 5. prepare
+        var aInputElements = this._aInputElements.length !== 1 ? this._aInputElements : this._aInputElements[0];
+
+        // 6. init
+        if (this._coreInputFields[this._sType]) {
+            // register
+            var CoreInputField = this._coreInputFields[this._sType];
+
+            // init
+            this._input = new CoreInputField(elFormField, fBroadcast, aInputElements);
         }
+        // else if (Mimoto.inputFields([this._sType]))
+        // {
+        //     // 1. check if any custom field registered in root
+        // }
+        // else
+        // {
+        //     // 2. if not, try based in Mimoto.input and Mimoto.value (generalInput)
+        // }
 
-        // 4. read
+
+        // TEMP
+        if (!this._input) return;
+
+        // 7. store initial value
+        this._persistentValue = this._input.getValue();
+
+        // 8. setup validation
         if (elFormField.hasAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION)) {
             // a. register
             this._aValidationRules = JSON.parse(elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION));
-        }
-
-        // 5. verify or cancel
-        if (!this._input) return;
-
-        // ---
-
-
-        // store initial value
-        this._persistentValue = this._input.getValue();
-
-        // configure
-        var nInputElementCount = this._aInputElements.length;
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            // register
-            var elInput = this._aInputElements[nInputElementIndex];
-
-            // configure
-            elInput.addEventListener('onMimotoInputChanged', function (e) {
-                this._handleInputChange();
-            }.bind(this));
         }
     },
 
@@ -28379,15 +28391,17 @@ module.exports.prototype = {
 
 
 
-module.exports = function (elInput) {
+module.exports = function (elFormField, fBroadcast, elInput) {
 
     // start
-    this.__construct(elInput);
+    this.__construct(elFormField, fBroadcast, elInput);
 };
 
 module.exports.prototype = {
 
     // dom
+    _elFormField: null,
+    _fBroadcast: null,
     _elInput: null,
 
     // ----------------------------------------------------------------------------
@@ -28398,16 +28412,18 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function __construct(elInput) {
+    __construct: function __construct(elFormField, fBroadcast, elInput) {
         // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
         this._elInput = elInput;
 
         // configure
         this._elInput.addEventListener('input', function (e) {
-            this._broadcastChange(this._elInput);
+            this._fBroadcast();
         }.bind(this));
         this._elInput.addEventListener('change', function (e) {
-            this._broadcastChange(this._elInput);
+            this._fBroadcast();
         }.bind(this));
     },
 
@@ -28422,15 +28438,6 @@ module.exports.prototype = {
 
     setValue: function setValue(value) {
         this._elInput.value = value;
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _broadcastChange: function _broadcastChange(elInput) {
-        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
     }
 
 };
@@ -28448,15 +28455,17 @@ module.exports.prototype = {
 
 
 
-module.exports = function (aInputElements) {
+module.exports = function (elFormField, fBroadcast, aInputElements) {
 
     // start
-    this.__construct(aInputElements);
+    this.__construct(elFormField, fBroadcast, aInputElements);
 };
 
 module.exports.prototype = {
 
     // dom
+    _elFormField: null,
+    _fBroadcast: null,
     _aInputElements: null,
 
     // ----------------------------------------------------------------------------
@@ -28467,30 +28476,27 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function __construct(aInputElements) {
-        var _this = this;
-
+    __construct: function __construct(elFormField, fBroadcast, aInputElements) {
         // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
         this._aInputElements = aInputElements;
+
+        Mimoto.log('Radiobutton', elFormField, aInputElements);
 
         // configure
         var nInputElementCount = this._aInputElements.length;
-
-        var _loop = function _loop(nInputElementIndex) {
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
             // register
-            var elInput = _this._aInputElements[nInputElementIndex];
+            var elInput = this._aInputElements[nInputElementIndex];
 
             // configure
             elInput.addEventListener('input', function (e) {
-                this._broadcastChange(elInput);
-            }.bind(_this));
+                this._fBroadcast();
+            }.bind(this));
             elInput.addEventListener('change', function (e) {
-                this._broadcastChange(elInput);
-            }.bind(_this));
-        };
-
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            _loop(nInputElementIndex);
+                this._fBroadcast();
+            }.bind(this));
         }
     },
 
@@ -28507,11 +28513,11 @@ module.exports.prototype = {
         var nInputElementCount = this._aInputElements.length;
         for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
             // register
-            var _elInput = this._aInputElements[nInputElementIndex];
+            var elInput = this._aInputElements[nInputElementIndex];
 
             // verify
-            if (_elInput.checked) {
-                value = _elInput.value;
+            if (elInput.checked) {
+                value = elInput.value;
                 break;
             }
         }
@@ -28525,23 +28531,14 @@ module.exports.prototype = {
         var nInputElementCount = this._aInputElements.length;
         for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
             // register
-            var _elInput2 = this._aInputElements[nInputElementIndex];
+            var elInput = this._aInputElements[nInputElementIndex];
 
             // verify
-            if (_elInput2.value == value) {
-                _elInput2.checked = true;
+            if (elInput.value == value) {
+                elInput.checked = true;
                 break;
             }
         }
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _broadcastChange: function _broadcastChange(elInput) {
-        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
     }
 
 };
@@ -28559,15 +28556,17 @@ module.exports.prototype = {
 
 
 
-module.exports = function (elInput) {
+module.exports = function (elFormField, fBroadcast, elInput) {
 
     // start
-    this.__construct(elInput);
+    this.__construct(elFormField, fBroadcast, elInput);
 };
 
 module.exports.prototype = {
 
     // dom
+    _elFormField: null,
+    _fBroadcast: null,
     _elInput: null,
 
     // ----------------------------------------------------------------------------
@@ -28578,16 +28577,18 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function __construct(elInput) {
+    __construct: function __construct(elFormField, fBroadcast, elInput) {
         // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
         this._elInput = elInput;
 
         // configure
         this._elInput.addEventListener('input', function (e) {
-            this._broadcastChange(this._elInput);
+            this._fBroadcast();
         }.bind(this));
         this._elInput.addEventListener('change', function (e) {
-            this._broadcastChange(this._elInput);
+            this._fBroadcast();
         }.bind(this));
     },
 
@@ -28602,17 +28603,7 @@ module.exports.prototype = {
     },
 
     setValue: function setValue(value) {
-
         this._elInput.checked = value === true;
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _broadcastChange: function _broadcastChange(elInput) {
-        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
     }
 
 };
@@ -28623,22 +28614,24 @@ module.exports.prototype = {
 
 "use strict";
 /**
- * Mimoto - InputField - Checkbox
+ * Mimoto - InputField - Multiselect
  *
  * @author Sebastian Kersten (@supertaboo)
  */
 
 
 
-module.exports = function (aInputElements) {
+module.exports = function (elFormField, fBroadcast, aInputElements) {
 
     // start
-    this.__construct(aInputElements);
+    this.__construct(elFormField, fBroadcast, aInputElements);
 };
 
 module.exports.prototype = {
 
     // dom
+    _elFormField: null,
+    _fBroadcast: null,
     _aInputElements: null,
 
     // ----------------------------------------------------------------------------
@@ -28649,30 +28642,25 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function __construct(aInputElements) {
-        var _this = this;
-
+    __construct: function __construct(elFormField, fBroadcast, aInputElements) {
         // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
         this._aInputElements = aInputElements;
 
         // configure
         var nInputElementCount = this._aInputElements.length;
-
-        var _loop = function _loop(nInputElementIndex) {
+        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
             // register
-            var elInput = _this._aInputElements[nInputElementIndex];
+            var elInput = this._aInputElements[nInputElementIndex];
 
             // configure
             elInput.addEventListener('input', function (e) {
-                this._broadcastChange(elInput);
-            }.bind(_this));
+                this._fBroadcast();
+            }.bind(this));
             elInput.addEventListener('change', function (e) {
-                this._broadcastChange(elInput);
-            }.bind(_this));
-        };
-
-        for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
-            _loop(nInputElementIndex);
+                this._fBroadcast();
+            }.bind(this));
         }
     },
 
@@ -28689,11 +28677,11 @@ module.exports.prototype = {
         var nInputElementCount = this._aInputElements.length;
         for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
             // register
-            var _elInput = this._aInputElements[nInputElementIndex];
+            var elInput = this._aInputElements[nInputElementIndex];
 
             // verify
-            if (_elInput.checked) {
-                aValues.push(_elInput.value);
+            if (elInput.checked) {
+                aValues.push(elInput.value);
             }
         }
 
@@ -28709,20 +28697,11 @@ module.exports.prototype = {
         var nInputElementCount = this._aInputElements.length;
         for (var nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++) {
             // register
-            var _elInput2 = this._aInputElements[nInputElementIndex];
+            var elInput = this._aInputElements[nInputElementIndex];
 
             // verify
-            _elInput2.checked = aValues.includes(_elInput2.value);
+            elInput.checked = aValues.includes(elInput.value);
         }
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _broadcastChange: function _broadcastChange(elInput) {
-        elInput.dispatchEvent(new Event('onMimotoInputChanged'));
     }
 
 };
@@ -28742,17 +28721,18 @@ module.exports.prototype = {
 
 var Dropzone = __webpack_require__(467);
 
-module.exports = function (elFormField, elInput) {
+module.exports = function (elFormField, fBroadcast, aInputElements) {
 
     // start
-    this.__construct(elFormField, elInput);
+    this.__construct(elFormField, fBroadcast, aInputElements);
 };
 
 module.exports.prototype = {
 
     // dom
     _elFormField: null,
-    _elInput: null,
+    _fBroadcast: null,
+    _aInputElements: null,
 
     // elements
     _elTemplate: null,
@@ -28771,9 +28751,10 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function __construct(elFormField, elInput) {
+    __construct: function __construct(elFormField, fBroadcast, elInput) {
         // store
         this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
         this._elInput = elInput;
 
         // register
@@ -28814,10 +28795,7 @@ module.exports.prototype = {
             this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
         }.bind(this));
 
-        this._dropzone.on('complete', function (file) {
-
-            Mimoto.warn('File complete', file);
-        }.bind(this));
+        this._dropzone.on('complete', function (file) {}.bind(this));
 
         this._dropzone.on('thumbnail', function (file) {
             this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--show-preview-image');
@@ -28828,8 +28806,6 @@ module.exports.prototype = {
         }.bind(this));
 
         this._dropzone.on('success', function (file, serverResponse) {
-            Mimoto.log('serverResponse onSuccess', serverResponse);
-
             // connect value
             this.setValue(serverResponse.file_id);
 
@@ -28877,7 +28853,7 @@ module.exports.prototype = {
         this._elInput.value = value;
 
         // broadcast
-        if (!bDontBroadcastOnInitialSet) this._broadcastChange();
+        if (!bDontBroadcastOnInitialSet) this._fBroadcast();
     },
 
     // ----------------------------------------------------------------------------
@@ -28896,10 +28872,6 @@ module.exports.prototype = {
                 }
             }.bind(this)
         });
-    },
-
-    _broadcastChange: function _broadcastChange() {
-        this._elInput.dispatchEvent(new Event('onMimotoInputChanged'));
     }
 
 };
@@ -39513,6 +39485,85 @@ Iterator.prototype.peekType = function () {
 
 module.exports = lib;
 
+
+/***/ }),
+/* 527 */,
+/* 528 */,
+/* 529 */,
+/* 530 */,
+/* 531 */,
+/* 532 */,
+/* 533 */,
+/* 534 */,
+/* 535 */,
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - InputField - Dropdown
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (elFormField, fBroadcast, elInput) {
+
+    // start
+    this.__construct(elFormField, fBroadcast, elInput);
+};
+
+module.exports.prototype = {
+
+    // dom
+    _elFormField: null,
+    _fBroadcast: null,
+    _elInput: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elFormField, fBroadcast, elInput) {
+        // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
+        this._elInput = elInput;
+
+        // configure
+        //this._elInput.addEventListener('input', function(e) { this._fBroadcast(); }.bind(this));
+        this._elInput.addEventListener('change', function (e) {
+            this._fBroadcast();
+        }.bind(this));
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getValue: function getValue() {
+        return this._elInput.value;
+    },
+
+    setValue: function setValue(value) {
+        this._elInput.value = value;
+    }
+
+};
 
 /***/ })
 /******/ ]);

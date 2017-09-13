@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "66f7d958973df5bc328a";
+/******/ 	__webpack_require__.h = "a88c55b9e374116d5adf";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -18699,7 +18699,7 @@ module.exports.prototype = {
     formFieldNew_FieldForm: function formFieldNew_FieldForm(nFormId, nFormFieldTypeId) {
         console.log('formFieldNew_FieldForm: nFormId=' + nFormId + ', nFormFieldTypeId=' + nFormFieldTypeId);
 
-        Mimoto.popup.replace('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
+        Mimoto.popup('/mimoto.cms/form/' + nFormId + '/field/new/' + nFormFieldTypeId);
     },
 
     formFieldEdit: function formFieldEdit(nFormFieldTypeId, nFormFieldId) {

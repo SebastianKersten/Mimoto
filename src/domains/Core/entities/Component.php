@@ -1073,7 +1073,7 @@ class Component
                 'name' => 'MimotoCMS_modules_Button',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/modules/ButtonModule/ButtonModule.twig',
+                        'file' => 'MimotoCMS/modules/Button/Button.twig',
                         'conditionals' => []
                     )
                 ]

@@ -1145,9 +1145,10 @@ a.MimotoCMS_modules_Button {
   a.MimotoCMS_modules_Button:hover {
     text-decoration: none;
     background-color: #9dbab7; }
-  a.MimotoCMS_modules_Button a.MimotoCMS_modules_Button--text {
+  a.MimotoCMS_modules_Button span.MimotoCMS_modules_Button--text {
     color: #ffffff;
-    background-color: transparent; }
+    background-color: transparent;
+    font-size: 14px; }
 
 a.MimotoCMS_modules_Button--loading {
   pointer-events: none;
@@ -1192,7 +1193,7 @@ div.MimotoCMS_modules_Button-content {
   white-space: nowrap;
   text-decoration: none; }
 
-a.MimotoCMS_modules_Button--text {
+span.MimotoCMS_modules_Button--text {
   text-decoration: underline;
   color: #555;
   background-color: transparent;
@@ -1200,13 +1201,14 @@ a.MimotoCMS_modules_Button--text {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
-          user-select: none; }
-  a.MimotoCMS_modules_Button--text:hover {
+          user-select: none;
+  font-size: 14px; }
+  span.MimotoCMS_modules_Button--text:hover {
     color: #000;
     background-color: transparent;
     text-decoration: underline; }
 
-a.MimotoCMS_modules_Button--text {
+span.MimotoCMS_modules_Button-text {
   font-family: "Futura PT W02 Book", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -3524,11 +3526,11 @@ span.MimotoCMS_interface_Header-menu-user-text {
   @media screen and (min-width: 26.25em) {
     span.MimotoCMS_interface_Header-menu-user-text {
       display: block;
-      margin-right: 20px;
       font-size: 1.0625rem; } }
 
 span.MimotoCMS_interface_Header-menu-user-text-last-name {
-  display: none; }
+  display: none;
+  margin-left: 5px; }
   @media screen and (min-width: 40em) {
     span.MimotoCMS_interface_Header-menu-user-text-last-name {
       display: inline; } }
@@ -3541,6 +3543,7 @@ figure.MimotoCMS_interface_Header-menu-user-figure {
   width: 49px;
   height: 49px;
   margin-bottom: 1px;
+  margin-left: 20px;
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
@@ -3555,6 +3558,14 @@ figure.MimotoCMS_interface_Header-menu-user-figure {
       width: 63px;
       height: 63px;
       margin-bottom: 1px; } }
+
+div.MimotoCMS_interface_Header-menu-user-fallbackfigure {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 16px; }
+  @media screen and (min-width: 46.875em) {
+    div.MimotoCMS_interface_Header-menu-user-fallbackfigure {
+      font-size: 24px; } }
 
 img.MimotoCMS_interface_Header-menu-user-image {
   display: inline-block;
@@ -3876,7 +3887,7 @@ div.MimotoCMS_interface_Popup__title {
   margin-bottom: 20px; }
 
 .Mimoto_CoreCSS_hidden {
-  display: none; }
+  visibility: hidden; }
 
 div.MimotoCMS {
   position: absolute;
@@ -4789,7 +4800,8 @@ div.MimotoCMS_forms_layout_Divider {
   margin: 35px 0 18px 0; }
 
 div.MimotoCMS_forms_Form-holder {
-  max-width: 750px; }
+  max-width: 750px;
+  margin-bottom: 30px; }
 
 div.MimotoCMS_forms_Form-menu {
   width: 100%;

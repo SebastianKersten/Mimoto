@@ -123,10 +123,10 @@ class InputTextblock
     public static function getForm($eInputTextblock = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_TEXTBLOCK);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_TEXTBLOCK, true);
 
         // setup
-        CoreFormUtils::addField_title($form, 'Textline');
+        CoreFormUtils::addField_title($form, 'Textblock');
         CoreFormUtils::addField_groupStart($form);
 
         $field = CoreFormUtils::addField_textline
