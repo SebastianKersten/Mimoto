@@ -1044,14 +1044,7 @@ class OutputService
         Mimoto::service('messages')->registerModification('data.changed', $data);
 
 
-
         if (!empty($data->changes)) { $this->sendSocketIOEvent('Aimless', 'data.changed', $data); }
-        
-        /**
-         * Exaamples:
-         * $this->sendSocketIOEvent('livescreen', 'popup.open', (object) array('url' => '/project/new'));
-         * $this->sendSocketIOEvent('livescreen', 'page.change', (object) array('url' => '/forecast'));
-         */
     }
     
     /**

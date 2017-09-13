@@ -232,9 +232,6 @@ class EntityConfigRepository
 
     public function getEntityNameByPropertyId($nId)
     {
-        //echo 'id = '.$nId;
-
-
         // search
         $nEntityCount = count($this->_aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)
@@ -456,10 +453,7 @@ class EntityConfigRepository
                                     if (!isset($aAllEntityPropertySetting_Connections[$setting->id]))
                                     {
                                         // notify
-                                        //$this->_LogService->silent('', '');
-                                        //echo 'SKIP  '.$setting->key;
-                                        //error($setting);
-                                        //error($connection);
+                                        // 1. $this->_LogService->silent('', '');
 
                                         // skip
                                         continue 3;

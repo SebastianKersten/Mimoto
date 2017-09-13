@@ -137,15 +137,6 @@ class EntityRepository
             // load
             $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            //if ($entityConfig->getName() == CoreConfig::MIMOTO_DATASET)
-            //{
-             //   Mimoto::output('$aResults', $aResults);
-            //}
-
-            //Mimoto::output('$nEntityId '.$nEntityId, $entityConfig);
-            //throw new \Exception('oh oh, computer says oops!');
-
-
             // verify
             if (count($aResults) !== 1)
             {
@@ -172,7 +163,7 @@ class EntityRepository
     {
         
         // init
-        $aEntities = []; //new MimotoCollection();
+        $aEntities = [];
         
         // setup
         //$aEntities->setCriteria($criteria);

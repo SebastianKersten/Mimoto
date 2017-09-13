@@ -353,8 +353,6 @@ class FormService
                         // load
                         $aCurrentConnections = $entity->getValue($field->propertyName, true);
 
-                        //Mimoto::output('$aCurrentConnections', $aCurrentConnections, true);
-
                         // find new connections
                         $nNewConnectionCount = count($aNewConnections);
                         for ($nNewConnectionIndex = 0; $nNewConnectionIndex < $nNewConnectionCount; $nNewConnectionIndex++)

@@ -58,8 +58,6 @@ class WorkerController
 
     public function data(Request $request, Application $app)
     {
-        //Mimoto::error(gearman_version());
-
         echo "\n";
         echo "--------------------------------------------------------------------------------\n";
         echo "--- Mimoto - The ultra fast, fluid & realtime data management microframework ---\n";
@@ -75,8 +73,6 @@ class WorkerController
 
         // setup connection
         $this->_socketIOClient = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
-        //$this->_socketIOClient->initialize(false);
-
 
         // init
         $worker = new GearmanWorker();
@@ -108,15 +104,11 @@ class WorkerController
             // output
             ob_flush();
             flush();
-            //die();
         });
 
         var_dump($worker, true);
 
-
-
         // run
-        //while ($this->xxx() && $worker->work());
         while ($worker->work());
 
 

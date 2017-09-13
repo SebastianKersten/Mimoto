@@ -447,16 +447,11 @@ class EntityConfigService
             );
             $stmt->execute($params);
 
-//            output('$stmt', $stmt);
-//            output('$params', $params);
-
             // load
             $aResults = $stmt->fetchAll();
 
             // register
             $nResultCount = count($aResults);
-
-            //output('$nResultCount', $nResultCount);
 
             // validate
             if ($nResultCount != 1) return null;

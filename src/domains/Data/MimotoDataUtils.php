@@ -19,23 +19,9 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 class MimotoDataUtils
 {
 
-    // const ENT
-
-//    public static function getValueType($xValue)
-//    {
-//
-//    }
-
-
-
-
-
     public static function validatePropertyName($sPropertyName)
     {
-        // check _Mimoto_ CoreConfig::CORE_PREFIX
-
         return preg_match("/^[a-zA-Z-_][a-zA-Z0-9-_]*(\.[a-zA-Z-_][a-zA-Z0-9_-]*)*$/", $sPropertyName);
-        //return preg_match("/^[a-zA-Z][a-zA-Z0-9-_]*(\.[a-zA-Z][a-zA-Z0-9_-]*)*$/", $sPropertyName);
     }
 
     public static function validatePropertySelector($sPropertySelector)
