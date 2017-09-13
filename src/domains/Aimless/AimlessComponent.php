@@ -558,6 +558,9 @@ class AimlessComponent
 
     public function realtime($sPropertySelector = null, $sComponentName = null, $sWrapperName = null)
     {
+        // auto correct
+        if ($sPropertySelector == '') $sPropertySelector = null;
+
 
 
         // 1. move to util functie

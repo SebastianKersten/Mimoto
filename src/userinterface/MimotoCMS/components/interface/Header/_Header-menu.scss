@@ -36,11 +36,21 @@ ul.MimotoCMS_interface_Header-menu {
                     display: block;
                     font-size: rem-calc(17px);
                 }
+
+                @include breakpoint(small up) {
+                    margin-right: 20px;
+
+                    @include breakpoint(medium up) {
+                        margin-right: 0;
+                    }
+                }
+
             }
 
                 span.MimotoCMS_interface_Header-menu-user-text-last-name {
                     display: none;
                     margin-left: 5px;
+                    margin-right: 20px;
 
                     @include breakpoint(medium up) {
                         display: inline;
@@ -52,7 +62,6 @@ ul.MimotoCMS_interface_Header-menu {
                 width: 49px;
                 height: 49px;
                 margin-bottom: 1px;
-                margin-left: 20px;
                 align-items: center;
                 justify-content: center;
                 background-color: $sinbad;

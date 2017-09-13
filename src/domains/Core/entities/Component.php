@@ -749,6 +749,16 @@ class Component
                 ]
             ),
 
+            (object) array(
+                'name' => 'MimotoCMS_pages_users_Detail_UserRole',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/users/Detail/UserRole/UserRole.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
 
             // forms
 

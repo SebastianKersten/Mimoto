@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "0e5a6fa181bfb9d4dbfa";
+/******/ 	__webpack_require__.h = "6e811447c59bf2c6b246";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -25439,7 +25439,7 @@ module.exports.prototype = {
                     popup_content.append(element);
 
                     // register directives
-                    Mimoto.display.parseInterface(element);
+                    Mimoto.display.parseInterface(element.parentNode);
 
                     // collect and execute scripts
                     var aResponseScripts = element.querySelectorAll('script');
@@ -25584,11 +25584,11 @@ module.exports.prototype = {
                     // isolate
                     var element = newDocument.querySelector('body').firstChild;
 
-                    // register directives
-                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
-
                     // add to dom
                     container.append(element);
+
+                    // register directives
+                    Mimoto.display.parseInterface(element.parentNode);
                 }
             }
         };
@@ -25646,9 +25646,6 @@ module.exports.prototype = {
                     // isolate
                     var element = newDocument.querySelector('body').firstChild;
 
-                    // register directives
-                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
-
                     // get parent
                     var container = elementToReplace.parentNode;
 
@@ -25657,6 +25654,9 @@ module.exports.prototype = {
 
                     // remove old
                     Mimoto.utils.removeComponent(elementToReplace);
+
+                    // register directives
+                    Mimoto.display.parseInterface(element.parentNode);
                 }
             }
         };
@@ -25681,6 +25681,9 @@ module.exports.prototype = {
     },
 
     removeComponent: function removeComponent(element) {
+        // filter wrong usage
+        if (!element) return;
+
         // cleanup
         Mimoto.display.cleanupDirectives(element);
 
@@ -26947,7 +26950,7 @@ module.exports.prototype = {
 
 
         // 2. collect
-        var aDirectives = this._collectDirectives(element);
+        var aDirectives = this._collectDirectives(element.parentNode);
 
         // 3. cleanup
         for (var sDirective in aDirectives) {
@@ -27190,8 +27193,6 @@ module.exports.prototype = {
                             // register
                             directive.aFilterValues = JSON.parse(element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_FILTER));
                         }
-
-                        //Mimoto.log('directive', directive);
 
                         break;
 
@@ -27498,6 +27499,12 @@ module.exports.prototype = {
                                 // 3. verify and change sort order
                                 if (change.collection.connections) new CollectionChangeSortOrder(directive, change.collection.connections);
 
+                                break;
+
+                            case this.DIRECTIVE_MIMOTO_IMAGE:
+
+                                // update
+                                directive.element.src = change.entity.file.path + change.entity.file.name;
                                 break;
 
                             // --- display updates

@@ -76,11 +76,11 @@ module.exports.prototype = {
                     // isolate
                     let element = newDocument.querySelector('body').firstChild;
 
-                    // register directives
-                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
-
                     // add to dom
                     container.append(element);
+
+                    // register directives
+                    Mimoto.display.parseInterface(element.parentNode);
                 }
             }
         };
@@ -147,9 +147,6 @@ module.exports.prototype = {
                     // isolate
                     let element = newDocument.querySelector('body').firstChild;
 
-                    // register directives
-                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
-
                     // get parent
                     let container = elementToReplace.parentNode;
 
@@ -158,6 +155,9 @@ module.exports.prototype = {
 
                     // remove old
                     Mimoto.utils.removeComponent(elementToReplace);
+
+                    // register directives
+                    Mimoto.display.parseInterface(element.parentNode);
                 }
             }
         };
@@ -186,6 +186,9 @@ module.exports.prototype = {
 
     removeComponent: function(element)
     {
+        // filter wrong usage
+        if (!element) return;
+
         // cleanup
         Mimoto.display.cleanupDirectives(element);
 

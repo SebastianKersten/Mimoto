@@ -7,19 +7,43 @@
             <div class="MimotoCMS_pages_users_UserDetail_Structure">
 
                 <div class="MimotoCMS_pages_users_UserDetail_Structure__meta">
+                    
                     <div class="MimotoCMS_pages_users_UserDetail_Structure__meta_info">
 
-                        <div class="MimotoCMS_pages_users_UserDetail_Structure__userName">
-                            <span {{ Mimoto.realtime('firstName') }}>{{ Mimoto.data('firstName') }}</span>
-                            <span {{ Mimoto.realtime('lastName') }}>{{ Mimoto.data('lastName') }}</span>
+                        <div class="MimotoCMS_pages_users_Detail-avatar {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('avatar') }}>
+                            <img class="MimotoCMS_pages_users_Detail-avatar" {{ Mimoto.realtime('avatar') }} src="{{ Mimoto.data('avatar') }}">
                         </div>
-                        <div class="MimotoCMS_pages_users_UserDetail_Structure__userEmail" {{ Mimoto.realtime('email') }}>{{ Mimoto.data('email') }}</div>
-                        <img class="MimotoCMS_pages_users_UserDetail_Structure__userAvatar" {{ Mimoto.realtime('avatar') }} src="{{ Mimoto.data('avatar') }}">
+                        <div class="MimotoCMS_pages_users_Detail-info">
+                            <div class="MimotoCMS_pages_users_Detail-name">
+                                <span {{ Mimoto.realtime('firstName') }}>{{ Mimoto.data('firstName') }}</span>
+                                <span {{ Mimoto.realtime('lastName') }}>{{ Mimoto.data('lastName') }}</span>
+                            </div>
+                            <div class="MimotoCMS_pages_users_Detail-email" {{ Mimoto.realtime('email') }}>{{ Mimoto.data('email') }}</div>
+                        </div>
 
                     </div>
 
                     <div class="MimotoCMS_pages_users_UserDetail_Structure__meta_menu">
                         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_user'), type:'secondary' }) }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="MimotoCMS_pages_users_UserDetail_Structure">
+
+                <div class="MimotoCMS_pages_users_UserDetail_Structure__meta">
+
+                    <div class="MimotoCMS_pages_users_Detail-userRoles-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('roles') }}>
+                        This user has not been given any roles yet
+                    </div>
+
+                    <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('roles') }}>
+                        This user has the following rules:
+                        <div class="MimotoCMS_pages_users_Detail-userRoles-container" {{ Mimoto.realtime('roles', 'MimotoCMS_pages_users_Detail_UserRole') }}>
+                            {{ Mimoto.data('roles', 'MimotoCMS_pages_users_Detail_UserRole') }}
+                        </div>
                     </div>
 
                 </div>

@@ -231,7 +231,7 @@ module.exports.prototype = {
 
 
         // 2. collect
-        let aDirectives = this._collectDirectives(element);
+        let aDirectives = this._collectDirectives(element.parentNode);
 
         // 3. cleanup
         for (let sDirective in aDirectives)
@@ -559,10 +559,8 @@ module.exports.prototype = {
                             directive.aFilterValues = JSON.parse(element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_FILTER));
                         }
 
-
-                        //Mimoto.log('directive', directive);
-
                         break;
+
 
                     case this.DIRECTIVE_MATH_MIMOTO_COUNT:
 
@@ -916,6 +914,12 @@ module.exports.prototype = {
                                 // 3. verify and change sort order
                                 if (change.collection.connections) new CollectionChangeSortOrder(directive, change.collection.connections);
 
+                                break;
+
+                            case this.DIRECTIVE_MIMOTO_IMAGE:
+
+                                // update
+                                directive.element.src = change.entity.file.path + change.entity.file.name;
                                 break;
 
 

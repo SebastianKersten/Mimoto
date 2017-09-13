@@ -217,7 +217,7 @@ module.exports.prototype = {
                     popup_content.append(element);
 
                     // register directives
-                    Mimoto.display.parseInterface(element);
+                    Mimoto.display.parseInterface(element.parentNode);
 
                     // collect and execute scripts
                     let aResponseScripts = element.querySelectorAll('script');

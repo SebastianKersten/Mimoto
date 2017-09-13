@@ -1,3 +1,5 @@
+@import 'UserRole/UserRole';
+
 div.MimotoCMS_pages_users_UserDetail__panel {
     margin-bottom: 25px;
     background-color: #ffffff;
@@ -23,29 +25,43 @@ div.MimotoCMS_pages_users_UserDetail_Structure__meta {
     //}
 
     &>div.MimotoCMS_pages_users_UserDetail_Structure__meta_info {
-        flex-grow: 5;
+        flex: auto;
+        text-align: left;
+
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
     }
 
     &>div.MimotoCMS_pages_users_UserDetail_Structure__meta_menu {
-        flex-grow: 1;
+        flex: auto;
         text-align: right;
         padding-top: 5px;
     }
+    
 
-    div.MimotoCMS_pages_users_UserDetail_Structure__userName {
-        font-size: 24px;
-        font-weight: bold;
+    div.MimotoCMS_pages_users_Detail-avatar {
+        flex: none;
+        margin-right: 20px;
     }
 
-    div.MimotoCMS_pages_users_UserDetail_Structure__userEmail {
-        font-size: 16px;
-        font-style: italic;
+    img.MimotoCMS_pages_users_Detail-avatar {
+        width: 80px;
+    }
+
+    div.MimotoCMS_pages_users_Detail-details {
+        flex: auto;
+    }
+
+    div.MimotoCMS_pages_users_Detail-name {
+        font-size: 24px;
+        font-weight: bold;
         color: $tower-gray;
     }
 
-    img.MimotoCMS_pages_users_UserDetail_Structure__userAvatar {
-        margin-top: 25px;
-        max-width: 400px;
+    div.MimotoCMS_pages_users_Detail-email {
+        font-style: italic;
     }
 
 }
@@ -87,4 +103,22 @@ div.MimotoCMS_pages_users_UserDetail_Structure__rules_container {
         margin-bottom: 0;
     }
 
+}
+
+div.MimotoCMS_pages_users_Detail-userRoles-empty {
+    font-style: italic;
+    color: #858585;
+}
+
+div.MimotoCMS_pages_users_Detail-userRoles-container {
+
+    margin-top: 10px;
+
+    & > div {
+        margin-right: 5px;
+    }
+
+    & > div:last-child {
+        margin-right: 0;
+    }
 }
