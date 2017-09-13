@@ -10,9 +10,12 @@ require_once __DIR__.'/../vendor/autoload.php';
 use Mimoto\Mimoto;
 
 
-$config = @include(dirname(__FILE__) . '/config.php');
-
-if (!$config)
+$sConfigFile = dirname(__FILE__) . '/config.php';
+if (file_exists($sConfigFile))
+{
+    $config = include($sConfigFile);
+}
+else
 {
     echo "
     <h1>Installling Mimoto</h1>
