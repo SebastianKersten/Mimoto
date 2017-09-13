@@ -27,7 +27,7 @@ class InputColorPicker
             'name' => CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER,
             'visualName' => 'ColorPicker',
             'extends' => CoreConfig::MIMOTO_FORM_INPUT,
-            'forms' => [CoreConfig::COREFORM_INPUT_COLORPICKER],
+            'forms' => [CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER],
             'properties' => [
                 (object) array(
                     'id' => CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER.'--label',
@@ -79,15 +79,15 @@ class InputColorPicker
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_INPUT_COLORPICKER,
-            'name' => CoreConfig::COREFORM_INPUT_COLORPICKER,
+            'id' => CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER,
+            'name' => CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_COLORPICKER, 'label'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_COLORPICKER, 'description'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_COLORPICKER, 'value'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_COLORPICKER, 'options'),
-                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_COLORPICKER, 'validation')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER, 'label'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER, 'description'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER, 'value'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER, 'options'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER, 'validation')
             ]
         );
     }
@@ -98,7 +98,7 @@ class InputColorPicker
     public static function getForm($eInputColorPicker = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_COLORPICKER, true);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'ColorPicker');

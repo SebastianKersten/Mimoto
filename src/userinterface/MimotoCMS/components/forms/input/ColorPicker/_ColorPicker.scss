@@ -1,3 +1,20 @@
-input.MimotoCMS_forms_input_ColorPicker {
+div.MimotoCMS_forms_input_ColorPicker {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
 
+div.MimotoCMS_forms_input_ColorPicker-preview {
+    flex: none;
+    display:inline-block;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    background: $alabaster;
+    border: 1px solid $pale-slate;
+}
+
+div.MimotoCMS_forms_input_ColorPicker-input {
+    flex: auto;
 }

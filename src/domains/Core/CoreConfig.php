@@ -201,7 +201,6 @@ class CoreConfig
 
     const COREFORM_INPUT_IMAGE          = '_Mimoto_coreform_input_image';
     const COREFORM_INPUT_VIDEO          = '_Mimoto_coreform_input_video';
-    const COREFORM_INPUT_COLORPICKER    = '_Mimoto_coreform_input_colorpicker';
     const COREFORM_INPUT_DATEPICKER     = '_Mimoto_coreform_input_datepicker';
 
     // output

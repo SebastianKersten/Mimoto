@@ -67,7 +67,14 @@ curl "http://mimoto.aimless/mimoto.cms/workers/slack
 
 
 
+# Archive
+```
+"jquery": "^3.1.1",
+"jquery-ui-dist": "^1.12.1",
+```
 
+
+# About
 
 
 Mimoto is an _Entity Oriented Programming_ protocol that allows you to easily create a realtime interface.

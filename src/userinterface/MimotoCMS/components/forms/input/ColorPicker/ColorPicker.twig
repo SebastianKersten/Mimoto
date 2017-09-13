@@ -1,11 +1,21 @@
-{% embed "MimotoCMS/components/forms/FormField.twig" with {"type": "colorpicker" } %}
+{% embed "MimotoCMS/components/forms/FormField.twig" %}
+
     {% block input %}
 
-        <div>color rectangle</div>
-        <div>button die popup opent</div>
+        <div class="MimotoCMS_forms_input_ColorPicker">
 
-        input wordt "hidden"
-        <input {{ Mimoto.input() }} type="type" class="MimotoCMS_forms_input_ColorPicker" value="{{ Mimoto.value() }}"/>
+            <div data-mimoto-form-input-colorpicker-preview class="MimotoCMS_forms_input_ColorPicker-preview"></div>
+            <div class="MimotoCMS_forms_input_ColorPicker-input">
+
+                <div class="MimotoCMS_forms_FormField-element-container MimotoCMS_forms_FormField-element-container--has-prefix">
+                    <input {{ Mimoto.input() }} type="text" class="MimotoCMS_forms_input_Textline" value="{{ Mimoto.value() }}"/>
+                    <span class="MimotoCMS_forms_FormField-element-prefix">#</span>
+                </div>
+
+            </div>
+
+        </div>
 
     {% endblock %}
+
 {% endembed %}

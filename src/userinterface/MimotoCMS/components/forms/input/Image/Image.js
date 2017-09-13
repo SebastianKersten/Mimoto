@@ -55,11 +55,6 @@ module.exports.prototype = {
         this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-image-persistent]');
         this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-image-remove]');
 
-
-
-        Mimoto.warn(elFormField.querySelector('[data-mimoto-form-input-image-upload]'));
-
-
         // setup
         this._dropzone = new Dropzone('[data-mimoto-form-input-image-upload]', {
             url: '/mimoto/media/upload/image',

@@ -387,8 +387,12 @@ class FormController
         // 1. init popup
         $popup = Mimoto::service('output')->createPopup();
 
+        // load
+        $eForm = Mimoto::service('input')->getFormByName(Mimoto::service('input')->getCoreFormByEntityTypeId($nFormFieldTypeId));
+
+
         // 2. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $eForm);
 
         // 3. auto create and connect
         $eInputField = Mimoto::service('data')->create($nFormFieldTypeId);

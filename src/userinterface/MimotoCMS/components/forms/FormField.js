@@ -15,6 +15,7 @@ let MultiSelect = require('./input/MultiSelect/MultiSelect');
 let Image = require('./input/Image/Image');
 let Dropdown = require('./input/Dropdown/Dropdown');
 let Video = require('./input/Video/Video');
+let ColorPicker = require('./input/ColorPicker/ColorPicker');
 
 
 module.exports = function(elFormField) {
@@ -56,7 +57,8 @@ module.exports.prototype = {
         '_Mimoto_form_input_multiselect': MultiSelect,
         '_Mimoto_form_input_image': Image,
         '_Mimoto_form_input_dropdown': Dropdown,
-        '_Mimoto_form_input_video': Video
+        '_Mimoto_form_input_video': Video,
+        '_Mimoto_form_input_colorpicker': ColorPicker
     },
 
 

@@ -4250,6 +4250,42 @@ input.MimotoCMS_forms_input_DatePicker-input {
       border-color: #9dbab7;
       background: #fff; }
 
+div.MimotoCMS_forms_input_ColorPicker {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start; }
+
+div.MimotoCMS_forms_input_ColorPicker-preview {
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  background: #f7f7f7;
+  border: 1px solid #c3c1c2; }
+
+div.MimotoCMS_forms_input_ColorPicker-input {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto; }
+
 div.MimotoCMS_forms_input_MultiSelect-container {
   position: relative;
   -webkit-box-flex: 0;
@@ -4987,7 +5023,7 @@ a.Miproto-button {
   color: #000000; }
 
 /*!
- * Quill Editor v1.3.1
+ * Quill Editor v1.3.2
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -5378,7 +5414,7 @@ a.Miproto-button {
   text-align: right; }
 
 .ql-editor .ql-embed-selected {
-  border: 1px solid #777;
+  border: 2px solid #777;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -5388,8 +5424,10 @@ a.Miproto-button {
   color: rgba(0, 0, 0, 0.6);
   content: attr(data-placeholder);
   font-style: italic;
+  left: 15px;
   pointer-events: none;
-  position: absolute; }
+  position: absolute;
+  right: 15px; }
 
 .ql-bubble.ql-toolbar:after,
 .ql-bubble .ql-toolbar:after {

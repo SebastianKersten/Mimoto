@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "6e811447c59bf2c6b246";
+/******/ 	__webpack_require__.h = "c3dac05c5a7840bf57ce";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -3981,209 +3981,231 @@ module.exports = Object.getPrototypeOf || function (O) {
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(__resourceQuery) {/* global __resourceQuery WorkerGlobalScope */
-var url = __webpack_require__(55);
-var stripAnsi = __webpack_require__(61);
-var log = __webpack_require__(63)
-var socket = __webpack_require__(64);
-var overlay = __webpack_require__(96);
+"use strict";
+/* WEBPACK VAR INJECTION */(function(__resourceQuery) {
+
+/* global __resourceQuery WorkerGlobalScope self */
+/* eslint prefer-destructuring: off */
+
+const url = __webpack_require__(55);
+const stripAnsi = __webpack_require__(61);
+const log = __webpack_require__(63).getLogger('webpack-dev-server');
+const socket = __webpack_require__(64);
+const overlay = __webpack_require__(96);
 
 function getCurrentScriptSource() {
-	// `document.currentScript` is the most accurate way to find the current script,
-	// but is not supported in all browsers.
-	if(document.currentScript)
-		return document.currentScript.getAttribute("src");
-	// Fall back to getting all scripts in the document.
-	var scriptElements = document.scripts || [];
-	var currentScript = scriptElements[scriptElements.length - 1];
-	if(currentScript)
-		return currentScript.getAttribute("src");
-	// Fail as there was no script to use.
-	throw new Error("[WDS] Failed to get current script source");
+  // `document.currentScript` is the most accurate way to find the current script,
+  // but is not supported in all browsers.
+  if (document.currentScript) { return document.currentScript.getAttribute('src'); }
+  // Fall back to getting all scripts in the document.
+  const scriptElements = document.scripts || [];
+  const currentScript = scriptElements[scriptElements.length - 1];
+  if (currentScript) { return currentScript.getAttribute('src'); }
+  // Fail as there was no script to use.
+  throw new Error('[WDS] Failed to get current script source.');
 }
 
-var urlParts;
-if(true) {
-	// If this bundle is inlined, use the resource query to get the correct url.
-	urlParts = url.parse(__resourceQuery.substr(1));
+let urlParts;
+let hotReload = true;
+if (typeof window !== 'undefined') {
+  const qs = window.location.search.toLowerCase();
+  hotReload = qs.indexOf('hotreload=false') === -1;
+}
+if (true) {
+  // If this bundle is inlined, use the resource query to get the correct url.
+  urlParts = url.parse(__resourceQuery.substr(1));
 } else {
-	// Else, get the url from the <script> this file was called with.
-	var scriptHost = getCurrentScriptSource();
-	scriptHost = scriptHost.replace(/\/[^\/]+$/, "");
-	urlParts = url.parse((scriptHost ? scriptHost : "/"), false, true);
+  // Else, get the url from the <script> this file was called with.
+  let scriptHost = getCurrentScriptSource();
+  // eslint-disable-next-line no-useless-escape
+  scriptHost = scriptHost.replace(/\/[^\/]+$/, '');
+  urlParts = url.parse((scriptHost || '/'), false, true);
 }
 
-var hot = false;
-var initial = true;
-var currentHash = "";
-var useWarningOverlay = false;
-var useErrorOverlay = false;
+if (!urlParts.port || urlParts.port === '0') {
+  urlParts.port = self.location.port;
+}
 
-var INFO = "info";
-var WARNING = "warning";
-var ERROR = "error";
-var NONE = "none";
+let hot = false;
+let initial = true;
+let currentHash = '';
+let useWarningOverlay = false;
+let useErrorOverlay = false;
+let useProgress = false;
+
+const INFO = 'info';
+const WARNING = 'warning';
+const ERROR = 'error';
+const NONE = 'none';
 
 // Set the default log level
 log.setDefaultLevel(INFO);
 
 // Send messages to the outside, so plugins can consume it.
 function sendMsg(type, data) {
-	if(
-		typeof self !== "undefined" &&
-		(typeof WorkerGlobalScope === "undefined" ||
-		!(self instanceof WorkerGlobalScope))
-	) {
-		self.postMessage({
-			type: "webpack" + type,
-			data: data
-		}, "*");
-	}
+  if (
+    typeof self !== 'undefined' &&
+  (typeof WorkerGlobalScope === 'undefined' ||
+  !(self instanceof WorkerGlobalScope))
+  ) {
+    self.postMessage({
+      type: `webpack${type}`,
+      data
+    }, '*');
+  }
 }
 
-var onSocketMsg = {
-	hot: function() {
-		hot = true;
-		log.info("[WDS] Hot Module Replacement enabled.");
-	},
-	invalid: function() {
-		log.info("[WDS] App updated. Recompiling...");
-		sendMsg("Invalid");
-	},
-	hash: function(hash) {
-		currentHash = hash;
-	},
-	"still-ok": function() {
-		log.info("[WDS] Nothing changed.")
-		if(useWarningOverlay || useErrorOverlay) overlay.clear();
-		sendMsg("StillOk");
-	},
-	"log-level": function(level) {
-		var hotCtx = __webpack_require__(101);
-		if(hotCtx.keys().length > 0) {
-			hotCtx("./log").setLogLevel(level);
-		}
-		switch(level) {
-			case INFO:
-			case ERROR:
-				log.setLevel(level);
-				break;
-			case WARNING:
-				log.setLevel("warn"); // loglevel's warning name is different from webpack's
-				break;
-			case NONE:
-				log.disableAll();
-				break;
-			default:
-				log.error("[WDS] Unknown clientLogLevel '" + level + "'");
-		}
-	},
-	"overlay": function(overlay) {
-		if(typeof document !== "undefined") {
-			if(typeof(overlay) === "boolean") {
-				useWarningOverlay = false;
-				useErrorOverlay = overlay;
-			} else if(overlay) {
-				useWarningOverlay = overlay.warnings;
-				useErrorOverlay = overlay.errors;
-			}
-		}
-	},
-	ok: function() {
-		sendMsg("Ok");
-		if(useWarningOverlay || useErrorOverlay) overlay.clear();
-		if(initial) return initial = false;
-		reloadApp();
-	},
-	"content-changed": function() {
-		log.info("[WDS] Content base changed. Reloading...")
-		self.location.reload();
-	},
-	warnings: function(warnings) {
-		log.warn("[WDS] Warnings while compiling.");
-		var strippedWarnings = warnings.map(function(warning) {
-			return stripAnsi(warning);
-		});
-		sendMsg("Warnings", strippedWarnings);
-		for(var i = 0; i < strippedWarnings.length; i++)
-			log.warn(strippedWarnings[i]);
-		if(useWarningOverlay) overlay.showMessage(warnings);
+const onSocketMsg = {
+  hot() {
+    hot = true;
+    log.info('[WDS] Hot Module Replacement enabled.');
+  },
+  invalid() {
+    log.info('[WDS] App updated. Recompiling...');
+    // fixes #1042. overlay doesn't clear if errors are fixed but warnings remain.
+    if (useWarningOverlay || useErrorOverlay) overlay.clear();
+    sendMsg('Invalid');
+  },
+  hash(hash) {
+    currentHash = hash;
+  },
+  'still-ok': function stillOk() {
+    log.info('[WDS] Nothing changed.');
+    if (useWarningOverlay || useErrorOverlay) overlay.clear();
+    sendMsg('StillOk');
+  },
+  'log-level': function logLevel(level) {
+    const hotCtx = __webpack_require__(101);
+    const contextKeys = hotCtx.keys();
+    if (contextKeys.length && contextKeys['./log']) {
+      hotCtx('./log').setLogLevel(level);
+    }
+    switch (level) {
+      case INFO:
+      case ERROR:
+        log.setLevel(level);
+        break;
+      case WARNING:
+        // loglevel's warning name is different from webpack's
+        log.setLevel('warn');
+        break;
+      case NONE:
+        log.disableAll();
+        break;
+      default:
+        log.error(`[WDS] Unknown clientLogLevel '${level}'`);
+    }
+  },
+  overlay(value) {
+    if (typeof document !== 'undefined') {
+      if (typeof (value) === 'boolean') {
+        useWarningOverlay = false;
+        useErrorOverlay = value;
+      } else if (value) {
+        useWarningOverlay = value.warnings;
+        useErrorOverlay = value.errors;
+      }
+    }
+  },
+  progress(progress) {
+    if (typeof document !== 'undefined') {
+      useProgress = progress;
+    }
+  },
+  'progress-update': function progressUpdate(data) {
+    if (useProgress) log.info(`[WDS] ${data.percent}% - ${data.msg}.`);
+  },
+  ok() {
+    sendMsg('Ok');
+    if (useWarningOverlay || useErrorOverlay) overlay.clear();
+    if (initial) return initial = false; // eslint-disable-line no-return-assign
+    reloadApp();
+  },
+  'content-changed': function contentChanged() {
+    log.info('[WDS] Content base changed. Reloading...');
+    self.location.reload();
+  },
+  warnings(warnings) {
+    log.warn('[WDS] Warnings while compiling.');
+    const strippedWarnings = warnings.map(warning => stripAnsi(warning));
+    sendMsg('Warnings', strippedWarnings);
+    for (let i = 0; i < strippedWarnings.length; i++) { log.warn(strippedWarnings[i]); }
+    if (useWarningOverlay) overlay.showMessage(warnings);
 
-		if(initial) return initial = false;
-		reloadApp();
-	},
-	errors: function(errors) {
-		log.error("[WDS] Errors while compiling. Reload prevented.");
-		var strippedErrors = errors.map(function(error) {
-			return stripAnsi(error);
-		});
-		sendMsg("Errors", strippedErrors);
-		for(var i = 0; i < strippedErrors.length; i++)
-			log.error(strippedErrors[i]);
-		if(useErrorOverlay) overlay.showMessage(errors);
-	},
-	error: function(error) {
-		log.error(error);
-	},
-	close: function() {
-		log.error("[WDS] Disconnected!");
-		sendMsg("Close");
-	}
+    if (initial) return initial = false; // eslint-disable-line no-return-assign
+    reloadApp();
+  },
+  errors(errors) {
+    log.error('[WDS] Errors while compiling. Reload prevented.');
+    const strippedErrors = errors.map(error => stripAnsi(error));
+    sendMsg('Errors', strippedErrors);
+    for (let i = 0; i < strippedErrors.length; i++) { log.error(strippedErrors[i]); }
+    if (useErrorOverlay) overlay.showMessage(errors);
+  },
+  error(error) {
+    log.error(error);
+  },
+  close() {
+    log.error('[WDS] Disconnected!');
+    sendMsg('Close');
+  }
 };
 
-var hostname = urlParts.hostname;
-var protocol = urlParts.protocol;
+let hostname = urlParts.hostname;
+let protocol = urlParts.protocol;
 
 
-//check ipv4 and ipv6 `all hostname`
-if(hostname === "0.0.0.0" || hostname === "::") {
-	// why do we need this check?
-	// hostname n/a for file protocol (example, when using electron, ionic)
-	// see: https://github.com/webpack/webpack-dev-server/pull/384
-	if(self.location.hostname && !!~self.location.protocol.indexOf("http")) {
-		hostname = self.location.hostname;
-	}
+// check ipv4 and ipv6 `all hostname`
+if (hostname === '0.0.0.0' || hostname === '::') {
+  // why do we need this check?
+  // hostname n/a for file protocol (example, when using electron, ionic)
+  // see: https://github.com/webpack/webpack-dev-server/pull/384
+  // eslint-disable-next-line no-bitwise
+  if (self.location.hostname && !!~self.location.protocol.indexOf('http')) {
+    hostname = self.location.hostname;
+  }
 }
 
 // `hostname` can be empty when the script path is relative. In that case, specifying
 // a protocol would result in an invalid URL.
 // When https is used in the app, secure websockets are always necessary
 // because the browser doesn't accept non-secure websockets.
-if(hostname && (self.location.protocol === "https:" || urlParts.hostname === "0.0.0.0")) {
-	protocol = self.location.protocol;
+if (hostname && (self.location.protocol === 'https:' || urlParts.hostname === '0.0.0.0')) {
+  protocol = self.location.protocol;
 }
 
-var socketUrl = url.format({
-	protocol: protocol,
-	auth: urlParts.auth,
-	hostname: hostname,
-	port: (urlParts.port === "0") ? self.location.port : urlParts.port,
-	pathname: urlParts.path == null || urlParts.path === "/" ? "/sockjs-node" : urlParts.path
+const socketUrl = url.format({
+  protocol,
+  auth: urlParts.auth,
+  hostname,
+  port: urlParts.port,
+  pathname: urlParts.path == null || urlParts.path === '/' ? '/sockjs-node' : urlParts.path
 });
 
 socket(socketUrl, onSocketMsg);
 
-var isUnloading = false;
-self.addEventListener("beforeunload", function() {
-	isUnloading = true;
+let isUnloading = false;
+self.addEventListener('beforeunload', () => {
+  isUnloading = true;
 });
 
 function reloadApp() {
-	if(isUnloading) {
-		return;
-	}
-	if(hot) {
-		log.info("[WDS] App hot update...");
-		var hotEmitter = __webpack_require__(103);
-		hotEmitter.emit("webpackHotUpdate", currentHash);
-		if(typeof self !== "undefined" && self.window) {
-			// broadcast update to window
-			self.postMessage("webpackHotUpdate" + currentHash, "*");
-		}
-	} else {
-		log.info("[WDS] App updated. Reloading...");
-		self.location.reload();
-	}
+  if (isUnloading || !hotReload) {
+    return;
+  }
+  if (hot) {
+    log.info('[WDS] App hot update...');
+    // eslint-disable-next-line global-require
+    const hotEmitter = __webpack_require__(103);
+    hotEmitter.emit('webpackHotUpdate', currentHash);
+    if (typeof self !== 'undefined' && self.window) {
+      // broadcast update to window
+      self.postMessage(`webpackHotUpdate${currentHash}`, '*');
+    }
+  } else {
+    log.info('[WDS] App updated. Reloading...');
+    self.location.reload();
+  }
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, "?http://localhost:8080"))
@@ -5732,21 +5754,20 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
     }
 }(this, function () {
     "use strict";
+
+    // Slightly dubious tricks to cut down minimized file size
     var noop = function() {};
     var undefinedType = "undefined";
 
-    function realMethod(methodName) {
-        if (typeof console === undefinedType) {
-            return false; // We can't build a real method without a console to log to
-        } else if (console[methodName] !== undefined) {
-            return bindMethod(console, methodName);
-        } else if (console.log !== undefined) {
-            return bindMethod(console, 'log');
-        } else {
-            return noop;
-        }
-    }
+    var logMethods = [
+        "trace",
+        "debug",
+        "info",
+        "warn",
+        "error"
+    ];
 
+    // Cross-browser bind equivalent that works at least back to IE6
     function bindMethod(obj, methodName) {
         var method = obj[methodName];
         if (typeof method.bind === 'function') {
@@ -5763,16 +5784,25 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
         }
     }
 
-    // these private functions always need `this` to be set properly
+    // Build the best logging method possible for this env
+    // Wherever possible we want to bind, not wrap, to preserve stack traces
+    function realMethod(methodName) {
+        if (methodName === 'debug') {
+            methodName = 'log';
+        }
 
-    function enableLoggingWhenConsoleArrives(methodName, level, loggerName) {
-        return function () {
-            if (typeof console !== undefinedType) {
-                replaceLoggingMethods.call(this, level, loggerName);
-                this[methodName].apply(this, arguments);
-            }
-        };
+        if (typeof console === undefinedType) {
+            return false; // No method possible, for now - fixed later by enableLoggingWhenConsoleArrives
+        } else if (console[methodName] !== undefined) {
+            return bindMethod(console, methodName);
+        } else if (console.log !== undefined) {
+            return bindMethod(console, 'log');
+        } else {
+            return noop;
+        }
     }
+
+    // These private functions always need `this` to be set properly
 
     function replaceLoggingMethods(level, loggerName) {
         /*jshint validthis:true */
@@ -5782,21 +5812,29 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
                 noop :
                 this.methodFactory(methodName, level, loggerName);
         }
+
+        // Define log.log as an alias for log.debug
+        this.log = this.debug;
     }
 
+    // In old IE versions, the console isn't present until you first open it.
+    // We build realMethod() replacements here that regenerate logging methods
+    function enableLoggingWhenConsoleArrives(methodName, level, loggerName) {
+        return function () {
+            if (typeof console !== undefinedType) {
+                replaceLoggingMethods.call(this, level, loggerName);
+                this[methodName].apply(this, arguments);
+            }
+        };
+    }
+
+    // By default, we use closely bound real methods wherever possible, and
+    // otherwise we wait for a console to appear, and then try again.
     function defaultMethodFactory(methodName, level, loggerName) {
         /*jshint validthis:true */
         return realMethod(methodName) ||
                enableLoggingWhenConsoleArrives.apply(this, arguments);
     }
-
-    var logMethods = [
-        "trace",
-        "debug",
-        "info",
-        "warn",
-        "error"
-    ];
 
     function Logger(name, defaultLevel, factory) {
       var self = this;
@@ -5808,6 +5846,8 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
       function persistLevelIfPossible(levelNum) {
           var levelName = (logMethods[levelNum] || 'silent').toUpperCase();
+
+          if (typeof window === undefinedType) return;
 
           // Use localStorage if available
           try {
@@ -5825,10 +5865,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
       function getPersistedLevel() {
           var storedLevel;
 
+          if (typeof window === undefinedType) return;
+
           try {
               storedLevel = window.localStorage[storageKey];
           } catch (ignore) {}
 
+          // Fallback to cookies if local storage gives us nothing
           if (typeof storedLevel === undefinedType) {
               try {
                   var cookie = window.document.cookie;
@@ -5850,7 +5893,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
       /*
        *
-       * Public API
+       * Public logger API - see https://github.com/pimterry/loglevel for details
        *
        */
 
@@ -5905,7 +5948,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
     /*
      *
-     * Package-level API
+     * Top-level API
      *
      */
 
@@ -5944,44 +5987,46 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 /* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SockJS = __webpack_require__(65);
+"use strict";
 
-var retries = 0;
-var sock = null;
+
+const SockJS = __webpack_require__(65);
+
+let retries = 0;
+let sock = null;
 
 function socket(url, handlers) {
-	sock = new SockJS(url);
+  sock = new SockJS(url);
 
-	sock.onopen = function() {
-		retries = 0;
-	}
+  sock.onopen = function onopen() {
+    retries = 0;
+  };
 
-	sock.onclose = function() {
-		if(retries === 0)
-			handlers.close();
+  sock.onclose = function onclose() {
+    if (retries === 0) { handlers.close(); }
 
-		// Try to reconnect.
-		sock = null;
+    // Try to reconnect.
+    sock = null;
 
-		// After 10 retries stop trying, to prevent logspam.
-		if(retries <= 10) {
-			// Exponentially increase timeout to reconnect.
-			// Respectfully copied from the package `got`.
-			var retryInMs = 1000 * Math.pow(2, retries) + Math.random() * 100;
-			retries += 1;
+    // After 10 retries stop trying, to prevent logspam.
+    if (retries <= 10) {
+      // Exponentially increase timeout to reconnect.
+      // Respectfully copied from the package `got`.
+      // eslint-disable-next-line no-mixed-operators, no-restricted-properties
+      const retryInMs = 1000 * Math.pow(2, retries) + Math.random() * 100;
+      retries += 1;
 
-			setTimeout(function() {
-				socket(url, handlers);
-			}, retryInMs);
-		}
-	};
+      setTimeout(() => {
+        socket(url, handlers);
+      }, retryInMs);
+    }
+  };
 
-	sock.onmessage = function(e) {
-		// This assumes that all data sent via the websocket is JSON.
-		var msg = JSON.parse(e.data);
-		if(handlers[msg.type])
-			handlers[msg.type](msg.data);
-	};
+  sock.onmessage = function onmessage(e) {
+    // This assumes that all data sent via the websocket is JSON.
+    const msg = JSON.parse(e.data);
+    if (handlers[msg.type]) { handlers[msg.type](msg.data); }
+  };
 }
 
 module.exports = socket;
@@ -8812,132 +8857,137 @@ module.exports = FacadeJS;
 /* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 // The error overlay is inspired (and mostly copied) from Create React App (https://github.com/facebookincubator/create-react-app)
 // They, in turn, got inspired by webpack-hot-middleware (https://github.com/glenjamin/webpack-hot-middleware).
-var ansiHTML = __webpack_require__(97);
-var Entities = __webpack_require__(98).AllHtmlEntities;
-var entities = new Entities();
 
-var colors = {
-	reset: ["transparent", "transparent"],
-	black: "181818",
-	red: "E36049",
-	green: "B3CB74",
-	yellow: "FFD080",
-	blue: "7CAFC2",
-	magenta: "7FACCA",
-	cyan: "C3C2EF",
-	lightgrey: "EBE7E3",
-	darkgrey: "6D7891"
+const ansiHTML = __webpack_require__(97);
+const Entities = __webpack_require__(98).AllHtmlEntities;
+
+const entities = new Entities();
+
+const colors = {
+  reset: ['transparent', 'transparent'],
+  black: '181818',
+  red: 'E36049',
+  green: 'B3CB74',
+  yellow: 'FFD080',
+  blue: '7CAFC2',
+  magenta: '7FACCA',
+  cyan: 'C3C2EF',
+  lightgrey: 'EBE7E3',
+  darkgrey: '6D7891'
 };
 ansiHTML.setColors(colors);
 
 function createOverlayIframe(onIframeLoad) {
-	var iframe = document.createElement("iframe");
-	iframe.id = "webpack-dev-server-client-overlay";
-	iframe.src = "about:blank";
-	iframe.style.position = "fixed";
-	iframe.style.left = 0;
-	iframe.style.top = 0;
-	iframe.style.right = 0;
-	iframe.style.bottom = 0;
-	iframe.style.width = "100vw";
-	iframe.style.height = "100vh";
-	iframe.style.border = "none";
-	iframe.style.zIndex = 9999999999;
-	iframe.onload = onIframeLoad;
-	return iframe;
+  const iframe = document.createElement('iframe');
+  iframe.id = 'webpack-dev-server-client-overlay';
+  iframe.src = 'about:blank';
+  iframe.style.position = 'fixed';
+  iframe.style.left = 0;
+  iframe.style.top = 0;
+  iframe.style.right = 0;
+  iframe.style.bottom = 0;
+  iframe.style.width = '100vw';
+  iframe.style.height = '100vh';
+  iframe.style.border = 'none';
+  iframe.style.zIndex = 9999999999;
+  iframe.onload = onIframeLoad;
+  return iframe;
 }
 
 function addOverlayDivTo(iframe) {
-	var div = iframe.contentDocument.createElement("div");
-	div.id = "webpack-dev-server-client-overlay-div";
-	div.style.position = "fixed";
-	div.style.boxSizing = "border-box";
-	div.style.left = 0;
-	div.style.top = 0;
-	div.style.right = 0;
-	div.style.bottom = 0;
-	div.style.width = "100vw";
-	div.style.height = "100vh";
-	div.style.backgroundColor = "black";
-	div.style.color = "#E8E8E8";
-	div.style.fontFamily = "Menlo, Consolas, monospace";
-	div.style.fontSize = "large";
-	div.style.padding = "2rem";
-	div.style.lineHeight = "1.2";
-	div.style.whiteSpace = "pre-wrap";
-	div.style.overflow = "auto";
-	iframe.contentDocument.body.appendChild(div);
-	return div;
+  const div = iframe.contentDocument.createElement('div');
+  div.id = 'webpack-dev-server-client-overlay-div';
+  div.style.position = 'fixed';
+  div.style.boxSizing = 'border-box';
+  div.style.left = 0;
+  div.style.top = 0;
+  div.style.right = 0;
+  div.style.bottom = 0;
+  div.style.width = '100vw';
+  div.style.height = '100vh';
+  div.style.backgroundColor = 'black';
+  div.style.color = '#E8E8E8';
+  div.style.fontFamily = 'Menlo, Consolas, monospace';
+  div.style.fontSize = 'large';
+  div.style.padding = '2rem';
+  div.style.lineHeight = '1.2';
+  div.style.whiteSpace = 'pre-wrap';
+  div.style.overflow = 'auto';
+  iframe.contentDocument.body.appendChild(div);
+  return div;
 }
 
-var overlayIframe = null;
-var overlayDiv = null;
-var lastOnOverlayDivReady = null;
+let overlayIframe = null;
+let overlayDiv = null;
+let lastOnOverlayDivReady = null;
 
 function ensureOverlayDivExists(onOverlayDivReady) {
-	if(overlayDiv) {
-	// Everything is ready, call the callback right away.
-		onOverlayDivReady(overlayDiv);
-		return;
-	}
+  if (overlayDiv) {
+    // Everything is ready, call the callback right away.
+    onOverlayDivReady(overlayDiv);
+    return;
+  }
 
-	// Creating an iframe may be asynchronous so we'll schedule the callback.
-	// In case of multiple calls, last callback wins.
-	lastOnOverlayDivReady = onOverlayDivReady;
+  // Creating an iframe may be asynchronous so we'll schedule the callback.
+  // In case of multiple calls, last callback wins.
+  lastOnOverlayDivReady = onOverlayDivReady;
 
-	if(overlayIframe) {
-		// We're already creating it.
-		return;
-	}
+  if (overlayIframe) {
+    // We're already creating it.
+    return;
+  }
 
-	// Create iframe and, when it is ready, a div inside it.
-	overlayIframe = createOverlayIframe(function onIframeLoad() {
-		overlayDiv = addOverlayDivTo(overlayIframe);
-		// Now we can talk!
-		lastOnOverlayDivReady(overlayDiv);
-	});
+  // Create iframe and, when it is ready, a div inside it.
+  overlayIframe = createOverlayIframe(() => {
+    overlayDiv = addOverlayDivTo(overlayIframe);
+    // Now we can talk!
+    lastOnOverlayDivReady(overlayDiv);
+  });
 
-	// Zalgo alert: onIframeLoad() will be called either synchronously
-	// or asynchronously depending on the browser.
-	// We delay adding it so `overlayIframe` is set when `onIframeLoad` fires.
-	document.body.appendChild(overlayIframe);
+  // Zalgo alert: onIframeLoad() will be called either synchronously
+  // or asynchronously depending on the browser.
+  // We delay adding it so `overlayIframe` is set when `onIframeLoad` fires.
+  document.body.appendChild(overlayIframe);
 }
 
 function showMessageOverlay(message) {
-	ensureOverlayDivExists(function onOverlayDivReady(overlayDiv) {
-		// Make it look similar to our terminal.
-		overlayDiv.innerHTML =
-			"<span style=\"color: #" +
-			colors.red +
-			"\">Failed to compile.</span><br><br>" +
-			ansiHTML(entities.encode(message));
-	});
+  ensureOverlayDivExists((div) => {
+    // Make it look similar to our terminal.
+    div.innerHTML =
+   `<span style="color: #${
+     colors.red
+   }">Failed to compile.</span><br><br>${
+     ansiHTML(entities.encode(message))}`;
+  });
 }
 
 function destroyErrorOverlay() {
-	if(!overlayDiv) {
-		// It is not there in the first place.
-		return;
-	}
+  if (!overlayDiv) {
+    // It is not there in the first place.
+    return;
+  }
 
-	// Clean up and reset internal state.
-	document.body.removeChild(overlayIframe);
-	overlayDiv = null;
-	overlayIframe = null;
-	lastOnOverlayDivReady = null;
+  // Clean up and reset internal state.
+  document.body.removeChild(overlayIframe);
+  overlayDiv = null;
+  overlayIframe = null;
+  lastOnOverlayDivReady = null;
 }
 
 // Successful compilation.
 exports.clear = function handleSuccess() {
-	destroyErrorOverlay();
-}
+  destroyErrorOverlay();
+};
 
 // Compilation with errors (e.g. syntax error or missing modules).
 exports.showMessage = function handleMessage(messages) {
-	showMessageOverlay(messages[0]);
-}
+  showMessageOverlay(messages[0]);
+};
 
 
 /***/ }),
