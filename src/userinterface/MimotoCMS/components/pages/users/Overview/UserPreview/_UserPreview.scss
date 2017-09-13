@@ -15,17 +15,35 @@ div.MimotoCMS_users_overview_UserPreview {
 div.MimotoCMS_users_overview_UserPreview-info {
     flex: auto;
     text-align: left;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
-    div.MimotoCMS_users_overview_UserPreview-name {
-        font-size: 20px;
-        font-weight: bold;
-        color: $tower-gray;
+    div.MimotoCMS_users_overview_UserPreview-avatar {
+        flex: none;
+        margin-right: 20px;
     }
 
-    div.MimotoCMS_users_overview_UserPreview-email {
-        font-style: italic;
+        img.MimotoCMS_users_overview_UserPreview-avatar {
+            width: 80px;
+        }
+
+    div.MimotoCMS_users_overview_UserPreview-details {
+        flex: auto;
     }
+
+        div.MimotoCMS_users_overview_UserPreview-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: $tower-gray;
+        }
+
+        div.MimotoCMS_users_overview_UserPreview-email {
+            font-style: italic;
+        }
 
 div.MimotoCMS_users_overview_UserPreview-menu {
     flex: auto;

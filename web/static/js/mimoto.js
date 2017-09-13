@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "a88c55b9e374116d5adf";
+/******/ 	__webpack_require__.h = "f2657df08ef15f5ceb29";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -25432,14 +25432,14 @@ module.exports.prototype = {
                     // isolate
                     var element = newDocument.querySelector('body').firstChild;
 
-                    // register directives
-                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
-
                     // reset scroll
                     layer_popup.scrollTop = 0;
 
                     // add to dom
                     popup_content.append(element);
+
+                    // register directives
+                    Mimoto.display.parseInterface(element);
 
                     // collect and execute scripts
                     var aResponseScripts = element.querySelectorAll('script');
@@ -28762,6 +28762,8 @@ module.exports.prototype = {
         this._elPreview = elFormField.querySelector('[data-mimoto-form-input-image-preview]');
         this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-image-persistent]');
         this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-image-remove]');
+
+        Mimoto.warn(elFormField.querySelector('[data-mimoto-form-input-image-upload]'));
 
         // setup
         this._dropzone = new Dropzone('[data-mimoto-form-input-image-upload]', {

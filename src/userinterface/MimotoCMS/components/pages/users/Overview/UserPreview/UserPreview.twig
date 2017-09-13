@@ -1,11 +1,16 @@
 <div class="MimotoCMS_users_overview_UserPreview" {{ Mimoto.realtime() }}>
 
     <div class="MimotoCMS_users_overview_UserPreview-info">
-        <div class="MimotoCMS_users_overview_UserPreview-name">
-            <span {{ Mimoto.realtime('firstName') }}>{{ Mimoto.data('firstName') }}</span>
-            <span {{ Mimoto.realtime('lastName') }}>{{ Mimoto.data('lastName') }}</span>
+        <div class="MimotoCMS_users_overview_UserPreview-avatar {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('avatar') }}>
+            <img class="MimotoCMS_users_overview_UserPreview-avatar" src="{{ Mimoto.data('avatar') }}">
         </div>
-        <div class="MimotoCMS_users_overview_UserPreview-email" {{ Mimoto.realtime('email') }}>{{ Mimoto.data('email') }}</div>
+        <div class="MimotoCMS_users_overview_UserPreview-details">
+            <div class="MimotoCMS_users_overview_UserPreview-name">
+                <span {{ Mimoto.realtime('firstName') }}>{{ Mimoto.data('firstName') }}</span>
+                <span {{ Mimoto.realtime('lastName') }}>{{ Mimoto.data('lastName') }}</span>
+            </div>
+            <div class="MimotoCMS_users_overview_UserPreview-email" {{ Mimoto.realtime('email') }}>{{ Mimoto.data('email') }}</div>
+        </div>
     </div>
 
     <div class="MimotoCMS_users_overview_UserPreview-menu">

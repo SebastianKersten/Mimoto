@@ -54,6 +54,8 @@ module.exports.prototype = {
         this._elPreview = elFormField.querySelector('[data-mimoto-form-input-image-preview]');
         this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-image-persistent]');
         this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-image-remove]');
+        //this._elDropzone
+
 
 
         // setup

@@ -210,14 +210,14 @@ module.exports.prototype = {
                     // isolate
                     let element = newDocument.querySelector('body').firstChild;
 
-                    // register directives
-                    Mimoto.display.parseInterface(newDocument.querySelector('body'));
-
                     // reset scroll
                     layer_popup.scrollTop = 0;
 
                     // add to dom
                     popup_content.append(element);
+
+                    // register directives
+                    Mimoto.display.parseInterface(element);
 
                     // collect and execute scripts
                     let aResponseScripts = element.querySelectorAll('script');
