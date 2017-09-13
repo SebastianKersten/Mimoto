@@ -693,6 +693,9 @@ class EntityRepository
                 ':id' => $entity->getId()
             );
             $stmt->execute($params);
+
+
+
         }
     }
 
@@ -1083,5 +1086,27 @@ class EntityRepository
             ':id' => $existingItem->getId()
         );
         $stmt->execute($params);
+
+
+        // --- cleanup file if no other connections ---
+
+        // read
+        $eEntity = Mimoto::service('data')->get($existingItem->getChildEntityTypeName(), $existingItem->getChildId());
+        $aParents = $this->getAllParents($eEntity);
+
+        // verify and cleanup
+        if (empty($aParents)) Mimoto::service('data')->delete($eEntity);
+
+        // --- cleanup files
+
+        if ($eEntity->getEntityTypeName() == CoreConfig::MIMOTO_FILE)
+        {
+            // composer
+            $sFile = Mimoto::value('config')->media->upload_dir.$eEntity->get('name');
+
+            // verify
+            if (file_exists($sFile)) { unlink($sFile); }
+        }
+
     }
 }
