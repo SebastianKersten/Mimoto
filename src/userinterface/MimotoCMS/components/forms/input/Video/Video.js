@@ -1,5 +1,5 @@
 /**
- * Mimoto - InputField - Image
+ * Mimoto - InputField - Video
  *
  * @author Sebastian Kersten (@supertaboo)
  */
@@ -50,24 +50,24 @@ module.exports.prototype = {
         this._elInput = elInput;
 
         // register
-        this._elTemplate = elFormField.querySelector('[data-mimoto-form-input-image-template]');
-        this._elPreview = elFormField.querySelector('[data-mimoto-form-input-image-preview]');
-        this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-image-persistent]');
-        this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-image-remove]');
+        this._elTemplate = elFormField.querySelector('[data-mimoto-form-input-video-template]');
+        this._elPreview = elFormField.querySelector('[data-mimoto-form-input-video-preview]');
+        this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-video-persistent]');
+        this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-video-remove]');
         //this._elDropzone
 
 
 
         // setup
-        this._dropzone = new Dropzone('[data-mimoto-form-input-image-upload]', {
-            url: '/mimoto/media/upload/image',
+        this._dropzone = new Dropzone('[data-mimoto-form-input-video-upload]', {
+            url: '/mimoto/media/upload/video',
             maxFilesize: 1000,
             parallelUploads: 20,
             previewTemplate: this._elTemplate.parentNode.innerHTML,
             thumbnailWidth: 500,
             thumbnailHeight: null,
             previewsContainer: this._elPreview,
-            clickable: '[data-mimoto-form-input-image-trigger]'
+            clickable: '[data-mimoto-form-input-video-trigger]'
         });
 
         // cleanup
@@ -86,8 +86,8 @@ module.exports.prototype = {
                 if (registeredFile !== file) this._dropzone.removeFile(registeredFile);
             }
 
-            this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--show-preview');
-            this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
+            this._dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--show-preview');
+            this._dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
 
             // hide persistent
             this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
@@ -100,7 +100,7 @@ module.exports.prototype = {
 
         this._dropzone.on('thumbnail', function (file)
         {
-            this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--show-preview-image');
+            this._dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--show-preview-image');
 
         }.bind(this));
 
@@ -118,6 +118,9 @@ module.exports.prototype = {
             // show
             this._elRemoveButton.classList.remove('Mimoto_CoreCSS_hidden');
 
+            // show
+            this._showVideo(serverResponse.full_path);
+
         }.bind(this));
 
 
@@ -126,8 +129,8 @@ module.exports.prototype = {
             // clear value
             this.setValue(null);
 
-            this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview');
-            this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview-image');
+            this._dropzone.element.classList.remove('MimotoCMS_forms_input_VideoUpload--show-preview');
+            this._dropzone.element.classList.remove('MimotoCMS_forms_input_VideoUpload--show-preview-image');
 
             // hide
             this._elRemoveButton.classList.add('Mimoto_CoreCSS_hidden');
@@ -143,7 +146,7 @@ module.exports.prototype = {
         if (this.getValue())
         {
             // load
-            this._loadPersistentImage();
+            this._loadPersistentVideo();
         }
         else
         {
@@ -180,7 +183,7 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
-    _loadPersistentImage: function()
+    _loadPersistentVideo: function()
     {
         Mimoto.utils.callAPI({
             type: 'get',
@@ -189,11 +192,21 @@ module.exports.prototype = {
             {
                 if (resultData && resultData.file_id)
                 {
-                    // setup
-                    this._elPersistent.setAttribute('src', resultData.full_path);
+                    // show
+                    this._showVideo(resultData.full_path);
                 }
             }.bind(this)
         });
+    },
+
+    _showVideo: function(sFullPath)
+    {
+        // setup
+        this._elPersistent.src = sFullPath;
+        this._elPersistent.controls = true;
+
+        // load video
+        this._elPersistent.load();
     }
 
 }

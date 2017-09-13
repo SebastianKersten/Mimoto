@@ -1,34 +1,40 @@
 {% set sVideofieldId = Mimoto.meta('type')~"."~Mimoto.meta('id') %}
 {% set sFlatVideoFieldId = Mimoto.meta('type')~Mimoto.meta('id') %}
 
-{% embed "MimotoCMS/components/forms/FormField.twig" with {"type": "video", button:true, buttonLabel:'Upload video', buttonIcon:'', buttonClass:'js-'~sFlatVideoFieldId~'-video-upload-trigger' } %}
+{% embed "MimotoCMS/components/forms/FormField.twig" with {button:true, buttonLabel:'Upload video', buttonIcon:'', buttonAttribute:'data-mimoto-form-input-video-trigger' } %}
 
     {% block input %}
-        <div id="{{ Mimoto.meta('type')~"."~Mimoto.meta('id') }}">
-            <div class="MimotoCMS_forms_input_VideoUpload js-{{ sFlatVideoFieldId }}-video-upload">
 
-                <video id="js-{{ sFlatVideoFieldId }}-previewvideo" class="MimotoCMS_forms_input_VideoUpload-player" muted loop poster="">
+        <div data-mimoto-form-input-video-trigger class="MimotoCMS_forms_input_VideoUpload-fulltrigger">
+            <div data-mimoto-form-input-video-upload class="MimotoCMS_forms_input_VideoUpload">
+
+                <video data-mimoto-form-input-video-persistent class="MimotoCMS_forms_input_VideoUpload-player" muted loop poster="">
                     <source src="" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
 
+                <div class="MimotoCMS_forms_input_VideoUpload-trigger">
+                    <div class="MimotoCMS_forms_input_VideoUpload-trigger-button"><svg class="MimotoCMS_forms_input_VideoUpload-button-trigger-icon"><use xlink:href="#ico-plus"></use></svg></div>
+                    <p class="MimotoCMS_forms_input_VideoUpload-trigger-text">Click here or drop a video</p>
+                </div>
 
-                <div class="MimotoCMS_forms_input_VideoUpload-preview js-{{ sFlatVideoFieldId }}-video-upload-preview">
 
-                    <div class="MimotoCMS_forms_input_VideoUpload-preview-template js-{{ sFlatVideoFieldId }}-video-upload-preview-template">
-                        <img data-dz-thumbnail class="MimotoCMS_forms_input_VideoUpload-preview-video" />
+
+                <div data-mimoto-form-input-video-preview class="MimotoCMS_forms_input_VideoUpload-preview">
+                    <div data-mimoto-form-input-video-template class="MimotoCMS_forms_input_VideoUpload-preview-template">
+                        <img data-dz-thumbnail class="MimotoCMS_forms_input_VideoUpload-preview-image" />
                         <div class="MimotoCMS_forms_input_VideoUpload-preview-upload-progress">
-                            <div class="MimotoCMS_forms_input_VideoUpload-preview-upload-progess-bar" data-dz-uploadprogress></div>
-                        </div>
-                        <div class="MimotoCMS_forms_input_VideoUpload-preview-button">
-                            {{ Mimoto.module('MimotoCMS_modules_Button', { label: 'Remove', attributes: [{"attribute": "dz-remove"}] }) }}
+                            <div data-dz-uploadprogress class="MimotoCMS_forms_input_VideoUpload-preview-upload-progess-bar"></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}" class=".js-{{ sFlatVideoFieldId }}-video-upload-value"/>
-        </div>
 
+            </div>
+
+            <input {{ Mimoto.input() }} type="hidden" value="{{ Mimoto.value() }}"/>
+            
+        </div>
+        <div data-mimoto-form-input-video-remove class="MimotoCMS_forms_input_VideoUpload-delete {% if Mimoto.value() is empty %}hidden{% endif %}">Remove video</div>
     {% endblock %}
 
 {% endembed %}

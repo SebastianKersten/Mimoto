@@ -3,13 +3,6 @@ div.MimotoCMS_forms_input_VideoUpload {
     margin: 0 0 10px;
     border: 1px solid $pale-slate;
     background-color: $mercury;
-
-    &::after {
-        position: static;
-        content: '';
-        display: block;
-        padding-bottom: calc(100% * 9 / 16);
-    }
 }
 
 div.MimotoCMS_forms_input_VideoUpload--show-preview {
@@ -28,50 +21,45 @@ div.MimotoCMS_forms_input_VideoUpload--show-preview-image {
     img.MimotoCMS_forms_input_VideoUpload-preview-image {
         opacity: 1;
     }
-
-    //div.MimotoCMS_forms_input_VideoUpload-trigger {
-    //    visibility: hidden;
-    //}
 }
 
-//div.MimotoCMS_forms_input_VideoUpload-trigger {
-//    position: absolute;
-//    display: flex;
-//    justify-content: center;
-//    align-items: center;
-//    flex-direction: column;
-//    width: 100%;
-//    height: 100%;
-//    cursor: pointer;
-//    z-index: 1;
-//}
-//
-//div.MimotoCMS_forms_input_VideoUpload-trigger-button {
-//    overflow: hidden;
-//    width: 35px;
-//    height: 35px;
-//    margin: 0 auto 15px;
-//    border-radius: 100%;
-//    background-color: $silver-chalice;
-//}
-//
-//svg.MimotoCMS_forms_input_VideoUpload-trigger-button-icon {
-//    display: block;
-//    width: 17px;
-//    height: 17px;
-//    margin: 9px;
-//    fill: $mercury;
-//}
-//
-//.MimotoCMS_forms_input_VideoUpload-trigger-text {
-//    font-size: rem-calc(14px);
-//    font-weight: 500;
-//    text-align: center;
-//    color: rgba($black, .5);
-//}
+div.MimotoCMS_forms_input_VideoUpload-fulltrigger {
+    cursor: pointer;
+}
+
+
+div.MimotoCMS_forms_input_VideoUpload-trigger {
+    padding: 120px 20px;
+    cursor: pointer;
+}
+
+    div.MimotoCMS_forms_input_VideoUpload-trigger-button {
+        overflow: hidden;
+        width: 35px;
+        height: 35px;
+        margin: 0 auto 15px;
+        border-radius: 100%;
+        background-color: $silver-chalice;
+    }
+
+        svg.MimotoCMS_forms_input_VideoUpload-trigger-button-icon {
+            display: block;
+            width: 17px;
+            height: 17px;
+            margin: 9px;
+            fill: $mercury;
+            color: #ffffff;
+        }
+
+        p.MimotoCMS_forms_input_VideoUpload-trigger-text {
+            font-size: rem-calc(14px);
+            font-weight: 500;
+            text-align: center;
+            color: rgba($black, .5);
+        }
 
 div.MimotoCMS_forms_input_VideoUpload-preview {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     display: none;
@@ -93,7 +81,7 @@ div.MimotoCMS_forms_input_VideoUpload-preview-button {
 }
 
 img.MimotoCMS_forms_input_VideoUpload-preview-image {
-    position: relative;
+    position: absolute;
     top: 50%;
     display: block;
     width: 100%;
@@ -129,4 +117,20 @@ video.MimotoCMS_forms_input_VideoUpload-player {
     left: 0;
     width: 100%;
     z-index: 0;
+}
+
+div.MimotoCMS_forms_input_VideoUpload-delete {
+    text-align: right;
+    font-size: 12px;
+    color: #858585;
+    font-style: italic;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    & > .hidden {
+        display: none;
+    }
 }

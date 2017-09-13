@@ -76,12 +76,12 @@ ul.MimotoCMS_interface_Header-menu {
 
                 img.MimotoCMS_interface_Header-menu-user-image {
                     display: inline-block;
-                    width: 49px;
-                    height: 49px;
+                    max-width: 49px;
+                    max-height: 49px;
 
                     @include breakpoint(large up) {
-                        width: 63px;
-                        height: 63px;
+                        max-width: 63px;
+                        max-height: 63px;
                     }
                 }
 

@@ -45,12 +45,13 @@ div.MimotoCMS_forms_input_ImageUpload-fulltrigger {
             background-color: $silver-chalice;
         }
 
-            div.MimotoCMS_forms_input_ImageUpload-trigger-button-icon {
+            svg.MimotoCMS_forms_input_ImageUpload-trigger-button-icon {
                 display: block;
                 width: 17px;
                 height: 17px;
                 margin: 9px;
                 fill: $mercury;
+                color: #ffffff;
             }
 
         p.MimotoCMS_forms_input_ImageUpload-trigger-text {
