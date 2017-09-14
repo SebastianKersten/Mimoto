@@ -3,7 +3,7 @@ const webpackMerge = require('webpack-merge');
 const { resolve } = require('path');
 const baseConfig = require('./base');
 
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+//const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 
@@ -64,25 +64,25 @@ module.exports = function(env) {
             ]
         },
         plugins: [
-            new webpack.HotModuleReplacementPlugin(),
+            //new webpack.HotModuleReplacementPlugin(),
             //new webpack.NamedModulesPlugin(),
             new WriteFilePlugin({
                 log: false,
                 useHashIndex: true
             }),
-            new BrowserSyncPlugin(
-                // BrowserSync options
-                {
-                    host: 'localhost',
-                    port: 3000,
-                    proxy: 'http://mimoto.aimless',
-                    open: true
-                },
-                // Plugin options
-                {
-                    // Prevent BrowserSync from reloading the page and let Webpack Dev Server take care of this
-                    reload: true
-                })
+            // new BrowserSyncPlugin(
+            //     // BrowserSync options
+            //     {
+            //         host: 'localhost',
+            //         port: 3000,
+            //         proxy: 'http://mimoto.aimless',
+            //         open: true
+            //     },
+            //     // Plugin options
+            //     {
+            //         // Prevent BrowserSync from reloading the page and let Webpack Dev Server take care of this
+            //         reload: true
+            //     })
             //new BrowserSyncPlugin(
             //    // BrowserSync options
             //    {

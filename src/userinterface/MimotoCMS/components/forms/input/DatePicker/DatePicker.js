@@ -62,8 +62,8 @@ module.exports.prototype = {
         });
 
         // configure
-        this._elInput.addEventListener('input', function(e) { this._correctColorValue(); }.bind(this));
-        this._elInput.addEventListener('change', function(e) { this._correctColorValue(); }.bind(this));
+        this._elInput.addEventListener('input', function(e) { this._fBroadcast(); }.bind(this));
+        this._elInput.addEventListener('change', function(e) { this._fBroadcast(); }.bind(this));
     },
 
 

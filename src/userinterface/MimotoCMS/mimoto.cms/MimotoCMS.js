@@ -8,7 +8,7 @@
 
 
 let Header = require('./components/Header');
-let TabMenu = require('./../modules/TabMenu/TabMenu');
+let TabMenu = require('./../modules/Tabmenu/Tabmenu');
 
 
 module.exports = function()
