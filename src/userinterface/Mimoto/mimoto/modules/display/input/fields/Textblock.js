@@ -97,17 +97,17 @@ module.exports.prototype = {
         let $valueHolder = $('js-' + sFlatFieldId + '-textblock-value', $form);
 
 
-        //console.warn('fieldInput', fieldInput.attr('data-mimoto-input-formattingoptions'));
+        //console.warn('fieldInput', fieldInput.attr('data-mimoto-form-input-formattingoptions'));
         //var fieldForFormattingOptions = $('[data-mimoto-form-field="' + sInputFieldId + '"]', $form);
 
-
+        let s
 
 
         // init
         var toolbar = null;
         var formats = null;
 
-        var sFormattingOptions = fieldInput.attr('data-mimoto-input-formattingoptions');
+        var sFormattingOptions = fieldInput.attr('data-mimoto-form-input-formattingoptions');
 
         if (sFormattingOptions)
         {

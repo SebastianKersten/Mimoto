@@ -1,8 +1,10 @@
+$textblock-min-height: 120px;
+
 div.MimotoCMS_forms_input_Textblock {
 
     display: block;
     width: 100%;
-    min-height: 120px;
+    min-height: $textblock-min-height;
     margin: 0 0 10px;
     padding: 14px 15px;
     resize: vertical;
@@ -18,6 +20,21 @@ div.MimotoCMS_forms_input_Textblock {
     position: relative;
     height: auto;
     overflow: visible;
+
+    & > p:first-child {
+        margin-top: 0;
+    }
+
+    & .ql-editor, & .ql-container{
+        overflow-y: auto;
+        height: auto;
+        min-height: $textblock-min-height;
+    }
+
+    & .ql-editor {
+        line-height: inherit;
+        padding: 0 0 0 0;
+    }
 
     & * {
         font-family: $font-family-helvetica;
@@ -60,13 +77,4 @@ div.MimotoCMS_forms_input_Textblock {
 }
 
 
-.ql-editor, .ql-container{
-    //overflow-y: visible;
-    overflow-y: auto;
-    height: auto;
-}
 
-.ql-editor {
-    padding: 0;
-    line-height: inherit;
-}

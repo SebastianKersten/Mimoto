@@ -154,7 +154,7 @@ class AimlessInput extends AimlessComponent
                                 }
 
                                 // convert
-                                $sFormattingOptions = ' data-mimoto-input-formattingoptions="'.htmlentities(json_encode($formattingOptions), ENT_QUOTES, 'UTF-8').'"';
+                                $sFormattingOptions = ' data-mimoto-form-input-formattingoptions="'.htmlentities(json_encode($formattingOptions), ENT_QUOTES, 'UTF-8').'"';
                             }
                             break;
                         }

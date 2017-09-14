@@ -253,27 +253,62 @@ module.exports.prototype = {
         // setup
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
+        // // prepare
+        // let sRequestData = '';
+        // for (let sKey in requestData)
+        // {
+        //     if (requestData[sKey])
+        //     {
+        //         if (sRequestData.length !== 0) sRequestData += '&';
+        //
+        //         // register
+        //         let value = requestData[sKey];
+        //
+        //         // convert
+        //         if (typeof value === 'object') value = JSON.stringify(value);
+        //
+        //         // compose
+        //         sRequestData += sKey + '=' + value;
+        //     }
+        // }
+
+
+
         // prepare
-        let sRequestData = '';
-        for (let sKey in requestData)
-        {
-            if (requestData[sKey])
-            {
-                if (sRequestData.length !== 0) sRequestData += '&';
-
-                // register
-                let value = requestData[sKey];
-
-                // convert
-                if (typeof value === 'object') value = JSON.stringify(value);
-
-                // compose
-                sRequestData += sKey + '=' + value;
-            }
-        }
+        let sRequestData = (requestData) ? 'data=' + this.utoa(JSON.stringify(requestData)) : null;
 
         // send
         request.send(sRequestData);
+    },
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Public helper methods --------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    // from: https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa
+    // and: http://ecmanaut.blogspot.nl/2006/07/encoding-decoding-utf8-in-javascript.html by Johan Sundström
+    // Usage:
+    // utoa('✓ à la mode'); // 4pyTIMOgIGxhIG1vZGU=
+    // atou('4pyTIMOgIGxhIG1vZGU='); // "✓ à la mode"
+    //
+    // utoa('I \u2661 Unicode!'); // SSDimaEgVW5pY29kZSE=
+    // atou('SSDimaEgVW5pY29kZSE='); // "I ♡ Unicode!"
+
+    // ucs-2 string to base64 encoded ascii
+    utoa: function(str)
+    {
+        return decodeURI(encodeURIComponent(str));
+        //return window.btoa(decodeURI(encodeURIComponent(str)));
+    },
+
+    // base64 encoded ascii to ucs-2 string
+    atou: function(str)
+    {
+        return decodeURIComponent(encodeURI(str));
+        //return decodeURIComponent(encodeURI(window.atob(str)));
     }
-    
+
 }

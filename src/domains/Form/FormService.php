@@ -165,23 +165,26 @@ class FormService
 
     public function parseForm($sFormName, Request $request)
     {
-        // 1. register
-        $sPublicKey = $request->get('publicKey');
-        $nInstanceId = $request->get('instanceId');
-        $changedFields = json_decode($request->get('changedFields'));
-        $actions = json_decode($request->get('actions'));
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
 
-        // 2. load form
+        // 2. register
+        $sPublicKey = $data->publicKey;
+        $nInstanceId = $data->instanceId;
+        $actions = $data->actions;
+        $changedFields = $data->changedFields;
+
+        // 3. load form
         $form = Mimoto::service('input')->getFormByName($sFormName);
 
-        // 3. load
+        // 4. load
         $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
-        // 4. find connected entity
+        // 5. find connected entity
         $sEntityName = $eParent->getValue('name');
 
 
-        // 5. collect
+        // 6. collect
         if (empty($nInstanceId))
         {
             // create

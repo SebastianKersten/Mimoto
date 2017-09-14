@@ -27,9 +27,12 @@ class DataController
 
     public function edit(Application $app, Request $request)
     {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
         // 1. register
-        $sEntitySelector = $request->get('sEntitySelector');
-        $sFormName = $request->get('sFormName');
+        $sEntitySelector = $data->sEntitySelector;
+        $sFormName = $data->sFormName;
 
         // 2. extract
         $sEntity = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sEntitySelector);
@@ -76,9 +79,12 @@ class DataController
      */
     public function add(Application $app, Request $request)
     {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
         // 1. register
-        $sPropertySelector = $request->get('sPropertySelector');
-        $sFormName = $request->get('sFormName');
+        $sPropertySelector = $data->sPropertySelector;
+        $sFormName = $data->sFormName;
 
         // 2. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
@@ -145,9 +151,12 @@ class DataController
 
     public function remove(Application $app, Request $request)
     {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
         // 1. register
-        $sEntitySelector = $request->get('sEntitySelector');
-        $nConnectionId = $request->get('nConnectionId');
+        $sEntitySelector = $data->sEntitySelector;
+        $nConnectionId = $data->nConnectionId;
 
         // 2. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sEntitySelector);
@@ -165,9 +174,12 @@ class DataController
 
     public function select(Application $app, Request $request)
     {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
         // 1. register
-        $sPropertySelector = $request->get('sPropertySelector');
-        $xSelection = $request->get('xSelection');
+        $sPropertySelector = $data->sPropertySelector;
+        $xSelection = $data->xSelection;
 
         // 2. select
         $aSelection = Mimoto::service('data')->select($xSelection);
@@ -195,9 +207,12 @@ class DataController
 
     public function set(Application $app, Request $request)
     {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
         // 1. register
-        $sPropertySelector = $request->get('sPropertySelector');
-        $value = $request->get('value');
+        $sPropertySelector = $data->sPropertySelector;
+        $value = $data->value;
 
         // 2. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
@@ -253,9 +268,12 @@ class DataController
 
     public function create(Application $app, Request $request)
     {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
         // 1. register
-        $sPropertySelector = $request->get('sPropertySelector');
-        $sEntityName = $request->get('sEntityName');
+        $sPropertySelector = $data->sPropertySelector;
+        $sEntityName = $data->sEntityName;
 
         // 2. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
@@ -274,8 +292,11 @@ class DataController
 
     public function clear(Application $app, Request $request)
     {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
         // 1. register
-        $sPropertySelector = $request->get('sPropertySelector');
+        $sPropertySelector = $data->sPropertySelector;
 
         // 2. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);

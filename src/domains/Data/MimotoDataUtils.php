@@ -548,4 +548,11 @@ class MimotoDataUtils
         // send
         return $connection;
     }
+
+    public static function decodePostData($sEncodedPostData)
+    {
+        //Mimoto::error(json_decode(urldecode(base64_decode($sEncodedPostData))));
+
+        return json_decode(urldecode($sEncodedPostData));
+    }
 }

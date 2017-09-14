@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "6b65f5dd9a17b49bde8d";
+/******/ 	__webpack_require__.h = "652203e22a25c288a0dd";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -18146,8 +18146,6 @@ module.exports.prototype = {
 
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 module.exports = function () {
 
     // start
@@ -18361,25 +18359,57 @@ module.exports.prototype = {
         // setup
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
+        // // prepare
+        // let sRequestData = '';
+        // for (let sKey in requestData)
+        // {
+        //     if (requestData[sKey])
+        //     {
+        //         if (sRequestData.length !== 0) sRequestData += '&';
+        //
+        //         // register
+        //         let value = requestData[sKey];
+        //
+        //         // convert
+        //         if (typeof value === 'object') value = JSON.stringify(value);
+        //
+        //         // compose
+        //         sRequestData += sKey + '=' + value;
+        //     }
+        // }
+
+
         // prepare
-        var sRequestData = '';
-        for (var sKey in requestData) {
-            if (requestData[sKey]) {
-                if (sRequestData.length !== 0) sRequestData += '&';
-
-                // register
-                var value = requestData[sKey];
-
-                // convert
-                if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') value = JSON.stringify(value);
-
-                // compose
-                sRequestData += sKey + '=' + value;
-            }
-        }
+        var sRequestData = requestData ? 'data=' + this.utoa(JSON.stringify(requestData)) : null;
 
         // send
         request.send(sRequestData);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public helper methods --------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    // from: https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa
+    // and: http://ecmanaut.blogspot.nl/2006/07/encoding-decoding-utf8-in-javascript.html by Johan Sundström
+    // Usage:
+    // utoa('✓ à la mode'); // 4pyTIMOgIGxhIG1vZGU=
+    // atou('4pyTIMOgIGxhIG1vZGU='); // "✓ à la mode"
+    //
+    // utoa('I \u2661 Unicode!'); // SSDimaEgVW5pY29kZSE=
+    // atou('SSDimaEgVW5pY29kZSE='); // "I ♡ Unicode!"
+
+    // ucs-2 string to base64 encoded ascii
+    utoa: function utoa(str) {
+        return decodeURI(encodeURIComponent(str));
+        //return window.btoa(decodeURI(encodeURIComponent(str)));
+    },
+
+    // base64 encoded ascii to ucs-2 string
+    atou: function atou(str) {
+        return decodeURIComponent(encodeURI(str));
+        //return decodeURIComponent(encodeURI(window.atob(str)));
     }
 
 };
@@ -20080,7 +20110,8 @@ module.exports.prototype = {
                                 // 3. check alias
                                 // 4. output full change object
 
-                                console.warn('DIRECTIVE_MIMOTO_VALUE - check origins from separate array', change);
+                                //console.warn('DIRECTIVE_MIMOTO_VALUE - check origins from separate array', change);
+
 
                                 if (change.type === 'value') {
                                     // 1. also allow delta's and keep track of delta-index
@@ -20728,6 +20759,7 @@ var Dropdown = __webpack_require__(384);
 var Video = __webpack_require__(385);
 var ColorPicker = __webpack_require__(386);
 var DatePicker = __webpack_require__(387);
+var Textblock = __webpack_require__(464);
 
 module.exports = function (elFormField) {
 
@@ -20769,7 +20801,8 @@ module.exports.prototype = {
         '_Mimoto_form_input_dropdown': Dropdown,
         '_Mimoto_form_input_video': Video,
         '_Mimoto_form_input_colorpicker': ColorPicker,
-        '_Mimoto_form_input_datepicker': DatePicker
+        '_Mimoto_form_input_datepicker': DatePicker,
+        '_Mimoto_form_input_textblock': Textblock
     },
 
     // ----------------------------------------------------------------------------
@@ -34034,6 +34067,130 @@ Iterator.prototype.peekType = function () {
 
 module.exports = lib;
 
+
+/***/ }),
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */,
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - InputField - Textblock
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+// Quill classes
+
+var Quill = __webpack_require__(153);
+
+module.exports = function (elFormField, fBroadcast, elInput) {
+
+    // start
+    this.__construct(elFormField, fBroadcast, elInput);
+};
+
+module.exports.prototype = {
+
+    // dom
+    _elFormField: null,
+    _fBroadcast: null,
+    _elInput: null,
+
+    // utils
+    _quill: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elFormField, fBroadcast, elInput) {
+        // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
+        this._elInput = elInput;
+
+        // init
+        var toolbar = null;
+        var formats = null;
+
+        var sFormattingOptions = this._elInput.getAttribute('data-mimoto-form-input-formattingoptions');
+
+        if (sFormattingOptions) {
+            var formattingOptions = JSON.parse(sFormattingOptions);
+
+            toolbar = formattingOptions.toolbar;
+            formats = formattingOptions.formats;
+        }
+
+        var sPlaceHolder = this._elInput.getAttribute('data-mimoto-form-input-textblock-placeholder');
+
+        // create
+        this._quill = new Quill(this._elInput, {
+            theme: 'bubble',
+            modules: {
+                toolbar: toolbar,
+                // toolbar: [
+                //     ['bold', 'italic', 'underline', 'strike'],
+                //     ['blockquote', 'code-block', 'link'],
+                //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                //     [{ 'indent': '-1'}, { 'indent': '+1' }],
+                // ],
+                history: {
+                    delay: 2000,
+                    maxStack: 500,
+                    userOnly: true
+                }
+            },
+            placeholder: sPlaceHolder || '', // #todo
+            // formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
+            formats: formats
+        });
+
+        // 1. set initial value
+        //this._elInput.getElementsByClassName("ql-editor")[0].innerHTML;
+
+
+        this._quill.on('text-change', function (delta, oldContents, source) {
+            //textblockField.fieldInput.val(valueContainer.getElementsByClassName("ql-editor")[0].innerHTML);
+            this._fBroadcast();
+        }.bind(this));
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getValue: function getValue() {
+        return this._elInput.getElementsByClassName("ql-editor")[0].innerHTML;
+    },
+
+    setValue: function setValue(value) {
+        this._elInput.getElementsByClassName("ql-editor")[0].innerHTML = value;
+    }
+
+};
 
 /***/ })
 /******/ ]);

@@ -865,7 +865,7 @@ module.exports.prototype = {
                                 // 3. check alias
                                 // 4. output full change object
 
-                                console.warn('DIRECTIVE_MIMOTO_VALUE - check origins from separate array', change);
+                                //console.warn('DIRECTIVE_MIMOTO_VALUE - check origins from separate array', change);
 
 
 

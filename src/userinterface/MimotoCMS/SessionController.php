@@ -5,6 +5,7 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Core\FormattingUtils;
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
@@ -166,8 +167,12 @@ class SessionController
 
         try
         {
+            // convert
+            $requestData = MimotoDataUtils::decodePostData($request->get('data'));
+
             // read
-            $sSocketId = $request->get('id');
+            $sSocketId = $requestData->id;
+
             $user = $app['session']->get('user');
 
             // broadcast approval
