@@ -1,9 +1,11 @@
-input.MimotoCMS_forms_input_DatePicker {
-    > div {
+div.MimotoCMS_forms_input_DatePicker {
+
+    & > div {
         width: 100%;
     }
 
-    &-input {
+
+    input.MimotoCMS_forms_input_DatePicker-input {
         display: block;
         width: 100%;
         height: 50px;

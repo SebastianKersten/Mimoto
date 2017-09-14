@@ -4207,10 +4207,10 @@ svg.MimotoCMS_forms_input_Checkbox-icon {
   pointer-events: none;
   fill: #9dbab7; }
 
-input.MimotoCMS_forms_input_DatePicker > div {
+div.MimotoCMS_forms_input_DatePicker > div {
   width: 100%; }
 
-input.MimotoCMS_forms_input_DatePicker-input {
+div.MimotoCMS_forms_input_DatePicker input.MimotoCMS_forms_input_DatePicker-input {
   display: block;
   width: 100%;
   height: 50px;
@@ -4226,10 +4226,10 @@ input.MimotoCMS_forms_input_DatePicker-input {
   -webkit-transition: all 100ms ease-out;
   -o-transition: all 100ms ease-out;
   transition: all 100ms ease-out; }
-  input.MimotoCMS_forms_input_DatePicker-input:focus {
+  div.MimotoCMS_forms_input_DatePicker input.MimotoCMS_forms_input_DatePicker-input:focus {
     border-color: #9dbab7;
     background: #fff; }
-    input.MimotoCMS_forms_input_DatePicker-input:focus + span.MimotoCMS_forms_FormField-element-prefix {
+    div.MimotoCMS_forms_input_DatePicker input.MimotoCMS_forms_input_DatePicker-input:focus + span.MimotoCMS_forms_FormField-element-prefix {
       border-color: #9dbab7;
       background: #fff; }
 
