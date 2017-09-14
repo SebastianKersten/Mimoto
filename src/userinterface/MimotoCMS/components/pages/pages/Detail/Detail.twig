@@ -1,10 +1,14 @@
 {% embed "MimotoCMS/modules/Tabmenu/Tabmenu.twig" %}
 
+    {% block tabs %}
+
+        <div data-mimotocms-tabmenu-tab>Page</div>
+
+    {% endblock %}
+
     {% block panels %}
 
-        <!-- structure -->
-
-        <div data-mimotocms-tabmenu-tab="Page" class="MimotoCMS_pages_pages_Detail__panel">
+        <div data-mimotocms-tabmenu-panel>
 
             <div class="MimotoCMS_pages_pages_Detail_Structure">
 

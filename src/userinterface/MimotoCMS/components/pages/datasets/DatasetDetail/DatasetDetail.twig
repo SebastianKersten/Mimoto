@@ -1,10 +1,14 @@
 {% embed "MimotoCMS/modules/Tabmenu/Tabmenu.twig" %}
 
+    {% block tabs %}
+
+        <div data-mimotocms-tabmenu-tab>Dataset</div>
+
+    {% endblock %}
+
     {% block panels %}
 
-        <!-- structure -->
-
-        <div data-mimotocms-tabmenu-tab="Dataset" class="MimotoCMS_pages_datasets_DatasetDetail__panel">
+        <div data-mimotocms-tabmenu-panel>
 
             <div class="MimotoCMS_pages_datasets_DatasetDetail_Structure">
 
