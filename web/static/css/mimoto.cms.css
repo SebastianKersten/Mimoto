@@ -1801,10 +1801,10 @@ div.MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__container {
   position: relative;
   margin-bottom: 25px;
   margin-top: 30px; }
-  div.MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__container > li {
+  div.MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__container > div {
     margin-bottom: 5px;
     margin-right: 5px; }
-  div.MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__container > li:last-child {
+  div.MimotoCMS_pages_forms_FormDetail_FieldTypeSelector__container > div:last-child {
     margin-bottom: 0; }
 
 div.MimotoCMS_pages_forms_FormDetail_Structure {

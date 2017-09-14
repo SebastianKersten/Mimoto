@@ -59,7 +59,7 @@
 /******/
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "21230cb183ef6a7182e4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a61bd6db1da0614e3d81"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -717,7 +717,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "21230cb183ef6a7182e4";
+/******/ 	__webpack_require__.h = "a61bd6db1da0614e3d81";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -21776,8 +21776,6 @@ module.exports.prototype = {
         this._elFormField = elFormField;
         this._fBroadcast = fBroadcast;
         this._aInputElements = aInputElements;
-
-        Mimoto.log('Radiobutton', elFormField, aInputElements);
 
         // configure
         var nInputElementCount = this._aInputElements.length;

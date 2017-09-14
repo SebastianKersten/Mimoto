@@ -37,8 +37,6 @@ module.exports.prototype = {
         this._fBroadcast = fBroadcast;
         this._aInputElements = aInputElements;
 
-        Mimoto.log('Radiobutton', elFormField, aInputElements);
-
         // configure
         let nInputElementCount = this._aInputElements.length;
         for (let nInputElementIndex = 0; nInputElementIndex < nInputElementCount; nInputElementIndex++)
