@@ -10,20 +10,20 @@ const WriteFilePlugin = require('write-file-webpack-plugin');
 module.exports = function(env) {
     return webpackMerge(baseConfig(), {
         devtool: 'cheap-module-source-map', // https://webpack.js.org/configuration/devtool/
-        devServer: {
-           contentBase: resolve(__dirname, './../../web'), // The folder from where the files get served
-           compress: true, // Enable gzip compression for everything served
-           port: 3100,
-           hot: true,
-           proxy: {
-               '*': {
-                   target: 'http://mimoto.aimless',
-                   secure: false,
-                   changeOrigin: true
-               }
-           },
-           historyApiFallback: true
-        },
+        //devServer: {
+        //   contentBase: resolve(__dirname, './../../web'), // The folder from where the files get served
+        //   compress: true, // Enable gzip compression for everything served
+        //   port: 3100,
+        //   hot: true,
+        //   proxy: {
+        //       '*': {
+        //           target: 'http://mimoto.aimless',
+        //           secure: false,
+        //           changeOrigin: true
+        //       }
+        //   },
+        //   historyApiFallback: true
+        //},
         module: {
             rules: [
                 {
@@ -73,7 +73,7 @@ module.exports = function(env) {
             new BrowserSyncPlugin(
                 // BrowserSync options
                 {
-                    //host: 'localhost',
+                    host: 'localhost',
                     port: 3000,
                     proxy: 'http://mimoto.aimless',
                     open: true
