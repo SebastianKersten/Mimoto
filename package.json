@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build-web:dev": "BABEL_ENV=dev node_modules/.bin/webpack-dev-server --env=dev --target=web",
+    "build-web:dev": "BABEL_ENV=dev node_modules/.bin/webpack --watch --env=dev --target=web",
     "build-web:prod": "BABEL_ENV=prod node_modules/.bin/webpack --env=prod --target=web",
     "build-node:dev": "BABEL_ENV=dev node_modules/.bin/webpack-dev-server --env=dev --target=node",
     "build-node:prod": "BABEL_ENV=prod node_modules/.bin/webpack --env=prod --target=node"

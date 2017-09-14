@@ -81,7 +81,7 @@ module.exports = function(env) {
                 // Plugin options
                 {
                     // Prevent BrowserSync from reloading the page and let Webpack Dev Server take care of this
-                    reload: false
+                    reload: true
                 })
             //new BrowserSyncPlugin(
             //    // BrowserSync options
