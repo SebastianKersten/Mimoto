@@ -21,6 +21,7 @@ div.MimotoCMS_forms_input_Textblock {
     height: auto;
     overflow: visible;
 
+    // fix for some quill style that is added on quill init
     & > p:first-child {
         margin-top: 0;
     }

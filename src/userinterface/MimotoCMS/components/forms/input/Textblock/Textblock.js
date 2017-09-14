@@ -63,7 +63,7 @@ module.exports.prototype = {
 
         let sPlaceHolder = this._elInput.getAttribute('data-mimoto-form-input-textblock-placeholder');
 
-        
+
         // create
         this._quill = new Quill(this._elInput, {
             theme: 'bubble',
