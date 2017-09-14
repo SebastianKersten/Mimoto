@@ -1,0 +1,64 @@
+div.MimotoCMS_modules_Tabmenu {
+    margin-bottom: 35px;
+}
+
+div.MimotoCMS_modules_Tabmenu-tabcontainer {
+
+    overflow: scroll;
+
+    & > div[data-mimotocms-tabmenu-tab] {
+        margin-right: 2px;
+
+        display: inline-block;
+        padding: 10px 30px 10px 30px;
+        color: #000000;
+        background-color: #dedede;
+        font-family: $font-family-futura;
+        user-select: none;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &.active {
+            cursor: default;
+            text-decoration: none;
+            background-color: #ffffff;
+        }
+
+        &.hidden {
+            display: none;
+        }
+    }
+
+    & > div[data-mimotocms-tabmenu-tab]:last-child {
+        margin-right: 0;
+    }
+}
+
+div.MimotoCMS_modules_Tabmenu-panelcontainer {
+
+    background-color: $wild-sand;
+
+    & > div[data-mimotocms-tabmenu-panel] {
+
+        background-color: #ffffff;
+        padding: 15px;
+        max-width: 800px;
+
+        &.hidden {
+            display: none;
+        }
+    }
+
+    & > div[data-mimotocms-tabmenu-panel]:last-child {
+        margin-bottom: 0;
+    }
+}
+
+
+div.MimotoCMS_modules_Tabmenu-panel-menu {
+    margin-bottom: 20px;
+    text-align: right;
+}

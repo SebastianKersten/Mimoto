@@ -8,7 +8,7 @@
 
 
 let Header = require('./components/Header');
-let TabMenuService = require('./components/TabMenuService');
+let TabMenu = require('./../modules/TabMenu/TabMenu');
 
 
 module.exports = function()
@@ -71,7 +71,7 @@ module.exports.prototype = {
         if (navigation && header) { this._header = new Header(header); }
 
         // setup tabmenus
-        new TabMenuService();
+        new TabMenu();
     },
 
 

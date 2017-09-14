@@ -1092,7 +1092,7 @@ class Component
                 'name' => 'MimotoCMS_modules_Tabmenu',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/modules/TabmenuModule/TabmenuModule.twig',
+                        'file' => 'MimotoCMS/modules/Tabmenu/Tabmenu.twig',
                         'conditionals' => []
                     )
                 ]

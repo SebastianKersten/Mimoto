@@ -67,31 +67,28 @@ module.exports.prototype = {
      */
     _setupTabs: function(elTabmenu)
     {
-        // collect
-        let aPanelElements = elTabmenu.querySelectorAll('[data-mimotocms-tabmenu-tab]');
-        let elTabTemplate = elTabmenu.querySelector('[data-mimotocms-tabmenu-tab-template]');
-        let elTabContainer = elTabmenu.querySelector('[data-mimotocms-tabmenu-tab-container]');
+        // register
+        let elTabContainer = elTabmenu.querySelector('[data-mimotocms-tabmenu-tabcontainer]');
+        let elPanelContainer = elTabmenu.querySelector('[data-mimotocms-tabmenu-panelcontainer]');
 
-        // cleanup
-        elTabTemplate.parentNode.removeChild(elTabTemplate);
-        elTabTemplate.classList.remove('hidden');
+        // collect
+        let aTabElements = elTabContainer.querySelectorAll('[data-mimotocms-tabmenu-tab]');
+        let aPanelElements = elPanelContainer.querySelectorAll('[data-mimotocms-tabmenu-panel]');
 
         // init
         let nTabmenuIndex = this._aTabmenus.length;
         this._aTabmenus[nTabmenuIndex] = [];
 
         // setup
-        let nPanelCount = aPanelElements.length;
-        for (let nPanelIndex = 0; nPanelIndex < nPanelCount; nPanelIndex++)
+        let nTabCount = aTabElements.length;
+        for (let nTabIndex = 0; nTabIndex < nTabCount; nTabIndex++)
         {
             // register
-            let elPanel = aPanelElements[nPanelIndex];
-
-            // create and connect
-            let elTab = elTabContainer.appendChild(elTabTemplate.cloneNode(true));
+            let elTab = aTabElements[nTabIndex];
+            let elPanel = aPanelElements[nTabIndex];
 
             // setup
-            this._setupTab(elTab, elPanel, nPanelIndex === 0, nTabmenuIndex);
+            this._setupTab(elTab, elPanel, nTabIndex === 0, nTabmenuIndex);
 
             // store
             this._aTabmenus[nTabmenuIndex].push( { elTab: elTab, elPanel: elPanel } );
@@ -100,9 +97,6 @@ module.exports.prototype = {
 
     _setupTab: function(elTab, elPanel, bIsFirst, nTabmenuIndex)
     {
-        // setup
-        elTab.innerText = elPanel.getAttribute('data-mimotocms-tabmenu-tab');
-
         // focus
         if (bIsFirst) { this._focusTab(elTab, elPanel); }
 

@@ -1,8 +1,16 @@
-{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+{% embed "MimotoCMS/modules/Tabmenu/Tabmenu.twig" %}
+
+    {% block tabs %}
+
+        <div data-mimotocms-tabmenu-tab>Structure</div>
+        <div data-mimotocms-tabmenu-tab>Instances</div>
+        <div data-mimotocms-tabmenu-tab>More</div>
+
+    {% endblock %}
 
     {% block panels %}
 
-        <div data-mimotocms-tabmenu-tab="Structure" class="MimotoCMS_modules_Tabmenu-panel">
+        <div data-mimotocms-tabmenu-panel>
 
             <div class="MimotoCMS_pages_entities_EntityDetail_Structure">
 
@@ -66,7 +74,7 @@
             </div>
         </div>
 
-        <div data-mimotocms-tabmenu-tab="Instances" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-panel>
 
             <b><i>Currently in beta and very raw (no primary labels or realtime updates yet)</i></b><br>
             <br>
@@ -94,7 +102,7 @@
 
         <!-- more -->
 
-        <div data-mimotocms-tabmenu-tab="More" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-panel>
 
             <b>Danger zone!</b><br>
             <br>
@@ -107,11 +115,17 @@
 {% endembed %}
 
 
-{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+{% embed "MimotoCMS/modules/Tabmenu/Tabmenu.twig" %}
+
+    {% block tabs %}
+
+        <div data-mimotocms-tabmenu-tab>Forms</div>
+
+    {% endblock %}
 
     {% block panels %}
 
-        <div data-mimotocms-tabmenu-tab="Forms" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-panel>
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
@@ -138,27 +152,32 @@
 {% endembed %}
 
 
-{% embed "MimotoCMS/modules/TabmenuModule/TabmenuModule.twig" %}
+{% embed "MimotoCMS/modules/Tabmenu/Tabmenu.twig" %}
+
+    {% block tabs %}
+
+        <div data-mimotocms-tabmenu-tab>Components</div>
+
+    {% endblock %}
 
     {% block panels %}
 
-        <div data-mimotocms-tabmenu-tab="Components" class="MimotoCMS_modules_Tabmenu-panel hidden">
+        <div data-mimotocms-tabmenu-panel>
 
             <div class="MimotoCMS_pages_entities_EntityDetail__block">
 
                 <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('components') }}>
                     <div>This entity has no component yet.<br>Go ahead, start adding one!</div>
-                    <div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new component', icon:'plus', onclick:"MimotoCMS.entityComponentNew('" ~ Mimoto.meta('id') ~ "');" }) }}</div>
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('components') }}>
                     <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('components', 'MimotoCMS_entities_EntityDetail-ComponentListItem') }}>
                         {{ Mimoto.data('components', 'MimotoCMS_entities_EntityDetail-ComponentListItem') }}
                     </ul>
+                </div>
 
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new component', icon:'plus', onclick:"MimotoCMS.entityComponentNew('" ~ Mimoto.meta('id') ~ "');" }) }}
-                    </div>
+                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new component', icon:'plus', onclick:"MimotoCMS.entityComponentNew('" ~ Mimoto.meta('id') ~ "');" }) }}
                 </div>
 
             </div>
