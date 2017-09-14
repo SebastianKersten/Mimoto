@@ -59,7 +59,7 @@
 /******/
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "19dbb94dcd0bd9a0fe85"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "21230cb183ef6a7182e4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -717,7 +717,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "19dbb94dcd0bd9a0fe85";
+/******/ 	__webpack_require__.h = "21230cb183ef6a7182e4";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -10318,6 +10318,11 @@ module.exports.prototype = {
         for (var nTabIndex = 0; nTabIndex < nTabCount; nTabIndex++) {
             // register
             var elTab = aTabElements[nTabIndex];
+
+            // verify
+            if (!aPanelElements[nTabIndex]) break;
+
+            // register
             var elPanel = aPanelElements[nTabIndex];
 
             // setup
@@ -10378,6 +10383,8 @@ module.exports.prototype = {
      * Blur tab
      */
     _blurTab: function _blurTab(elTab, elPanel) {
+        Mimoto.warn('blur', elTab, elPanel);
+
         elTab.classList.remove("active");
         elPanel.classList.add("hidden");
     }

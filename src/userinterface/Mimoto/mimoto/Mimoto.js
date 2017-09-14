@@ -89,7 +89,7 @@ module.exports.prototype = {
      */
     startup: function()
     {
-        if (this.debug) console.log('Mimoto starting up ...');
+        Mimoto.log('Mimoto starting up ...');
 
         // parse interface
         this.data = new DataService();
@@ -280,17 +280,17 @@ module.exports.prototype = {
 
     log: function()
     {
-        if (this.debug === true) console.log.apply(null, arguments);
+        if (this.debug === true && console) console.log.apply(null, arguments);
     },
 
     warn: function()
     {
-        if (this.debug === true) console.warn.apply(null, arguments);
+        if (this.debug === true && console) console.warn.apply(null, arguments);
     },
 
     error: function()
     {
-        if (this.debug === true) console.error.apply(null, arguments);
+        if (this.debug === true && console) console.error.apply(null, arguments);
     }
 
 }

@@ -85,6 +85,11 @@ module.exports.prototype = {
         {
             // register
             let elTab = aTabElements[nTabIndex];
+
+            // verify
+            if (!aPanelElements[nTabIndex]) break;
+
+            // register
             let elPanel = aPanelElements[nTabIndex];
 
             // setup
@@ -153,6 +158,8 @@ module.exports.prototype = {
      */
     _blurTab: function(elTab, elPanel)
     {
+        Mimoto.warn('blur', elTab, elPanel);
+
         elTab.classList.remove("active");
         elPanel.classList.add("hidden");
     }
