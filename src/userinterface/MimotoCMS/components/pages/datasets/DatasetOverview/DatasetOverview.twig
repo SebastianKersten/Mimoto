@@ -1,5 +1,17 @@
-{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new dataset', icon:'plus', directive:Mimoto.add('datasets', '_Mimoto_dataset') }) }}
+{{
+    Mimoto.module('MimotoCMS_modules_List',
+    {
+        button_label: 'Add new dataset',
+        button_icon: 'plus',
+        button_directive: Mimoto.add('datasets', '_Mimoto_dataset'),
+        property_name: 'datasets',
+        listitem_component: 'MimotoCMS_datasets_DatasetOverview_ListItem'
+    })
+}}
 
-<ul class="MimotoCMS_pages_datasets_DatasetOverview__container js-list js-list-sortable" {{ Mimoto.realtime('datasets', 'MimotoCMS_datasets_DatasetOverview_ListItem') }}>
-    {{ Mimoto.data('datasets', 'MimotoCMS_datasets_DatasetOverview_ListItem') }}
-</ul>
+<div class="MimotoCMS_pages_datasets_DatasetOverview-empty" {{ Mimoto.showWhenEmpty('datasets') }}>
+    <b>Centralise your config data</b><br>
+    Datasets help you to void duplicate data that you need in several places. Think about
+    color swatches, types of somethings or a specific text that you only want to manage
+    via the cms.
+</div>

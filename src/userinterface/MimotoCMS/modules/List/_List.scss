@@ -1,0 +1,16 @@
+div.MimotoCMS_modules_List {
+
+}
+
+div.MimotoCMS_modules_List-container {
+
+    margin-top: 25px;
+
+    & > div {
+        margin-bottom: 3px;
+    }
+
+    & > div:last-child {
+        margin-bottom: 3px;
+    }
+}

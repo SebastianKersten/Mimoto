@@ -1071,10 +1071,19 @@ class Component
             // modules
 
             (object) array(
+                'name' => 'MimotoCMS_modules_List',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/List/List.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
                 'name' => 'MimotoCMS_modules_ListItem',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/modules/ListItemModule/ListItemModule.twig',
+                        'file' => 'MimotoCMS/modules/ListItem/ListItem.twig',
                         'conditionals' => []
                     )
                 ]

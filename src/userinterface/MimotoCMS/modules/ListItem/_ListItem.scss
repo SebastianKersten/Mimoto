@@ -1,4 +1,4 @@
-li.MimotoCMS_ListItemModule {
+div.MimotoCMS_modules_ListItem {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -14,7 +14,7 @@ li.MimotoCMS_ListItemModule {
     //}
 }
 
-    div.MimotoCMS_ListItemModule-content {
+    div.MimotoCMS_modules_ListItem-content {
         display: flex;
         font-family: $font-family-futura;
         color: $black;
@@ -23,13 +23,13 @@ li.MimotoCMS_ListItemModule {
         flex-wrap: nowrap;
     }
 
-        div.MimotoCMS_ListItemModule-info {
+        div.MimotoCMS_modules_ListItem-info {
             padding: 8px 7px 8px 15px;
             flex: 1 1 auto;
             overflow: hidden;
         }
 
-            div.MimotoCMS_ListItemModule-label {
+            div.MimotoCMS_modules_ListItem-label {
                 font-size: rem-calc(18px);
                 line-height: rem-calc(24px);
                 white-space: nowrap;
@@ -37,19 +37,19 @@ li.MimotoCMS_ListItemModule {
                 text-overflow: ellipsis;
             }
 
-            div.MimotoCMS_ListItemModule-sublabel {
+            div.MimotoCMS_modules_ListItem-sublabel {
                 font-size: rem-calc(14px);
                 font-style: italic;
                 line-height: rem-calc(20px);
                 color: $sinbad;
             }
 
-        div.MimotoCMS_ListItemModule-menu {
+        div.MimotoCMS_modules_ListItem-menu {
             padding: 10px 10px 10px 5px;
             flex: 0 0 auto;
         }
 
-div.MimotoCMS_ListItemModule-handle {
+div.MimotoCMS_modules_ListItem-handle {
     display: inline-block;
     overflow: hidden;
     width: 10px;
@@ -60,7 +60,7 @@ div.MimotoCMS_ListItemModule-handle {
     flex: 0 0 auto;
 }
 
-div.MimotoCMS_ListItemModule-handle-dot {
+div.MimotoCMS_modules_ListItem-handle-dot {
     float: left;
     width: 3px;
     height: 3px;
@@ -68,10 +68,10 @@ div.MimotoCMS_ListItemModule-handle-dot {
     background-color: $tower-gray;
 }
 
-li.MimotoCMS_ListItemModule--drag {
+div.MimotoCMS_modules_ListItem--drag {
     background-color: $white;
 }
 
-li.MimotoCMS_ListItemModule--ghost {
+div.MimotoCMS_modules_ListItem--ghost {
     opacity: 0;
 }

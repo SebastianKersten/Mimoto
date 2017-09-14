@@ -58,7 +58,7 @@ div.MimotoCMS_users_overview_UserPreview-menu {
     }
 }
 
-div.MimotoCMS_ListItemModule-sorthandlecontainer {
+div.MimotoCMS_modules_ListItem-sorthandlecontainer {
     display: inline-block;
     padding-top: 5px;
     padding-left: 10px;
@@ -83,10 +83,10 @@ div.MimotoCMS_users_overview_UserPreview-sorthandledot {
     background-color: $tower-gray;
 }
 
-div.MimotoCMS_ListItemModule--drag {
+div.MimotoCMS_modules_ListItem--drag {
     background-color: $white;
 }
 
-div.MimotoCMS_ListItemModule--ghost {
+div.MimotoCMS_modules_ListItem--ghost {
     opacity: 0;
 }

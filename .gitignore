@@ -9,3 +9,4 @@ node_modules
 src/config.php
 web/dynamic/*
 twigcache/
+web/static/*hot-update*

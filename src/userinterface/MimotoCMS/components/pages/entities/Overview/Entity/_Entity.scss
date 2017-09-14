@@ -37,7 +37,7 @@ div.MimotoCMS_entities_overview_Entity-menu {
     float: right;
 }
 
-div.MimotoCMS_ListItemModule-sorthandlecontainer {
+div.MimotoCMS_modules_ListItem-sorthandlecontainer {
     display: inline-block;
     float: right;
     padding-top: 7px;
@@ -63,10 +63,10 @@ div.MimotoCMS_entities_overview_Entity-sorthandledot {
     background-color: $tower-gray;
 }
 
-div.MimotoCMS_ListItemModule--drag {
+div.MimotoCMS_modules_ListItem--drag {
     background-color: $white;
 }
 
-div.MimotoCMS_ListItemModule--ghost {
+div.MimotoCMS_modules_ListItem--ghost {
     opacity: 0;
 }
