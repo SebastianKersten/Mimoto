@@ -115,7 +115,8 @@ class SessionController
                 // compose
                 $user = (object) array(
                     'id' => $eUser->getId(),
-                    'name' => $eUser->getValue('name'),
+                    'firstName' => $eUser->getValue('firstName'),
+                    'lastName' => $eUser->getValue('lastName'),
                     'avatar' => '/'.$eUser->getValue('avatar.path').$eUser->getValue('avatar.name'),
                 );
 
