@@ -18,6 +18,7 @@ let Video = require('./input/Video/Video');
 let ColorPicker = require('./input/ColorPicker/ColorPicker');
 let DatePicker = require('./input/DatePicker/DatePicker');
 let Textblock = require('./input/Textblock/Textblock');
+let Generic = require('./input/Generic/Generic');
 
 
 module.exports = function(elFormField) {
@@ -215,10 +216,11 @@ module.exports.prototype = {
         // {
         //     // 1. check if any custom field registered in root
         // }
-        // else
-        // {
-        //     // 2. if not, try based in Mimoto.input and Mimoto.value (generalInput)
-        // }
+        else
+        {
+            // init generic input for best effort
+            this._input = new Generic(elFormField, fBroadcast, aInputElements);
+        }
 
 
         // TEMP

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "429b5a5b745a5afbb420";
+/******/ 	__webpack_require__.h = "11fd5da8f8738e10d31f";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -18079,14 +18079,19 @@ module.exports.prototype = {
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         // prepare
-        var sPostData = '';
-        for (var sKey in postData) {
-            if (sPostData.length !== 0) sPostData += '&';
-            sPostData += sKey + '=' + postData[sKey];
-        }
+        var sRequestData = postData ? 'data=' + Mimoto.utils.utoa(JSON.stringify(postData)) : null;
 
-        // send
-        request.send(sPostData);
+        // // prepare
+        // let sPostData = '';
+        // for (let sKey in postData)
+        // {
+        //     if (sPostData.length !== 0) sPostData += '&';
+        //     sPostData += sKey + '=' + postData[sKey];
+        // }
+        //
+        // // send
+        // request.send(sPostData);
+        request.send(sRequestData);
 
         return { 'popup': 'xxx' };
     },
@@ -20760,6 +20765,7 @@ var Video = __webpack_require__(385);
 var ColorPicker = __webpack_require__(386);
 var DatePicker = __webpack_require__(387);
 var Textblock = __webpack_require__(464);
+var Generic = __webpack_require__(465);
 
 module.exports = function (elFormField) {
 
@@ -20936,11 +20942,10 @@ module.exports.prototype = {
         // {
         //     // 1. check if any custom field registered in root
         // }
-        // else
-        // {
-        //     // 2. if not, try based in Mimoto.input and Mimoto.value (generalInput)
-        // }
-
+        else {
+                // init generic input for best effort
+                this._input = new Generic(elFormField, fBroadcast, aInputElements);
+            }
 
         // TEMP
         if (!this._input) return;
@@ -34188,6 +34193,70 @@ module.exports.prototype = {
 
     setValue: function setValue(value) {
         this._elInput.getElementsByClassName("ql-editor")[0].innerHTML = value;
+    }
+
+};
+
+/***/ }),
+/* 465 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - InputField - Generic
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (elFormField, fBroadcast, elInput) {
+
+    // start
+    this.__construct(elFormField, fBroadcast, elInput);
+};
+
+module.exports.prototype = {
+
+    // dom
+    _elFormField: null,
+    _fBroadcast: null,
+    _elInput: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elFormField, fBroadcast, elInput) {
+        // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
+        this._elInput = elInput;
+
+        // configure
+        this._elInput.addEventListener('input', function (e) {
+            this._fBroadcast();
+        }.bind(this));
+        this._elInput.addEventListener('change', function (e) {
+            this._fBroadcast();
+        }.bind(this));
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getValue: function getValue() {
+        return this._elInput.value;
+    },
+
+    setValue: function setValue(value) {
+        this._elInput.value = value;
     }
 
 };

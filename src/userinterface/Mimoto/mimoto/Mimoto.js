@@ -232,16 +232,21 @@ module.exports.prototype = {
         // setup
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-        // prepare
-        let sPostData = '';
-        for (let sKey in postData)
-        {
-            if (sPostData.length !== 0) sPostData += '&';
-            sPostData += sKey + '=' + postData[sKey];
-        }
 
-        // send
-        request.send(sPostData);
+        // prepare
+        let sRequestData = (postData) ? 'data=' + Mimoto.utils.utoa(JSON.stringify(postData)) : null;
+
+        // // prepare
+        // let sPostData = '';
+        // for (let sKey in postData)
+        // {
+        //     if (sPostData.length !== 0) sPostData += '&';
+        //     sPostData += sKey + '=' + postData[sKey];
+        // }
+        //
+        // // send
+        // request.send(sPostData);
+        request.send(sRequestData);
 
 
         return {'popup':'xxx'};

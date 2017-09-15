@@ -387,14 +387,13 @@ class FormController
         // 1. init popup
         $popup = Mimoto::service('output')->createPopup();
 
-        // load
-        $eForm = Mimoto::service('input')->getFormByName(Mimoto::service('input')->getCoreFormByEntityTypeId($nFormFieldTypeId));
+        // 2. load
+        $eFormForEditing = Mimoto::service('input')->getFormByName(Mimoto::service('input')->getCoreFormByEntityTypeId($nFormFieldTypeId));
 
+        // 3. create content
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $eFormForEditing);
 
-        // 2. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $eForm);
-
-        // 3. auto create and connect
+        // 4. auto create and connect
         $eInputField = Mimoto::service('data')->create($nFormFieldTypeId);
 
         Mimoto::service('data')->store($eInputField);
@@ -402,8 +401,7 @@ class FormController
         $eForm->addValue('fields', $eInputField);
         Mimoto::service('data')->store($eForm);
 
-
-        // 4. content
+        // 5. content
         $component->addForm(
             Mimoto::service('input')->getCoreFormByEntityTypeId($nFormFieldTypeId),
             $eInputField,
@@ -413,10 +411,10 @@ class FormController
             ]
         );
 
-        // 5. inject
+        // 6. inject
         $popup->addComponent('content', $component);
 
-        // 6. output
+        // 7. output
         return $component->render();
     }
 

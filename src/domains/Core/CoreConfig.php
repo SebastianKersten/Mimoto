@@ -37,6 +37,7 @@ use Mimoto\Core\entities\InputCheckbox;
 use Mimoto\Core\entities\InputDropdown;
 use Mimoto\Core\entities\InputRadiobutton;
 use Mimoto\Core\entities\InputTextline;
+use Mimoto\Core\entities\InputPassword;
 use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputTextblock;
 use Mimoto\Core\entities\InputList;
@@ -124,6 +125,7 @@ class CoreConfig
 
     // input
     const MIMOTO_FORM_INPUT_TEXTLINE            = '_Mimoto_form_input_textline';
+    const MIMOTO_FORM_INPUT_PASSWORD            = '_Mimoto_form_input_password';
     const MIMOTO_FORM_INPUT_TEXTBLOCK           = '_Mimoto_form_input_textblock';
     const MIMOTO_FORM_INPUT_CHECKBOX            = '_Mimoto_form_input_checkbox';
     const MIMOTO_FORM_INPUT_MULTISELECT         = '_Mimoto_form_input_multiselect';
@@ -282,6 +284,7 @@ class CoreConfig
 
             // input
             InputTextline::getStructure(),
+            InputPassword::getStructure(),
             InputList::getStructure(),
             InputTextblock::getStructure(),
             InputCheckbox::getStructure(),
@@ -365,6 +368,7 @@ class CoreConfig
             InputRadiobutton::getFormStructure(),
             InputTextBlock::getFormStructure(),
             InputTextline::getFormStructure(),
+            InputPassword::getFormStructure(),
             InputVideo::getFormStructure(),
             InputColorPicker::getFormStructure(),
             InputDatePicker::getFormStructure()

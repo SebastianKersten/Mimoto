@@ -891,6 +891,15 @@ class Component
                 ]
             ),
             (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_PASSWORD,
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/forms/input/Password/Password.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK,
                 'templates' => [
                     (object) array(
