@@ -34,23 +34,21 @@ class DashboardController
             // validate
             if (count($aUsers) == 0)
             {
-                Mimoto::output('Install Mimoto', '
-                    <ol>
-                        <li>Make a copy of `config.php.bak` and name it `config.php`</li>
-                        <li>Add your MySQL credentials to your `config.php`</li>
-                        <li>Import the database dump in `/database` in your MySQL</li>
-                        <li>Add at least 1 user to the `_Mimoto_user` table:<br>
+                // add temp password
+                $sPassword = json_encode(Mimoto::service('session')->createPasswordHash('welcome'));
+
+
+                Mimoto::output('Installing Mimoto (step 2 / 2)', "Add your first user (with owner permissions)<br>
 <br>
-INSERT INTO `_Mimoto_user`(`id`, `firstName`, `lastName`, `email`, `password`, `created`) VALUES (1, \'Your first name\', \'Your last name\', \'your@email.com\', \'your_password\', NULL);<br>
-and<br>
-INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_property_id`, `child_entity_type_id`, `child_id`, `sortindex`) VALUES (\'_Mimoto_user\', \'1\', \'_Mimoto_user--roles\', \'_Mimoto_user_role\', \'_Mimoto_user_role-owner\', 0);<br>
-INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_property_id`, `child_entity_type_id`, `child_id`, `sortindex`) VALUES (\'_Mimoto_root\', \'_Mimoto_root\', \'_Mimoto_root--users\', \'_Mimoto_user\', \'1\', 0);<br>
+Username = Your email address<br>
+Temp password = welcome (Please change it after login on /mimoto.cms/account)
 <br>
-Your email address also functions as your username to login to the cms
-                        </li>
-                    </ol>
-                ');
-                die();
+INSERT INTO `_Mimoto_user`(`id`, `firstName`, `lastName`, `email`, `password`, `created`) VALUES (1, 'Your first name', 'Your last name', 'your@email.com', '".$sPassword."', NULL);<br>
+INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_property_id`, `child_entity_type_id`, `child_id`, `sortindex`) VALUES ('_Mimoto_user', '1', '_Mimoto_user--roles', '_Mimoto_user_role', '_Mimoto_user_role-owner', 0);<br>
+INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_property_id`, `child_entity_type_id`, `child_id`, `sortindex`) VALUES ('_Mimoto_root', '_Mimoto_root', '_Mimoto_root--users', '_Mimoto_user', '1', 0);<br>
+<br>");
+
+                return '';
 
                 // 1. init page
                 //$page = Mimoto::service('output')->create('MimotoCMS_layout_Setup');

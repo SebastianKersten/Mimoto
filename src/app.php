@@ -18,20 +18,11 @@ if (file_exists($sConfigFile))
 else
 {
     echo "
-    <h1>Installling Mimoto</h1>
+    <h1>Installing Mimoto (step 1 / 2)</h1>
     <ol>
         <li>Make a copy of `config.php.dist` and name it `config.php`</li>
         <li>Add your MySQL credentials to your `config.php`</li>
         <li>Import the database dump in `/database` in your MySQL</li>
-        <li>Add at least 1 user to the `_Mimoto_user` table:<br>
-<br>
-INSERT INTO `_Mimoto_user`(`id`, `firstName`, `lastName`, `email`, `password`, `created`) VALUES (1, 'Your first name', 'Your last name', 'your@email.com', 'your_password', NULL);<br>
-and<br>
-INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_property_id`, `child_entity_type_id`, `child_id`, `sortindex`) VALUES ('_Mimoto_user', '1', '_Mimoto_user--roles', '_Mimoto_user_role', '_Mimoto_user_role-owner', 0);<br
-INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_property_id`, `child_entity_type_id`, `child_id`, `sortindex`) VALUES ('_Mimoto_root', '_Mimoto_root', '_Mimoto_root--users', '_Mimoto_user', '1', 0);<br>
-<br>
-Your email address also functions as your username to login to the cms
-        </li>
     </ol>";
     die();
 }
