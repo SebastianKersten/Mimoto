@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 13/09/2017 11:37:47
+ Date: 15/09/2017 18:44:38
 */
 
 SET NAMES utf8mb4;
@@ -38,7 +38,7 @@ CREATE TABLE `_Mimoto_component` (
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_componentconditional
@@ -61,7 +61,7 @@ CREATE TABLE `_Mimoto_componenttemplate` (
   `file` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_connection
@@ -76,7 +76,7 @@ CREATE TABLE `_Mimoto_connection` (
   `child_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `sortindex` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=458 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_dataset
@@ -89,7 +89,7 @@ CREATE TABLE `_Mimoto_dataset` (
   `isHiddenFromMenu` enum('0','1') CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_entity
@@ -101,7 +101,7 @@ CREATE TABLE `_Mimoto_entity` (
   `isAbstract` enum('0','1') CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_entityproperty
@@ -114,7 +114,7 @@ CREATE TABLE `_Mimoto_entityproperty` (
   `subtype` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_entitypropertysetting
@@ -127,7 +127,7 @@ CREATE TABLE `_Mimoto_entitypropertysetting` (
   `value` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_file
@@ -145,7 +145,7 @@ CREATE TABLE `_Mimoto_file` (
   `originalName` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form
@@ -163,7 +163,7 @@ CREATE TABLE `_Mimoto_form` (
   `target` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form_fieldrules
@@ -212,7 +212,7 @@ CREATE TABLE `_Mimoto_form_input_datepicker` (
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form_input_dropdown
@@ -236,7 +236,7 @@ CREATE TABLE `_Mimoto_form_input_image` (
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form_input_list
@@ -262,6 +262,19 @@ CREATE TABLE `_Mimoto_form_input_multiselect` (
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for _Mimoto_form_input_password
+-- ----------------------------
+DROP TABLE IF EXISTS `_Mimoto_form_input_password`;
+CREATE TABLE `_Mimoto_form_input_password` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `placeholder` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form_input_radiobutton
@@ -303,7 +316,7 @@ CREATE TABLE `_Mimoto_form_input_textline` (
   `prefix` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form_input_textrtf
@@ -331,7 +344,7 @@ CREATE TABLE `_Mimoto_form_input_video` (
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form_inputoption
@@ -390,7 +403,7 @@ CREATE TABLE `_Mimoto_form_layout_groupend` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form_layout_groupstart
@@ -401,7 +414,7 @@ CREATE TABLE `_Mimoto_form_layout_groupstart` (
   `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_form_output_title
@@ -414,7 +427,7 @@ CREATE TABLE `_Mimoto_form_output_title` (
   `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_formattingoption
@@ -460,7 +473,7 @@ CREATE TABLE `_Mimoto_layout` (
   `file` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_layoutcontainer
@@ -486,7 +499,7 @@ CREATE TABLE `_Mimoto_notification` (
   `state` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_output
@@ -496,7 +509,7 @@ CREATE TABLE `_Mimoto_output` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_output_container
@@ -507,7 +520,7 @@ CREATE TABLE `_Mimoto_output_container` (
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_route
@@ -518,7 +531,7 @@ CREATE TABLE `_Mimoto_route` (
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_route_path_element
@@ -531,7 +544,7 @@ CREATE TABLE `_Mimoto_route_path_element` (
   `varName` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_selection
@@ -542,7 +555,7 @@ CREATE TABLE `_Mimoto_selection` (
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_selectionrule
@@ -558,7 +571,7 @@ CREATE TABLE `_Mimoto_selectionrule` (
   `propertyVarName` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_user
@@ -572,7 +585,7 @@ CREATE TABLE `_Mimoto_user` (
   `password` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for _Mimoto_user_role
@@ -583,6 +596,6 @@ CREATE TABLE `_Mimoto_user_role` (
   `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
