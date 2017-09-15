@@ -192,6 +192,16 @@ class FormController
 
                                                 $eInputField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_TEXTBLOCK);
                                                 break;
+
+                                            case CoreConfig::DATA_VALUE_DATETIME:
+
+                                                $eInputField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER);
+                                                break;
+
+                                            case CoreConfig::DATA_VALUE_PASSWORD:
+
+                                                $eInputField = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUT_PASSWORD);
+                                                break;
                                         }
 
                                         break;
