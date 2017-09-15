@@ -1,6 +1,6 @@
 @import 'ListItem/ListItem';
 
-ul.MimotoCMS_pages_content_ContentOverview-container {
+div.MimotoCMS_pages_content_ContentOverview-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -8,12 +8,12 @@ ul.MimotoCMS_pages_content_ContentOverview-container {
     margin-bottom: 25px;
     margin-top: 30px;
 
-    &>li {
+    &>div {
         margin-bottom: 5px;
         margin-right: 5px;
     }
 
-    &>li:last-child {
+    &>div:last-child {
         margin-bottom: 0;
     }
 }
