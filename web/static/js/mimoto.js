@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "11fd5da8f8738e10d31f";
+/******/ 	__webpack_require__.h = "265320b792a31b98ac6d";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -17917,6 +17917,9 @@ module.exports.prototype = {
     // project
     projectName: 'mimoto',
 
+    // data
+    user: null,
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -18081,16 +18084,7 @@ module.exports.prototype = {
         // prepare
         var sRequestData = postData ? 'data=' + Mimoto.utils.utoa(JSON.stringify(postData)) : null;
 
-        // // prepare
-        // let sPostData = '';
-        // for (let sKey in postData)
-        // {
-        //     if (sPostData.length !== 0) sPostData += '&';
-        //     sPostData += sKey + '=' + postData[sKey];
-        // }
-        //
         // // send
-        // request.send(sPostData);
         request.send(sRequestData);
 
         return { 'popup': 'xxx' };
@@ -25337,7 +25331,11 @@ module.exports.prototype = {
      * @private
      */
     _socketOnLogon: function _socketOnLogon(data) {
-        Mimoto.log('User `' + data.user.firstName + ' ' + data.user.lastName + '` is logged on.');
+        // store
+        Mimoto.user = data.user;
+
+        // report
+        Mimoto.log('User `' + Mimoto.user.firstName + ' ' + Mimoto.user.lastName + '` is logged on.');
         Mimoto.log('===========================================================');
 
         // connect editable values

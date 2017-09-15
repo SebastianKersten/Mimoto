@@ -90,11 +90,29 @@ class EntityPropertyForm_Value_type
         $option->setValue('value', CoreConfig::DATA_VALUE_BOOLEAN);
         $field->addValue('options', $option);
 
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_DATETIME);
+        $option->setValue('label', CoreConfig::DATA_VALUE_DATETIME);
+        $option->setValue('value', CoreConfig::DATA_VALUE_DATETIME);
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_PASSWORD);
+        $option->setValue('label', CoreConfig::DATA_VALUE_PASSWORD);
+        $option->setValue('value', CoreConfig::DATA_VALUE_PASSWORD);
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--value-options-'.CoreConfig::DATA_VALUE_JSON);
+        $option->setValue('label', CoreConfig::DATA_VALUE_JSON);
+        $option->setValue('value', CoreConfig::DATA_VALUE_JSON);
+        $field->addValue('options', $option);
+
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--type_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
-        $validationRule->setValue('value', '^('.CoreConfig::DATA_VALUE_TEXTLINE.'|'.CoreConfig::DATA_VALUE_TEXTBLOCK.'|'.CoreConfig::DATA_VALUE_BOOLEAN.')$');
+        $validationRule->setValue('value', '^('.CoreConfig::DATA_VALUE_TEXTLINE.'|'.CoreConfig::DATA_VALUE_TEXTBLOCK.'|'.CoreConfig::DATA_VALUE_BOOLEAN.'|'.CoreConfig::DATA_VALUE_DATETIME.'|'.CoreConfig::DATA_VALUE_PASSWORD.'|'.CoreConfig::DATA_VALUE_JSON.')$');
         $validationRule->setValue('errorMessage', 'Select one of the above types');
         $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);

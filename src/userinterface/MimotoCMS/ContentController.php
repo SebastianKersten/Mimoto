@@ -219,7 +219,8 @@ class ContentController
             // verify
             if ($eEntity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
             {
-                $sLabelProperty = '<span data-mimoto-value="'.$eEntity->getEntityTypeName().'.'.$eEntity->getId().'.'.$sPropertyName.'">'.$eEntity->getValue($sPropertyName).'</span>';
+                // do not output objects like a password or json #todo - check type (pwd or json)
+                $sLabelProperty = !is_object($eEntity->get($sPropertyName)) ? '<span data-mimoto-value="'.$eEntity->getEntityTypeName().'.'.$eEntity->getId().'.'.$sPropertyName.'">'.$eEntity->getValue($sPropertyName).'</span>' : '';
                 break;
             }
         }

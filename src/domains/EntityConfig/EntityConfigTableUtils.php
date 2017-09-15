@@ -95,7 +95,7 @@ class EntityConfigTableUtils
         // 1. convert
         $sDataType = self::getColumnDataType($sColumnType);
 
-        // 2. add column to table
+        // a. add column to table
         $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` ADD COLUMN `".$sPropertyName."` ".$sDataType." AFTER `".$sColumnOnTheLeft."`");
         $params = array();
         if ($stmt->execute($params) === false) Mimoto::error("Error while adding column '$sPropertyName' to entity table '$sEntityName'");
@@ -138,9 +138,12 @@ class EntityConfigTableUtils
         $sDataType = null;
         switch($sColumnType)
         {
-            case 'textline': $sDataType = "VARCHAR(255)"; break;
-            case 'textblock': $sDataType = "TEXT"; break;
-            case 'boolean': $sDataType = "ENUM('0','1')"; break;
+            case CoreConfig::DATA_VALUE_TEXTLINE: $sDataType = "VARCHAR(255)"; break;
+            case CoreConfig::DATA_VALUE_TEXTBLOCK: $sDataType = "TEXT"; break;
+            case CoreConfig::DATA_VALUE_BOOLEAN: $sDataType = "ENUM('0','1')"; break;
+            case CoreConfig::DATA_VALUE_DATETIME: $sDataType = "DATETIME"; break;
+            case CoreConfig::DATA_VALUE_PASSWORD: $sDataType = "VARCHAR(255)"; break;
+            case CoreConfig::DATA_VALUE_JSON: $sDataType = "TEXT"; break;
         }
 
         // 2. verify specs

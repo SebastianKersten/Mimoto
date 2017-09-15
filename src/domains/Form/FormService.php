@@ -620,6 +620,7 @@ class FormService
                 'fieldSelector' => $sFieldSelector,
                 'key' => $sEntitySelector.'.'.$sPropertyName,
                 'propertyName' => $sPropertyName,
+                'propertyType' => $sPropertyType,
                 'value' => $propertyValue
             );
         }

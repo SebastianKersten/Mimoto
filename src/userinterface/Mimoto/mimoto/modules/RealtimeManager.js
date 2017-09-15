@@ -157,7 +157,11 @@ module.exports.prototype = {
      */
     _socketOnLogon: function(data)
     {
-        Mimoto.log('User `' + data.user.firstName + ' ' + data.user.lastName + '` is logged on.');
+        // store
+        Mimoto.user = data.user;
+
+        // report
+        Mimoto.log('User `' + Mimoto.user.firstName + ' ' + Mimoto.user.lastName + '` is logged on.');
         Mimoto.log('===========================================================');
 
         // connect editable values

@@ -436,6 +436,20 @@ class MimotoDataUtils
                         $value = ($value == 1) ? true : false;
                         break;
 
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_DATETIME:
+
+                        break;
+
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD:
+
+                        $value = json_decode($value);
+                        break;
+
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_JSON:
+
+                        $value = json_decode($value);
+                        break;
+
                     default:
 
                         break;
@@ -452,6 +466,10 @@ class MimotoDataUtils
                 // convert
                 $value = ($value == 1) ? true : false;
                 break;
+
+            case MimotoEntityPropertyValueTypes::VALUETYPE_DATETIME: // #todo - duplicate code? (unused?)
+            case MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD: // #todo - duplicate code? (unused?)
+            case MimotoEntityPropertyValueTypes::VALUETYPE_JSON: // #todo - duplicate code? (unused?)
 
             default:
 
@@ -487,6 +505,24 @@ class MimotoDataUtils
                         $value = ($value === true) ? 1 : 0;
                         break;
 
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_DATETIME:
+
+                        break;
+
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD:
+
+                        // encrypt
+                        $encryptedValue = Mimoto::service('session')->createPasswordHash($value);
+
+                        // encode
+                        $value = json_encode($encryptedValue);
+                        break;
+
+                    case MimotoEntityPropertyValueTypes::VALUETYPE_JSON:
+
+                        $value = json_encode($value);
+                        break;
+
                     default:
 
                         break;
@@ -503,6 +539,10 @@ class MimotoDataUtils
                 // convert
                 $value = ($value === true) ? 1 : 0;
                 break;
+
+            case MimotoEntityPropertyValueTypes::VALUETYPE_DATETIME: // #todo - duplicate code? (unused?)
+            case MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD: // #todo - duplicate code? (unused?)
+            case MimotoEntityPropertyValueTypes::VALUETYPE_JSON: // #todo - duplicate code? (unused?)
 
             default:
 

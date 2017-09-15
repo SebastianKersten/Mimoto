@@ -97,10 +97,6 @@ class SessionController
         // 2. https://silex.sensiolabs.org/doc/2.0/providers/security.html
 
 
-        // 1. find based on username (email)
-        // 2. check password
-        // 3. get avatar and name
-
         // find
         $aUsers = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_USER, 'value' => ['email' => $sUsername]]);
 
@@ -111,25 +107,31 @@ class SessionController
             $eUser = $aUsers[0];
 
             // validate
-            if ($sUsername == $eUser->getValue('email') && $sPassword == $eUser->getValue('password'))
+            if ($sUsername == $eUser->getValue('email'))
             {
-                // compose
-                $user = (object) array(
-                    'id' => $eUser->getId(),
-                    'firstName' => $eUser->getValue('firstName'),
-                    'lastName' => $eUser->getValue('lastName'),
-                    'avatar' => '/'.$eUser->getValue('avatar.path').$eUser->getValue('avatar.name'),
-                );
+                // read
+                $encryptedPassword = $eUser->getValue('password');
 
-                // register
-                $app['session']->set('is_user', true);
-                $app['session']->set('user', $user);
+                if (Mimoto::service('session')->comparePassword($sPassword, $encryptedPassword))
+                {
+                    // compose
+                    $user = (object) array(
+                        'id' => $eUser->getId(),
+                        'firstName' => $eUser->getValue('firstName'),
+                        'lastName' => $eUser->getValue('lastName'),
+                        'avatar' => '/'.$eUser->getValue('avatar.path').$eUser->getValue('avatar.name'),
+                    );
 
-                // determine
-                $sNextPage = (!empty($sRequestedPage)) ? $sRequestedPage : '/mimoto.cms';
+                    // register
+                    $app['session']->set('is_user', true);
+                    $app['session']->set('user', $user);
 
-                // open
-                return $app->redirect($sNextPage);
+                    // determine
+                    $sNextPage = (!empty($sRequestedPage)) ? $sRequestedPage : '/mimoto.cms';
+
+                    // open
+                    return $app->redirect($sNextPage);
+                }
             }
         }
 

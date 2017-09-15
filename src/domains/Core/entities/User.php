@@ -76,7 +76,7 @@ class User
                         'type' => (object) array(
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                            'value' => CoreConfig::DATA_VALUE_PASSWORD
                         )
                     ]
                 ),
@@ -193,10 +193,10 @@ class User
         );
         self::setEmailValidation($field);
 
-        $field = CoreFormUtils::addField_textline
+        $field = CoreFormUtils::addField_password
         (
             $form, 'password', CoreConfig::MIMOTO_USER.'--password',
-            'Password [#WARNING - not stored encrypted]', "Use a DUMMY password", 'This password is not encrypted as of yet. Please use a dummy password'
+            'Password', "Please enter a password", 'Use a strong password for better security'
         );
 
         $field = CoreFormUtils::addField_image

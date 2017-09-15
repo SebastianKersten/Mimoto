@@ -70,4 +70,23 @@ class SessionService
         return $this->_currentUser;
     }
 
+    public function createPasswordHash($sPassword)
+    {
+        // init
+        $encryptedPassword = (object) array(
+            'salt' => bin2hex(random_bytes(32)),
+            'iterations' => random_int(10000, 20000)
+        );
+
+        // encrypt
+        $encryptedPassword->hash = hash_pbkdf2('sha256', $sPassword, $encryptedPassword->salt, $encryptedPassword->iterations, 32);
+
+        // send
+        return $encryptedPassword;
+    }
+
+    public function comparePassword($sPassword, $encryptedPassword)
+    {
+        return ($encryptedPassword->hash == hash_pbkdf2('sha256', $sPassword, $encryptedPassword->salt, $encryptedPassword->iterations, 32));
+    }
 }

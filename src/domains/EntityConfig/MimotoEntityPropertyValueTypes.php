@@ -18,6 +18,8 @@ class MimotoEntityPropertyValueTypes
     const VALUETYPE_INTEGER     = 'integer';
     const VALUETYPE_FLOAT       = 'float';
     const VALUETYPE_DATETIME    = 'datetime';
+    const VALUETYPE_PASSWORD    = 'password';
+    const VALUETYPE_JSON        = 'json';
 
     // connection related value types
     const VALUETYPE_ID          = 'valuetype_id';

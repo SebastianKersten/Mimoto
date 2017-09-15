@@ -364,7 +364,17 @@ class AimlessComponent
                     // verify
                     if ($nFoundPropertyIndex == $nIndex)
                     {
-                        return ($bGetRealtime) ? $this->realtime($sPropertyName) : $this->data($sPropertyName, false, true);
+                        if ($bGetRealtime)
+                        {
+                            return $this->realtime($sPropertyName);
+                        }
+                        else
+                        {
+                            $data = $this->data($sPropertyName, false, true);
+
+                            // do not output objects like a password or json #todo - check type (pwd or json)
+                            return (!is_object($data)) ? $data : '';
+                        }
                     } else
                     {
                         // update
