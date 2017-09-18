@@ -150,6 +150,8 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/workers/slack', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::slack');
         $app->get ('/'.$sProjectName.'.cms/heartbeat', 'Mimoto\\UserInterface\\MimotoCMS\\HeartbeatController::viewOverview');
 
+        $app->get ('/'.$sProjectName.'.cms/setup/verify', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::verifyDatabase');
+
 
 
         // --- data manipulation

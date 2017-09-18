@@ -82,5 +82,33 @@ class SetupController
         // 4. output
         return $page->render();
     }
+
+    public function verifyDatabase(Application $app, Request $request)
+    {
+        // load
+        $stmt = Mimoto::service('database')->prepare('show tables');
+        $params = array();
+        $stmt->execute($params);
+
+        // load
+        $aTableResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+
+        // init
+        $aTables = [];
+
+        // collect table names
+        $nTableCount = count($aTableResults);
+        for ($nTableIndex = 0; $nTableIndex < $nTableCount; $nTableIndex++)
+        {
+            // register
+            $sTableName = $aTableResults[$nTableIndex]['Tables_in_'.Mimoto::value('config')->mysql->dbname];
+
+            $aTables[] = $sTableName;
+        }
+
+        Mimoto::error($aTables);
+
+    }
     
 }

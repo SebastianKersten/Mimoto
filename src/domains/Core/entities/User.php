@@ -76,7 +76,7 @@ class User
                         'type' => (object) array(
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_PASSWORD
+                            'value' => MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD
                         )
                     ]
                 ),

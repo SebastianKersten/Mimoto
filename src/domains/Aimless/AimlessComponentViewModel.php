@@ -306,6 +306,17 @@ class AimlessComponentViewModel
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_API, null, $this->_component, $instructions, $options);
     }
 
+    public function channel($sPropertyName, $sJavascriptDelegate, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'javascriptDelegate' => $sJavascriptDelegate
+        );
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_CHANNEL, $sPropertyName, $this->_component, $instructions, $options);
+    }
+
 
 
 

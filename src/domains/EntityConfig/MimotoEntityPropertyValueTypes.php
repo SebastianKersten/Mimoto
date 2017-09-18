@@ -13,6 +13,8 @@ class MimotoEntityPropertyValueTypes
 {
     // value types
     const VALUETYPE_TEXT        = 'text';
+
+
     const VALUETYPE_BOOLEAN     = 'boolean';
     const VALUETYPE_ARRAY       = 'array';
     const VALUETYPE_INTEGER     = 'integer';

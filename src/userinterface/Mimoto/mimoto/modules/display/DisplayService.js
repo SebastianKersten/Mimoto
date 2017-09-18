@@ -111,9 +111,12 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE:      'data-mimoto-display-removeclasswhenvalue',
     DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE:   'data-mimoto-display-removeclasswhennotvalue',
 
-    // utility tags
+    // utility
     DIRECTIVE_MATH_MIMOTO_COUNT: 'data-mimoto-count',
     DIRECTIVE_MIMOTO_API: 'data-mimoto-api',
+
+    // communication
+    DIRECTIVE_MIMOTO_CHANNEL: 'data-mimoto-channel',
 
     // setting tags
     DIRECTIVE_SETTING_MIMOTO_FILTER:     'data-mimoto-filter',
@@ -375,7 +378,10 @@ module.exports.prototype = {
 
             // utility tags
             this.DIRECTIVE_MATH_MIMOTO_COUNT,
-            this.DIRECTIVE_MIMOTO_API
+            this.DIRECTIVE_MIMOTO_API,
+
+            // communication
+            this.DIRECTIVE_MIMOTO_CHANNEL
         ];
 
         // 3. collect
@@ -748,6 +754,12 @@ module.exports.prototype = {
 
                         }.bind(directive.element, directive.sEntitySelector, directive.instructions.url), true);
 
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_CHANNEL:
+
+                        Mimoto.log('Subscribing to channel ...', directive);
+                        break;
                 }
             }
         }

@@ -1,12 +1,12 @@
-{% set sPHPDateFormat = 'F jS, Y / H:i' %}
-{% set sFRDateFormat = 'F J, Y / H:i' %}
+{% set sPHPDateFormat = 'Y m d' %}
+{% set sFRDateFormat = 'j F Y' %}
 
 {% embed "MimotoCMS/components/forms/FormField.twig" %}
 
     {% block input %}
 
         <div class="MimotoCMS_forms_input_DatePicker">
-            <input {{ Mimoto.input() }} type="text" data-mimoto-form-input-datepicker class="MimotoCMS_forms_input_DatePicker-input" value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-value="{{ Mimoto.value() }}" data-dp-format="{{ sFRDateFormat }}"/>
+            <input {{ Mimoto.input() }} type="text" data-mimoto-form-input-datepicker class="MimotoCMS_forms_input_DatePicker-input" value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-format="{{ sFRDateFormat }}"/>
         </div>
 
     {% endblock %}

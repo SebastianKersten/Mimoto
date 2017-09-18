@@ -54,7 +54,7 @@ module.exports.prototype = {
             altInput: true,
             altFormat: this._elDatePicker.getAttribute('data-dp-format'),
             defaultDate: this._elDatePicker.getAttribute('data-dp-value'),
-            enableTime: true,
+            //enableTime: true,
             dateFormat: 'Y-m-d H:i:S', // 2017-03-08 21:46:42
             // noCalendar: true, // only diplays time
             time_24hr: true,

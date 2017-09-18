@@ -158,12 +158,8 @@ class CoreConfig
     // data values
     const DATA_VALUE_TEXTLINE       = 'textline';
     const DATA_VALUE_TEXTBLOCK      = 'textblock';
-    const DATA_VALUE_BOOLEAN        = 'boolean';
     const DATA_VALUE_TRUE           = 'true';
     const DATA_VALUE_FALSE          = 'false';
-    const DATA_VALUE_DATETIME       = 'datetime';
-    const DATA_VALUE_PASSWORD       = 'password';
-    const DATA_VALUE_JSON           = 'json';
 
     // inputvalue vartypes
     const INPUTVALUE_VARTYPE                = 'vartype';

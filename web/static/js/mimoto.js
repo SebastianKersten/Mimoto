@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "312671c0ba33f28d0732";
+/******/ 	__webpack_require__.h = "c87413ad4ab4e6334ea6";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -19494,9 +19494,12 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE: 'data-mimoto-display-removeclasswhenvalue',
     DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE: 'data-mimoto-display-removeclasswhennotvalue',
 
-    // utility tags
+    // utility
     DIRECTIVE_MATH_MIMOTO_COUNT: 'data-mimoto-count',
     DIRECTIVE_MIMOTO_API: 'data-mimoto-api',
+
+    // communication
+    DIRECTIVE_MIMOTO_CHANNEL: 'data-mimoto-channel',
 
     // setting tags
     DIRECTIVE_SETTING_MIMOTO_FILTER: 'data-mimoto-filter',
@@ -19691,7 +19694,10 @@ module.exports.prototype = {
         this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY, this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY, this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX, this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX, this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE, this.DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE, this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY, this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY, this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENREGEX, this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTREGEX, this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENVALUE, this.DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTVALUE, this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY, this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY, this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENREGEX, this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTREGEX, this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENVALUE, this.DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTVALUE, this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY, this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY, this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENREGEX, this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTREGEX, this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENVALUE, this.DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTVALUE,
 
         // utility tags
-        this.DIRECTIVE_MATH_MIMOTO_COUNT, this.DIRECTIVE_MIMOTO_API];
+        this.DIRECTIVE_MATH_MIMOTO_COUNT, this.DIRECTIVE_MIMOTO_API,
+
+        // communication
+        this.DIRECTIVE_MIMOTO_CHANNEL];
 
         // 3. collect
         var nPrimaryDirectiveCount = aPrimaryDirectives.length;
@@ -20010,6 +20016,12 @@ module.exports.prototype = {
                             });
                         }.bind(directive.element, directive.sEntitySelector, directive.instructions.url), true);
 
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_CHANNEL:
+
+                        Mimoto.log('Subscribing to channel ...', directive);
+                        break;
                 }
             }
         }
@@ -21961,7 +21973,7 @@ module.exports.prototype = {
             altInput: true,
             altFormat: this._elDatePicker.getAttribute('data-dp-format'),
             defaultDate: this._elDatePicker.getAttribute('data-dp-value'),
-            enableTime: true,
+            //enableTime: true,
             dateFormat: 'Y-m-d H:i:S', // 2017-03-08 21:46:42
             // noCalendar: true, // only diplays time
             time_24hr: true,

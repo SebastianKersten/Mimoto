@@ -140,10 +140,10 @@ class EntityConfigTableUtils
         {
             case CoreConfig::DATA_VALUE_TEXTLINE: $sDataType = "VARCHAR(255)"; break;
             case CoreConfig::DATA_VALUE_TEXTBLOCK: $sDataType = "TEXT"; break;
-            case CoreConfig::DATA_VALUE_BOOLEAN: $sDataType = "ENUM('0','1')"; break;
-            case CoreConfig::DATA_VALUE_DATETIME: $sDataType = "DATETIME"; break;
-            case CoreConfig::DATA_VALUE_PASSWORD: $sDataType = "VARCHAR(255)"; break;
-            case CoreConfig::DATA_VALUE_JSON: $sDataType = "TEXT"; break;
+            case MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN: $sDataType = "ENUM('0','1')"; break;
+            case MimotoEntityPropertyValueTypes::VALUETYPE_DATETIME: $sDataType = "DATETIME"; break;
+            case MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD: $sDataType = "VARCHAR(255)"; break;
+            case MimotoEntityPropertyValueTypes::VALUETYPE_JSON: $sDataType = "TEXT"; break;
         }
 
         // 2. verify specs
