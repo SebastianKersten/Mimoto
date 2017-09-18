@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "35c34a81acb87d6bac6a";
+/******/ 	__webpack_require__.h = "312671c0ba33f28d0732";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -20759,6 +20759,7 @@ var Video = __webpack_require__(385);
 var ColorPicker = __webpack_require__(386);
 var DatePicker = __webpack_require__(387);
 var Textblock = __webpack_require__(464);
+var Password = __webpack_require__(466);
 var Generic = __webpack_require__(465);
 
 module.exports = function (elFormField) {
@@ -20802,7 +20803,8 @@ module.exports.prototype = {
         '_Mimoto_form_input_video': Video,
         '_Mimoto_form_input_colorpicker': ColorPicker,
         '_Mimoto_form_input_datepicker': DatePicker,
-        '_Mimoto_form_input_textblock': Textblock
+        '_Mimoto_form_input_textblock': Textblock,
+        '_Mimoto_form_input_password': Password
     },
 
     // ----------------------------------------------------------------------------
@@ -34233,7 +34235,12 @@ module.exports.prototype = {
         // store
         this._elFormField = elFormField;
         this._fBroadcast = fBroadcast;
-        this._elInput = elInput;
+
+        // only support one input element
+        this._elInput = Array.isArray(elInput) && elInput[0] ? elInput[0] : elInput;
+
+        // validate
+        if (!this._elInput) return;
 
         // configure
         this._elInput.addEventListener('input', function (e) {
@@ -34250,14 +34257,323 @@ module.exports.prototype = {
 
 
     getValue: function getValue() {
+        return this._elInput ? this._elInput.value : null;
+    },
+
+    setValue: function setValue(value) {
+        if (this._elInput) this._elInput.value = value;
+    }
+
+};
+
+/***/ }),
+/* 466 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - InputField - Textline
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+var PasswordStrengthTest = __webpack_require__(467);
+
+module.exports = function (elFormField, fBroadcast, elInput) {
+
+    // start
+    this.__construct(elFormField, fBroadcast, elInput);
+};
+
+module.exports.prototype = {
+
+    // dom
+    _elFormField: null,
+    _fBroadcast: null,
+    _elInput: null,
+
+    // elements
+    _elPasswordStrength: null,
+    _aPasswordStrengthBlocks: [],
+
+    // states
+    GOOD: 'good',
+    MEDIUM: 'medium',
+    BAD: 'bad',
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(elFormField, fBroadcast, elInput) {
+        // store
+        this._elFormField = elFormField;
+        this._fBroadcast = fBroadcast;
+        this._elInput = elInput;
+
+        // register
+        this._elPasswordStrength = elFormField.querySelector('[data-mimoto-form-input-password-strength]');
+        this._aPasswordStrengthBlocks = this._elPasswordStrength.querySelectorAll('div');
+
+        // configure
+        this._elInput.addEventListener('input', function (e) {
+            this._checkPasswordStrength();
+        }.bind(this));
+        this._elInput.addEventListener('change', function (e) {
+            this._checkPasswordStrength();
+        }.bind(this));
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    getValue: function getValue() {
         return this._elInput.value;
     },
 
     setValue: function setValue(value) {
         this._elInput.value = value;
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _checkPasswordStrength: function _checkPasswordStrength() {
+        // test
+        var result = PasswordStrengthTest.test(this.getValue());
+
+        // sum
+        var nErrorCount = result.errors.length + result.optionalTestErrors.length;
+
+        // toggle colors
+        var nBlockCount = this._aPasswordStrengthBlocks.length;
+        for (var nBlockIndex = 0; nBlockIndex < nBlockCount; nBlockIndex++) {
+            // register
+            var elBlock = this._aPasswordStrengthBlocks[nBlockIndex];
+
+            // colorize
+            if (this.getValue().length < 4) {
+                this._colorizeStrengthBlock(elBlock, this.BAD);
+            } else {
+                if (nErrorCount >= nBlockIndex * 2 + 2) this._colorizeStrengthBlock(elBlock, this.BAD);else if (nErrorCount >= nBlockIndex * 2 + 1) this._colorizeStrengthBlock(elBlock, this.MEDIUM);else this._colorizeStrengthBlock(elBlock, this.GOOD);
+            }
+        }
+
+        // show
+        this._elPasswordStrength.classList.remove('Mimoto_CoreCSS_hidden');
+    },
+
+    _colorizeStrengthBlock: function _colorizeStrengthBlock(elBlock, sState) {
+        // 1. init
+        var STATE_PREFIX = 'MimotoCMS_forms_input_Password-strengthblock--';
+
+        // 2. reset
+        elBlock.classList.remove(STATE_PREFIX + this.GOOD);
+        elBlock.classList.remove(STATE_PREFIX + this.MEDIUM);
+        elBlock.classList.remove(STATE_PREFIX + this.BAD);
+
+        // 3. toggle
+        elBlock.classList.add(STATE_PREFIX + sState);
     }
 
 };
+
+/***/ }),
+/* 467 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* globals define */
+(function (root, factory) {
+  
+  if (true) {
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.owaspPasswordStrengthTest = factory();
+  }
+
+  }(this, function () {
+
+    var owasp = {};
+
+    // These are configuration settings that will be used when testing password
+    // strength
+    owasp.configs = {
+      allowPassphrases       : true,
+      maxLength              : 128,
+      minLength              : 10,
+      minPhraseLength        : 20,
+      minOptionalTestsToPass : 4,
+    };
+
+    // This method makes it more convenient to set config parameters
+    owasp.config = function(params) {
+      for (var prop in params) {
+        if (params.hasOwnProperty(prop) && this.configs.hasOwnProperty(prop)) {
+          this.configs[prop] = params[prop];
+        }
+      }
+    };
+
+    // This is an object containing the tests to run against all passwords.
+    owasp.tests = {
+
+      // An array of required tests. A password *must* pass these tests in order
+      // to be considered strong.
+      required: [
+
+        // enforce a minimum length
+        function(password) {
+          if (password.length < owasp.configs.minLength) {
+            return 'The password must be at least ' + owasp.configs.minLength + ' characters long.';
+          }
+        },
+
+        // enforce a maximum length
+        function(password) {
+          if (password.length > owasp.configs.maxLength) {
+            return 'The password must be fewer than ' + owasp.configs.maxLength + ' characters.';
+          }
+        },
+
+        // forbid repeating characters
+        function(password) {
+          if (/(.)\1{2,}/.test(password)) {
+            return 'The password may not contain sequences of three or more repeated characters.';
+          }
+        },
+
+      ],
+
+      // An array of optional tests. These tests are "optional" in two senses:
+      //
+      // 1. Passphrases (passwords whose length exceeds
+      //    this.configs.minPhraseLength) are not obligated to pass these tests
+      //    provided that this.configs.allowPassphrases is set to Boolean true
+      //    (which it is by default).
+      //
+      // 2. A password need only to pass this.configs.minOptionalTestsToPass
+      //    number of these optional tests in order to be considered strong.
+      optional: [
+
+        // require at least one lowercase letter
+        function(password) {
+          if (!/[a-z]/.test(password)) {
+            return 'The password must contain at least one lowercase letter.';
+          }
+        },
+
+        // require at least one uppercase letter
+        function(password) {
+          if (!/[A-Z]/.test(password)) {
+            return 'The password must contain at least one uppercase letter.';
+          }
+        },
+
+        // require at least one number
+        function(password) {
+          if (!/[0-9]/.test(password)) {
+            return 'The password must contain at least one number.';
+          }
+        },
+
+        // require at least one special character
+        function(password) {
+          if (!/[^A-Za-z0-9]/.test(password)) {
+            return 'The password must contain at least one special character.';
+          }
+        },
+
+      ],
+    };
+
+    // This method tests password strength
+    owasp.test = function(password) {
+
+      // create an object to store the test results
+      var result = {
+        errors              : [],
+        failedTests         : [],
+        passedTests         : [],
+        requiredTestErrors  : [],
+        optionalTestErrors  : [],
+        isPassphrase        : false,
+        strong              : true,
+        optionalTestsPassed : 0,
+      };
+
+      // Always submit the password/passphrase to the required tests
+      var i = 0;
+      this.tests.required.forEach(function(test) {
+        var err = test(password);
+        if (typeof err === 'string') {
+          result.strong = false;
+          result.errors.push(err);
+          result.requiredTestErrors.push(err);
+          result.failedTests.push(i);
+        } else {
+          result.passedTests.push(i);
+        }
+        i++;
+      });
+
+      // If configured to allow passphrases, and if the password is of a
+      // sufficient length to consider it a passphrase, exempt it from the
+      // optional tests.
+      if (
+        this.configs.allowPassphrases === true &&
+        password.length >= this.configs.minPhraseLength
+      ) {
+        result.isPassphrase = true;
+      }
+
+      if (!result.isPassphrase) {
+        var j = this.tests.required.length;
+        this.tests.optional.forEach(function(test) {
+          var err = test(password);
+          if (typeof err === 'string') {
+            result.errors.push(err);
+            result.optionalTestErrors.push(err);
+            result.failedTests.push(j);
+          } else {
+            result.optionalTestsPassed++;
+            result.passedTests.push(j);
+          }
+          j++;
+        });
+      }
+
+      // If the password is not a passphrase, assert that it has passed a
+      // sufficient number of the optional tests, per the configuration
+      if (
+        !result.isPassphrase &&
+        result.optionalTestsPassed < this.configs.minOptionalTestsToPass
+      ) {
+        result.strong = false;
+      }
+
+      // return the result
+      return result;
+    };
+
+    return owasp;
+  }
+));
+
 
 /***/ })
 /******/ ]);

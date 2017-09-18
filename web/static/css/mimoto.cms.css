@@ -5749,7 +5749,7 @@ input.MimotoCMS_forms_input_Password {
   width: 100%;
   height: 50px;
   margin: 0 0 10px;
-  padding: 14px 15px;
+  padding: 14px 50px 14px 15px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
@@ -5763,6 +5763,27 @@ input.MimotoCMS_forms_input_Password {
   input.MimotoCMS_forms_input_Password:focus {
     border-color: #9dbab7;
     background: #fff; }
+
+div.MimotoCMS_forms_input_Password-strength {
+  position: relative;
+  right: 15px;
+  top: -37px; }
+  div.MimotoCMS_forms_input_Password-strength > div {
+    margin-left: 2px;
+    float: right; }
+  div.MimotoCMS_forms_input_Password-strength > div:last-child {
+    margin-left: 0; }
+
+div.MimotoCMS_forms_input_Password-strengthblock {
+  display: inline-block;
+  width: 14px;
+  height: 7px; }
+  div.MimotoCMS_forms_input_Password-strengthblock--good {
+    background-color: #b1dd7e; }
+  div.MimotoCMS_forms_input_Password-strengthblock--medium {
+    background-color: #ddac48; }
+  div.MimotoCMS_forms_input_Password-strengthblock--bad {
+    background-color: #df5b57; }
 
 div.MimotoCMS_forms_input_VideoUpload {
   position: relative;

@@ -35,7 +35,12 @@ module.exports.prototype = {
         // store
         this._elFormField = elFormField;
         this._fBroadcast = fBroadcast;
-        this._elInput = elInput;
+
+        // only support one input element
+        this._elInput = (Array.isArray(elInput) && elInput[0]) ? elInput[0] : elInput;
+
+        // validate
+        if (!this._elInput) return;
 
         // configure
         this._elInput.addEventListener('input', function(e) { this._fBroadcast(); }.bind(this));
@@ -51,12 +56,12 @@ module.exports.prototype = {
 
     getValue: function()
     {
-        return this._elInput.value;
+        return (this._elInput) ? this._elInput.value : null;
     },
 
     setValue: function(value)
     {
-        this._elInput.value = value;
+        if (this._elInput) this._elInput.value = value;
     }
 
 }

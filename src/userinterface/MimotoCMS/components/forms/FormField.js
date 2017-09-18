@@ -18,6 +18,7 @@ let Video = require('./input/Video/Video');
 let ColorPicker = require('./input/ColorPicker/ColorPicker');
 let DatePicker = require('./input/DatePicker/DatePicker');
 let Textblock = require('./input/Textblock/Textblock');
+let Password = require('./input/Password/Password');
 let Generic = require('./input/Generic/Generic');
 
 
@@ -63,7 +64,8 @@ module.exports.prototype = {
         '_Mimoto_form_input_video': Video,
         '_Mimoto_form_input_colorpicker': ColorPicker,
         '_Mimoto_form_input_datepicker': DatePicker,
-        '_Mimoto_form_input_textblock': Textblock
+        '_Mimoto_form_input_textblock': Textblock,
+        '_Mimoto_form_input_password': Password
     },
 
 
