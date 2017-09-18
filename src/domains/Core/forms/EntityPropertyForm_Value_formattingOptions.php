@@ -83,7 +83,7 @@ class EntityPropertyForm_Value_formattingOptions
             // register
             $eFormattingOption = $aFormattingOptions[$nFormattingOptionIndex];
 
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_FORMATTINGOPTIONS.'-custom-'.$eFormattingOption->getId());
             $option->setValue('label', $eFormattingOption->getValue('name'));
             $option->setValue('value', $eFormattingOption->getEntityTypeName().'.'.$eFormattingOption->getId());
@@ -138,7 +138,7 @@ class EntityPropertyForm_Value_formattingOptions
             // register
             $formattingOption = $aCoreFormattingOptions[$nFormattingOptionIndex];
 
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_FORMATTINGOPTIONS.'-core-'.$nFormattingOptionIndex);
             $option->setValue('label', $formattingOption->label);
             $option->setValue('value', CoreConfig::MIMOTO_FORMATTINGOPTION.'.'.$formattingOption->id);

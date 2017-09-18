@@ -90,7 +90,7 @@ class CoreConfig
 
     // text
     const MIMOTO_FORMATTINGOPTION               = '_Mimoto_formattingoption';
-    const MIMOTO_FORMATTINGOPTIONATTRIBUTE      = '_Mimoto_formattingoptionattribute';
+    const MIMOTO_FORMATTINGOPTION_ATTRIBUTE     = '_Mimoto_formattingoption_attribute';
 
     // functionality
     const MIMOTO_ACTION                         = '_Mimoto_action';
@@ -102,8 +102,8 @@ class CoreConfig
 
     // search
     const MIMOTO_SELECTION                      = '_Mimoto_selection';
-    const MIMOTO_SELECTIONRULE                  = '_Mimoto_selectionrule';
-    const MIMOTO_SELECTIONRULEVALUE             = '_Mimoto_selectionrulevalue';
+    const MIMOTO_SELECTION_RULE                 = '_Mimoto_selection_rule';
+    const MIMOTO_SELECTION_RULEVALUE            = '_Mimoto_selection_rule_value';
 
     // routes
     const MIMOTO_ROUTE                          = '_Mimoto_route';
@@ -120,11 +120,13 @@ class CoreConfig
     // forms
     const MIMOTO_FORM                           = '_Mimoto_form';
     const MIMOTO_FORM_FIELD                     = '_Mimoto_form_field';
+    const MIMOTO_FORM_FIELD_OPTION              = '_Mimoto_form_field_option';
+    const MIMOTO_FORM_FIELD_OPTION_MAP          = '_Mimoto_form_field_option_map';
     const MIMOTO_FORM_FIELD_RULES               = '_Mimoto_form_field_rules';
-    const MIMOTO_FORM_INPUT                     = '_Mimoto_form_input';
-    const MIMOTO_FORM_INPUTOPTION               = '_Mimoto_form_inputoption';
-    const MIMOTO_FORM_INPUTOPTION_MAP           = '_Mimoto_form_inputoption_map';
     const MIMOTO_FORM_FIELD_VALIDATION          = '_Mimoto_form_field_validation';
+
+    const MIMOTO_FORM_INPUT                     = '_Mimoto_form_input';
+
 
     // input
     const MIMOTO_FORM_INPUT_TEXTLINE            = '_Mimoto_form_input_textline';

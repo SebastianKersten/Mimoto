@@ -152,7 +152,7 @@ class LayoutContainer
             $entity = $aEntities[$i];
 
             //output('$entity->getValue(\'name\')', $entity->getValue('name'));
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::COREFORM_ENTITY.'--entityType_value_options-valuesettings-collection-'.$entity->getId());
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));
@@ -199,7 +199,7 @@ class LayoutContainer
                 $sLabel = $entity->getValue('name').'.'.$entityProperty->getValue('name');
 
 
-                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
                 $option->setValue('label', $sLabel);
                 $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());

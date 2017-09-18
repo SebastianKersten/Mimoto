@@ -198,7 +198,7 @@ class Output
             $entity = $aEntities[$i];
 
             //output('$entity->getValue(\'name\')', $entity->getValue('name'));
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--extends_value_options-valuesettings-collection-'.$entity->getId());
             $option->setValue('key', $entity->getEntityTypeName().'.'.$entity->getId());
             $option->setValue('value', $entity->getValue('name'));

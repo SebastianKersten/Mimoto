@@ -179,13 +179,13 @@ class ComponentConditional
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_COMPONENTCONDITIONAL, 'type');
 
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--type_value_option-entityType');
         $option->setValue('label', ComponentConditional::ENTITY_TYPE);
         $option->setValue('value', ComponentConditional::ENTITY_TYPE);
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--type_value_option-propertyValue');
         $option->setValue('label', ComponentConditional::PROPERTY_VALUE);
         $option->setValue('value', ComponentConditional::PROPERTY_VALUE);
@@ -232,7 +232,7 @@ class ComponentConditional
             $entity = $aEntities[$i];
 
             //output('$entity->getValue(\'name\')', $entity->getValue('name'));
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::COREFORM_ENTITY.'--entityType_value_options-valuesettings-collection-'.$entity->getId());
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));
@@ -279,7 +279,7 @@ class ComponentConditional
                 $sLabel = $entity->getValue('name').'.'.$entityProperty->getValue('name');
 
 
-                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
                 $option->setValue('label', $sLabel);
                 $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());

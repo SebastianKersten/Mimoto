@@ -49,7 +49,7 @@ class Selection
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTIONRULE]
+                            'value' => [CoreConfig::MIMOTO_SELECTION_RULE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

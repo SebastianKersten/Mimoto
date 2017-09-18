@@ -337,7 +337,7 @@ class User
             // register
             $entity = $aEntities[$i];
 
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::MIMOTO_USER.'--roles_value_options-'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());

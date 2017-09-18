@@ -124,8 +124,8 @@ class SelectionService
         // init
         $aAllSelections = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_SELECTION);
         $aAllSelectionRuleConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTION);
-        $aAllSelectionRules = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_SELECTIONRULE);
-        $aAllSelectionRuleSettingsConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTIONRULE);
+        $aAllSelectionRules = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_SELECTION_RULE);
+        $aAllSelectionRuleSettingsConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTION_RULE);
 
 
         // --- compose ---
@@ -183,7 +183,7 @@ class SelectionService
 
                                         switch($selectionRuleSetting->parent_property_id)
                                         {
-                                            case CoreConfig::MIMOTO_SELECTIONRULE.'--type':
+                                            case CoreConfig::MIMOTO_SELECTION_RULE.'--type':
 
                                                 $newSelectionRule->type = Mimoto::service('config')->getEntityNameById($selectionRuleSetting->child_id);
 //                                            $newSelectionRule->type = (object) array(
@@ -193,7 +193,7 @@ class SelectionService
                                                 $bSettingFound = true;
                                                 break;
 
-                                            case CoreConfig::MIMOTO_SELECTIONRULE.'--instance':
+                                            case CoreConfig::MIMOTO_SELECTION_RULE.'--instance':
 
                                                 $newSelectionRule->instance = $selectionRuleSetting;
                                                 $newSelectionRule->instance = (object) array(
@@ -205,7 +205,7 @@ class SelectionService
                                                 $bSettingFound = true;
                                                 break;
 
-                                            case CoreConfig::MIMOTO_SELECTIONRULE.'--property':
+                                            case CoreConfig::MIMOTO_SELECTION_RULE.'--property':
 
                                                 $newSelectionRule->entityProperty = (object) array(
                                                     'property_type_id' => $selectionRuleSetting->child_id,

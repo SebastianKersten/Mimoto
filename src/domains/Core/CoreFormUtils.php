@@ -136,7 +136,7 @@ class CoreFormUtils
                 $sLabel = (!empty($eInstance)) ? $entityProperty->getValue('name') : $eParentEntity->getValue('name').'.'.$entityProperty->getValue('name');
 
                 // create input options
-                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
                 $option->setValue('label', $sLabel);
                 $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
@@ -160,8 +160,8 @@ class CoreFormUtils
         self::addValueToField($field, $eParent->getValue('name'), 'validation');
 
         // configure
-        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--validation-item1');
+        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $itemForm->setId(CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--validation-item1');
         $itemForm->setValue('label', 'Label');
 
         // connect form
@@ -202,8 +202,8 @@ class CoreFormUtils
 
 
         // configure
-        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
+        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $itemForm->setId(CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--options-item1');
         $itemForm->setValue('label', 'Label');
 
         // connect form

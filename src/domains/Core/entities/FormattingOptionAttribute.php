@@ -54,7 +54,7 @@ class FormattingOptionAttribute
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => [CoreConfig::MIMOTO_FORMATTINGOPTIONATTRIBUTE]
+                            'value' => [CoreConfig::MIMOTO_FORMATTINGOPTION_ATTRIBUTE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

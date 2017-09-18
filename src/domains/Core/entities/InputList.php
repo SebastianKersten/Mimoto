@@ -161,8 +161,8 @@ class InputList
 
 
         // configure
-        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $itemForm->setId(CoreConfig::MIMOTO_FORM_INPUTOPTION.'--options-item1');
+        $itemForm = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $itemForm->setId(CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--options-item1');
         $itemForm->setValue('label', 'Label');
 
         // connect form

@@ -164,19 +164,19 @@ class InputValidation
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_FIELD_VALIDATION, 'type');
 
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-maxchars');
         $option->setValue('label', 'Maximum amount of charaters');
         $option->setValue('value', 'maxchars');
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-minchars');
         $option->setValue('label', 'Minimum amount of charaters');
         $option->setValue('value', 'minchars');
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-regex_custom');
         $option->setValue('label', 'Regular expression');
         $option->setValue('value', 'regex_custom');
@@ -209,13 +209,13 @@ class InputValidation
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_FIELD_VALIDATION, 'trigger');
 
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-maxchars');
         $option->setValue('label', 'On submit');
         $option->setValue('value', 'onSubmit');
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_options-minchars');
         $option->setValue('label', 'While typing');
         $option->setValue('value', 'onChange');

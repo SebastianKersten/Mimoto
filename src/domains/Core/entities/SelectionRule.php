@@ -23,15 +23,15 @@ class SelectionRule
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_SELECTIONRULE,
+            'id' => CoreConfig::MIMOTO_SELECTION_RULE,
             // ---
-            'name' => CoreConfig::MIMOTO_SELECTIONRULE,
+            'name' => CoreConfig::MIMOTO_SELECTION_RULE,
             'extends' => null,
-            'forms' => [CoreConfig::MIMOTO_SELECTIONRULE],
+            'forms' => [CoreConfig::MIMOTO_SELECTION_RULE],
             'properties' => [
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--typeAsVar',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--typeAsVar',
                     // ---
                     'name' => 'typeAsVar',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -44,7 +44,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--typeVarName',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--typeVarName',
                     // ---
                     'name' => 'typeVarName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -57,7 +57,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--type',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--type',
                     // ---
                     'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -75,7 +75,7 @@ class SelectionRule
 
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--idAsVar',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--idAsVar',
                     // ---
                     'name' => 'idAsVar',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -88,7 +88,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--idVarName',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--idVarName',
                     // ---
                     'name' => 'idVarName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -101,7 +101,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--instance',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--instance',
                     // ---
                     'name' => 'instance',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -119,7 +119,7 @@ class SelectionRule
 
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--propertyAsVar',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--propertyAsVar',
                     // ---
                     'name' => 'propertyAsVar',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -132,7 +132,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--propertyVarName',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--propertyVarName',
                     // ---
                     'name' => 'propertyVarName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -145,7 +145,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--property',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--property',
                     // ---
                     'name' => 'property',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -171,7 +171,7 @@ class SelectionRule
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTIONRULEVALUE]
+                            'value' => [CoreConfig::MIMOTO_SELECTION_RULEVALUE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -186,7 +186,7 @@ class SelectionRule
 
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--childTypeAsVar',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--childTypeAsVar',
                     // ---
                     'name' => 'childTypeAsVar',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -199,7 +199,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--childTypeVarName',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--childTypeVarName',
                     // ---
                     'name' => 'childTypeVarName',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -212,7 +212,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--childType',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--childType',
                     // ---
                     'name' => 'childType',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -238,7 +238,7 @@ class SelectionRule
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTIONRULEVALUE]
+                            'value' => [CoreConfig::MIMOTO_SELECTION_RULEVALUE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -269,24 +269,24 @@ class SelectionRule
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_SELECTIONRULE,
-            'name' => CoreConfig::MIMOTO_SELECTIONRULE,
+            'id' => CoreConfig::MIMOTO_SELECTION_RULE,
+            'name' => CoreConfig::MIMOTO_SELECTION_RULE,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'typeAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'typeVarName'),
-                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'type'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'idAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'idVarName'),
-                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'instance'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'propertyAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'propertyVarName'),
-                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'property'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'values'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'childTypeAsVar'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'childTypeVarName'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'childType'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'childValues')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'typeAsVar'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'typeVarName'),
+                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'type'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'idAsVar'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'idVarName'),
+                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'instance'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'propertyAsVar'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'propertyVarName'),
+                //CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'property'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'values'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'childTypeAsVar'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'childTypeVarName'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'childType'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'childValues')
             ]
         );
     }
@@ -298,7 +298,7 @@ class SelectionRule
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_SELECTIONRULE);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_SELECTION_RULE);
 
         // setup
         CoreFormUtils::addField_title($form, 'Selection rule', '', "Configure a selection rule to select specific sets of data.");
@@ -308,40 +308,40 @@ class SelectionRule
         
         CoreFormUtils::addField_checkbox
         (
-            $form, 'typeAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'typeAsVar'),
+            $form, 'typeAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'typeAsVar'),
             'Type as variable',
             'Use a variable to define the type'
         );
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'typeVarName', CoreConfig::MIMOTO_SELECTIONRULE.'--typeVarName',
+            $form, 'typeVarName', CoreConfig::MIMOTO_SELECTION_RULE.'--typeVarName',
             'Var name for the entity type', 'Enter the variable name', 'The variable`s name should be unique'
         );
 
         CoreFormUtils::addField_checkbox
         (
-            $form, 'idAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'idAsVar'),
+            $form, 'idAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'idAsVar'),
             'Instance id as variable',
             'Use a variable to define the id'
         );
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'idVarName', CoreConfig::MIMOTO_SELECTIONRULE.'--idVarName',
+            $form, 'idVarName', CoreConfig::MIMOTO_SELECTION_RULE.'--idVarName',
             'Var name for the instance id', 'Enter the variable name', 'The variable`s name should be unique'
         );
 
         CoreFormUtils::addField_checkbox
         (
-            $form, 'propertyAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTIONRULE, 'propertyAsVar'),
+            $form, 'propertyAsVar', CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SELECTION_RULE, 'propertyAsVar'),
             'Property as variable',
             'Use a variable to define the property'
         );
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'propertyVarName', CoreConfig::MIMOTO_SELECTIONRULE.'--propertyVarName',
+            $form, 'propertyVarName', CoreConfig::MIMOTO_SELECTION_RULE.'--propertyVarName',
             'Var name for the property', 'Enter the variable name', 'The variable`s name should be unique'
         );
 

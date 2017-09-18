@@ -116,7 +116,7 @@ class FormattingOption
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => 'array',
-                            'value' => [CoreConfig::MIMOTO_FORMATTINGOPTIONATTRIBUTE]
+                            'value' => [CoreConfig::MIMOTO_FORMATTINGOPTION_ATTRIBUTE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -314,19 +314,19 @@ class FormattingOption
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORMATTINGOPTION, 'type');
 
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_FORMATTINGOPTION.'--type_value_options-inline');
         $option->setValue('label', 'Inline');
         $option->setValue('value', 'inline');
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_FORMATTINGOPTION.'--type_value_options-block');
         $option->setValue('label', 'Block');
         $option->setValue('value', 'block');
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_FORMATTINGOPTION.'--type_value_options-embeds');
         $option->setValue('label', 'Embeds');
         $option->setValue('value', 'embeds');

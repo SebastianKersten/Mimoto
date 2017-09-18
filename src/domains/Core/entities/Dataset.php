@@ -221,13 +221,13 @@ class Dataset
 
 
         // 3b. set options
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_DATASET.'--type_value_options-item');
         $option->setValue('value', Dataset::TYPE_ITEM);
         $option->setValue('label', 'Item');
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_DATASET.'--type_value_options-group');
         $option->setValue('value', Dataset::TYPE_GROUP);
         $option->setValue('label', 'Group');
@@ -270,7 +270,7 @@ class Dataset
             $entity = $aEntities[$i];
 
             //output('$entity->getValue(\'name\')', $entity->getValue('name'));
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::MIMOTO_DATASET.'--form_value_options-valuesettings-collection-'.$entity->getId());
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));

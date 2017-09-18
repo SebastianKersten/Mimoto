@@ -218,31 +218,31 @@ class EntityProperty
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ENTITYPROPERTY, 'type');
 
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-value');
         $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE);
         $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE);
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-entity');
         $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY);
         $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY);
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-collection');
         $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION);
         $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION);
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-image');
         $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE);
         $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE);
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--type_value_options-video');
         $option->setValue('label', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO);
         $option->setValue('value', MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_VIDEO);

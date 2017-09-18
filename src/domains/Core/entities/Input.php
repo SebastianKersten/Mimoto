@@ -48,7 +48,7 @@ class Input
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_FORM_INPUTOPTION]
+                            'value' => [CoreConfig::MIMOTO_FORM_FIELD_OPTION]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

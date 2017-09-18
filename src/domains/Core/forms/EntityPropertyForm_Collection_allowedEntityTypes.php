@@ -82,7 +82,7 @@ class EntityPropertyForm_Collection_allowedEntityTypes
             // register
             $entity = $aEntities[$i];
 
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--allowedEntityTypes_value_options-valuesettings-collection-'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());

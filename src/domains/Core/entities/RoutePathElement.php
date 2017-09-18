@@ -156,19 +156,19 @@ class RoutePathElement
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT, 'type');
 
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type_value_options-var');
         $option->setValue('label', 'Static');
         $option->setValue('value', 'static');
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type_value_options-var');
         $option->setValue('label', 'Slash');
         $option->setValue('value', 'slash');
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
         $option->setId(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT.'--type_value_options-static');
         $option->setValue('label', 'Variable');
         $option->setValue('value', 'var');

@@ -23,15 +23,15 @@ class SelectionRule
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_SELECTIONRULE,
+            'id' => CoreConfig::MIMOTO_SELECTION_RULE,
             // ---
-            'name' => CoreConfig::MIMOTO_SELECTIONRULE,
+            'name' => CoreConfig::MIMOTO_SELECTION_RULE,
             'extends' => null,
             'forms' => [CoreConfig::COREFORM_SELECTIONRULE],
             'properties' => [
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--valueAsVar',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--valueAsVar',
                     // ---
                     'name' => 'name',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -45,7 +45,7 @@ class SelectionRule
                 ),
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--type',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--type',
                     // ---
                     'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -68,7 +68,7 @@ class SelectionRule
 
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--instance',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--instance',
                     // ---
                     'name' => 'instance',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -81,7 +81,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--property',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--property',
                     // ---
                     'name' => 'entityProperty',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -102,7 +102,7 @@ class SelectionRule
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTIONRULE_VALUE]
+                            'value' => [CoreConfig::MIMOTO_SELECTION_RULE_VALUE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -112,7 +112,7 @@ class SelectionRule
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTIONRULE.'--childType',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--childType',
                     // ---
                     'name' => 'childType',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -133,7 +133,7 @@ class SelectionRule
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTIONRULE_VALUE]
+                            'value' => [CoreConfig::MIMOTO_SELECTION_RULE_VALUE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -218,23 +218,23 @@ class SelectionRule
         $field->setValue('label', 'Type');
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTIONRULE, 'type');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTION_RULE, 'type');
 
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_SELECTIONRULE.'--type_value_options-value');
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $option->setId(CoreConfig::MIMOTO_SELECTION_RULE.'--type_value_options-value');
         $option->setValue('label', 'Child of');
         $option->setValue('value', SelectionRuleTypes::CHILDOF);
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_SELECTIONRULE.'--type_value_options-entity');
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $option->setId(CoreConfig::MIMOTO_SELECTION_RULE.'--type_value_options-entity');
         $option->setValue('label', 'Type');
         $option->setValue('value', SelectionRuleTypes::TYPE);
         $field->addValue('options', $option);
 
-        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
-        $option->setId(CoreConfig::MIMOTO_SELECTIONRULE.'--type_value_options-collection');
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $option->setId(CoreConfig::MIMOTO_SELECTION_RULE.'--type_value_options-collection');
         $option->setValue('label', 'Instance');
         $option->setValue('value', SelectionRuleTypes::INSTANCE);
         $field->addValue('options', $option);
@@ -262,7 +262,7 @@ class SelectionRule
         $field->setValue('label', 'Select the entity type');
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTIONRULE, 'entity');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_SELECTION_RULE, 'entity');
 
 
         // load
@@ -274,7 +274,7 @@ class SelectionRule
             // register
             $entity = $aEntities[$i];
 
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
             $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entity_value_options-valuesettings-collection-'.$entity->getId());
             $option->setValue('label', $entity->getValue('name'));
             $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());

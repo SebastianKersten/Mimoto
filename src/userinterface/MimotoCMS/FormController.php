@@ -633,7 +633,7 @@ class FormController
         // toggle
         switch($sInstanceType)
         {
-            case CoreConfig::MIMOTO_FORM_INPUTOPTION:
+            case CoreConfig::MIMOTO_FORM_FIELD_OPTION:
 
                 $form = Mimoto::service('input')->getFormByName(CoreConfig::COREFORM_INPUTOPTION);
                 break;

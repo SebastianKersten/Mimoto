@@ -35,8 +35,8 @@ class SetupService
         //CoreConfig::MIMOTO_FORM_FIELD,
         CoreConfig::MIMOTO_FORM_FIELD_RULES,
         CoreConfig::MIMOTO_FORM_FIELD_VALIDATION,
-        CoreConfig::MIMOTO_FORM_INPUTOPTION,
-        //CoreConfig::MIMOTO_FORM_INPUTOPTION_MAP,
+        CoreConfig::MIMOTO_FORM_FIELD_OPTION,
+        //CoreConfig::MIMOTO_FORM_FIELD_OPTION_MAP,
 
         CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER,
         CoreConfig::MIMOTO_FORM_INPUT_PASSWORD,
@@ -56,7 +56,7 @@ class SetupService
         CoreConfig::MIMOTO_FORM_OUTPUT_TITLE,
 
         CoreConfig::MIMOTO_FORMATTINGOPTION,
-        CoreConfig::MIMOTO_FORMATTINGOPTIONATTRIBUTE,
+        CoreConfig::MIMOTO_FORMATTINGOPTION_ATTRIBUTE,
         CoreConfig::MIMOTO_LAYOUT,
         CoreConfig::MIMOTO_LAYOUTCONTAINER,
         CoreConfig::MIMOTO_NOTIFICATION,
@@ -65,7 +65,7 @@ class SetupService
         CoreConfig::MIMOTO_ROUTE,
         CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT,
         CoreConfig::MIMOTO_SELECTION,
-        CoreConfig::MIMOTO_SELECTIONRULE,
+        CoreConfig::MIMOTO_SELECTION_RULE,
         CoreConfig::MIMOTO_USER,
         CoreConfig::MIMOTO_USER_ROLE
     ];
@@ -251,6 +251,8 @@ class SetupService
         // load
         $aStructureResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
+        //Mimoto::output($sTableName, json_encode($aStructureResults));
+
         $jsonTableStructure = $this->getTableStructure($sTableName);
         
         if (json_encode($aStructureResults) == $jsonTableStructure)
@@ -259,16 +261,107 @@ class SetupService
         }
         else
         {
-            //Mimoto::output('Error '.$sTableName, $aStructureResults);
-
             $table->status = 'Issue';
-
-            // 1. check order
-            // 2. check format
+            $table->issues = [];
 
 
+            $aDefinitionColumns = json_decode($jsonTableStructure);
+            $aDefinitionColumnNames = [];
 
-            //die();
+            // 5. add columns
+            $nDefinitionColumnCount = count($aDefinitionColumns);
+            for ($nDefinitionColumnIndex = 0; $nDefinitionColumnIndex < $nDefinitionColumnCount; $nDefinitionColumnIndex++)
+            {
+                // register
+                $definitonColumn = $aDefinitionColumns[$nDefinitionColumnIndex];
+
+                // store
+                $aDefinitionColumnNames[] = $definitonColumn->Field;
+
+                // init
+                $bColumnFound = false;
+
+                // find
+                $nColumnCount = count($aStructureResults);
+                for ($nColumnIndex = 0; $nColumnIndex < $nColumnCount; $nColumnIndex++)
+                {
+                    // register
+                    $column = $aStructureResults[$nColumnIndex];
+
+                    // skip
+                    if ($column['Field'] == $definitonColumn->Field)
+                    {
+                        if (
+                            $column['Type'] != $definitonColumn->Type ||
+                            $column['Null'] != $definitonColumn->Null ||
+                            $column['Key'] != $definitonColumn->Key ||
+                            $column['Default'] != $definitonColumn->Default ||
+                            $column['Extra'] != $definitonColumn->Extra
+                        )
+                        {
+                            $table->issues[] = (object) array(
+                                'field' => $definitonColumn->Field,
+                                'whatsWrong' => 'Wrong format',
+                                'current' => $column['Field'].' '.$column['Type'].' '.(($column['Null'] == 'YES') ? 'DEFAULT NULL' : 'NOT NULL'),
+                                'shouldBe' => $definitonColumn->Field.' '.$definitonColumn->Type.' '.(($definitonColumn->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL')
+                            );
+                        }
+
+                        $bColumnFound = true;
+                        break;
+                    }
+
+                }
+
+                if (!$bColumnFound)
+                {
+                    // register
+                    $table->issues[] = (object) array(
+                        'field' => $definitonColumn->Field,
+                        'whatsWrong' => 'Missing column',
+                        'shouldBe' => $definitonColumn->Field.' '.$definitonColumn->Type.' '.(($definitonColumn->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL')
+                    );
+                }
+            }
+
+
+            // --- redundant columns
+
+
+            // init
+            $table->redundantColumns = [];
+            $aStructureColumnNames = [];
+
+
+            // find
+            $nColumnCount = count($aStructureResults);
+            for ($nColumnIndex = 0; $nColumnIndex < $nColumnCount; $nColumnIndex++)
+            {
+                // register
+                $column = $aStructureResults[$nColumnIndex];
+
+                // store
+                $aStructureColumnNames[] = $column['Field'];
+
+                // verify
+                if (!in_array($column['Field'], $aDefinitionColumnNames)) $table->redundantColumns[] = $column['Field'];
+            }
+
+
+            // --- order
+
+
+            if (count($table->issues) == 0 && count($table->redundantColumns) == 0)
+            {
+                if (json_encode($aStructureColumnNames) != json_encode($aDefinitionColumnNames))
+                {
+                    $table->orderIssues = (object) array(
+                        'current' => $aStructureColumnNames,
+                        'shouldBe' => $aDefinitionColumnNames
+                    );
+                }
+            }
+            Mimoto::error($table);
         }
 
 
@@ -296,13 +389,13 @@ class SetupService
             case CoreConfig::MIMOTO_FILE: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"path","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"mime","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"size","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"width","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"height","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"aspectRatio","Type":"float(10,5)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"originalName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_FORM: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"manualSave","Type":"enum(\'0\',\'1\')","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"realtimeCollaborationMode","Type":"enum(\'0\',\'1\')","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"customSubmit","Type":"enum(\'0\',\'1\')","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"action","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"method","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"target","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_FORM_FIELD: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"type","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"label","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"placeholder","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"prefix","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"title","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"subtitle","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"introduction","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
-            case CoreConfig::MIMOTO_FORM_INPUTOPTION: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"type","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"label","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"value","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
-//            case CoreConfig::MIMOTO_FORM_INPUTOPTION_MAP: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"targetKey","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"originKey","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
+            case CoreConfig::MIMOTO_FORM_FIELD_OPTION: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"type","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"label","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"value","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
+//            case CoreConfig::MIMOTO_FORM_FIELD_OPTION_MAP: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"targetKey","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"originKey","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_FORM_FIELD_VALIDATION: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"type","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"value","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"errorMessage","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"trigger","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_FORM_FIELD_RULES: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"key","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"value","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
 
 
-            case CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"label","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
+            case CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"label","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"showTime","Type":"enum(\'0\',\'1\')","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_FORM_INPUT_PASSWORD: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"label","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"placeholder","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_FORM_INPUT_CHECKBOX: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"label","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"option","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_FORM_INPUT_COLORPICKER: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"label","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"description","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
@@ -321,7 +414,7 @@ class SetupService
 
 
             case CoreConfig::MIMOTO_FORMATTINGOPTION: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"type","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"tagName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"toolbar","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"jsOnAdd","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"jsOnEdit","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
-            case CoreConfig::MIMOTO_FORMATTINGOPTIONATTRIBUTE: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"path","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"mime","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"size","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"width","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"height","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"aspectRatio","Type":"float(10,5)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"originalName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
+            case CoreConfig::MIMOTO_FORMATTINGOPTION_ATTRIBUTE: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"path","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"mime","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"size","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"width","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"height","Type":"int(10) unsigned","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"aspectRatio","Type":"float(10,5)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"originalName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_LAYOUT: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"file","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_LAYOUTCONTAINER: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_NOTIFICATION: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"title","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"message","Type":"text","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"category","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"dispatcher","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"state","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
@@ -330,7 +423,7 @@ class SetupService
             case CoreConfig::MIMOTO_ROUTE: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"type","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"staticValue","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"varName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_SELECTION: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
-            case CoreConfig::MIMOTO_SELECTIONRULE: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"typeAsVar","Type":"int(1)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"typeVarName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"idAsVar","Type":"int(1)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"idVarName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"propertyAsVar","Type":"int(1)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"propertyVarName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
+            case CoreConfig::MIMOTO_SELECTION_RULE: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"typeAsVar","Type":"int(1)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"typeVarName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"idAsVar","Type":"int(1)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"idVarName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"propertyAsVar","Type":"int(1)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"propertyVarName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_USER: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"firstName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"lastName","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"email","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"password","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_USER_ROLE: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
         }
