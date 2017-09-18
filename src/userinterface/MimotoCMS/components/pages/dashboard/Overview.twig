@@ -7,9 +7,23 @@
 
             <h1 class="MimotoCMS_pages_dashboard_Overview-database">Database health warning</h1>
 
+            <div class="MimotoCMS_pages_dashboard_Overview-warning">
+                <div class="MimotoCMS_pages_dashboard_Overview-warning-label"><span>Warning</span></div>
+                <div>
+                    <span class="MimotoCMS_pages_dashboard_Overview-warning-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width="40" height="40">
+                            <g fill="#c76255" stroke="none">
+                                <path d="M 40,20 0,40 0,0 z"/>
+                         </g>
+                        </svg>
+                    </span>
+                </div>
+                <div class="MimotoCMS_pages_dashboard_Overview-warning-message">
+                    <span>Please backup your database before you continue!</span>
+                </div>
+            </div>
+
             <div class="MimotoCMS_pages_dashboard_Overview-database">
-
-
 
                 {% if Mimoto.getVar('tableCheckResult').missingTables|length > 0 %}
                     <div class="MimotoCMS_pages_dashboard_Overview-database-tables">

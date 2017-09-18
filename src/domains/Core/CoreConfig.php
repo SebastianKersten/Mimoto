@@ -123,6 +123,7 @@ class CoreConfig
     const MIMOTO_FORM_FIELD_RULES               = '_Mimoto_form_field_rules';
     const MIMOTO_FORM_INPUT                     = '_Mimoto_form_input';
     const MIMOTO_FORM_INPUTOPTION               = '_Mimoto_form_inputoption';
+    const MIMOTO_FORM_INPUTOPTION_MAP           = '_Mimoto_form_inputoption_map';
     const MIMOTO_FORM_FIELD_VALIDATION          = '_Mimoto_form_field_validation';
 
     // input
