@@ -110,7 +110,7 @@ class EntityPropertyForm_Value_type
         $field->addValue('options', $option);
 
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE.'--type_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^('.CoreConfig::DATA_VALUE_TEXTLINE.'|'.CoreConfig::DATA_VALUE_TEXTBLOCK.'|'.MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN.'|'.MimotoEntityPropertyValueTypes::VALUETYPE_DATETIME.'|'.MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD.'|'.MimotoEntityPropertyValueTypes::VALUETYPE_JSON.')$');

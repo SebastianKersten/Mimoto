@@ -1,3 +1,60 @@
-<b>Welcome <span {{ Mimoto.user.realtime('firstName') }}>{{ Mimoto.user.data('firstName') }}</span></b>,<br>
-<br>
-This is Mimoto, the ultra fast, fluid & realtime data management microframework!
+<div class="MimotoCMS_pages_dashboard_Overview">
+    <div class="MimotoCMS_pages_dashboard_Overview-title">Welcome <span {{ Mimoto.user.realtime('firstName') }}>{{ Mimoto.user.data('firstName') }}</span>,</div>
+    <div class="MimotoCMS_pages_dashboard_Overview-introduction">This is Mimoto, the ultra fast, fluid & realtime data management microframework!</div>
+
+    {% if (Mimoto.user.hasRole('owner') or Mimoto.user.hasRole('superuser')) %}
+        {% if Mimoto.getVar('tableCheckResult') is not empty and not Mimoto.getVar('tableCheckResult').valid %}
+
+            <h1 class="MimotoCMS_pages_dashboard_Overview-database">Database health warning</h1>
+
+            <div class="MimotoCMS_pages_dashboard_Overview-database">
+
+
+
+                {% if Mimoto.getVar('tableCheckResult').missingTables|length > 0 %}
+                    <div class="MimotoCMS_pages_dashboard_Overview-database-tables">
+                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-title">Missing tables</div>
+                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
+                            {% for sTableName in Mimoto.getVar('tableCheckResult').missingTables %}
+                                {{
+                                Mimoto.module('MimotoCMS_modules_ListItem',
+                                {
+                                    label: sTableName,
+                                    button_label: 'Add',
+                                    button_directive: Mimoto.api('/mimoto.cms/setup/add/' ~ sTableName),
+                                    button_action: 'this.parentNode.parentNode.parentNode.remove(this);',
+                                    button_type: 'secondary',
+                                    button_icon: '',
+                                    sortable: false
+                                })
+                                }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if Mimoto.getVar('tableCheckResult').redundantTables|length > 0 %}
+                    <div class="MimotoCMS_pages_dashboard_Overview-database-tables">
+                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-title">Redundant tables</div>
+                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
+                            {% for sTableName in Mimoto.getVar('tableCheckResult').redundantTables %}
+                                {{
+                                    Mimoto.module('MimotoCMS_modules_ListItem',
+                                    {
+                                        label: sTableName,
+                                        button_label: 'Remove',
+                                        button_directive: Mimoto.api('/mimoto.cms/setup/remove/' ~ sTableName),
+                                        button_action: 'this.parentNode.parentNode.parentNode.remove(this);',
+                                        button_type: 'alert',
+                                        button_icon: '',
+                                        sortable: false
+                                    })
+                                }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

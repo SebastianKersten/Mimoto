@@ -119,9 +119,11 @@ class CoreConfig
 
     // forms
     const MIMOTO_FORM                           = '_Mimoto_form';
+    const MIMOTO_FORM_FIELD                     = '_Mimoto_form_field';
+    const MIMOTO_FORM_FIELD_RULES               = '_Mimoto_form_field_rules';
     const MIMOTO_FORM_INPUT                     = '_Mimoto_form_input';
     const MIMOTO_FORM_INPUTOPTION               = '_Mimoto_form_inputoption';
-    const MIMOTO_FORM_INPUTVALIDATION           = '_Mimoto_form_inputvalidation';
+    const MIMOTO_FORM_FIELD_VALIDATION          = '_Mimoto_form_field_validation';
 
     // input
     const MIMOTO_FORM_INPUT_TEXTLINE            = '_Mimoto_form_input_textline';

@@ -235,7 +235,7 @@ class User
     private static function setNameValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_USER.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
@@ -252,7 +252,7 @@ class User
     private static function setEmailValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_USER.'--file_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);

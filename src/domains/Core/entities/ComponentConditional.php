@@ -192,7 +192,7 @@ class ComponentConditional
         $field->addValue('options', $option);
 
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--type_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^('.ComponentConditional::ENTITY_TYPE.'|'.ComponentConditional::PROPERTY_VALUE.')$');
@@ -298,7 +298,7 @@ class ComponentConditional
     private static function setEntityPropertyValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
@@ -317,7 +317,7 @@ class ComponentConditional
     private static function setValueValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--value_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-zA-Z0-9_-]*$');

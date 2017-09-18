@@ -86,6 +86,21 @@ INSERT INTO `_Mimoto_connection`(`parent_entity_type_id`, `parent_id`, `parent_p
 
             // 3. connect
             $page->addComponent('content', $component);
+
+
+
+            // --- sanity check for database structure
+
+
+            // verify
+            if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser'))
+            {
+                // verify
+                $tableCheckResult = Mimoto::service('setup')->checkTables();
+
+                // store
+                $component->setVar('tableCheckResult', $tableCheckResult);
+            }
         }
 
         // 4. output

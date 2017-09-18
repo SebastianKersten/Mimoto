@@ -83,32 +83,48 @@ class SetupController
         return $page->render();
     }
 
-    public function verifyDatabase(Application $app, Request $request)
+    public function removeCoreTable(Application $app, Request $request, $sTableName)
     {
-        // load
-        $stmt = Mimoto::service('database')->prepare('show tables');
+        // 1. validate
+        if (!Mimoto::user()->hasRole('owner') && !Mimoto::user()->hasRole('superuser')) return '';
+
+        // 2. validate
+        if (substr($sTableName, 0, strlen(CoreConfig::CORE_PREFIX)) != CoreConfig::CORE_PREFIX) return '';
+
+        // 3. validate
+        if (in_array($sTableName, Mimoto::service('setup')->getCoreTables())) return '';
+
+        // 4. remove
+        $stmt = Mimoto::service('database')->prepare("DROP TABLE IF EXISTS `" . $sTableName . "`");
         $params = array();
         $stmt->execute($params);
 
-        // load
-        $aTableResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        // 5. send
+        return Mimoto::service('messages')->response((object) array('result' => 'Table `'.$sTableName.'` removed! '.date("Y.m.d H:i:s")), 200);
+    }
 
+    public function addCoreTable(Application $app, Request $request, $sTableName)
+    {
+        // 1. validate
+        if (!Mimoto::user()->hasRole('owner') && !Mimoto::user()->hasRole('superuser')) return '';
 
-        // init
-        $aTables = [];
+        // 2. validate
+        if (substr($sTableName, 0, strlen(CoreConfig::CORE_PREFIX)) != CoreConfig::CORE_PREFIX) return '';
 
-        // collect table names
-        $nTableCount = count($aTableResults);
-        for ($nTableIndex = 0; $nTableIndex < $nTableCount; $nTableIndex++)
+        // 3. validate
+        if (!in_array($sTableName, Mimoto::service('setup')->getCoreTables())) return '';
+
+        // 4. create
+        if (Mimoto::service('setup')->createCoreTable($sTableName))
         {
-            // register
-            $sTableName = $aTableResults[$nTableIndex]['Tables_in_'.Mimoto::value('config')->mysql->dbname];
-
-            $aTables[] = $sTableName;
+            // report success
+            return Mimoto::service('messages')->response((object) array('result' => 'Table `'.$sTableName.'` added! '.date("Y.m.d H:i:s")), 200);
         }
-
-        Mimoto::error($aTables);
-
+        else
+        {
+            // report error
+            return Mimoto::service('messages')->response((object) array('result' => 'Coudn`t create table `'.$sTableName.'` '.date("Y.m.d H:i:s")), 400);
+        }
     }
     
 }

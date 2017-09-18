@@ -21,14 +21,14 @@ class InputValidation
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION,
+            'id' => CoreConfig::MIMOTO_FORM_FIELD_VALIDATION,
             // ---
-            'name' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION,
+            'name' => CoreConfig::MIMOTO_FORM_FIELD_VALIDATION,
             'extends' => null,
             'forms' => [CoreConfig::COREFORM_FORM_INPUTVALIDATION],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--type',
+                    'id' => CoreConfig::MIMOTO_FORM_FIELD_VALIDATION.'--type',
                     // ---
                     'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -41,7 +41,7 @@ class InputValidation
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--value',
+                    'id' => CoreConfig::MIMOTO_FORM_FIELD_VALIDATION.'--value',
                     // ---
                     'name' => 'value',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -54,7 +54,7 @@ class InputValidation
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--errorMessage',
+                    'id' => CoreConfig::MIMOTO_FORM_FIELD_VALIDATION.'--errorMessage',
                     // ---
                     'name' => 'errorMessage',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -67,7 +67,7 @@ class InputValidation
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--trigger',
+                    'id' => CoreConfig::MIMOTO_FORM_FIELD_VALIDATION.'--trigger',
                     // ---
                     'name' => 'trigger',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -132,13 +132,13 @@ class InputValidation
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'value', CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--value',
+            $form, 'value', CoreConfig::MIMOTO_FORM_FIELD_VALIDATION.'--value',
             'Value', 'Enter the value', 'Enter the corresponding value on which should be checked'
         );
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'errorMessage', CoreConfig::MIMOTO_FORM_INPUTVALIDATION.'--errorMessage',
+            $form, 'errorMessage', CoreConfig::MIMOTO_FORM_FIELD_VALIDATION.'--errorMessage',
             'Error message', 'Enter an error message', 'Describe the problem to the user'
         );
 
@@ -161,7 +161,7 @@ class InputValidation
         $field->setValue('description', 'Define the type of the validation rule');
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_INPUTVALIDATION, 'type');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_FIELD_VALIDATION, 'type');
 
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
@@ -183,7 +183,7 @@ class InputValidation
         $field->addValue('options', $option);
 
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--type_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
@@ -206,7 +206,7 @@ class InputValidation
         $field->setValue('description', 'Define when the rule needs to be applied'); // #todo - needs multiselect support
 
         // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_INPUTVALIDATION, 'trigger');
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_FORM_FIELD_VALIDATION, 'trigger');
 
 
         $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTOPTION);
@@ -222,7 +222,7 @@ class InputValidation
         $field->addValue('options', $option);
 
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::COREFORM_FORM_INPUTVALIDATION.'--tirgger_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);

@@ -112,7 +112,7 @@ class LayoutContainer
         $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_LAYOUTCONTAINER, 'name');
 
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_LAYOUTCONTAINER.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', '1');
@@ -218,7 +218,7 @@ class LayoutContainer
     private static function setEntityPropertyValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_LAYOUTCONTAINER.'--entityProperty_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
@@ -237,7 +237,7 @@ class LayoutContainer
     private static function setValueValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_LAYOUTCONTAINER.'--value_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-zA-Z0-9_-]*$');

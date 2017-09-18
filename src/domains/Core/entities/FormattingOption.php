@@ -262,7 +262,7 @@ class FormattingOption
     private static function setNameValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_FORMATTINGOPTION.'--name_value_validation2');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
@@ -271,7 +271,7 @@ class FormattingOption
         $field->addValue('validation', $validationRule);
 
         // validation rule #2
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_FORMATTINGOPTION.'--name_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^[a-z][a-zA-Z0-9_-]*$');
@@ -333,7 +333,7 @@ class FormattingOption
         $field->addValue('options', $option);
 
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_FORMATTINGOPTION.'--type_value_validation1');
         $validationRule->setValue('type', 'regex_custom');
         $validationRule->setValue('value', '^(inline|block|embeds)$');
@@ -351,7 +351,7 @@ class FormattingOption
     private static function setTagNameValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_FORMATTINGOPTION.'--name_value_validation2');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);

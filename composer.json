@@ -40,6 +40,7 @@
             "Mimoto\\Mail\\": "./src/domains/Mail",
             "Mimoto\\Cache\\": "./src/domains/Cache",
             "Mimoto\\Session\\": "./src/domains/Session",
+            "Mimoto\\Setup\\": "./src/domains/Setup",
             "Mimoto\\tests\\": "./tests",
             "Mimoto\\api\\": "./src/api"
         }

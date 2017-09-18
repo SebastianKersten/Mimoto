@@ -15,6 +15,7 @@ use Mimoto\Log\LogServiceProvider;
 use Mimoto\User\UserServiceProvider;
 use Mimoto\Selection\SelectionServiceProvider;
 use Mimoto\Message\MessageServiceProvider;
+use Mimoto\Setup\SetupServiceProvider;
 use Mimoto\Session\SessionServiceProvider as MimotoSessionServiceProvider;
 //use Mimoto\Page\PageServiceProvider;
 
@@ -101,6 +102,7 @@ class Mimoto
         $app->register(new SelectionServiceProvider());
         $app->register(new MessageServiceProvider());
         $app->register(new MimotoSessionServiceProvider());
+        $app->register(new SetupServiceProvider());
         //$app->register(new PageServiceProvider());
 
 
@@ -150,7 +152,12 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/workers/slack', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::slack');
         $app->get ('/'.$sProjectName.'.cms/heartbeat', 'Mimoto\\UserInterface\\MimotoCMS\\HeartbeatController::viewOverview');
 
+
+        // --- database sanity
+
         $app->get ('/'.$sProjectName.'.cms/setup/verify', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::verifyDatabase');
+        $app->get ('/'.$sProjectName.'.cms/setup/add/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::addCoreTable');
+        $app->get ('/'.$sProjectName.'.cms/setup/remove/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::removeCoreTable');
 
 
 

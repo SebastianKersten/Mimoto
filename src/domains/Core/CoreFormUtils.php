@@ -401,7 +401,7 @@ class CoreFormUtils
     public static function setLabelValidation($field, $sFieldId)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId($sFieldId.'_value_validation1');
         $validationRule->setValue('value', 'minchars');
         $validationRule->setValue('value', 1);

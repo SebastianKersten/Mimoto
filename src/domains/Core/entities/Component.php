@@ -1182,7 +1182,7 @@ class Component
     private static function setNameValidation($field)
     {
         // validation rule #1
-        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
         $validationRule->setId(CoreConfig::MIMOTO_COMPONENT.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
@@ -1199,7 +1199,7 @@ class Component
 //    private static function setFileValidation($field)
 //    {
 //        // validation rule #1
-//        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_INPUTVALIDATION);
+//        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
 //        $validationRule->setId(CoreConfig::MIMOTO_COMPONENT.'--file_value_validation1');
 //        $validationRule->setValue('type', 'minchars');
 //        $validationRule->setValue('value', 1);
