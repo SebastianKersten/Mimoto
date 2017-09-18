@@ -133,8 +133,6 @@ class AimlessComponent
 
     public function getVar($sKey)
     {
-        //Mimoto::error($this->_aVars);
-
         // register
         return (isset($this->_aVars[$sKey])) ? $this->_aVars[$sKey] : null;
     }

@@ -187,7 +187,7 @@ class SetupService
         // 4. compose
         $sQuery =  'CREATE TABLE `'.$sTableName.'` (';
         $sQuery .= '`id` int(10) unsigned NOT NULL AUTO_INCREMENT,';
-        
+
         // 5. add columns
         $nColumnCount = count($table);
         for ($nColumnIndex = 0; $nColumnIndex < $nColumnCount; $nColumnIndex++)
