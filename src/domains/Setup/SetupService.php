@@ -153,7 +153,7 @@ class SetupService
         }
 
         // find redundant tables
-        $result->tables = [];
+        $aTableNames = [];
         $result->redundantTables = [];
 
         $nProjectTableCount = count($aProjectTables);
@@ -170,29 +170,36 @@ class SetupService
             }
             else
             {
-                $result->tables[] = $sProjectTable;
+                $aTableNames[] = $sProjectTable;
             }
         }
 
+        // init
+        $result->unsyncedTables = [];
+
         // validate table stucture
-        $nTableCount = count($result->tables);
+        $nTableCount = count($aTableNames);
         for ($nTableIndex = 0; $nTableIndex < $nTableCount; $nTableIndex++)
         {
             // register
-            $sTableName = $result->tables[$nTableIndex];
+            $sTableName = $aTableNames[$nTableIndex];
+
+            // validate
+            $table = $this->checkTableStructure($sTableName);
 
             // replace
-            $result->tables[$nTableIndex] = $this->checkTableStructure($sTableName);
-
-            // toggle
-            if (($result->tables[$nTableIndex]->status != 'Ok!')) $result->valid = false;
+            if ($table->status != 'Ok!')
+            {
+                $result->unsyncedTables[] = $table;
+                $result->valid = false;
+            }
         }
 
         // 3. send
         return $result;
     }
 
-    public function createCoreTable($sTableName)
+    public function addCoreTable($sTableName)
     {
         // 1. load
         $sTableStructure = $this->getTableStructure($sTableName);
@@ -234,6 +241,120 @@ class SetupService
         // 8. send
         return true;
     }
+
+    public function fixCoreTable($sTableName)
+    {
+        // 1. load
+        $table = $this->checkTableStructure($sTableName);
+
+        // 2. validate
+        if ($table->status == 'Ok!') return false;
+
+
+
+        // --- add missing columns
+
+
+        $nIssueCount = count($table->issues);
+        for ($nIssueIndex = 0; $nIssueIndex < $nIssueCount; $nIssueIndex++)
+        {
+            // register
+            $issue = $table->issues[$nIssueIndex];
+
+            // verify
+            if ($issue->whatsWrong != 'Missing column') continue;
+
+            // a. add column to table
+            $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sTableName."` ADD COLUMN .$issue->shouldBe");
+            $params = array();
+            if ($stmt->execute($params) === false) return "Error while adding column `".$issue->shouldBe."` to entity table '$sTableName'";
+        }
+
+
+
+        // --- remove redundant columns
+
+
+        $nIssueCount = count($table->issues);
+        for ($nIssueIndex = 0; $nIssueIndex < $nIssueCount; $nIssueIndex++)
+        {
+            // register
+            $issue = $table->issues[$nIssueIndex];
+
+            // verify
+            if ($issue->whatsWrong != 'Redundant column') continue;
+
+            // a. add column to table
+            $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sTableName."` DROP COLUMN `".$issue->field."`");
+            $params = array();
+            if ($stmt->execute($params) === false) return "Error while removing column `".$issue->field."` from entity table '$sTableName'";
+        }
+
+
+        // --- change order
+
+
+        
+
+        Mimoto::error($table);
+
+
+
+
+
+
+        //alter table `mytable` change column username username varchar(255) after `somecolumn`;
+
+
+
+        // 4. compose
+        $sQuery =  'CREATE TABLE `'.$sTableName.'` (';
+        $sQuery .= '`id` int(10) unsigned NOT NULL AUTO_INCREMENT,';
+
+        // 5. add columns
+        $nColumnCount = count($table);
+        for ($nColumnIndex = 0; $nColumnIndex < $nColumnCount; $nColumnIndex++)
+        {
+            // register
+            $column = $table[$nColumnIndex];
+
+            // skip
+            if ($column->Field == 'id' || $column->Field == 'created') continue;
+
+            // build
+            $sQuery .= '`'.$column->Field.'` '.$column->Type.' '.(($column->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL').',';
+        }
+
+        // 6. compose
+        $sQuery .= '`created` datetime DEFAULT NULL,';
+        $sQuery .= 'PRIMARY KEY (`id`) USING BTREE';
+        $sQuery .= ') ENGINE=InnoDB DEFAULT CHARSET=utf8;';
+
+        // 7. create
+        $stmt = Mimoto::service('database')->prepare($sQuery);
+        $params = array();
+        $stmt->execute($params);
+
+        // 8. send
+        return true;
+    }
+
+    public function removeCoreTable($sTableName)
+    {
+        // 1. remove
+        $stmt = Mimoto::service('database')->prepare("DROP TABLE IF EXISTS `" . $sTableName . "`");
+        $params = array();
+        $stmt->execute($params);
+
+        // 2. send
+        return true;
+    }
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
 
 
     private function checkTableStructure($sTableName)
@@ -329,7 +450,6 @@ class SetupService
 
 
             // init
-            $table->redundantColumns = [];
             $aStructureColumnNames = [];
 
 
@@ -344,27 +464,31 @@ class SetupService
                 $aStructureColumnNames[] = $column['Field'];
 
                 // verify
-                if (!in_array($column['Field'], $aDefinitionColumnNames)) $table->redundantColumns[] = $column['Field'];
+                if (!in_array($column['Field'], $aDefinitionColumnNames))
+                {
+                    $table->issues[] = (object) array(
+                        'field' => $column['Field'],
+                        'whatsWrong' => 'Redundant column'
+                    );
+                }
             }
 
 
             // --- order
 
 
-            if (count($table->issues) == 0 && count($table->redundantColumns) == 0)
+            if (count($table->issues) == 0)
             {
                 if (json_encode($aStructureColumnNames) != json_encode($aDefinitionColumnNames))
                 {
-                    $table->orderIssues = (object) array(
-                        'current' => $aStructureColumnNames,
-                        'shouldBe' => $aDefinitionColumnNames
+                    $table->issues[] = (object) array(
+                        'whatsWrong' => 'Wrong order',
+                        'current' => json_encode($aStructureColumnNames),
+                        'shouldBe' => json_encode($aDefinitionColumnNames)
                     );
                 }
             }
-            Mimoto::error($table);
         }
-
-
 
         // send
         return $table;

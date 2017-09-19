@@ -3096,6 +3096,10 @@ div.MimotoCMS_pages_dashboard_Overview-database-tables-container {
   div.MimotoCMS_pages_dashboard_Overview-database-tables-container > div:last-child {
     margin-bottom: 0; }
 
+span.MimotoCMS_pages_dashboard_Overview-database-tables-syncmessage {
+  font-style: normal;
+  color: #c76255; }
+
 div.MimotoCMS_pages_content_ContentOverview-container {
   display: -webkit-box;
   display: -webkit-flex;

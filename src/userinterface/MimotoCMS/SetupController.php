@@ -83,25 +83,9 @@ class SetupController
         return $page->render();
     }
 
-    public function removeCoreTable(Application $app, Request $request, $sTableName)
-    {
-        // 1. validate
-        if (!Mimoto::user()->hasRole('owner') && !Mimoto::user()->hasRole('superuser')) return '';
 
-        // 2. validate
-        if (substr($sTableName, 0, strlen(CoreConfig::CORE_PREFIX)) != CoreConfig::CORE_PREFIX) return '';
+    // --- database sanity
 
-        // 3. validate
-        if (in_array($sTableName, Mimoto::service('setup')->getCoreTables())) return '';
-
-        // 4. remove
-        $stmt = Mimoto::service('database')->prepare("DROP TABLE IF EXISTS `" . $sTableName . "`");
-        $params = array();
-        $stmt->execute($params);
-
-        // 5. send
-        return Mimoto::service('messages')->response((object) array('result' => 'Table `'.$sTableName.'` removed! '.date("Y.m.d H:i:s")), 200);
-    }
 
     public function addCoreTable(Application $app, Request $request, $sTableName)
     {
@@ -115,7 +99,7 @@ class SetupController
         if (!in_array($sTableName, Mimoto::service('setup')->getCoreTables())) return '';
 
         // 4. create
-        if (Mimoto::service('setup')->createCoreTable($sTableName))
+        if (Mimoto::service('setup')->addCoreTable($sTableName))
         {
             // report success
             return Mimoto::service('messages')->response((object) array('result' => 'Table `'.$sTableName.'` added! '.date("Y.m.d H:i:s")), 200);
@@ -124,6 +108,54 @@ class SetupController
         {
             // report error
             return Mimoto::service('messages')->response((object) array('result' => 'Coudn`t create table `'.$sTableName.'` '.date("Y.m.d H:i:s")), 400);
+        }
+    }
+
+    public function fixCoreTable(Application $app, Request $request, $sTableName)
+    {
+        // 1. validate
+        if (!Mimoto::user()->hasRole('owner') && !Mimoto::user()->hasRole('superuser')) return '';
+
+        // 2. validate
+        if (substr($sTableName, 0, strlen(CoreConfig::CORE_PREFIX)) != CoreConfig::CORE_PREFIX) return '';
+
+        // 3. validate
+        if (!in_array($sTableName, Mimoto::service('setup')->getCoreTables())) return '';
+
+        // 4. fix
+        if (($result = Mimoto::service('setup')->fixCoreTable($sTableName)) !== true)
+        {
+            // report success
+            return Mimoto::service('messages')->response((object) array('result' => 'Table `'.$sTableName.'` fixed! '.date("Y.m.d H:i:s")), 200);
+        }
+        else
+        {
+            // report error
+            return Mimoto::service('messages')->response((object) array('result' => 'Coudn`t fix table `'.$sTableName.'`: '.$result.' '.date("Y.m.d H:i:s")), 400);
+        }
+    }
+
+    public function removeCoreTable(Application $app, Request $request, $sTableName)
+    {
+        // 1. validate
+        if (!Mimoto::user()->hasRole('owner') && !Mimoto::user()->hasRole('superuser')) return '';
+
+        // 2. validate
+        if (substr($sTableName, 0, strlen(CoreConfig::CORE_PREFIX)) != CoreConfig::CORE_PREFIX) return '';
+
+        // 3. validate
+        if (in_array($sTableName, Mimoto::service('setup')->getCoreTables())) return '';
+
+        // 4. remove
+        if (Mimoto::service('setup')->removeCoreTable($sTableName))
+        {
+            // report success
+            return Mimoto::service('messages')->response((object) array('result' => 'Table `'.$sTableName.'` removed! '.date("Y.m.d H:i:s")), 200);
+        }
+        else
+        {
+            // report error
+            return Mimoto::service('messages')->response((object) array('result' => 'Coudn`t remove table `'.$sTableName.'` '.date("Y.m.d H:i:s")), 400);
         }
     }
     

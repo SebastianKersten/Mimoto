@@ -31,16 +31,55 @@
                         <div class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
                             {% for sTableName in Mimoto.getVar('tableCheckResult').missingTables %}
                                 {{
-                                Mimoto.module('MimotoCMS_modules_ListItem',
-                                {
-                                    label: sTableName,
-                                    button_label: 'Add',
-                                    button_directive: Mimoto.api('/mimoto.cms/setup/add/' ~ sTableName),
-                                    button_action: 'this.parentNode.parentNode.parentNode.remove(this);',
-                                    button_type: 'secondary',
-                                    button_icon: '',
-                                    sortable: false
-                                })
+                                    Mimoto.module('MimotoCMS_modules_ListItem',
+                                    {
+                                        label: sTableName,
+                                        button_label: 'Add',
+                                        button_directive: Mimoto.api('/mimoto.cms/setup/add/' ~ sTableName),
+                                        button_action: 'this.parentNode.parentNode.parentNode.remove(this);',
+                                        button_type: 'secondary',
+                                        button_icon: '',
+                                        sortable: false
+                                    })
+                                }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if Mimoto.getVar('tableCheckResult').unsyncedTables|length > 0 %}
+                    <div class="MimotoCMS_pages_dashboard_Overview-database-tables">
+                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-title">Unsynced tables</div>
+                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
+                            {% for table in Mimoto.getVar('tableCheckResult').unsyncedTables %}
+                                {% set sublabel = '' %}
+                                {% for issue in table.issues %}
+                                    {% if issue.whatsWrong == 'Wrong format' %}
+                                        {% set sublabel = sublabel ~ '<span class="MimotoCMS_pages_dashboard_Overview-database-tables-syncmessage">' ~ issue.whatsWrong ~ '</span><br>Current: `' ~ issue.current ~ '`<br>Should be: `' ~ issue.shouldBe ~ '`' %}
+                                    {% endif %}
+                                    {% if issue.whatsWrong == 'Missing column' %}
+                                        {% set sublabel = sublabel ~ '<span class="MimotoCMS_pages_dashboard_Overview-database-tables-syncmessage">' ~ issue.whatsWrong ~ '</span><br>`' ~ issue.shouldBe ~ '`' %}
+                                    {% endif %}
+                                    {% if issue.whatsWrong == 'Redundant column' %}
+                                        {% set sublabel = sublabel ~ '<span class="MimotoCMS_pages_dashboard_Overview-database-tables-syncmessage">' ~ issue.whatsWrong ~ '</span><br>`' ~ issue.field ~ '`' %}
+                                    {% endif %}
+                                    {% if issue.whatsWrong == 'Wrong order' %}
+                                        {% set sublabel = sublabel ~ '<span class="MimotoCMS_pages_dashboard_Overview-database-tables-syncmessage">' ~ issue.whatsWrong ~ '</span><br>Current: `' ~ issue.current ~ '`<br>Should be: `' ~ issue.shouldBe ~ '`' %}
+                                    {% endif %}
+                                    {% if not loop.last %}{% set sublabel = sublabel ~ '<br><br>' %}{% endif %}
+                                {% endfor %}
+                                {{
+                                    Mimoto.module('MimotoCMS_modules_ListItem',
+                                    {
+                                        label: table.name,
+                                        sublabel: sublabel,
+                                        button_label: 'Fix',
+                                        button_directive: Mimoto.api('/mimoto.cms/setup/fix/' ~ table.name),
+                                        button_action: 'this.parentNode.parentNode.parentNode.remove(this);',
+                                        button_type: 'secondary',
+                                        button_icon: '',
+                                        sortable: false
+                                    })
                                 }}
                             {% endfor %}
                         </div>

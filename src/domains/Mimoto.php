@@ -157,6 +157,7 @@ class Mimoto
 
         $app->get ('/'.$sProjectName.'.cms/setup/verify', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::verifyDatabase');
         $app->get ('/'.$sProjectName.'.cms/setup/add/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::addCoreTable');
+        $app->get ('/'.$sProjectName.'.cms/setup/fix/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::fixCoreTable');
         $app->get ('/'.$sProjectName.'.cms/setup/remove/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::removeCoreTable');
 
 
