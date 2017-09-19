@@ -315,21 +315,45 @@ class SetupService
         // --- change order
 
 
+        // 1. reload
+        $table = $this->checkTableStructure($sTableName);
+
+        // 2. validate
+        if ($table->status == 'Ok!') return true;
 
 
-        
+        $nIssueCount = count($table->issues);
+        for ($nIssueIndex = 0; $nIssueIndex < $nIssueCount; $nIssueIndex++)
+        {
+            // register
+            $issue = $table->issues[$nIssueIndex];
+
+            // verify
+            if ($issue->whatsWrong != 'Wrong order') continue;
 
 
-        Mimoto::error($table);
+            // 1. load
+            $sTableStructure = $this->getTableStructure($sTableName);
 
+            // 2. validate
+            if (empty($sTableStructure)) return false;
 
+            // 3. convert
+            $aTableStructure = json_decode($sTableStructure);
 
+            // 4. reorder
+            $nColumnCount = count($aTableStructure);
+            for ($nColumnIndex = $nColumnCount - 1; $nColumnIndex >= 0; $nColumnIndex--)
+            {
+                // register
+                $column = $aTableStructure[$nColumnIndex];
 
-
-
-        //alter table `mytable` change column username username varchar(255) after `somecolumn`;
-
-
+                // move columns
+                $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sTableName."` MODIFY COLUMN `".$column->Field.'` '.$column->Type.' '.(($column->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL')." ".$column->Extra." FIRST");
+                $params = array();
+                if ($stmt->execute($params) === false) return "Error while moving column `".$column->Field."` to correct order on entity table '$sTableName'";
+            }
+        }
 
         // 8. send
         return true;
@@ -420,7 +444,7 @@ class SetupService
                                 'field' => $definitonColumn->Field,
                                 'whatsWrong' => 'Wrong format',
                                 'current' => $column['Field'].' '.$column['Type'].' '.(($column['Null'] == 'YES') ? 'DEFAULT NULL' : 'NOT NULL'),
-                                'shouldBe' => $definitonColumn->Field.' '.$definitonColumn->Type.' '.(($definitonColumn->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL')
+                                'shouldBe' => $definitonColumn->Field.' '.$definitonColumn->Type.' '.(($definitonColumn->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL').(!empty($definitonColumn->Extra) ? ' '.$definitonColumn->Extra : '')
                             );
                         }
 
@@ -436,7 +460,7 @@ class SetupService
                     $table->issues[] = (object) array(
                         'field' => $definitonColumn->Field,
                         'whatsWrong' => 'Missing column',
-                        'shouldBe' => $definitonColumn->Field.' '.$definitonColumn->Type.' '.(($definitonColumn->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL')
+                        'shouldBe' => $definitonColumn->Field.' '.$definitonColumn->Type.' '.(($definitonColumn->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL').(!empty($definitonColumn->Extra) ? ' '.$definitonColumn->Extra : '')
                     );
                 }
             }

@@ -2963,6 +2963,9 @@ h1.MimotoCMS_pages_dashboard_Overview-database {
   color: #c76255;
   margin-bottom: 10px; }
 
+h1.MimotoCMS_pages_dashboard_Overview-database--uptodate {
+  color: #9dbab7; }
+
 div.MimotoCMS_pages_dashboard_Overview-database {
   background-color: #fff;
   padding: 25px 25px 35px 25px;

@@ -128,7 +128,7 @@ module.exports.prototype = {
                 data: null,
                 dataType: 'json',
                 success: function (resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
+                    //console.log(resultData);
                 }
             });
         }
@@ -227,7 +227,7 @@ module.exports.prototype = {
                 data: null,
                 dataType: 'json',
                 success: function (resultData, resultStatus, resultSomething) {
-                    console.log(resultData);
+                    //console.log(resultData);
                 }
             });
         }
@@ -262,6 +262,130 @@ module.exports.prototype = {
         
         // send
         return listInfo;
+    },
+
+
+    // --- database tools
+
+
+    addCoreTable: function(sTableName, elButton)
+    {
+        Mimoto.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/setup/add/' + sTableName,
+            data: null,
+            dataType: 'json',
+            success: function (resultData, resultStatus, resultSomething) {
+
+                elButton.parentNode.parentNode.parentNode.remove(this);
+                this._setDatabaseHealthWarningVisibility();
+
+            }.bind(this)
+        });
+    },
+
+    fixCoreTable: function(sTableName, elButton)
+    {
+        Mimoto.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/setup/fix/' + sTableName,
+            data: null,
+            dataType: 'json',
+            success: function (resultData, resultStatus, resultSomething) {
+
+                elButton.parentNode.parentNode.parentNode.remove(this);
+                this._setDatabaseHealthWarningVisibility();
+
+            }.bind(this)
+        });
+    },
+
+    removeCoreTable: function(sTableName, elButton)
+    {
+        Mimoto.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/setup/remove/' + sTableName,
+            data: null,
+            dataType: 'json',
+            success: function (resultData, resultStatus, resultSomething) {
+
+                elButton.parentNode.parentNode.parentNode.remove(this);
+                this._setDatabaseHealthWarningVisibility();
+
+            }.bind(this)
+        });
+    },
+
+    _setDatabaseHealthWarningVisibility: function()
+    {
+        // init
+        let bHasIssues = false;
+
+        // register
+        let elTitle = document.querySelector('[data-mimoto-page-dashboard-title]');
+        let elWarning = document.querySelector('[data-mimoto-page-dashboard-warning]');
+        let elDetails = document.querySelector('[data-mimoto-page-dashboard-details]');
+
+        let elMissingTables = document.querySelector('[data-mimoto-page-dashboard-missingtables]');
+        let elMissingTableContainer = document.querySelector('[data-mimoto-page-dashboard-missingtables-container]');
+
+        let elUnsynchedTables = document.querySelector('[data-mimoto-page-dashboard-unsynchedtables]');
+        let elUnsynchedTableContainer = document.querySelector('[data-mimoto-page-dashboard-unsynchedtables-container]');
+
+        let elRedundantTables = document.querySelector('[data-mimoto-page-dashboard-redundanttables]');
+        let elRedundantTableContainer = document.querySelector('[data-mimoto-page-dashboard-redundanttables-container]');
+
+        // verify
+        if (elMissingTableContainer)
+        {
+            if (elMissingTableContainer && elMissingTableContainer.querySelectorAll('div').length === 0)
+            {
+                elMissingTables.parentNode.removeChild(elMissingTables)
+            }
+            else
+            {
+                bHasIssues = true;
+            }
+        }
+
+        // verify
+        if (elUnsynchedTableContainer)
+        {
+            if (elUnsynchedTableContainer.querySelectorAll('div').length === 0)
+            {
+                elUnsynchedTables.parentNode.removeChild(elUnsynchedTables)
+            }
+            else
+            {
+                bHasIssues = true;
+            }
+        }
+
+        // verify
+        if (elRedundantTableContainer)
+        {
+            if (elRedundantTableContainer.querySelectorAll('div').length === 0)
+            {
+                elRedundantTables.parentNode.removeChild(elRedundantTables)
+            }
+            else
+            {
+                bHasIssues = true;
+            }
+        }
+
+        // update interface
+        if (!bHasIssues)
+        {
+            // report
+            elTitle.innerText = 'Database up to date!';
+            elTitle.classList.add('MimotoCMS_pages_dashboard_Overview-database--uptodate');
+
+            // cleanup
+            elWarning.parentNode.removeChild(elWarning);
+            elDetails.parentNode.removeChild(elDetails);
+        }
     }
+
     
 }

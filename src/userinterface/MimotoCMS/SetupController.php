@@ -123,7 +123,7 @@ class SetupController
         if (!in_array($sTableName, Mimoto::service('setup')->getCoreTables())) return '';
 
         // 4. fix
-        if (($result = Mimoto::service('setup')->fixCoreTable($sTableName)) !== true)
+        if (($result = Mimoto::service('setup')->fixCoreTable($sTableName)) === true)
         {
             // report success
             return Mimoto::service('messages')->response((object) array('result' => 'Table `'.$sTableName.'` fixed! '.date("Y.m.d H:i:s")), 200);

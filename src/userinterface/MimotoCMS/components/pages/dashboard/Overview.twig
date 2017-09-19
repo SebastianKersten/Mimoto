@@ -5,16 +5,14 @@
     {% if (Mimoto.user.hasRole('owner') or Mimoto.user.hasRole('superuser')) %}
         {% if Mimoto.getVar('tableCheckResult') is not empty and not Mimoto.getVar('tableCheckResult').valid %}
 
-            <h1 class="MimotoCMS_pages_dashboard_Overview-database">Database health warning</h1>
+            <h1 data-mimoto-page-dashboard-title class="MimotoCMS_pages_dashboard_Overview-database">Database health warning</h1>
 
-            <div class="MimotoCMS_pages_dashboard_Overview-warning">
+            <div data-mimoto-page-dashboard-warning class="MimotoCMS_pages_dashboard_Overview-warning">
                 <div class="MimotoCMS_pages_dashboard_Overview-warning-label"><span>Warning</span></div>
                 <div>
                     <span class="MimotoCMS_pages_dashboard_Overview-warning-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width="40" height="40">
-                            <g fill="#c76255" stroke="none">
-                                <path d="M 40,20 0,40 0,0 z"/>
-                         </g>
+                            <g fill="#c76255" stroke="none"><path d="M 40,20 0,40 0,0 z"/></g>
                         </svg>
                     </span>
                 </div>
@@ -23,20 +21,19 @@
                 </div>
             </div>
 
-            <div class="MimotoCMS_pages_dashboard_Overview-database">
+            <div data-mimoto-page-dashboard-details class="MimotoCMS_pages_dashboard_Overview-database">
 
                 {% if Mimoto.getVar('tableCheckResult').missingTables|length > 0 %}
-                    <div class="MimotoCMS_pages_dashboard_Overview-database-tables">
+                    <div data-mimoto-page-dashboard-missingtables class="MimotoCMS_pages_dashboard_Overview-database-tables">
                         <div class="MimotoCMS_pages_dashboard_Overview-database-tables-title">Missing tables</div>
-                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
+                        <div data-mimoto-page-dashboard-missingtables-container class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
                             {% for sTableName in Mimoto.getVar('tableCheckResult').missingTables %}
                                 {{
                                     Mimoto.module('MimotoCMS_modules_ListItem',
                                     {
                                         label: sTableName,
                                         button_label: 'Add',
-                                        button_directive: Mimoto.api('/mimoto.cms/setup/add/' ~ sTableName),
-                                        button_action: 'this.parentNode.parentNode.parentNode.remove(this);',
+                                        button_action: 'MimotoCMS.addCoreTable(\'' ~ sTableName ~ '\', this)',
                                         button_type: 'secondary',
                                         button_icon: '',
                                         sortable: false
@@ -48,9 +45,9 @@
                 {% endif %}
 
                 {% if Mimoto.getVar('tableCheckResult').unsyncedTables|length > 0 %}
-                    <div class="MimotoCMS_pages_dashboard_Overview-database-tables">
+                    <div data-mimoto-page-dashboard-unsynchedtables class="MimotoCMS_pages_dashboard_Overview-database-tables">
                         <div class="MimotoCMS_pages_dashboard_Overview-database-tables-title">Unsynced tables</div>
-                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
+                        <div data-mimoto-page-dashboard-unsynchedtables-container class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
                             {% for table in Mimoto.getVar('tableCheckResult').unsyncedTables %}
                                 {% set sublabel = '' %}
                                 {% for issue in table.issues %}
@@ -74,8 +71,7 @@
                                         label: table.name,
                                         sublabel: sublabel,
                                         button_label: 'Fix',
-                                        button_directive: Mimoto.api('/mimoto.cms/setup/fix/' ~ table.name),
-                                        button_action: 'this.parentNode.parentNode.parentNode.remove(this);',
+                                        button_action: 'MimotoCMS.fixCoreTable(\'' ~ table.name ~ '\', this)',
                                         button_type: 'secondary',
                                         button_icon: '',
                                         sortable: false
@@ -87,17 +83,16 @@
                 {% endif %}
 
                 {% if Mimoto.getVar('tableCheckResult').redundantTables|length > 0 %}
-                    <div class="MimotoCMS_pages_dashboard_Overview-database-tables">
+                    <div data-mimoto-page-dashboard-redundanttables class="MimotoCMS_pages_dashboard_Overview-database-tables">
                         <div class="MimotoCMS_pages_dashboard_Overview-database-tables-title">Redundant tables</div>
-                        <div class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
+                        <div data-mimoto-page-dashboard-redundanttables-container class="MimotoCMS_pages_dashboard_Overview-database-tables-container">
                             {% for sTableName in Mimoto.getVar('tableCheckResult').redundantTables %}
                                 {{
                                     Mimoto.module('MimotoCMS_modules_ListItem',
                                     {
                                         label: sTableName,
                                         button_label: 'Remove',
-                                        button_directive: Mimoto.api('/mimoto.cms/setup/remove/' ~ sTableName),
-                                        button_action: 'this.parentNode.parentNode.parentNode.remove(this);',
+                                        button_action: 'MimotoCMS.removeCoreTable(\'' ~ sTableName ~ '\', this)',
                                         button_type: 'alert',
                                         button_icon: '',
                                         sortable: false
