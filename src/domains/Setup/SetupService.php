@@ -291,10 +291,34 @@ class SetupService
         }
 
 
+
+        // --- change column format
+
+
+        $nIssueCount = count($table->issues);
+        for ($nIssueIndex = 0; $nIssueIndex < $nIssueCount; $nIssueIndex++)
+        {
+            // register
+            $issue = $table->issues[$nIssueIndex];
+
+            // verify
+            if ($issue->whatsWrong != 'Wrong format') continue;
+
+            // a. add column to table
+            $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sTableName."` MODIFY ".$issue->shouldBe);
+            $params = array();
+            if ($stmt->execute($params) === false) return "Error while changing column `".$issue->field."` format on entity table '$sTableName'";
+        }
+
+
+
         // --- change order
 
 
+
+
         
+
 
         Mimoto::error($table);
 
@@ -306,34 +330,6 @@ class SetupService
         //alter table `mytable` change column username username varchar(255) after `somecolumn`;
 
 
-
-        // 4. compose
-        $sQuery =  'CREATE TABLE `'.$sTableName.'` (';
-        $sQuery .= '`id` int(10) unsigned NOT NULL AUTO_INCREMENT,';
-
-        // 5. add columns
-        $nColumnCount = count($table);
-        for ($nColumnIndex = 0; $nColumnIndex < $nColumnCount; $nColumnIndex++)
-        {
-            // register
-            $column = $table[$nColumnIndex];
-
-            // skip
-            if ($column->Field == 'id' || $column->Field == 'created') continue;
-
-            // build
-            $sQuery .= '`'.$column->Field.'` '.$column->Type.' '.(($column->Null == 'YES') ? 'DEFAULT NULL' : 'NOT NULL').',';
-        }
-
-        // 6. compose
-        $sQuery .= '`created` datetime DEFAULT NULL,';
-        $sQuery .= 'PRIMARY KEY (`id`) USING BTREE';
-        $sQuery .= ') ENGINE=InnoDB DEFAULT CHARSET=utf8;';
-
-        // 7. create
-        $stmt = Mimoto::service('database')->prepare($sQuery);
-        $params = array();
-        $stmt->execute($params);
 
         // 8. send
         return true;
