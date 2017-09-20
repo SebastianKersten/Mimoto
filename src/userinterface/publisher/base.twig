@@ -20,7 +20,7 @@
                     <div class="MimotoPublisher-menu-member-avatar"><img {{ Mimoto.user.realtime('avatar') }} src="{{ Mimoto.user.data('avatar') }}"></div>
                 </div>
             {% else %}
-                <div class="MimotoPublisher-menu-login">Login</div>
+                <div class="MimotoPublisher-menu-login"><a href="/mimoto.cms">Login</a></div>
             {% endif %}
         </div>
         <div class="MimotoPublisher-content">{% block content %}{% endblock %}</div>

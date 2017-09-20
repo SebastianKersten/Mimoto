@@ -1345,6 +1345,15 @@ div.MimotoPublisher-menu-logo {
   float: right;
   color: #ffffff; }
 
+div.MimotoPublisher-menu-login {
+  padding: 15px 0 15px 25px;
+  display: inline-block;
+  float: right;
+  color: #ffffff; }
+  div.MimotoPublisher-menu-login > a {
+    text-decoration: none;
+    color: #ffffff; }
+
 div.MimotoPublisher-menu-member {
   float: right;
   display: -webkit-box;

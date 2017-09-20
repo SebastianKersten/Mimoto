@@ -46,6 +46,18 @@ div.MimotoPublisher-menu-logo {
     color: #ffffff;
 }
 
+div.MimotoPublisher-menu-login {
+    padding: 15px 0 15px 25px;
+    display: inline-block;
+    float: right;
+    color: #ffffff;
+
+    & > a {
+        text-decoration: none;
+        color: #ffffff;
+    }
+}
+
 div.MimotoPublisher-menu-member {
     float: right;
     display: flex;
