@@ -210,9 +210,8 @@ class FormService
         }
 
 
-        // 6. prepare
-        $formFieldValues = Mimoto::service('input')->getFormFieldValues($form, $entity, null, $entity->getId()); // todo - strip values
-
+        // 6. prepare - reload form, but now with entity to collect the correct fields depending on the form`s internal logic
+        $formFieldValues = Mimoto::service('input')->getFormFieldValues(Mimoto::service('input')->getFormByName($sFormName, $entity), $entity, null, $entity->getId()); // todo - strip values
 
         // 7. get all vars and entities
         $nFieldCount = count($formFieldValues->fields);

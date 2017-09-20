@@ -183,6 +183,8 @@ class EntityConfigService
         // 2. read changes
         $aChanges = $entity->getChanges();
 
+        Mimoto::output('$entity', $entity, true);
+
         // 3. check if name was changed
         if (isset($aChanges['name'])) $this->renameEntityTable($entity);
 
@@ -230,7 +232,7 @@ class EntityConfigService
                 {
                     // register
                     $connection = $aChanges['properties']->removed[$nConnectionIndex];
-
+                    Mimoto::output('$connection', $connection);
                     // load property
                     $entityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
 
