@@ -4,6 +4,7 @@
 namespace Mimoto\Core;
 
 // Mimoto classes
+use Mimoto\Core\entities\UserRole;
 use Mimoto\Mimoto;
 use Mimoto\Core\entities\Input;
 use Mimoto\Data\MimotoEntity;
@@ -454,6 +455,130 @@ class CoreFormUtils
 
         // 4. send
         return $field;
+    }
+
+    /**
+     * Get field: user roles
+     */
+    public static function addUserRolesTofield(MimotoEntity $eForm, $sEntityName, $sPropertyName)
+    {
+        // 1. init
+        $selection = Mimoto::service('selection')->create();
+
+        // 2. setup
+        $selection->setType(CoreConfig::MIMOTO_USER_ROLE);
+
+        // 3. determine
+        if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || Mimoto::user()->hasRole('admin') || self::userHasRole($eUser, 'contenteditor'))
+        {
+            // init
+            $aCoreUserRoleIds = [CoreConfig::MIMOTO_USER_ROLE.'-contenteditor'];
+
+            // verify
+            if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || self::userHasRole($eUser, 'admin'))
+            {
+                // add permissions
+                array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-admin');
+
+                // verify
+                if (Mimoto::user()->hasRole('owner') || self::userHasRole($eUser, 'superuser'))
+                {
+                    // add permissions
+                    array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-superuser');
+
+                    // verify
+                    if (Mimoto::user()->hasRole('owner'))
+                    {
+                        // add permissions
+                        array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-owner');
+                    }
+                }
+            }
+
+            $nCoreUserRoleIdCount = count($aCoreUserRoleIds);
+            for ($nCoreUserRoleIdIndex = 0; $nCoreUserRoleIdIndex < $nCoreUserRoleIdCount; $nCoreUserRoleIdIndex++)
+            {
+                // register
+                $coreUserRoleId = $aCoreUserRoleIds[$nCoreUserRoleIdIndex];
+
+                // add core user roles
+                $rule = $selection->addRule();
+
+                // setup
+                $rule->setType(CoreConfig::MIMOTO_USER_ROLE);
+                $rule->setId($coreUserRoleId);
+            }
+        }
+
+        // 3. load
+        $aUserRoles = Mimoto::service('data')->select($selection);
+
+
+        // ---
+
+
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, $sEntityName, $sPropertyName);
+        $field->setValue('label', 'User roles');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, $sEntityName, $sPropertyName);
+
+        // 4. add options
+        $nUserRoleCount = count($aUserRoles);
+        for ($nUserRoleIndex = 0; $nUserRoleIndex < $nUserRoleCount; $nUserRoleIndex++)
+        {
+            // register
+            $eUserRole = $aUserRoles[$nUserRoleIndex];
+
+            // setup
+            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+            $option->setId($sEntityName.'--roles_value_options-'.$eUserRole->getId());
+            $option->setValue('label', $eUserRole->getValue('name'));
+            $option->setValue('value', $eUserRole->getEntityTypeName().'.'.$eUserRole->getId());
+            $field->addValue('options', $option);
+        }
+
+        // store
+        $eForm->add('fields', $field);
+
+        // send
+        return $field;
+    }
+
+    private static function userHasRole($eUser, $sRole)
+    {
+        // 1. init
+        $bHasRole = false;
+
+        // 2. validate
+        if (empty($eUser)) return $bHasRole;
+
+
+        // ---
+
+
+        // 3. read
+        $aRoles = $eUser->getValue('roles');
+
+        // 4. find
+        $nRoleCount = count($aRoles);
+        for ($nRoleIndex = 0; $nRoleIndex < $nRoleCount; $nRoleIndex++)
+        {
+            // register
+            $eRole = $aRoles[$nRoleIndex];
+
+            // verify
+            if ($eRole->getValue('name') == $sRole)
+            {
+                // toglle
+                $bHasRole = true;
+                break;
+            }
+        }
+
+        // 5. send
+        return $bHasRole;
     }
 
 }

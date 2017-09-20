@@ -145,7 +145,7 @@ class Route
 
         CoreFormUtils::addField_groupStart($form, 'Permissions', 'permissions');
 
-        $form->addValue('fields', self::getField_UserRoles());
+        CoreFormUtils::addUserRolesTofield($form, CoreConfig::MIMOTO_ROUTE, 'allowedUserRoles');
 
         CoreFormUtils::addField_groupEnd($form, 'permissions');
 
@@ -174,61 +174,6 @@ class Route
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");
         $field->addValue('validation', $validationRule);
-
-        // send
-        return $field;
-    }
-
-
-    /**
-     * Get field: user roles
-     */
-    private static function getField_userRoles()
-    {
-        // 1. create and setup field
-        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_MULTISELECT, CoreConfig::MIMOTO_ROUTE, 'allowedUserRoles');
-        $field->setValue('label', 'User roles');
-
-        // 2. connect value
-        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_ROUTE, 'allowedUserRoles');
-
-
-        // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_USER_ROLE]);
-
-
-        //if (Mimoto::user()->hasRole('superuser'))
-        {
-            $aCoreUserRoles = [
-                (object)array('label' => 'Mimoto Superuser', 'id' => CoreConfig::MIMOTO_USER_ROLE . '-superuser')
-            ];
-
-            $nCoreUserRoleCount = count($aCoreUserRoles);
-            for ($nCoreUserRoleIndex = 0; $nCoreUserRoleIndex < $nCoreUserRoleCount; $nCoreUserRoleIndex++) {
-                // register
-                $coreUserRole = $aCoreUserRoles[$nCoreUserRoleIndex];
-
-                // load
-                $entity = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER_ROLE, $coreUserRole->id);
-
-                // store
-                $aEntities[] = $entity;
-            }
-        }
-
-
-        $nEntityCount = count($aEntities);
-        for ($i = 0; $i < $nEntityCount; $i++)
-        {
-            // register
-            $entity = $aEntities[$i];
-
-            $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
-            $option->setId(CoreConfig::MIMOTO_ROUTE.'--allowedUserRoles_value_options-'.$entity->getId());
-            $option->setValue('label', $entity->getValue('name'));
-            $option->setValue('value', $entity->getEntityTypeName().'.'.$entity->getId());
-            $field->addValue('options', $option);
-        }
 
         // send
         return $field;
