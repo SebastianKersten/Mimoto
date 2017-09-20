@@ -498,6 +498,9 @@ class EntityConfigService
      */
     private function createValuePropertySettings(MimotoEntity $entityProperty)
     {
+
+        // --- A. type ---
+
         // 1. init property setting
         $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
@@ -513,7 +516,9 @@ class EntityConfigService
         $entityProperty->addValue('settings', $entityPropertySetting);
 
 
-        // --- formatting options
+
+        // --- B. formatting options ---
+
 
         // 1. init property setting
         $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
@@ -521,6 +526,24 @@ class EntityConfigService
         // 2. setup property setting
         $entityPropertySetting->setValue('key', EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS);
         $entityPropertySetting->setValue('type', '');
+        $entityPropertySetting->setValue('value', '');
+
+        // 3. persist property setting
+        Mimoto::service('data')->store($entityPropertySetting);
+
+        // 4. connect property setting to property
+        $entityProperty->addValue('settings', $entityPropertySetting);
+
+
+        // --- C. default value ---
+
+
+        // 1. init property setting
+        $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+        // 2. setup property setting
+        $entityPropertySetting->setValue('key', EntityConfig::SETTING_VALUE_DEFAULTVALUE);
+        $entityPropertySetting->setValue('type', MimotoEntityPropertyTypes::PROPERTY_SETTING_DEFAULTVALUE_TYPE_NONE);
         $entityPropertySetting->setValue('value', '');
 
         // 3. persist property setting
@@ -595,6 +618,9 @@ class EntityConfigService
 
             default:
 
+
+                // --- A. allowed entity type ---
+
                 // init
                 $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
@@ -608,6 +634,27 @@ class EntityConfigService
 
                 // connect
                 $entityProperty->addValue('settings', $entityPropertySetting);
+
+
+
+                // --- B. default value ---
+
+
+                // 1. init property setting
+                $entityPropertySetting = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+                // 2. setup property setting
+                $entityPropertySetting->setValue('key', EntityConfig::SETTING_ENTITY_DEFAULTVALUE);
+                $entityPropertySetting->setValue('type', MimotoEntityPropertyTypes::PROPERTY_SETTING_DEFAULTVALUE_TYPE_NONE);
+                $entityPropertySetting->setValue('value', '');
+
+                // 3. persist property setting
+                Mimoto::service('data')->store($entityPropertySetting);
+
+                // 4. connect property setting to property
+                $entityProperty->addValue('settings', $entityPropertySetting);
+
+
 
                 // store
                 Mimoto::service('data')->store($entityProperty);

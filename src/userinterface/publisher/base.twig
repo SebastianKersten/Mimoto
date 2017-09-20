@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
         <link rel="stylesheet" type="text/css" href="/static/css/publisher.css">
-        <script src="/static/js/publisher.js"></script>
+
     </head>
 
     <body class="MimotoPublisher">
@@ -22,8 +22,9 @@
 
 
         {#{% if !Mimoto.editMode | Mimoto.isMode('edit') %}<script scr="yourinfocardscript"></script>{% endif %}#}
-        <script type="text/javascript" src="/mimoto/static/js/mimoto.js"></script>
-        <script type="text/javascript" src="/mimoto/static/js/mimoto.cms.js"></script>
+        <script src="/static/js/publisher.js"></script>
+        <script type="text/javascript" src="/mimoto/mimoto.js"></script>
+        <script type="text/javascript" src="/mimoto/mimoto.cms.js"></script>
         <script>
             Mimoto.debug = true
         </script>

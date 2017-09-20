@@ -903,24 +903,24 @@ class EntityRepository
         if (empty($nEntityId))
         {
             // init
-            $entity = new MimotoEntity($entityConfig->getId(), $entityConfig->getName(), false);
+            $eInstance = new MimotoEntity($entityConfig->getId(), $entityConfig->getName(), false);
         }
         else if (!isset($this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)]))
         {
             // init
-            $entity = new MimotoEntity($entityConfig->getId(), $entityConfig->getName(), false);
+            $eInstance = new MimotoEntity($entityConfig->getId(), $entityConfig->getName(), false);
 
             // register
-            $entity->setId($nEntityId);
-            $entity->setCreated($result['created']);
+            $eInstance->setId($nEntityId);
+            $eInstance->setCreated($result['created']);
 
             // store - #todo restore a working version of the entity caching
-            //$this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $entity;
+            //$this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $eInstance;
         }
         else
         {
             // load
-            $entity = $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)];
+            $eInstance = $this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)];
         }
 
 
@@ -938,9 +938,9 @@ class EntityRepository
             $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
 
             // setup property
-            $entity->setupProperty($propertyConfig);
+            $eInstance->setupProperty($propertyConfig);
 
-            // veridy
+            // verify
             if (!empty($nEntityId))
             {
                 // set value
@@ -955,7 +955,7 @@ class EntityRepository
                             $value = MimotoDataUtils::convertStoredValueToRuntimeValue($result[$propertyValue->mysqlColumnName], $propertyConfig->settings->type->type, $propertyConfig->settings->type->value);
 
                             // 2. store
-                            $entity->setValue($propertyConfig->name, $value);
+                            $eInstance->set($propertyConfig->name, $value);
                         }
                         break;
 
@@ -973,9 +973,9 @@ class EntityRepository
                             ' ORDER BY sortindex'
                         );
                         $params = array(
-                            ':parent_id' => $entity->getId(),
+                            ':parent_id' => $eInstance->getId(),
                             ':parent_property_id' => $propertyConfig->id,
-                            ':parent_entity_type_id' => $entity->getEntityTypeId()
+                            ':parent_entity_type_id' => $eInstance->getEntityTypeId()
                         );
 
                         $stmt->execute($params);
@@ -1006,13 +1006,13 @@ class EntityRepository
                             if (isset($aCollection[0]))
                             {
                                 // register collection data
-                                $entity->setValue($propertyConfig->name, $aCollection[0]);
+                                $eInstance->setValue($propertyConfig->name, $aCollection[0]);
                             }
                         }
                         elseif ($propertyConfig->type == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
                         {
                             // register collection data
-                            $entity->setValue($propertyConfig->name, $aCollection);
+                            $eInstance->setValue($propertyConfig->name, $aCollection);
                         }
 
                         break;
@@ -1021,10 +1021,52 @@ class EntityRepository
         }
 
         // start tracking changes
-        $entity->trackChanges();
+        $eInstance->trackChanges();
+
+
+
+        // -- default values
+
+
+        if (empty($nEntityId))
+        {
+            // load properties
+            $nPropertyCount = count($aPropertyNames);
+            for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
+            {
+                // register
+                $sPropertyName = $aPropertyNames[$nPropertyIndex];
+                $propertyConfig = $entityConfig->getPropertyConfig($sPropertyName);
+
+
+                // verify
+                if (isset($propertyConfig->settings->{EntityConfig::SETTING_VALUE_DEFAULTVALUE}))
+                {
+                    // register
+                    $defaultValueSetting = $propertyConfig->settings->{EntityConfig::SETTING_VALUE_DEFAULTVALUE};
+
+                    switch($defaultValueSetting->type)
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_SETTING_DEFAULTVALUE_TYPE_CURRENTTIMESTAMP:
+
+                            $eInstance->set($propertyConfig->name, date('Y.m.d h:i:s'));
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_SETTING_DEFAULTVALUE_TYPE_CURRENTUSER:
+
+                            $eInstance->set($propertyConfig->name, Mimoto::service('session')->currentUser());
+                            break;
+                    }
+                }
+            }
+        }
+
+
+        // ---
+
 
         // send
-        return $entity;
+        return $eInstance;
     }
     
     

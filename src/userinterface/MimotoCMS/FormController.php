@@ -446,7 +446,7 @@ class FormController
         $eForm = Mimoto::service('input')->getFormByName($sFormName);
 
         // 6. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form', $eForm);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $eForm);
 
         // 5. get parent form
         $eParentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eFormField);
@@ -588,7 +588,7 @@ class FormController
 
 
         // 3. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $form);
 
         // 4. setup content
         $component->addForm(
@@ -696,7 +696,7 @@ class FormController
 
 
         // 3. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form');
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $form);
 
         // 4. setup content
         $component->addForm(

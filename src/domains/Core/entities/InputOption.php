@@ -139,7 +139,7 @@ class InputOption
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUTOPTION);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUTOPTION, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Option', '', "Entities are composed of 'properties'. Add properties to your entity and decide what type they are. A property can have three types: <i>value</i>, <i>entity</i> or <i>collection</i>");

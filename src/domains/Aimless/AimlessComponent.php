@@ -805,7 +805,7 @@ class AimlessComponent
         $eUser = Mimoto::service('session')->currentUser();
 
         // validate
-        if (empty($eUser)) $eUser = Mimoto::service('data')->create(CoreConfig::MIMOTO_US);
+        if (empty($eUser)) $eUser = Mimoto::service('data')->create(CoreConfig::MIMOTO_USER);
 
         // create
         $component = Mimoto::service('output')->createComponent('', $eUser);

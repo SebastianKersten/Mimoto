@@ -21,10 +21,6 @@ div.MimotoCMS_pages_components_ComponentDetail_Structure__meta {
     display: flex;
     flex-wrap: nowrap;
 
-    & a {
-        color: $tower-gray;
-    }
-
     &>div.MimotoCMS_pages_components_ComponentDetail_Structure__meta_info {
         flex-grow: 5;
     }

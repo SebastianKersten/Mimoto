@@ -6,6 +6,7 @@ namespace Mimoto\EntityConfig;
 // Mimoto classes
 use Mimoto\Core\CoreConfig;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
+use Mimoto\Mimoto;
 
 
 /**
@@ -60,7 +61,9 @@ class EntityConfig
     // property settings keys
     const SETTING_VALUE_TYPE                    = 'type';
     const SETTING_VALUE_FORMATTINGOPTIONS       = 'formattingOptions';
+    const SETTING_VALUE_DEFAULTVALUE            = 'defaultValue';
     const SETTING_ENTITY_ALLOWEDENTITYTYPE      = 'allowedEntityType';
+    const SETTING_ENTITY_DEFAULTVALUE           = 'defaultValue';
     const SETTING_COLLECTION_ALLOWEDENTITYTYPES = 'allowedEntityTypes';
     const SETTING_COLLECTION_ALLOWDUPLICATES    = 'allowDuplicates';
 
@@ -165,6 +168,12 @@ class EntityConfig
                 EntityConfig::SETTING_VALUE_TYPE => $settings[EntityConfig::SETTING_VALUE_TYPE]
             )
         );
+
+        // optional settings
+        if (isset($settings[EntityConfig::SETTING_VALUE_DEFAULTVALUE]))
+        {
+            $property->settings->{EntityConfig::SETTING_VALUE_DEFAULTVALUE} = $settings[EntityConfig::SETTING_VALUE_DEFAULTVALUE];
+        }
         
         // store
         $this->_aProperties[$sPropertyName] = $property;
@@ -187,7 +196,13 @@ class EntityConfig
                 EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value
             )
         );
-        
+
+        // optional settings
+        if (isset($settings[EntityConfig::SETTING_ENTITY_DEFAULTVALUE]))
+        {
+            $property->settings->{EntityConfig::SETTING_ENTITY_DEFAULTVALUE} = $settings[EntityConfig::SETTING_ENTITY_DEFAULTVALUE];
+        }
+
         // store
         $this->_aProperties[$sPropertyName] = $property;
     }

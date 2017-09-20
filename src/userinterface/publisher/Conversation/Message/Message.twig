@@ -1,0 +1,12 @@
+<div class="MimotoPublisher_Message" {{ Mimoto.realtime() }}>
+    <div class="MimotoPublisher_Message-content">
+        <div class="MimotoPublisher_Message-user">
+            <div><img {{ Mimoto.realtime('owner.avatar') }} src="{{ Mimoto.data('owner.avatar') }}"></div>
+            <div {{ Mimoto.realtime('owner.firstName') }}>{{ Mimoto.data('owner.firstName') }}</div>
+        </div>
+        <div class="MimotoPublisher_Message-message" {{ Mimoto.realtime('message') }}>{{ Mimoto.data('message') }}</div>
+    </div>
+    <div class="MimotoPublisher_Message-menu">
+        <a onclick="Publisher.article.reportComment({{ Mimoto.meta('id') }})">Rapporteer</a>
+    </div>
+</div>

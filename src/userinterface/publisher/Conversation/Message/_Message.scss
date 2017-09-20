@@ -1,0 +1,54 @@
+div.MimotoPublisher_Message
+{
+    width: 100%;
+    background-color: #EfEeEe;
+    padding: 20px;
+}
+
+div.MimotoPublisher_Message-content {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+
+    & > div {
+        margin-right: 15px;
+    }
+
+    & > div:last-child {
+        margin-right: 0;
+    }
+}
+
+
+div.MimotoPublisher_Message-user {
+    flex: none;
+    font-style: italic;
+    color: #858585;
+    font-size: 14px;
+
+    & img {
+        width: 50px;
+    }
+}
+
+div.MimotoPublisher_Message-message {
+    flex: auto;
+    color: #000000;
+    font-size: 18px;
+}
+
+div.MimotoPublisher_Message-menu {
+    padding-top: 5px;
+    font-size: 12px;
+    color: #858585;
+    cursor: pointer;
+
+    & > a {
+        color: #858585;
+        text-decoration: none;
+    }
+
+    & > a:hover {
+        text-decoration: underline;
+    }
+}

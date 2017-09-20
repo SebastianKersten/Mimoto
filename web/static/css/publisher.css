@@ -1247,6 +1247,58 @@ img.MimotoPublisher-FeedItemExplainer-headerImage {
   width: 100%;
   z-index: 0; }
 
+div.MimotoPublisher_Message {
+  width: 100%;
+  background-color: #EfEeEe;
+  padding: 20px; }
+
+div.MimotoPublisher_Message-content {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start; }
+  div.MimotoPublisher_Message-content > div {
+    margin-right: 15px; }
+  div.MimotoPublisher_Message-content > div:last-child {
+    margin-right: 0; }
+
+div.MimotoPublisher_Message-user {
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  font-style: italic;
+  color: #858585;
+  font-size: 14px; }
+  div.MimotoPublisher_Message-user img {
+    width: 50px; }
+
+div.MimotoPublisher_Message-message {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
+  color: #000000;
+  font-size: 18px; }
+
+div.MimotoPublisher_Message-menu {
+  padding-top: 5px;
+  font-size: 12px;
+  color: #858585;
+  cursor: pointer; }
+  div.MimotoPublisher_Message-menu > a {
+    color: #858585;
+    text-decoration: none; }
+  div.MimotoPublisher_Message-menu > a:hover {
+    text-decoration: underline; }
+
 div.MimotoPublisher_Comment {
   width: 100%;
   background-color: #EfEeEe;

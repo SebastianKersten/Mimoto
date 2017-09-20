@@ -1,5 +1,7 @@
 {% if Mimoto.data('key') == 'type' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_value_type' %}{% endif %}
 {% if Mimoto.data('key') == 'formattingOptions' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_value_formattingoptions' %}{% endif %}
+{% if Mimoto.data('key') == 'defaultValue' and propertyType == 'value' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_value_defaultvalue' %}{% endif %}
+{% if Mimoto.data('key') == 'defaultValue' and propertyType == 'entity' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_entity_defaultvalue' %}{% endif %}
 {% if Mimoto.data('key') == 'allowedEntityType' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_entity_allowedEntityType' %}{% endif %}
 {% if Mimoto.data('key') == 'allowedEntityTypes' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes' %}{% endif %}
 {% if Mimoto.data('key') == 'allowDuplicates' %}{% set sFormName = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates' %}{% endif %}
@@ -56,7 +58,16 @@
             ]
         </div>
 
+    {% elseif Mimoto.data('key') == 'defaultValue' %}
+
+        <div {{ Mimoto.showWhenEmpty('type') }}>
+            <span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-defaultsettings">no default value</span>
+        </div>
+        <div {{ Mimoto.hideWhenEmpty('type') }}>
+            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-value" {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</div>
+        </div>
+
     {% else %}
-        <div {{ Mimoto.realtime('value') }}>{{ Mimoto.data('value') }}</div>
+        <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting-value" {{ Mimoto.realtime('value') }}>{{ Mimoto.data('value') }}</div>
     {% endif %}
 </div>

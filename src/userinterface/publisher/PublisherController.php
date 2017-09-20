@@ -4,6 +4,7 @@
 namespace Mimoto\UserInterface\publisher;
 
 // Mimoto classes
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 
@@ -59,11 +60,14 @@ class PublisherController
 
     public function addComment(Application $app, Request $request, $nArticleId)
     {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
         // 1. init page
         $eComment = Mimoto::service('data')->create('comment');
 
         // 2. register
-        $eComment->setValue('message', $request->get('message'));
+        $eComment->setValue('message', $data->message);
 
         // 3. store
         Mimoto::service('data')->store($eComment);

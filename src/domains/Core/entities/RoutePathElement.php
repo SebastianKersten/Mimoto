@@ -107,7 +107,7 @@ class RoutePathElement
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_ROUTE_PATH_ELEMENT, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Path element', '', "The core element of data is called an 'entity'. Entities are the data objects that contain a certain set of properties, for instance <i>Person</i> containing a <i>name</i> and a <i>date of birth</i>");

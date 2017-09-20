@@ -344,7 +344,7 @@ class EntityConfigRepository
         $aAllEntityPropertySettings = $this->loadRawEntityPropertySettingData();
         $aAllEntityPropertySetting_Connections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
 
-        
+
 
         // --- compose ---
 
@@ -419,8 +419,6 @@ class EntityConfigRepository
 
 
 
-
-
                     // register
                     $aEntityProperty_Connections = $aAllEntityProperty_Connections[$property->id];
 
@@ -456,7 +454,8 @@ class EntityConfigRepository
                                         // 1. $this->_LogService->silent('', '');
 
                                         // skip
-                                        continue 3;
+                                        //continue 3;
+                                        break;
                                     }
 
                                     // register
@@ -509,6 +508,8 @@ class EntityConfigRepository
 
                                 // store
                                 $property->settings[$setting->key] = $setting;
+
+                                //Mimoto::output($setting->key, $property->settings);
 
                                 break;
                         }
@@ -673,7 +674,7 @@ class EntityConfigRepository
             {
                 // read
                 $property = $entity->properties[$j];
-                
+
                 switch($property->type)
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
@@ -683,6 +684,12 @@ class EntityConfigRepository
 
                         // copy
                         $settings[EntityConfig::SETTING_VALUE_TYPE] = clone $property->settings[EntityConfig::SETTING_VALUE_TYPE];
+
+                        // copy
+                        if (isset($property->settings[EntityConfig::SETTING_VALUE_DEFAULTVALUE]))
+                        {
+                            $settings[EntityConfig::SETTING_VALUE_DEFAULTVALUE] = clone $property->settings[EntityConfig::SETTING_VALUE_DEFAULTVALUE];
+                        }
 
                         // setup
                         $entityConfig->setValueAsProperty($property->name, $property->id, $settings);
@@ -704,6 +711,12 @@ class EntityConfigRepository
                             'id' => $property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value,
                             'name' => $this->getEntityNameById($property->settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value)
                         );
+
+                        // copy
+                        if (isset($property->settings[EntityConfig::SETTING_ENTITY_DEFAULTVALUE]))
+                        {
+                            $settings[EntityConfig::SETTING_ENTITY_DEFAULTVALUE] = clone $property->settings[EntityConfig::SETTING_ENTITY_DEFAULTVALUE];
+                        }
 
 
                         $sSubtype = (isset($property->subtype)) ? $property->subtype : null;

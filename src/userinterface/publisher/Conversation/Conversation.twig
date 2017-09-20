@@ -1,0 +1,18 @@
+<div class="MimotoPublisher-Article-comments">
+
+    <h1>Bijdragen</h1>
+
+    <div {{ Mimoto.showWhenEmpty('comments') }} class="MimotoPublisher-Article-comments-container-empty">
+        Er zijn nog geen bijdragen. Vertel als eerste jouw kijk op dit stuk ..
+    </div>
+
+    <div {{ Mimoto.hideWhenEmpty('comments') }} class="MimotoPublisher-Article-comments-container" {{ Mimoto.realtime('comments', 'Comment') }}>
+        {{ Mimoto.data('comments', 'Comment') }}
+    </div>
+
+    <div class="MimotoPublisher-Article-commentform">
+        <input id="commentForm" type="text" class="MimotoPublisher-Article-comment" />
+        <div class="MimotoPublisher-Article-commentform-button" onclick="Publisher.article.addComment()">Draag bij +</div>
+    </div>
+
+</div>

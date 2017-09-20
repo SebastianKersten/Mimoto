@@ -22,4 +22,9 @@ class MimotoEntityPropertyTypes
     const PROPERTY_SUBTYPE_AUDIO = 'audio';
     const PROPERTY_SUBTYPE_FILE = 'file';
 
+    // property setting default value types
+    const PROPERTY_SETTING_DEFAULTVALUE_TYPE_NONE = '';
+    const PROPERTY_SETTING_DEFAULTVALUE_TYPE_CURRENTTIMESTAMP = 'currentTimestamp';
+    const PROPERTY_SETTING_DEFAULTVALUE_TYPE_CURRENTUSER = 'currentUser';
+
 }

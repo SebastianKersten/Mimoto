@@ -49,7 +49,9 @@ use Mimoto\Core\entities\Notification;
 
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Value_formattingOptions;
+use Mimoto\Core\forms\EntityPropertyForm_Value_defaultValue;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
+use Mimoto\Core\forms\EntityPropertyForm_Entity_defaultValue;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
 use Mimoto\Selection\SelectionRuleTypes;
@@ -178,7 +180,9 @@ class CoreConfig
 
     const COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE                     = '_Mimoto_coreform__entityPropertySetting_value_type';
     const COREFORM_ENTITYPROPERTYSETTING_VALUE_FORMATTINGOPTIONS        = '_Mimoto_coreform__entityPropertySetting_value_formattingoptions';
+    const COREFORM_ENTITYPROPERTYSETTING_VALUE_DEFAULTVALUE             = '_Mimoto_coreform__entityPropertySetting_value_defaultvalue';
     const COREFORM_ENTITYPROPERTYSETTING_ENTITY_ALLOWEDENTITYTYPE       = '_Mimoto_coreform__entityPropertySetting_entity_allowedEntityType';
+    const COREFORM_ENTITYPROPERTYSETTING_ENTITY_DEFAULTVALUE            = '_Mimoto_coreform__entityPropertySetting_entity_defaultvalue';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
@@ -318,7 +322,9 @@ class CoreConfig
             EntityProperty::getFormStructure(),
             EntityPropertyForm_Value_type::getFormStructure(),
             EntityPropertyForm_Value_formattingOptions::getFormStructure(),
+            EntityPropertyForm_Value_defaultValue::getFormStructure(),
             EntityPropertyForm_Entity_allowedEntityType::getFormStructure(),
+            EntityPropertyForm_Entity_defaultValue::getFormStructure(),
             EntityPropertyForm_Collection_allowedEntityTypes::getFormStructure(),
             EntityPropertyForm_Collection_allowDuplicates::getFormStructure(),
 
