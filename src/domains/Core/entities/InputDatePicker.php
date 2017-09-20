@@ -54,6 +54,19 @@ class InputDatePicker
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER.'--enableTime',
+                    // ---
+                    'name' => 'enableTime',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
                 )
             ]
         );
@@ -85,6 +98,7 @@ class InputDatePicker
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_DATEPICKER, 'label'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_DATEPICKER, 'description'),
+                CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_DATEPICKER, 'enableTime'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_DATEPICKER, 'value'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_DATEPICKER, 'options'),
                 CoreFormUtils::composeFieldName(CoreConfig::COREFORM_INPUT_DATEPICKER, 'validation')
@@ -117,6 +131,13 @@ class InputDatePicker
             'Description',
             'Enter a description',
             'Clarify what is required from the content editor'
+        );
+
+        CoreFormUtils::addField_checkbox
+        (
+            $form, 'enableTime', CoreConfig::MIMOTO_FORM_INPUT_DATEPICKER.'--enableTime',
+            'Configuration',
+            'Enable time input'
         );
 
         CoreFormUtils::addField_groupEnd($form);

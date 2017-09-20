@@ -22,23 +22,6 @@ use Symfony\Component\HttpFoundation\Request;
 class DocsController
 {
 
-    public function testDefaultValue(Application $app)
-    {
-        $eComment = Mimoto::service('data')->create('comment');
-
-        //$eComment->set('message', 'Hallo');
-
-        Mimoto::service('data')->store($eComment);
-
-
-
-        Mimoto::error($eComment);
-
-        return 'xxx';
-    }
-
-
-
     public function viewDocs(Application $app)
     {
         // 1. load data

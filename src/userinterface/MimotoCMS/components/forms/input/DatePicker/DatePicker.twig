@@ -1,12 +1,17 @@
-{% set sPHPDateFormat = 'Y m d' %}
-{% set sFRDateFormat = 'j F Y' %}
+{% if Mimoto.data('enableTime') %}
+    {% set sPHPDateFormat = 'Y m d H:i' %}
+    {% set sFRDateFormat = 'j F Y H:i' %}
+{% else %}
+    {% set sPHPDateFormat = 'Y m d' %}
+    {% set sFRDateFormat = 'j F Y' %}
+{% endif %}
 
 {% embed "MimotoCMS/components/forms/FormField.twig" %}
 
     {% block input %}
 
         <div class="MimotoCMS_forms_input_DatePicker">
-            <input {{ Mimoto.input() }} type="text" data-mimoto-form-input-datepicker class="MimotoCMS_forms_input_DatePicker-input" value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-format="{{ sFRDateFormat }}"/>
+            <input {{ Mimoto.input() }} type="text" data-mimoto-form-input-datepicker class="MimotoCMS_forms_input_DatePicker-input" value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-value="{{ date(Mimoto.value())|date(sPHPDateFormat) }}" data-dp-format="{{ sFRDateFormat }}" {% if Mimoto.data('enableTime') %}data-mimoto-form-input-datepicker-enabletime{% endif %}/>
         </div>
 
     {% endblock %}

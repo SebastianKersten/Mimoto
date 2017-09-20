@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "398bbbb0b226d6513456";
+/******/ 	__webpack_require__.h = "0fb665b2dbb2055ba5a3";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -21973,7 +21973,7 @@ module.exports.prototype = {
             altInput: true,
             altFormat: this._elDatePicker.getAttribute('data-dp-format'),
             defaultDate: this._elDatePicker.getAttribute('data-dp-value'),
-            //enableTime: true,
+            enableTime: elInput.hasAttribute('data-mimoto-form-input-datepicker-enabletime'),
             dateFormat: 'Y-m-d H:i:S', // 2017-03-08 21:46:42
             // noCalendar: true, // only diplays time
             time_24hr: true,
