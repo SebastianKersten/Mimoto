@@ -6,8 +6,8 @@
         </div>
         <div class="MimotoCMS_pages_components_ComponentTemplate-menu">
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', icon:'', types:['small', 'alert'], directive:Mimoto.remove() }) }}
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_componenttemplate') }) }}
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditional', icon:'', types:['small', 'primary'], directive:Mimoto.add('conditionals', '_Mimoto_componentconditional') }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_component_template') }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditional', icon:'', types:['small', 'primary'], directive:Mimoto.add('conditionals', '_MIMOTO_COMPONENT_CONDITIONAL') }) }}
         </div>
     </div>
     <div class="MimotoCMS_pages_components_ComponentTemplate-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.hideWhenEmpty('conditionals') }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_components_ComponentDetail-Conditional') }}>

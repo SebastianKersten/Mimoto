@@ -1,6 +1,6 @@
-@import 'LayoutContainer/LayoutContainer';
-@import 'ComponentTemplate/ComponentTemplate';
+@import 'ComponentContainer/ComponentContainer';
 @import 'ComponentConditional/ComponentConditional';
+@import 'ComponentTemplate/ComponentTemplate';
 
 
 div.MimotoCMS_pages_components_ComponentDetail__panel {
@@ -38,7 +38,7 @@ div.MimotoCMS_pages_components_ComponentDetail_Structure__meta {
         font-weight: bold;
     }
 
-    div.MimotoCMS_pages_components_ComponentDetail_Structure__componentfile {
+    div.MimotoCMS_pages_components_ComponentDetail_Structure__componenttype {
         font-style: italic;
         color: $tower-gray;
     }
@@ -65,6 +65,31 @@ div.MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu 
 }
 
 div.MimotoCMS_pages_components_ComponentDetail_Structure__templates {
+
+    &>div {
+        margin-bottom: 5px;
+    }
+
+    &>div:last-child {
+        margin-bottom: 0;
+    }
+
+}
+
+
+div.MimotoCMS_pages_components_ComponentDetail_Structure__containers_empty {
+    text-align: left;
+    font-style: italic;
+    color: $gray;
+    white-space: normal;
+}
+
+div.MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu {
+    padding: 20px 0 10px 0;
+    text-align: left;
+}
+
+div.MimotoCMS_pages_components_ComponentDetail_Structure__containers {
 
     &>div {
         margin-bottom: 5px;

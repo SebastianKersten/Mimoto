@@ -183,8 +183,6 @@ class EntityConfigService
         // 2. read changes
         $aChanges = $entity->getChanges();
 
-        Mimoto::output('$entity', $entity, true);
-
         // 3. check if name was changed
         if (isset($aChanges['name'])) $this->renameEntityTable($entity);
 

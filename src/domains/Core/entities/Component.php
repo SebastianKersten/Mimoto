@@ -55,19 +55,20 @@ class Component
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         ),
+                        //'defaultValue' =>
                         'allowedValues' => array(
                             (object) array(
                                 'label' => 'Component', // replace by translation
-                                'value' => 'component',
+                                'value' => CoreConfig::OUTPUT_TYPE_COMPONENT,
                                 'default' => true
                             ),
                             (object) array(
                                 'label' => 'Layout', // replace by translation
-                                'value' => 'layout'
+                                'value' => CoreConfig::OUTPUT_TYPE_LAYOUT
                             ),
                             (object) array(
                                 'label' => 'Input field', // replace by translation
-                                'value' => 'input'
+                                'value' => CoreConfig::OUTPUT_TYPE_INPUT
                             )
                         )
                     ]
@@ -81,7 +82,25 @@ class Component
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_COMPONENTTEMPLATE]
+                            'value' => [CoreConfig::MIMOTO_COMPONENT_TEMPLATE]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_COMPONENT.'--containers',
+                    // ---
+                    'name' => 'containers',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_COMPONENT_CONTAINER]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -488,15 +507,6 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_components_ComponentOverview_ListItemLayout',
-                'templates' => [
-                    (object) array(
-                        'file' => 'MimotoCMS/components/pages/components/ComponentOverview/ListItemLayout/ListItemLayout.twig',
-                        'conditionals' => []
-                    )
-                ]
-            ),
-            (object) array(
                 'name' => 'MimotoCMS_components_ComponentDetail',
                 'templates' => [
                     (object) array(
@@ -535,10 +545,10 @@ class Component
             ),
 
             (object) array(
-                'name' => 'MimotoCMS_components_LayoutDetail-Container',
+                'name' => 'MimotoCMS_components_ComponentDetail-Container',
                 'templates' => [
                     (object) array(
-                        'file' => 'MimotoCMS/components/pages/components/LayoutDetail/LayoutContainer/LayoutContainer.twig',
+                        'file' => 'MimotoCMS/components/pages/components/ComponentDetail/ComponentContainer/ComponentContainer.twig',
                         'conditionals' => []
                     )
                 ]
@@ -1151,7 +1161,7 @@ class Component
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_COMPONENT);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_COMPONENT, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Component', '', "The key element in presenting data is the 'component'. These are twig files that use Mimoto`s protocol to read and render the data, with the support of realtime updates to any client.");
@@ -1164,10 +1174,10 @@ class Component
         );
         self::setNameValidation($field);
 
+        $form->addValue('fields', self::getField_type());
+
         // send
         return $form;
-
-
     }
 
 
@@ -1209,5 +1219,50 @@ class Component
 //        // send
 //        return $field;
 //    }
+
+
+    /**
+     * Get field: type
+     */
+    private static function getField_type()
+    {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_RADIOBUTTON, CoreConfig::MIMOTO_COMPONENT, 'type');
+        $field->setValue('label', 'Type');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_COMPONENT, 'type');
+
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $option->setId(CoreConfig::MIMOTO_COMPONENT.'--type_value_options-value');
+        $option->setValue('label', 'Component');
+        $option->setValue('value', CoreConfig::OUTPUT_TYPE_COMPONENT);
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $option->setId(CoreConfig::MIMOTO_COMPONENT.'--type_value_options-entity');
+        $option->setValue('label', 'Layout');
+        $option->setValue('value', CoreConfig::OUTPUT_TYPE_LAYOUT);
+        $field->addValue('options', $option);
+
+        $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+        $option->setId(CoreConfig::MIMOTO_COMPONENT.'--type_value_options-collection');
+        $option->setValue('label', 'Input field');
+        $option->setValue('value', CoreConfig::OUTPUT_TYPE_INPUT);
+        $field->addValue('options', $option);
+
+        // validation rule #1
+        $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
+        $validationRule->setId(CoreConfig::MIMOTO_COMPONENT.'--type_value_validation1');
+        $validationRule->setValue('type', 'regex_custom');
+        $validationRule->setValue('value', '^('.CoreConfig::OUTPUT_TYPE_COMPONENT.'|'.CoreConfig::OUTPUT_TYPE_LAYOUT.'|'.CoreConfig::OUTPUT_TYPE_INPUT.')$');
+        $validationRule->setValue('errorMessage', 'Select one of the above types');
+        $validationRule->setValue('trigger', 'submit');
+        $field->addValue('validation', $validationRule);
+
+        // send
+        return $field;
+    }
 
 }

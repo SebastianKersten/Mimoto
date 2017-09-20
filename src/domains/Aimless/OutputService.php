@@ -401,7 +401,7 @@ class OutputService
                 if (empty($eOutput)) return false;
 
 
-                $eLayout = $eOutput->getValue('layout');
+                $eLayout = $eOutput->getValue('component');
                 $eSelection = $eOutput->getValue('selection');
 
 
@@ -513,12 +513,12 @@ class OutputService
 
         // 2. load all components
         $aRawComponents = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_COMPONENT);
-        $aRawTemplates = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_COMPONENTTEMPLATE);
-        $aRawConditionals = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_COMPONENTCONDITIONAL);
+        $aRawTemplates = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_COMPONENT_TEMPLATE);
+        $aRawConditionals = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_COMPONENT_CONDITIONAL);
 
         // 3. load all connections
         $aComponentTemplateConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_COMPONENT);
-        $aTemplateConditionalConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_COMPONENTTEMPLATE);
+        $aTemplateConditionalConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_COMPONENT_TEMPLATE);
 
 
 
@@ -583,7 +583,7 @@ class OutputService
 
                                         if (
                                             $rawConditional->type == ComponentConditional::ENTITY_TYPE &&
-                                            $rawConditionalConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityType'
+                                            $rawConditionalConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENT_CONDITIONAL.'--entityType'
                                         ) {
                                             // setup
                                             $conditional->entityName = Mimoto::service('config')->getEntityNameById($rawConditionalConnection->child_id);
@@ -592,7 +592,7 @@ class OutputService
 
                                         if (
                                             $rawConditional->type == ComponentConditional::PROPERTY_VALUE &&
-                                            $rawConditionalConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENTCONDITIONAL.'--entityProperty'
+                                            $rawConditionalConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENT_CONDITIONAL.'--entityProperty'
                                         ) {
 
                                             // setup

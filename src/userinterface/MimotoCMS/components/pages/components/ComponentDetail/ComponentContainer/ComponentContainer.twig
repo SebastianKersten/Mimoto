@@ -1,0 +1,12 @@
+<div class="MimotoCMS_pages_components_ComponentDetail_ComponentContainer" {{ Mimoto.realtime() }}>
+
+    <div class="MimotoCMS_pages_components_ComponentDetail_ComponentContainer-data">
+        <div class="MimotoCMS_pages_components_ComponentDetail_ComponentContainer-name">
+            <div {{ Mimoto.realtime('name') }} >{{ Mimoto.data('name') }}</div>
+        </div>
+    </div>
+    <div class="MimotoCMS_pages_components_ComponentDetail_ComponentContainer-menu">
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_component_container') }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() }) }}
+    </div>
+</div>

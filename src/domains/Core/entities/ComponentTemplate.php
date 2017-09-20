@@ -22,14 +22,14 @@ class ComponentTemplate
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_COMPONENTTEMPLATE,
+            'id' => CoreConfig::MIMOTO_COMPONENT_TEMPLATE,
             // ---
-            'name' => CoreConfig::MIMOTO_COMPONENTTEMPLATE,
+            'name' => CoreConfig::MIMOTO_COMPONENT_TEMPLATE,
             'extends' => null,
-            'forms' => [CoreConfig::MIMOTO_COMPONENTTEMPLATE],
+            'forms' => [CoreConfig::MIMOTO_COMPONENT_TEMPLATE],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENTTEMPLATE.'--file',
+                    'id' => CoreConfig::MIMOTO_COMPONENT_TEMPLATE.'--file',
                     // ---
                     'name' => 'file',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -42,7 +42,7 @@ class ComponentTemplate
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENTTEMPLATE.'--conditionals',
+                    'id' => CoreConfig::MIMOTO_COMPONENT_TEMPLATE.'--conditionals',
                     // ---
                     'name' => 'conditionals',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
@@ -50,7 +50,7 @@ class ComponentTemplate
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_COMPONENTCONDITIONAL]
+                            'value' => [CoreConfig::MIMOTO_COMPONENT_CONDITIONAL]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -82,12 +82,12 @@ class ComponentTemplate
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_COMPONENTTEMPLATE,
-            'name' => CoreConfig::MIMOTO_COMPONENTTEMPLATE,
+            'id' => CoreConfig::MIMOTO_COMPONENT_TEMPLATE,
+            'name' => CoreConfig::MIMOTO_COMPONENT_TEMPLATE,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_COMPONENTTEMPLATE, 'file'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_COMPONENTTEMPLATE, 'conditionals')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_COMPONENT_TEMPLATE, 'file'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_COMPONENT_TEMPLATE, 'conditionals')
             ]
         );
     }
@@ -98,7 +98,7 @@ class ComponentTemplate
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_COMPONENTTEMPLATE);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_COMPONENT_TEMPLATE);
 
         // setup
         CoreFormUtils::addField_title($form, 'Component', '', "The key element in presenting data is the 'component'. These are twig files that use the Aimless protocol to read and render the data, with the support of realtime updates to any client.");
@@ -107,7 +107,7 @@ class ComponentTemplate
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'file', CoreConfig::MIMOTO_COMPONENTTEMPLATE.'--file',
+            $form, 'file', CoreConfig::MIMOTO_COMPONENT_TEMPLATE.'--file',
             'Twig file', 'your_template_file.twig', '', Mimoto::value('ProjectConfig.twigroot')
         );
         self::setFileValidation($field);
@@ -134,7 +134,7 @@ class ComponentTemplate
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
-        $validationRule->setId(CoreConfig::MIMOTO_COMPONENTTEMPLATE.'--file_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_COMPONENT_TEMPLATE.'--file_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");

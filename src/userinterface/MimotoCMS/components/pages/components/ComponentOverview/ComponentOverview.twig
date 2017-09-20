@@ -17,8 +17,8 @@
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new component', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component') }) }}
             </div>
 
-            <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components', 'MimotoCMS_components_ComponentOverview_ListItem') }}>
-                {{ Mimoto.data('components', 'MimotoCMS_components_ComponentOverview_ListItem') }}
+            <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components.{type=component}', 'MimotoCMS_components_ComponentOverview_ListItem') }}>
+                {{ Mimoto.data('components.{type=component}', 'MimotoCMS_components_ComponentOverview_ListItem') }}
             </div>
 
         </div>
@@ -26,18 +26,24 @@
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 
             <div class="MimotoCMS_modules_Tabmenu-panel-menu">
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('layouts', '_Mimoto_layout') }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component') }) }}
             </div>
 
-            <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('layouts', 'MimotoCMS_components_ComponentOverview_ListItemLayout') }}>
-                {{ Mimoto.data('layouts', 'MimotoCMS_components_ComponentOverview_ListItemLayout') }}
+            <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components.{type=layout}', 'MimotoCMS_components_ComponentOverview_ListItem') }}>
+                {{ Mimoto.data('components.{type=layout}', 'MimotoCMS_components_ComponentOverview_ListItem') }}
             </div>
 
         </div>
 
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 
-            Support for custom input fields coming soon ..
+            <div class="MimotoCMS_modules_Tabmenu-panel-menu">
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component') }) }}
+            </div>
+
+            <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components.{type=input}', 'MimotoCMS_components_ComponentOverview_ListItem') }}>
+                {{ Mimoto.data('components.{type=input}', 'MimotoCMS_components_ComponentOverview_ListItem') }}
+            </div>
 
         </div>
 

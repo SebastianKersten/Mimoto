@@ -70,25 +70,4 @@ class ComponentController
         return $page->render();
     }
 
-    public function layoutView(Application $app, $nLayoutId)
-    {
-        // 1. init popup
-        $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
-
-        // 2. load data
-        $eLayout = Mimoto::service('data')->get(CoreConfig::MIMOTO_LAYOUT, $nLayoutId);
-
-        // 3. validate data
-        if (empty($eLayout)) return $app->redirect("/mimoto.cms/components");
-
-        // 4. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_components_LayoutDetail', $eLayout);
-
-        // 6. connect
-        $page->addComponent('content', $component);
-
-        // 7. output
-        return $page->render();
-    }
-
 }

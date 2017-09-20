@@ -273,12 +273,12 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/page/create', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::createPageFromNonExistingPath')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
 
-        // Layout
-        $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::layoutView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-
-        $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/layoutcontainer/new', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/layoutcontainer/{nLayoutContainerId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/layoutcontainer/{nLayoutContainerId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+//        // Layout
+//        $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::layoutView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+//
+//        $app->get ('/'.$sProjectName.'.cms/layout/{nLayoutId}/layoutcontainer/new', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+//        $app->get ('/'.$sProjectName.'.cms/layoutcontainer/{nLayoutContainerId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+//        $app->get ('/'.$sProjectName.'.cms/layoutcontainer/{nLayoutContainerId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\LayoutController::layoutContainerDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         // Content
         $app->get ('/'.$sProjectName.'.cms/datasets', 'Mimoto\\UserInterface\\MimotoCMS\\DatasetController::viewDatasetOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');

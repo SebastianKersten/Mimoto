@@ -15,8 +15,7 @@ use Mimoto\Core\entities\FormattingOptionAttribute;
 use Mimoto\Core\entities\Component;
 use Mimoto\Core\entities\ComponentTemplate;
 use Mimoto\Core\entities\ComponentConditional;
-use Mimoto\Core\entities\Layout;
-use Mimoto\Core\entities\LayoutContainer;
+use Mimoto\Core\entities\ComponentContainer;
 use Mimoto\Core\entities\File;
 use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
@@ -85,10 +84,9 @@ class CoreConfig
 
     // views
     const MIMOTO_COMPONENT                      = '_Mimoto_component';
-    const MIMOTO_COMPONENTTEMPLATE              = '_Mimoto_componenttemplate';
-    const MIMOTO_COMPONENTCONDITIONAL           = '_Mimoto_componentconditional';
-    const MIMOTO_LAYOUT                         = '_Mimoto_layout';
-    const MIMOTO_LAYOUTCONTAINER                = '_Mimoto_layoutcontainer';
+    const MIMOTO_COMPONENT_CONDITIONAL          = '_Mimoto_component_conditional';
+    const MIMOTO_COMPONENT_CONTAINER            = '_Mimoto_component_container';
+    const MIMOTO_COMPONENT_TEMPLATE             = '_Mimoto_component_template';
 
     // text
     const MIMOTO_FORMATTINGOPTION               = '_Mimoto_formattingoption';
@@ -173,6 +171,9 @@ class CoreConfig
     const INPUTVALUE_VARTYPE_VARNAME        = 'varname';
     const INPUTVALUE_VARTYPE_ENTITYPROPERTY = 'entityproperty';
 
+    const OUTPUT_TYPE_COMPONENT = 'component';
+    const OUTPUT_TYPE_LAYOUT    = 'layout';
+    const OUTPUT_TYPE_INPUT     = 'input';
 
     // core forms
     const COREFORM_ENTITY               = '_Mimoto_coreform__entity';
@@ -186,9 +187,6 @@ class CoreConfig
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWEDENTITYTYPES  = '_Mimoto_coreform__entityPropertySetting_value_allowedEntityTypes';
     const COREFORM_ENTITYPROPERTYSETTING_COLLECTION_ALLOWDUPLICATES     = '_Mimoto_coreform__entityPropertySetting_collection_allowDuplicates';
 
-
-    const COREFORM_LAYOUT                       = '_Mimoto_coreform__layout';
-    const COREFORM_LAYOUTCONTAINER              = '_Mimoto_coreform__layoutContainer';
 
     const COREFORM_FORM                         = '_Mimoto_coreform__form';
     const COREFORM_INPUTOPTION                  = '_Mimoto_coreform_form_inputoption';
@@ -257,12 +255,12 @@ class CoreConfig
 
             // views
             Component::getStructure(),
-            ComponentTemplate::getStructure(),
             ComponentConditional::getStructure(),
+            ComponentContainer::getStructure(),
+            ComponentTemplate::getStructure(),
 
             // views
-            Layout::getStructure(),
-            LayoutContainer::getStructure(),
+
 
             // formatting
             FormattingOption::getStructure(),
@@ -338,12 +336,9 @@ class CoreConfig
 
             // views
             Component::getFormStructure(),
-            ComponentTemplate::getFormStructure(),
             ComponentConditional::getFormStructure(),
-
-            // views
-            Layout::getFormStructure(),
-            LayoutContainer::getFormStructure(),
+            ComponentContainer::getFormStructure(),
+            ComponentTemplate::getFormStructure(),
 
             // formatting
             FormattingOption::getFormStructure(),
@@ -533,7 +528,8 @@ class CoreConfig
                 'label' => 'xxx',
                 'rules' => [
                     (object)array(
-                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_LAYOUT
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_COMPONENT,
+                        // values
                     )
                 ]
             ),

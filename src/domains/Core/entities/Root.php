@@ -170,24 +170,6 @@ class Root
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ROOT.'--layouts',
-                    // ---
-                    'name' => 'layouts',
-                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
-                    'settings' => [
-                        'allowedEntityTypes' => (object) array(
-                            'key' => 'allowedEntityTypes',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_LAYOUT]
-                        ),
-                        'allowDuplicates' => (object) array(
-                            'key' => 'allowDuplicates',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => CoreConfig::DATA_VALUE_FALSE
-                        )
-                    ]
-                ),
-                (object) array(
                     'id' => CoreConfig::MIMOTO_ROOT.'--datasets',
                     // ---
                     'name' => 'datasets',

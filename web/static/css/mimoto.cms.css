@@ -3786,7 +3786,7 @@ div.MimotoCMS_pages_users_Overview-container {
     margin-bottom: 5px;
     margin-right: 5px; }
 
-div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer {
+div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -3800,12 +3800,12 @@ div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer {
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
   background-color: #f5f5f5; }
-  div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer > div {
+  div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer > div {
     overflow: hidden; }
-  div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer > div:last-child {
+  div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer > div:last-child {
     text-align: right;
     padding-right: 0; }
-  div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data {
+  div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-data {
     -webkit-box-flex: 10;
     -webkit-flex-grow: 10;
         -ms-flex-positive: 10;
@@ -3823,7 +3823,7 @@ div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer {
         -ms-flex-wrap: wrap;
             flex-wrap: wrap;
     width: 80%; }
-    div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__name {
+    div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-data div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-name {
       -webkit-box-flex: 2;
       -webkit-flex-grow: 2;
           -ms-flex-positive: 2;
@@ -3832,12 +3832,12 @@ div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer {
       vertical-align: top;
       color: #000000;
       width: 28%; }
-      div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__name > a {
+      div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-data div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-name > a {
         text-decoration: none;
         color: #ffffff; }
-      div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__name > a:hover {
+      div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-data div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-name > a:hover {
         text-decoration: underline; }
-    div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__type {
+    div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-data div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-type {
       -webkit-box-flex: 0;
       -webkit-flex-grow: 0;
           -ms-flex-positive: 0;
@@ -3847,7 +3847,7 @@ div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer {
       background-color: #f5f5f5;
       color: #000000;
       width: 17%; }
-  div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__menu {
+  div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer div.MimotoCMS_pages_components_ComponentDetail_ComponentContainer-menu {
     white-space: nowrap;
     padding: 5px;
     -webkit-box-flex: 1;
@@ -3856,61 +3856,6 @@ div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer {
             flex-grow: 1;
     width: 20%;
     text-align: right; }
-
-div.MimotoCMS_pages_components_ComponentTemplate {
-  background-color: #f5f5f5;
-  padding: 3px; }
-
-div.MimotoCMS_pages_components_ComponentTemplate-infocontainer {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 15px 15px 15px 15px; }
-
-div.MimotoCMS_pages_components_ComponentTemplate-info {
-  -webkit-box-flex: 1;
-  -webkit-flex: auto;
-      -ms-flex: auto;
-          flex: auto; }
-
-div.MimotoCMS_pages_components_ComponentTemplate-fileName.empty {
-  font-style: italic;
-  color: #9dbab7; }
-
-div.MimotoCMS_pages_components_ComponentTemplate-menu {
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-      -ms-flex: none;
-          flex: none;
-  text-align: right; }
-
-div.MimotoCMS_pages_components_ComponentTemplate-menu-handle {
-  padding-top: 6px;
-  padding-right: 3px;
-  margin-left: 17px; }
-
-div.MimotoCMS_pages_components_ComponentTemplate-conditionals {
-  padding: 1px;
-  background-color: #ffffff; }
-  div.MimotoCMS_pages_components_ComponentTemplate-conditionals > div {
-    margin-bottom: 1px;
-    margin-left: 5px;
-    padding-left: 20px; }
-  div.MimotoCMS_pages_components_ComponentTemplate-conditionals > div:last-child {
-    margin-bottom: 0; }
 
 div.MimotoCMS_pages_components_ComponentConditional {
   display: -webkit-box;
@@ -3991,6 +3936,61 @@ div.MimotoCMS_pages_components_ComponentConditional {
     width: 5%;
     display: inline-block; }
 
+div.MimotoCMS_pages_components_ComponentTemplate {
+  background-color: #f5f5f5;
+  padding: 3px; }
+
+div.MimotoCMS_pages_components_ComponentTemplate-infocontainer {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 15px 15px 15px 15px; }
+
+div.MimotoCMS_pages_components_ComponentTemplate-info {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto; }
+
+div.MimotoCMS_pages_components_ComponentTemplate-fileName.empty {
+  font-style: italic;
+  color: #9dbab7; }
+
+div.MimotoCMS_pages_components_ComponentTemplate-menu {
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  text-align: right; }
+
+div.MimotoCMS_pages_components_ComponentTemplate-menu-handle {
+  padding-top: 6px;
+  padding-right: 3px;
+  margin-left: 17px; }
+
+div.MimotoCMS_pages_components_ComponentTemplate-conditionals {
+  padding: 1px;
+  background-color: #ffffff; }
+  div.MimotoCMS_pages_components_ComponentTemplate-conditionals > div {
+    margin-bottom: 1px;
+    margin-left: 5px;
+    padding-left: 20px; }
+  div.MimotoCMS_pages_components_ComponentTemplate-conditionals > div:last-child {
+    margin-bottom: 0; }
+
 div.MimotoCMS_pages_components_ComponentDetail__panel {
   margin-bottom: 25px;
   background-color: #ffffff;
@@ -4027,7 +4027,7 @@ div.MimotoCMS_pages_components_ComponentDetail_Structure__meta {
   div.MimotoCMS_pages_components_ComponentDetail_Structure__meta div.MimotoCMS_pages_components_ComponentDetail_Structure__layoutname {
     font-size: 24px;
     font-weight: bold; }
-  div.MimotoCMS_pages_components_ComponentDetail_Structure__meta div.MimotoCMS_pages_components_ComponentDetail_Structure__componentfile {
+  div.MimotoCMS_pages_components_ComponentDetail_Structure__meta div.MimotoCMS_pages_components_ComponentDetail_Structure__componenttype {
     font-style: italic;
     color: #9dbab7; }
 
@@ -4051,137 +4051,20 @@ div.MimotoCMS_pages_components_ComponentDetail_Structure__templates > div {
 div.MimotoCMS_pages_components_ComponentDetail_Structure__templates > div:last-child {
   margin-bottom: 0; }
 
-div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  background-color: #f5f5f5; }
-  div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer > div {
-    overflow: hidden; }
-  div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer > div:last-child {
-    text-align: right;
-    padding-right: 0; }
-  div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data {
-    -webkit-box-flex: 10;
-    -webkit-flex-grow: 10;
-        -ms-flex-positive: 10;
-            flex-grow: 10;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-flex-wrap: wrap;
-        -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-    width: 80%; }
-    div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__name {
-      -webkit-box-flex: 2;
-      -webkit-flex-grow: 2;
-          -ms-flex-positive: 2;
-              flex-grow: 2;
-      padding: 7px 10px 4px 10px;
-      vertical-align: top;
-      color: #000000;
-      width: 28%; }
-      div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__name > a {
-        text-decoration: none;
-        color: #ffffff; }
-      div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__name > a:hover {
-        text-decoration: underline; }
-    div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__data div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__type {
-      -webkit-box-flex: 0;
-      -webkit-flex-grow: 0;
-          -ms-flex-positive: 0;
-              flex-grow: 0;
-      padding: 3px 10px 4px 10px;
-      vertical-align: top;
-      background-color: #f5f5f5;
-      color: #000000;
-      width: 17%; }
-  div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer div.MimotoCMS_pages_layouts_LayoutDetail-LayoutContainer__menu {
-    white-space: nowrap;
-    padding: 5px;
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-    width: 20%;
-    text-align: right; }
-
-div.MimotoCMS_pages_components_LayoutDetail__panel {
-  margin-bottom: 25px;
-  background-color: #ffffff;
-  padding: 15px;
-  max-width: 800px; }
-
-div.MimotoCMS_pages_components_LayoutDetail_Structure {
-  position: relative;
-  background-color: #ffffff; }
-
-div.MimotoCMS_pages_components_LayoutDetail_Structure__meta {
-  padding: 10px 15px 15px 15px;
-  margin-bottom: 5px;
-  background-color: #fcfcfc;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-      -ms-flex-wrap: nowrap;
-          flex-wrap: nowrap; }
-  div.MimotoCMS_pages_components_LayoutDetail_Structure__meta a {
-    color: #9dbab7; }
-  div.MimotoCMS_pages_components_LayoutDetail_Structure__meta > div.MimotoCMS_pages_components_LayoutDetail_Structure__meta_info {
-    -webkit-box-flex: 5;
-    -webkit-flex-grow: 5;
-        -ms-flex-positive: 5;
-            flex-grow: 5; }
-  div.MimotoCMS_pages_components_LayoutDetail_Structure__meta > div.MimotoCMS_pages_components_LayoutDetail_Structure__meta_menu {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
-    text-align: right;
-    padding-top: 5px; }
-  div.MimotoCMS_pages_components_LayoutDetail_Structure__meta div.MimotoCMS_pages_components_LayoutDetail_Structure__layoutname {
-    font-size: 24px;
-    font-weight: bold; }
-  div.MimotoCMS_pages_components_LayoutDetail_Structure__meta div.MimotoCMS_pages_components_LayoutDetail_Structure__layoutfile {
-    font-style: italic;
-    color: #9dbab7; }
-
-div.MimotoCMS_pages_components_LayoutDetail__block {
-  padding: 15px 15px 10px 15px;
-  background-color: #fcfcfc; }
-
-div.MimotoCMS_pages_components_LayoutDetail_Structure__containers_empty {
+div.MimotoCMS_pages_components_ComponentDetail_Structure__containers_empty {
   text-align: left;
   font-style: italic;
   color: #818181;
   white-space: normal; }
 
-div.MimotoCMS_pages_components_LayoutDetail_Structure__layoutcontainers_menu {
+div.MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu {
   padding: 20px 0 10px 0;
   text-align: left; }
 
-div.MimotoCMS_pages_components_LayoutDetail_Structure__containers > div {
+div.MimotoCMS_pages_components_ComponentDetail_Structure__containers > div {
   margin-bottom: 5px; }
 
-div.MimotoCMS_pages_components_LayoutDetail_Structure__containers > div:last-child {
+div.MimotoCMS_pages_components_ComponentDetail_Structure__containers > div:last-child {
   margin-bottom: 0; }
 
 div.MimotoCMS_pages_content_ContentOverview-container {

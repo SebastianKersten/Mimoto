@@ -7,32 +7,31 @@ namespace Mimoto\Core\entities;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
-use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * User
+ * LayoutContainer
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class UserRole
+class ComponentContainer
 {
-
+    
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_USER_ROLE,
+            'id' => CoreConfig::MIMOTO_COMPONENT_CONTAINER,
             // ---
-            'name' => CoreConfig::MIMOTO_USER_ROLE,
+            'name' => CoreConfig::MIMOTO_COMPONENT_CONTAINER,
             'extends' => null,
-            'forms' => [CoreConfig::MIMOTO_USER_ROLE],
+            'forms' => [CoreConfig::MIMOTO_COMPONENT_CONTAINER],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_USER_ROLE.'--name',
+                    'id' => CoreConfig::MIMOTO_COMPONENT_CONTAINER.'--name',
                     // ---
                     'name' => 'name',
-                    'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
                             'key' => 'type',
@@ -45,20 +44,9 @@ class UserRole
         );
     }
 
-
-    public static function getData($sItemId)
+    public static function getData()
     {
-        // init
-        $aData = [];
 
-        // inline
-        $aData[CoreConfig::MIMOTO_USER_ROLE.'-owner'] = (object) array('name' => 'owner');
-        $aData[CoreConfig::MIMOTO_USER_ROLE.'-superuser'] = (object) array('name' => 'superuser');
-        $aData[CoreConfig::MIMOTO_USER_ROLE.'-admin'] = (object) array('name' => 'admin');
-        $aData[CoreConfig::MIMOTO_USER_ROLE.'-contenteditor'] = (object) array('name' => 'contenteditor');
-
-        // send
-        return $aData[$sItemId];
     }
 
 
@@ -74,14 +62,15 @@ class UserRole
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_USER_ROLE,
-            'name' => CoreConfig::MIMOTO_USER_ROLE,
+            'id' => CoreConfig::MIMOTO_COMPONENT_CONTAINER,
+            'name' => CoreConfig::MIMOTO_COMPONENT_CONTAINER,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_USER_ROLE, 'name'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_COMPONENT_CONTAINER, 'name')
             ]
         );
     }
+
 
     /**
      * Get form
@@ -89,19 +78,13 @@ class UserRole
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_USER_ROLE, true);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_COMPONENT_CONTAINER, true);
 
         // setup
-        CoreFormUtils::addField_title($form, 'User role', '', "");
+        CoreFormUtils::addField_title($form, 'Container', 'Use containers to setup layouts with which you can buid pages.');
+
         CoreFormUtils::addField_groupStart($form);
-
-        $field = CoreFormUtils::addField_textline
-        (
-            $form, 'name', CoreConfig::MIMOTO_USER_ROLE.'--name',
-            'Name', "The role's name", ''
-        );
-        self::setNameValidation($field);
-
+        $form->addValue('fields', $field = self::getField_name());
         CoreFormUtils::addField_groupEnd($form);
 
         // send
@@ -117,16 +100,24 @@ class UserRole
 
 
     /**
-     * Set name validation
+     * Get field: type
      */
-    private static function setNameValidation($field)
+    private static function getField_name()
     {
+        // 1. create and setup field
+        $field = CoreFormUtils::createField(CoreConfig::MIMOTO_FORM_INPUT_TEXTLINE, CoreConfig::MIMOTO_COMPONENT_CONTAINER, 'name');
+        $field->setValue('label', 'Name');
+
+        // 2. connect value
+        $field = CoreFormUtils::addValueToField($field, CoreConfig::MIMOTO_COMPONENT_CONTAINER, 'name');
+
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
-        $validationRule->setId(CoreConfig::MIMOTO_USER_ROLE.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_COMPONENT_CONTAINER.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
-        $validationRule->setValue('value', 1);
-        $validationRule->setValue('errorMessage', "Value can't be empty");
+        $validationRule->setValue('value', '1');
+        $validationRule->setValue('errorMessage', "Please enter the container's name");
+        $validationRule->setValue('trigger', 'submit');
         $field->addValue('validation', $validationRule);
 
         // send

@@ -1,22 +1,22 @@
 <div class="MimotoCMS_pages_pages_Detail_Output" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
 
     <div class="MimotoCMS_pages_pages_Detail_Output-setting">
-        <div class="MimotoCMS_pages_pages_Detail_Output-setting-info" {{ Mimoto.showWhenEmpty('layout') }}>
+        <div class="MimotoCMS_pages_pages_Detail_Output-setting-info" {{ Mimoto.showWhenEmpty('component') }}>
             Please select a layout or component
         </div>
 
-        <div {{ Mimoto.hideWhenEmpty('layout') }}>
+        <div {{ Mimoto.hideWhenEmpty('component') }}>
 
-            Layout or component = <span {{ Mimoto.realtime('layout.name') }}>{{ Mimoto.data('layout.name') }}</span>
+            <span {{ Mimoto.realtime('component.type') }}>{{ Mimoto.data('component.type') }}</span> or component = <span {{ Mimoto.realtime('component.name') }}>{{ Mimoto.data('component.name') }}</span>
         </div>
         <div class="MimotoCMS_pages_pages_Detail_Output-setting-menu">
 
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select', directive:Mimoto.select('layout', '_Mimoto_all_layouts') }) }}
-            <div {{ Mimoto.hideWhenEmpty('layout') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['alert'], directive:Mimoto.clear('layout') }) }}</div>
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select', directive:Mimoto.select('component', '_Mimoto_all_layouts') }) }}
+            <div {{ Mimoto.hideWhenEmpty('component') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['alert'], directive:Mimoto.clear('component') }) }}</div>
         </div>
     </div>
 
-    <div class="MimotoCMS_pages_pages_Detail_Output-setting" {{ Mimoto.hideWhenEmpty('layout') }}>
+    <div class="MimotoCMS_pages_pages_Detail_Output-setting" {{ Mimoto.hideWhenEmpty('component') }}>
         <div class="MimotoCMS_pages_pages_Detail_Output-setting-info MimotoCMS_pages_pages_Detail_Output-setting-info-empty" {{ Mimoto.showWhenEmpty('selection') }}>
             Optional: Add data ..
         </div>
@@ -34,7 +34,7 @@
 
     {#include as module here ...#}
 
-    <div class="MimotoCMS_pages_pages_Detail_Output-containers" {{ Mimoto.hideWhenEmpty('layout') }}>
+    <div class="MimotoCMS_pages_pages_Detail_Output-containers" {{ Mimoto.hideWhenEmpty('component') }}>
 
         <div class="MimotoCMS_pages_pages_Detail_Output-containers-header">
             <div class="MimotoCMS_pages_pages_Detail_Output-containers-label">Containers</div>

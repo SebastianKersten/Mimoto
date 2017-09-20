@@ -16,6 +16,7 @@
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_info">
 
                         <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componenttype" {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</div>
 
                     </div>
 
@@ -40,7 +41,25 @@
                 </div>
 
                 <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu">
-                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add template', icon:'plus', directive:Mimoto.add('templates', '_Mimoto_componenttemplate') }) }}
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add template', icon:'plus', directive:Mimoto.add('templates', '_Mimoto_component_template') }) }}
+                </div>
+
+            </div>
+
+            <div class="MimotoCMS_pages_components_ComponentDetail__block">
+
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__containers_empty" {{ Mimoto.showWhenEmpty('containers') }}>
+                    <div>This component has no containers yet. You could use this layout but without containers it sort of defies the purpose and makes it more like a component.</div>
+                </div>
+
+                <div {{ Mimoto.hideWhenEmpty('containers') }}>
+                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__containers" {{ Mimoto.realtime('containers', 'MimotoCMS_components_ComponentDetail-Container') }}>
+                        {{ Mimoto.data('containers', 'MimotoCMS_components_ComponentDetail-Container') }}
+                    </div>
+                </div>
+
+                <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutcontainers_menu">
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add container', icon:'plus', directive:Mimoto.add('containers', '_Mimoto_component_container') }) }}
                 </div>
 
             </div>

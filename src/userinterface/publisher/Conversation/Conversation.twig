@@ -2,11 +2,11 @@
 
     <h1>Bijdragen</h1>
 
-    <div {{ Mimoto.showWhenEmpty('comments') }} class="MimotoPublisher_Conversation-comments-container-empty">
+    <div {{ Mimoto.showWhenEmpty('comments') }} class="MimotoPublisher_Conversation-comments-container-empty {{ Mimoto.init() }}">
         Er zijn nog geen bijdragen. Vertel als eerste jouw kijk op dit stuk ..
     </div>
 
-    <div {{ Mimoto.hideWhenEmpty('comments') }} class="MimotoPublisher_Conversation-comments-container" {{ Mimoto.realtime('comments', 'Comment') }}>
+    <div {{ Mimoto.hideWhenEmpty('comments') }} class="MimotoPublisher_Conversation-comments-container  {{ Mimoto.init() }}" {{ Mimoto.realtime('comments', 'Comment') }}>
         {{ Mimoto.data('comments', 'Comment') }}
     </div>
 
