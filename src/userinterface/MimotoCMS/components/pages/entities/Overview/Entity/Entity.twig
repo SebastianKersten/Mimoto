@@ -11,7 +11,7 @@
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'View', link:'/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/view', types:['secondary'], icon:'' }) }}
 
         <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">
-            <div class="MimotoCMS_entities_overview_Entity-sorthandle js-sortable-draghandle">
+            <div class="MimotoCMS_entities_overview_Entity-sorthandle {{ Mimoto.sortHandle() }}">
                 <div class="MimotoCMS_entities_overview_Entity-sorthandledot"></div>
                 <div class="MimotoCMS_entities_overview_Entity-sorthandledot"></div>
                 <div class="MimotoCMS_entities_overview_Entity-sorthandledot"></div>

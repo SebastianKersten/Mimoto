@@ -1,5 +1,5 @@
 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add custom formatting option', icon:'plus', directive:Mimoto.add('formattingOptions', '_Mimoto_formattingoption') }) }}
 
-<ul class="MimotoCMS_pages_formattingoptions_Overview__container js-list js-list-sortable" {{ Mimoto.realtime('formattingOptions', 'MimotoCMS_formattingoptions_Overview_ListItem') }}>
+<ul class="MimotoCMS_pages_formattingoptions_Overview__container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('formattingOptions', 'MimotoCMS_formattingoptions_Overview_ListItem') }}>
     {{ Mimoto.data('formattingOptions', 'MimotoCMS_formattingoptions_Overview_ListItem') }}
 </ul>

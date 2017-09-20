@@ -13,6 +13,7 @@ let CollectionRemoveItems = require('./data/CollectionRemoveItems');
 let CollectionChangeSortOrder = require('./data/CollectionChangeSortOrder');
 let EntitySetItem = require('./data/EntitySetItem');
 let EntityUnsetItem = require('./data/EntityUnsetItem');
+let SortableCollection = require('./data/SortableCollection');
 
 // Mimoto input classes
 let Form = require('../../../../MimotoCMS/components/forms/Form');
@@ -70,13 +71,14 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_ID:         'data-mimoto-id',
 
     // data manipulation directives
-    DIRECTIVE_MIMOTO_DATA_EDIT:    'data-mimoto-edit',
-    DIRECTIVE_MIMOTO_DATA_ADD:     'data-mimoto-add',
-    DIRECTIVE_MIMOTO_DATA_REMOVE:  'data-mimoto-remove',
-    DIRECTIVE_MIMOTO_DATA_SELECT:  'data-mimoto-select',
-    DIRECTIVE_MIMOTO_DATA_SET:     'data-mimoto-set',
-    DIRECTIVE_MIMOTO_DATA_CREATE:  'data-mimoto-create',
-    DIRECTIVE_MIMOTO_DATA_CLEAR:   'data-mimoto-clear',
+    DIRECTIVE_MIMOTO_DATA_EDIT:     'data-mimoto-edit',
+    DIRECTIVE_MIMOTO_DATA_ADD:      'data-mimoto-add',
+    DIRECTIVE_MIMOTO_DATA_REMOVE:   'data-mimoto-remove',
+    DIRECTIVE_MIMOTO_DATA_SELECT:   'data-mimoto-select',
+    DIRECTIVE_MIMOTO_DATA_SET:      'data-mimoto-set',
+    DIRECTIVE_MIMOTO_DATA_CREATE:   'data-mimoto-create',
+    DIRECTIVE_MIMOTO_DATA_CLEAR:    'data-mimoto-clear',
+    DIRECTIVE_MIMOTO_DATA_SORTABLE: 'data-mimoto-sortable',
 
     // input directives
     DIRECTIVE_MIMOTO_FORM:        'data-mimoto-form',
@@ -342,6 +344,7 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DATA_SET,
             this.DIRECTIVE_MIMOTO_DATA_CREATE,
             this.DIRECTIVE_MIMOTO_DATA_CLEAR,
+            this.DIRECTIVE_MIMOTO_DATA_SORTABLE,
 
             // intput directives
             this.DIRECTIVE_MIMOTO_FORM,
@@ -676,6 +679,10 @@ module.exports.prototype = {
 
                         break;
 
+                    case this.DIRECTIVE_MIMOTO_DATA_SORTABLE:
+
+                        directive.sortableCollection = new SortableCollection(directive);
+                        break;
 
 
                     // --- input directives

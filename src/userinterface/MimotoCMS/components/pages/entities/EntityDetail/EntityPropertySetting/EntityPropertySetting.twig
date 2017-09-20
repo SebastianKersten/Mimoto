@@ -52,7 +52,7 @@
         </div>
         <div {{ Mimoto.hideWhenEmpty('formattingOptions') }}>
             [
-            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__formattingOptions js-list js-list-sortable" {{ Mimoto.realtime('formattingOptions', 'MimotoCMS_entities_EntityDetail-EntityPropertySettingFormattingOption') }}>
+            <div class="MimotoCMS_pages_entities_EntityDetail-EntityPropertySetting__formattingOptions" {{ Mimoto.sortable() }} {{ Mimoto.realtime('formattingOptions', 'MimotoCMS_entities_EntityDetail-EntityPropertySettingFormattingOption') }}>
                 {{ Mimoto.data('formattingOptions', 'MimotoCMS_entities_EntityDetail-EntityPropertySettingFormattingOption') }}
             </div>
             ]

@@ -2017,6 +2017,14 @@ div.MimotoCMS_modules_Tabmenu-panel-menu {
   margin-bottom: 20px;
   text-align: right; }
 
+div.MimotoCMS_modules_Tabmenu-container {
+  background-color: #f5f5f5;
+  padding: 1px; }
+  div.MimotoCMS_modules_Tabmenu-container > div {
+    margin-bottom: 1px; }
+  div.MimotoCMS_modules_Tabmenu-container > div:last-child {
+    margin-bottom: 0; }
+
 div.MimotoCMS_modules_List-container {
   margin-top: 25px; }
   div.MimotoCMS_modules_List-container > div {
@@ -5613,10 +5621,10 @@ li.MimotoCMS_forms_input_ListItem {
       -ms-flex-align: center;
           align-items: center; }
 
-li.MimotoCMS_forms_input_ListItem--drag {
+.MimotoCMS_forms_input_ListItem--drag {
   background-color: #fff; }
 
-li.MimotoCMS_forms_input_ListItem--ghost {
+.MimotoCMS_forms_input_ListItem--ghost {
   opacity: 0; }
 
 figure.MimotoCMS_forms_input_ListItem-figure {
@@ -5705,10 +5713,10 @@ li.MimotoCMS_forms_input_ListItem {
       -ms-flex-align: center;
           align-items: center; }
 
-li.MimotoCMS_forms_input_ListItem--drag {
+.MimotoCMS_forms_input_ListItem--drag {
   background-color: #fff; }
 
-li.MimotoCMS_forms_input_ListItem--ghost {
+.MimotoCMS_forms_input_ListItem--ghost {
   opacity: 0; }
 
 figure.MimotoCMS_forms_input_ListItem-figure {

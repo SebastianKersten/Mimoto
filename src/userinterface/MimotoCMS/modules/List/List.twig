@@ -2,7 +2,7 @@
 
     {{ Mimoto.module('MimotoCMS_modules_Button', { label:button_label|default(''), icon:button_icon|default(''), directive:button_directive|default('') }) }}
 
-    <div class="MimotoCMS_modules_List-container js-list js-list-sortable" {{ Mimoto.realtime(property_name|default(''), listitem_component|default('')) }}>
+    <div class="MimotoCMS_modules_List-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime(property_name|default(''), listitem_component|default('')) }}>
         {{ Mimoto.data(property_name|default(''), listitem_component|default('')) }}
     </div>
 

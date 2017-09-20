@@ -17,9 +17,9 @@
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new component', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component') }) }}
             </div>
 
-            <ul class="MimotoCMS_modules_Tabmenu-panel-container js-list js-list-sortable" {{ Mimoto.realtime('components', 'MimotoCMS_components_ComponentOverview_ListItem') }}>
+            <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components', 'MimotoCMS_components_ComponentOverview_ListItem') }}>
                 {{ Mimoto.data('components', 'MimotoCMS_components_ComponentOverview_ListItem') }}
-            </ul>
+            </div>
 
         </div>
 
@@ -29,9 +29,9 @@
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('layouts', '_Mimoto_layout') }) }}
             </div>
 
-            <ul class="MimotoCMS_modules_Tabmenu-panel-container js-list js-list-sortable" {{ Mimoto.realtime('layouts', 'MimotoCMS_components_ComponentOverview_ListItemLayout') }}>
+            <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('layouts', 'MimotoCMS_components_ComponentOverview_ListItemLayout') }}>
                 {{ Mimoto.data('layouts', 'MimotoCMS_components_ComponentOverview_ListItemLayout') }}
-            </ul>
+            </div>
 
         </div>
 

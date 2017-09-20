@@ -10,7 +10,7 @@
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditional', icon:'', types:['small', 'primary'], directive:Mimoto.add('conditionals', '_Mimoto_componentconditional') }) }}
         </div>
     </div>
-    <div class="MimotoCMS_pages_components_ComponentTemplate-conditionals js-list js-list-sortable" {{ Mimoto.hideWhenEmpty('conditionals') }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_components_ComponentDetail-Conditional') }}>
+    <div class="MimotoCMS_pages_components_ComponentTemplate-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.hideWhenEmpty('conditionals') }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_components_ComponentDetail-Conditional') }}>
         {{ Mimoto.data('conditionals', 'MimotoCMS_components_ComponentDetail-Conditional') }}
     </div>
 </div>

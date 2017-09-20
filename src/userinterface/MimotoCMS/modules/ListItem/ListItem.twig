@@ -15,7 +15,7 @@
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:button_label|default(''), link:button_link|default(''), onclick:button_action|default(''), directive:button_directive|default(''), types:[button_type|default('')], icon:button_icon|default('') }) }}
         </div>
         {% if (sortable is not defined or sortable is defined and sortable != false) %}
-        <div class="MimotoCMS_modules_ListItem-handle js-sortable-draghandle">
+        <div class="MimotoCMS_modules_ListItem-handle {{ Mimoto.sortHandle() }}">
             <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
             <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
             <div class="MimotoCMS_modules_ListItem-handle-dot"></div>

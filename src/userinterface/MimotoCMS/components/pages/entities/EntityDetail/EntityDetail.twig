@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('properties') }}>
-                        <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityDetail-EntityProperty') }}>
+                        <ul class="MimotoCMS_pages_entities_EntityDetail_container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityDetail-EntityProperty') }}>
                             {{ Mimoto.data('properties', 'MimotoCMS_entities_EntityDetail-EntityProperty') }}
                         </ul>
                     </div>
@@ -134,7 +134,7 @@
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('forms') }}>
-                    <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('forms', 'MimotoCMS_entities_EntityDetail-Form') }}>
+                    <ul class="MimotoCMS_pages_entities_EntityDetail_container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('forms', 'MimotoCMS_entities_EntityDetail-Form') }}>
                         {{ Mimoto.data('forms', 'MimotoCMS_entities_EntityDetail-Form') }}
                     </ul>
                 </div>
@@ -171,7 +171,7 @@
                 </div>
 
                 <div {{ Mimoto.hideWhenEmpty('components') }}>
-                    <ul class="MimotoCMS_pages_entities_EntityDetail_container js-list js-list-sortable" {{ Mimoto.realtime('components', 'MimotoCMS_entities_EntityDetail-ComponentListItem') }}>
+                    <ul class="MimotoCMS_pages_entities_EntityDetail_container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components', 'MimotoCMS_entities_EntityDetail-ComponentListItem') }}>
                         {{ Mimoto.data('components', 'MimotoCMS_entities_EntityDetail-ComponentListItem') }}
                     </ul>
                 </div>

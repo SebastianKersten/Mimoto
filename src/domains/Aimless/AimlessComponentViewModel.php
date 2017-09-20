@@ -318,6 +318,20 @@ class AimlessComponentViewModel
     }
 
 
+    public function sortable($options = null)
+    {
+        // 1. prepare
+        //$instructions = (object) array();
+
+        // 2. build and output
+        return DataManipulationUtils::MIMOTO_DATA_SORTABLE; //DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_SORTABLE, $sPropertyName, $this->_component, $instructions, $options);
+    }
+
+    public function sortHandle()
+    {
+        return 'MimotoCMS_CoreCSS_draghandle';
+    }
+
 
 
     // --- Show and hide

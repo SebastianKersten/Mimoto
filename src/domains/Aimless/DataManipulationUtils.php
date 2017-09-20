@@ -17,19 +17,20 @@ class DataManipulationUtils
 {
 
     // manipulation
-    const MIMOTO_DATA_EDIT    = 'data-mimoto-edit';
-    const MIMOTO_DATA_ADD     = 'data-mimoto-add';
-    const MIMOTO_DATA_REMOVE  = 'data-mimoto-remove';
-    const MIMOTO_DATA_SELECT  = 'data-mimoto-select';
-    const MIMOTO_DATA_SET     = 'data-mimoto-set';
-    const MIMOTO_DATA_CREATE  = 'data-mimoto-create';
-    const MIMOTO_DATA_CLEAR   = 'data-mimoto-clear';
+    const MIMOTO_DATA_EDIT       = 'data-mimoto-edit';
+    const MIMOTO_DATA_ADD        = 'data-mimoto-add';
+    const MIMOTO_DATA_REMOVE     = 'data-mimoto-remove';
+    const MIMOTO_DATA_SELECT     = 'data-mimoto-select';
+    const MIMOTO_DATA_SET        = 'data-mimoto-set';
+    const MIMOTO_DATA_CREATE     = 'data-mimoto-create';
+    const MIMOTO_DATA_CLEAR      = 'data-mimoto-clear';
+    const MIMOTO_DATA_SORTABLE   = 'data-mimoto-sortable';
 
     // utils
-    const MIMOTO_DATA_API     = 'data-mimoto-api';
+    const MIMOTO_DATA_API      = 'data-mimoto-api';
 
     // communication
-    const MIMOTO_DATA_CHANNEL = 'data-mimoto-channel';
+    const MIMOTO_DATA_CHANNEL  = 'data-mimoto-channel';
 
 
 

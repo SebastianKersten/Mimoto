@@ -1,6 +1,6 @@
 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new entity', icon:'plus', directive:Mimoto.add('entities', '_Mimoto_coreform__entity'), types:['secondary'] }) }}
 
-<div class="MimotoCMS_pages_entities_EntityOverview__container js-list js-list-sortable" {{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}>
+<div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}>
     {{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}
 </div>
 

@@ -61,4 +61,19 @@ div.MimotoCMS_modules_Tabmenu-panelcontainer {
 div.MimotoCMS_modules_Tabmenu-panel-menu {
     margin-bottom: 20px;
     text-align: right;
+
+}
+
+div.MimotoCMS_modules_Tabmenu-container {
+
+    background-color: $wild-sand;
+    padding: 1px;
+
+    & > div {
+        margin-bottom: 1px;
+    }
+
+    & > div:last-child {
+        margin-bottom: 0;
+    }
 }

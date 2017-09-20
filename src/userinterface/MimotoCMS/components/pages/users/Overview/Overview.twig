@@ -1,6 +1,6 @@
 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new entity', icon:'plus', directive:Mimoto.add('users', '_Mimoto_user'), types:['secondary'] }) }}
 
-<div class="MimotoCMS_pages_users_Overview-container js-list js-list-sortable" {{ Mimoto.realtime('users', 'MimotoCMS_users_Overview_UserPreview') }}>
+<div class="MimotoCMS_pages_users_Overview-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('users', 'MimotoCMS_users_Overview_UserPreview') }}>
     {{ Mimoto.data('users', 'MimotoCMS_users_Overview_UserPreview') }}
 </div>
 
