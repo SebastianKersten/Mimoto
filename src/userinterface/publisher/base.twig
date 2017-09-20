@@ -13,7 +13,15 @@
     <body class="MimotoPublisher">
         <div class="MimotoPublisher-menu">
             <div class="MimotoPublisher-menu-home"><a href="/publisher">Home</a></div>
-            <div class="MimotoPublisher-menu-logo">De Correspondent</div>
+            <div class="MimotoPublisher-menu-logo">The Publisher</div>
+            {% if (Mimoto.user.hasRole('member')) %}
+                <div class="MimotoPublisher-menu-member">
+                    <div class="MimotoPublisher-menu-member-name" {{ Mimoto.user.realtime('firstName') }}>{{ Mimoto.user.data('firstName') }}</div>
+                    <div class="MimotoPublisher-menu-member-avatar"><img {{ Mimoto.user.realtime('avatar') }} src="{{ Mimoto.user.data('avatar') }}"></div>
+                </div>
+            {% else %}
+                <div class="MimotoPublisher-menu-login">Login</div>
+            {% endif %}
         </div>
         <div class="MimotoPublisher-content">{% block content %}{% endblock %}</div>
         <div class="MimotoPublisher-footer">

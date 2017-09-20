@@ -46,6 +46,29 @@ div.MimotoPublisher-menu-logo {
     color: #ffffff;
 }
 
+div.MimotoPublisher-menu-member {
+    float: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.MimotoPublisher-menu-member-name {
+    padding: 15px 25px 15px 25px;
+    display: inline-block;
+    color: #ffffff;
+    flex: none;
+}
+
+div.MimotoPublisher-menu-member-avatar {
+    display: inline-block;
+    height: 40px;
+    flex: none;
+
+    & img {
+        height: 40px;
+    }
+}
 
 div.MimotoPublisher-content {
     padding-top: 80px;

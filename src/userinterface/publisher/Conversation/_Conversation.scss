@@ -1,35 +1,70 @@
 @import 'Message/Message';
 
-div.MimotoPublisher_Comment
-{
+
+div.MimotoPublisher_Conversation {
     width: 100%;
-    background-color: #EfEeEe;
-    padding: 20px;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+
+    & > h1 {
+        padding: 30px 50px 15px 50px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #858585;
+    }
 }
 
-div.MimotoPublisher_Comment-user {
-    font-style: italic;
+div.MimotoPublisher_Conversation-comments-container-empty {
     color: #858585;
-    font-size: 14px;
+    font-style: italic;
+    padding: 0 50px 0 50px;
 }
 
-div.MimotoPublisher_Comment-message {
-    color: #000000;
+div.MimotoPublisher_Conversation-comments-container {
+
+    & > div {
+        margin-bottom: 10px;
+    }
+
+    & > div:last-child {
+        margin-bottom: 0;
+    }
+}
+
+div.MimotoPublisher_Conversation-commentform {
+    padding: 30px 50px 10px 50px;
     font-size: 18px;
 }
 
-span.MimotoPublisher_Comment-options {
-    padding-top: 5px;
-    font-size: 12px;
+input.MimotoPublisher_Conversation-comment {
+    background-color: #ffffff;
+    padding: 10px;
+    border: solid 1px #858585;
+    display:inline-block;
+    min-height:10px;
+    width: 500px;
+    max-width: 100%;
     color: #858585;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+div.MimotoPublisher_Conversation-commentform-button {
+    display: inline-block;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 13px 15px 12px 15px;
+    font-weight: bold;
     cursor: pointer;
+}
 
-    & > a {
-        color: #858585;
-        text-decoration: none;
-    }
-
-    & > a:hover {
-        text-decoration: underline;
-    }
+div.MimotoPublisher_Conversation-others {
+    padding-left: 60px;
+    color: #858585;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 14px;
 }
