@@ -223,24 +223,24 @@ class EntityConfigService
 
 
             // 4c. remove columns
-            if (isset($aChanges['properties']->removed))
-            {
-                $nConnectionCount = count($aChanges['properties']->removed);
-                for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
-                {
-                    // register
-                    $connection = $aChanges['properties']->removed[$nConnectionIndex];
-                    Mimoto::output('$connection', $connection);
-                    // load property
-                    $entityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
-
-                    if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
-                    {
-                        // remove
-                        EntityConfigTableUtils::removePropertyColumnFromEntityTable($entity->getValue('name'), $entityProperty->getValue('name'));
-                    }
-                }
-            }
+//            if (isset($aChanges['properties']->removed))
+//            {
+//                $nConnectionCount = count($aChanges['properties']->removed);
+//                for ($nConnectionIndex = 0; $nConnectionIndex < $nConnectionCount; $nConnectionIndex++)
+//                {
+//                    // register
+//                    $connection = $aChanges['properties']->removed[$nConnectionIndex];
+//                    Mimoto::output('$connection', $connection);
+//                    // load property
+//                    $entityProperty = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITYPROPERTY, $connection->getChildId());
+//
+//                    if ($entityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+//                    {
+//                        // remove
+//                        EntityConfigTableUtils::removePropertyColumnFromEntityTable($entity->getValue('name'), $entityProperty->getValue('name'));
+//                    }
+//                }
+//            }
         }
 
         // 7. cleanup cache
@@ -367,6 +367,18 @@ class EntityConfigService
 
         // 10. rename
         EntityConfigTableUtils::renamePropertyColumn($eEntity->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
+    }
+
+    public function onEntityPropertyDeleted(MimotoEntity $eEntityProperty)
+    {
+        // 1. verify
+        if ($eEntityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
+
+        // 2. get parent entity
+        $eEntity = self::getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
+
+        // 3. remove column
+        EntityConfigTableUtils::removePropertyColumnFromEntityTable($eEntity->get('name'), $eEntityProperty->get('name'));
     }
 
     public function onEntityPropertySettingUpdated(MimotoEntity $eEntityPropertySetting)

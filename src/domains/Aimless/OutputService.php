@@ -642,6 +642,7 @@ class OutputService
             case 'updateEntityTable':               Mimoto::service('config')->entityUpdateTable($data); break;
             case 'onEntityPropertyCreated':         Mimoto::service('config')->onEntityPropertyCreated($data); break;
             case 'onEntityPropertyUpdated':         Mimoto::service('config')->onEntityPropertyUpdated($data); break;
+            case 'onEntityPropertyDeleted':         Mimoto::service('config')->onEntityPropertyDeleted($data); break;
             case 'onEntityPropertySettingUpdated':  Mimoto::service('config')->onEntityPropertySettingUpdated($data); break;
             case 'onFormattingChanged':             $this->onFormattingChanged($data); break;
 

@@ -632,7 +632,6 @@ class EntityRepository
         // 1. init
         $bDeleteForever = false;
 
-
         // 2. verify
         if (!empty($nConnectionId))
         {
@@ -641,6 +640,20 @@ class EntityRepository
 
             // 2. get parent
             $eParent = Mimoto::service('data')->get($connection->getParentEntityTypeName(), $connection->getParentId());
+
+
+            // --- broadcast --- # todo - needs refactoring
+            // #todo (issue - on top of this function the event gets called twice, probably via cleanup parents)
+
+            // setup
+            $event = new MimotoEvent($entity, MimotoEvent::DELETED);
+
+            // broadcast
+            $this->_EventService->sendUpdate($event->getType(), $event);
+
+
+            // --- broadcast - end ---
+
 
             // 3. register
             $sPropertyName = $connection->getParentPropertyName();
@@ -693,9 +706,6 @@ class EntityRepository
                 ':id' => $entity->getId()
             );
             $stmt->execute($params);
-
-
-
         }
     }
 

@@ -412,6 +412,12 @@ class CoreConfig
                 'type' => 'sync'
             ),
             (object) array(
+                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTY.'.deleted',
+                'service' => 'Aimless',
+                'request' => 'onEntityPropertyDeleted',
+                'type' => 'sync'
+            ),
+            (object) array(
                 'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTY.'.updated',
                 'service' => 'Aimless',
                 'request' => 'onEntityPropertyUpdated',

@@ -44,6 +44,13 @@ class MimotoEvent extends Event
      * @const string
      */
     const UPDATED = 'updated';
+
+    /**
+     * The DELETED event
+     *
+     * @const string
+     */
+    const DELETED = 'deleted';
     
     
     
