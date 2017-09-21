@@ -264,7 +264,13 @@ class SelectionService
 
             // setup
             if (isset($ruleConfig->type)) $rule->setType($ruleConfig->type);
+
+            // setup
+            if (isset($ruleConfig->typeAsVar)) $rule->setTypeAsVar($ruleConfig->typeVarName);
         }
+
+
+        //Mimoto::output($selectionConfig->name, $selectionConfig);
         //Mimoto::output('$selectionConfig', $selectionConfig);
         //Mimoto::error($selection);
 

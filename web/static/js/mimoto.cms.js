@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "589a4901e74f87f21814";
+/******/ 	__webpack_require__.h = "16151fd30f9257bb534a";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -9347,18 +9347,18 @@ module.exports.prototype = {
         var listInfo = [];
 
         // search
-        var $listItem = $('[data-mimoto-id="' + sInstanceType + '.' + sInstanceId + '"][data-mimoto-connection="' + nConnectionId + '"]');
+        var elListItem = document.querySelector('[data-mimoto-id="' + sInstanceType + '.' + sInstanceId + '"][data-mimoto-connection="' + nConnectionId + '"]');
 
         // validate
-        if (!$listItem) {
+        if (!elListItem) {
             console.log('ListItem not found');return;
         }
 
         // search
-        var $parent = $($listItem).parent();
+        var elParent = elListItem.parentNode;
 
         // register
-        var sInputFieldSelector = $($parent).attr('data-mimoto-list-id');
+        var sInputFieldSelector = elParent.getAttribute('data-mimoto-list-id');
 
         // split
         var aInputFieldSelectorElements = sInputFieldSelector.split('.');

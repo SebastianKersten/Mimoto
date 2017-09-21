@@ -236,24 +236,24 @@ module.exports.prototype = {
     findListByListItem: function(nConnectionId, sInstanceType, sInstanceId)
     {
         // init
-        var listInfo = [];
+        let listInfo = [];
         
         // search
-        var $listItem = $('[data-mimoto-id="' + sInstanceType + '.' + sInstanceId + '"][data-mimoto-connection="' + nConnectionId + '"]');
+        let elListItem = document.querySelector('[data-mimoto-id="' + sInstanceType + '.' + sInstanceId + '"][data-mimoto-connection="' + nConnectionId + '"]');
         
         
         // validate
-        if (!$listItem) { console.log('ListItem not found'); return; }
+        if (!elListItem) { console.log('ListItem not found'); return; }
     
     
         // search
-        var $parent = $($listItem).parent();
+        let elParent = elListItem.parentNode;
     
         // register
-        var sInputFieldSelector = $($parent).attr('data-mimoto-list-id');
+        let sInputFieldSelector = elParent.getAttribute('data-mimoto-list-id');
         
         // split
-        var aInputFieldSelectorElements = sInputFieldSelector.split('.');
+        let aInputFieldSelectorElements = sInputFieldSelector.split('.');
         
         // compose
         listInfo.sInputFieldType = aInputFieldSelectorElements[0];

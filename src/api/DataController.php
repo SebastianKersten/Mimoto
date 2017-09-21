@@ -177,31 +177,46 @@ class DataController
         // 1. load and convert
         $data = MimotoDataUtils::decodePostData($request->get('data'));
 
-        // 1. register
+        // 2. register
         $sPropertySelector = $data->sPropertySelector;
         $xSelection = $data->xSelection;
+        $options = $data->options;
 
-        // 2. select
-        $aSelection = Mimoto::service('data')->select($xSelection);
+        // 3. load
+        $selection = Mimoto::service('selection')->getSelection($xSelection);
+
+        // 4. apply vars
+        if (isset($options) && (isset($options->vars) || isset($options['vars'])))
+        {
+            $aVars = (isset($options->vars)) ? $options->vars : $options['vars'];
+
+            foreach($aVars as $sKey => $sVarValue)
+            {
+                $selection->applyVar($sKey, $sVarValue);
+            }
+        }
+
+        // 5. select
+        $aInstances = Mimoto::service('data')->select($selection);
 
 
         // ---
 
 
-        // 3. init popup
+        // 6. init popup
         $popup = Mimoto::service('output')->create('MimotoCMS_layout_Selection');
 
-        // 4. prepare
+        // 7. prepare
         $options = (object) array(
             'values' => (object) array(
                 'sPropertySelector' => $sPropertySelector
             )
         );
 
-        // 5. fill
-        $popup->fillContainer('selection', $aSelection, 'MimotoCMS_components_selection_SelectableItem', $options);
+        // 8. fill
+        $popup->fillContainer('selection', $aInstances, 'MimotoCMS_components_selection_SelectableItem', $options);
 
-        // 6. output
+        // 9. output
         return $popup->render();
     }
 

@@ -4,7 +4,7 @@
 
         {# showOnEmpty / hideOmEmtpy on empty collection #}
 
-        <ul class="MimotoCMS_forms_input_List js-list js-list-sortable" data-mimoto-list-id="{{ Mimoto.meta('type')~'.'~Mimoto.meta('id') }}"  data-mimoto-collection="{{ Mimoto.fieldId() }}" data-mimoto-component="_Mimoto_form_input_list-item">
+        <ul class="MimotoCMS_forms_input_List" {{ Mimoto.sortable() }} data-mimoto-list-id="{{ Mimoto.meta('type')~'.'~Mimoto.meta('id') }}"  data-mimoto-collection="{{ Mimoto.fieldId() }}" data-mimoto-component="_Mimoto_form_input_list-item">
 
             {{ Mimoto.value(true, '_Mimoto_form_input_list-item', null) }}
 

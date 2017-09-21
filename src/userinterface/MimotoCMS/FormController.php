@@ -4,6 +4,7 @@
 namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
+use Mimoto\Aimless\AimlessComponentViewModel;
 use Mimoto\Core\entities\InputOption;
 use Mimoto\Data\DataFormattingUtils;
 use Mimoto\EntityConfig\EntityConfig;
@@ -545,7 +546,7 @@ class FormController
         else if (count($aOptions) > 1 && empty($sItemId))
         {
 
-            echo '<b>Choose a form:</b><br><br>';
+            $sOutput = '<div><b>Choose a form:</b><br><br>';
 
 
             if ($sInputFieldType == CoreConfig::MIMOTO_FORM_INPUT_LIST)
@@ -563,12 +564,20 @@ class FormController
                         $sURL = '/mimoto.cms/formfield/'.$sInputFieldType.'/'.$sInputFieldId.'/add/'.$sPropertySelector.'/'.$option->getId();
 
                         // output
-                        echo '- <a href="#" style="color:#000000;" onclick="Mimoto.popup(\''.$sURL.'\');">'.$option->getValue('label').'</a><br>';
+                        $sOutput .= '<div class="MimotoCMS_modules_ListItem" style="margin-bottom:1px;">';
+                        $sOutput .= '    <div class="MimotoCMS_modules_ListItem-content">';
+                        $sOutput .= '        <div class="MimotoCMS_modules_ListItem-info">';
+                        $sOutput .= '           <div class="MimotoCMS_modules_ListItem-label"><a href="#" style="color:#000000;" onclick="Mimoto.popup(\''.$sURL.'\');">'.$option->getValue('label').'</a></div>';
+                        $sOutput .= '        </div>';
+                        $sOutput .= '    </div>';
+                        $sOutput .= '</div>';
                     }
                 }
 
+                $sOutput .= '</div>';
+
                 // exit
-                return '';
+                return $sOutput;
             }
         }
         else

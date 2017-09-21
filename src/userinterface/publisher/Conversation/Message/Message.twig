@@ -8,5 +8,6 @@
     </div>
     <div class="MimotoPublisher_Message-menu">
         <a onclick="Publisher.article.reportComment({{ Mimoto.meta('id') }})">Rapporteer</a>
+        {% if (Mimoto.user.meta('id') == Mimoto.meta('owner.id')) %}| <a {{ Mimoto.edit('comment') }}>Edit</a>{% endif %}
     </div>
 </div>

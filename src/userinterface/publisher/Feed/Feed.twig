@@ -1,6 +1,9 @@
 {% extends "publisher/base.twig" %}
 
+
 {% block content %}
+
+    {#{% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" style="float:right;"{{ Mimoto.add('article') }}>Edit</button>{% endif %}#}
 
     <div class="MimotoPublisher_Feed-container">{{ Mimoto.container('feed') }}</div>
 

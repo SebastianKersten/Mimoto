@@ -561,8 +561,8 @@ class CoreConfig
             ),
 
             (object)array(
-                'id' => CoreConfig::CORE_PREFIX . '_Mimoto_all_instances_of_entity', // internal of external?
-                'name' => CoreConfig::CORE_PREFIX . '_Mimoto_all_instances_of_entity', // internal of external?
+                'id' => CoreConfig::CORE_PREFIX . 'all_instances_of_entity', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_instances_of_entity', // internal of external?
                 'label' => 'All instances of entity',
                 'rules' => [
                     (object)array(

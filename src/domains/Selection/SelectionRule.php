@@ -2,6 +2,7 @@
 
 // classpath
 namespace Mimoto\Selection;
+use Mimoto\Mimoto;
 
 
 /**

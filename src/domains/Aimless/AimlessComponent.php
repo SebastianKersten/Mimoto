@@ -785,14 +785,44 @@ class AimlessComponent
         if (empty($this->_entity)) return;
 
 
-        switch(strtolower($sKey))
+        // find
+        $nSeperatorPos = strpos($sKey, '.');
+
+        // separate
+        $sFirstElement = ($nSeperatorPos !== false) ? substr($sKey, 0, $nSeperatorPos) : $sKey;
+        $sSecondElement = ($nSeperatorPos !== false) ? substr($sKey, $nSeperatorPos + 1) : '';
+
+        if (!empty($sSecondElement))
         {
-            case 'id': return $this->_entity->getId();
-            case 'type': return $this->_entity->getEntityTypeName();
-            case 'typeid': return $this->_entity->getEntityTypeId();
-            case 'created': return $this->_entity->getCreated();
-            case 'connectionid': return $this->_connection->getId();
+            if ($this->_entity->getPropertyType($sFirstElement) == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY)
+            {
+                // load
+                $eSubentity = $this->_entity->get($sFirstElement);
+
+                switch(strtolower($sSecondElement))
+                {
+                    case 'id': return $eSubentity->getId();
+                    case 'type': return $eSubentity->getEntityTypeName();
+                    case 'typeid': return $eSubentity->getEntityTypeId();
+                    case 'created': return $eSubentity->getCreated();
+                    //case 'connectionid': return $this->_connection->getId();
+                }
+            }
         }
+        else
+        {
+            switch(strtolower($sKey))
+            {
+                case 'id': return $this->_entity->getId();
+                case 'type': return $this->_entity->getEntityTypeName();
+                case 'typeid': return $this->_entity->getEntityTypeId();
+                case 'created': return $this->_entity->getCreated();
+                case 'connectionid': return $this->_connection->getId();
+            }
+        }
+
+        // error
+        return '';
     }
 
     /**
