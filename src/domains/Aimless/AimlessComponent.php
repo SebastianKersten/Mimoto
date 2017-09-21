@@ -799,13 +799,17 @@ class AimlessComponent
                 // load
                 $eSubentity = $this->_entity->get($sFirstElement);
 
-                switch(strtolower($sSecondElement))
+                // verify
+                if (!empty($eSubentity))
                 {
-                    case 'id': return $eSubentity->getId();
-                    case 'type': return $eSubentity->getEntityTypeName();
-                    case 'typeid': return $eSubentity->getEntityTypeId();
-                    case 'created': return $eSubentity->getCreated();
-                    //case 'connectionid': return $this->_connection->getId();
+                    switch(strtolower($sSecondElement))
+                    {
+                        case 'id': return $eSubentity->getId();
+                        case 'type': return $eSubentity->getEntityTypeName();
+                        case 'typeid': return $eSubentity->getEntityTypeId();
+                        case 'created': return $eSubentity->getCreated();
+                        //case 'connectionid': return $this->_connection->getId();
+                    }
                 }
             }
         }
