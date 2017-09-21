@@ -180,13 +180,13 @@ class DataController
         // 2. register
         $sPropertySelector = $data->sPropertySelector;
         $xSelection = $data->xSelection;
-        $options = $data->options;
+        $options = (isset($data->options)) ? $data->options : null;
 
         // 3. load
         $selection = Mimoto::service('selection')->getSelection($xSelection);
 
         // 4. apply vars
-        if (isset($options) && (isset($options->vars) || isset($options['vars'])))
+        if (!empty(($options)) && (isset($options->vars) || isset($options['vars'])))
         {
             $aVars = (isset($options->vars)) ? $options->vars : $options['vars'];
 

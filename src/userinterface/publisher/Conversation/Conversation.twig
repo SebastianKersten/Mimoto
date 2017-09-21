@@ -11,7 +11,7 @@
     </div>
 
     <div class="MimotoPublisher_Conversation-commentform">
-        <input id="commentForm" type="text" class="MimotoPublisher_Conversation-comment" />
+        <input {#{{ Mimoto.channel('', 'Publisher.isTyping()') }}#} id="commentForm" type="text" class="MimotoPublisher_Conversation-comment" />
         <div class="MimotoPublisher_Conversation-commentform-button" onclick="Publisher.article.addComment()">Draag bij +</div>
     </div>
 

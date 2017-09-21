@@ -54,6 +54,26 @@ module.exports.prototype = {
     // --- Private methods --------------------------------------------------------
     // ----------------------------------------------------------------------------
 
+    //
+    // isTyping: function(channel)
+    // {
+    //     channel.element.addEventListener('focus', function() {
+    //
+    //        channel.send({
+    //            action: 'isTyping',
+    //            user_firstName: Mimoto.user.firstName
+    //        })
+    //     });
+    //
+    //     channel.receive( function(data){
+    //         if (data.action == 'isTyping')
+    //         {
+    //             elIsTyping.innerText = data.user_firstName + ' is typing'
+    //         }
+    //
+    //     })
+    // },
+
 
     /**
      * Setup article
