@@ -29,6 +29,19 @@ class Output
             'forms' => [CoreConfig::MIMOTO_OUTPUT],
             'properties' => [
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_OUTPUT.'--isRoot',
+                    // ---
+                    'name' => 'isRoot',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => EntityConfig::SETTING_VALUE_TYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_ENTITY.'--component',
                     // ---
                     'name' => 'component',
@@ -38,6 +51,39 @@ class Output
                             'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => CoreConfig::MIMOTO_COMPONENT
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_COMPONENT.'--dataType',
+                    // ---
+                    'name' => 'dataType',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        ),
+                        'defaultValue' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        ),
+                        'allowedValues' => array(
+                            (object) array(
+                                'label' => 'Component', // replace by translation
+                                'value' => CoreConfig::OUTPUT_TYPE_COMPONENT,
+                                'default' => true
+                            ),
+                            (object) array(
+                                'label' => 'Layout', // replace by translation
+                                'value' => CoreConfig::OUTPUT_TYPE_LAYOUT
+                            ),
+                            (object) array(
+                                'label' => 'Input field', // replace by translation
+                                'value' => CoreConfig::OUTPUT_TYPE_INPUT
+                            )
                         )
                     ]
                 ),

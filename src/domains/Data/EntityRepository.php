@@ -1066,6 +1066,33 @@ class EntityRepository
 
                             $eInstance->set($propertyConfig->name, Mimoto::service('session')->currentUser());
                             break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_SETTING_DEFAULTVALUE_TYPE_NEWENTITYINSTANCE:
+
+                            // create
+                            $eNewEntityInstance = Mimoto::service('data')->create($defaultValueSetting->value);
+
+                            // setup
+                            if ($defaultValueSetting->defaultValues)
+                            {
+
+                                foreach ($defaultValueSetting->defaultValues as $sDefaultValuePropertyName => $sDefaultValuePropertyValue)
+                                {
+                                    // validate
+                                    if ($eNewEntityInstance->getPropertyType($sDefaultValuePropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                                    {
+                                        $eNewEntityInstance->set($sDefaultValuePropertyName, $sDefaultValuePropertyValue);
+                                    }
+
+                                }
+                            }
+
+                            // store
+                            Mimoto::service('data')->store($eNewEntityInstance);
+
+                            // connect
+                            $eInstance->set($propertyConfig->name, $eNewEntityInstance);
+                            break;
                     }
                 }
             }

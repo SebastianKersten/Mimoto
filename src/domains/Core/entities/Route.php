@@ -71,6 +71,14 @@ class Route
                             'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => CoreConfig::MIMOTO_OUTPUT
+                        ),
+                        'defaultValue' => (object) array(
+                            'key' => EntityConfig::SETTING_ENTITY_DEFAULTVALUE,
+                            'type' => MimotoEntityPropertyTypes::PROPERTY_SETTING_DEFAULTVALUE_TYPE_NEWENTITYINSTANCE,
+                            'value' => CoreConfig::MIMOTO_OUTPUT,
+                            'defaultValues' => (object) array(
+                                'isRoot' => CoreConfig::DATA_VALUE_TRUE
+                            )
                         )
                     ]
                 ),
@@ -124,7 +132,7 @@ class Route
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_ROUTE);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_ROUTE, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Page', '', "");
