@@ -264,9 +264,13 @@ class SelectionService
 
             // setup
             if (isset($ruleConfig->type)) $rule->setType($ruleConfig->type);
+            if (isset($ruleConfig->id)) $rule->setType($ruleConfig->id);
+            if (isset($ruleConfig->property)) $rule->setProperty($ruleConfig->property);
 
             // setup
             if (isset($ruleConfig->typeAsVar)) $rule->setTypeAsVar($ruleConfig->typeVarName);
+            if (isset($ruleConfig->idAsVar)) $rule->setIdAsVar($ruleConfig->idVarName);
+            if (isset($ruleConfig->properyAsVar)) $rule->setPropertyAsVar($ruleConfig->propertyVarName);
         }
 
 

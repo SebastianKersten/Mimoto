@@ -95,6 +95,23 @@ class Selection
                         }
                     }
 
+                    // verify
+                    if ($eRule->getValue('propertyAsVar') && !empty($eRule->getValue('propertyVarName'))) // #todo - validate varname
+                    {
+                        $this->setPropertyAsVar($eRule->getValue('propertyVarName'));
+                    }
+                    else
+                    {
+                        // read
+                        $eProperty = $eRule->getValue('property');
+
+                        // validate
+                        if (!empty($eProperty))
+                        {
+                            $this->setProperty($eProperty->getid());
+                        }
+                    }
+
 
                     // ......
                     //Mimoto::error($this);

@@ -28,9 +28,10 @@
         <div class="MimotoCMS_pages_pages_Detail_Output-setting-menu">
 
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:'From existing selection', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'New selection', directive:Mimoto.add('selection', '_Mimoto_selection') }) }}
+            {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'From existing dataset', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}#}
+            {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'New selection', directive:Mimoto.add('selection', '_Mimoto_selection') }) }}#}
 
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Create instance', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Create instance', directive:Mimoto.add('instance', '') }) }}
 
             {% if Mimoto.data('isRoot') %}
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add dataset', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}

@@ -559,15 +559,27 @@ class CoreConfig
                     )
                 ]
             ),
-
-            (object)array(
+            (object) array(
                 'id' => CoreConfig::CORE_PREFIX . 'all_instances_of_entity', // internal of external?
                 'name' => CoreConfig::CORE_PREFIX . 'all_instances_of_entity', // internal of external?
                 'label' => 'All instances of entity',
                 'rules' => [
                     (object)array(
-                        'typeAsVar' => true,
-                        'typeVarName' => 'typeVarName'
+                        SelectionRuleTypes::TYPE_AS_VAR => true,
+                        SelectionRuleTypes::TYPE_VARNAME => 'typeVarName'
+                    )
+                ]
+            ),
+            (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_properties_of_entity', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_properties_of_entity', // internal of external?
+                'label' => 'All properties of entity',
+                'rules' => [
+                    (object) array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_ENTITY,
+                        SelectionRuleTypes::ID_AS_VAR => true,
+                        SelectionRuleTypes::ID_VARNAME => 'idVarName',
+                        SelectionRuleTypes::PROPERTY => 'properties'
                     )
                 ]
             )

@@ -6,6 +6,7 @@
 
 
         <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-setting">
+
         {% if Mimoto.data('typeAsVar') %}
             Var name for type = {{ Mimoto.data('typeVarName') }}
         {% else %}
@@ -35,11 +36,36 @@
                 {% endif %}
 
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select instance', types:['small', 'secondary'], directive:Mimoto.select('instance', '_Mimoto_all_instances_of_entity', { vars:{typeVarName:Mimoto.data('type.name')} }) }) }}
-                <span {{ Mimoto.hideWhenEmpty('type') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'alert'], directive:Mimoto.clear('instance') }) }}</span>
+                <span {{ Mimoto.hideWhenEmpty('instance') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'alert'], directive:Mimoto.clear('instance') }) }}</span>
+
+
+
 
             {% endif %}
             </div>
         {% endif %}
+
+
+        {% if (Mimoto.data('typeAsVar') or not Mimoto.isEmpty('type')) and (Mimoto.data('idAsVar') or not Mimoto.isEmpty('instance')) %}
+
+            <div class="MimotoCMS_pages_selections_SelectionDetail-Rule-setting">
+                {% if Mimoto.data('propertyAsVar') %}
+                    Var name for property = {{ Mimoto.data('propertyVarName') }}
+                {% else %}
+
+                    {% if not Mimoto.empty('property') %}
+                        Property name = <span>{{ Mimoto.data('property.name') }}</span>
+                    {% else %}
+                        No property selected ..
+                    {% endif %}
+
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select property', types:['small', 'secondary'], directive:Mimoto.select('property', '_Mimoto_all_properties_of_entity', { vars:{idVarName:Mimoto.meta('type.id')} }) }) }}
+                    <span {{ Mimoto.hideWhenEmpty('property') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'alert'], directive:Mimoto.clear('property') }) }}</span>
+
+                {% endif %}
+            </div>
+        {% endif %}
+
 
 
         <br>

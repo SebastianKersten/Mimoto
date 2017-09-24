@@ -88,7 +88,6 @@ class ContentController
             $eInstance,
             [
                 //'response' => ['onSuccess' => ['loadPage' => '/mimoto.cms/content/'.$nContentId]]
-                //'menu' => ['onClick' => ['loadPage' => '/mimoto.cms/content/'.$nDatasetId]]
             ]
         );
 
