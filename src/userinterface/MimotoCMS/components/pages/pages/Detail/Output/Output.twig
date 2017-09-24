@@ -17,8 +17,13 @@
     </div>
 
     <div class="MimotoCMS_pages_pages_Detail_Output-setting" {{ Mimoto.hideWhenEmpty('component') }}>
+
         <div class="MimotoCMS_pages_pages_Detail_Output-setting-info MimotoCMS_pages_pages_Detail_Output-setting-info-empty" {{ Mimoto.showWhenEmpty('selection') }}>
             Optional: Add data ..
+        </div>
+
+        <div class="MimotoCMS_pages_pages_Detail_Output-setting-info MimotoCMS_pages_pages_Detail_Output-setting-info-empty" {{ Mimoto.hideWhenEmpty('dataset') }}>
+            Data from dataset `{{ Mimoto.data('dataset.name') }}`
         </div>
 
         <div {{ Mimoto.realtime('selection.name') }} {{ Mimoto.hideWhenEmpty('selection') }}>
@@ -28,6 +33,7 @@
         <div class="MimotoCMS_pages_pages_Detail_Output-setting-menu">
 
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:'From existing selection', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'From dataset', directive:Mimoto.select('dataset', '_Mimoto_all_datasets') }) }}
             {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'From existing dataset', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}#}
             {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'New selection', directive:Mimoto.add('selection', '_Mimoto_selection') }) }}#}
 

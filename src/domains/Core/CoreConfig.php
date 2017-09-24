@@ -560,6 +560,16 @@ class CoreConfig
                 ]
             ),
             (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_datasets', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_datasets', // internal of external?
+                'label' => 'All datasets',
+                'rules' => [
+                    (object)array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_DATASET
+                    )
+                ]
+            ),
+            (object) array(
                 'id' => CoreConfig::CORE_PREFIX . 'all_instances_of_entity', // internal of external?
                 'name' => CoreConfig::CORE_PREFIX . 'all_instances_of_entity', // internal of external?
                 'label' => 'All instances of entity',

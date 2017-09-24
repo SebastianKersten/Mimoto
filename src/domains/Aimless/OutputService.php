@@ -403,6 +403,7 @@ class OutputService
 
                 $eLayout = $eOutput->getValue('component');
                 $eSelection = $eOutput->getValue('selection');
+                $eDataset = $eOutput->getValue('dataset');
 
 
                 // validate #todo - notify in debug mode
@@ -439,6 +440,11 @@ class OutputService
 
                     // get first
                     $eInstance = (count($aItems) > 0) ? $aItems[0] : null; // #todo - don't allow multiple items or notify
+                }
+
+                if (!empty($eDataset))
+                {
+                    $eInstance = $eDataset;
                 }
 
 

@@ -117,17 +117,12 @@ class Output
                     'id' => CoreConfig::MIMOTO_OUTPUT.'--dataset',
                     // ---
                     'name' => 'dataset',
-                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
                     'settings' => [
-                        'allowedEntityTypes' => (object) array(
-                            'key' => 'allowedEntityTypes',
+                        'allowedEntityType' => (object) array(
+                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => null
-                        ),
-                        'allowDuplicates' => (object) array(
-                            'key' => 'allowDuplicates',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => CoreConfig::DATA_VALUE_FALSE
+                            'value' => CoreConfig::MIMOTO_DATASET
                         )
                     ]
                 ),

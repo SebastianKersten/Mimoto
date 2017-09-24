@@ -379,7 +379,7 @@ class MimotoDataUtils
 
             default:
 
-                output('Unknown value type', $sValueType);
+                Mimoto::output('Unknown value type', $sValueType);
 
                 Mimoto::service('log')->error("Unknown connection value", "The property '".$sPropertyName."' only allows values of type '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."'", true);
                 break;
