@@ -352,7 +352,7 @@ class Mimoto
                     $sPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
                     // render and output
-                    $result = Mimoto::service('output')->instance($sPath);
+                    $result = Mimoto::service('output')->renderRoute($sPath);
 
                     if ($result !== false)
                     {
