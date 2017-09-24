@@ -104,6 +104,27 @@
 
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 
+            <b>The user object</b><br>
+            <br>
+            <div {{ Mimoto.hideWhenValue('isUserExtension', true) }}>
+                Use this entity to extend Mimoto's core <u>User</u> object
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Extend user object', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/useasuserextension'), types:['secondary', 'small'] }) }}
+            </div>
+            <div {{ Mimoto.showWhenValue('isUserExtension', true) }}>
+                <b>This entity is being used as the extension of Mimoto's core <u>User</u> object</b><br>
+                The following field are part of the core object:<br>
+                firstName<br>
+                lastName<br>
+                avatar<br>
+                email<br>
+
+                The `password` cannot be directly read or altered. Use the following methods to<br>
+                Mimoto::service('security')->changePassword()<br>
+                Mimoto::service('security')->validatePassword()<br>
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Stop using as extension of user object', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/stopusingasuserextension'), types:['alert', 'small'] }) }}
+            </div>
+            <br>
+            <br>
             <b>Danger zone!</b><br>
             <br>
             <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>

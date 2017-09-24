@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "0ae9bbd9eede6935289a";
+/******/ 	__webpack_require__.h = "ab4ca2ee06f93e31ae91";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -9260,13 +9260,15 @@ module.exports.prototype = {
         window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
     },
 
-    /**
-     * Content sections
-     */
-    contentNew: function contentNew(nContentId) {
-        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
-        window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
-    },
+    // /**
+    //  * Content sections
+    //  */
+    // contentNew: function(nContentId)
+    // {
+    //     //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
+    //     window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
+    // },
+
 
     formFieldNew_TypeSelector: function formFieldNew_TypeSelector(nFormId) {
         Mimoto.popup('/mimoto.cms/form/' + nFormId + '/field/new');

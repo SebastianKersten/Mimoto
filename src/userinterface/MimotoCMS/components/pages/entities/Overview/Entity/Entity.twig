@@ -1,8 +1,10 @@
 <div class="MimotoCMS_entities_overview_Entity" {{ Mimoto.realtime() }}>
 
     <div class="MimotoCMS_entities_overview_Entity-info">
-        <div class="MimotoCMS_entities_overview_Entity-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
-
+        <div class="MimotoCMS_entities_overview_Entity-name">
+            <span {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
+            <span class="MimotoCMS_entities_overview_Entity-isUserExtension" {{ Mimoto.showWhenValue('isUserExtension', true) }}>- extends user</span>
+        </div>
         <div class="MimotoCMS_entities_overview_Entity-properties-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('properties') }}>No properties added yet</div>
         <div class="MimotoCMS_entities_overview_Entity-properties {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('properties') }} {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityOverview_EntityProperty') }}>{{ Mimoto.data('properties', 'MimotoCMS_entities_EntityOverview_EntityProperty') }}</div>
     </div>

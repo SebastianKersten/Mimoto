@@ -23,6 +23,12 @@ div.MimotoCMS_entities_overview_Entity-info {
         color: $tower-gray;
     }
 
+    span.MimotoCMS_entities_overview_Entity-isUserExtension {
+        font-style: italic;
+        font-weight: normal;
+        color: $pale-slate;
+    }
+
     div.MimotoCMS_entities_overview_Entity-properties-empty {
         padding: 10px 20px 15px 0;
         font-style: italic;

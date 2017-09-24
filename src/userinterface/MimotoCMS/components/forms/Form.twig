@@ -7,5 +7,10 @@
         {% if Mimoto.data('manualSave') %}
             <span {{ Mimoto.submit() }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:"Save" }) }}</span>
         {% endif %}
+        {% if onClickFormMenuButtonOk is defined %}
+            {% if onClickFormMenuButtonOk.menu and onClickFormMenuButtonOk.menu.onClick and onClickFormMenuButtonOk.menu.onClick.loadPage %}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:"Ok", onclick:"window.open('"  ~ onClickFormMenuButtonOk.menu.onClick.loadPage ~ "', '_self');" }) }}
+            {% endif %}
+        {% endif %}
     </div>
 </div>

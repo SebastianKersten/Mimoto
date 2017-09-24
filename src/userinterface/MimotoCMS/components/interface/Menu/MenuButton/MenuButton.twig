@@ -1,8 +1,6 @@
-{% set sIcon = 'publications' %}
-{% if Mimoto.data('type') == 'group' %}{% set sIcon = 'files' %}{% endif %}
 <li class="MimotoCMS_interface_Menu-item" {{ Mimoto.realtime() }}>
     <a href="/mimoto.cms/content/{{ Mimoto.meta('id') }}" class="MimotoCMS_interface_Menu-item-link">
-        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-{{ sIcon }}'/></svg>
+        <svg class="MimotoCMS_interface_Menu-item-icon"><use xlink:href='#ico-files'/></svg>
         <span class="MimotoCMS_interface_Menu-item-text-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('name') }}>Unnamed dataset</span>
         <span class="MimotoCMS_interface_Menu-item-text {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('name') }} {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
     </a>

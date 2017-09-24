@@ -57,48 +57,9 @@ class Dataset
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_DATASET.'--isHiddenFromMenu',
+                    'id' => CoreConfig::MIMOTO_DATASET.'--data',
                     // ---
-                    'name' => 'isHiddenFromMenu',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
-                            'value' => CoreConfig::DATA_VALUE_FALSE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_DATASET.'--type',
-                    // ---
-                    'name' => 'type',
-                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
-                    'settings' => [
-                        'type' => (object) array(
-                            'key' => 'type',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
-                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_DATASET.'--contentItem',
-                    // ---
-                    'name' => 'contentItem',
-                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
-                    'settings' => [
-                        'allowedEntityType' => (object) array(
-                            'key' => 'allowedEntityType',
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => null
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_DATASET.'--contentItems',
-                    // ---
-                    'name' => 'contentItems',
+                    'name' => 'data',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
@@ -140,9 +101,7 @@ class Dataset
             'class' => get_class(),
             'inputFieldIds' => [
                 CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_DATASET, 'name'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_DATASET, 'type'),
                 CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_DATASET, 'form'),
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_DATASET, 'isHiddenFromMenu')
             ]
         );
     }
@@ -166,15 +125,7 @@ class Dataset
         );
         self::setNameValidation($field);
 
-        $form->addValue('fields', self::getField_type());
         $form->addValue('fields', self::getField_form());
-
-        CoreFormUtils::addField_checkbox
-        (
-            $form, 'isHiddenFromMenu', CoreConfig::MIMOTO_DATASET.'--isHiddenFromMenu',
-            'Visibility',
-            'Hide from menu'
-        );
 
         CoreFormUtils::addField_groupEnd($form);
 

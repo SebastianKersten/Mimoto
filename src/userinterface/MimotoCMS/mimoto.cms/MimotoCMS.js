@@ -140,14 +140,14 @@ module.exports.prototype = {
     },
 
     
-    /**
-     * Content sections
-     */
-    contentNew: function(nContentId)
-    {
-        //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
-        window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
-    },
+    // /**
+    //  * Content sections
+    //  */
+    // contentNew: function(nContentId)
+    // {
+    //     //Mimoto.page.open('/mimoto.cms/content/' + nContentId + '/new');
+    //     window.open('/mimoto.cms/content/' + nContentId + '/new', '_self');
+    // },
 
 
     

@@ -2260,6 +2260,11 @@ div.MimotoCMS_entities_overview_Entity-name {
   font-weight: bold;
   color: #9dbab7; }
 
+span.MimotoCMS_entities_overview_Entity-isUserExtension {
+  font-style: italic;
+  font-weight: normal;
+  color: #c3c1c2; }
+
 div.MimotoCMS_entities_overview_Entity-properties-empty {
   padding: 10px 20px 15px 0;
   font-style: italic;
@@ -3169,13 +3174,10 @@ div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta {
             flex-grow: 1;
     text-align: right;
     padding-top: 5px; }
-  div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta div.MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectionname {
+  div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta div.MimotoCMS_pages_datasets_DatasetDetail_Structure__datasetname {
     font-size: 24px;
     font-weight: bold; }
-  div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta div.MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectiontype {
-    font-style: italic;
-    color: #9dbab7; }
-  div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta div.MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectionformname {
+  div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta div.MimotoCMS_pages_datasets_DatasetDetail_Structure__datesetformname {
     color: #000000; }
 
 div.MimotoCMS_pages_datasets_DatasetDetail_Structure__properties {

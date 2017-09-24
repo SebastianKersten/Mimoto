@@ -155,10 +155,10 @@ class Mimoto
 
         // --- database sanity
 
-        $app->get ('/'.$sProjectName.'.cms/setup/verify', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::verifyDatabase');
-        $app->get ('/'.$sProjectName.'.cms/setup/add/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::addCoreTable');
-        $app->get ('/'.$sProjectName.'.cms/setup/fix/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::fixCoreTable');
-        $app->get ('/'.$sProjectName.'.cms/setup/remove/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::removeCoreTable');
+        $app->get ('/'.$sProjectName.'.cms/setup/verify', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::verifyDatabase')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/setup/add/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::addCoreTable')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/setup/fix/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::fixCoreTable')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/setup/remove/{sTableName}', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::removeCoreTable')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
 
 
@@ -232,6 +232,9 @@ class Mimoto
         // Entity
         $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
+        $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/useasuserextension', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::useAsUserExtension')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/stopusingasuserextension', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::stopUsingAsUserExtension')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
         // Instance
         $app->get ('/'.$sProjectName.'.cms/instance/{sEntityType}/all/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::instanceDeleteAll')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/instance/{sEntityType}/{nId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::instanceDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
@@ -284,10 +287,8 @@ class Mimoto
         $app->get ('/'.$sProjectName.'.cms/datasets', 'Mimoto\\UserInterface\\MimotoCMS\\DatasetController::viewDatasetOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/dataset/{nDatasetId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\DatasetController::datasetView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
-        $app->get ('/'.$sProjectName.'.cms/content/{nContentId}', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/content/{nContentId}/new', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemNew')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/content/{nContentId}/{sContentTypeName}/{nContentItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get ('/'.$sProjectName.'.cms/content/{nContentId}/{sContentTypeName}/{nContentItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentGroupItemDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/content/{nDatasetId}', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$sProjectName.'.cms/content/instance/{sContentTypeName}/{nContentItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\ContentController::contentEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         // Form
         $app->get ('/'.$sProjectName.'.cms/entity/{nEntityId}/form/autogenerate', 'Mimoto\\UserInterface\\MimotoCMS\\FormController::formAutogenerate')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');

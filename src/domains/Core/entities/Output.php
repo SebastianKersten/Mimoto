@@ -42,7 +42,7 @@ class Output
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--component',
+                    'id' => CoreConfig::MIMOTO_OUTPUT.'--component',
                     // ---
                     'name' => 'component',
                     'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
@@ -55,7 +55,7 @@ class Output
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_COMPONENT.'--dataType',
+                    'id' => CoreConfig::MIMOTO_OUTPUT.'--dataType',
                     // ---
                     'name' => 'dataType',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
@@ -97,6 +97,37 @@ class Output
                             'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => CoreConfig::MIMOTO_SELECTION
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_OUTPUT.'--instance',
+                    // ---
+                    'name' => 'instance',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => null
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_OUTPUT.'--dataset',
+                    // ---
+                    'name' => 'dataset',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => null
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
                 ),

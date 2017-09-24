@@ -110,6 +110,74 @@ class EntityController
     }
 
 
+    public function useAsUserExtension(Application $app, $nEntityId)
+    {
+        // init
+        $sEntityNameAsUserExtension = '';
+
+        // load
+        $aEntities = Mimoto::service('data')->select(array('type' => CoreConfig::MIMOTO_ENTITY));
+
+        // toggle
+        $nEntityCount = count($aEntities);
+        for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
+        {
+            // register
+            $eEntity = $aEntities[$nEntityIndex];
+
+            // read
+            $bCurrentlyIsUserExtension = $eEntity->get('isUserExtension');
+
+            //
+            if (!empty($nEntityId) && $eEntity->getId() == $nEntityId)
+            {
+                // toggle
+                $eEntity->set('isUserExtension', true);
+
+                // store
+                Mimoto::service('data')->store($eEntity);
+
+                // register
+                $sEntityNameAsUserExtension = $eEntity->get('name');
+            }
+            else
+            {
+                if ($bCurrentlyIsUserExtension)
+                {
+                    // toggle
+                    $eEntity->set('isUserExtension', false);
+
+                    // store
+                    Mimoto::service('data')->store($eEntity);
+                }
+            }
+        }
+
+        // report
+        return Mimoto::service('messages')->response((object) array('result' => 'Entity `'.$sEntityNameAsUserExtension.'` is now being used as Mimoto`s user object extension! '.date("Y.m.d H:i:s")), 200);
+    }
+
+    public function stopUsingAsUserExtension(Application $app, $nEntityId)
+    {
+        // load
+        $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, $nEntityId);
+
+        // verify
+        if (empty($eEntity)) return Mimoto::service('messages')->response((object) array('result' => 'No entity with id = `'.$nEntityId.'` to stop using as user extension'.date("Y.m.d H:i:s")), 400);
+
+        // register
+        $sEntityNameAsUserExtension = $eEntity->get('name');
+
+        // toggle
+        $eEntity->set('isUserExtension', false);
+
+        // store
+        Mimoto::service('data')->store($eEntity);
+
+        // report
+        return Mimoto::service('messages')->response((object) array('result' => 'Entity `'.$sEntityNameAsUserExtension.'` has now stopped from being used as Mimoto`s user object extension! '.date("Y.m.d H:i:s")), 200);
+    }
+
 
     // --- other ---
 

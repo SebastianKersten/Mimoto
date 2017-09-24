@@ -1,5 +1,15 @@
-{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new', icon:'plus', onclick:"MimotoCMS.contentNew('"~Mimoto.meta('id')~"');" }) }}
+{{
+    Mimoto.module('MimotoCMS_modules_List',
+    {
+        button_label: 'Add new',
+        button_icon: 'plus',
+        button_directive: Mimoto.add('data', Mimoto.data('form.name')),
+        property_name: 'data',
+        listitem_component: 'MimotoCMS_content_ContentOverview_ListItem'
+    })
+}}
 
-<div class="MimotoCMS_pages_content_ContentOverview-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('contentItems', 'MimotoCMS_content_ContentOverview_ListItem') }}>
-    {{ Mimoto.data('contentItems', 'MimotoCMS_content_ContentOverview_ListItem') }}
+<div class="MimotoCMS_pages_datasets_DatasetOverview-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('data') }}>
+    <b>Add data to your `{{ Mimoto.data('name') }}` dataset</b><br>
+    Use this data to populate pages, input fields like radiobutton, dropdowns etc, or custom data management features.
 </div>

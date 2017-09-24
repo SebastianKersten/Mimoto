@@ -24,10 +24,6 @@ div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta {
     display: flex;
     flex-wrap: nowrap;
 
-    //& a {
-    //    color: $tower-gray;
-    //}
-
     &>div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta_info {
         flex-grow: 5;
     }
@@ -38,16 +34,12 @@ div.MimotoCMS_pages_datasets_DatasetDetail_Structure__meta {
         padding-top: 5px;
     }
 
-    div.MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectionname {
+    div.MimotoCMS_pages_datasets_DatasetDetail_Structure__datasetname {
         font-size: 24px;
         font-weight: bold;
     }
 
-    div.MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectiontype {
-        font-style: italic;
-        color: $tower_gray;
-    }
-    div.MimotoCMS_pages_datasets_DatasetDetail_Structure__contentsectionformname {
+    div.MimotoCMS_pages_datasets_DatasetDetail_Structure__datesetformname {
         color: #000000;
     }
 

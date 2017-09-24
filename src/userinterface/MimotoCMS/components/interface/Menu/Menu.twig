@@ -5,8 +5,8 @@
 
 
         {% if Mimoto.user.hasRole('contenteditor') or Mimoto.user.hasRole('owner') or Mimoto.user.hasRole('superuser') or Mimoto.user.hasRole('admin') %}
-            <ul class="MimotoCMS_interface_Menu-group" {{ Mimoto.hideWhenEmpty('datasets') }} {{ Mimoto.realtime('datasets.{!isHiddenFromMenu}', 'MimotoCMS_interface_Menu_MenuButton') }}>
-                {{ Mimoto.data('datasets.{!isHiddenFromMenu}', 'MimotoCMS_interface_Menu_MenuButton') }}
+            <ul class="MimotoCMS_interface_Menu-group" {{ Mimoto.hideWhenEmpty('datasets') }} {{ Mimoto.realtime('datasets', 'MimotoCMS_interface_Menu_MenuButton') }}>
+                {{ Mimoto.data('datasets', 'MimotoCMS_interface_Menu_MenuButton') }}
             </ul>
         {% endif %}
 
