@@ -43,6 +43,7 @@
                 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add dataset', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
             {% endif %}
 
+            <div {{ Mimoto.hideWhenEmpty('dataset') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['alert'], directive:Mimoto.clear('dataset') }) }}</div>
             <div {{ Mimoto.hideWhenEmpty('selection') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['alert'], directive:Mimoto.clear('selection') }) }}</div>
         </div>
     </div>
