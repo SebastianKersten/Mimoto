@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "ab4ca2ee06f93e31ae91";
+/******/ 	__webpack_require__.h = "aada6ad76f563a61630e";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -20528,11 +20528,10 @@ module.exports.prototype = {
         // setup
         this._sortable = new Sortable(directive.element, {
             group: directive.id,
-            handle: '.MimotoCMS_CoreCSS_draghandle',
-            dragClass: 'MimotoCMS_forms_input_ListItem--drag',
-            ghostClass: 'MimotoCMS_forms_input_ListItem--ghost',
+            handle: '.Mimoto_CoreCSS_sorthandle',
+            dragClass: 'Mimoto_CoreCSS_sorthandle--drag',
+            ghostClass: 'Mimoto_CoreCSS_sorthandle--ghost',
             onEnd: function (e) {
-                Mimoto.log('Dragging stopped');
                 // adjust
                 this._changeOrder(e.from, e.item, e.oldIndex, e.newIndex);
             }.bind(this)

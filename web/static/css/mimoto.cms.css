@@ -5518,10 +5518,10 @@ li.MimotoCMS_forms_input_ListItem {
       -ms-flex-align: center;
           align-items: center; }
 
-.MimotoCMS_forms_input_ListItem--drag {
+.Mimoto_CoreCSS_sorthandle--drag {
   background-color: #fff; }
 
-.MimotoCMS_forms_input_ListItem--ghost {
+.Mimoto_CoreCSS_sorthandle--ghost {
   opacity: 0; }
 
 figure.MimotoCMS_forms_input_ListItem-figure {
@@ -5610,10 +5610,10 @@ li.MimotoCMS_forms_input_ListItem {
       -ms-flex-align: center;
           align-items: center; }
 
-.MimotoCMS_forms_input_ListItem--drag {
+.Mimoto_CoreCSS_sorthandle--drag {
   background-color: #fff; }
 
-.MimotoCMS_forms_input_ListItem--ghost {
+.Mimoto_CoreCSS_sorthandle--ghost {
   opacity: 0; }
 
 figure.MimotoCMS_forms_input_ListItem-figure {

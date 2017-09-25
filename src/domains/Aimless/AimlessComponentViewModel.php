@@ -329,7 +329,7 @@ class AimlessComponentViewModel
 
     public function sortHandle()
     {
-        return 'MimotoCMS_CoreCSS_draghandle';
+        return 'Mimoto_CoreCSS_sorthandle';
     }
 
 

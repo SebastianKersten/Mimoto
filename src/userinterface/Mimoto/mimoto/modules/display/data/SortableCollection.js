@@ -28,12 +28,11 @@ module.exports.prototype = {
         // setup
         this._sortable = new Sortable(directive.element, {
             group: directive.id,
-            handle: '.MimotoCMS_CoreCSS_draghandle',
-            dragClass: 'MimotoCMS_forms_input_ListItem--drag',
-            ghostClass: 'MimotoCMS_forms_input_ListItem--ghost',
+            handle: '.Mimoto_CoreCSS_sorthandle',
+            dragClass: 'Mimoto_CoreCSS_sorthandle--drag',
+            ghostClass: 'Mimoto_CoreCSS_sorthandle--ghost',
             onEnd: function (e)
             {
-                Mimoto.log('Dragging stopped');
                 // adjust
                 this._changeOrder(e.from, e.item, e.oldIndex, e.newIndex)
 
