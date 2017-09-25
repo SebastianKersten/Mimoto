@@ -98,7 +98,7 @@ class ComponentTemplate
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_COMPONENT_TEMPLATE);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_COMPONENT_TEMPLATE, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Component', '', "The key element in presenting data is the 'component'. These are twig files that use the Aimless protocol to read and render the data, with the support of realtime updates to any client.");
