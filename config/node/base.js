@@ -5,10 +5,10 @@ module.exports = function() {
     return {
         context: resolve(__dirname, './../../src/userinterface/'), // The context is an absolute string to the directory that contains the entry files.
         entry: { // The entry object is where webpack looks to start building the bundle
-            'js/realtime.js' : './Mimoto/realtime.js'
+            'MimotoRealtimeServer.js' : './Mimoto/realtime.js'
         },
         output: {
-            path: resolve(__dirname, './../../web/static'),
+            path: resolve(__dirname, './../../server'),
             filename: '[name]'
         },
         resolve: {
