@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "fa40c539d676e7d21240";
+/******/ 	__webpack_require__.h = "0f1072915ea231c0909d";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -14335,7 +14335,7 @@ exports.decode = function(qs){
       _ref = this.files;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        file = _ref[_i];
+        file = _ref[_i];z
         _results.push(this.cancelUpload(file));
       }
       return _results;
@@ -22979,6 +22979,7 @@ module.exports = function (elFormField, fBroadcast, aInputElements) {
 module.exports.prototype = {
 
     // dom
+    _elDropzone: null,
     _elFormField: null,
     _fBroadcast: null,
     _aInputElements: null,
@@ -23007,13 +23008,22 @@ module.exports.prototype = {
         this._elInput = elInput;
 
         // register
+        this._elDropzone = elFormField.querySelector('[data-mimoto-form-input-image-upload]');
         this._elTemplate = elFormField.querySelector('[data-mimoto-form-input-image-template]');
         this._elPreview = elFormField.querySelector('[data-mimoto-form-input-image-preview]');
         this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-image-persistent]');
         this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-image-remove]');
 
+        // prepare
+        var aClickableElements = elFormField.querySelectorAll('[data-mimoto-form-input-image-trigger]');
+        var nClickableElementCount = aClickableElements.length;
+        for (var nClickableElementIndex = 0; nClickableElementIndex < nClickableElementCount; nClickableElementIndex++) {
+            // make unique
+            aClickableElements[nClickableElementIndex].setAttribute('data-mimoto-form-input-image-trigger', elFormField.getAttribute('data-mimoto-form-field'));
+        }
+
         // setup
-        this._dropzone = new Dropzone('[data-mimoto-form-input-image-upload]', {
+        this._dropzone = new Dropzone(this._elDropzone, {
             url: '/mimoto/media/upload/image',
             maxFilesize: 1000,
             parallelUploads: 20,
@@ -23021,7 +23031,7 @@ module.exports.prototype = {
             thumbnailWidth: 500,
             thumbnailHeight: null,
             previewsContainer: this._elPreview,
-            clickable: '[data-mimoto-form-input-image-trigger]'
+            clickable: '[data-mimoto-form-input-image-trigger="' + elFormField.getAttribute('data-mimoto-form-field') + '"]'
         });
 
         // cleanup
@@ -23211,6 +23221,7 @@ module.exports = function (elFormField, fBroadcast, aInputElements) {
 module.exports.prototype = {
 
     // dom
+    _elDropzone: null,
     _elFormField: null,
     _fBroadcast: null,
     _aInputElements: null,
@@ -23239,15 +23250,22 @@ module.exports.prototype = {
         this._elInput = elInput;
 
         // register
+        this._elDropzone = elFormField.querySelector('[data-mimoto-form-input-video-upload]');
         this._elTemplate = elFormField.querySelector('[data-mimoto-form-input-video-template]');
         this._elPreview = elFormField.querySelector('[data-mimoto-form-input-video-preview]');
         this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-video-persistent]');
         this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-video-remove]');
-        //this._elDropzone
 
+        // prepare
+        var aClickableElements = elFormField.querySelectorAll('[data-mimoto-form-input-video-trigger]');
+        var nClickableElementCount = aClickableElements.length;
+        for (var nClickableElementIndex = 0; nClickableElementIndex < nClickableElementCount; nClickableElementIndex++) {
+            // make unique
+            aClickableElements[nClickableElementIndex].setAttribute('data-mimoto-form-input-video-trigger', elFormField.getAttribute('data-mimoto-form-field'));
+        }
 
         // setup
-        this._dropzone = new Dropzone('[data-mimoto-form-input-video-upload]', {
+        this._dropzone = new Dropzone(this._elDropzone, {
             url: '/mimoto/media/upload/video',
             maxFilesize: 1000,
             parallelUploads: 20,
@@ -23255,7 +23273,7 @@ module.exports.prototype = {
             thumbnailWidth: 500,
             thumbnailHeight: null,
             previewsContainer: this._elPreview,
-            clickable: '[data-mimoto-form-input-video-trigger]'
+            clickable: '[data-mimoto-form-input-video-trigger="' + elFormField.getAttribute('data-mimoto-form-field') + '"]'
         });
 
         // cleanup

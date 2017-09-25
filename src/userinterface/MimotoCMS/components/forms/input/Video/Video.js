@@ -19,6 +19,7 @@ module.exports = function(elFormField, fBroadcast, aInputElements) {
 module.exports.prototype = {
 
     // dom
+    _elDropzone: null,
     _elFormField: null,
     _fBroadcast: null,
     _aInputElements: null,
@@ -50,16 +51,23 @@ module.exports.prototype = {
         this._elInput = elInput;
 
         // register
+        this._elDropzone = elFormField.querySelector('[data-mimoto-form-input-video-upload]');
         this._elTemplate = elFormField.querySelector('[data-mimoto-form-input-video-template]');
         this._elPreview = elFormField.querySelector('[data-mimoto-form-input-video-preview]');
         this._elPersistent = elFormField.querySelector('[data-mimoto-form-input-video-persistent]');
         this._elRemoveButton = elFormField.querySelector('[data-mimoto-form-input-video-remove]');
-        //this._elDropzone
 
-
+        // prepare
+        let aClickableElements = elFormField.querySelectorAll('[data-mimoto-form-input-video-trigger]');
+        let nClickableElementCount = aClickableElements.length;
+        for (let nClickableElementIndex = 0; nClickableElementIndex < nClickableElementCount; nClickableElementIndex++)
+        {
+            // make unique
+            aClickableElements[nClickableElementIndex].setAttribute('data-mimoto-form-input-video-trigger', elFormField.getAttribute('data-mimoto-form-field'));
+        }
 
         // setup
-        this._dropzone = new Dropzone('[data-mimoto-form-input-video-upload]', {
+        this._dropzone = new Dropzone(this._elDropzone, {
             url: '/mimoto/media/upload/video',
             maxFilesize: 1000,
             parallelUploads: 20,
@@ -67,7 +75,7 @@ module.exports.prototype = {
             thumbnailWidth: 500,
             thumbnailHeight: null,
             previewsContainer: this._elPreview,
-            clickable: '[data-mimoto-form-input-video-trigger]'
+            clickable: '[data-mimoto-form-input-video-trigger="' + elFormField.getAttribute('data-mimoto-form-field') + '"]'
         });
 
         // cleanup

@@ -148,12 +148,25 @@ class AimlessComponent
         );
     }
 
-    public function fillContainer($sContainerName, array $aEntities, $sComponentName, $options = null)
+    public function fillContainer($sContainerName, $xEntities, $sComponentName, $options = null)
     {
         // 1. verify or init
         if (!isset($this->_aContainers[$sContainerName])) $this->_aContainers[$sContainerName] = [];
 
-        // 2.
+        // 2. init
+        $aEntities = [];
+
+        // 3. convert
+        if (is_array($xEntities))
+        {
+            $aEntities = $xEntities;
+        }
+        else if ($xEntities instanceof MimotoEntity)
+        {
+            $aEntities = [$xEntities];
+        }
+
+        // 4. compose and store
         $this->_aContainers[$sContainerName][] = (object) array(
             'sComponentName' => $sComponentName,
             'aEntities' => $aEntities,
