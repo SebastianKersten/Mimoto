@@ -107,7 +107,7 @@ class OutputTitle
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_OUTPUT_TITLE);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_OUTPUT_TITLE, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Title');

@@ -84,7 +84,7 @@ class LayoutGroupStart
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_LAYOUT_GROUPSTART);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_LAYOUT_GROUPSTART, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Group start', '', "Add groups in order to make a form more pleasant and scannable for the content editor. Use a 'group end' to close a previously started group of input fields.");

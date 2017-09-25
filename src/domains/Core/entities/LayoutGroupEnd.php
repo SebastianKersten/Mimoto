@@ -63,7 +63,7 @@ class LayoutGroupEnd
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_LAYOUT_GROUPEND);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_LAYOUT_GROUPEND, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Group end', 'This feature will be rewritten to form proper groups', "Add groups in order to make a form more pleasant and scannable for the content editor");

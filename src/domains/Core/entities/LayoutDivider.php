@@ -63,7 +63,7 @@ class LayoutDivider
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_LAYOUT_DIVIDER);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_LAYOUT_DIVIDER, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Divider', '', "Add dividers to make a form more pleasant and scannable for the content editor");
