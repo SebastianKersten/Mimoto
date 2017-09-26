@@ -269,7 +269,7 @@ class DataController
                 }
                 else
                 {
-                    $eEntity->addValue($sPropertyName, $value);
+                    $eEntity->addValue($sPropertyName, $eChild);
                 }
 
                 // d. store
