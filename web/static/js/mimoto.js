@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "0f1072915ea231c0909d";
+/******/ 	__webpack_require__.h = "99e54d30aba68b1e85cf";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -20153,6 +20153,7 @@ module.exports.prototype = {
 
                                 // 1. verify and add items
                                 if (change.entity) {
+                                    new EntityUnsetItem(directive);
                                     new EntitySetItem(directive, change.entity);
                                 } else {
                                     new EntityUnsetItem(directive);

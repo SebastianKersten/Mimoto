@@ -914,6 +914,7 @@ module.exports.prototype = {
                                 // 1. verify and add items
                                 if (change.entity)
                                 {
+                                    new EntityUnsetItem(directive);
                                     new EntitySetItem(directive, change.entity);
                                 }
                                 else
