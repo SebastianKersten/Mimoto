@@ -492,7 +492,7 @@ class Mimoto
         return $viewModel;
     }
 
-    public static function output($sTitle, $data = null, $bScream = false)
+    public static function output($sTitle = '', $data = null, $bScream = false)
     {
         // validate
         if (!self::$_bDebugMode) return;
@@ -511,7 +511,7 @@ class Mimoto
         echo '<br>';
     }
 
-    public static function error($data)
+    public static function error($data = null)
     {
         // validate
         if (!self::$_bDebugMode) return;
