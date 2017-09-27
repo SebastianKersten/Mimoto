@@ -178,6 +178,9 @@ module.exports.prototype = {
         // lock background from scrolling
         document.body.classList.add("Mimoto_layer_application");
 
+        // cleanup
+        Mimoto.closePopup();
+        
 
         // register
         let layer_overlay = document.getElementById('Mimoto_layer_overlay');
