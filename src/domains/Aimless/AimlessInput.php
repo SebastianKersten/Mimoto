@@ -143,23 +143,33 @@ class AimlessInput extends AimlessComponent
                                     $formattingOptions->formats[] = $eFormattingOption->get('name');
 
 
-                                    if ($eFormattingOption->get('name') == 'header')
+                                    switch($eFormattingOption->get('name'))
                                     {
-                                        $formattingOptions->toolbar[] = (object) array('header' => [1, 2, 3, 4, 5, 6, false]);
+                                        case 'header':
+
+                                            $formattingOptions->toolbar[] = (object) array('header' => [1, 2, 3, 4, 5, 6, false]);
+                                            break;
+
+                                        case 'list':
+
+                                            $formattingOptions->toolbar[] = (object) array('list' => [ (object) array('list' => 'ordered'), (object) array('list' => 'bullet') ]);
+                                            break;
+
+                                        case 'indent':
+
+                                            $formattingOptions->toolbar[] = (object) array('indent' => [ (object) array('indent' => '-1'), (object) array('indent' => '+1') ]);
+                                            break;
+
+                                        default:
+
+                                            $formattingOptions->toolbar[] = $eFormattingOption->get('name');
+                                            break;
                                     }
-                                    else
-                                    {
-                                        $formattingOptions->toolbar[] = $eFormattingOption->get('name');
-                                    }
 
 
-//                                    ['bold', 'italic', 'underline', 'strike'],
-//                                    ['blockquote', 'code-block', 'link'],
-//                                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-//                                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-//                                    [{ 'indent': '-1'}, { 'indent': '+1' }],
-
-//                                    formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
+                                    // ['bold', 'italic', 'underline', 'strike'],
+                                    // ['blockquote', 'code-block', 'link'],
+                                    // formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
                                 }
 
                                 // convert
