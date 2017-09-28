@@ -71,14 +71,15 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_ID:         'data-mimoto-id',
 
     // data manipulation directives
-    DIRECTIVE_MIMOTO_DATA_EDIT:     'data-mimoto-edit',
-    DIRECTIVE_MIMOTO_DATA_ADD:      'data-mimoto-add',
-    DIRECTIVE_MIMOTO_DATA_REMOVE:   'data-mimoto-remove',
-    DIRECTIVE_MIMOTO_DATA_SELECT:   'data-mimoto-select',
-    DIRECTIVE_MIMOTO_DATA_SET:      'data-mimoto-set',
-    DIRECTIVE_MIMOTO_DATA_CREATE:   'data-mimoto-create',
-    DIRECTIVE_MIMOTO_DATA_CLEAR:    'data-mimoto-clear',
-    DIRECTIVE_MIMOTO_DATA_SORTABLE: 'data-mimoto-sortable',
+    DIRECTIVE_MIMOTO_DATA_EDIT:      'data-mimoto-edit',
+    DIRECTIVE_MIMOTO_DATA_ADD:       'data-mimoto-add',
+    DIRECTIVE_MIMOTO_DATA_REMOVE:    'data-mimoto-remove',
+    DIRECTIVE_MIMOTO_DATA_SELECT:    'data-mimoto-select',
+    DIRECTIVE_MIMOTO_DATA_SET:       'data-mimoto-set',
+    DIRECTIVE_MIMOTO_DATA_CREATE:    'data-mimoto-create',
+    DIRECTIVE_MIMOTO_DATA_CLEAR:     'data-mimoto-clear',
+    DIRECTIVE_MIMOTO_DATA_SORTABLE:  'data-mimoto-sortable',
+    DIRECTIVE_MIMOTO_DATA_ATTRIBUTE: 'data-mimoto-attribute',
 
     // input directives
     DIRECTIVE_MIMOTO_FORM:        'data-mimoto-form',
@@ -345,6 +346,7 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DATA_CREATE,
             this.DIRECTIVE_MIMOTO_DATA_CLEAR,
             this.DIRECTIVE_MIMOTO_DATA_SORTABLE,
+            this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE,
 
             // intput directives
             this.DIRECTIVE_MIMOTO_FORM,
@@ -685,6 +687,12 @@ module.exports.prototype = {
                         break;
 
 
+                    case this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE:
+
+
+                        break;
+
+
                     // --- input directives
 
                     case this.DIRECTIVE_MIMOTO_FORM:
@@ -1003,6 +1011,15 @@ module.exports.prototype = {
                                 }
 
                                 break;
+
+
+                            case this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE:
+
+                                if (change.type === 'value')
+                                {
+                                    directive.element.setAttribute(directive.instructions.attributeName, change.value);
+                                }
+
                         }
 
                     }

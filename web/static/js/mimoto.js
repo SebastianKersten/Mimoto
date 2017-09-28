@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "ae6ece8119f247211fff";
+/******/ 	__webpack_require__.h = "f83c9b29f8019a1d9c0c";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -19465,6 +19465,7 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DATA_CREATE: 'data-mimoto-create',
     DIRECTIVE_MIMOTO_DATA_CLEAR: 'data-mimoto-clear',
     DIRECTIVE_MIMOTO_DATA_SORTABLE: 'data-mimoto-sortable',
+    DIRECTIVE_MIMOTO_DATA_ATTRIBUTE: 'data-mimoto-attribute',
 
     // input directives
     DIRECTIVE_MIMOTO_FORM: 'data-mimoto-form',
@@ -19690,7 +19691,7 @@ module.exports.prototype = {
         this.DIRECTIVE_MIMOTO_VALUE, this.DIRECTIVE_MIMOTO_ENTITY, this.DIRECTIVE_MIMOTO_COLLECTION, this.DIRECTIVE_MIMOTO_IMAGE, this.DIRECTIVE_MIMOTO_VIDEO, this.DIRECTIVE_MIMOTO_AUDIO, this.DIRECTIVE_MIMOTO_ID,
 
         // data manipulation directives
-        this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT, this.DIRECTIVE_MIMOTO_DATA_SET, this.DIRECTIVE_MIMOTO_DATA_CREATE, this.DIRECTIVE_MIMOTO_DATA_CLEAR, this.DIRECTIVE_MIMOTO_DATA_SORTABLE,
+        this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT, this.DIRECTIVE_MIMOTO_DATA_SET, this.DIRECTIVE_MIMOTO_DATA_CREATE, this.DIRECTIVE_MIMOTO_DATA_CLEAR, this.DIRECTIVE_MIMOTO_DATA_SORTABLE, this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE,
 
         // intput directives
         this.DIRECTIVE_MIMOTO_FORM, this.DIRECTIVE_MIMOTO_FORM_SUBMIT,
@@ -19953,6 +19954,10 @@ module.exports.prototype = {
                     case this.DIRECTIVE_MIMOTO_DATA_SORTABLE:
 
                         directive.sortableCollection = new SortableCollection(directive);
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE:
+
                         break;
 
                     // --- input directives
@@ -20240,6 +20245,13 @@ module.exports.prototype = {
                                 }
 
                                 break;
+
+                            case this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE:
+
+                                if (change.type === 'value') {
+                                    directive.element.setAttribute(directive.instructions.attributeName, change.value);
+                                }
+
                         }
                     }
                 }

@@ -289,6 +289,16 @@ class AimlessComponentViewModel
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_CLEAR, $sPropertyName, $this->_component, $instructions, $options);
     }
 
+    public function attribute($sPropertyName, $sAttributeName, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array(
+            'attributeName' => $sAttributeName
+        );
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_ATTRIBUTE, $sPropertyName, $this->_component, $instructions, $options);
+    }
 
     public function collaborate()
     {

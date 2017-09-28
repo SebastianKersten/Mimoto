@@ -25,6 +25,7 @@ class DataManipulationUtils
     const MIMOTO_DATA_CREATE     = 'data-mimoto-create';
     const MIMOTO_DATA_CLEAR      = 'data-mimoto-clear';
     const MIMOTO_DATA_SORTABLE   = 'data-mimoto-sortable';
+    const MIMOTO_DATA_ATTRIBUTE  = 'data-mimoto-attribute';
 
     // utils
     const MIMOTO_DATA_API      = 'data-mimoto-api';
