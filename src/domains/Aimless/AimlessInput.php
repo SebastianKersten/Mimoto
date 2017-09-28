@@ -152,12 +152,14 @@ class AimlessInput extends AimlessComponent
 
                                         case 'list':
 
-                                            $formattingOptions->toolbar[] = (object) array('list' => [ (object) array('list' => 'ordered'), (object) array('list' => 'bullet') ]);
+                                            $formattingOptions->toolbar[] = (object) array('list' => 'ordered');
+                                            $formattingOptions->toolbar[] = (object) array('list' => 'bullet');
                                             break;
 
                                         case 'indent':
 
-                                            $formattingOptions->toolbar[] = (object) array('indent' => [ (object) array('indent' => '-1'), (object) array('indent' => '+1') ]);
+                                            $formattingOptions->toolbar[] = (object) array('indent' => '-1');
+                                            $formattingOptions->toolbar[] = (object) array('indent' => '+1');
                                             break;
 
                                         default:

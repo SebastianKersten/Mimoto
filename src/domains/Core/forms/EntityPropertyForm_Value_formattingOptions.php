@@ -122,7 +122,9 @@ class EntityPropertyForm_Value_formattingOptions
 //            (object) array('label' => 'Header 5', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header5'),
 //            (object) array('label' => 'Header 6', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header6'),
             (object) array('label' => 'Indent', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-indent'),
+            // -1 | +1
             (object) array('label' => 'List', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-list'),
+            // ordered | bullet
             (object) array('label' => 'Text Alignment', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-align'),
             (object) array('label' => 'Text Direction', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-direction'),
             (object) array('label' => 'Code Block', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-code-block'),
