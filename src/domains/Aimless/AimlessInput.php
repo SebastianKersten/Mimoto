@@ -140,8 +140,17 @@ class AimlessInput extends AimlessComponent
                                     $eFormattingOption = $aFormattingOptions[$nFormattingOptionIndex];
 
                                     // register
-                                    $formattingOptions->toolbar[] = $eFormattingOption->get('name');
                                     $formattingOptions->formats[] = $eFormattingOption->get('name');
+
+
+                                    if ($eFormattingOption->get('name') == 'header')
+                                    {
+                                        $formattingOptions->toolbar[] = (object) array('header' => [1, 2, 3, 4, 5, 6, false]);
+                                    }
+                                    else
+                                    {
+                                        $formattingOptions->toolbar[] = $eFormattingOption->get('name');
+                                    }
 
 
 //                                    ['bold', 'italic', 'underline', 'strike'],

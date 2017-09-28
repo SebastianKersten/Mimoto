@@ -153,7 +153,13 @@ class FormattingOption
 
         // blocks
         $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-blockquote'] = (object) array('name' => 'blockquote');
-        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header'] = (object) array('name' => 'header', 'toolbar' => '{ "header": [1, 2, false] }');
+        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header'] = (object) array('name' => 'header', 'toolbar' => '{ "header": [1, 2, 3, 4, 5, 6, false] }');
+//        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header1'] = (object) array('name' => 'header1');
+//        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header2'] = (object) array('name' => 'header2');
+//        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header3'] = (object) array('name' => 'header3');
+//        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header4'] = (object) array('name' => 'header4');
+//        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header5'] = (object) array('name' => 'header5');
+//        $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-header6'] = (object) array('name' => 'header6');
         $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-indent'] = (object) array('name' => 'indent');
         $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-list'] = (object) array('name' => 'list');
         $aData[CoreConfig::MIMOTO_FORMATTINGOPTION.'-align'] = (object) array('name' => 'align');

@@ -115,6 +115,12 @@ class EntityPropertyForm_Value_formattingOptions
 
             (object) array('label' => 'Blockquote', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-blockquote'),
             (object) array('label' => 'Header', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header'),
+//            (object) array('label' => 'Header 1', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header1'),
+//            (object) array('label' => 'Header 2', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header2'),
+//            (object) array('label' => 'Header 3', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header3'),
+//            (object) array('label' => 'Header 4', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header4'),
+//            (object) array('label' => 'Header 5', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header5'),
+//            (object) array('label' => 'Header 6', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-header6'),
             (object) array('label' => 'Indent', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-indent'),
             (object) array('label' => 'List', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-list'),
             (object) array('label' => 'Text Alignment', 'id' => CoreConfig::MIMOTO_FORMATTINGOPTION.'-align'),

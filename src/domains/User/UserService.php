@@ -42,7 +42,8 @@ class UserService
     public function getUserId()
     {
         // send
-        return Mimoto::service('session')->currentUser()->getId();
+        return (!empty(Mimoto::service('session')->currentUser())) ? Mimoto::service('session')->currentUser()->getId() : null;
+        //return Mimoto::service('session')->currentUser()->getId();
     }
     
     /**
