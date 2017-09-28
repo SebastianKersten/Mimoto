@@ -180,7 +180,7 @@ module.exports.prototype = {
 
         // cleanup
         Mimoto.closePopup();
-        
+
 
         // register
         let layer_overlay = document.getElementById('Mimoto_layer_overlay');

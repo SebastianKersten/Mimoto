@@ -6,6 +6,11 @@
             <div class="MimotoCMS_pages_forms_FormDetail-FormField__field-type">
                 {{ Mimoto.meta('type')|slice(20) }}
             </div>
+            {% if Mimoto.meta('type') == '_Mimoto_form_layout_groupstart' and not Mimoto.isEmpty('title') %}
+                <div class="MimotoCMS_pages_forms_FormDetail-FormField__field-label" {{ Mimoto.realtime('title') }}>
+                    {{ Mimoto.data('title') }}
+                </div>
+            {% endif %}
         {% else %}
             <div class="MimotoCMS_pages_forms_FormDetail-FormField__field-label" {{ Mimoto.getRealtimeValueBySortindex() }}>
                 {{ Mimoto.getValueBySortindex() }}
