@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "f83c9b29f8019a1d9c0c";
+/******/ 	__webpack_require__.h = "064f16bd33f4cea329b9";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -18024,11 +18024,11 @@ module.exports.prototype = {
             document.body.appendChild(rootElement);
         }
 
-        // lock background from scrolling
-        document.body.classList.add("Mimoto_layer_application");
-
         // cleanup
         Mimoto.closePopup();
+
+        // lock background from scrolling
+        document.body.classList.add("Mimoto_layer_application");
 
         // register
         var layer_overlay = document.getElementById('Mimoto_layer_overlay');
