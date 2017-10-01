@@ -43,6 +43,7 @@ class AimlessComponent
     protected $_aPropertyComponents = [];
     protected $_aPropertyFormatters = [];
     protected $_mapping;
+    protected $_sFieldId; // realted to buidling form fields
 
     protected $_connection;
     protected $_nItemIndex;
@@ -528,7 +529,7 @@ class AimlessComponent
             $sPropertyType = '';
 
             // split and validate
-            $aEntitySelectorElements = explode('.', $this->_sFieldId); // inherited from AimlessInput
+            $aEntitySelectorElements = explode('.', $this->_sFieldId);
             if (MimotoDataUtils::isValidId($aEntitySelectorElements[1]))
             {
                 // load

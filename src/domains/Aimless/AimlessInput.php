@@ -23,7 +23,6 @@ class AimlessInput extends AimlessComponent
 
     // config
     protected $_value;
-    protected $_sFieldId;
 
     
     /**
