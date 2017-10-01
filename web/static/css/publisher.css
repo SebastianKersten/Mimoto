@@ -1327,7 +1327,8 @@ body.MimotoPublisher {
 
 div.MimotoPublisher-menu {
   width: 100%;
-  background-color: #DF5B57;
+  background-color: #000000;
+  opacity: 0.8;
   position: fixed;
   z-index: 100; }
   div.MimotoPublisher-menu > div.MimotoPublisher-menu-home {

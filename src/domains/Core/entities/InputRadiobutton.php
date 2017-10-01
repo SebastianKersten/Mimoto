@@ -98,7 +98,7 @@ class InputRadiobutton
     public static function getForm($eInputRadiobutton = null)
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_RADIOBUTTON);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_INPUT_RADIOBUTTON, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Radiobutton');

@@ -690,6 +690,11 @@ class FormController
                             break;
 
                         case InputOption::SELECTION:
+
+
+
+                            break;
+
                         default:
 
                             Mimoto::error("Congratulation! You found a part that hasn't been implemented yet. Your request needs additional code!");

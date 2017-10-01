@@ -97,7 +97,32 @@ class InputOption
                         )
                     ]
                 ),
-                // mapping
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--mappingLabel',
+                    // ---
+                    'name' => 'mappingLabel',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--mappingValue',
+                    // ---
+                    'name' => 'mappingValue',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                )
             ]
         );
     }
@@ -176,8 +201,23 @@ class InputOption
 
         // --- selection
 
-        CoreFormUtils::addField_groupStart($form, 'Settings for the selection type', 'group_selction');
+        CoreFormUtils::addField_groupStart($form, 'Settings for the selection type', 'group_selection');
+
         $form->addValue('fields', self::getField_selection());
+
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'mappingLabel', CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--mappingLabel',
+            'Mapping label', 'Which property do you want to use as a label', 'Only use value properties'
+        );
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'mappingValue', CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--mappingValue',
+            'Mapping value', 'Which property do you want to use as the value', 'Only use value properties'
+        );
+
         CoreFormUtils::addField_groupEnd($form, 'group_selection');
 
         // send

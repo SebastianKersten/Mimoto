@@ -1,5 +1,5 @@
 <div class="MimotoCMS_forms_FormField-element-container">
     {% set sInputId = fieldId ~ '-' ~ Mimoto.data('value') %}
-    <input {{ input }} id="{{ sInputId }}" name="{{ fieldId }}" type="radio" value="{{ Mimoto.data('value') }}" class="MimotoCMS_forms_input_RadioButton js-radio-button" {% if value == Mimoto.data('value') %}checked{% endif %}/>
+    <input {{ input }} id="{{ sInputId }}" name="{{ fieldId }}" type="radio" value="{{ Mimoto.data('value') }}" class="MimotoCMS_forms_input_RadioButton" {% if value == Mimoto.data('value') %}checked{% endif %}/>
     <label for="{{ sInputId }}" class="MimotoCMS_forms_FormField-element-label">{{ Mimoto.data('label') }}</label>
 </div>

@@ -516,10 +516,17 @@ class AimlessComponent
         // #todo - end
 
 
-
         // 1. read
-        $xValue = $this->_entity->getValue($sPropertySelector);
-        $aConnections = $this->_entity->getValue($sPropertySelector, true);
+        $xValue = $this->_entity->get($sPropertySelector);
+        $aConnections = $this->_entity->get($sPropertySelector, true);
+
+
+        // verify and convert selection to options
+        if ($this instanceof AimlessInput && $sPropertySelector == 'options')
+        {
+            $xValue = $this->replaceSelectionWithOptions($xValue, $sPropertySelector);
+        }
+
 
         // 2. output if collection is empty or entity's subproperty is empty
         if (empty($xValue) || !is_array($xValue) || empty($aConnections) || !is_array($aConnections)) return '';
@@ -1197,7 +1204,6 @@ class AimlessComponent
     }
 
 
-
     public function reloadOnChange()
     {
         return 'data-mimoto-reloadonchange="true"';
@@ -1221,6 +1227,80 @@ class AimlessComponent
     public function getPropertyType($sPropertyName)
     {
         return $this->_entity->getPropertyType($sPropertyName);
+    }
+
+
+
+    private function replaceSelectionWithOptions($aOptions, $sPropertySelector)
+    {
+        // init
+        $aOptionsFromSelection = [];
+
+        // find options of type 'selection'
+        for ($nOptionIndex = 0; $nOptionIndex < count($aOptions); $nOptionIndex++)
+        {
+            // register
+            $eOption = $aOptions[$nOptionIndex];
+
+            // verify
+            if ($eOption->get('type') == 'selection')
+            {
+                // remove selection from value
+                array_splice($aOptions, $nOptionIndex, 1);
+                $nOptionIndex--;
+
+                // register
+                $sMappingLabel = $eOption->get('mappingLabel');
+                $sMappingValue = $eOption->get('mappingValue');
+
+                // read
+                $eSelection = $eOption->get('selection');
+
+                // load
+                $aInstances = Mimoto::service('data')->select($eSelection);
+
+                // convert selection into options
+                $nInstanceCount = count($aInstances);
+                for ($nInstanceIndex = 0; $nInstanceIndex < $nInstanceCount; $nInstanceIndex++)
+                {
+                    // register
+                    $eInstance = $aInstances[$nInstanceIndex];
+
+                    // init
+                    $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+
+                    // read
+                    $sLabel =  ($eInstance->hasProperty($sMappingLabel)) ? $eInstance->get($sMappingLabel) : '';
+                    $sValue =  ($eInstance->hasProperty($sMappingValue)) ? $eInstance->get($sMappingValue) : '';
+
+                    // setup
+                    $option->setId(CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--instance-'.$eInstance->getEntityTypeName().'.'.$eInstance->getId());
+                    $option->setValue('label', $sLabel);
+
+                    // 1. value or connection depending on type
+//                    switch($this->_entity->getPropertyType($sPropertySelector))
+//                    {
+//                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+//
+                            $option->setValue('value', $sValue);
+
+//                            break;
+//
+//                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+//                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+//
+//                            $option->setValue('value', $eInstance->getEntityTypeName().'.'.$eInstance->getId());
+//                            break;
+//                    }
+
+                    // store
+                    $aOptionsFromSelection[] = $option;
+                }
+            }
+        }
+
+        // send
+        return array_merge($aOptions, $aOptionsFromSelection);
     }
 
 }
