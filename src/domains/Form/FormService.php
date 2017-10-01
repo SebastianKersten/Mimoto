@@ -289,7 +289,10 @@ class FormService
                         $sConnectionValue = $field->newValue;
 
                         // split
-                        $nChildType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sConnectionValue);
+                        $sChildTypeName = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sConnectionValue);
+                        $nChildTypeId = Mimoto::service('config')->getEntityIdByName($sChildTypeName);
+
+                        // split
                         $nChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sConnectionValue);
 
                         // register
@@ -297,13 +300,17 @@ class FormService
                         $nParentPropertyId = Mimoto::service('config')->getPropertyIdByName($field->propertyName, $nParentEntityTypeId);
 
                         // convert
-                        $allowedEntityType = (object) array(
-                            'id' => $nChildType,
-                            'name' => Mimoto::service('config')->getEntityNameById($nChildType)
+                        $allowedEntityType = (object)array(
+                            'id' => $nChildTypeId,
+                            'name' => $sChildTypeName
                         );
 
                         // create
-                        $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entity->getId(), [$allowedEntityType], $nChildType, $field->propertyName);
+                        //$connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entity->getId(), [], $nChildType, $field->propertyName);
+
+                        // temp disabled because of failed allowedEntityType check (needs to be from setting -> centralise function getSetting('sSettingName')
+                        $connection = MimotoDataUtils::createConnection($nChildId, $nParentEntityTypeId, $nParentPropertyId, $entity->getId(), [$allowedEntityType], $nChildTypeId, $field->propertyName);
+
                     }
 
                     // store
@@ -340,7 +347,7 @@ class FormService
                             $nParentPropertyId = Mimoto::service('config')->getPropertyIdByName($field->propertyName, $nParentEntityTypeId);
 
                             // convert
-                            $allowedEntityType = (object)array(
+                            $allowedEntityType = (object) array(
                                 'id' => $nChildTypeId,
                                 'name' => $sChildTypeName
                             );

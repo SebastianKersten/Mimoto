@@ -524,7 +524,22 @@ class AimlessComponent
         // verify and convert selection to options
         if ($this instanceof AimlessInput && $sPropertySelector == 'options')
         {
-            $xValue = $this->replaceSelectionWithOptions($xValue, $sPropertySelector);
+            // init
+            $sPropertyType = '';
+
+            // split and validate
+            $aEntitySelectorElements = explode('.', $this->_sFieldId); // inherited from AimlessInput
+            if (MimotoDataUtils::isValidId($aEntitySelectorElements[1]))
+            {
+                // load
+                $eParent = Mimoto::service('data')->get($aEntitySelectorElements[0], $aEntitySelectorElements[1]);
+
+                // register
+                $sPropertyType = $eParent->getPropertyType($aEntitySelectorElements[2]);
+            }
+
+            // convert
+            $xValue = $this->replaceSelectionWithOptions($xValue, $sPropertyType);
         }
 
 
@@ -1155,7 +1170,6 @@ class AimlessComponent
         // validate
         if (!$bFormFieldFound) $this->_LogService->error('AimlessComponent - Form field misses a value specification', "Please add a value to input field with <b>id=".$eField->getId()."</b> and type=".$eField->getEntityTypeName(), 'AimlessComponent', true);
 
-
         // 1. input
         $input = Mimoto::service('output')->createInput($sTemplateName, $eField, $connection, $formField->key, $formField->value, $nItemIndex);
 
@@ -1231,7 +1245,7 @@ class AimlessComponent
 
 
 
-    private function replaceSelectionWithOptions($aOptions, $sPropertySelector)
+    private function replaceSelectionWithOptions($aOptions, $sPropertyType)
     {
         // init
         $aOptionsFromSelection = [];
@@ -1277,21 +1291,19 @@ class AimlessComponent
                     $option->setId(CoreConfig::MIMOTO_FORM_FIELD_OPTION.'--instance-'.$eInstance->getEntityTypeName().'.'.$eInstance->getId());
                     $option->setValue('label', $sLabel);
 
-                    // 1. value or connection depending on type
-//                    switch($this->_entity->getPropertyType($sPropertySelector))
-//                    {
-//                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-//
-                            $option->setValue('value', $sValue);
+                    switch($sPropertyType)
+                    {
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
-//                            break;
-//
-//                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-//                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-//
-//                            $option->setValue('value', $eInstance->getEntityTypeName().'.'.$eInstance->getId());
-//                            break;
-//                    }
+                            $option->setValue('value', $sValue);
+                            break;
+
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+                        case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                            $option->setValue('value', $eInstance->getEntityTypeName().'.'.$eInstance->getId());
+                            break;
+                    }
 
                     // store
                     $aOptionsFromSelection[] = $option;

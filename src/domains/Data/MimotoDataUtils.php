@@ -342,6 +342,7 @@ class MimotoDataUtils
                     // read
                     $sChildEntityTypeId = $connection->getChildEntityTypeId();
 
+
                     // init
                     $bValidated = false;
 
@@ -368,6 +369,7 @@ class MimotoDataUtils
                     {
                         Mimoto::service('log')->error("Incorrect value", "The property '".Mimoto::service('config')->getEntityNameById($xParentEntityTypeId).".$sPropertyName' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."' (and not `".Mimoto::service('config')->getEntityNameById($sChildEntityTypeId)."`)", true);
                     }
+
                 }
 
                 break;
@@ -378,8 +380,6 @@ class MimotoDataUtils
                 break;
 
             default:
-
-                Mimoto::output('Unknown value type', $sValueType);
 
                 Mimoto::service('log')->error("Unknown connection value", "The property '".$sPropertyName."' only allows values of type '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."'", true);
                 break;
