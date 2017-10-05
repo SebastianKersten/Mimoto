@@ -36,16 +36,16 @@ var memcached = new Memcached('127.0.0.1:11211');
 // });
 
 
-app.get('/collaborate', function(req, res){
-    res.sendFile(__dirname + '/collaborate.html');
+// app.get('/collaborate', function(req, res){
+//     res.sendFile(__dirname + '/collaborate.html');
+//
+//     //runner.exec("curl http://mimoto.aimless/mimoto.cms/logon", function (error, stdout, stderr) { console.log('done', stdout); res.send(stdout); } );
+//
+// });
 
-    //runner.exec("curl http://mimoto.aimless/mimoto.cms/logon", function (error, stdout, stderr) { console.log('done', stdout); res.send(stdout); } );
-
-});
-
-app.get('/mimoto.cms.js', function(req, res){
-    res.sendFile(__dirname + '/temp/mimoto.cms.js');
-});
+// app.get('/mimoto.cms.js', function(req, res){
+//     res.sendFile(__dirname + '/temp/mimoto.cms.js');
+// });
 
 
 
@@ -101,7 +101,7 @@ socketIO.on('connection', function(client)
         // 2. send welcome message
         client.emit('message', 'You have entered room `' + sPropertySelector + '`');
 
-        // 3. let the others know a new person entered thr room
+        // 3. let the others know a new person entered the room
         client.broadcast.to(sPropertySelector).emit('message', client.user.name + ' has entered room `' + sPropertySelector + '`');
 
 
@@ -279,6 +279,42 @@ socketIO.on('connection', function(client)
     client.on('selectionChange', function(range)
     {
         client.broadcast.emit('selectionChange', range);
+    });
+
+
+
+
+    // Mimoto.channel communication
+
+    client.on('dataChannelConnect', function(sSelector)
+    {
+        console.log('dataChannelConnect', sSelector);
+
+        // 1. join room
+        client.join('dataChannel-' + sSelector);
+
+        // 2. send welcome message
+        client.emit('dataChannelConnected', 'You have entered data channel `' + sSelector + '`');
+
+
+        // 1. needs permission check on user role
+
+
+        // 3. let the others know a new person entered thr room
+        //client.broadcast.to(sPropertySelector).emit('message', client.user.name + ' has entered room `' + sPropertySelector + '`');
+
+
+
+        // 1. no broadcast to all
+        // 2. client in control of broadcast
+    });
+
+    client.on('dataChannelSend', function(message)
+    {
+        console.log('dataChannelSend ---> ', message.sSelector, message.sEvent, message.data);
+
+        // forward to others
+        client.broadcast.to('dataChannel-' + message.sSelector).emit('dataChannelReceive', message);
     });
 
 });

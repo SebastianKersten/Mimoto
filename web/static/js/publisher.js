@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "db4fc95912d59f0c356e";
+/******/ 	__webpack_require__.h = "ea53b6938e14ec7804e6";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -122,6 +122,10 @@ module.exports = function () {
 
 module.exports.prototype = {
 
+    // feature: is typing
+    _aUsersInCommentField: [],
+    _elIsTypingMessage: null,
+
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -147,26 +151,84 @@ module.exports.prototype = {
     // --- Private methods --------------------------------------------------------
     // ----------------------------------------------------------------------------
 
-    //
-    // isTyping: function(channel)
-    // {
-    //     channel.element.addEventListener('focus', function() {
-    //
-    //        channel.send({
-    //            action: 'isTyping',
-    //            user_firstName: Mimoto.user.firstName
-    //        })
-    //     });
-    //
-    //     channel.receive( function(data){
-    //         if (data.action == 'isTyping')
-    //         {
-    //             elIsTyping.innerText = data.user_firstName + ' is typing'
-    //         }
-    //
-    //     })
-    // },
 
+    isTyping: function isTyping(channel) {
+        Mimoto.warn('Publisher.isTyping was called with', channel);
+        Mimoto.warn('this', this);
+
+        // register
+        this._elIsTypingMessage = document.querySelector('[data-publisher-conversation-istypingmessage]');
+
+        this._updateIsTypingMessage(channel.element);
+
+        // register
+        var classRoot = this;
+
+        channel.element.addEventListener('focus', function () {
+
+            console.log('Focus of field');
+
+            // broadcast
+            channel.send('startsTyping', { firstName: Mimoto.user.firstName });
+        });
+
+        channel.element.addEventListener('blur', function () {
+
+            console.log('Blur of field');
+
+            // broadcast
+            channel.send('stopsTyping', { firstName: Mimoto.user.firstName });
+        });
+
+        channel.receive('startsTyping', function (data) {
+            // register
+            classRoot._aUsersInCommentField.push(data.firstName);
+
+            // update
+            classRoot._updateIsTypingMessage(channel.element);
+        });
+
+        channel.receive('stopsTyping', function (data) {
+            // cleanup - #todo needs public id or id provided by realtime.js
+            var nUserCount = classRoot._aUsersInCommentField.length;
+            for (var nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++) {
+                // verify
+                if (classRoot._aUsersInCommentField[nUserIndex] === data.firstName) {
+                    // remove
+                    classRoot._aUsersInCommentField.splice(nUserIndex, 1);
+                    break;
+                }
+            }
+
+            // update
+            classRoot._updateIsTypingMessage(channel.element);
+        });
+    },
+
+    _updateIsTypingMessage: function _updateIsTypingMessage(element) {
+        // init
+        var sMessage = '';
+
+        // compose
+        var nUserCount = this._aUsersInCommentField.length;
+        for (var nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++) {
+            // build
+            sMessage += this._aUsersInCommentField[nUserIndex];
+
+            // connect
+            sMessage += nUserCount === 2 || nUserIndex === nUserCount - 2 ? ' and ' : ', ';
+        }
+
+        console.warn('sMessage', sMessage);
+
+        // update interface
+        if (nUserCount === 0) {
+            // cleanup
+            this._elIsTypingMessage.innerHTML = '&nbsp;';
+        } else {
+            this._elIsTypingMessage.innerText = sMessage + ' ' + (nUserCount === 1 ? 'is' : 'are') + 'typing ..';
+        }
+    },
 
     /**
      * Setup article

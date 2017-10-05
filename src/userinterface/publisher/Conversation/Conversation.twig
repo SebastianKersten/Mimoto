@@ -11,13 +11,11 @@
     </div>
 
     <div class="MimotoPublisher_Conversation-commentform">
-        <input {#{{ Mimoto.channel('', 'Publisher.isTyping()') }}#} id="commentForm" type="text" class="MimotoPublisher_Conversation-comment" />
+        <input {{ Mimoto.channel('comments', 'Publisher.isTyping') }} id="commentForm" type="text" class="MimotoPublisher_Conversation-comment" />
         <div class="MimotoPublisher_Conversation-commentform-button" onclick="Publisher.article.addComment()">Draag bij +</div>
     </div>
 
     <div class="MimotoPublisher_Conversation-others">
-        <span data-publisher-conversation-others>Sebastian</span>
-        <span data-publisher-conversation-istyping class="">is typing ..</span>
-        <span data-publisher-conversation-aretyping class="{{ Mimoto.init() }}">are typing ..</span>
+        <span data-publisher-conversation-istypingmessage>&nbsp;</span>
     </div>
 </div>

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "db4fc95912d59f0c356e";
+/******/ 	__webpack_require__.h = "ea53b6938e14ec7804e6";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -17951,12 +17951,12 @@ module.exports.prototype = {
     startup: function startup() {
         Mimoto.log('Mimoto starting up ...');
 
-        // parse interface
-        this.data = new DataService();
-        this.display = new DisplayService();
-
         // logon
         if (this.autoLogon) this._realtimeManager = new RealtimeManager(this.gateway);
+
+        // parse interface
+        this.data = new DataService();
+        this.display = new DisplayService(this._realtimeManager);
     },
 
     /**
@@ -19439,10 +19439,10 @@ var RemoveClassWhenValueNot = __webpack_require__(418);
 // utils
 var DataUtils = __webpack_require__(419);
 
-module.exports = function () {
+module.exports = function (realtimeManager) {
 
     // start
-    this.__construct();
+    this.__construct(realtimeManager);
 };
 
 module.exports.prototype = {
@@ -19520,6 +19520,8 @@ module.exports.prototype = {
     _aTaggedItems: [],
     _aTaggedProperties: [],
     _aSelectors: [],
+    _aOriginSelectors: [],
+    _aOriginContainerSelectors: [],
 
     _nDirectiveIndex: 0,
     _aDirectives: [],
@@ -19530,6 +19532,9 @@ module.exports.prototype = {
     // forms
     _aForms: [],
 
+    // comunication
+    _realtimeManager: null,
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -19538,7 +19543,10 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function __construct() {
+    __construct: function __construct(realtimeManager) {
+        // register
+        this._realtimeManager = realtimeManager;
+
         // 1. add core css classes
         var style = document.createElement('style');
         style.type = 'text/css';
@@ -19759,13 +19767,31 @@ module.exports.prototype = {
                     directive.instructions = JSON.parse(sPropertySelector.substr(nInstructionPos + 1));
                 }
 
-                // verify or init
-                if (!this._aSelectors[directive.sPropertySelector]) this._aSelectors[directive.sPropertySelector] = [];
+                // --- storage
 
-                // register
-                this._aSelectors[directive.sPropertySelector].push(directive);
 
-                // ---
+                // check if the directive relates to deep selection
+                if (directive.instructions && directive.instructions.origin) {
+                    // verify or init
+                    if (!this._aOriginSelectors[directive.instructions.origin]) this._aOriginSelectors[directive.instructions.origin] = [];
+
+                    // register
+                    this._aOriginSelectors[directive.instructions.origin].push(directive);
+
+                    // verify or init
+                    if (!this._aOriginContainerSelectors[directive.instructions.originContainer]) this._aOriginContainerSelectors[directive.instructions.originContainer] = [];
+
+                    // register
+                    this._aOriginContainerSelectors[directive.instructions.originContainer].push(directive);
+                } else {
+                    // verify or init
+                    if (!this._aSelectors[directive.sPropertySelector]) this._aSelectors[directive.sPropertySelector] = [];
+
+                    // register
+                    this._aSelectors[directive.sPropertySelector].push(directive);
+                }
+
+                // --- identification
 
 
                 // store directive
@@ -19787,17 +19813,26 @@ module.exports.prototype = {
                 }
                 this._aDirectives[nDirectiveId] = directive;
 
-                // ---
+                // --- initialisation
 
 
                 // read tag specific settings
                 switch (sDirective) {
                     case this.DIRECTIVE_MIMOTO_VALUE:
 
-                        if (directive.instructions && directive.instructions.origin) {
-                            Mimoto.warn('origin for', directive.sPropertySelector, 'is', directive.instructions.origin);
-                            Mimoto.warn('alias for', directive.sPropertySelector, 'is', directive.instructions.alias);
-                        }
+                        // if (directive.instructions && directive.instructions.origin)
+                        // {
+                        //     Mimoto.warn('origin for', directive.sPropertySelector, 'is', directive.instructions.origin);
+                        //     Mimoto.warn('originContainer for', directive.sPropertySelector, 'is', directive.instructions.originContainer);
+                        //
+                        //
+                        //     //originContainers
+                        //     //origins
+                        //
+                        //     Mimoto.log('this._aOriginSelectors', this._aOriginSelectors);
+                        //     Mimoto.log('this._aOriginContainerSelectors', this._aOriginContainerSelectors);
+                        // }
+
 
                         break;
 
@@ -20035,7 +20070,53 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_CHANNEL:
 
-                        Mimoto.log('Subscribing to channel ...', directive);
+                        // register
+                        var sSelector = directive.sPropertySelector ? directive.sPropertySelector : directive.sEntitySelector ? directive.sEntitySelector : null;
+
+                        // validate
+                        if (!sSelector) break;
+
+                        // init
+                        var dataChannel = this._realtimeManager.createDataChannel(sSelector);
+
+                        // setup
+                        dataChannel.element = directive.element;
+
+                        // ---
+
+
+                        // 1. validate
+                        if (!directive.instructions.javascriptDelegate || typeof directive.instructions.javascriptDelegate !== 'string') break;
+
+                        // 2. split
+                        var aDelegateParts = directive.instructions.javascriptDelegate.split('.');
+
+                        // 3. build
+                        var path = window;
+                        var fMethod = null;
+                        var nPartCount = aDelegateParts.length;
+                        for (var nPartIndex = 0; nPartIndex < nPartCount; nPartIndex++) {
+                            // register
+                            var sPart = aDelegateParts[nPartIndex];
+
+                            // verify
+                            if (nPartIndex < nPartCount - 1) {
+                                if (path[sPart]) path = path[sPart];
+                            } else {
+                                // validate
+                                if (!(path[sPart] instanceof Function)) break;
+
+                                // register
+                                fMethod = path[sPart];
+                            }
+                        }
+
+                        // validate
+                        if (!fMethod) break;
+
+                        // execute
+                        fMethod.call(path, dataChannel);
+
                         break;
                 }
             }
@@ -20255,6 +20336,61 @@ module.exports.prototype = {
                         }
                     }
                 }
+
+                // --- deep selectors
+
+
+                if (this._aOriginSelectors[sPropertySelector]) {
+                    // register
+                    var _aDirectives = this._aOriginSelectors[sPropertySelector];
+
+                    // parse elements
+                    var nDirectiveCount = _aDirectives.length;
+                    for (var nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++) {
+                        // register
+                        var _directive2 = _aDirectives[nDirectiveIndex];
+
+                        // update
+                        _directive2.element.innerHTML = change.value;
+                    }
+                }
+
+                if (this._aOriginContainerSelectors[sPropertySelector]) {
+                    // register
+                    var _aDirectives2 = this._aOriginContainerSelectors[sPropertySelector];
+
+                    // parse elements
+                    var _nDirectiveCount = _aDirectives2.length;
+                    for (var _nDirectiveIndex = 0; _nDirectiveIndex < _nDirectiveCount; _nDirectiveIndex++) {
+                        // register
+                        var _directive3 = _aDirectives2[_nDirectiveIndex];
+
+                        Mimoto.warn('Origin container change .. new sEntitySelector =', sEntitySelector, _directive3);
+
+                        // validate
+                        if (change.entity && change.entity.data && _directive3.instructions.originProperty && change.entity.data[_directive3.instructions.originProperty]) {
+                            // update
+                            _directive3.element.innerHTML = change.entity.data[_directive3.instructions.originProperty];
+                        } else if (!change.entity) {
+                            Mimoto.log('Entity is empty');
+                            _directive3.element.innerHTML = '';
+                        }
+
+                        // 1. search similar sPropertySelector in _aOriginSelectors
+                        // 2. check if same element
+                        // 3. originProperty
+
+                    }
+
+                    // move
+                    //sEntitySelector + change.propertyName
+
+                    // remove
+
+
+                    // if empty entity -> remove
+                    // otherwise add or move
+                }
             }
         }
 
@@ -20264,17 +20400,17 @@ module.exports.prototype = {
         if (this._aSelectors[sEntitySelector]) {
             if (data.changes && data.changes.length > 0) {
                 // register
-                var _aDirectives = this._aSelectors[sEntitySelector];
+                var _aDirectives3 = this._aSelectors[sEntitySelector];
 
                 // parse elements
-                var nDirectiveCount = _aDirectives.length;
-                for (var nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++) {
+                var _nDirectiveCount2 = _aDirectives3.length;
+                for (var _nDirectiveIndex2 = 0; _nDirectiveIndex2 < _nDirectiveCount2; _nDirectiveIndex2++) {
                     // register
-                    var _directive2 = _aDirectives[nDirectiveIndex];
+                    var _directive4 = _aDirectives3[_nDirectiveIndex2];
 
                     // verify
-                    if (_directive2.bReloadOnChange) {
-                        Mimoto.utils.updateComponent(_directive2.element, _directive2.sEntitySelector, _directive2.sComponentName, _directive2.nConnectionId);
+                    if (_directive4.bReloadOnChange) {
+                        Mimoto.utils.updateComponent(_directive4.element, _directive4.sEntitySelector, _directive4.sComponentName, _directive4.nConnectionId);
                     }
                 }
             }
@@ -20297,12 +20433,12 @@ module.exports.prototype = {
                 // verify
                 if (this._aSelectors[_sPropertySelector]) {
                     // register
-                    var _aDirectives2 = this._aSelectors[_sPropertySelector];
+                    var _aDirectives4 = this._aSelectors[_sPropertySelector];
 
                     // 1. execute directive
                     // 2. pass value
 
-                    Mimoto.log('Known collection / selection', _aDirectives2);
+                    Mimoto.log('Known collection / selection', _aDirectives4);
                 }
             }
 
@@ -29314,6 +29450,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var RealtimeEditor = __webpack_require__(421);
+var DataChannel = __webpack_require__(471);
 
 // Socket.io classes
 var io = __webpack_require__(139);
@@ -29331,6 +29468,7 @@ module.exports.prototype = {
     // connection
     _socket: null,
     _sGateway: null,
+    _aDataChannels: [],
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -29371,6 +29509,36 @@ module.exports.prototype = {
         } else {
             // connect
             this._connect();
+        }
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Create data channel
+     * @param sSelector
+     * @param sDelegate
+     * @returns false is error in paramaters | channel object if everything ok
+     */
+    createDataChannel: function createDataChannel(sSelector) {
+        // init
+        var dataChannel = new DataChannel(sSelector);
+
+        // store
+        this._aDataChannels.push(dataChannel);
+
+        // send
+        return dataChannel;
+    },
+
+    _connectDataChannels: function _connectDataChannels() {
+        // connect all
+        var nDataChannelCount = this._aDataChannels.length;
+        for (var nDataChannelIndex = 0; nDataChannelIndex < nDataChannelCount; nDataChannelIndex++) {
+            this._aDataChannels[nDataChannelIndex].connect(this._socket);
         }
     },
 
@@ -29465,6 +29633,9 @@ module.exports.prototype = {
 
         // connect editable values
         this._setupEditableValues();
+
+        // connect
+        this._connectDataChannels();
     },
 
     /**
@@ -36176,6 +36347,128 @@ Iterator.prototype.peekType = function () {
 
 module.exports = lib;
 
+
+/***/ }),
+/* 456 */,
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto - DataChannel
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (sSelector) {
+    // start
+    this.__construct(sSelector);
+};
+
+module.exports.prototype = {
+
+    _sSelector: null,
+    _aDelegates: [],
+    _aSendRequests: [],
+    _aReceiveRequests: [],
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(sSelector) {
+        // store
+        this._sSelector = sSelector;
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    connect: function connect(socket) {
+        // store
+        this._socket = socket;
+
+        // configur
+        this._socket.on('dataChannelConnected', function (data) {
+            this._onConnected(data);
+        }.bind(this));
+
+        // connect
+        this._socket.emit('dataChannelConnect', this._sSelector);
+    },
+
+    _onConnected: function _onConnected(data) {
+        Mimoto.warn('Data channel `' + this._sSelector + '` is connected');
+
+        // configure
+        this._socket.on('valueChannelReceive', function (message) {
+            this._distributeMessage(message);
+        }.bind(this));
+
+        // 1. handle queue
+        while (this._aSendRequests.length > 0) {
+            // remove
+            var sendRequest = this._aSendRequests.shift();
+
+            // send
+            this.send(sendRequest.sEvent, sendRequest.data);
+        }
+    },
+
+    send: function send(sEvent, data) {
+        // validate or queue
+        if (!this._socket) {
+            this._aSendRequests.push({ sEvent: sEvent, data: data });
+        } else {
+            // build
+            var message = {
+                sSelector: this._sSelector,
+                sEvent: sEvent,
+                data: data
+            };
+
+            // broadcast
+            this._socket.emit('dataChannelSend', message);
+        }
+    },
+
+    receive: function receive(sEvent, fDelegate) {
+        // verify or init
+        if (!this._aDelegates[sEvent]) this._aDelegates[sEvent] = [];
+
+        // store
+        this._aDelegates[sEvent] = fDelegate;
+    },
+
+    _distributeMessage: function _distributeMessage(message) {
+        Mimoto.log('Message = ', message);
+
+        //fDelegate(sEvent, data) }.bind(this, sEvent, fDeletate
+    }
+
+};
 
 /***/ })
 /******/ ]);

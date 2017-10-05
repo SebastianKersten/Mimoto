@@ -57,7 +57,7 @@ module.exports.prototype = {
         this._valueContainer = valueContainer;
 
         // register
-        var classRoot = this;
+        let classRoot = this;
 
         // configure
         this._socket.on('baseDocument', function(delta) { classRoot._socketOnBaseDocument(delta); });

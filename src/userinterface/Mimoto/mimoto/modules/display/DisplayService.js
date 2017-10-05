@@ -52,10 +52,10 @@ let DataUtils = require('./utils/DataUtils');
 
 
 
-module.exports = function() {
+module.exports = function(realtimeManager) {
 
     // start
-    this.__construct();
+    this.__construct(realtimeManager);
 };
 
 module.exports.prototype = {
@@ -134,6 +134,8 @@ module.exports.prototype = {
     _aTaggedItems: [],
     _aTaggedProperties: [],
     _aSelectors: [],
+    _aOriginSelectors: [],
+    _aOriginContainerSelectors: [],
 
     _nDirectiveIndex: 0,
     _aDirectives: [],
@@ -145,6 +147,9 @@ module.exports.prototype = {
     // forms
     _aForms: [],
 
+    // comunication
+    _realtimeManager: null,
+
 
     
     // ----------------------------------------------------------------------------
@@ -155,8 +160,12 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function()
+    __construct: function(realtimeManager)
     {
+        // register
+        this._realtimeManager = realtimeManager;
+
+
         // 1. add core css classes
         var style = document.createElement('style');
         style.type = 'text/css';
@@ -449,14 +458,39 @@ module.exports.prototype = {
                     directive.instructions = JSON.parse(sPropertySelector.substr(nInstructionPos + 1));
                 }
 
-                // verify or init
-                if (!this._aSelectors[directive.sPropertySelector]) this._aSelectors[directive.sPropertySelector] = [];
-
-                // register
-                this._aSelectors[directive.sPropertySelector].push(directive);
 
 
-                // ---
+                // --- storage
+
+
+                // check if the directive relates to deep selection
+                if (directive.instructions && directive.instructions.origin)
+                {
+                    // verify or init
+                    if (!this._aOriginSelectors[directive.instructions.origin]) this._aOriginSelectors[directive.instructions.origin] = [];
+
+                    // register
+                    this._aOriginSelectors[directive.instructions.origin].push(directive);
+
+
+                    // verify or init
+                    if (!this._aOriginContainerSelectors[directive.instructions.originContainer]) this._aOriginContainerSelectors[directive.instructions.originContainer] = [];
+
+                    // register
+                    this._aOriginContainerSelectors[directive.instructions.originContainer].push(directive);
+                }
+                else
+                {
+                    // verify or init
+                    if (!this._aSelectors[directive.sPropertySelector]) this._aSelectors[directive.sPropertySelector] = [];
+
+                    // register
+                    this._aSelectors[directive.sPropertySelector].push(directive);
+                }
+
+
+
+                // --- identification
 
 
                 // store directive
@@ -485,7 +519,8 @@ module.exports.prototype = {
                 this._aDirectives[nDirectiveId] = directive;
 
 
-                // ---
+
+                // --- initialisation
 
 
                 // read tag specific settings
@@ -493,11 +528,18 @@ module.exports.prototype = {
                 {
                     case this.DIRECTIVE_MIMOTO_VALUE:
 
-                        if (directive.instructions && directive.instructions.origin)
-                        {
-                            Mimoto.warn('origin for', directive.sPropertySelector, 'is', directive.instructions.origin);
-                            Mimoto.warn('alias for', directive.sPropertySelector, 'is', directive.instructions.alias);
-                        }
+                        // if (directive.instructions && directive.instructions.origin)
+                        // {
+                        //     Mimoto.warn('origin for', directive.sPropertySelector, 'is', directive.instructions.origin);
+                        //     Mimoto.warn('originContainer for', directive.sPropertySelector, 'is', directive.instructions.originContainer);
+                        //
+                        //
+                        //     //originContainers
+                        //     //origins
+                        //
+                        //     Mimoto.log('this._aOriginSelectors', this._aOriginSelectors);
+                        //     Mimoto.log('this._aOriginContainerSelectors', this._aOriginContainerSelectors);
+                        // }
 
 
 
@@ -773,7 +815,58 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_CHANNEL:
 
-                        Mimoto.log('Subscribing to channel ...', directive);
+                        // register
+                        let sSelector = (directive.sPropertySelector) ? directive.sPropertySelector : ((directive.sEntitySelector) ? directive.sEntitySelector : null);
+
+                        // validate
+                        if (!sSelector) break;
+
+                        // init
+                        let dataChannel = this._realtimeManager.createDataChannel(sSelector);
+
+                        // setup
+                        dataChannel.element = directive.element;
+
+
+                        // ---
+
+
+                        // 1. validate
+                        if (!directive.instructions.javascriptDelegate || typeof directive.instructions.javascriptDelegate !== 'string') break;
+
+                        // 2. split
+                        let aDelegateParts = directive.instructions.javascriptDelegate.split('.');
+
+                        // 3. build
+                        let path = window;
+                        let fMethod = null;
+                        let nPartCount = aDelegateParts.length;
+                        for (let nPartIndex = 0; nPartIndex < nPartCount; nPartIndex++)
+                        {
+                            // register
+                            let sPart = aDelegateParts[nPartIndex];
+
+                            // verify
+                            if (nPartIndex < nPartCount - 1)
+                            {
+                                if (path[sPart]) path = path[sPart];
+                            }
+                            else
+                            {
+                                // validate
+                                if (!(path[sPart] instanceof Function)) break;
+
+                                // register
+                                fMethod = path[sPart];
+                            }
+                        }
+
+                        // validate
+                        if (!fMethod) break;
+
+                        // execute
+                        fMethod.call(path, dataChannel);
+
                         break;
                 }
             }
@@ -1025,6 +1118,77 @@ module.exports.prototype = {
                     }
 
 
+                }
+
+
+
+                // --- deep selectors
+
+
+                if (this._aOriginSelectors[sPropertySelector])
+                {
+                    // register
+                    let aDirectives = this._aOriginSelectors[sPropertySelector];
+
+                    // parse elements
+                    let nDirectiveCount = aDirectives.length;
+                    for (let nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++)
+                    {
+                        // register
+                        let directive = aDirectives[nDirectiveIndex];
+
+                        // update
+                        directive.element.innerHTML = change.value;
+                    }
+                }
+
+                if (this._aOriginContainerSelectors[sPropertySelector])
+                {
+                    // register
+                    let aDirectives = this._aOriginContainerSelectors[sPropertySelector];
+
+                    // parse elements
+                    let nDirectiveCount = aDirectives.length;
+                    for (let nDirectiveIndex = 0; nDirectiveIndex < nDirectiveCount; nDirectiveIndex++)
+                    {
+                        // register
+                        let directive = aDirectives[nDirectiveIndex];
+
+
+                        Mimoto.warn('Origin container change .. new sEntitySelector =', sEntitySelector, directive);
+
+
+                        // validate
+                        if (change.entity && change.entity.data && directive.instructions.originProperty && change.entity.data[directive.instructions.originProperty])
+                        {
+                            // update
+                            directive.element.innerHTML = change.entity.data[directive.instructions.originProperty];
+                        }
+                        else
+                        if (!change.entity)
+                        {
+                            Mimoto.log('Entity is empty');
+                            directive.element.innerHTML = '';
+                        }
+
+
+                        // 1. search similar sPropertySelector in _aOriginSelectors
+                        // 2. check if same element
+                        // 3. originProperty
+
+
+
+
+                    }
+
+                    // move
+                    //sEntitySelector + change.propertyName
+
+                    // remove
+
+
+                    // if empty entity -> remove
+                    // otherwise add or move
                 }
             }
 

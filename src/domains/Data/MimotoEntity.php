@@ -459,27 +459,40 @@ class MimotoEntity
             $entity = $this->getValue($sMainPropertyName);
 
             // compose
-            if (MimotoDataUtils::isEntity($entity))
-            {
+//            if (MimotoDataUtils::isEntity($entity))
+//            {
                 // setup
                 $instructions = (object) array(
-                    'alias' => $sAimlessValue,
-                    'origin' => $entity->getEntityTypeName().'.'.$entity->getId().'.'.$sSubPropertyName
+
+                    'originContainer' => MimotoAimlessUtils::formatAimlessValue($this->getEntityTypeName(), $this->getId(), $sMainPropertyName),
+                    'originProperty' => $sSubPropertyName
                 );
 
+
+                if (MimotoDataUtils::isEntity($entity)) $instructions->origin = $entity->getEntityTypeName().'.'.$entity->getId().'.'.$sSubPropertyName;
+
                 // replace
-                $sAimlessValue = $this->getEntityTypeName().'.'.$this->getId().'.'.$sMainPropertyName;
+                $sAimlessValue = $this->getEntityTypeName().'.'.$this->getId().'.'.$sPropertyName;
 
                 // compose, convert and send
                 $sAimlessValue .= '|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8');
-            }
-            else
-            {
-                // 1. fix empty entity property
-
-
-                $sAimlessValue .= MimotoAimlessUtils::formatAimlessSubvalueWithoutId($sMainPropertyName, $sSubPropertyName);
-            }
+//            }
+//            else
+//            {
+//                // 1. fix empty entity property
+//
+//                // setup
+//                $instructions = (object) array(
+//                    'originContainer' => MimotoAimlessUtils::formatAimlessValue($this->getEntityTypeName(), $this->getId(), $sMainPropertyName),
+//                    'originProperty' => $sSubPropertyName
+//                );
+//
+//
+//                $sAimlessValue .= MimotoAimlessUtils::formatAimlessSubvalueWithoutId($sMainPropertyName, $sSubPropertyName);
+//
+//                // compose, convert and send
+//                $sAimlessValue .= '|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8');
+//            }
         }
 
         // send

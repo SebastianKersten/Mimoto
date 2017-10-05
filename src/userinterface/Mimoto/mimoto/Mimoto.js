@@ -94,12 +94,12 @@ module.exports.prototype = {
     {
         Mimoto.log('Mimoto starting up ...');
 
-        // parse interface
-        this.data = new DataService();
-        this.display = new DisplayService();
-
         // logon
         if (this.autoLogon) this._realtimeManager = new RealtimeManager(this.gateway);
+
+        // parse interface
+        this.data = new DataService();
+        this.display = new DisplayService(this._realtimeManager);
     },
 
     /**

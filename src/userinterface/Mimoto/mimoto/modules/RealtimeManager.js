@@ -8,13 +8,14 @@
 
 
 // Mimoto classes
-var RealtimeEditor = require('./RealtimeEditor');
+let RealtimeEditor = require('./RealtimeEditor');
+let DataChannel = require('./collaboration/DataChannel');
 
 // Socket.io classes
-var io = require('socket.io-client');
+let io = require('socket.io-client');
 
 // Quill classes
-var Quill = require("quill");
+let Quill = require("quill");
 
 
 
@@ -30,6 +31,8 @@ module.exports.prototype = {
     // connection
     _socket: null,
     _sGateway: null,
+    _aDataChannels: [],
+
 
 
     // ----------------------------------------------------------------------------
@@ -78,6 +81,42 @@ module.exports.prototype = {
         {
             // connect
             this._connect();
+        }
+    },
+
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Public methods ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Create data channel
+     * @param sSelector
+     * @param sDelegate
+     * @returns false is error in paramaters | channel object if everything ok
+     */
+    createDataChannel: function(sSelector)
+    {
+        // init
+        let dataChannel = new DataChannel(sSelector);
+
+        // store
+        this._aDataChannels.push(dataChannel);
+
+        // send
+        return dataChannel;
+    },
+
+    _connectDataChannels: function()
+    {
+        // connect all
+        let nDataChannelCount = this._aDataChannels.length;
+        for (let nDataChannelIndex = 0; nDataChannelIndex < nDataChannelCount; nDataChannelIndex++)
+        {
+            this._aDataChannels[nDataChannelIndex].connect(this._socket);
         }
     },
 
@@ -166,6 +205,9 @@ module.exports.prototype = {
 
         // connect editable values
         this._setupEditableValues();
+
+        // connect
+        this._connectDataChannels();
     },
 
     /**
@@ -358,7 +400,6 @@ module.exports.prototype = {
 
         // send
         return bExecuted;
-    }
-
+    },
 
 }

@@ -1094,6 +1094,9 @@ class OutputService
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;
 
+        // 2. verify or disable
+        if (isset(Mimoto::value('config')->socketio) && isset(Mimoto::value('config')->socketio->disabled) && Mimoto::value('config')->socketio->disabled === true) return;
+
         // init
         $client= new \GearmanClient();
 

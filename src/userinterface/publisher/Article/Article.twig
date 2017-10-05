@@ -11,7 +11,7 @@
 
                 {% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" style="float:right;"{{ Mimoto.edit('article') }}>Edit</button>{% endif %}
 
-                <span class="MimotoPublisher-Article-articletype">{% if Mimoto.data('type') == 'explainer' %}Explainer{% else %}Verhaal van de dag{% endif %}</span>
+                <span class="MimotoPublisher-Article-articletype" {#{{ Mimoto.hideWhenEmpty('type.label') }}#} {{ Mimoto.realtime('type.label') }}>{{ Mimoto.data('type.label') }}</span>
                 <span {{ Mimoto.realtime('lede') }}>{{ Mimoto.data('lede') }}</span>
 
             </div>
