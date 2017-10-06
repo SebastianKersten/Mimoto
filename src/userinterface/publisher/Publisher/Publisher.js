@@ -62,15 +62,12 @@ module.exports.prototype = {
 
     isTyping: function(channel)
     {
-        Mimoto.warn('Publisher.isTyping was called with', channel);
-        Mimoto.warn('this', this);
-
-
         // register
         this._elIsTypingMessage = document.querySelector('[data-publisher-conversation-istypingmessage]');
 
-        this._updateIsTypingMessage(channel.element);
 
+        // initial setup
+        this._updateIsTypingMessage(channel.element);
 
 
         // register
@@ -79,15 +76,11 @@ module.exports.prototype = {
 
         channel.element.addEventListener('focus', function() {
 
-            console.log('Focus of field');
-
             // broadcast
             channel.send('startsTyping', { firstName: Mimoto.user.firstName });
         });
 
         channel.element.addEventListener('blur', function() {
-
-            console.log('Blur of field');
 
             // broadcast
             channel.send('stopsTyping', { firstName: Mimoto.user.firstName });
@@ -100,7 +93,6 @@ module.exports.prototype = {
 
             // update
             classRoot._updateIsTypingMessage(channel.element);
-
         });
 
         channel.receive('stopsTyping', function(data)
@@ -136,10 +128,11 @@ module.exports.prototype = {
             sMessage += this._aUsersInCommentField[nUserIndex];
 
             // connect
-            sMessage += (nUserCount === 2 || nUserIndex === nUserCount - 2) ? ' and ' : ', ';
+            if (nUserIndex < nUserCount - 1)
+            {
+                sMessage += (nUserCount === 2 || nUserIndex === nUserCount - 2) ? ' and ' : ', ';
+            }
         }
-
-        console.warn('sMessage', sMessage);
 
         // update interface
         if (nUserCount === 0)
@@ -149,7 +142,7 @@ module.exports.prototype = {
         }
         else
         {
-            this._elIsTypingMessage.innerText = sMessage + ' ' + ((nUserCount === 1) ? 'is' : 'are') + 'typing ..';
+            this._elIsTypingMessage.innerText = sMessage + ' ' + ((nUserCount === 1) ? 'is' : 'are') + ' typing ..';
         }
 
     },

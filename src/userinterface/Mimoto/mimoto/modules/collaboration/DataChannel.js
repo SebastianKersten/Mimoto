@@ -56,17 +56,12 @@ module.exports.prototype = {
 
         // connect
         this._socket.emit('dataChannelConnect', this._sSelector);
-
-
-
     },
 
     _onConnected: function(data)
     {
-        Mimoto.warn('Data channel `' + this._sSelector + '` is connected');
-
         // configure
-        this._socket.on('valueChannelReceive', function(message) { this._distributeMessage(message) }.bind(this) );
+        this._socket.on('dataChannelReceive', function(message) { this._distributeMessage(message) }.bind(this) );
 
         // 1. handle queue
         while (this._aSendRequests.length > 0)
@@ -106,15 +101,24 @@ module.exports.prototype = {
         if (!this._aDelegates[sEvent]) this._aDelegates[sEvent] = [];
 
         // store
-        this._aDelegates[sEvent] = fDelegate;
+        this._aDelegates[sEvent].push(fDelegate);
     },
 
     _distributeMessage: function(message)
     {
-        Mimoto.log('Message = ', message);
+        // verify
+        if (!this._aDelegates[message.sEvent] || this._aDelegates[message.sEvent].length === 0) return;
 
+        // forward
+        let nDelegateCount = this._aDelegates[message.sEvent].length;
+        for (let nDelegateIndex = 0; nDelegateIndex < nDelegateCount; nDelegateIndex++)
+        {
+            // register
+            let fDelegate = this._aDelegates[message.sEvent][nDelegateIndex];
 
-        //fDelegate(sEvent, data) }.bind(this, sEvent, fDeletate
+            // broadcast
+            fDelegate(message.data);
+        }
     }
 
 

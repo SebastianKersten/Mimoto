@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "ea53b6938e14ec7804e6";
+/******/ 	__webpack_require__.h = "0a4e786a141e5595bae2";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -36420,10 +36420,8 @@ module.exports.prototype = {
     },
 
     _onConnected: function _onConnected(data) {
-        Mimoto.warn('Data channel `' + this._sSelector + '` is connected');
-
         // configure
-        this._socket.on('valueChannelReceive', function (message) {
+        this._socket.on('dataChannelReceive', function (message) {
             this._distributeMessage(message);
         }.bind(this));
 
@@ -36459,13 +36457,22 @@ module.exports.prototype = {
         if (!this._aDelegates[sEvent]) this._aDelegates[sEvent] = [];
 
         // store
-        this._aDelegates[sEvent] = fDelegate;
+        this._aDelegates[sEvent].push(fDelegate);
     },
 
     _distributeMessage: function _distributeMessage(message) {
-        Mimoto.log('Message = ', message);
+        // verify
+        if (!this._aDelegates[message.sEvent] || this._aDelegates[message.sEvent].length === 0) return;
 
-        //fDelegate(sEvent, data) }.bind(this, sEvent, fDeletate
+        // forward
+        var nDelegateCount = this._aDelegates[message.sEvent].length;
+        for (var nDelegateIndex = 0; nDelegateIndex < nDelegateCount; nDelegateIndex++) {
+            // register
+            var fDelegate = this._aDelegates[message.sEvent][nDelegateIndex];
+
+            // broadcast
+            fDelegate(message.data);
+        }
     }
 
 };

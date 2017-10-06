@@ -16,6 +16,7 @@
             'password' => ''
         ),
         'socketio' => (object) array(
+            'disabled' => false,
             'clientgateway' => 'http://127.0.0.1:4000',
             'workergateway' => 'http://127.0.0.1:4001',
         ),

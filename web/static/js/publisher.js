@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "ea53b6938e14ec7804e6";
+/******/ 	__webpack_require__.h = "0a4e786a141e5595bae2";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -153,12 +153,10 @@ module.exports.prototype = {
 
 
     isTyping: function isTyping(channel) {
-        Mimoto.warn('Publisher.isTyping was called with', channel);
-        Mimoto.warn('this', this);
-
         // register
         this._elIsTypingMessage = document.querySelector('[data-publisher-conversation-istypingmessage]');
 
+        // initial setup
         this._updateIsTypingMessage(channel.element);
 
         // register
@@ -166,15 +164,11 @@ module.exports.prototype = {
 
         channel.element.addEventListener('focus', function () {
 
-            console.log('Focus of field');
-
             // broadcast
             channel.send('startsTyping', { firstName: Mimoto.user.firstName });
         });
 
         channel.element.addEventListener('blur', function () {
-
-            console.log('Blur of field');
 
             // broadcast
             channel.send('stopsTyping', { firstName: Mimoto.user.firstName });
@@ -216,17 +210,17 @@ module.exports.prototype = {
             sMessage += this._aUsersInCommentField[nUserIndex];
 
             // connect
-            sMessage += nUserCount === 2 || nUserIndex === nUserCount - 2 ? ' and ' : ', ';
+            if (nUserIndex < nUserCount - 1) {
+                sMessage += nUserCount === 2 || nUserIndex === nUserCount - 2 ? ' and ' : ', ';
+            }
         }
-
-        console.warn('sMessage', sMessage);
 
         // update interface
         if (nUserCount === 0) {
             // cleanup
             this._elIsTypingMessage.innerHTML = '&nbsp;';
         } else {
-            this._elIsTypingMessage.innerText = sMessage + ' ' + (nUserCount === 1 ? 'is' : 'are') + 'typing ..';
+            this._elIsTypingMessage.innerText = sMessage + ' ' + (nUserCount === 1 ? 'is' : 'are') + ' typing ..';
         }
     },
 

@@ -112,7 +112,7 @@ socketIO.on('connection', function(client)
         //to get the number of clients
         //var numClients = (typeof aClientsInRoom !== 'undefined') ? Object.keys(aClientsInRoom).length : 0;
 
-        // 5. let the others now about the new client
+        // 5. let the others know about the new client
         for (var clientId in aClientsInRoom)
         {
             // skip current client
@@ -288,16 +288,33 @@ socketIO.on('connection', function(client)
 
     client.on('dataChannelConnect', function(sSelector)
     {
-        console.log('dataChannelConnect', sSelector);
 
         // 1. join room
         client.join('dataChannel-' + sSelector);
 
-        // 2. send welcome message
+        // 2. send handshake
         client.emit('dataChannelConnected', 'You have entered data channel `' + sSelector + '`');
 
 
+        // 3. let the others know a new person entered the room
+        //client.broadcast.to('dataChannel-' + sSelector).emit('dataChannelReceive', client.user.name + ' has entered room `' + sSelector + '`');
+
+
+
+
+
+        //
+        //
+        // console.log('dataChannelConnect', sSelector);
+        //
+        // // 1. join room
+        // client.join('dataChannel-' + sSelector);
+        //
+
+        //
+
         // 1. needs permission check on user role
+        // 2. return unique room id
 
 
         // 3. let the others know a new person entered thr room
@@ -313,8 +330,40 @@ socketIO.on('connection', function(client)
     {
         console.log('dataChannelSend ---> ', message.sSelector, message.sEvent, message.data);
 
-        // forward to others
-        client.broadcast.to('dataChannel-' + message.sSelector).emit('dataChannelReceive', message);
+
+        // 1. check if user is in room
+
+
+
+        // -----------------
+
+
+
+        // 4. get all clients
+        let aClientsInRoom = socketIO.sockets.adapter.rooms['dataChannel-' + message.sSelector].sockets;
+
+        //to get the number of clients
+        //var numClients = (typeof aClientsInRoom !== 'undefined') ? Object.keys(aClientsInRoom).length : 0;
+
+        // 5. let the others know about the new client
+        for (let clientId in aClientsInRoom)
+        {
+            // skip current client
+            if (clientId === client.id) continue;
+
+            // this is the socket of each client in the room.
+            let clientSocket = socketIO.sockets.connected[clientId];
+
+            // report the new client know about the others in this room
+            clientSocket.emit('dataChannelReceive', message);
+        }
+
+
+
+        // -----------------
+
+
+
     });
 
 });
