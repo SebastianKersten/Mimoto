@@ -328,7 +328,7 @@ socketIO.on('connection', function(client)
 
     client.on('dataChannelSend', function(message)
     {
-        console.log('dataChannelSend ---> ', message.sSelector, message.sEvent, message.data);
+        //console.log('dataChannelSend ---> ', message.sSelector, message.sEvent, message.data);
 
 
         // 1. check if user is in room
