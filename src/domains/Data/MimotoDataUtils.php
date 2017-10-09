@@ -510,7 +510,7 @@ class MimotoDataUtils
 
                     case MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD:
 
-                        // encrypt
+                        // hash
                         $value = Mimoto::service('session')->createPasswordHash($value);
                         break;
 

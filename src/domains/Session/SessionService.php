@@ -76,20 +76,20 @@ class SessionService
 
     public function createPasswordHash($sPassword)
     {
-        // encrypt
-        $encryptedPassword = password_hash($sPassword, self::PASSWORD_HASH_ALGORITM, self::PASSWORD_HASH_OPTIONS);
+        // hash
+        $sHashedPassword = password_hash($sPassword, self::PASSWORD_HASH_ALGORITM, self::PASSWORD_HASH_OPTIONS);
 
         // validate
-        if (empty($encryptedPassword)) {
+        if (empty($sHashedPassword)) {
             throw new \Exception('can not properly hash password');
         }
 
         // send
-        return $encryptedPassword;
+        return $sHashedPassword;
     }
 
-    public function comparePassword($sPassword, $encryptedPassword)
+    public function comparePassword($sPassword, $sHashedPassword)
     {
-        return password_verify($sPassword, $encryptedPassword);
+        return password_verify($sPassword, $sHashedPassword);
     }
 }
