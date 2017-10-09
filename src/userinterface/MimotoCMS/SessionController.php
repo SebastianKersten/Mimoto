@@ -114,6 +114,8 @@ class SessionController
 
                 if (Mimoto::service('session')->comparePassword($sPassword, $sHashedPassword))
                 {
+                    // #todo check for password upgrades using password_needs_rehash()
+
                     // compose
                     $user = (object) array(
                         'id' => $eUser->getId(),
