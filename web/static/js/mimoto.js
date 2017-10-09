@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "b40e410c68fac175811f";
+/******/ 	__webpack_require__.h = "700dd67bf685d27456ac";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -28241,10 +28241,10 @@ module.exports.prototype = {
 
         // configure
         this._elInput.addEventListener('input', function (e) {
-            this._checkPasswordStrength();
+            this._checkPasswordStrength();this._fBroadcast();
         }.bind(this));
         this._elInput.addEventListener('change', function (e) {
-            this._checkPasswordStrength();
+            this._checkPasswordStrength();this._fBroadcast();
         }.bind(this));
     },
 
@@ -36417,6 +36417,13 @@ module.exports.prototype = {
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
 
+
+    identify: function identify(publicData) {
+        // register user information which is publicly broadcasted within the channel
+
+        // 1. broadcast
+        // 2. make available
+    },
 
     connect: function connect(socket) {
         // 1. skip reconfiguration

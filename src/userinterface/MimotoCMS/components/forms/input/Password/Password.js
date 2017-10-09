@@ -54,8 +54,8 @@ module.exports.prototype = {
         this._aPasswordStrengthBlocks = this._elPasswordStrength.querySelectorAll('div');
 
         // configure
-        this._elInput.addEventListener('input', function(e) { this._checkPasswordStrength(); }.bind(this));
-        this._elInput.addEventListener('change', function(e) { this._checkPasswordStrength(); }.bind(this));
+        this._elInput.addEventListener('input', function(e) { this._checkPasswordStrength(); this._fBroadcast(); }.bind(this));
+        this._elInput.addEventListener('change', function(e) { this._checkPasswordStrength(); this._fBroadcast(); }.bind(this));
     },
 
 
@@ -74,6 +74,7 @@ module.exports.prototype = {
     {
         this._elInput.value = value;
     },
+
 
 
     // ----------------------------------------------------------------------------

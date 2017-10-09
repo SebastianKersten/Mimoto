@@ -61,6 +61,14 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
+    identify: function(publicData)
+    {
+        // register user information which is publicly broadcasted within the channel
+
+        // 1. broadcast
+        // 2. make available
+    },
+
     connect: function(socket)
     {
         // 1. skip reconfiguration

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "b40e410c68fac175811f";
+/******/ 	__webpack_require__.h = "700dd67bf685d27456ac";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -177,15 +177,20 @@ module.exports.prototype = {
 
         //channel.onOtherLeft = function(client) {
         channel.onOtherDisconnected = function (clientId) {
-            Mimoto.log('OTHER DISCONNECTED');
-
+            // validate
             if (!this._aClientsOnThisPage[clientId]) return;
 
+            // toggle
             this._aClientsOnThisPage[clientId].isToBeRemoved = true;
 
-            this._updateAlsoOnThisPage(data, clientId);
+            // update
+            this._updateAlsoOnThisPage(clientId);
 
+            // cleanup
             delete this._aClientsOnThisPage[clientId];
+
+            // toggle visibility
+            this._toggleAlsoOnThisPageVisibility();
         }.bind(this);
 
         channel.receive('join', function (data, clientId) {
@@ -196,11 +201,14 @@ module.exports.prototype = {
                 avatar: data.avatar
             };
 
-            this._updateAlsoOnThisPage(data, clientId);
+            this._updateAlsoOnThisPage(clientId);
+
+            // toggle visibility
+            this._toggleAlsoOnThisPageVisibility();
         }.bind(this));
     },
 
-    _updateAlsoOnThisPage: function _updateAlsoOnThisPage(data, userId) {
+    _updateAlsoOnThisPage: function _updateAlsoOnThisPage(userId) {
 
         for (var clientId in this._aClientsOnThisPage) {
             // register
@@ -235,6 +243,23 @@ module.exports.prototype = {
 
                 client.element.parentNode.removeChild(client.element);
             }
+        }
+    },
+
+    _toggleAlsoOnThisPageVisibility: function _toggleAlsoOnThisPageVisibility() {
+
+        var bHasItems = false;
+        for (var sKey in this._aClientsOnThisPage) {
+            bHasItems = true;break;
+        }
+
+        Mimoto.warn('!this._aClientsOnThisPage', !this._aClientsOnThisPage, bHasItems);
+
+        // toggle visibility
+        if (!bHasItems) {
+            this._alsoOnThisPageChannel.element.classList.add('Mimoto_CoreCSS_hidden');
+        } else {
+            this._alsoOnThisPageChannel.element.classList.remove('Mimoto_CoreCSS_hidden');
         }
     },
 

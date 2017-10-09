@@ -95,7 +95,7 @@ socketIO.on('connection', function(client)
                         let other = socketIO.sockets.connected[clientId];
 
                         // report the new client know about the others in this room
-                        other.emit('dataChannelOtherDisconnected', client.id);
+                        other.emit('dataChannelOtherDisconnected', other.id);
                     }
                 }
             }
@@ -347,7 +347,7 @@ socketIO.on('connection', function(client)
             let other = socketIO.sockets.connected[clientId];
 
             // report the new client know about the others in this room
-            other.emit('dataChannelOtherConnected', client.id);
+            other.emit('dataChannelOtherConnected', other.id);
 
             // register
             aOthers.push(other.id);

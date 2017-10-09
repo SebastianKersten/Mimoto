@@ -87,17 +87,20 @@ module.exports.prototype = {
         //channel.onOtherLeft = function(client) {
         channel.onOtherDisconnected = function(clientId)
         {
-            Mimoto.log('OTHER DISCONNECTED');
-
+            // validate
             if (!this._aClientsOnThisPage[clientId]) return;
 
-
-
+            // toggle
             this._aClientsOnThisPage[clientId].isToBeRemoved = true;
 
-            this._updateAlsoOnThisPage(data, clientId);
-            
+            // update
+            this._updateAlsoOnThisPage(clientId);
+
+            // cleanup
             delete this._aClientsOnThisPage[clientId];
+
+            // toggle visibility
+            this._toggleAlsoOnThisPageVisibility();
 
         }.bind(this);
 
@@ -112,14 +115,17 @@ module.exports.prototype = {
                 avatar: data.avatar
             };
 
-            this._updateAlsoOnThisPage(data, clientId);
+            this._updateAlsoOnThisPage(clientId);
+
+            // toggle visibility
+            this._toggleAlsoOnThisPageVisibility();
 
         }.bind(this));
     },
 
 
 
-    _updateAlsoOnThisPage: function(data, userId)
+    _updateAlsoOnThisPage: function(userId)
     {
         
         for (let clientId in this._aClientsOnThisPage)
@@ -162,6 +168,29 @@ module.exports.prototype = {
 
                 client.element.parentNode.removeChild(client.element);
             }
+        }
+    },
+
+
+    _toggleAlsoOnThisPageVisibility: function()
+    {
+
+
+
+        let bHasItems = false;
+        for (let sKey in this._aClientsOnThisPage) { bHasItems = true; break; }
+
+
+        Mimoto.warn('!this._aClientsOnThisPage', !this._aClientsOnThisPage, bHasItems);
+
+        // toggle visibility
+        if (!bHasItems)
+        {
+            this._alsoOnThisPageChannel.element.classList.add('Mimoto_CoreCSS_hidden');
+        }
+        else
+        {
+            this._alsoOnThisPageChannel.element.classList.remove('Mimoto_CoreCSS_hidden');
         }
     },
 
