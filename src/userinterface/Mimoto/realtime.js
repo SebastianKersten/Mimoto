@@ -14,6 +14,9 @@ var QuillDelta = require("quill-delta");
 var aClients = [];
 var aRooms = [];
 
+
+let aClientsInDataChannels = [];
+
 var Memcached = require('memcached');
 var memcached = new Memcached('127.0.0.1:11211');
 
@@ -49,33 +52,6 @@ var memcached = new Memcached('127.0.0.1:11211');
 
 
 
-// socket.on("connection", function (client)
-// {
-//     client.on("join", function(name)
-//     {
-//         aClients[client.id] = name;
-//
-//         client.emit("update", "You have connected to the server.");
-//
-//         socket.sockets.emit("update", name + " has joined the server.");
-//         socket.sockets.emit("update-people", people);
-//     });
-//
-//     client.on("send", function(msg)
-//     {
-//         socket.sockets.emit("chat", people[client.id], msg);
-//     });
-//
-//     client.on("disconnect", function()
-//     {
-//         socket.sockets.emit("update", aClients[client.id] + " has left the server.");
-//         delete aClients[client.id];
-//         socket.sockets.emit("update-people", people);
-//     });
-// });
-
-
-
 socketIO.on('connection', function(client)
 {
     // register
@@ -84,8 +60,49 @@ socketIO.on('connection', function(client)
 
     client.on('disconnect', function()
     {
+
+        //console.log('Disconnected client ---> cleanup', client);
+
         // cleanup
         delete aClients[client.id];
+
+
+        // ---
+
+
+        // cleanup data channels
+        if (aClientsInDataChannels[client.id])
+        {
+            if (aClientsInDataChannels[client.id].length > 0)
+            {
+                let nRoomCount = aClientsInDataChannels[client.id].length;
+                for (let nRoomIndex = 0; nRoomIndex < nRoomCount; nRoomIndex++)
+                {
+                    // a. register
+                    let sRoomName = aClientsInDataChannels[client.id][nRoomIndex];
+
+                    // verify
+                    if (!socketIO.sockets.adapter.rooms[sRoomName]) continue;
+
+                    // b. get all clients
+                    let aClientsInRoom = socketIO.sockets.adapter.rooms[sRoomName].sockets;
+
+                    // c. let the others know about the new client
+                    let aOthers = [];
+                    for (let clientId in aClientsInRoom)
+                    {
+                        // this is the socket of each client in the room.
+                        let other = socketIO.sockets.connected[clientId];
+
+                        // report the new client know about the others in this room
+                        other.emit('dataChannelOtherDisconnected', client.id);
+                    }
+                }
+            }
+
+            // final cleanup
+            delete aClientsInDataChannels[client.id];
+        }
     });
 
 
@@ -288,19 +305,56 @@ socketIO.on('connection', function(client)
 
     client.on('dataChannelConnect', function(sSelector)
     {
+        // init
+        let sRoomName = 'dataChannel-' + sSelector;
+
 
         // 1. join room
-        client.join('dataChannel-' + sSelector);
+        client.join(sRoomName);
 
         // 2. send handshake
-        client.emit('dataChannelConnected', 'You have entered data channel `' + sSelector + '`');
+        //client.emit('dataChannelSelfConnected', 'You have entered data channel `' + sSelector + '`');
+
+
+        // store
+        if (!aClientsInDataChannels[client.id]) aClientsInDataChannels[client.id] = [];
+        aClientsInDataChannels[client.id].push(sRoomName);
+
+
 
 
         // 3. let the others know a new person entered the room
-        //client.broadcast.to('dataChannel-' + sSelector).emit('dataChannelReceive', client.user.name + ' has entered room `' + sSelector + '`');
+        //client.broadcast.to('dataChannel-' + sSelector).emit('dataChannelOtherConnected', client.user.name + ' has entered room `' + sSelector + '`');
 
 
+        // 4. get all clients
+        let aClientsInRoom = socketIO.sockets.adapter.rooms[sRoomName].sockets;
 
+
+        //to get the number of clients
+        //var numClients = (typeof aClientsInRoom !== 'undefined') ? Object.keys(aClientsInRoom).length : 0;
+
+        //console.log('client = ', client.user);
+
+        // 5. let the others know about the new client
+        let aOthers = [];
+        for (let clientId in aClientsInRoom)
+        {
+            // skip current client
+            if (clientId === client.id) continue;
+
+            // this is the socket of each client in the room.
+            let other = socketIO.sockets.connected[clientId];
+
+            // report the new client know about the others in this room
+            other.emit('dataChannelOtherConnected', client.id);
+
+            // register
+            aOthers.push(other.id);
+        }
+
+        // 2. send handshake
+        client.emit('dataChannelSelfConnected', aOthers);
 
 
         //
@@ -315,10 +369,6 @@ socketIO.on('connection', function(client)
 
         // 1. needs permission check on user role
         // 2. return unique room id
-
-
-        // 3. let the others know a new person entered thr room
-        //client.broadcast.to(sPropertySelector).emit('message', client.user.name + ' has entered room `' + sPropertySelector + '`');
 
 
 
@@ -355,7 +405,7 @@ socketIO.on('connection', function(client)
             let clientSocket = socketIO.sockets.connected[clientId];
 
             // report the new client know about the others in this room
-            clientSocket.emit('dataChannelReceive', message);
+            clientSocket.emit('dataChannelReceive', message, clientSocket.id);
         }
 
 

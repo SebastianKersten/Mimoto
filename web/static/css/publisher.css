@@ -1077,20 +1077,88 @@ div.MimotoPublisher-Article-body {
   div.MimotoPublisher-Article-body em {
     font-style: italic; }
 
-div.otmenu {
-  background-color: #867adb;
-  padding: 20px; }
+div.MimotoPublisher_Article-others-container > div:first-child {
+  display: none; }
 
-div.otbutton {
-  display: inline-block;
-  padding: 5px 8px;
-  background-color: #000000;
-  color: #ffffff;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none; }
+div.MimotoPublisher_Article-others-container > div {
+  float: right;
+  margin-left: 5px; }
+
+div.MimotoPublisher_Article-others-container > div:last-child {
+  margin-left: 0; }
+
+div.MimotoPublisher_Article-others {
+  float: right;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+
+div.MimotoPublisher_Article-others-label {
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  white-space: nowrap;
+  padding: 15px 25px 15px 25px;
+  color: #e5e5e5; }
+
+div.MimotoPublisher_Article-others-other {
+  width: 40px;
+  height: 40px;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #3adb76;
+  background: url("/dynamic/7ed2f3279e444065298dda124923f2b2.png") no-repeat center center;
+  -webkit-background-size: cover;
+          background-size: cover; }
+
+div.MimotoPublisher_Article-others-other-initials {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
 
 div.Author {
   padding: 15px 20px;

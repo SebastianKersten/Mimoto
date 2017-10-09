@@ -1,11 +1,12 @@
 {% extends "publisher/base.twig" %}
 
+{# --- article ---#}
+
 {% block content %}
 
     <img data-js-article="{{ Mimoto.meta('id') }}">
 
         <div class="MimotoPublisher-Article-lede-container">
-
 
             <div class="MimotoPublisher-Article-lede">
 
@@ -23,6 +24,23 @@
         <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {#{{ Mimoto.editable('body') }}#} {{ Mimoto.collaborate('body') }}>{{ Mimoto.data('body') }}</div>
 
         {% if Mimoto.user.hasRole('member') %}{{ Mimoto.module('Conversation') }}{% endif %}
+    </div>
+
+{% endblock %}
+
+
+{# --- also on this page --- #}
+
+{% block alsoonthispage %}
+
+    <div {{ Mimoto.channel('', 'Publisher.alsoOnThisPage') }} class="MimotoPublisher_Article-others">
+        <div class="MimotoPublisher_Article-others-label">Also on this page</div>
+        <div data-publisher-article-others-container class="MimotoPublisher_Article-others-container">
+
+            <div data-publisher-article-others-other-template class="MimotoPublisher_Article-others-other">
+                <span data-publisher-article-others-other-initials class="MimotoPublisher_Article-others-other-initials">SK</span>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

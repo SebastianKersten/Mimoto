@@ -109,4 +109,112 @@ class PublisherController
         return $page->render();
     }
 
+
+
+    public function viewInbox(Application $app)
+    {
+
+        $instagram = new \Instagram\Instagram();
+
+        try {
+            //Login
+            $instagram->login(Mimoto::value('config')->instagram->username, Mimoto::value('config')->instagram->password);
+
+
+
+            //Find User by Username
+            $user = $instagram->getUserByUsername("the.vulva.gallery");
+            //Get Feed of User by Id
+            $userFeed = $instagram->getUserFeed($user);
+            //Iterate over Items in Feed
+            foreach($userFeed->getItems() as $feedItem){
+                //User Object, (who posted this)
+                $user = $feedItem->getUser();
+                //Caption Object
+                $caption = $feedItem->getCaption();
+                //How many Likes?
+                $likeCount = $feedItem->getLikeCount();
+                //How many Comments?
+                $commentCount = $feedItem->getCommentCount();
+                //Get the Comments
+                $comments = $feedItem->getComments();
+                //Which Filter did they use?
+                $filterType = $feedItem->getFilterType();
+                //Grab a list of Images for this Post (different sizes)
+                $images = $feedItem->getImageVersions2()->getCandidates();
+                //Grab the URL of the first Photo in the list of Images for this Post
+                $photoUrl = $images[0]->getUrl();
+                //todo: Do something with it :)
+                //Output the Photo URL
+                //echo $photoUrl . "\n";
+
+
+                echo '<div style="display:inline-block">';
+                echo '<div><img src="'.$photoUrl.'" width="400" /></div>';
+                echo '<div style="font-style:italic;color:#858585;">'.$caption->getText().'</div>';
+                echo '<div style="display:inline-block;background-color:#ff0000;color:#ffffff;">'.$likeCount.' likes</div>';
+                echo '<div style="display:inline-block;background-color:#000000;color:#ffffff;">'.$commentCount.' comments</div>';
+                echo '</div>';
+
+
+                //Mimoto::error($feedItem->getId());
+
+                $aAllComments = [];
+                $nCommentsLoaded = 0;
+                $sMaxId = '';
+                while ($nCommentsLoaded < $commentCount)
+                {
+                    $mediaComments = $instagram->getMediaComments($feedItem, $sMaxId);
+
+
+                    $aNewBatch = [];
+
+                    foreach ($mediaComments->getComments() as $mediaComment)
+                    {
+                        $nCommentsLoaded++;
+
+                        $aNewBatch[] = (object) array(
+                            'username' => $mediaComment->getUser()->getUsername(),
+                            'comment' => $mediaComment->getText(),
+                            'isHidden' => $mediaComment->getType() == 2
+                        );
+
+                        Mimoto::output('$mediaComment', $mediaComment);
+                    }
+
+
+
+
+                    $aAllComments = array_merge($aNewBatch, $aAllComments);
+
+                    // prepare
+                    $sMaxId = $mediaComments->getNextMaxId();
+                }
+
+
+                $nCommentCount = count($aAllComments);
+                for ($nCommentIndex = 0; $nCommentIndex < $nCommentCount; $nCommentIndex++)
+                {
+                    // register
+                    $comment = $aAllComments[$nCommentIndex];
+
+                    // output
+                    if ($comment->isHidden) echo '<strike style="font-style:italic;color:#858585;">';
+
+                    echo '<b>'.($nCommentIndex + 1).' - '.$comment->username.'</b> - '.$comment->comment.'<br>';
+
+                    if ($comment->isHidden) echo '</strike>';
+                }
+
+            }
+
+        } catch(Exception $e){
+            //Something went wrong...
+            echo $e->getMessage() . "\n";
+        }
+
+
+        return '';
+    }
+
 }

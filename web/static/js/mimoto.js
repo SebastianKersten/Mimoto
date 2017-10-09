@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "54255744418c1d9785e6";
+/******/ 	__webpack_require__.h = "b40e410c68fac175811f";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -36387,6 +36387,9 @@ module.exports.prototype = {
     _aDelegates: [],
     _aSendRequests: [],
     _aReceiveRequests: [],
+    _aOthers: [],
+
+    DATACHANNEL_EVENT_PREFIX: 'Mimoto_DataChannelEvent',
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -36402,37 +36405,83 @@ module.exports.prototype = {
     },
 
     // ----------------------------------------------------------------------------
+    // --- Events -----------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    onSelfConnected: null,
+    onOtherConnected: null,
+    onOtherDisconnected: null,
+
+    // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
 
 
     connect: function connect(socket) {
-        // store
+        // 1. skip reconfiguration
+        if (this._socket) return;
+
+        // 2. store
         this._socket = socket;
 
-        // configur
-        this._socket.on('dataChannelConnected', function (data) {
-            this._onConnected(data);
+        // 3. configure
+        this._socket.on('dataChannelSelfConnected', function (data) {
+            this._onSelfConnected(data);
+        }.bind(this));
+        this._socket.on('dataChannelOtherConnected', function (data) {
+            this._onOtherConnected(data);
+        }.bind(this));
+        this._socket.on('dataChannelOtherDisconnected', function (data) {
+            this._onOtherDisconnected(data);
         }.bind(this));
 
-        // connect
+        // 4. connect
         this._socket.emit('dataChannelConnect', this._sSelector);
     },
 
-    _onConnected: function _onConnected(data) {
-        // configure
-        this._socket.on('dataChannelReceive', function (message) {
-            this._distributeMessage(message);
+    _onSelfConnected: function _onSelfConnected(others) {
+        // 1. register users here
+        this._aOthers = others;
+
+        // 2. configure
+        this._socket.on('dataChannelReceive', function (message, clientId) {
+            this._distributeMessage(message, clientId);
         }.bind(this));
 
-        // 1. handle queue
+        // 3. let `self` know
+        if (this.onConnected && typeof this.onConnected === "function") this.onConnected();
+
+        // 4. handle queue
         while (this._aSendRequests.length > 0) {
-            // remove
+            // a. remove
             var sendRequest = this._aSendRequests.shift();
 
-            // send
+            // b. send
             this.send(sendRequest.sEvent, sendRequest.data);
         }
+    },
+
+    _onOtherConnected: function _onOtherConnected(clientId) {
+        // 1. store
+        this._aOthers.push(clientId);
+
+        // 2. report newly connected user
+        if (this.onOtherConnected && typeof this.onOtherConnected === "function") this.onOtherConnected(clientId);
+    },
+
+    _onOtherDisconnected: function _onOtherDisconnected(clientId) {
+        // 1. cleanup
+        for (var nOtherIndex = 0; nOtherIndex < this._aOthers.length; nOtherIndex++) {
+            // a. remove
+            this._aOthers.splice(nOtherIndex, 1);
+
+            // b. update
+            nOtherIndex--;
+        }
+
+        // 2. report recently disconnected user
+        if (this.onOtherDisconnected && typeof this.onOtherDisconnected === "function") this.onOtherDisconnected(clientId);
     },
 
     send: function send(sEvent, data) {
@@ -36454,24 +36503,24 @@ module.exports.prototype = {
 
     receive: function receive(sEvent, fDelegate) {
         // verify or init
-        if (!this._aDelegates[sEvent]) this._aDelegates[sEvent] = [];
+        if (!this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent]) this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent] = [];
 
         // store
-        this._aDelegates[sEvent].push(fDelegate);
+        this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent].push(fDelegate);
     },
 
-    _distributeMessage: function _distributeMessage(message) {
+    _distributeMessage: function _distributeMessage(message, clientId) {
         // verify
-        if (!this._aDelegates[message.sEvent] || this._aDelegates[message.sEvent].length === 0) return;
+        if (!this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent] || this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent].length === 0) return;
 
         // forward
-        var nDelegateCount = this._aDelegates[message.sEvent].length;
+        var nDelegateCount = this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent].length;
         for (var nDelegateIndex = 0; nDelegateIndex < nDelegateCount; nDelegateIndex++) {
             // register
-            var fDelegate = this._aDelegates[message.sEvent][nDelegateIndex];
+            var fDelegate = this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent][nDelegateIndex];
 
             // broadcast
-            fDelegate(message.data);
+            fDelegate(message.data, clientId);
         }
     }
 
