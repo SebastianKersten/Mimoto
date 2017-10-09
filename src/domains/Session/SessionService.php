@@ -18,6 +18,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class SessionService
 {
+    const PASSWORD_HASH_ALGORITM = PASSWORD_BCRYPT;
+    const PASSWORD_HASH_OPTIONS = [
+        'cost' => PASSWORD_BCRYPT_DEFAULT_COST + 1, // be on the safe side
+    ];
 
     private $_app;
     private $_currentUser;
@@ -72,14 +76,13 @@ class SessionService
 
     public function createPasswordHash($sPassword)
     {
-        // init
-        $encryptedPassword = (object) array(
-            'salt' => bin2hex(random_bytes(32)),
-            'iterations' => 50000
-        );
-
         // encrypt
-        $encryptedPassword->hash = hash_pbkdf2('sha256', $sPassword, $encryptedPassword->salt, $encryptedPassword->iterations, 64);
+        $encryptedPassword = password_hash($sPassword, self::PASSWORD_HASH_ALGORITM, self::PASSWORD_HASH_OPTIONS);
+
+        // validate
+        if (empty($encryptedPassword)) {
+            throw new \Exception('can not properly hash password');
+        }
 
         // send
         return $encryptedPassword;
@@ -87,6 +90,6 @@ class SessionService
 
     public function comparePassword($sPassword, $encryptedPassword)
     {
-        return ($encryptedPassword->hash == hash_pbkdf2('sha256', $sPassword, $encryptedPassword->salt, $encryptedPassword->iterations, 64));
+        return password_verify($sPassword, $encryptedPassword);
     }
 }
