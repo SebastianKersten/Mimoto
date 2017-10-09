@@ -35,7 +35,7 @@ class DashboardController
             if (count($aUsers) == 0)
             {
                 // add temp password
-                $sPassword = json_encode(Mimoto::service('session')->createPasswordHash('welcome'));
+                $sPassword = Mimoto::service('session')->createPasswordHash('welcome');
 
 
                 Mimoto::output('Installing Mimoto (step 2 / 2)', "Add your first user (with owner permissions)<br>
