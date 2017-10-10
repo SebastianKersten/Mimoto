@@ -242,9 +242,6 @@ module.exports.prototype = {
 
     _handleInputChange: function()
     {
-        Mimoto.log('Changed from', this._persistentValue, 'to', this._input.getValue());
-
-
         // 1. validate
         if (this._aValidationRules.length > 0 && !this._validateInputField()) return;
 
