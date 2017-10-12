@@ -71,7 +71,7 @@ module.exports.prototype = {
         channel.onConnected = function() {
 
             // broadcast
-            channel.send('join', { firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
+            channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
 
         }.bind(this);
 

@@ -6,7 +6,7 @@ module.exports = {
     loadingIcon: '#ico-loading',
     loadingIconClass: 'MimotoCMS_modules_Button-icon--loading',
     successClass: 'MimotoCMS_modules_Button--success',
-    successIcon: '#ico-checkmark',
+    successIcon: '#Mimoto_ico-checkmark',
     successIconClass: 'MimotoCMS_modules_Button-icon--success',
     iconSelector: '.js-button-icon',
 

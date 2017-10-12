@@ -21,6 +21,10 @@ module.exports.prototype = {
     _aDelegates: [],
     _aSendRequests: [],
     _aReceiveRequests: [],
+    _queuedIdentificationData: null,
+
+    // users
+    _self: null,
     _aOthers: [],
 
 
@@ -67,9 +71,57 @@ module.exports.prototype = {
 
         // 1. broadcast
         // 2. make available
+
+
+        // validate or queue
+        if (!this._socket)
+        {
+            this._queuedIdentificationData = publicData;
+        }
+        else
+        {
+            this._socket.emit('dataChannelIdentify', this._queuedIdentificationData);
+        }
     },
 
-    connect: function(socket)
+    send: function(sEvent, data)
+    {
+        // validate or queue
+        if (!this._socket)
+        {
+            this._aSendRequests.push({sEvent:sEvent, data:data});
+        }
+        else
+        {
+            // build
+            let message = {
+                sSelector: this._sSelector,
+                sEvent: sEvent,
+                data: data
+            };
+
+            // broadcast
+            this._socket.emit('dataChannelSend', message);
+        }
+    },
+
+    receive: function(sEvent, fDelegate)
+    {
+        // verify or init
+        if (!this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent]) this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent] = [];
+
+        // store
+        this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent].push(fDelegate);
+    },
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _connect: function(socket)
     {
         // 1. skip reconfiguration
         if (this._socket) return;
@@ -131,36 +183,6 @@ module.exports.prototype = {
 
         // 2. report recently disconnected user
         if (this.onOtherDisconnected && typeof this.onOtherDisconnected === "function") this.onOtherDisconnected(clientId);
-    },
-
-    send: function(sEvent, data)
-    {
-        // validate or queue
-        if (!this._socket)
-        {
-            this._aSendRequests.push({sEvent:sEvent, data:data});
-        }
-        else
-        {
-            // build
-            let message = {
-                sSelector: this._sSelector,
-                sEvent: sEvent,
-                data: data
-            };
-
-            // broadcast
-            this._socket.emit('dataChannelSend', message);
-        }
-    },
-
-    receive: function(sEvent, fDelegate)
-    {
-        // verify or init
-        if (!this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent]) this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent] = [];
-
-        // store
-        this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent].push(fDelegate);
     },
 
     _distributeMessage: function(message, clientId)

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "954c3ab96611790e6bb4";
+/******/ 	__webpack_require__.h = "9b4065f641ea8d45e869";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -29536,7 +29536,7 @@ module.exports.prototype = {
         // connect all
         var nDataChannelCount = this._aDataChannels.length;
         for (var nDataChannelIndex = 0; nDataChannelIndex < nDataChannelCount; nDataChannelIndex++) {
-            this._aDataChannels[nDataChannelIndex].connect(this._socket);
+            this._aDataChannels[nDataChannelIndex]._connect(this._socket);
         }
     },
 
@@ -36385,6 +36385,10 @@ module.exports.prototype = {
     _aDelegates: [],
     _aSendRequests: [],
     _aReceiveRequests: [],
+    _queuedIdentificationData: null,
+
+    // users
+    _self: null,
     _aOthers: [],
 
     DATACHANNEL_EVENT_PREFIX: 'Mimoto_DataChannelEvent',
@@ -36421,9 +36425,47 @@ module.exports.prototype = {
 
         // 1. broadcast
         // 2. make available
+
+
+        // validate or queue
+        if (!this._socket) {
+            this._queuedIdentificationData = publicData;
+        } else {
+            this._socket.emit('dataChannelIdentify', this._queuedIdentificationData);
+        }
     },
 
-    connect: function connect(socket) {
+    send: function send(sEvent, data) {
+        // validate or queue
+        if (!this._socket) {
+            this._aSendRequests.push({ sEvent: sEvent, data: data });
+        } else {
+            // build
+            var message = {
+                sSelector: this._sSelector,
+                sEvent: sEvent,
+                data: data
+            };
+
+            // broadcast
+            this._socket.emit('dataChannelSend', message);
+        }
+    },
+
+    receive: function receive(sEvent, fDelegate) {
+        // verify or init
+        if (!this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent]) this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent] = [];
+
+        // store
+        this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent].push(fDelegate);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _connect: function _connect(socket) {
         // 1. skip reconfiguration
         if (this._socket) return;
 
@@ -36487,31 +36529,6 @@ module.exports.prototype = {
 
         // 2. report recently disconnected user
         if (this.onOtherDisconnected && typeof this.onOtherDisconnected === "function") this.onOtherDisconnected(clientId);
-    },
-
-    send: function send(sEvent, data) {
-        // validate or queue
-        if (!this._socket) {
-            this._aSendRequests.push({ sEvent: sEvent, data: data });
-        } else {
-            // build
-            var message = {
-                sSelector: this._sSelector,
-                sEvent: sEvent,
-                data: data
-            };
-
-            // broadcast
-            this._socket.emit('dataChannelSend', message);
-        }
-    },
-
-    receive: function receive(sEvent, fDelegate) {
-        // verify or init
-        if (!this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent]) this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent] = [];
-
-        // store
-        this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + sEvent].push(fDelegate);
     },
 
     _distributeMessage: function _distributeMessage(message, clientId) {

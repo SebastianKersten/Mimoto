@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "954c3ab96611790e6bb4";
+/******/ 	__webpack_require__.h = "9b4065f641ea8d45e869";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -163,7 +163,7 @@ module.exports.prototype = {
         channel.onConnected = function () {
 
             // broadcast
-            channel.send('join', { firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
+            channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
         }.bind(this);
 
         // //channel.onOtherJoined = function(client) {

@@ -101,7 +101,7 @@ class AimlessForm extends AimlessComponent
             'data-mimoto-form-instanceid="'.$formFieldValues->entityId.'" '.
             'data-mimoto-form-publickey="'.Mimoto::service('input')->generatePublicKey($formFieldValues).'" '.
             'data-mimoto-form-actions="'.$sFormActions.'" '.
-            'data-mimoto-form-manualsave="'.(($form->get('manualSave') == 1) ? 'true' : 'false').'">';
+            'data-mimoto-form-manualsave="'.(($form->get('manualSave') == 1) ? 'true' : 'false').'" onsubmit="return false;">';
 
         // render form
         $sRenderedForm .= parent::renderCollection($aFields, null, null, $formFieldValues->fields, true);

@@ -120,7 +120,7 @@ class InputValidation
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_FORM_INPUTVALIDATION);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_FORM_INPUTVALIDATION, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Validation', 'Set a validation rule', '');
