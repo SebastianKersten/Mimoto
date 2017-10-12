@@ -1101,7 +1101,8 @@ div.MimotoPublisher_Article-others {
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  visibility: hidden; }
 
 div.MimotoPublisher_Article-others-label {
   -webkit-box-flex: 0;
@@ -1136,12 +1137,12 @@ div.MimotoPublisher_Article-others-other {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #3adb76;
-  background: url("/dynamic/7ed2f3279e444065298dda124923f2b2.png") no-repeat center center;
+  background-color: #ffffff;
   -webkit-background-size: cover;
-          background-size: cover; }
+          background-size: cover;
+  background-position: center; }
 
-div.MimotoPublisher_Article-others-other-initials {
+span.MimotoPublisher_Article-others-other-initials {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1158,7 +1159,8 @@ div.MimotoPublisher_Article-others-other-initials {
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  color: #000000; }
 
 div.Author {
   padding: 15px 20px;

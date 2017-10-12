@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "9b4065f641ea8d45e869";
+/******/ 	__webpack_require__.h = "be66ce8c0c18a98fc315";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -36421,18 +36421,16 @@ module.exports.prototype = {
 
 
     identify: function identify(publicData) {
-        // register user information which is publicly broadcasted within the channel
-
-        // 1. broadcast
-        // 2. make available
-
-
         // validate or queue
         if (!this._socket) {
             this._queuedIdentificationData = publicData;
         } else {
-            this._socket.emit('dataChannelIdentify', this._queuedIdentificationData);
+            this._socket.emit('dataChannelIdentify', this._sSelector, publicData);
         }
+    },
+
+    getInfo: function getInfo(clientId) {
+        return this._aOthers[clientId] ? this._aOthers[clientId].publicData : null;
     },
 
     send: function send(sEvent, data) {
@@ -36479,6 +36477,9 @@ module.exports.prototype = {
         this._socket.on('dataChannelOtherConnected', function (data) {
             this._onOtherConnected(data);
         }.bind(this));
+        this._socket.on('dataChannelOtherIdentified', function (clientId, publicData) {
+            this._onOtherIdentified(clientId, publicData);
+        }.bind(this));
         this._socket.on('dataChannelOtherDisconnected', function (data) {
             this._onOtherDisconnected(data);
         }.bind(this));
@@ -36496,10 +36497,23 @@ module.exports.prototype = {
             this._distributeMessage(message, clientId);
         }.bind(this));
 
-        // 3. let `self` know
-        if (this.onConnected && typeof this.onConnected === "function") this.onConnected();
+        // 3. filter
+        var aOtherIds = [];
+        for (var clientId in this._aOthers) {
+            aOtherIds.push(clientId);
+        } // 4. let `self` know
+        if (this.onSelfConnected && typeof this.onSelfConnected === "function") this.onSelfConnected(aOtherIds);
 
-        // 4. handle queue
+        // 5. handle identification queue
+        if (this._queuedIdentificationData) {
+            // a. execute
+            this.identify(this._queuedIdentificationData);
+
+            // b. cleanup
+            delete this._queuedIdentificationData;
+        }
+
+        // 6. handle send queue
         while (this._aSendRequests.length > 0) {
             // a. remove
             var sendRequest = this._aSendRequests.shift();
@@ -36511,21 +36525,23 @@ module.exports.prototype = {
 
     _onOtherConnected: function _onOtherConnected(clientId) {
         // 1. store
-        this._aOthers.push(clientId);
+        this._aOthers[clientId] = { clientId: clientId };
 
         // 2. report newly connected user
         if (this.onOtherConnected && typeof this.onOtherConnected === "function") this.onOtherConnected(clientId);
     },
 
+    _onOtherIdentified: function _onOtherIdentified(clientId, publicData) {
+        // 1. store
+        if (this._aOthers[clientId]) this._aOthers[clientId].publicData = publicData;
+
+        // 2. report newly identification
+        if (this.onOtherIdentified && typeof this.onOtherIdentified === "function") this.onOtherIdentified(clientId);
+    },
+
     _onOtherDisconnected: function _onOtherDisconnected(clientId) {
         // 1. cleanup
-        for (var nOtherIndex = 0; nOtherIndex < this._aOthers.length; nOtherIndex++) {
-            // a. remove
-            this._aOthers.splice(nOtherIndex, 1);
-
-            // b. update
-            nOtherIndex--;
-        }
+        if (this._aOthers[clientId]) delete this._aOthers[clientId];
 
         // 2. report recently disconnected user
         if (this.onOtherDisconnected && typeof this.onOtherDisconnected === "function") this.onOtherDisconnected(clientId);

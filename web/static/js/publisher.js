@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "9b4065f641ea8d45e869";
+/******/ 	__webpack_require__.h = "be66ce8c0c18a98fc315";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -114,6 +114,10 @@ document.addEventListener('DOMContentLoaded', function () {
 var Article = __webpack_require__(458);
 var Editor = __webpack_require__(459);
 
+var AlsoOnThisPage = __webpack_require__(473);
+//let IsTypingComment = require('./presence/IsTypingComment');
+
+
 module.exports = function () {
 
     // start
@@ -122,12 +126,9 @@ module.exports = function () {
 
 module.exports.prototype = {
 
-    // feature: is typing
-    _aUsersInCommentField: [],
-    _elIsTypingMessage: null,
-    _isTypingChannel: null,
-    _alsoOnThisPageChannel: null,
-    _aClientsOnThisPage: [],
+    // presence
+    _alsoOnThisPage: null,
+    _isTypingComment: null,
 
     // ----------------------------------------------------------------------------
     // --- Properties -------------------------------------------------------------
@@ -156,186 +157,11 @@ module.exports.prototype = {
 
 
     alsoOnThisPage: function alsoOnThisPage(channel) {
-        // register
-        this._alsoOnThisPageChannel = channel;
-
-        //channel.onOtherJoined = function(client) {
-        channel.onConnected = function () {
-
-            // broadcast
-            channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
-        }.bind(this);
-
-        // //channel.onOtherJoined = function(client) {
-        // channel.onOtherConnected = function(clientId) {
-        //
-        //     this._aClientsOnThisPage[clientId] = {
-        //         isNew: true
-        //     }
-        //
-        // }.bind(this);
-
-        //channel.onOtherLeft = function(client) {
-        channel.onOtherDisconnected = function (clientId) {
-            // validate
-            if (!this._aClientsOnThisPage[clientId]) return;
-
-            // toggle
-            this._aClientsOnThisPage[clientId].isToBeRemoved = true;
-
-            // update
-            this._updateAlsoOnThisPage(clientId);
-
-            // cleanup
-            delete this._aClientsOnThisPage[clientId];
-
-            // toggle visibility
-            this._toggleAlsoOnThisPageVisibility();
-        }.bind(this);
-
-        channel.receive('join', function (data, clientId) {
-            this._aClientsOnThisPage[clientId] = {
-                isNew: true,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                avatar: data.avatar
-            };
-
-            this._updateAlsoOnThisPage(clientId);
-
-            // toggle visibility
-            this._toggleAlsoOnThisPageVisibility();
-        }.bind(this));
+        this._alsoOnThisPage = new AlsoOnThisPage(channel);
     },
-
-    _updateAlsoOnThisPage: function _updateAlsoOnThisPage(userId) {
-
-        for (var clientId in this._aClientsOnThisPage) {
-            // register
-            var client = this._aClientsOnThisPage[clientId];
-
-            if (client.isNew) {
-                // reset
-                delete client.isNew;
-
-                // init
-                client.element = this._alsoOnThisPageChannel.element.querySelector('[data-publisher-article-others-other-template]').cloneNode();
-
-                // add
-                this._alsoOnThisPageChannel.element.querySelector('[data-publisher-article-others-container]').appendChild(client.element);
-
-                // register
-                var elAvatarInitials = this._alsoOnThisPageChannel.element.querySelector('[data-publisher-article-others-other-initials]');
-
-                // set data
-                if (client.avatar) client.element.setAttribute('style', 'background-image:url(' + client.avatar + ');');
-
-                elAvatarInitials.innerText = client.firstName.substr(0, 1).toUpperCase() + client.lastName.substr(0, 1).toUpperCase();
-
-                console.log('isNew!');
-            }
-
-            if (client.isToBeRemoved) {
-                // reset
-                delete client.isToBeRemoved;
-
-                console.log('isToBeRemoved!');
-
-                client.element.parentNode.removeChild(client.element);
-            }
-        }
-    },
-
-    _toggleAlsoOnThisPageVisibility: function _toggleAlsoOnThisPageVisibility() {
-
-        var bHasItems = false;
-        for (var sKey in this._aClientsOnThisPage) {
-            bHasItems = true;break;
-        }
-
-        Mimoto.warn('!this._aClientsOnThisPage', !this._aClientsOnThisPage, bHasItems);
-
-        // toggle visibility
-        if (!bHasItems) {
-            this._alsoOnThisPageChannel.element.classList.add('Mimoto_CoreCSS_hidden');
-        } else {
-            this._alsoOnThisPageChannel.element.classList.remove('Mimoto_CoreCSS_hidden');
-        }
-    },
-
-    // -----------
-
 
     isTypingComment: function isTypingComment(channel) {
-        // register
-        this._isTypingChannel = channel;
-
-        // find and register
-        this._elIsTypingMessage = document.querySelector('[data-publisher-conversation-istypingmessage]');
-
-        // initial setup
-        this._updateIsTypingMessage(channel.element);
-
-        channel.element.addEventListener('focus', function () {
-
-            // broadcast
-            channel.send('startsTyping', { firstName: Mimoto.user.firstName });
-        });
-
-        channel.element.addEventListener('blur', function () {
-
-            // broadcast
-            channel.send('stopsTyping', { firstName: Mimoto.user.firstName });
-        });
-
-        channel.receive('startsTyping', function (data) {
-            // register
-            this._aUsersInCommentField.push(data.firstName);
-
-            // update
-            this._updateIsTypingMessage(channel.element);
-        }.bind(this));
-
-        channel.receive('stopsTyping', function (data) {
-            // cleanup - #todo needs public id or id provided by realtime.js
-            var nUserCount = this._aUsersInCommentField.length;
-            for (var nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++) {
-                // verify
-                if (this._aUsersInCommentField[nUserIndex] === data.firstName) {
-                    // remove
-                    this._aUsersInCommentField.splice(nUserIndex, 1);
-                    break;
-                }
-            }
-
-            // update
-            this._updateIsTypingMessage(channel.element);
-        }.bind(this));
-    },
-
-    _updateIsTypingMessage: function _updateIsTypingMessage(element) {
-        // init
-        var sMessage = '';
-
-        // compose
-        var nUserCount = this._aUsersInCommentField.length;
-        for (var nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++) {
-            // build
-            sMessage += this._aUsersInCommentField[nUserIndex];
-
-            // connect
-            if (nUserIndex < nUserCount - 1) {
-                sMessage += nUserCount === 2 || nUserIndex === nUserCount - 2 ? ' and ' : ', ';
-            }
-        }
-
-        // update interface
-        if (nUserCount === 0) {
-            // cleanup
-            this._elIsTypingMessage.innerHTML = '&nbsp;';
-        } else {
-            this._elIsTypingMessage.innerText = sMessage + ' ' + (nUserCount === 1 ? 'is' : 'are') + ' typing ..';
-        }
+        //this._isTypingComment = new IsTypingComment(channel);
     },
 
     /**
@@ -540,6 +366,168 @@ module.exports.prototype = {
 
         // 4. delete formatting options (als mogelijke feedback van popup)
         // 5. onInit (wanneer het op de dom geplaatst worden vanuit een saved state
+    }
+
+};
+
+/***/ }),
+
+/***/ 473:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto.Publisher - Demo "Also on this page"
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (channel) {
+
+    // start
+    this.__construct(channel);
+};
+
+module.exports.prototype = {
+
+    // communication
+    _channel: null,
+    _others: [],
+
+    // dom
+    _elOtherTemplate: null,
+    _elOtherContainer: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(channel) {
+        // store
+        this._channel = channel;
+
+        // register
+        this._elOtherTemplate = channel.element.querySelector('[data-publisher-article-others-other-template]');
+        this._elOtherContainer = channel.element.querySelector('[data-publisher-article-others-container]');
+
+        //configure
+        channel.onSelfConnected = this._onSelfConnected.bind(this);
+        channel.onOtherConnected = this._onOtherConnected.bind(this);
+        channel.onOtherIdentified = this._onOtherIdentified.bind(this);
+        channel.onOtherDisconnected = this._onOtherDisconnected.bind(this);
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Event listeners --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _onSelfConnected: function _onSelfConnected(aOthers) {
+        // init
+        this._initOthersAlreadyOnPage(aOthers);
+
+        // broadcast
+        this._channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
+    },
+
+    _onOtherConnected: function _onOtherConnected(clientId) {
+        // add
+        this._addOther(clientId);
+    },
+
+    _onOtherIdentified: function _onOtherIdentified(clientId) {
+        this._showPublicInfo(clientId);
+    },
+
+    _onOtherDisconnected: function _onOtherDisconnected(clientId) {
+        // verify if user was known
+        if (!this._others[clientId]) return;
+
+        // register
+        var elOther = this._others[clientId].element;
+
+        // remove
+        elOther.parentNode.removeChild(elOther);
+
+        // cleanup
+        delete this._others[clientId];
+
+        // update
+        this._toggleVisibility();
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _initOthersAlreadyOnPage: function _initOthersAlreadyOnPage(aOthers) {
+        // build
+        var nOtherCount = aOthers.length;
+        for (var nOtherIndex = 0; nOtherIndex < nOtherCount; nOtherIndex++) {
+            // register
+            var clientId = aOthers[nOtherIndex];
+
+            // add
+            this._addOther(clientId);
+
+            // show public info
+            this._showPublicInfo(clientId);
+        }
+    },
+
+    _addOther: function _addOther(clientId) {
+        // create
+        var elOther = this._elOtherTemplate.cloneNode(true);
+
+        // connect
+        this._elOtherContainer.appendChild(elOther);
+
+        // store
+        this._others[clientId] = { element: elOther };
+
+        // update
+        this._toggleVisibility();
+    },
+
+    _showPublicInfo: function _showPublicInfo(clientId) {
+        // verify if user was known
+        if (!this._others[clientId]) return;
+
+        // register
+        var info = this._channel.getInfo(clientId);
+
+        // validate
+        if (!info) return;
+
+        // register
+        var elOther = this._others[clientId].element;
+        var elAvatarInitials = elOther.querySelector('[data-publisher-article-others-other-initials]');
+
+        // set data
+        if (info.avatar) {
+            elOther.setAttribute('style', 'background-image: url("' + info.avatar + '");');
+            elAvatarInitials.innerText = '';
+        } else {
+            elAvatarInitials.innerText = info.firstName.substr(0, 1).toUpperCase() + info.lastName.substr(0, 1).toUpperCase();
+        }
+    },
+
+    _toggleVisibility: function _toggleVisibility() {
+        // find other
+        var bHasItems = false;
+        for (var clientId in this._others) {
+            bHasItems = true;break;
+        }
+
+        // toggle
+        this._channel.element.style.visibility = !bHasItems ? 'hidden' : 'visible';
     }
 
 };

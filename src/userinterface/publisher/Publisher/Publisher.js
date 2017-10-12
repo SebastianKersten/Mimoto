@@ -12,6 +12,9 @@
 let Article = require('../Article/Article');
 let Editor = require('../Editor/Editor');
 
+let AlsoOnThisPage = require('./presence/AlsoOnThisPage');
+//let IsTypingComment = require('./presence/IsTypingComment');
+
 
 module.exports = function() {
 
@@ -21,13 +24,9 @@ module.exports = function() {
 
 module.exports.prototype = {
 
-
-    // feature: is typing
-    _aUsersInCommentField: [],
-    _elIsTypingMessage: null,
-    _isTypingChannel: null,
-    _alsoOnThisPageChannel: null,
-    _aClientsOnThisPage: [],
+    // presence
+    _alsoOnThisPage: null,
+    _isTypingComment: null,
 
 
 
@@ -64,232 +63,13 @@ module.exports.prototype = {
 
     alsoOnThisPage: function(channel)
     {
-        // register
-        this._alsoOnThisPageChannel = channel;
-
-        //channel.onOtherJoined = function(client) {
-        channel.onConnected = function() {
-
-            // broadcast
-            channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
-
-        }.bind(this);
-
-        // //channel.onOtherJoined = function(client) {
-        // channel.onOtherConnected = function(clientId) {
-        //
-        //     this._aClientsOnThisPage[clientId] = {
-        //         isNew: true
-        //     }
-        //
-        // }.bind(this);
-
-        //channel.onOtherLeft = function(client) {
-        channel.onOtherDisconnected = function(clientId)
-        {
-            // validate
-            if (!this._aClientsOnThisPage[clientId]) return;
-
-            // toggle
-            this._aClientsOnThisPage[clientId].isToBeRemoved = true;
-
-            // update
-            this._updateAlsoOnThisPage(clientId);
-
-            // cleanup
-            delete this._aClientsOnThisPage[clientId];
-
-            // toggle visibility
-            this._toggleAlsoOnThisPageVisibility();
-
-        }.bind(this);
-
-
-
-        channel.receive('join', function(data, clientId)
-        {
-            this._aClientsOnThisPage[clientId] = {
-                isNew: true,
-                firstName: data.firstName,
-                lastName: data.lastName,
-                avatar: data.avatar
-            };
-
-            this._updateAlsoOnThisPage(clientId);
-
-            // toggle visibility
-            this._toggleAlsoOnThisPageVisibility();
-
-        }.bind(this));
+        this._alsoOnThisPage = new AlsoOnThisPage(channel);
     },
-
-
-
-    _updateAlsoOnThisPage: function(userId)
-    {
-        
-        for (let clientId in this._aClientsOnThisPage)
-        {
-            // register
-            let client = this._aClientsOnThisPage[clientId];
-            
-
-            if (client.isNew)
-            {
-                // reset
-                delete client.isNew;
-
-                // init
-                client.element = this._alsoOnThisPageChannel.element.querySelector('[data-publisher-article-others-other-template]').cloneNode();
-
-                // add
-                this._alsoOnThisPageChannel.element.querySelector('[data-publisher-article-others-container]').appendChild(client.element);
-
-                // register
-                let elAvatarInitials = this._alsoOnThisPageChannel.element.querySelector('[data-publisher-article-others-other-initials]');
-
-                // set data
-                if (client.avatar) client.element.setAttribute('style', 'background-image:url(' + client.avatar + ');');
-
-
-                elAvatarInitials.innerText = client.firstName.substr(0, 1).toUpperCase() + client.lastName.substr(0, 1).toUpperCase();
-
-
-                console.log('isNew!');
-            }
-
-            if (client.isToBeRemoved)
-            {
-                // reset
-                delete client.isToBeRemoved;
-
-                console.log('isToBeRemoved!');
-
-
-                client.element.parentNode.removeChild(client.element);
-            }
-        }
-    },
-
-
-    _toggleAlsoOnThisPageVisibility: function()
-    {
-
-
-
-        let bHasItems = false;
-        for (let sKey in this._aClientsOnThisPage) { bHasItems = true; break; }
-
-
-        Mimoto.warn('!this._aClientsOnThisPage', !this._aClientsOnThisPage, bHasItems);
-
-        // toggle visibility
-        if (!bHasItems)
-        {
-            this._alsoOnThisPageChannel.element.classList.add('Mimoto_CoreCSS_hidden');
-        }
-        else
-        {
-            this._alsoOnThisPageChannel.element.classList.remove('Mimoto_CoreCSS_hidden');
-        }
-    },
-
-
-
-    // -----------
-    
-    
 
     isTypingComment: function(channel)
     {
-        // register
-        this._isTypingChannel = channel;
-
-        // find and register
-        this._elIsTypingMessage = document.querySelector('[data-publisher-conversation-istypingmessage]');
-
-
-
-        // initial setup
-        this._updateIsTypingMessage(channel.element);
-
-
-
-        channel.element.addEventListener('focus', function() {
-
-            // broadcast
-            channel.send('startsTyping', { firstName: Mimoto.user.firstName });
-        });
-
-        channel.element.addEventListener('blur', function() {
-
-            // broadcast
-            channel.send('stopsTyping', { firstName: Mimoto.user.firstName });
-        });
-
-        channel.receive('startsTyping', function(data)
-        {
-            // register
-            this._aUsersInCommentField.push(data.firstName);
-
-            // update
-            this._updateIsTypingMessage(channel.element);
-
-        }.bind(this));
-
-        channel.receive('stopsTyping', function(data)
-        {
-            // cleanup - #todo needs public id or id provided by realtime.js
-            let nUserCount = this._aUsersInCommentField.length;
-            for (let nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++)
-            {
-                // verify
-                if (this._aUsersInCommentField[nUserIndex] === data.firstName)
-                {
-                    // remove
-                    this._aUsersInCommentField.splice(nUserIndex, 1);
-                    break;
-                }
-            }
-
-            // update
-            this._updateIsTypingMessage(channel.element);
-
-        }.bind(this))
+        //this._isTypingComment = new IsTypingComment(channel);
     },
-
-    _updateIsTypingMessage: function(element)
-    {
-        // init
-        let sMessage = '';
-
-        // compose
-        let nUserCount = this._aUsersInCommentField.length;
-        for (let nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++)
-        {
-            // build
-            sMessage += this._aUsersInCommentField[nUserIndex];
-
-            // connect
-            if (nUserIndex < nUserCount - 1)
-            {
-                sMessage += (nUserCount === 2 || nUserIndex === nUserCount - 2) ? ' and ' : ', ';
-            }
-        }
-
-        // update interface
-        if (nUserCount === 0)
-        {
-            // cleanup
-            this._elIsTypingMessage.innerHTML = '&nbsp;';
-        }
-        else
-        {
-            this._elIsTypingMessage.innerText = sMessage + ' ' + ((nUserCount === 1) ? 'is' : 'are') + ' typing ..';
-        }
-
-    },
-    
 
 
     /**
