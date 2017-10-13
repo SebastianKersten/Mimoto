@@ -15,10 +15,16 @@ var aClients = [];
 var aRooms = [];
 
 
-let aClientsInDataChannels = [];
-
 var Memcached = require('memcached');
 var memcached = new Memcached('127.0.0.1:11211');
+
+
+
+let RealtimeDataChannel = require('./realtime/RealtimeDataChannel');
+
+let aDataChannels = [];
+let aClientsInDataChannels = [];
+
 
 
 // app.get('/reset', function(req, res){
@@ -301,10 +307,29 @@ socketIO.on('connection', function(client)
 
 
 
-    // Mimoto.channel communication
+    // ----------------------------------------------------------------------------
+    // --- Data channels ----------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
 
     client.on('dataChannelConnect', function(sSelector)
     {
+        // 1. init
+        if (!aDataChannels[sSelector]) aDataChannels[sSelector] = new RealtimeDataChannel(sSelector);
+
+        // 2. register
+        let dataChannel = aDataChannels[sSelector];
+
+        // 3. connect
+        dataChannel.connect(client);
+
+
+
+        return;
+        // 3. move all to datachannel
+
+
         // init
         let sRoomName = 'dataChannel-' + sSelector;
 
@@ -425,7 +450,10 @@ socketIO.on('connection', function(client)
 
     client.on('dataChannelSend', function(message)
     {
-        //console.log('dataChannelSend ---> ', message.sSelector, message.sEvent, message.data);
+        console.log('dataChannelSend ---> ', message.sSelector, message.sEvent, message.data);
+
+        // init
+        let sRoomName = 'dataChannel-' + message.sSelector;
 
 
         // 1. check if user is in room
@@ -437,7 +465,7 @@ socketIO.on('connection', function(client)
 
 
         // 4. get all clients
-        let aClientsInRoom = socketIO.sockets.adapter.rooms['dataChannel-' + message.sSelector].sockets;
+        let aClientsInRoom = socketIO.sockets.adapter.rooms[sRoomName].sockets;
 
         //to get the number of clients
         //var numClients = (typeof aClientsInRoom !== 'undefined') ? Object.keys(aClientsInRoom).length : 0;
@@ -452,7 +480,7 @@ socketIO.on('connection', function(client)
             let clientSocket = socketIO.sockets.connected[clientId];
 
             // report the new client know about the others in this room
-            clientSocket.emit('dataChannelReceive', message, clientSocket.id);
+            clientSocket.emit('dataChannelReceive', message, client.id);
         }
 
 
@@ -495,8 +523,6 @@ _broadcastBaseDocument = function(client, sPropertySelector)
         }
     );
 };
-
-
 
 
 

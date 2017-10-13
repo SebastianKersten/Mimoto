@@ -74,7 +74,7 @@ module.exports.prototype = {
         }
         else
         {
-            this._socket.emit('dataChannelIdentify', this._sSelector, publicData);
+            this._socket.emit('dataChannelIdentify-' + this._sSelector, this._sSelector, publicData);
         }
     },
 
@@ -100,7 +100,7 @@ module.exports.prototype = {
             };
 
             // broadcast
-            this._socket.emit('dataChannelSend', message);
+            this._socket.emit('dataChannelSend-' + this._sSelector, message);
         }
     },
 
@@ -116,11 +116,16 @@ module.exports.prototype = {
 
 
     // ----------------------------------------------------------------------------
-    // --- Private methods --------------------------------------------------------
+    // --- Internal methods -------------------------------------------------------
     // ----------------------------------------------------------------------------
 
 
-    _connect: function(socket)
+    /**
+     * Connect the client to the data channel from realtime communication
+     * @param socket The websocket to connect to
+     * @private
+     */
+    __connect: function(socket)
     {
         // 1. skip reconfiguration
         if (this._socket) return;
@@ -129,22 +134,34 @@ module.exports.prototype = {
         this._socket = socket;
 
         // 3. configure
-        this._socket.on('dataChannelSelfConnected', function(data) { this._onSelfConnected(data); }.bind(this) );
-        this._socket.on('dataChannelOtherConnected', function(data) { this._onOtherConnected(data); }.bind(this) );
-        this._socket.on('dataChannelOtherIdentified', function(clientId, publicData) { this._onOtherIdentified(clientId, publicData); }.bind(this) );
-        this._socket.on('dataChannelOtherDisconnected', function(data) { this._onOtherDisconnected(data); }.bind(this) );
+        this._socket.on(this._composeEvent('dataChannelSelfConnected'), this._onSelfConnected.bind(this));
+        this._socket.on(this._composeEvent('dataChannelOtherConnected'), this._onOtherConnected.bind(this));
+        this._socket.on(this._composeEvent('dataChannelOtherIdentified'), this._onOtherIdentified.bind(this));
+        this._socket.on(this._composeEvent('dataChannelOtherDisconnected'), this._onOtherDisconnected.bind(this));
 
         // 4. connect
         this._socket.emit('dataChannelConnect', this._sSelector);
     },
 
+
+
+    // ----------------------------------------------------------------------------
+    // --- Event listener ---------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Handle SELF-CONNECTED
+     * @param others array A list odf ids of clients who are already present on this channel
+     * @private
+     */
     _onSelfConnected: function(others)
     {
         // 1. register users here
         this._aOthers = others;
 
         // 2. configure
-        this._socket.on('dataChannelReceive', function(message, clientId) { this._distributeMessage(message, clientId) }.bind(this) );
+        this._socket.on(this._composeEvent('dataChannelReceive'), this._distributeMessage.bind(this));
 
         // 3. filter
         let aOtherIds = [];
@@ -174,6 +191,11 @@ module.exports.prototype = {
         }
     },
 
+    /**
+     * Handle OTHER-CONNECTED
+     * @param clientId string The id of the client that connected to the channel
+     * @private
+     */
     _onOtherConnected: function(clientId)
     {
         // 1. store
@@ -183,6 +205,12 @@ module.exports.prototype = {
         if (this.onOtherConnected && typeof this.onOtherConnected === "function") this.onOtherConnected(clientId);
     },
 
+    /**
+     * Handle OTHER-IDENTIFIED
+     * @param clientId string The id of the client that identified itself
+     * @param publicData mixed The data with which the client identified itself
+     * @private
+     */
     _onOtherIdentified: function(clientId, publicData)
     {
         // 1. store
@@ -192,6 +220,11 @@ module.exports.prototype = {
         if (this.onOtherIdentified && typeof this.onOtherIdentified === "function") this.onOtherIdentified(clientId);
     },
 
+    /**
+     * Handle OTHER-DISCONNECTED
+     * @param clientId string The id of the client that disconnected from the channel
+     * @private
+     */
     _onOtherDisconnected: function(clientId)
     {
         // 1. cleanup
@@ -201,6 +234,19 @@ module.exports.prototype = {
         if (this.onOtherDisconnected && typeof this.onOtherDisconnected === "function") this.onOtherDisconnected(clientId);
     },
 
+
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Distribute the message to the clients that subscribed to a custom event
+     * @param message mixed The message that was send by another client
+     * @param clientId string The id of the client sending the message
+     * @private
+     */
     _distributeMessage: function(message, clientId)
     {
         // verify
@@ -216,6 +262,24 @@ module.exports.prototype = {
             // broadcast
             fDelegate(message.data, clientId);
         }
+    },
+
+
+
+    // ----------------------------------------------------------------------------
+    // --- Utils ------------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Compose a channel-unique event name
+     * @param sEvent string The name of the event
+     * @returns {string}
+     * @private
+     */
+    _composeEvent: function(sEvent)
+    {
+        return sEvent + '-' + this._sSelector;
     }
 
 }

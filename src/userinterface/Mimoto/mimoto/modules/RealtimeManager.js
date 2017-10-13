@@ -116,7 +116,7 @@ module.exports.prototype = {
         let nDataChannelCount = this._aDataChannels.length;
         for (let nDataChannelIndex = 0; nDataChannelIndex < nDataChannelCount; nDataChannelIndex++)
         {
-            this._aDataChannels[nDataChannelIndex]._connect(this._socket);
+            this._aDataChannels[nDataChannelIndex].__connect(this._socket);
         }
     },
 

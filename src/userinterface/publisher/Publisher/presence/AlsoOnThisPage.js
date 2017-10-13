@@ -143,6 +143,9 @@ module.exports.prototype = {
         // register
         let info = this._channel.getInfo(clientId);
 
+
+        Mimoto.warn('AlsoOnThisPage.showPublicInfo', info);
+
         // validate
         if (!info) return;
 

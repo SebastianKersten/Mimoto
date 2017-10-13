@@ -13,7 +13,7 @@ let Article = require('../Article/Article');
 let Editor = require('../Editor/Editor');
 
 let AlsoOnThisPage = require('./presence/AlsoOnThisPage');
-//let IsTypingComment = require('./presence/IsTypingComment');
+let IsTypingComment = require('./presence/IsTypingComment');
 
 
 module.exports = function() {
@@ -68,7 +68,7 @@ module.exports.prototype = {
 
     isTypingComment: function(channel)
     {
-        //this._isTypingComment = new IsTypingComment(channel);
+        this._isTypingComment = new IsTypingComment(channel);
     },
 
 

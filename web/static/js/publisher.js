@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "be66ce8c0c18a98fc315";
+/******/ 	__webpack_require__.h = "e43f973301a512c8b42d";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -115,8 +115,7 @@ var Article = __webpack_require__(458);
 var Editor = __webpack_require__(459);
 
 var AlsoOnThisPage = __webpack_require__(473);
-//let IsTypingComment = require('./presence/IsTypingComment');
-
+var IsTypingComment = __webpack_require__(474);
 
 module.exports = function () {
 
@@ -161,7 +160,7 @@ module.exports.prototype = {
     },
 
     isTypingComment: function isTypingComment(channel) {
-        //this._isTypingComment = new IsTypingComment(channel);
+        this._isTypingComment = new IsTypingComment(channel);
     },
 
     /**
@@ -503,6 +502,8 @@ module.exports.prototype = {
         // register
         var info = this._channel.getInfo(clientId);
 
+        Mimoto.warn('AlsoOnThisPage.showPublicInfo', info);
+
         // validate
         if (!info) return;
 
@@ -528,6 +529,118 @@ module.exports.prototype = {
 
         // toggle
         this._channel.element.style.visibility = !bHasItems ? 'hidden' : 'visible';
+    }
+
+};
+
+/***/ }),
+
+/***/ 474:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto.Publisher - Demo "Is typing"
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+module.exports = function (channel) {
+
+    // start
+    this.__construct(channel);
+};
+
+module.exports.prototype = {
+
+    // communication
+    _channel: null,
+    _aOthersCurrentlyTyping: [],
+
+    // dom
+    _elIsTypingMessage: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(channel) {
+        // store
+        this._channel = channel;
+
+        // register
+        this._elIsTypingMessage = document.querySelector('[data-publisher-conversation-istypingmessage]');
+
+        //configure
+        channel.onSelfConnected = this._onSelfConnected.bind(this);
+
+        // configure
+        channel.receive('isTyping', this._onOtherIsTyping.bind(this));
+
+        //configure
+        channel.element.addEventListener('input', this._onInput.bind(this));
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Event listeners --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _onSelfConnected: function _onSelfConnected() {
+        // broadcast
+        this._channel.identify({ firstName: Mimoto.user.firstName });
+    },
+
+    _onInput: function _onInput() {
+
+        Mimoto.log('Is typing ... onInput ...');
+
+        this._channel.send('isTyping');
+    },
+
+    _onOtherIsTyping: function _onOtherIsTyping(message, clientId) {
+
+        // add to array if not in_array
+
+        Mimoto.log('Is typing', this._channel.getInfo(clientId));
+
+        // register
+        this._aOthersCurrentlyTyping.push(data.firstName);
+
+        // update
+        //this._updateIsTypingMessage(channel.element);
+
+    },
+
+    _updateIsTypingMessage: function _updateIsTypingMessage(element) {
+        // init
+        var sMessage = '';
+
+        // compose
+        var nUserCount = this._aOthersCurrentlyTyping.length;
+        for (var nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++) {
+            // build
+            sMessage += this._aOthersCurrentlyTyping[nUserIndex];
+
+            // connect
+            if (nUserIndex < nUserCount - 1) {
+                sMessage += nUserCount === 2 || nUserIndex === nUserCount - 2 ? ' and ' : ', ';
+            }
+        }
+
+        // update interface
+        if (nUserCount === 0) {
+            // cleanup
+            this._elIsTypingMessage.innerHTML = '&nbsp;';
+        } else {
+            this._elIsTypingMessage.innerText = sMessage + ' ' + (nUserCount === 1 ? 'is' : 'are') + ' typing ..';
+        }
     }
 
 };
