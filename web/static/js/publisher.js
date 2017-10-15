@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "685bd77a4c3a869f3561";
+/******/ 	__webpack_require__.h = "977009daf3683ce20ab0";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -477,7 +477,7 @@ module.exports.prototype = {
             this._addOther(clientId);
 
             // show public info
-            this._showPublicInfo(clientId);
+            //this._showPublicInfo(clientId);
         }
     },
 

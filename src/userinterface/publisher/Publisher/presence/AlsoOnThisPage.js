@@ -115,7 +115,7 @@ module.exports.prototype = {
             this._addOther(clientId);
 
             // show public info
-            this._showPublicInfo(clientId);
+            //this._showPublicInfo(clientId);
         }
     },
 

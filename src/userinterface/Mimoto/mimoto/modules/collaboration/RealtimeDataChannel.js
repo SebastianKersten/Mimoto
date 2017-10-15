@@ -29,12 +29,10 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function (sSelector)
+    __construct: function(sSelector)
     {
         // store
         this._sSelector = sSelector;
-
-        console.log('New data channel started .. ', this._sSelector);
     },
 
 
@@ -63,6 +61,9 @@ module.exports.prototype = {
         client.on(this._composeEvent('dataChannelIdentify'), function(publicData) { this._onIdentify(client, publicData); }.bind(this));
         client.on(this._composeEvent('dataChannelSend'), function(message) { this._onSend(client, message); }.bind(this));
 
+
+        console.log('Connect', this._aClients);
+
         // 4. collect others
         let aOthers = {};
         for (let otherId in this._aClients)
@@ -76,6 +77,9 @@ module.exports.prototype = {
                 publicData: this._aClients[otherId].publicData
             };
         }
+
+        console.log('aOthers', aOthers);
+
 
         // 5. send handshake
         client.emit(this._composeEvent('dataChannelSelfConnected'), aOthers);
@@ -129,7 +133,10 @@ module.exports.prototype = {
 
     _onIdentify: function(client, publicData)
     {
-        console.log('[' + client.id + '] identifies on [' + this._sSelector+ '] with', publicData);
+        //console.log('onIdentify -----------> [' + client.id + '] identifies on [' + this._sSelector+ '] with', publicData);
+
+
+        console.log('\n----------\nthis._aClients.onIdentify', this._aClients, '\n----------\n');
 
 
         // 1. load
@@ -141,7 +148,7 @@ module.exports.prototype = {
         // 3. store
         clientInfo.publicData = publicData;
 
-        console.log('\n\n EVENT: ', this._composeEvent('dataChannelOtherIdentified'));
+        //console.log('publicData', publicData);
 
         // 4. broadcast new information
         client.broadcast.to(this._getRoomName()).emit(this._composeEvent('dataChannelOtherIdentified'), client.id, publicData);

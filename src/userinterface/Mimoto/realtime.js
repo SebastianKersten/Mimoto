@@ -89,9 +89,6 @@ socketIO.on('connection', function(client)
             // b. cleanup
             delete aClientsInDataChannels[client.id];
         }
-
-
-        console.log('CLEANUP aDataChannels', aDataChannels);
     });
 
 
@@ -313,9 +310,6 @@ socketIO.on('connection', function(client)
 
         // 4. connect
         dataChannel.connect(client);
-
-
-        console.log('SETUP aDataChannels', aDataChannels);
     });
 
 });

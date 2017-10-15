@@ -160,6 +160,8 @@ module.exports.prototype = {
         // 1. register users here
         this._aOthers = others;
 
+        Mimoto.log('this._aOthers on SELF-CONNECTED', this._sSelector, JSON.stringify(this._aOthers, '', 4));
+
         // 2. configure
         this._socket.on(this._composeEvent('dataChannelReceive'), this._distributeMessage.bind(this));
 
@@ -213,7 +215,7 @@ module.exports.prototype = {
      */
     _onOtherIdentified: function(clientId, publicData)
     {
-        console.log('[' + clientId + '] identified on [' + this._sSelector + '] with ', publicData);
+        console.log(clientId + ' identified on [' + this._sSelector + '] with ', publicData);
 
 
         // 1. store
