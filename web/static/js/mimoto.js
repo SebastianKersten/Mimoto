@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "b8554b38045b30b34483";
+/******/ 	__webpack_require__.h = "685bd77a4c3a869f3561";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -36533,6 +36533,8 @@ module.exports.prototype = {
      * @private
      */
     _onOtherIdentified: function _onOtherIdentified(clientId, publicData) {
+        console.log('[' + clientId + '] identified on [' + this._sSelector + '] with ', publicData);
+
         // 1. store
         if (this._aOthers[clientId]) this._aOthers[clientId].publicData = publicData;
 

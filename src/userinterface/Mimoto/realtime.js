@@ -81,11 +81,17 @@ socketIO.on('connection', function(client)
 
                 // ii. disconnect
                 dataChannel.disconnect(client);
+
+                // iii. cleanup if nobody there
+                if (dataChannel.isEmpty()) delete aDataChannels[dataChannel.getSelector()];
             }
 
             // b. cleanup
             delete aClientsInDataChannels[client.id];
         }
+
+
+        console.log('CLEANUP aDataChannels', aDataChannels);
     });
 
 
@@ -307,6 +313,9 @@ socketIO.on('connection', function(client)
 
         // 4. connect
         dataChannel.connect(client);
+
+
+        console.log('SETUP aDataChannels', aDataChannels);
     });
 
 });

@@ -213,6 +213,9 @@ module.exports.prototype = {
      */
     _onOtherIdentified: function(clientId, publicData)
     {
+        console.log('[' + clientId + '] identified on [' + this._sSelector + '] with ', publicData);
+
+
         // 1. store
         if (this._aOthers[clientId]) this._aOthers[clientId].publicData = publicData;
 

@@ -73,7 +73,7 @@ module.exports.prototype = {
         this._channel.send('isTyping');
     },
 
-    _onOtherIsTyping: function(clientId, message)
+    _onOtherIsTyping: function(clientId, data)
     {
 
         // add to array if not in_array

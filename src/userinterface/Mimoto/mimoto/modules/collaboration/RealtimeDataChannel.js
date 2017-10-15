@@ -97,6 +97,31 @@ module.exports.prototype = {
 
 
     // ----------------------------------------------------------------------------
+    // --- Properties -------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Check if data channel is empty
+     * @returns {boolean}
+     */
+    isEmpty: function()
+    {
+        return this._aClients.length === 0;
+    },
+
+    /**
+     * Get data channel's selector
+     * @returns string
+     */
+    getSelector: function()
+    {
+        return this._sSelector;
+    },
+
+
+
+    // ----------------------------------------------------------------------------
     // --- Event listeners --------------------------------------------------------
     // ----------------------------------------------------------------------------
 
@@ -104,6 +129,9 @@ module.exports.prototype = {
 
     _onIdentify: function(client, publicData)
     {
+        console.log('[' + client.id + '] identifies on [' + this._sSelector+ '] with', publicData);
+
+
         // 1. load
         let clientInfo = this._aClients[client.id];
 
@@ -112,6 +140,8 @@ module.exports.prototype = {
 
         // 3. store
         clientInfo.publicData = publicData;
+
+        console.log('\n\n EVENT: ', this._composeEvent('dataChannelOtherIdentified'));
 
         // 4. broadcast new information
         client.broadcast.to(this._getRoomName()).emit(this._composeEvent('dataChannelOtherIdentified'), client.id, publicData);

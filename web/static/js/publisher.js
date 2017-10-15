@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "b8554b38045b30b34483";
+/******/ 	__webpack_require__.h = "685bd77a4c3a869f3561";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -602,7 +602,7 @@ module.exports.prototype = {
         this._channel.send('isTyping');
     },
 
-    _onOtherIsTyping: function _onOtherIsTyping(clientId, message) {
+    _onOtherIsTyping: function _onOtherIsTyping(clientId, data) {
 
         // add to array if not in_array
 
