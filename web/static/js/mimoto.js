@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "e43f973301a512c8b42d";
+/******/ 	__webpack_require__.h = "b8554b38045b30b34483";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -29448,7 +29448,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var RealtimeEditor = __webpack_require__(421);
-var DataChannel = __webpack_require__(471);
+var DataChannel = __webpack_require__(456);
 
 // Socket.io classes
 var io = __webpack_require__(139);
@@ -36347,22 +36347,7 @@ module.exports = lib;
 
 
 /***/ }),
-/* 456 */,
-/* 457 */,
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */,
-/* 465 */,
-/* 466 */,
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36425,7 +36410,7 @@ module.exports.prototype = {
         if (!this._socket) {
             this._queuedIdentificationData = publicData;
         } else {
-            this._socket.emit('dataChannelIdentify-' + this._sSelector, this._sSelector, publicData);
+            this._socket.emit(this._composeEvent('dataChannelIdentify'), publicData);
         }
     },
 
@@ -36446,7 +36431,7 @@ module.exports.prototype = {
             };
 
             // broadcast
-            this._socket.emit('dataChannelSend-' + this._sSelector, message);
+            this._socket.emit(this._composeEvent('dataChannelSend'), message);
         }
     },
 
@@ -36579,7 +36564,7 @@ module.exports.prototype = {
      * @param clientId string The id of the client sending the message
      * @private
      */
-    _distributeMessage: function _distributeMessage(message, clientId) {
+    _distributeMessage: function _distributeMessage(clientId, message) {
         // verify
         if (!this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent] || this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent].length === 0) return;
 
@@ -36590,7 +36575,7 @@ module.exports.prototype = {
             var fDelegate = this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent][nDelegateIndex];
 
             // broadcast
-            fDelegate(message.data, clientId);
+            fDelegate(clientId, message.data);
         }
     },
 

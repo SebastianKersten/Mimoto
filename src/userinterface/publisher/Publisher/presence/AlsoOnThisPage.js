@@ -59,10 +59,10 @@ module.exports.prototype = {
 
     _onSelfConnected: function(aOthers)
     {
-        // init
+        // 1. init
         this._initOthersAlreadyOnPage(aOthers);
 
-        // broadcast
+        // 2. broadcast
         this._channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
     },
 
@@ -72,7 +72,6 @@ module.exports.prototype = {
         this._addOther(clientId);
     },
 
-
     _onOtherIdentified: function(clientId)
     {
         this._showPublicInfo(clientId);
@@ -80,19 +79,19 @@ module.exports.prototype = {
 
     _onOtherDisconnected: function(clientId)
     {
-        // verify if user was known
+        // 1. verify if user was known
         if (!this._others[clientId]) return;
 
-        // register
+        // 2. register
         let elOther = this._others[clientId].element;
 
-        // remove
+        // 3. remove
         elOther.parentNode.removeChild(elOther);
 
-        // cleanup
+        // 4. cleanup
         delete this._others[clientId];
 
-        // update
+        // 5. update
         this._toggleVisibility();
     },
 
@@ -141,27 +140,24 @@ module.exports.prototype = {
         if (!this._others[clientId]) return;
 
         // register
-        let info = this._channel.getInfo(clientId);
-
-
-        Mimoto.warn('AlsoOnThisPage.showPublicInfo', info);
+        let clientInfo = this._channel.getInfo(clientId);
 
         // validate
-        if (!info) return;
+        if (!clientInfo) return;
 
         // register
         let elOther = this._others[clientId].element;
         let elAvatarInitials = elOther.querySelector('[data-publisher-article-others-other-initials]');
 
         // set data
-        if (info.avatar)
+        if (clientInfo.avatar)
         {
-            elOther.setAttribute('style', 'background-image: url("' + info.avatar + '");');
+            elOther.setAttribute('style', 'background-image: url("' + clientInfo.avatar + '");');
             elAvatarInitials.innerText = '';
         }
         else
         {
-            elAvatarInitials.innerText = info.firstName.substr(0, 1).toUpperCase() + info.lastName.substr(0, 1).toUpperCase();
+            elAvatarInitials.innerText = clientInfo.firstName.substr(0, 1).toUpperCase() + clientInfo.lastName.substr(0, 1).toUpperCase();
         }
     },
 

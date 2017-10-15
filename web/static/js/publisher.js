@@ -60,42 +60,16 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "e43f973301a512c8b42d";
+/******/ 	__webpack_require__.h = "b8554b38045b30b34483";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 456);
+/******/ 	return __webpack_require__(__webpack_require__.s = 457);
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ 456:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto.Publisher - Demo - How to build a publication platform
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-// Publisher demo classes
-
-var Publisher = __webpack_require__(457);
-
-/**
- * Auto run
- */
-document.addEventListener('DOMContentLoaded', function () {
-  // init
-  window.Publisher = new Publisher();
-}, false);
-
-/***/ }),
 
 /***/ 457:
 /***/ (function(module, exports, __webpack_require__) {
@@ -109,13 +83,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+// Publisher demo classes
+
+var Publisher = __webpack_require__(458);
+
+/**
+ * Auto run
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  // init
+  window.Publisher = new Publisher();
+}, false);
+
+/***/ }),
+
+/***/ 458:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto.Publisher - Demo - How to build a publication platform
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
 // Mimoto classes
 
-var Article = __webpack_require__(458);
-var Editor = __webpack_require__(459);
+var Article = __webpack_require__(459);
+var Editor = __webpack_require__(460);
 
-var AlsoOnThisPage = __webpack_require__(473);
-var IsTypingComment = __webpack_require__(474);
+var AlsoOnThisPage = __webpack_require__(461);
+var IsTypingComment = __webpack_require__(462);
 
 module.exports = function () {
 
@@ -191,7 +191,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 458:
+/***/ 459:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -306,7 +306,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 459:
+/***/ 460:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +371,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 473:
+/***/ 461:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -428,10 +428,10 @@ module.exports.prototype = {
 
 
     _onSelfConnected: function _onSelfConnected(aOthers) {
-        // init
+        // 1. init
         this._initOthersAlreadyOnPage(aOthers);
 
-        // broadcast
+        // 2. broadcast
         this._channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
     },
 
@@ -445,19 +445,19 @@ module.exports.prototype = {
     },
 
     _onOtherDisconnected: function _onOtherDisconnected(clientId) {
-        // verify if user was known
+        // 1. verify if user was known
         if (!this._others[clientId]) return;
 
-        // register
+        // 2. register
         var elOther = this._others[clientId].element;
 
-        // remove
+        // 3. remove
         elOther.parentNode.removeChild(elOther);
 
-        // cleanup
+        // 4. cleanup
         delete this._others[clientId];
 
-        // update
+        // 5. update
         this._toggleVisibility();
     },
 
@@ -500,23 +500,21 @@ module.exports.prototype = {
         if (!this._others[clientId]) return;
 
         // register
-        var info = this._channel.getInfo(clientId);
-
-        Mimoto.warn('AlsoOnThisPage.showPublicInfo', info);
+        var clientInfo = this._channel.getInfo(clientId);
 
         // validate
-        if (!info) return;
+        if (!clientInfo) return;
 
         // register
         var elOther = this._others[clientId].element;
         var elAvatarInitials = elOther.querySelector('[data-publisher-article-others-other-initials]');
 
         // set data
-        if (info.avatar) {
-            elOther.setAttribute('style', 'background-image: url("' + info.avatar + '");');
+        if (clientInfo.avatar) {
+            elOther.setAttribute('style', 'background-image: url("' + clientInfo.avatar + '");');
             elAvatarInitials.innerText = '';
         } else {
-            elAvatarInitials.innerText = info.firstName.substr(0, 1).toUpperCase() + info.lastName.substr(0, 1).toUpperCase();
+            elAvatarInitials.innerText = clientInfo.firstName.substr(0, 1).toUpperCase() + clientInfo.lastName.substr(0, 1).toUpperCase();
         }
     },
 
@@ -535,7 +533,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 474:
+/***/ 462:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -604,7 +602,7 @@ module.exports.prototype = {
         this._channel.send('isTyping');
     },
 
-    _onOtherIsTyping: function _onOtherIsTyping(message, clientId) {
+    _onOtherIsTyping: function _onOtherIsTyping(clientId, message) {
 
         // add to array if not in_array
 

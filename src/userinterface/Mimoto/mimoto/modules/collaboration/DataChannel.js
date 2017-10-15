@@ -74,7 +74,7 @@ module.exports.prototype = {
         }
         else
         {
-            this._socket.emit('dataChannelIdentify-' + this._sSelector, this._sSelector, publicData);
+            this._socket.emit(this._composeEvent('dataChannelIdentify'), publicData);
         }
     },
 
@@ -100,7 +100,7 @@ module.exports.prototype = {
             };
 
             // broadcast
-            this._socket.emit('dataChannelSend-' + this._sSelector, message);
+            this._socket.emit(this._composeEvent('dataChannelSend'), message);
         }
     },
 
@@ -247,7 +247,7 @@ module.exports.prototype = {
      * @param clientId string The id of the client sending the message
      * @private
      */
-    _distributeMessage: function(message, clientId)
+    _distributeMessage: function(clientId, message)
     {
         // verify
         if (!this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent] || this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent].length === 0) return;
@@ -260,7 +260,7 @@ module.exports.prototype = {
             let fDelegate = this._aDelegates[this.DATACHANNEL_EVENT_PREFIX + message.sEvent][nDelegateIndex];
 
             // broadcast
-            fDelegate(message.data, clientId);
+            fDelegate(clientId, message.data);
         }
     },
 

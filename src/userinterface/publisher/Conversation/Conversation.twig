@@ -10,10 +10,10 @@
         {{ Mimoto.data('comments', 'Comment') }}
     </div>
 
-    {#<div class="MimotoPublisher_Conversation-commentform">#}
-        {#<input {{ Mimoto.channel('comments', 'Publisher.isTypingComment') }} id="commentForm" type="text" class="MimotoPublisher_Conversation-comment" />#}
-        {#<div class="MimotoPublisher_Conversation-commentform-button" onclick="Publisher.article.addComment()">Draag bij +</div>#}
-    {#</div>#}
+    <div class="MimotoPublisher_Conversation-commentform">
+        <input {{ Mimoto.channel('comments', 'Publisher.isTypingComment') }} id="commentForm" type="text" class="MimotoPublisher_Conversation-comment" />
+        <div class="MimotoPublisher_Conversation-commentform-button" onclick="Publisher.article.addComment()">Draag bij +</div>
+    </div>
 
     <div class="MimotoPublisher_Conversation-others">
         <span data-publisher-conversation-istypingmessage></span>
