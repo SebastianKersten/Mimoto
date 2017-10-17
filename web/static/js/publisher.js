@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "4c3cd230f5c3c2d91168";
+/******/ 	__webpack_require__.h = "2304c2eada78f33afd5e";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -629,17 +629,30 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
+    /**
+     * Handle SELF-CONNECTED
+     * @private
+     */
     _onSelfConnected: function _onSelfConnected() {
         // broadcast
         this._channel.identify({ firstName: Mimoto.user.firstName });
     },
 
+    /**
+     * Handle INPUT
+     * @private
+     */
     _onInput: function _onInput() {
         // send
         this._channel.send('isTyping');
     },
 
-    _onOtherIsTyping: function _onOtherIsTyping(clientId, data) {
+    /**
+     * Handle OTHER-ISTYPING
+     * @param clientId The client's id
+     * @private
+     */
+    _onOtherIsTyping: function _onOtherIsTyping(clientId) {
         // 1. register
         var publicInfo = this._channel.getInfo(clientId);
 

@@ -1,5 +1,5 @@
 /**
- * Mimoto.Publisher - Demo "Is typing"
+ * Mimoto.Publisher - Demo "Cursor position"
  *
  * @author Sebastian Kersten (@supertaboo)
  */
