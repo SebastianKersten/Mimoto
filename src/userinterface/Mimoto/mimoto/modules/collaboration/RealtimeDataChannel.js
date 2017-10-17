@@ -10,15 +10,17 @@
 
 module.exports = function(sSelector)
 {
+
+    this._sSelector = null;
+    this._aClientsInChannel = [];
+
+
     // start
     this.__construct(sSelector);
 };
 
 module.exports.prototype = {
 
-    _sSelector: null,
-
-    _aClients: [],
 
 
     // ----------------------------------------------------------------------------
@@ -49,7 +51,7 @@ module.exports.prototype = {
     connect: function(client)
     {
         // 1. store
-        this._aClients[client.id] = { client:client, publicData:null };
+        this._aClientsInChannel[client.id] = { client:client, publicData:null };
 
         // 2. join room
         client.join(this._getRoomName());
@@ -61,12 +63,9 @@ module.exports.prototype = {
         client.on(this._composeEvent('dataChannelIdentify'), function(publicData) { this._onIdentify(client, publicData); }.bind(this));
         client.on(this._composeEvent('dataChannelSend'), function(message) { this._onSend(client, message); }.bind(this));
 
-
-        console.log('Connect', this._aClients);
-
-        // 4. collect others
+        // 5. collect others
         let aOthers = {};
-        for (let otherId in this._aClients)
+        for (let otherId in this._aClientsInChannel)
         {
             // a. skip current client
             if (otherId === client.id) continue;
@@ -74,14 +73,11 @@ module.exports.prototype = {
             // b. register
             aOthers[otherId] = {
                 clientId: otherId,
-                publicData: this._aClients[otherId].publicData
+                publicData: this._aClientsInChannel[otherId].publicData
             };
         }
 
-        console.log('aOthers', aOthers);
-
-
-        // 5. send handshake
+        // 6. send handshake
         client.emit(this._composeEvent('dataChannelSelfConnected'), aOthers);
     },
 
@@ -95,7 +91,7 @@ module.exports.prototype = {
         client.broadcast.to(this._getRoomName()).emit(this._composeEvent('dataChannelOtherDisconnected'), client.id);
 
         // 2. cleanup
-        delete this._aClients[client.id];
+        delete this._aClientsInChannel[client.id];
     },
 
 
@@ -111,7 +107,12 @@ module.exports.prototype = {
      */
     isEmpty: function()
     {
-        return this._aClients.length === 0;
+        // count
+        let bIsEmpty = true;
+        for (let clientId in this._aClientsInChannel) { bIsEmpty = false; break; }
+
+        // send
+        return bIsEmpty;
     },
 
     /**
@@ -133,24 +134,13 @@ module.exports.prototype = {
 
     _onIdentify: function(client, publicData)
     {
-        //console.log('onIdentify -----------> [' + client.id + '] identifies on [' + this._sSelector+ '] with', publicData);
+        // 1. validate
+        if (!this._aClientsInChannel[client.id]) return;
 
+        // 2. store
+        this._aClientsInChannel[client.id].publicData = publicData;
 
-        console.log('\n----------\nthis._aClients.onIdentify', this._aClients, '\n----------\n');
-
-
-        // 1. load
-        let clientInfo = this._aClients[client.id];
-
-        // 2. validate
-        if (!clientInfo) return;
-
-        // 3. store
-        clientInfo.publicData = publicData;
-
-        //console.log('publicData', publicData);
-
-        // 4. broadcast new information
+        // 3. broadcast new information
         client.broadcast.to(this._getRoomName()).emit(this._composeEvent('dataChannelOtherIdentified'), client.id, publicData);
     },
 

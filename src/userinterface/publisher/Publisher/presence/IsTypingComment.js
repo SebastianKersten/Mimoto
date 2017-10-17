@@ -66,42 +66,73 @@ module.exports.prototype = {
 
     _onInput: function()
     {
-
-        Mimoto.log('Is typing ... onInput ...');
-
-
+        // send
         this._channel.send('isTyping');
     },
 
     _onOtherIsTyping: function(clientId, data)
     {
+        // 1. register
+        let publicInfo = this._channel.getInfo(clientId);
 
-        // add to array if not in_array
+        // 2. validate  or init
+        if (!this._aOthersCurrentlyTyping[clientId]) this._aOthersCurrentlyTyping[clientId] = { clientId:clientId, firstName:publicInfo.firstName };
 
-        Mimoto.log('Is typing', this._channel.getInfo(clientId));
+        // 3. load
+        let other = this._aOthersCurrentlyTyping[clientId];
 
+        // 4. store (in milliseconds)
+        other.since = new Date().getTime();
 
-        // register
-        this._aOthersCurrentlyTyping.push(data.firstName);
-
-        // update
-        //this._updateIsTypingMessage(channel.element);
-
-
+        // 5. update
+        this._updateIsTypingMessage();
     },
 
 
-    _updateIsTypingMessage: function(element)
+    _updateIsTypingMessage: function()
     {
+        // stop
+        if (this._timer){ clearTimeout(this._timer); delete this._timer; }
+
+
+        // ---
+
+
+        // 1. init
+        let aOthersNames = [];
+
+        // 2. register (in milliseconds)
+        let nCurrentTimestamp = new Date().getTime();
+
+        // 3. search or cleanup
+        for (let clientId in this._aOthersCurrentlyTyping)
+        {
+            // validate
+            if (this._aOthersCurrentlyTyping[clientId].since + 2500 < nCurrentTimestamp)
+            {
+                // a. cleanup
+                delete this._aOthersCurrentlyTyping[clientId];
+            }
+            else
+            {
+                // b. register
+                aOthersNames.push(this._aOthersCurrentlyTyping[clientId].firstName)
+            }
+        }
+
+
+        // ---
+
+
         // init
         let sMessage = '';
 
         // compose
-        let nUserCount = this._aOthersCurrentlyTyping.length;
+        let nUserCount = aOthersNames.length;
         for (let nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++)
         {
             // build
-            sMessage += this._aOthersCurrentlyTyping[nUserIndex];
+            sMessage += aOthersNames[nUserIndex];
 
             // connect
             if (nUserIndex < nUserCount - 1)
@@ -121,6 +152,12 @@ module.exports.prototype = {
             this._elIsTypingMessage.innerText = sMessage + ' ' + ((nUserCount === 1) ? 'is' : 'are') + ' typing ..';
         }
 
+
+        // ---
+
+
+        // validate
+        if (aOthersNames.length > 0) this._timer = setTimeout(function() { this._updateIsTypingMessage(); }.bind(this), 100);
     }
 
 };

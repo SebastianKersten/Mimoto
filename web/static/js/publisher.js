@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "977009daf3683ce20ab0";
+/******/ 	__webpack_require__.h = "4c3cd230f5c3c2d91168";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
@@ -427,6 +427,11 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
+    /**
+     * HANDLE SELF-CONNECTED
+     * @param aOthers array List of ids of others already on this page
+     * @private
+     */
     _onSelfConnected: function _onSelfConnected(aOthers) {
         // 1. init
         this._initOthersAlreadyOnPage(aOthers);
@@ -435,15 +440,30 @@ module.exports.prototype = {
         this._channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
     },
 
+    /**
+     * HANDLE OTHER-CONNECTED
+     * @param clientId
+     * @private
+     */
     _onOtherConnected: function _onOtherConnected(clientId) {
         // add
         this._addOther(clientId);
     },
 
+    /**
+     * HANDLE OTHER-IDENTIFIED
+     * @param clientId
+     * @private
+     */
     _onOtherIdentified: function _onOtherIdentified(clientId) {
         this._showPublicInfo(clientId);
     },
 
+    /**
+     * HANDLE OTHER-DISCONNECTED
+     * @param clientId
+     * @private
+     */
     _onOtherDisconnected: function _onOtherDisconnected(clientId) {
         // 1. verify if user was known
         if (!this._others[clientId]) return;
@@ -466,6 +486,11 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
+    /**
+     * Init others already on this page
+     * @param aOthers
+     * @private
+     */
     _initOthersAlreadyOnPage: function _initOthersAlreadyOnPage(aOthers) {
         // build
         var nOtherCount = aOthers.length;
@@ -477,10 +502,15 @@ module.exports.prototype = {
             this._addOther(clientId);
 
             // show public info
-            //this._showPublicInfo(clientId);
+            this._showPublicInfo(clientId);
         }
     },
 
+    /**
+     * Add other client to AlsoOnThisPage som element
+     * @param clientId
+     * @private
+     */
     _addOther: function _addOther(clientId) {
         // create
         var elOther = this._elOtherTemplate.cloneNode(true);
@@ -495,6 +525,11 @@ module.exports.prototype = {
         this._toggleVisibility();
     },
 
+    /**
+     * Show other client's public info
+     * @param clientId
+     * @private
+     */
     _showPublicInfo: function _showPublicInfo(clientId) {
         // verify if user was known
         if (!this._others[clientId]) return;
@@ -518,6 +553,10 @@ module.exports.prototype = {
         }
     },
 
+    /**
+     * Toggle visibility of the AlsoInPage dom element
+     * @private
+     */
     _toggleVisibility: function _toggleVisibility() {
         // find other
         var bHasItems = false;
@@ -596,35 +635,65 @@ module.exports.prototype = {
     },
 
     _onInput: function _onInput() {
-
-        Mimoto.log('Is typing ... onInput ...');
-
+        // send
         this._channel.send('isTyping');
     },
 
     _onOtherIsTyping: function _onOtherIsTyping(clientId, data) {
+        // 1. register
+        var publicInfo = this._channel.getInfo(clientId);
 
-        // add to array if not in_array
+        // 2. validate  or init
+        if (!this._aOthersCurrentlyTyping[clientId]) this._aOthersCurrentlyTyping[clientId] = { clientId: clientId, firstName: publicInfo.firstName };
 
-        Mimoto.log('Is typing', this._channel.getInfo(clientId));
+        // 3. load
+        var other = this._aOthersCurrentlyTyping[clientId];
 
-        // register
-        this._aOthersCurrentlyTyping.push(data.firstName);
+        // 4. store (in milliseconds)
+        other.since = new Date().getTime();
 
-        // update
-        //this._updateIsTypingMessage(channel.element);
-
+        // 5. update
+        this._updateIsTypingMessage();
     },
 
-    _updateIsTypingMessage: function _updateIsTypingMessage(element) {
+    _updateIsTypingMessage: function _updateIsTypingMessage() {
+        // stop
+        if (this._timer) {
+            clearTimeout(this._timer);delete this._timer;
+        }
+
+        // ---
+
+
+        // 1. init
+        var aOthersNames = [];
+
+        // 2. register (in milliseconds)
+        var nCurrentTimestamp = new Date().getTime();
+
+        // 3. search or cleanup
+        for (var clientId in this._aOthersCurrentlyTyping) {
+            // validate
+            if (this._aOthersCurrentlyTyping[clientId].since + 2500 < nCurrentTimestamp) {
+                // a. cleanup
+                delete this._aOthersCurrentlyTyping[clientId];
+            } else {
+                // b. register
+                aOthersNames.push(this._aOthersCurrentlyTyping[clientId].firstName);
+            }
+        }
+
+        // ---
+
+
         // init
         var sMessage = '';
 
         // compose
-        var nUserCount = this._aOthersCurrentlyTyping.length;
+        var nUserCount = aOthersNames.length;
         for (var nUserIndex = 0; nUserIndex < nUserCount; nUserIndex++) {
             // build
-            sMessage += this._aOthersCurrentlyTyping[nUserIndex];
+            sMessage += aOthersNames[nUserIndex];
 
             // connect
             if (nUserIndex < nUserCount - 1) {
@@ -639,6 +708,14 @@ module.exports.prototype = {
         } else {
             this._elIsTypingMessage.innerText = sMessage + ' ' + (nUserCount === 1 ? 'is' : 'are') + ' typing ..';
         }
+
+        // ---
+
+
+        // validate
+        if (aOthersNames.length > 0) this._timer = setTimeout(function () {
+            this._updateIsTypingMessage();
+        }.bind(this), 100);
     }
 
 };

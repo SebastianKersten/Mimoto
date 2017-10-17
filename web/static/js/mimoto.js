@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "977009daf3683ce20ab0";
+/******/ 	__webpack_require__.h = "4c3cd230f5c3c2d91168";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -36484,8 +36484,6 @@ module.exports.prototype = {
         // 1. register users here
         this._aOthers = others;
 
-        Mimoto.log('this._aOthers on SELF-CONNECTED', this._sSelector, JSON.stringify(this._aOthers, '', 4));
-
         // 2. configure
         this._socket.on(this._composeEvent('dataChannelReceive'), this._distributeMessage.bind(this));
 
@@ -36535,8 +36533,6 @@ module.exports.prototype = {
      * @private
      */
     _onOtherIdentified: function _onOtherIdentified(clientId, publicData) {
-        console.log(clientId + ' identified on [' + this._sSelector + '] with ', publicData);
-
         // 1. store
         if (this._aOthers[clientId]) this._aOthers[clientId].publicData = publicData;
 

@@ -57,6 +57,11 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
+    /**
+     * HANDLE SELF-CONNECTED
+     * @param aOthers array List of ids of others already on this page
+     * @private
+     */
     _onSelfConnected: function(aOthers)
     {
         // 1. init
@@ -66,17 +71,32 @@ module.exports.prototype = {
         this._channel.identify({ firstName: Mimoto.user.firstName, lastName: Mimoto.user.lastName, avatar: Mimoto.user.avatar });
     },
 
+    /**
+     * HANDLE OTHER-CONNECTED
+     * @param clientId
+     * @private
+     */
     _onOtherConnected: function(clientId)
     {
         // add
         this._addOther(clientId);
     },
 
+    /**
+     * HANDLE OTHER-IDENTIFIED
+     * @param clientId
+     * @private
+     */
     _onOtherIdentified: function(clientId)
     {
         this._showPublicInfo(clientId);
     },
 
+    /**
+     * HANDLE OTHER-DISCONNECTED
+     * @param clientId
+     * @private
+     */
     _onOtherDisconnected: function(clientId)
     {
         // 1. verify if user was known
@@ -102,6 +122,11 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
+    /**
+     * Init others already on this page
+     * @param aOthers
+     * @private
+     */
     _initOthersAlreadyOnPage: function(aOthers)
     {
         // build
@@ -115,10 +140,15 @@ module.exports.prototype = {
             this._addOther(clientId);
 
             // show public info
-            //this._showPublicInfo(clientId);
+            this._showPublicInfo(clientId);
         }
     },
 
+    /**
+     * Add other client to AlsoOnThisPage som element
+     * @param clientId
+     * @private
+     */
     _addOther: function(clientId)
     {
         // create
@@ -134,6 +164,11 @@ module.exports.prototype = {
         this._toggleVisibility();
     },
 
+    /**
+     * Show other client's public info
+     * @param clientId
+     * @private
+     */
     _showPublicInfo: function(clientId)
     {
         // verify if user was known
@@ -161,6 +196,10 @@ module.exports.prototype = {
         }
     },
 
+    /**
+     * Toggle visibility of the AlsoInPage dom element
+     * @private
+     */
     _toggleVisibility: function()
     {
         // find other
