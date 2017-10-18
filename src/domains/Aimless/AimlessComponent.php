@@ -138,7 +138,7 @@ class AimlessComponent
         return (isset($this->_aVars[$sKey])) ? $this->_aVars[$sKey] : null;
     }
     
-    public function addSelection($sKey, $aaEntities, $sComponentName = null)
+    public function addSelection($sKey, $aEntities, $sComponentName = null)
     {
         // #todo - check for double property name | or separate selections from collections
 
