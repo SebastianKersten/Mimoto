@@ -1,0 +1,14 @@
+{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new service', icon:'plus', directive:Mimoto.add('services', '_Mimoto_service'), types:['secondary'] }) }}
+
+<div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('services', 'MimotoCMS_services_ServiceOverview_Service') }}>
+    {{ Mimoto.data('services', 'MimotoCMS_services_ServiceOverview_Service') }}
+</div>
+
+<div {{ Mimoto.showWhenEmpty('services') }}>
+    Add <b>services</b> to your project!
+    <ul>
+        <li>1) automate certain <u>actions</u></li>
+        <li>2) easily connect to other systems</li>
+        <li>3) extends Mimoto's core functionality</li>
+    </ul>
+</div>

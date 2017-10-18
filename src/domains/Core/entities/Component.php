@@ -1124,6 +1124,39 @@ class Component
                         'conditionals' => []
                     )
                 ]
+            ),
+
+
+
+            // --- services
+
+
+            (object) array(
+                'name' => 'MimotoCMS_services_ServiceOverview',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/services/ServiceOverview/ServiceOverview.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_services_ServiceOverview_Service',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/services/ServiceOverview/Service/Service.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_services_ServiceOverview_ServiceFunction',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/services/ServiceOverview/ServiceFunction/ServiceFunction.twig',
+                        'conditionals' => []
+                    )
+                ]
             )
 
         ];

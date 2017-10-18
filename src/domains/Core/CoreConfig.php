@@ -45,6 +45,8 @@ use Mimoto\Core\entities\InputVideo;
 use Mimoto\Core\entities\InputColorPicker;
 use Mimoto\Core\entities\InputDatePicker;
 use Mimoto\Core\entities\Notification;
+use Mimoto\Core\entities\Service;
+use Mimoto\Core\entities\ServiceFunction;
 
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Value_formattingOptions;
@@ -94,8 +96,13 @@ class CoreConfig
 
     // functionality
     const MIMOTO_ACTION                         = '_Mimoto_action';
+    const MIMOTO_SERVICE                        = '_Mimoto_service';
+    const MIMOTO_SERVICE_FUNCTION               = '_Mimoto_service_function';
+
+    // developers
     const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';
 
+    // users
     const MIMOTO_USER                           = '_Mimoto_user';
     const MIMOTO_USER_GROUP                     = '_Mimoto_user_group';
     const MIMOTO_USER_ROLE                      = '_Mimoto_user_role';
@@ -259,8 +266,9 @@ class CoreConfig
             ComponentContainer::getStructure(),
             ComponentTemplate::getStructure(),
 
-            // views
-
+            // automation
+            Service::getStructure(),
+            ServiceFunction::getStructure(),
 
             // formatting
             FormattingOption::getStructure(),
@@ -339,6 +347,10 @@ class CoreConfig
             ComponentConditional::getFormStructure(),
             ComponentContainer::getFormStructure(),
             ComponentTemplate::getFormStructure(),
+
+            // automation
+            Service::getFormStructure(),
+            ServiceFunction::getFormStructure(),
 
             // formatting
             FormattingOption::getFormStructure(),

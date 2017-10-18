@@ -6,6 +6,7 @@ const baseConfig = require('./base');
 //const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
+const LatestBuildTimestampPlugin = require('latest-build-timestamp-webpack-plugin');
 
 module.exports = function(env) {
     return webpackMerge(baseConfig(), {
@@ -70,6 +71,7 @@ module.exports = function(env) {
                 log: false,
                 useHashIndex: true
             }),
+            new LatestBuildTimestampPlugin(),
             // new BrowserSyncPlugin(
             //     // BrowserSync options
             //     {
