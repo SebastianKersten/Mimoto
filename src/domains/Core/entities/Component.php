@@ -715,20 +715,6 @@ class Component
             ),
 
 
-
-            // actions
-
-            (object) array(
-                'name' => 'MimotoCMS_actions_ActionOverview',
-                'templates' => [
-                    (object) array(
-                        'file' => 'MimotoCMS/components/pages/actions/Overview.twig',
-                        'conditionals' => []
-                    )
-                ]
-            ),
-
-
             // users
 
             (object) array(
@@ -1157,7 +1143,47 @@ class Component
                         'conditionals' => []
                     )
                 ]
+            ),
+
+
+
+
+            // --- actions
+
+
+            (object) array(
+                'name' => 'MimotoCMS_actions_ActionOverview',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/actions/ActionOverview/ActionOverview.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_actions_ActionOverview_Action',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/actions/ActionOverview/Action/Action.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_actions_ActionOverview_ActionSetting',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/actions/ActionOverview/ActionSetting/ActionSetting.twig',
+                        'conditionals' => []
+                    )
+                ]
             )
+
+
+
+
+
+
 
         ];
 

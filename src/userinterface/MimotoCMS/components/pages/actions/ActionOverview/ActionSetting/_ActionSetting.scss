@@ -1,0 +1,27 @@
+div.MimotoCMS_services_ServiceOverview_ServiceFunction {
+
+}
+
+span.MimotoCMS_services_ServiceOverview_ServiceFunction-name {
+    color: #000000;
+}
+
+span.MimotoCMS_services_ServiceOverview_ServiceFunction-menu {
+    color: $pale-slate;
+    white-space: nowrap;
+}
+
+span.MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem {
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+        text-decoration: underline;
+        color: #000000;
+    }
+}
+
+span.MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem-move {
+    cursor: move;
+}
