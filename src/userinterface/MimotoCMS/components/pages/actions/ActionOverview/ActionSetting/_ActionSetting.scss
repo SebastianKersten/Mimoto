@@ -1,17 +1,17 @@
-div.MimotoCMS_services_ServiceOverview_ServiceFunction {
+div.MimotoCMS_actions_ActionOverview_ActionSetting {
 
 }
 
-span.MimotoCMS_services_ServiceOverview_ServiceFunction-name {
+span.MimotoCMS_actions_ActionOverview_ActionSetting-name {
     color: #000000;
 }
 
-span.MimotoCMS_services_ServiceOverview_ServiceFunction-menu {
+span.MimotoCMS_actions_ActionOverview_ActionSetting-menu {
     color: $pale-slate;
     white-space: nowrap;
 }
 
-span.MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem {
+span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem {
 
     cursor: pointer;
     white-space: nowrap;
@@ -22,6 +22,6 @@ span.MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem {
     }
 }
 
-span.MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem-move {
+span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem-move {
     cursor: move;
 }

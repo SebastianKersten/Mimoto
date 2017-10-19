@@ -2961,7 +2961,7 @@ div.MimotoCMS_pages_notifications_NotificationOverviewSmall__viewall {
   div.MimotoCMS_pages_notifications_NotificationOverviewSmall__viewall a:hover {
     text-decoration: underline; }
 
-div.MimotoCMS_services_ServiceOverview_Service {
+div.MimotoCMS_actions_ActionOverview_Action {
   -webkit-box-flex: 1;
   -webkit-flex: auto;
       -ms-flex: auto;
@@ -2986,32 +2986,32 @@ div.MimotoCMS_services_ServiceOverview_Service {
   background-color: #ffffff;
   min-width: 300px; }
 
-div.MimotoCMS_services_ServiceOverview_Service-info {
+div.MimotoCMS_actions_ActionOverview_Action-info {
   -webkit-box-flex: 1;
   -webkit-flex: auto;
       -ms-flex: auto;
           flex: auto;
   text-align: left; }
 
-div.MimotoCMS_services_ServiceOverview_Service-name {
+div.MimotoCMS_actions_ActionOverview_Action-name {
   font-size: 20px;
   font-weight: bold;
   color: #9dbab7; }
 
-div.MimotoCMS_services_ServiceOverview_Service-file {
+div.MimotoCMS_actions_ActionOverview_Action-file {
   font-style: italic;
   font-weight: normal;
   color: #c3c1c2; }
 
-div.MimotoCMS_services_ServiceOverview_Service-functions-empty {
+div.MimotoCMS_actions_ActionOverview_Action-functions-empty {
   padding: 10px 20px 15px 0;
   font-style: italic;
   color: #858585; }
 
-div.MimotoCMS_services_ServiceOverview_Service-functions {
+div.MimotoCMS_actions_ActionOverview_Action-functions {
   padding: 10px 20px 15px 20px; }
 
-div.MimotoCMS_services_ServiceOverview_Service-menu {
+div.MimotoCMS_actions_ActionOverview_Action-menu {
   float: right; }
 
 div.MimotoCMS_modules_ListItem-sorthandlecontainer {
@@ -3020,7 +3020,7 @@ div.MimotoCMS_modules_ListItem-sorthandlecontainer {
   padding-top: 7px;
   padding-left: 10px; }
 
-div.MimotoCMS_services_ServiceOverview_Service-sorthandle {
+div.MimotoCMS_actions_ActionOverview_Action-sorthandle {
   display: inline-block;
   overflow: hidden;
   width: 10px;
@@ -3033,28 +3033,28 @@ div.MimotoCMS_services_ServiceOverview_Service-sorthandle {
       -ms-flex: 0 0 auto;
           flex: 0 0 auto; }
 
-div.MimotoCMS_services_ServiceOverview_Service-sorthandledot {
+div.MimotoCMS_actions_ActionOverview_Action-sorthandledot {
   float: left;
   width: 3px;
   height: 3px;
   margin: 0 1px 2px;
   background-color: #9dbab7; }
 
-span.MimotoCMS_services_ServiceOverview_ServiceFunction-name {
+span.MimotoCMS_actions_ActionOverview_ActionSetting-name {
   color: #000000; }
 
-span.MimotoCMS_services_ServiceOverview_ServiceFunction-menu {
+span.MimotoCMS_actions_ActionOverview_ActionSetting-menu {
   color: #c3c1c2;
   white-space: nowrap; }
 
-span.MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem {
+span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem {
   cursor: pointer;
   white-space: nowrap; }
-  span.MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem:hover {
+  span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem:hover {
     text-decoration: underline;
     color: #000000; }
 
-span.MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem-move {
+span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem-move {
   cursor: move; }
 
 div.MimotoCMS_pages_actions_ActionOverview__container {

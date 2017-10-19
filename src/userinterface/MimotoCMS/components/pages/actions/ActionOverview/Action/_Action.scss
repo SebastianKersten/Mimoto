@@ -1,4 +1,4 @@
-div.MimotoCMS_services_ServiceOverview_Service {
+div.MimotoCMS_actions_ActionOverview_Action {
 
     flex: auto;
 
@@ -12,34 +12,34 @@ div.MimotoCMS_services_ServiceOverview_Service {
     min-width: 300px;
 }
 
-div.MimotoCMS_services_ServiceOverview_Service-info {
+div.MimotoCMS_actions_ActionOverview_Action-info {
     flex: auto;
     text-align: left;
 }
 
-    div.MimotoCMS_services_ServiceOverview_Service-name {
+    div.MimotoCMS_actions_ActionOverview_Action-name {
         font-size: 20px;
         font-weight: bold;
         color: $tower-gray;
     }
 
-    div.MimotoCMS_services_ServiceOverview_Service-file {
+    div.MimotoCMS_actions_ActionOverview_Action-file {
         font-style: italic;
         font-weight: normal;
         color: $pale-slate;
     }
 
-    div.MimotoCMS_services_ServiceOverview_Service-functions-empty {
+    div.MimotoCMS_actions_ActionOverview_Action-functions-empty {
         padding: 10px 20px 15px 0;
         font-style: italic;
         color: #858585;
     }
 
-    div.MimotoCMS_services_ServiceOverview_Service-functions {
+    div.MimotoCMS_actions_ActionOverview_Action-functions {
         padding: 10px 20px 15px 20px;
     }
 
-div.MimotoCMS_services_ServiceOverview_Service-menu {
+div.MimotoCMS_actions_ActionOverview_Action-menu {
     float: right;
 }
 
@@ -50,7 +50,7 @@ div.MimotoCMS_modules_ListItem-sorthandlecontainer {
     padding-left: 10px;
 }
 
-div.MimotoCMS_services_ServiceOverview_Service-sorthandle {
+div.MimotoCMS_actions_ActionOverview_Action-sorthandle {
     display: inline-block;
     overflow: hidden;
     width: 10px;
@@ -61,7 +61,7 @@ div.MimotoCMS_services_ServiceOverview_Service-sorthandle {
     flex: 0 0 auto;
 }
 
-div.MimotoCMS_services_ServiceOverview_Service-sorthandledot {
+div.MimotoCMS_actions_ActionOverview_Action-sorthandledot {
     float: left;
     width: 3px;
     height: 3px;

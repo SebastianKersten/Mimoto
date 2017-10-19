@@ -1,29 +1,29 @@
-<div class="MimotoCMS_services_ServiceOverview_Service" {{ Mimoto.realtime() }}>
+<div class="MimotoCMS_actions_ActionOverview_Action" {{ Mimoto.realtime() }}>
 
-    <div class="MimotoCMS_services_ServiceOverview_Service-info">
-        <div class="MimotoCMS_services_ServiceOverview_Service-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
-        <div class="MimotoCMS_services_ServiceOverview_Service-file" {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
-        <div class="MimotoCMS_services_ServiceOverview_Service-functions-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('functions') }}>No functions added yet</div>
-        <div class="MimotoCMS_services_ServiceOverview_Service-functions {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('functions') }} {{ Mimoto.sortable() }} {{ Mimoto.realtime('functions', 'MimotoCMS_services_ServiceOverview_ServiceFunction') }}>{{ Mimoto.data('functions', 'MimotoCMS_services_ServiceOverview_ServiceFunction') }}</div>
-
+    <div class="MimotoCMS_actions_ActionOverview_Action-info">
+        <div class="MimotoCMS_actions_ActionOverview_Action-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+        <div class="MimotoCMS_actions_ActionOverview_Action-file" {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
+        <div class="MimotoCMS_actions_ActionOverview_Action-functions-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('functions') }}>No functions added yet</div>
+        <div class="MimotoCMS_actions_ActionOverview_Action-functions {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('functions') }} {{ Mimoto.sortable() }} {{ Mimoto.realtime('functions', 'MimotoCMS_actions_ActionOverview_ActionFunction') }}>{{ Mimoto.data('functions', 'MimotoCMS_actions_ActionOverview_ActionFunction') }}</div>
+        
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add function', directive:Mimoto.add('functions', '_Mimoto_service_function'), types:['small'], icon:'' }) }}
     </div>
 
-    <div class="MimotoCMS_services_ServiceOverview_Service-menu">
+    <div class="MimotoCMS_actions_ActionOverview_Action-menu">
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove(), types:['secondary', 'alert'], icon:'' }) }}
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', directive:Mimoto.edit('_Mimoto_service'), types:['secondary'], icon:'' }) }}
         <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">
-            <div class="MimotoCMS_services_ServiceOverview_Service-sorthandle {{ Mimoto.sortHandle() }}">
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
-                <div class="MimotoCMS_services_ServiceOverview_Service-sorthandledot"></div>
+            <div class="MimotoCMS_actions_ActionOverview_Action-sorthandle {{ Mimoto.sortHandle() }}">
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
+                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
             </div>
         </div>
     </div>
