@@ -108,6 +108,39 @@ class EventService
                     //$this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
                     Mimoto::service('output')->handleRequest($action->request, $event->getEntity(), $config);
                 }
+                else if (isset($action->owner) && $action->owner == 'project')
+                {
+
+
+                    if (isset($action->service) && isset($action->service->name) && isset($action->function))
+                    {
+                        // 1. verify
+                        if (!class_exists($action->service->name))
+                        {
+                            // a. prepare
+                            $sClassFile = Mimoto::value('ProjectConfig.root').Mimoto::value('ProjectConfig.serviceroot').$action->service->file;
+
+                            // b. verify
+                            if (file_exists($sClassFile))
+                            {
+                                // load
+                                require_once($sClassFile);
+                            }
+                        }
+
+                        // 2. init class
+                        $service = new $action->service->name;
+
+                        // 3. verify
+                        if (method_exists($service, $action->function))
+                        {
+                            // a. call
+                            call_user_func([$service, $action->function], $event->getEntity(), unserialize(serialize($action->settings)));
+                        }
+                    }
+
+                }
+
             //}
             
         }

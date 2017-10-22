@@ -12,35 +12,45 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * ServiceFunction
+ * ActionSetting
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class ServiceFunction
+class ActionSetting
 {
 
     public static function getStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_SERVICE_FUNCTION,
+            'id' => CoreConfig::MIMOTO_ACTION_SETTING,
             // ---
-            'name' => CoreConfig::MIMOTO_SERVICE_FUNCTION,
+            'name' => CoreConfig::MIMOTO_ACTION_SETTING,
             'extends' => null,
-            'forms' => [CoreConfig::MIMOTO_SERVICE_FUNCTION],
+            'forms' => [CoreConfig::MIMOTO_ACTION_SETTING],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SERVICE_FUNCTION.'--name',
+                    'id' => CoreConfig::MIMOTO_ACTION_SETTING.'--key',
                     // ---
-                    'name' => 'name',
+                    'name' => 'key',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
                             'key' => 'type',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
                             'value' => CoreConfig::DATA_VALUE_TEXTLINE
-                        ),
-                        'validation' => (object) array(
-                            'type' => Validation::UNIQUE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ACTION_SETTING.'--value',
+                    // ---
+                    'name' => 'value',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
                         )
                     ]
                 )
@@ -64,11 +74,12 @@ class ServiceFunction
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_SERVICE_FUNCTION,
-            'name' => CoreConfig::MIMOTO_SERVICE_FUNCTION,
+            'id' => CoreConfig::MIMOTO_ACTION_SETTING,
+            'name' => CoreConfig::MIMOTO_ACTION_SETTING,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_SERVICE_FUNCTION, 'name')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_ACTION_SETTING, 'key'),
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_ACTION_SETTING, 'value')
             ]
         );
     }
@@ -79,18 +90,24 @@ class ServiceFunction
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_SERVICE_FUNCTION, true);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_ACTION_SETTING, true);
 
         // setup
-        CoreFormUtils::addField_title($form, 'Service function', '', "Register a function that can be called when a certain data change triggers an action");
+        CoreFormUtils::addField_title($form, 'Action setting', 'Configure the service', "Pass action specific settings to the service being called");
         CoreFormUtils::addField_groupStart($form);
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'name', CoreConfig::MIMOTO_SERVICE_FUNCTION.'--name',
-            'Name', 'Function name', 'The function name that is part of the Service'
+            $form, 'name', CoreConfig::MIMOTO_ACTION_SETTING.'--key',
+            'Key', 'Enter the key', ''
         );
-        self::setNameValidation($field);
+        self::setKeyValidation($field);
+
+        $field = CoreFormUtils::addField_textline
+        (
+            $form, 'value', CoreConfig::MIMOTO_ACTION_SETTING.'--value',
+            'Value', 'Enter the value', ''
+        );
 
         // send
         return $form;
@@ -105,11 +122,11 @@ class ServiceFunction
     /**
      * Set name validation
      */
-    private static function setNameValidation($field)
+    private static function setKeyValidation($field)
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
-        $validationRule->setId(CoreConfig::MIMOTO_SERVICE_FUNCTION.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_ACTION_SETTING.'--key_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");

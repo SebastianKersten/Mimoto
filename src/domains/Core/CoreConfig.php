@@ -47,6 +47,8 @@ use Mimoto\Core\entities\InputDatePicker;
 use Mimoto\Core\entities\Notification;
 use Mimoto\Core\entities\Service;
 use Mimoto\Core\entities\ServiceFunction;
+use Mimoto\Core\entities\Action;
+use Mimoto\Core\entities\ActionSetting;
 
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Value_formattingOptions;
@@ -95,9 +97,10 @@ class CoreConfig
     const MIMOTO_FORMATTINGOPTION_ATTRIBUTE     = '_Mimoto_formattingoption_attribute';
 
     // functionality
-    const MIMOTO_ACTION                         = '_Mimoto_action';
     const MIMOTO_SERVICE                        = '_Mimoto_service';
     const MIMOTO_SERVICE_FUNCTION               = '_Mimoto_service_function';
+    const MIMOTO_ACTION                         = '_Mimoto_action';
+    const MIMOTO_ACTION_SETTING                 = '_Mimoto_action_setting';
 
     // developers
     const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';
@@ -227,6 +230,11 @@ class CoreConfig
     const COREFORM_LAYOUT_DIVIDER       = '_Mimoto_coreform_layout_divider';
 
 
+    const DATA_EVENT_CREATED = 'created';
+    const DATA_EVENT_UPDATED = 'updated';
+    const DATA_EVENT_DELETED = 'deleted';
+
+
 
     // #todo
     // 1. noteer hier ook de tables en tableconfigs for installatie
@@ -269,6 +277,8 @@ class CoreConfig
             // automation
             Service::getStructure(),
             ServiceFunction::getStructure(),
+            Action::getStructure(),
+            ActionSetting::getStructure(),
 
             // formatting
             FormattingOption::getStructure(),
@@ -351,6 +361,8 @@ class CoreConfig
             // automation
             Service::getFormStructure(),
             ServiceFunction::getFormStructure(),
+            Action::getFormStructure(),
+            ActionSetting::getFormStructure(),
 
             // formatting
             FormattingOption::getFormStructure(),

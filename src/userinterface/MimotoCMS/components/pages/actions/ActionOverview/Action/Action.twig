@@ -1,17 +1,32 @@
 <div class="MimotoCMS_actions_ActionOverview_Action" {{ Mimoto.realtime() }}>
 
     <div class="MimotoCMS_actions_ActionOverview_Action-info">
-        <div class="MimotoCMS_actions_ActionOverview_Action-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
-        <div class="MimotoCMS_actions_ActionOverview_Action-file" {{ Mimoto.realtime('file') }}>{{ Mimoto.data('file') }}</div>
-        <div class="MimotoCMS_actions_ActionOverview_Action-functions-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('functions') }}>No functions added yet</div>
-        <div class="MimotoCMS_actions_ActionOverview_Action-functions {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('functions') }} {{ Mimoto.sortable() }} {{ Mimoto.realtime('functions', 'MimotoCMS_actions_ActionOverview_ActionFunction') }}>{{ Mimoto.data('functions', 'MimotoCMS_actions_ActionOverview_ActionFunction') }}</div>
-        
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add function', directive:Mimoto.add('functions', '_Mimoto_service_function'), types:['small'], icon:'' }) }}
+        <div class="MimotoCMS_actions_ActionOverview_Action-name" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+
+        <div>if</div>
+        <div>
+            <span {{ Mimoto.realtime('entity.name') }}>{{ Mimoto.data('entity.name') }}</span>
+            <span {{ Mimoto.realtime('event') }}>{{ Mimoto.data('event') }}</span>
+        </div>
+        <div>then</div>
+        <div>
+            <span {{ Mimoto.realtime('service.name') }}>{{ Mimoto.data('service.name') }}</span>
+        </div>
+
+        <div class="MimotoCMS_actions_ActionOverview_Action-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('settings') }}>No settings</div>
+
+        <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('settings') }}>
+            <div>with</div>
+            <div class="MimotoCMS_actions_ActionOverview_Action-settings" {{ Mimoto.sortable() }} {{ Mimoto.realtime('settings', 'MimotoCMS_actions_ActionOverview_ActionSetting') }}>{{ Mimoto.data('settings', 'MimotoCMS_actions_ActionOverview_ActionSetting') }}</div>
+        </div>
+
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add setting', directive:Mimoto.add('settings', '_Mimoto_action_setting'), types:['small'], icon:'' }) }}
+
     </div>
 
     <div class="MimotoCMS_actions_ActionOverview_Action-menu">
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove(), types:['secondary', 'alert'], icon:'' }) }}
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', directive:Mimoto.edit('_Mimoto_service'), types:['secondary'], icon:'' }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', directive:Mimoto.edit('_Mimoto_action'), types:['secondary'], icon:'' }) }}
         <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">
             <div class="MimotoCMS_actions_ActionOverview_Action-sorthandle {{ Mimoto.sortHandle() }}">
                 <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
