@@ -99,8 +99,7 @@ class ActionService
                     'name' => $eAction->get('service.name'),
                     'file' => $eAction->get('service.file')
                 ),
-                //'request' => $eAction->get('function.name'),
-                'function' => 'sendNotification',
+                'function' => $eAction->get('function.name'),
                 'type' => 'sync',
                 'settings' => []
             );

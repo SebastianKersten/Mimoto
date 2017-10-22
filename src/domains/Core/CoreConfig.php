@@ -616,6 +616,19 @@ class CoreConfig
                         SelectionRuleTypes::PROPERTY => 'properties'
                     )
                 ]
+            ),
+            (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_functions_of_service', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_functions_of_service', // internal of external?
+                'label' => 'All functions of a service',
+                'rules' => [
+                    (object) array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_SERVICE,
+                        SelectionRuleTypes::ID_AS_VAR => true,
+                        SelectionRuleTypes::ID_VARNAME => 'idVarName',
+                        SelectionRuleTypes::PROPERTY => 'functions'
+                    )
+                ]
             )
         ];
 

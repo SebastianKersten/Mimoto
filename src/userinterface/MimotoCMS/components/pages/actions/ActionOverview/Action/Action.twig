@@ -1,16 +1,20 @@
-<div class="MimotoCMS_actions_ActionOverview_Action" {{ Mimoto.realtime() }}>
+<div class="MimotoCMS_actions_ActionOverview_Action" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
 
     <div class="MimotoCMS_actions_ActionOverview_Action-info">
         <div class="MimotoCMS_actions_ActionOverview_Action-name" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
 
         <div>if</div>
         <div>
-            <span {{ Mimoto.realtime('entity.name') }}>{{ Mimoto.data('entity.name') }}</span>
+            <b><span {{ Mimoto.realtime('entity.name') }}>{{ Mimoto.data('entity.name') }}</span></b>
             <span {{ Mimoto.realtime('event') }}>{{ Mimoto.data('event') }}</span>
         </div>
         <div>then</div>
         <div>
-            <span {{ Mimoto.realtime('service.name') }}>{{ Mimoto.data('service.name') }}</span>
+            <b><span {{ Mimoto.realtime('service.name') }}>{{ Mimoto.data('service.name') }}</span></b>
+            <span {{ Mimoto.hideWhenEmpty('function') }}> - </span>
+            <span {{ Mimoto.hideWhenEmpty('service') }} {{ Mimoto.realtime('function.name') }}>{{ Mimoto.data('function.name') }}</span>
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select function', types:['small', 'secondary'], directive:Mimoto.select('function', '_Mimoto_all_functions_of_service', { vars:{idVarName:Mimoto.meta('service.id')} }) }) }}
+            <span {{ Mimoto.hideWhenEmpty('function') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'secondary'], directive:Mimoto.clear('function') }) }}</span>
         </div>
 
         <div class="MimotoCMS_actions_ActionOverview_Action-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('settings') }}>No settings</div>

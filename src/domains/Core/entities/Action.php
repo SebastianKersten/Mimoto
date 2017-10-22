@@ -85,6 +85,19 @@ class Action
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_ACTION.'--function',
+                    // ---
+                    'name' => 'function',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => CoreConfig::MIMOTO_SERVICE_FUNCTION
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_ACTION.'--settings',
                     // ---
                     'name' => 'settings',
