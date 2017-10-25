@@ -5212,7 +5212,7 @@ div.MimotoCMS_interface_Popup__title {
   font-weight: bold;
   margin-bottom: 20px; }
 
-.Mimoto_CoreCSS_hidden {
+.Mimoto--hidden {
   visibility: hidden; }
 
 .Mimoto_CoreCSS_cms {
@@ -5787,15 +5787,27 @@ div.MimotoCMS_forms_input_ListItem-text {
           flex: 1 1 auto;
   overflow: hidden; }
 
-p.MimotoCMS_forms_input_ListItem-title,
-p.MimotoCMS_forms_input_ListItem-subtitle {
+div.MimotoCMS_forms_input_ListItem-type {
+  position: relative;
+  margin-bottom: 5px; }
+  div.MimotoCMS_forms_input_ListItem-type > span {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-style: italic;
+    padding: 3px 8px;
+    margin-left: -6px;
+    background-color: #000000;
+    color: #ffffff; }
+
+div.MimotoCMS_forms_input_ListItem-title,
+div.MimotoCMS_forms_input_ListItem-subtitle {
   font-size: 0.875rem; }
 
-p.MimotoCMS_forms_input_ListItem-title {
+div.MimotoCMS_forms_input_ListItem-title {
   font-weight: 500;
   color: #000; }
 
-p.MimotoCMS_forms_input_ListItem-subtitle {
+div.MimotoCMS_forms_input_ListItem-subtitle {
   color: #818181;
   overflow: hidden;
   white-space: nowrap;
@@ -5879,15 +5891,27 @@ div.MimotoCMS_forms_input_ListItem-text {
           flex: 1 1 auto;
   overflow: hidden; }
 
-p.MimotoCMS_forms_input_ListItem-title,
-p.MimotoCMS_forms_input_ListItem-subtitle {
+div.MimotoCMS_forms_input_ListItem-type {
+  position: relative;
+  margin-bottom: 5px; }
+  div.MimotoCMS_forms_input_ListItem-type > span {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-style: italic;
+    padding: 3px 8px;
+    margin-left: -6px;
+    background-color: #000000;
+    color: #ffffff; }
+
+div.MimotoCMS_forms_input_ListItem-title,
+div.MimotoCMS_forms_input_ListItem-subtitle {
   font-size: 0.875rem; }
 
-p.MimotoCMS_forms_input_ListItem-title {
+div.MimotoCMS_forms_input_ListItem-title {
   font-weight: 500;
   color: #000; }
 
-p.MimotoCMS_forms_input_ListItem-subtitle {
+div.MimotoCMS_forms_input_ListItem-subtitle {
   color: #818181;
   overflow: hidden;
   white-space: nowrap;

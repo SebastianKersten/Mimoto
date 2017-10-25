@@ -45,12 +45,12 @@ module.exports.prototype = {
 
     hideElement: function(element)
     {
-        element.classList.add('Mimoto_CoreCSS_hidden');
+        element.classList.add('Mimoto--hidden');
     },
 
     showElement: function(element)
     {
-        element.classList.remove('Mimoto_CoreCSS_hidden');
+        element.classList.remove('Mimoto--hidden');
     },
 
 

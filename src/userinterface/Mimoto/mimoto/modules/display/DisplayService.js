@@ -169,7 +169,7 @@ module.exports.prototype = {
         // 1. add core css classes
         var style = document.createElement('style');
         style.type = 'text/css';
-        style.innerHTML = '.Mimoto_CoreCSS_hidden { display: none !important; }';
+        style.innerHTML = '.Mimoto--hidden { display: none !important; }';
         document.getElementsByTagName('head')[0].appendChild(style);
 
 

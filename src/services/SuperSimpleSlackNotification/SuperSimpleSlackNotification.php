@@ -19,9 +19,6 @@ class SuperSimpleSlackNotification // extends MimotoService
 
     public function sendNotification(MimotoEntity $eArticle, $settings = null)
     {
-
-
-
         // compose
         $data = "payload=" . json_encode(array
             (

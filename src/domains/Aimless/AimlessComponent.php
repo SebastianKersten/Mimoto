@@ -780,7 +780,7 @@ class AimlessComponent
         return '';
     }
 
-    public function editable($sPropertySelector, $options = null)
+    public function collaborate($sPropertySelector, $options = null)
     {
         // 1. check global settings
         // 2. return mls identifier from class

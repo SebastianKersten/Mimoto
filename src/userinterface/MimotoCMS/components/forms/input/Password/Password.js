@@ -111,7 +111,7 @@ module.exports.prototype = {
         }
 
         // show
-        this._elPasswordStrength.classList.remove('Mimoto_CoreCSS_hidden');
+        this._elPasswordStrength.classList.remove('Mimoto--hidden');
     },
 
     _colorizeStrengthBlock: function(elBlock, sState)

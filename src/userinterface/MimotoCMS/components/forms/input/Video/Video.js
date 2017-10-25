@@ -98,7 +98,7 @@ module.exports.prototype = {
             this._dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
 
             // hide persistent
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
 
         }.bind(this));
 
@@ -124,7 +124,7 @@ module.exports.prototype = {
             this.setValue(serverResponse.file_id);
 
             // show
-            this._elRemoveButton.classList.remove('Mimoto_CoreCSS_hidden');
+            this._elRemoveButton.classList.remove('Mimoto--hidden');
 
             // show
             this._showVideo(serverResponse.full_path);
@@ -141,8 +141,8 @@ module.exports.prototype = {
             this._dropzone.element.classList.remove('MimotoCMS_forms_input_VideoUpload--show-preview-image');
 
             // hide
-            this._elRemoveButton.classList.add('Mimoto_CoreCSS_hidden');
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elRemoveButton.classList.add('Mimoto--hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
 
             // clear
             this._dropzone.removeAllFiles();
@@ -158,7 +158,7 @@ module.exports.prototype = {
         }
         else
         {
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
         }
     },
 

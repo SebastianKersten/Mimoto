@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "4ebcea8e16a542bee292";
+/******/ 	__webpack_require__.h = "97a3025ce7d4b5249080";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -9820,7 +9820,7 @@ module.exports.prototype = {
      */
     _focusTab: function _focusTab(elTab, elPanel) {
         elTab.classList.add("active");
-        elPanel.classList.remove("Mimoto_CoreCSS_hidden");
+        elPanel.classList.remove("Mimoto--hidden");
     },
 
     /**
@@ -9828,7 +9828,7 @@ module.exports.prototype = {
      */
     _blurTab: function _blurTab(elTab, elPanel) {
         elTab.classList.remove("active");
-        elPanel.classList.add("Mimoto_CoreCSS_hidden");
+        elPanel.classList.add("Mimoto--hidden");
     }
 
 };

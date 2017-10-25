@@ -28,17 +28,33 @@ li.MimotoCMS_forms_input_ListItem {
         overflow: hidden;
     }
 
-        p.MimotoCMS_forms_input_ListItem-title,
-        p.MimotoCMS_forms_input_ListItem-subtitle {
+        div.MimotoCMS_forms_input_ListItem-type {
+
+            position: relative;
+            margin-bottom: 5px;
+
+            & > span {
+                display: inline-block;
+                font-size: rem-calc(14px);
+                font-style: italic;
+                padding: 3px 8px;
+                margin-left: -6px;
+                background-color: #000000;
+                color: #ffffff;
+            }
+        }
+
+        div.MimotoCMS_forms_input_ListItem-title,
+        div.MimotoCMS_forms_input_ListItem-subtitle {
             font-size: rem-calc(14px);
         }
 
-        p.MimotoCMS_forms_input_ListItem-title {
+        div.MimotoCMS_forms_input_ListItem-title {
             font-weight: 500;
             color: $black;
         }
 
-        p.MimotoCMS_forms_input_ListItem-subtitle {
+        div.MimotoCMS_forms_input_ListItem-subtitle {
             color: $gray;
             overflow: hidden;
             white-space: nowrap;

@@ -57,7 +57,7 @@ class AimlessTags
             $sJsonOptions = (!empty($this->_editOptions)) ? json_encode($this->_editOptions) : '';
 
             // compose
-            $sTags .= self::ATTRIBUTE_PREFIX.'editable="'.$this->_entity->getEntityTypeName().'.'.$this->_entity->getId().'.'.$this->_sPropertyName.'" '.self::ATTRIBUTE_PREFIX.'editable-options=\''.$sJsonOptions.'\'';
+            $sTags .= self::ATTRIBUTE_PREFIX.'collaborate="'.$this->_entity->getEntityTypeName().'.'.$this->_entity->getId().'.'.$this->_sPropertyName.'" '.self::ATTRIBUTE_PREFIX.'editable-options=\''.$sJsonOptions.'\'';
         }
 
 

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "4ebcea8e16a542bee292";
+/******/ 	__webpack_require__.h = "97a3025ce7d4b5249080";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -117,11 +117,11 @@ module.exports.prototype = {
     },
 
     hideElement: function hideElement(element) {
-        element.classList.add('Mimoto_CoreCSS_hidden');
+        element.classList.add('Mimoto--hidden');
     },
 
     showElement: function showElement(element) {
-        element.classList.remove('Mimoto_CoreCSS_hidden');
+        element.classList.remove('Mimoto--hidden');
     },
 
     hasAnyMatch: function hasAnyMatch(value, aValues) {
@@ -17951,10 +17951,24 @@ module.exports.prototype = {
     startup: function startup() {
         Mimoto.log('Mimoto starting up ...');
 
-        // logon
+        // 1. logon
         if (this.autoLogon) this._realtimeManager = new RealtimeManager(this.gateway);
 
-        // parse interface
+        // 2. load cms stylesheet
+        if (!document.getElementById('MimotoCMS')) {
+            if (this.autoloadCSS) {
+                var head = document.head;
+                var link = document.createElement('link');
+
+                link.type = 'text/css';
+                link.rel = 'stylesheet';
+                link.href = '/mimoto/mimoto.cms.css';
+
+                head.appendChild(link);
+            }
+        }
+
+        // 3. connect interface
         this.data = new DataService();
         this.display = new DisplayService(this._realtimeManager);
     },
@@ -17972,18 +17986,6 @@ module.exports.prototype = {
     popup: function popup(sURL, postData, bLoadInIFrame) {
 
         if (!document.getElementById('MimotoCMS')) {
-
-            if (this.autoloadCSS) {
-                var head = document.head;
-                var link = document.createElement('link');
-
-                link.type = 'text/css';
-                link.rel = 'stylesheet';
-                link.href = '/mimoto/mimoto.cms.css';
-
-                head.appendChild(link);
-            }
-
             var rootElement = document.createElement('div');
             rootElement.setAttribute('id', 'MimotoCMS');
 
@@ -17993,12 +17995,12 @@ module.exports.prototype = {
 
             var overlayLayer = document.createElement('div');
             overlayLayer.setAttribute('id', 'Mimoto_layer_overlay');
-            overlayLayer.setAttribute('class', 'MimotoCMS_layer_overlay Mimoto_CoreCSS_hidden');
+            overlayLayer.setAttribute('class', 'MimotoCMS_layer_overlay Mimoto--hidden');
             rootElement.appendChild(overlayLayer);
 
             var popupLayer = document.createElement('div');
             popupLayer.setAttribute('id', 'Mimoto_layer_popup');
-            popupLayer.setAttribute('class', 'MimotoCMS_layer_popup Mimoto_CoreCSS_hidden');
+            popupLayer.setAttribute('class', 'MimotoCMS_layer_popup Mimoto--hidden');
             rootElement.appendChild(popupLayer);
 
             var popup = document.createElement('div');
@@ -18039,8 +18041,8 @@ module.exports.prototype = {
         popup_content.innerHTML = '';
 
         // show
-        layer_overlay.classList.remove('Mimoto_CoreCSS_hidden');
-        layer_popup.classList.remove('Mimoto_CoreCSS_hidden');
+        layer_overlay.classList.remove('Mimoto--hidden');
+        layer_popup.classList.remove('Mimoto--hidden');
 
         // init
         var request = new XMLHttpRequest();
@@ -18106,8 +18108,8 @@ module.exports.prototype = {
         popup_content.innerHTML = '';
 
         // hide
-        layer_overlay.classList.add('Mimoto_CoreCSS_hidden');
-        layer_popup.classList.add('Mimoto_CoreCSS_hidden');
+        layer_overlay.classList.add('Mimoto--hidden');
+        layer_popup.classList.add('Mimoto--hidden');
 
         // unlock background for scrolling
         document.body.classList.remove('Mimoto_layer_application');
@@ -19550,7 +19552,7 @@ module.exports.prototype = {
         // 1. add core css classes
         var style = document.createElement('style');
         style.type = 'text/css';
-        style.innerHTML = '.Mimoto_CoreCSS_hidden { display: none !important; }';
+        style.innerHTML = '.Mimoto--hidden { display: none !important; }';
         document.getElementsByTagName('head')[0].appendChild(style);
 
         // prepare
@@ -23201,7 +23203,7 @@ module.exports.prototype = {
             this._dropzone.element.classList.add('MimotoCMS_forms_input_ImageUpload--hide-upload-progess');
 
             // hide persistent
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
         }.bind(this));
 
         this._dropzone.on('complete', function (file) {}.bind(this));
@@ -23219,7 +23221,7 @@ module.exports.prototype = {
             this.setValue(serverResponse.file_id);
 
             // show
-            this._elRemoveButton.classList.remove('Mimoto_CoreCSS_hidden');
+            this._elRemoveButton.classList.remove('Mimoto--hidden');
         }.bind(this));
 
         this._elRemoveButton.addEventListener('click', function () {
@@ -23231,8 +23233,8 @@ module.exports.prototype = {
             this._dropzone.element.classList.remove('MimotoCMS_forms_input_ImageUpload--show-preview-image');
 
             // hide
-            this._elRemoveButton.classList.add('Mimoto_CoreCSS_hidden');
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elRemoveButton.classList.add('Mimoto--hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
 
             // clear
             this._dropzone.removeAllFiles();
@@ -23243,7 +23245,7 @@ module.exports.prototype = {
             // load
             this._loadPersistentImage();
         } else {
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
         }
     },
 
@@ -23443,7 +23445,7 @@ module.exports.prototype = {
             this._dropzone.element.classList.add('MimotoCMS_forms_input_VideoUpload--hide-upload-progess');
 
             // hide persistent
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
         }.bind(this));
 
         this._dropzone.on('complete', function (file) {}.bind(this));
@@ -23461,7 +23463,7 @@ module.exports.prototype = {
             this.setValue(serverResponse.file_id);
 
             // show
-            this._elRemoveButton.classList.remove('Mimoto_CoreCSS_hidden');
+            this._elRemoveButton.classList.remove('Mimoto--hidden');
 
             // show
             this._showVideo(serverResponse.full_path);
@@ -23476,8 +23478,8 @@ module.exports.prototype = {
             this._dropzone.element.classList.remove('MimotoCMS_forms_input_VideoUpload--show-preview-image');
 
             // hide
-            this._elRemoveButton.classList.add('Mimoto_CoreCSS_hidden');
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elRemoveButton.classList.add('Mimoto--hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
 
             // clear
             this._dropzone.removeAllFiles();
@@ -23488,7 +23490,7 @@ module.exports.prototype = {
             // load
             this._loadPersistentVideo();
         } else {
-            this._elPersistent.classList.add('Mimoto_CoreCSS_hidden');
+            this._elPersistent.classList.add('Mimoto--hidden');
         }
     },
 
@@ -28286,7 +28288,7 @@ module.exports.prototype = {
         }
 
         // show
-        this._elPasswordStrength.classList.remove('Mimoto_CoreCSS_hidden');
+        this._elPasswordStrength.classList.remove('Mimoto--hidden');
     },
 
     _colorizeStrengthBlock: function _colorizeStrengthBlock(elBlock, sState) {
@@ -29759,7 +29761,7 @@ module.exports.prototype = {
      */
     _setupEditableValues: function _setupEditableValues() {
         // search
-        var aEditableValues = document.querySelectorAll('[data-mimoto-editable]');
+        var aEditableValues = document.querySelectorAll('[data-mimoto-collaborate]');
 
         // init
         this._aRealtimeEditors = [];
@@ -29771,7 +29773,7 @@ module.exports.prototype = {
             var editableValue = aEditableValues[nEditableValueIndex];
 
             // read
-            var sPropertySelector = editableValue.getAttribute('data-mimoto-editable');
+            var sPropertySelector = editableValue.getAttribute('data-mimoto-collaborate');
 
             //console.log('editable', sPropertySelector, editOptions, editableValue);
 

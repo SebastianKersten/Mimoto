@@ -150,7 +150,7 @@ module.exports.prototype = {
     _focusTab: function(elTab, elPanel)
     {
         elTab.classList.add("active");
-        elPanel.classList.remove("Mimoto_CoreCSS_hidden");
+        elPanel.classList.remove("Mimoto--hidden");
     },
 
     /**
@@ -159,7 +159,7 @@ module.exports.prototype = {
     _blurTab: function(elTab, elPanel)
     {
         elTab.classList.remove("active");
-        elPanel.classList.add("Mimoto_CoreCSS_hidden");
+        elPanel.classList.add("Mimoto--hidden");
     }
 
 }

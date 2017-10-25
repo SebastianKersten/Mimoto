@@ -1,12 +1,15 @@
 <li class="MimotoCMS_forms_input_ListItem" {{ Mimoto.realtime() }}>
 
-    {% if list_item.image|default('') %}
-        <figure class="MimotoCMS_forms_input_ListItem-figure" style="background-image: url({{ list_item.image }});"></figure>
+    {% set sImage = Mimoto.getImageBySortindex() %}
+
+    {% if sImage %}
+        <figure class="MimotoCMS_forms_input_ListItem-figure" style="background-image: url({{ sImage }});"></figure>
     {% endif %}
 
     <div class="MimotoCMS_forms_input_ListItem-text">
-        <p class="MimotoCMS_forms_input_ListItem-title" {{ Mimoto.getRealtimeBySortindex()|default('') }}>{{ Mimoto.getValueBySortindex()|default('') }}</p>
-        <p class="MimotoCMS_forms_input_ListItem-subtitle" {{ Mimoto.getRealtimeBySortindex(1)|default('') }}>{{ Mimoto.getValueBySortindex(1)|default('') }}</p>
+        <div class="MimotoCMS_forms_input_ListItem-type"><span>{{ Mimoto.meta('type') }}</span></div>
+        <div class="MimotoCMS_forms_input_ListItem-title" {{ Mimoto.getRealtimeBySortindex()|default('') }}>{{ Mimoto.getValueBySortindex()|default('') }}</div>
+        <div class="MimotoCMS_forms_input_ListItem-subtitle" {{ Mimoto.getRealtimeBySortindex(1)|default('') }}>{{ Mimoto.getValueBySortindex(1)|default('') }}</div>
     </div>
 
     <div class="MimotoCMS_forms_input_ListItem-menu">

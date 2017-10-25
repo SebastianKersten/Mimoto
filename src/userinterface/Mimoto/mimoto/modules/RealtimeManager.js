@@ -336,7 +336,7 @@ module.exports.prototype = {
     _setupEditableValues: function()
     {
         // search
-        let aEditableValues = document.querySelectorAll('[data-mimoto-editable]');
+        let aEditableValues = document.querySelectorAll('[data-mimoto-collaborate]');
 
         // init
         this._aRealtimeEditors = [];
@@ -349,7 +349,7 @@ module.exports.prototype = {
             let editableValue = aEditableValues[nEditableValueIndex];
 
             // read
-            let sPropertySelector = editableValue.getAttribute('data-mimoto-editable');
+            let sPropertySelector = editableValue.getAttribute('data-mimoto-collaborate');
 
             //console.log('editable', sPropertySelector, editOptions, editableValue);
 

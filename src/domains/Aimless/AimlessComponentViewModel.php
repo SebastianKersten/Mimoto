@@ -88,11 +88,6 @@ class AimlessComponentViewModel
         return $this->_component->jsListen($sPropertySelector, $scope, $fJavascriptDelegate);
     }
 
-    public function editable($sPropertySelector, $options = null)
-    {
-        return $this->_component->editable($sPropertySelector, $options);
-    }
-
     public function container($sContainerName)
     {
         return $this->_component->renderContainer($sContainerName);
@@ -194,7 +189,7 @@ class AimlessComponentViewModel
      */
     public function init()
     {
-        return 'Mimoto_CoreCSS_hidden';
+        return 'Mimoto--hidden';
     }
 
 
@@ -300,10 +295,30 @@ class AimlessComponentViewModel
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_ATTRIBUTE, $sPropertyName, $this->_component, $instructions, $options);
     }
 
-    public function collaborate()
+    public function editable($sPropertyName, $options = null)
     {
+        // 1. prepare
+        $instructions = (object) array();
 
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDITABLE, $sPropertyName, $this->_component, $instructions, $options);
     }
+
+    public function toggleEditMode($sPropertyName, $options = null)
+    {
+        // 1. prepare
+        $instructions = (object) array();
+
+        // 2. build and output
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_TOGGLEEDITMODE, $sPropertyName, $this->_component, $instructions, $options);
+    }
+
+    public function collaborate($sPropertySelector, $options = null)
+    {
+        return $this->_component->collaborate($sPropertySelector, $options);
+    }
+
+
 
     public function api($sURL, $options = null)
     {

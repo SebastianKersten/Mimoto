@@ -10,7 +10,7 @@
 
             <div class="MimotoPublisher-Article-lede">
 
-                {% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" style="float:right;"{{ Mimoto.edit('article') }}>Edit</button>{% endif %}
+                {% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" style="float:right;" {{ Mimoto.edit('article') }}>Edit</button>{% endif %}
 
                 <span class="MimotoPublisher-Article-articletype" {#{{ Mimoto.hideWhenEmpty('type.label') }}#} {{ Mimoto.realtime('type.label') }}>{{ Mimoto.data('type.label') }}</span>
                 <span {{ Mimoto.realtime('lede') }}>{{ Mimoto.data('lede') }}</span>
@@ -18,10 +18,12 @@
             </div>
         </div>
 
-        <div class="MimotoPublisher-Article-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+    {% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" style="position:absolute" {{ Mimoto.toggleEditMode('title') }}>Edit title</button>{% endif %}
+    <div class="MimotoPublisher-Article-title" {{ Mimoto.editable('title') }} {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+
         <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }} ></img>
 
-        <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {#{{ Mimoto.editable('body') }}#} {{ Mimoto.collaborate('body') }}>{{ Mimoto.data('body') }}</div>
+        <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.collaborate('body') }}>{{ Mimoto.data('body') }}</div>
 
         {% if Mimoto.user.hasRole('member') %}{{ Mimoto.module('Conversation') }}{% endif %}
     </div>
