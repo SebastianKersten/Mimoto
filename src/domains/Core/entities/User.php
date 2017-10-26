@@ -212,7 +212,7 @@ class User
 
         CoreFormUtils::addField_groupStart($form, 'Permissions', 'permissions');
 
-        CoreFormUtils::addUserRolesTofield($form, CoreConfig::MIMOTO_USER, 'roles');
+        CoreFormUtils::addUserRolesTofield($form, CoreConfig::MIMOTO_USER, 'roles', $eUser);
 
         CoreFormUtils::addField_groupEnd($form, 'permissions');
 

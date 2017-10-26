@@ -310,7 +310,7 @@ class AimlessComponentViewModel
         $instructions = (object) array();
 
         // 2. build and output
-        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_TOGGLEEDITMODE, $sPropertyName, $this->_component, $instructions, $options);
+        return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_TOGGLE_EDITMODE, $sPropertyName, $this->_component, $instructions, $options);
     }
 
     public function collaborate($sPropertySelector, $options = null)

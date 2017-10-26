@@ -593,6 +593,6 @@ class MimotoDataUtils
     {
         //Mimoto::error(json_decode(urldecode(base64_decode($sEncodedPostData))));
 
-        return json_decode(urldecode($sEncodedPostData));
+        return json_decode(rawurldecode($sEncodedPostData));
     }
 }

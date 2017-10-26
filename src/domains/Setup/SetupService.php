@@ -21,6 +21,7 @@ class SetupService
 
     private $_aCoreTables = [
         CoreConfig::MIMOTO_ACTION,
+        CoreConfig::MIMOTO_ACTION_SETTING,
         CoreConfig::MIMOTO_COMPONENT,
         CoreConfig::MIMOTO_COMPONENT_CONDITIONAL,
         CoreConfig::MIMOTO_COMPONENT_CONTAINER,
@@ -523,7 +524,8 @@ class SetupService
         
         switch($sTableName)
         {
-            case CoreConfig::MIMOTO_ACTION: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
+            case CoreConfig::MIMOTO_ACTION: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"title","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"event","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
+            case CoreConfig::MIMOTO_ACTION_SETTING: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"key","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"value","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_COMPONENT: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"type","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_COMPONENT_CONDITIONAL: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"type","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"value","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;
             case CoreConfig::MIMOTO_COMPONENT_CONTAINER: $sTableStructure = '[{"Field":"id","Type":"int(10) unsigned","Null":"NO","Key":"PRI","Default":null,"Extra":"auto_increment"},{"Field":"name","Type":"varchar(255)","Null":"YES","Key":"","Default":null,"Extra":""},{"Field":"created","Type":"datetime","Null":"YES","Key":"","Default":null,"Extra":""}]'; break;

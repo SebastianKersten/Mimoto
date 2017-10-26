@@ -460,7 +460,7 @@ class CoreFormUtils
     /**
      * Get field: user roles
      */
-    public static function addUserRolesTofield(MimotoEntity $eForm, $sEntityName, $sPropertyName)
+    public static function addUserRolesTofield(MimotoEntity $eForm, $sEntityName, $sPropertyName, $eUser = null)
     {
         // 1. init
         $selection = Mimoto::service('selection')->create();
@@ -469,19 +469,19 @@ class CoreFormUtils
         $selection->setType(CoreConfig::MIMOTO_USER_ROLE);
 
         // 3. determine
-        if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || Mimoto::user()->hasRole('admin') || self::userHasRole($eUser, 'contenteditor'))
+        if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || Mimoto::user()->hasRole('admin') || (isset($eUser) && self::userHasRole($eUser, 'contenteditor')))
         {
             // init
             $aCoreUserRoleIds = [CoreConfig::MIMOTO_USER_ROLE.'-contenteditor'];
 
             // verify
-            if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || self::userHasRole($eUser, 'admin'))
+            if (Mimoto::user()->hasRole('owner') || Mimoto::user()->hasRole('superuser') || (isset($eUser) && self::userHasRole($eUser, 'admin')))
             {
                 // add permissions
                 array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-admin');
 
                 // verify
-                if (Mimoto::user()->hasRole('owner') || self::userHasRole($eUser, 'superuser'))
+                if (Mimoto::user()->hasRole('owner') || (isset($eUser) && self::userHasRole($eUser, 'superuser')))
                 {
                     // add permissions
                     array_push($aCoreUserRoleIds, CoreConfig::MIMOTO_USER_ROLE.'-superuser');

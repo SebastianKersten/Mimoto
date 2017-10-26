@@ -17,18 +17,18 @@ class DataManipulationUtils
 {
 
     // manipulation
-    const MIMOTO_DATA_EDIT           = 'data-mimoto-edit';
-    const MIMOTO_DATA_ADD            = 'data-mimoto-add';
-    const MIMOTO_DATA_REMOVE         = 'data-mimoto-remove';
-    const MIMOTO_DATA_SELECT         = 'data-mimoto-select';
-    const MIMOTO_DATA_SET            = 'data-mimoto-set';
-    const MIMOTO_DATA_CREATE         = 'data-mimoto-create';
-    const MIMOTO_DATA_CLEAR          = 'data-mimoto-clear';
-    const MIMOTO_DATA_SORTABLE       = 'data-mimoto-sortable';
-    const MIMOTO_DATA_ATTRIBUTE      = 'data-mimoto-attribute';
-    const MIMOTO_DATA_EDITABLE       = 'data-mimoto-editable';
-    const MIMOTO_DATA_TOGGLEEDITMODE = 'data-mimoto-toggleeditmode';
-    const MIMOTO_DATA_COLLABORATE    = 'data-mimoto-collaborate';
+    const MIMOTO_DATA_EDIT            = 'data-mimoto-edit';
+    const MIMOTO_DATA_ADD             = 'data-mimoto-add';
+    const MIMOTO_DATA_REMOVE          = 'data-mimoto-remove';
+    const MIMOTO_DATA_SELECT          = 'data-mimoto-select';
+    const MIMOTO_DATA_SET             = 'data-mimoto-set';
+    const MIMOTO_DATA_CREATE          = 'data-mimoto-create';
+    const MIMOTO_DATA_CLEAR           = 'data-mimoto-clear';
+    const MIMOTO_DATA_SORTABLE        = 'data-mimoto-sortable';
+    const MIMOTO_DATA_ATTRIBUTE       = 'data-mimoto-attribute';
+    const MIMOTO_DATA_EDITABLE        = 'data-mimoto-editable';
+    const MIMOTO_DATA_TOGGLE_EDITMODE = 'data-mimoto-toggle-editmode';
+    const MIMOTO_DATA_COLLABORATE     = 'data-mimoto-collaborate';
 
     // utils
     const MIMOTO_DATA_API      = 'data-mimoto-api';

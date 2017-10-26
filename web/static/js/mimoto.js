@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "60ccc1240d46bdcc2c07";
+/******/ 	__webpack_require__.h = "50b66df1daa0ead129b6";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -19468,6 +19468,9 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DATA_CLEAR: 'data-mimoto-clear',
     DIRECTIVE_MIMOTO_DATA_SORTABLE: 'data-mimoto-sortable',
     DIRECTIVE_MIMOTO_DATA_ATTRIBUTE: 'data-mimoto-attribute',
+    DIRECTIVE_MIMOTO_DATA_EDITABLE: 'data-mimoto-editable',
+    DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE: 'data-mimoto-toggle-editmode',
+    DIRECTIVE_MIMOTO_DATA_COLLABORATE: 'data-mimoto-collaborate',
 
     // input directives
     DIRECTIVE_MIMOTO_FORM: 'data-mimoto-form',
@@ -19524,6 +19527,7 @@ module.exports.prototype = {
     _aSelectors: [],
     _aOriginSelectors: [],
     _aOriginContainerSelectors: [],
+    _aEditableFields: [],
 
     _nDirectiveIndex: 0,
     _aDirectives: [],
@@ -19701,7 +19705,7 @@ module.exports.prototype = {
         this.DIRECTIVE_MIMOTO_VALUE, this.DIRECTIVE_MIMOTO_ENTITY, this.DIRECTIVE_MIMOTO_COLLECTION, this.DIRECTIVE_MIMOTO_IMAGE, this.DIRECTIVE_MIMOTO_VIDEO, this.DIRECTIVE_MIMOTO_AUDIO, this.DIRECTIVE_MIMOTO_ID,
 
         // data manipulation directives
-        this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT, this.DIRECTIVE_MIMOTO_DATA_SET, this.DIRECTIVE_MIMOTO_DATA_CREATE, this.DIRECTIVE_MIMOTO_DATA_CLEAR, this.DIRECTIVE_MIMOTO_DATA_SORTABLE, this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE,
+        this.DIRECTIVE_MIMOTO_DATA_EDIT, this.DIRECTIVE_MIMOTO_DATA_ADD, this.DIRECTIVE_MIMOTO_DATA_REMOVE, this.DIRECTIVE_MIMOTO_DATA_SELECT, this.DIRECTIVE_MIMOTO_DATA_SET, this.DIRECTIVE_MIMOTO_DATA_CREATE, this.DIRECTIVE_MIMOTO_DATA_CLEAR, this.DIRECTIVE_MIMOTO_DATA_SORTABLE, this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE, this.DIRECTIVE_MIMOTO_DATA_EDITABLE, this.DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE, this.DIRECTIVE_MIMOTO_DATA_SORTABLE,
 
         // intput directives
         this.DIRECTIVE_MIMOTO_FORM, this.DIRECTIVE_MIMOTO_FORM_SUBMIT,
@@ -19994,6 +19998,30 @@ module.exports.prototype = {
                         break;
 
                     case this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE:
+
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_EDITABLE:
+
+                        Mimoto.log('DIRECTIVE_MIMOTO_DATA_EDITABLE', directive);
+
+                        // verify or init
+                        if (!this._aEditableFields[directive.sPropertySelector]) this._aEditableFields[directive.sPropertySelector] = [];
+
+                        // store
+                        this._aEditableFields[directive.sPropertySelector].push(directive);
+
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE:
+
+                        Mimoto.log('DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE', directive);
+
+                        break;
+
+                    case this.DIRECTIVE_MIMOTO_DATA_COLLABORATE:
+
+                        Mimoto.log('DIRECTIVE_MIMOTO_DATA_COLLABORATE', directive);
 
                         break;
 
