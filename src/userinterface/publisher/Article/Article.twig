@@ -4,28 +4,39 @@
 
 {% block content %}
 
-    <img data-js-article="{{ Mimoto.meta('id') }}">
+    <div data-js-article="{{ Mimoto.meta('id') }}">
 
-        <div class="MimotoPublisher-Article-lede-container">
+        <div class="MimotoPublisher_Article-lede-container">
 
-            <div class="MimotoPublisher-Article-lede">
+            <div class="MimotoPublisher_Article-lede">
 
                 {% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" style="float:right;" {{ Mimoto.edit('article') }}>Edit</button>{% endif %}
 
-                <span class="MimotoPublisher-Article-articletype" {#{{ Mimoto.hideWhenEmpty('type.label') }}#} {{ Mimoto.realtime('type.label') }}>{{ Mimoto.data('type.label') }}</span>
+                <span class="MimotoPublisher_Article-articletype" {#{{ Mimoto.hideWhenEmpty('type.label') }}#} {{ Mimoto.realtime('type.label') }}>{{ Mimoto.data('type.label') }}</span>
                 <span {{ Mimoto.realtime('lede') }}>{{ Mimoto.data('lede') }}</span>
 
             </div>
         </div>
 
-    {% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" style="position:absolute" {{ Mimoto.toggleEditMode('title') }}>Edit title</button>{% endif %}
-    <div class="MimotoPublisher-Article-title" {{ Mimoto.editable('title') }} {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+        <div class="MimotoPublisher_Article-titlecontainer">
+            <div class="MimotoPublisher_Article-titlemenu">
+                {% if Mimoto.user.hasRole('contenteditor') %}
+                    <span class="MimotoPublisher_Article-titlemenu-button" {{ Mimoto.toggleEditMode('title') }}>
+                        <span class="MimotoPublisher_Article-titlemenu-button-edit">edit</span>
+                        <span class="MimotoPublisher_Article-titlemenu-button-ok">ok</span>
+                    </span>
+                {% endif %}
+            </div>
+            <div class="MimotoPublisher_Article-title" {{ Mimoto.editable('title') }} {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+        </div>
 
-        <img class="MimotoPublisher-Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }} ></img>
 
-        <div class="MimotoPublisher-Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.collaborate('body') }}>{{ Mimoto.data('body') }}</div>
+        <img class="MimotoPublisher_Article-headerImage" src="{{ Mimoto.data('headerImage') }}" {{ Mimoto.realtime('headerImage') }} {{ Mimoto.hideWhenEmpty('headerImage') }} />
+
+        <div class="MimotoPublisher_Article-body" {{ Mimoto.realtime('body') }} {{ Mimoto.collaborate('body') }}>{{ Mimoto.data('body') }}</div>
 
         {% if Mimoto.user.hasRole('member') %}{{ Mimoto.module('Conversation') }}{% endif %}
+
     </div>
 
 {% endblock %}

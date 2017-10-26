@@ -989,47 +989,82 @@ b[class*="MimotoCMS"] {
 div.MimotoPublisher_Article {
   width: 100%; }
 
-div.MimotoPublisher-Article-lede-container {
+div.MimotoPublisher_Article-lede-container {
   width: 100%;
   max-width: 750px;
   margin-left: auto;
   margin-right: auto; }
 
-div.MimotoPublisher-Article-lede {
+div.MimotoPublisher_Article-lede {
   padding: 25px 100px 20px 50px;
   width: 550px;
   font-size: 18px;
   line-height: 30px; }
-  div.MimotoPublisher-Article-lede > span.MimotoPublisher-Article-articletype {
+  div.MimotoPublisher_Article-lede > span.MimotoPublisher_Article-articletype {
     color: #000000;
     background-color: #ffffff;
     font-size: 14px;
     padding: 3px 7px 3px 7px; }
 
-div.MimotoPublisher-Article-authors-container {
+div.MimotoPublisher_Article-authors-container {
   text-align: right; }
-  div.MimotoPublisher-Article-authors-container > div {
+  div.MimotoPublisher_Article-authors-container > div {
     display: inline-block;
     margin-right: 5px; }
-  div.MimotoPublisher-Article-authors-container > div:last-child {
+  div.MimotoPublisher_Article-authors-container > div:last-child {
     margin-right: 0; }
 
-div.MimotoPublisher-Article-header {
+div.MimotoPublisher_Article-header {
   position: relative; }
 
-div.MimotoPublisher-Article-title {
-  padding: 0 50px 40px 50px;
+div.MimotoPublisher_Article-titlecontainer {
+  position: relative;
+  padding: 0 50px 40px 50px; }
+
+div.MimotoPublisher_Article-titlemenu {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  display: inline-block; }
+
+span.MimotoPublisher_Article-titlemenu-button {
+  color: #858585;
+  text-decoration: none;
+  cursor: pointer; }
+
+span.MimotoPublisher_Article-titlemenu-button-edit {
+  display: inline-block; }
+  .Mimoto--ineditmode span.MimotoPublisher_Article-titlemenu-button-edit {
+    display: none; }
+  span.MimotoPublisher_Article-titlemenu-button-edit:hover {
+    color: #c76255;
+    text-decoration: underline; }
+
+span.MimotoPublisher_Article-titlemenu-button-ok {
+  display: none; }
+  .Mimoto--ineditmode span.MimotoPublisher_Article-titlemenu-button-ok {
+    display: inline-block; }
+  span.MimotoPublisher_Article-titlemenu-button-ok:hover {
+    color: #c76255;
+    text-decoration: underline; }
+
+div.MimotoPublisher_Article-title {
+  position: relative;
   font-size: 48px;
   line-height: 50px;
   font-weight: bold;
   font-family: "Futura PT W02 Book", sans-serif; }
+  div.MimotoPublisher_Article-title.Mimoto--ineditmode {
+    background-color: #f1f1f1; }
 
 @media screen and (min-width: 40em) {
-  div.MimotoPublisher-Article-title {
+  div.MimotoPublisher_Article-titlecontainer {
     padding: 0 200px 30px 100px;
-    overflow: visible; } }
+    overflow: visible; }
+  div.MimotoPublisher_Article-titlemenu {
+    right: 170px; } }
 
-img.MimotoPublisher-Article-headerImage {
+img.MimotoPublisher_Article-headerImage {
   position: relative;
   width: 100%;
   z-index: 0; }
@@ -1042,7 +1077,7 @@ img.MimotoPublisher-Article-headerImage {
   padding: 0;
   line-height: inherit; }
 
-div.MimotoPublisher-Article-body {
+div.MimotoPublisher_Article-body {
   position: relative;
   font-size: 18px;
   font-family: "Futura PT W02 Book", sans-serif;
@@ -1056,25 +1091,25 @@ div.MimotoPublisher-Article-body {
   margin-right: auto;
   overflow: visible;
   outline: none; }
-  div.MimotoPublisher-Article-body p {
+  div.MimotoPublisher_Article-body p {
     margin-bottom: 20px; }
-  div.MimotoPublisher-Article-body p:last-child {
+  div.MimotoPublisher_Article-body p:last-child {
     margin-bottom: 0; }
-  div.MimotoPublisher-Article-body h1 {
+  div.MimotoPublisher_Article-body h1 {
     font-weight: bold;
     font-family: "Futura PT W02 Book", sans-serif;
     color: #DF5B57;
     font-size: 30px;
     margin-bottom: 20px; }
-  div.MimotoPublisher-Article-body h2 {
+  div.MimotoPublisher_Article-body h2 {
     font-weight: bold;
     font-family: "Futura PT W02 Book", sans-serif;
     color: #DF5B57;
     font-size: 24px;
     margin-bottom: 20px; }
-  div.MimotoPublisher-Article-body strong {
+  div.MimotoPublisher_Article-body strong {
     font-weight: bold; }
-  div.MimotoPublisher-Article-body em {
+  div.MimotoPublisher_Article-body em {
     font-style: italic; }
 
 div.MimotoPublisher_Article-others-container > div:first-child {

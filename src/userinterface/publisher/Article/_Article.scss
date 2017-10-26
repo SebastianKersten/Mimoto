@@ -2,20 +2,20 @@ div.MimotoPublisher_Article {
     width: 100%;
 }
 
-div.MimotoPublisher-Article-lede-container {
+div.MimotoPublisher_Article-lede-container {
     width: 100%;
     max-width: 750px;
     margin-left: auto;
     margin-right: auto;
 }
 
-div.MimotoPublisher-Article-lede {
+div.MimotoPublisher_Article-lede {
     padding: 25px 100px 20px 50px;
     width: 550px;
     font-size: 18px;
     line-height: 30px;
 
-    & > span.MimotoPublisher-Article-articletype {
+    & > span.MimotoPublisher_Article-articletype {
         color: #000000;
         background-color : #ffffff;
         font-size: 14px;
@@ -23,7 +23,7 @@ div.MimotoPublisher-Article-lede {
     }
 }
 
-div.MimotoPublisher-Article-authors-container {
+div.MimotoPublisher_Article-authors-container {
 
     text-align: right;
 
@@ -37,27 +37,79 @@ div.MimotoPublisher-Article-authors-container {
     }
 }
 
-div.MimotoPublisher-Article-header {
+div.MimotoPublisher_Article-header {
     position: relative;
 }
 
-div.MimotoPublisher-Article-title {
+div.MimotoPublisher_Article-titlecontainer {
+    position: relative;
     padding: 0 50px 40px 50px;
+}
+
+div.MimotoPublisher_Article-titlemenu {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: inline-block;
+}
+
+span.MimotoPublisher_Article-titlemenu-button {
+    color: #858585;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+span.MimotoPublisher_Article-titlemenu-button-edit {
+    display: inline-block;
+
+    .Mimoto--ineditmode & {
+        display: none;
+    }
+
+    &:hover {
+        color: $fuzzy-wuzzy-brown;
+        text-decoration: underline;
+    }
+}
+
+span.MimotoPublisher_Article-titlemenu-button-ok {
+    display: none;
+
+    .Mimoto--ineditmode & {
+        display: inline-block;
+    }
+
+    &:hover {
+        color: $fuzzy-wuzzy-brown;
+        text-decoration: underline;
+    }
+}
+
+div.MimotoPublisher_Article-title {
+    position: relative;
     font-size: 48px;
     line-height: 50px;
     font-weight: bold;
     font-family: "Futura PT W02 Book", sans-serif;
+
+    &.Mimoto--ineditmode {
+        background-color: #f1f1f1;
+    }
 }
 
 @include breakpoint(medium up) {
 
-    div.MimotoPublisher-Article-title {
+    div.MimotoPublisher_Article-titlecontainer {
         padding: 0 200px 30px 100px;
         overflow: visible;
     }
+
+    div.MimotoPublisher_Article-titlemenu {
+        right: 170px;
+    }
 }
 
-img.MimotoPublisher-Article-headerImage {
+img.MimotoPublisher_Article-headerImage {
     position: relative;
     width: 100%;
     z-index: 0;
@@ -73,7 +125,7 @@ img.MimotoPublisher-Article-headerImage {
     line-height: inherit;
 }
 
-div.MimotoPublisher-Article-body {
+div.MimotoPublisher_Article-body {
 
     position: relative;
     font-size: 18px;

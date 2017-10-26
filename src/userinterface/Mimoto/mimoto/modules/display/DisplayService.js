@@ -140,6 +140,7 @@ module.exports.prototype = {
     _aOriginSelectors: [],
     _aOriginContainerSelectors: [],
     _aEditableFields: [],
+    _aEditModeToggleButtons: [],
 
     _nDirectiveIndex: 0,
     _aDirectives: [],
@@ -756,6 +757,65 @@ module.exports.prototype = {
                     case this.DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE:
 
                         Mimoto.log('DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE', directive);
+
+                        // 1. verify or init
+                        if (!this._aEditModeToggleButtons[directive.sPropertySelector]) this._aEditModeToggleButtons[directive.sPropertySelector] = [];
+
+                        // 2. store
+                        this._aEditModeToggleButtons[directive.sPropertySelector].push(directive);
+
+                        // 3. configure
+                        directive.element.addEventListener('click', function(element, sPropertySelector, options, e)
+                        {
+
+                            // 1. move to separate class that combines fields and buttons
+                            // 2. if double field, auto sync?
+                            // 3. handle data submit as form?
+
+
+                            if (element.classList.contains('Mimoto--ineditmode'))
+                            {
+                                // toggle mode for button
+                                element.classList.remove('Mimoto--ineditmode');
+
+                                // toggle mode for related fields
+                                if (this._aEditableFields[sPropertySelector])
+                                {
+                                    // toggle
+                                    let nEditableFieldCount = this._aEditableFields[sPropertySelector].length;
+                                    for (let nEditableFieldIndex = 0; nEditableFieldIndex < nEditableFieldCount; nEditableFieldIndex++)
+                                    {
+                                        // register
+                                        let elEditableField = this._aEditableFields[sPropertySelector][nEditableFieldIndex].element;
+
+                                        // toggle
+                                        elEditableField.classList.remove('Mimoto--ineditmode');
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // toggle mode for button
+                                element.classList.add('Mimoto--ineditmode');
+
+                                // toggle mode for related fields
+                                if (this._aEditableFields[sPropertySelector])
+                                {
+                                    // toggle
+                                    let nEditableFieldCount = this._aEditableFields[sPropertySelector].length;
+                                    for (let nEditableFieldIndex = 0; nEditableFieldIndex < nEditableFieldCount; nEditableFieldIndex++)
+                                    {
+                                        // register
+                                        let elEditableField = this._aEditableFields[sPropertySelector][nEditableFieldIndex].element;
+
+                                        // toggle
+                                        elEditableField.classList.add('Mimoto--ineditmode');
+                                    }
+                                }
+                            }
+
+
+                        }.bind(this, directive.element, directive.sPropertySelector, directive.instructions.options), true);
 
                         break;
 
