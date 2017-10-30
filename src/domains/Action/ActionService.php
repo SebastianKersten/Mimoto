@@ -101,7 +101,7 @@ class ActionService
                 ),
                 'function' => $eAction->get('function.name'),
                 'type' => 'sync',
-                'settings' => []
+                'settings' => (object) array()
             );
 
             // c. add settings
@@ -113,10 +113,7 @@ class ActionService
                 $eActionSetting = $aActionSettings[$nActionSettingIndex];
 
                 // ii. build and store
-                $actionConfig->settings[] = (object) array(
-                    'key' => $eActionSetting->get('key'),
-                    'value' => $eActionSetting->get('value')
-                );
+                $actionConfig->settings->{$eActionSetting->get('key')} = $eActionSetting->get('value');
             }
 
             // d. store

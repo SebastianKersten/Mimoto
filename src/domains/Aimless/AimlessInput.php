@@ -74,116 +74,19 @@ class AimlessInput extends AimlessComponent
 
     public function input()
     {
-        // init
+        // 1. init
         $sFormattingOptions = '';
 
-        // split
+        // 2. split
         $aPropertySelectorElements = explode('.', $this->_sFieldId);
 
+        // 3. load
+        $formattingOptions = MimotoDataUtils::getFormattingOptionsForEntityProperty($aPropertySelectorElements[0], $aPropertySelectorElements[2]);
 
-        // ---
+        // 4. wrap
+        if (!empty($formattingOptions)) $sFormattingOptions = ' data-mimoto-form-input-formattingoptions="'.htmlentities(json_encode($formattingOptions), ENT_QUOTES, 'UTF-8').'"';
 
-
-        // load
-        $aEntities = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_ENTITY, 'values' => ['name' => $aPropertySelectorElements[0]]]);
-
-        // validate
-        if (count($aEntities) == 1)
-        {
-            // register
-            $eEntity = $aEntities[0];
-
-            // read
-            $aProperties = $eEntity->get('properties');
-
-            // find
-            $nPropertyCount = count($aProperties);
-            for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
-            {
-                // register
-                $eProperty = $aProperties[$nPropertyIndex];
-
-                // verify
-                if ($eProperty->get('name') == $aPropertySelectorElements[2])
-                {
-                    // read
-                    $aSettings = $eProperty->get('settings');
-
-                    // find
-                    $nSettingCount = count($aSettings);
-                    for ($nSettingIndex = 0; $nSettingIndex < $nSettingCount; $nSettingIndex++)
-                    {
-                        // register
-                        $eSetting = $aSettings[$nSettingIndex];
-
-                        // verify
-                        if ($eSetting->get('key') == EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS)
-                        {
-                            // read
-                            $aFormattingOptions = $eSetting->get('formattingOptions');
-
-                            // verify
-                            if (count($aFormattingOptions) > 0)
-                            {
-                                // init
-                                $formattingOptions = (object) array(
-                                    'toolbar' => [],
-                                    'formats' => []
-                                );
-
-                                // find
-                                $nFormattingOptionCount = count($aFormattingOptions);
-                                for ($nFormattingOptionIndex = 0; $nFormattingOptionIndex < $nFormattingOptionCount; $nFormattingOptionIndex++)
-                                {
-                                    // register
-                                    $eFormattingOption = $aFormattingOptions[$nFormattingOptionIndex];
-
-                                    // register
-                                    $formattingOptions->formats[] = $eFormattingOption->get('name');
-
-
-                                    switch($eFormattingOption->get('name'))
-                                    {
-                                        case 'header':
-
-                                            $formattingOptions->toolbar[] = (object) array('header' => [1, 2, 3, 4, 5, 6, false]);
-                                            break;
-
-                                        case 'list':
-
-                                            $formattingOptions->toolbar[] = (object) array('list' => 'ordered');
-                                            $formattingOptions->toolbar[] = (object) array('list' => 'bullet');
-                                            break;
-
-                                        case 'indent':
-
-                                            $formattingOptions->toolbar[] = (object) array('indent' => '-1');
-                                            $formattingOptions->toolbar[] = (object) array('indent' => '+1');
-                                            break;
-
-                                        default:
-
-                                            $formattingOptions->toolbar[] = $eFormattingOption->get('name');
-                                            break;
-                                    }
-
-
-                                    // ['bold', 'italic', 'underline', 'strike'],
-                                    // ['blockquote', 'code-block', 'link'],
-                                    // formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
-                                }
-
-                                // convert
-                                $sFormattingOptions = ' data-mimoto-form-input-formattingoptions="'.htmlentities(json_encode($formattingOptions), ENT_QUOTES, 'UTF-8').'"';
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        // compose and send
+        // 5. compose and send
         return 'data-mimoto-form-field-input="'.$this->_sFieldId.'" name="'.$this->_sFieldId.'"'.$sFormattingOptions;
     }
 

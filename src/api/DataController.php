@@ -343,4 +343,51 @@ class DataController
         return Mimoto::service('messages')->response("Value of property `$sPropertySelector` is cleared.");
     }
 
+
+    public function update(Application $app, Request $request)
+    {
+        // 1. load and convert
+        $data = MimotoDataUtils::decodePostData($request->get('data'));
+
+        // 1. register
+        $sPropertySelector = $data->sPropertySelector;
+
+        // 2. extract
+        $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
+        $nInstanceId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sPropertySelector);
+        $sPropertyName = MimotoDataUtils::getPropertyFromFromEntityPropertySelector($sPropertySelector);
+
+        // 4. load
+        $eEntity = Mimoto::service('data')->get($sInstanceType, $nInstanceId);
+
+        // 5. clear
+        switch ($eEntity->getPropertyType($sPropertyName))
+        {
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                //Mimoto
+
+                // strip
+                if (empty(MimotoDataUtils::getFormattingOptionsForEntityProperty($sInstanceType, $sPropertyName)))
+                {
+                    $data->newValue = strip_tags($data->newValue);
+                }
+
+                $eEntity->setValue($sPropertyName, $data->newValue);
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                //$eEntity->setValue($sPropertyName, null);
+                break;
+        }
+
+        // 6. store
+        Mimoto::service('data')->store($eEntity);
+
+        // 7. output
+        return Mimoto::service('messages')->response("Value of property `$sPropertySelector` has been updated.");
+    }
+
 }

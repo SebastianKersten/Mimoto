@@ -177,6 +177,8 @@ class Mimoto
 
         $app->post('/mimoto/output/component', 'Mimoto\\api\\OutputController::renderEntityView');
 
+        $app->post('/mimoto/data/update', 'Mimoto\\api\\DataController::update');
+
 
         // register
         $app->get ('/Mimoto.Aimless/data/{sEntityType}/{nEntityId}/{sComponentName}', 'Mimoto\\api\\OutputController::renderEntityView');

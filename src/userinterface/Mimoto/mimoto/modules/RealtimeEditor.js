@@ -70,6 +70,13 @@ module.exports.prototype = {
         this._socket.emit('edit', this._sPropertySelector); // #todo - rename to "request.edit"
     },
 
+
+    disable: function()
+    {
+        this._quill.enable(false);
+    },
+
+
     _socketOnBaseDocument: function(baseDocument)
     {
         // skip if not relevant #todo - make more efficient (room per field o.i.d.)

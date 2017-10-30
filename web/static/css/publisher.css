@@ -986,7 +986,64 @@ b[class*="MimotoCMS"] {
 .hidden[class*="MimotoCMS"] {
   display: none !important; }
 
+div.MimotoPublisher_Article-editor {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row; }
+
+div.MimotoPublisher_Article-editor-reviewbar {
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  width: 300px;
+  background-color: #666666;
+  padding: 20px;
+  -webkit-box-shadow: inset 7px 0 9px -7px rgba(0, 0, 0, 0.4);
+          box-shadow: inset 7px 0 9px -7px rgba(0, 0, 0, 0.4); }
+
+div.MimotoPublisher_Article-editor-review {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  div.MimotoPublisher_Article-editor-review > div.MimotoPublisher_Article-editor-review-arrow {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+        -ms-flex: none;
+            flex: none;
+    width: 20px;
+    height: 20px; }
+  div.MimotoPublisher_Article-editor-review > div.MimotoPublisher_Article-editor-review-box {
+    -webkit-box-flex: 1;
+    -webkit-flex: auto;
+        -ms-flex: auto;
+            flex: auto;
+    background-color: #ffffff;
+    padding: 10px;
+    -webkit-box-shadow: 7px 7px 9px -7px rgba(0, 0, 0, 0.4);
+            box-shadow: 7px 7px 9px -7px rgba(0, 0, 0, 0.4); }
+
 div.MimotoPublisher_Article {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
   width: 100%; }
 
 div.MimotoPublisher_Article-lede-container {
@@ -1000,11 +1057,12 @@ div.MimotoPublisher_Article-lede {
   width: 550px;
   font-size: 18px;
   line-height: 30px; }
-  div.MimotoPublisher_Article-lede > span.MimotoPublisher_Article-articletype {
-    color: #000000;
-    background-color: #ffffff;
-    font-size: 14px;
-    padding: 3px 7px 3px 7px; }
+
+span.MimotoPublisher_Article-articletype {
+  color: #000000;
+  background-color: #ffffff;
+  font-size: 14px;
+  padding: 3px 7px 3px 7px; }
 
 div.MimotoPublisher_Article-authors-container {
   text-align: right; }
@@ -1021,37 +1079,37 @@ div.MimotoPublisher_Article-titlecontainer {
   position: relative;
   padding: 0 50px 40px 50px; }
 
-div.MimotoPublisher_Article-titlemenu {
+div.MimotoPublisher_Article-inlineeditmenu {
   position: absolute;
   top: 10px;
   right: 20px;
   display: inline-block; }
 
-span.MimotoPublisher_Article-titlemenu-button {
+span.MimotoPublisher_Article-inlineeditmenu-button {
   color: #858585;
   text-decoration: none;
   cursor: pointer; }
 
-span.MimotoPublisher_Article-titlemenu-button-edit {
+span.MimotoPublisher_Article-inlineeditmenu-button-edit {
   display: inline-block; }
-  .Mimoto--ineditmode span.MimotoPublisher_Article-titlemenu-button-edit {
+  .Mimoto--ineditmode span.MimotoPublisher_Article-inlineeditmenu-button-edit {
     display: none; }
-  span.MimotoPublisher_Article-titlemenu-button-edit:hover {
+  span.MimotoPublisher_Article-inlineeditmenu-button-edit:hover {
     color: #c76255;
     text-decoration: underline; }
 
-span.MimotoPublisher_Article-titlemenu-button-ok {
+span.MimotoPublisher_Article-inlineeditmenu-button-ok {
   display: none; }
-  .Mimoto--ineditmode span.MimotoPublisher_Article-titlemenu-button-ok {
+  .Mimoto--ineditmode span.MimotoPublisher_Article-inlineeditmenu-button-ok {
     display: inline-block; }
-  span.MimotoPublisher_Article-titlemenu-button-ok:hover {
+  span.MimotoPublisher_Article-inlineeditmenu-button-ok:hover {
     color: #c76255;
     text-decoration: underline; }
 
 div.MimotoPublisher_Article-title {
   position: relative;
   font-size: 48px;
-  line-height: 50px;
+  padding: 0;
   font-weight: bold;
   font-family: "Futura PT W02 Book", sans-serif; }
   div.MimotoPublisher_Article-title.Mimoto--ineditmode {
@@ -1061,7 +1119,7 @@ div.MimotoPublisher_Article-title {
   div.MimotoPublisher_Article-titlecontainer {
     padding: 0 200px 30px 100px;
     overflow: visible; }
-  div.MimotoPublisher_Article-titlemenu {
+  div.MimotoPublisher_Article-inlineeditmenu {
     right: 170px; } }
 
 img.MimotoPublisher_Article-headerImage {
@@ -1069,11 +1127,11 @@ img.MimotoPublisher_Article-headerImage {
   width: 100%;
   z-index: 0; }
 
-.ql-editor, .ql-container {
+* > .ql-editor, * > .ql-container {
   overflow-y: auto;
   height: auto; }
 
-.ql-editor {
+* > .ql-editor {
   padding: 0;
   line-height: inherit; }
 
@@ -1496,7 +1554,7 @@ div.MimotoPublisher-menu-member-avatar {
     height: 40px; }
 
 div.MimotoPublisher-content {
-  padding-top: 80px; }
+  padding-top: 52px; }
 
 div.MimotoPublisher-footer {
   padding: 25px;

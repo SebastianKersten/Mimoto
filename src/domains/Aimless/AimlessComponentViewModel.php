@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Mimoto;
 use Mimoto\Aimless\MimotoAimlessUtils;
 use Mimoto\Aimless\DisplayOptionUtils;
@@ -298,7 +299,9 @@ class AimlessComponentViewModel
     public function editable($sPropertyName, $options = null)
     {
         // 1. prepare
-        $instructions = (object) array();
+        $instructions = (object) array(
+            'formattingOptions' => MimotoDataUtils::getFormattingOptionsForEntityProperty($this->_component->getEntity()->getEntityTypeName(), $sPropertyName)
+        );
 
         // 2. build and output
         return DataManipulationUtils::manipulate(DataManipulationUtils::MIMOTO_DATA_EDITABLE, $sPropertyName, $this->_component, $instructions, $options);

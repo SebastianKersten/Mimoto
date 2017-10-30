@@ -1,4 +1,39 @@
+div.MimotoPublisher_Article-editor {
+    display: flex;
+    flex-direction: row;
+}
+
+div.MimotoPublisher_Article-editor-reviewbar {
+    flex: none;
+    width: 300px;
+    background-color: #666666;
+    padding: 20px;
+
+    box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.4);
+}
+
+div.MimotoPublisher_Article-editor-review {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > div.MimotoPublisher_Article-editor-review-arrow {
+        flex: none;
+        width: 20px;
+        height: 20px;
+    }
+
+    & > div.MimotoPublisher_Article-editor-review-box {
+        flex: auto;
+        background-color: #ffffff;
+        padding: 10px;
+        box-shadow: 7px 7px 9px -7px rgba(0,0,0,0.4);
+    }
+}
+
 div.MimotoPublisher_Article {
+    flex: auto;
     width: 100%;
 }
 
@@ -14,13 +49,13 @@ div.MimotoPublisher_Article-lede {
     width: 550px;
     font-size: 18px;
     line-height: 30px;
+}
 
-    & > span.MimotoPublisher_Article-articletype {
-        color: #000000;
-        background-color : #ffffff;
-        font-size: 14px;
-        padding: 3px 7px 3px 7px;
-    }
+span.MimotoPublisher_Article-articletype {
+    color: #000000;
+    background-color : #ffffff;
+    font-size: 14px;
+    padding: 3px 7px 3px 7px;
 }
 
 div.MimotoPublisher_Article-authors-container {
@@ -46,20 +81,20 @@ div.MimotoPublisher_Article-titlecontainer {
     padding: 0 50px 40px 50px;
 }
 
-div.MimotoPublisher_Article-titlemenu {
+div.MimotoPublisher_Article-inlineeditmenu {
     position: absolute;
     top: 10px;
     right: 20px;
     display: inline-block;
 }
 
-span.MimotoPublisher_Article-titlemenu-button {
+span.MimotoPublisher_Article-inlineeditmenu-button {
     color: #858585;
     text-decoration: none;
     cursor: pointer;
 }
 
-span.MimotoPublisher_Article-titlemenu-button-edit {
+span.MimotoPublisher_Article-inlineeditmenu-button-edit {
     display: inline-block;
 
     .Mimoto--ineditmode & {
@@ -72,7 +107,7 @@ span.MimotoPublisher_Article-titlemenu-button-edit {
     }
 }
 
-span.MimotoPublisher_Article-titlemenu-button-ok {
+span.MimotoPublisher_Article-inlineeditmenu-button-ok {
     display: none;
 
     .Mimoto--ineditmode & {
@@ -88,13 +123,25 @@ span.MimotoPublisher_Article-titlemenu-button-ok {
 div.MimotoPublisher_Article-title {
     position: relative;
     font-size: 48px;
-    line-height: 50px;
+    padding: 0;
+    //line-height: 50px;
     font-weight: bold;
     font-family: "Futura PT W02 Book", sans-serif;
+    //overflow: visible;
 
     &.Mimoto--ineditmode {
         background-color: #f1f1f1;
     }
+
+    //& > .ql-editor, &.ql-container{
+    //    overflow-y: auto;
+    //    height: auto;
+    //}
+    //
+    //& > div.ql-editor {
+    //    padding: 0;
+    //    line-height: inherit;
+    //}
 }
 
 @include breakpoint(medium up) {
@@ -104,7 +151,7 @@ div.MimotoPublisher_Article-title {
         overflow: visible;
     }
 
-    div.MimotoPublisher_Article-titlemenu {
+    div.MimotoPublisher_Article-inlineeditmenu {
         right: 170px;
     }
 }
@@ -115,12 +162,12 @@ img.MimotoPublisher_Article-headerImage {
     z-index: 0;
 }
 
-.ql-editor, .ql-container{
+* > .ql-editor, * > .ql-container{
     overflow-y: auto;
     height: auto;
 }
 
-.ql-editor {
+* > .ql-editor {
     padding: 0;
     line-height: inherit;
 }

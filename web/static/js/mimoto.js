@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "8d88a8f18062f44a3224";
+/******/ 	__webpack_require__.h = "98d0b6abc42f7571904f";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -19441,6 +19441,8 @@ var RemoveClassWhenValueNot = __webpack_require__(418);
 // utils
 var DataUtils = __webpack_require__(419);
 
+var Editor = __webpack_require__(474);
+
 module.exports = function (realtimeManager) {
 
     // start
@@ -19529,6 +19531,8 @@ module.exports.prototype = {
     _aOriginContainerSelectors: [],
     _aEditableFields: [],
     _aEditModeToggleButtons: [],
+
+    _aEditors: [],
 
     _nDirectiveIndex: 0,
     _aDirectives: [],
@@ -20004,8 +20008,6 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_DATA_EDITABLE:
 
-                        Mimoto.log('DIRECTIVE_MIMOTO_DATA_EDITABLE', directive);
-
                         // verify or init
                         if (!this._aEditableFields[directive.sPropertySelector]) this._aEditableFields[directive.sPropertySelector] = [];
 
@@ -20015,8 +20017,6 @@ module.exports.prototype = {
                         break;
 
                     case this.DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE:
-
-                        Mimoto.log('DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE', directive);
 
                         // 1. verify or init
                         if (!this._aEditModeToggleButtons[directive.sPropertySelector]) this._aEditModeToggleButtons[directive.sPropertySelector] = [];
@@ -20046,6 +20046,30 @@ module.exports.prototype = {
 
                                         // toggle
                                         elEditableField.classList.remove('Mimoto--ineditmode');
+
+                                        // store
+                                        if (this._aEditors[sPropertySelector]) this._aEditors[sPropertySelector].disable();
+
+                                        // setup
+                                        var requestData = {
+                                            //publicKey: this._sPublicKey,
+                                            sPropertySelector: sPropertySelector,
+                                            newValue: this._aEditors[sPropertySelector].getValue()
+                                        };
+
+                                        // 11. send data
+                                        Mimoto.utils.callAPI({
+                                            type: 'post',
+                                            url: '/mimoto/data/update',
+                                            data: requestData,
+                                            dataType: 'json',
+                                            success: function (resultData, resultStatus, resultSomething) {
+                                                Mimoto.log('Value submitted', resultData);
+                                            }.bind(this)
+                                        });
+
+                                        // cleanup
+                                        delete this._aEditors[sPropertySelector];
                                     }
                                 }
                             } else {
@@ -20057,11 +20081,17 @@ module.exports.prototype = {
                                     // toggle
                                     var _nEditableFieldCount = this._aEditableFields[sPropertySelector].length;
                                     for (var _nEditableFieldIndex = 0; _nEditableFieldIndex < _nEditableFieldCount; _nEditableFieldIndex++) {
-                                        // register
+                                        // 1. register
                                         var _elEditableField = this._aEditableFields[sPropertySelector][_nEditableFieldIndex].element;
 
-                                        // toggle
+                                        // 2. toggle
                                         _elEditableField.classList.add('Mimoto--ineditmode');
+
+                                        // 3. read
+                                        var formattingOptions = this._aEditableFields[sPropertySelector][_nEditableFieldIndex].instructions.formattingOptions;
+
+                                        // 4. init and store
+                                        this._aEditors[sPropertySelector] = new Editor(sPropertySelector, _elEditableField, formattingOptions);
                                     }
                                 }
                             }
@@ -29981,6 +30011,10 @@ module.exports.prototype = {
         this._socket.emit('edit', this._sPropertySelector); // #todo - rename to "request.edit"
     },
 
+    disable: function disable() {
+        this._quill.enable(false);
+    },
+
     _socketOnBaseDocument: function _socketOnBaseDocument(baseDocument) {
         // skip if not relevant #todo - make more efficient (room per field o.i.d.)
         if (baseDocument.sPropertySelector != this._sPropertySelector) return;
@@ -36672,6 +36706,135 @@ module.exports.prototype = {
      */
     _composeEvent: function _composeEvent(sEvent) {
         return sEvent + '-' + this._sSelector;
+    }
+
+};
+
+/***/ }),
+/* 457 */,
+/* 458 */,
+/* 459 */,
+/* 460 */,
+/* 461 */,
+/* 462 */,
+/* 463 */,
+/* 464 */,
+/* 465 */,
+/* 466 */,
+/* 467 */,
+/* 468 */,
+/* 469 */,
+/* 470 */,
+/* 471 */,
+/* 472 */,
+/* 473 */,
+/* 474 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto.CMS - Editor
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+// Quill classes
+
+var Quill = __webpack_require__(97);
+var QuillDelta = __webpack_require__(451);
+
+module.exports = function (sPropertySelector, elEditableField, formattingOptions) {
+
+    // start
+    this.__construct(sPropertySelector, elEditableField, formattingOptions);
+};
+
+module.exports.prototype = {
+
+    _quill: null,
+    _deltaPending: null,
+    _documentPending: null,
+    _deltaBuffer: null,
+
+    _sPropertySelector: null,
+    _elEditableField: null,
+    _formattingOptions: null,
+    _otid: null,
+
+    _baseDocument: null,
+
+    _user: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(sPropertySelector, elEditableField, formattingOptions) {
+        // register
+        this._sPropertySelector = sPropertySelector;
+        this._elEditableField = elEditableField;
+        this._formattingOptions = formattingOptions;
+
+        // show content
+        this._quill = this._setupEditor(formattingOptions);
+    },
+
+    enable: function enable() {
+        Mimoto.log('Enabled ?');
+        this._quill.enable();
+    },
+
+    disable: function disable() {
+        this._quill.disable();
+    },
+
+    getValue: function getValue() {
+        return this._elEditableField.getElementsByClassName("ql-editor")[0].innerHTML;
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods text management ----------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _setupEditor: function _setupEditor(formattingOptions) {
+        // init
+        var toolbar = null;
+        var formats = null;
+
+        if (formattingOptions) {
+            if (formattingOptions.toolbar && formattingOptions.toolbar.length > 0) toolbar = formattingOptions.toolbar;
+            if (formattingOptions.formats && formattingOptions.formats.length > 0) formats = formattingOptions.formats;
+        }
+
+        // create
+        var quill = new Quill(this._elEditableField, {
+            theme: 'bubble',
+            modules: {
+                toolbar: toolbar,
+                history: {
+                    delay: 2000,
+                    maxStack: 500,
+                    userOnly: true
+                }
+            },
+            placeholder: 'Start typing', // #todo
+            formats: formats
+        });
+
+        // configure
+        //quill.on('selection-change', function() { this._onSelectionChange(); }.bind(this);
+        //quill.on('text-change', function(delta, oldContents, source) { this._onTextChange(delta, oldContents, source); }.bind(this) );
+
+
+        // send
+        return quill;
     }
 
 };

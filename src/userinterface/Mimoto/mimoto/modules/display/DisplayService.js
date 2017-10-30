@@ -50,6 +50,7 @@ let RemoveClassWhenValueNot = require('./directives/RemoveClassWhenValueNot');
 // utils
 let DataUtils = require('./utils/DataUtils');
 
+let Editor = require('./../Editor');
 
 
 module.exports = function(realtimeManager) {
@@ -141,6 +142,8 @@ module.exports.prototype = {
     _aOriginContainerSelectors: [],
     _aEditableFields: [],
     _aEditModeToggleButtons: [],
+
+    _aEditors: [],
 
     _nDirectiveIndex: 0,
     _aDirectives: [],
@@ -744,8 +747,6 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_DATA_EDITABLE:
 
-                        Mimoto.log('DIRECTIVE_MIMOTO_DATA_EDITABLE', directive);
-
                         // verify or init
                         if (!this._aEditableFields[directive.sPropertySelector]) this._aEditableFields[directive.sPropertySelector] = [];
 
@@ -755,8 +756,6 @@ module.exports.prototype = {
                         break;
 
                     case this.DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE:
-
-                        Mimoto.log('DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE', directive);
 
                         // 1. verify or init
                         if (!this._aEditModeToggleButtons[directive.sPropertySelector]) this._aEditModeToggleButtons[directive.sPropertySelector] = [];
@@ -790,6 +789,32 @@ module.exports.prototype = {
 
                                         // toggle
                                         elEditableField.classList.remove('Mimoto--ineditmode');
+
+                                        // store
+                                        if (this._aEditors[sPropertySelector]) this._aEditors[sPropertySelector].disable();
+
+                                        // setup
+                                        let requestData = {
+                                            //publicKey: this._sPublicKey,
+                                            sPropertySelector: sPropertySelector,
+                                            newValue: this._aEditors[sPropertySelector].getValue()
+                                        };
+
+                                        // 11. send data
+                                        Mimoto.utils.callAPI({
+                                            type: 'post',
+                                            url: '/mimoto/data/update',
+                                            data: requestData,
+                                            dataType: 'json',
+                                            success: function(resultData, resultStatus, resultSomething)
+                                            {
+                                                Mimoto.log('Value submitted', resultData);
+
+                                            }.bind(this)
+                                        });
+
+                                        // cleanup
+                                        delete this._aEditors[sPropertySelector];
                                     }
                                 }
                             }
@@ -805,17 +830,24 @@ module.exports.prototype = {
                                     let nEditableFieldCount = this._aEditableFields[sPropertySelector].length;
                                     for (let nEditableFieldIndex = 0; nEditableFieldIndex < nEditableFieldCount; nEditableFieldIndex++)
                                     {
-                                        // register
+                                        // 1. register
                                         let elEditableField = this._aEditableFields[sPropertySelector][nEditableFieldIndex].element;
 
-                                        // toggle
+                                        // 2. toggle
                                         elEditableField.classList.add('Mimoto--ineditmode');
+
+                                        // 3. read
+                                        let formattingOptions = this._aEditableFields[sPropertySelector][nEditableFieldIndex].instructions.formattingOptions;
+
+                                        // 4. init and store
+                                        this._aEditors[sPropertySelector] = new Editor(sPropertySelector, elEditableField, formattingOptions);
                                     }
                                 }
                             }
 
 
                         }.bind(this, directive.element, directive.sPropertySelector, directive.instructions.options), true);
+
 
                         break;
 

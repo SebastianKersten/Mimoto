@@ -4,6 +4,7 @@
 namespace Mimoto\Data;
 
 // Mimoto classes
+use Mimoto\EntityConfig\EntityConfig;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Data\MimotoEntity;
@@ -595,4 +596,109 @@ class MimotoDataUtils
 
         return json_decode(rawurldecode($sEncodedPostData));
     }
+
+    public static function getFormattingOptionsForEntityProperty($sEntityName, $sPropertyName)
+    {
+        // 1. init
+        $formattingOptions = null;
+
+        // 2. load
+        $aEntities = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_ENTITY, 'values' => ['name' => $sEntityName]]);
+
+        // validate
+        if (count($aEntities) == 1)
+        {
+            // register
+            $eEntity = $aEntities[0];
+
+            // read
+            $aProperties = $eEntity->get('properties');
+
+            // find
+            $nPropertyCount = count($aProperties);
+            for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
+            {
+                // register
+                $eProperty = $aProperties[$nPropertyIndex];
+
+                // verify
+                if ($eProperty->get('name') == $sPropertyName)
+                {
+                    // read
+                    $aSettings = $eProperty->get('settings');
+
+                    // find
+                    $nSettingCount = count($aSettings);
+                    for ($nSettingIndex = 0; $nSettingIndex < $nSettingCount; $nSettingIndex++)
+                    {
+                        // register
+                        $eSetting = $aSettings[$nSettingIndex];
+
+                        // verify
+                        if ($eSetting->get('key') == EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS)
+                        {
+                            // read
+                            $aFormattingOptions = $eSetting->get('formattingOptions');
+
+                            // verify
+                            if (count($aFormattingOptions) > 0)
+                            {
+                                $formattingOptions = (object) array(
+                                    'toolbar' => [],
+                                    'formats' => []
+                                );
+
+                                // find
+                                $nFormattingOptionCount = count($aFormattingOptions);
+                                for ($nFormattingOptionIndex = 0; $nFormattingOptionIndex < $nFormattingOptionCount; $nFormattingOptionIndex++)
+                                {
+                                    // register
+                                    $eFormattingOption = $aFormattingOptions[$nFormattingOptionIndex];
+
+                                    // register
+                                    $formattingOptions->formats[] = $eFormattingOption->get('name');
+
+
+                                    switch($eFormattingOption->get('name'))
+                                    {
+                                        case 'header':
+
+                                            $formattingOptions->toolbar[] = (object) array('header' => [1, 2, 3, 4, 5, 6, false]);
+                                            break;
+
+                                        case 'list':
+
+                                            $formattingOptions->toolbar[] = (object) array('list' => 'ordered');
+                                            $formattingOptions->toolbar[] = (object) array('list' => 'bullet');
+                                            break;
+
+                                        case 'indent':
+
+                                            $formattingOptions->toolbar[] = (object) array('indent' => '-1');
+                                            $formattingOptions->toolbar[] = (object) array('indent' => '+1');
+                                            break;
+
+                                        default:
+
+                                            $formattingOptions->toolbar[] = $eFormattingOption->get('name');
+                                            break;
+                                    }
+
+
+                                    // ['bold', 'italic', 'underline', 'strike'],
+                                    // ['blockquote', 'code-block', 'link'],
+                                    // formats: ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code-block', 'link', 'header', 'list', 'indent']
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // send
+        return $formattingOptions;
+    }
+
 }

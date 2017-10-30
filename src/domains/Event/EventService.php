@@ -134,7 +134,7 @@ class EventService
                         // 3. verify
                         if (method_exists($service, $action->function))
                         {
-                            // a. call
+                            // a. call and pass clone of settings (unserialize/serialize)
                             call_user_func([$service, $action->function], $event->getEntity(), unserialize(serialize($action->settings)));
                         }
                     }
