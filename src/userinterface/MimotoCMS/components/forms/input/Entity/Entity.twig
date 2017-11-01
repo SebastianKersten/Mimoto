@@ -1,0 +1,12 @@
+{% embed "MimotoCMS/components/forms/FormField.twig" %}
+
+    {% block input %}
+
+        <button>Create</button>
+        <button>Clear</button>
+
+        <input type="hidden" data-mimoto-input-type="list" {{ Mimoto.input() }} value='{{ Mimoto.value() }}' />
+
+    {% endblock %}
+
+{% endembed %}

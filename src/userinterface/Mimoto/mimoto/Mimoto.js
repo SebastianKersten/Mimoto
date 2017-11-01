@@ -110,6 +110,11 @@ module.exports.prototype = {
                 link.href = '/mimoto/mimoto.cms.css';
 
                 head.appendChild(link);
+
+
+                let editorCSS = document.createElement('style');
+                editorCSS.innerHTML = ".ql-editor, .ql-container { overflow-y: auto; height: auto; } .ql-editor { padding: 0; line-height: inherit; }";
+                head.appendChild(editorCSS);
             }
         }
 
@@ -273,13 +278,37 @@ module.exports.prototype = {
         document.body.classList.remove('Mimoto_layer_application');
     },
 
-    page: function(sURL)
+    page: function(sMethod, sURL, data, target)
     {
+        let form = document.createElement("form");
+        form.action = sURL;
+        form.method = sMethod;
+        form.target = target || "_self";
+
+        if (data)
+        {
+            for (let sKey in data)
+            {
+                let input = document.createElement("textarea");
+                input.name = sKey;
+                input.value = typeof data[sKey] === "object" ? JSON.stringify(data[sKey]) : data[sKey];
+                form.appendChild(input);
+            }
+        }
+
+        // add referrer
+        let input = document.createElement("textarea");
+        input.name = 'Mimoto_referrer';
+        input.value = window.location.href.split('?')[0];
+        form.appendChild(input);
+
+
+        form.style.display = 'none';
+        document.body.appendChild(form);
+        form.submit();
+
         // 1. auto return on save?
         // 2. add information about context (for example: section, group title, ...)
-
-
-        window.open(sURL, '_self');
     },
 
     log: function()

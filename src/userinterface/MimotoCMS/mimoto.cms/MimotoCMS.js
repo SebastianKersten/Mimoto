@@ -183,12 +183,34 @@ module.exports.prototype = {
     
     formFieldListItemAdd: function(sInputFieldType, sInputFieldId, sPropertySelector)
     {
-        // 1. build
-        var sURL = '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector;
-        
-        console.log(sURL);
-        
-        var popup = Mimoto.popup(sURL);
+        Mimoto.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/getoptions/' + sPropertySelector,
+            data: null,
+            dataType: 'json',
+            success: function(response, resultStatus, resultSomething)
+            {
+                console.log('list options', response);
+
+                if (response.optionCount === 0)
+                {
+                    alert('No options available yet. Please contact your webdeveloper or website administrator.');
+                }
+                else if (response.optionCount === 1)
+                {
+                    this.formFieldListItemAddAfterOptionSelected(sInputFieldType, sInputFieldId, sPropertySelector, response.optionId);
+                }
+                else
+                {
+                    Mimoto.popup('/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/showoptions/' + sPropertySelector,);
+                }
+
+            }.bind(this)
+        });
+
+
+
+        //var popup = Mimoto.popup(sURL);
         
         // 1. return root of the popup (or root object)
         // 2. connect content of the popup (onload) to the popup object
@@ -202,6 +224,12 @@ module.exports.prototype = {
         //
         // }
     },
+
+    formFieldListItemAddAfterOptionSelected: function(sInputFieldType, sInputFieldId, sPropertySelector, nOptionId)
+    {
+        Mimoto.page('post', '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector + '/' + nOptionId);
+    },
+
     
     formFieldListItemEdit: function(nConnectionId, sInstanceType, sInstanceId)
     {
@@ -209,7 +237,7 @@ module.exports.prototype = {
         var listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
         
         // execute
-        window.open("/mimoto.cms/formfield/" + listInfo.sInputFieldType + "/" + listInfo.sInputFieldId + "/edit/" + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId, '_self');
+        Mimoto.page('post', "/mimoto.cms/formfield/" + listInfo.sInputFieldType + "/" + listInfo.sInputFieldId + "/edit/" + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId);
     },
     
     

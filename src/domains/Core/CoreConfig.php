@@ -40,6 +40,7 @@ use Mimoto\Core\entities\InputPassword;
 use Mimoto\Core\entities\InputMultiSelect;
 use Mimoto\Core\entities\InputTextblock;
 use Mimoto\Core\entities\InputList;
+use Mimoto\Core\entities\InputEntity;
 use Mimoto\Core\entities\InputImage;
 use Mimoto\Core\entities\InputVideo;
 use Mimoto\Core\entities\InputColorPicker;
@@ -147,6 +148,7 @@ class CoreConfig
     const MIMOTO_FORM_INPUT_RADIOBUTTON         = '_Mimoto_form_input_radiobutton';
     const MIMOTO_FORM_INPUT_DROPDOWN            = '_Mimoto_form_input_dropdown';
     const MIMOTO_FORM_INPUT_LIST                = '_Mimoto_form_input_list';
+    const MIMOTO_FORM_INPUT_ENTITY              = '_Mimoto_form_input_entity';
     const MIMOTO_FORM_INPUT_IMAGE               = '_Mimoto_form_input_image';
     const MIMOTO_FORM_INPUT_VIDEO               = '_Mimoto_form_input_video';
     const MIMOTO_FORM_INPUT_COLORPICKER         = '_Mimoto_form_input_colorpicker';
@@ -216,6 +218,7 @@ class CoreConfig
     const COREFORM_INPUT_RADIOBUTTON    = '_Mimoto_coreform_input_radiobutton';
     const COREFORM_INPUT_DROPDOWN       = '_Mimoto_coreform_input_dropdown';
     const COREFORM_INPUT_LIST           = '_Mimoto_coreform_input_list';
+    const COREFORM_INPUT_ENTITY         = '_Mimoto_coreform_input_entity';
 
     const COREFORM_INPUT_IMAGE          = '_Mimoto_coreform_input_image';
     const COREFORM_INPUT_VIDEO          = '_Mimoto_coreform_input_video';
@@ -310,6 +313,7 @@ class CoreConfig
             InputTextline::getStructure(),
             InputPassword::getStructure(),
             InputList::getStructure(),
+            InputEntity::getStructure(),
             InputTextblock::getStructure(),
             InputCheckbox::getStructure(),
             InputMultiSelect::getStructure(),
@@ -393,6 +397,7 @@ class CoreConfig
             InputDropdown::getFormStructure(),
             InputImage::getFormStructure(),
             InputList::getFormStructure(),
+            InputEntity::getFormStructure(),
             InputMultiSelect::getFormStructure(),
             InputRadiobutton::getFormStructure(),
             InputTextBlock::getFormStructure(),

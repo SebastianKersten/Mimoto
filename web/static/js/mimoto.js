@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "98d0b6abc42f7571904f";
+/******/ 	__webpack_require__.h = "a480d8353453eedfac98";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -17876,6 +17876,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Mimoto classes
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var DomUtils = __webpack_require__(368);
 var DomService = __webpack_require__(369);
 var DataService = __webpack_require__(370);
@@ -17965,6 +17967,10 @@ module.exports.prototype = {
                 link.href = '/mimoto/mimoto.cms.css';
 
                 head.appendChild(link);
+
+                var editorCSS = document.createElement('style');
+                editorCSS.innerHTML = ".ql-editor, .ql-container { overflow-y: auto; height: auto; } .ql-editor { padding: 0; line-height: inherit; }";
+                head.appendChild(editorCSS);
             }
         }
 
@@ -18115,12 +18121,33 @@ module.exports.prototype = {
         document.body.classList.remove('Mimoto_layer_application');
     },
 
-    page: function page(sURL) {
+    page: function page(sMethod, sURL, data, target) {
+        var form = document.createElement("form");
+        form.action = sURL;
+        form.method = sMethod;
+        form.target = target || "_self";
+
+        if (data) {
+            for (var sKey in data) {
+                var _input = document.createElement("textarea");
+                _input.name = sKey;
+                _input.value = _typeof(data[sKey]) === "object" ? JSON.stringify(data[sKey]) : data[sKey];
+                form.appendChild(_input);
+            }
+        }
+
+        // add referrer
+        var input = document.createElement("textarea");
+        input.name = 'Mimoto_referrer';
+        input.value = window.location.href.split('?')[0];
+        form.appendChild(input);
+
+        form.style.display = 'none';
+        document.body.appendChild(form);
+        form.submit();
+
         // 1. auto return on save?
         // 2. add information about context (for example: section, group title, ...)
-
-
-        window.open(sURL, '_self');
     },
 
     log: function log() {

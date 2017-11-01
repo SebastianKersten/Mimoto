@@ -16,6 +16,7 @@ use Mimoto\Data\MimotoDataUtils;
 
 // Symfony classes
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 // Silex classes
 use Silex\Application;
@@ -483,13 +484,34 @@ class FormController
         return Mimoto::service('messages')->response((object) array('result' => 'FormField deleted! '.date("Y.m.d H:i:s")), 200);
     }
 
-    public function formFieldListItemAdd(Application $app, $sInputFieldType, $sInputFieldId, $sPropertySelector, $sOptionId = null)
+    public function formFieldListGetOptions(Application $app, $sInputFieldType, $sInputFieldId, $sPropertySelector)
     {
+        // 1. validate
+        if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) die('Invalid property selector');
 
-        // 1. init popup
-        $popup = Mimoto::service('output')->createPopup();
+        // 2. load
+        $formField = Mimoto::service('input')->getFormFieldByFieldId($sInputFieldType, $sInputFieldId);
 
+        // 3. validate
+        if (empty($formField)) return Mimoto::service('messages')->response('Formfield not found', 400);
 
+        // 4. load
+        $aOptions = $formField->getValue('options');
+
+        // 5. compose
+        $response = (object) array(
+            'optionCount' => count($aOptions),
+        );
+
+        // 6. add information
+        if (count($aOptions) == 1) $response->optionId = $aOptions[0]->getId();
+
+        // 7. reply
+        return Mimoto::service('messages')->response($response, 200);
+    }
+
+    public function formFieldListShowOptions(Application $app, $sInputFieldType, $sInputFieldId, $sPropertySelector)
+    {
         // validate
         if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) die('Invalid property selector');
 
@@ -502,19 +524,72 @@ class FormController
         // 1. welk formulierveld hort hierbij? get formid en formselector
         $aOptions = $formField->getValue('options');
 
+        $sOutput = '<div><b>Choose a form:</b><br><br>';
+
+
+        if ($sInputFieldType == CoreConfig::MIMOTO_FORM_INPUT_LIST)
+        {
+            $nOptionCount = count($aOptions);
+            for ($nOptionIndex = 0; $nOptionIndex < $nOptionCount; $nOptionIndex++)
+            {
+                // register
+                $option = $aOptions[$nOptionIndex];
+
+
+                if ($option->getValue('type') == InputOption::FORM)
+                {
+                    // output
+                    $sOutput .= '<div class="MimotoCMS_modules_ListItem" style="margin-bottom:1px;">';
+                    $sOutput .= '    <div class="MimotoCMS_modules_ListItem-content">';
+                    $sOutput .= '        <div class="MimotoCMS_modules_ListItem-info">';
+                    $sOutput .= '           <div class="MimotoCMS_modules_ListItem-label"><a href="#" style="color:#000000;" onclick="MimotoCMS.formFieldListItemAddAfterOptionSelected(\''.$sInputFieldType.'\', \''.$sInputFieldId.'\', \''.$sPropertySelector.'\', '.$option->getId().');">'.$option->getValue('label').'</a></div>';
+                    $sOutput .= '        </div>';
+                    $sOutput .= '    </div>';
+                    $sOutput .= '</div>';
+                }
+            }
+
+            $sOutput .= '</div>';
+
+            // exit
+            return $sOutput;
+        }
+    }
+
+    public function formFieldListItemAdd(Application $app, Request $request, $sInputFieldType, $sInputFieldId, $sPropertySelector, $sOptionId)
+    {
+        // 1. validate
+        if (!MimotoDataUtils::validatePropertySelector($sPropertySelector)) die('Invalid property selector');
+
+        // 2. load
+        $formField = Mimoto::service('input')->getFormFieldByFieldId($sInputFieldType, $sInputFieldId);
+
+        // 3. validate
+        if (empty($formField)) return $app->redirect("/mimoto.cms/forms");
+
+        // 4. welk formulierveld hort hierbij? get formid en formselector
+        $aOptions = $formField->getValue('options');
 
 
         // ---
 
+        // 5. init popup
+        $output = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
+
+
+        // ---
+
+
         // init
         $option = null;
 
+
         if (count($aOptions) == 1)
         {
-            // register
             $option = $aOptions[0];
         }
-        else if (count($aOptions) > 1 && !empty($sOptionId))
+        else
+        if (count($aOptions) > 1 && !empty($sOptionId))
         {
             // init
             $bOptionFound = false;
@@ -543,61 +618,31 @@ class FormController
 
 
         }
-        else if (count($aOptions) > 1 && empty($sItemId))
-        {
-
-            $sOutput = '<div><b>Choose a form:</b><br><br>';
-
-
-            if ($sInputFieldType == CoreConfig::MIMOTO_FORM_INPUT_LIST)
-            {
-                $nOptionCount = count($aOptions);
-                for ($nOptionIndex = 0; $nOptionIndex < $nOptionCount; $nOptionIndex++)
-                {
-                    // register
-                    $option = $aOptions[$nOptionIndex];
-
-
-                    if ($option->getValue('type') == InputOption::FORM)
-                    {
-                        // compose
-                        $sURL = '/mimoto.cms/formfield/'.$sInputFieldType.'/'.$sInputFieldId.'/add/'.$sPropertySelector.'/'.$option->getId();
-
-                        // output
-                        $sOutput .= '<div class="MimotoCMS_modules_ListItem" style="margin-bottom:1px;">';
-                        $sOutput .= '    <div class="MimotoCMS_modules_ListItem-content">';
-                        $sOutput .= '        <div class="MimotoCMS_modules_ListItem-info">';
-                        $sOutput .= '           <div class="MimotoCMS_modules_ListItem-label"><a href="#" style="color:#000000;" onclick="Mimoto.popup(\''.$sURL.'\');">'.$option->getValue('label').'</a></div>';
-                        $sOutput .= '        </div>';
-                        $sOutput .= '    </div>';
-                        $sOutput .= '</div>';
-                    }
-                }
-
-                $sOutput .= '</div>';
-
-                // exit
-                return $sOutput;
-            }
-        }
-        else
-        {
-            Mimoto::service('log')->error("No list options set", "Please add options to the list '$sInputFieldId' in order to add items to it", true);
-        }
 
 
         // validate
         if (empty($option)) Mimoto::service('log')->error("No options selected", "Please select a valid options for adding items to this list", true);
 
 
-        // --- show form
+        // ---
+
 
         // read
         $form = $option->getValue('form');
 
+        // 2. create content
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form', $form);
 
-        // 3. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $form);
+        // 6. setup navigation
+        if (!empty($request->get('Mimoto_referrer'))) $component->setVar('onClickFormMenuButtonOk', (object) array('menu' => ['onClick' => ['loadPage' => $request->get('Mimoto_referrer')]]));
+
+
+        // --- show form
+
+
+        // 1. auto create
+        // 2. get entity from form
+
 
         // 4. setup content
         $component->addForm(
@@ -611,10 +656,10 @@ class FormController
         );
 
         // 5. connect
-        $popup->addComponent('content', $component);
+        $output->addComponent('content', $component);
 
         // 6. render and send
-        return $popup->render();
+        return $output->render();
     }
 
 //    public function formFieldItemEdit(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sItemId = null)
@@ -622,7 +667,7 @@ class FormController
 //
 //    }
 
-    public function formFieldListItemEdit(Application $app, $sInputFieldType, $sInputFieldId, $sPropertySelector, $sInstanceType, $sInstanceId)
+    public function formFieldListItemEdit(Application $app, Request $request, $sInputFieldType, $sInputFieldId, $sPropertySelector, $sInstanceType, $sInstanceId)
     {
         //Mimoto::output($sInputFieldType, $sInputFieldId);
 
@@ -710,7 +755,10 @@ class FormController
 
 
         // 3. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $form);
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form', $form);
+
+        // 6. setup navigation
+        if (!empty($request->get('Mimoto_referrer'))) $component->setVar('onClickFormMenuButtonOk', (object) array('menu' => ['onClick' => ['loadPage' => $request->get('Mimoto_referrer')]]));
 
         // 4. setup content
         $component->addForm(

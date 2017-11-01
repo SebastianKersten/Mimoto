@@ -995,6 +995,16 @@ class Component
 
 
             (object) array(
+                'name' => CoreConfig::MIMOTO_FORM_INPUT_ENTITY,
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/forms/input/Entity/Entity.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+            (object) array(
                 'name' => CoreConfig::MIMOTO_FORM_INPUT_IMAGE,
                 'templates' => [
                     (object) array(

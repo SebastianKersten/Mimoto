@@ -89,6 +89,12 @@ class EventService
         // load
         $aActions = $this->getActionsByEvent($sEvent); //$this->_ActionService->getActionsByEvent($sEvent);
 
+
+        //Mimoto::error($event->getEntity()->getChanges());
+
+        //Mimoto::error($aActions);
+
+
         // trigger all actions
         $nActionCount = count($aActions);
         for ($nActionIndex = 0; $nActionIndex < $nActionCount; $nActionIndex++)

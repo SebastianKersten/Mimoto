@@ -49,6 +49,10 @@ div.MimotoPublisher_Article-lede {
     width: 550px;
     font-size: 18px;
     line-height: 30px;
+
+    &.Mimoto--ineditmode {
+        background-color: #f1f1f1;
+    }
 }
 
 span.MimotoPublisher_Article-articletype {
@@ -160,16 +164,6 @@ img.MimotoPublisher_Article-headerImage {
     position: relative;
     width: 100%;
     z-index: 0;
-}
-
-* > .ql-editor, * > .ql-container{
-    overflow-y: auto;
-    height: auto;
-}
-
-* > .ql-editor {
-    padding: 0;
-    line-height: inherit;
 }
 
 div.MimotoPublisher_Article-body {
