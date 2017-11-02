@@ -60,13 +60,13 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "a480d8353453eedfac98";
+/******/ 	__webpack_require__.h = "b78b6b52b2832e4ccd57";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 366);
+/******/ 	return __webpack_require__(__webpack_require__.s = 367);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -289,15 +289,15 @@ module.exports = g;
  * Module dependencies.
  */
 
-var keys = __webpack_require__(437);
-var hasBinary = __webpack_require__(147);
-var sliceBuffer = __webpack_require__(438);
-var after = __webpack_require__(439);
-var utf8 = __webpack_require__(440);
+var keys = __webpack_require__(443);
+var hasBinary = __webpack_require__(150);
+var sliceBuffer = __webpack_require__(444);
+var after = __webpack_require__(445);
+var utf8 = __webpack_require__(446);
 
 var base64encoder;
 if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(441);
+  base64encoder = __webpack_require__(447);
 }
 
 /**
@@ -355,7 +355,7 @@ var err = { type: 'error', data: 'parser error' };
  * Create a blob api even for blob builder when vendor prefixes exist
  */
 
-var Blob = __webpack_require__(442);
+var Blob = __webpack_require__(448);
 
 /**
  * Encodes a packet.
@@ -917,440 +917,6 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 /* 65 */,
 /* 66 */,
 /* 67 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {
-/**
- * This is the web browser implementation of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = __webpack_require__(423);
-exports.log = log;
-exports.formatArgs = formatArgs;
-exports.save = save;
-exports.load = load;
-exports.useColors = useColors;
-exports.storage = 'undefined' != typeof chrome
-               && 'undefined' != typeof chrome.storage
-                  ? chrome.storage.local
-                  : localstorage();
-
-/**
- * Colors.
- */
-
-exports.colors = [
-  'lightseagreen',
-  'forestgreen',
-  'goldenrod',
-  'dodgerblue',
-  'darkorchid',
-  'crimson'
-];
-
-/**
- * Currently only WebKit-based Web Inspectors, Firefox >= v31,
- * and the Firebug extension (any Firefox version) are known
- * to support "%c" CSS customizations.
- *
- * TODO: add a `localStorage` variable to explicitly enable/disable colors
- */
-
-function useColors() {
-  // is webkit? http://stackoverflow.com/a/16459606/376773
-  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    (window.console && (console.firebug || (console.exception && console.table))) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
-}
-
-/**
- * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
- */
-
-exports.formatters.j = function(v) {
-  try {
-    return JSON.stringify(v);
-  } catch (err) {
-    return '[UnexpectedJSONParseError]: ' + err.message;
-  }
-};
-
-
-/**
- * Colorize log arguments if enabled.
- *
- * @api public
- */
-
-function formatArgs() {
-  var args = arguments;
-  var useColors = this.useColors;
-
-  args[0] = (useColors ? '%c' : '')
-    + this.namespace
-    + (useColors ? ' %c' : ' ')
-    + args[0]
-    + (useColors ? '%c ' : ' ')
-    + '+' + exports.humanize(this.diff);
-
-  if (!useColors) return args;
-
-  var c = 'color: ' + this.color;
-  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
-
-  // the final "%c" is somewhat tricky, because there could be other
-  // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
-  var index = 0;
-  var lastC = 0;
-  args[0].replace(/%[a-z%]/g, function(match) {
-    if ('%%' === match) return;
-    index++;
-    if ('%c' === match) {
-      // we only are interested in the *last* %c
-      // (the user may have provided their own)
-      lastC = index;
-    }
-  });
-
-  args.splice(lastC, 0, c);
-  return args;
-}
-
-/**
- * Invokes `console.log()` when available.
- * No-op when `console.log` is not a "function".
- *
- * @api public
- */
-
-function log() {
-  // this hackery is required for IE8/9, where
-  // the `console.log` function doesn't have 'apply'
-  return 'object' === typeof console
-    && console.log
-    && Function.prototype.apply.call(console.log, console, arguments);
-}
-
-/**
- * Save `namespaces`.
- *
- * @param {String} namespaces
- * @api private
- */
-
-function save(namespaces) {
-  try {
-    if (null == namespaces) {
-      exports.storage.removeItem('debug');
-    } else {
-      exports.storage.debug = namespaces;
-    }
-  } catch(e) {}
-}
-
-/**
- * Load `namespaces`.
- *
- * @return {String} returns the previously persisted debug modes
- * @api private
- */
-
-function load() {
-  var r;
-  try {
-    return exports.storage.debug;
-  } catch(e) {}
-
-  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-  if (typeof process !== 'undefined' && 'env' in process) {
-    return process.env.DEBUG;
-  }
-}
-
-/**
- * Enable namespaces listed in `localStorage.debug` initially.
- */
-
-exports.enable(load());
-
-/**
- * Localstorage attempts to return the localstorage.
- *
- * This is necessary because safari throws
- * when a user disables cookies/localstorage
- * and you attempt to access it.
- *
- * @return {LocalStorage}
- * @api private
- */
-
-function localstorage(){
-  try {
-    return window.localStorage;
-  } catch (e) {}
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(141)))
-
-/***/ }),
-/* 68 */
-/***/ (function(module, exports) {
-
-
-module.exports = function(a, b){
-  var fn = function(){};
-  fn.prototype = b.prototype;
-  a.prototype = new fn;
-  a.prototype.constructor = a;
-};
-
-/***/ }),
-/* 69 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {
-/**
- * This is the web browser implementation of `debug()`.
- *
- * Expose `debug()` as the module.
- */
-
-exports = module.exports = __webpack_require__(443);
-exports.log = log;
-exports.formatArgs = formatArgs;
-exports.save = save;
-exports.load = load;
-exports.useColors = useColors;
-exports.storage = 'undefined' != typeof chrome
-               && 'undefined' != typeof chrome.storage
-                  ? chrome.storage.local
-                  : localstorage();
-
-/**
- * Colors.
- */
-
-exports.colors = [
-  'lightseagreen',
-  'forestgreen',
-  'goldenrod',
-  'dodgerblue',
-  'darkorchid',
-  'crimson'
-];
-
-/**
- * Currently only WebKit-based Web Inspectors, Firefox >= v31,
- * and the Firebug extension (any Firefox version) are known
- * to support "%c" CSS customizations.
- *
- * TODO: add a `localStorage` variable to explicitly enable/disable colors
- */
-
-function useColors() {
-  // is webkit? http://stackoverflow.com/a/16459606/376773
-  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
-    // is firebug? http://stackoverflow.com/a/398120/376773
-    (window.console && (console.firebug || (console.exception && console.table))) ||
-    // is firefox >= v31?
-    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
-}
-
-/**
- * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
- */
-
-exports.formatters.j = function(v) {
-  try {
-    return JSON.stringify(v);
-  } catch (err) {
-    return '[UnexpectedJSONParseError]: ' + err.message;
-  }
-};
-
-
-/**
- * Colorize log arguments if enabled.
- *
- * @api public
- */
-
-function formatArgs() {
-  var args = arguments;
-  var useColors = this.useColors;
-
-  args[0] = (useColors ? '%c' : '')
-    + this.namespace
-    + (useColors ? ' %c' : ' ')
-    + args[0]
-    + (useColors ? '%c ' : ' ')
-    + '+' + exports.humanize(this.diff);
-
-  if (!useColors) return args;
-
-  var c = 'color: ' + this.color;
-  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
-
-  // the final "%c" is somewhat tricky, because there could be other
-  // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
-  var index = 0;
-  var lastC = 0;
-  args[0].replace(/%[a-z%]/g, function(match) {
-    if ('%%' === match) return;
-    index++;
-    if ('%c' === match) {
-      // we only are interested in the *last* %c
-      // (the user may have provided their own)
-      lastC = index;
-    }
-  });
-
-  args.splice(lastC, 0, c);
-  return args;
-}
-
-/**
- * Invokes `console.log()` when available.
- * No-op when `console.log` is not a "function".
- *
- * @api public
- */
-
-function log() {
-  // this hackery is required for IE8/9, where
-  // the `console.log` function doesn't have 'apply'
-  return 'object' === typeof console
-    && console.log
-    && Function.prototype.apply.call(console.log, console, arguments);
-}
-
-/**
- * Save `namespaces`.
- *
- * @param {String} namespaces
- * @api private
- */
-
-function save(namespaces) {
-  try {
-    if (null == namespaces) {
-      exports.storage.removeItem('debug');
-    } else {
-      exports.storage.debug = namespaces;
-    }
-  } catch(e) {}
-}
-
-/**
- * Load `namespaces`.
- *
- * @return {String} returns the previously persisted debug modes
- * @api private
- */
-
-function load() {
-  var r;
-  try {
-    return exports.storage.debug;
-  } catch(e) {}
-
-  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-  if (typeof process !== 'undefined' && 'env' in process) {
-    return process.env.DEBUG;
-  }
-}
-
-/**
- * Enable namespaces listed in `localStorage.debug` initially.
- */
-
-exports.enable(load());
-
-/**
- * Localstorage attempts to return the localstorage.
- *
- * This is necessary because safari throws
- * when a user disables cookies/localstorage
- * and you attempt to access it.
- *
- * @return {LocalStorage}
- * @api private
- */
-
-function localstorage(){
-  try {
-    return window.localStorage;
-  } catch (e) {}
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(141)))
-
-/***/ }),
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(Buffer) {/*!
@@ -12647,7 +12213,441 @@ module.exports = __webpack_require__(63);
 /***/ })
 /******/ ]);
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(392).Buffer))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(393).Buffer))
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {
+/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = __webpack_require__(429);
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome
+               && 'undefined' != typeof chrome.storage
+                  ? chrome.storage.local
+                  : localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (window.console && (console.firebug || (console.exception && console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs() {
+  var args = arguments;
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return args;
+
+  var c = 'color: ' + this.color;
+  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+  return args;
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    return exports.storage.debug;
+  } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if (typeof process !== 'undefined' && 'env' in process) {
+    return process.env.DEBUG;
+  }
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage(){
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(144)))
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports) {
+
+
+module.exports = function(a, b){
+  var fn = function(){};
+  fn.prototype = b.prototype;
+  a.prototype = new fn;
+  a.prototype.constructor = a;
+};
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {
+/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = __webpack_require__(449);
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
+exports.storage = 'undefined' != typeof chrome
+               && 'undefined' != typeof chrome.storage
+                  ? chrome.storage.local
+                  : localstorage();
+
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+ * and the Firebug extension (any Firefox version) are known
+ * to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (window.console && (console.firebug || (console.exception && console.table))) ||
+    // is firefox >= v31?
+    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
+}
+
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
+
+exports.formatters.j = function(v) {
+  try {
+    return JSON.stringify(v);
+  } catch (err) {
+    return '[UnexpectedJSONParseError]: ' + err.message;
+  }
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs() {
+  var args = arguments;
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? ' %c' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return args;
+
+  var c = 'color: ' + this.color;
+  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+  return args;
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // this hackery is required for IE8/9, where
+  // the `console.log` function doesn't have 'apply'
+  return 'object' === typeof console
+    && console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      exports.storage.removeItem('debug');
+    } else {
+      exports.storage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    return exports.storage.debug;
+  } catch(e) {}
+
+  // If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+  if (typeof process !== 'undefined' && 'env' in process) {
+    return process.env.DEBUG;
+  }
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+/**
+ * Localstorage attempts to return the localstorage.
+ *
+ * This is necessary because safari throws
+ * when a user disables cookies/localstorage
+ * and you attempt to access it.
+ *
+ * @return {LocalStorage}
+ * @api private
+ */
+
+function localstorage(){
+  try {
+    return window.localStorage;
+  } catch (e) {}
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(144)))
+
+/***/ }),
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
 
 /***/ }),
 /* 98 */
@@ -12658,11 +12658,11 @@ module.exports = __webpack_require__(63);
  * Module dependencies.
  */
 
-var debug = __webpack_require__(425)('socket.io-parser');
-var json = __webpack_require__(428);
-var Emitter = __webpack_require__(430);
-var binary = __webpack_require__(431);
-var isBuf = __webpack_require__(143);
+var debug = __webpack_require__(431)('socket.io-parser');
+var json = __webpack_require__(434);
+var Emitter = __webpack_require__(436);
+var binary = __webpack_require__(437);
+var isBuf = __webpack_require__(146);
 
 /**
  * Protocol version.
@@ -13065,7 +13065,7 @@ function error(data){
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(435);
+var hasCORS = __webpack_require__(441);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -15283,7 +15283,7 @@ exports.decode = function(qs){
 
 }).call(this);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(97)(module)))
 
 /***/ }),
 /* 137 */
@@ -15371,15 +15371,539 @@ module.exports.prototype = {
 /* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var diff = __webpack_require__(422);
+var equal = __webpack_require__(140);
+var extend = __webpack_require__(141);
+var op = __webpack_require__(425);
+
+
+var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
+
+
+var Delta = function (ops) {
+  // Assume we are given a well formed ops
+  if (Array.isArray(ops)) {
+    this.ops = ops;
+  } else if (ops != null && Array.isArray(ops.ops)) {
+    this.ops = ops.ops;
+  } else {
+    this.ops = [];
+  }
+};
+
+
+Delta.prototype.insert = function (text, attributes) {
+  var newOp = {};
+  if (text.length === 0) return this;
+  newOp.insert = text;
+  if (attributes != null && typeof attributes === 'object' && Object.keys(attributes).length > 0) {
+    newOp.attributes = attributes;
+  }
+  return this.push(newOp);
+};
+
+Delta.prototype['delete'] = function (length) {
+  if (length <= 0) return this;
+  return this.push({ 'delete': length });
+};
+
+Delta.prototype.retain = function (length, attributes) {
+  if (length <= 0) return this;
+  var newOp = { retain: length };
+  if (attributes != null && typeof attributes === 'object' && Object.keys(attributes).length > 0) {
+    newOp.attributes = attributes;
+  }
+  return this.push(newOp);
+};
+
+Delta.prototype.push = function (newOp) {
+  var index = this.ops.length;
+  var lastOp = this.ops[index - 1];
+  newOp = extend(true, {}, newOp);
+  if (typeof lastOp === 'object') {
+    if (typeof newOp['delete'] === 'number' && typeof lastOp['delete'] === 'number') {
+      this.ops[index - 1] = { 'delete': lastOp['delete'] + newOp['delete'] };
+      return this;
+    }
+    // Since it does not matter if we insert before or after deleting at the same index,
+    // always prefer to insert first
+    if (typeof lastOp['delete'] === 'number' && newOp.insert != null) {
+      index -= 1;
+      lastOp = this.ops[index - 1];
+      if (typeof lastOp !== 'object') {
+        this.ops.unshift(newOp);
+        return this;
+      }
+    }
+    if (equal(newOp.attributes, lastOp.attributes)) {
+      if (typeof newOp.insert === 'string' && typeof lastOp.insert === 'string') {
+        this.ops[index - 1] = { insert: lastOp.insert + newOp.insert };
+        if (typeof newOp.attributes === 'object') this.ops[index - 1].attributes = newOp.attributes
+        return this;
+      } else if (typeof newOp.retain === 'number' && typeof lastOp.retain === 'number') {
+        this.ops[index - 1] = { retain: lastOp.retain + newOp.retain };
+        if (typeof newOp.attributes === 'object') this.ops[index - 1].attributes = newOp.attributes
+        return this;
+      }
+    }
+  }
+  if (index === this.ops.length) {
+    this.ops.push(newOp);
+  } else {
+    this.ops.splice(index, 0, newOp);
+  }
+  return this;
+};
+
+Delta.prototype.chop = function () {
+  var lastOp = this.ops[this.ops.length - 1];
+  if (lastOp && lastOp.retain && !lastOp.attributes) {
+    this.ops.pop();
+  }
+  return this;
+};
+
+Delta.prototype.filter = function (predicate) {
+  return this.ops.filter(predicate);
+};
+
+Delta.prototype.forEach = function (predicate) {
+  this.ops.forEach(predicate);
+};
+
+Delta.prototype.map = function (predicate) {
+  return this.ops.map(predicate);
+};
+
+Delta.prototype.partition = function (predicate) {
+  var passed = [], failed = [];
+  this.forEach(function(op) {
+    var target = predicate(op) ? passed : failed;
+    target.push(op);
+  });
+  return [passed, failed];
+};
+
+Delta.prototype.reduce = function (predicate, initial) {
+  return this.ops.reduce(predicate, initial);
+};
+
+Delta.prototype.changeLength = function () {
+  return this.reduce(function (length, elem) {
+    if (elem.insert) {
+      return length + op.length(elem);
+    } else if (elem.delete) {
+      return length - elem.delete;
+    }
+    return length;
+  }, 0);
+};
+
+Delta.prototype.length = function () {
+  return this.reduce(function (length, elem) {
+    return length + op.length(elem);
+  }, 0);
+};
+
+Delta.prototype.slice = function (start, end) {
+  start = start || 0;
+  if (typeof end !== 'number') end = Infinity;
+  var ops = [];
+  var iter = op.iterator(this.ops);
+  var index = 0;
+  while (index < end && iter.hasNext()) {
+    var nextOp;
+    if (index < start) {
+      nextOp = iter.next(start - index);
+    } else {
+      nextOp = iter.next(end - index);
+      ops.push(nextOp);
+    }
+    index += op.length(nextOp);
+  }
+  return new Delta(ops);
+};
+
+
+Delta.prototype.compose = function (other) {
+  var thisIter = op.iterator(this.ops);
+  var otherIter = op.iterator(other.ops);
+  var delta = new Delta();
+  while (thisIter.hasNext() || otherIter.hasNext()) {
+    if (otherIter.peekType() === 'insert') {
+      delta.push(otherIter.next());
+    } else if (thisIter.peekType() === 'delete') {
+      delta.push(thisIter.next());
+    } else {
+      var length = Math.min(thisIter.peekLength(), otherIter.peekLength());
+      var thisOp = thisIter.next(length);
+      var otherOp = otherIter.next(length);
+      if (typeof otherOp.retain === 'number') {
+        var newOp = {};
+        if (typeof thisOp.retain === 'number') {
+          newOp.retain = length;
+        } else {
+          newOp.insert = thisOp.insert;
+        }
+        // Preserve null when composing with a retain, otherwise remove it for inserts
+        var attributes = op.attributes.compose(thisOp.attributes, otherOp.attributes, typeof thisOp.retain === 'number');
+        if (attributes) newOp.attributes = attributes;
+        delta.push(newOp);
+      // Other op should be delete, we could be an insert or retain
+      // Insert + delete cancels out
+      } else if (typeof otherOp['delete'] === 'number' && typeof thisOp.retain === 'number') {
+        delta.push(otherOp);
+      }
+    }
+  }
+  return delta.chop();
+};
+
+Delta.prototype.concat = function (other) {
+  var delta = new Delta(this.ops.slice());
+  if (other.ops.length > 0) {
+    delta.push(other.ops[0]);
+    delta.ops = delta.ops.concat(other.ops.slice(1));
+  }
+  return delta;
+};
+
+Delta.prototype.diff = function (other, index) {
+  if (this.ops === other.ops) {
+    return new Delta();
+  }
+  var strings = [this, other].map(function (delta) {
+    return delta.map(function (op) {
+      if (op.insert != null) {
+        return typeof op.insert === 'string' ? op.insert : NULL_CHARACTER;
+      }
+      var prep = (delta === other) ? 'on' : 'with';
+      throw new Error('diff() called ' + prep + ' non-document');
+    }).join('');
+  });
+  var delta = new Delta();
+  var diffResult = diff(strings[0], strings[1], index);
+  var thisIter = op.iterator(this.ops);
+  var otherIter = op.iterator(other.ops);
+  diffResult.forEach(function (component) {
+    var length = component[1].length;
+    while (length > 0) {
+      var opLength = 0;
+      switch (component[0]) {
+        case diff.INSERT:
+          opLength = Math.min(otherIter.peekLength(), length);
+          delta.push(otherIter.next(opLength));
+          break;
+        case diff.DELETE:
+          opLength = Math.min(length, thisIter.peekLength());
+          thisIter.next(opLength);
+          delta['delete'](opLength);
+          break;
+        case diff.EQUAL:
+          opLength = Math.min(thisIter.peekLength(), otherIter.peekLength(), length);
+          var thisOp = thisIter.next(opLength);
+          var otherOp = otherIter.next(opLength);
+          if (equal(thisOp.insert, otherOp.insert)) {
+            delta.retain(opLength, op.attributes.diff(thisOp.attributes, otherOp.attributes));
+          } else {
+            delta.push(otherOp)['delete'](opLength);
+          }
+          break;
+      }
+      length -= opLength;
+    }
+  });
+  return delta.chop();
+};
+
+Delta.prototype.eachLine = function (predicate, newline) {
+  newline = newline || '\n';
+  var iter = op.iterator(this.ops);
+  var line = new Delta();
+  var i = 0;
+  while (iter.hasNext()) {
+    if (iter.peekType() !== 'insert') return;
+    var thisOp = iter.peek();
+    var start = op.length(thisOp) - iter.peekLength();
+    var index = typeof thisOp.insert === 'string' ?
+      thisOp.insert.indexOf(newline, start) - start : -1;
+    if (index < 0) {
+      line.push(iter.next());
+    } else if (index > 0) {
+      line.push(iter.next(index));
+    } else {
+      if (predicate(line, iter.next(1).attributes || {}, i) === false) {
+        return;
+      }
+      i += 1;
+      line = new Delta();
+    }
+  }
+  if (line.length() > 0) {
+    predicate(line, {}, i);
+  }
+};
+
+Delta.prototype.transform = function (other, priority) {
+  priority = !!priority;
+  if (typeof other === 'number') {
+    return this.transformPosition(other, priority);
+  }
+  var thisIter = op.iterator(this.ops);
+  var otherIter = op.iterator(other.ops);
+  var delta = new Delta();
+  while (thisIter.hasNext() || otherIter.hasNext()) {
+    if (thisIter.peekType() === 'insert' && (priority || otherIter.peekType() !== 'insert')) {
+      delta.retain(op.length(thisIter.next()));
+    } else if (otherIter.peekType() === 'insert') {
+      delta.push(otherIter.next());
+    } else {
+      var length = Math.min(thisIter.peekLength(), otherIter.peekLength());
+      var thisOp = thisIter.next(length);
+      var otherOp = otherIter.next(length);
+      if (thisOp['delete']) {
+        // Our delete either makes their delete redundant or removes their retain
+        continue;
+      } else if (otherOp['delete']) {
+        delta.push(otherOp);
+      } else {
+        // We retain either their retain or insert
+        delta.retain(length, op.attributes.transform(thisOp.attributes, otherOp.attributes, priority));
+      }
+    }
+  }
+  return delta.chop();
+};
+
+Delta.prototype.transformPosition = function (index, priority) {
+  priority = !!priority;
+  var thisIter = op.iterator(this.ops);
+  var offset = 0;
+  while (thisIter.hasNext() && offset <= index) {
+    var length = thisIter.peekLength();
+    var nextType = thisIter.peekType();
+    thisIter.next();
+    if (nextType === 'delete') {
+      index -= Math.min(length, index - offset);
+      continue;
+    } else if (nextType === 'insert' && (offset < index || !priority)) {
+      index += length;
+    }
+    offset += length;
+  }
+  return index;
+};
+
+
+module.exports = Delta;
+
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pSlice = Array.prototype.slice;
+var objectKeys = __webpack_require__(423);
+var isArguments = __webpack_require__(424);
+
+var deepEqual = module.exports = function (actual, expected, opts) {
+  if (!opts) opts = {};
+  // 7.1. All identical values are equivalent, as determined by ===.
+  if (actual === expected) {
+    return true;
+
+  } else if (actual instanceof Date && expected instanceof Date) {
+    return actual.getTime() === expected.getTime();
+
+  // 7.3. Other pairs that do not both pass typeof value == 'object',
+  // equivalence is determined by ==.
+  } else if (!actual || !expected || typeof actual != 'object' && typeof expected != 'object') {
+    return opts.strict ? actual === expected : actual == expected;
+
+  // 7.4. For all other Object pairs, including Array objects, equivalence is
+  // determined by having the same number of owned properties (as verified
+  // with Object.prototype.hasOwnProperty.call), the same set of keys
+  // (although not necessarily the same order), equivalent values for every
+  // corresponding key, and an identical 'prototype' property. Note: this
+  // accounts for both named and indexed properties on Arrays.
+  } else {
+    return objEquiv(actual, expected, opts);
+  }
+}
+
+function isUndefinedOrNull(value) {
+  return value === null || value === undefined;
+}
+
+function isBuffer (x) {
+  if (!x || typeof x !== 'object' || typeof x.length !== 'number') return false;
+  if (typeof x.copy !== 'function' || typeof x.slice !== 'function') {
+    return false;
+  }
+  if (x.length > 0 && typeof x[0] !== 'number') return false;
+  return true;
+}
+
+function objEquiv(a, b, opts) {
+  var i, key;
+  if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
+    return false;
+  // an identical 'prototype' property.
+  if (a.prototype !== b.prototype) return false;
+  //~~~I've managed to break Object.keys through screwy arguments passing.
+  //   Converting to array solves the problem.
+  if (isArguments(a)) {
+    if (!isArguments(b)) {
+      return false;
+    }
+    a = pSlice.call(a);
+    b = pSlice.call(b);
+    return deepEqual(a, b, opts);
+  }
+  if (isBuffer(a)) {
+    if (!isBuffer(b)) {
+      return false;
+    }
+    if (a.length !== b.length) return false;
+    for (i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+  try {
+    var ka = objectKeys(a),
+        kb = objectKeys(b);
+  } catch (e) {//happens when one is a string literal and the other isn't
+    return false;
+  }
+  // having the same number of owned properties (keys incorporates
+  // hasOwnProperty)
+  if (ka.length != kb.length)
+    return false;
+  //the same set of keys (although not necessarily the same order),
+  ka.sort();
+  kb.sort();
+  //~~~cheap key test
+  for (i = ka.length - 1; i >= 0; i--) {
+    if (ka[i] != kb[i])
+      return false;
+  }
+  //equivalent values for every corresponding key, and
+  //~~~possibly expensive deep test
+  for (i = ka.length - 1; i >= 0; i--) {
+    key = ka[i];
+    if (!deepEqual(a[key], b[key], opts)) return false;
+  }
+  return typeof a === typeof b;
+}
+
+
+/***/ }),
+/* 141 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var hasOwn = Object.prototype.hasOwnProperty;
+var toStr = Object.prototype.toString;
+
+var isArray = function isArray(arr) {
+	if (typeof Array.isArray === 'function') {
+		return Array.isArray(arr);
+	}
+
+	return toStr.call(arr) === '[object Array]';
+};
+
+var isPlainObject = function isPlainObject(obj) {
+	if (!obj || toStr.call(obj) !== '[object Object]') {
+		return false;
+	}
+
+	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
+	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
+	// Not own constructor property must be Object
+	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
+		return false;
+	}
+
+	// Own properties are enumerated firstly, so to speed up,
+	// if last one is own, then all properties are own.
+	var key;
+	for (key in obj) { /**/ }
+
+	return typeof key === 'undefined' || hasOwn.call(obj, key);
+};
+
+module.exports = function extend() {
+	var options, name, src, copy, copyIsArray, clone;
+	var target = arguments[0];
+	var i = 1;
+	var length = arguments.length;
+	var deep = false;
+
+	// Handle a deep copy situation
+	if (typeof target === 'boolean') {
+		deep = target;
+		target = arguments[1] || {};
+		// skip the boolean and the target
+		i = 2;
+	}
+	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
+		target = {};
+	}
+
+	for (; i < length; ++i) {
+		options = arguments[i];
+		// Only deal with non-null/undefined values
+		if (options != null) {
+			// Extend the base object
+			for (name in options) {
+				src = target[name];
+				copy = options[name];
+
+				// Prevent never-ending loop
+				if (target !== copy) {
+					// Recurse if we're merging plain objects or arrays
+					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
+						if (copyIsArray) {
+							copyIsArray = false;
+							clone = src && isArray(src) ? src : [];
+						} else {
+							clone = src && isPlainObject(src) ? src : {};
+						}
+
+						// Never move original objects, clone them
+						target[name] = extend(deep, clone, copy);
+
+					// Don't bring in undefined values
+					} else if (typeof copy !== 'undefined') {
+						target[name] = copy;
+					}
+				}
+			}
+		}
+	}
+
+	// Return the modified object
+	return target;
+};
+
+
+/***/ }),
+/* 142 */
+/***/ (function(module, exports, __webpack_require__) {
+
 
 /**
  * Module dependencies.
  */
 
-var url = __webpack_require__(422);
+var url = __webpack_require__(428);
 var parser = __webpack_require__(98);
-var Manager = __webpack_require__(144);
-var debug = __webpack_require__(67)('socket.io-client');
+var Manager = __webpack_require__(147);
+var debug = __webpack_require__(68)('socket.io-client');
 
 /**
  * Module exports.
@@ -15478,12 +16002,12 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(144);
-exports.Socket = __webpack_require__(150);
+exports.Manager = __webpack_require__(147);
+exports.Socket = __webpack_require__(153);
 
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, exports) {
 
 /**
@@ -15528,7 +16052,7 @@ module.exports = function parseuri(str) {
 
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -15718,7 +16242,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, exports) {
 
 module.exports = Array.isArray || function (arr) {
@@ -15727,7 +16251,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 143 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -15747,7 +16271,7 @@ function isBuf(obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 144 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -15755,15 +16279,15 @@ function isBuf(obj) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(432);
-var Socket = __webpack_require__(150);
-var Emitter = __webpack_require__(151);
+var eio = __webpack_require__(438);
+var Socket = __webpack_require__(153);
+var Emitter = __webpack_require__(154);
 var parser = __webpack_require__(98);
-var on = __webpack_require__(152);
-var bind = __webpack_require__(153);
-var debug = __webpack_require__(67)('socket.io-client:manager');
-var indexOf = __webpack_require__(149);
-var Backoff = __webpack_require__(450);
+var on = __webpack_require__(155);
+var bind = __webpack_require__(156);
+var debug = __webpack_require__(68)('socket.io-client:manager');
+var indexOf = __webpack_require__(152);
+var Backoff = __webpack_require__(456);
 
 /**
  * IE6+ hasOwnProperty
@@ -16313,7 +16837,7 @@ Manager.prototype.onreconnect = function () {
 
 
 /***/ }),
-/* 145 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -16321,9 +16845,9 @@ Manager.prototype.onreconnect = function () {
  */
 
 var XMLHttpRequest = __webpack_require__(99);
-var XHR = __webpack_require__(436);
-var JSONP = __webpack_require__(445);
-var websocket = __webpack_require__(446);
+var XHR = __webpack_require__(442);
+var JSONP = __webpack_require__(451);
+var websocket = __webpack_require__(452);
 
 /**
  * Export transports.
@@ -16373,7 +16897,7 @@ function polling (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 146 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -16383,9 +16907,9 @@ function polling (opts) {
 var Transport = __webpack_require__(100);
 var parseqs = __webpack_require__(102);
 var parser = __webpack_require__(48);
-var inherit = __webpack_require__(68);
-var yeast = __webpack_require__(148);
-var debug = __webpack_require__(69)('engine.io-client:polling');
+var inherit = __webpack_require__(69);
+var yeast = __webpack_require__(151);
+var debug = __webpack_require__(70)('engine.io-client:polling');
 
 /**
  * Module exports.
@@ -16624,7 +17148,7 @@ Polling.prototype.uri = function () {
 
 
 /***/ }),
-/* 147 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -16632,7 +17156,7 @@ Polling.prototype.uri = function () {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(142);
+var isArray = __webpack_require__(145);
 
 /**
  * Module exports.
@@ -16690,7 +17214,7 @@ function hasBinary(data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 148 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16765,7 +17289,7 @@ module.exports = yeast;
 
 
 /***/ }),
-/* 149 */
+/* 152 */
 /***/ (function(module, exports) {
 
 
@@ -16780,7 +17304,7 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-/* 150 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -16789,12 +17313,12 @@ module.exports = function(arr, obj){
  */
 
 var parser = __webpack_require__(98);
-var Emitter = __webpack_require__(151);
-var toArray = __webpack_require__(449);
-var on = __webpack_require__(152);
-var bind = __webpack_require__(153);
-var debug = __webpack_require__(67)('socket.io-client:socket');
-var hasBin = __webpack_require__(147);
+var Emitter = __webpack_require__(154);
+var toArray = __webpack_require__(455);
+var on = __webpack_require__(155);
+var bind = __webpack_require__(156);
+var debug = __webpack_require__(68)('socket.io-client:socket');
+var hasBin = __webpack_require__(150);
 
 /**
  * Module exports.
@@ -17205,7 +17729,7 @@ Socket.prototype.compress = function (compress) {
 
 
 /***/ }),
-/* 151 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -17374,7 +17898,7 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 152 */
+/* 155 */
 /***/ (function(module, exports) {
 
 
@@ -17404,7 +17928,7 @@ function on (obj, ev, fn) {
 
 
 /***/ }),
-/* 153 */
+/* 156 */
 /***/ (function(module, exports) {
 
 /**
@@ -17433,200 +17957,6 @@ module.exports = function(obj, fn){
 
 
 /***/ }),
-/* 154 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var pSlice = Array.prototype.slice;
-var objectKeys = __webpack_require__(453);
-var isArguments = __webpack_require__(454);
-
-var deepEqual = module.exports = function (actual, expected, opts) {
-  if (!opts) opts = {};
-  // 7.1. All identical values are equivalent, as determined by ===.
-  if (actual === expected) {
-    return true;
-
-  } else if (actual instanceof Date && expected instanceof Date) {
-    return actual.getTime() === expected.getTime();
-
-  // 7.3. Other pairs that do not both pass typeof value == 'object',
-  // equivalence is determined by ==.
-  } else if (!actual || !expected || typeof actual != 'object' && typeof expected != 'object') {
-    return opts.strict ? actual === expected : actual == expected;
-
-  // 7.4. For all other Object pairs, including Array objects, equivalence is
-  // determined by having the same number of owned properties (as verified
-  // with Object.prototype.hasOwnProperty.call), the same set of keys
-  // (although not necessarily the same order), equivalent values for every
-  // corresponding key, and an identical 'prototype' property. Note: this
-  // accounts for both named and indexed properties on Arrays.
-  } else {
-    return objEquiv(actual, expected, opts);
-  }
-}
-
-function isUndefinedOrNull(value) {
-  return value === null || value === undefined;
-}
-
-function isBuffer (x) {
-  if (!x || typeof x !== 'object' || typeof x.length !== 'number') return false;
-  if (typeof x.copy !== 'function' || typeof x.slice !== 'function') {
-    return false;
-  }
-  if (x.length > 0 && typeof x[0] !== 'number') return false;
-  return true;
-}
-
-function objEquiv(a, b, opts) {
-  var i, key;
-  if (isUndefinedOrNull(a) || isUndefinedOrNull(b))
-    return false;
-  // an identical 'prototype' property.
-  if (a.prototype !== b.prototype) return false;
-  //~~~I've managed to break Object.keys through screwy arguments passing.
-  //   Converting to array solves the problem.
-  if (isArguments(a)) {
-    if (!isArguments(b)) {
-      return false;
-    }
-    a = pSlice.call(a);
-    b = pSlice.call(b);
-    return deepEqual(a, b, opts);
-  }
-  if (isBuffer(a)) {
-    if (!isBuffer(b)) {
-      return false;
-    }
-    if (a.length !== b.length) return false;
-    for (i = 0; i < a.length; i++) {
-      if (a[i] !== b[i]) return false;
-    }
-    return true;
-  }
-  try {
-    var ka = objectKeys(a),
-        kb = objectKeys(b);
-  } catch (e) {//happens when one is a string literal and the other isn't
-    return false;
-  }
-  // having the same number of owned properties (keys incorporates
-  // hasOwnProperty)
-  if (ka.length != kb.length)
-    return false;
-  //the same set of keys (although not necessarily the same order),
-  ka.sort();
-  kb.sort();
-  //~~~cheap key test
-  for (i = ka.length - 1; i >= 0; i--) {
-    if (ka[i] != kb[i])
-      return false;
-  }
-  //equivalent values for every corresponding key, and
-  //~~~possibly expensive deep test
-  for (i = ka.length - 1; i >= 0; i--) {
-    key = ka[i];
-    if (!deepEqual(a[key], b[key], opts)) return false;
-  }
-  return typeof a === typeof b;
-}
-
-
-/***/ }),
-/* 155 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var hasOwn = Object.prototype.hasOwnProperty;
-var toStr = Object.prototype.toString;
-
-var isArray = function isArray(arr) {
-	if (typeof Array.isArray === 'function') {
-		return Array.isArray(arr);
-	}
-
-	return toStr.call(arr) === '[object Array]';
-};
-
-var isPlainObject = function isPlainObject(obj) {
-	if (!obj || toStr.call(obj) !== '[object Object]') {
-		return false;
-	}
-
-	var hasOwnConstructor = hasOwn.call(obj, 'constructor');
-	var hasIsPrototypeOf = obj.constructor && obj.constructor.prototype && hasOwn.call(obj.constructor.prototype, 'isPrototypeOf');
-	// Not own constructor property must be Object
-	if (obj.constructor && !hasOwnConstructor && !hasIsPrototypeOf) {
-		return false;
-	}
-
-	// Own properties are enumerated firstly, so to speed up,
-	// if last one is own, then all properties are own.
-	var key;
-	for (key in obj) { /**/ }
-
-	return typeof key === 'undefined' || hasOwn.call(obj, key);
-};
-
-module.exports = function extend() {
-	var options, name, src, copy, copyIsArray, clone;
-	var target = arguments[0];
-	var i = 1;
-	var length = arguments.length;
-	var deep = false;
-
-	// Handle a deep copy situation
-	if (typeof target === 'boolean') {
-		deep = target;
-		target = arguments[1] || {};
-		// skip the boolean and the target
-		i = 2;
-	}
-	if (target == null || (typeof target !== 'object' && typeof target !== 'function')) {
-		target = {};
-	}
-
-	for (; i < length; ++i) {
-		options = arguments[i];
-		// Only deal with non-null/undefined values
-		if (options != null) {
-			// Extend the base object
-			for (name in options) {
-				src = target[name];
-				copy = options[name];
-
-				// Prevent never-ending loop
-				if (target !== copy) {
-					// Recurse if we're merging plain objects or arrays
-					if (deep && copy && (isPlainObject(copy) || (copyIsArray = isArray(copy)))) {
-						if (copyIsArray) {
-							copyIsArray = false;
-							clone = src && isArray(src) ? src : [];
-						} else {
-							clone = src && isPlainObject(src) ? src : {};
-						}
-
-						// Never move original objects, clone them
-						target[name] = extend(deep, clone, copy);
-
-					// Don't bring in undefined values
-					} else if (typeof copy !== 'undefined') {
-						target[name] = copy;
-					}
-				}
-			}
-		}
-	}
-
-	// Return the modified object
-	return target;
-};
-
-
-/***/ }),
-/* 156 */,
 /* 157 */,
 /* 158 */,
 /* 159 */,
@@ -17836,7 +18166,8 @@ module.exports = function extend() {
 /* 363 */,
 /* 364 */,
 /* 365 */,
-/* 366 */
+/* 366 */,
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -17846,7 +18177,7 @@ module.exports = function extend() {
  */
 
 // Mimoto classes
-var ClassMimoto = __webpack_require__(367);
+var ClassMimoto = __webpack_require__(368);
 
 // init
 window.Mimoto = new ClassMimoto();
@@ -17862,7 +18193,7 @@ document.addEventListener('DOMContentLoaded', function () {
 }, true);
 
 /***/ }),
-/* 367 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17878,11 +18209,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var DomUtils = __webpack_require__(368);
-var DomService = __webpack_require__(369);
-var DataService = __webpack_require__(370);
-var DisplayService = __webpack_require__(371);
-var RealtimeManager = __webpack_require__(420);
+var DomUtils = __webpack_require__(369);
+var DomService = __webpack_require__(370);
+var DataService = __webpack_require__(371);
+var DisplayService = __webpack_require__(372);
+var RealtimeManager = __webpack_require__(426);
 
 /**
  * Class MimotoStartup
@@ -18165,7 +18496,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 368 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18239,7 +18570,7 @@ module.exports.prototype = {
                     container.append(element);
 
                     // register directives
-                    Mimoto.display.parseInterface(element.parentNode);
+                    Mimoto.display.parseInterface(element);
                 }
             }
         };
@@ -18446,7 +18777,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 369 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19255,7 +19586,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 370 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19333,7 +19664,8 @@ module.exports.prototype = {
             options: options
         };
 
-        console.log('remove', sEntitySelector, nConnectionId);
+        //Mimoto.log('remove', sEntitySelector, nConnectionId);
+
 
         Mimoto.utils.callAPI({
             type: 'POST',
@@ -19341,7 +19673,7 @@ module.exports.prototype = {
             data: postData,
             dataType: 'json',
             success: function success(resultData, resultStatus, resultSomething) {
-                console.log('Item removed', resultData);
+                Mimoto.log('Item removed', resultData);
             }
         });
     },
@@ -19412,7 +19744,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 371 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19426,49 +19758,49 @@ module.exports.prototype = {
 
 // Mimoto data manipulation classes
 
-var CollectionAddItems = __webpack_require__(372);
-var CollectionRemoveItems = __webpack_require__(373);
-var CollectionChangeSortOrder = __webpack_require__(374);
-var EntitySetItem = __webpack_require__(375);
-var EntityUnsetItem = __webpack_require__(376);
-var SortableCollection = __webpack_require__(377);
+var CollectionAddItems = __webpack_require__(373);
+var CollectionRemoveItems = __webpack_require__(374);
+var CollectionChangeSortOrder = __webpack_require__(375);
+var EntitySetItem = __webpack_require__(376);
+var EntityUnsetItem = __webpack_require__(377);
+var SortableCollection = __webpack_require__(378);
 
 // Mimoto input classes
-var Form = __webpack_require__(379);
+var Form = __webpack_require__(380);
 
 // Mimoto display classes
-var HideWhenEmpty = __webpack_require__(399);
-var HideWhenEmptyNot = __webpack_require__(400);
-var HideWhenRegex = __webpack_require__(401);
-var HideWhenRegexNot = __webpack_require__(402);
-var HideWhenValue = __webpack_require__(403);
-var HideWhenValueNot = __webpack_require__(404);
+var HideWhenEmpty = __webpack_require__(400);
+var HideWhenEmptyNot = __webpack_require__(401);
+var HideWhenRegex = __webpack_require__(402);
+var HideWhenRegexNot = __webpack_require__(403);
+var HideWhenValue = __webpack_require__(404);
+var HideWhenValueNot = __webpack_require__(405);
 
-var ShowWhenEmpty = __webpack_require__(405);
-var ShowWhenEmptyNot = __webpack_require__(406);
-var ShowWhenRegex = __webpack_require__(407);
-var ShowWhenRegexNot = __webpack_require__(408);
-var ShowWhenValue = __webpack_require__(409);
-var ShowWhenValueNot = __webpack_require__(410);
+var ShowWhenEmpty = __webpack_require__(406);
+var ShowWhenEmptyNot = __webpack_require__(407);
+var ShowWhenRegex = __webpack_require__(408);
+var ShowWhenRegexNot = __webpack_require__(409);
+var ShowWhenValue = __webpack_require__(410);
+var ShowWhenValueNot = __webpack_require__(411);
 
 var AddClassWhenEmpty = __webpack_require__(137);
-var AddClassWhenEmptyNot = __webpack_require__(411);
-var AddClassWhenRegex = __webpack_require__(412);
-var AddClassWhenRegexNot = __webpack_require__(413);
+var AddClassWhenEmptyNot = __webpack_require__(412);
+var AddClassWhenRegex = __webpack_require__(413);
+var AddClassWhenRegexNot = __webpack_require__(414);
 var AddClassWhenValue = __webpack_require__(137);
-var AddClassWhenValueNot = __webpack_require__(414);
+var AddClassWhenValueNot = __webpack_require__(415);
 
 var RemoveClassWhenEmpty = __webpack_require__(138);
-var RemoveClassWhenEmptyNot = __webpack_require__(415);
-var RemoveClassWhenRegex = __webpack_require__(416);
-var RemoveClassWhenRegexNot = __webpack_require__(417);
+var RemoveClassWhenEmptyNot = __webpack_require__(416);
+var RemoveClassWhenRegex = __webpack_require__(417);
+var RemoveClassWhenRegexNot = __webpack_require__(418);
 var RemoveClassWhenValue = __webpack_require__(138);
-var RemoveClassWhenValueNot = __webpack_require__(418);
+var RemoveClassWhenValueNot = __webpack_require__(419);
 
 // utils
-var DataUtils = __webpack_require__(419);
+var DataUtils = __webpack_require__(420);
 
-var Editor = __webpack_require__(474);
+var Editor = __webpack_require__(421);
 
 module.exports = function (realtimeManager) {
 
@@ -19656,7 +19988,7 @@ module.exports.prototype = {
 
 
         // 2. collect
-        var aDirectives = this._collectDirectives(element.parentNode);
+        var aDirectives = this._collectDirectives(element);
 
         // 3. cleanup
         for (var sDirective in aDirectives) {
@@ -19666,53 +19998,50 @@ module.exports.prototype = {
                 var _element = aDirectives[sDirective][nElementIndex];
 
                 // b. read
-                var nDirectiveId = _element.getAttribute('data-mimoto');
+                var xDirectiveId = _element.getAttribute('data-mimoto');
 
-                // $todo - support array
+                // c. init
+                var aDirectivesToRemove = [];
 
-
-                // c. read
-                var directive = this._aDirectives[nDirectiveId];
-
-                // #todo - FIX
-                if (!directive) {
-                    Mimoto.log('element id = ', nDirectiveId, directive, _element);
-                    Mimoto.log('Need to handle double value selector xxx.xxx.xxx.xxx[yyy.yyy]');
-                    continue;
+                // d. manage single or multiple id
+                if (isNaN(xDirectiveId)) {
+                    aDirectivesToRemove = JSON.parse(xDirectiveId);
+                } else {
+                    aDirectivesToRemove.push(this._aDirectives[xDirectiveId]);
                 }
 
-                // 1. find in selector array and cleanup
-                var sPropertySelector = directive.sPropertySelector;
+                var nRemoveCount = aDirectivesToRemove.length;
+                for (var nRemoveIndex = 0; nRemoveIndex < nRemoveCount; nRemoveIndex++) {
+                    // register
+                    var directive = aDirectivesToRemove[nRemoveIndex];
 
-                // verify
-                if (this._aSelectors[sPropertySelector]) {
-                    var nSelectorCount = this._aSelectors[sPropertySelector].length;
-                    for (var nSelectorIndex = 0; nSelectorIndex < nSelectorCount; nSelectorIndex++) {
-                        // verify
-                        if (this._aSelectors[sPropertySelector][nSelectorIndex] === directive) {
-                            // remove
-                            this._aSelectors[sPropertySelector].splice(nSelectorIndex, 1);
+                    // 1. find in selector array and cleanup
+                    var sPropertySelector = directive.sPropertySelector;
 
+                    // verify
+                    if (this._aSelectors[sPropertySelector]) {
+                        var nSelectorCount = this._aSelectors[sPropertySelector].length;
+                        for (var nSelectorIndex = 0; nSelectorIndex < nSelectorCount; nSelectorIndex++) {
                             // verify
-                            if (this._aSelectors[sPropertySelector].length === 0) {
-                                // cleanup
-                                delete this._aSelectors[sPropertySelector];
+                            if (this._aSelectors[sPropertySelector][nSelectorIndex] === directive) {
+                                // remove
+                                this._aSelectors[sPropertySelector].splice(nSelectorIndex, 1);
 
-                                // solid cleanup of empty spaces
-                                this._aSelectors = dataUtils.cleanupArray(this._aSelectors);
+                                // verify
+                                if (this._aSelectors[sPropertySelector].length === 0) {
+                                    // cleanup
+                                    delete this._aSelectors[sPropertySelector];
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
-                }
 
-                // f. cleanup
-                delete this._aDirectives[nDirectiveId];
+                    // f. cleanup
+                    delete this._aDirectives[directive.id];
+                }
             }
         }
-
-        // 4. solid cleanup of empty spaces
-        this._aDirectives = dataUtils.cleanupArray(this._aDirectives);
     },
 
     // ----------------------------------------------------------------------------
@@ -19751,20 +20080,39 @@ module.exports.prototype = {
         // communication
         this.DIRECTIVE_MIMOTO_CHANNEL];
 
-        // 3. collect
+        // 3. init
+        var elSearchableContainer = element;
+
+        // 4. verify
+        var elOriginalParent = null;
+        if (element !== document) {
+            // archive
+            elOriginalParent = element.parentNode;
+
+            // a. create container
+            elSearchableContainer = document.createElement('div');
+
+            // b. temp add to container
+            elSearchableContainer.appendChild(element);
+        }
+
+        // 5. collect
         var nPrimaryDirectiveCount = aPrimaryDirectives.length;
         for (var nPrimaryDirectiveIndex = 0; nPrimaryDirectiveIndex < nPrimaryDirectiveCount; nPrimaryDirectiveIndex++) {
             // 3a. register
             var sPrimaryDirective = aPrimaryDirectives[nPrimaryDirectiveIndex];
 
             // 3b. find
-            var aElementsWithDirectives = element.querySelectorAll('[' + sPrimaryDirective + ']');
+            var aElementsWithDirectives = elSearchableContainer.querySelectorAll('[' + sPrimaryDirective + ']');
 
             // 3b. find and store
             if (aElementsWithDirectives.length > 0) aDirectives[sPrimaryDirective] = aElementsWithDirectives;
         }
 
-        // 4. send
+        // restore original parent
+        if (element !== document) elOriginalParent.appendChild(element);
+
+        // 6. send
         return aDirectives;
     },
 
@@ -19963,24 +20311,21 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_DATA_REMOVE:
 
-                        // init
-                        var nConnectionId = null;
-
                         // find parent
                         var elParent = this._findParentWithType('data-mimoto-id', directive.element);
 
                         // get connection id
                         if (elParent && elParent.getAttribute('data-mimoto-id') === directive.sPropertySelector) {
                             if (elParent.hasAttribute('data-mimoto-connection')) {
-                                nConnectionId = elParent.getAttribute('data-mimoto-connection');
+                                var nConnectionId = elParent.getAttribute('data-mimoto-connection');
+
+                                // configure
+                                directive.element.addEventListener('click', function (sEntitySelector, nConnectionId, options, e) {
+                                    // forward
+                                    Mimoto.data.remove(sEntitySelector, nConnectionId, options);
+                                }.bind(directive.element, directive.sPropertySelector, nConnectionId, directive.instructions.options), true);
                             }
                         }
-
-                        // configure
-                        directive.element.addEventListener('click', function (sEntitySelector, nConnectionId, options, e) {
-                            // forward
-                            Mimoto.data.remove(sEntitySelector, nConnectionId, options);
-                        }.bind(directive.element, directive.sPropertySelector, nConnectionId, directive.instructions.options), true);
 
                         break;
 
@@ -20602,7 +20947,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 372 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20644,7 +20989,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 373 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20685,7 +21030,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 374 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20729,7 +21074,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 375 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20758,7 +21103,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 376 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20787,7 +21132,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 377 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20801,7 +21146,7 @@ module.exports.prototype = {
 
 // RubaXa classes
 
-var Sortable = __webpack_require__(378);
+var Sortable = __webpack_require__(379);
 
 module.exports = function (directive) {
     // start
@@ -20849,7 +21194,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 378 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
@@ -22350,7 +22695,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 /***/ }),
-/* 379 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22364,7 +22709,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 // Mimoto input classes
 
-var FormField = __webpack_require__(380);
+var FormField = __webpack_require__(381);
 
 module.exports = function (elForm) {
 
@@ -22606,7 +22951,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 380 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22620,18 +22965,18 @@ module.exports.prototype = {
 
 // Mimoto input classes
 
-var Textline = __webpack_require__(381);
-var Radiobutton = __webpack_require__(382);
-var Checkbox = __webpack_require__(383);
-var MultiSelect = __webpack_require__(384);
-var Image = __webpack_require__(385);
-var Dropdown = __webpack_require__(386);
-var Video = __webpack_require__(387);
-var ColorPicker = __webpack_require__(388);
-var DatePicker = __webpack_require__(389);
-var Textblock = __webpack_require__(391);
-var Password = __webpack_require__(396);
-var Generic = __webpack_require__(398);
+var Textline = __webpack_require__(382);
+var Radiobutton = __webpack_require__(383);
+var Checkbox = __webpack_require__(384);
+var MultiSelect = __webpack_require__(385);
+var Image = __webpack_require__(386);
+var Dropdown = __webpack_require__(387);
+var Video = __webpack_require__(388);
+var ColorPicker = __webpack_require__(389);
+var DatePicker = __webpack_require__(390);
+var Textblock = __webpack_require__(392);
+var Password = __webpack_require__(397);
+var Generic = __webpack_require__(399);
 
 module.exports = function (elFormField) {
 
@@ -22917,7 +23262,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 381 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22981,7 +23326,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 382 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23080,7 +23425,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 383 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23145,7 +23490,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 384 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23243,7 +23588,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 385 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23423,7 +23768,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 386 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23485,7 +23830,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 387 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23677,7 +24022,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 388 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23792,7 +24137,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 389 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23806,7 +24151,7 @@ module.exports.prototype = {
 
 // Chmln classes
 
-var Flatpickr = __webpack_require__(390);
+var Flatpickr = __webpack_require__(391);
 
 module.exports = function (elFormField, fBroadcast, aInputElements) {
 
@@ -23885,7 +24230,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 390 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -26191,7 +26536,7 @@ Date.prototype.fp_toUTC = function () {
 if (true) module.exports = Flatpickr;
 
 /***/ }),
-/* 391 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26205,7 +26550,7 @@ if (true) module.exports = Flatpickr;
 
 // Quill classes
 
-var Quill = __webpack_require__(97);
+var Quill = __webpack_require__(67);
 
 module.exports = function (elFormField, fBroadcast, elInput) {
 
@@ -26301,7 +26646,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 392 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26315,9 +26660,9 @@ module.exports.prototype = {
 
 
 
-var base64 = __webpack_require__(393)
-var ieee754 = __webpack_require__(394)
-var isArray = __webpack_require__(395)
+var base64 = __webpack_require__(394)
+var ieee754 = __webpack_require__(395)
+var isArray = __webpack_require__(396)
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -28098,7 +28443,7 @@ function isnan (val) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 393 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28219,7 +28564,7 @@ function fromByteArray (uint8) {
 
 
 /***/ }),
-/* 394 */
+/* 395 */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -28309,7 +28654,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
 
 /***/ }),
-/* 395 */
+/* 396 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -28320,7 +28665,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 396 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28332,7 +28677,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 
-var PasswordStrengthTest = __webpack_require__(397);
+var PasswordStrengthTest = __webpack_require__(398);
 
 module.exports = function (elFormField, fBroadcast, elInput) {
 
@@ -28442,7 +28787,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 397 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* globals define */
@@ -28629,7 +28974,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 398 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28698,7 +29043,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 399 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28739,7 +29084,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 400 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28780,7 +29125,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 401 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28821,7 +29166,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 402 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28862,7 +29207,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 403 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28903,7 +29248,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 404 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28944,7 +29289,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 405 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28985,7 +29330,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 406 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29026,7 +29371,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 407 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29067,7 +29412,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 408 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29108,7 +29453,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 409 */
+/* 410 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29149,7 +29494,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 410 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29190,7 +29535,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 411 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29231,7 +29576,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 412 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29272,7 +29617,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 413 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29313,7 +29658,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 414 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29354,7 +29699,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 415 */
+/* 416 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29395,7 +29740,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 416 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29436,7 +29781,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 417 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29477,7 +29822,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 418 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29518,7 +29863,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 419 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29560,7 +29905,1009 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 420 */
+/* 421 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto.CMS - Editor
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
+// Quill classes
+
+var Quill = __webpack_require__(67);
+var QuillDelta = __webpack_require__(139);
+
+module.exports = function (sPropertySelector, elEditableField, formattingOptions) {
+
+    // start
+    this.__construct(sPropertySelector, elEditableField, formattingOptions);
+};
+
+module.exports.prototype = {
+
+    _quill: null,
+    _deltaPending: null,
+    _documentPending: null,
+    _deltaBuffer: null,
+
+    _sPropertySelector: null,
+    _elEditableField: null,
+    _formattingOptions: null,
+    _otid: null,
+
+    _baseDocument: null,
+
+    _user: null,
+
+    // ----------------------------------------------------------------------------
+    // --- Constructor ------------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    /**
+     * Constructor
+     */
+    __construct: function __construct(sPropertySelector, elEditableField, formattingOptions) {
+        // register
+        this._sPropertySelector = sPropertySelector;
+        this._elEditableField = elEditableField;
+        this._formattingOptions = formattingOptions;
+
+        // show content
+        this._quill = this._setupEditor(formattingOptions);
+    },
+
+    enable: function enable() {
+        Mimoto.log('Enabled ?');
+        this._quill.enable();
+    },
+
+    disable: function disable() {
+        this._quill.disable();
+    },
+
+    getValue: function getValue() {
+        return this._elEditableField.getElementsByClassName("ql-editor")[0].innerHTML;
+    },
+
+    // ----------------------------------------------------------------------------
+    // --- Private methods text management ----------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    _setupEditor: function _setupEditor(formattingOptions) {
+        // init
+        var toolbar = null;
+        var formats = null;
+
+        if (formattingOptions) {
+            if (formattingOptions.toolbar && formattingOptions.toolbar.length > 0) toolbar = formattingOptions.toolbar;
+            if (formattingOptions.formats && formattingOptions.formats.length > 0) formats = formattingOptions.formats;
+        }
+
+        // create
+        var quill = new Quill(this._elEditableField, {
+            theme: 'bubble',
+            modules: {
+                toolbar: toolbar,
+                history: {
+                    delay: 2000,
+                    maxStack: 500,
+                    userOnly: true
+                }
+            },
+            placeholder: 'Start typing', // #todo
+            formats: formats
+        });
+
+        // configure
+        //quill.on('selection-change', function() { this._onSelectionChange(); }.bind(this);
+        //quill.on('text-change', function(delta, oldContents, source) { this._onTextChange(delta, oldContents, source); }.bind(this) );
+
+
+        // send
+        return quill;
+    }
+
+};
+
+/***/ }),
+/* 422 */
+/***/ (function(module, exports) {
+
+/**
+ * This library modifies the diff-patch-match library by Neil Fraser
+ * by removing the patch and match functionality and certain advanced
+ * options in the diff function. The original license is as follows:
+ *
+ * ===
+ *
+ * Diff Match and Patch
+ *
+ * Copyright 2006 Google Inc.
+ * http://code.google.com/p/google-diff-match-patch/
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+/**
+ * The data structure representing a diff is an array of tuples:
+ * [[DIFF_DELETE, 'Hello'], [DIFF_INSERT, 'Goodbye'], [DIFF_EQUAL, ' world.']]
+ * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
+ */
+var DIFF_DELETE = -1;
+var DIFF_INSERT = 1;
+var DIFF_EQUAL = 0;
+
+
+/**
+ * Find the differences between two texts.  Simplifies the problem by stripping
+ * any common prefix or suffix off the texts before diffing.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {Int} cursor_pos Expected edit position in text1 (optional)
+ * @return {Array} Array of diff tuples.
+ */
+function diff_main(text1, text2, cursor_pos) {
+  // Check for equality (speedup).
+  if (text1 == text2) {
+    if (text1) {
+      return [[DIFF_EQUAL, text1]];
+    }
+    return [];
+  }
+
+  // Check cursor_pos within bounds
+  if (cursor_pos < 0 || text1.length < cursor_pos) {
+    cursor_pos = null;
+  }
+
+  // Trim off common prefix (speedup).
+  var commonlength = diff_commonPrefix(text1, text2);
+  var commonprefix = text1.substring(0, commonlength);
+  text1 = text1.substring(commonlength);
+  text2 = text2.substring(commonlength);
+
+  // Trim off common suffix (speedup).
+  commonlength = diff_commonSuffix(text1, text2);
+  var commonsuffix = text1.substring(text1.length - commonlength);
+  text1 = text1.substring(0, text1.length - commonlength);
+  text2 = text2.substring(0, text2.length - commonlength);
+
+  // Compute the diff on the middle block.
+  var diffs = diff_compute_(text1, text2);
+
+  // Restore the prefix and suffix.
+  if (commonprefix) {
+    diffs.unshift([DIFF_EQUAL, commonprefix]);
+  }
+  if (commonsuffix) {
+    diffs.push([DIFF_EQUAL, commonsuffix]);
+  }
+  diff_cleanupMerge(diffs);
+  if (cursor_pos != null) {
+    diffs = fix_cursor(diffs, cursor_pos);
+  }
+  return diffs;
+};
+
+
+/**
+ * Find the differences between two texts.  Assumes that the texts do not
+ * have any common prefix or suffix.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @return {Array} Array of diff tuples.
+ */
+function diff_compute_(text1, text2) {
+  var diffs;
+
+  if (!text1) {
+    // Just add some text (speedup).
+    return [[DIFF_INSERT, text2]];
+  }
+
+  if (!text2) {
+    // Just delete some text (speedup).
+    return [[DIFF_DELETE, text1]];
+  }
+
+  var longtext = text1.length > text2.length ? text1 : text2;
+  var shorttext = text1.length > text2.length ? text2 : text1;
+  var i = longtext.indexOf(shorttext);
+  if (i != -1) {
+    // Shorter text is inside the longer text (speedup).
+    diffs = [[DIFF_INSERT, longtext.substring(0, i)],
+             [DIFF_EQUAL, shorttext],
+             [DIFF_INSERT, longtext.substring(i + shorttext.length)]];
+    // Swap insertions for deletions if diff is reversed.
+    if (text1.length > text2.length) {
+      diffs[0][0] = diffs[2][0] = DIFF_DELETE;
+    }
+    return diffs;
+  }
+
+  if (shorttext.length == 1) {
+    // Single character string.
+    // After the previous speedup, the character can't be an equality.
+    return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
+  }
+
+  // Check to see if the problem can be split in two.
+  var hm = diff_halfMatch_(text1, text2);
+  if (hm) {
+    // A half-match was found, sort out the return data.
+    var text1_a = hm[0];
+    var text1_b = hm[1];
+    var text2_a = hm[2];
+    var text2_b = hm[3];
+    var mid_common = hm[4];
+    // Send both pairs off for separate processing.
+    var diffs_a = diff_main(text1_a, text2_a);
+    var diffs_b = diff_main(text1_b, text2_b);
+    // Merge the results.
+    return diffs_a.concat([[DIFF_EQUAL, mid_common]], diffs_b);
+  }
+
+  return diff_bisect_(text1, text2);
+};
+
+
+/**
+ * Find the 'middle snake' of a diff, split the problem in two
+ * and return the recursively constructed diff.
+ * See Myers 1986 paper: An O(ND) Difference Algorithm and Its Variations.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @return {Array} Array of diff tuples.
+ * @private
+ */
+function diff_bisect_(text1, text2) {
+  // Cache the text lengths to prevent multiple calls.
+  var text1_length = text1.length;
+  var text2_length = text2.length;
+  var max_d = Math.ceil((text1_length + text2_length) / 2);
+  var v_offset = max_d;
+  var v_length = 2 * max_d;
+  var v1 = new Array(v_length);
+  var v2 = new Array(v_length);
+  // Setting all elements to -1 is faster in Chrome & Firefox than mixing
+  // integers and undefined.
+  for (var x = 0; x < v_length; x++) {
+    v1[x] = -1;
+    v2[x] = -1;
+  }
+  v1[v_offset + 1] = 0;
+  v2[v_offset + 1] = 0;
+  var delta = text1_length - text2_length;
+  // If the total number of characters is odd, then the front path will collide
+  // with the reverse path.
+  var front = (delta % 2 != 0);
+  // Offsets for start and end of k loop.
+  // Prevents mapping of space beyond the grid.
+  var k1start = 0;
+  var k1end = 0;
+  var k2start = 0;
+  var k2end = 0;
+  for (var d = 0; d < max_d; d++) {
+    // Walk the front path one step.
+    for (var k1 = -d + k1start; k1 <= d - k1end; k1 += 2) {
+      var k1_offset = v_offset + k1;
+      var x1;
+      if (k1 == -d || (k1 != d && v1[k1_offset - 1] < v1[k1_offset + 1])) {
+        x1 = v1[k1_offset + 1];
+      } else {
+        x1 = v1[k1_offset - 1] + 1;
+      }
+      var y1 = x1 - k1;
+      while (x1 < text1_length && y1 < text2_length &&
+             text1.charAt(x1) == text2.charAt(y1)) {
+        x1++;
+        y1++;
+      }
+      v1[k1_offset] = x1;
+      if (x1 > text1_length) {
+        // Ran off the right of the graph.
+        k1end += 2;
+      } else if (y1 > text2_length) {
+        // Ran off the bottom of the graph.
+        k1start += 2;
+      } else if (front) {
+        var k2_offset = v_offset + delta - k1;
+        if (k2_offset >= 0 && k2_offset < v_length && v2[k2_offset] != -1) {
+          // Mirror x2 onto top-left coordinate system.
+          var x2 = text1_length - v2[k2_offset];
+          if (x1 >= x2) {
+            // Overlap detected.
+            return diff_bisectSplit_(text1, text2, x1, y1);
+          }
+        }
+      }
+    }
+
+    // Walk the reverse path one step.
+    for (var k2 = -d + k2start; k2 <= d - k2end; k2 += 2) {
+      var k2_offset = v_offset + k2;
+      var x2;
+      if (k2 == -d || (k2 != d && v2[k2_offset - 1] < v2[k2_offset + 1])) {
+        x2 = v2[k2_offset + 1];
+      } else {
+        x2 = v2[k2_offset - 1] + 1;
+      }
+      var y2 = x2 - k2;
+      while (x2 < text1_length && y2 < text2_length &&
+             text1.charAt(text1_length - x2 - 1) ==
+             text2.charAt(text2_length - y2 - 1)) {
+        x2++;
+        y2++;
+      }
+      v2[k2_offset] = x2;
+      if (x2 > text1_length) {
+        // Ran off the left of the graph.
+        k2end += 2;
+      } else if (y2 > text2_length) {
+        // Ran off the top of the graph.
+        k2start += 2;
+      } else if (!front) {
+        var k1_offset = v_offset + delta - k2;
+        if (k1_offset >= 0 && k1_offset < v_length && v1[k1_offset] != -1) {
+          var x1 = v1[k1_offset];
+          var y1 = v_offset + x1 - k1_offset;
+          // Mirror x2 onto top-left coordinate system.
+          x2 = text1_length - x2;
+          if (x1 >= x2) {
+            // Overlap detected.
+            return diff_bisectSplit_(text1, text2, x1, y1);
+          }
+        }
+      }
+    }
+  }
+  // Diff took too long and hit the deadline or
+  // number of diffs equals number of characters, no commonality at all.
+  return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
+};
+
+
+/**
+ * Given the location of the 'middle snake', split the diff in two parts
+ * and recurse.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {number} x Index of split point in text1.
+ * @param {number} y Index of split point in text2.
+ * @return {Array} Array of diff tuples.
+ */
+function diff_bisectSplit_(text1, text2, x, y) {
+  var text1a = text1.substring(0, x);
+  var text2a = text2.substring(0, y);
+  var text1b = text1.substring(x);
+  var text2b = text2.substring(y);
+
+  // Compute both diffs serially.
+  var diffs = diff_main(text1a, text2a);
+  var diffsb = diff_main(text1b, text2b);
+
+  return diffs.concat(diffsb);
+};
+
+
+/**
+ * Determine the common prefix of two strings.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {number} The number of characters common to the start of each
+ *     string.
+ */
+function diff_commonPrefix(text1, text2) {
+  // Quick check for common null cases.
+  if (!text1 || !text2 || text1.charAt(0) != text2.charAt(0)) {
+    return 0;
+  }
+  // Binary search.
+  // Performance analysis: http://neil.fraser.name/news/2007/10/09/
+  var pointermin = 0;
+  var pointermax = Math.min(text1.length, text2.length);
+  var pointermid = pointermax;
+  var pointerstart = 0;
+  while (pointermin < pointermid) {
+    if (text1.substring(pointerstart, pointermid) ==
+        text2.substring(pointerstart, pointermid)) {
+      pointermin = pointermid;
+      pointerstart = pointermin;
+    } else {
+      pointermax = pointermid;
+    }
+    pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
+  }
+  return pointermid;
+};
+
+
+/**
+ * Determine the common suffix of two strings.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {number} The number of characters common to the end of each string.
+ */
+function diff_commonSuffix(text1, text2) {
+  // Quick check for common null cases.
+  if (!text1 || !text2 ||
+      text1.charAt(text1.length - 1) != text2.charAt(text2.length - 1)) {
+    return 0;
+  }
+  // Binary search.
+  // Performance analysis: http://neil.fraser.name/news/2007/10/09/
+  var pointermin = 0;
+  var pointermax = Math.min(text1.length, text2.length);
+  var pointermid = pointermax;
+  var pointerend = 0;
+  while (pointermin < pointermid) {
+    if (text1.substring(text1.length - pointermid, text1.length - pointerend) ==
+        text2.substring(text2.length - pointermid, text2.length - pointerend)) {
+      pointermin = pointermid;
+      pointerend = pointermin;
+    } else {
+      pointermax = pointermid;
+    }
+    pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
+  }
+  return pointermid;
+};
+
+
+/**
+ * Do the two texts share a substring which is at least half the length of the
+ * longer text?
+ * This speedup can produce non-minimal diffs.
+ * @param {string} text1 First string.
+ * @param {string} text2 Second string.
+ * @return {Array.<string>} Five element Array, containing the prefix of
+ *     text1, the suffix of text1, the prefix of text2, the suffix of
+ *     text2 and the common middle.  Or null if there was no match.
+ */
+function diff_halfMatch_(text1, text2) {
+  var longtext = text1.length > text2.length ? text1 : text2;
+  var shorttext = text1.length > text2.length ? text2 : text1;
+  if (longtext.length < 4 || shorttext.length * 2 < longtext.length) {
+    return null;  // Pointless.
+  }
+
+  /**
+   * Does a substring of shorttext exist within longtext such that the substring
+   * is at least half the length of longtext?
+   * Closure, but does not reference any external variables.
+   * @param {string} longtext Longer string.
+   * @param {string} shorttext Shorter string.
+   * @param {number} i Start index of quarter length substring within longtext.
+   * @return {Array.<string>} Five element Array, containing the prefix of
+   *     longtext, the suffix of longtext, the prefix of shorttext, the suffix
+   *     of shorttext and the common middle.  Or null if there was no match.
+   * @private
+   */
+  function diff_halfMatchI_(longtext, shorttext, i) {
+    // Start with a 1/4 length substring at position i as a seed.
+    var seed = longtext.substring(i, i + Math.floor(longtext.length / 4));
+    var j = -1;
+    var best_common = '';
+    var best_longtext_a, best_longtext_b, best_shorttext_a, best_shorttext_b;
+    while ((j = shorttext.indexOf(seed, j + 1)) != -1) {
+      var prefixLength = diff_commonPrefix(longtext.substring(i),
+                                           shorttext.substring(j));
+      var suffixLength = diff_commonSuffix(longtext.substring(0, i),
+                                           shorttext.substring(0, j));
+      if (best_common.length < suffixLength + prefixLength) {
+        best_common = shorttext.substring(j - suffixLength, j) +
+            shorttext.substring(j, j + prefixLength);
+        best_longtext_a = longtext.substring(0, i - suffixLength);
+        best_longtext_b = longtext.substring(i + prefixLength);
+        best_shorttext_a = shorttext.substring(0, j - suffixLength);
+        best_shorttext_b = shorttext.substring(j + prefixLength);
+      }
+    }
+    if (best_common.length * 2 >= longtext.length) {
+      return [best_longtext_a, best_longtext_b,
+              best_shorttext_a, best_shorttext_b, best_common];
+    } else {
+      return null;
+    }
+  }
+
+  // First check if the second quarter is the seed for a half-match.
+  var hm1 = diff_halfMatchI_(longtext, shorttext,
+                             Math.ceil(longtext.length / 4));
+  // Check again based on the third quarter.
+  var hm2 = diff_halfMatchI_(longtext, shorttext,
+                             Math.ceil(longtext.length / 2));
+  var hm;
+  if (!hm1 && !hm2) {
+    return null;
+  } else if (!hm2) {
+    hm = hm1;
+  } else if (!hm1) {
+    hm = hm2;
+  } else {
+    // Both matched.  Select the longest.
+    hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
+  }
+
+  // A half-match was found, sort out the return data.
+  var text1_a, text1_b, text2_a, text2_b;
+  if (text1.length > text2.length) {
+    text1_a = hm[0];
+    text1_b = hm[1];
+    text2_a = hm[2];
+    text2_b = hm[3];
+  } else {
+    text2_a = hm[0];
+    text2_b = hm[1];
+    text1_a = hm[2];
+    text1_b = hm[3];
+  }
+  var mid_common = hm[4];
+  return [text1_a, text1_b, text2_a, text2_b, mid_common];
+};
+
+
+/**
+ * Reorder and merge like edit sections.  Merge equalities.
+ * Any edit section can move as long as it doesn't cross an equality.
+ * @param {Array} diffs Array of diff tuples.
+ */
+function diff_cleanupMerge(diffs) {
+  diffs.push([DIFF_EQUAL, '']);  // Add a dummy entry at the end.
+  var pointer = 0;
+  var count_delete = 0;
+  var count_insert = 0;
+  var text_delete = '';
+  var text_insert = '';
+  var commonlength;
+  while (pointer < diffs.length) {
+    switch (diffs[pointer][0]) {
+      case DIFF_INSERT:
+        count_insert++;
+        text_insert += diffs[pointer][1];
+        pointer++;
+        break;
+      case DIFF_DELETE:
+        count_delete++;
+        text_delete += diffs[pointer][1];
+        pointer++;
+        break;
+      case DIFF_EQUAL:
+        // Upon reaching an equality, check for prior redundancies.
+        if (count_delete + count_insert > 1) {
+          if (count_delete !== 0 && count_insert !== 0) {
+            // Factor out any common prefixies.
+            commonlength = diff_commonPrefix(text_insert, text_delete);
+            if (commonlength !== 0) {
+              if ((pointer - count_delete - count_insert) > 0 &&
+                  diffs[pointer - count_delete - count_insert - 1][0] ==
+                  DIFF_EQUAL) {
+                diffs[pointer - count_delete - count_insert - 1][1] +=
+                    text_insert.substring(0, commonlength);
+              } else {
+                diffs.splice(0, 0, [DIFF_EQUAL,
+                                    text_insert.substring(0, commonlength)]);
+                pointer++;
+              }
+              text_insert = text_insert.substring(commonlength);
+              text_delete = text_delete.substring(commonlength);
+            }
+            // Factor out any common suffixies.
+            commonlength = diff_commonSuffix(text_insert, text_delete);
+            if (commonlength !== 0) {
+              diffs[pointer][1] = text_insert.substring(text_insert.length -
+                  commonlength) + diffs[pointer][1];
+              text_insert = text_insert.substring(0, text_insert.length -
+                  commonlength);
+              text_delete = text_delete.substring(0, text_delete.length -
+                  commonlength);
+            }
+          }
+          // Delete the offending records and add the merged ones.
+          if (count_delete === 0) {
+            diffs.splice(pointer - count_insert,
+                count_delete + count_insert, [DIFF_INSERT, text_insert]);
+          } else if (count_insert === 0) {
+            diffs.splice(pointer - count_delete,
+                count_delete + count_insert, [DIFF_DELETE, text_delete]);
+          } else {
+            diffs.splice(pointer - count_delete - count_insert,
+                count_delete + count_insert, [DIFF_DELETE, text_delete],
+                [DIFF_INSERT, text_insert]);
+          }
+          pointer = pointer - count_delete - count_insert +
+                    (count_delete ? 1 : 0) + (count_insert ? 1 : 0) + 1;
+        } else if (pointer !== 0 && diffs[pointer - 1][0] == DIFF_EQUAL) {
+          // Merge this equality with the previous one.
+          diffs[pointer - 1][1] += diffs[pointer][1];
+          diffs.splice(pointer, 1);
+        } else {
+          pointer++;
+        }
+        count_insert = 0;
+        count_delete = 0;
+        text_delete = '';
+        text_insert = '';
+        break;
+    }
+  }
+  if (diffs[diffs.length - 1][1] === '') {
+    diffs.pop();  // Remove the dummy entry at the end.
+  }
+
+  // Second pass: look for single edits surrounded on both sides by equalities
+  // which can be shifted sideways to eliminate an equality.
+  // e.g: A<ins>BA</ins>C -> <ins>AB</ins>AC
+  var changes = false;
+  pointer = 1;
+  // Intentionally ignore the first and last element (don't need checking).
+  while (pointer < diffs.length - 1) {
+    if (diffs[pointer - 1][0] == DIFF_EQUAL &&
+        diffs[pointer + 1][0] == DIFF_EQUAL) {
+      // This is a single edit surrounded by equalities.
+      if (diffs[pointer][1].substring(diffs[pointer][1].length -
+          diffs[pointer - 1][1].length) == diffs[pointer - 1][1]) {
+        // Shift the edit over the previous equality.
+        diffs[pointer][1] = diffs[pointer - 1][1] +
+            diffs[pointer][1].substring(0, diffs[pointer][1].length -
+                                        diffs[pointer - 1][1].length);
+        diffs[pointer + 1][1] = diffs[pointer - 1][1] + diffs[pointer + 1][1];
+        diffs.splice(pointer - 1, 1);
+        changes = true;
+      } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ==
+          diffs[pointer + 1][1]) {
+        // Shift the edit over the next equality.
+        diffs[pointer - 1][1] += diffs[pointer + 1][1];
+        diffs[pointer][1] =
+            diffs[pointer][1].substring(diffs[pointer + 1][1].length) +
+            diffs[pointer + 1][1];
+        diffs.splice(pointer + 1, 1);
+        changes = true;
+      }
+    }
+    pointer++;
+  }
+  // If shifts were made, the diff needs reordering and another shift sweep.
+  if (changes) {
+    diff_cleanupMerge(diffs);
+  }
+};
+
+
+var diff = diff_main;
+diff.INSERT = DIFF_INSERT;
+diff.DELETE = DIFF_DELETE;
+diff.EQUAL = DIFF_EQUAL;
+
+module.exports = diff;
+
+/*
+ * Modify a diff such that the cursor position points to the start of a change:
+ * E.g.
+ *   cursor_normalize_diff([[DIFF_EQUAL, 'abc']], 1)
+ *     => [1, [[DIFF_EQUAL, 'a'], [DIFF_EQUAL, 'bc']]]
+ *   cursor_normalize_diff([[DIFF_INSERT, 'new'], [DIFF_DELETE, 'xyz']], 2)
+ *     => [2, [[DIFF_INSERT, 'new'], [DIFF_DELETE, 'xy'], [DIFF_DELETE, 'z']]]
+ *
+ * @param {Array} diffs Array of diff tuples
+ * @param {Int} cursor_pos Suggested edit position. Must not be out of bounds!
+ * @return {Array} A tuple [cursor location in the modified diff, modified diff]
+ */
+function cursor_normalize_diff (diffs, cursor_pos) {
+  if (cursor_pos === 0) {
+    return [DIFF_EQUAL, diffs];
+  }
+  for (var current_pos = 0, i = 0; i < diffs.length; i++) {
+    var d = diffs[i];
+    if (d[0] === DIFF_DELETE || d[0] === DIFF_EQUAL) {
+      var next_pos = current_pos + d[1].length;
+      if (cursor_pos === next_pos) {
+        return [i + 1, diffs];
+      } else if (cursor_pos < next_pos) {
+        // copy to prevent side effects
+        diffs = diffs.slice();
+        // split d into two diff changes
+        var split_pos = cursor_pos - current_pos;
+        var d_left = [d[0], d[1].slice(0, split_pos)];
+        var d_right = [d[0], d[1].slice(split_pos)];
+        diffs.splice(i, 1, d_left, d_right);
+        return [i + 1, diffs];
+      } else {
+        current_pos = next_pos;
+      }
+    }
+  }
+  throw new Error('cursor_pos is out of bounds!')
+}
+
+/*
+ * Modify a diff such that the edit position is "shifted" to the proposed edit location (cursor_position).
+ *
+ * Case 1)
+ *   Check if a naive shift is possible:
+ *     [0, X], [ 1, Y] -> [ 1, Y], [0, X]    (if X + Y === Y + X)
+ *     [0, X], [-1, Y] -> [-1, Y], [0, X]    (if X + Y === Y + X) - holds same result
+ * Case 2)
+ *   Check if the following shifts are possible:
+ *     [0, 'pre'], [ 1, 'prefix'] -> [ 1, 'pre'], [0, 'pre'], [ 1, 'fix']
+ *     [0, 'pre'], [-1, 'prefix'] -> [-1, 'pre'], [0, 'pre'], [-1, 'fix']
+ *         ^            ^
+ *         d          d_next
+ *
+ * @param {Array} diffs Array of diff tuples
+ * @param {Int} cursor_pos Suggested edit position. Must not be out of bounds!
+ * @return {Array} Array of diff tuples
+ */
+function fix_cursor (diffs, cursor_pos) {
+  var norm = cursor_normalize_diff(diffs, cursor_pos);
+  var ndiffs = norm[1];
+  var cursor_pointer = norm[0];
+  var d = ndiffs[cursor_pointer];
+  var d_next = ndiffs[cursor_pointer + 1];
+
+  if (d == null) {
+    // Text was deleted from end of original string,
+    // cursor is now out of bounds in new string
+    return diffs;
+  } else if (d[0] !== DIFF_EQUAL) {
+    // A modification happened at the cursor location.
+    // This is the expected outcome, so we can return the original diff.
+    return diffs;
+  } else {
+    if (d_next != null && d[1] + d_next[1] === d_next[1] + d[1]) {
+      // Case 1)
+      // It is possible to perform a naive shift
+      ndiffs.splice(cursor_pointer, 2, d_next, d)
+      return merge_tuples(ndiffs, cursor_pointer, 2)
+    } else if (d_next != null && d_next[1].indexOf(d[1]) === 0) {
+      // Case 2)
+      // d[1] is a prefix of d_next[1]
+      // We can assume that d_next[0] !== 0, since d[0] === 0
+      // Shift edit locations..
+      ndiffs.splice(cursor_pointer, 2, [d_next[0], d[1]], [0, d[1]]);
+      var suffix = d_next[1].slice(d[1].length);
+      if (suffix.length > 0) {
+        ndiffs.splice(cursor_pointer + 2, 0, [d_next[0], suffix]);
+      }
+      return merge_tuples(ndiffs, cursor_pointer, 3)
+    } else {
+      // Not possible to perform any modification
+      return diffs;
+    }
+  }
+
+}
+
+/*
+ * Try to merge tuples with their neigbors in a given range.
+ * E.g. [0, 'a'], [0, 'b'] -> [0, 'ab']
+ *
+ * @param {Array} diffs Array of diff tuples.
+ * @param {Int} start Position of the first element to merge (diffs[start] is also merged with diffs[start - 1]).
+ * @param {Int} length Number of consecutive elements to check.
+ * @return {Array} Array of merged diff tuples.
+ */
+function merge_tuples (diffs, start, length) {
+  // Check from (start-1) to (start+length).
+  for (var i = start + length - 1; i >= 0 && i >= start - 1; i--) {
+    if (i + 1 < diffs.length) {
+      var left_d = diffs[i];
+      var right_d = diffs[i+1];
+      if (left_d[0] === right_d[1]) {
+        diffs.splice(i, 2, [left_d[0], left_d[1] + right_d[1]]);
+      }
+    }
+  }
+  return diffs;
+}
+
+
+/***/ }),
+/* 423 */
+/***/ (function(module, exports) {
+
+exports = module.exports = typeof Object.keys === 'function'
+  ? Object.keys : shim;
+
+exports.shim = shim;
+function shim (obj) {
+  var keys = [];
+  for (var key in obj) keys.push(key);
+  return keys;
+}
+
+
+/***/ }),
+/* 424 */
+/***/ (function(module, exports) {
+
+var supportsArgumentsClass = (function(){
+  return Object.prototype.toString.call(arguments)
+})() == '[object Arguments]';
+
+exports = module.exports = supportsArgumentsClass ? supported : unsupported;
+
+exports.supported = supported;
+function supported(object) {
+  return Object.prototype.toString.call(object) == '[object Arguments]';
+};
+
+exports.unsupported = unsupported;
+function unsupported(object){
+  return object &&
+    typeof object == 'object' &&
+    typeof object.length == 'number' &&
+    Object.prototype.hasOwnProperty.call(object, 'callee') &&
+    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
+    false;
+};
+
+
+/***/ }),
+/* 425 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var equal = __webpack_require__(140);
+var extend = __webpack_require__(141);
+
+
+var lib = {
+  attributes: {
+    compose: function (a, b, keepNull) {
+      if (typeof a !== 'object') a = {};
+      if (typeof b !== 'object') b = {};
+      var attributes = extend(true, {}, b);
+      if (!keepNull) {
+        attributes = Object.keys(attributes).reduce(function (copy, key) {
+          if (attributes[key] != null) {
+            copy[key] = attributes[key];
+          }
+          return copy;
+        }, {});
+      }
+      for (var key in a) {
+        if (a[key] !== undefined && b[key] === undefined) {
+          attributes[key] = a[key];
+        }
+      }
+      return Object.keys(attributes).length > 0 ? attributes : undefined;
+    },
+
+    diff: function(a, b) {
+      if (typeof a !== 'object') a = {};
+      if (typeof b !== 'object') b = {};
+      var attributes = Object.keys(a).concat(Object.keys(b)).reduce(function (attributes, key) {
+        if (!equal(a[key], b[key])) {
+          attributes[key] = b[key] === undefined ? null : b[key];
+        }
+        return attributes;
+      }, {});
+      return Object.keys(attributes).length > 0 ? attributes : undefined;
+    },
+
+    transform: function (a, b, priority) {
+      if (typeof a !== 'object') return b;
+      if (typeof b !== 'object') return undefined;
+      if (!priority) return b;  // b simply overwrites us without priority
+      var attributes = Object.keys(b).reduce(function (attributes, key) {
+        if (a[key] === undefined) attributes[key] = b[key];  // null is a valid value
+        return attributes;
+      }, {});
+      return Object.keys(attributes).length > 0 ? attributes : undefined;
+    }
+  },
+
+  iterator: function (ops) {
+    return new Iterator(ops);
+  },
+
+  length: function (op) {
+    if (typeof op['delete'] === 'number') {
+      return op['delete'];
+    } else if (typeof op.retain === 'number') {
+      return op.retain;
+    } else {
+      return typeof op.insert === 'string' ? op.insert.length : 1;
+    }
+  }
+};
+
+
+function Iterator(ops) {
+  this.ops = ops;
+  this.index = 0;
+  this.offset = 0;
+};
+
+Iterator.prototype.hasNext = function () {
+  return this.peekLength() < Infinity;
+};
+
+Iterator.prototype.next = function (length) {
+  if (!length) length = Infinity;
+  var nextOp = this.ops[this.index];
+  if (nextOp) {
+    var offset = this.offset;
+    var opLength = lib.length(nextOp)
+    if (length >= opLength - offset) {
+      length = opLength - offset;
+      this.index += 1;
+      this.offset = 0;
+    } else {
+      this.offset += length;
+    }
+    if (typeof nextOp['delete'] === 'number') {
+      return { 'delete': length };
+    } else {
+      var retOp = {};
+      if (nextOp.attributes) {
+        retOp.attributes = nextOp.attributes;
+      }
+      if (typeof nextOp.retain === 'number') {
+        retOp.retain = length;
+      } else if (typeof nextOp.insert === 'string') {
+        retOp.insert = nextOp.insert.substr(offset, length);
+      } else {
+        // offset should === 0, length should === 1
+        retOp.insert = nextOp.insert;
+      }
+      return retOp;
+    }
+  } else {
+    return { retain: Infinity };
+  }
+};
+
+Iterator.prototype.peek = function () {
+  return this.ops[this.index];
+};
+
+Iterator.prototype.peekLength = function () {
+  if (this.ops[this.index]) {
+    // Should never return 0 if our index is being managed correctly
+    return lib.length(this.ops[this.index]) - this.offset;
+  } else {
+    return Infinity;
+  }
+};
+
+Iterator.prototype.peekType = function () {
+  if (this.ops[this.index]) {
+    if (typeof this.ops[this.index]['delete'] === 'number') {
+      return 'delete';
+    } else if (typeof this.ops[this.index].retain === 'number') {
+      return 'retain';
+    } else {
+      return 'insert';
+    }
+  }
+  return 'retain';
+};
+
+
+module.exports = lib;
+
+
+/***/ }),
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29584,14 +30931,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var RealtimeEditor = __webpack_require__(421);
-var DataChannel = __webpack_require__(456);
+var RealtimeEditor = __webpack_require__(427);
+var DataChannel = __webpack_require__(457);
 
 // Socket.io classes
-var io = __webpack_require__(139);
+var io = __webpack_require__(142);
 
 // Quill classes
-var Quill = __webpack_require__(97);
+var Quill = __webpack_require__(67);
 
 module.exports = function (sGateway) {
     // start
@@ -29957,7 +31304,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 421 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29971,11 +31318,11 @@ module.exports.prototype = {
 
 // Socket.io classes
 
-var io = __webpack_require__(139);
+var io = __webpack_require__(142);
 
 // Quill classes
-var Quill = __webpack_require__(97);
-var QuillDelta = __webpack_require__(451);
+var Quill = __webpack_require__(67);
+var QuillDelta = __webpack_require__(139);
 
 module.exports = function (socket, sPropertySelector, editOptions, editableValue) {
 
@@ -30301,7 +31648,7 @@ module.exports.prototype = {
 };
 
 /***/ }),
-/* 422 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -30309,8 +31656,8 @@ module.exports.prototype = {
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(140);
-var debug = __webpack_require__(67)('socket.io-client:url');
+var parseuri = __webpack_require__(143);
+var debug = __webpack_require__(68)('socket.io-client:url');
 
 /**
  * Module exports.
@@ -30383,7 +31730,7 @@ function url (uri, loc) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 423 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30399,7 +31746,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(424);
+exports.humanize = __webpack_require__(430);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -30589,7 +31936,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 424 */
+/* 430 */
 /***/ (function(module, exports) {
 
 /**
@@ -30744,7 +32091,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 425 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30754,7 +32101,7 @@ function plural(ms, n, name) {
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(426);
+exports = module.exports = __webpack_require__(432);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -30918,7 +32265,7 @@ function localstorage(){
 
 
 /***/ }),
-/* 426 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -30934,7 +32281,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(427);
+exports.humanize = __webpack_require__(433);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -31121,7 +32468,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 427 */
+/* 433 */
 /***/ (function(module, exports) {
 
 /**
@@ -31252,14 +32599,14 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 428 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 ;(function () {
   // Detect the `define` function exposed by asynchronous module loaders. The
   // strict `define` check is necessary for compatibility with `r.js`.
-  var isLoader = "function" === "function" && __webpack_require__(429);
+  var isLoader = "function" === "function" && __webpack_require__(435);
 
   // A set of types used to distinguish objects from primitives.
   var objectTypes = {
@@ -32159,10 +33506,10 @@ function plural(ms, n, name) {
   }
 }).call(this);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)(module), __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(97)(module), __webpack_require__(10)))
 
 /***/ }),
-/* 429 */
+/* 435 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -32171,7 +33518,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 430 */
+/* 436 */
 /***/ (function(module, exports) {
 
 
@@ -32341,7 +33688,7 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
-/* 431 */
+/* 437 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -32350,8 +33697,8 @@ Emitter.prototype.hasListeners = function(event){
  * Module requirements
  */
 
-var isArray = __webpack_require__(142);
-var isBuf = __webpack_require__(143);
+var isArray = __webpack_require__(145);
+var isBuf = __webpack_require__(146);
 
 /**
  * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -32489,19 +33836,19 @@ exports.removeBlobs = function(data, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 432 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(433);
+module.exports = __webpack_require__(439);
 
 
 /***/ }),
-/* 433 */
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(434);
+module.exports = __webpack_require__(440);
 
 /**
  * Exports parser
@@ -32513,20 +33860,20 @@ module.exports.parser = __webpack_require__(48);
 
 
 /***/ }),
-/* 434 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var transports = __webpack_require__(145);
+var transports = __webpack_require__(148);
 var Emitter = __webpack_require__(101);
-var debug = __webpack_require__(69)('engine.io-client:socket');
-var index = __webpack_require__(149);
+var debug = __webpack_require__(70)('engine.io-client:socket');
+var index = __webpack_require__(152);
 var parser = __webpack_require__(48);
-var parseuri = __webpack_require__(140);
-var parsejson = __webpack_require__(448);
+var parseuri = __webpack_require__(143);
+var parsejson = __webpack_require__(454);
 var parseqs = __webpack_require__(102);
 
 /**
@@ -32660,7 +34007,7 @@ Socket.protocol = parser.protocol; // this is an int
 
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__(100);
-Socket.transports = __webpack_require__(145);
+Socket.transports = __webpack_require__(148);
 Socket.parser = __webpack_require__(48);
 
 /**
@@ -33258,7 +34605,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 435 */
+/* 441 */
 /***/ (function(module, exports) {
 
 
@@ -33281,7 +34628,7 @@ try {
 
 
 /***/ }),
-/* 436 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -33289,10 +34636,10 @@ try {
  */
 
 var XMLHttpRequest = __webpack_require__(99);
-var Polling = __webpack_require__(146);
+var Polling = __webpack_require__(149);
 var Emitter = __webpack_require__(101);
-var inherit = __webpack_require__(68);
-var debug = __webpack_require__(69)('engine.io-client:polling-xhr');
+var inherit = __webpack_require__(69);
+var debug = __webpack_require__(70)('engine.io-client:polling-xhr');
 
 /**
  * Module exports.
@@ -33712,7 +35059,7 @@ function unloadHandler () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 437 */
+/* 443 */
 /***/ (function(module, exports) {
 
 
@@ -33737,7 +35084,7 @@ module.exports = Object.keys || function keys (obj){
 
 
 /***/ }),
-/* 438 */
+/* 444 */
 /***/ (function(module, exports) {
 
 /**
@@ -33772,7 +35119,7 @@ module.exports = function(arraybuffer, start, end) {
 
 
 /***/ }),
-/* 439 */
+/* 445 */
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -33806,7 +35153,7 @@ function noop() {}
 
 
 /***/ }),
-/* 440 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/wtf8 v1.0.0 by @mathias */
@@ -34043,10 +35390,10 @@ function noop() {}
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(96)(module), __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(97)(module), __webpack_require__(10)))
 
 /***/ }),
-/* 441 */
+/* 447 */
 /***/ (function(module, exports) {
 
 /*
@@ -34119,7 +35466,7 @@ function noop() {}
 
 
 /***/ }),
-/* 442 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -34222,7 +35569,7 @@ module.exports = (function() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 443 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -34238,7 +35585,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(444);
+exports.humanize = __webpack_require__(450);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -34428,7 +35775,7 @@ function coerce(val) {
 
 
 /***/ }),
-/* 444 */
+/* 450 */
 /***/ (function(module, exports) {
 
 /**
@@ -34583,7 +35930,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 445 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -34591,8 +35938,8 @@ function plural(ms, n, name) {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(146);
-var inherit = __webpack_require__(68);
+var Polling = __webpack_require__(149);
+var inherit = __webpack_require__(69);
 
 /**
  * Module exports.
@@ -34821,7 +36168,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 446 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -34831,14 +36178,14 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 var Transport = __webpack_require__(100);
 var parser = __webpack_require__(48);
 var parseqs = __webpack_require__(102);
-var inherit = __webpack_require__(68);
-var yeast = __webpack_require__(148);
-var debug = __webpack_require__(69)('engine.io-client:websocket');
+var inherit = __webpack_require__(69);
+var yeast = __webpack_require__(151);
+var debug = __webpack_require__(70)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(447);
+    NodeWebSocket = __webpack_require__(453);
   } catch (e) { }
 }
 
@@ -35113,13 +36460,13 @@ WS.prototype.check = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 447 */
+/* 453 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 448 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -35157,7 +36504,7 @@ module.exports = function parsejson(data) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ }),
-/* 449 */
+/* 455 */
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -35176,7 +36523,7 @@ function toArray(list, index) {
 
 
 /***/ }),
-/* 450 */
+/* 456 */
 /***/ (function(module, exports) {
 
 
@@ -35267,1228 +36614,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 /***/ }),
-/* 451 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var diff = __webpack_require__(452);
-var equal = __webpack_require__(154);
-var extend = __webpack_require__(155);
-var op = __webpack_require__(455);
-
-
-var NULL_CHARACTER = String.fromCharCode(0);  // Placeholder char for embed in diff()
-
-
-var Delta = function (ops) {
-  // Assume we are given a well formed ops
-  if (Array.isArray(ops)) {
-    this.ops = ops;
-  } else if (ops != null && Array.isArray(ops.ops)) {
-    this.ops = ops.ops;
-  } else {
-    this.ops = [];
-  }
-};
-
-
-Delta.prototype.insert = function (text, attributes) {
-  var newOp = {};
-  if (text.length === 0) return this;
-  newOp.insert = text;
-  if (attributes != null && typeof attributes === 'object' && Object.keys(attributes).length > 0) {
-    newOp.attributes = attributes;
-  }
-  return this.push(newOp);
-};
-
-Delta.prototype['delete'] = function (length) {
-  if (length <= 0) return this;
-  return this.push({ 'delete': length });
-};
-
-Delta.prototype.retain = function (length, attributes) {
-  if (length <= 0) return this;
-  var newOp = { retain: length };
-  if (attributes != null && typeof attributes === 'object' && Object.keys(attributes).length > 0) {
-    newOp.attributes = attributes;
-  }
-  return this.push(newOp);
-};
-
-Delta.prototype.push = function (newOp) {
-  var index = this.ops.length;
-  var lastOp = this.ops[index - 1];
-  newOp = extend(true, {}, newOp);
-  if (typeof lastOp === 'object') {
-    if (typeof newOp['delete'] === 'number' && typeof lastOp['delete'] === 'number') {
-      this.ops[index - 1] = { 'delete': lastOp['delete'] + newOp['delete'] };
-      return this;
-    }
-    // Since it does not matter if we insert before or after deleting at the same index,
-    // always prefer to insert first
-    if (typeof lastOp['delete'] === 'number' && newOp.insert != null) {
-      index -= 1;
-      lastOp = this.ops[index - 1];
-      if (typeof lastOp !== 'object') {
-        this.ops.unshift(newOp);
-        return this;
-      }
-    }
-    if (equal(newOp.attributes, lastOp.attributes)) {
-      if (typeof newOp.insert === 'string' && typeof lastOp.insert === 'string') {
-        this.ops[index - 1] = { insert: lastOp.insert + newOp.insert };
-        if (typeof newOp.attributes === 'object') this.ops[index - 1].attributes = newOp.attributes
-        return this;
-      } else if (typeof newOp.retain === 'number' && typeof lastOp.retain === 'number') {
-        this.ops[index - 1] = { retain: lastOp.retain + newOp.retain };
-        if (typeof newOp.attributes === 'object') this.ops[index - 1].attributes = newOp.attributes
-        return this;
-      }
-    }
-  }
-  if (index === this.ops.length) {
-    this.ops.push(newOp);
-  } else {
-    this.ops.splice(index, 0, newOp);
-  }
-  return this;
-};
-
-Delta.prototype.chop = function () {
-  var lastOp = this.ops[this.ops.length - 1];
-  if (lastOp && lastOp.retain && !lastOp.attributes) {
-    this.ops.pop();
-  }
-  return this;
-};
-
-Delta.prototype.filter = function (predicate) {
-  return this.ops.filter(predicate);
-};
-
-Delta.prototype.forEach = function (predicate) {
-  this.ops.forEach(predicate);
-};
-
-Delta.prototype.map = function (predicate) {
-  return this.ops.map(predicate);
-};
-
-Delta.prototype.partition = function (predicate) {
-  var passed = [], failed = [];
-  this.forEach(function(op) {
-    var target = predicate(op) ? passed : failed;
-    target.push(op);
-  });
-  return [passed, failed];
-};
-
-Delta.prototype.reduce = function (predicate, initial) {
-  return this.ops.reduce(predicate, initial);
-};
-
-Delta.prototype.changeLength = function () {
-  return this.reduce(function (length, elem) {
-    if (elem.insert) {
-      return length + op.length(elem);
-    } else if (elem.delete) {
-      return length - elem.delete;
-    }
-    return length;
-  }, 0);
-};
-
-Delta.prototype.length = function () {
-  return this.reduce(function (length, elem) {
-    return length + op.length(elem);
-  }, 0);
-};
-
-Delta.prototype.slice = function (start, end) {
-  start = start || 0;
-  if (typeof end !== 'number') end = Infinity;
-  var ops = [];
-  var iter = op.iterator(this.ops);
-  var index = 0;
-  while (index < end && iter.hasNext()) {
-    var nextOp;
-    if (index < start) {
-      nextOp = iter.next(start - index);
-    } else {
-      nextOp = iter.next(end - index);
-      ops.push(nextOp);
-    }
-    index += op.length(nextOp);
-  }
-  return new Delta(ops);
-};
-
-
-Delta.prototype.compose = function (other) {
-  var thisIter = op.iterator(this.ops);
-  var otherIter = op.iterator(other.ops);
-  var delta = new Delta();
-  while (thisIter.hasNext() || otherIter.hasNext()) {
-    if (otherIter.peekType() === 'insert') {
-      delta.push(otherIter.next());
-    } else if (thisIter.peekType() === 'delete') {
-      delta.push(thisIter.next());
-    } else {
-      var length = Math.min(thisIter.peekLength(), otherIter.peekLength());
-      var thisOp = thisIter.next(length);
-      var otherOp = otherIter.next(length);
-      if (typeof otherOp.retain === 'number') {
-        var newOp = {};
-        if (typeof thisOp.retain === 'number') {
-          newOp.retain = length;
-        } else {
-          newOp.insert = thisOp.insert;
-        }
-        // Preserve null when composing with a retain, otherwise remove it for inserts
-        var attributes = op.attributes.compose(thisOp.attributes, otherOp.attributes, typeof thisOp.retain === 'number');
-        if (attributes) newOp.attributes = attributes;
-        delta.push(newOp);
-      // Other op should be delete, we could be an insert or retain
-      // Insert + delete cancels out
-      } else if (typeof otherOp['delete'] === 'number' && typeof thisOp.retain === 'number') {
-        delta.push(otherOp);
-      }
-    }
-  }
-  return delta.chop();
-};
-
-Delta.prototype.concat = function (other) {
-  var delta = new Delta(this.ops.slice());
-  if (other.ops.length > 0) {
-    delta.push(other.ops[0]);
-    delta.ops = delta.ops.concat(other.ops.slice(1));
-  }
-  return delta;
-};
-
-Delta.prototype.diff = function (other, index) {
-  if (this.ops === other.ops) {
-    return new Delta();
-  }
-  var strings = [this, other].map(function (delta) {
-    return delta.map(function (op) {
-      if (op.insert != null) {
-        return typeof op.insert === 'string' ? op.insert : NULL_CHARACTER;
-      }
-      var prep = (delta === other) ? 'on' : 'with';
-      throw new Error('diff() called ' + prep + ' non-document');
-    }).join('');
-  });
-  var delta = new Delta();
-  var diffResult = diff(strings[0], strings[1], index);
-  var thisIter = op.iterator(this.ops);
-  var otherIter = op.iterator(other.ops);
-  diffResult.forEach(function (component) {
-    var length = component[1].length;
-    while (length > 0) {
-      var opLength = 0;
-      switch (component[0]) {
-        case diff.INSERT:
-          opLength = Math.min(otherIter.peekLength(), length);
-          delta.push(otherIter.next(opLength));
-          break;
-        case diff.DELETE:
-          opLength = Math.min(length, thisIter.peekLength());
-          thisIter.next(opLength);
-          delta['delete'](opLength);
-          break;
-        case diff.EQUAL:
-          opLength = Math.min(thisIter.peekLength(), otherIter.peekLength(), length);
-          var thisOp = thisIter.next(opLength);
-          var otherOp = otherIter.next(opLength);
-          if (equal(thisOp.insert, otherOp.insert)) {
-            delta.retain(opLength, op.attributes.diff(thisOp.attributes, otherOp.attributes));
-          } else {
-            delta.push(otherOp)['delete'](opLength);
-          }
-          break;
-      }
-      length -= opLength;
-    }
-  });
-  return delta.chop();
-};
-
-Delta.prototype.eachLine = function (predicate, newline) {
-  newline = newline || '\n';
-  var iter = op.iterator(this.ops);
-  var line = new Delta();
-  var i = 0;
-  while (iter.hasNext()) {
-    if (iter.peekType() !== 'insert') return;
-    var thisOp = iter.peek();
-    var start = op.length(thisOp) - iter.peekLength();
-    var index = typeof thisOp.insert === 'string' ?
-      thisOp.insert.indexOf(newline, start) - start : -1;
-    if (index < 0) {
-      line.push(iter.next());
-    } else if (index > 0) {
-      line.push(iter.next(index));
-    } else {
-      if (predicate(line, iter.next(1).attributes || {}, i) === false) {
-        return;
-      }
-      i += 1;
-      line = new Delta();
-    }
-  }
-  if (line.length() > 0) {
-    predicate(line, {}, i);
-  }
-};
-
-Delta.prototype.transform = function (other, priority) {
-  priority = !!priority;
-  if (typeof other === 'number') {
-    return this.transformPosition(other, priority);
-  }
-  var thisIter = op.iterator(this.ops);
-  var otherIter = op.iterator(other.ops);
-  var delta = new Delta();
-  while (thisIter.hasNext() || otherIter.hasNext()) {
-    if (thisIter.peekType() === 'insert' && (priority || otherIter.peekType() !== 'insert')) {
-      delta.retain(op.length(thisIter.next()));
-    } else if (otherIter.peekType() === 'insert') {
-      delta.push(otherIter.next());
-    } else {
-      var length = Math.min(thisIter.peekLength(), otherIter.peekLength());
-      var thisOp = thisIter.next(length);
-      var otherOp = otherIter.next(length);
-      if (thisOp['delete']) {
-        // Our delete either makes their delete redundant or removes their retain
-        continue;
-      } else if (otherOp['delete']) {
-        delta.push(otherOp);
-      } else {
-        // We retain either their retain or insert
-        delta.retain(length, op.attributes.transform(thisOp.attributes, otherOp.attributes, priority));
-      }
-    }
-  }
-  return delta.chop();
-};
-
-Delta.prototype.transformPosition = function (index, priority) {
-  priority = !!priority;
-  var thisIter = op.iterator(this.ops);
-  var offset = 0;
-  while (thisIter.hasNext() && offset <= index) {
-    var length = thisIter.peekLength();
-    var nextType = thisIter.peekType();
-    thisIter.next();
-    if (nextType === 'delete') {
-      index -= Math.min(length, index - offset);
-      continue;
-    } else if (nextType === 'insert' && (offset < index || !priority)) {
-      index += length;
-    }
-    offset += length;
-  }
-  return index;
-};
-
-
-module.exports = Delta;
-
-
-/***/ }),
-/* 452 */
-/***/ (function(module, exports) {
-
-/**
- * This library modifies the diff-patch-match library by Neil Fraser
- * by removing the patch and match functionality and certain advanced
- * options in the diff function. The original license is as follows:
- *
- * ===
- *
- * Diff Match and Patch
- *
- * Copyright 2006 Google Inc.
- * http://code.google.com/p/google-diff-match-patch/
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-
-/**
- * The data structure representing a diff is an array of tuples:
- * [[DIFF_DELETE, 'Hello'], [DIFF_INSERT, 'Goodbye'], [DIFF_EQUAL, ' world.']]
- * which means: delete 'Hello', add 'Goodbye' and keep ' world.'
- */
-var DIFF_DELETE = -1;
-var DIFF_INSERT = 1;
-var DIFF_EQUAL = 0;
-
-
-/**
- * Find the differences between two texts.  Simplifies the problem by stripping
- * any common prefix or suffix off the texts before diffing.
- * @param {string} text1 Old string to be diffed.
- * @param {string} text2 New string to be diffed.
- * @param {Int} cursor_pos Expected edit position in text1 (optional)
- * @return {Array} Array of diff tuples.
- */
-function diff_main(text1, text2, cursor_pos) {
-  // Check for equality (speedup).
-  if (text1 == text2) {
-    if (text1) {
-      return [[DIFF_EQUAL, text1]];
-    }
-    return [];
-  }
-
-  // Check cursor_pos within bounds
-  if (cursor_pos < 0 || text1.length < cursor_pos) {
-    cursor_pos = null;
-  }
-
-  // Trim off common prefix (speedup).
-  var commonlength = diff_commonPrefix(text1, text2);
-  var commonprefix = text1.substring(0, commonlength);
-  text1 = text1.substring(commonlength);
-  text2 = text2.substring(commonlength);
-
-  // Trim off common suffix (speedup).
-  commonlength = diff_commonSuffix(text1, text2);
-  var commonsuffix = text1.substring(text1.length - commonlength);
-  text1 = text1.substring(0, text1.length - commonlength);
-  text2 = text2.substring(0, text2.length - commonlength);
-
-  // Compute the diff on the middle block.
-  var diffs = diff_compute_(text1, text2);
-
-  // Restore the prefix and suffix.
-  if (commonprefix) {
-    diffs.unshift([DIFF_EQUAL, commonprefix]);
-  }
-  if (commonsuffix) {
-    diffs.push([DIFF_EQUAL, commonsuffix]);
-  }
-  diff_cleanupMerge(diffs);
-  if (cursor_pos != null) {
-    diffs = fix_cursor(diffs, cursor_pos);
-  }
-  return diffs;
-};
-
-
-/**
- * Find the differences between two texts.  Assumes that the texts do not
- * have any common prefix or suffix.
- * @param {string} text1 Old string to be diffed.
- * @param {string} text2 New string to be diffed.
- * @return {Array} Array of diff tuples.
- */
-function diff_compute_(text1, text2) {
-  var diffs;
-
-  if (!text1) {
-    // Just add some text (speedup).
-    return [[DIFF_INSERT, text2]];
-  }
-
-  if (!text2) {
-    // Just delete some text (speedup).
-    return [[DIFF_DELETE, text1]];
-  }
-
-  var longtext = text1.length > text2.length ? text1 : text2;
-  var shorttext = text1.length > text2.length ? text2 : text1;
-  var i = longtext.indexOf(shorttext);
-  if (i != -1) {
-    // Shorter text is inside the longer text (speedup).
-    diffs = [[DIFF_INSERT, longtext.substring(0, i)],
-             [DIFF_EQUAL, shorttext],
-             [DIFF_INSERT, longtext.substring(i + shorttext.length)]];
-    // Swap insertions for deletions if diff is reversed.
-    if (text1.length > text2.length) {
-      diffs[0][0] = diffs[2][0] = DIFF_DELETE;
-    }
-    return diffs;
-  }
-
-  if (shorttext.length == 1) {
-    // Single character string.
-    // After the previous speedup, the character can't be an equality.
-    return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
-  }
-
-  // Check to see if the problem can be split in two.
-  var hm = diff_halfMatch_(text1, text2);
-  if (hm) {
-    // A half-match was found, sort out the return data.
-    var text1_a = hm[0];
-    var text1_b = hm[1];
-    var text2_a = hm[2];
-    var text2_b = hm[3];
-    var mid_common = hm[4];
-    // Send both pairs off for separate processing.
-    var diffs_a = diff_main(text1_a, text2_a);
-    var diffs_b = diff_main(text1_b, text2_b);
-    // Merge the results.
-    return diffs_a.concat([[DIFF_EQUAL, mid_common]], diffs_b);
-  }
-
-  return diff_bisect_(text1, text2);
-};
-
-
-/**
- * Find the 'middle snake' of a diff, split the problem in two
- * and return the recursively constructed diff.
- * See Myers 1986 paper: An O(ND) Difference Algorithm and Its Variations.
- * @param {string} text1 Old string to be diffed.
- * @param {string} text2 New string to be diffed.
- * @return {Array} Array of diff tuples.
- * @private
- */
-function diff_bisect_(text1, text2) {
-  // Cache the text lengths to prevent multiple calls.
-  var text1_length = text1.length;
-  var text2_length = text2.length;
-  var max_d = Math.ceil((text1_length + text2_length) / 2);
-  var v_offset = max_d;
-  var v_length = 2 * max_d;
-  var v1 = new Array(v_length);
-  var v2 = new Array(v_length);
-  // Setting all elements to -1 is faster in Chrome & Firefox than mixing
-  // integers and undefined.
-  for (var x = 0; x < v_length; x++) {
-    v1[x] = -1;
-    v2[x] = -1;
-  }
-  v1[v_offset + 1] = 0;
-  v2[v_offset + 1] = 0;
-  var delta = text1_length - text2_length;
-  // If the total number of characters is odd, then the front path will collide
-  // with the reverse path.
-  var front = (delta % 2 != 0);
-  // Offsets for start and end of k loop.
-  // Prevents mapping of space beyond the grid.
-  var k1start = 0;
-  var k1end = 0;
-  var k2start = 0;
-  var k2end = 0;
-  for (var d = 0; d < max_d; d++) {
-    // Walk the front path one step.
-    for (var k1 = -d + k1start; k1 <= d - k1end; k1 += 2) {
-      var k1_offset = v_offset + k1;
-      var x1;
-      if (k1 == -d || (k1 != d && v1[k1_offset - 1] < v1[k1_offset + 1])) {
-        x1 = v1[k1_offset + 1];
-      } else {
-        x1 = v1[k1_offset - 1] + 1;
-      }
-      var y1 = x1 - k1;
-      while (x1 < text1_length && y1 < text2_length &&
-             text1.charAt(x1) == text2.charAt(y1)) {
-        x1++;
-        y1++;
-      }
-      v1[k1_offset] = x1;
-      if (x1 > text1_length) {
-        // Ran off the right of the graph.
-        k1end += 2;
-      } else if (y1 > text2_length) {
-        // Ran off the bottom of the graph.
-        k1start += 2;
-      } else if (front) {
-        var k2_offset = v_offset + delta - k1;
-        if (k2_offset >= 0 && k2_offset < v_length && v2[k2_offset] != -1) {
-          // Mirror x2 onto top-left coordinate system.
-          var x2 = text1_length - v2[k2_offset];
-          if (x1 >= x2) {
-            // Overlap detected.
-            return diff_bisectSplit_(text1, text2, x1, y1);
-          }
-        }
-      }
-    }
-
-    // Walk the reverse path one step.
-    for (var k2 = -d + k2start; k2 <= d - k2end; k2 += 2) {
-      var k2_offset = v_offset + k2;
-      var x2;
-      if (k2 == -d || (k2 != d && v2[k2_offset - 1] < v2[k2_offset + 1])) {
-        x2 = v2[k2_offset + 1];
-      } else {
-        x2 = v2[k2_offset - 1] + 1;
-      }
-      var y2 = x2 - k2;
-      while (x2 < text1_length && y2 < text2_length &&
-             text1.charAt(text1_length - x2 - 1) ==
-             text2.charAt(text2_length - y2 - 1)) {
-        x2++;
-        y2++;
-      }
-      v2[k2_offset] = x2;
-      if (x2 > text1_length) {
-        // Ran off the left of the graph.
-        k2end += 2;
-      } else if (y2 > text2_length) {
-        // Ran off the top of the graph.
-        k2start += 2;
-      } else if (!front) {
-        var k1_offset = v_offset + delta - k2;
-        if (k1_offset >= 0 && k1_offset < v_length && v1[k1_offset] != -1) {
-          var x1 = v1[k1_offset];
-          var y1 = v_offset + x1 - k1_offset;
-          // Mirror x2 onto top-left coordinate system.
-          x2 = text1_length - x2;
-          if (x1 >= x2) {
-            // Overlap detected.
-            return diff_bisectSplit_(text1, text2, x1, y1);
-          }
-        }
-      }
-    }
-  }
-  // Diff took too long and hit the deadline or
-  // number of diffs equals number of characters, no commonality at all.
-  return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
-};
-
-
-/**
- * Given the location of the 'middle snake', split the diff in two parts
- * and recurse.
- * @param {string} text1 Old string to be diffed.
- * @param {string} text2 New string to be diffed.
- * @param {number} x Index of split point in text1.
- * @param {number} y Index of split point in text2.
- * @return {Array} Array of diff tuples.
- */
-function diff_bisectSplit_(text1, text2, x, y) {
-  var text1a = text1.substring(0, x);
-  var text2a = text2.substring(0, y);
-  var text1b = text1.substring(x);
-  var text2b = text2.substring(y);
-
-  // Compute both diffs serially.
-  var diffs = diff_main(text1a, text2a);
-  var diffsb = diff_main(text1b, text2b);
-
-  return diffs.concat(diffsb);
-};
-
-
-/**
- * Determine the common prefix of two strings.
- * @param {string} text1 First string.
- * @param {string} text2 Second string.
- * @return {number} The number of characters common to the start of each
- *     string.
- */
-function diff_commonPrefix(text1, text2) {
-  // Quick check for common null cases.
-  if (!text1 || !text2 || text1.charAt(0) != text2.charAt(0)) {
-    return 0;
-  }
-  // Binary search.
-  // Performance analysis: http://neil.fraser.name/news/2007/10/09/
-  var pointermin = 0;
-  var pointermax = Math.min(text1.length, text2.length);
-  var pointermid = pointermax;
-  var pointerstart = 0;
-  while (pointermin < pointermid) {
-    if (text1.substring(pointerstart, pointermid) ==
-        text2.substring(pointerstart, pointermid)) {
-      pointermin = pointermid;
-      pointerstart = pointermin;
-    } else {
-      pointermax = pointermid;
-    }
-    pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
-  }
-  return pointermid;
-};
-
-
-/**
- * Determine the common suffix of two strings.
- * @param {string} text1 First string.
- * @param {string} text2 Second string.
- * @return {number} The number of characters common to the end of each string.
- */
-function diff_commonSuffix(text1, text2) {
-  // Quick check for common null cases.
-  if (!text1 || !text2 ||
-      text1.charAt(text1.length - 1) != text2.charAt(text2.length - 1)) {
-    return 0;
-  }
-  // Binary search.
-  // Performance analysis: http://neil.fraser.name/news/2007/10/09/
-  var pointermin = 0;
-  var pointermax = Math.min(text1.length, text2.length);
-  var pointermid = pointermax;
-  var pointerend = 0;
-  while (pointermin < pointermid) {
-    if (text1.substring(text1.length - pointermid, text1.length - pointerend) ==
-        text2.substring(text2.length - pointermid, text2.length - pointerend)) {
-      pointermin = pointermid;
-      pointerend = pointermin;
-    } else {
-      pointermax = pointermid;
-    }
-    pointermid = Math.floor((pointermax - pointermin) / 2 + pointermin);
-  }
-  return pointermid;
-};
-
-
-/**
- * Do the two texts share a substring which is at least half the length of the
- * longer text?
- * This speedup can produce non-minimal diffs.
- * @param {string} text1 First string.
- * @param {string} text2 Second string.
- * @return {Array.<string>} Five element Array, containing the prefix of
- *     text1, the suffix of text1, the prefix of text2, the suffix of
- *     text2 and the common middle.  Or null if there was no match.
- */
-function diff_halfMatch_(text1, text2) {
-  var longtext = text1.length > text2.length ? text1 : text2;
-  var shorttext = text1.length > text2.length ? text2 : text1;
-  if (longtext.length < 4 || shorttext.length * 2 < longtext.length) {
-    return null;  // Pointless.
-  }
-
-  /**
-   * Does a substring of shorttext exist within longtext such that the substring
-   * is at least half the length of longtext?
-   * Closure, but does not reference any external variables.
-   * @param {string} longtext Longer string.
-   * @param {string} shorttext Shorter string.
-   * @param {number} i Start index of quarter length substring within longtext.
-   * @return {Array.<string>} Five element Array, containing the prefix of
-   *     longtext, the suffix of longtext, the prefix of shorttext, the suffix
-   *     of shorttext and the common middle.  Or null if there was no match.
-   * @private
-   */
-  function diff_halfMatchI_(longtext, shorttext, i) {
-    // Start with a 1/4 length substring at position i as a seed.
-    var seed = longtext.substring(i, i + Math.floor(longtext.length / 4));
-    var j = -1;
-    var best_common = '';
-    var best_longtext_a, best_longtext_b, best_shorttext_a, best_shorttext_b;
-    while ((j = shorttext.indexOf(seed, j + 1)) != -1) {
-      var prefixLength = diff_commonPrefix(longtext.substring(i),
-                                           shorttext.substring(j));
-      var suffixLength = diff_commonSuffix(longtext.substring(0, i),
-                                           shorttext.substring(0, j));
-      if (best_common.length < suffixLength + prefixLength) {
-        best_common = shorttext.substring(j - suffixLength, j) +
-            shorttext.substring(j, j + prefixLength);
-        best_longtext_a = longtext.substring(0, i - suffixLength);
-        best_longtext_b = longtext.substring(i + prefixLength);
-        best_shorttext_a = shorttext.substring(0, j - suffixLength);
-        best_shorttext_b = shorttext.substring(j + prefixLength);
-      }
-    }
-    if (best_common.length * 2 >= longtext.length) {
-      return [best_longtext_a, best_longtext_b,
-              best_shorttext_a, best_shorttext_b, best_common];
-    } else {
-      return null;
-    }
-  }
-
-  // First check if the second quarter is the seed for a half-match.
-  var hm1 = diff_halfMatchI_(longtext, shorttext,
-                             Math.ceil(longtext.length / 4));
-  // Check again based on the third quarter.
-  var hm2 = diff_halfMatchI_(longtext, shorttext,
-                             Math.ceil(longtext.length / 2));
-  var hm;
-  if (!hm1 && !hm2) {
-    return null;
-  } else if (!hm2) {
-    hm = hm1;
-  } else if (!hm1) {
-    hm = hm2;
-  } else {
-    // Both matched.  Select the longest.
-    hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
-  }
-
-  // A half-match was found, sort out the return data.
-  var text1_a, text1_b, text2_a, text2_b;
-  if (text1.length > text2.length) {
-    text1_a = hm[0];
-    text1_b = hm[1];
-    text2_a = hm[2];
-    text2_b = hm[3];
-  } else {
-    text2_a = hm[0];
-    text2_b = hm[1];
-    text1_a = hm[2];
-    text1_b = hm[3];
-  }
-  var mid_common = hm[4];
-  return [text1_a, text1_b, text2_a, text2_b, mid_common];
-};
-
-
-/**
- * Reorder and merge like edit sections.  Merge equalities.
- * Any edit section can move as long as it doesn't cross an equality.
- * @param {Array} diffs Array of diff tuples.
- */
-function diff_cleanupMerge(diffs) {
-  diffs.push([DIFF_EQUAL, '']);  // Add a dummy entry at the end.
-  var pointer = 0;
-  var count_delete = 0;
-  var count_insert = 0;
-  var text_delete = '';
-  var text_insert = '';
-  var commonlength;
-  while (pointer < diffs.length) {
-    switch (diffs[pointer][0]) {
-      case DIFF_INSERT:
-        count_insert++;
-        text_insert += diffs[pointer][1];
-        pointer++;
-        break;
-      case DIFF_DELETE:
-        count_delete++;
-        text_delete += diffs[pointer][1];
-        pointer++;
-        break;
-      case DIFF_EQUAL:
-        // Upon reaching an equality, check for prior redundancies.
-        if (count_delete + count_insert > 1) {
-          if (count_delete !== 0 && count_insert !== 0) {
-            // Factor out any common prefixies.
-            commonlength = diff_commonPrefix(text_insert, text_delete);
-            if (commonlength !== 0) {
-              if ((pointer - count_delete - count_insert) > 0 &&
-                  diffs[pointer - count_delete - count_insert - 1][0] ==
-                  DIFF_EQUAL) {
-                diffs[pointer - count_delete - count_insert - 1][1] +=
-                    text_insert.substring(0, commonlength);
-              } else {
-                diffs.splice(0, 0, [DIFF_EQUAL,
-                                    text_insert.substring(0, commonlength)]);
-                pointer++;
-              }
-              text_insert = text_insert.substring(commonlength);
-              text_delete = text_delete.substring(commonlength);
-            }
-            // Factor out any common suffixies.
-            commonlength = diff_commonSuffix(text_insert, text_delete);
-            if (commonlength !== 0) {
-              diffs[pointer][1] = text_insert.substring(text_insert.length -
-                  commonlength) + diffs[pointer][1];
-              text_insert = text_insert.substring(0, text_insert.length -
-                  commonlength);
-              text_delete = text_delete.substring(0, text_delete.length -
-                  commonlength);
-            }
-          }
-          // Delete the offending records and add the merged ones.
-          if (count_delete === 0) {
-            diffs.splice(pointer - count_insert,
-                count_delete + count_insert, [DIFF_INSERT, text_insert]);
-          } else if (count_insert === 0) {
-            diffs.splice(pointer - count_delete,
-                count_delete + count_insert, [DIFF_DELETE, text_delete]);
-          } else {
-            diffs.splice(pointer - count_delete - count_insert,
-                count_delete + count_insert, [DIFF_DELETE, text_delete],
-                [DIFF_INSERT, text_insert]);
-          }
-          pointer = pointer - count_delete - count_insert +
-                    (count_delete ? 1 : 0) + (count_insert ? 1 : 0) + 1;
-        } else if (pointer !== 0 && diffs[pointer - 1][0] == DIFF_EQUAL) {
-          // Merge this equality with the previous one.
-          diffs[pointer - 1][1] += diffs[pointer][1];
-          diffs.splice(pointer, 1);
-        } else {
-          pointer++;
-        }
-        count_insert = 0;
-        count_delete = 0;
-        text_delete = '';
-        text_insert = '';
-        break;
-    }
-  }
-  if (diffs[diffs.length - 1][1] === '') {
-    diffs.pop();  // Remove the dummy entry at the end.
-  }
-
-  // Second pass: look for single edits surrounded on both sides by equalities
-  // which can be shifted sideways to eliminate an equality.
-  // e.g: A<ins>BA</ins>C -> <ins>AB</ins>AC
-  var changes = false;
-  pointer = 1;
-  // Intentionally ignore the first and last element (don't need checking).
-  while (pointer < diffs.length - 1) {
-    if (diffs[pointer - 1][0] == DIFF_EQUAL &&
-        diffs[pointer + 1][0] == DIFF_EQUAL) {
-      // This is a single edit surrounded by equalities.
-      if (diffs[pointer][1].substring(diffs[pointer][1].length -
-          diffs[pointer - 1][1].length) == diffs[pointer - 1][1]) {
-        // Shift the edit over the previous equality.
-        diffs[pointer][1] = diffs[pointer - 1][1] +
-            diffs[pointer][1].substring(0, diffs[pointer][1].length -
-                                        diffs[pointer - 1][1].length);
-        diffs[pointer + 1][1] = diffs[pointer - 1][1] + diffs[pointer + 1][1];
-        diffs.splice(pointer - 1, 1);
-        changes = true;
-      } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ==
-          diffs[pointer + 1][1]) {
-        // Shift the edit over the next equality.
-        diffs[pointer - 1][1] += diffs[pointer + 1][1];
-        diffs[pointer][1] =
-            diffs[pointer][1].substring(diffs[pointer + 1][1].length) +
-            diffs[pointer + 1][1];
-        diffs.splice(pointer + 1, 1);
-        changes = true;
-      }
-    }
-    pointer++;
-  }
-  // If shifts were made, the diff needs reordering and another shift sweep.
-  if (changes) {
-    diff_cleanupMerge(diffs);
-  }
-};
-
-
-var diff = diff_main;
-diff.INSERT = DIFF_INSERT;
-diff.DELETE = DIFF_DELETE;
-diff.EQUAL = DIFF_EQUAL;
-
-module.exports = diff;
-
-/*
- * Modify a diff such that the cursor position points to the start of a change:
- * E.g.
- *   cursor_normalize_diff([[DIFF_EQUAL, 'abc']], 1)
- *     => [1, [[DIFF_EQUAL, 'a'], [DIFF_EQUAL, 'bc']]]
- *   cursor_normalize_diff([[DIFF_INSERT, 'new'], [DIFF_DELETE, 'xyz']], 2)
- *     => [2, [[DIFF_INSERT, 'new'], [DIFF_DELETE, 'xy'], [DIFF_DELETE, 'z']]]
- *
- * @param {Array} diffs Array of diff tuples
- * @param {Int} cursor_pos Suggested edit position. Must not be out of bounds!
- * @return {Array} A tuple [cursor location in the modified diff, modified diff]
- */
-function cursor_normalize_diff (diffs, cursor_pos) {
-  if (cursor_pos === 0) {
-    return [DIFF_EQUAL, diffs];
-  }
-  for (var current_pos = 0, i = 0; i < diffs.length; i++) {
-    var d = diffs[i];
-    if (d[0] === DIFF_DELETE || d[0] === DIFF_EQUAL) {
-      var next_pos = current_pos + d[1].length;
-      if (cursor_pos === next_pos) {
-        return [i + 1, diffs];
-      } else if (cursor_pos < next_pos) {
-        // copy to prevent side effects
-        diffs = diffs.slice();
-        // split d into two diff changes
-        var split_pos = cursor_pos - current_pos;
-        var d_left = [d[0], d[1].slice(0, split_pos)];
-        var d_right = [d[0], d[1].slice(split_pos)];
-        diffs.splice(i, 1, d_left, d_right);
-        return [i + 1, diffs];
-      } else {
-        current_pos = next_pos;
-      }
-    }
-  }
-  throw new Error('cursor_pos is out of bounds!')
-}
-
-/*
- * Modify a diff such that the edit position is "shifted" to the proposed edit location (cursor_position).
- *
- * Case 1)
- *   Check if a naive shift is possible:
- *     [0, X], [ 1, Y] -> [ 1, Y], [0, X]    (if X + Y === Y + X)
- *     [0, X], [-1, Y] -> [-1, Y], [0, X]    (if X + Y === Y + X) - holds same result
- * Case 2)
- *   Check if the following shifts are possible:
- *     [0, 'pre'], [ 1, 'prefix'] -> [ 1, 'pre'], [0, 'pre'], [ 1, 'fix']
- *     [0, 'pre'], [-1, 'prefix'] -> [-1, 'pre'], [0, 'pre'], [-1, 'fix']
- *         ^            ^
- *         d          d_next
- *
- * @param {Array} diffs Array of diff tuples
- * @param {Int} cursor_pos Suggested edit position. Must not be out of bounds!
- * @return {Array} Array of diff tuples
- */
-function fix_cursor (diffs, cursor_pos) {
-  var norm = cursor_normalize_diff(diffs, cursor_pos);
-  var ndiffs = norm[1];
-  var cursor_pointer = norm[0];
-  var d = ndiffs[cursor_pointer];
-  var d_next = ndiffs[cursor_pointer + 1];
-
-  if (d == null) {
-    // Text was deleted from end of original string,
-    // cursor is now out of bounds in new string
-    return diffs;
-  } else if (d[0] !== DIFF_EQUAL) {
-    // A modification happened at the cursor location.
-    // This is the expected outcome, so we can return the original diff.
-    return diffs;
-  } else {
-    if (d_next != null && d[1] + d_next[1] === d_next[1] + d[1]) {
-      // Case 1)
-      // It is possible to perform a naive shift
-      ndiffs.splice(cursor_pointer, 2, d_next, d)
-      return merge_tuples(ndiffs, cursor_pointer, 2)
-    } else if (d_next != null && d_next[1].indexOf(d[1]) === 0) {
-      // Case 2)
-      // d[1] is a prefix of d_next[1]
-      // We can assume that d_next[0] !== 0, since d[0] === 0
-      // Shift edit locations..
-      ndiffs.splice(cursor_pointer, 2, [d_next[0], d[1]], [0, d[1]]);
-      var suffix = d_next[1].slice(d[1].length);
-      if (suffix.length > 0) {
-        ndiffs.splice(cursor_pointer + 2, 0, [d_next[0], suffix]);
-      }
-      return merge_tuples(ndiffs, cursor_pointer, 3)
-    } else {
-      // Not possible to perform any modification
-      return diffs;
-    }
-  }
-
-}
-
-/*
- * Try to merge tuples with their neigbors in a given range.
- * E.g. [0, 'a'], [0, 'b'] -> [0, 'ab']
- *
- * @param {Array} diffs Array of diff tuples.
- * @param {Int} start Position of the first element to merge (diffs[start] is also merged with diffs[start - 1]).
- * @param {Int} length Number of consecutive elements to check.
- * @return {Array} Array of merged diff tuples.
- */
-function merge_tuples (diffs, start, length) {
-  // Check from (start-1) to (start+length).
-  for (var i = start + length - 1; i >= 0 && i >= start - 1; i--) {
-    if (i + 1 < diffs.length) {
-      var left_d = diffs[i];
-      var right_d = diffs[i+1];
-      if (left_d[0] === right_d[1]) {
-        diffs.splice(i, 2, [left_d[0], left_d[1] + right_d[1]]);
-      }
-    }
-  }
-  return diffs;
-}
-
-
-/***/ }),
-/* 453 */
-/***/ (function(module, exports) {
-
-exports = module.exports = typeof Object.keys === 'function'
-  ? Object.keys : shim;
-
-exports.shim = shim;
-function shim (obj) {
-  var keys = [];
-  for (var key in obj) keys.push(key);
-  return keys;
-}
-
-
-/***/ }),
-/* 454 */
-/***/ (function(module, exports) {
-
-var supportsArgumentsClass = (function(){
-  return Object.prototype.toString.call(arguments)
-})() == '[object Arguments]';
-
-exports = module.exports = supportsArgumentsClass ? supported : unsupported;
-
-exports.supported = supported;
-function supported(object) {
-  return Object.prototype.toString.call(object) == '[object Arguments]';
-};
-
-exports.unsupported = unsupported;
-function unsupported(object){
-  return object &&
-    typeof object == 'object' &&
-    typeof object.length == 'number' &&
-    Object.prototype.hasOwnProperty.call(object, 'callee') &&
-    !Object.prototype.propertyIsEnumerable.call(object, 'callee') ||
-    false;
-};
-
-
-/***/ }),
-/* 455 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var equal = __webpack_require__(154);
-var extend = __webpack_require__(155);
-
-
-var lib = {
-  attributes: {
-    compose: function (a, b, keepNull) {
-      if (typeof a !== 'object') a = {};
-      if (typeof b !== 'object') b = {};
-      var attributes = extend(true, {}, b);
-      if (!keepNull) {
-        attributes = Object.keys(attributes).reduce(function (copy, key) {
-          if (attributes[key] != null) {
-            copy[key] = attributes[key];
-          }
-          return copy;
-        }, {});
-      }
-      for (var key in a) {
-        if (a[key] !== undefined && b[key] === undefined) {
-          attributes[key] = a[key];
-        }
-      }
-      return Object.keys(attributes).length > 0 ? attributes : undefined;
-    },
-
-    diff: function(a, b) {
-      if (typeof a !== 'object') a = {};
-      if (typeof b !== 'object') b = {};
-      var attributes = Object.keys(a).concat(Object.keys(b)).reduce(function (attributes, key) {
-        if (!equal(a[key], b[key])) {
-          attributes[key] = b[key] === undefined ? null : b[key];
-        }
-        return attributes;
-      }, {});
-      return Object.keys(attributes).length > 0 ? attributes : undefined;
-    },
-
-    transform: function (a, b, priority) {
-      if (typeof a !== 'object') return b;
-      if (typeof b !== 'object') return undefined;
-      if (!priority) return b;  // b simply overwrites us without priority
-      var attributes = Object.keys(b).reduce(function (attributes, key) {
-        if (a[key] === undefined) attributes[key] = b[key];  // null is a valid value
-        return attributes;
-      }, {});
-      return Object.keys(attributes).length > 0 ? attributes : undefined;
-    }
-  },
-
-  iterator: function (ops) {
-    return new Iterator(ops);
-  },
-
-  length: function (op) {
-    if (typeof op['delete'] === 'number') {
-      return op['delete'];
-    } else if (typeof op.retain === 'number') {
-      return op.retain;
-    } else {
-      return typeof op.insert === 'string' ? op.insert.length : 1;
-    }
-  }
-};
-
-
-function Iterator(ops) {
-  this.ops = ops;
-  this.index = 0;
-  this.offset = 0;
-};
-
-Iterator.prototype.hasNext = function () {
-  return this.peekLength() < Infinity;
-};
-
-Iterator.prototype.next = function (length) {
-  if (!length) length = Infinity;
-  var nextOp = this.ops[this.index];
-  if (nextOp) {
-    var offset = this.offset;
-    var opLength = lib.length(nextOp)
-    if (length >= opLength - offset) {
-      length = opLength - offset;
-      this.index += 1;
-      this.offset = 0;
-    } else {
-      this.offset += length;
-    }
-    if (typeof nextOp['delete'] === 'number') {
-      return { 'delete': length };
-    } else {
-      var retOp = {};
-      if (nextOp.attributes) {
-        retOp.attributes = nextOp.attributes;
-      }
-      if (typeof nextOp.retain === 'number') {
-        retOp.retain = length;
-      } else if (typeof nextOp.insert === 'string') {
-        retOp.insert = nextOp.insert.substr(offset, length);
-      } else {
-        // offset should === 0, length should === 1
-        retOp.insert = nextOp.insert;
-      }
-      return retOp;
-    }
-  } else {
-    return { retain: Infinity };
-  }
-};
-
-Iterator.prototype.peek = function () {
-  return this.ops[this.index];
-};
-
-Iterator.prototype.peekLength = function () {
-  if (this.ops[this.index]) {
-    // Should never return 0 if our index is being managed correctly
-    return lib.length(this.ops[this.index]) - this.offset;
-  } else {
-    return Infinity;
-  }
-};
-
-Iterator.prototype.peekType = function () {
-  if (this.ops[this.index]) {
-    if (typeof this.ops[this.index]['delete'] === 'number') {
-      return 'delete';
-    } else if (typeof this.ops[this.index].retain === 'number') {
-      return 'retain';
-    } else {
-      return 'insert';
-    }
-  }
-  return 'retain';
-};
-
-
-module.exports = lib;
-
-
-/***/ }),
-/* 456 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36733,135 +36859,6 @@ module.exports.prototype = {
      */
     _composeEvent: function _composeEvent(sEvent) {
         return sEvent + '-' + this._sSelector;
-    }
-
-};
-
-/***/ }),
-/* 457 */,
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */,
-/* 465 */,
-/* 466 */,
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */,
-/* 474 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto.CMS - Editor
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-// Quill classes
-
-var Quill = __webpack_require__(97);
-var QuillDelta = __webpack_require__(451);
-
-module.exports = function (sPropertySelector, elEditableField, formattingOptions) {
-
-    // start
-    this.__construct(sPropertySelector, elEditableField, formattingOptions);
-};
-
-module.exports.prototype = {
-
-    _quill: null,
-    _deltaPending: null,
-    _documentPending: null,
-    _deltaBuffer: null,
-
-    _sPropertySelector: null,
-    _elEditableField: null,
-    _formattingOptions: null,
-    _otid: null,
-
-    _baseDocument: null,
-
-    _user: null,
-
-    // ----------------------------------------------------------------------------
-    // --- Constructor ------------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    /**
-     * Constructor
-     */
-    __construct: function __construct(sPropertySelector, elEditableField, formattingOptions) {
-        // register
-        this._sPropertySelector = sPropertySelector;
-        this._elEditableField = elEditableField;
-        this._formattingOptions = formattingOptions;
-
-        // show content
-        this._quill = this._setupEditor(formattingOptions);
-    },
-
-    enable: function enable() {
-        Mimoto.log('Enabled ?');
-        this._quill.enable();
-    },
-
-    disable: function disable() {
-        this._quill.disable();
-    },
-
-    getValue: function getValue() {
-        return this._elEditableField.getElementsByClassName("ql-editor")[0].innerHTML;
-    },
-
-    // ----------------------------------------------------------------------------
-    // --- Private methods text management ----------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-    _setupEditor: function _setupEditor(formattingOptions) {
-        // init
-        var toolbar = null;
-        var formats = null;
-
-        if (formattingOptions) {
-            if (formattingOptions.toolbar && formattingOptions.toolbar.length > 0) toolbar = formattingOptions.toolbar;
-            if (formattingOptions.formats && formattingOptions.formats.length > 0) formats = formattingOptions.formats;
-        }
-
-        // create
-        var quill = new Quill(this._elEditableField, {
-            theme: 'bubble',
-            modules: {
-                toolbar: toolbar,
-                history: {
-                    delay: 2000,
-                    maxStack: 500,
-                    userOnly: true
-                }
-            },
-            placeholder: 'Start typing', // #todo
-            formats: formats
-        });
-
-        // configure
-        //quill.on('selection-change', function() { this._onSelectionChange(); }.bind(this);
-        //quill.on('text-change', function(delta, oldContents, source) { this._onTextChange(delta, oldContents, source); }.bind(this) );
-
-
-        // send
-        return quill;
     }
 
 };

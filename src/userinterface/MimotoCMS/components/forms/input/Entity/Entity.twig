@@ -2,10 +2,19 @@
 
     {% block input %}
 
-        <button>Create</button>
-        <button>Clear</button>
+        {% set sFormFieldId = Mimoto.meta('type')~'.'~Mimoto.meta('id')~'.'~Mimoto.fieldId() %}
 
-        <input type="hidden" data-mimoto-input-type="list" {{ Mimoto.input() }} value='{{ Mimoto.value() }}' />
+        {% if Mimoto.value() is empty %}
+            <button onclick="MimotoCMS.formFieldListItemAdd('{{ Mimoto.meta('type') }}', '{{ Mimoto.meta('id') }}', '{{ Mimoto.fieldId() }}')">Create</button>
+        {% else %}
+
+            <button data-mimoto-clear="{{ Mimoto.fieldId() }}|{}" onclick='document.querySelector("[data-mimoto-formfieldid=\"{{ sFormFieldId }}\"]").value = null;'>Clear</button>
+
+            <button onclick="">Edit</button>
+
+        {% endif %}
+
+        <input type="hidden" data-mimoto-formfieldid="{{ sFormFieldId }}" data-mimoto-input-type="entity" {{ Mimoto.input() }} value='{{ Mimoto.value() }}' />
 
     {% endblock %}
 

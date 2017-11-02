@@ -80,7 +80,7 @@ module.exports.prototype = {
                     container.append(element);
 
                     // register directives
-                    Mimoto.display.parseInterface(element.parentNode);
+                    Mimoto.display.parseInterface(element);
                 }
             }
         };

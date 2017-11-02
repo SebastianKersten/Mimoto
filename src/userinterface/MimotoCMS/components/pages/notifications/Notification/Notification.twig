@@ -1,7 +1,7 @@
 <div class="MimotoCMS_pages_notifications_Notification MimotoCMS_pages_notifications_Notification--{{ Mimoto.data('category') }}" {{ Mimoto.realtime() }}>
     <a name="notification_{{ Mimoto.meta('id') }}"></a>
     <div class="MimotoCMS_pages_notifications_Notification-content">
-        <div class="MimotoCMS_pages_notifications_Notification-title" {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
+        <div class="MimotoCMS_pages_notifications_Notification-title" {{ Mimoto.hideWhenEmpty('title') }} {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</div>
         <div class="MimotoCMS_pages_notifications_Notification-subtitle">
             <span class="MimotoCMS_pages_notifications_Notification-subtitle-timestamp">{{ Mimoto.meta('created') }}</span> by
             <span class="MimotoCMS_pages_notifications_Notification-subtitle-creator">{{ Mimoto.data('dispatcher') }}</span>

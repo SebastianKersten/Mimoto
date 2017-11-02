@@ -13,9 +13,9 @@ module.exports.prototype = {
      */
     init: function () {
 
-        this.setVariables();
-        this.addEventListeners();
-        this.checkMenuState();
+        //this.setVariables();
+        //this.addEventListeners();
+        //this.checkMenuState();
         
         this.initNotificationCount();
         this.initConversationCount();

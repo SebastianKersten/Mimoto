@@ -84,7 +84,7 @@ module.exports.prototype = {
             options: options
         };
 
-        console.log('remove', sEntitySelector, nConnectionId);
+        //Mimoto.log('remove', sEntitySelector, nConnectionId);
 
 
         Mimoto.utils.callAPI({
@@ -94,7 +94,7 @@ module.exports.prototype = {
             dataType: 'json',
             success: function(resultData, resultStatus, resultSomething)
             {
-                console.log('Item removed', resultData);
+                Mimoto.log('Item removed', resultData);
             }
         });
     },

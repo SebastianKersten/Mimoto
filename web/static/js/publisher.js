@@ -60,42 +60,16 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "a480d8353453eedfac98";
+/******/ 	__webpack_require__.h = "b78b6b52b2832e4ccd57";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 457);
+/******/ 	return __webpack_require__(__webpack_require__.s = 458);
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ 457:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Mimoto.Publisher - Demo - How to build a publication platform
- *
- * @author Sebastian Kersten (@supertaboo)
- */
-
-
-
-// Publisher demo classes
-
-var Publisher = __webpack_require__(458);
-
-/**
- * Auto run
- */
-document.addEventListener('DOMContentLoaded', function () {
-  // init
-  window.Publisher = new Publisher();
-}, false);
-
-/***/ }),
 
 /***/ 458:
 /***/ (function(module, exports, __webpack_require__) {
@@ -109,13 +83,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+// Publisher demo classes
+
+var Publisher = __webpack_require__(459);
+
+/**
+ * Auto run
+ */
+document.addEventListener('DOMContentLoaded', function () {
+  // init
+  window.Publisher = new Publisher();
+}, false);
+
+/***/ }),
+
+/***/ 459:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Mimoto.Publisher - Demo - How to build a publication platform
+ *
+ * @author Sebastian Kersten (@supertaboo)
+ */
+
+
+
 // Mimoto classes
 
-var Article = __webpack_require__(459);
-var Editor = __webpack_require__(460);
+var Article = __webpack_require__(460);
+var Editor = __webpack_require__(461);
 
-var AlsoOnThisPage = __webpack_require__(461);
-var IsTypingComment = __webpack_require__(462);
+var AlsoOnThisPage = __webpack_require__(462);
+var IsTypingComment = __webpack_require__(463);
 
 module.exports = function () {
 
@@ -191,7 +191,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 459:
+/***/ 460:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -306,7 +306,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 460:
+/***/ 461:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +371,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 461:
+/***/ 462:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -572,7 +572,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 462:
+/***/ 463:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

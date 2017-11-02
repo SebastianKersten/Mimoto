@@ -22,8 +22,8 @@ class Slack // extends MimotoService
         // 1. validate
         if (empty($settings) && !isset($settings->channel)) return;
 
-        // 2. replace enter
-        $settings->message = preg_replace('/\\\n/', chr(13), $settings->message);
+        // 2. replace enter or init
+        $settings->message = (isset($settings->message) && !empty($settings->message)) ? preg_replace('/\\\n/', chr(13), $settings->message) : '';
 
         // 3. get variables
         if (preg_match('/({{.*?}})/U', $settings->message, $aMatches))
@@ -52,9 +52,9 @@ class Slack // extends MimotoService
         $data = "payload=" . json_encode(array
             (
                 "channel" => "#".$settings->channel,
-                "text" => (isset($settings->message) ? $settings->message : '_empty message_'),
-                "username" => (isset($settings->username) ? $settings->username : 'Slack for Mimoto'),
-                "icon_emoji" => (isset($settings->icon) ? $settings->icon: '')
+                "text" => (!empty($settings->message)) ? $settings->message : '_empty message_',
+                "username" => (isset($settings->username) && !empty($settings->username)) ? $settings->username : 'Slack for Mimoto',
+                "icon_emoji" => (isset($settings->icon) && !empty($settings->icon)) ? $settings->icon: ''
             ));
 
         // 5. send

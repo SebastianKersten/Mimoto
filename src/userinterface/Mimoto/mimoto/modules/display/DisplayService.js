@@ -254,7 +254,7 @@ module.exports.prototype = {
 
 
         // 2. collect
-        let aDirectives = this._collectDirectives(element.parentNode);
+        let aDirectives = this._collectDirectives(element);
 
         // 3. cleanup
         for (let sDirective in aDirectives)
@@ -266,62 +266,59 @@ module.exports.prototype = {
                 let element = aDirectives[sDirective][nElementIndex];
 
                 // b. read
-                let nDirectiveId = element.getAttribute('data-mimoto');
+                let xDirectiveId = element.getAttribute('data-mimoto');
 
+                // c. init
+                let aDirectivesToRemove = [];
 
-                // $todo - support array
-
-
-                // c. read
-                let directive = this._aDirectives[nDirectiveId];
-
-
-
-                // #todo - FIX
-                if (!directive)
+                // d. manage single or multiple id
+                if (isNaN(xDirectiveId))
                 {
-                    Mimoto.log('element id = ', nDirectiveId, directive, element);
-                    Mimoto.log('Need to handle double value selector xxx.xxx.xxx.xxx[yyy.yyy]');
-                    continue;
+                    aDirectivesToRemove = JSON.parse(xDirectiveId);
+                }
+                else
+                {
+                    aDirectivesToRemove.push(this._aDirectives[xDirectiveId]);
                 }
 
 
-                // 1. find in selector array and cleanup
-                let sPropertySelector = directive.sPropertySelector;
-
-                // verify
-                if (this._aSelectors[sPropertySelector])
+                let nRemoveCount = aDirectivesToRemove.length;
+                for (let nRemoveIndex = 0; nRemoveIndex < nRemoveCount; nRemoveIndex++)
                 {
-                    let nSelectorCount = this._aSelectors[sPropertySelector].length;
-                    for (let nSelectorIndex = 0; nSelectorIndex < nSelectorCount; nSelectorIndex++)
+                    // register
+                    let directive = aDirectivesToRemove[nRemoveIndex];
+
+                    // 1. find in selector array and cleanup
+                    let sPropertySelector = directive.sPropertySelector;
+
+                    // verify
+                    if (this._aSelectors[sPropertySelector])
                     {
-                        // verify
-                        if (this._aSelectors[sPropertySelector][nSelectorIndex] === directive)
+                        let nSelectorCount = this._aSelectors[sPropertySelector].length;
+                        for (let nSelectorIndex = 0; nSelectorIndex < nSelectorCount; nSelectorIndex++)
                         {
-                            // remove
-                            this._aSelectors[sPropertySelector].splice(nSelectorIndex, 1);
-
                             // verify
-                            if (this._aSelectors[sPropertySelector].length === 0)
+                            if (this._aSelectors[sPropertySelector][nSelectorIndex] === directive)
                             {
-                                // cleanup
-                                delete this._aSelectors[sPropertySelector];
+                                // remove
+                                this._aSelectors[sPropertySelector].splice(nSelectorIndex, 1);
 
-                                // solid cleanup of empty spaces
-                                this._aSelectors = dataUtils.cleanupArray(this._aSelectors);
+                                // verify
+                                if (this._aSelectors[sPropertySelector].length === 0)
+                                {
+                                    // cleanup
+                                    delete this._aSelectors[sPropertySelector];
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
-                }
 
-                // f. cleanup
-                delete this._aDirectives[nDirectiveId];
+                    // f. cleanup
+                    delete this._aDirectives[directive.id];
+                }
             }
         }
-
-        // 4. solid cleanup of empty spaces
-        this._aDirectives = dataUtils.cleanupArray(this._aDirectives);
     },
 
 
@@ -409,7 +406,25 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_CHANNEL
         ];
 
-        // 3. collect
+
+        // 3. init
+        let elSearchableContainer = element;
+
+        // 4. verify
+        let elOriginalParent = null;
+        if (element !== document)
+        {
+            // archive
+            elOriginalParent = element.parentNode;
+
+            // a. create container
+            elSearchableContainer = document.createElement('div');
+
+            // b. temp add to container
+            elSearchableContainer.appendChild(element);
+        }
+
+        // 5. collect
         let nPrimaryDirectiveCount = aPrimaryDirectives.length;
         for (let nPrimaryDirectiveIndex = 0; nPrimaryDirectiveIndex < nPrimaryDirectiveCount; nPrimaryDirectiveIndex++)
         {
@@ -417,13 +432,16 @@ module.exports.prototype = {
             let sPrimaryDirective = aPrimaryDirectives[nPrimaryDirectiveIndex];
 
             // 3b. find
-            let aElementsWithDirectives = element.querySelectorAll('[' + sPrimaryDirective + ']');
+            let aElementsWithDirectives = elSearchableContainer.querySelectorAll('[' + sPrimaryDirective + ']');
 
             // 3b. find and store
             if (aElementsWithDirectives.length > 0) aDirectives[sPrimaryDirective] = aElementsWithDirectives;
         }
 
-        // 4. send
+        // restore original parent
+        if (element !== document) elOriginalParent.appendChild(element);
+
+        // 6. send
         return aDirectives;
     },
 
@@ -661,9 +679,6 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_DATA_REMOVE:
 
-                        // init
-                        let nConnectionId = null;
-
                         // find parent
                         let elParent = this._findParentWithType('data-mimoto-id', directive.element);
 
@@ -672,17 +687,17 @@ module.exports.prototype = {
                         {
                             if (elParent.hasAttribute('data-mimoto-connection'))
                             {
-                                nConnectionId = elParent.getAttribute('data-mimoto-connection');
+                                let nConnectionId = elParent.getAttribute('data-mimoto-connection');
+
+                                // configure
+                                directive.element.addEventListener('click', function(sEntitySelector, nConnectionId, options, e)
+                                {
+                                    // forward
+                                    Mimoto.data.remove(sEntitySelector, nConnectionId, options);
+
+                                }.bind(directive.element, directive.sPropertySelector, nConnectionId, directive.instructions.options), true);
                             }
                         }
-
-                        // configure
-                        directive.element.addEventListener('click', function(sEntitySelector, nConnectionId, options, e)
-                        {
-                            // forward
-                            Mimoto.data.remove(sEntitySelector, nConnectionId, options);
-
-                        }.bind(directive.element, directive.sPropertySelector, nConnectionId, directive.instructions.options), true);
 
                         break;
 
@@ -1059,12 +1074,8 @@ module.exports.prototype = {
 
 
 
-
-
         // compose
         let sEntitySelector = data.entityType + '.' + data.entityId;
-
-
 
 
         // --- value changes
