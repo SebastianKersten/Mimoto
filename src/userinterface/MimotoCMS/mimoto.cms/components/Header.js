@@ -13,9 +13,9 @@ module.exports.prototype = {
      */
     init: function () {
 
-        //this.setVariables();
-        //this.addEventListeners();
-        //this.checkMenuState();
+        this.setVariables();
+        this.addEventListeners();
+        this.checkMenuState();
         
         this.initNotificationCount();
         this.initConversationCount();
@@ -57,26 +57,26 @@ module.exports.prototype = {
             this.toggleClass(this.navigation, 'MimotoCMS_interface_Menu--active');
         }.bind(this));
 
-        if (this.dropdowns.length) {
-/*
-            var rect = this.dropdownToggles[0].getBoundingClientRect();
-            console.log(rect.top, rect.right, rect.bottom, rect.left);
-*/
-
-            // var bodyRect = document.body.getBoundingClientRect(),
-            //     elemRect = element.getBoundingClientRect(),
-            //     offset   = elemRect.top - bodyRect.top;
-            //
-            // alert('Element is ' + offset + ' vertical pixels from <body>');
-
-            for (var i = 0; i < this.dropdowns.length; i++) {
-
-                this.dropdowns[i].addEventListener('click', function (e) {
-                    this.toggleDropdownContent(e);
-                }.bind(this));
-
-            }
-        }
+//         if (this.dropdowns.length) {
+// /*
+//             var rect = this.dropdownToggles[0].getBoundingClientRect();
+//             console.log(rect.top, rect.right, rect.bottom, rect.left);
+// */
+//
+//             // var bodyRect = document.body.getBoundingClientRect(),
+//             //     elemRect = element.getBoundingClientRect(),
+//             //     offset   = elemRect.top - bodyRect.top;
+//             //
+//             // alert('Element is ' + offset + ' vertical pixels from <body>');
+//
+//             for (var i = 0; i < this.dropdowns.length; i++) {
+//
+//                 this.dropdowns[i].addEventListener('click', function (e) {
+//                     this.toggleDropdownContent(e);
+//                 }.bind(this));
+//
+//             }
+//         }
 
     },
 
