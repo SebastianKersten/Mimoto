@@ -1,0 +1,59 @@
+div.MimotoCMS_modules_EditableField {
+    position: relative;
+    height: auto;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+div.MimotoCMS_modules_EditableField-menu {
+    position: absolute;
+    color: $silver;
+    flex: none;
+    right: -25px;
+    margin-top: 2px;
+    cursor: pointer;
+
+    &:hover {
+        color: $tower-gray;
+    }
+}
+
+span.MimotoCMS_modules_EditableField-menu-button-edit {
+    display: inline-block;
+
+    .Mimoto--ineditmode & {
+        display: none;
+    }
+
+    &:hover {
+        color: $fuzzy-wuzzy-brown;
+        text-decoration: underline;
+    }
+}
+
+span.MimotoCMS_modules_EditableField-menu-button-ok {
+    display: none;
+
+    .Mimoto--ineditmode & {
+        display: inline-block;
+    }
+
+    &:hover {
+        color: $fuzzy-wuzzy-brown;
+        text-decoration: underline;
+    }
+}
+
+div.MimotoCMS_modules_EditableField-field {
+    position: relative;
+    display: inline-block;
+    flex: auto;
+    min-width: 20px;
+
+    & > div:empty:before {
+        content:'...'
+    }
+}

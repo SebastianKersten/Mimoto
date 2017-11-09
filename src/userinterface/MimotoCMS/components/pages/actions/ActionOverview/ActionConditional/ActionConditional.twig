@@ -1,0 +1,9 @@
+<div class="MimotoCMS_actions_ActionOverview_ActionConditional" {{ Mimoto.realtime() }}>
+    <span class="MimotoCMS_actions_ActionOverview_ActionConditional-name" {{ Mimoto.realtime('event') }}>{{ Mimoto.data('event') }}</span> =
+    <span class="MimotoCMS_actions_ActionOverview_ActionConditional-name" {{ Mimoto.realtime('value') }}>{{ Mimoto.data('value') }}</span>
+    <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menu">
+        - <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem" {{ Mimoto.edit('_Mimoto_action_conditional') }}>edit</span>
+        | <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem" {{ Mimoto.remove() }}>remove</span>
+        | <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem MimotoCMS_actions_ActionOverview_ActionConditional-menuitem-move {{ Mimoto.sortHandle() }}">move</span>
+    </span>
+</div>

@@ -17,7 +17,19 @@ div.MimotoCMS_actions_ActionOverview_Action-info {
     text-align: left;
 }
 
-    div.MimotoCMS_actions_ActionOverview_Action-name {
+    div.MimotoCMS_actions_ActionOverview_Action-head {
+        margin-bottom: 10px;
+    }
+
+    div.MimotoCMS_actions_ActionOverview_Action-body-section {
+        margin-bottom: 15px;
+    }
+
+    div.MimotoCMS_actions_ActionOverview_Action-namecontainer {
+        display: inline-block;
+    }
+
+    div.MimotoCMS_actions_ActionOverview_Action-name, div.MimotoCMS_actions_ActionOverview_Action-name p {
         font-size: 20px;
         font-weight: bold;
         color: $tower-gray;

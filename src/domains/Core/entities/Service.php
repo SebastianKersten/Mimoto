@@ -82,8 +82,40 @@ class Service
         );
     }
 
-    public static function getData() {}
+    public static function getData($sInstanceId)
+    {
+        // init
+        $aData = [];
 
+        // inline
+        $aData[CoreConfig::MIMOTO_SERVICE.'-Data'] = (object) array
+        (
+            'name' => 'Data',
+            'file' => '', // core services folder (separate from projects folder)
+            'functions' => [
+                (object) array(
+                    ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.create'),
+                    ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.update'),
+                    ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.delete')
+                )
+            ]
+        );
+
+        // inline
+        $aData[CoreConfig::MIMOTO_SERVICE.'-Slack'] = (object) array
+        (
+            'name' => 'Slack',
+            'file' => '',
+            'functions' => [
+                (object) array(
+                    ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Slack.sendMessage')
+                )
+            ]
+        );
+
+        // send
+        return $aData[$sInstanceId];
+    }
 
 
 

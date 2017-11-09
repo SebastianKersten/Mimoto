@@ -48,8 +48,38 @@ class ServiceFunction
         );
     }
 
-    public static function getData() {}
+    public static function getData($sInstanceId)
+    {
+        // init
+        $aData = [];
 
+
+        // service: Data
+        $aData[CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.create'] = (object) array
+        (
+            'name' => 'create'
+        );
+
+        $aData[CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.update'] = (object) array
+        (
+            'name' => 'update'
+        );
+
+        $aData[CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.delete'] = (object) array
+        (
+            'name' => 'delete'
+        );
+
+
+        // service: Slack
+        $aData[CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Slack.sendMessage'] = (object) array
+        (
+            'name' => 'sendMessage'
+        );
+
+        // send
+        return $aData[$sInstanceId];
+    }
 
 
 

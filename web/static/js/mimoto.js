@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "dc645f545f31b8564678";
+/******/ 	__webpack_require__.h = "4e8d45e017b15b7db330";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -20380,11 +20380,60 @@ module.exports.prototype = {
 
                     case this.DIRECTIVE_MIMOTO_DATA_EDITABLE:
 
-                        // verify or init
+                        // 1. verify or init
                         if (!this._aEditableFields[directive.sPropertySelector]) this._aEditableFields[directive.sPropertySelector] = [];
 
-                        // store
+                        // 2. store
                         this._aEditableFields[directive.sPropertySelector].push(directive);
+
+                        // 3. configure
+                        // directive.element.addEventListener('click', function(element, sPropertySelector, instructions, e)
+                        // {
+                        //
+                        //     if (!element.classList.contains('Mimoto--ineditmode'))
+                        //     {
+                        //         // a. toggle
+                        //         element.classList.add('Mimoto--ineditmode');
+                        //
+                        //         // b. read
+                        //         let formattingOptions = instructions.formattingOptions;
+                        //
+                        //         // c. init and store
+                        //         this._aEditors[sPropertySelector] = new Editor(sPropertySelector, element, formattingOptions);
+                        //     }
+                        //     else
+                        //     {
+                        //         // // a. toggle
+                        //         // element.classList.remove('Mimoto--ineditmode');
+                        //         //
+                        //         // // b. store
+                        //         // if (this._aEditors[sPropertySelector]) this._aEditors[sPropertySelector].disable();
+                        //         //
+                        //         // // c. setup
+                        //         // let requestData = {
+                        //         //     //publicKey: this._sPublicKey,
+                        //         //     sPropertySelector: sPropertySelector,
+                        //         //     newValue: this._aEditors[sPropertySelector].getValue()
+                        //         // };
+                        //         //
+                        //         // // d. send data
+                        //         // Mimoto.utils.callAPI({
+                        //         //     type: 'post',
+                        //         //     url: '/mimoto/data/update',
+                        //         //     data: requestData,
+                        //         //     dataType: 'json',
+                        //         //     success: function(resultData, resultStatus, resultSomething)
+                        //         //     {
+                        //         //         Mimoto.log('Value submitted', resultData);
+                        //         //
+                        //         //     }.bind(this)
+                        //         // });
+                        //         //
+                        //         // // e. cleanup
+                        //         // delete this._aEditors[sPropertySelector];
+                        //     }
+                        //
+                        // }.bind(this, directive.element, directive.sPropertySelector, directive.instructions), true);
 
                         break;
 
@@ -20404,20 +20453,42 @@ module.exports.prototype = {
                             // 3. handle data submit as form?
 
 
-                            if (element.classList.contains('Mimoto--ineditmode')) {
+                            if (!element.classList.contains('Mimoto--ineditmode')) {
                                 // toggle mode for button
-                                element.classList.remove('Mimoto--ineditmode');
+                                element.classList.add('Mimoto--ineditmode');
 
                                 // toggle mode for related fields
                                 if (this._aEditableFields[sPropertySelector]) {
                                     // toggle
                                     var nEditableFieldCount = this._aEditableFields[sPropertySelector].length;
                                     for (var nEditableFieldIndex = 0; nEditableFieldIndex < nEditableFieldCount; nEditableFieldIndex++) {
-                                        // register
+                                        // 1. register
                                         var elEditableField = this._aEditableFields[sPropertySelector][nEditableFieldIndex].element;
 
+                                        // 2. toggle
+                                        elEditableField.classList.add('Mimoto--ineditmode');
+
+                                        // 3. read
+                                        var formattingOptions = this._aEditableFields[sPropertySelector][nEditableFieldIndex].instructions.formattingOptions;
+
+                                        // 4. init and store
+                                        this._aEditors[sPropertySelector] = new Editor(sPropertySelector, elEditableField, formattingOptions);
+                                    }
+                                }
+                            } else {
+                                // toggle mode for button
+                                element.classList.remove('Mimoto--ineditmode');
+
+                                // toggle mode for related fields
+                                if (this._aEditableFields[sPropertySelector]) {
+                                    // toggle
+                                    var _nEditableFieldCount = this._aEditableFields[sPropertySelector].length;
+                                    for (var _nEditableFieldIndex = 0; _nEditableFieldIndex < _nEditableFieldCount; _nEditableFieldIndex++) {
+                                        // register
+                                        var _elEditableField = this._aEditableFields[sPropertySelector][_nEditableFieldIndex].element;
+
                                         // toggle
-                                        elEditableField.classList.remove('Mimoto--ineditmode');
+                                        _elEditableField.classList.remove('Mimoto--ineditmode');
 
                                         // store
                                         if (this._aEditors[sPropertySelector]) this._aEditors[sPropertySelector].disable();
@@ -20442,28 +20513,6 @@ module.exports.prototype = {
 
                                         // cleanup
                                         delete this._aEditors[sPropertySelector];
-                                    }
-                                }
-                            } else {
-                                // toggle mode for button
-                                element.classList.add('Mimoto--ineditmode');
-
-                                // toggle mode for related fields
-                                if (this._aEditableFields[sPropertySelector]) {
-                                    // toggle
-                                    var _nEditableFieldCount = this._aEditableFields[sPropertySelector].length;
-                                    for (var _nEditableFieldIndex = 0; _nEditableFieldIndex < _nEditableFieldCount; _nEditableFieldIndex++) {
-                                        // 1. register
-                                        var _elEditableField = this._aEditableFields[sPropertySelector][_nEditableFieldIndex].element;
-
-                                        // 2. toggle
-                                        _elEditableField.classList.add('Mimoto--ineditmode');
-
-                                        // 3. read
-                                        var formattingOptions = this._aEditableFields[sPropertySelector][_nEditableFieldIndex].instructions.formattingOptions;
-
-                                        // 4. init and store
-                                        this._aEditors[sPropertySelector] = new Editor(sPropertySelector, _elEditableField, formattingOptions);
                                     }
                                 }
                             }

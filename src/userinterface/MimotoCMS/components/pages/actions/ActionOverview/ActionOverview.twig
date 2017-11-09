@@ -1,4 +1,4 @@
-{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new action', icon:'plus', directive:Mimoto.add('actions', '_Mimoto_action'), types:['secondary'] }) }}
+{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new action', icon:'plus', directive:Mimoto.create('actions', '_Mimoto_action'), types:['secondary'] }) }}
 
 <div class="MimotoCMS_pages_actions_ActionOverview__container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('actions', 'MimotoCMS_actions_ActionOverview_Action') }}>
     {{ Mimoto.data('actions', 'MimotoCMS_actions_ActionOverview_Action') }}

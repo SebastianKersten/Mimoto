@@ -50,6 +50,7 @@ use Mimoto\Core\entities\Service;
 use Mimoto\Core\entities\ServiceFunction;
 use Mimoto\Core\entities\Action;
 use Mimoto\Core\entities\ActionSetting;
+use Mimoto\Core\entities\ActionConditional;
 
 use Mimoto\Core\forms\EntityPropertyForm_Value_type;
 use Mimoto\Core\forms\EntityPropertyForm_Value_formattingOptions;
@@ -102,6 +103,7 @@ class CoreConfig
     const MIMOTO_SERVICE_FUNCTION               = '_Mimoto_service_function';
     const MIMOTO_ACTION                         = '_Mimoto_action';
     const MIMOTO_ACTION_SETTING                 = '_Mimoto_action_setting';
+    const MIMOTO_ACTION_CONDITIONAL             = '_Mimoto_action_conditional';
 
     // developers
     const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';
@@ -282,6 +284,7 @@ class CoreConfig
             ServiceFunction::getStructure(),
             Action::getStructure(),
             ActionSetting::getStructure(),
+            ActionConditional::getStructure(),
 
             // formatting
             FormattingOption::getStructure(),
@@ -367,6 +370,7 @@ class CoreConfig
             ServiceFunction::getFormStructure(),
             Action::getFormStructure(),
             ActionSetting::getFormStructure(),
+            ActionConditional::getFormStructure(),
 
             // formatting
             FormattingOption::getFormStructure(),
@@ -623,6 +627,37 @@ class CoreConfig
                 ]
             ),
             (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_services', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_services', // internal of external?
+                'label' => 'All services',
+                'rules' => [
+                    (object) array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_SERVICE
+                    )
+                ]
+            ),
+
+
+            (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_public_services', // internal of external?
+                'name' => CoreConfig::CORE_PREFIX . 'all_public_services', // internal of external?
+                'label' => 'All services',
+                'rules' => [
+                    (object) array(
+                        SelectionRuleTypes::TYPE => CoreConfig::MIMOTO_SERVICE
+                    )
+                ],
+                'data' => [
+                    Service::getData(CoreConfig::MIMOTO_SERVICE.'-Data'),
+                    Service::getData(CoreConfig::MIMOTO_SERVICE.'-Slack')
+
+                    // 1. internal item 1 via getData from entty description with internal Mimoto-prefixed ids
+                ]
+            ),
+
+
+
+            (object) array(
                 'id' => CoreConfig::CORE_PREFIX . 'all_functions_of_service', // internal of external?
                 'name' => CoreConfig::CORE_PREFIX . 'all_functions_of_service', // internal of external?
                 'label' => 'All functions of a service',
@@ -633,6 +668,19 @@ class CoreConfig
                         SelectionRuleTypes::ID_VARNAME => 'idVarName',
                         SelectionRuleTypes::PROPERTY => 'functions'
                     )
+                ]
+            ),
+
+
+            (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_core_events',
+                'name' => CoreConfig::CORE_PREFIX . 'all_core_events',
+                'label' => 'All core data manipulation events',
+                'rules' => [],
+                'data' => [
+                    'created', // label / value
+                    'updated',
+                    'deleted'
                 ]
             )
         ];

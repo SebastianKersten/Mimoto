@@ -1,0 +1,15 @@
+{% if sPropertyName|default('') is empty %}
+    WARNING - Make sure you pass the required variable sPropertyName! (sFieldClass is optional)
+{% endif %}
+
+<div class="MimotoCMS_modules_EditableField">
+    <div class="MimotoCMS_modules_EditableField-menu">
+        <span class="MimotoPublisher_Article-inlineeditmenu-button" {{ Mimoto.toggleEditMode(sPropertyName) }}>
+            <span class="MimotoCMS_modules_EditableField-menu-button-edit"><span class="fa fa-edit"></span></span>
+            <span class="MimotoCMS_modules_EditableField-menu-button-ok"><span class="fa fa-check"></span></span>
+        </span>
+    </div>
+    <div class="MimotoCMS_modules_EditableField-field {{ sFieldClass|default('') }}">
+        <div {{ Mimoto.realtime(sPropertyName) }} {{ Mimoto.editable(sPropertyName) }}>{{ Mimoto.data(sPropertyName) }}</div>
+    </div>
+</div>

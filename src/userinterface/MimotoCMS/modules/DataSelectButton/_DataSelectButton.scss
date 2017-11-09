@@ -1,0 +1,32 @@
+div.MimotoCMS_modules_DataSelectButton {
+    display: inline-block;
+}
+
+button.MimotoCMS_modules_DataSelectButton-button {
+    padding: 4px 10px 5px 10px;
+    background-color: $tower-gray;
+    color: #ffffff;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+    & > span {
+        flex: none;
+    }
+
+    & > span:first-child {
+        margin-right: 10px;
+    }
+
+    & > span:last-child {
+        margin-top: 1px;
+    }
+}
+
+button.MimotoCMS_modules_DataSelectButton-button--empty {
+    background-color: $pale-slate;
+    font-style: italic;
+}

@@ -99,6 +99,7 @@ class EntityRepository
 
             $coreData = CoreConfig::getCoreData($entityConfig->getId(), $nEntityId);
 
+
             if ($coreData !== false)
             {
                 foreach ($coreData as $sPropertyName => $value)

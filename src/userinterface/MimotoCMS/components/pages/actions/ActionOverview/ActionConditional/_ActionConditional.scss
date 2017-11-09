@@ -1,0 +1,27 @@
+div.MimotoCMS_actions_ActionOverview_ActionConditional {
+
+}
+
+span.MimotoCMS_actions_ActionOverview_ActionConditional-name {
+    color: #000000;
+}
+
+span.MimotoCMS_actions_ActionOverview_ActionConditional-menu {
+    color: $pale-slate;
+    white-space: nowrap;
+}
+
+span.MimotoCMS_actions_ActionOverview_ActionConditional-menuitem {
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+        text-decoration: underline;
+        color: #000000;
+    }
+}
+
+span.MimotoCMS_actions_ActionOverview_ActionConditional-menuitem-move {
+    cursor: move;
+}

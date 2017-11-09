@@ -91,6 +91,17 @@ nav.MimotoCMS_interface_Menu--active {
                     flex: 0 0 auto;
                 }
 
+                span.MimotoCMS_interface_Menu-item-icon {
+                    width: 18px;
+                    margin-right: 12px;
+                    margin-top: 3px;
+                    font-size: rem-calc(18px);
+                    text-align: center;
+                    transition: color .05s;
+                    fill: $white;
+                    flex: 0 0 auto;
+                }
+
                 span.MimotoCMS_interface_Menu-item-text {
                     padding: 8px 0;
                     font-size: rem-calc(17px);

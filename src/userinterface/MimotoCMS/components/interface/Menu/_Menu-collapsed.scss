@@ -40,6 +40,10 @@
             svg.MimotoCMS_interface_Menu-item-icon {
                 fill: $white;
             }
+
+            span.MimotoCMS_interface_Menu-item-icon {
+                fill: $white;
+            }
         }
 
         span.MimotoCMS_interface_Menu-item-text {
@@ -47,6 +51,11 @@
         }
 
         svg.MimotoCMS_interface_Menu-item-icon {
+            margin: 0 auto;
+            fill: $sinbad;
+        }
+
+        span.MimotoCMS_interface_Menu-item-icon {
             margin: 0 auto;
             fill: $sinbad;
         }

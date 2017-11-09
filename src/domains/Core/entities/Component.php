@@ -1113,6 +1113,24 @@ class Component
                 ]
             ),
             (object) array(
+                'name' => 'MimotoCMS_modules_DataSelectButton',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/DataSelectButton/DataSelectButton.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_modules_EditableField',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/EditableField/EditableField.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
                 'name' => 'MimotoCMS_modules_Tabmenu',
                 'templates' => [
                     (object) array(
@@ -1184,6 +1202,15 @@ class Component
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/actions/ActionOverview/ActionSetting/ActionSetting.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_actions_ActionOverview_ActionConditional',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/actions/ActionOverview/ActionConditional/ActionConditional.twig',
                         'conditionals' => []
                     )
                 ]
