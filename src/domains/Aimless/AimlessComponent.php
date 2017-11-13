@@ -166,6 +166,10 @@ class AimlessComponent
         {
             $aEntities = [$xEntities];
         }
+        else if ($xEntities === null)
+        {
+            $aEntities = [new MimotoEntity('_Mimoto_nullcomponent', '_Mimoto_nullcomponent')];
+        }
 
         // 4. compose and store
         $this->_aContainers[$sContainerName][] = (object) array(

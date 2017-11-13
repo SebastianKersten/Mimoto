@@ -26,13 +26,11 @@
             <div {{ Mimoto.hideWhenEmpty('event') }}>
 
                 <div class="MimotoCMS_actions_ActionOverview_Action-body-section">
-                    <span>AND</span>
-                    select properties
 
                     <div>
-                        <div class="MimotoCMS_actions_ActionOverview_Action-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('settings') }}>No conditionals</div>
-                        <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('settings') }}>
-                            <div>with</div>
+                        <div class="MimotoCMS_actions_ActionOverview_Action-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('conditionals') }}>Optional: add conditionals</div>
+                        <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('conditionals') }}>
+                            <span>AND</span>
                             <div class="MimotoCMS_actions_ActionOverview_Action-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_actions_ActionOverview_ActionConditional') }}>{{ Mimoto.data('conditionals', 'MimotoCMS_actions_ActionOverview_ActionConditional') }}</div>
                         </div>
                         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditionals', directive:Mimoto.add('conditionals', '_Mimoto_action_conditional'), types:['small'], icon:'' }) }}
@@ -46,7 +44,7 @@
 
                     <span {{ Mimoto.hideWhenEmpty('service') }}>
 
-                        <span {{ Mimoto.select('function', '_Mimoto_all_functions_of_service', { vars:{ idVarName:Mimoto.meta('service.id') } }) }}>
+                        <span {{ Mimoto.select('function', '_Mimoto_all_functions_of_service', { vars: { idVarName:Mimoto.meta('service.id') } }) }}>
                         <button class="MimotoCMS_actions_ActionOverview_Action-button MimotoCMS_actions_ActionOverview_Action-button--empty" {{ Mimoto.showWhenEmpty('function') }}>select function</button>
                         <button class="MimotoCMS_actions_ActionOverview_Action-button" {{ Mimoto.hideWhenEmpty('function') }}>
                             <span {{ Mimoto.realtime('function.name') }}>{{ Mimoto.data('function.name') }}</span>
@@ -61,7 +59,7 @@
                                 <div class="MimotoCMS_actions_ActionOverview_Action-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('settings') }}>No settings</div>
 
                                 <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('settings') }}>
-                                    <div>with</div>
+                                    <div>with the following settings</div>
                                     <div class="MimotoCMS_actions_ActionOverview_Action-settings" {{ Mimoto.sortable() }} {{ Mimoto.realtime('settings', 'MimotoCMS_actions_ActionOverview_ActionSetting') }}>{{ Mimoto.data('settings', 'MimotoCMS_actions_ActionOverview_ActionSetting') }}</div>
                                 </div>
 

@@ -2,8 +2,8 @@
     <span class="MimotoCMS_actions_ActionOverview_ActionSetting-name" {{ Mimoto.realtime('key') }}>{{ Mimoto.data('key') }}</span> =
     <span class="MimotoCMS_actions_ActionOverview_ActionSetting-name" {{ Mimoto.realtime('value') }}>{{ Mimoto.data('value') }}</span>
     <span class="MimotoCMS_actions_ActionOverview_ActionSetting-menu">
-        - <span class="MimotoCMS_actions_ActionOverview_ActionSetting-menuitem" {{ Mimoto.edit('_Mimoto_action_setting') }}>edit</span>
-        | <span class="MimotoCMS_actions_ActionOverview_ActionSetting-menuitem" {{ Mimoto.remove() }}>remove</span>
-        | <span class="MimotoCMS_actions_ActionOverview_ActionSetting-menuitem MimotoCMS_actions_ActionOverview_ActionSetting-menuitem-move {{ Mimoto.sortHandle() }}">move</span>
+        <span class="MimotoCMS_actions_ActionOverview_ActionSetting-menuitem" {{ Mimoto.edit('_Mimoto_action_setting') }}><span class="fa fa-edit"></span>
+        <span class="MimotoCMS_actions_ActionOverview_ActionSetting-menuitem" {{ Mimoto.remove() }}><span class="fa fa-remove"></span>
+        <span class="MimotoCMS_actions_ActionOverview_ActionSetting-menuitem MimotoCMS_actions_ActionOverview_ActionSetting-menuitem-move {{ Mimoto.sortHandle() }}"><span class="fa fa-arrows"></span>
     </span>
 </div>
