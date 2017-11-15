@@ -190,7 +190,7 @@ module.exports.prototype = {
             dataType: 'json',
             success: function(response, resultStatus, resultSomething)
             {
-                console.log('list options', response);
+                //Mimoto.log('list options', response);
 
                 if (response.optionCount === 0)
                 {
@@ -227,27 +227,43 @@ module.exports.prototype = {
 
     formFieldListItemAddAfterOptionSelected: function(sInputFieldType, sInputFieldId, sPropertySelector, nOptionId)
     {
-        Mimoto.page('post', '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector + '/' + nOptionId);
+        Mimoto.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector + '/' + nOptionId,
+            data: null,
+            dataType: 'json',
+            success: function(response, resultStatus, resultSomething)
+            {
+                // edit
+                this.formFieldListItemEditNow(sInputFieldType, sInputFieldId, sPropertySelector, response.connectionId, response.instanceType, response.instanceId);
+
+            }.bind(this)
+        });
     },
 
-    
     formFieldListItemEdit: function(nConnectionId, sInstanceType, sInstanceId)
     {
         // search
-        var listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
-        
+        let listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
+
+        // forward
+        this.formFieldListItemEditNow(listInfo.sInputFieldType, listInfo.sInputFieldId, listInfo.sPropertySelector, nConnectionId, sInstanceType, sInstanceId);
+    },
+    
+    formFieldListItemEditNow: function(sInputFieldType, sInputFieldId, sPropertySelector, nConnectionId, sInstanceType, sInstanceId)
+    {
         // execute
-        Mimoto.page('post', "/mimoto.cms/formfield/" + listInfo.sInputFieldType + "/" + listInfo.sInputFieldId + "/edit/" + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId);
+        Mimoto.page('post', "/mimoto.cms/formfield/" + sInputFieldType + "/" + sInputFieldId + "/edit/" + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId);
     },
     
     
     formFieldListItemDelete: function(nConnectionId, sInstanceType, sInstanceId)
     {
         // search
-        var listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
+        let listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
         
         // execute
-        var response = confirm("Are you sure you want to delete this item?");
+        let response = confirm("Are you sure you want to delete this item?");
         if (response == true) {
             Mimoto.utils.callAPI({
                 type: 'get',

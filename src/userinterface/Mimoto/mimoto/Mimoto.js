@@ -111,9 +111,8 @@ module.exports.prototype = {
 
                 head.appendChild(link);
 
-
                 let editorCSS = document.createElement('style');
-                editorCSS.innerHTML = ".ql-editor, .ql-container { overflow-y: auto; height: auto; } .ql-editor { padding: 0; line-height: inherit; }";
+                editorCSS.innerHTML = ".ql-editor, .ql-container { overflow-y: auto; height: auto; font-size:inherit } .ql-editor { padding: 0; line-height: inherit; font-size:inherit }";
                 head.appendChild(editorCSS);
             }
         }

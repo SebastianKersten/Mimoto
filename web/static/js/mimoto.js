@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "4e8d45e017b15b7db330";
+/******/ 	__webpack_require__.h = "f7c82ec4c048126b6816";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -18300,7 +18300,7 @@ module.exports.prototype = {
                 head.appendChild(link);
 
                 var editorCSS = document.createElement('style');
-                editorCSS.innerHTML = ".ql-editor, .ql-container { overflow-y: auto; height: auto; } .ql-editor { padding: 0; line-height: inherit; }";
+                editorCSS.innerHTML = ".ql-editor, .ql-container { overflow-y: auto; height: auto; font-size:inherit } .ql-editor { padding: 0; line-height: inherit; font-size:inherit }";
                 head.appendChild(editorCSS);
             }
         }
@@ -30002,19 +30002,27 @@ module.exports.prototype = {
      * Constructor
      */
     __construct: function __construct(sPropertySelector, elEditableField, formattingOptions) {
-        // register
+        // 1. register
         this._sPropertySelector = sPropertySelector;
         this._elEditableField = elEditableField;
         this._formattingOptions = formattingOptions;
 
-        // show content
+        // 2. show content
         this._quill = this._setupEditor(formattingOptions);
+
+        // 3. focus
+        this._quill.focus();
+
+        // 4. position cursor
+        this._quill.setSelection(this._quill.getLength(), 0);
     },
 
-    enable: function enable() {
-        Mimoto.log('Enabled ?');
-        this._quill.enable();
-    },
+    //
+    // enable: function()
+    // {
+    //     Mimoto.log('Enabled ?');
+    //     this._quill.enable();
+    // },
 
     disable: function disable() {
         this._quill.disable();

@@ -378,15 +378,18 @@ class DataService
      * Create entity
      * @param string $sEntityType
      * @param array $aParentEntitySelectionConfigs Contains object with 'type', 'id' and 'property'
-     * @return MimotoEntity The entity
+     * @return object Object containing the entity and the connection
      */
     public function createAndConnect($sEntityType, $aParentEntitySelectionConfigs)
     {
-        // 1. create
-        $eEntity = Mimoto::service('data')->create($sEntityType);
+        // 1. init
+        $result = (object) array(
+            'entity' => Mimoto::service('data')->create($sEntityType),
+            'connection' => null
+        );
 
         // 2. store
-        Mimoto::service('data')->store($eEntity);
+        Mimoto::service('data')->store($result->entity);
 
         // 3. connect to parents
         $nParentCount = count($aParentEntitySelectionConfigs);
@@ -398,31 +401,42 @@ class DataService
             // b. load
             $eParent = Mimoto::service('data')->get($parent->type, $parent->id);
 
-            // c. verify
+            // d. verify
             if (!empty($eParent))
             {
+                // I. connect
                 switch($eParent->getPropertyType($parent->property))
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-                        // I. add
-                        $eParent->setValue($parent->property, $eEntity);
+                        // set
+                        $eParent->setValue($parent->property, $result->entity);
                         break;
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                        // I. add
-                        $eParent->addValue($parent->property, $eEntity);
+                        // add
+                        $eParent->addValue($parent->property, $result->entity);
                         break;
                 }
 
                 // II. store
                 Mimoto::service('data')->store($eParent);
+
+                // III. register
+                if (count($aParentEntitySelectionConfigs) === 1)
+                {
+                    // read
+                    $aAllChildren = $eParent->getValue($parent->property, true);
+
+                    // register
+                    $result->connection = $aAllChildren[count($aAllChildren) - 1];
+                }
             }
         }
 
         // 4. send
-        return $eEntity;
+        return $result;
     }
 
 

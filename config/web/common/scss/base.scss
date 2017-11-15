@@ -1,3 +1,12 @@
+@import '~quill/dist/quill.core';
+@import '~quill/dist/quill.bubble';
+
+.ql-editor,
+.ql-container
+{ overflow-y: auto; height: auto; font-size:inherit }
+
+.ql-editor { padding: 0; line-height: inherit; font-size:inherit }
+
 @import 'utils/utils';
 @import 'foundation';
 @import 'base/base';

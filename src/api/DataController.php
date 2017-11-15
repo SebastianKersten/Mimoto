@@ -120,7 +120,10 @@ class DataController
             $aParentEntitySelectionConfigs = [(object) array('type' => $sInstanceType, 'id' => $nInstanceId, 'property' => $sPropertyName)];
 
             // III. load
-            $eNewEntity = Mimoto::service('data')->createAndConnect($eParent->getValue('name'), $aParentEntitySelectionConfigs);
+            $result = Mimoto::service('data')->createAndConnect($eParent->getValue('name'), $aParentEntitySelectionConfigs);
+
+            // IV. register
+            $eNewEntity = $result->entity;
         }
 
 
@@ -298,10 +301,13 @@ class DataController
         // 3. configure
         $aParentEntitySelectionConfigs = [(object) array('type' => $sInstanceType, 'id' => $nInstanceId, 'property' => $sPropertyName)];
 
-        // 4. load
-        $eNewEntity = Mimoto::service('data')->createAndConnect($sEntityName, $aParentEntitySelectionConfigs);
+        // 4. create and connect
+        $result = Mimoto::service('data')->createAndConnect($sEntityName, $aParentEntitySelectionConfigs);
 
-        // 5. output
+        // 5. register
+        $eNewEntity = $result->entity;
+
+        // 6. output
         return Mimoto::service('messages')->response("New entity of type `$sEntityName` with id=`".$eNewEntity->getId()."` created and connected to `$sPropertySelector`");
     }
 

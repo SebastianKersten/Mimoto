@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "4e8d45e017b15b7db330";
+/******/ 	__webpack_require__.h = "f7c82ec4c048126b6816";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -9304,7 +9304,7 @@ module.exports.prototype = {
             data: null,
             dataType: 'json',
             success: function (response, resultStatus, resultSomething) {
-                console.log('list options', response);
+                //Mimoto.log('list options', response);
 
                 if (response.optionCount === 0) {
                     alert('No options available yet. Please contact your webdeveloper or website administrator.');
@@ -9332,15 +9332,29 @@ module.exports.prototype = {
     },
 
     formFieldListItemAddAfterOptionSelected: function formFieldListItemAddAfterOptionSelected(sInputFieldType, sInputFieldId, sPropertySelector, nOptionId) {
-        Mimoto.page('post', '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector + '/' + nOptionId);
+        Mimoto.utils.callAPI({
+            type: 'get',
+            url: '/mimoto.cms/formfield/' + sInputFieldType + '/' + sInputFieldId + '/add/' + sPropertySelector + '/' + nOptionId,
+            data: null,
+            dataType: 'json',
+            success: function (response, resultStatus, resultSomething) {
+                // edit
+                this.formFieldListItemEditNow(sInputFieldType, sInputFieldId, sPropertySelector, response.connectionId, response.instanceType, response.instanceId);
+            }.bind(this)
+        });
     },
 
     formFieldListItemEdit: function formFieldListItemEdit(nConnectionId, sInstanceType, sInstanceId) {
         // search
         var listInfo = this.findListByListItem(nConnectionId, sInstanceType, sInstanceId);
 
+        // forward
+        this.formFieldListItemEditNow(listInfo.sInputFieldType, listInfo.sInputFieldId, listInfo.sPropertySelector, nConnectionId, sInstanceType, sInstanceId);
+    },
+
+    formFieldListItemEditNow: function formFieldListItemEditNow(sInputFieldType, sInputFieldId, sPropertySelector, nConnectionId, sInstanceType, sInstanceId) {
         // execute
-        Mimoto.page('post', "/mimoto.cms/formfield/" + listInfo.sInputFieldType + "/" + listInfo.sInputFieldId + "/edit/" + listInfo.sPropertySelector + '/' + sInstanceType + '/' + sInstanceId);
+        Mimoto.page('post', "/mimoto.cms/formfield/" + sInputFieldType + "/" + sInputFieldId + "/edit/" + sPropertySelector + '/' + sInstanceType + '/' + sInstanceId);
     },
 
     formFieldListItemDelete: function formFieldListItemDelete(nConnectionId, sInstanceType, sInstanceId) {

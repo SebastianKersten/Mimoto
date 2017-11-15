@@ -701,4 +701,26 @@ class MimotoDataUtils
         return $formattingOptions;
     }
 
+    public static function convertSelector($sSelector)
+    {
+        // 1. init
+        $selector = (object) array();
+
+        // 2. prepare
+        $aCoreSelectorElements = ['type', 'id', 'property'];
+
+        // 3. split
+        $aSelectorParts = explode('.', $sSelector);
+
+        // 4.
+        $nPartCount = count($aSelectorParts);
+        for ($nPartIndex = 0; $nPartIndex < $nPartCount; $nPartIndex++)
+        {
+            $selector->{$aCoreSelectorElements[$nPartIndex]} = $aSelectorParts[$nPartIndex];
+        }
+
+        // 5. return
+        return $selector;
+    }
+
 }

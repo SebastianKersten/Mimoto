@@ -56,7 +56,8 @@ module.exports = function(env) {
                                 loader: 'sass-loader',
                                 options: {
                                     sourceMap: true,
-                                    includePaths: ['node_modules/foundation-sites/scss', 'node_modules/flatpickr/dist', 'node_modules/quill/dist']
+                                    //includePaths: ['node_modules/foundation-sites/scss', 'node_modules/flatpickr/dist', 'node_modules/quill/dist']
+                                    includePaths: ['node_modules/foundation-sites/scss', 'node_modules/flatpickr/dist']
                                 }
                             }
                         ]

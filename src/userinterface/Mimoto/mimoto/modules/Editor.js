@@ -47,21 +47,27 @@ module.exports.prototype = {
      */
     __construct: function(sPropertySelector, elEditableField, formattingOptions)
     {
-        // register
+        // 1. register
         this._sPropertySelector = sPropertySelector;
         this._elEditableField = elEditableField;
         this._formattingOptions = formattingOptions;
         
-        // show content
+        // 2. show content
         this._quill = this._setupEditor(formattingOptions);
+
+        // 3. focus
+        this._quill.focus();
+
+        // 4. position cursor
+        this._quill.setSelection(this._quill.getLength(), 0);
     },
 
-
-    enable: function()
-    {
-        Mimoto.log('Enabled ?');
-        this._quill.enable();
-    },
+    //
+    // enable: function()
+    // {
+    //     Mimoto.log('Enabled ?');
+    //     this._quill.enable();
+    // },
 
     disable: function()
     {

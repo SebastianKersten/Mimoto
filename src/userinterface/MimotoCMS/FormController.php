@@ -627,45 +627,38 @@ class FormController
         // ---
 
 
-        // read
+        // 1. read
         $form = $option->getValue('form');
 
         // 2. create content
         $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_Form', $form);
 
-        // 6. setup navigation
+        // 3. setup navigation
         if (!empty($request->get('Mimoto_referrer'))) $component->setVar('onClickFormMenuButtonOk', (object) array('menu' => ['onClick' => ['loadPage' => $request->get('Mimoto_referrer')]]));
 
 
         // --- show form
 
 
-        // 1. auto create
-        // 2. get entity from form
+        // 1. read
+        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
+        // 2. set
+        $sEntityName = $eParent->getValue('name');
 
-        // 4. setup content
-        $component->addForm(
-            $form->getValue('name'),
-            null,
-            [
-                //'onCreatedReturnToClient' => true,
-                'onCreatedConnectTo' => $sPropertySelector,
-                'response' => ['onSuccess' => ['closePopup' => true]]
-            ]
+        // 3. auto create
+        $result = Mimoto::service('data')->createAndConnect($sEntityName, [MimotoDataUtils::convertSelector($sPropertySelector)]);
+
+        // 4. prepare
+        $response = (object) array(
+            'instanceType' => $result->entity->getEntityTypeName(),
+            'instanceId' => $result->entity->getId(),
+            'connectionId' => $result->connection->getId()
         );
 
-        // 5. connect
-        $output->addComponent('content', $component);
-
-        // 6. render and send
-        return $output->render();
+        // 5. output
+        return Mimoto::service('messages')->response($response, 200);
     }
-
-//    public function formFieldItemEdit(Application $app, $nFormFieldTypeId, $nFormFieldId, $sPropertySelector, $sItemId = null)
-//    {
-//
-//    }
 
     public function formFieldListItemEdit(Application $app, Request $request, $sInputFieldType, $sInputFieldId, $sPropertySelector, $sInstanceType, $sInstanceId)
     {
