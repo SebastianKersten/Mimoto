@@ -100,6 +100,30 @@ class AssetController
         return new BinaryFileResponse($this->_sStaticFolder.'fonts/futura/cb9d11fa-bd41-4bd9-8b8f-34ccfc8a80a2.woff2');
     }
 
+    public function loadFontAwesomeTtf(Application $app)
+    {
+        // 1. load and send
+        return new BinaryFileResponse($this->_sStaticFolder.'fonts/fontawesome/fontawesome-webfont.ttf');
+    }
+
+    public function loadFontAwesomeEot(Application $app)
+    {
+        // 1. load and send
+        return new BinaryFileResponse($this->_sStaticFolder.'fonts/fontawesome/fontawesome-webfont.eot');
+    }
+
+    public function loadFontAwesomeWoff(Application $app)
+    {
+        // 1. load and send
+        return new BinaryFileResponse($this->_sStaticFolder.'fonts/fontawesome/fontawesome-webfont.woff');
+    }
+
+    public function loadFontAwesomeWoff2(Application $app)
+    {
+        // 1. load and send
+        return new BinaryFileResponse($this->_sStaticFolder.'fonts/fontawesome/fontawesome-webfont.woff2');
+    }
+
     public function loadImageLogo(Application $app)
     {
         // 1. load and send

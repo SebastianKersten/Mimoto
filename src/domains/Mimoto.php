@@ -344,6 +344,11 @@ class Mimoto
         $app->get('/'.$sProjectName.'/static/fonts/futura/475da8bf-b453-41ee-ab0e-bd9cb250e218.woff', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadFontFuturaWoff');
         $app->get('/'.$sProjectName.'/static/fonts/futura/cb9d11fa-bd41-4bd9-8b8f-34ccfc8a80a2.woff2', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadFontFuturaWoff2');
 
+        $app->get('/'.$sProjectName.'/static/fonts/fontawesome/fontawesome-webfont.ttf', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadFontAwesomeTtf');
+        $app->get('/'.$sProjectName.'/static/fonts/fontawesome/fontawesome-webfont.eot', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadFontAwesomeEot');
+        $app->get('/'.$sProjectName.'/static/fonts/fontawesome/fontawesome-webfont.woff', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadFontAwesomeWoff');
+        $app->get('/'.$sProjectName.'/static/fonts/fontawesome/fontawesome-webfont.woff2', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadFontAwesomeWoff2');
+
         // images
         $app->get('/'.$sProjectName.'/static/images/mimoto_logo.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogo');
         $app->get('/'.$sProjectName.'/static/images/mimoto_logo_collapsed.png', 'Mimoto\\UserInterface\\MimotoCMS\\AssetController::loadImageLogoCollapsed');
