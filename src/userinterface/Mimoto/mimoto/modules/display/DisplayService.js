@@ -289,6 +289,12 @@ module.exports.prototype = {
                     let directive = aDirectivesToRemove[nRemoveIndex];
 
                     // 1. find in selector array and cleanup
+
+                    if (!directive) continue;
+                    //Mimoto.warn(directive); #todo - fix this because it shouldn't exist
+                    // for s in ...
+
+
                     let sPropertySelector = directive.sPropertySelector;
 
                     // verify

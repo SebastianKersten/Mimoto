@@ -214,7 +214,15 @@ class DataService
                 $aRequestedEntities = array_merge($aRequestedEntities, $this->_entityRepository->select($entityConfig, $rule));
             }
 
-            // 2. remove duplicates
+            // #todo remove duplicates
+
+
+            // add core data
+            if (!empty($aInstances = $selection->getData()))
+            {
+                $aRequestedEntities = array_merge($aRequestedEntities, $aInstances);
+            }
+
         }
 
 

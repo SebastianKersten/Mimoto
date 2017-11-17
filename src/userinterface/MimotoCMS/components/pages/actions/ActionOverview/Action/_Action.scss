@@ -80,3 +80,20 @@ div.MimotoCMS_actions_ActionOverview_Action-sorthandledot {
     margin: 0 1px 2px;
     background-color: $tower-gray;
 }
+
+
+
+div.MimotoCMS_actions_ActionOverview_Action-conditionals {
+    //display: inline-block;
+}
+
+div.MimotoCMS_actions_ActionOverview_Action-conditionals-empty {
+    //display: inline-block;
+    font-style: italic;
+    color: #858585;
+}
+
+span.MimotoCMS_actions_ActionOverview_Action-conditionals-addFirst {
+    cursor: pointer;
+    text-decoration: underline;
+}

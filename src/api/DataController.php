@@ -252,7 +252,25 @@ class DataController
         {
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
+                // special case for handling core data
+                if (substr($value, 0, strlen(CoreConfig::MIMOTO_COREDATA_KEYVALUE)) === CoreConfig::MIMOTO_COREDATA_KEYVALUE)
+                {
+                    // a. retrieve
+                    $sChildType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($value);
+                    $sChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($value);
+
+                    // b. load
+                    $eChild = Mimoto::service('data')->get($sChildType, $sChildId);
+
+                    // c. register
+                    $value = $eChild->get('value');
+                }
+
+                // update
                 $eEntity->setValue($sPropertyName, $value);
+
+                // store
+                Mimoto::service('data')->store($eEntity);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:

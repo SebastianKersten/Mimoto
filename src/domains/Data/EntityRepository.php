@@ -87,31 +87,38 @@ class EntityRepository
 
 
 
-            // prepare
-            $entityData = array(
-                'id' => $nEntityId,
-                'created' => CoreConfig::EPOCH
-            );
-
-            // create
-            $entity = $this->createEntity($entityConfig, $entityData);
-
-
+            // a. load
             $coreData = CoreConfig::getCoreData($entityConfig->getId(), $nEntityId);
 
-
-            if ($coreData !== false)
+            // b. verify
+            if ($coreData instanceof MimotoEntity)
             {
-                foreach ($coreData as $sPropertyName => $value)
-                {
-                    $entity->setValue($sPropertyName, $value);
-                }
+                $entity = $coreData;
             }
             else
             {
-                if ($entity->hasProperty('name')) $entity->setValue('name', $nEntityId);
-            }
+                // prepare
+                $entityData = array(
+                    'id' => $nEntityId,
+                    'created' => CoreConfig::EPOCH
+                );
 
+                // create
+                $entity = $this->createEntity($entityConfig, $entityData);
+
+                if ($coreData !== false)
+                {
+                    foreach ($coreData as $sPropertyName => $value)
+                    {
+                        $entity->setValue($sPropertyName, $value);
+                    }
+                }
+
+                else
+                {
+                    if ($entity->hasProperty('name')) $entity->setValue('name', $nEntityId);
+                }
+            }
 
 
             //$entity->setValue('name', $entityConfig->getName()); // note: niet op alles van toepassing, dus niet te gebruiken

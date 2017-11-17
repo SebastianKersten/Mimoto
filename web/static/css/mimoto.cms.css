@@ -6880,6 +6880,14 @@ div.MimotoCMS_actions_ActionOverview_Action-sorthandledot {
   margin: 0 1px 2px;
   background-color: #9dbab7; }
 
+div.MimotoCMS_actions_ActionOverview_Action-conditionals-empty {
+  font-style: italic;
+  color: #858585; }
+
+span.MimotoCMS_actions_ActionOverview_Action-conditionals-addFirst {
+  cursor: pointer;
+  text-decoration: underline; }
+
 span.MimotoCMS_actions_ActionOverview_ActionConditional-name {
   color: #000000; }
 

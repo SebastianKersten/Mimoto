@@ -50,35 +50,63 @@ class ServiceFunction
 
     public static function getData($sInstanceId)
     {
-        // init
+        // 1. init
         $aData = [];
 
+        // 2. ServiceFunction: Data.create
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-create')
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE_FUNCTION);
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-create');
+            $eInstance->set('name', 'create');
 
-        // service: Data
-        $aData[CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.create'] = (object) array
-        (
-            'name' => 'create'
-        );
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
 
-        $aData[CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.update'] = (object) array
-        (
-            'name' => 'update'
-        );
+        // 3. ServiceFunction: Data.update
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-update')
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE_FUNCTION);
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-update');
+            $eInstance->set('name', 'update');
 
-        $aData[CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.delete'] = (object) array
-        (
-            'name' => 'delete'
-        );
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
 
+        // 4. ServiceFunction: Data.delete
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-delete')
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE_FUNCTION);
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-delete');
+            $eInstance->set('name', 'delete');
 
-        // service: Slack
-        $aData[CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Slack.sendMessage'] = (object) array
-        (
-            'name' => 'sendMessage'
-        );
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
 
-        // send
-        return $aData[$sInstanceId];
+        // 4. ServiceFunction: Slack.sendMessage
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Slack-sendMessage')
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE_FUNCTION);
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Slack-sendMessage');
+            $eInstance->set('name', 'sendMessage');
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 5. send
+        return $aData;
     }
 
 

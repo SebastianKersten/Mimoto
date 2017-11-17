@@ -25,6 +25,7 @@ class Selection
     // rules
     private $_aRules = [];
     private $_aliasRule = null;
+    private $_data = [];
 
 
 
@@ -112,7 +113,7 @@ class Selection
                         }
                     }
 
-
+                    //Mimoto::output('$selectionSettings', $selectionSettings);
                     // ......
                     //Mimoto::error($this);
 
@@ -384,6 +385,24 @@ class Selection
     {
         // forward
         $this->getAliasRule()->setChildValueAsVar($xProperty, $sVarName);
+    }
+
+    /**
+     * Get the instances that were added via the core
+     * @return array
+     */
+    public function getData()
+    {
+        return $this->_data;
+    }
+
+    /**
+     * Add instances (currently only the core code adds these
+     * @param array $aInstances
+     */
+    public function setData($aInstances)
+    {
+        $this->_data = $aInstances;
     }
 
 

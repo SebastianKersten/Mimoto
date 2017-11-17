@@ -82,39 +82,45 @@ class Service
         );
     }
 
-    public static function getData($sInstanceId)
+    public static function getData($sInstanceId = null)
     {
-        // init
+        // 1. init
         $aData = [];
 
-        // inline
-        $aData[CoreConfig::MIMOTO_SERVICE.'-Data'] = (object) array
-        (
-            'name' => 'Data',
-            'file' => '', // core services folder (separate from projects folder)
-            'functions' => [
-                (object) array(
-                    ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.create'),
-                    ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.update'),
-                    ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data.delete')
-                )
-            ]
-        );
+        // 2. Service: Data
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE.'-Data')
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE);
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE.'-Data');
+            $eInstance->set('name', 'Data');
+            $eInstance->set('file', 'Data/Data.php');
+            $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-create'));
+            $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-update'));
+            $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-delete'));
 
-        // inline
-        $aData[CoreConfig::MIMOTO_SERVICE.'-Slack'] = (object) array
-        (
-            'name' => 'Slack',
-            'file' => '',
-            'functions' => [
-                (object) array(
-                    ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Slack.sendMessage')
-                )
-            ]
-        );
+            // e. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
 
-        // send
-        return $aData[$sInstanceId];
+        // 3. Service: Slack
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE.'-Slack')
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE);
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE.'-Slack');
+            $eInstance->set('name', 'Slack');
+            $eInstance->set('file', 'Slack/Slack.php');
+            $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Slack-sendMessage'));
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 4. send
+        return $aData;
     }
 
 

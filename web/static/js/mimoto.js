@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "9c9ac66e1ef138c8f509";
+/******/ 	__webpack_require__.h = "75094e43fe0ff8b984b4";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -20016,6 +20016,12 @@ module.exports.prototype = {
                     var directive = aDirectivesToRemove[nRemoveIndex];
 
                     // 1. find in selector array and cleanup
+
+                    if (!directive) continue;
+                    //Mimoto.warn(directive); #todo - fix this because it shouldn't exist
+                    // for s in ...
+
+
                     var sPropertySelector = directive.sPropertySelector;
 
                     // verify

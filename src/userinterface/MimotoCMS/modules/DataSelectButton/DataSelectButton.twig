@@ -2,7 +2,7 @@
     WARNING - Make sure you pass all the required variables sLabel, sEntityName, sSelectionName and sValuePropertySelector! (sHideWhenEmpty is optional)
 {% endif %}
 
-<div {% if sHideWhenEmpty|default('') is not empty %}{{ Mimoto.hideWhenEmpty(sHideWhenEmpty) }}{% endif %} class="MimotoCMS_modules_DataSelectButton" {{ Mimoto.select(sEntityName, sSelectionName) }}>
+<div {% if sHideWhenEmpty|default('') is not empty %}{{ Mimoto.hideWhenEmpty(sHideWhenEmpty) }}{% endif %} class="MimotoCMS_modules_DataSelectButton" {{ Mimoto.select(sEntityName, sSelectionName, selectionSettings|default({})) }}>
     <button class="MimotoCMS_modules_DataSelectButton-button MimotoCMS_modules_DataSelectButton-button--empty" {{ Mimoto.showWhenEmpty(sEntityName) }}><span>{{ sEmptyLabel }}</span><span class="fa fa-caret-down"></span></button>
     <button class="MimotoCMS_modules_DataSelectButton-button" {{ Mimoto.hideWhenEmpty(sEntityName) }}>
         <span {{ Mimoto.realtime(sValuePropertySelector) }}>{{ Mimoto.data(sValuePropertySelector) }}</span><span class="fa fa-caret-down"></span>

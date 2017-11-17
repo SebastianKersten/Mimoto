@@ -28,29 +28,32 @@
                 <div class="MimotoCMS_actions_ActionOverview_Action-body-section">
 
                     <div>
-                        <div class="MimotoCMS_actions_ActionOverview_Action-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('conditionals') }}>Optional: add conditionals</div>
+                        <div class="MimotoCMS_actions_ActionOverview_Action-conditionals-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('conditionals') }}>Optional: <span class="MimotoCMS_actions_ActionOverview_Action-conditionals-addFirst" {{ Mimoto.add('conditionals', '_Mimoto_action_conditional') }}>add conditionals</span></div>
                         <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('conditionals') }}>
-                            <span>AND</span>
+                            <div>AND</div>
                             <div class="MimotoCMS_actions_ActionOverview_Action-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_actions_ActionOverview_ActionConditional') }}>{{ Mimoto.data('conditionals', 'MimotoCMS_actions_ActionOverview_ActionConditional') }}</div>
+                            <div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditionals', directive:Mimoto.add('conditionals', '_Mimoto_action_conditional'), types:['small'], icon:'' }) }}</div>
                         </div>
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditionals', directive:Mimoto.add('conditionals', '_Mimoto_action_conditional'), types:['small'], icon:'' }) }}
                     </div>
 
                 </div>
 
                 <div class="MimotoCMS_actions_ActionOverview_Action-body-section">
                     <span>THEN</span>
+
                     {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select service', sEntityName:'service', sSelectionName:'_Mimoto_all_public_services', sValuePropertySelector:'service.name' }) }}
+                    {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sHideWhenEmpty:'service', sEmptyLabel:'select function', sEntityName:'function', sSelectionName:'_Mimoto_all_functions_of_service', selectionSettings:{ vars: { idVarName:Mimoto.meta('service.id') } }, sValuePropertySelector:'function.name' }) }}
 
-                    <span {{ Mimoto.hideWhenEmpty('service') }}>
+                    {#<span {{ Mimoto.hideWhenEmpty('service') }}>#}
 
-                        <span {{ Mimoto.select('function', '_Mimoto_all_functions_of_service', { vars: { idVarName:Mimoto.meta('service.id') } }) }}>
-                        <button class="MimotoCMS_actions_ActionOverview_Action-button MimotoCMS_actions_ActionOverview_Action-button--empty" {{ Mimoto.showWhenEmpty('function') }}>select function</button>
-                        <button class="MimotoCMS_actions_ActionOverview_Action-button" {{ Mimoto.hideWhenEmpty('function') }}>
-                            <span {{ Mimoto.realtime('function.name') }}>{{ Mimoto.data('function.name') }}</span>
-                        </button>
 
-                    </span>
+                        {#<span {{ Mimoto.select('function', '_Mimoto_all_functions_of_service', { vars: { idVarName:Mimoto.meta('service.id') } }) }}>#}
+                        {#<button class="MimotoCMS_actions_ActionOverview_Action-button MimotoCMS_actions_ActionOverview_Action-button--empty" {{ Mimoto.showWhenEmpty('function') }}>select function</button>#}
+                        {#<button class="MimotoCMS_actions_ActionOverview_Action-button" {{ Mimoto.hideWhenEmpty('function') }}>#}
+                            {#<span {{ Mimoto.realtime('function.name') }}>{{ Mimoto.data('function.name') }}</span>#}
+                        {#</button>#}
+
+                    {#</span>#}
 
                         <span {{ Mimoto.hideWhenEmpty('service') }}>
 

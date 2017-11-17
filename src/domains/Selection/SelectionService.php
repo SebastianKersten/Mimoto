@@ -273,6 +273,9 @@ class SelectionService
             if (isset($ruleConfig->properyAsVar)) $rule->setPropertyAsVar($ruleConfig->propertyVarName);
         }
 
+        // add data
+        if (isset($selectionConfig->data) && is_array($selectionConfig->data)) $selection->setData($selectionConfig->data);
+
 
         //Mimoto::output($selectionConfig->name, $selectionConfig);
         //Mimoto::output('$selectionConfig', $selectionConfig);

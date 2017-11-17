@@ -5,6 +5,7 @@ namespace Mimoto\Core;
 
 // Mimoto classes
 use Mimoto\Core\entities\Root;
+use Mimoto\Core\entities\CoreDataKeyValue;
 use Mimoto\Core\entities\Entity;
 use Mimoto\Core\entities\EntityProperty;
 use Mimoto\Core\entities\EntityPropertySetting;
@@ -59,6 +60,7 @@ use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_defaultValue;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
+use Mimoto\Mimoto;
 use Mimoto\Selection\SelectionRuleTypes;
 
 
@@ -129,6 +131,9 @@ class CoreConfig
 
     // content
     const MIMOTO_DATASET                        = '_Mimoto_dataset';
+
+    // core data
+    const MIMOTO_COREDATA_KEYVALUE              = '_Mimoto_coreata_keyvalue';
 
     // forms
     const MIMOTO_FORM                           = '_Mimoto_form';
@@ -297,6 +302,7 @@ class CoreConfig
             Output::getStructure(),
             OutputContainer::getStructure(),
             Dataset::getStructure(),
+            CoreDataKeyValue::getStructure(),
 
             // forms
             Form::getStructure(),
@@ -650,11 +656,8 @@ class CoreConfig
                 'data' => [
                     Service::getData(CoreConfig::MIMOTO_SERVICE.'-Data'),
                     Service::getData(CoreConfig::MIMOTO_SERVICE.'-Slack')
-
-                    // 1. internal item 1 via getData from entty description with internal Mimoto-prefixed ids
                 ]
             ),
-
 
 
             (object) array(
@@ -678,9 +681,9 @@ class CoreConfig
                 'label' => 'All core data manipulation events',
                 'rules' => [],
                 'data' => [
-                    'created', // label / value
-                    'updated',
-                    'deleted'
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-CREATED'),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-UPDATED'),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-DELETED')
                 ]
             )
         ];
@@ -693,10 +696,15 @@ class CoreConfig
     {
         // #todo - make generic
 
+        //Mimoto::error($sEntityTypeName);
+
         switch($sEntityTypeName)
         {
             case CoreConfig::MIMOTO_FORMATTINGOPTION: return FormattingOption::getData($sItemId); break;
             case CoreConfig::MIMOTO_USER_ROLE: return UserRole::getData($sItemId); break;
+            case CoreConfig::MIMOTO_COREDATA_KEYVALUE: return CoreDataKeyValue::getData($sItemId); break;
+            case CoreConfig::MIMOTO_SERVICE: return Service::getData($sItemId); break;
+            case CoreConfig::MIMOTO_SERVICE_FUNCTION: return ServiceFunction::getData($sItemId); break;
         }
 
         return false;
