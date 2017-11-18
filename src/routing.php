@@ -20,4 +20,5 @@
 
 
     // Instagram Inbox
+    //$app->get('/instagram/inbox', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewInbox');
     $app->get('/instagram/inbox', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewInbox');

@@ -16,11 +16,7 @@
         "twig/twig": "~1.0",
         "symfony/security": "^3.2",
         "wisembly/elephant.io": "^3.2",
-        "symfony/translation": "^3.3",
-        "symfony/config": "^3.3",
-        "symfony/yaml": "^3.3",
-        "kraken-io/kraken-php": "^1.6",
-        "liamcottle/instagram-sdk-php": "^1.0"
+        "kraken-io/kraken-php": "^1.6"
     },
     "autoload": {
         "psr-4": {
