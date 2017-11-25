@@ -5,10 +5,11 @@ div.MimotoCMS_actions_ActionOverview_ActionConditional {
     flex-wrap: nowrap;
     align-items: center;
 
-    padding: 4px;
+    padding: 5px;
     width: 100%;
 
     background-color: #f7f7f7;
+    border-radius: 5px;
 }
 
 div.MimotoCMS_actions_ActionOverview_ActionConditional-data {
@@ -46,9 +47,18 @@ span.MimotoCMS_actions_ActionOverview_ActionConditional-menuitem {
     cursor: pointer;
     white-space: nowrap;
 
+    margin-right: 5px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
     &:hover {
-        text-decoration: underline;
         color: #000000;
+    }
+
+    & .fa.fa-remove:hover {
+        color: $fuzzy-wuzzy-brown;
     }
 }
 

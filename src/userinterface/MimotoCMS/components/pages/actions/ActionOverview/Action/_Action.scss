@@ -21,13 +21,31 @@ div.MimotoCMS_actions_ActionOverview_Action-info {
         margin-bottom: 10px;
     }
 
-    div.MimotoCMS_actions_ActionOverview_Action-body-section {
+    div.MimotoCMS_actions_ActionOverview_Action-row {
         margin-bottom: 15px;
     }
 
-    div.MimotoCMS_actions_ActionOverview_Action-body-section-label {
+    div.MimotoCMS_actions_ActionOverview_Action-section {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    div.MimotoCMS_actions_ActionOverview_Action-section-label {
+
+        flex: none;
+
         display: inline-block;
         margin-right: 10px;
+        margin-top: 9px;
+        min-width: 50px;
+    }
+
+    div.MimotoCMS_actions_ActionOverview_Action-section-data {
+        flex: auto;
+        display: inline-block;
+        padding: 5px;
     }
 
     div.MimotoCMS_actions_ActionOverview_Action-namecontainer {
@@ -53,7 +71,7 @@ div.MimotoCMS_actions_ActionOverview_Action-info {
     }
 
     div.MimotoCMS_actions_ActionOverview_Action-settings {
-        padding: 10px 20px 15px 20px;
+        padding: 0;
     }
 
 div.MimotoCMS_actions_ActionOverview_Action-menu {
@@ -69,6 +87,8 @@ div.MimotoCMS_modules_ListItem-sorthandlecontainer {
 
 
 div.MimotoCMS_actions_ActionOverview_Action-conditionals {
+
+    padding: 0;
 
     & > div {
         margin-bottom: 5px;
@@ -96,11 +116,63 @@ div.MimotoCMS_actions_ActionOverview_Action-conditionals-add {
     color: #858585;
     cursor: pointer;
     text-decoration: underline;
-    margin-left: 45px;
+    margin-left: 70px;
 }
 
 
 div.MimotoCMS_actions_ActionOverview_Action-conditionals-section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    & > div {
+        flex: none;
+        display: inline-block;
+        margin-right: 8px;
+
+        &:last-child {
+            margin-right: 10px;
+        }
+    }
+}
+
+
+div.MimotoCMS_actions_ActionOverview_Action-settings {
+
+    padding: 0;
+
+    & > div {
+        margin-bottom: 5px;
+    }
+
+    & > div:last-child {
+        margin-bottom: 0;
+    }
+}
+
+div.MimotoCMS_actions_ActionOverview_Action-settings-empty {
+    //display: inline-block;
+    font-style: italic;
+    color: #858585;
+}
+
+span.MimotoCMS_actions_ActionOverview_Action-settings-addFirst {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+div.MimotoCMS_actions_ActionOverview_Action-settings-add {
+    display: inline-block;
+    font-style: italic;
+    color: #858585;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 70px;
+}
+
+
+div.MimotoCMS_actions_ActionOverview_Action-settings-section {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

@@ -357,7 +357,7 @@ class AimlessComponentViewModel
 
     public function sortHandle()
     {
-        return 'Mimoto_CoreCSS_sorthandle';
+        return DataManipulationUtils::MIMOTO_DATA_SORTHANDLE;
     }
 
 

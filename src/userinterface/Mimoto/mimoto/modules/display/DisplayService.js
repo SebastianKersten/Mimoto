@@ -80,6 +80,7 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_DATA_CREATE:          'data-mimoto-create',
     DIRECTIVE_MIMOTO_DATA_CLEAR:           'data-mimoto-clear',
     DIRECTIVE_MIMOTO_DATA_SORTABLE:        'data-mimoto-sortable',
+    DIRECTIVE_MIMOTO_DATA_SORTHANDLE:      'data-mimoto-sorthandle',
     DIRECTIVE_MIMOTO_DATA_ATTRIBUTE:       'data-mimoto-attribute',
     DIRECTIVE_MIMOTO_DATA_EDITABLE:        'data-mimoto-editable',
     DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE: 'data-mimoto-toggle-editmode',
@@ -366,10 +367,10 @@ module.exports.prototype = {
             this.DIRECTIVE_MIMOTO_DATA_CREATE,
             this.DIRECTIVE_MIMOTO_DATA_CLEAR,
             this.DIRECTIVE_MIMOTO_DATA_SORTABLE,
+            this.DIRECTIVE_MIMOTO_DATA_SORTHANDLE,
             this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE,
             this.DIRECTIVE_MIMOTO_DATA_EDITABLE,
             this.DIRECTIVE_MIMOTO_DATA_TOGGLE_EDITMODE,
-            this.DIRECTIVE_MIMOTO_DATA_SORTABLE,
 
             // intput directives
             this.DIRECTIVE_MIMOTO_FORM,
@@ -760,6 +761,10 @@ module.exports.prototype = {
                         directive.sortableCollection = new SortableCollection(directive);
                         break;
 
+                    case this.DIRECTIVE_MIMOTO_DATA_SORTHANDLE:
+
+                        directive.element.classList.add('Mimoto_CoreCSS_sorthandle');
+                        break;
 
                     case this.DIRECTIVE_MIMOTO_DATA_ATTRIBUTE:
 

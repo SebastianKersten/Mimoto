@@ -24,7 +24,10 @@ class DataManipulationUtils
     const MIMOTO_DATA_SET             = 'data-mimoto-set';
     const MIMOTO_DATA_CREATE          = 'data-mimoto-create';
     const MIMOTO_DATA_CLEAR           = 'data-mimoto-clear';
+
     const MIMOTO_DATA_SORTABLE        = 'data-mimoto-sortable';
+    const MIMOTO_DATA_SORTHANDLE      = 'data-mimoto-sorthandle';
+
     const MIMOTO_DATA_ATTRIBUTE       = 'data-mimoto-attribute';
     const MIMOTO_DATA_EDITABLE        = 'data-mimoto-editable';
     const MIMOTO_DATA_TOGGLE_EDITMODE = 'data-mimoto-toggle-editmode';

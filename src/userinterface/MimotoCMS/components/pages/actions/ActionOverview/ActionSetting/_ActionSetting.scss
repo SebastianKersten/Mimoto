@@ -1,14 +1,56 @@
 div.MimotoCMS_actions_ActionOverview_ActionSetting {
 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    padding: 5px;
+    width: 100%;
+
+    background-color: #f7f7f7;
+    border-radius: 5px;
 }
 
-span.MimotoCMS_actions_ActionOverview_ActionSetting-name {
+div.MimotoCMS_actions_ActionOverview_ActionSetting-data {
+    flex: auto;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+    margin-right: 45px;
+
     color: #000000;
+
+    & > div {
+        display: inline-block;
+        flex: none;
+    }
 }
 
-span.MimotoCMS_actions_ActionOverview_ActionSetting-menu {
+div.MimotoCMS_actions_ActionOverview_ActionSetting-key {
+    font-weight: bold;
+    padding: 7px;
+}
+
+div.MimotoCMS_actions_ActionOverview_ActionSetting-equals {
+    padding: 0 7px 0 0;
+}
+
+div.MimotoCMS_actions_ActionOverview_ActionSetting-value {
+    border: 1px solid #e5e5e5;
+    background-color: #f1f1f1;
+    padding: 7px;
+}
+
+div.MimotoCMS_actions_ActionOverview_ActionSetting-menu {
+    flex: auto;
+    text-align: right;
     color: $pale-slate;
     white-space: nowrap;
+    padding-right: 8px;
 }
 
 span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem {
@@ -16,9 +58,18 @@ span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem {
     cursor: pointer;
     white-space: nowrap;
 
+    margin-right: 5px;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
     &:hover {
-        text-decoration: underline;
         color: #000000;
+    }
+
+    & .fa.fa-remove:hover {
+        color: $fuzzy-wuzzy-brown;
     }
 }
 

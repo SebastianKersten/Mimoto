@@ -4,7 +4,7 @@
 
     <div class="MimotoCMS_actions_ActionOverview_ActionConditional" {{ Mimoto.realtime() }}>
 
-        <div class="MimotoCMS_actions_ActionOverview_ActionConditional-data" {{ Mimoto.realtime() }}>
+        <div class="MimotoCMS_actions_ActionOverview_ActionConditional-data">
             <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select property', sEntityName:'entityProperty', sSelectionName:'_Mimoto_all_properties_of_entity', selectionSettings: {vars:{ idVarName:entityTypeId }}, sValuePropertySelector:'entityProperty.name' }) }}</div>
             <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select type', sEntityName:'type', sSelectionName:'_Mimoto_all_conditionaltypes', sValuePropertySelector:'type' }) }}</div>
             <div>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'value', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
@@ -12,7 +12,7 @@
 
         <div class="MimotoCMS_actions_ActionOverview_ActionConditional-menu">
             <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem" {{ Mimoto.remove() }}><span class="fa fa-remove"></span></span>
-            <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem MimotoCMS_actions_ActionOverview_ActionConditional-menuitem-move {{ Mimoto.sortHandle() }}"><span class="fa fa-arrows"></span></span>
+            <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem MimotoCMS_actions_ActionOverview_ActionConditional-menuitem-move" {{ Mimoto.sortHandle() }}><span class="fa fa-arrows"></span></span>
         </div>
     </div>
 
