@@ -132,6 +132,11 @@ class EntityConfigTableUtils
         //if ($stmt->execute($params) === false) Mimoto::error("Error while removing column '$sPropertyName' from entity table '$sEntityName'");
     }
 
+    public static function flushEntityConfigCache()
+    {
+        // TODO Flush memcache
+    }
+
     private static function getColumnDataType($sColumnType)
     {
         // 1. determine column specs

@@ -94,7 +94,8 @@ class ActionService
             // b. build
             $actionConfig = (object) array(
                 'owner' => 'project',
-                'trigger' => $eAction->get('entity.name').'.'.$eAction->get('event'),
+                'trigger' => [$eAction->get('entity.name').'.'.$eAction->get('event')],
+                'conditionals' => [],
                 'service' => (object) array(
                     'name' => $eAction->get('service.name'),
                     'file' => $eAction->get('service.file')
@@ -104,7 +105,23 @@ class ActionService
                 'settings' => (object) array()
             );
 
-            // c. add settings
+            // c. add conditionals
+            $aActionConditionals = $eAction->get('conditionals');
+            $nActionConditionalCount = count($aActionConditionals);
+            for ($nActionConditionalIndex = 0; $nActionConditionalIndex < $nActionConditionalCount; $nActionConditionalIndex++)
+            {
+                // i. register
+                $eActionConditional = $aActionConditionals[$nActionConditionalIndex];
+
+                // ii. build and store
+                $actionConfig->conditionals[] = (object) array(
+                    'propertyName' =>  $eActionConditional->getValue('entityProperty.name'),
+                    'type' =>  $eActionConditional->getValue('type'),
+                    'value' =>  $eActionConditional->getValue('value')
+                );
+            }
+
+            // d. add settings
             $aActionSettings = $eAction->get('settings');
             $nActionSettingCount = count($aActionSettings);
             for ($nActionSettingIndex = 0; $nActionSettingIndex < $nActionSettingCount; $nActionSettingIndex++)
@@ -116,7 +133,7 @@ class ActionService
                 $actionConfig->settings->{$eActionSetting->get('key')} = $eActionSetting->get('value');
             }
 
-            // d. store
+            // e. store
             $aActionConfigs[] = $actionConfig;
 
         }

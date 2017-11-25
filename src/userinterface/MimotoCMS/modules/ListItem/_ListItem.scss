@@ -49,25 +49,6 @@ div.MimotoCMS_modules_ListItem {
             flex: 0 0 auto;
         }
 
-div.MimotoCMS_modules_ListItem-handle {
-    display: inline-block;
-    overflow: hidden;
-    width: 10px;
-    margin-left: 0;
-    margin-right: 10px;
-    padding-top: 2px;
-    cursor: move;
-    flex: 0 0 auto;
-}
-
-div.MimotoCMS_modules_ListItem-handle-dot {
-    float: left;
-    width: 3px;
-    height: 3px;
-    margin: 0 1px 2px;
-    background-color: $tower-gray;
-}
-
 div.MimotoCMS_modules_ListItem--drag {
     background-color: $white;
 }

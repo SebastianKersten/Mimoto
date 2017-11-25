@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
- * Quill Editor v1.3.2
+ * Quill Editor v1.3.4
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -389,13 +389,6 @@
 
 .ql-editor .ql-align-right {
   text-align: right; }
-
-.ql-editor .ql-embed-selected {
-  border: 2px solid #777;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none; }
 
 .ql-editor.ql-blank::before {
   color: rgba(0, 0, 0, 0.6);
@@ -407,7 +400,7 @@
   right: 15px; }
 
 /*!
- * Quill Editor v1.3.2
+ * Quill Editor v1.3.4
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -796,13 +789,6 @@
 
 .ql-editor .ql-align-right {
   text-align: right; }
-
-.ql-editor .ql-embed-selected {
-  border: 2px solid #777;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none; }
 
 .ql-editor.ql-blank::before {
   color: rgba(0, 0, 0, 0.6);

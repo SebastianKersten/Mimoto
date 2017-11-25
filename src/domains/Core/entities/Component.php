@@ -108,6 +108,42 @@ class Component
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_COMPONENT.'--properties',
+                    // ---
+                    'name' => 'properties',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_ENTITYPROPERTY]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_COMPONENT.'--forms',
+                    // ---
+                    'name' => 'forms',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_FORM]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
                 )
             ]
         );
@@ -1126,6 +1162,24 @@ class Component
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/modules/EditableField/EditableField.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_modules_PropertyInput',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/PropertyInput/PropertyInput.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_modules_SortHandle',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/SortHandle/SortHandle.twig',
                         'conditionals' => []
                     )
                 ]

@@ -10,69 +10,7 @@
 
     {% block panels %}
 
-        <div data-mimotocms-tabmenu-panel>
-
-            <div class="MimotoCMS_pages_entities_EntityDetail_Structure">
-
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta">
-
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_info">
-
-                        <span class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
-
-                        {% if entityStructure.extends is not empty %}
-                            {% for extension in entityStructure.extends %}
-                                extends <b><a href="/mimoto.cms/entity/{{ extension.id }}/view"><span data-mimoto-id="entity.{{ extension.id }}.name" class="MimotoCMS_pages_entities_EntityDetail_Structure__entityname">{{ extension.name }}</span></a></b>
-                            {% endfor %}
-                            <br>
-                        {% endif %}
-
-                        {% if entityStructure.extendedBy is not empty %}
-                            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__extendedby">
-                                Extended by:
-                                {% for extension in entityStructure.extendedBy %}
-                                <a href="/mimoto.cms/entity/{{ extension.id }}/view"><span data-mimoto-value="_MimotoAimless__core__entity.{{ extension.id }}.name">{{ extension.name }}</span></a>{% if not loop.last %}, {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-
-                        <div class="MimotoCMS_pages_entities_EntityDetail_Structure__usage">
-                            {% if entityStructure.hasTable %}
-                                This entity has {{ entityStructure.instanceCount }} instance{% if entityStructure.instanceCount != 1 %}s{%  endif %}
-                            {% else %}
-                                This entity has no table of its own and is only used for extension purposes
-                            {% endif %}
-                        </div>
-
-                    </div>
-
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__meta_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_coreform__entity'), types:['secondary'] }) }}
-                    </div>
-
-                </div>
-
-
-                <div class="MimotoCMS_pages_entities_EntityDetail__block">
-
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('properties') }}>
-                        <div>This entity has no properties yet.<br>Go ahead, start adding them!</div>
-                    </div>
-
-                    <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('properties') }}>
-                        <ul class="MimotoCMS_pages_entities_EntityDetail_container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityDetail-EntityProperty') }}>
-                            {{ Mimoto.data('properties', 'MimotoCMS_entities_EntityDetail-EntityProperty') }}
-                        </ul>
-                    </div>
-
-                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new property', icon:'plus', directive:Mimoto.add('properties', '_Mimoto_coreform__entityProperty') }) }}
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
+        <div data-mimotocms-tabmenu-panel>{{ Mimoto.module('MimotoCMS_modules_PropertyInput', { type:'entity', entityStructure:entityStructure }) }}</div>
 
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 

@@ -18,7 +18,7 @@
         <div class="MimotoCMS_actions_ActionOverview_Action-body">
 
             <div class="MimotoCMS_actions_ActionOverview_Action-body-section">
-                <span>IF</span>
+                <div class="MimotoCMS_actions_ActionOverview_Action-body-section-label">WHEN</div>
                 {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select entity', sEntityName:'entity', sSelectionName:'_Mimoto_all_entities', sValuePropertySelector:'entity.name' }) }}
                 {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sHideWhenEmpty:'entity', sEmptyLabel:'select event', sEntityName:'event', sSelectionName:'_Mimoto_all_core_events', sValuePropertySelector:'event' }) }}
             </div>
@@ -28,18 +28,18 @@
                 <div class="MimotoCMS_actions_ActionOverview_Action-body-section">
 
                     <div>
-                        <div class="MimotoCMS_actions_ActionOverview_Action-conditionals-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('conditionals') }}>Optional: <span class="MimotoCMS_actions_ActionOverview_Action-conditionals-addFirst" {{ Mimoto.add('conditionals', '_Mimoto_action_conditional') }}>add conditionals</span></div>
-                        <div class="{{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('conditionals') }}>
-                            <div>AND</div>
-                            <div class="MimotoCMS_actions_ActionOverview_Action-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_actions_ActionOverview_ActionConditional') }}>{{ Mimoto.data('conditionals', 'MimotoCMS_actions_ActionOverview_ActionConditional') }}</div>
-                            <div>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditionals', directive:Mimoto.add('conditionals', '_Mimoto_action_conditional'), types:['small'], icon:'' }) }}</div>
+                        <div class="MimotoCMS_actions_ActionOverview_Action-conditionals-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('conditionals') }}>Optional: <span class="MimotoCMS_actions_ActionOverview_Action-conditionals-addFirst" {{ Mimoto.create('conditionals', '_Mimoto_action_conditional') }}>add conditionals</span></div>
+                        <div class="MimotoCMS_actions_ActionOverview_Action-conditionals-section {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('conditionals') }}>
+                            <div class="MimotoCMS_actions_ActionOverview_Action-body-section-label">AND</div>
+                            <div class="MimotoCMS_actions_ActionOverview_Action-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_actions_ActionOverview_ActionConditional') }}>{{ Mimoto.data('conditionals', 'MimotoCMS_actions_ActionOverview_ActionConditional', { customValues:{ entityTypeId:Mimoto.meta('entity.id') }} ) }}</div>
                         </div>
+                        <div class="MimotoCMS_actions_ActionOverview_Action-conditionals-add" {{ Mimoto.hideWhenEmpty('conditionals') }} {{ Mimoto.create('conditionals', '_Mimoto_action_conditional') }}>add another conditional</div>
                     </div>
 
                 </div>
 
                 <div class="MimotoCMS_actions_ActionOverview_Action-body-section">
-                    <span>THEN</span>
+                    <div class="MimotoCMS_actions_ActionOverview_Action-body-section-label">THEN</div>
 
                     {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select service', sEntityName:'service', sSelectionName:'_Mimoto_all_public_services', sValuePropertySelector:'service.name' }) }}
                     {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sHideWhenEmpty:'service', sEmptyLabel:'select function', sEntityName:'function', sSelectionName:'_Mimoto_all_functions_of_service', selectionSettings:{ vars: { idVarName:Mimoto.meta('service.id') } }, sValuePropertySelector:'function.name' }) }}
@@ -81,19 +81,6 @@
     <div class="MimotoCMS_actions_ActionOverview_Action-menu">
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove(), types:['secondary', 'alert', 'small'], icon:'' }) }}
         {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', directive:Mimoto.edit('_Mimoto_action'), types:['secondary'], icon:'' }) }}#}
-        <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">
-            <div class="MimotoCMS_actions_ActionOverview_Action-sorthandle {{ Mimoto.sortHandle() }}">
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-                <div class="MimotoCMS_actions_ActionOverview_Action-sorthandledot"></div>
-            </div>
-        </div>
+        <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">{{ Mimoto.module('MimotoCMS_modules_SortHandle') }}</div>
     </div>
 </div>

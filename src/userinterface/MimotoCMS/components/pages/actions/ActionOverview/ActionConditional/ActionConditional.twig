@@ -1,9 +1,19 @@
-<div class="MimotoCMS_actions_ActionOverview_ActionConditional" {{ Mimoto.realtime() }}>
-    <span class="MimotoCMS_actions_ActionOverview_ActionConditional-name" {{ Mimoto.realtime('event') }}>{{ Mimoto.data('event') }}</span> =
-    <span class="MimotoCMS_actions_ActionOverview_ActionConditional-name" {{ Mimoto.realtime('value') }}>{{ Mimoto.data('value') }}</span>
-    <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menu">
-        <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem" {{ Mimoto.edit('_Mimoto_action_conditional') }}><span class="fa fa-edit"></span></span>
-        <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem" {{ Mimoto.remove() }}><span class="fa fa-remove"></span></span>
-        <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem MimotoCMS_actions_ActionOverview_ActionConditional-menuitem-move {{ Mimoto.sortHandle() }}"><span class="fa fa-arrows"></span></span>
-    </span>
-</div>
+{% if entityTypeId|default('') is empty %}
+    Please pass the the entity's type id as `entityTypeId`
+{% else %}
+
+    <div class="MimotoCMS_actions_ActionOverview_ActionConditional" {{ Mimoto.realtime() }}>
+
+        <div class="MimotoCMS_actions_ActionOverview_ActionConditional-data" {{ Mimoto.realtime() }}>
+            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select property', sEntityName:'entityProperty', sSelectionName:'_Mimoto_all_properties_of_entity', selectionSettings: {vars:{ idVarName:entityTypeId }}, sValuePropertySelector:'entityProperty.name' }) }}</div>
+            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select type', sEntityName:'type', sSelectionName:'_Mimoto_all_conditionaltypes', sValuePropertySelector:'type' }) }}</div>
+            <div>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'value', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
+        </div>
+
+        <div class="MimotoCMS_actions_ActionOverview_ActionConditional-menu">
+            <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem" {{ Mimoto.remove() }}><span class="fa fa-remove"></span></span>
+            <span class="MimotoCMS_actions_ActionOverview_ActionConditional-menuitem MimotoCMS_actions_ActionOverview_ActionConditional-menuitem-move {{ Mimoto.sortHandle() }}"><span class="fa fa-arrows"></span></span>
+        </div>
+    </div>
+
+{% endif %}

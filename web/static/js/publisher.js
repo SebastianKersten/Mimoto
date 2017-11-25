@@ -60,18 +60,18 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "3f63cc4aff64fb0f62df";
+/******/ 	__webpack_require__.h = "9baa8d68372352b2a62c";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 458);
+/******/ 	return __webpack_require__(__webpack_require__.s = 451);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 458:
+/***/ 451:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85,7 +85,7 @@
 
 // Publisher demo classes
 
-var Publisher = __webpack_require__(459);
+var Publisher = __webpack_require__(452);
 
 /**
  * Auto run
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /***/ }),
 
-/***/ 459:
+/***/ 452:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -111,11 +111,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Mimoto classes
 
-var Article = __webpack_require__(460);
-var Editor = __webpack_require__(461);
+var Article = __webpack_require__(453);
+var Editor = __webpack_require__(454);
 
-var AlsoOnThisPage = __webpack_require__(462);
-var IsTypingComment = __webpack_require__(463);
+var AlsoOnThisPage = __webpack_require__(455);
+var IsTypingComment = __webpack_require__(456);
 
 module.exports = function () {
 
@@ -191,7 +191,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 460:
+/***/ 453:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -306,7 +306,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 461:
+/***/ 454:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +371,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 462:
+/***/ 455:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -572,7 +572,7 @@ module.exports.prototype = {
 
 /***/ }),
 
-/***/ 463:
+/***/ 456:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

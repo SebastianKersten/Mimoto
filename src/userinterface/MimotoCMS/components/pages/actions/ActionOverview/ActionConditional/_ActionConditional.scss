@@ -1,14 +1,44 @@
 div.MimotoCMS_actions_ActionOverview_ActionConditional {
 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    padding: 4px;
+    width: 100%;
+
+    background-color: #f7f7f7;
 }
 
-span.MimotoCMS_actions_ActionOverview_ActionConditional-name {
-    color: #000000;
+div.MimotoCMS_actions_ActionOverview_ActionConditional-data {
+    flex: auto;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+    margin-right: 45px;
+
+    & > div {
+        flex: none;
+        margin-right: 5px;
+    }
+
+    & > div:last-child {
+        margin-left: 3px;
+    }
 }
 
-span.MimotoCMS_actions_ActionOverview_ActionConditional-menu {
+div.MimotoCMS_actions_ActionOverview_ActionConditional-menu {
+
+    flex: auto;
+    text-align: right;
     color: $pale-slate;
     white-space: nowrap;
+    padding-right: 8px;
+
 }
 
 span.MimotoCMS_actions_ActionOverview_ActionConditional-menuitem {

@@ -20,7 +20,7 @@ class Slack // extends MimotoService
     public function sendMessage(MimotoEntity $eInstance, $settings = null)
     {
         // 1. validate
-        if (empty($settings) && !isset($settings->channel)) return;
+        if (empty($settings) || !isset($settings->channel)) return;
 
         // 2. replace enter or init
         $settings->message = (isset($settings->message) && !empty($settings->message)) ? preg_replace('/\\\n/', chr(13), $settings->message) : '';

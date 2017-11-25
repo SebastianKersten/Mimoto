@@ -4,11 +4,12 @@
 namespace Mimoto\Core\entities;
 
 // Mimoto classes
-use Mimoto\Core\Validation;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
+use Mimoto\Core\Validation;
 use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
+use Mimoto\Event\ConditionalTypes;
 
 
 /**
@@ -76,12 +77,16 @@ class CoreDataKeyValue
         // 1. init
         $aData = [];
 
-        // 2. Service: Data
-        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-CREATED')
+
+        // --- events ---
+
+
+        // 2. Event: CREATED
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-CREATED')
         {
             // a. init
             $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
-            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-CREATED');
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-CREATED');
             $eInstance->set('label', 'Created');
             $eInstance->set('key', 'created');
             $eInstance->set('value', 'created');
@@ -91,12 +96,12 @@ class CoreDataKeyValue
             else return $eInstance;
         }
 
-        // 3. Service: Data
-        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-UPDATED')
+        // 3. Event: UPDATED
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-UPDATED')
         {
             // a. init
             $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
-            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-UPDATED');
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-UPDATED');
             $eInstance->set('label', 'Updated');
             $eInstance->set('key', 'updated');
             $eInstance->set('value', 'updated');
@@ -106,12 +111,12 @@ class CoreDataKeyValue
             else return $eInstance;
         }
 
-        // 4. Service: Data
-        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-DELETED')
+        // 4. Event: DELETED
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-DELETED')
         {
             // a. init
             $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
-            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-DELETED');
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-DELETED');
             $eInstance->set('label', 'Deleted');
             $eInstance->set('key', 'deleted');
             $eInstance->set('value', 'deleted');
@@ -121,7 +126,88 @@ class CoreDataKeyValue
             else return $eInstance;
         }
 
-        // 5. send
+
+
+        // --- action conditionals ---
+
+
+        // 5. Conditional type: CHANGED
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED)
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED);
+            $eInstance->set('label', 'Changed');
+            $eInstance->set('key', ConditionalTypes::CHANGED);
+            $eInstance->set('value', ConditionalTypes::CHANGED);
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 6. Conditional type: CHANGED_INTO
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_INTO)
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_INTO);
+            $eInstance->set('label', 'Changed into');
+            $eInstance->set('key', ConditionalTypes::CHANGED_INTO);
+            $eInstance->set('value', ConditionalTypes::CHANGED_INTO);
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 7. Conditional type: CHANGED_FROM
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_FROM)
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_FROM);
+            $eInstance->set('label', 'Changed from');
+            $eInstance->set('key', ConditionalTypes::CHANGED_FROM);
+            $eInstance->set('value', ConditionalTypes::CHANGED_FROM);
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 8. Conditional type: EQUALS
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::EQUALS)
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::EQUALS);
+            $eInstance->set('label', 'Equals');
+            $eInstance->set('key', ConditionalTypes::EQUALS);
+            $eInstance->set('value', ConditionalTypes::EQUALS);
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 9. Conditional type: DID_NOT_CHANGE
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::DID_NOT_CHANGE)
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::DID_NOT_CHANGE);
+            $eInstance->set('label', 'Did not change');
+            $eInstance->set('key', ConditionalTypes::DID_NOT_CHANGE);
+            $eInstance->set('value', ConditionalTypes::DID_NOT_CHANGE);
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+
+        // 10. send
         return $aData;
     }
 

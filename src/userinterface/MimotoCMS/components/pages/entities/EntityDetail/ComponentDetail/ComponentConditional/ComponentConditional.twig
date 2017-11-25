@@ -41,18 +41,5 @@
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:sButtonLabel, types:['small', sButtonType], onclick:"MimotoCMS.componentConditionalEdit('" ~ Mimoto.meta('id') ~ "');" }) }}
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"MimotoCMS.componentConditionalDelete('" ~ Mimoto.meta('id') ~ "');" }) }}
     </div>
-    <div class="MimotoCMS_pages_components_ComponentConditional__menu-handle">
-        <div class="MimotoCMS_modules_ListItem-handle {{ Mimoto.sortHandle() }}">
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-            <div class="MimotoCMS_modules_ListItem-handle-dot"></div>
-        </div>
-    </div>
+    <div class="MimotoCMS_pages_components_ComponentConditional__menu-handle">{{ Mimoto.module('MimotoCMS_modules_SortHandle') }}</div>
 </li>

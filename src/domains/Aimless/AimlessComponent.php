@@ -1059,6 +1059,9 @@ class AimlessComponent
             // register
             $connection = (!empty($aConnections) && !empty($aConnections[$i])) ? $aConnections[$i] : null;
 
+            // verify
+            if (empty($entity)) { Mimoto::output('Oops, connection not found!', $connection, true); die(); }
+
             // render
             $sRenderedCollection .= $this->renderCollectionItem($entity, $connection, $sComponentName, $aFieldVars, $bRenderInputFieldsAsInput, $sWrapperName, $customValues, $i);
         }

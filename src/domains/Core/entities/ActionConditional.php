@@ -5,6 +5,7 @@ namespace Mimoto\Core\entities;
 
 // Mimoto classes
 use Mimoto\Core\Validation;
+use Mimoto\Event\ConditionalTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
@@ -43,9 +44,9 @@ class ActionConditional
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ACTION_CONDITIONAL.'--event',
+                    'id' => CoreConfig::MIMOTO_ACTION_CONDITIONAL.'--type',
                     // ---
-                    'name' => 'event',
+                    'name' => 'type',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(
@@ -72,7 +73,14 @@ class ActionConditional
         );
     }
 
-    public static function getData() {}
+    public static function getData($sInstanceId = null)
+    {
+        // 1. init
+        $aData = [];
+
+        // 2. send
+        return $aData;
+    }
 
 
 
@@ -92,7 +100,6 @@ class ActionConditional
             'name' => CoreConfig::MIMOTO_ACTION_CONDITIONAL,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_ACTION_CONDITIONAL, 'event'),
                 CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_ACTION_CONDITIONAL, 'value')
             ]
         );

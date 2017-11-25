@@ -223,7 +223,6 @@ class EntityRepository
         // init
         $aEntities = [];
 
-
         // validate
         if (empty($rule->getType()))
         {

@@ -5,7 +5,9 @@ namespace Mimoto\Event;
 
 // Mimoto classes
 use Mimoto\Mimoto;
+use Mimoto\Event\ConditionalTypes;
 use Mimoto\Event\MimotoEvent;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 // Symfony classes
 use Symfony\Component\EventDispatcher\Event;
@@ -90,11 +92,6 @@ class EventService
         $aActions = $this->getActionsByEvent($sEvent); //$this->_ActionService->getActionsByEvent($sEvent);
 
 
-        //Mimoto::error($event->getEntity()->getChanges());
-
-        //Mimoto::error($aActions);
-
-
         // trigger all actions
         $nActionCount = count($aActions);
         for ($nActionIndex = 0; $nActionIndex < $nActionCount; $nActionIndex++)
@@ -102,106 +99,138 @@ class EventService
             // register
             $action = $aActions[$nActionIndex];
 
-            // verify
-            //if (isset($this->_aServices[$action->service]))
-            //{
-                // setup
-                $config = (isset($action->config)) ? $action->config : (object) array();
-                
-                if ($action->service == 'Aimless')
-                {
-                    // call
-                    //$this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
-                    Mimoto::service('output')->handleRequest($action->request, $event->getEntity(), $config);
-                }
-                else if (isset($action->owner) && $action->owner == 'project')
-                {
+
+            // --- filter
 
 
-                    if (isset($action->service) && isset($action->service->name) && isset($action->function))
+            if (isset($action->conditionals) && is_array($action->conditionals) && count($action->conditionals) > 0)
+            {
+                // init
+                $bValidated = true;
+
+                // register
+                $eInstance = $event->getEntity();
+
+                // filter
+                $nConditionalCount = count($action->conditionals);
+                for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
+                {
+                    // register
+                    $conditional = $action->conditionals[$nConditionalIndex];
+
+                    // verify
+                    if (
+                        empty($conditional->propertyName) || empty($conditional->type)
+                        || !$eInstance->hasProperty($conditional->propertyName)
+                        || $eInstance->getPropertyType($conditional->propertyName) != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE
+                    )
                     {
-                        // 1. verify
-                        if (!class_exists($action->service->name))
+                        $bValidated = false;
+                        break;
+                    }
+
+                    // register
+                    $sPreviousValue = $eInstance->get($conditional->propertyName, false, true);
+                    $sNewValue = $eInstance->get($conditional->propertyName);
+
+                    // prepare
+                    $sValueToCompare = (!empty($conditional->value)) ? $conditional->value : '';
+
+                    // verify
+                    switch($conditional->type)
+                    {
+                        case ConditionalTypes::CHANGED:
+
+                            if ($sNewValue == $sPreviousValue) $bValidated = false;
+                            break;
+
+                        case ConditionalTypes::DID_NOT_CHANGE:
+
+                            if ($sNewValue != $sPreviousValue) $bValidated = false;
+                            break;
+
+                        case ConditionalTypes::CHANGED_INTO:
+
+                            if ($sNewValue != $sValueToCompare) $bValidated = false;
+                            break;
+
+                        case ConditionalTypes::CHANGED_FROM:
+
+                            if ($sNewValue != $sPreviousValue && $sPreviousValue != $sValueToCompare) $bValidated = false;
+                            break;
+
+                        case ConditionalTypes::EQUALS:
+
+                            if ($sNewValue != $sValueToCompare) $bValidated = false;
+                            break;
+                    }
+                }
+
+                // verify
+                if (!$bValidated) continue;
+            }
+
+
+            // --- filter (end) ---
+
+
+
+            // setup
+            $config = (isset($action->config)) ? $action->config : (object) array();
+
+            if ($action->service == 'Aimless')
+            {
+                // call
+                //$this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
+                Mimoto::service('output')->handleRequest($action->request, $event->getEntity(), $config);
+            }
+            else if (isset($action->owner)  && ($action->owner == 'project' ||  $action->owner == 'Mimoto'))
+            {
+
+                switch($action->owner)
+                {
+                    case 'Mimoto':
+
+                        $sServicesPath = dirname(dirname(dirname(__FILE__))).'/services/';
+                        break;
+
+                    case 'project':
+
+                        $sServicesPath = Mimoto::value('ProjectConfig.root').Mimoto::value('ProjectConfig.serviceroot');
+                        break;
+                }
+
+
+                if (!empty($sServicesPath) && isset($action->service) && isset($action->service->name) && isset($action->function))
+                {
+                    // 1. verify
+                    if (!class_exists($action->service->name))
+                    {
+                        // a. prepare
+                        $sClassFile = $sServicesPath.$action->service->file;
+
+                        // b. verify
+                        if (file_exists($sClassFile))
                         {
-                            // a. prepare
-                            $sClassFile = Mimoto::value('ProjectConfig.root').Mimoto::value('ProjectConfig.serviceroot').$action->service->file;
-
-                            // b. verify
-                            if (file_exists($sClassFile))
-                            {
-                                // load
-                                require_once($sClassFile);
-                            }
-                        }
-
-                        // 2. init class
-                        $service = new $action->service->name;
-
-                        // 3. verify
-                        if (method_exists($service, $action->function))
-                        {
-                            // a. call and pass clone of settings (unserialize/serialize)
-                            call_user_func([$service, $action->function], $event->getEntity(), unserialize(serialize($action->settings)));
+                            // load
+                            require_once($sClassFile);
                         }
                     }
 
+                    // 2. init class
+                    $service = new $action->service->name;
+
+                    // 3. verify
+                    if (method_exists($service, $action->function))
+                    {
+                        // a. call and pass clone of settings (unserialize/serialize)
+                        call_user_func([$service, $action->function], $event->getEntity(), unserialize(serialize($action->settings)));
+                    }
                 }
 
-            //}
-            
+            }
+
         }
-
-        
-        /* 
-        
-        // init
-        $trigger = (object) array();
-        
-        $trigger->event = 'client.created';
-        
-        $trigger->action = (object) array();
-        $trigger->action->service = 'MailService';
-        
-        $trigger->action->config = array();
-        $trigger->action->config['template.html'] = '/src/MaidoProjects/userinterface/templates/emails/welcome_html.twig';
-        $trigger->action->config['template.plaintext'] = '/src/MaidoProjects/userinterface/templates/emails/welcome_plaintext.twig';
-        
-        // simple . seperated syntax
-        
-        // store
-        $aTriggers[] = $trigger;
-        
-        
-        load eventlisteners json-configs in memcache
-        aparte classes voor maken
-        
-  
-        
-
-        
-        // #todo - property map Model
-        
-        // id = vast gegeven
-        // configs zijn low effort (event -> action, load config gegevens)
-        
-        */
-                
-        
-        
-         //generiek data event met types geschikt voor sequence handling
-        
-        //$this->_dispatcher->dispatch($sEvent, $event); // type in event, MimotoEvent
-        
-        
-        // schedule once (bijv. daily digest)
-        // tasklist heeft id, en individuele tasks worden individueel getracked
-        // uniek ID of niet (overwrite -> use Redis)
-        // WebeventService of in EventService
-        // sync, async, public
-        
-        //generieke EventListener handelt configs af
-        
-        //Hoe ziet een config eruit:
     }
     
      /**

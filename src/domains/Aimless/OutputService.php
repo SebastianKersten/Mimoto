@@ -643,12 +643,8 @@ class OutputService
         {
             case 'dataUpdate':                      $this->dataUpdate($data, $config); break;
             case 'dataCreate':                      $this->dataCreate($data, $config); break;
+
             case 'sendSlackNotification':           $this->sendSlackNotification($data, $config); break;
-            case 'createEntityTable':               Mimoto::service('config')->entityCreateTable($data); break;
-            case 'updateEntityTable':               Mimoto::service('config')->entityUpdateTable($data); break;
-            case 'onEntityPropertyCreated':         Mimoto::service('config')->onEntityPropertyCreated($data); break;
-            case 'onEntityPropertyUpdated':         Mimoto::service('config')->onEntityPropertyUpdated($data); break;
-            case 'onEntityPropertyDeleted':         Mimoto::service('config')->onEntityPropertyDeleted($data); break;
             case 'onEntityPropertySettingUpdated':  Mimoto::service('config')->onEntityPropertySettingUpdated($data); break;
             case 'onFormattingChanged':             $this->onFormattingChanged($data); break;
 
@@ -1125,7 +1121,7 @@ class OutputService
      * @param type $sEvent
      * @param type $data
      */
-    private function sendSlackNotification(MimotoEntity$entity, $config)
+    private function sendSlackNotification(MimotoEntity $entity, $config)
     {
         // 1. only works if Gearman properly set up
         if (!class_exists('\GearmanClient')) return;

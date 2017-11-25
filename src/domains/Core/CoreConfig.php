@@ -60,6 +60,8 @@ use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_defaultValue;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
+use Mimoto\Event\ConditionalTypes;
+use Mimoto\Event\EventService;
 use Mimoto\Mimoto;
 use Mimoto\Selection\SelectionRuleTypes;
 
@@ -133,7 +135,7 @@ class CoreConfig
     const MIMOTO_DATASET                        = '_Mimoto_dataset';
 
     // core data
-    const MIMOTO_COREDATA_KEYVALUE              = '_Mimoto_coreata_keyvalue';
+    const MIMOTO_COREDATA_KEYVALUE              = '_Mimoto_coredata_keyvalue';
 
     // forms
     const MIMOTO_FORM                           = '_Mimoto_form';
@@ -432,36 +434,7 @@ class CoreConfig
                 'request' => 'dataCreate',
                 'type' => 'async'
             ),
-            (object) array(
-                'trigger' => CoreConfig::MIMOTO_ENTITY.'.created', // #todo - move 'created' etc to const class
-                'service' => 'Aimless',
-                'request' => 'createEntityTable',
-                'type' => 'sync'
-            ),
-            (object) array(
-                'trigger' => CoreConfig::MIMOTO_ENTITY.'.updated',
-                'service' => 'Aimless',
-                'request' => 'updateEntityTable',
-                'type' => 'sync'
-            ),
-            (object) array(
-                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTY.'.created',
-                'service' => 'Aimless',
-                'request' => 'onEntityPropertyCreated',
-                'type' => 'sync'
-            ),
-            (object) array(
-                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTY.'.deleted',
-                'service' => 'Aimless',
-                'request' => 'onEntityPropertyDeleted',
-                'type' => 'sync'
-            ),
-            (object) array(
-                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTY.'.updated',
-                'service' => 'Aimless',
-                'request' => 'onEntityPropertyUpdated',
-                'type' => 'sync'
-            ),
+
             (object) array(
                 'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'.updated',
                 'service' => 'Aimless',
@@ -537,7 +510,94 @@ class CoreConfig
                 'notes' => array(
                     "voor admin user, send all. Add 'except'. Wildcard"
                 )
+            ),
+
+
+            // ----------
+
+
+            (object) array(
+                'owner' => 'Mimoto',
+                'trigger' => [CoreConfig::MIMOTO_ENTITY.'.'.CoreConfig::DATA_EVENT_CREATED, CoreConfig::MIMOTO_COMPONENT.'.'.CoreConfig::DATA_EVENT_CREATED],
+                'conditionals' => [],
+                'service' => (object) array(
+                    'name' => 'CoreData',
+                    'file' => 'CoreData/CoreData.php',
+                ),
+                'function' => 'createTable',
+                'type' => 'sync',
+                'settings' => (object) array()
+            ),
+
+            (object) array(
+                'owner' => 'Mimoto',
+                'trigger' => [CoreConfig::MIMOTO_ENTITY.'.'.CoreConfig::DATA_EVENT_UPDATED, CoreConfig::MIMOTO_COMPONENT.'.'.CoreConfig::DATA_EVENT_UPDATED],
+                'conditionals' => [
+                    (object) array('propertyName' => 'name', 'event' => 'changed')
+                ],
+                'service' => (object) array(
+                    'name' => 'CoreData',
+                    'file' => 'CoreData/CoreData.php',
+                ),
+                'function' => 'renameTable',
+                'type' => 'sync',
+                'settings' => (object) array()
+            ),
+
+            (object) array(
+                'owner' => 'Mimoto',
+                'trigger' => [CoreConfig::MIMOTO_ENTITY.'.'.CoreConfig::DATA_EVENT_DELETED, CoreConfig::MIMOTO_COMPONENT.'.'.CoreConfig::DATA_EVENT_DELETED],
+                'conditionals' => [],
+                'service' => (object) array(
+                    'name' => 'CoreData',
+                    'file' => 'CoreData/CoreData.php',
+                ),
+                'function' => 'deleteTable',
+                'type' => 'sync',
+                'settings' => (object) array()
+            ),
+
+
+            (object) array(
+                'owner' => 'Mimoto',
+                'trigger' => [CoreConfig::MIMOTO_ENTITYPROPERTY.'.'.CoreConfig::DATA_EVENT_CREATED],
+                'conditionals' => [],
+                'service' => (object) array(
+                    'name' => 'CoreData',
+                    'file' => 'CoreData/CoreData.php',
+                ),
+                'function' => 'createProperty',
+                'type' => 'sync',
+                'settings' => (object) array()
+            ),
+
+            (object) array(
+                'owner' => 'Mimoto',
+                'trigger' => [CoreConfig::MIMOTO_ENTITYPROPERTY.'.'.CoreConfig::DATA_EVENT_UPDATED],
+                'conditionals' => [],
+                'service' => (object) array(
+                    'name' => 'CoreData',
+                    'file' => 'CoreData/CoreData.php',
+                ),
+                'function' => 'updateProperty',
+                'type' => 'sync',
+                'settings' => (object) array()
+            ),
+
+            (object) array(
+                'owner' => 'Mimoto',
+                'trigger' => [CoreConfig::MIMOTO_ENTITYPROPERTY.'.'.CoreConfig::DATA_EVENT_DELETED],
+                'conditionals' => [],
+                'service' => (object) array(
+                    'name' => 'CoreData',
+                    'file' => 'CoreData/CoreData.php',
+                ),
+                'function' => 'updateDelete',
+                'type' => 'sync',
+                'settings' => (object) array()
             )
+
+
         ];
 
         // send
@@ -681,11 +741,26 @@ class CoreConfig
                 'label' => 'All core data manipulation events',
                 'rules' => [],
                 'data' => [
-                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-CREATED'),
-                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-UPDATED'),
-                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-events-DELETED')
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-CREATED'),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-UPDATED'),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-event-DELETED')
+                ]
+            ),
+
+            (object) array(
+                'id' => CoreConfig::CORE_PREFIX . 'all_conditionaltypes',
+                'name' => CoreConfig::CORE_PREFIX . 'all_conditionaltypes',
+                'label' => 'All core conditional types',
+                'rules' => [],
+                'data' => [
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_INTO),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_FROM),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::EQUALS),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::DID_NOT_CHANGE)
                 ]
             )
+
         ];
 
         // send
@@ -696,7 +771,7 @@ class CoreConfig
     {
         // #todo - make generic
 
-        //Mimoto::error($sEntityTypeName);
+        //Mimoto::output($sEntityTypeName);
 
         switch($sEntityTypeName)
         {

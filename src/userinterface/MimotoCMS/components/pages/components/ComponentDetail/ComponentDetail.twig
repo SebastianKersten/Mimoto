@@ -2,7 +2,8 @@
 
     {% block tabs %}
 
-        <div data-mimotocms-tabmenu-tab>Component structure</div>
+        <div data-mimotocms-tabmenu-tab>Structure</div>
+        <div data-mimotocms-tabmenu-tab>Properties</div>
 
     {% endblock %}
 
@@ -15,14 +16,18 @@
                 <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta">
                     <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_info">
 
-                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
+                        <div class="MimotoCMS_pages_components_ComponentDetail_Structure__namecontainer">
+                            {{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'name', sFieldClass:'MimotoCMS_pages_components_ComponentDetail_Structure__name' }) }}
+                        </div>
+
+                        {#<div class="MimotoCMS_pages_components_ComponentDetail_Structure__layoutname" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>#}
                         <div class="MimotoCMS_pages_components_ComponentDetail_Structure__componenttype" {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</div>
 
                     </div>
 
-                    <div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', type:'secondary', directive:Mimoto.edit('_Mimoto_component') }) }}
-                    </div>
+                    {#<div class="MimotoCMS_pages_components_ComponentDetail_Structure__meta_menu">#}
+                        {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', type:'secondary', directive:Mimoto.edit('_Mimoto_component') }) }}#}
+                    {#</div>#}
 
                 </div>
 
@@ -64,6 +69,8 @@
 
             </div>
         </div>
+
+        <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">{{ Mimoto.module('MimotoCMS_modules_PropertyInput', { type:'component' }) }}</div>
 
     {% endblock %}
 {% endembed %}
