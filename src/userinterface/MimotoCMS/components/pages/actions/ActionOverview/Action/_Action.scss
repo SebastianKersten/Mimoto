@@ -76,6 +76,11 @@ div.MimotoCMS_actions_ActionOverview_Action-info {
 
 div.MimotoCMS_actions_ActionOverview_Action-menu {
     float: right;
+
+    & > .MimotoCMS_actions_ActionOverview_Action-menuitem {
+        display: inline-block;
+        margin-top: 4px;
+    }
 }
 
 div.MimotoCMS_modules_ListItem-sorthandlecontainer {

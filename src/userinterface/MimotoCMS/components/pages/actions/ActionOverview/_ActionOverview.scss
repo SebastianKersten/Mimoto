@@ -2,6 +2,11 @@
 @import 'ActionConditional/ActionConditional';
 @import 'ActionSetting/ActionSetting';
 
+
+div.MimotoCMS_pages_actions_ActionOverview {
+    padding: 0 0 35px 0;
+}
+
 div.MimotoCMS_pages_actions_ActionOverview__container {
 
     display: flex;
@@ -17,10 +22,10 @@ div.MimotoCMS_pages_actions_ActionOverview__container {
         margin-right: 5px;
     }
 
-    //&>div:last-child {
-    //    margin-bottom: 0;
-    //    margin-right: 0;
-    //}
+    & > div:last-child {
+        margin-bottom: 0;
+        margin-right: 0;
+    }
 }
 
 div.MimotoCMS_pages_actions_ActionOverview-intro {

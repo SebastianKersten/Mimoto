@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "0406d45530d5ff7fbde6";
+/******/ 	__webpack_require__.h = "83e93dbb397396c9e8d4";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -18147,7 +18147,7 @@ module.exports.prototype = {
                     Mimoto.utils.removeComponent(elementToReplace);
 
                     // register directives
-                    Mimoto.display.parseInterface(element.parentNode);
+                    Mimoto.display.parseInterface(element);
                 }
             }
         };
@@ -19601,9 +19601,12 @@ module.exports.prototype = {
 
         // 4. verify
         var elOriginalParent = null;
+        var nOriginalIndex = null;
         if (element !== document) {
             // archive
             elOriginalParent = element.parentNode;
+            var nodes = Array.prototype.slice.call(elOriginalParent.children);
+            nOriginalIndex = nodes.indexOf(element);
 
             // a. create container
             elSearchableContainer = document.createElement('div');
@@ -19626,7 +19629,13 @@ module.exports.prototype = {
         }
 
         // restore original parent
-        if (element !== document) elOriginalParent.appendChild(element);
+        if (element !== document) {
+            if (nOriginalIndex >= elOriginalParent.children.length) {
+                elOriginalParent.appendChild(element);
+            } else {
+                elOriginalParent.insertBefore(element, elOriginalParent.children[nOriginalIndex]);
+            }
+        }
 
         // 6. send
         return aDirectives;

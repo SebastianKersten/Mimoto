@@ -191,7 +191,22 @@ class CoreDataKeyValue
             else return $eInstance;
         }
 
-        // 9. Conditional type: DID_NOT_CHANGE
+        // 9. Conditional type: NOT_EQUALS
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::NOT_EQUALS)
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_COREDATA_KEYVALUE);
+            $eInstance->setId(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::NOT_EQUALS);
+            $eInstance->set('label', 'Not equals');
+            $eInstance->set('key', ConditionalTypes::NOT_EQUALS);
+            $eInstance->set('value', ConditionalTypes::NOT_EQUALS);
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 10. Conditional type: DID_NOT_CHANGE
         if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::DID_NOT_CHANGE)
         {
             // a. init
@@ -207,7 +222,7 @@ class CoreDataKeyValue
         }
 
 
-        // 10. send
+        // 11. send
         return $aData;
     }
 

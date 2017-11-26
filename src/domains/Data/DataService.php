@@ -357,8 +357,11 @@ class DataService
      * Delete entity via main repository
      * @param MimotoEntity $entity
      */
-    public function delete(MimotoEntity $entity, $nConnectionId = null)
+    public function delete(MimotoEntity $entity = null, $nConnectionId = null)
     {
+        // validate
+        if (empty($entity)) return false;
+
         // verify
         if (!isset($this->_aEntityConfigs[$entity->getEntityTypeName()]))
         {

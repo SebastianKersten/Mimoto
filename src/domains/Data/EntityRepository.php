@@ -149,7 +149,7 @@ class EntityRepository
             if (count($aResults) !== 1)
             {
 
-                Mimoto::service('log')->silent("Entity not found", "Sorry, I can't find the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
+                //Mimoto::service('log')->silent("Entity not found", "Sorry, I can't find the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
                 return null;
             }
             else
@@ -634,92 +634,91 @@ class EntityRepository
      * Delete entity
      * @param entity $entity
      */
-    public function delete(EntityConfig $entityConfig, MimotoEntity $entity, $nConnectionId = null)
+    public function delete(EntityConfig $entityConfig, MimotoEntity $eInstance = null, $nConnectionId = null)
     {
-        // 1. init
-        $bDeleteForever = false;
+        // 1. validate
+        if (empty($eInstance) || empty($nConnectionId)) return;
 
-        // 2. verify
-        if (!empty($nConnectionId))
+
+        // ---
+
+
+        // 2. search
+        $connection = MimotoDataUtils::getConnectionById($nConnectionId);
+
+        // 3. validate
+        if (empty($connection)) return false;
+
+        // 4. get parent
+        $eParent = Mimoto::service('data')->get($connection->getParentEntityTypeName(), $connection->getParentId());
+
+
+
+        // --- broadcast ---
+
+
+        // 5. setup
+        $event = new MimotoEvent($eInstance, MimotoEvent::DELETED);
+
+        // 6. broadcast
+        $this->_EventService->sendUpdate($event->getType(), $event);
+
+
+        // --- broadcast - end ---
+
+
+        // 7. register
+        $sPropertyName = $connection->getParentPropertyName();
+
+        // remove
+        switch($eParent->getPropertyType($sPropertyName))
         {
-            // 1. search
-            $connection = MimotoDataUtils::getConnectionById($nConnectionId);
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-            // 2. get parent
-            $eParent = Mimoto::service('data')->get($connection->getParentEntityTypeName(), $connection->getParentId());
+                $eParent->set($sPropertyName, null);
+                break;
 
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-            // --- broadcast --- # todo - needs refactoring
-            // #todo (issue - on top of this function the event gets called twice, probably via cleanup parents)
-
-            // setup
-            $event = new MimotoEvent($entity, MimotoEvent::DELETED);
-
-            // broadcast
-            $this->_EventService->sendUpdate($event->getType(), $event);
-
-
-            // --- broadcast - end ---
-
-
-            // 3. register
-            $sPropertyName = $connection->getParentPropertyName();
-
-            // remove
-            switch($eParent->getPropertyType($sPropertyName))
-            {
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-
-                    $eParent->set($sPropertyName, null);
-                    break;
-
-                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-
-                    $eParent->remove($sPropertyName, $connection);
-                    break;
-            }
-
-            // store
-            Mimoto::service('data')->store($eParent);
-
-
-            // ---
-
-
-            // load
-            $aParents = $this->getAllParents($entity);
-
-            // verify and toggle
-            if (count($aParents) == 0) $bDeleteForever = true;
-        }
-        else {
-            // cleanup parent
-            $this->cleanupParents($entity);
-
-            // toggle
-            $bDeleteForever = true;
+                $eParent->remove($sPropertyName, $connection);
+                break;
         }
 
+        // store
+        Mimoto::service('data')->store($eParent);
 
-        // verify
-        if ($bDeleteForever)
+
+        // ---
+
+
+        // load
+        $aParents = $this->getAllParents($eInstance);
+
+        // verify and toggle
+        if (
+            count($aParents) == 0 ||
+            $connection->getParentEntityTypeName() == CoreConfig::MIMOTO_ROOT ||
+            $connection->getParentEntityTypeName() == CoreConfig::MIMOTO_DATASET ||
+            $connection->getParentEntityTypeName() == CoreConfig::MIMOTO_ENTITY ||
+            $connection->getParentEntityTypeName() == CoreConfig::MIMOTO_COMPONENT
+        )
         {
             // cleanup children
-            $this->cleanupChildren($entity);
+            $this->cleanupChildren($eInstance);
 
             // cleanup entity
             $stmt = Mimoto::service('database')->prepare('DELETE FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
             $params = array(
-                ':id' => $entity->getId()
+                ':id' => $eInstance->getId()
             );
             $stmt->execute($params);
         }
     }
 
-    private function cleanupParents(MimotoEntity $entity)
+    private function cleanupParents(MimotoEntity $eInstance)
     {
         // load
-        $aParents = $this->getAllParents($entity);
+        $aParents = $this->getAllParents($eInstance);
 
         // parse
         $nParentCount = count($aParents);
@@ -741,7 +740,7 @@ class EntityRepository
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                        $parent->entity->removeValue($parent->propertyName, $entity);
+                        $parent->entity->removeValue($parent->propertyName, $eInstance);
                         break;
                 }
 
@@ -751,7 +750,7 @@ class EntityRepository
         }
     }
 
-    private function getAllParents(MimotoEntity $entity)
+    private function getAllParents(MimotoEntity $eInstance)
     {
         // init
         $aParentEntities = [];
@@ -764,8 +763,8 @@ class EntityRepository
             "ORDER BY parent_id ASC, sortindex ASC"
         );
         $params = array(
-            ':child_entity_type_id' => $entity->getEntityTypeId(),
-            ':child_id' => $entity->getId()
+            ':child_entity_type_id' => $eInstance->getEntityTypeId(),
+            ':child_id' => $eInstance->getId()
         );
         $stmt->execute($params);
 
@@ -801,10 +800,10 @@ class EntityRepository
         return $aParentEntities;
     }
 
-    private function cleanupChildren(MimotoEntity $entity)
+    private function cleanupChildren(MimotoEntity $eInstance)
     {
         // load
-        $aChildren = $this->getAllChildren($entity);
+        $aChildren = $this->getAllChildren($eInstance);
 
         // parse
         $nChildCount = count($aChildren);
@@ -818,17 +817,17 @@ class EntityRepository
             {
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-                    $entity->setValue($child->parentPropertyName, null);
+                    $eInstance->setValue($child->parentPropertyName, null);
                     break;
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                    $entity->removeValue($child->parentPropertyName, $child->entity);
+                    $eInstance->removeValue($child->parentPropertyName, $child->entity);
                     break;
             }
 
             // store
-            Mimoto::service('data')->store($entity);
+            Mimoto::service('data')->store($eInstance);
 
             // load
             $aParents = $this->getAllParents($child->entity);
@@ -846,7 +845,7 @@ class EntityRepository
 
     }
 
-    private function getAllChildren(MimotoEntity $entity)
+    private function getAllChildren(MimotoEntity $eInstance)
     {
         // init
         $aChildEntities = [];
@@ -859,8 +858,8 @@ class EntityRepository
             "ORDER BY parent_id ASC, sortindex ASC"
         );
         $params = array(
-            ':parent_entity_type_id' => $entity->getEntityTypeId(),
-            ':parent_id' => $entity->getId()
+            ':parent_entity_type_id' => $eInstance->getEntityTypeId(),
+            ':parent_id' => $eInstance->getId()
         );
         $stmt->execute($params);
 
@@ -1162,14 +1161,14 @@ class EntityRepository
         $stmt->execute($params);
     }
 
-    private function removeItemFromCollection($sDBTable, MimotoEntityConnection $existingItem)
+    private function removeItemFromCollection($sDBTable, MimotoEntityConnection $connection)
     {
         // load
         $stmt = Mimoto::service('database')->prepare(
             'DELETE FROM `'.$sDBTable.'` WHERE id = :id'
         );
         $params = array(
-            ':id' => $existingItem->getId()
+            ':id' => $connection->getId()
         );
         $stmt->execute($params);
 
@@ -1177,7 +1176,7 @@ class EntityRepository
         // --- cleanup file if no other connections ---
 
         // read
-        $eEntity = Mimoto::service('data')->get($existingItem->getChildEntityTypeName(), $existingItem->getChildId());
+        $eEntity = Mimoto::service('data')->get($connection->getChildEntityTypeName(), $connection->getChildId());
         $aParents = $this->getAllParents($eEntity);
 
         // verify and cleanup

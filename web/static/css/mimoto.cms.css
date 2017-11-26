@@ -6870,6 +6870,9 @@ div.MimotoCMS_actions_ActionOverview_Action-settings {
 
 div.MimotoCMS_actions_ActionOverview_Action-menu {
   float: right; }
+  div.MimotoCMS_actions_ActionOverview_Action-menu > .MimotoCMS_actions_ActionOverview_Action-menuitem {
+    display: inline-block;
+    margin-top: 4px; }
 
 div.MimotoCMS_modules_ListItem-sorthandlecontainer {
   display: inline-block;
@@ -7144,6 +7147,9 @@ span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem {
 span.MimotoCMS_actions_ActionOverview_ActionSetting-menuitem-move {
   cursor: move; }
 
+div.MimotoCMS_pages_actions_ActionOverview {
+  padding: 0 0 35px 0; }
+
 div.MimotoCMS_pages_actions_ActionOverview__container {
   display: -webkit-box;
   display: -webkit-flex;
@@ -7166,6 +7172,9 @@ div.MimotoCMS_pages_actions_ActionOverview__container {
   div.MimotoCMS_pages_actions_ActionOverview__container > div {
     margin-bottom: 5px;
     margin-right: 5px; }
+  div.MimotoCMS_pages_actions_ActionOverview__container > div:last-child {
+    margin-bottom: 0;
+    margin-right: 0; }
 
 div.MimotoCMS_pages_actions_ActionOverview-intro {
   max-width: 500px; }

@@ -569,7 +569,8 @@ class MimotoDataUtils
         // load
         $aResults = $stmt->fetchAll();
 
-        if (count($aResults) != 1) Mimoto::service('log')->error("Connection not found", "The connection with id=`$nConnectionId` cannot be found", true);
+        // validate
+        if (count($aResults) != 1) return null;
 
         // read
         $connectionData = $aResults[0];

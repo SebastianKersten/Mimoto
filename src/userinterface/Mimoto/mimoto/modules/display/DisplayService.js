@@ -419,10 +419,13 @@ module.exports.prototype = {
 
         // 4. verify
         let elOriginalParent = null;
+        let nOriginalIndex = null;
         if (element !== document)
         {
             // archive
             elOriginalParent = element.parentNode;
+            let nodes = Array.prototype.slice.call(elOriginalParent.children);
+            nOriginalIndex = nodes.indexOf(element);
 
             // a. create container
             elSearchableContainer = document.createElement('div');
@@ -446,7 +449,17 @@ module.exports.prototype = {
         }
 
         // restore original parent
-        if (element !== document) elOriginalParent.appendChild(element);
+        if (element !== document)
+        {
+            if (nOriginalIndex >= elOriginalParent.children.length)
+            {
+                elOriginalParent.appendChild(element)
+            }
+            else
+            {
+                elOriginalParent.insertBefore(element, elOriginalParent.children[nOriginalIndex])
+            }
+        }
 
         // 6. send
         return aDirectives;
@@ -1128,7 +1141,6 @@ module.exports.prototype = {
         Mimoto.log('data', data);
 
 
-
         // compose
         let sEntitySelector = data.entityType + '.' + data.entityId;
 
@@ -1158,6 +1170,7 @@ module.exports.prototype = {
                     {
                         // register
                         let directive = aDirectives[nElementIndex];
+
 
                         //Mimoto.log('---------- directive', directive.sDirective, 'for', directive.sPropertySelector, directive);
 

@@ -757,6 +757,7 @@ class CoreConfig
                     CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_INTO),
                     CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_FROM),
                     CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::EQUALS),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::NOT_EQUALS),
                     CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::DID_NOT_CHANGE)
                 ]
             )

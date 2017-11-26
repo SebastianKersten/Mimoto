@@ -157,7 +157,7 @@ module.exports.prototype = {
                     Mimoto.utils.removeComponent(elementToReplace);
 
                     // register directives
-                    Mimoto.display.parseInterface(element.parentNode);
+                    Mimoto.display.parseInterface(element);
                 }
             }
         };

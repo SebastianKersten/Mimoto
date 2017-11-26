@@ -143,12 +143,7 @@ class EventService
 
                             if ($sNewValue == $sPreviousValue) $bValidated = false;
                             break;
-
-                        case ConditionalTypes::DID_NOT_CHANGE:
-
-                            if ($sNewValue != $sPreviousValue) $bValidated = false;
-                            break;
-
+                        
                         case ConditionalTypes::CHANGED_INTO:
 
                             if ($sNewValue != $sValueToCompare) $bValidated = false;
@@ -162,6 +157,16 @@ class EventService
                         case ConditionalTypes::EQUALS:
 
                             if ($sNewValue != $sValueToCompare) $bValidated = false;
+                            break;
+
+                        case ConditionalTypes::NOT_EQUALS:
+
+                            if ($sNewValue == $sValueToCompare) $bValidated = false;
+                            break;
+
+                        case ConditionalTypes::DID_NOT_CHANGE:
+
+                            if ($sNewValue != $sPreviousValue) $bValidated = false;
                             break;
                     }
                 }

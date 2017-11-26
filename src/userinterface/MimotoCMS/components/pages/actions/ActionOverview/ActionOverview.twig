@@ -1,14 +1,16 @@
-{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new action', icon:'plus', directive:Mimoto.create('actions', '_Mimoto_action'), types:['secondary'] }) }}
+<div class="MimotoCMS_pages_actions_ActionOverview">
 
-<div class="MimotoCMS_pages_actions_ActionOverview__container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('actions', 'MimotoCMS_actions_ActionOverview_Action') }}>
-    {{ Mimoto.data('actions', 'MimotoCMS_actions_ActionOverview_Action') }}
-</div>
+    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new action', icon:'plus', directive:Mimoto.create('actions', '_Mimoto_action'), types:['secondary'] }) }}
 
-<div class="MimotoCMS_pages_actions_ActionOverview-intro" {{ Mimoto.showWhenEmpty('actions') }}>
-    Add <b>actions</b> to your project!<br>
-    <br>
-    Actions are great to automate certain features of your project. Think for 
-    instance about sending out al welcome mail to a new user. Or a notification
-    when a certain property of an instance changed, like the state of an article
-    changed from 'draft' to 'published'.
+    <div class="MimotoCMS_pages_actions_ActionOverview__container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('actions', 'MimotoCMS_actions_ActionOverview_Action') }}>{{ Mimoto.data('actions', 'MimotoCMS_actions_ActionOverview_Action') }}</div>
+
+    <div class="MimotoCMS_pages_actions_ActionOverview-intro" {{ Mimoto.showWhenEmpty('actions') }}>
+        Add <b>actions</b> to your project!<br>
+        <br>
+        Actions are great to automate certain features of your project. Think for
+        instance about sending out al welcome mail to a new user. Or a notification
+        when a certain property of an instance changed, like the state of an article
+        changed from 'draft' to 'published'.
+    </div>
+
 </div>
