@@ -500,14 +500,10 @@ module.exports.prototype = {
 
 
                 // check if the directive relates to deep selection
-                if (directive.instructions && directive.instructions.origin)
+                if (directive.instructions && directive.instructions.originContainer && directive.instructions.originProperty)
                 {
-                    // verify or init
-                    if (!this._aOriginSelectors[directive.instructions.origin]) this._aOriginSelectors[directive.instructions.origin] = [];
-
-                    // register
-                    this._aOriginSelectors[directive.instructions.origin].push(directive);
-
+                    // store
+                    if (directive.instructions.origin) this._addOriginSelector(directive.instructions.origin, directive);
 
                     // verify or init
                     if (!this._aOriginContainerSelectors[directive.instructions.originContainer]) this._aOriginContainerSelectors[directive.instructions.originContainer] = [];
@@ -1347,29 +1343,38 @@ module.exports.prototype = {
                         // register
                         let directive = aDirectives[nDirectiveIndex];
 
-
-                        Mimoto.warn('Origin container change .. new sEntitySelector =', sEntitySelector, directive);
-
-
                         // validate
                         if (change.entity && change.entity.data && directive.instructions.originProperty && change.entity.data[directive.instructions.originProperty])
                         {
-                            // update
+                            // a. update
                             directive.element.innerHTML = change.entity.data[directive.instructions.originProperty];
+
+                            // b. verify
+                            if (!directive.instructions.origin)
+                            {
+                                // I. build
+                                let sOrigin = change.entity.connection.childEntityTypeName + '.' + change.entity.connection.childId + '.' + directive.instructions.originProperty;
+
+                                // II. add
+                                this._addOriginSelector(sOrigin, directive);
+                            }
                         }
                         else
                         if (!change.entity)
                         {
                             Mimoto.log('Entity is empty');
                             directive.element.innerHTML = '';
+
+
+                            // 1. cleanup origins
+
+                            //this._removeOriginSelector()
                         }
 
 
                         // 1. search similar sPropertySelector in _aOriginSelectors
                         // 2. check if same element
                         // 3. originProperty
-
-
 
 
                     }
@@ -1474,4 +1479,33 @@ module.exports.prototype = {
         // send
         return parent;
     },
+
+
+    _addOriginSelector: function(sOrigin, directive)
+    {
+        // verify or init
+        if (!this._aOriginSelectors[sOrigin]) this._aOriginSelectors[sOrigin] = [];
+
+        // register
+        this._aOriginSelectors[sOrigin].push(directive);
+    },
+
+    _removeOriginSelector: function(sOrigin, directive)
+    {
+        // 1. find and remove
+        let nCount = this._aOriginSelectors[sOrigin].length;
+        for (let nIndex = 0; nIndex < nCount; nIndex++)
+        {
+            if (this._aOriginSelectors[sOrigin][nIndex] === directive)
+            {
+                this._aOriginSelectors[sOrigin].splice(nIndex, 1);
+                break;
+            }
+        }
+
+        // 2. cleanup if empty
+        if (this._aOriginSelectors[sOrigin].length === 0) delete this._aOriginSelectors[sOrigin];
+
+    }
+
 }

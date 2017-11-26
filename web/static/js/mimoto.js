@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "425d35df1dbadb3ef4b0";
+/******/ 	__webpack_require__.h = "0406d45530d5ff7fbde6";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -19673,12 +19673,9 @@ module.exports.prototype = {
 
 
                 // check if the directive relates to deep selection
-                if (directive.instructions && directive.instructions.origin) {
-                    // verify or init
-                    if (!this._aOriginSelectors[directive.instructions.origin]) this._aOriginSelectors[directive.instructions.origin] = [];
-
-                    // register
-                    this._aOriginSelectors[directive.instructions.origin].push(directive);
+                if (directive.instructions && directive.instructions.originContainer && directive.instructions.originProperty) {
+                    // store
+                    if (directive.instructions.origin) this._addOriginSelector(directive.instructions.origin, directive);
 
                     // verify or init
                     if (!this._aOriginContainerSelectors[directive.instructions.originContainer]) this._aOriginContainerSelectors[directive.instructions.originContainer] = [];
@@ -20417,15 +20414,26 @@ module.exports.prototype = {
                         // register
                         var _directive3 = _aDirectives2[_nDirectiveIndex];
 
-                        Mimoto.warn('Origin container change .. new sEntitySelector =', sEntitySelector, _directive3);
-
                         // validate
                         if (change.entity && change.entity.data && _directive3.instructions.originProperty && change.entity.data[_directive3.instructions.originProperty]) {
-                            // update
+                            // a. update
                             _directive3.element.innerHTML = change.entity.data[_directive3.instructions.originProperty];
+
+                            // b. verify
+                            if (!_directive3.instructions.origin) {
+                                // I. build
+                                var sOrigin = change.entity.connection.childEntityTypeName + '.' + change.entity.connection.childId + '.' + _directive3.instructions.originProperty;
+
+                                // II. add
+                                this._addOriginSelector(sOrigin, _directive3);
+                            }
                         } else if (!change.entity) {
                             Mimoto.log('Entity is empty');
                             _directive3.element.innerHTML = '';
+
+                            // 1. cleanup origins
+
+                            //this._removeOriginSelector()
                         }
 
                         // 1. search similar sPropertySelector in _aOriginSelectors
@@ -20513,7 +20521,30 @@ module.exports.prototype = {
 
         // send
         return parent;
+    },
+
+    _addOriginSelector: function _addOriginSelector(sOrigin, directive) {
+        // verify or init
+        if (!this._aOriginSelectors[sOrigin]) this._aOriginSelectors[sOrigin] = [];
+
+        // register
+        this._aOriginSelectors[sOrigin].push(directive);
+    },
+
+    _removeOriginSelector: function _removeOriginSelector(sOrigin, directive) {
+        // 1. find and remove
+        var nCount = this._aOriginSelectors[sOrigin].length;
+        for (var nIndex = 0; nIndex < nCount; nIndex++) {
+            if (this._aOriginSelectors[sOrigin][nIndex] === directive) {
+                this._aOriginSelectors[sOrigin].splice(nIndex, 1);
+                break;
+            }
+        }
+
+        // 2. cleanup if empty
+        if (this._aOriginSelectors[sOrigin].length === 0) delete this._aOriginSelectors[sOrigin];
     }
+
 };
 
 /***/ }),
