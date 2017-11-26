@@ -27,8 +27,12 @@ div.MimotoCMS_actions_ActionOverview_ActionConditional-data {
         margin-right: 5px;
     }
 
-    & > div:last-child {
+    & > div:nth-child(3) {
         margin-left: 3px;
+    }
+
+    & > div:nth-child(4) {
+        margin-left: 40px;
     }
 }
 

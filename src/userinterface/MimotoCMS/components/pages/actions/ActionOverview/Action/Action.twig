@@ -21,7 +21,7 @@
                 <div class="MimotoCMS_actions_ActionOverview_Action-section">
                     <div class="MimotoCMS_actions_ActionOverview_Action-section-label">WHEN</div>
                     <div class="MimotoCMS_actions_ActionOverview_Action-section-data">
-                        {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select entity', sEntityName:'entity', sSelectionName:'_Mimoto_all_entities', sValuePropertySelector:'entity.name' }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select entity', sEntityName:'entity', sSelectionName:'_Mimoto_all_entities', sValuePropertySelector:'entity.name', options:{onChange:[['clear','conditionals']]} }) }}
                         {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sHideWhenEmpty:'entity', sEmptyLabel:'select event', sEntityName:'event', sSelectionName:'_Mimoto_all_core_events', sValuePropertySelector:'event' }) }}
                     </div>
                 </div>
@@ -45,14 +45,14 @@
                     <div class="MimotoCMS_actions_ActionOverview_Action-section">
                         <div class="MimotoCMS_actions_ActionOverview_Action-section-label">THEN</div>
                         <div class="MimotoCMS_actions_ActionOverview_Action-section-data">
-                            {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select service', sEntityName:'service', sSelectionName:'_Mimoto_all_public_services', sValuePropertySelector:'service.name' }) }}
-                            {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sHideWhenEmpty:'service', sEmptyLabel:'select function', sEntityName:'function', sSelectionName:'_Mimoto_all_functions_of_service', selectionSettings:{ vars: { idVarName:Mimoto.meta('service.id') } }, sValuePropertySelector:'function.name' }) }}
+                            {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select service', sEntityName:'service', sSelectionName:'_Mimoto_all_public_services', sValuePropertySelector:'service.name', options:{onChange:[['clear','function']]} }) }}
+                            {{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sHideWhenEmpty:'service', sEmptyLabel:'select function', sEntityName:'function', sSelectionName:'_Mimoto_all_functions_of_service', options:{vars:{idVarName:Mimoto.meta('service.id') } }, sValuePropertySelector:'function.name' }) }}
                         </div>
                     </div>
                 </div>
 
-                <div class="MimotoCMS_actions_ActionOverview_Action-row">
-                    <div class="MimotoCMS_actions_ActionOverview_section" {{ Mimoto.hideWhenEmpty('function') }}>
+                <div class="MimotoCMS_actions_ActionOverview_Action-row" {{ Mimoto.hideWhenEmpty('function') }}>
+                    <div class="MimotoCMS_actions_ActionOverview_section">
                         <div class="MimotoCMS_actions_ActionOverview_Action-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('settings') }}>No settings, or <span class="MimotoCMS_actions_ActionOverview_Action-settings-addFirst" {{ Mimoto.add('settings', '_Mimoto_action_setting') }}>add a setting</span></div>
                         <div class="MimotoCMS_actions_ActionOverview_Action-section {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('settings') }}>
                             <div class="MimotoCMS_actions_ActionOverview_Action-section-label">WITH</div>

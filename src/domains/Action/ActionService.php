@@ -117,7 +117,8 @@ class ActionService
                 $actionConfig->conditionals[] = (object) array(
                     'propertyName' =>  $eActionConditional->getValue('entityProperty.name'),
                     'type' =>  $eActionConditional->getValue('type'),
-                    'value' =>  $eActionConditional->getValue('value')
+                    'value1' =>  $eActionConditional->getValue('value1'),
+                    'value2' =>  $eActionConditional->getValue('value2')
                 );
             }
 

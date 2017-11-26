@@ -134,7 +134,8 @@ class EventService
                     $sNewValue = $eInstance->get($conditional->propertyName);
 
                     // prepare
-                    $sValueToCompare = (!empty($conditional->value)) ? $conditional->value : '';
+                    $sValue1ToCompare = (!empty($conditional->value1)) ? $conditional->value1 : '';
+                    $sValue2ToCompare = (!empty($conditional->value2)) ? $conditional->value2 : '';
 
                     // verify
                     switch($conditional->type)
@@ -143,25 +144,30 @@ class EventService
 
                             if ($sNewValue == $sPreviousValue) $bValidated = false;
                             break;
-                        
+
                         case ConditionalTypes::CHANGED_INTO:
 
-                            if ($sNewValue != $sValueToCompare) $bValidated = false;
+                            if ($sNewValue == $sPreviousValue || $sNewValue != $sValue1ToCompare) $bValidated = false;
                             break;
 
                         case ConditionalTypes::CHANGED_FROM:
 
-                            if ($sNewValue != $sPreviousValue && $sPreviousValue != $sValueToCompare) $bValidated = false;
+                            if ($sNewValue == $sPreviousValue || $sPreviousValue != $sValue1ToCompare) $bValidated = false;
+                            break;
+
+                        case ConditionalTypes::CHANGED_FROM_INTO:
+
+                            if ($sNewValue == $sPreviousValue || $sPreviousValue != $sValue1ToCompare || $sNewValue != $sValue2ToCompare) $bValidated = false;
                             break;
 
                         case ConditionalTypes::EQUALS:
 
-                            if ($sNewValue != $sValueToCompare) $bValidated = false;
+                            if ($sNewValue != $sValue1ToCompare) $bValidated = false;
                             break;
 
-                        case ConditionalTypes::NOT_EQUALS:
+                        case ConditionalTypes::DOES_NOT_EQUAL:
 
-                            if ($sNewValue == $sValueToCompare) $bValidated = false;
+                            if ($sNewValue == $sValue1ToCompare) $bValidated = false;
                             break;
 
                         case ConditionalTypes::DID_NOT_CHANGE:

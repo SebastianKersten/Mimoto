@@ -17,7 +17,8 @@ class ConditionalTypes
     const DID_NOT_CHANGE = 'didNotChange';
     const CHANGED_INTO = 'changedInto';
     const CHANGED_FROM = 'changedFrom';
+    const CHANGED_FROM_INTO = 'changedFromInto';
     const EQUALS = 'equals';
-    const NOT_EQUALS = 'notEquals';
+    const DOES_NOT_EQUAL = 'doesNotEqual';
 
 }

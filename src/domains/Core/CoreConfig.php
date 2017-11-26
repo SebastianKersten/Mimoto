@@ -754,11 +754,12 @@ class CoreConfig
                 'rules' => [],
                 'data' => [
                     CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::DID_NOT_CHANGE),
                     CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_INTO),
                     CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_FROM),
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::CHANGED_FROM_INTO),
                     CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::EQUALS),
-                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::NOT_EQUALS),
-                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::DID_NOT_CHANGE)
+                    CoreDataKeyValue::getData(CoreConfig::MIMOTO_COREDATA_KEYVALUE.'-conditionaltype-'.ConditionalTypes::DOES_NOT_EQUAL)
                 ]
             )
 

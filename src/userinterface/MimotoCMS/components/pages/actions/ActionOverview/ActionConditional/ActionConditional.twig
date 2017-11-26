@@ -5,9 +5,10 @@
     <div class="MimotoCMS_actions_ActionOverview_ActionConditional" {{ Mimoto.realtime() }}>
 
         <div class="MimotoCMS_actions_ActionOverview_ActionConditional-data">
-            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select property', sEntityName:'entityProperty', sSelectionName:'_Mimoto_all_properties_of_entity', selectionSettings: {vars:{ idVarName:entityTypeId }}, sValuePropertySelector:'entityProperty.name' }) }}</div>
+            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select property', sEntityName:'entityProperty', sSelectionName:'_Mimoto_all_properties_of_entity', options:{vars:{idVarName:entityTypeId }}, sValuePropertySelector:'entityProperty.name' }) }}</div>
             <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select type', sEntityName:'type', sSelectionName:'_Mimoto_all_conditionaltypes', sValuePropertySelector:'type' }) }}</div>
-            <div>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'value', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
+            <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenValue('type', ['equals', 'changedInto', 'doesNotEqual', 'changedFrom', 'changedFromInto']) }}>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'value1', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
+            <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenValue('type', 'changedFromInto') }}>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'value2', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
         </div>
 
         <div class="MimotoCMS_actions_ActionOverview_ActionConditional-menu">

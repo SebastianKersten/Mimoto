@@ -7031,8 +7031,10 @@ div.MimotoCMS_actions_ActionOverview_ActionConditional-data {
         -ms-flex: none;
             flex: none;
     margin-right: 5px; }
-  div.MimotoCMS_actions_ActionOverview_ActionConditional-data > div:last-child {
+  div.MimotoCMS_actions_ActionOverview_ActionConditional-data > div:nth-child(3) {
     margin-left: 3px; }
+  div.MimotoCMS_actions_ActionOverview_ActionConditional-data > div:nth-child(4) {
+    margin-left: 40px; }
 
 div.MimotoCMS_actions_ActionOverview_ActionConditional-menu {
   -webkit-box-flex: 1;

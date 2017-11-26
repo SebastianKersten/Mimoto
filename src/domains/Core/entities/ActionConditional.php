@@ -57,9 +57,22 @@ class ActionConditional
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ACTION_CONDITIONAL.'--value',
+                    'id' => CoreConfig::MIMOTO_ACTION_CONDITIONAL.'--value1',
                     // ---
-                    'name' => 'value',
+                    'name' => 'value1',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ACTION_CONDITIONAL.'--value2',
+                    // ---
+                    'name' => 'value2',
                     'type' => CoreConfig::PROPERTY_TYPE_VALUE,
                     'settings' => [
                         'type' => (object) array(

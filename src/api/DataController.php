@@ -189,14 +189,18 @@ class DataController
         $selection = Mimoto::service('selection')->getSelection($xSelection);
 
         // 4. apply vars
-        if (!empty(($options)) && (isset($options->vars) || isset($options['vars'])))
+        if (!empty(($options)) && ((is_array($options) && isset($options['vars']) || isset($options->vars))))
         {
-            $aVars = (isset($options->vars)) ? $options->vars : $options['vars'];
+            // register
+            $aVars = (is_array($options) && isset($options['vars'])) ? $options['vars'] : $options->vars;
 
             foreach($aVars as $sKey => $sVarValue)
             {
                 $selection->applyVar($sKey, $sVarValue);
             }
+
+            // cleanup
+            unset($options->vars);
         }
 
         // 5. select
@@ -210,14 +214,15 @@ class DataController
         $popup = Mimoto::service('output')->create('MimotoCMS_layout_Selection');
 
         // 7. prepare
-        $options = (object) array(
+        $optionsForTemplate = (object) array(
             'values' => (object) array(
-                'sPropertySelector' => $sPropertySelector
+                'sPropertySelector' => $sPropertySelector,
+                'options' => $options
             )
         );
 
         // 8. fill
-        $popup->fillContainer('selection', $aInstances, 'MimotoCMS_components_selection_SelectableItem', $options);
+        $popup->fillContainer('selection', $aInstances, 'MimotoCMS_components_selection_SelectableItem', $optionsForTemplate);
 
         // 9. output
         return $popup->render();
@@ -228,11 +233,12 @@ class DataController
         // 1. load and convert
         $data = MimotoDataUtils::decodePostData($request->get('data'));
 
-        // 1. register
+        // 2. register
         $sPropertySelector = $data->sPropertySelector;
         $value = $data->value;
+        $options = (isset($data->options)) ? $data->options : null;
 
-        // 2. extract
+        // 3. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
         $nInstanceId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sPropertySelector);
         $sPropertyName = MimotoDataUtils::getPropertyFromFromEntityPropertySelector($sPropertySelector);
@@ -241,13 +247,13 @@ class DataController
         // ---
 
 
-        // 3. load
-        $eEntity = Mimoto::service('data')->get($sInstanceType, $nInstanceId);
+        // 4. load
+        $eInstance = Mimoto::service('data')->get($sInstanceType, $nInstanceId);
 
-        // 4. register
-        $sPropertyType = $eEntity->getPropertyType($sPropertyName);
+        // 5. register
+        $sPropertyType = $eInstance->getPropertyType($sPropertyName);
 
-        // 5. parse
+        // 6. parse
         switch($sPropertyType)
         {
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
@@ -267,10 +273,7 @@ class DataController
                 }
 
                 // update
-                $eEntity->setValue($sPropertyName, $value);
-
-                // store
-                Mimoto::service('data')->store($eEntity);
+                $eInstance->setValue($sPropertyName, $value);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
@@ -286,19 +289,51 @@ class DataController
                 // c. set value
                 if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY)
                 {
-                    $eEntity->setValue($sPropertyName, $eChild);
+                    $eInstance->setValue($sPropertyName, $eChild);
                 }
                 else
                 {
-                    $eEntity->addValue($sPropertyName, $eChild);
+                    $eInstance->addValue($sPropertyName, $eChild);
                 }
-
-                // d. store
-                Mimoto::service('data')->store($eEntity);
                 break;
         }
 
-        // 6. output
+
+        // manage changes
+        if (!empty(($options)) && !empty($eInstance->getChanges()) && ((is_array($options) && isset($options['onChange']) || isset($options->onChange))))
+        {
+            // register
+            $aOnChange = (is_array($options) && isset($options['onChange'])) ? $options['onChange'] : $options->onChange;
+
+            foreach($aOnChange as $nIndex => $sVarValue)
+            {
+                // register
+                $aDirective = $aOnChange[$nIndex];
+
+                // register
+                $sDirective = $aDirective[0];
+                $sPropertyName = $aDirective[1];
+                $value = (isset($aDirective[2])) ? $aDirective[2] : null;
+
+                switch($sDirective)
+                {
+                    case 'clear':
+
+                        $this->clearProperty($eInstance, $sPropertyName);
+                        break;
+
+                    case 'set': // #todo
+
+                        //$this->setProperty($eInstance, $sPropertyName, $value);
+                        break;
+                }
+            }
+        }
+
+        // store
+        Mimoto::service('data')->store($eInstance);
+
+        // 7. output
         return Mimoto::service('messages')->response('Value for '.$sPropertySelector.' set to '.$value);
     }
 
@@ -343,25 +378,13 @@ class DataController
         $sPropertyName = MimotoDataUtils::getPropertyFromFromEntityPropertySelector($sPropertySelector);
 
         // 4. load
-        $eEntity = Mimoto::service('data')->get($sInstanceType, $nInstanceId);
+        $eInstance = Mimoto::service('data')->get($sInstanceType, $nInstanceId);
 
-        // 5. clear
-        switch ($eEntity->getPropertyType($sPropertyName))
-        {
-            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-
-                $eEntity->setValue($sPropertyName, '');
-                break;
-
-            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
-            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
-
-                $eEntity->setValue($sPropertyName, null);
-                break;
-        }
+        // 5. clear property
+        $this->clearProperty($eInstance, $sPropertyName);
 
         // 6. store
-        Mimoto::service('data')->store($eEntity);
+        Mimoto::service('data')->store($eInstance);
 
         // 7. output
         return Mimoto::service('messages')->response("Value of property `$sPropertySelector` is cleared.");
@@ -414,4 +437,24 @@ class DataController
         return Mimoto::service('messages')->response("Value of property `$sPropertySelector` has been updated.");
     }
 
+
+
+
+    private function clearProperty($eInstance, $sPropertyName)
+    {
+        // 1. clear
+        switch ($eInstance->getPropertyType($sPropertyName))
+        {
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
+
+                $eInstance->setValue($sPropertyName, '');
+                break;
+
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+            case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                $eInstance->setValue($sPropertyName, null);
+                break;
+        }
+    }
 }
