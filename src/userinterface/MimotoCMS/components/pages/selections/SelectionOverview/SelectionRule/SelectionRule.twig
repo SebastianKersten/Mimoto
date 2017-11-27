@@ -1,0 +1,157 @@
+<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+
+    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-info">
+
+
+        {# --- body --- #}
+
+        <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-body">
+
+            <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row">
+                <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">
+                    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Type</div>
+                    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">
+                        <div {{ Mimoto.showWhenValue('typeAsVar', true) }}><span class="fa fa-square-o"></span></div>
+                        <div></div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select type', sEntityName:'type', sSelectionName:'_Mimoto_all_entities', sValuePropertySelector:'type.name' }) }}
+                        <div {{ Mimoto.showWhenValue('typeAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>
+                    </div>
+                </div>
+            </div>
+
+            {#<div {{ Mimoto.hideWhenEmpty('event') }}>#}
+
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row">#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('conditionals') }}>Optional: <span class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-addFirst" {{ Mimoto.create('conditionals', '_Mimoto_Selection_conditional') }}>add conditionals</span></div>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('conditionals') }}>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">AND</div>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRuleConditional') }}>#}
+            {#{{ Mimoto.data('conditionals', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRuleConditional', { customValues:{ entityTypeId:Mimoto.meta('entity.id') }} ) }}#}
+            {#</div>#}
+            {#</div>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-add" {{ Mimoto.hideWhenEmpty('conditionals') }} {{ Mimoto.create('conditionals', '_Mimoto_Selection_conditional') }}>add another conditional</div>#}
+            {#</div>#}
+
+
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row">#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">THEN</div>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">#}
+            {#{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select service', sEntityName:'service', sSelectionName:'_Mimoto_all_public_services', sValuePropertySelector:'service.name', options:{onChange:[['clear','function']]} }) }}#}
+            {#{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sHideWhenEmpty:'service', sEmptyLabel:'select function', sEntityName:'function', sSelectionName:'_Mimoto_all_functions_of_service', options:{vars:{idVarName:Mimoto.meta('service.id') } }, sValuePropertySelector:'function.name' }) }}#}
+            {#</div>#}
+            {#</div>#}
+            {#</div>#}
+
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row" {{ Mimoto.hideWhenEmpty('function') }}>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_section">#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('settings') }}>No settings, or <span class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-addFirst" {{ Mimoto.add('settings', '_Mimoto_Selection_setting') }}>add a setting</span></div>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('settings') }}>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">WITH</div>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings" {{ Mimoto.sortable() }} {{ Mimoto.realtime('settings', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRuleSetting') }}>{{ Mimoto.data('settings', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRuleSetting') }}</div>#}
+            {#</div>#}
+
+            {#</div>#}
+            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-add" {{ Mimoto.hideWhenEmpty('settings') }} {{ Mimoto.add('settings', '_Mimoto_Selection_setting') }}>add more settings</div>#}
+            {#</div>#}
+
+            {#</div>#}
+
+        </div>
+
+    </div>
+
+    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menu">
+        <span class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menuitem" {{ Mimoto.remove() }}><span class="fa fa-remove"></span></span>
+        <span class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menuitem-move" {{ Mimoto.sortHandle() }}><span class="fa fa-arrows"></span></span>
+    </div>
+</div>
+
+
+
+
+{#<div class="MimotoCMS_pages_selections_SelectionDetail-Rule" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>#}
+
+    {#<div class="MimotoCMS_pages_selections_SelectionDetail-Rule-data">#}
+
+
+
+
+        {#<div class="MimotoCMS_pages_selections_SelectionDetail-Rule-setting">#}
+
+        {#{% if Mimoto.data('typeAsVar') %}#}
+            {#Var name for type = {{ Mimoto.data('typeVarName') }}#}
+        {#{% else %}#}
+
+            {#{% if not Mimoto.empty('type') %}#}
+                {#Type = <span {{ Mimoto.realtime('type.name') }}>{{ Mimoto.data('type.name') }}</span>#}
+            {#{% else %}#}
+                {#No type selected yet ..#}
+            {#{% endif %}#}
+
+            {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select entity type', types:['small', 'secondary'], directive:Mimoto.select('type', '_Mimoto_all_entities') }) }}#}
+            {#<span {{ Mimoto.hideWhenEmpty('type') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'alert'], directive:Mimoto.clear('type') }) }}</span>#}
+
+        {#{% endif %}#}
+        {#</div>#}
+
+        {#{% if Mimoto.data('typeAsVar') or not Mimoto.isEmpty('type') %}#}
+            {#<div class="MimotoCMS_pages_selections_SelectionDetail-Rule-setting">#}
+            {#{% if Mimoto.data('idAsVar') %}#}
+                {#Var name for id = {{ Mimoto.data('idVarName') }}#}
+            {#{% else %}#}
+
+                {#{% if not Mimoto.empty('instance') %}#}
+                    {#Instance = <span>{{ Mimoto.meta('instance.id') }}</span>#}
+                {#{% else %}#}
+                    {#No instance selected yet ..#}
+                {#{% endif %}#}
+
+                {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select instance', types:['small', 'secondary'], directive:Mimoto.select('instance', '_Mimoto_all_instances_of_entity', { vars:{typeVarName:Mimoto.data('type.name')} }) }) }}#}
+                {#<span {{ Mimoto.hideWhenEmpty('instance') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'alert'], directive:Mimoto.clear('instance') }) }}</span>#}
+
+
+
+
+            {#{% endif %}#}
+            {#</div>#}
+        {#{% endif %}#}
+
+
+        {#{% if (Mimoto.data('typeAsVar') or not Mimoto.isEmpty('type')) and (Mimoto.data('idAsVar') or not Mimoto.isEmpty('instance')) %}#}
+
+            {#<div class="MimotoCMS_pages_selections_SelectionDetail-Rule-setting">#}
+                {#{% if Mimoto.data('propertyAsVar') %}#}
+                    {#Var name for property = {{ Mimoto.data('propertyVarName') }}#}
+                {#{% else %}#}
+
+                    {#{% if not Mimoto.empty('property') %}#}
+                        {#Property name = <span>{{ Mimoto.data('property.name') }}</span>#}
+                    {#{% else %}#}
+                        {#No property selected ..#}
+                    {#{% endif %}#}
+
+                    {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Select property', types:['small', 'secondary'], directive:Mimoto.select('property', '_Mimoto_all_properties_of_entity', { vars:{idVarName:Mimoto.meta('type.id')} }) }) }}#}
+                    {#<span {{ Mimoto.hideWhenEmpty('property') }}>{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Clear', types:['small', 'alert'], directive:Mimoto.clear('property') }) }}</span>#}
+
+                {#{% endif %}#}
+            {#</div>#}
+        {#{% endif %}#}
+
+
+
+        {#<br>#}
+        {#// 1. add values<br>#}
+        {#<br>#}
+        {#or<br>#}
+        {#<br>#}
+        {#// a. add property<br>#}
+        {#// b. add child types<br>#}
+        {#// c. add child values<br>#}
+        {#<br>#}
+
+    {#</div>#}
+    {#<div class="MimotoCMS_pages_selections_SelectionDetail-Rule-menu">#}
+        {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() }) }}#}
+        {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_selection_rule') }) }}#}
+    {#</div>#}
+{#</div>#}

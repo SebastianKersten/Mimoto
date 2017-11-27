@@ -25,7 +25,7 @@ class ActionController
         $page = Mimoto::service('output')->createPage($eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. create and connect content
-        $page->addComponent('content', Mimoto::service('output')->createComponent('MimotoCMS_actions_ActionOverview', $eRoot));
+        $page->addComponent('content', Mimoto::service('output')->createComponent('MimotoCMS_pages_actions_ActionOverview', $eRoot));
 
         // 3. setup page
         $page->setVar('pageTitle', array(

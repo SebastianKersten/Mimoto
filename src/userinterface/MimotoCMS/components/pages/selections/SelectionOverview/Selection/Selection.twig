@@ -1,0 +1,29 @@
+<div class="MimotoCMS_pages_selections_SelectionOverview_Selection" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+
+    <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-name">
+
+        <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-info">
+
+            <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-head">
+
+                <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-namecontainer">
+                    {{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'name', sFieldClass:'MimotoCMS_pages_selections_SelectionOverview_Selection-name' }) }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-menu">
+            <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-menuitem">{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove(), types:['secondary', 'alert', 'small'], icon:'' }) }}</div>
+            <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">{{ Mimoto.module('MimotoCMS_modules_SortHandle') }}</div>
+        </div>
+
+    </div>
+
+    <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-rules-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('rules') }}>No rules yet .. <span class="MimotoCMS_pages_selections_SelectionOverview_Selection-rules-addFirst" {{ Mimoto.create('rules', '_Mimoto_selection_rule') }}>add rule</span></div>
+    <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-rules {{ Mimoto.init() }}" {{ Mimoto.sortable() }} {{ Mimoto.hideWhenEmpty('rules') }} {{ Mimoto.realtime('rules', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRule') }}>{{ Mimoto.data('rules', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRule') }}</div>
+    <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-rules-add {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('rules') }} {{ Mimoto.create('rules', '_Mimoto_selection_rule') }}>add rule</div>
+</div>
+
+

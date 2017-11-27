@@ -1,13 +1,12 @@
-@import 'Action/Action';
-@import 'ActionConditional/ActionConditional';
-@import 'ActionSetting/ActionSetting';
+@import 'Selection/Selection';
+@import 'SelectionRule/SelectionRule';
 
 
-div.MimotoCMS_pages_actions_ActionOverview {
+div.MimotoCMS_pages_selections_SelectionOverview {
     padding: 0 0 35px 0;
 }
 
-div.MimotoCMS_pages_actions_ActionOverview-container {
+div.MimotoCMS_pages_selections_SelectionOverview-container {
 
     display: flex;
     flex-direction: row;
@@ -28,6 +27,6 @@ div.MimotoCMS_pages_actions_ActionOverview-container {
     }
 }
 
-div.MimotoCMS_pages_actions_ActionOverview-intro {
+div.MimotoCMS_pages_selections_SelectionOverview-intro {
     max-width: 500px;
 }

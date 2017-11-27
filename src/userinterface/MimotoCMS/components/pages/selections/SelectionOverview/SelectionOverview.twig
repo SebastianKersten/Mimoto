@@ -1,0 +1,15 @@
+<div class="MimotoCMS_pages_selections_SelectionOverview">
+
+    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new selection', icon:'plus', directive:Mimoto.create('selections', '_Mimoto_selection'), types:['secondary'] }) }}
+
+    <div class="MimotoCMS_pages_selections_SelectionOverview-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('selections', 'MimotoCMS_pages_selections_SelectionOverview_Selection') }}>{{ Mimoto.data('selections', 'MimotoCMS_pages_selections_SelectionOverview_Selection') }}</div>
+
+    <div class="MimotoCMS_pages_selections_SelectionOverview-intro {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('selections') }}>
+        Start adding <b>selections</b><br>
+        <br>
+        Adding selections to your project allow you to dynamically fetch preconfigured
+        sets of data from within every scope of your project. With the added benefit of
+        out of the box heavy caching.
+    </div>
+
+</div>
