@@ -19,6 +19,7 @@ class ConditionalTypes
     const CHANGED_FROM = 'changedFrom';
     const CHANGED_FROM_INTO = 'changedFromInto';
     const EQUALS = 'equals';
+    const CONTAINS = 'contains';
     const DOES_NOT_EQUAL = 'doesNotEqual';
 
 }

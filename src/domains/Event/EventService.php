@@ -170,6 +170,11 @@ class EventService
                             if ($sNewValue == $sValue1ToCompare) $bValidated = false;
                             break;
 
+                        case ConditionalTypes::CONTAINS:
+
+                            if (!preg_match('/'.$sValue1ToCompare.'/U', $sNewValue, $aMatches)) $bValidated = false;
+                            break;
+
                         case ConditionalTypes::DID_NOT_CHANGE:
 
                             if ($sNewValue != $sPreviousValue) $bValidated = false;
