@@ -93,7 +93,7 @@ class ActionService
 
             // b. build
             $actionConfig = (object) array(
-                'owner' => 'project',
+                'owner' => (!empty($eAction->get('service.owner'))) ? $eAction->get('service.owner') : 'project',
                 'trigger' => [$eAction->get('entity.name').'.'.$eAction->get('event')],
                 'conditionals' => [],
                 'service' => (object) array(
