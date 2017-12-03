@@ -20,6 +20,22 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 class MimotoDataUtils
 {
 
+    public static function buildSelector(...$aSelectorElements)
+    {
+        // 1/ init
+        $sSelector = '';
+
+        // 2. build
+        foreach ( $aSelectorElements as $aSelectorElement)
+        {
+            if (!empty($sSelector)) $sSelector .= '.';
+            $sSelector .= $aSelectorElement;
+        }
+
+        // 3. send
+        return $sSelector;
+    }
+
     public static function validatePropertyName($sPropertyName)
     {
         return preg_match("/^[a-zA-Z-_][a-zA-Z0-9-_]*(\.[a-zA-Z-_][a-zA-Z0-9_-]*)*$/", $sPropertyName);

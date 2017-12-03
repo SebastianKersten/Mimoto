@@ -54,6 +54,8 @@ class Mimoto
     private static $_nExecutionTimeStart = null;
 
 
+    const MIMOTO = 'Mimoto';
+
     const DATA = 'data';
     const CONFIG = 'config';
     const AIMLESS = 'aimless';

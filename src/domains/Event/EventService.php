@@ -90,7 +90,7 @@ class EventService
         if (!($event instanceof MimotoEvent)) { return; }
         
         // load
-        $aActions = $this->getActionsByEvent($sEvent); //$this->_ActionService->getActionsByEvent($sEvent);
+        $aActions = $this->getActionsByEvent($sEvent);
 
 
         // trigger all actions
@@ -191,7 +191,6 @@ class EventService
             // --- filter (end) ---
 
 
-
             // setup
             $config = (isset($action->config)) ? $action->config : (object) array();
 
@@ -201,12 +200,12 @@ class EventService
                 //$this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
                 Mimoto::service('output')->handleRequest($action->request, $event->getEntity(), $config);
             }
-            else if (isset($action->owner)  && ($action->owner == 'project' ||  $action->owner == CoreConfig::CORE_PREFIX))
+            else if (isset($action->owner)  && ($action->owner == 'project' ||  $action->owner == Mimoto::MIMOTO))
             {
 
                 switch($action->owner)
                 {
-                    case CoreConfig::CORE_PREFIX:
+                    case Mimoto::MIMOTO:
 
                         $sServicesPath = dirname(dirname(dirname(__FILE__))).'/services/';
                         break;
@@ -267,7 +266,6 @@ class EventService
         // register
         $aAllActions = Mimoto::service('actions')->getAllActions();
 
-
         
         // --- filter ---
         
@@ -288,7 +286,7 @@ class EventService
             $action = $aAllActions[$i];
 
             // init
-            $bIsValidTrigger = true;
+            $bHasValidTrigger = false;
             
             // read
             $aTriggers = (is_array($action->trigger)) ? $action->trigger : [$action->trigger];
@@ -298,37 +296,35 @@ class EventService
             {
                 // register
                 $sTrigger = $aTriggers[$j];
-                
+
                 // prepare
                 $aTriggerParts = explode('.', $sTrigger);
                 
-                // init
-                $bIsValidTrigger = true;
-                
                 // validate
-                if (count($aTriggerParts) != count($aEventParts))
+                if (count($aTriggerParts) != count($aEventParts)) continue;
+
+                // search
+                $nTriggerPartCount = count($aTriggerParts);
+                $bIsValidTrigger = true;
+                for ($k = 0; $k < $nTriggerPartCount; $k++)
                 {
-                    $bIsValidTrigger = false;
-                }
-                else
-                {
-                    $nTriggerPartCount = count($aTriggerParts);
-                    for ($k = 0; $k < $nTriggerPartCount; $k++)
+                    if ($aTriggerParts[$k] != '*' && $aTriggerParts[$k] !== $aEventParts[$k])
                     {
-                        if ($aTriggerParts[$k] != '*' && $aTriggerParts[$k] !== $aEventParts[$k])
-                        {
-                            $bIsValidTrigger = false;
-                            break;
-                        }
+                        $bIsValidTrigger = false;
+                        break;
                     }
                 }
                 
-                // valid trigger found, so stop looking
-                if ($bIsValidTrigger) { break; }
+                // valid trigger found, so register and stop looking
+                if ($bIsValidTrigger)
+                {
+                    $bHasValidTrigger = true;
+                    break;
+                }
             }
             
             // register
-            if ($bIsValidTrigger) { $aFilteredActions[] = $action; }
+            if ($bHasValidTrigger) { $aFilteredActions[] = $action; }
         }
 
         // send

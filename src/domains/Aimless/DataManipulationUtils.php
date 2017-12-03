@@ -4,6 +4,7 @@
 namespace Mimoto\Aimless;
 
 // Mimoto classes
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Mimoto;
 use Mimoto\Aimless\AimlessComponent;
 
@@ -56,7 +57,7 @@ class DataManipulationUtils
         // 2. complete selector
         if (empty($sPropertyName))
         {
-            $sSelector = $component->meta('type').'.'.$component->meta('id');
+            $sSelector = MimotoDataUtils::buildSelector($component->meta('type'), $component->meta('id'));
         }
         else
         {

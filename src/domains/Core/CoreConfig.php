@@ -60,6 +60,7 @@ use Mimoto\Core\forms\EntityPropertyForm_Entity_allowedEntityType;
 use Mimoto\Core\forms\EntityPropertyForm_Entity_defaultValue;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowedEntityTypes;
 use Mimoto\Core\forms\EntityPropertyForm_Collection_allowDuplicates;
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Event\ConditionalTypes;
 use Mimoto\Event\EventService;
 use Mimoto\Mimoto;
@@ -428,12 +429,6 @@ class CoreConfig
     {
         // setup
         $aActions = [
-            (object) array(
-                'trigger' => '*.created',
-                'service' => 'Aimless',
-                'request' => 'dataCreate',
-                'type' => 'async'
-            ),
 
             (object) array(
                 'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'.updated',
@@ -517,8 +512,8 @@ class CoreConfig
 
 
             (object) array(
-                'owner' => 'Mimoto',
-                'trigger' => [CoreConfig::MIMOTO_ENTITY.'.'.CoreConfig::DATA_EVENT_CREATED, CoreConfig::MIMOTO_COMPONENT.'.'.CoreConfig::DATA_EVENT_CREATED],
+                'owner' => Mimoto::MIMOTO,
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITY, CoreConfig::DATA_EVENT_CREATED), MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_COMPONENT, CoreConfig::DATA_EVENT_CREATED)],
                 'conditionals' => [],
                 'service' => (object) array(
                     'name' => 'CoreData',
@@ -530,10 +525,10 @@ class CoreConfig
             ),
 
             (object) array(
-                'owner' => 'Mimoto',
-                'trigger' => [CoreConfig::MIMOTO_ENTITY.'.'.CoreConfig::DATA_EVENT_UPDATED, CoreConfig::MIMOTO_COMPONENT.'.'.CoreConfig::DATA_EVENT_UPDATED],
+                'owner' => Mimoto::MIMOTO,
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITY, CoreConfig::DATA_EVENT_UPDATED), MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_COMPONENT, CoreConfig::DATA_EVENT_UPDATED)],
                 'conditionals' => [
-                    (object) array('propertyName' => 'name', 'event' => 'changed')
+                    (object) array('propertyName' => 'name', 'type' => 'changed')
                 ],
                 'service' => (object) array(
                     'name' => 'CoreData',
@@ -545,8 +540,8 @@ class CoreConfig
             ),
 
             (object) array(
-                'owner' => 'Mimoto',
-                'trigger' => [CoreConfig::MIMOTO_ENTITY.'.'.CoreConfig::DATA_EVENT_DELETED, CoreConfig::MIMOTO_COMPONENT.'.'.CoreConfig::DATA_EVENT_DELETED],
+                'owner' => Mimoto::MIMOTO,
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITY, CoreConfig::DATA_EVENT_DELETED), MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_COMPONENT, CoreConfig::DATA_EVENT_DELETED)],
                 'conditionals' => [],
                 'service' => (object) array(
                     'name' => 'CoreData',
@@ -559,8 +554,8 @@ class CoreConfig
 
 
             (object) array(
-                'owner' => 'Mimoto',
-                'trigger' => [CoreConfig::MIMOTO_ENTITYPROPERTY.'.'.CoreConfig::DATA_EVENT_CREATED],
+                'owner' => Mimoto::MIMOTO,
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::DATA_EVENT_CREATED)],
                 'conditionals' => [],
                 'service' => (object) array(
                     'name' => 'CoreData',
@@ -572,8 +567,8 @@ class CoreConfig
             ),
 
             (object) array(
-                'owner' => 'Mimoto',
-                'trigger' => [CoreConfig::MIMOTO_ENTITYPROPERTY.'.'.CoreConfig::DATA_EVENT_UPDATED],
+                'owner' => Mimoto::MIMOTO,
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::DATA_EVENT_UPDATED)],
                 'conditionals' => [],
                 'service' => (object) array(
                     'name' => 'CoreData',
@@ -585,8 +580,8 @@ class CoreConfig
             ),
 
             (object) array(
-                'owner' => 'Mimoto',
-                'trigger' => [CoreConfig::MIMOTO_ENTITYPROPERTY.'.'.CoreConfig::DATA_EVENT_DELETED],
+                'owner' => Mimoto::MIMOTO,
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::DATA_EVENT_DELETED)],
                 'conditionals' => [],
                 'service' => (object) array(
                     'name' => 'CoreData',
@@ -597,6 +592,7 @@ class CoreConfig
                 'settings' => (object) array()
             )
 
+            // send Slack notification when critic notification was created
 
         ];
 
