@@ -77,6 +77,22 @@ class Service
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_SERVICE.'--owner',
+                    // ---
+                    'name' => 'owner',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        ),
+                        'validation' => (object) array(
+                            'type' => Validation::UNIQUE
+                        )
+                    ]
                 )
             ]
         );

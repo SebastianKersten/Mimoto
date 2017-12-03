@@ -5,7 +5,12 @@
     <div {% if sHideWhenEmpty|default('') is not empty %}{{ Mimoto.hideWhenEmpty(sHideWhenEmpty) }}{% endif %} class="MimotoCMS_modules_DataSelectButton" {{ Mimoto.select(sEntityName, sSelectionName, options|default({})) }}>
         <button class="MimotoCMS_modules_DataSelectButton-button MimotoCMS_modules_DataSelectButton-button--empty" {{ Mimoto.showWhenEmpty(sEntityName) }}><span>{{ sEmptyLabel }}</span><span class="fa fa-caret-down"></span></button>
         <button class="MimotoCMS_modules_DataSelectButton-button" {{ Mimoto.hideWhenEmpty(sEntityName) }}>
-            <span {{ Mimoto.realtime(sValuePropertySelector) }}>{{ Mimoto.data(sValuePropertySelector) }}</span><span class="fa fa-caret-down"></span>
+            {% if sValuePropertyIndex|default('') is not empty %}
+                <span {{ Mimoto.getRealtimeValueBySortindex(sValuePropertySelector~'.'~sValuePropertyIndex) }}>{{ Mimoto.getValueBySortindex(sValuePropertySelector~'.'~sValuePropertyIndex) }}</span>
+            {% else %}
+                <span {{ Mimoto.realtime(sValuePropertySelector) }}>{{ Mimoto.data(sValuePropertySelector) }}</span>
+            {% endif %}
+            <span class="fa fa-caret-down"></span>
         </button>
     </div>
 

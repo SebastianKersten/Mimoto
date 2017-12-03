@@ -346,8 +346,39 @@ class AimlessComponent
 
     public function getValueBySortindex($nIndex = 0, $bGetRealtime = false, $bGetImage = false)
     {
+        // init
+        $eInstance = $this->_entity;
+        $component = $this;
+
+        // split
+        $aIndexParts = explode('.', $nIndex);
+
+        // verify
+        if (count($aIndexParts) == 2)
+        {
+            // validate
+            if ($this->_entity->hasProperty($aIndexParts[0]) && $this->_entity->getPropertyType($aIndexParts[0]) == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY)
+            {
+                // load
+                $eInstance = $this->_entity->get($aIndexParts[0]);
+
+                // validate or return empty
+                if (empty($eInstance)) return '';
+
+                // setup
+                $component = Mimoto::service('output')->create('', $eInstance);
+            }
+        }
+
+        // validate or return empty
+        if (empty($eInstance)) return '';
+
+
+        // ---
+
+
         // read
-        $aPropertyNames = $this->_entity->getPropertyNames();
+        $aPropertyNames = $eInstance->getPropertyNames();
 
         // search
         $nFoundPropertyIndex = 0;
@@ -359,13 +390,13 @@ class AimlessComponent
 
             if ($bGetImage)
             {
-                if ($this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY &&
-                    $this->_entity->getPropertySubtype($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE)
+                if ($eInstance->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY &&
+                    $eInstance->getPropertySubtype($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_IMAGE)
                 {
                     // verify
                     if ($nFoundPropertyIndex == $nIndex)
                     {
-                        return ($bGetRealtime) ? $this->realtime($sPropertyName) : $this->data($sPropertyName, false, true);
+                        return ($bGetRealtime) ? $component->realtime($sPropertyName) : $component->data($sPropertyName, false, true);
                     }
                     else
                     {
@@ -377,18 +408,18 @@ class AimlessComponent
             else
             {
                 // verify
-                if ($this->_entity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                if ($eInstance->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
                 {
                     // verify
                     if ($nFoundPropertyIndex == $nIndex)
                     {
                         if ($bGetRealtime)
                         {
-                            return $this->realtime($sPropertyName);
+                            return $component->realtime($sPropertyName);
                         }
                         else
                         {
-                            $data = $this->data($sPropertyName, false, true);
+                            $data = $component->data($sPropertyName, false, true);
 
                             // do not output objects like a password or json #todo - check type (pwd or json)
                             return (!is_object($data)) ? $data : '';

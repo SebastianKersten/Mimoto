@@ -228,10 +228,8 @@ class MimotoDataUtils
      */
     public static function getEntityIdFromEntityInstanceSelector($sSelector)
     {
-
         // #todo
-        if (substr($sSelector, 0, 1) == '[') return null; // can't handle collections yet
-
+        if (empty($sSelector) || substr($sSelector, 0, 1) == '[') return null; // can't handle collections yet
 
         // split
         $aParts = explode('.', $sSelector);

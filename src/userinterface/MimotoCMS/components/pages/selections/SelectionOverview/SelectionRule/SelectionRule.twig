@@ -11,50 +11,43 @@
                 <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">
                     <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Type</div>
                     <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">
-                        <div {{ Mimoto.showWhenValue('typeAsVar', true) }}><span class="fa fa-square-o"></span></div>
-                        <div></div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select type', sEntityName:'type', sSelectionName:'_Mimoto_all_entities', sValuePropertySelector:'type.name' }) }}
-                        <div {{ Mimoto.showWhenValue('typeAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>
+                        <div {{ Mimoto.showWhenValue('typeAsVar', true) }}><span class="fa fa-square-o" {{ Mimoto.set('typeAsVar', false) }}></span></div>
+                        <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select type', sEntityName:'type', sSelectionName:'_Mimoto_all_entities', sValuePropertySelector:'type.name', options:{onChange:[['clear', 'instance']]} }) }}</div>
+                        <div {{ Mimoto.showWhenValue('typeAsVar', false) }}><span class="fa fa-square-o" {{ Mimoto.set('typeAsVar', true) }}></span> as var</div>
+                        <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenValue('typeAsVar', true) }}>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'typeVarName', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
+                        <div><span class="fa fa-remove" {{ Mimoto.hideWhenEmpty('type') }} {{ Mimoto.clear('type') }}></span></div>
                     </div>
                 </div>
             </div>
 
-            {#<div {{ Mimoto.hideWhenEmpty('event') }}>#}
+            <div {{ Mimoto.hideWhenEmpty('type') }}>
 
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row">#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('conditionals') }}>Optional: <span class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-addFirst" {{ Mimoto.create('conditionals', '_Mimoto_Selection_conditional') }}>add conditionals</span></div>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('conditionals') }}>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">AND</div>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRuleConditional') }}>#}
-            {#{{ Mimoto.data('conditionals', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRuleConditional', { customValues:{ entityTypeId:Mimoto.meta('entity.id') }} ) }}#}
-            {#</div>#}
-            {#</div>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-add" {{ Mimoto.hideWhenEmpty('conditionals') }} {{ Mimoto.create('conditionals', '_Mimoto_Selection_conditional') }}>add another conditional</div>#}
-            {#</div>#}
+                <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row">
+                    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">
+                        <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Instance</div>
+                        <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">
+                            <div {{ Mimoto.showWhenValue('idAsVar', true) }}><span class="fa fa-square-o"></span></div>
+                            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select instance', sEntityName:'instance', sSelectionName:'_Mimoto_all_instances_of_entity', options:{vars:{typeVarName:Mimoto.meta('type.id') }}, sValuePropertySelector:'instance', sValuePropertyIndex:0 }) }}</div>
+                            <div {{ Mimoto.showWhenValue('idAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>
+                        </div>
+                    </div>
+                </div>
 
 
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row">#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">THEN</div>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">#}
-            {#{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select service', sEntityName:'service', sSelectionName:'_Mimoto_all_public_services', sValuePropertySelector:'service.name', options:{onChange:[['clear','function']]} }) }}#}
-            {#{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sHideWhenEmpty:'service', sEmptyLabel:'select function', sEntityName:'function', sSelectionName:'_Mimoto_all_functions_of_service', options:{vars:{idVarName:Mimoto.meta('service.id') } }, sValuePropertySelector:'function.name' }) }}#}
-            {#</div>#}
-            {#</div>#}
-            {#</div>#}
+                {# if instance? (or idAsVar) -> show property | allow multiple conditionals in 'hideWhenEmpty' #}
 
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row" {{ Mimoto.hideWhenEmpty('function') }}>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_section">#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('settings') }}>No settings, or <span class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-addFirst" {{ Mimoto.add('settings', '_Mimoto_Selection_setting') }}>add a setting</span></div>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('settings') }}>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">WITH</div>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings" {{ Mimoto.sortable() }} {{ Mimoto.realtime('settings', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRuleSetting') }}>{{ Mimoto.data('settings', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRuleSetting') }}</div>#}
-            {#</div>#}
+                <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row" {{ Mimoto.hideWhenEmpty('property') }}>
+                    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">
+                        <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Property</div>
+                        <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">
+                            <div {{ Mimoto.showWhenValue('idAsVar', true) }}><span class="fa fa-square-o"></span></div>
+                            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select property', sEntityName:'property', sSelectionName:'_Mimoto_all_properties_of_entity', options:{vars:{idVarName:Mimoto.meta('type.type') }}, sValuePropertySelector:'property.name' }) }}</div>
+                            <div {{ Mimoto.showWhenValue('idAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>
+                        </div>
+                    </div>
+                </div>
 
-            {#</div>#}
-            {#<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-add" {{ Mimoto.hideWhenEmpty('settings') }} {{ Mimoto.add('settings', '_Mimoto_Selection_setting') }}>add more settings</div>#}
-            {#</div>#}
-
-            {#</div>#}
+            </div>
 
         </div>
 

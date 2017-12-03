@@ -59,4 +59,25 @@ class UserService
         return $sPublicKey;
     }
 
+    public function createUser($sUserName, $sPassword)
+    {
+
+    }
+
+    public function authenticate($sUserName, $sPassword)
+    {
+
+    }
+
+    public function createMagicLink($sUserName, $sPassword)
+    {
+
+    }
+
+    public function authenticateMagicLink($sToken)
+    {
+
+    }
+
+
 }

@@ -150,7 +150,7 @@ class AimlessComponentViewModel
         return $this->_component->getVar($sKey);
     }
 
-    public function getValueBySortindex($nIndex = 0)
+    public function getValueBySortindex($nIndex = 0, $sPropertyName = null)
     {
         return $this->_component->getValueBySortindex($nIndex);
     }
