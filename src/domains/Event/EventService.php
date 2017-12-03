@@ -4,6 +4,7 @@
 namespace Mimoto\Event;
 
 // Mimoto classes
+use Mimoto\Core\CoreConfig;
 use Mimoto\Mimoto;
 use Mimoto\Event\ConditionalTypes;
 use Mimoto\Event\MimotoEvent;
@@ -200,12 +201,12 @@ class EventService
                 //$this->_aServices[$action->service]->handleRequest($action->request, $event->getEntity(), $config);
                 Mimoto::service('output')->handleRequest($action->request, $event->getEntity(), $config);
             }
-            else if (isset($action->owner)  && ($action->owner == 'project' ||  $action->owner == 'Mimoto'))
+            else if (isset($action->owner)  && ($action->owner == 'project' ||  $action->owner == CoreConfig::CORE_PREFIX))
             {
 
                 switch($action->owner)
                 {
-                    case 'Mimoto':
+                    case CoreConfig::CORE_PREFIX:
 
                         $sServicesPath = dirname(dirname(dirname(__FILE__))).'/services/';
                         break;

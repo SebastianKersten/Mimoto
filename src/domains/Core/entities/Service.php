@@ -114,6 +114,7 @@ class Service
             $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-create'));
             $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-update'));
             $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Data-delete'));
+            $eInstance->set('owner', CoreConfig::CORE_PREFIX);
 
             // e. add or send
             if (empty($sInstanceId)) $aData[] = $eInstance;
@@ -129,6 +130,7 @@ class Service
             $eInstance->set('name', 'Slack');
             $eInstance->set('file', 'Slack/Slack.php');
             $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-Slack-sendMessage'));
+            $eInstance->set('owner', CoreConfig::CORE_PREFIX);
 
             // b. add or send
             if (empty($sInstanceId)) $aData[] = $eInstance;
