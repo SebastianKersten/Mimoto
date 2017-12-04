@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "64fb894d147327b4780a";
+/******/ 	__webpack_require__.h = "48e18dc5c72f5b62ded2";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -19837,8 +19837,8 @@ module.exports.prototype = {
                         var elParent = this._findParentWithType('data-mimoto-id', directive.element);
 
                         // get connection id
-                        if (elParent && elParent.getAttribute('data-mimoto-id') === directive.sPropertySelector || directive.instructions.options.forceDelete === true) {
-                            if (elParent && elParent.hasAttribute('data-mimoto-connection') || directive.instructions.options.forceDelete === true) {
+                        if (elParent && elParent.getAttribute('data-mimoto-id') === directive.sPropertySelector || directive.instructions && directive.instructions.options && directive.instructions.options.forceDelete === true) {
+                            if (elParent && elParent.hasAttribute('data-mimoto-connection') || directive.instructions && directive.instructions.options && directive.instructions.options.forceDelete === true) {
                                 var nConnectionId = elParent && elParent.hasAttribute('data-mimoto-connection') ? elParent.getAttribute('data-mimoto-connection') : null;
 
                                 // configure

@@ -699,9 +699,9 @@ module.exports.prototype = {
                         let elParent = this._findParentWithType('data-mimoto-id', directive.element);
 
                         // get connection id
-                        if (elParent && elParent.getAttribute('data-mimoto-id') === directive.sPropertySelector || directive.instructions.options.forceDelete === true)
+                        if (elParent && elParent.getAttribute('data-mimoto-id') === directive.sPropertySelector || (directive.instructions && directive.instructions.options && directive.instructions.options.forceDelete === true))
                         {
-                            if (elParent && elParent.hasAttribute('data-mimoto-connection') || directive.instructions.options.forceDelete === true)
+                            if (elParent && elParent.hasAttribute('data-mimoto-connection') || (directive.instructions && directive.instructions.options && directive.instructions.options.forceDelete === true))
                             {
                                 let nConnectionId = (elParent && elParent.hasAttribute('data-mimoto-connection')) ? elParent.getAttribute('data-mimoto-connection') : null;
 
