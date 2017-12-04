@@ -109,7 +109,7 @@ class EntityConfigTableUtils
         // 2. add column to table
         $stmt = Mimoto::service('database')->prepare("ALTER TABLE `".$sEntityName."` CHANGE COLUMN `".$sOldPropertyName."` `".$sNewPropertyName."` ".$sDataType);
         $params = array();
-        if ($stmt->execute($params) === false) Mimoto::error("Error while renaming column '$sOldPropertyName' to entity table '$sEntityName'");
+        if ($stmt->execute($params) === false) Mimoto::error("Error while renaming column `$sOldPropertyName` to `$sNewPropertyName` in entity table `$sEntityName``");
     }
 
     public static function alterPropertyColumnType($sEntityName, $sPropertyName, $sColumnType)

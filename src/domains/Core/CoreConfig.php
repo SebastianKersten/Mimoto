@@ -431,12 +431,6 @@ class CoreConfig
         $aActions = [
 
             (object) array(
-                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'.updated',
-                'service' => 'Aimless',
-                'request' => 'onEntityPropertySettingUpdated',
-                'type' => 'sync'
-            ),
-            (object) array(
                 'trigger' => CoreConfig::MIMOTO_NOTIFICATION.'.created',
                 'service' => 'Aimless',
                 'request' => 'sendSlackNotification',
@@ -446,61 +440,12 @@ class CoreConfig
                 )
             ),
             (object) array(
-                'trigger' => CoreConfig::MIMOTO_ENTITYPROPERTYSETTING.'.updated',
-                'service' => 'Aimless',
-                'request' => 'onFormattingChanged',
-                'type' => 'sync'
-            ),
-            (object) array(
                 'trigger' => '*.updated',
                 'service' => 'Aimless',
                 'request' => 'dataUpdate',
                 'type' => 'async',
                 'config' => (object) array(
-                    'properties' => array(
-                        'state',
-                        'name',
-                        'type',
-
-                        'description',
-
-                        'client.name',
-                        'agency.name',
-                        'projectManager',
-                        'projectManager.name',
-
-                        'subprojects',
-                        'properties',
-                        'fields',
-                        'value',
-                        'allowedEntityType',
-                        'allowedEntityTypes',
-
-                        'file',
-                        'label',
-
-                        'placeholder',
-                        'prefix',
-
-                        'form',
-                        'forms',
-                        'components',
-                        'title',
-
-                        'options',
-                        'validation',
-
-                        'rules',
-                        'notifications',
-                        'entities',
-                        'users',
-                        'datasets',
-                        'selections',
-
-                        'contentItem',
-                        'contentItems',
-                        'conditionals'
-                    )
+                    'properties' => array('state', 'name', 'type', 'description', 'client.name')
                 ),
                 'notes' => array(
                     "voor admin user, send all. Add 'except'. Wildcard"
@@ -519,7 +464,7 @@ class CoreConfig
                     'name' => 'CoreData',
                     'file' => 'CoreData/CoreData.php',
                 ),
-                'function' => 'createTable',
+                'function' => 'createEntityTable',
                 'type' => 'sync',
                 'settings' => (object) array()
             ),
@@ -534,7 +479,7 @@ class CoreConfig
                     'name' => 'CoreData',
                     'file' => 'CoreData/CoreData.php',
                 ),
-                'function' => 'renameTable',
+                'function' => 'renameEntityTable',
                 'type' => 'sync',
                 'settings' => (object) array()
             ),
@@ -547,7 +492,7 @@ class CoreConfig
                     'name' => 'CoreData',
                     'file' => 'CoreData/CoreData.php',
                 ),
-                'function' => 'deleteTable',
+                'function' => 'deleteEntityTable',
                 'type' => 'sync',
                 'settings' => (object) array()
             ),
@@ -555,13 +500,15 @@ class CoreConfig
 
             (object) array(
                 'owner' => Mimoto::MIMOTO,
-                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::DATA_EVENT_CREATED)],
-                'conditionals' => [],
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITY, CoreConfig::DATA_EVENT_UPDATED)],
+                'conditionals' => [
+                    //(object) array('propertyName' => 'properties', 'type' => 'changed') -----> changes check on collecion not supported yet
+                ],
                 'service' => (object) array(
                     'name' => 'CoreData',
                     'file' => 'CoreData/CoreData.php',
                 ),
-                'function' => 'createProperty',
+                'function' => 'addEntityPropertyColumn',
                 'type' => 'sync',
                 'settings' => (object) array()
             ),
@@ -574,7 +521,7 @@ class CoreConfig
                     'name' => 'CoreData',
                     'file' => 'CoreData/CoreData.php',
                 ),
-                'function' => 'updateProperty',
+                'function' => 'updateEntityPropertyColumn',
                 'type' => 'sync',
                 'settings' => (object) array()
             ),
@@ -587,7 +534,33 @@ class CoreConfig
                     'name' => 'CoreData',
                     'file' => 'CoreData/CoreData.php',
                 ),
-                'function' => 'updateDelete',
+                'function' => 'removeEntityPropertyColumn',
+                'type' => 'sync',
+                'settings' => (object) array()
+            ),
+
+            (object) array(
+                'owner' => Mimoto::MIMOTO,
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, CoreConfig::DATA_EVENT_UPDATED)],
+                'conditionals' => [],
+                'service' => (object) array(
+                    'name' => 'CoreData',
+                    'file' => 'CoreData/CoreData.php',
+                ),
+                'function' => 'onEntityPropertySettingUpdated',
+                'type' => 'sync',
+                'settings' => (object) array()
+            ),
+
+            (object) array(
+                'owner' => Mimoto::MIMOTO,
+                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING, CoreConfig::DATA_EVENT_UPDATED)],
+                'conditionals' => [],
+                'service' => (object) array(
+                    'name' => 'CoreRealtime',
+                    'file' => 'CoreRealtime/CoreRealtime.php',
+                ),
+                'function' => 'onFormattingChanged',
                 'type' => 'sync',
                 'settings' => (object) array()
             )
