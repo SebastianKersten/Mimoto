@@ -4,8 +4,9 @@
 namespace Mimoto\Event;
 
 // Mimoto classes
-use Mimoto\Core\CoreConfig;
 use Mimoto\Mimoto;
+use Mimoto\Core\CoreConfig;
+use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Event\ConditionalTypes;
 use Mimoto\Event\MimotoEvent;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
@@ -202,7 +203,6 @@ class EventService
             }
             else if (isset($action->owner)  && ($action->owner == 'project' ||  $action->owner == Mimoto::MIMOTO))
             {
-
                 switch($action->owner)
                 {
                     case Mimoto::MIMOTO:
@@ -239,8 +239,51 @@ class EventService
                     // 3. verify
                     if (method_exists($service, $action->function))
                     {
+                        // a. clone
+                        $settings = unserialize(serialize($action->settings));
+
+                        // b. apply variables (the & allows for direct editing of the value)
+                        foreach($settings as &$setting)
+                        {
+                            // 2. replace enter or init
+                            if (!empty($setting)) $setting = preg_replace('/\\\n/', chr(13), $setting);
+
+                            // 3. get variables
+                            if (preg_match_all('/({{.*?}})/', $setting, $aMatches))
+                            {
+                                // remove full match
+                                array_splice($aMatches, 0, 1);
+
+
+                                $nSubmatchCount = count($aMatches);
+                                for ($nSubmatchIndex = 0; $nSubmatchIndex < $nSubmatchCount; $nSubmatchIndex++)
+                                {
+                                    // register
+                                    $aSubmatches = $aMatches[$nSubmatchIndex];
+
+                                    $nVarCount = count($aSubmatches);
+                                    for ($nVarIndex = 0; $nVarIndex < $nVarCount; $nVarIndex++)
+                                    {
+                                        // a. register
+                                        $sMatch = $aSubmatches[$nVarIndex];
+
+                                        // b. isolate
+                                        $sPropertyName = trim(substr($sMatch, 2, strlen($sMatch) - 4));
+
+                                        // c. validate
+                                        if (!MimotoDataUtils::validatePropertyName($sPropertyName) || !$event->getEntity()->hasProperty($sPropertyName)) continue;
+
+                                        // d. inject
+                                        $setting = preg_replace('/'.$sMatch.'/', $event->getEntity()->get($sPropertyName), $setting);
+                                    }
+                                }
+
+
+                            }
+                        }
+
                         // a. call and pass clone of settings (unserialize/serialize)
-                        call_user_func([$service, $action->function], $event->getEntity(), unserialize(serialize($action->settings)));
+                        call_user_func([$service, $action->function], $event->getEntity(), $settings);
                     }
                 }
 

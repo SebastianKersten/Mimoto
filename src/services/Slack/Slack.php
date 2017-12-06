@@ -4,7 +4,6 @@
 // Mimoto classes
 use Mimoto\Mimoto;
 use Mimoto\Data\MimotoEntity;
-use Mimoto\Data\MimotoDataUtils;
 
 
 class Slack // extends MimotoService
@@ -21,32 +20,6 @@ class Slack // extends MimotoService
     {
         // 1. validate
         if (empty($settings) || !isset($settings->channel)) return;
-
-        // 2. replace enter or init
-        $settings->message = (isset($settings->message) && !empty($settings->message)) ? preg_replace('/\\\n/', chr(13), $settings->message) : '';
-
-        // 3. get variables
-        if (preg_match('/({{.*?}})/U', $settings->message, $aMatches))
-        {
-            // remove full match
-            array_splice($aMatches, 0, 1);
-
-            $nVarCount = count($aMatches);
-            for ($nVarIndex = 0; $nVarIndex < $nVarCount; $nVarIndex++)
-            {
-                // a. register
-                $sMatch = $aMatches[$nVarIndex];
-
-                // b. isolate
-                $sPropertyName = trim(substr($sMatch, 2, strlen($sMatch) - 4));
-
-                // c. validate
-                if (!MimotoDataUtils::validatePropertyName($sPropertyName) || !$eInstance->hasProperty($sPropertyName)) continue;
-
-                // d. inject
-                $settings->message = preg_replace('/'.$sMatch.'/', $eInstance->get($sPropertyName), $settings->message);
-            }
-        }
 
         // 4. compose message
         $data = "payload=" . json_encode(array
