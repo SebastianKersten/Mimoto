@@ -39,7 +39,7 @@ class EntityPropertyForm_Value_type
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE);
+        $form = CoreFormUtils::initForm(CoreConfig::COREFORM_ENTITYPROPERTYSETTING_VALUE_TYPE, true);
 
         // setup
         CoreFormUtils::addField_title($form, 'Configure');
