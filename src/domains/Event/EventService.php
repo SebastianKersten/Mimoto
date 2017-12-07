@@ -254,11 +254,11 @@ class EventService
                                 // remove full match
                                 array_splice($aMatches, 0, 1);
 
-
+                                // I. replace
                                 $nSubmatchCount = count($aMatches);
                                 for ($nSubmatchIndex = 0; $nSubmatchIndex < $nSubmatchCount; $nSubmatchIndex++)
                                 {
-                                    // register
+                                    // 1. register
                                     $aSubmatches = $aMatches[$nSubmatchIndex];
 
                                     $nVarCount = count($aSubmatches);
@@ -271,14 +271,12 @@ class EventService
                                         $sPropertyName = trim(substr($sMatch, 2, strlen($sMatch) - 4));
 
                                         // c. validate
-                                        if (!MimotoDataUtils::validatePropertyName($sPropertyName) || !$event->getEntity()->hasProperty($sPropertyName)) continue;
+                                        if (!$event->getEntity()->hasProperty($sPropertyName)) continue;
 
                                         // d. inject
                                         $setting = preg_replace('/'.$sMatch.'/', $event->getEntity()->get($sPropertyName), $setting);
                                     }
                                 }
-
-
                             }
                         }
 

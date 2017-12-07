@@ -419,13 +419,34 @@ class MimotoEntity
      *
      * @return boolean True if value was changed
      */
-    public function hasProperty($sProperty)
+    public function hasProperty($sPropertyName)
     {
-        // validate
-        if (is_object($sProperty)) return false;
+        // 1. validate
+        if (is_object($sPropertyName)) return false;
 
-        // verify
-        return isset($this->_aProperties[$sProperty]);
+        // 2. find
+        $nSeperatorPos = strpos($sPropertyName, '.');
+
+        // 3. separate
+        $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, 0, $nSeperatorPos) : $sPropertyName;
+        $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertyName, $nSeperatorPos + 1) : '';
+
+        if (!empty($sSubPropertyName) && $this->valueRelatesToEntity($sMainPropertyName))
+        {
+            // a. load
+            $eProperty = $this->get($sMainPropertyName);
+
+            // b. can't find #todo check entityConfig instead of instance
+            if (empty($eProperty)) return false;
+
+            // c. verify and send
+            return $eProperty->hasProperty($sSubPropertyName);
+        }
+        else
+        {
+            // a. verify
+            return isset($this->_aProperties[$sPropertyName]);
+        }
     }
 
 
