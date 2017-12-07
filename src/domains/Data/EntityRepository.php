@@ -369,7 +369,7 @@ class EntityRepository
 
 
                     // prepare
-                    $sQuery .= ($nPropertyValueIndex == 0) ? ' WHERE ' : ', ';
+                    $sQuery .= ($nPropertyValueIndex == 0) ? ' WHERE ' : ' && ';
 
                     // compose
                     $sQuery .= '`'.$sPropertyName.'` = :'.$sPropertyName;
