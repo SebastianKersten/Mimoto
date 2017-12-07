@@ -6714,13 +6714,6 @@ div.MimotoCMS_pages_notifications_NotificationSmall {
   padding: 10px;
   cursor: pointer; }
 
-a {
-  text-decoration: none;
-  color: #ffffff; }
-
-a:hover {
-  text-decoration: underline; }
-
 div.MimotoCMS_pages_notifications_NotificationSmall__title {
   font-size: 12px; }
 
