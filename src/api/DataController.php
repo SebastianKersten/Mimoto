@@ -160,7 +160,7 @@ class DataController
         // 1. register
         $sEntitySelector = $data->sEntitySelector;
         $nConnectionId = $data->nConnectionId;
-        $options = $data->options;
+        $options = (!empty($data->options)) ? $data->options : (object) array();
 
         // 2. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sEntitySelector);
