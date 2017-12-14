@@ -457,7 +457,6 @@ class MimotoDataUtils
 
                     case MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD:
 
-                        $value = json_decode($value);
                         break;
 
                     case MimotoEntityPropertyValueTypes::VALUETYPE_JSON:
@@ -526,11 +525,8 @@ class MimotoDataUtils
 
                     case MimotoEntityPropertyValueTypes::VALUETYPE_PASSWORD:
 
-                        // encrypt
-                        $encryptedValue = Mimoto::service('session')->createPasswordHash($value);
-
-                        // encode
-                        $value = json_encode($encryptedValue);
+                        // hash
+                        $value = Mimoto::service('session')->createPasswordHash($value);
                         break;
 
                     case MimotoEntityPropertyValueTypes::VALUETYPE_JSON:

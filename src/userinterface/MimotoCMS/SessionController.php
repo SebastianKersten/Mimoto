@@ -110,10 +110,12 @@ class SessionController
             if ($sUsername == $eUser->getValue('email'))
             {
                 // read
-                $encryptedPassword = $eUser->getValue('password');
+                $sHashedPassword = $eUser->getValue('password');
 
-                if (Mimoto::service('session')->comparePassword($sPassword, $encryptedPassword))
+                if (Mimoto::service('session')->comparePassword($sPassword, $sHashedPassword))
                 {
+                    // #todo check for password upgrades using password_needs_rehash()
+
                     // compose
                     $user = (object) array(
                         'id' => $eUser->getId(),
