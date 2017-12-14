@@ -6,6 +6,21 @@ div.MimotoCMS_modules_EditableField {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+
+    .ql-container {
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+    .ql-editor {
+        font-size: inherit;
+    }
+
+    .ql-bubble,
+    .ql-container,
+    .ql-editor {
+        box-sizing: inherit;
+    }
 }
 
 div.MimotoCMS_modules_EditableField-menu {
