@@ -5,6 +5,7 @@ namespace Mimoto\UserInterface\MimotoCMS;
 
 // Mimoto classes
 use Mimoto\Mimoto;
+use Mimoto\Data\Selector;
 use Mimoto\core\CoreConfig;
 
 // Silex classes
@@ -21,7 +22,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class HeartbeatController
 {
-    
+    public function devSelection(Application $app)
+    {
+        $sSelector = 'name';
+        $sSelector = 'name.[first]';
+
+        //if (startsWith[ endsWith])
+
+        // 1. find first .
+        // 2. find first [
+        // 3. find first {
+        //
+        // if hasIndex
+
+
+
+        // 1. convert
+        $selector = new Selector($sSelector);
+    }
+
+
     public function viewOverview(Request $request, Application $app)
     {
         // 1. prepare

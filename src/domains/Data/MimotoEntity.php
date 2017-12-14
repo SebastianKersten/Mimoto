@@ -53,15 +53,6 @@ class MimotoEntity
      * @var boolean
      */
     private $_bTrackChanges;
-    
-    
-    // selector 
-    const SELECTOR_KEY_SEPARATOR = '.';
-    const SELECTOR_EXPRESSION_START = '{';
-    const SELECTOR_EXPRESSION_END = '}';
-    const SELECTOR_EXPRESSION_SEPERATOR = '=';
-    const SELECTOR_ARRAY_START = '[';
-    const SELECTOR_ARRAY_END = ']';
 
 
 
@@ -264,6 +255,9 @@ class MimotoEntity
      */
     public function get($sPropertySelector, $bGetConnectionInfo = false, $bGetPersistentValue = false)
     {
+        // 1. convert
+        //$selector = new Selector($sPropertySelector);
+
         // load
         $property = $this->getProperty($sPropertySelector);
         $sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
