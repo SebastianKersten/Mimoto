@@ -100,7 +100,7 @@ module.exports.prototype = {
             if (formattingOptions.formats && formattingOptions.formats.length > 0) formats = formattingOptions.formats;
         }
 
-        var sEditorContainer = "<div data-mimoto-editable-container>" + this._elEditableField.innerHTML + "</div>"
+        var sEditorContainer = "<div data-mimoto-editable-container>" + this._elEditableField.innerHTML + "</div>";
         this._elEditableField.innerHTML = sEditorContainer;
         var elEditorContainer = this._elEditableField.querySelector('[data-mimoto-editable-container]');
 
