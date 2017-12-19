@@ -15,6 +15,20 @@ body.MimotoPublisher {
     background-color: #E5E4E4;
     font-size: 18px;
     font-family: "Futura PT W02 Book", sans-serif;
+
+    .ql-container {
+        font-family: inherit;
+    }
+
+    .ql-editor {
+        font-size: inherit;
+    }
+
+    .ql-bubble,
+    .ql-container,
+    .ql-editor {
+        box-sizing: inherit;
+    }
 }
 
 

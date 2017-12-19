@@ -5844,6 +5844,20 @@ div.MimotoCMS_modules_EditableField {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center; }
+  div.MimotoCMS_modules_EditableField .ql-container {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit; }
+  div.MimotoCMS_modules_EditableField .ql-editor {
+    font-size: inherit;
+    line-height: inherit; }
+  div.MimotoCMS_modules_EditableField .ql-bubble,
+  div.MimotoCMS_modules_EditableField .ql-container,
+  div.MimotoCMS_modules_EditableField .ql-editor {
+    height: auto;
+    padding: inherit;
+    -webkit-box-sizing: inherit;
+            box-sizing: inherit; }
 
 div.MimotoCMS_modules_EditableField-menu {
   position: absolute;
@@ -5884,17 +5898,6 @@ div.MimotoCMS_modules_EditableField-field {
   min-width: 20px; }
   div.MimotoCMS_modules_EditableField-field > div:empty:before {
     content: '...'; }
-  div.MimotoCMS_modules_EditableField-field .ql-editor {
-    font-size: inherit;
-    height: inherit;
-    padding: inherit; }
-    div.MimotoCMS_modules_EditableField-field .ql-editor p {
-      font-size: inherit; }
-  div.MimotoCMS_modules_EditableField-field .ql-container {
-    height: inherit;
-    padding: inherit; }
-    div.MimotoCMS_modules_EditableField-field .ql-container p {
-      font-size: inherit; }
 
 div.MimotoCMS_modules_List-container {
   margin-top: 25px; }

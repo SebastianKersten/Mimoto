@@ -6,6 +6,25 @@ div.MimotoCMS_modules_EditableField {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+
+    .ql-container {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    .ql-editor {
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    .ql-bubble,
+    .ql-container,
+    .ql-editor {
+        height: auto;
+        padding: inherit;
+        box-sizing: inherit;
+    }
 }
 
 div.MimotoCMS_modules_EditableField-menu {
@@ -55,24 +74,5 @@ div.MimotoCMS_modules_EditableField-field {
 
     & > div:empty:before {
         content:'...'
-    }
-
-    & .ql-editor {
-        font-size: inherit;
-        height: inherit;
-        padding: inherit;
-
-        & p {
-            font-size: inherit;
-        }
-    }
-
-    & .ql-container {
-        height: inherit;
-        padding: inherit;
-
-        & p {
-            font-size: inherit;
-        }
     }
 }
