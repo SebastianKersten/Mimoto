@@ -112,7 +112,7 @@ module.exports.prototype = {
                 head.appendChild(link);
 
                 let editorCSS = document.createElement('style');
-                editorCSS.innerHTML = ".ql-editor, .ql-container { overflow-y: auto; height: auto; font-size:inherit } .ql-editor { padding: 0; line-height: inherit; font-size:inherit }";
+                editorCSS.innerHTML = ".ql-editor, .ql-container { height: auto; font-family: inherit; font-size: inherit; line-height: inherit; padding: 0; }";
                 head.appendChild(editorCSS);
             }
         }

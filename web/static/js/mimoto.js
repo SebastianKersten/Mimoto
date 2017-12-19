@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "273a1fb0d9132ac8d2c5";
+/******/ 	__webpack_require__.h = "1d103b602bf5c9ca2886";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -17809,7 +17809,7 @@ module.exports.prototype = {
                 head.appendChild(link);
 
                 var editorCSS = document.createElement('style');
-                editorCSS.innerHTML = ".ql-editor, .ql-container { overflow-y: auto; height: auto; font-size:inherit } .ql-editor { padding: 0; line-height: inherit; font-size:inherit }";
+                editorCSS.innerHTML = ".ql-editor, .ql-container { height: auto; font-family: inherit; font-size: inherit; line-height: inherit; padding: 0; }";
                 head.appendChild(editorCSS);
             }
         }
@@ -29657,8 +29657,12 @@ module.exports.prototype = {
             if (formattingOptions.formats && formattingOptions.formats.length > 0) formats = formattingOptions.formats;
         }
 
+        var sEditorContainer = "<div data-mimoto-editable-container>" + this._elEditableField.innerHTML + "</div>";
+        this._elEditableField.innerHTML = sEditorContainer;
+        var elEditorContainer = this._elEditableField.querySelector('[data-mimoto-editable-container]');
+
         // create
-        var quill = new Quill(this._elEditableField, {
+        var quill = new Quill(elEditorContainer, {
             theme: 'bubble',
             modules: {
                 toolbar: toolbar,

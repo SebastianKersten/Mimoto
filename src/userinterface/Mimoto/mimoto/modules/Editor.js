@@ -100,8 +100,12 @@ module.exports.prototype = {
             if (formattingOptions.formats && formattingOptions.formats.length > 0) formats = formattingOptions.formats;
         }
 
+        var sEditorContainer = "<div data-mimoto-editable-container>" + this._elEditableField.innerHTML + "</div>"
+        this._elEditableField.innerHTML = sEditorContainer;
+        var elEditorContainer = this._elEditableField.querySelector('[data-mimoto-editable-container]');
+
         // create
-        let quill = new Quill(this._elEditableField, {
+        let quill = new Quill(elEditorContainer, {
             theme: 'bubble',
             modules: {
                 toolbar: toolbar,
