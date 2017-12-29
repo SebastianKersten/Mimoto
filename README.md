@@ -22,7 +22,7 @@ curl http://mimoto.aimless/mimoto.cms/workers/data
 
 Run realtime server script
 ```
-node src/userinterface/app/javascript/realtime.js
+node rc/userinterface/Mimoto/realtime.js
 ```
 
 

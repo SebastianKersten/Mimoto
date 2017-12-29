@@ -229,7 +229,7 @@ class PublisherController
         $ig = new \InstagramAPI\Instagram($debug, $truncatedDebug);
 
         try {
-            $ig->login('supertaboo', 'Purperen69');
+            $ig->login('', '');
         } catch (\Exception $e) {
             echo 'Something went wrong: '.$e->getMessage()."\n";
             exit(0);
