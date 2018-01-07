@@ -17,13 +17,5 @@
     // Mimoto.Docs
     $app->get ('/docs', 'Mimoto\\UserInterface\\docs\\DocsController::viewDocs');
 
-
-
-    // Instagram Inbox
-    //$app->get('/instagram/inbox', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewInbox');
-    $app->get('/instagram/inbox', 'Mimoto\\UserInterface\\publisher\\PublisherController::viewInbox');
-
-
-
-
+    // under development
     $app->get('/selector', 'Mimoto\\UserInterface\\MimotoCMS\\HeartbeatController::devSelection');
