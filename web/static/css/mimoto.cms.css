@@ -9294,7 +9294,8 @@ a.MimotoCMS_interface_Header-menu-user {
   -webkit-box-align: center;
   -webkit-align-items: center;
       -ms-flex-align: center;
-          align-items: center; }
+          align-items: center;
+  text-decoration: none; }
   @media screen and (min-width: 26.25em) {
     a.MimotoCMS_interface_Header-menu-user {
       padding-left: 20px; } }
@@ -9303,7 +9304,8 @@ a.MimotoCMS_interface_Header-menu-user {
     color: #000; }
 
 span.MimotoCMS_interface_Header-menu-user-text {
-  display: none; }
+  display: none;
+  text-decoration: none; }
   @media screen and (min-width: 26.25em) {
     span.MimotoCMS_interface_Header-menu-user-text {
       display: block;
@@ -9318,7 +9320,8 @@ span.MimotoCMS_interface_Header-menu-user-text {
 span.MimotoCMS_interface_Header-menu-user-text-last-name {
   display: none;
   margin-left: 5px;
-  margin-right: 20px; }
+  margin-right: 20px;
+  text-decoration: none; }
   @media screen and (min-width: 40em) {
     span.MimotoCMS_interface_Header-menu-user-text-last-name {
       display: inline; } }

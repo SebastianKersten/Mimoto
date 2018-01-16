@@ -18,6 +18,7 @@ ul.MimotoCMS_interface_Header-menu {
             display: flex;
             color: $dusty-gray;
             align-items: center;
+            text-decoration: none;
 
             @include breakpoint(small up) {
                 padding-left: 20px;
@@ -31,6 +32,8 @@ ul.MimotoCMS_interface_Header-menu {
 
             span.MimotoCMS_interface_Header-menu-user-text {
                 display: none;
+
+                text-decoration: none;
 
                 @include breakpoint(small up) {
                     display: block;
@@ -51,6 +54,8 @@ ul.MimotoCMS_interface_Header-menu {
                     display: none;
                     margin-left: 5px;
                     margin-right: 20px;
+
+                    text-decoration: none;
 
                     @include breakpoint(medium up) {
                         display: inline;
