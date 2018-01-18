@@ -87,6 +87,12 @@ class SessionService
 
     public function comparePassword($sPassword, $encryptedPassword)
     {
+        // 1. validate
+        if (!isset($encryptedPassword->hash) || empty($encryptedPassword->hash)) return false;
+        if (!isset($encryptedPassword->salt) || empty($encryptedPassword->salt)) return false;
+        if (!isset($encryptedPassword->iterations) || empty($encryptedPassword->iterations)) return false;
+
+        // 2. compare
         return ($encryptedPassword->hash == hash_pbkdf2('sha256', $sPassword, $encryptedPassword->salt, $encryptedPassword->iterations, 64));
     }
 }
