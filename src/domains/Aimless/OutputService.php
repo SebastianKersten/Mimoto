@@ -583,8 +583,7 @@ class OutputService
                                         $conditional = $template->conditionals[] = (object) array();
 
                                         if (
-                                            $rawConditional->type == ComponentConditional::ENTITY_TYPE &&
-                                            $rawConditionalConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENT_CONDITIONAL.'--entityType'
+                                            $rawConditional->type == ComponentConditional::ENTITY_TYPE
                                         ) {
                                             // setup
                                             $conditional->entityName = Mimoto::service('config')->getEntityNameById($rawConditionalConnection->child_id);
@@ -592,8 +591,7 @@ class OutputService
                                         }
 
                                         if (
-                                            $rawConditional->type == ComponentConditional::PROPERTY_VALUE &&
-                                            $rawConditionalConnection->parent_property_id == CoreConfig::MIMOTO_COMPONENT_CONDITIONAL.'--entityProperty'
+                                            $rawConditional->type == ComponentConditional::PROPERTY_VALUE
                                         ) {
 
                                             // setup
