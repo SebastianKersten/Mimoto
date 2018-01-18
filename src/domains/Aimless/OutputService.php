@@ -590,8 +590,11 @@ class OutputService
                                         if (
                                             $rawConditional->type == ComponentConditional::ENTITY_TYPE
                                         ) {
+                                            // load
+                                            $eConditional = Mimoto::service('data')->get(CoreConfig::MIMOTO_COMPONENT_CONDITIONAL, $rawConditional->id);
+
                                             // setup
-                                            $conditional->entityName = Mimoto::service('config')->getEntityNameById($rawConditionalConnection->child_id);
+                                            $conditional->entityName = $eConditional->get('entityType.name');
                                             break;
                                         }
 
