@@ -579,8 +579,13 @@ class OutputService
                                         // register
                                         $rawConditional = $aRawConditionals[$nConditionalIndex];
 
+                                        // verify or skip
+                                        if ($rawConditionalConnection->child_id != $rawConditional->id) continue;
+
                                         // add
-                                        $conditional = $template->conditionals[] = (object) array();
+                                        $conditional = $template->conditionals[] = (object) array(
+                                            'type' => $rawConditional->type
+                                        );
 
                                         if (
                                             $rawConditional->type == ComponentConditional::ENTITY_TYPE
