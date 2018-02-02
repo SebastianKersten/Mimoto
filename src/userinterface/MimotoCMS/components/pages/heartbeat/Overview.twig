@@ -1,1 +1,53 @@
-Heartbeat
+<b>Heartbeat</b><br>
+
+<div id="trades_placeholder" style="display:inline-block; width:60%"><i>waiting for some trades to happen...</i></div>
+<div id="latest_price" style="display:inline-block;margin-left:25px;width:35%;vertical-align:top;font-weight:bold;font-size:48px;text-align:right;"><i>waiting ...</i></div>
+
+<script src="https://d3dy5gmtp8yhk7.cloudfront.net/2.1/pusher.min.js"></script>
+<script>
+    var placeholder = document.getElementById('trades_placeholder'),
+        elLatestPrice = document.getElementById('latest_price'),
+        pusher = new Pusher('de504dc5763aeef9ff52'),
+        tradesChannel = pusher.subscribe('live_trades_xrpeur'),
+        child = null,
+        i = 0;
+
+    tradesChannel.bind('trade', function (data) {
+        if (i === 0) {
+            placeholder.innerHTML = '';
+        }
+
+        Mimoto.log(data);
+
+        var date = new Date(data.timestamp * 1000);
+        // Hours part from the timestamp
+        var hours = ("0" + date.getHours()).slice(-2);
+        // Minutes part from the timestamp
+        var minutes = "0" + date.getMinutes();
+        // Seconds part from the timestamp
+        var seconds = "0" + date.getSeconds();
+
+        // Will display time in 10:30:23 format
+        var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
+
+
+        //7e-8 = 0.00000007
+        //2.1e-7 = 0.00000021
+
+
+        var sAmount = data.amount.toString();
+        var aAmountParts = sAmount.split('.');
+        var sAmountView = '<span style="font-size:24px;font-weight:bold;color:' + ((data.type === 1) ? '#c76255' : '#9dceca') +'">' + aAmountParts[0] + '</span>';
+        if(aAmountParts[1]) sAmountView += '<span style="font-size:10px;">.' + aAmountParts[1] + '</span>';
+
+
+        child = document.createElement('div');
+        //child.setAttribute('style', 'display:inline-block;');
+        child.innerHTML = formattedTime + ' - ' + sAmountView + ' Ripple @ <span style="font-size: 18px;font-weight: bold;">&euro; ' + data.price + '</span> = <i>&euro;' + (data.amount * data.price).toFixed(2) + '</i>';
+        placeholder.prepend(child);
+        i++;
+
+        elLatestPrice.innerHTML = '&euro; ' + data.price;
+    });
+</script>

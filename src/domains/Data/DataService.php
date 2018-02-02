@@ -483,4 +483,17 @@ class DataService
         return $this->_aEntityConfigs[$sEntityType];
     }
 
+    /**
+     * Get dataset by label
+     * @param $sDatasetLabel
+     * @return null
+     */
+    public function getDatasetByLabel($sDatasetLabel)
+    {
+        // 1. load
+        $aDatasets = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_DATASET, 'values' => ['name' => $sDatasetLabel]]);
+
+        // 2. verify and send
+        return (count($aDatasets) == 1) ? $aDatasets[0] : null;
+    }
 }
