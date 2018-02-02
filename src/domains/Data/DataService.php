@@ -488,7 +488,7 @@ class DataService
      * @param $sDatasetLabel
      * @return null
      */
-    public function getDatasetByLabel($sDatasetLabel)
+    public function getDataset($sDatasetLabel)
     {
         // 1. load
         $aDatasets = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_DATASET, 'values' => ['name' => $sDatasetLabel]]);
@@ -496,4 +496,40 @@ class DataService
         // 2. verify and send
         return (count($aDatasets) == 1) ? $aDatasets[0] : null;
     }
+
+    /**
+     * Get dataset item by field value
+     * @param $sDatasetLabel
+     * @param $sFieldName
+     * @param $xValue
+     * @return null
+     */
+    public function getDatasetItem($sDatasetLabel, $sFieldName, $xValue)
+    {
+        // 1. load
+        $aDatasets = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_DATASET, 'values' => ['name' => $sDatasetLabel]]);
+
+        // verify
+        if (count($aDatasets) == 1)
+        {
+            // register
+            $eDatatset = $aDatasets[0];
+            $aDatasetItems = $eDatatset->get('data');
+
+            // search correct block
+            $nDatasetItemCount = count($aDatasetItems);
+            for ($nDatasetItemIndex = 0; $nDatasetItemIndex < $nDatasetItemCount; $nDatasetItemIndex++)
+            {
+                // register
+                $eDatasetItem = $aDatasetItems[$nDatasetItemIndex];
+
+                // verify
+                if ($eDatasetItem->get($sFieldName) == $xValue) return $eDatasetItem;
+            }
+        }
+
+        // send
+        return null;
+    }
+
 }
