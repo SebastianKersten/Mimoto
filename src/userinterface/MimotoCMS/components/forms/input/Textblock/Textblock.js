@@ -109,7 +109,14 @@ module.exports.prototype = {
 
     getValue: function()
     {
-        return this._elInput.getElementsByClassName("ql-editor")[0].innerHTML;
+        // 1. read
+        let sValue = this._elInput.getElementsByClassName("ql-editor")[0].innerHTML;
+
+        // 2. check if field is empty and fully cleanup
+        if (sValue === '<p><br></p>' || sValue === '<p></p>') sValue = '';
+
+        // 3. send
+        return sValue;
     },
 
     setValue: function(value)

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "7f82efb75df49bc46cf2";
+/******/ 	__webpack_require__.h = "6c346cd4bb5c34095fb9";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -26295,7 +26295,14 @@ module.exports.prototype = {
 
 
     getValue: function getValue() {
-        return this._elInput.getElementsByClassName("ql-editor")[0].innerHTML;
+        // 1. read
+        var sValue = this._elInput.getElementsByClassName("ql-editor")[0].innerHTML;
+
+        // 2. check if field is empty and fully cleanup
+        if (sValue === '<p><br></p>' || sValue === '<p></p>') sValue = '';
+
+        // 3. send
+        return sValue;
     },
 
     setValue: function setValue(value) {
