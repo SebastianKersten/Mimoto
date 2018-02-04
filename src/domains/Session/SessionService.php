@@ -72,16 +72,19 @@ class SessionService
 
     public function createPasswordHash($sPassword)
     {
-        // init
+        // 1. skip if object passed (result of an empty password value) instead of a new password string
+        if (is_object($sPassword)) return $sPassword;
+
+        // 2. init
         $encryptedPassword = (object) array(
             'salt' => bin2hex(random_bytes(32)),
             'iterations' => 50000
         );
 
-        // encrypt
+        // 3. encrypt
         $encryptedPassword->hash = hash_pbkdf2('sha256', $sPassword, $encryptedPassword->salt, $encryptedPassword->iterations, 64);
 
-        // send
+        // 4. send
         return $encryptedPassword;
     }
 
