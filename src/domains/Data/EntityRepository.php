@@ -704,17 +704,24 @@ class EntityRepository
                 $connection->getParentEntityTypeName() == CoreConfig::MIMOTO_COMPONENT
             )
             {
+                // toggle
+                $bForceDelete = true;
+
                 // cleanup children
                 $this->cleanupChildren($eInstance);
             }
         }
 
-        // cleanup entity
-        $stmt = Mimoto::service('database')->prepare('DELETE FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
-        $params = array(
-            ':id' => $eInstance->getId()
-        );
-        $stmt->execute($params);
+
+        if ($bForceDelete)
+        {
+            // cleanup entity
+            $stmt = Mimoto::service('database')->prepare('DELETE FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
+            $params = array(
+                ':id' => $eInstance->getId()
+            );
+            $stmt->execute($params);
+        }
     }
 
     private function cleanupParents(MimotoEntity $eInstance)
