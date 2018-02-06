@@ -1022,24 +1022,34 @@ class EntityRepository
                         // init
                         $aCollection = array();
 
-                        // load
-                        $stmt = Mimoto::service('database')->prepare(
-                            'SELECT * FROM `'.$propertyValue->mysqlConnectionTable.'`'.
-                            ' WHERE parent_id = :parent_id'.
-                            ' && parent_property_id = :parent_property_id'.
-                            ' && parent_entity_type_id = :parent_entity_type_id'.
-                            ' ORDER BY sortindex'
-                        );
-                        $params = array(
-                            ':parent_id' => $eInstance->getId(),
-                            ':parent_property_id' => $propertyConfig->id,
-                            ':parent_entity_type_id' => $eInstance->getEntityTypeId()
-                        );
 
-                        $stmt->execute($params);
+                        // toggle between cache or database
+                        if (Mimoto::service('cache')->isEnabled())
+                        {
+                            // build
+                            $sPropertySelector = 'mimoto.core.connections.'.$eInstance->getId().'.'.$propertyConfig->id.'.'.$eInstance->getEntityTypeId();
 
-                        // load
-                        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                            // read
+                            if (Mimoto::service('cache')->hasValue($sPropertySelector))
+                            {
+                                // load
+                                $aResults = Mimoto::service('cache')->getValue($sPropertySelector);
+                            }
+                            else
+                            {
+                                // load
+                                $aResults = $this->loadConnectionsOfProperty($propertyValue, $eInstance, $propertyConfig);
+
+                                // store
+                                Mimoto::service('cache')->setValue($sPropertySelector, $aResults);
+                            }
+                        }
+                        else
+                        {
+                            // load
+                            $aResults = $this->loadConnectionsOfProperty($propertyValue, $eInstance, $propertyConfig);
+                        }
+                        
 
                         foreach ($aResults as $row)
                         {
@@ -1153,7 +1163,32 @@ class EntityRepository
         // send
         return $eInstance;
     }
-    
+
+    private function loadConnectionsOfProperty($propertyValue, $eInstance, $propertyConfig)
+    {
+        // load
+        $stmt = Mimoto::service('database')->prepare(
+            'SELECT * FROM `'.$propertyValue->mysqlConnectionTable.'`'.
+            ' WHERE parent_id = :parent_id'.
+            ' && parent_property_id = :parent_property_id'.
+            ' && parent_entity_type_id = :parent_entity_type_id'.
+            ' ORDER BY sortindex'
+        );
+        $params = array(
+            ':parent_id' => $eInstance->getId(),
+            ':parent_property_id' => $propertyConfig->id,
+            ':parent_entity_type_id' => $eInstance->getEntityTypeId()
+        );
+
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        // send
+        return $aResults;
+    }
+
     
     private function getEntityIdentifier($sEntityName, $nEntityId)
     {
