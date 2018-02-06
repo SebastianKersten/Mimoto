@@ -149,10 +149,10 @@ class Mimoto
 
         // --- runtime ---
 
-        $app->get ('/'.$sProjectName.'.cms/configuration/gearman', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::overview');
+        $app->get ('/'.$sProjectName.'.cms/configuration/gearman', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$sProjectName.'.cms/workers/data', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::data');
         $app->get ('/'.$sProjectName.'.cms/workers/slack', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::slack');
-        $app->get ('/'.$sProjectName.'.cms/heartbeat', 'Mimoto\\UserInterface\\MimotoCMS\\HeartbeatController::viewOverview');
+        $app->get ('/'.$sProjectName.'.cms/heartbeat', 'Mimoto\\UserInterface\\MimotoCMS\\HeartbeatController::viewOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
 
         // --- database sanity
@@ -221,6 +221,10 @@ class Mimoto
         $app->get('/'.$sProjectName.'.cms/configuration/formatting', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/configuration/userroles', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/configuration/services', 'Mimoto\\UserInterface\\MimotoCMS\\ServiceController::viewOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+        $app->get ('/'.$sProjectName.'.cms/configuration/memcached/flush', 'Mimoto\\UserInterface\\MimotoCMS\\ConfigurationController::flushMemcached')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+
         $app->get('/'.$sProjectName.'.cms/components', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::viewComponentOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$sProjectName.'.cms/users', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::viewUserOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');

@@ -181,8 +181,6 @@ class OutputService
     }
 
 
-
-
     public function getComponentFile($sComponentName, MimotoEntity $entity = null)
     {
         // search

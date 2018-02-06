@@ -74,10 +74,9 @@ class EntityRepository
      */
     public function get(EntityConfig $entityConfig, $nEntityId)
     {
+        // 1. check if the request related to core data
         if (substr($nEntityId, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
         {
-
-
 
             // 1. hoe ophalen core data
             // 2. aparte functie (kent alle types - registerClass by key)
@@ -127,6 +126,7 @@ class EntityRepository
             // send
             return $entity;
         }
+        // 2. else load data from the database
         else
         {
 
@@ -135,33 +135,66 @@ class EntityRepository
             // validate
             //if (is_nan($nEntityId) || $nEntityId < 0) { throw new MimotoEntityException("( '-' ) - Sorry, the entity id '$nEntityId' you passed is not a valid. Should be an integer > 0"); }
 
-            // load
-            $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
-            $params = array(
-                ':id' => $nEntityId
-            );
-            $stmt->execute($params);
 
-            // load
-            $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            // verify
-            if (count($aResults) !== 1)
+            // toggle between cache or database
+            if (Mimoto::service('cache')->isEnabled())
             {
+                // build
+                $sEntitySelector = 'mimoto.core.entities.'.$entityConfig->getName().'.'.$nEntityId;
 
-                //Mimoto::service('log')->silent("Entity not found", "Sorry, I can't find the '" . $entityConfig->getName() . "' entity with id='$nEntityId'");
-                return null;
+                // read
+                if (Mimoto::service('cache')->hasValue($sEntitySelector))
+                {
+                    // load
+                    $instanceData = Mimoto::service('cache')->getValue($sEntitySelector);
+                }
+                else
+                {
+                    // load
+                    $instanceData = $this->loadInstanceFromDatabase($entityConfig, $nEntityId);
+
+                    // store
+                    Mimoto::service('cache')->setValue($sEntitySelector, $instanceData);
+                }
             }
             else
             {
-                // setup
-                $entity = $this->createEntity($entityConfig, $aResults[0]);
-
-                // send
-                return $entity;
+                // load
+                $instanceData = $this->loadInstanceFromDatabase($entityConfig, $nEntityId);
             }
+
+            // validate
+            if (empty($instanceData)) return null;
+
+            // create and send
+            return $this->createEntity($entityConfig, $instanceData);
+
         }
     }
+
+    private function loadInstanceFromDatabase(EntityConfig $entityConfig, $nEntityId)
+    {
+        // load
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
+        $params = array(
+            ':id' => $nEntityId
+        );
+        $stmt->execute($params);
+
+        // load
+        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (count($aResults) !== 1)
+        {
+            return null;
+        }
+        else
+        {
+            return $aResults[0];
+        }
+    }
+
     
     /**
      * Find a collection entities

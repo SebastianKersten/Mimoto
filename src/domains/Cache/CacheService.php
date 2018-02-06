@@ -56,7 +56,12 @@ class CacheService
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
 
-    
+
+    public function hasValue($sKey)
+    {
+        return ($this->_memcache->get($sKey) !== false);
+    }
+
     public function getValue($sKey)
     {
         return $this->_memcache->get($sKey);
@@ -66,5 +71,9 @@ class CacheService
     {
         return $this->_memcache->set($sKey, $value, $flag, $expire);
     }
-    
+
+    public function flush()
+    {
+        if ($this->_bCacheEnabled) $this->_memcache->flush();
+    }
 }

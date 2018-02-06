@@ -48,4 +48,18 @@ class ConfigurationController
         return $page->render();
     }
 
+    public function flushMemcached(Application $app)
+    {
+        if (Mimoto::service('cache')->isEnabled())
+        {
+            Mimoto::service('cache')->flush();
+
+            Mimoto::error('Memcached has been flushed');
+        }
+        else
+        {
+            Mimoto::error('Memcached was not enabled. No flushing today!');
+        }
+    }
+
 }
