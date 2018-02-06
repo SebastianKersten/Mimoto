@@ -429,7 +429,11 @@ module.exports.prototype = {
             elWarning.parentNode.removeChild(elWarning);
             elDetails.parentNode.removeChild(elDetails);
         }
-    }
+    },
 
+    confirmRemoval: function()
+    {
+        return confirm('Are you sure you want to remove this item?');
+    }
     
 }

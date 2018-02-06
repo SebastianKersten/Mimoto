@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "3e505857fb421243971e";
+/******/ 	__webpack_require__.h = "fb46379382f394d92612";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -19166,8 +19166,14 @@ module.exports.prototype = {
         // onError,
         // onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing)
 
-        if (options && options.confirm && typeof options.confirm === 'function') {
-            if (!options.confirm()) return;
+
+        if (options && options.confirm) {
+            if (typeof eval(options.confirm) !== 'function') {
+                Mimoto.log('Invalid function for confirmation of item removal');return;
+            }
+            if (eval(options.confirm)() === false) {
+                Mimoto.log('User cancelled');return;
+            }
         }
 
         var postData = {

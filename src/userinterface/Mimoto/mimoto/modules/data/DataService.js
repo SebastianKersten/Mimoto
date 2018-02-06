@@ -77,9 +77,11 @@ module.exports.prototype = {
         // onError,
         // onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing)
 
-        if (options && options.confirm && typeof options.confirm === 'function')
+
+        if (options && options.confirm)
         {
-            if (!options.confirm()) return;
+            if (typeof eval(options.confirm) !== 'function') { Mimoto.log('Invalid function for confirmation of item removal'); return; }
+            if (eval(options.confirm)() === false) { Mimoto.log('User cancelled'); return; }
         }
 
 

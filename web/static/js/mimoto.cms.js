@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "3e505857fb421243971e";
+/******/ 	__webpack_require__.h = "fb46379382f394d92612";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -9442,6 +9442,10 @@ module.exports.prototype = {
             elWarning.parentNode.removeChild(elWarning);
             elDetails.parentNode.removeChild(elDetails);
         }
+    },
+
+    confirmRemoval: function confirmRemoval() {
+        return confirm('Are you sure you want to remove this item?');
     }
 
 };
