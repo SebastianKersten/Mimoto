@@ -77,6 +77,11 @@ module.exports.prototype = {
         // onError,
         // onConfirm:null -> new Confirmation()->confirm() or ->deny() or nothing)
 
+        if (options && options.confirm && typeof options.confirm === 'function')
+        {
+            if (!options.confirm()) return;
+        }
+
 
         let postData = {
             sEntitySelector: sEntitySelector,
