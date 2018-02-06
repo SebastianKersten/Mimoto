@@ -1049,7 +1049,7 @@ class EntityRepository
                             // load
                             $aResults = $this->loadConnectionsOfProperty($propertyValue, $eInstance, $propertyConfig);
                         }
-                        
+
 
                         foreach ($aResults as $row)
                         {
@@ -1198,6 +1198,9 @@ class EntityRepository
 
     private function addItemToCollection($sDBTable, MimotoEntityConnection $newItem)
     {
+        // record
+        $sNow = date('Y-m-d H:i:s');
+
         // load
         $stmt = Mimoto::service('database')->prepare(
             "INSERT INTO `".$sDBTable."` SET ".
@@ -1206,7 +1209,9 @@ class EntityRepository
             "parent_id = :parent_id, ".
             "child_entity_type_id = :child_entity_type_id, ".
             "child_id = :child_id, ".
-            "sortindex = :sortindex"
+            "sortindex = :sortindex, ".
+            "created = :created, ".
+            "lastModified = :lastModified"
         );
         $params = array(
             ':parent_entity_type_id' => $newItem->getParentEntityTypeId(),
@@ -1214,7 +1219,9 @@ class EntityRepository
             ':parent_id' => $newItem->getParentId(),
             ':child_entity_type_id' => $newItem->getChildEntityTypeId(),
             ':child_id' => $newItem->getChildId(),
-            ':sortindex' => $newItem->getSortIndex()
+            ':sortindex' => $newItem->getSortIndex(),
+            ':created' => $sNow,
+            ':lastModified' => $sNow
         );
 
         $stmt->execute($params);
@@ -1225,14 +1232,19 @@ class EntityRepository
 
     private function alterExistingItemInCollection($sDBTable, MimotoEntityConnection $existingItem)
     {
+        // record
+        $sNow = date('Y-m-d H:i:s');
+
         // load
         $stmt = Mimoto::service('database')->prepare(
             'UPDATE `'.$sDBTable.'` SET '.
-            'sortindex = :sortindex '.
+            'sortindex = :sortindex, '.
+            'lastModified = :lastModified '.
             'WHERE id = :id'
         );
         $params = array(
             ':sortindex' => $existingItem->getSortIndex(),
+            ':lastModified' => $sNow,
             ':id' => $existingItem->getId()
         );
         $stmt->execute($params);
