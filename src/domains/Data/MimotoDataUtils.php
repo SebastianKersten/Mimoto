@@ -382,6 +382,7 @@ class MimotoDataUtils
                     // validate
                     if (!$bValidated)
                     {
+                        Mimoto::output('Connection error', $connection);
                         Mimoto::service('log')->error("Incorrect value", "The property '".Mimoto::service('config')->getEntityNameById($xParentEntityTypeId).".$sPropertyName' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."' (and not `".Mimoto::service('config')->getEntityNameById($sChildEntityTypeId)."`)", true);
                     }
 
