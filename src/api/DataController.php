@@ -86,6 +86,81 @@ class DataController
         $sPropertySelector = $data->sPropertySelector;
         $sFormName = $data->sFormName;
 
+
+        // ------- Multi option add
+
+
+        //Mimoto::output('$sFormName', $sFormName);
+
+//        if (!is_string($sFormName) && is_array($sFormName))
+//        {
+//            // init
+//            $sOutput = '<div>';
+//            $sOutput .= '<h1>Make a selection</h1>';
+//
+//            $nFormCount = count($sFormName);
+//            for ($nFormIndex = 0; $nFormIndex < $nFormCount; $nFormIndex++)
+//            {
+//                // register
+//                $option = $sFormName[$nFormIndex];
+//
+//                if (isset($option->label) || isset($option['label']))
+//                {
+//                    $sLabel = (isset($option->label)) ? $option->label : $option['label'];
+//                }
+//                else
+//                {
+//                    Mimoto::error('OF Hier?');
+//                    return;
+//                }
+//
+//                if (isset($option->form) || isset($option['form']))
+//                {
+//                    $sForm = (isset($option->form)) ? $option->form : $option['form'];
+//                }
+//                else
+//                {
+//                    Mimoto::error('Hier?');
+//                    return;
+//                }
+//
+//                $instructions = (object) array(
+//                    'form' => $sForm,
+//                    'propertyType' => 'collection'
+//                );
+//
+//                $sDirective = 'data-mimoto-add="'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
+//
+//                $sOutput .= "<div class=\"MimotoCMS_components_selection_SelectableItem\" $sDirective>$sLabel</div>";
+//
+//
+//
+//                // 7. init page
+//                $popup = Mimoto::service('output')->createPopup();
+//
+//                // 8. create content
+//                $component = Mimoto::service('output')->create('MimotoCMS_layout_PopupForm');
+//
+//                // add component here
+//
+//                // 10. connect
+//                $popup->addComponent('content', $component);
+//
+//                // 11. output
+//                return $popup->render();
+//            }
+//
+//            // close
+//            $sOutput .= '</div>';
+//
+//            // send
+//            return $sOutput;
+//        }
+
+
+        // -------
+
+
         // 2. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
         $nInstanceId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sPropertySelector);
