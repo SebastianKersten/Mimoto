@@ -316,7 +316,8 @@ socketIO.on('connection', function(client)
 
 
 
-http.listen(4000, 'localhost', function() {
+//http.listen(4000, 'localhost', function() {
+http.listen(4000, function() {
     console.log('listening on *:4000');
 });
 
