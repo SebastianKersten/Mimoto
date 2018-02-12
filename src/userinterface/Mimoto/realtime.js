@@ -316,7 +316,7 @@ socketIO.on('connection', function(client)
 
 
 
-http.listen(4000, function(){
+http.listen(4000, 'localhost', function() {
     console.log('listening on *:4000');
 });
 
@@ -463,6 +463,6 @@ socketIOMimoto.on('connection', function(server)
 
 });
 
-httpMimoto.listen(4001, function(){
+httpMimoto.listen(4001, 'localhost', function() {
     console.log('listening to Mimoto on *:4001');
 });

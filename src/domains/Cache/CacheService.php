@@ -13,7 +13,7 @@ class CacheService
 {
 
     // services
-    private $_memcache;
+    private $_memcached;
 
     // settings
     private $_bCacheEnabled;
@@ -38,16 +38,16 @@ class CacheService
     /**
      * Constructor
      */
-    public function __construct($memcache, $bEnableCache = false)
+    public function __construct($memcached, $bEnableCache = false)
     {
         // register
-        $this->_memcache = $memcache;
+        $this->_memcached = $memcached;
 
         // init
         $this->_bCacheEnabled = $bEnableCache;
 
         // flush all
-        if (!$this->_bCacheEnabled && !empty($this->_memcache)) $this->_memcache->flush();
+        if (!$this->_bCacheEnabled && !empty($this->_memcached)) $this->_memcached->flush();
     }
     
     
@@ -59,21 +59,26 @@ class CacheService
 
     public function hasValue($sKey)
     {
-        return ($this->_memcache->get($sKey) !== false);
+        return ($this->_memcached->get($sKey) !== false);
     }
 
     public function getValue($sKey)
     {
-        return $this->_memcache->get($sKey);
+        return $this->_memcached->get($sKey);
     }
     
     public function setValue($sKey, $value, $flag = false, $expire = 0)
     {
-        return $this->_memcache->set($sKey, $value, $flag, $expire);
+        return $this->_memcached->set($sKey, $value, $flag, $expire);
     }
 
     public function flush()
     {
-        if ($this->_bCacheEnabled) $this->_memcache->flush();
+        if ($this->_bCacheEnabled) $this->_memcached->flush();
+    }
+
+    public function delete($sKey)
+    {
+        if ($this->_bCacheEnabled) $this->_memcached->delete($sKey);
     }
 }

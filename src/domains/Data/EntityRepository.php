@@ -754,6 +754,17 @@ class EntityRepository
                 ':id' => $eInstance->getId()
             );
             $stmt->execute($params);
+
+
+            // update cache
+            if (Mimoto::service('cache')->isEnabled())
+            {
+                // build
+                $sEntitySelector = 'mimoto.core.entities.'.$entityConfig->getName().'.'.$eInstance->getId();
+
+                // remove
+                Mimoto::service('cache')->delete($sEntitySelector);
+            }
         }
     }
 

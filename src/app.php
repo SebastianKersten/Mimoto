@@ -77,7 +77,7 @@ Mimoto::setService('twig', $twig);
 // setup
 $app['debug'] = true;
 $app['twig'] = $twig;
-$app['Mimoto'] = new \Mimoto\Mimoto($app, true);
+$app['Mimoto'] = new \Mimoto\Mimoto($app, false);
 
 
 // run in debug mode
