@@ -67,9 +67,9 @@ class CacheService
         return $this->_memcached->get($sKey);
     }
     
-    public function setValue($sKey, $value, $flag = false, $expire = 0)
+    public function setValue($sKey, $value, $expire = 0)
     {
-        return $this->_memcached->set($sKey, $value, $flag, $expire);
+        return $this->_memcached->set($sKey, $value, $expire);
     }
 
     public function flush()
