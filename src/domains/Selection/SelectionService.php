@@ -298,9 +298,21 @@ class SelectionService
             if (isset($ruleConfig->idAsVar)) $rule->setIdAsVar($ruleConfig->idVarName);
             if (isset($ruleConfig->properyAsVar)) $rule->setPropertyAsVar($ruleConfig->propertyVarName);
 
-            if (isset($ruleConfig->values))
+            if (isset($ruleConfig->values) && !empty($ruleConfig->values))
             {
-                Mimoto::error('xxx');
+                // read
+                $aRuleValues = $ruleConfig->values;
+
+                // add values
+                $nRuleValueCount = count($aRuleValues);
+                for ($nRuleValueIndex = 0; $nRuleValueIndex < $nRuleValueCount; $nRuleValueIndex++)
+                {
+                    // register
+                    $ruleValue = $aRuleValues[$nRuleValueIndex];
+
+                    // add
+                    $rule->setValue($ruleValue->propertyName, $ruleValue->value);
+                }
             }
         }
 
