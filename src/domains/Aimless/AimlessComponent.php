@@ -374,8 +374,11 @@ class AimlessComponent
                     // c. validate
                     if (!$this->_entity->hasProperty($sPropertyName)) continue;
 
+                    // d. replace
+                    $sNewSubvalue = '<span '.$this->realtime($sPropertyName).'>'.$this->_entity->get($sPropertyName).'</span>';
+
                     // d. inject
-                    $sValue = preg_replace('/'.$sMatch.'/', $this->_entity->get($sPropertyName), $sValue);
+                    $sValue = preg_replace('/'.$sMatch.'/', $sNewSubvalue, $sValue);
                 }
             }
         }
