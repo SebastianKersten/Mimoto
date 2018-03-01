@@ -52,6 +52,10 @@ class AimlessComponentViewModel
         return $this->_component->data($sPropertySelector, $bGetConnectionInfo, !empty($sComponentName), $sComponentName, null, $customValues);
     }
 
+    public function parse($sValue)
+    {
+        return $this->_component->parse($sValue);
+    }
 
 //    public function data($sPropertySelector, $bGetConnectionInfo = false)
 //    {

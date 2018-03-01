@@ -344,6 +344,45 @@ class AimlessComponent
         return '';
     }
 
+    public function parse($sValue)
+    {
+        // 1. replace enter or init
+        if (!empty($sValue)) $sValue = preg_replace('/\\\n/', chr(13), $sValue);
+
+        // 3. get variables
+        if (preg_match_all('/({{.*?}})/', $sValue, $aMatches))
+        {
+            // remove full match
+            array_splice($aMatches, 0, 1);
+
+            // I. replace
+            $nSubmatchCount = count($aMatches);
+            for ($nSubmatchIndex = 0; $nSubmatchIndex < $nSubmatchCount; $nSubmatchIndex++)
+            {
+                // 1. register
+                $aSubmatches = $aMatches[$nSubmatchIndex];
+
+                $nVarCount = count($aSubmatches);
+                for ($nVarIndex = 0; $nVarIndex < $nVarCount; $nVarIndex++)
+                {
+                    // a. register
+                    $sMatch = $aSubmatches[$nVarIndex];
+
+                    // b. isolate
+                    $sPropertyName = trim(substr($sMatch, 2, strlen($sMatch) - 4));
+
+                    // c. validate
+                    if (!$this->_entity->hasProperty($sPropertyName)) continue;
+
+                    // d. inject
+                    $sValue = preg_replace('/'.$sMatch.'/', $this->_entity->get($sPropertyName), $sValue);
+                }
+            }
+        }
+
+        return $sValue;
+    }
+
     public function getValueBySortindex($nIndex = 0, $bGetRealtime = false, $bGetImage = false)
     {
         // init

@@ -1,8 +1,8 @@
 <div class="MimotoCMS_components_selection_SelectableItem">
 
     <div class="MimotoCMS_components_selection_SelectableItem-info">
-        <div class="MimotoCMS_components_selection_SelectableItem-info-title" {{ Mimoto.getRealtimeBySortindex()|default('') }}>{{ Mimoto.getValueBySortindex()|default('') }}</div>
-        <div class="MimotoCMS_components_selection_SelectableItem-info-subtitle" {{ Mimoto.getRealtimeBySortindex(1)|default('') }}>{{ Mimoto.getValueBySortindex(1)|default('') }}</div>
+        <div class="MimotoCMS_components_selection_SelectableItem-info-title">{% if options.itemLabel is not empty %}{{ Mimoto.parse(options.itemLabel)|default('') }}{% else %}{{ Mimoto.getValueBySortindex(0)|default('') }}{% endif %}</div>
+        <div class="MimotoCMS_components_selection_SelectableItem-info-subtitle">{% if options.itemSublabel is not empty %}{{ Mimoto.parse(options.itemSublabel)|default('') }}{% else %}{{ Mimoto.getValueBySortindex(1)|default('') }}{% endif %}</div>
     </div>
 
     <div class="MimotoCMS_components_selection_SelectableItem-menu">
