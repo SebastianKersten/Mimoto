@@ -141,7 +141,7 @@ class EntityRepository
             if (Mimoto::service('cache')->isEnabled())
             {
                 // build
-                $sEntitySelector = 'mimoto.core.entities.'.$entityConfig->getName().'.'.$nEntityId;
+                $sEntitySelector = 'mimoto.core.entities--'.$entityConfig->getName().'.'.$nEntityId;
 
                 // read
                 if (Mimoto::service('cache')->hasValue($sEntitySelector))
@@ -166,6 +166,7 @@ class EntityRepository
 
             // validate
             if (empty($instanceData)) return null;
+
 
             // create and send
             return $this->createEntity($entityConfig, $instanceData);
@@ -381,18 +382,57 @@ class EntityRepository
 
     /**
      * Store entity
-     * @param MimotoEntity $entity
+     * @param MimotoEntity $eInstance
      */
-    public function store(EntityConfig $entityConfig, MimotoEntity $entity)
+    public function store(EntityConfig $entityConfig, MimotoEntity $eInstance)
     {
         // read
-        $aModifiedValues = $entity->getChanges();
+        $aModifiedValues = $eInstance->getChanges();
 
         // save nothing if no changes
-        if (count($aModifiedValues) == 0 && MimotoDataUtils::isValidId($entity->getId())) { return $entity; }
+        if (count($aModifiedValues) == 0 && MimotoDataUtils::isValidId($eInstance->getId())) { return $eInstance; }
+
 
         // determine
-        $bIsExistingEntity = (MimotoDataUtils::isValidId($entity->getId())) ? true : false;
+        $bIsExistingEntity = (MimotoDataUtils::isValidId($eInstance->getId())) ? true : false;
+
+
+        // --- clear cache
+
+
+        // toggle between cache or database
+        if (Mimoto::service('cache')->isEnabled() && $bIsExistingEntity)
+        {
+            // build
+            $sEntitySelector = 'mimoto.core.entities--'.$eInstance->getEntityTypeName().'.'.$eInstance->getId();
+
+            // clear
+            Mimoto::service('cache')->delete($sEntitySelector);
+
+            // construct
+            $sEntityConnectionsSelector = 'mimoto.core.entityconnections--'.$eInstance->getEntityTypeName().'.'.$eInstance->getId();
+
+            // read
+            $aEntityConnections = Mimoto::service('cache')->getValue($sEntityConnectionsSelector);
+
+            if (!empty($aEntityConnections))
+            {
+                $nEntityConnectionCount = count($aEntityConnections);
+                for ($nEntityConnectionIndex = 0; $nEntityConnectionIndex < $nEntityConnectionCount; $nEntityConnectionIndex++)
+                {
+                    // store
+                    Mimoto::service('cache')->delete($aEntityConnections[$nEntityConnectionIndex]);
+                }
+            }
+
+            // store
+            Mimoto::service('cache')->delete($sEntityConnectionsSelector);
+        }
+
+
+        // --- clear cache (end)
+
+
 
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
@@ -426,7 +466,7 @@ class EntityRepository
                     
                             $aQueryElements[] = (object) array(
                                 'key' => $propertyValue->mysqlColumnName,
-                                'value' => MimotoDataUtils::convertRuntimeValueToStorableValue($entity->getValue($sPropertyName), $propertyConfig->settings->type->type, $propertyConfig->settings->type->value)
+                                'value' => MimotoDataUtils::convertRuntimeValueToStorableValue($eInstance->getValue($sPropertyName), $propertyConfig->settings->type->type, $propertyConfig->settings->type->value)
                             );
                             break;
                     }
@@ -533,7 +573,7 @@ class EntityRepository
             if ($bIsExistingEntity)
             {
                 $sQuery .= " WHERE id = :id";
-                $params[':id'] = $entity->getId();
+                $params[':id'] = $eInstance->getId();
             } else
             {
                 $sQuery .= ((count($aQueryElements) > 0) ? ', ' : '') . "created = :created";
@@ -550,7 +590,7 @@ class EntityRepository
             if (!$bIsExistingEntity)
             {
                 // read and store
-                $entity->setId(Mimoto::service('database')->lastInsertId());
+                $eInstance->setId(Mimoto::service('database')->lastInsertId());
             }
 
         }
@@ -582,7 +622,7 @@ class EntityRepository
             $newConnectionsToStore = $aNewConnectionsToStore[$nNewConnectionsToStoreIndex];
 
             // complete
-            if (empty($newConnectionsToStore->connection->getParentId())) $newConnectionsToStore->connection->setParentId($entity->getId());
+            if (empty($newConnectionsToStore->connection->getParentId())) $newConnectionsToStore->connection->setParentId($eInstance->getId());
 
             // add
             $this->addItemToCollection($newConnectionsToStore->dbtable, $newConnectionsToStore->connection);
@@ -590,7 +630,7 @@ class EntityRepository
 
 
         // setup
-        $event = new MimotoEvent($entity, $sEvent);
+        $event = new MimotoEvent($eInstance, $sEvent);
 
         // broadcast
         $this->_EventService->sendUpdate($event->getType(), $event);
@@ -601,10 +641,10 @@ class EntityRepository
         
         
         // update
-        $entity->acceptChanges();
+        $eInstance->acceptChanges();
 
         // send
-        return $entity;
+        return $eInstance;
     }
 
     /**
@@ -704,10 +744,30 @@ class EntityRepository
             if (Mimoto::service('cache')->isEnabled())
             {
                 // build
-                $sEntitySelector = 'mimoto.core.entities.'.$entityConfig->getName().'.'.$eInstance->getId();
+                $sEntitySelector = 'mimoto.core.entities--'.$entityConfig->getName().'.'.$eInstance->getId();
 
                 // remove
                 Mimoto::service('cache')->delete($sEntitySelector);
+
+
+                // construct
+                $sEntityConnectionsSelector = 'mimoto.core.entityconnections--'.$eInstance->getEntityTypeName().'.'.$eInstance->getId();
+
+                // read
+                $aEntityConnections = Mimoto::service('cache')->getValue($sEntityConnectionsSelector);
+
+                if (!empty($aEntityConnections))
+                {
+                    $nEntityConnectionCount = count($aEntityConnections);
+                    for ($nEntityConnectionIndex = 0; $nEntityConnectionIndex < $nEntityConnectionCount; $nEntityConnectionIndex++)
+                    {
+                        // store
+                        Mimoto::service('cache')->delete($aEntityConnections[$nEntityConnectionIndex]);
+                    }
+                }
+
+                // store
+                Mimoto::service('cache')->delete($sEntityConnectionsSelector);
             }
         }
     }
@@ -982,7 +1042,7 @@ class EntityRepository
                         if (Mimoto::service('cache')->isEnabled())
                         {
                             // build
-                            $sPropertySelector = 'mimoto.core.connections.'.$eInstance->getId().'.'.$propertyConfig->id.'.'.$eInstance->getEntityTypeId();
+                            $sPropertySelector = 'mimoto.core.connections--'.$eInstance->getEntityTypeName().'.'.$eInstance->getId().'.'.$propertyConfig->name;
 
                             // read
                             if (Mimoto::service('cache')->hasValue($sPropertySelector))
@@ -997,6 +1057,28 @@ class EntityRepository
 
                                 // store
                                 Mimoto::service('cache')->setValue($sPropertySelector, $aResults);
+
+
+                                // construct
+                                $sEntityConnectionsSelector = 'mimoto.core.entityconnections--'.$eInstance->getEntityTypeName().'.'.$eInstance->getId();
+
+                                // init
+                                $aEntityConnections = [];
+
+                                // load
+                                if (Mimoto::service('cache')->hasValue($sEntityConnectionsSelector))
+                                {
+                                    $aEntityConnections = Mimoto::service('cache')->getValue($sEntityConnectionsSelector);
+                                }
+
+                                // register
+                                if (!in_array($sEntityConnectionsSelector, $aEntityConnections))
+                                {
+                                    $aEntityConnections[] = $sEntityConnectionsSelector;
+                                }
+
+                                // store
+                                Mimoto::service('cache')->setValue($sEntityConnectionsSelector, $aEntityConnections);
                             }
                         }
                         else
