@@ -126,6 +126,9 @@ class SelectionService
         $aAllSelectionRuleConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTION);
         $aAllSelectionRules = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_SELECTION_RULE);
         $aAllSelectionRuleSettingsConnections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_SELECTION_RULE);
+        $aAllSelectionRuleValues = EntityConfigUtils::loadRawEntityData(CoreConfig::MIMOTO_SELECTION_RULE_VALUE);
+
+
 
 
         // --- compose ---
@@ -214,6 +217,29 @@ class SelectionService
                                                 $bSettingFound = true;
                                                 break;
 
+                                            case CoreConfig::MIMOTO_SELECTION_RULE.'--values':
+
+                                                // init
+                                                if (!isset($newSelectionRule->values)) $newSelectionRule->values = [];
+
+                                                $nRuleValueCount = count($aAllSelectionRuleValues);
+                                                for ($nRuleValueIndex = 0; $nRuleValueIndex < $nRuleValueCount; $nRuleValueIndex++)
+                                                {
+                                                    // register
+                                                    $ruleValue = $aAllSelectionRuleValues[$nRuleValueIndex];
+
+                                                    if ($ruleValue->id == $selectionRuleSetting->child_id)
+                                                    {
+                                                        // add
+                                                        $newSelectionRule->values[] = (object) array(
+                                                            'propertyName' => $ruleValue->propertyName,
+                                                            'value' => $ruleValue->value,
+                                                        );
+                                                        break;
+                                                    }
+                                                }
+                                                $bSettingFound = true;
+                                                break;
                                         }
                                     }
                                 }
@@ -271,6 +297,11 @@ class SelectionService
             if (isset($ruleConfig->typeAsVar)) $rule->setTypeAsVar($ruleConfig->typeVarName);
             if (isset($ruleConfig->idAsVar)) $rule->setIdAsVar($ruleConfig->idVarName);
             if (isset($ruleConfig->properyAsVar)) $rule->setPropertyAsVar($ruleConfig->propertyVarName);
+
+            if (isset($ruleConfig->values))
+            {
+                Mimoto::error('xxx');
+            }
         }
 
         // add data

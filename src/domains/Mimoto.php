@@ -550,7 +550,7 @@ class Mimoto
         echo '</div>';
         echo '<br>';
 
-        //throw new \Exception('oh oh, computer says oops!');
+        //throw new \Exception(print_r($data, true).'');
         die();
     }
 

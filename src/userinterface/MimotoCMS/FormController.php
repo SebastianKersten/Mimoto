@@ -70,7 +70,7 @@ class FormController
         if (empty($eEntity)) return $app->redirect("/mimoto.cms/entities/".$nEntityId.'/edit');
 
         // load all
-        $aExistingForms = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);
+        $aExistingForms = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORM]);
 
 
         // init
@@ -333,7 +333,7 @@ class FormController
 
 
         // load
-        $aInputTypesAll = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_INPUT]);
+        $aInputTypesAll = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_INPUT]);
 
         // filter
         $aInputTypes = [];
@@ -348,19 +348,19 @@ class FormController
 
 
         // load
-        $aOutputTypes = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE]);
+        $aOutputTypes = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE]);
 
         // load
-        $aLayoutTypes = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART]);
+        $aLayoutTypes = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART]);
 
-        $aMoreLayoutTypes = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND]);
+        $aMoreLayoutTypes = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND]);
         $nLayoutCount = count($aMoreLayoutTypes);
         for($nLayoutIndex = 0; $nLayoutIndex < $nLayoutCount; $nLayoutIndex++)
         {
             $aLayoutTypes[] = $aMoreLayoutTypes[$nLayoutIndex];
         }
 
-        $aMoreLayoutTypes = Mimoto::service('config')->find(['typeOf' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER]);
+        $aMoreLayoutTypes = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER]);
         $nLayoutCount = count($aMoreLayoutTypes);
         for($nLayoutIndex = 0; $nLayoutIndex < $nLayoutCount; $nLayoutIndex++)
         {

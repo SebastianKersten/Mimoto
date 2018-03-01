@@ -98,7 +98,7 @@ class SessionController
 
 
         // find
-        $aUsers = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_USER, 'value' => ['email' => $sUsername]]);
+        $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER, 'values' => ['email' => $sUsername]]);
 
         // validate
         if (count($aUsers) == 1)

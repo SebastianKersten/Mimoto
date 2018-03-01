@@ -41,6 +41,19 @@ class Selection
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_SELECTION.'--label',
+                    // ---
+                    'name' => 'label',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_TEXT,
+                            'value' => CoreConfig::DATA_VALUE_TEXTLINE
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_SELECTION.'--rules',
                     // ---
                     'name' => 'rules',

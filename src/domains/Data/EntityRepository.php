@@ -195,62 +195,6 @@ class EntityRepository
         }
     }
 
-    
-    /**
-     * Find a collection entities
-     * @return array containing zero or more entities
-     */
-    public function find(EntityConfig $entityConfig, $criteria)
-    {
-        
-        // init
-        $aEntities = [];
-        
-        // setup
-        //$aEntities->setCriteria($criteria);
-
-
-        $sQuery = 'SELECT * FROM `'.$entityConfig->getMySQLTable().'`';
-        $params = array();
-
-        if (isset($criteria['value']))
-        {
-            $bFirst = true;
-            foreach($criteria['value'] as $sKey => $value)
-            {
-                // prepare
-                if ($bFirst) { $bFirst = false; $sQuery .= ' WHERE '; } else { $sQuery .= ', '; }
-
-                // compose
-                $sQuery .= '`'.$sKey.'` = :'.$sKey;
-
-                // add
-                $params[':'.$sKey] = $value;
-            }
-        }
-
-        // load
-        $stmt = Mimoto::service('database')->prepare($sQuery);
-        $stmt->execute($params);
-
-        // load
-        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-
-        // register
-        $nResultCount = count($aResults);
-        for ($i = 0; $i < $nResultCount; $i++)
-        {
-            // register
-            $aEntities[] = $this->createEntity($entityConfig, $aResults[$i]);
-        }
-
-        // send
-        return $aEntities;
-    }
-
-
-
     public function select(EntityConfig $entityConfig, SelectionRule $rule)
     {
         // init

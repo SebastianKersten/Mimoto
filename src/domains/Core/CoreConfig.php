@@ -20,6 +20,7 @@ use Mimoto\Core\entities\ComponentContainer;
 use Mimoto\Core\entities\File;
 use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
+use Mimoto\Core\entities\SelectionRuleValue;
 use Mimoto\Core\entities\Dataset;
 use Mimoto\Core\entities\Route;
 use Mimoto\Core\entities\RoutePathElement;
@@ -121,7 +122,7 @@ class CoreConfig
     // search
     const MIMOTO_SELECTION                      = '_Mimoto_selection';
     const MIMOTO_SELECTION_RULE                 = '_Mimoto_selection_rule';
-    const MIMOTO_SELECTION_RULEVALUE            = '_Mimoto_selection_rule_value';
+    const MIMOTO_SELECTION_RULE_VALUE           = '_Mimoto_selection_rule_value';
 
     // routes
     const MIMOTO_ROUTE                          = '_Mimoto_route';
@@ -280,6 +281,7 @@ class CoreConfig
             // search
             Selection::getStructure(),
             SelectionRule::getStructure(),
+            SelectionRuleValue::getStructure(),
 
             // views
             Component::getStructure(),
@@ -366,7 +368,7 @@ class CoreConfig
 
             // search
             Selection::getFormStructure(),
-            SelectionRule::getFormStructure(),
+            SelectionRuleValue::getFormStructure(),
 
             // views
             Component::getFormStructure(),

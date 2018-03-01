@@ -1,0 +1,16 @@
+<div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRuleValue" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+
+    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRuleValue-info">
+
+
+        {{ Mimoto.data('propertyName') }} = {{ Mimoto.data('value') }}
+
+        <button {{ Mimoto.edit('_Mimoto_selection_rule_value') }}>Edit</button>
+
+    </div>
+
+    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRuleValue-menu">
+        <span class="MimotoCMS_pages_selections_SelectionOverview_SelectionRuleValue-menuitem" {{ Mimoto.remove() }}><span class="fa fa-remove"></span></span>
+        <span class="MimotoCMS_pages_selections_SelectionOverview_SelectionRuleValue MimotoCMS_pages_selections_SelectionOverview_SelectionRuleValue-menuitem-move" {{ Mimoto.sortHandle() }}><span class="fa fa-arrows"></span></span>
+    </div>
+</div>

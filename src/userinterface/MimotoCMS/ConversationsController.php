@@ -23,7 +23,7 @@ class ConversationsController
     public function viewconversations(Application $app)
     {
 //        // load
-//        $aNotifications = $app['Mimoto.Data']->find([ 'type' => CoreConfig::MIMOTO_CONVERSATION, 'value' => ['state' => 'open'] ]);
+//        $aNotifications = $app['Mimoto.Data']->select([ 'type' => CoreConfig::MIMOTO_CONVERSATION, 'values' => ['state' => 'open'] ]);
 //
 //        // create
 //        $component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_conversations_ConversationOverview');
@@ -65,7 +65,7 @@ class ConversationsController
     public function getConversationCount(Application $app)
     {
         // load
-        //$aConversations = $app['Mimoto.Data']->find([ 'type' => CoreConfig::MIMOTO_CONVERSATION, 'value' => ['state' => 'open'] ]);
+        //$aConversations = $app['Mimoto.Data']->select([ 'type' => CoreConfig::MIMOTO_CONVERSATION, 'values' => ['state' => 'open'] ]);
 
         // create
         //$component = $app['Mimoto.Aimless']->createComponent('Mimoto.CMS_conversations_ConversationOverviewSmall');

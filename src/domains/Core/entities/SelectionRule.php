@@ -163,7 +163,7 @@ class SelectionRule
 
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTION.'--values',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--values',
                     // ---
                     'name' => 'values',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
@@ -171,7 +171,7 @@ class SelectionRule
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTION_RULEVALUE]
+                            'value' => [CoreConfig::MIMOTO_SELECTION_RULE_VALUE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -230,7 +230,7 @@ class SelectionRule
 
 
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_SELECTION.'--childValues',
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--childValues',
                     // ---
                     'name' => 'childValues',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
@@ -238,7 +238,7 @@ class SelectionRule
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_SELECTION_RULEVALUE]
+                            'value' => [CoreConfig::MIMOTO_SELECTION_RULE_VALUE]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',

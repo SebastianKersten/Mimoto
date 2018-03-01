@@ -42,7 +42,7 @@ class SetupController
             // --- temp setup to guide first time user to users page
 
             // find
-            $aUsers = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_USER]);
+            $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER]);
 
             // validate
             if (count($aUsers) == 0)

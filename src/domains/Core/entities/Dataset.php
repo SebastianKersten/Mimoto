@@ -212,7 +212,7 @@ class Dataset
 
 
         // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);
+        $aEntities = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORM]);
 
         $nEntityCount = count($aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)

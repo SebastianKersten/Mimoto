@@ -418,6 +418,15 @@ class Component
                     )
                 ]
             ),
+            (object) array(
+                'name' => 'MimotoCMS_pages_selections_SelectionOverview_SelectionRule_SelectionRuleValue',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/selections/SelectionOverview/SelectionRule/SelectionRuleValue/SelectionRuleValue.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
 
 
             // configuration

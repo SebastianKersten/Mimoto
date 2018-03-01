@@ -75,7 +75,7 @@ class EntityPropertyForm_Value_formattingOptions
         // -- custom options ---
 
         // load
-        $aFormattingOptions = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORMATTINGOPTION]);
+        $aFormattingOptions = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORMATTINGOPTION]);
 
         $nFormattingOptionCount = count($aFormattingOptions);
         for ($nFormattingOptionIndex = 0; $nFormattingOptionIndex < $nFormattingOptionCount; $nFormattingOptionIndex++)

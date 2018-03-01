@@ -74,7 +74,7 @@ class EntityPropertyForm_Collection_allowedEntityTypes
 
 
         // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_ENTITY]);
+        $aEntities = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_ENTITY]);
 
         $nEntityCount = count($aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)

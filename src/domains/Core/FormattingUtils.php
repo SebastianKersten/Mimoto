@@ -23,7 +23,7 @@ class FormattingUtils
         $aFormattingOptions = [];
 
         // 2. load
-        $aCustomFormattingOptions = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORMATTINGOPTION]);
+        $aCustomFormattingOptions = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORMATTINGOPTION]);
 
         // 3. parse
         $nCustomFormattingOptionCount = count($aCustomFormattingOptions);

@@ -290,7 +290,7 @@ class InputOption
 
 
         // load
-        $aEntities = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_FORM]);
+        $aEntities = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORM]);
 
         $nEntityCount = count($aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)
@@ -324,7 +324,7 @@ class InputOption
 
 
         // load
-        $aSelections = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_SELECTION]);
+        $aSelections = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_SELECTION]);
 
         $nSelectionCount = count($aSelections);
         for ($nSelectionIndex = 0; $nSelectionIndex < $nSelectionCount; $nSelectionIndex++)

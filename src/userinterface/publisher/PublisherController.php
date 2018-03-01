@@ -37,7 +37,7 @@ class PublisherController
     public function viewFeed(Application $app)
     {
         // 1. load data
-        $eContentSection = Mimoto::service('data')->find(['type' => CoreConfig::MIMOTO_DATASET, 'value' => ['name' => 'Articles']]);
+        $eContentSection = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_DATASET, 'values' => ['name' => 'Articles']]);
 
         // 2. create template
         $page = Mimoto::service('output')->createPage('Feed', (!empty($eContentSection)) ? $eContentSection[0] : '');

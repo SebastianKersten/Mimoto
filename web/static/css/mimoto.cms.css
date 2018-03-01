@@ -7477,8 +7477,21 @@ div.MimotoCMS_pages_selections_SelectionOverview_Selection-name {
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
       -ms-flex-align: start;
-          align-items: flex-start;
-  padding-bottom: 5px; }
+          align-items: flex-start; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_Selection-label {
+  display: inline-block;
+  padding-bottom: 5px;
+  margin-left: 12px; }
+
+span.MimotoCMS_pages_selections_SelectionOverview_Selection-label-label {
+  float: left;
+  margin-top: 5px;
+  margin-right: 8px; }
+
+span.MimotoCMS_pages_selections_SelectionOverview_Selection-label-value {
+  float: left;
+  position: relative; }
 
 div.MimotoCMS_pages_selections_SelectionOverview_Selection-info {
   -webkit-box-flex: 1;

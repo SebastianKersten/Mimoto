@@ -36,13 +36,18 @@
 
                 {# if instance? (or idAsVar) -> show property | allow multiple conditionals in 'hideWhenEmpty' #}
 
-                <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row" {{ Mimoto.hideWhenEmpty('property') }}>
+
+                <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row">
                     <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">
-                        <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Property</div>
+                        <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Values</div>
                         <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">
-                            <div {{ Mimoto.showWhenValue('idAsVar', true) }}><span class="fa fa-square-o"></span></div>
-                            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select property', sEntityName:'property', sSelectionName:'_Mimoto_all_properties_of_entity', options:{vars:{idVarName:Mimoto.meta('type.type') }}, sValuePropertySelector:'property.name' }) }}</div>
-                            <div {{ Mimoto.showWhenValue('idAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>
+                            <div {{ Mimoto.realtime('values', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRule_SelectionRuleValue') }}>
+                                {{ Mimoto.data('values', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRule_SelectionRuleValue') }}
+                            </div>
+                            <button {{ Mimoto.create('values', '_Mimoto_selection_rule_value') }}>Add value</button>
+                            {#<div {{ Mimoto.showWhenValue('valueAsVar', true) }}><span class="fa fa-square-o"></span></div>#}
+                            {#<div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select property', sEntityName:'property', sSelectionName:'_Mimoto_all_properties_of_entity', options:{vars:{idVarName:Mimoto.meta('type.type') }}, sValuePropertySelector:'property.name' }) }}</div>#}
+                            {#<div {{ Mimoto.showWhenValue('valueAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>#}
                         </div>
                     </div>
                 </div>

@@ -21,6 +21,11 @@
 
     </div>
 
+    <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-label">
+        <span class="MimotoCMS_pages_selections_SelectionOverview_Selection-label-label">Label</span>
+        <span class="MimotoCMS_pages_selections_SelectionOverview_Selection-label-value">{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'label', sFieldClass:'MimotoCMS_pages_selections_SelectionOverview_Selection-name' }) }}</span>
+    </div>
+
     <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-rules-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('rules') }}>No rules yet .. <span class="MimotoCMS_pages_selections_SelectionOverview_Selection-rules-addFirst" {{ Mimoto.create('rules', '_Mimoto_selection_rule') }}>add rule</span></div>
     <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-rules {{ Mimoto.init() }}" {{ Mimoto.sortable() }} {{ Mimoto.hideWhenEmpty('rules') }} {{ Mimoto.realtime('rules', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRule') }}>{{ Mimoto.data('rules', 'MimotoCMS_pages_selections_SelectionOverview_SelectionRule') }}</div>
     <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-rules-add {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('rules') }} {{ Mimoto.create('rules', '_Mimoto_selection_rule') }}>add rule</div>

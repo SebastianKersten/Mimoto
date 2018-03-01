@@ -16,6 +16,7 @@ class SelectionRuleTypes
     const TYPE      = 'type';
     const PROPERTY  = 'property';
     const INSTANCE  = 'instance';
+    const VALUES    = 'values';
 
 
     const TYPE_AS_VAR   = 'typeAsVar';

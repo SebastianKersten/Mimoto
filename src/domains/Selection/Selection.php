@@ -117,7 +117,20 @@ class Selection
                     // ......
                     //Mimoto::error($this);
 
+                    $aRuleValues = $eRule->get('values');
+                    if (!empty($aRuleValues))
+                    {
+                        // add values
+                        $nRuleValueCount = count($aRuleValues);
+                        for ($nRuleValueIndex = 0; $nRuleValueIndex < $nRuleValueCount; $nRuleValueIndex++)
+                        {
+                            // register
+                            $eSelectionRuleValue = $aRuleValues[$nRuleValueIndex];
 
+                            // add
+                            $this->setValue($eSelectionRuleValue->get('propertyName'), $eSelectionRuleValue->get('value'));
+                        }
+                    }
 
                 }
             }
