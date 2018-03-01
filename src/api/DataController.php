@@ -297,10 +297,13 @@ class DataController
             )
         );
 
-        // 8. fill
+        // 8. add label
+        $popup->setVar('sLabel', (isset($options->label)) ? $options->label : 'Select an item');
+
+        // 9. fill
         $popup->fillContainer('selection', $aInstances, 'MimotoCMS_components_selection_SelectableItem', $optionsForTemplate);
 
-        // 9. output
+        // 10. output
         return $popup->render();
     }
 
