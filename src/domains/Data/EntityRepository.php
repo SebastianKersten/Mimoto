@@ -19,26 +19,26 @@ use Mimoto\Selection\SelectionRule;
  */
 class EntityRepository
 {
-    
+
     /**
      * The EventService
      * @var class
      */
     private $_EventService;
-    
+
     /**
      * The requested entities
      * @var array
      */
     private $_aEntities = [];
-    
-    
-    
+
+
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Constructor
      * @param EventService $EventService
@@ -48,14 +48,14 @@ class EntityRepository
         // register
         $this->_EventService = $EventService;
     }
-    
-    
-    
+
+
+
     // ----------------------------------------------------------------------------
     // --- Public methods - runtime usage -----------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Create new entity
      * @return MimotoEntity
@@ -65,7 +65,7 @@ class EntityRepository
         // init and send
         return $this->createEntity($entityConfig);
     }
-    
+
     /**
      * Get single entity by id
      * @param int $nId
@@ -230,7 +230,7 @@ class EntityRepository
                 // convert to label in case of id
                 $sPropertyName = (MimotoDataUtils::isValidId($xProperty)) ? Mimoto::service('config')->getPropertyNameById($xProperty) : $xProperty;
 
-                    // validate
+                // validate
                 if ($eEntity->hasProperty($sPropertyName))
                 {
                     // register
@@ -417,11 +417,11 @@ class EntityRepository
 
             if (!empty($aEntityConnections))
             {
-                $nEntityConnectionCount = count($aEntityConnections);
-                for ($nEntityConnectionIndex = 0; $nEntityConnectionIndex < $nEntityConnectionCount; $nEntityConnectionIndex++)
+                $nEntityPropertyCount = count($aEntityConnections);
+                for ($nEntityPropertyIndex = 0; $nEntityPropertyIndex < $nEntityPropertyCount; $nEntityPropertyIndex++)
                 {
                     // store
-                    Mimoto::service('cache')->delete($aEntityConnections[$nEntityConnectionIndex]);
+                    Mimoto::service('cache')->delete($aEntityConnections[$nEntityPropertyIndex]);
                 }
             }
 
@@ -436,11 +436,11 @@ class EntityRepository
 
         // load
         $aPropertyNames = $entityConfig->getPropertyNames();
-        
+
         // init
         $aQueryElements = [];
         $aNewConnectionsToStore = [];
-        
+
         // load properties
         $nPropertyCount = count($aPropertyNames);
         for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
@@ -450,7 +450,7 @@ class EntityRepository
 
             // skip if no changes
             if (!isset($aModifiedValues[$sPropertyName])) { continue; }
-            
+
             // read
             $propertyConfig = $entityConfig->getPropertyConfig($sPropertyName);
             $propertyValue = $entityConfig->getPropertyValue($sPropertyName);
@@ -459,18 +459,18 @@ class EntityRepository
             switch($propertyValue->type)
             {
                 case EntityConfig::PROPERTY_VALUE_MYSQL_COLUMN:
-                    
+
                     switch($propertyConfig->type)
                     {
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
-                    
+
                             $aQueryElements[] = (object) array(
                                 'key' => $propertyValue->mysqlColumnName,
                                 'value' => MimotoDataUtils::convertRuntimeValueToStorableValue($eInstance->getValue($sPropertyName), $propertyConfig->settings->type->type, $propertyConfig->settings->type->value)
                             );
                             break;
                     }
-                    
+
                     break;
 
                 case EntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
@@ -598,11 +598,11 @@ class EntityRepository
 
 
         // --- events ---
-        
-        
+
+
         // broadcast
         if ($bIsExistingEntity)
-        {   
+        {
             // register
             $sEvent = MimotoEvent::UPDATED;
         }
@@ -634,12 +634,12 @@ class EntityRepository
 
         // broadcast
         $this->_EventService->sendUpdate($event->getType(), $event);
-        
-        
-        
+
+
+
         // --- finish up ---
-        
-        
+
+
         // update
         $eInstance->acceptChanges();
 
@@ -758,11 +758,11 @@ class EntityRepository
 
                 if (!empty($aEntityConnections))
                 {
-                    $nEntityConnectionCount = count($aEntityConnections);
-                    for ($nEntityConnectionIndex = 0; $nEntityConnectionIndex < $nEntityConnectionCount; $nEntityConnectionIndex++)
+                    $nEntityPropertyCount = count($aEntityConnections);
+                    for ($nEntityPropertyIndex = 0; $nEntityPropertyIndex < $nEntityPropertyCount; $nEntityPropertyIndex++)
                     {
                         // store
-                        Mimoto::service('cache')->delete($aEntityConnections[$nEntityConnectionIndex]);
+                        Mimoto::service('cache')->delete($aEntityConnections[$nEntityPropertyIndex]);
                     }
                 }
 
@@ -953,13 +953,13 @@ class EntityRepository
         return $aChildEntities;
     }
 
-    
-    
+
+
     // ----------------------------------------------------------------------------
     // --- Private methods --------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Create entity from MySQL result
      * @param MySQL query result $mysqlResult
@@ -1033,7 +1033,7 @@ class EntityRepository
                         break;
 
                     case EntityConfig::PROPERTY_VALUE_MYSQLCONNECTION_TABLE:
-                        
+
                         // init
                         $aCollection = array();
 
@@ -1072,9 +1072,9 @@ class EntityRepository
                                 }
 
                                 // register
-                                if (!in_array($sEntityConnectionsSelector, $aEntityConnections))
+                                if (!in_array($sPropertySelector, $aEntityConnections))
                                 {
-                                    $aEntityConnections[] = $sEntityConnectionsSelector;
+                                    $aEntityConnections[] = $sPropertySelector;
                                 }
 
                                 // store
@@ -1226,7 +1226,7 @@ class EntityRepository
         return $aResults;
     }
 
-    
+
     private function getEntityIdentifier($sEntityName, $nEntityId)
     {
         return $sEntityName.'.'.$nEntityId;
