@@ -5664,7 +5664,28 @@ div.MimotoCMS_layouts_Selection {
 
 h1.MimotoCMS_layouts_Selection-title {
   font-size: 24px;
-  font-weight: bold; }
+  font-weight: bold;
+  margin-bottom: 5px; }
+
+input.MimotoCMS_layout_Selection-search {
+  padding: 10px;
+  width: 100%;
+  background-color: #fafafa; }
+  input.MimotoCMS_layout_Selection-search::-webkit-input-placeholder {
+    font-style: italic;
+    color: #aaaaaa; }
+  input.MimotoCMS_layout_Selection-search::-moz-placeholder {
+    font-style: italic;
+    color: #aaaaaa; }
+  input.MimotoCMS_layout_Selection-search:-ms-input-placeholder {
+    font-style: italic;
+    color: #aaaaaa; }
+  input.MimotoCMS_layout_Selection-search::-ms-input-placeholder {
+    font-style: italic;
+    color: #aaaaaa; }
+  input.MimotoCMS_layout_Selection-search::placeholder {
+    font-style: italic;
+    color: #aaaaaa; }
 
 div.MimotoCMS_layout_Selection-container {
   margin-top: 15px;
@@ -7673,6 +7694,247 @@ div.MimotoCMS_pages_selections_SelectionOverview_Selection-settings-section {
     display: inline-block;
     margin-right: 8px; }
     div.MimotoCMS_pages_selections_SelectionOverview_Selection-settings-section > div:last-child {
+      margin-right: 10px; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule_SelectionRuleValue {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 5px 5px 5px 13px;
+  background-color: #fafafa; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-info {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
+  text-align: left; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-head {
+  margin-bottom: 10px; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label {
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  display: inline-block;
+  margin-right: 10px;
+  margin-top: 9px;
+  min-width: 50px; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
+  padding: 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data > div {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+        -ms-flex: none;
+            flex: none; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-namecontainer {
+  display: inline-block; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-name, div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-name p {
+  font-size: 20px;
+  font-weight: bold;
+  color: #9dbab7; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-file {
+  font-style: italic;
+  font-weight: normal;
+  color: #c3c1c2; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-empty {
+  padding: 10px 20px 15px 0;
+  font-style: italic;
+  color: #858585; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings {
+  padding: 0; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menu {
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+      -ms-flex: auto;
+          flex: auto;
+  text-align: right;
+  color: #c3c1c2;
+  white-space: nowrap;
+  padding-right: 8px; }
+
+span.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menuitem {
+  cursor: pointer;
+  white-space: nowrap;
+  margin-right: 5px; }
+  span.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menuitem:last-child {
+    margin-right: 0; }
+  span.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menuitem:hover {
+    color: #000000; }
+  span.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menuitem .fa.fa-remove:hover {
+    color: #c76255; }
+
+span.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-menuitem-move {
+  cursor: move; }
+
+div.MimotoCMS_modules_ListItem-sorthandlecontainer {
+  display: inline-block;
+  float: right;
+  padding-top: 7px;
+  padding-left: 10px; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals {
+  padding: 0; }
+  div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals > div {
+    margin-bottom: 5px; }
+  div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals > div:last-child {
+    margin-bottom: 0; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-empty {
+  font-style: italic;
+  color: #858585; }
+
+span.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-addFirst {
+  cursor: pointer;
+  text-decoration: underline; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-add {
+  display: inline-block;
+  font-style: italic;
+  color: #858585;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 70px; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start; }
+  div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-section > div {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+        -ms-flex: none;
+            flex: none;
+    display: inline-block;
+    margin-right: 8px; }
+    div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-conditionals-section > div:last-child {
+      margin-right: 10px; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings {
+  padding: 0; }
+  div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings > div {
+    margin-bottom: 5px; }
+  div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings > div:last-child {
+    margin-bottom: 0; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-empty {
+  font-style: italic;
+  color: #858585; }
+
+span.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-addFirst {
+  cursor: pointer;
+  text-decoration: underline; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-add {
+  display: inline-block;
+  font-style: italic;
+  color: #858585;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 70px; }
+
+div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start; }
+  div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-section > div {
+    -webkit-box-flex: 0;
+    -webkit-flex: none;
+        -ms-flex: none;
+            flex: none;
+    display: inline-block;
+    margin-right: 8px; }
+    div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule-settings-section > div:last-child {
       margin-right: 10px; }
 
 div.MimotoCMS_pages_selections_SelectionOverview_SelectionRule {

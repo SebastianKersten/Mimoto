@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "1c2b420cdbdf39b92d8b";
+/******/ 	__webpack_require__.h = "965ff80cbba58153cf6b";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/publisher.js";

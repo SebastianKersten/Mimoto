@@ -5,6 +5,18 @@ div.MimotoCMS_layouts_Selection {
 h1.MimotoCMS_layouts_Selection-title {
     font-size: 24px;
     font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input.MimotoCMS_layout_Selection-search {
+    padding: 10px;
+    width: 100%;
+    background-color: #fafafa;
+
+    &::placeholder {
+        font-style: italic;
+        color: #aaaaaa;
+    }
 }
 
 div.MimotoCMS_layout_Selection-container {

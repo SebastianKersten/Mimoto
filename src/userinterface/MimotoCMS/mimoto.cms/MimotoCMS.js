@@ -434,6 +434,47 @@ module.exports.prototype = {
     confirmRemoval: function()
     {
         return confirm('Are you sure you want to remove this item?');
+    },
+
+    filterSelectionPopup: function(elFilterInput)
+    {
+        // 1. read
+        let sFilterValue = elFilterInput.value;
+
+        // 2. locate
+        let elContainer = elFilterInput.parentNode.querySelector('[data-selection-itemcontainer]');
+
+        // 3. filter
+        let nItemCount = elContainer.children.length;
+        for (let nItemIndex = 0; nItemIndex < nItemCount; nItemIndex++)
+        {
+            // a. register
+            let elItem = elContainer.children[nItemIndex];
+
+            // b. locate
+            let elValue = elItem.querySelector('[data-selection-item-value]');
+
+            // c. register
+            let sValue = elValue.innerHTML.replace(/<(.|\n)*?>/g, '');
+
+            // d. init
+            let pattern = new RegExp(sFilterValue, 'i');
+
+            // e. validate
+            if (sValue.match(pattern))
+            {
+                // I. show
+                elItem.classList.remove('Mimoto--hidden');
+            }
+            else
+            {
+                // II. hide
+                elItem.classList.add('Mimoto--hidden');
+            }
+
+        }
+
+        Mimoto.log('sFilterValue = ' + sFilterValue, elContainer);
     }
     
 }
