@@ -215,7 +215,7 @@ class SessionController
 
 
         // load
-        $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, Mimoto::service('config')->getEntityIdByName($aPropertyElements[0]));
+        $eEntity = Mimoto::service('data')->get(CoreConfig::MIMOTO_ENTITY, Mimoto::service('entityConfig')->getEntityIdByName($aPropertyElements[0]));
 
         // read
         $aProperties = $eEntity->getValue('properties');

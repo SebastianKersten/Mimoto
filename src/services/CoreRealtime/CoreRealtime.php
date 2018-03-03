@@ -38,10 +38,10 @@ class CoreRealtime // extends MimotoService
         if ($eEntityPropertySetting->getValue('key') != EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS) return;
 
         // 2. get the setting's property
-        $eEntityProperty = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings', $eEntityPropertySetting);
+        $eEntityProperty = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings', $eEntityPropertySetting);
 
         // 3. get the property's entity
-        $eEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
+        $eEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
 
         // 4. compose memcache key
         $sKeyFormattingOptions = EntityConfig::SETTING_VALUE_FORMATTINGOPTIONS.':'.$eEntity->getValue('name').'.'.$eEntityProperty->getValue('name');

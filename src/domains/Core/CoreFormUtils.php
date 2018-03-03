@@ -67,7 +67,7 @@ class CoreFormUtils
 
 
         // load
-        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
 
         // init
@@ -78,8 +78,8 @@ class CoreFormUtils
         if (!empty($eInstance))
         {
             // collect
-            $eParentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eInstance);
-            $eParentEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eParentForm);
+            $eParentForm = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eInstance);
+            $eParentEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eParentForm);
 
             // register
             $aParentEntities = array($eParentEntity);
@@ -189,7 +189,7 @@ class CoreFormUtils
         $sFormId = $form->getId();
 
         // load
-        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
         // create
         $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_LIST, $sFormId, 'options');

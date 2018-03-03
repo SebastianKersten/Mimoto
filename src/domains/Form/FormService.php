@@ -178,7 +178,7 @@ class FormService
         $form = Mimoto::service('input')->getFormByName($sFormName);
 
         // 4. load
-        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
         // 5. find connected entity
         $sEntityName = $eParent->getValue('name');
@@ -290,14 +290,14 @@ class FormService
 
                         // split
                         $sChildTypeName = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sConnectionValue);
-                        $nChildTypeId = Mimoto::service('config')->getEntityIdByName($sChildTypeName);
+                        $nChildTypeId = Mimoto::service('entityConfig')->getEntityIdByName($sChildTypeName);
 
                         // split
                         $nChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sConnectionValue);
 
                         // register
                         $nParentEntityTypeId = $entity->getEntityTypeId();
-                        $nParentPropertyId = Mimoto::service('config')->getPropertyIdByName($field->propertyName, $nParentEntityTypeId);
+                        $nParentPropertyId = Mimoto::service('entityConfig')->getPropertyIdByName($field->propertyName, $nParentEntityTypeId);
 
                         // convert
                         $allowedEntityType = (object)array(
@@ -340,11 +340,11 @@ class FormService
                             $nChildId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sConnectionValue);
 
                             // convert
-                            $nChildTypeId = Mimoto::service('config')->getEntityIdByName($sChildTypeName);
+                            $nChildTypeId = Mimoto::service('entityConfig')->getEntityIdByName($sChildTypeName);
 
                             // register
                             $nParentEntityTypeId = $entity->getEntityTypeId();
-                            $nParentPropertyId = Mimoto::service('config')->getPropertyIdByName($field->propertyName, $nParentEntityTypeId);
+                            $nParentPropertyId = Mimoto::service('entityConfig')->getPropertyIdByName($field->propertyName, $nParentEntityTypeId);
 
                             // convert
                             $allowedEntityType = (object) array(
@@ -530,7 +530,7 @@ class FormService
         $aFormFields = (!empty($aFields)) ? $aFields : $form->getValue('fields');
 
         // read
-        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
         // set
         $sEntityName = $eParent->getValue('name');
@@ -571,9 +571,9 @@ class FormService
 
 
             // 1. get entity to which the property is connected
-            $sEntityName = Mimoto::service('config')->getEntityNameByPropertyId($fieldValueId);
-            $sPropertyName = Mimoto::service('config')->getPropertyNameById($fieldValueId);
-            $sPropertyType = Mimoto::service('config')->getPropertyTypeById($fieldValueId);
+            $sEntityName = Mimoto::service('entityConfig')->getEntityNameByPropertyId($fieldValueId);
+            $sPropertyName = Mimoto::service('entityConfig')->getPropertyNameById($fieldValueId);
+            $sPropertyType = Mimoto::service('entityConfig')->getPropertyTypeById($fieldValueId);
 
             // auto create
             if (!isset($entity)) $entity = Mimoto::service('data')->create($sEntityName);
@@ -720,7 +720,7 @@ class FormService
                     $formFieldConnection = $aAllFormConfigConnections[$nFormId][$nFormFieldIndex];
 
                     // check if field is input
-                    if (Mimoto::service('config')->entityIsTypeOf($formFieldConnection->child_entity_type_id, CoreConfig::MIMOTO_FORM_INPUT))
+                    if (Mimoto::service('entityConfig')->entityIsTypeOf($formFieldConnection->child_entity_type_id, CoreConfig::MIMOTO_FORM_INPUT))
                     {
                         // store
                         $formConfig->inputFieldIds[] = $formFieldConnection->child_entity_type_id.'.'.$formFieldConnection->child_id;

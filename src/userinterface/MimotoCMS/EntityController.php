@@ -296,7 +296,7 @@ class EntityController
                 {
                     case EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE:
 
-                        $entityStructure->entityNames[$value] = Mimoto::service('config')->getEntityNameById($value);
+                        $entityStructure->entityNames[$value] = Mimoto::service('entityConfig')->getEntityNameById($value);
                         break;
 
                     case EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES:
@@ -312,7 +312,7 @@ class EntityController
                             $nAllowedEntityType = $aAllowedEntityTypes[$k];
 
                             // register
-                            $entityStructure->entityNames[$nAllowedEntityType] = Mimoto::service('config')->getEntityNameById($nAllowedEntityType);
+                            $entityStructure->entityNames[$nAllowedEntityType] = Mimoto::service('entityConfig')->getEntityNameById($nAllowedEntityType);
                         }
                         break;
                 }

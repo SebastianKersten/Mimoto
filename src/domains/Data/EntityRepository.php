@@ -228,7 +228,7 @@ class EntityRepository
                 $xProperty = $rule->getProperty();
 
                 // convert to label in case of id
-                $sPropertyName = (MimotoDataUtils::isValidId($xProperty)) ? Mimoto::service('config')->getPropertyNameById($xProperty) : $xProperty;
+                $sPropertyName = (MimotoDataUtils::isValidId($xProperty)) ? Mimoto::service('entityConfig')->getPropertyNameById($xProperty) : $xProperty;
 
                 // validate
                 if ($eEntity->hasProperty($sPropertyName))
@@ -295,7 +295,7 @@ class EntityRepository
                                 $valueToCompare = $rule->getChildValue($xPropertyName);
 
                                 // convert to label in case of id
-                                $sPropertyName = (MimotoDataUtils::isValidId($xPropertyName)) ? Mimoto::service('config')->getPropertyNameById($xPropertyName) : $xPropertyName;
+                                $sPropertyName = (MimotoDataUtils::isValidId($xPropertyName)) ? Mimoto::service('entityConfig')->getPropertyNameById($xPropertyName) : $xPropertyName;
 
                                 // validate
                                 if (!$eChild->hasProperty($sPropertyName) || $eChild->getValue($sPropertyName) != $valueToCompare)
@@ -343,7 +343,7 @@ class EntityRepository
                     $value = $rule->getValue($xPropertyName);
 
                     // convert to label in case of id
-                    $sPropertyName= (MimotoDataUtils::isValidId($xPropertyName)) ? Mimoto::service('config')->getPropertyNameById($xPropertyName) : $xPropertyName;
+                    $sPropertyName= (MimotoDataUtils::isValidId($xPropertyName)) ? Mimoto::service('entityConfig')->getPropertyNameById($xPropertyName) : $xPropertyName;
 
 
                     // prepare
@@ -788,7 +788,7 @@ class EntityRepository
             if (!empty($parent->entity))
             {
                 // remove
-                switch(Mimoto::service('config')->getPropertyTypeById($parent->propertyId))
+                switch(Mimoto::service('entityConfig')->getPropertyTypeById($parent->propertyId))
                 {
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
@@ -836,7 +836,7 @@ class EntityRepository
             $result = $aResults[$nResultIndex];
 
             // convert
-            $sParentEntityTypeName = Mimoto::service('config')->getEntityNameById($result['parent_entity_type_id']);
+            $sParentEntityTypeName = Mimoto::service('entityConfig')->getEntityNameById($result['parent_entity_type_id']);
 
             // #fix - Temp workaround for broken garbage collection
             if (!empty($sParentEntityTypeName))
@@ -845,7 +845,7 @@ class EntityRepository
                 $parent = (object) array(
                     'entity' => Mimoto::service('data')->get($sParentEntityTypeName, $result['parent_id']),
                     'propertyId' => $result['parent_property_id'],
-                    'propertyName' => Mimoto::service('config')->getPropertyNameById($result['parent_property_id'])
+                    'propertyName' => Mimoto::service('entityConfig')->getPropertyNameById($result['parent_property_id'])
                 );
 
                 // store
@@ -870,7 +870,7 @@ class EntityRepository
             $child = $aChildren[$nChildIndex];
 
             // remove
-            switch(Mimoto::service('config')->getPropertyTypeById($child->parentPropertyId))
+            switch(Mimoto::service('entityConfig')->getPropertyTypeById($child->parentPropertyId))
             {
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
@@ -931,7 +931,7 @@ class EntityRepository
             $result = $aResults[$nResultIndex];
 
             // convert
-            $sChildEntityTypeName = Mimoto::service('config')->getEntityNameById($result['child_entity_type_id']);
+            $sChildEntityTypeName = Mimoto::service('entityConfig')->getEntityNameById($result['child_entity_type_id']);
 
             // #fix - Temp workaround for broken garbage collection
             if (!empty($sChildEntityTypeName))
@@ -940,7 +940,7 @@ class EntityRepository
                 $child = (object) array(
                     'entity' => Mimoto::service('data')->get($sChildEntityTypeName, $result['child_id']),
                     'parentPropertyId' => $result['parent_property_id'],
-                    'parentPropertyName' => Mimoto::service('config')->getPropertyNameById($result['parent_property_id'])
+                    'parentPropertyName' => Mimoto::service('entityConfig')->getPropertyNameById($result['parent_property_id'])
 
                 );
 

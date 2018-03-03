@@ -601,7 +601,7 @@ class OutputService
                                         ) {
 
                                             // setup
-                                            $conditional->propertyName = Mimoto::service('config')->getPropertyNameById($rawConditionalConnection->child_id);
+                                            $conditional->propertyName = Mimoto::service('entityConfig')->getPropertyNameById($rawConditionalConnection->child_id);
                                             $conditional->value = $rawConditional->value;
                                             break;
                                         }
@@ -1008,7 +1008,7 @@ class OutputService
         // init
         $aConnections = [];
 
-        $xChildEntityTypeId = Mimoto::service('config')->getEntityIdByName($entity->getEntityTypeName());
+        $xChildEntityTypeId = Mimoto::service('entityConfig')->getEntityIdByName($entity->getEntityTypeName());
 
 
         // load all connections
@@ -1023,8 +1023,8 @@ class OutputService
             // compose
             $connection = (object) array(
                 'connectionId' => $row['id'],
-                'parentEntityType' => Mimoto::service('config')->getEntityNameById($row['parent_entity_type_id']),
-                'parentPropertyName' => Mimoto::service('config')->getPropertyNameById($row['parent_property_id']),
+                'parentEntityType' => Mimoto::service('entityConfig')->getEntityNameById($row['parent_entity_type_id']),
+                'parentPropertyName' => Mimoto::service('entityConfig')->getPropertyNameById($row['parent_property_id']),
                 'parentId' => $row['parent_id']
             );
 

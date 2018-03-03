@@ -143,7 +143,7 @@ class MimotoEntityConnection
     public function setParentEntityTypeId($xParentEntityTypeId)
     {
         $this->_xParentEntityTypeId = $xParentEntityTypeId;
-        $this->_sParentEntityTypeName = Mimoto::service('config')->getEntityNameById($xParentEntityTypeId);
+        $this->_sParentEntityTypeName = Mimoto::service('entityConfig')->getEntityNameById($xParentEntityTypeId);
     }
 
 
@@ -170,7 +170,7 @@ class MimotoEntityConnection
     public function setParentPropertyId($xParentPropertyId)
     {
         $this->_xParentPropertyId = $xParentPropertyId;
-        $this->_sParentPropertyName = Mimoto::service('config')->getPropertyNameById($xParentPropertyId);
+        $this->_sParentPropertyName = Mimoto::service('entityConfig')->getPropertyNameById($xParentPropertyId);
     }
 
 
@@ -211,7 +211,7 @@ class MimotoEntityConnection
     public function setChildEntityTypeId($xChildEntityTypeId)
     {
         $this->_xChildEntityTypeId = $xChildEntityTypeId;
-        $this->_sChildEntityTypeName = Mimoto::service('config')->getEntityNameById($xChildEntityTypeId);
+        $this->_sChildEntityTypeName = Mimoto::service('entityConfig')->getEntityNameById($xChildEntityTypeId);
     }
 
 

@@ -175,7 +175,7 @@ class EntityConfigService
                 if (MimotoDataUtils::isValidEntityName($sParentEntityTypeId))
                 {
                     // convert
-                    $sParentEntityTypeId = Mimoto::service('config')->getEntityIdByName($sParentEntityTypeId);
+                    $sParentEntityTypeId = Mimoto::service('entityConfig')->getEntityIdByName($sParentEntityTypeId);
                 }
             }
 
@@ -184,7 +184,7 @@ class EntityConfigService
                 if (MimotoDataUtils::validatePropertyName($sParentPropertyId))
                 {
                     // convert
-                    $sParentPropertyId = Mimoto::service('config')->getPropertyIdByName($sParentPropertyId);
+                    $sParentPropertyId = Mimoto::service('entityConfig')->getPropertyIdByName($sParentPropertyId);
                 }
             }
 

@@ -6,8 +6,7 @@ composer.lock
 node_modules
 #web/static/css
 #web/static/js
-src/config.php
-src/config.json
+mimoto.json
 web/dynamic/*
 twigcache/
 web/static/*hot-update*

@@ -73,13 +73,63 @@ class Mimoto
      * Constructor
      * @param Application $app
      */
-    public function __construct($app, $bEnableCache = false, $sProjectName = 'mimoto')
+    public function __construct($sPathToConfigFile = 'config/config.json', $bEnableCache = false, $sProjectName = 'mimoto')
     {
         // register
         self::$_nExecutionTimeStart = microtime(true);
 
+
         // register
-        Mimoto::$_app = $app;
+        Mimoto::$_app = $app = new \Silex\Application();
+
+// configure
+        Mimoto::setValue('ProjectConfig.root', __DIR__ . '/../');
+        Mimoto::setValue('ProjectConfig.twigroot', 'src/userinterface/');
+        Mimoto::setValue('ProjectConfig.serviceroot', 'src/services/');
+
+
+// init
+
+
+
+        // http://127.0.0.1:4000
+
+
+// setup
+        $loader = new \Twig_Loader_Filesystem([Mimoto::value('ProjectConfig.root').Mimoto::value('ProjectConfig.twigroot')]);
+        $twig = new Twig_Environment($loader, array(
+            //'cache' => '../twigcache',
+            'autoescape' => false,
+            'strict_variables' => true,
+        ));
+
+        //"cacheFolder": "../twigcache",
+        //"enableTwigCache": false,
+
+// connect
+        Mimoto::setService('database', new PDO("mysql:host=".Mimoto::value('config')->mysql->host.";dbname=".Mimoto::value('config')->mysql->dbname, Mimoto::value('config')->mysql->username, Mimoto::value('config')->mysql->password));
+        Mimoto::setService('twig', $twig);
+
+
+
+//Mimoto::registerService('mail');
+
+
+        // setup
+        $app['debug'] = true;
+        $app['twig'] = $twig;
+
+
+
+        // run in debug mode
+        Mimoto::runInDebugMode(true);
+        //Mimoto::enableCache(true);
+
+
+        // ---
+
+
+
 
 
         // setup templates
@@ -93,6 +143,7 @@ class Mimoto
         $app->register(new SessionServiceProvider());
 
         // setup Mimoto services
+        $app->register(new ConfigServiceProvider($sPathToConfigFile));
         $app->register(new CacheServiceProvider($bEnableCache));
         $app->register(new DataServiceProvider());
         $app->register(new LogServiceProvider());
@@ -429,6 +480,11 @@ class Mimoto
 
             return new Response($message);
         });
+    }
+
+    public static function getSilexApp()
+    {
+        return Mimoto::$_app;
     }
 
 

@@ -333,7 +333,7 @@ class FormController
 
 
         // load
-        $aInputTypesAll = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_INPUT]);
+        $aInputTypesAll = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORM_INPUT]);
 
         // filter
         $aInputTypes = [];
@@ -348,19 +348,19 @@ class FormController
 
 
         // load
-        $aOutputTypes = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE]);
+        $aOutputTypes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORM_OUTPUT_TITLE]);
 
         // load
-        $aLayoutTypes = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART]);
+        $aLayoutTypes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART]);
 
-        $aMoreLayoutTypes = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND]);
+        $aMoreLayoutTypes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_GROUPEND]);
         $nLayoutCount = count($aMoreLayoutTypes);
         for($nLayoutIndex = 0; $nLayoutIndex < $nLayoutCount; $nLayoutIndex++)
         {
             $aLayoutTypes[] = $aMoreLayoutTypes[$nLayoutIndex];
         }
 
-        $aMoreLayoutTypes = Mimoto::service('config')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER]);
+        $aMoreLayoutTypes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_FORM_LAYOUT_DIVIDER]);
         $nLayoutCount = count($aMoreLayoutTypes);
         for($nLayoutIndex = 0; $nLayoutIndex < $nLayoutCount; $nLayoutIndex++)
         {
@@ -451,7 +451,7 @@ class FormController
         $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $eForm);
 
         // 5. get parent form
-        $eParentForm = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eFormField);
+        $eParentForm = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eFormField);
 
         // 6. setup content
         $component->addForm(
@@ -641,7 +641,7 @@ class FormController
 
 
         // 1. read
-        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
         // 2. set
         $sEntityName = $eParent->getValue('name');
@@ -716,7 +716,7 @@ class FormController
                             $eConnectedForm = $eFieldOption->getValue('form');
 
                             // find
-                            $eConnectedEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eConnectedForm);
+                            $eConnectedEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eConnectedForm);
 
                             // verify
                             if ($eConnectedEntity->getValue('name') == $sInstanceType)

@@ -229,7 +229,7 @@ class MimotoEntity
      */
     public function typeOf($sEntityTypeName)
     {
-        return Mimoto::service('config')->entityIsTypeOf($this->_config->entityTypeName, $sEntityTypeName);
+        return Mimoto::service('entityConfig')->entityIsTypeOf($this->_config->entityTypeName, $sEntityTypeName);
     }
 
 

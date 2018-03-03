@@ -22,6 +22,9 @@ class KrakenService extends MimotoService
         // https://kraken.io/docs/generating-image-sets
 
 
+        //composer.json add "kraken-io/kraken-php": "^1.6"
+
+
         // entity: kraken_job - kraken_job_id = value, image = entity
 
 

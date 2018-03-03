@@ -152,7 +152,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
 
 
         // 1. convert
-        $xEntityTypeId = Mimoto::service('config')->getEntityIdByName($sEntityType);
+        $xEntityTypeId = Mimoto::service('entityConfig')->getEntityIdByName($sEntityType);
 
         // 2. assist
         if (empty($xEntityTypeId))
@@ -228,7 +228,7 @@ class MimotoEntityProperty_Collection extends MimotoEntityProperty implements Mi
 
 
         // 1. convert
-        $xEntityTypeId = Mimoto::service('config')->getEntityIdByName($sEntityType);
+        $xEntityTypeId = Mimoto::service('entityConfig')->getEntityIdByName($sEntityType);
 
         // 2. assist
         if (empty($xEntityTypeId))

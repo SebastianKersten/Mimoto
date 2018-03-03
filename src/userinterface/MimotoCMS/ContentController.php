@@ -69,7 +69,7 @@ class ContentController
         if (empty($eInstance)) return $app->redirect('/mimoto.cms/datasets');
 
         // 4. get containing dataset
-        $eDataset = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_DATASET, CoreConfig::MIMOTO_DATASET.'--data', $eInstance);
+        $eDataset = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_DATASET, CoreConfig::MIMOTO_DATASET.'--data', $eInstance);
 
         // 5. read properties
         $nDatasetId = $eDataset->getId();

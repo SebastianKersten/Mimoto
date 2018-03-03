@@ -15,8 +15,7 @@
         "silex/silex": "~1.3",
         "twig/twig": "~1.0",
         "symfony/security": "^3.2",
-        "wisembly/elephant.io": "^3.2",
-        "kraken-io/kraken-php": "^1.6"
+        "wisembly/elephant.io": "^3.2"
     },
     "autoload": {
         "psr-4": {
@@ -25,6 +24,7 @@
             "Mimoto\\EntityConfig\\": "./src/domains/EntityConfig",
             "Mimoto\\FormConfig\\": "./src/domains/FormConfig",
             "Mimoto\\Action\\": "./src/domains/Action",
+            "Mimoto\\Config\\": "./src/domains/Config",
             "Mimoto\\Core\\": "./src/domains/Core",
             "Mimoto\\Data\\": "./src/domains/Data",
             "Mimoto\\Event\\": "./src/domains/Event",

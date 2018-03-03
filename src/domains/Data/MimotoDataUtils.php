@@ -369,7 +369,7 @@ class MimotoDataUtils
                         $sAllowedEntityTypeId = $aAllowedEntityTypeIds[$nAllowedEntityTypeIdIndex];
 
                         // validate
-                        if (Mimoto::service('config')->entityIsTypeOf($sChildEntityTypeId, $sAllowedEntityTypeId))
+                        if (Mimoto::service('entityConfig')->entityIsTypeOf($sChildEntityTypeId, $sAllowedEntityTypeId))
                         {
                             $bValidated = true;
                             break;
@@ -383,7 +383,7 @@ class MimotoDataUtils
                     if (!$bValidated)
                     {
                         Mimoto::output('Connection error', $connection);
-                        Mimoto::service('log')->error("Incorrect value", "The property '".Mimoto::service('config')->getEntityNameById($xParentEntityTypeId).".$sPropertyName' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."' (and not `".Mimoto::service('config')->getEntityNameById($sChildEntityTypeId)."`)", true);
+                        Mimoto::service('log')->error("Incorrect value", "The property '".Mimoto::service('entityConfig')->getEntityNameById($xParentEntityTypeId).".$sPropertyName' only allows '".implode(',', MimotoDataUtils::flattenAllowedEntityTypes($aAllowedEntityTypes, true))."' (and not `".Mimoto::service('entityConfig')->getEntityNameById($sChildEntityTypeId)."`)", true);
                     }
 
                 }

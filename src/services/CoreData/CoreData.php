@@ -168,7 +168,7 @@ class CoreData // extends MimotoService
         $sNewPropertyName = $eInstance->getValue('name');
 
         // 6. get parent entity
-        $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eInstance);
+        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eInstance);
 
         // 7. check if parentEntity is known (something to do with store and acceptChanges)
         if (empty($eParent)) return;
@@ -189,7 +189,7 @@ class CoreData // extends MimotoService
         if ($eInstance->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
 
         // 2. get parent entity
-        $eEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eInstance);
+        $eEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eInstance);
 
         // 3. remove column
         EntityConfigTableUtils::removePropertyColumnFromEntityTable($eEntity->get('name'), $eInstance->get('name'));
@@ -199,13 +199,13 @@ class CoreData // extends MimotoService
     public function onEntityPropertySettingUpdated(MimotoEntity $eEntityPropertySetting)
     {
         // 1. load parent property
-        $eEntityProperty = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings', $eEntityPropertySetting);
+        $eEntityProperty = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITYPROPERTY, CoreConfig::MIMOTO_ENTITYPROPERTY.'--settings', $eEntityPropertySetting);
 
         // 2. verify
         if (empty($eEntityProperty) || $eEntityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return;
 
         // 3. load parent entity
-        $eEntity = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
+        $eEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
 
         // 4. register
         $sPropertyName = $eEntityProperty->getValue('name');

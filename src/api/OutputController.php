@@ -354,7 +354,7 @@ class OutputController
             $eForm = Mimoto::service('input')->getFormByName($sFormName);
 
             // get parent entity
-            $eParent = Mimoto::service('config')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
+            $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
 
             // create
             $eEntity = Mimoto::service('data')->create($eParent->getValue('name'));

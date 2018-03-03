@@ -289,7 +289,7 @@ class DataService
                 if (MimotoDataUtils::isValidPropertyId($criteria[SelectionRuleTypes::CHILDOF]))
                 {
                     // convert
-                    $sPropertyName = Mimoto::service('config')->getPropertyNameById($criteria[SelectionRuleTypes::CHILDOF]);
+                    $sPropertyName = Mimoto::service('entityConfig')->getPropertyNameById($criteria[SelectionRuleTypes::CHILDOF]);
                 }
 
                 // verify
@@ -366,7 +366,7 @@ class DataService
         if (!isset($this->_aEntityConfigs[$entity->getEntityTypeName()]))
         {
 
-            $entityConfig = Mimoto::service('config')->getEntityConfigByName($entity->getEntityTypeName());
+            $entityConfig = Mimoto::service('entityConfig')->getEntityConfigByName($entity->getEntityTypeName());
 
             if ($entityConfig !== false)
             {
