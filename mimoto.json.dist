@@ -1,6 +1,11 @@
 {
     "project": {
-        "name": "mimoto"
+        "name": "mimoto",
+        "path_api": "mimoto",
+        "path_cms": "mimoto.cms"
+    },
+    "development": {
+        "runInDebugMode": true
     },
     "folders": {
         "webroot": "web",
@@ -31,6 +36,7 @@
         "serverAddress": "127.0.0.1"
     },
     "memcached": {
+        "enabled": false,
         "keyPrefix": "",
         "address": "127.0.0.1",
         "port": "11211"

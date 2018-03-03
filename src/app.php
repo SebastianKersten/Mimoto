@@ -9,7 +9,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 use Mimoto\Mimoto;
 
 // init and send
-$mimoto = new Mimoto('mimoto.json');
+$mimoto = new Mimoto(dirname(dirname(__FILE__)), dirname(dirname(__FILE__)).'/mimoto.json');
 
 // send
 return $mimoto->getSilexApp();

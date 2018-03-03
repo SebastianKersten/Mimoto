@@ -212,7 +212,7 @@ class EventService
 
                     case 'project':
 
-                        $sServicesPath = Mimoto::value('ProjectConfig.root').Mimoto::value('ProjectConfig.serviceroot');
+                        $sServicesPath = Mimoto::service('config')->get('folders.projectroot').Mimoto::service('config')->get('folders.services');
                         break;
                 }
 

@@ -185,7 +185,7 @@ class Service
         $field = CoreFormUtils::addField_textline
         (
             $form, 'file', CoreConfig::MIMOTO_SERVICE.'--file',
-            'File', 'your-service-file.php', 'Enter the name of the service file', Mimoto::value('ProjectConfig.serviceroot')
+            'File', 'your-service-file.php', 'Enter the name of the service file', Mimoto::service('config')->get('folders.services')
         );
         self::setFileValidation($field);
 

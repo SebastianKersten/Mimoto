@@ -71,7 +71,7 @@ class SessionController
         // compose
         $response = (object) array
         (
-            'gateway' => Mimoto::value('config')->socketio->clientgateway
+            'gateway' => Mimoto::service('config')->get('socketid.clientGateway')
         );
 
         // only for logged in users
@@ -165,7 +165,7 @@ class SessionController
 
 
         // setup socket connection
-        $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+        $client = new Client(new Version1X(Mimoto::service('config')->get('socketid.workerGateway')));
 
         try
         {

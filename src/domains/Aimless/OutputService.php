@@ -853,7 +853,7 @@ class OutputService
                                     if (!empty($eFile))
                                     {
                                         $valueForBroadcast->entity->file = (object) array(
-                                            'path' => Mimoto::value('config')->general->public_root.$eFile->getValue('path'),
+                                            'path' => Mimoto::service('config')->get('webroot').$eFile->getValue('path'),
                                             'name' => $eFile->getValue('name')
                                         );
                                     }
@@ -1088,7 +1088,7 @@ class OutputService
         if (!class_exists('\GearmanClient')) return;
 
         // 2. verify or disable
-        if (isset(Mimoto::value('config')->socketio) && isset(Mimoto::value('config')->socketio->disabled) && Mimoto::value('config')->socketio->disabled === true) return;
+        if (isset(Mimoto::service('config')->get('socketio')) && isset(Mimoto::service('config')->get('socketio.enabled')) && !Mimoto::service('config')->get('socketio.enabled')) return;
 
         // init
         $client= new \GearmanClient();
@@ -1096,7 +1096,7 @@ class OutputService
         try
         {
             // setup
-            $client->addServer(Mimoto::value('config')->gearman->server_address);
+            $client->addServer(Mimoto::service('config')->get('gearman.serverAddress'));
 
             // $result =
             // execute
@@ -1129,7 +1129,7 @@ class OutputService
         try
         {
             // setup
-            $client->addServer(Mimoto::value('config')->gearman->server_address);
+            $client->addServer(Mimoto::service('config')->get('gearman.serverAddress');
 
 
             // register

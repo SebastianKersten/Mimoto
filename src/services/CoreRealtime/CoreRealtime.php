@@ -54,7 +54,7 @@ class CoreRealtime // extends MimotoService
 
 
         // setup socket connection
-        $client = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+        $client = new Client(new Version1X(Mimoto::service('config')->get('socketid.workerGateway')));
 
         try
         {

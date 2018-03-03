@@ -16,7 +16,7 @@ class ConfigService
 {
 
     // config
-    private $_sPathToConfigFile = '';
+    private $_config = '';
 
 
     
@@ -28,13 +28,10 @@ class ConfigService
     /**
      * Constructor
      */
-    public function __construct($sPathToConfigFile)
+    public function __construct($config)
     {
         // store
-        $this->_sPathToConfigFile = $sPathToConfigFile;
-
-        // load
-        $this->loadConfigFile();
+        $this->_config = $config;
     }
     
     
@@ -44,40 +41,24 @@ class ConfigService
     // ----------------------------------------------------------------------------
 
 
-    public function get()
+    public function get($sSelector)
     {
+        // 1. split
+        $aSelectorParts = explode('.', $sSelector);
 
+        // 2. init
+        $value = null;
+
+        // 3. find
+        $nPartCount = count($aSelectorParts);
+        for ($nPartIndex = 0; $nPartIndex < $nPartCount; $nPartIndex++)
+        {
+            // recursive
+        }
+
+        // 4. send
+        return '';
     }
 
-
-
-    // ----------------------------------------------------------------------------
-    // --- Public methods ---------------------------------------------------------
-    // ----------------------------------------------------------------------------
-
-
-
-    /**
-     * Load config file
-     */
-    private function loadConfigFile()
-    {
-        $sConfigFile = dirname(__FILE__).((substr($this->_sPathToConfigFile, 0, 1) == '/') ? '' : '/').$this->_sPathToConfigFile;
-        if (file_exists($sConfigFile))
-        {
-            $config = include($sConfigFile);
-        }
-        else
-        {
-            echo "
-                <h1>Installing Mimoto (step 1 / 2)</h1>
-                <ol>
-                    <li>Make a copy of `config.php.dist` and name it `config.php`</li>
-                    <li>Add your MySQL credentials to your `config.php`</li>
-                    <li>Import the database dump in `/database` in your MySQL</li>
-                </ol>";
-            die();
-        }
-    }
 
 }

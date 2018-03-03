@@ -136,7 +136,7 @@ class SetupService
         for ($nTableIndex = 0; $nTableIndex < $nTableCount; $nTableIndex++)
         {
             // register
-            $sTableName = $aTableResults[$nTableIndex]['Tables_in_'.Mimoto::value('config')->mysql->dbname];
+            $sTableName = $aTableResults[$nTableIndex]['Tables_in_'.Mimoto::service('config')->get('mysql.dbname')];
 
             // add
             if (substr($sTableName, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX) $aProjectTables[] = $sTableName;

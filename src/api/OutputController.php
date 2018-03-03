@@ -133,14 +133,14 @@ class OutputController
     {
         // validate
         if (!empty($_FILES)) {
-            $sTargetDir = Mimoto::value('config')->general->web_root . Mimoto::value('config')->media->upload_dir;
+            $sTargetDir = Mimoto::service('config')->get('folders.projectroot').Mimoto::service('config')->get('folders.uploads');
             $sOriginalFileName = $_FILES['file']['name'];
 
             // create
             $eFile = Mimoto::service('data')->create(CoreConfig::MIMOTO_FILE);
 
             // setup
-            $eFile->setValue('path', Mimoto::value('config')->media->upload_dir);
+            $eFile->setValue('path', Mimoto::service('config')->get('folders.uploads'));
             $eFile->setValue('originalName', $sOriginalFileName);
 
             // store
@@ -195,14 +195,14 @@ class OutputController
     {
         // validate
         if (!empty($_FILES)) {
-            $sTargetDir = Mimoto::value('config')->general->web_root . Mimoto::value('config')->media->upload_dir;
+            $sTargetDir = Mimoto::service('config')->get('folders.projectroot'). Mimoto::service('config')->get('folders.uploads');
             $sOriginalFileName = $_FILES['file']['name'];
 
             // create
             $eFile = Mimoto::service('data')->create(CoreConfig::MIMOTO_FILE);
 
             // setup
-            $eFile->setValue('path', Mimoto::value('config')->media->upload_dir);
+            $eFile->setValue('path', Mimoto::service('config')->get('folders/webroot'));
             $eFile->setValue('originalName', $sOriginalFileName);
 
             // store

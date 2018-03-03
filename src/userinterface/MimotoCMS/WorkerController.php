@@ -72,13 +72,13 @@ class WorkerController
 
 
         // setup connection
-        $this->_socketIOClient = new Client(new Version1X(Mimoto::value('config')->socketio->workergateway));
+        $this->_socketIOClient = new Client(new Version1X(Mimoto::service('config')->get('socketio.workerGateway')));
 
         // init
         $worker = new GearmanWorker();
 
         // setup
-        $worker->addServer(Mimoto::value('config')->gearman->server_address);
+        $worker->addServer(Mimoto::service('config')->get('gearman.serverAddress'));
         $worker->addFunction("sendUpdate", function($job)
         {
             // read
@@ -150,7 +150,7 @@ class WorkerController
         $worker = new GearmanWorker();
 
         // setup
-        $worker->addServer(Mimoto::value('config')->gearman->server_address);
+        $worker->addServer(Mimoto::service('config')->get('gearman.serverAddress'));
         $worker->addFunction("sendSlackNotification", function ($job) {
 
 

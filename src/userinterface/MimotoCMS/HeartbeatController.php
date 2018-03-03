@@ -45,7 +45,7 @@ class HeartbeatController
     public function viewOverview(Request $request, Application $app)
     {
         // 1. prepare
-//        $sRealtimeScript = Mimoto::value('config')->general->project_root.'src/userinterface/app/javascript/realtime.js';
+//        $sRealtimeScript = Mimoto::service('config')->get('folders.projectroot').'src/userinterface/app/javascript/realtime.js';
 //
 //
 //        Mimoto::output('$sRealtimeScript', $sRealtimeScript);

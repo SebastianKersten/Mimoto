@@ -1313,7 +1313,7 @@ class EntityRepository
         if ($eEntity->getEntityTypeName() == CoreConfig::MIMOTO_FILE)
         {
             // composer
-            $sFile = Mimoto::value('config')->media->upload_dir.$eEntity->get('name');
+            $sFile = Mimoto::service('config')->get('folders/uploads').$eEntity->get('name');
 
             // verify
             if (file_exists($sFile)) { unlink($sFile); }
