@@ -30,7 +30,8 @@
         'media' => (object) array
         (
             'upload_dir' => 'dynamic/'
-        )
+        ),
+        'cache' => 
     );
 
     return $config;
