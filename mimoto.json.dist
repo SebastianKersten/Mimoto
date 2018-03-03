@@ -1,0 +1,38 @@
+{
+    "project": {
+        "name": "mimoto"
+    },
+    "folders": {
+        "webroot": "web",
+        "uploads": "web/dynamic",
+        "services": "src/services",
+        "components": "src/userinterface"
+    },
+    "twig": {
+        "cacheFolder": "twigcache",
+        "enableTwigCache": false,
+        "autoescape": false,
+        "strict_variables": true
+    },
+    "mysql": {
+        "host": "",
+        "dbname": "",
+        "username": "",
+        "password": ""
+    },
+    "socketio": {
+        "enabled": true,
+        "clientAddress": "http://127.0.0.1",
+        "clientPort": "4000",
+        "workerAddress": "http://127.0.0.1",
+        "workerPort": "4001"
+    },
+    "gearman": {
+        "serverAddress": "127.0.0.1"
+    },
+    "memcached": {
+        "keyPrefix": "",
+        "address": "127.0.0.1",
+        "port": "11211"
+    }
+}
