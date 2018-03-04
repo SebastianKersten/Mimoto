@@ -1088,7 +1088,7 @@ class OutputService
         if (!class_exists('\GearmanClient')) return;
 
         // 2. verify or disable
-        if (isset(Mimoto::service('config')->get('socketio')) && isset(Mimoto::service('config')->get('socketio.enabled')) && !Mimoto::service('config')->get('socketio.enabled')) return;
+        if (empty(Mimoto::service('config')->get('socketio')) || empty(Mimoto::service('config')->get('socketio.enabled')) || Mimoto::service('config')->get('socketio.enabled') != true) return;
 
         // init
         $client= new \GearmanClient();
@@ -1129,7 +1129,7 @@ class OutputService
         try
         {
             // setup
-            $client->addServer(Mimoto::service('config')->get('gearman.serverAddress');
+            $client->addServer(Mimoto::service('config')->get('gearman.serverAddress'));
 
 
             // register

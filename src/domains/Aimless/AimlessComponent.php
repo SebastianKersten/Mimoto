@@ -526,7 +526,7 @@ class AimlessComponent
                 if (!empty($eFile))
                 {
                     // compose and send
-                    return Mimoto::service('config')->get('folders.webroot').$eFile->getValue('path').$eFile->getValue('name');
+                    return '/'.$eFile->getValue('path').$eFile->getValue('name');
                 }
                 else
                 {

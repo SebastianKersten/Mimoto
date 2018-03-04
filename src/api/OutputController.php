@@ -132,7 +132,8 @@ class OutputController
     public function uploadImage(Application $app, Request $request)
     {
         // validate
-        if (!empty($_FILES)) {
+        if (!empty($_FILES))
+        {
             $sTargetDir = Mimoto::service('config')->get('folders.projectroot').Mimoto::service('config')->get('folders.uploads');
             $sOriginalFileName = $_FILES['file']['name'];
 

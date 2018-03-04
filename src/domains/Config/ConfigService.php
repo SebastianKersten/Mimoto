@@ -41,24 +41,55 @@ class ConfigService
     // ----------------------------------------------------------------------------
 
 
+    /**
+     * Get value from node
+     * @param $sSelector
+     */
     public function get($sSelector)
     {
         // 1. split
         $aSelectorParts = explode('.', $sSelector);
 
-        // 2. init
-        $value = null;
-
-        // 3. find
-        $nPartCount = count($aSelectorParts);
-        for ($nPartIndex = 0; $nPartIndex < $nPartCount; $nPartIndex++)
-        {
-            // recursive
-        }
-
-        // 4. send
-        return '';
+        // 2. read and send
+        return $this->getNode($this->_config, $aSelectorParts);;
     }
 
+
+
+    // ----------------------------------------------------------------------------
+    // --- private methods --------------------------------------------------------
+    // ----------------------------------------------------------------------------
+
+
+    private function getNode($root, $aSelectorParts)
+    {
+        // 1. read and remove
+        $sSelectorPart = array_shift($aSelectorParts);
+
+        // 2. verify and read
+        if (isset($root->$sSelectorPart))
+        {
+            $nodeValue = $root->$sSelectorPart;
+        }
+        else if (isset($root[$sSelectorPart]))
+        {
+            $nodeValue = $root[$sSelectorPart];
+        }
+        else
+        {
+            return null;
+        }
+
+        // 3. load
+        if (count($aSelectorParts) > 0)
+        {
+            // b.
+            return $this->getNode($nodeValue, $aSelectorParts);
+        }
+        else
+        {
+            return $nodeValue;
+        }
+    }
 
 }
