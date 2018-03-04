@@ -55,16 +55,6 @@ Fire up the Gearman worker and make sure it keeps running in the background.
 curl "http://mimoto.aimless/mimoto.cms/workers/data
 ```
 
-# Get notification via Slack 
-
-Add a channel webhook to your `config.php` and fire up the Slack Gearman worker and make sure it keeps running in the background.
-
-```
-curl "http://mimoto.aimless/mimoto.cms/workers/slack
-```
-
-
-
 
 
 # Archive
