@@ -9,7 +9,7 @@
     },
     "folders": {
         "webroot": "web",
-        "uploads": "web/dynamic",
+        "uploads": "dynamic",
         "services": "src/services",
         "components": "src/userinterface"
     },
