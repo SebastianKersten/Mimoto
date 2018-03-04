@@ -114,8 +114,8 @@ https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset
 - It's really easy. See this example.
 - An open platform - build addons tools utils adapters
 - External platforms as services that can be connected / addon
-- Complexe datastructuren worden goedkoop
-- De prijs van complexiteit daalt!
+- Complex data structures become cheap
+- The price of complexity decreases!
 
 
 
