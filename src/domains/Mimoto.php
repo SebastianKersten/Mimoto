@@ -177,7 +177,7 @@ class Mimoto
         // --- installation ---
 
         $app->get ('/'.$config->project->path_cms.'/setup', 'Mimoto\\UserInterface\\MimotoCMS\\SetupController::welcome');
-        // werkt alleen als config.php niet bestaat én geen users
+        // should only work when mimoto.json is missing and the project has no users
         // check connection
 
 

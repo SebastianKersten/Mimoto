@@ -39,11 +39,8 @@ composer update
 npm install
 ```
 
-
-*Todo* change to json and auto-read
-
 ```
-cp config.php.dist config.php
+cp mimoto.json.dist mimoto.json
 ```
 
 

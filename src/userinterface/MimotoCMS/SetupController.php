@@ -49,10 +49,9 @@ class SetupController
             {
                 Mimoto::output('Install Mimoto', '
                     <ol>
-                        <li>Make a copy of `config.php.bak` and name it `config.php`</li>
-                        <li>Add your MySQL credentials to your `config.php`</li>
-                        <li>Import the database dump in `/database` in your MySQL</li>
-                        <li>Add at least 1 user to the `_Mimoto_user` table</li> 
+                        <li>Make a copy of `mimoto.json.dist` and name it `mimoto.json`</li>
+                        <li>Add your MySQL credentials to your `mimoto.json`</li>
+                        <li>Import the database dump in `/database` in your MySQL</li> 
                     </ol>
                 ');
                 die();
