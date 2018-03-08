@@ -1,0 +1,15 @@
+{% extends "publisher/base.twig" %}
+
+{# --- page ---#}
+
+{% block content %}
+
+
+    <button {{ Mimoto.add('elements', [{label:'Component: Element 1'}, 'element2'], { label:'Select a component'}) }}>Add element</button>
+
+    <div {{ Mimoto.realtime('elements', 'element') }}>
+        {{ Mimoto.data('elements', 'element') }}
+    </div>
+
+{% endblock %}
+

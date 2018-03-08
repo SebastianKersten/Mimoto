@@ -108,7 +108,7 @@ class ComponentTemplate
         $field = CoreFormUtils::addField_textline
         (
             $form, 'file', CoreConfig::MIMOTO_COMPONENT_TEMPLATE.'--file',
-            'Twig file', 'your_template_file.twig', '', Mimoto::service('config')->get('folder.components')
+            'Twig file', 'your_template_file.twig', '', Mimoto::service('config')->get('folders.components')
         );
         self::setFileValidation($field);
 

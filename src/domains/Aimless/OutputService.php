@@ -269,54 +269,53 @@ class OutputService
         // 1. init
         $sComponentConditionals = '';
 
-        // 2. find requested component
-        $nComponentCount = count($this->_aComponents);
-        for ($nComponentIndex = 0; $nComponentIndex < $nComponentCount; $nComponentIndex++)
-        {
-            // register
-            $component = $this->_aComponents[$nComponentIndex];
-
-            // verify
-            if ($component->name === $sComponentName)
-            {
-                // read
-                $aTemplates = $component->templates;
-
-                // search
-                $nTemplateCount = count($aTemplates);
-                for ($nTemplateIndex = 0; $nTemplateIndex < $nTemplateCount; $nTemplateIndex++)
-                {
-                    // register
-                    $template = $aTemplates[$nTemplateIndex];
-
-
-                    if (count($template->conditionals) > 0)
-                    {
-                        // init
-                        $sComponentConditionals = '[';
-
-                        // compose
-                        $nConditionalCount = count($template->conditionals);
-                        for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
-                        {
-                            // register
-                            $conditional = $template->conditionals[$nConditionalIndex];
-
-                            // store
-                            $sComponentConditionals .= $conditional->propertyName;
-
-                            // compose
-                            if ($nConditionalIndex < $nConditionalCount - 1) $sComponentConditionals .= ',';
-                        }
-
-                        // compose
-                        $sComponentConditionals .= ']';
-                    }
-
-                    break;
-                }
-            }
-        }
+//        // 2. find requested component
+//        $nComponentCount = count($this->_aComponents);
+//        for ($nComponentIndex = 0; $nComponentIndex < $nComponentCount; $nComponentIndex++)
+//        {
+//            // register
+//            $component = $this->_aComponents[$nComponentIndex];
+//
+//            // verify
+//            if ($component->name === $sComponentName)
+//            {
+//                // read
+//                $aTemplates = $component->templates;
+//
+//                // search
+//                $nTemplateCount = count($aTemplates);
+//                for ($nTemplateIndex = 0; $nTemplateIndex < $nTemplateCount; $nTemplateIndex++)
+//                {
+//                    // register
+//                    $template = $aTemplates[$nTemplateIndex];
+//
+//                    if (count($template->conditionals) > 0)
+//                    {
+//                        // init
+//                        $sComponentConditionals = '[';
+//
+//                        // compose
+//                        $nConditionalCount = count($template->conditionals);
+//                        for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
+//                        {
+//                            // register
+//                            $conditional = $template->conditionals[$nConditionalIndex];
+//
+//                            // store
+//                            //$sComponentConditionals .= $conditional->propertyName;
+//
+//                            // compose
+//                            if ($nConditionalIndex < $nConditionalCount - 1) $sComponentConditionals .= ',';
+//                        }
+//
+//                        // compose
+//                        $sComponentConditionals .= ']';
+//                    }
+//
+//                    break;
+//                }
+//            }
+//        }
 
         // send
         return $sComponentConditionals;

@@ -375,7 +375,7 @@ class AimlessComponent
                     if (!$this->_entity->hasProperty($sPropertyName)) continue;
 
                     // d. replace
-                    $sNewSubvalue = '<span '.$this->realtime($sPropertyName).'>'.$this->_entity->get($sPropertyName).'</span>';
+                    $sNewSubvalue = '<mimoto '.$this->realtime($sPropertyName).'>'.$this->_entity->get($sPropertyName).'</mimoto>';
 
                     // d. inject
                     $sValue = preg_replace('/'.$sMatch.'/', $sNewSubvalue, $sValue);

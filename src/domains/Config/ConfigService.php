@@ -67,11 +67,11 @@ class ConfigService
         $sSelectorPart = array_shift($aSelectorParts);
 
         // 2. verify and read
-        if (isset($root->$sSelectorPart))
+        if (!is_array($root) && isset($root->$sSelectorPart))
         {
             $nodeValue = $root->$sSelectorPart;
         }
-        else if (isset($root[$sSelectorPart]))
+        else if (is_array($root) && isset($root[$sSelectorPart]))
         {
             $nodeValue = $root[$sSelectorPart];
         }

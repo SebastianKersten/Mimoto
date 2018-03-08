@@ -72,7 +72,7 @@ class WorkerController
 
 
         // setup connection
-        $this->_socketIOClient = new Client(new Version1X(Mimoto::service('config')->get('socketio.workerGateway')));
+        $this->_socketIOClient = new Client(new Version1X(Mimoto::service('config')->get('socketio.workerAddress').':'.Mimoto::service('config')->get('socketio.workerPort')));
 
         // init
         $worker = new GearmanWorker();

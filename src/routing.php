@@ -11,6 +11,9 @@
     // groups
 
 
+    $app->get('/publisher/page/{nPageId}', 'Mimoto\\UserInterface\\publisher\\PublisherController::showPages');
+
+
     // The Timeline
     $app->get ('/thetimeline/{nTimelineId}', 'Mimoto\\UserInterface\\thetimeline\\TimelineController::viewTimeline');
 

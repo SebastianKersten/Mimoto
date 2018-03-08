@@ -109,4 +109,17 @@ class PublisherController
         return $page->render();
     }
 
+
+    public function showPages(Application $app, $nPageId)
+    {
+        // 1. load data
+        $ePage = Mimoto::service('data')->get('page', $nPageId);
+
+        // 2. create template
+        $page = Mimoto::service('output')->createPage('page', $ePage);
+
+        // 3. output
+        return $page->render();
+    }
+
 }

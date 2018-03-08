@@ -87,78 +87,77 @@ class DataController
         $sFormName = $data->sFormName;
 
 
-        // ------- Multi option add
+        // ------- Multi option add - manual form selection
 
 
-        //Mimoto::output('$sFormName', $sFormName);
+        if (!is_string($sFormName) && is_array($sFormName))
+        {
+            // register
+            $aFormNames = $sFormName;
 
-//        if (!is_string($sFormName) && is_array($sFormName))
-//        {
-//            // init
-//            $sOutput = '<div>';
-//            $sOutput .= '<h1>Make a selection</h1>';
-//
-//            $nFormCount = count($sFormName);
-//            for ($nFormIndex = 0; $nFormIndex < $nFormCount; $nFormIndex++)
-//            {
-//                // register
-//                $option = $sFormName[$nFormIndex];
-//
-//                if (isset($option->label) || isset($option['label']))
-//                {
-//                    $sLabel = (isset($option->label)) ? $option->label : $option['label'];
-//                }
-//                else
-//                {
-//                    Mimoto::error('OF Hier?');
-//                    return;
-//                }
-//
-//                if (isset($option->form) || isset($option['form']))
-//                {
-//                    $sForm = (isset($option->form)) ? $option->form : $option['form'];
-//                }
-//                else
-//                {
-//                    Mimoto::error('Hier?');
-//                    return;
-//                }
-//
-//                $instructions = (object) array(
-//                    'form' => $sForm,
-//                    'propertyType' => 'collection'
-//                );
-//
-//                $sDirective = 'data-mimoto-add="'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
-//
-//                $sOutput .= "<div class=\"MimotoCMS_components_selection_SelectableItem\" $sDirective>$sLabel</div>";
-//
-//
-//
-//                // 7. init page
-//                $popup = Mimoto::service('output')->createPopup();
-//
-//                // 8. create content
-//                $component = Mimoto::service('output')->create('MimotoCMS_layout_PopupForm');
-//
-//                // add component here
-//
-//                // 10. connect
-//                $popup->addComponent('content', $component);
-//
-//                // 11. output
-//                return $popup->render();
-//            }
-//
-//            // close
-//            $sOutput .= '</div>';
-//
-//            // send
-//            return $sOutput;
-//        }
+            // init
+            $sOutput  = '<div class="MimotoCMS_layout_Selection">';
+            $sOutput .= '<h1 class="MimotoCMS_layouts_Selection-title">Make a selection</h1>';
+            $sOutput .= '<div class="MimotoCMS_layout_Selection-container">';
+
+            $nFormCount = count($aFormNames);
+            for ($nFormIndex = 0; $nFormIndex < $nFormCount; $nFormIndex++)
+            {
+                // register
+                $option = $aFormNames[$nFormIndex];
+
+                if ((!is_array($option) && !empty($option->label)) || (is_array($option) && !empty($option['label'])))
+                {
+                    $sLabel = (!is_array($option) && !empty($option->label)) ? $option->label : $option['label'];
+                }
+                else
+                {
+                    if ((!is_array($option) && !empty($option->form)) || (is_array($option) && !empty($option['form'])))
+                    {
+
+                        $sLabel = (!is_array($option) && !empty($option->form)) ? $option->form : $option['form'];
+                    }
+                    else
+                    {
+                        $sLabel = $option;
+                    }
+                }
+
+                if ((!is_array($option) && !empty($option->form)) || (is_array($option) && !empty($option['form'])))
+                {
+                    $sForm = (!is_array($option) && !empty($option->form)) ? $option->form : $option['form'];
+                }
+                else
+                {
+                    if ((!is_array($option) && !empty($option->label)) || (is_array($option) && !empty($option['label'])))
+                    {
+                        $sForm = (!is_array($option) && !empty($option->label)) ? $option->label : $option['label'];
+                    }
+                    else
+                    {
+                        $sForm = $option;
+                    }
+                }
+
+                $instructions = (object) array(
+                    'form' => $sForm,
+                    'propertyType' => 'collection'
+                );
+
+                $sDirective = 'data-mimoto-add="'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
+
+                $sOutput .= "<div class=\"MimotoCMS_components_selection_SelectableItem\" style=\"cursor:pointer\" $sDirective>$sLabel</div>";
+            }
+
+            // close
+            $sOutput .= '</div></div>';
+
+            // send
+            return $sOutput;
+        }
 
 
-        // -------
+        // ------- Multi option add (end)
 
 
         // 2. extract

@@ -130,7 +130,7 @@ class Mimoto
         Mimoto::setService('twig', $twig);
 
         // 9. setup
-        $app['debug'] = (isset($config->development) && isset($config->development->runInDebugMode)) ? $config->development->runInDebugMode : true;
+        $app['debug'] = self::$_bDebugMode = (isset($config->development) && isset($config->development->runInDebugMode)) ? $config->development->runInDebugMode : true;
         $app['twig'] = $twig;
 
 
