@@ -51,7 +51,7 @@ class ConfigService
         $aSelectorParts = explode('.', $sSelector);
 
         // 2. read and send
-        return $this->getNode($this->_config, $aSelectorParts);;
+        return $this->getNode($this->_config, $aSelectorParts);
     }
 
 

@@ -134,7 +134,7 @@ class OutputController
         // validate
         if (!empty($_FILES))
         {
-            $sTargetDir = Mimoto::service('config')->get('folders.projectroot').Mimoto::service('config')->get('folders.uploads');
+            $sTargetDir = Mimoto::service('config')->get('folders.projectroot').Mimoto::service('config')->get('folders.webroot').Mimoto::service('config')->get('folders.uploads');
             $sOriginalFileName = $_FILES['file']['name'];
 
             // create
@@ -196,7 +196,7 @@ class OutputController
     {
         // validate
         if (!empty($_FILES)) {
-            $sTargetDir = Mimoto::service('config')->get('folders.projectroot'). Mimoto::service('config')->get('folders.uploads');
+            $sTargetDir = Mimoto::service('config')->get('folders.projectroot').Mimoto::service('config')->get('folders.webroot').Mimoto::service('config')->get('folders.uploads');
             $sOriginalFileName = $_FILES['file']['name'];
 
             // create
