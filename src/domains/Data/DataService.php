@@ -231,6 +231,20 @@ class DataService
         // send
         return $aRequestedEntities;
     }
+
+    /**
+     * Select the first item of a selection
+     * @param $xSelection
+     * @return array|mixed
+     */
+    public function selectOne($xSelection)
+    {
+        // 1. load
+        $aInstances = $this->select($xSelection);
+
+        // 2. filter and send
+        return (count($aInstances) > 0) ? $aInstances[0] : $aInstances;
+    }
     
     /**
      * Get all entities
