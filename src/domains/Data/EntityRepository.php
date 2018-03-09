@@ -701,7 +701,7 @@ class EntityRepository
 
                 case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                    $eParent->remove($sPropertyName, $connection);
+                    $eParent->remove($sPropertyName, $connection, $eInstance->getEntityTypeName());
                     break;
             }
 
