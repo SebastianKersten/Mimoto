@@ -362,8 +362,6 @@ module.exports.prototype = {
             }
 
         }
-
-        Mimoto.log('sFilterValue = ' + sFilterValue, elContainer);
     }
 
 }
