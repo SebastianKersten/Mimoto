@@ -90,6 +90,12 @@ class MimotoEntity
      */
     public function getEntityTypeName() { return $this->_config->entityTypeName; }
 
+    /**
+     * Get the entity's type's name
+     *
+     * @return string
+     */
+    public function getType() { return $this->_config->entityTypeName; }
 
     /**
      * Get the moment of creation
