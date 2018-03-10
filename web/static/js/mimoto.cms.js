@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "4d85c848b1701460f1e3";
+/******/ 	__webpack_require__.h = "eab5022027313881b4d1";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -9446,41 +9446,6 @@ module.exports.prototype = {
 
     confirmRemoval: function confirmRemoval() {
         return confirm('Are you sure you want to remove this item?');
-    },
-
-    filterSelectionPopup: function filterSelectionPopup(elFilterInput) {
-        // 1. read
-        var sFilterValue = elFilterInput.value;
-
-        // 2. locate
-        var elContainer = elFilterInput.parentNode.querySelector('[data-selection-itemcontainer]');
-
-        // 3. filter
-        var nItemCount = elContainer.children.length;
-        for (var nItemIndex = 0; nItemIndex < nItemCount; nItemIndex++) {
-            // a. register
-            var elItem = elContainer.children[nItemIndex];
-
-            // b. locate
-            var elValue = elItem.querySelector('[data-selection-item-value]');
-
-            // c. register
-            var sValue = elValue.innerHTML.replace(/<(.|\n)*?>/g, '');
-
-            // d. init
-            var pattern = new RegExp(sFilterValue, 'i');
-
-            // e. validate
-            if (sValue.match(pattern)) {
-                // I. show
-                elItem.classList.remove('Mimoto--hidden');
-            } else {
-                // II. hide
-                elItem.classList.add('Mimoto--hidden');
-            }
-        }
-
-        Mimoto.log('sFilterValue = ' + sFilterValue, elContainer);
     }
 
 };
