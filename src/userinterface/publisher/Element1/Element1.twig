@@ -1,1 +1,4 @@
-<button {{ Mimoto.remove() }} {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>Element 1 - <mimoto {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</mimoto></button>
+<button {{ Mimoto.remove() }} {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+    Element 1 - <mimoto {{ Mimoto.realtime('title') }}>{{ Mimoto.data('title') }}</mimoto>
+    [{{ Mimoto.getVar('xxx') }}]
+</button>

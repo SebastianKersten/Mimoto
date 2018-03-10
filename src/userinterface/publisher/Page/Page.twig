@@ -7,8 +7,8 @@
 
     <button {{ Mimoto.add('elements', [{label:'Component: Element 1'}, 'element2'], { label:'Select a component'}) }}>Add element</button>
 
-    <div {{ Mimoto.realtime('elements', 'element') }}>
-        {{ Mimoto.data('elements', 'element') }}
+    <div {{ Mimoto.realtime('elements', 'element', { values:{ xxx:'yyy' } }) }}>
+        {{ Mimoto.data('elements', 'element', { values:{ xxx:'yyy' } }) }}
     </div>
 
 {% endblock %}

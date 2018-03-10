@@ -127,10 +127,11 @@ module.exports.prototype = {
     DIRECTIVE_MIMOTO_CHANNEL: 'data-mimoto-channel',
 
     // setting tags
-    DIRECTIVE_SETTING_MIMOTO_FILTER:     'data-mimoto-filter',
-    DIRECTIVE_SETTING_MIMOTO_COMPONENT:  'data-mimoto-component',
-    DIRECTIVE_SETTING_MIMOTO_CONNECTION: 'data-mimoto-connection',
-    DIRECTIVE_SETTING_MIMOTO_SORTINDEX:  'data-mimoto-sortindex',
+    DIRECTIVE_SETTING_MIMOTO_FILTER:            'data-mimoto-filter',
+    DIRECTIVE_SETTING_MIMOTO_COMPONENT:         'data-mimoto-component',
+    DIRECTIVE_SETTING_MIMOTO_COMPONENT_VALUES:  'data-mimoto-component-values',
+    DIRECTIVE_SETTING_MIMOTO_CONNECTION:        'data-mimoto-connection',
+    DIRECTIVE_SETTING_MIMOTO_SORTINDEX:         'data-mimoto-sortindex',
 
     // directive tags
     TAG_DIRECTIVE_MIMOTO_RELOADONCHANGE: 'data-mimoto-reloadonchange',
@@ -614,6 +615,12 @@ module.exports.prototype = {
                         if (element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT))
                         {
                             directive.sComponentName = element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT);
+
+                            // get components values from parent (realtime behaviour)
+                            if (element.parentNode.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT_VALUES))
+                            {
+                                directive.componentValues = element.parentNode.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT_VALUES);
+                            }
                         }
 
 
@@ -649,6 +656,7 @@ module.exports.prototype = {
 
                         // register
                         directive.sComponentName = element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT);
+                        directive.componentValues = element.getAttribute(this.DIRECTIVE_SETTING_MIMOTO_COMPONENT_VALUES);
 
                         // verify
                         if (sDirective === this.DIRECTIVE_MIMOTO_COLLECTION && element.hasAttribute(this.DIRECTIVE_SETTING_MIMOTO_FILTER))
@@ -1211,7 +1219,7 @@ module.exports.prototype = {
                             case this.DIRECTIVE_MIMOTO_ENTITY:
 
                                 // 1. check if alias of type value
-                                console.warn('DIRECTIVE_MIMOTO_ENTITY', change);
+                                Mimoto.warn('DIRECTIVE_MIMOTO_ENTITY', change);
 
 
                                 // 1. verify and add items
@@ -1428,7 +1436,7 @@ module.exports.prototype = {
                     // verify
                     if (directive.bReloadOnChange)
                     {
-                        Mimoto.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId)
+                        Mimoto.utils.updateComponent(directive.element, directive.sEntitySelector, directive.sComponentName, directive.nConnectionId, directive.componentValues)
                     }
 
                 }

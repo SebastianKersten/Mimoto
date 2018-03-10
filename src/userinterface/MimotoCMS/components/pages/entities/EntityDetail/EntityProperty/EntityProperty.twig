@@ -12,7 +12,7 @@
             {% endif %}
         </div>
         <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__propertysettingscontainer" {{ Mimoto.realtime('settings', 'MimotoCMS_entities_EntityDetail-EntityPropertySetting') }}>
-            {{ Mimoto.data('settings', 'MimotoCMS_entities_EntityDetail-EntityPropertySetting', { customValues: { propertyType:Mimoto.data('type'), propertySubtype:Mimoto.data('subtype') }}) }}
+            {{ Mimoto.data('settings', 'MimotoCMS_entities_EntityDetail-EntityPropertySetting', { values: { propertyType:Mimoto.data('type'), propertySubtype:Mimoto.data('subtype') }}) }}
         </div>
     </div>
     <div class="MimotoCMS_pages_entities_EntityDetail-EntityProperty__menu">

@@ -1,5 +1,5 @@
 {% embed "MimotoCMS/components/forms/FormField.twig" %}
     {% block input %}
-        {{ Mimoto.data('options', '_Mimoto_form_input_multiselect--option', { customValues: { value: Mimoto.value(), fieldId: Mimoto.meta('id'), input: Mimoto.input() }}) }}
+        {{ Mimoto.data('options', '_Mimoto_form_input_multiselect--option', { values: { value: Mimoto.value(), fieldId: Mimoto.meta('id'), input: Mimoto.input() }}) }}
     {% endblock %}
 {% endembed %}

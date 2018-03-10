@@ -34,7 +34,7 @@
                     <div class="MimotoCMS_pages_actions_ActionOverview_Action-section {{ Mimoto.init() }}" {{ Mimoto.hideWhenEmpty('conditionals') }}>
                         <div class="MimotoCMS_pages_actions_ActionOverview_Action-section-label">AND</div>
                         <div class="MimotoCMS_pages_actions_ActionOverview_Action-section-data MimotoCMS_pages_actions_ActionOverview_Action-conditionals" {{ Mimoto.sortable() }} {{ Mimoto.realtime('conditionals', 'MimotoCMS_pages_actions_ActionOverview_ActionConditional') }}>
-                            {{ Mimoto.data('conditionals', 'MimotoCMS_pages_actions_ActionOverview_ActionConditional', { customValues:{ entityTypeId:Mimoto.meta('entity.id') }} ) }}
+                            {{ Mimoto.data('conditionals', 'MimotoCMS_pages_actions_ActionOverview_ActionConditional', { values:{ entityTypeId:Mimoto.meta('entity.id') }} ) }}
                         </div>
                     </div>
                     <div class="MimotoCMS_pages_actions_ActionOverview_Action-conditionals-add" {{ Mimoto.hideWhenEmpty('conditionals') }} {{ Mimoto.create('conditionals', '_Mimoto_action_conditional') }}>add another conditional</div>

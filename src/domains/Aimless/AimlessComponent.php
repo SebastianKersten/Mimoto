@@ -679,7 +679,7 @@ class AimlessComponent
     }
 
 
-    public function realtime($sPropertySelector = null, $sComponentName = null, $sWrapperName = null)
+    public function realtime($sPropertySelector = null, $sComponentName = null, $sWrapperName = null, $values = null)
     {
         // auto correct
         if ($sPropertySelector == '') $sPropertySelector = null;
@@ -725,6 +725,11 @@ class AimlessComponent
                 $sComponent = (!empty($sComponentName)) ? ' data-mimoto-component="'.$sComponentName.'"' : '';
                 $sWrapper = (!empty($sWrapperName)) ? ' data-mimoto-wrapper="'.$sWrapperName.'"' : '';
 
+                if (!empty($values))
+                {
+                    $sComponent .= ' data-mimoto-component-values="'.htmlentities(json_encode($values), ENT_QUOTES, 'UTF-8').'"';
+                    $sWrapper .= ' data-mimoto-component-values="'.htmlentities(json_encode($values), ENT_QUOTES, 'UTF-8').'"';
+                }
 
 
                 $sContainer = '';

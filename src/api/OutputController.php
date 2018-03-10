@@ -40,6 +40,10 @@ class OutputController
         $sWrapperName       = $request->get('sWrapperName');
         $sPropertySelector  = $request->get('sPropertySelector');
         $nConnectionId      = $request->get('nConnectionId');
+        $values             = $request->get('values');
+
+        // convert
+        $values = (!empty($values)) ? json_decode($values) : null;
 
 
         // ---
@@ -64,7 +68,7 @@ class OutputController
         }
 
         // render and send
-        return $component->render();
+        return $component->render($values);
     }
 
     /**
@@ -80,6 +84,14 @@ class OutputController
         $nEntityId      = $request->get('nEntityId');
         $sComponentName = $request->get('sComponentName');
         $nConnectionId  = $request->get('nConnectionId');
+        $values         = $request->get('values');
+
+        // convert
+        $values = (!empty($values)) ? json_decode($values) : null;
+
+
+        // ---
+
 
         // load
         $entity = Mimoto::service('data')->get($sEntityType, $nEntityId);
@@ -91,7 +103,7 @@ class OutputController
         $component = Mimoto::service('output')->createComponent($sComponentName, $entity, $connection);
 
         // render and send
-        return $component->render();
+        return $component->render($values);
     }
 
 //    public function renderWrapperView(Application $app, $sEntityType, $nEntityId, $sWrapperName, $sComponentName = null, $sPropertySelector = null)

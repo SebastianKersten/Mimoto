@@ -41,7 +41,7 @@ module.exports.prototype = {
     /**
      * Load component
      */
-    loadComponent: function (container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId)
+    loadComponent: function (container, sEntityTypeName, nEntityId, sComponentName, sPropertySelector, nConnectionId, values)
     {
         // compose
         let requestData = {
@@ -50,7 +50,8 @@ module.exports.prototype = {
             sComponentName: sComponentName,
             sWrapperName: null,
             sPropertySelector: sPropertySelector,
-            nConnectionId: nConnectionId
+            nConnectionId: nConnectionId,
+            values: values
         };
 
 
@@ -106,7 +107,7 @@ module.exports.prototype = {
         request.send(sRequestData);
     },
 
-    updateComponent: function(elementToReplace, sEntitySelector, sComponentName, nConnectionId)
+    updateComponent: function(elementToReplace, sEntitySelector, sComponentName, nConnectionId, values)
     {
         // #todo - FIX
         if (!elementToReplace) return;
@@ -121,7 +122,8 @@ module.exports.prototype = {
             sEntityTypeName: aEntitySelectorElements[0],
             nEntityId: aEntitySelectorElements[1],
             sComponentName: sComponentName,
-            nConnectionId: nConnectionId
+            nConnectionId: nConnectionId,
+            values: values
         };
 
 

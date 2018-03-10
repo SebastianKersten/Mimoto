@@ -34,7 +34,7 @@ module.exports.prototype = {
             {
                 if (directive.sComponentName !== undefined)
                 {
-                    Mimoto.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id);
+                    Mimoto.utils.loadComponent(directive.element, item.connection.childEntityTypeName, item.connection.childId, directive.sComponentName, directive.sPropertySelector, item.connection.id, directive.componentValues);
                 }
             }
         });

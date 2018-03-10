@@ -46,10 +46,10 @@ class AimlessComponentViewModel
 
     public function data($sPropertySelector, $sComponentName = null, $options = null)
     {
-        $customValues = (!empty($options) && !empty($options['customValues'])) ? $options['customValues'] : null;
+        $values = (!empty($options) && !empty($options['values'])) ? $options['values'] : null;
         $bGetConnectionInfo = (!empty($options) && !empty($options['getConnectionInfo'])) ? $options['getConnectionInfo'] : false;
 
-        return $this->_component->data($sPropertySelector, $bGetConnectionInfo, !empty($sComponentName), $sComponentName, null, $customValues);
+        return $this->_component->data($sPropertySelector, $bGetConnectionInfo, !empty($sComponentName), $sComponentName, null, $values);
     }
 
     public function parse($sValue)
@@ -78,9 +78,13 @@ class AimlessComponentViewModel
 //        return $this->_component->data($sPropertySelector, false, true, $sComponentName, $sWrapperName);
 //    }
 
-    public function realtime($sPropertySelector = null, $sComponentName = null)
+    public function realtime($sPropertySelector = null, $sComponentName = null, $options = null)
     {
-        return $this->_component->realtime($sPropertySelector, $sComponentName);
+        // 1. extract
+        $values = (!empty($options) && !empty($options['values'])) ? $options['values'] : null;
+
+        // 2. forward and output
+        return $this->_component->realtime($sPropertySelector, $sComponentName, null, $values);
     }
 
 //    public function realtimeWrapper($sPropertySelector, $sWrapperName, $sComponentName = null)
