@@ -1,7 +1,8 @@
 <div class="MimotoCMS_layout_Selection">
     <h1 class="MimotoCMS_layouts_Selection-title">{{ Mimoto.getVar('sPopupLabel') }}</h1>
 
-    <input type="text" class="MimotoCMS_layout_Selection-search" placeholder="filter" onkeyup="Mimoto.filterSelectionPopup(this)">
+    <input id="MimotoSelectionPopupFilterField" type="text" class="MimotoCMS_layout_Selection-search" placeholder="filter" onkeyup="Mimoto.filterSelectionPopup(this)">
+    <script>document.getElementById('MimotoSelectionPopupFilterField').focus();</script>
 
     <div class="MimotoCMS_layout_Selection-container" data-selection-itemcontainer>
         {{ Mimoto.container('selection') }}
