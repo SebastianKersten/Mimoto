@@ -70,7 +70,7 @@
     </div>
 
     <div class="MimotoCMS_pages_actions_ActionOverview_Action-menu">
-        <div class="MimotoCMS_pages_actions_ActionOverview_Action-menuitem">{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove(), types:['secondary', 'alert', 'small'], icon:'' }) }}</div>
+        <div class="MimotoCMS_pages_actions_ActionOverview_Action-menuitem">{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}), types:['secondary', 'alert', 'small'], icon:'' }) }}</div>
         <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">{{ Mimoto.module('MimotoCMS_modules_SortHandle') }}</div>
     </div>
 </div>
