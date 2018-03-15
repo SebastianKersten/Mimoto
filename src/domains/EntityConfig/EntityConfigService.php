@@ -184,7 +184,7 @@ class EntityConfigService
                 if (MimotoDataUtils::validatePropertyName($sParentPropertyId))
                 {
                     // convert
-                    $sParentPropertyId = Mimoto::service('entityConfig')->getPropertyIdByName($sParentPropertyId);
+                    $sParentPropertyId = Mimoto::service('entityConfig')->getPropertyIdByName($sParentPropertyId, $sParentEntityTypeId);
                 }
             }
 
