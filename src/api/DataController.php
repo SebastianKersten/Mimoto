@@ -85,6 +85,7 @@ class DataController
         // 1. register
         $sPropertySelector = $data->sPropertySelector;
         $sFormName = $data->sFormName;
+        $options = (!empty($data->options)) ? $data->options : (object) array();
 
 
         // ------- Multi option add - manual form selection
@@ -196,7 +197,23 @@ class DataController
             // III. load
             $result = Mimoto::service('data')->createAndConnect($eParent->getValue('name'), $aParentEntitySelectionConfigs);
 
-            // IV. register
+            // IV. verify
+            if (isset($options->values))
+            {
+                // set default values
+                foreach ($options->values as $sPropertyName => $value)
+                {
+                    if ($result->entity->hasProperty($sPropertyName))
+                    {
+                        $result->entity->set($sPropertyName, $value);
+                    }
+                }
+
+                // store
+                Mimoto::service('data')->store($result->entity);
+            }
+
+            // V. register
             $eNewEntity = $result->entity;
         }
 
