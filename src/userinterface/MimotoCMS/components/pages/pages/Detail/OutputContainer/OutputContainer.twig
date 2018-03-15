@@ -47,7 +47,7 @@
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add data', directive:Mimoto.select('selection', '_Mimoto_all_selections') }) }}
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Component', directive:Mimoto.select('component', '_Mimoto_all_components') }) }}
 
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', types:['alert'], directive:Mimoto.remove() }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', types:['alert'], directive:Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}) }) }}
     </div>
 
 </div>

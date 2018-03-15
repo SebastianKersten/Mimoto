@@ -7,6 +7,6 @@
     </div>
     <div class="MimotoCMS_pages_components_ComponentDetail_ComponentContainer-menu">
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_component_container') }) }}
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}) }) }}
     </div>
 </div>

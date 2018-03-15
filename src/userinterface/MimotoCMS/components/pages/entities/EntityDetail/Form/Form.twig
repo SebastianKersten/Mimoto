@@ -8,7 +8,7 @@
         button_link: '/mimoto.cms/form/' ~ Mimoto.meta('id') ~ '/view',
         button_type: 'secondary',
         button2_label: 'Delete',
-        button2_directive: Mimoto.remove(),
+        button2_directive: Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}),
         button2_type: 'alert'
     })
 }}

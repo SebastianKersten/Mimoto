@@ -15,7 +15,7 @@
         </div>
 
         <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-menu">
-            <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-menuitem">{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove(), types:['secondary', 'alert', 'small'], icon:'' }) }}</div>
+            <div class="MimotoCMS_pages_selections_SelectionOverview_Selection-menuitem">{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}), types:['secondary', 'alert', 'small'], icon:'' }) }}</div>
             <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">{{ Mimoto.module('MimotoCMS_modules_SortHandle') }}</div>
         </div>
 

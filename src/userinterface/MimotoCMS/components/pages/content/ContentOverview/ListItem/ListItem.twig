@@ -10,7 +10,7 @@
         button_link: '/mimoto.cms/content/instance/' ~ Mimoto.meta('type') ~ '/' ~ Mimoto.meta('id') ~ '/edit',
         button_type: 'secondary',
         button2_label: 'Delete',
-        button2_directive: Mimoto.remove(),
+        button2_directive: Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}),
         button2_type: 'alert'
     })
 }}

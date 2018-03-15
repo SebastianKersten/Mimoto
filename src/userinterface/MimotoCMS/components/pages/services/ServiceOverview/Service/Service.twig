@@ -10,7 +10,7 @@
     </div>
 
     <div class="MimotoCMS_services_ServiceOverview_Service-menu">
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove(), types:['secondary', 'alert'], icon:'' }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', directive:Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}), types:['secondary', 'alert'], icon:'' }) }}
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', directive:Mimoto.edit('_Mimoto_service'), types:['secondary'], icon:'' }) }}
         <div class="MimotoCMS_modules_ListItem-sorthandlecontainer">{{ Mimoto.module('MimotoCMS_modules_SortHandle') }}</div>
     </div>

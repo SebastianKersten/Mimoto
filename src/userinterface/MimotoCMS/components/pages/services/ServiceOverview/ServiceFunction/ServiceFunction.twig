@@ -2,7 +2,7 @@
     <span class="MimotoCMS_services_ServiceOverview_ServiceFunction-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
     <span class="MimotoCMS_services_ServiceOverview_ServiceFunction-menu">
         - <span class="MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem" {{ Mimoto.edit('_Mimoto_service_function') }}>edit</span>
-        | <span class="MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem" {{ Mimoto.remove() }}>remove</span>
+        | <span class="MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem" {{ Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}) }}>remove</span>
         | <span class="MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem MimotoCMS_services_ServiceOverview_ServiceFunction-menuitem-move {{ Mimoto.sortHandle() }}">move</span>
     </span>
 </div>

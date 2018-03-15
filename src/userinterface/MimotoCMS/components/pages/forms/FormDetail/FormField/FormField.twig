@@ -29,7 +29,7 @@
         <div class="MimotoCMS_pages_forms_FormDetail-FormField__menu-handle">{{ Mimoto.module('MimotoCMS_modules_SortHandle') }}</div>
 
         {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], onclick:"MimotoCMS.formFieldDelete('" ~ Mimoto.meta('typeId') ~ "', '" ~ Mimoto.meta('id') ~ "');" }) }}#}
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() } ) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}) } ) }}
 
         {% if Mimoto.typeOf('_Mimoto_form_input') %}
             <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('value') }}>

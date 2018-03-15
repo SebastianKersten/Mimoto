@@ -38,7 +38,7 @@
             {% set sButtonType = 'alert' %}
         {% endif %}
 
-        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove() }) }}
+        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete', types:['small', 'alert'], directive:Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}) }) }}
         {{ Mimoto.module('MimotoCMS_modules_Button', { label:sButtonLabel, types:['small', sButtonType], directive:Mimoto.edit('_Mimoto_component_conditional') }) }}
     </div>
     <div class="MimotoCMS_pages_components_ComponentConditional__menu-handle">{{ Mimoto.module('MimotoCMS_modules_SortHandle') }}</div>

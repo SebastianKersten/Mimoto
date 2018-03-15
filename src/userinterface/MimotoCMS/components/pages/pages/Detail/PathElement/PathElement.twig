@@ -1,5 +1,5 @@
 <div class="MimotoCMS_pages_pages_Detail_PathElement" {{ Mimoto.sortHandle() }} {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
-    <div class="MimotoCMS_pages_pages_Detail_PathElement-remove" {{ Mimoto.remove() }}>x</div>
+    <div class="MimotoCMS_pages_pages_Detail_PathElement-remove" {{ Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}) }}>x</div>
     <div class="MimotoCMS_pages_pages_Detail_PathElement-info" {{ Mimoto.edit('_Mimoto_route_path_element') }}>
         {% if Mimoto.data('type') == 'var' %}{ {{ Mimoto.data('varName') }} }{% endif %}
         {% if Mimoto.data('type') == 'static' %}{{ Mimoto.data('staticValue') }}{% endif %}

@@ -5,7 +5,7 @@
             <div class="MimotoCMS_pages_components_ComponentTemplate-fileName empty" {{ Mimoto.showWhenEmpty('file') }}>No file connected yet</div>
         </div>
         <div class="MimotoCMS_pages_components_ComponentTemplate-menu">
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', icon:'', types:['small', 'alert'], directive:Mimoto.remove() }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Remove', icon:'', types:['small', 'alert'], directive:Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}) }) }}
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', types:['small', 'secondary'], directive:Mimoto.edit('_Mimoto_component_template') }) }}
             {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add conditional', icon:'', types:['small', 'primary'], directive:Mimoto.add('conditionals', '_Mimoto_component_conditional') }) }}
         </div>
