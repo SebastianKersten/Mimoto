@@ -212,7 +212,7 @@ class SelectionService
 
                                                 $newSelectionRule->property = (object) array(
                                                     'property_type_id' => $selectionRuleSetting->child_id,
-                                                    'property_type_name' => Mimoto::service('entityConfig')->getPropertyNameById($selectionRuleSetting->child_id)
+                                                    'property_type_name' => Mimoto::service('entityConfig')->getPropertyNameById($selectionRuleSetting->child_id, $selectionRuleSetting->parent_entity_type_id)
                                                 );
                                                 $bSettingFound = true;
                                                 break;
