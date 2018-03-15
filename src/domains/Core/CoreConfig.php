@@ -660,6 +660,12 @@ class CoreConfig
                         SelectionRuleTypes::ID_AS_VAR => true,
                         SelectionRuleTypes::ID_VARNAME => 'idVarName',
                         SelectionRuleTypes::PROPERTY => 'properties'
+//                        SelectionRuleTypes::VALUES => [
+//                            (object) array(
+//                                'propertyName' => 'type',
+//                                'value' => 'collection'
+//                            )
+//                        ]
                     )
                 ]
             ),

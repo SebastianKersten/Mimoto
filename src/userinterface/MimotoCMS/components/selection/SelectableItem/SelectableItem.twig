@@ -1,8 +1,8 @@
 <div class="MimotoCMS_components_selection_SelectableItem">
 
     <div class="MimotoCMS_components_selection_SelectableItem-info">
-        <div class="MimotoCMS_components_selection_SelectableItem-info-title" data-selection-item-value>{% if options is not empty and options.itemLabel is not empty %}{{ Mimoto.parse(options.itemLabel)|default('') }}{% else %}{{ Mimoto.getValueBySortindex(0)|default('') }}{% endif %}</div>
-        <div class="MimotoCMS_components_selection_SelectableItem-info-subtitle">{% if options is not empty and options.itemSublabel is not empty %}{{ Mimoto.parse(options.itemSublabel)|default('') }}{% else %}{{ Mimoto.getValueBySortindex(1)|default('') }}{% endif %}</div>
+        <div class="MimotoCMS_components_selection_SelectableItem-info-title" data-selection-item-value>{% if options is not empty and options.itemLabel|default('') is not empty %}{{ Mimoto.parse(options.itemLabel)|default('') }}{% else %}{{ Mimoto.getValueBySortindex(0)|default('') }}{% endif %}</div>
+        <div class="MimotoCMS_components_selection_SelectableItem-info-subtitle">{% if options is not empty and options.itemSublabel|default('') is not empty %}{{ Mimoto.parse(options.itemSublabel)|default('') }}{% else %}{{ Mimoto.getValueBySortindex(1)|default('') }}{% endif %}</div>
     </div>
 
     <div class="MimotoCMS_components_selection_SelectableItem-menu">

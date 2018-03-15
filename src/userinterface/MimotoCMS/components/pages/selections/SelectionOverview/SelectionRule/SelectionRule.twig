@@ -12,7 +12,9 @@
                     <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Type</div>
                     <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">
                         <div {{ Mimoto.showWhenValue('typeAsVar', true) }}><span class="fa fa-square-o" {{ Mimoto.set('typeAsVar', false) }}></span></div>
-                        <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select type', sEntityName:'type', sSelectionName:'_Mimoto_all_entities', sValuePropertySelector:'type.name', options:{onChange:[['clear', 'instance']]} }) }}</div>
+
+                        <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select type', sEntityName:'type', sSelectionName:'_Mimoto_all_entities', sValuePropertySelector:'type.name', options:{onChange:[['clear', 'instance'], ['clear', 'property']]} }) }}</div>
+
                         <div {{ Mimoto.showWhenValue('typeAsVar', false) }}><span class="fa fa-square-o" {{ Mimoto.set('typeAsVar', true) }}></span> as var</div>
                         <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenValue('typeAsVar', true) }}>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'typeVarName', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
                         <div><span class="fa fa-remove" {{ Mimoto.hideWhenEmpty('type') }} {{ Mimoto.clear('type') }}></span></div>
@@ -26,14 +28,35 @@
                     <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">
                         <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Instance</div>
                         <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">
-                            <div {{ Mimoto.showWhenValue('idAsVar', true) }}><span class="fa fa-square-o"></span></div>
-                            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select instance', sEntityName:'instance', sSelectionName:'_Mimoto_all_instances_of_entity', options:{vars:{typeVarName:Mimoto.meta('type.id') }}, sValuePropertySelector:'instance', sValuePropertyIndex:0 }) }}</div>
+                            <div {{ Mimoto.showWhenValue('idAsVar', true) }}><span class="fa fa-square-o" {{ Mimoto.set('idAsVar', false) }}></span></div>
+
+                            <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select instance', sEntityName:'instance', sSelectionName:'_Mimoto_all_instances_of_entity', options:{vars:{typeVarName:Mimoto.meta('type.id') }, onChange:[['clear', 'property']]}, sValuePropertySelector:'instance', sValuePropertyIndex:0 }) }}</div>
+
                             <div {{ Mimoto.showWhenValue('idAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>
+                            <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenValue('idAsVar', true) }}>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'idVarName', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
+                            <div><span class="fa fa-remove" {{ Mimoto.hideWhenEmpty('instance') }} {{ Mimoto.clear('instance') }}></span></div>
                         </div>
                     </div>
                 </div>
 
 
+                <div {{ Mimoto.hideWhenEmpty('instance') }}>
+
+                    <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-row">
+                        <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section">
+                            <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-label">Property</div>
+                            <div class="MimotoCMS_pages_selections_SelectionOverview_SelectionRule-section-data">
+                                <div {{ Mimoto.showWhenValue('propertyAsVar', true) }}><span class="fa fa-square-o" {{ Mimoto.set('propertyAsVar', false) }}></span></div>
+
+                                <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select property', sEntityName:'property', sSelectionName:'_Mimoto_all_properties_of_entity', options:{vars:{idVarName:Mimoto.meta('type.id') }}, sValuePropertySelector:'property.name' }) }}</div>
+
+                                <div {{ Mimoto.showWhenValue('propertyAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>
+                                <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenValue('propertyAsVar', true) }}>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'propertyVarName', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
+                                <div><span class="fa fa-remove" {{ Mimoto.hideWhenEmpty('property') }} {{ Mimoto.clear('property') }}></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {# if instance? (or idAsVar) -> show property | allow multiple conditionals in 'hideWhenEmpty' #}
 
 

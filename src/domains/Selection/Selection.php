@@ -63,32 +63,32 @@ class Selection
 
 
                     // verify
-                    if ($eRule->getValue('typeAsVar') && !empty($eRule->getValue('typeVarName'))) // #todo - validate varname
+                    if ($eRule->get('typeAsVar') && !empty($eRule->get('typeVarName'))) // #todo - validate varname
                     {
-                        $this->setTypeAsVar($eRule->getValue('typeVarName'));
+                        $this->setTypeAsVar($eRule->get('typeVarName'));
                     }
                     else
                     {
                         // read
-                        $eType = $eRule->getValue('type');
+                        $eType = $eRule->get('type');
 
                         // validate
                         if (!empty($eType))
                         {
-                            $this->setType($eType->getValue('name'));
+                            $this->setType($eType->get('name'));
                         }
                     }
 
                     // verify
-                    if ($eRule->getValue('idAsVar') && !empty($eRule->getValue('idVarName'))) // #todo - validate varname
+                    if ($eRule->get('idAsVar') && !empty($eRule->get('idVarName'))) // #todo - validate varname
                     {
-                        $this->setIdAsVar($eRule->getValue('idVarName'));
+                        $this->setIdAsVar($eRule->get('idVarName'));
                     }
                     else
                     {
                         // read
-                        $eInstance = $eRule->getValue('instance');
-
+                        $eInstance = $eRule->get('instance');
+                        Mimoto::error($eInstance);
                         // validate
                         if (!empty($eInstance))
                         {
@@ -97,14 +97,14 @@ class Selection
                     }
 
                     // verify
-                    if ($eRule->getValue('propertyAsVar') && !empty($eRule->getValue('propertyVarName'))) // #todo - validate varname
+                    if ($eRule->get('propertyAsVar') && !empty($eRule->get('propertyVarName'))) // #todo - validate varname
                     {
-                        $this->setPropertyAsVar($eRule->getValue('propertyVarName'));
+                        $this->setPropertyAsVar($eRule->get('propertyVarName'));
                     }
                     else
                     {
                         // read
-                        $eProperty = $eRule->getValue('property');
+                        $eProperty = $eRule->get('property');
 
                         // validate
                         if (!empty($eProperty))

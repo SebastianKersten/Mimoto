@@ -210,7 +210,7 @@ class SelectionService
 
                                             case CoreConfig::MIMOTO_SELECTION_RULE.'--property':
 
-                                                $newSelectionRule->entityProperty = (object) array(
+                                                $newSelectionRule->property = (object) array(
                                                     'property_type_id' => $selectionRuleSetting->child_id,
                                                     'property_type_name' => Mimoto::service('entityConfig')->getPropertyNameById($selectionRuleSetting->child_id)
                                                 );
@@ -272,51 +272,52 @@ class SelectionService
 
     private function buildSelectionFromConfig($selectionConfig)
     {
-        // init
+        // 1. init
         $selection = new Selection();
 
-        // setup
+        // 2. setup
         $selection->setName($selectionConfig->name);
 
-        // parse rules
+        // 3. parse rules
         $nRuleCount = count($selectionConfig->rules);
         for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
         {
-            // register
+            // a. register
             $ruleConfig = $selectionConfig->rules[$nRuleIndex];
 
-            // init
+            // b. init
             $rule = $selection->addRule();
 
-            // setup
+            // c. setup
             if (isset($ruleConfig->type)) $rule->setType($ruleConfig->type);
-            if (isset($ruleConfig->id)) $rule->setType($ruleConfig->id);
-            if (isset($ruleConfig->property)) $rule->setProperty($ruleConfig->property);
+            if (isset($ruleConfig->instance)) $rule->setId($ruleConfig->instance->instance_id);
+            if (isset($ruleConfig->property)) $rule->setProperty($ruleConfig->property->property_type_name);
 
-            // setup
+            // d. setup
             if (isset($ruleConfig->typeAsVar)) $rule->setTypeAsVar($ruleConfig->typeVarName);
             if (isset($ruleConfig->idAsVar)) $rule->setIdAsVar($ruleConfig->idVarName);
             if (isset($ruleConfig->properyAsVar)) $rule->setPropertyAsVar($ruleConfig->propertyVarName);
 
+            // e. setup
             if (isset($ruleConfig->values) && !empty($ruleConfig->values))
             {
-                // read
+                // I. read
                 $aRuleValues = $ruleConfig->values;
 
-                // add values
+                // II. add values
                 $nRuleValueCount = count($aRuleValues);
                 for ($nRuleValueIndex = 0; $nRuleValueIndex < $nRuleValueCount; $nRuleValueIndex++)
                 {
-                    // register
+                    // 1. register
                     $ruleValue = $aRuleValues[$nRuleValueIndex];
 
-                    // add
+                    // 2. add
                     $rule->setValue($ruleValue->propertyName, $ruleValue->value);
                 }
             }
         }
 
-        // add data
+        // 4. add data
         if (isset($selectionConfig->data) && is_array($selectionConfig->data)) $selection->setData($selectionConfig->data);
 
 
@@ -324,7 +325,7 @@ class SelectionService
         //Mimoto::output('$selectionConfig', $selectionConfig);
         //Mimoto::error($selection);
 
-        // send
+        // 5. send
         return $selection;
     }
 

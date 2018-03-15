@@ -5,11 +5,14 @@
 {% block content %}
 
 
-    <button {{ Mimoto.add('elements', [{label:'Component: Element 1'}, 'element2'], { label:'Select a component'}) }}>Add element</button>
+    <button {{ Mimoto.add('elements', [{label:'Component: Element 1', form:'element1'}, 'element2'], { label:'Select a component'}) }}>Add element</button>
 
     <div {{ Mimoto.realtime('elements', 'element', { values:{ xxx:'yyy' } }) }}>
         {{ Mimoto.data('elements', 'element', { values:{ xxx:'yyy' } }) }}
     </div>
+
+
+    <button {{ Mimoto.select('elements', 'allElementsOfPage3') }}>Select from elements of page 3</button>
 
 {% endblock %}
 
