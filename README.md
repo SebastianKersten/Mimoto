@@ -20,6 +20,11 @@ Run event worker
 curl http://mimoto.aimless/mimoto.cms/workers/data
 ```
 
+Run async worker
+```
+curl http://mimoto.aimless/mimoto.cms/workers/async
+```
+
 Run realtime server script
 ```
 node src/userinterface/Mimoto/realtime.js

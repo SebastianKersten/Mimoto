@@ -1,0 +1,10 @@
+{% if sPropertyName|default('') is empty or sLabel1|default('') is empty or sLabel2|default('') is empty or value1 is not defined or value2 is not defined %}
+    WARNING - Make sure you pass all the required variables sLabel, sEntityName, sSelectionName and sValuePropertySelector! (sHideWhenEmpty is optional)
+{% else %}
+
+    <div class="MimotoCMS_modules_DataToggleButton">
+        <button class="MimotoCMS_modules_DataToggleButton-button" {{ Mimoto.addClassWhenValue(sPropertyName, value1, 'selected') }} {{ Mimoto.set(sPropertyName, value1) }}>{{ sLabel1 }}</button>
+        <button class="MimotoCMS_modules_DataToggleButton-button" {{ Mimoto.addClassWhenValue(sPropertyName, value2, 'selected') }} {{ Mimoto.set(sPropertyName, value2) }}>{{ sLabel2 }}</button>
+    </div>
+
+{% endif %}

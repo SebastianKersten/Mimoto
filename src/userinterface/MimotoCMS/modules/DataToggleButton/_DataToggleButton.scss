@@ -1,0 +1,22 @@
+div.MimotoCMS_modules_DataToggleButton {
+    display: inline-block;
+    padding: 5px;
+    background-color: #f7f7f7;
+}
+
+button.MimotoCMS_modules_DataToggleButton-button {
+    padding: 4px 10px 5px 10px;
+    background-color: #f7f7f7;
+    color: #000000;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $pale-slate;
+        color: #ffffff;
+    }
+
+    &.selected {
+        background-color: $tower-gray;
+        color: #ffffff;
+    }
+}

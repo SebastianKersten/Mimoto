@@ -32,7 +32,7 @@ class Slack // extends MimotoService
 
         // 5. send
         // note: You can get your webhook endpoint from your Slack settings
-        $ch = curl_init(Mimoto::value('config')->slack->webhook);
+        $ch = curl_init(Mimoto::service('config')->get('slack.webhook'));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

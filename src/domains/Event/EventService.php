@@ -280,8 +280,38 @@ class EventService
                             }
                         }
 
-                        // a. call and pass clone of settings (unserialize/serialize)
-                        call_user_func([$service, $action->function], $event->getEntity(), $settings);
+
+                        if ($action->type == 'async' && class_exists('\GearmanClient'))
+                        {
+                            // init
+                            $gearmanClient = new \GearmanClient();
+
+                            try
+                            {
+                                // setup
+                                $gearmanClient->addServer(Mimoto::service('config')->get('gearman.serverAddress'));
+
+                                // execute
+                                $gearmanClient->doBackground("asyncEvent", json_encode(array(
+                                    'serviceName' => $action->service->name,
+                                    'serviceFile' => $action->service->file,
+                                    'function' => $action->function,
+                                    'entityType' => $event->getEntity()->getType(),
+                                    'instanceId' => $event->getEntity()->getId(),
+                                    'settings' => $settings
+                                )));
+                            }
+                            catch (\Exception $e)
+                            {
+                                return;
+                            }
+
+                        }
+                        else
+                        {
+                            // a. call and pass clone of settings (unserialize/serialize)
+                            call_user_func([$service, $action->function], $event->getEntity(), $settings);
+                        }
                     }
                 }
 

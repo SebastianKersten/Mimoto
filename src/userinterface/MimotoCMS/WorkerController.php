@@ -129,17 +129,15 @@ class WorkerController
         //return true;
     }
 
-    public function slack(Request $request, Application $app)
+    public function async(Request $request, Application $app)
     {
-
-        //Mimoto::error(gearman_version());
-
         echo "\n";
         echo "--------------------------------------------------------------------------------\n";
         echo "--- Mimoto - The ultra fast, fluid & realtime data management microframework ---\n";
         echo "--------------------------------------------------------------------------------\n";
         echo "\n";
-        echo "Booting Slack worker at ".date('Y.m.d H:i:s')." ... \n\n";
+        echo "Booting async event worker at ".date('Y.m.d H:i:s')." ... \n\n";
+
 
         // output
         ob_flush();
@@ -147,45 +145,67 @@ class WorkerController
 
 
         // init
+        $sServicesPath = Mimoto::service('config')->get('folders.projectroot').Mimoto::service('config')->get('folders.services');
+
+
+        // init
         $worker = new GearmanWorker();
 
         // setup
         $worker->addServer(Mimoto::service('config')->get('gearman.serverAddress'));
-        $worker->addFunction("sendSlackNotification", function ($job) {
-
-
+        $worker->addFunction("asyncEvent", function($job, $sServicesPath)
+        {
             // read
             $workload = json_decode($job->workload());
 
-            // compose
-            $data = "payload=" . json_encode(array
-                (
-                    "channel" => "#" . $workload->channel,
-                    "text" => $workload->message,
-                    "username" => "Mimoto",
-                    "icon_emoji" => ":ant:"
-                ));
 
-            echo "Slack event (" . date('Y.m.d H:i:s') . ")\n";
+            // output
+            echo "Async event (".date('Y.m.d H:i:s').")\n";
             echo "-------------------------------------\n";
-            echo print_r($data, true);
+            echo print_r($workload, true);
             echo "-------------------------------------\n\n\n";
 
 
-            // You can get your webhook endpoint from your Slack settings
-            $ch = curl_init(Mimoto::value('config')->slack->webhook);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($ch);
-            curl_close($ch);
+
+            if (!empty($sServicesPath) && isset($workload->serviceName) && isset($workload->serviceFile) && isset($workload->function))
+            {
+                // 1. verify
+                if (!class_exists($workload->serviceName)) {
+                    // a. prepare
+                    $sClassFile = $sServicesPath . $workload->serviceFile;
+
+                    // b. verify
+                    if (file_exists($sClassFile)) {
+                        // load
+                        require_once($sClassFile);
+                    }
+                }
+
+
+                // init
+                $service = new $workload->serviceName;
+
+                // load
+                $eInstance = Mimoto::service('data')->get($workload->entityType, $workload->instanceId);
+
+                // a. call and pass clone of settings (unserialize/serialize)
+                call_user_func([$service, $workload->function], $eInstance, $workload->settings);
+            }
 
 
             // output
             ob_flush();
             flush();
-        });
+        }, $sServicesPath);
 
-        while ($worker->work()) ;
+        var_dump($worker, true);
+
+        // run
+        while ($worker->work());
+
+
+        // output
+        return new Response();
     }
+    
 }

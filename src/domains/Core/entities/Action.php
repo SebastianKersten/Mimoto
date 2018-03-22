@@ -6,6 +6,7 @@ namespace Mimoto\Core\entities;
 // Mimoto classes
 use Mimoto\Core\Validation;
 use Mimoto\EntityConfig\EntityConfig;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Core\CoreFormUtils;
@@ -132,7 +133,28 @@ class Action
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
-                )
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_SELECTION_RULE.'--async',
+                    // ---
+                    'name' => 'async',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        ),
+//                        'defaultValue' => (object) array(
+//                            'key' => EntityConfig::SETTING_ENTITY_DEFAULTVALUE,
+//                            'type' => MimotoEntityPropertyTypes::PROPERTY_SETTING_DEFAULTVALUE_TYPE_NEWENTITYINSTANCE,
+//                            'value' => CoreConfig::MIMOTO_OUTPUT,
+//                            'defaultValues' => (object) array(
+//                                'isRoot' => CoreConfig::DATA_VALUE_TRUE
+//                            )
+//                        )
+                    ]
+                ),
             ]
         );
     }

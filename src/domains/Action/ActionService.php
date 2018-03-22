@@ -101,7 +101,7 @@ class ActionService
                     'file' => $eAction->get('service.file')
                 ),
                 'function' => $eAction->get('function.name'),
-                'type' => 'sync',
+                'type' => ($eAction->get('async') === true) ? 'async' : 'sync',
                 'settings' => (object) array()
             );
 

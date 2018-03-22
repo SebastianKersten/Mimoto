@@ -5846,6 +5846,23 @@ button.MimotoCMS_modules_DataSelectButton-button--empty {
   background-color: #c3c1c2;
   font-style: italic; }
 
+div.MimotoCMS_modules_DataToggleButton {
+  display: inline-block;
+  padding: 5px;
+  background-color: #f7f7f7; }
+
+button.MimotoCMS_modules_DataToggleButton-button {
+  padding: 4px 10px 5px 10px;
+  background-color: #f7f7f7;
+  color: #000000;
+  cursor: pointer; }
+  button.MimotoCMS_modules_DataToggleButton-button:hover {
+    background-color: #c3c1c2;
+    color: #ffffff; }
+  button.MimotoCMS_modules_DataToggleButton-button.selected {
+    background-color: #9dbab7;
+    color: #ffffff; }
+
 div.MimotoCMS_modules_EditableField {
   position: relative;
   height: auto;

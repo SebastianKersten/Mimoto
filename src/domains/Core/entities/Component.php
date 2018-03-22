@@ -1157,6 +1157,17 @@ class Component
                     )
                 ]
             ),
+
+            (object) array(
+                'name' => 'MimotoCMS_modules_DataToggleButton',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/DataToggleButton/DataToggleButton.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
             (object) array(
                 'name' => 'MimotoCMS_modules_EditableField',
                 'templates' => [

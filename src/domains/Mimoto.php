@@ -216,7 +216,7 @@ class Mimoto
 
         $app->get ('/'.$config->project->path_cms.'/configuration/gearman', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$config->project->path_cms.'/workers/data', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::data');
-        $app->get ('/'.$config->project->path_cms.'/workers/slack', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::slack');
+        $app->get ('/'.$config->project->path_cms.'/workers/async', 'Mimoto\\UserInterface\\MimotoCMS\\WorkerController::async');
         $app->get ('/'.$config->project->path_cms.'/heartbeat', 'Mimoto\\UserInterface\\MimotoCMS\\HeartbeatController::viewOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
 

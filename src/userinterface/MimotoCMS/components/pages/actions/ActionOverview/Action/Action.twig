@@ -63,6 +63,15 @@
                     <div class="MimotoCMS_pages_actions_ActionOverview_Action-settings-add" {{ Mimoto.hideWhenEmpty('settings') }} {{ Mimoto.add('settings', '_Mimoto_action_setting') }}>add more settings</div>
                 </div>
 
+                <div class="MimotoCMS_pages_actions_ActionOverview_Action-row" {{ Mimoto.hideWhenEmpty('function') }}>
+                    <div class="MimotoCMS_pages_actions_ActionOverview_Action-section">
+                        <div class="MimotoCMS_pages_actions_ActionOverview_Action-section-label">HOW</div>
+                        <div class="MimotoCMS_pages_actions_ActionOverview_Action-section-data">
+                            {{ Mimoto.module('MimotoCMS_modules_DataToggleButton', { sPropertyName:'async', sLabel1:'sync', value1:false, sLabel2:'async', value2:true }) }}
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
