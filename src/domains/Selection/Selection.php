@@ -88,7 +88,7 @@ class Selection
                     {
                         // read
                         $eInstance = $eRule->get('instance');
-                        Mimoto::error($eInstance);
+
                         // validate
                         if (!empty($eInstance))
                         {
