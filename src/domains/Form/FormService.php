@@ -650,7 +650,7 @@ class FormService
         }
 
         // send
-        return Mimoto::service('users')->getUserPublicKey(json_encode($baseData));
+        return Mimoto::service('user')->getUserPublicKey(json_encode($baseData));
     }
 
 

@@ -30,7 +30,7 @@ class UserServiceProvider implements ServiceProviderInterface
     public function boot(Application $app)
     {
         // register
-        Mimoto::setService('users', $app['Mimoto.User']);
+        Mimoto::setService('user', $app['Mimoto.User']);
     }
     
 }

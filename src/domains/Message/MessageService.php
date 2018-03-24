@@ -118,7 +118,7 @@ class MessageService
             }
 
             // convert
-            $this->_sUID = md5($xUID . Mimoto::service('users')->getUserId());
+            $this->_sUID = md5($xUID . Mimoto::service('user')->getUserId());
             $this->_sTimeStamp = date('YmdHis');;
         }
 
