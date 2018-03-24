@@ -5,6 +5,7 @@ namespace Mimoto\User;
 
 // Mimoto classes
 use Mimoto\Mimoto;
+use Silex\Application;
 
 
 /**
@@ -15,6 +16,10 @@ use Mimoto\Mimoto;
 class UserService
 {
 
+    private $_app = null;
+    private $_user = null;
+
+
 
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
@@ -24,9 +29,10 @@ class UserService
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Application $app)
     {
-
+        // 1. store
+        $this->_app = $app;
     }
     
     
@@ -34,6 +40,12 @@ class UserService
     // ----------------------------------------------------------------------------
     // --- Public methods----------------------------------------------------------
     // ----------------------------------------------------------------------------
+
+
+    public function isLoggedIn()
+    {
+        return (!empty($this->_app) && !empty($this->_app['session']) && $this->_app['session']->get('is_user'));
+    }
 
 
     /**

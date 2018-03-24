@@ -23,7 +23,7 @@ class UserServiceProvider implements ServiceProviderInterface
     {
         $app['Mimoto.User'] = $app['Mimoto.UserService'] = $app->share(function($app)
         {
-            return new UserService();
+            return new UserService($app);
         });
     }
 
