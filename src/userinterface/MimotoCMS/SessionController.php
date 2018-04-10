@@ -87,27 +87,27 @@ class SessionController
 
     public function login(Request $request, Application $app)
     {
-        // register
+        // 1. register
         $sUsername = $request->get('username');
         $sPassword = $request->get('password');
         $sRequestedPage = $request->get('request');
 
 
-        // 1. this need permission control and roles
-        // 2. https://silex.sensiolabs.org/doc/2.0/providers/security.html
+        // a. this need permission control and roles
+        // b. https://silex.sensiolabs.org/doc/2.0/providers/security.html
 
 
-        // find
-        $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER, 'values' => ['email' => $sUsername]]);
+        // 2. load
+        $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER]);
 
-        // validate
-        if (count($aUsers) == 1)
+        // 3. find
+        $nUserCount = count($aUsers);
+        for ($nUserIndex = 0; $nUserIndex < $nUserCount; $nUserIndex++)
         {
             // register
-            $eUser = $aUsers[0];
+            $eUser = $aUsers[$nUserIndex];
 
-            // validate
-            if ($sUsername == $eUser->getValue('email'))
+            if (strtolower($eUser->get('email')) == strtolower($sUsername))
             {
                 // read
                 $encryptedPassword = $eUser->getValue('password');
@@ -136,14 +136,17 @@ class SessionController
         }
 
 
-        // 1. init page
+        // ---
+
+
+        // 4. init page
         $page = Mimoto::service('output')->createPage('MimotoCMS_layout_Login');
 
-        // 2. setup
+        // 5. setup
         $page->setVar('requestedPage', $sRequestedPage);
         $page->setVar('username', $sUsername);
 
-        // 3. output
+        // 6. output
         return $page->render();
     }
 
