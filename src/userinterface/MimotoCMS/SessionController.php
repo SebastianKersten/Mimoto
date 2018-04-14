@@ -97,61 +97,33 @@ class SessionController
         // b. https://silex.sensiolabs.org/doc/2.0/providers/security.html
 
 
-        // 2. load
-        $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER]);
-
-        // 3. find
-        $nUserCount = count($aUsers);
-        for ($nUserIndex = 0; $nUserIndex < $nUserCount; $nUserIndex++)
+        // 2. try logging in
+        if (Mimoto::service('user')->login($sUsername, $sPassword))
         {
-            // register
-            $eUser = $aUsers[$nUserIndex];
+            // 1. determine
+            $sNextPage = (!empty($sRequestedPage)) ? $sRequestedPage : '/mimoto.cms';
 
-            if (strtolower($eUser->get('email')) == strtolower($sUsername))
-            {
-                // read
-                $encryptedPassword = $eUser->getValue('password');
-
-                if (Mimoto::service('session')->comparePassword($sPassword, $encryptedPassword))
-                {
-                    // compose
-                    $user = (object) array(
-                        'id' => $eUser->getId(),
-                        'firstName' => $eUser->getValue('firstName'),
-                        'lastName' => $eUser->getValue('lastName'),
-                        'avatar' => '/'.$eUser->getValue('avatar.path').$eUser->getValue('avatar.name'),
-                    );
-
-                    // register
-                    $app['session']->set('is_user', true);
-                    $app['session']->set('user', $user);
-
-                    // determine
-                    $sNextPage = (!empty($sRequestedPage)) ? $sRequestedPage : '/mimoto.cms';
-
-                    // open
-                    return $app->redirect($sNextPage);
-                }
-            }
+            // 2. open
+            return $app->redirect($sNextPage);
         }
+        else
+        {
+            // a. init page
+            $page = Mimoto::service('output')->createPage('MimotoCMS_layout_Login');
 
+            // b. setup
+            $page->setVar('requestedPage', $sRequestedPage);
+            $page->setVar('username', $sUsername);
 
-        // ---
-
-
-        // 4. init page
-        $page = Mimoto::service('output')->createPage('MimotoCMS_layout_Login');
-
-        // 5. setup
-        $page->setVar('requestedPage', $sRequestedPage);
-        $page->setVar('username', $sUsername);
-
-        // 6. output
-        return $page->render();
+            // c. output
+            return $page->render();
+        }
     }
 
     public function logout(Application $app)
     {
+        // 1. logout
+        Mimoto::service('user')->logout();
         // clear
         $app['session']->clear();
 

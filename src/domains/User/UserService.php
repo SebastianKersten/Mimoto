@@ -5,6 +5,9 @@ namespace Mimoto\User;
 
 // Mimoto classes
 use Mimoto\Mimoto;
+use Mimoto\Core\CoreConfig;
+
+// Silex classes
 use Silex\Application;
 
 
@@ -40,6 +43,59 @@ class UserService
     // ----------------------------------------------------------------------------
     // --- Public methods----------------------------------------------------------
     // ----------------------------------------------------------------------------
+
+
+
+    public function login($sUsername, $sPassword)
+    {
+        // 1. load
+        $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER]);
+
+        // 2. find
+        $nUserCount = count($aUsers);
+        for ($nUserIndex = 0; $nUserIndex < $nUserCount; $nUserIndex++)
+        {
+            // a. register
+            $eUser = $aUsers[$nUserIndex];
+
+            // b. compare
+            if (strtolower($eUser->get('email')) == strtolower($sUsername))
+            {
+                // I. read
+                $encryptedPassword = $eUser->getValue('password');
+
+                // II. compare
+                if (Mimoto::service('session')->comparePassword($sPassword, $encryptedPassword))
+                {
+                    // 1. compose
+                    $user = (object) array(
+                        'id' => $eUser->getId(),
+                        'firstName' => $eUser->getValue('firstName'),
+                        'lastName' => $eUser->getValue('lastName'),
+                        'avatar' => '/'.$eUser->getValue('avatar.path').$eUser->getValue('avatar.name'),
+                    );
+
+                    // 2. register
+                    Mimoto::getSilexApp()['session']->set('is_user', true);
+                    Mimoto::getSilexApp()['session']->set('user', $user);
+
+                    // 3. login successful
+                    return true;
+                }
+            }
+        }
+
+        // 3. couldn't login
+        return false;
+    }
+
+    public function logout()
+    {
+        // 1. clear
+        Mimoto::getSilexApp()['session']->clear();
+    }
+
+
 
 
     public function isLoggedIn()
