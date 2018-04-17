@@ -216,18 +216,41 @@ class EntityConfigService
             $nResultCount = count($aResults);
 
             // validate
-            if ($nResultCount != 1) return null;
+            if ($nResultCount == 0)
+            {
+                return null;
+            }
+            else
+            if ($nResultCount == 1)
+            {
+                // load
+                $entity = Mimoto::service('data')->get($sParentEntityTypeId, $aResults[0]['parent_id']);
 
-            // load
-            $entity = Mimoto::service('data')->get($sParentEntityTypeId, $aResults[0]['parent_id']);
+                // send
+                return $entity;
+            }
+            else
+            {
+                // init
+                $aParents = [];
 
-            // send
-            return $entity;
+                // collect
+                for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
+                {
+                    // register
+                    $result = $aResults[$nResultIndex];
+
+                    // load
+                    $aParents[] = Mimoto::service('data')->get($sParentEntityTypeId, $result['parent_id']);
+                }
+
+                // send
+                return $aParents;
+            }
+
         }
     }
-
-
-
+    
 
 
     public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)
