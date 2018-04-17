@@ -154,6 +154,22 @@ class EntityConfigService
 
     public function getParent($sParentEntityTypeId, $sParentPropertyId, MimotoEntity $child)
     {
+        // 1. load
+        $aParents = $this->getParents($sParentEntityTypeId, $sParentPropertyId, $child);
+
+        // 2. register
+        $nParentCount = count($aParents);
+
+        // 3. verify and return special format
+        if ($nParentCount == 0) return null;
+        if ($nParentCount == 1) return $aParents[0];
+
+        // 4. send all
+        return $aParents;
+    }
+
+    public function getParents($sParentEntityTypeId, $sParentPropertyId, MimotoEntity $child)
+    {
         $xId = $child->getId();
 
         if (substr($xId, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
@@ -166,7 +182,7 @@ class EntityConfigService
             $eParent->setValue('name', $this->_entityConfigRepository->getEntityNameByFormId($xId));
 
             // send
-            return $eParent;
+            return [$eParent];
         }
         else
         {
@@ -189,7 +205,7 @@ class EntityConfigService
             }
 
             // validate
-            if (empty($sParentEntityTypeId) || empty($sParentPropertyId)) return null;
+            if (empty($sParentEntityTypeId) || empty($sParentPropertyId)) return [];
 
 
             // load all connections
@@ -212,45 +228,25 @@ class EntityConfigService
             // load
             $aResults = $stmt->fetchAll();
 
-            // register
+            // init
+            $aParents = [];
+
+            // collect
             $nResultCount = count($aResults);
+            for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
+            {
+                // register
+                $result = $aResults[$nResultIndex];
 
-            // validate
-            if ($nResultCount == 0)
-            {
-                return null;
-            }
-            else
-            if ($nResultCount == 1)
-            {
                 // load
-                $entity = Mimoto::service('data')->get($sParentEntityTypeId, $aResults[0]['parent_id']);
-
-                // send
-                return $entity;
-            }
-            else
-            {
-                // init
-                $aParents = [];
-
-                // collect
-                for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
-                {
-                    // register
-                    $result = $aResults[$nResultIndex];
-
-                    // load
-                    $aParents[] = Mimoto::service('data')->get($sParentEntityTypeId, $result['parent_id']);
-                }
-
-                // send
-                return $aParents;
+                $aParents[] = Mimoto::service('data')->get($sParentEntityTypeId, $result['parent_id']);
             }
 
+            // send
+            return $aParents;
         }
     }
-    
+
 
 
     public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)
