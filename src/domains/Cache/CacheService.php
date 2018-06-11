@@ -84,7 +84,9 @@ class CacheService
         }
         else
         {
-            return $this->_memcached->get($this->_sPrefix.$sKey);
+            $value = $this->_memcached->get($this->_sPrefix.$sKey);
+            if ($value !== false) $this->_sessionCache[$this->_sPrefix.$sKey] = $value;
+            return $value;
         }
     }
     
