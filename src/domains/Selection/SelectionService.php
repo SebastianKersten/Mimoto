@@ -142,7 +142,7 @@ class SelectionService
             $selection = $aAllSelections[$nSelectionIndex];
 
             // read
-            $nSelectionId = $selection->id;
+            $nSelectionId = $selection->mimoto_id;
 
             // init
             $aRules = [];
@@ -158,7 +158,7 @@ class SelectionService
                     $selectionRuleConnection = $aAllSelectionRuleConnections[$nSelectionId][$nSelectionRuleIndex];
 
                     // verify
-                    if ($selectionRuleConnection->parent_id == $selection->id)
+                    if ($selectionRuleConnection->parent_id == $selection->mimoto_id)
                     {
                         // search
                         $nRuleCount = count($aAllSelectionRules);
@@ -168,21 +168,21 @@ class SelectionService
                             $rule = $aAllSelectionRules[$nRuleIndex];
 
                             // verify
-                            if ($rule->id == $selectionRuleConnection->child_id)
+                            if ($rule->mimoto_id == $selectionRuleConnection->child_id)
                             {
                                 // init
                                 $bSettingFound = false;
 
-                                if (isset($aAllSelectionRuleSettingsConnections[$rule->id]))
+                                if (isset($aAllSelectionRuleSettingsConnections[$rule->mimoto_id]))
                                 {
                                     // init
                                     $newSelectionRule = (object) array();
 
-                                    $nSelectionRuleSettingCount = count($aAllSelectionRuleSettingsConnections[$rule->id]);
+                                    $nSelectionRuleSettingCount = count($aAllSelectionRuleSettingsConnections[$rule->mimoto_id]);
                                     for ($nSelectionRuleSettingIndex = 0; $nSelectionRuleSettingIndex < $nSelectionRuleSettingCount; $nSelectionRuleSettingIndex++)
                                     {
                                         // register
-                                        $selectionRuleSetting = $aAllSelectionRuleSettingsConnections[$rule->id][$nSelectionRuleSettingIndex];
+                                        $selectionRuleSetting = $aAllSelectionRuleSettingsConnections[$rule->mimoto_id][$nSelectionRuleSettingIndex];
 
                                         switch($selectionRuleSetting->parent_property_id)
                                         {
@@ -229,7 +229,7 @@ class SelectionService
                                                     // register
                                                     $ruleValue = $aAllSelectionRuleValues[$nRuleValueIndex];
 
-                                                    if ($ruleValue->id == $selectionRuleSetting->child_id)
+                                                    if ($ruleValue->mimoto_id == $selectionRuleSetting->child_id)
                                                     {
                                                         // add
                                                         $newSelectionRule->values[] = (object) array(

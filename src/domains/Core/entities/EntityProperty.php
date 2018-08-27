@@ -106,7 +106,7 @@ class EntityProperty
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::COREFORM_ENTITYPROPERTY,
+            'mimoto_id' => CoreConfig::COREFORM_ENTITYPROPERTY,
             'name' => CoreConfig::COREFORM_ENTITYPROPERTY,
             'class' => get_class(),
             'inputFieldIds' => [

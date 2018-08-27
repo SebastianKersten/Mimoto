@@ -22,3 +22,7 @@
 
     // under development
     $app->get('/selector', 'Mimoto\\UserInterface\\MimotoCMS\\HeartbeatController::devSelection');
+
+
+
+    $app->get('/xxx', 'Mimoto\\UserInterface\\publisher\\PublisherController::xxx');

@@ -13,25 +13,25 @@ use Mimoto\EntityConfig\MimotoEntityPropertyValueTypes;
 
 
 /**
- * Route
+ * API
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class Route
+class API
 {
 
     public static function getStructure()
     {
         return (object) array
         (
-            'id' => CoreConfig::MIMOTO_PAGE,
+            'id' => CoreConfig::MIMOTO_API,
             // ---
-            'name' => CoreConfig::MIMOTO_PAGE,
+            'name' => CoreConfig::MIMOTO_API,
             'extends' => null,
-            'forms' => [CoreConfig::MIMOTO_PAGE],
+            'forms' => [CoreConfig::MIMOTO_API],
             'properties' => [
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_PAGE.'--name',
+                    'id' => CoreConfig::MIMOTO_API.'--name',
                     // ---
                     'name' => 'name',
                     'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
@@ -44,7 +44,7 @@ class Route
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_PAGE.'--path',
+                    'id' => CoreConfig::MIMOTO_API.'--path',
                     // ---
                     'name' => 'path',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
@@ -62,28 +62,7 @@ class Route
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_PAGE.'--output',
-                    // ---
-                    'name' => 'output',
-                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
-                    'settings' => [
-                        'allowedEntityType' => (object) array(
-                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
-                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => CoreConfig::MIMOTO_OUTPUT
-                        ),
-                        'defaultValue' => (object) array(
-                            'key' => EntityConfig::SETTING_ENTITY_DEFAULTVALUE,
-                            'type' => MimotoEntityPropertyTypes::PROPERTY_SETTING_DEFAULTVALUE_TYPE_NEWENTITYINSTANCE,
-                            'value' => CoreConfig::MIMOTO_OUTPUT,
-                            'defaultValues' => (object) array(
-                                'isRoot' => CoreConfig::DATA_VALUE_TRUE
-                            )
-                        )
-                    ]
-                ),
-                (object) array(
-                    'id' => CoreConfig::MIMOTO_PAGE.'--allowedUserRoles',
+                    'id' => CoreConfig::MIMOTO_API.'--allowedUserRoles',
                     // ---
                     'name' => 'allowedUserRoles',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
@@ -92,6 +71,24 @@ class Route
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
                             'value' => [CoreConfig::MIMOTO_USER_ROLE]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--selections',
+                    // ---
+                    'name' => 'properties',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_ENTITYPROPERTY]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -117,11 +114,11 @@ class Route
     public static function getFormStructure()
     {
         return (object) array(
-            'id' => CoreConfig::MIMOTO_PAGE,
-            'name' => CoreConfig::MIMOTO_PAGE,
+            'id' => CoreConfig::MIMOTO_API,
+            'name' => CoreConfig::MIMOTO_API,
             'class' => get_class(),
             'inputFieldIds' => [
-                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_PAGE, 'name')
+                CoreFormUtils::composeFieldName(CoreConfig::MIMOTO_API, 'name')
             ]
         );
     }
@@ -132,16 +129,16 @@ class Route
     public static function getForm()
     {
         // init
-        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_PAGE, true);
+        $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_API, true);
 
         // setup
-        CoreFormUtils::addField_title($form, 'Page', '', "");
+        CoreFormUtils::addField_title($form, 'API', '', "");
         CoreFormUtils::addField_groupStart($form);
 
         $field = CoreFormUtils::addField_textline
         (
-            $form, 'name', CoreConfig::MIMOTO_PAGE.'--name',
-            'Name', "The page name", ''
+            $form, 'name', CoreConfig::MIMOTO_API.'--name',
+            'Name', "The API route name", ''
         );
         self::setNameValidation($field);
 
@@ -153,7 +150,7 @@ class Route
 
         CoreFormUtils::addField_groupStart($form, 'Permissions', 'permissions');
 
-        CoreFormUtils::addUserRolesTofield($form, CoreConfig::MIMOTO_PAGE, 'allowedUserRoles');
+        CoreFormUtils::addUserRolesTofield($form, CoreConfig::MIMOTO_API, 'allowedUserRoles');
 
         CoreFormUtils::addField_groupEnd($form, 'permissions');
 
@@ -177,7 +174,7 @@ class Route
     {
         // validation rule #1
         $validationRule = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_VALIDATION);
-        $validationRule->setId(CoreConfig::MIMOTO_PAGE.'--name_value_validation1');
+        $validationRule->setId(CoreConfig::MIMOTO_API.'--name_value_validation1');
         $validationRule->setValue('type', 'minchars');
         $validationRule->setValue('value', 1);
         $validationRule->setValue('errorMessage', "Value can't be empty");

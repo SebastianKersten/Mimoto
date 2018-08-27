@@ -98,8 +98,9 @@ class EntityRepository
             {
                 // prepare
                 $entityData = array(
-                    'id' => $nEntityId,
-                    'created' => CoreConfig::EPOCH
+                    'mimoto_id' => $nEntityId,
+                    'mimoto_created' => CoreConfig::EPOCH,
+                    'mimoto_modified' => CoreConfig::EPOCH
                 );
 
                 // create
@@ -176,11 +177,36 @@ class EntityRepository
 
     private function loadInstanceFromDatabase(EntityConfig $entityConfig, $nEntityId)
     {
+        //Mimoto::output('$entityConfig '.$nEntityId, $entityConfig);
+
+
+
+
         // load
-        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
-        $params = array(
-            ':id' => $nEntityId
-        );
+//        if ($entityConfig->isUserExtension() || $entityConfig->getName() == CoreConfig::MIMOTO_USER)
+//        {
+//            Mimoto::error($entityConfig);
+//
+//            // $entityConfig->isUserExtension() || $entityConfig->getName() == CoreConfig::MIMOTO_USER
+//
+//            // find user extension from config service
+//
+//
+//            //$stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$entityConfig->getMySQLTable().'` INNER JOIN `'.CoreConfig::MIMOTO_USER.'` ON `'.$entityConfig->getMySQLTable().'`.mimoto_userid=`'.CoreConfig::MIMOTO_USER.'`.mimoto_id WHERE mimoto_id = :id');
+//            $params = array(
+//                ':id' => $nEntityId
+//            );
+//        }
+//        else
+//        {
+            $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$entityConfig->getMySQLTable().'` WHERE mimoto_id = :id');
+            $params = array(
+                ':id' => $nEntityId
+            );
+//        }
+
+
+
         $stmt->execute($params);
 
         // load
@@ -192,6 +218,11 @@ class EntityRepository
         }
         else
         {
+            // if empty(mimoto_userid)
+
+
+
+
             return $aResults[0];
         }
     }
@@ -572,11 +603,11 @@ class EntityRepository
             // compose
             if ($bIsExistingEntity)
             {
-                $sQuery .= " WHERE id = :id";
+                $sQuery .= " WHERE mimoto_id = :id";
                 $params[':id'] = $eInstance->getId();
             } else
             {
-                $sQuery .= ((count($aQueryElements) > 0) ? ', ' : '') . "created = :created";
+                $sQuery .= ((count($aQueryElements) > 0) ? ', ' : '') . "mimoto_created = :created";
                 $params[':created'] = date("YmdHis");
             }
 
@@ -657,7 +688,6 @@ class EntityRepository
         if (empty($eInstance) || (empty($nConnectionId) && !$bForceDelete)) return;
 
 
-
         // --- broadcast ---
 
 
@@ -669,7 +699,6 @@ class EntityRepository
 
 
         // --- broadcast - end ---
-
 
 
         if ($bForceDelete)
@@ -733,7 +762,7 @@ class EntityRepository
         if ($bForceDelete)
         {
             // cleanup entity
-            $stmt = Mimoto::service('database')->prepare('DELETE FROM `'.$entityConfig->getMySQLTable().'` WHERE id = :id');
+            $stmt = Mimoto::service('database')->prepare('DELETE FROM `'.$entityConfig->getMySQLTable().'` WHERE mimoto_id = :id');
             $params = array(
                 ':id' => $eInstance->getId()
             );
@@ -969,7 +998,7 @@ class EntityRepository
     private function createEntity(EntityConfig $entityConfig, $result = null)
     {
         // read
-        $nEntityId = (!empty($result)) ? $result['id'] : null;
+        $nEntityId = (!empty($result)) ? $result['mimoto_id'] : null;
 
 
         // make sure an entity is available only once
@@ -985,7 +1014,8 @@ class EntityRepository
 
             // register
             $eInstance->setId($nEntityId);
-            $eInstance->setCreated($result['created']);
+            $eInstance->setCreated($result['mimoto_created']);
+            $eInstance->setModified($result['mimoto_modified']);
 
             // store - #todo restore a working version of the entity caching
             //$this->_aEntities[$this->getEntityIdentifier($entityConfig->getName(), $nEntityId)] = $eInstance;
@@ -1094,7 +1124,9 @@ class EntityRepository
                             $connection = new MimotoEntityConnection();
 
                             // compose
-                            $connection->setId($row['id']);
+                            $connection->setId($row['mimoto_id']);
+                            $connection->setCreated($row['mimoto_created']);
+                            $connection->setModified($row['mimoto_modified']);
                             $connection->setParentEntityTypeId($row['parent_entity_type_id']);
                             $connection->setParentPropertyId($row['parent_property_id']);
                             $connection->setParentId($row['parent_id']);
@@ -1241,24 +1273,24 @@ class EntityRepository
         // load
         $stmt = Mimoto::service('database')->prepare(
             "INSERT INTO `".$sDBTable."` SET ".
+            "mimoto_created = :created, ".
+            "mimoto_modified = :modified, ".
             "parent_entity_type_id = :parent_entity_type_id, ".
             "parent_property_id = :parent_property_id, ".
             "parent_id = :parent_id, ".
             "child_entity_type_id = :child_entity_type_id, ".
             "child_id = :child_id, ".
-            "sortindex = :sortindex, ".
-            "created = :created, ".
-            "lastModified = :lastModified"
+            "sortindex = :sortindex"
         );
         $params = array(
+            ':created' => $sNow,
+            ':modified' => $sNow,
             ':parent_entity_type_id' => $newItem->getParentEntityTypeId(),
             ':parent_property_id' => $newItem->getParentPropertyId(),
             ':parent_id' => $newItem->getParentId(),
             ':child_entity_type_id' => $newItem->getChildEntityTypeId(),
             ':child_id' => $newItem->getChildId(),
-            ':sortindex' => $newItem->getSortIndex(),
-            ':created' => $sNow,
-            ':lastModified' => $sNow
+            ':sortindex' => $newItem->getSortIndex()
         );
 
         $stmt->execute($params);
@@ -1275,13 +1307,13 @@ class EntityRepository
         // load
         $stmt = Mimoto::service('database')->prepare(
             'UPDATE `'.$sDBTable.'` SET '.
+            'mimoto_modified = :modified '.
             'sortindex = :sortindex, '.
-            'lastModified = :lastModified '.
-            'WHERE id = :id'
+            'WHERE mimoto_id = :id'
         );
         $params = array(
             ':sortindex' => $existingItem->getSortIndex(),
-            ':lastModified' => $sNow,
+            ':modified' => $sNow,
             ':id' => $existingItem->getId()
         );
         $stmt->execute($params);
@@ -1291,7 +1323,7 @@ class EntityRepository
     {
         // load
         $stmt = Mimoto::service('database')->prepare(
-            'DELETE FROM `'.$sDBTable.'` WHERE id = :id'
+            'DELETE FROM `'.$sDBTable.'` WHERE mimoto_id = :id'
         );
         $params = array(
             ':id' => $connection->getId()

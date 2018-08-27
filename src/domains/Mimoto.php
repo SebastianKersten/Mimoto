@@ -23,7 +23,7 @@ use Mimoto\Session\SessionServiceProvider as MimotoSessionServiceProvider;
 
 use Mimoto\UserInterface\MimotoCMS\SessionController;
 
-use Mimoto\Aimless\UserViewModel; // move this to a central setup (output-service)
+use Mimoto\Aimless\User; // move this to a central setup (output-service)
 
 
 // Silex classes
@@ -58,6 +58,7 @@ class Mimoto
     private static $_bCacheOutputToFile = false;
 
     private static $_nExecutionTimeStart = null;
+
 
 
     const MIMOTO = 'Mimoto';
@@ -293,7 +294,7 @@ class Mimoto
         $app->get('/'.$config->project->path_cms.'/components', 'Mimoto\\UserInterface\\MimotoCMS\\ComponentController::viewComponentOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$config->project->path_cms.'/actions', 'Mimoto\\UserInterface\\MimotoCMS\\ActionController::viewActionOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$config->project->path_cms.'/users', 'Mimoto\\UserInterface\\MimotoCMS\\UserController::viewUserOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
-        $app->get('/'.$config->project->path_cms.'/api', 'Mimoto\\UserInterface\\MimotoCMS\\APIController::viewAPIOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
         $app->get('/'.$config->project->path_cms.'/flows', 'Mimoto\\UserInterface\\MimotoCMS\\FlowController::viewFlowOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$config->project->path_cms.'/pages', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
@@ -347,6 +348,9 @@ class Mimoto
         $app->get ('/'.$config->project->path_cms.'/page/{nItemId}/edit', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageEdit')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$config->project->path_cms.'/page/{nItemId}/delete', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::pageDelete')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$config->project->path_cms.'/page/create', 'Mimoto\\UserInterface\\MimotoCMS\\PageController::createPageFromNonExistingPath')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+
+        $app->get ('/'.$config->project->path_cms.'/api', 'Mimoto\\UserInterface\\MimotoCMS\\APIController::viewOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get ('/'.$config->project->path_cms.'/api/{nInstanceId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\APIController::viewDetail')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
 
 //        // Layout
@@ -514,6 +518,30 @@ class Mimoto
         }
     }
 
+
+//    public static function data($sSelector)
+//    {
+//        // 1. return self::$_aServices['data']->get();
+//        // 2. return self::$_aServices['data']->select();
+//        // 3. return self::$_aServices['data']->selectOne();
+//
+//          ONLY in ViewModel!!
+//          here as shortcut?
+//
+//
+//        //Mimoto::data('')->get();
+//
+//
+////        if (isset(self::$_aServices['data']))
+////        {
+////            return call_user_func_array(self::$_aServices['data']->get, func_get_args());
+////        }
+////        else
+////        {
+////            return null;
+////        }
+//    }
+
     public static function value($sKey)
     {
         if (isset(self::$_aValues[$sKey]))
@@ -573,11 +601,16 @@ class Mimoto
         // create
         $component = Mimoto::service('output')->createComponent('', $eUser);
 
-        // wrap into viewmodel
-        $viewModel = new UserViewModel($component);
 
-        // send
-        return $viewModel;
+        $eUserExtensionInstance = null;
+        // get extension type
+        if (!empty($sUserExtensionEntityType = Mimoto::service('entityConfig')->getUserExtensionType()))
+        {
+            $eUserExtensionInstance = Mimoto::service('data')->selectOne(['type'=>$sUserExtensionEntityType, 'value'=>['mimoto_userid'=>$eUser->getId()]]);
+        }
+
+        // wrap into viewmodel and send
+        return new User($component, $eUserExtensionInstance);
     }
 
     public static function output($sTitle = '', $data = null, $bScream = false)

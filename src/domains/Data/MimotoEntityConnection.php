@@ -23,6 +23,20 @@ class MimotoEntityConnection
     private $_xId;
 
     /**
+     * The moment of creation
+     *
+     * @var \DateTime
+     */
+    private $_datetimeCreated;
+
+    /**
+     * The moment of last modification
+     *
+     * @var \DateTime
+     */
+    private $_datetimeModified;
+
+    /**
      * The id of the parent's Entity type
      *
      * @var mixed
@@ -119,6 +133,35 @@ class MimotoEntityConnection
      * @param mixed
      */
     public function setId($xId) { $this->_xId = $xId; }
+
+
+    /**
+     * Get the moment of creation
+     *
+     * @return \DateTime
+     */
+    public function getCreated() { return $this->_datetimeCreated; }
+
+    /**
+     * Set the moment of creation
+     *
+     * @param \DateTime $datetimeCreated The moment of creation
+     */
+    public function setCreated($datetimeCreated) { $this->_datetimeCreated = $datetimeCreated; }
+
+    /**
+     * Get the moment of last modification
+     *
+     * @return \DateTime
+     */
+    public function getModified() { return $this->_datetimeModified; }
+
+    /**
+     * Set the moment of last modification
+     *
+     * @param \DateTime $datetimeModified The moment of last modification
+     */
+    public function setModified($datetimeModified) { $this->_datetimeModified = $datetimeModified; }
 
 
     /**

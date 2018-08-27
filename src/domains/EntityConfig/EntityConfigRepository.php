@@ -26,6 +26,7 @@ class EntityConfigRepository
      */
     private $_aEntityConfigs = [];
     private $_aEntities;
+    private $_nUserExtensionEntityIndex = false;
 
 
 
@@ -56,6 +57,19 @@ class EntityConfigRepository
             if (Mimoto::service('cache')->isEnabled())
             {
                 Mimoto::service('cache')->setValue('mimoto.core.entityconfigs', $this->_aEntities);
+            }
+        }
+
+        // register user extension index
+        $nEntityCount = count($this->_aEntities);
+        for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
+        {
+            $entity = $this->_aEntities[$nEntityIndex];
+
+            if (isset($entity->isUserExtension) && $entity->isUserExtension)
+            {
+                $this->_nUserExtensionEntityIndex = $nEntityIndex;
+                break;
             }
         }
     }
@@ -317,6 +331,18 @@ class EntityConfigRepository
         // send
         return $aEntityConfigs;
     }
+
+    public function getUserExtensionType()
+    {
+        if (!empty($this->_nUserExtensionEntityIndex))
+        {
+            return $this->_aEntities[$this->_nUserExtensionEntityIndex]->name;
+        }
+
+
+        return null;
+    }
+
 
 
 
@@ -666,7 +692,11 @@ class EntityConfigRepository
             $entityConfig->setId($entity->id);
             $entityConfig->setName($entity->name);
             $entityConfig->setMySQLTable($entity->name);
+
+            if (isset($entity->isUserExtension) && $entity->isUserExtension) $entityConfig->markAsUserExtension();
+
             $sConnectionTable = CoreConfig::MIMOTO_CONNECTION;
+
 
             // store
             $nPropertyCount = count($entity->properties);
@@ -800,10 +830,12 @@ class EntityConfigRepository
         {
             // compose
             $entity = (object) array(
-                'id' => $row['id'],
-                'created' => $row['created'],
+                'id' => $row['mimoto_id'],
+                'created' => $row['mimoto_created'],
+                'modified' => $row['mimoto_modified'],
                 'name' => $row['name'],
                 'extends' => null,
+                'isUserExtension' => $row['isUserExtension'],
                 'typeOf' => [],
                 'properties' => []
             );
@@ -831,16 +863,17 @@ class EntityConfigRepository
         {
             // compose
             $property = (object) array(
-                'id' => $row['id'],
+                'id' => $row['mimoto_id'],
+                'created' => $row['mimoto_created'],
+                'modified' => $row['mimoto_modified'],
                 'name' => $row['name'],
                 'type' => $row['type'],
                 'subtype' => $row['subtype'],
-                'created' => $row['created'],
                 'settings' => []
             );
 
             // register
-            $nEntityPropertyId = $row['id'];
+            $nEntityPropertyId = $row['mimoto_id'];
 
             // store
             $aEntityProperties[$nEntityPropertyId] = $property;
@@ -865,15 +898,16 @@ class EntityConfigRepository
         {
             // compose
             $setting = (object) array(
-                'id' => $row['id'],
+                'id' => $row['mimoto_id'],
+                'created' => $row['mimoto_created'],
+                'modified' => $row['mimoto_modified'],
                 'key' => $row['key'],
                 'type' => $row['type'],
-                'value' => $row['value'],
-                'created' => $row['created']
+                'value' => $row['value']
             );
 
             // register
-            $nEntityPropertySettingId = $row['id'];
+            $nEntityPropertySettingId = $row['mimoto_id'];
 
             // store
             $aEntityPropertySettings[$nEntityPropertySettingId] = $setting;

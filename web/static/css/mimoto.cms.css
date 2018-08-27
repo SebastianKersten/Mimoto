@@ -8946,27 +8946,171 @@ div.MimotoCMS_pages_components_ComponentDetail_Structure__containers > div {
 div.MimotoCMS_pages_components_ComponentDetail_Structure__containers > div:last-child {
   margin-bottom: 0; }
 
-div.MimotoCMS_pages_content_ContentOverview-container {
+div.MimotoCMS_api_Overview-empty {
+  margin-top: 25px; }
+
+div.MimotoCMS_pages_pages_Detail_AllowedUserRole {
+  display: inline-block; }
+  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a, div.MimotoCMS_pages_pages_Detail_AllowedUserRole > span {
+    padding: 8px 18px; }
+  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a {
+    color: #ffffff;
+    background-color: #9dceca;
+    text-decoration: none; }
+  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a:hover {
+    text-decoration: underline; }
+  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > span {
+    color: #000000;
+    background-color: #f1f1f1;
+    font-style: italic; }
+
+div.MimotoCMS_pages_pages_Detail_PathElement {
+  position: relative;
+  display: inline-block; }
+
+div.MimotoCMS_pages_pages_Detail_PathElement-info {
+  color: #ffffff;
+  padding: 10px 20px 10px 15px;
+  background-color: #9dbab7;
+  cursor: pointer; }
+  div.MimotoCMS_pages_pages_Detail_PathElement-info:hover {
+    background-color: #000000; }
+
+div.MimotoCMS_pages_pages_Detail_PathElement-remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 5px 0 5px;
+  display: inline-block;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer; }
+  div.MimotoCMS_pages_pages_Detail_PathElement-remove:hover {
+    color: #000000; }
+
+div.MimotoCMS_pages_pages_Detail__panel {
+  margin-bottom: 25px;
+  background-color: #ffffff;
+  padding: 15px;
+  max-width: 800px; }
+
+div.MimotoCMS_pages_pages_Detail_Structure {
+  position: relative;
+  background-color: #ffffff; }
+
+div.MimotoCMS_pages_pages_Detail_Structure__meta {
+  padding: 10px 15px 15px 15px;
+  margin-bottom: 5px;
+  background-color: #fcfcfc;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
-  position: relative;
-  margin-bottom: 25px;
-  margin-top: 30px; }
-  div.MimotoCMS_pages_content_ContentOverview-container > div {
-    margin-bottom: 5px;
-    margin-right: 5px; }
-  div.MimotoCMS_pages_content_ContentOverview-container > div:last-child {
-    margin-bottom: 0; }
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap; }
+  div.MimotoCMS_pages_pages_Detail_Structure__meta > a {
+    color: #9dbab7; }
+  div.MimotoCMS_pages_pages_Detail_Structure__meta > div.MimotoCMS_pages_pages_Detail_Structure__meta_info {
+    -webkit-box-flex: 5;
+    -webkit-flex-grow: 5;
+        -ms-flex-positive: 5;
+            flex-grow: 5; }
+  div.MimotoCMS_pages_pages_Detail_Structure__meta > div.MimotoCMS_pages_pages_Detail_Structure__meta_menu {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    text-align: right;
+    padding-top: 5px; }
+  div.MimotoCMS_pages_pages_Detail_Structure__meta div.MimotoCMS_pages_pages_Detail_Structure__name {
+    font-size: 24px;
+    font-weight: bold; }
+  div.MimotoCMS_pages_pages_Detail_Structure__meta div.MimotoCMS_pages_pages_Detail_Structure__type {
+    font-style: italic;
+    color: #9dbab7; }
+
+div.MimotoCMS_pages_pages_Detail-UserRoles > a {
+  color: #9dbab7; }
+
+div.MimotoCMS_pages_pages_Detail-UserRoles-empty {
+  font-style: italic; }
+
+div.MimotoCMS_pages_pages_Detail-UserRoles-container {
+  margin: 15px 0; }
+  div.MimotoCMS_pages_pages_Detail-UserRoles-container > div {
+    margin-right: 3px; }
+  div.MimotoCMS_pages_pages_Detail-UserRoles-container > div:last-child {
+    margin-right: 0; }
+
+div.MimotoCMS_pages_pages_Detail-path {
+  margin-top: 35px; }
+
+div.MimotoCMS_pages_pages_Detail-path-empty {
+  font-style: italic;
+  color: #9dbab7; }
+
+div.MimotoCMS_pages_pages_Detail-absolutepath {
+  margin: 10px 0 15px 0;
+  padding: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #f1f1f1; }
+  div.MimotoCMS_pages_pages_Detail-absolutepath > div {
+    -webkit-flex-basis: auto;
+        -ms-flex-preferred-size: auto;
+            flex-basis: auto; }
+  div.MimotoCMS_pages_pages_Detail-absolutepath > div:first-child {
+    padding: 10px 5px 10px 0; }
+
+div.MimotoCMS_pages_pages_Detail-path-container > div:first-child {
+  margin-left: 3px; }
+
+div.MimotoCMS_pages_pages_Detail-path-container > div {
+  margin-right: 3px; }
+
+div.MimotoCMS_pages_pages_Detail-path-container > div:last-child {
+  margin-right: 0; }
+
+div.MimotoCMS_pages_pages_Detail-path-menu {
+  padding: 20px 0 10px 0;
+  text-align: left; }
+
+div.MimotoCMS_pages_pages_Detail__block {
+  padding: 15px 15px 10px 15px;
+  background-color: #fcfcfc; }
+
+div.MimotoCMS_pages_pages_Detail_Structure__attributes_empty {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap; }
+  div.MimotoCMS_pages_pages_Detail_Structure__attributes_empty > div:first-child {
+    -webkit-box-flex: 5;
+    -webkit-flex-grow: 5;
+        -ms-flex-positive: 5;
+            flex-grow: 5; }
+  div.MimotoCMS_pages_pages_Detail_Structure__attributes_empty > div:last-child {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    text-align: right; }
+
+div.MimotoCMS_pages_pages_Detail_Structure__attributes_menu {
+  padding: 20px 0 10px 0;
+  text-align: left; }
+
+div.MimotoCMS_pages_pages_Detail_Structure__attributes_container > div {
+  margin-bottom: 5px; }
+
+div.MimotoCMS_pages_pages_Detail_Structure__attributes_container > div:last-child {
+  margin-bottom: 0; }
 
 div.MimotoCMS_pages_pages_Overview-empty {
   margin-top: 25px; }

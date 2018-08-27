@@ -22,6 +22,37 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PublisherController
 {
+    public function xxx(Application $app)
+    {
+
+        // __get Mimoto::user->get('selector')
+        // __get Mimoto::data->
+        // __get Mimoto::config->
+
+        // __get Mimoto::service('')-> (some basic core services, some extended. Everything overrideable) use interface?
+
+
+        if (!empty(Mimoto::user()->data()->get('biography')))
+        {
+            Mimoto::error(Mimoto::user()->data()->get('biography'));
+        }
+        else
+        {
+            Mimoto::error('NOT a owner');
+        }
+
+
+
+        $eUser = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER, 1);
+        Mimoto::error($eUser);
+
+
+        $eMember = Mimoto::service('data')->get('member', 1);
+        Mimoto::error($eMember);
+    }
+
+
+
     public function viewPeople(Application $app)
     {
         // 1. init
@@ -34,29 +65,29 @@ class PublisherController
         return $page->render();
     }
 
-    public function viewFeed(Application $app)
-    {
-        // 1. load data
-        $eContentSection = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_DATASET, 'values' => ['name' => 'Articles']]);
+//    public function viewFeed(Application $app)
+//    {
+//        // 1. load data
+//        $eDatatset = Mimoto::service('data')->selectOne(['type' => CoreConfig::MIMOTO_DATASET, 'values' => ['name' => 'Articles']]);
+//
+//        // 2. create template
+//        $page = Mimoto::service('output')->createPage('Feed', $eDatatset);
+//
+//        // 3. output
+//        return $page->render();
+//    }
 
-        // 2. create template
-        $page = Mimoto::service('output')->createPage('Feed', (!empty($eContentSection)) ? $eContentSection[0] : '');
-
-        // 3. output
-        return $page->render();
-    }
-
-    public function viewArticle(Application $app, $nArticleId)
-    {
-        // 1. load data
-        $eArticle = Mimoto::service('data')->get('article', $nArticleId);
-
-        // 2. create template
-        $page = Mimoto::service('output')->createPage('Article', $eArticle);
-
-        // 3. output
-        return $page->render();
-    }
+//    public function viewArticle(Application $app, $nArticleId)
+//    {
+//        // 1. load data
+//        $eArticle = Mimoto::service('data')->get('article', $nArticleId);
+//
+//        // 2. create template
+//        $page = Mimoto::service('output')->createPage('Article', $eArticle);
+//
+//        // 3. output
+//        return $page->render();
+//    }
 
     public function addComment(Application $app, Request $request, $nArticleId)
     {

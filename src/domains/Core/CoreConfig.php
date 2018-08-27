@@ -22,8 +22,9 @@ use Mimoto\Core\entities\Selection;
 use Mimoto\Core\entities\SelectionRule;
 use Mimoto\Core\entities\SelectionRuleValue;
 use Mimoto\Core\entities\Dataset;
+use Mimoto\Core\entities\API;
 use Mimoto\Core\entities\Route;
-use Mimoto\Core\entities\RoutePathElement;
+use Mimoto\Core\entities\PathElement;
 use Mimoto\Core\entities\Output;
 use Mimoto\Core\entities\OutputContainer;
 use Mimoto\Core\entities\Form;
@@ -125,8 +126,9 @@ class CoreConfig
     const MIMOTO_SELECTION_RULE_VALUE           = '_Mimoto_selection_rule_value';
 
     // routes
-    const MIMOTO_ROUTE                          = '_Mimoto_route';
-    const MIMOTO_ROUTE_PATH_ELEMENT             = '_Mimoto_route_path_element';
+    const MIMOTO_API                            = '_Mimoto_api';
+    const MIMOTO_PAGE                           = '_Mimoto_page';
+    const MIMOTO_PATH_ELEMENT                   = '_Mimoto_path_element';
     const MIMOTO_OUTPUT                         = '_Mimoto_output';
     const MIMOTO_OUTPUT_CONTAINER               = '_Mimoto_output_container';
 
@@ -302,8 +304,9 @@ class CoreConfig
 
             // content
             File::getStructure(),
+            API::getStructure(),
             Route::getStructure(),
-            RoutePathElement::getStructure(),
+            PathElement::getStructure(),
             Output::getStructure(),
             OutputContainer::getStructure(),
             Dataset::getStructure(),
@@ -388,8 +391,9 @@ class CoreConfig
             //FormattingOptionAttribute::getFormStructure(),
 
             // content
+            API::getFormStructure(),
             Route::getFormStructure(),
-            RoutePathElement::getFormStructure(),
+            PathElement::getFormStructure(),
             Output::getFormStructure(),
             OutputContainer::getFormStructure(),
             Dataset::getFormStructure(),
@@ -565,7 +569,25 @@ class CoreConfig
                 'function' => 'onFormattingChanged',
                 'type' => 'sync',
                 'settings' => (object) array()
-            )
+            ),
+
+
+
+            // TODO - add action to update table user extension with mimoto_userid
+//            (object) array(
+//                'owner' => Mimoto::MIMOTO,
+//                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITY, CoreConfig::DATA_EVENT_CREATED), MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITY, CoreConfig::DATA_EVENT_UPDATED)],
+//                'conditionals' => [
+//                    (object) array('propertyName' => 'isUserExtension', 'type' => 'changed')
+//                ],
+//                'service' => (object) array(
+//                    'name' => 'CoreData',
+//                    'file' => 'CoreData/CoreData.php',
+//                ),
+//                'function' => 'markTableAsUserExtension',
+//                'type' => 'sync',
+//                'settings' => (object) array()
+//            )
 
             // send Slack notification when critic notification was created
 

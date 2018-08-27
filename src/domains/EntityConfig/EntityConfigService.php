@@ -248,10 +248,15 @@ class EntityConfigService
     }
 
 
-
     public function entityIsTypeOf($sTypeOfEntity, $sTypeToCompare)
     {
         return $this->_entityConfigRepository->entityIsTypeOf($sTypeOfEntity, $sTypeToCompare);
+    }
+
+
+    public function getUserExtensionType()
+    {
+        return $this->_entityConfigRepository->getUserExtensionType();
     }
 
 }

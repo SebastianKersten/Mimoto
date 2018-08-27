@@ -1,0 +1,34 @@
+div.MimotoCMS_pages_pages_Detail_PathElement {
+
+    position: relative;
+    display: inline-block;
+
+}
+
+div.MimotoCMS_pages_pages_Detail_PathElement-info {
+
+    color: #ffffff;
+    padding: 10px 20px 10px 15px;
+    background-color: $tower-gray;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #000000;
+    }
+}
+
+div.MimotoCMS_pages_pages_Detail_PathElement-remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 5px 0 5px;
+    display: inline-block;
+
+    font-size: 14px;
+    color: #ffffff;
+    cursor: pointer;
+
+    &:hover {
+        color: #000000;
+    }
+}

@@ -46,8 +46,9 @@ class EntityConfigTableUtils
     {
         $stmt = Mimoto::service('database')->prepare(
             "CREATE TABLE `".$sEntityName."` (".
-            "   `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ".
-            "   `created` datetime DEFAULT NULL, ".
+            "   `mimoto_id` int(10) unsigned NOT NULL AUTO_INCREMENT, ".
+            "   `mimoto_created` datetime DEFAULT NULL, ".
+            "   `mimoto_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ".
             "   PRIMARY KEY (`id`) ".
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci"
         );
@@ -75,7 +76,7 @@ class EntityConfigTableUtils
     {
         $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM `".CoreConfig::MIMOTO_ENTITYPROPERTY."` LEFT JOIN `".CoreConfig::MIMOTO_CONNECTION."` ".
-            "ON `".CoreConfig::MIMOTO_CONNECTION.".id = ".CoreConfig::MIMOTO_CONNECTION.".child_id ".
+            "ON `".CoreConfig::MIMOTO_CONNECTION.".mimoto_id = ".CoreConfig::MIMOTO_CONNECTION.".child_id ".
             "WHERE ".CoreConfig::MIMOTO_CONNECTION.".parent_id = :parent_id ".
             "&& ".CoreConfig::MIMOTO_CONNECTION.".parent_property_id = :parent_property_id ".
             "&& ".CoreConfig::MIMOTO_ENTITYPROPERTY.".name = :name");

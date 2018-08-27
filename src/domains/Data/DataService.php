@@ -452,7 +452,7 @@ class DataService
                 if (count($aParentEntitySelectionConfigs) === 1)
                 {
                     // read
-                    $aAllChildren = $eParent->getValue($parent->property, true);
+                    $aAllChildren = $eParent->get($parent->property, true);
 
                     // register
                     $result->connection = $aAllChildren[count($aAllChildren) - 1];

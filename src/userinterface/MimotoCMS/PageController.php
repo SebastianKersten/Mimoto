@@ -58,7 +58,7 @@ class PageController
         $page = Mimoto::service('output')->createPage(Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT));
 
         // 2. load data
-        $ePage = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROUTE, $nItemId);
+        $ePage = Mimoto::service('data')->get(CoreConfig::MIMOTO_PAGE, $nItemId);
 
         // 3. validate data
         if (empty($ePage)) return $app->redirect("/mimoto.cms/pages");
@@ -76,7 +76,7 @@ class PageController
                     "url" => '/mimoto.cms/pages'
                 ),
                 (object) array(
-                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_ROUTE.'.'.$ePage->getId().'.name">'.$ePage->getValue('name').'</span>',
+                    "label" => '<span data-mimoto-value="'.CoreConfig::MIMOTO_PAGE.'.'.$ePage->getId().'.name">'.$ePage->getValue('name').'</span>',
                     "url" => '/mimoto.cms/page/'.$ePage->getId().'/view'
                 )
             )
@@ -105,10 +105,10 @@ class PageController
 
 
         // 5. create
-        $eRoute = Mimoto::service('data')->create(Coreconfig::MIMOTO_ROUTE);
+        $ePage = Mimoto::service('data')->create(Coreconfig::MIMOTO_PAGE);
 
         // 6. setup
-        $eRoute->set('name', 'Created from non-existing path: '.$sPath); // #todo - improve security
+        $ePage->set('name', 'Created from non-existing path: '.$sPath); // #todo - improve security
 
         // 7. create path
         $nPathElementCount = count($aPathElements);
@@ -120,7 +120,7 @@ class PageController
             if (empty($sPathElement)) continue;
 
             // b. create
-            $ePathElement = Mimoto::service('data')->create(Coreconfig::MIMOTO_ROUTE_PATH_ELEMENT);
+            $ePathElement = Mimoto::service('data')->create(Coreconfig::MIMOTO_PATH_ELEMENT);
 
             // c. setup
             $ePathElement->set('type', 'static');
@@ -130,13 +130,13 @@ class PageController
             Mimoto::service('data')->store($ePathElement);
 
             // e. connect
-            $eRoute->add('path', $ePathElement);
+            $ePage->add('path', $ePathElement);
 
             // f. verify
             if ($nPathElementIndex < ($nPathElementCount - 1))
             {
                 // I. create
-                $ePathElement = Mimoto::service('data')->create(Coreconfig::MIMOTO_ROUTE_PATH_ELEMENT);
+                $ePathElement = Mimoto::service('data')->create(Coreconfig::MIMOTO_PATH_ELEMENT);
 
                 // II. setup
                 $ePathElement->set('type', 'slash');
@@ -145,15 +145,15 @@ class PageController
                 Mimoto::service('data')->store($ePathElement);
 
                 // IV. connect
-                $eRoute->add('path', $ePathElement);
+                $ePage->add('path', $ePathElement);
             }
         }
 
         // 8. store
-        $eRoute = Mimoto::service('data')->store($eRoute);
+        $ePage = Mimoto::service('data')->store($ePage);
 
         // 9. read
-        $nRouteId = $eRoute->getId();
+        $nRouteId = $ePage->getId();
 
 
         // ---
@@ -163,7 +163,7 @@ class PageController
         $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
 
         // 11. connect
-        $eRoot->add('pages', $eRoute);
+        $eRoot->add('pages', $ePage);
 
         // 12. store
         Mimoto::service('data')->store($eRoot);

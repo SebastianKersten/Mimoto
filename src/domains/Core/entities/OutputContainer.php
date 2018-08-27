@@ -68,7 +68,7 @@ class OutputContainer
                     ]
                 ),
 //                (object) array(
-//                    'id' => CoreConfig::MIMOTO_ROUTE.'--output',
+//                    'id' => CoreConfig::MIMOTO_PAGE.'--output',
 //                    // ---
 //                    'name' => 'output',
 //                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,

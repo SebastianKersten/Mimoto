@@ -1,0 +1,15 @@
+{{
+    Mimoto.module('MimotoCMS_modules_List',
+    {
+        button_label: 'Add API',
+        button_icon: 'plus',
+        button_directive: Mimoto.add('api', '_Mimoto_api'),
+        property_name: 'api',
+        listitem_component: 'MimotoCMS_api_Overview-ListItem'
+    })
+}}
+
+<div class="MimotoCMS_api_Overview-empty {{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('api') }}>
+    <b>Start adding API routes</b><br>
+    Easily add api routes using selections and services.
+</div>

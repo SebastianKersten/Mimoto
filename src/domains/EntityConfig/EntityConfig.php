@@ -30,6 +30,12 @@ class EntityConfig
     private $_sName = '';
 
     /**
+     * Flag for user extension
+     * @var boolean
+     */
+    private $_bIsUserExtension = false;
+
+    /**
      * The properties of the entity
      * @var array 
      */
@@ -98,14 +104,31 @@ class EntityConfig
      * @param string $sName
      */
     public function setName($sName) { $this->_sName = $sName; }
+
+
+    /**
+     * Mark as user extension
+     */
+    public function markAsUserExtension()
+    {
+        $this->_bIsUserExtension = true;
+    }
+
+    /**
+     * Mark as user extension
+     */
+    public function isUserExtension()
+    {
+        return $this->_bIsUserExtension;
+    }
     
     
     
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Get entity's property names
      * @return array

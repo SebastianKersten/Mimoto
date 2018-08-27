@@ -77,7 +77,9 @@ class EntityConfigUtils
         {
             // compose
             $connection = (object) array(
-                'id' => $row['id'],                                         // the id of the connection
+                'id' => $row['mimoto_id'],                                  // the id of the connection
+                'created' => $row['mimoto_created'],                        // the moment of creation
+                'modified' => $row['mimoto_modified'],                      // the moment of last modification
                 'parent_entity_type_id' => $row['parent_entity_type_id'],   // the id of the parent's entity config
                 'parent_id' => $row['parent_id'],                           // the id of the parent entity
                 'parent_property_id' => $row['parent_property_id'],         // the id of the parent entity's property

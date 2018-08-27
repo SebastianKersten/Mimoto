@@ -138,7 +138,6 @@ module.exports.prototype = {
     {
         window.open('/mimoto.cms/page/' + nItemId + '/view', '_self');
     },
-
     
     // /**
     //  * Content sections

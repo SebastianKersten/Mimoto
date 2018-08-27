@@ -326,7 +326,7 @@ class OutputService
     {
 
         // load
-        $aRoutes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_ROUTE]);
+        $aRoutes = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_PAGE]);
 
 
         $nRouteCount = count($aRoutes);
@@ -534,14 +534,14 @@ class OutputService
             );
 
             // verify
-            if (isset($aComponentTemplateConnections[$rawComponent->id]))
+            if (isset($aComponentTemplateConnections[$rawComponent->mimoto_id]))
             {
                 // search
-                $nTemplateConnectionCount = count($aComponentTemplateConnections[$rawComponent->id]);
+                $nTemplateConnectionCount = count($aComponentTemplateConnections[$rawComponent->mimoto_id]);
                 for ($nTemplateConnectionIndex = 0; $nTemplateConnectionIndex < $nTemplateConnectionCount; $nTemplateConnectionIndex++)
                 {
                     // register
-                    $rawTemplateConnection = $aComponentTemplateConnections[$rawComponent->id][$nTemplateConnectionIndex];
+                    $rawTemplateConnection = $aComponentTemplateConnections[$rawComponent->mimoto_id][$nTemplateConnectionIndex];
 
                     // find
                     $nTemplateCount = count($aRawTemplates);
@@ -551,7 +551,7 @@ class OutputService
                         $rawTemplate = $aRawTemplates[$nTemplateIndex];
 
                         // verify
-                        if ($rawTemplate->id == $rawTemplateConnection->child_id)
+                        if ($rawTemplate->mimoto_id == $rawTemplateConnection->child_id)
                         {
                             // add
                             $template = $component->templates[] = (object) array(
@@ -560,14 +560,14 @@ class OutputService
                             );
 
                             // verify
-                            if (isset($aTemplateConditionalConnections[$rawTemplate->id]))
+                            if (isset($aTemplateConditionalConnections[$rawTemplate->mimoto_id]))
                             {
                                 // search
-                                $nConditionalConnectionCount = count($aTemplateConditionalConnections[$rawTemplate->id]);
+                                $nConditionalConnectionCount = count($aTemplateConditionalConnections[$rawTemplate->mimoto_id]);
                                 for ($nConditionalConnectionIndex = 0; $nConditionalConnectionIndex < $nConditionalConnectionCount; $nConditionalConnectionIndex++)
                                 {
                                     // register
-                                    $rawConditionalConnection = $aTemplateConditionalConnections[$rawTemplate->id][$nConditionalConnectionIndex];
+                                    $rawConditionalConnection = $aTemplateConditionalConnections[$rawTemplate->mimoto_id][$nConditionalConnectionIndex];
 
                                     // find
                                     $nConditionalCount = count($aRawConditionals);
@@ -577,7 +577,7 @@ class OutputService
                                         $rawConditional = $aRawConditionals[$nConditionalIndex];
 
                                         // verify or skip
-                                        if ($rawConditionalConnection->child_id != $rawConditional->id) continue;
+                                        if ($rawConditionalConnection->child_id != $rawConditional->mimoto_id) continue;
 
                                         // add
                                         $conditional = $template->conditionals[] = (object) array(
@@ -588,7 +588,7 @@ class OutputService
                                             $rawConditional->type == ComponentConditional::ENTITY_TYPE
                                         ) {
                                             // load
-                                            $eConditional = Mimoto::service('data')->get(CoreConfig::MIMOTO_COMPONENT_CONDITIONAL, $rawConditional->id);
+                                            $eConditional = Mimoto::service('data')->get(CoreConfig::MIMOTO_COMPONENT_CONDITIONAL, $rawConditional->mimoto_id);
 
                                             // setup
                                             $conditional->entityName = $eConditional->get('entityType.name');
@@ -1021,7 +1021,7 @@ class OutputService
         {
             // compose
             $connection = (object) array(
-                'connectionId' => $row['id'],
+                'connectionId' => $row['mimoto_id'],
                 'parentEntityType' => Mimoto::service('entityConfig')->getEntityNameById($row['parent_entity_type_id']),
                 'parentPropertyName' => Mimoto::service('entityConfig')->getPropertyNameById($row['parent_property_id']),
                 'parentId' => $row['parent_id']

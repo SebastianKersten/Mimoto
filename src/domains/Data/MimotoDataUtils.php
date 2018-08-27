@@ -574,7 +574,7 @@ class MimotoDataUtils
         // load all connections
         $stmt = Mimoto::service('database')->prepare(
             "SELECT * FROM `".CoreConfig::MIMOTO_CONNECTION."` WHERE ".
-            "id = :id "
+            "mimoto_id = :id "
         );
         $params = array(
             ':id' => $nConnectionId
@@ -594,7 +594,9 @@ class MimotoDataUtils
         $connection = new MimotoEntityConnection();
 
         // setup
-        $connection->setId($connectionData['id']);
+        $connection->setId($connectionData['mimoto_id']);
+        $connection->setCreated($connectionData['mimoto_created']);
+        $connection->setModified($connectionData['mimoto_modified']);
         $connection->setParentEntityTypeId($connectionData['parent_entity_type_id']);
         $connection->setParentId($connectionData['parent_id']);
         $connection->setParentPropertyId($connectionData['parent_property_id']);

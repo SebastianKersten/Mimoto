@@ -13,9 +13,10 @@ use Mimoto\data\MimotoEntity;
  *
  * @author Sebastian Kersten (@subertaboo)
  */
-class UserViewModel extends AimlessComponentViewModel
+class User
 {
 
+    private $_component = null;
     private $_eInstance = null;
 
 
@@ -31,7 +32,8 @@ class UserViewModel extends AimlessComponentViewModel
     public function __construct(AimlessComponent $component, $eInstance = null)
     {
         // store
-        parent::__construct($component);
+        $this->_component = $component;
+        $this->_eInstance = $eInstance;
     }
 
 
@@ -39,6 +41,24 @@ class UserViewModel extends AimlessComponentViewModel
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
+
+
+
+
+    // get/set, add/remove
+
+    public function data()
+    {
+        return (!empty($this->_eInstance)) ? $this->_eInstance : null;
+    }
+
+
+
+    public function store()
+    {
+        Mimoto::service('data')->store($this->_eInstance);
+    }
+
 
 
     /**

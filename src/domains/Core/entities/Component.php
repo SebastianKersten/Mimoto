@@ -603,32 +603,6 @@ class Component
 
 
 
-
-
-            // api
-
-//            (object) array(
-//                'name' => 'MimotoCMS_api_APIOverview',
-//                'file' => 'MimotoCMS/components/pages/api/APIOverview/APIOverview.twig',
-//                'conditionals' => []
-//            ),
-//            (object) array(
-//                'name' => 'MimotoCMS_api_APIOverview_ListItem',
-//                'file' => 'MimotoCMS/components/pages/api/APIOverview/ListItem/ListItem.twig',
-//                'conditionals' => []
-//            ),
-//            (object) array(
-//                'name' => 'MimotoCMS_api_APIDetail',
-//                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIDetail.twig',
-//                'conditionals' => []
-//            ),
-//            (object) array(
-//                'name' => 'MimotoCMS_api_APIDetail-APIContainer',
-//                'file' => 'MimotoCMS/components/pages/api/APIDetail/APIContainer/APIContainer.twig',
-//                'conditionals' => []
-//            ),
-
-
             // pages
 
             (object) array(
@@ -691,6 +665,37 @@ class Component
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/components/pages/pages/Detail/OutputContainer/OutputContainer.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+
+            // API
+
+            (object) array(
+                'name' => 'MimotoCMS_api_Overview',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/api/Overview/Overview.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_api_Overview-ListItem',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/api/Overview/ListItem/ListItem.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_api_Detail',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/components/pages/api/Detail/Detail.twig',
                         'conditionals' => []
                     )
                 ]
