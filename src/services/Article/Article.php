@@ -23,7 +23,7 @@ class Article // extends MimotoService
         //Mimoto::error('highlightComment reached!');
 
 
-        return $settings;
+        return $eInstance->get('message');//$settings;
     }
 
 }

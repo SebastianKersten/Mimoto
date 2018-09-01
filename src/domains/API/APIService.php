@@ -5,6 +5,7 @@ namespace Mimoto\API;
 
 // Mimoto classes
 use Mimoto\Mimoto;
+use Mimoto\Selection\Selection;
 
 
 /**
@@ -116,10 +117,36 @@ class APIService
             }
         }
 
-        // 8. call and pass clone of settings (unserialize/serialize)
-        $result = call_user_func([$service, $sFunctionName], null, $settings);
+        // 8. load instances
+        $aInstances = [];
+        $bIsSingle = true;
+        $aSelections = $eAPI->get('selections');
+        $nSelectionCount = count($aSelections);
+        for ($nSelectionIndex = 0; $nSelectionIndex < $nSelectionCount; $nSelectionIndex++)
+        {
+            // a. register
+            $eSelection = $aSelections[$nSelectionIndex];
 
-        // 9. respond
+            // b. init
+            $selection = new Selection($eSelection);
+
+
+            // todo - check if selection load single or multiple? (add as util to Selection class)
+
+            // if multi selections -> array
+            // if no instance (or var) -> array
+            // if instance of idVar -> single
+            // if property is set on selection and that property = entity -> single
+            // if property is set on selection and that property = collection -> array
+
+            // c. load
+            $aInstances = array_merge($aInstances, Mimoto::service('data')->select($selection));
+        }
+        Mimoto::error('Number of instances = '.count($aInstances).' (this should be 1)');
+        // 9. call and pass clone of settings (unserialize/serialize)
+        $result = call_user_func([$service, $sFunctionName], ($bIsSingle) ? ((count($aInstances) > 0) ? $aInstances[0] : null) : $aInstances, $settings);
+
+        // 10. respond
         return Mimoto::service('messages')->response($result, 200);
     }
 
