@@ -1,7 +1,7 @@
 <?php
 
 // classpath
-namespace Mimoto\Aimless;
+namespace Mimoto\Page;
 
 // Mimoto classes
 use Mimoto\Core\entities\ComponentConditional;
@@ -21,11 +21,11 @@ use Mimoto\Log\LogService;
 
 
 /**
- * OutputService
+ * PageService
  *
  * @author Sebastian Kersten (@supertaboo)
  */
-class OutputService
+class PageService
 {
     
     // services
@@ -48,17 +48,17 @@ class OutputService
     /**
      * Constructor
      */
-    public function __construct($DataService, FormService $FormService, LogService $LogService, $TwigService)
+    public function __construct()
     {
         // register
-        $this->_DataService = $DataService;
-        $this->_FormService = $FormService;
-        $this->_OutputService = $this;
-        $this->_LogService = $LogService;
-        $this->_TwigService = $TwigService;
-        
-        // load and register
-        $this->_aComponents = $this->loadComponents();
+//        $this->_DataService = $DataService;
+//        $this->_FormService = $FormService;
+//        $this->_OutputService = $this;
+//        $this->_LogService = $LogService;
+//        $this->_TwigService = $TwigService;
+//
+//        // load and register
+//        $this->_aComponents = $this->loadComponents();
     }
     
     
@@ -68,258 +68,101 @@ class OutputService
     // ----------------------------------------------------------------------------
 
 
-    /**
-     * Create page
-     * @param string $sComponentName The name of the registered template
-     * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessComponent
-     */
-    public function createPage($param1 = null, $param2 = null)
+
+    public function render($ePage, $aVars)
     {
-        // default
-        $sComponentName = Mimoto::value('page.layout.default');
-        $entity = null;
+        // init
+        $eInstance = null;
 
-        //
-        if (!empty($param1) && $param1 instanceof MimotoEntity) $entity = $param1;
-        if (!empty($param2) && $param2 instanceof MimotoEntity) $entity = $param2;
 
-        if (!empty($param1) && is_string($param1)) $sComponentName = $param1;
-        if (!empty($param2) && is_string($param2)) $sComponentName = $param2;
+        // read
+        $eOutput = $ePage->getValue('output');
+
+
+        // validate #todo - notify in debug mode
+        if (empty($eOutput)) return false;
+
+
+        $eLayout = $eOutput->getValue('component');
+        $eSelection = $eOutput->getValue('selection');
+        $eDataset = $eOutput->getValue('dataset');
+
+
+        // validate #todo - notify in debug mode
+        if (empty($eLayout)) return false;
+
 
         // verify
-        if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('output')->createPage() documentation [link]");
-
-        // init and send
-        return new AimlessComponent($sComponentName, $entity, null, null, null, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
-    }
-
-    /**
-     * Create popup
-     * @param string $sComponentName The name of the registered template
-     * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessComponent
-     */
-    public function createPopup($param1 = null, $param2 = null)
-    {
-        // default
-        $sComponentName = Mimoto::value('popup.layout.default');
-        $entity = null;
-
-        //
-        if (!empty($param1) && $param1 instanceof MimotoEntity) $entity = $param1;
-        if (!empty($param2) && $param2 instanceof MimotoEntity) $entity = $param2;
-
-        if (!empty($param1) && is_string($param1)) $sComponentName = $param1;
-        if (!empty($param2) && is_string($param2)) $sComponentName = $param2;
-
-        // verify
-        if (empty($sComponentName)) Mimoto::error("Please read the Mimoto::service('output')->createPopup() documentation [link]");
-
-        // init and send
-        return new AimlessComponent($sComponentName, $entity, null, null, null, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
-    }
-
-    /**
-     * Create component
-     * @param string $sComponentName The name of the registered template
-     * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessComponent
-     */
-    public function create($sComponentName, $entity = null, $connection = null, $nItemIndex = null)
-    {
-        // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, null, $nItemIndex, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
-    }
-
-    /**
-     * Create component
-     * @param string $sComponentName The name of the registered template
-     * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessComponent
-     */
-    public function createComponent($sComponentName, $entity = null, $connection = null, $nItemIndex = null)
-    {
-        // init and send
-        return self::create($sComponentName, $entity, $connection, $nItemIndex);
-    }
-
-    /**
-     * Create component wrapper
-     * @param string $sComponentName The name of the registered template
-     * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessComponent
-     */
-    public function createWrapper($sWrapperName, $sComponentName = null, $entity = null, $connection = null, $nItemIndex = null)
-    {
-        // init and send
-        return new AimlessComponent($sComponentName, $entity, $connection, $sWrapperName, $nItemIndex, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
-    }
-
-    /**
-     * Create input
-     * @param string $sComponentName The name of the registered template
-     * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessInput
-     */
-    public function createInput($sComponentName, $entity = null, $connection = null, $sFieldName = null, $value = null, $nItemIndex = null)
-    {
-        // init and send
-        return new AimlessInput($sComponentName, $entity, $connection, $sFieldName, $value, $nItemIndex, $this->_OutputService, $this->_DataService, $this->_LogService, $this->_TwigService);
-    }
-
-    /**
-     * Create form
-     * @param string $sTemplateName The name of the registered template
-     * @param MimotoEntity $entity The data to be combined with the template
-     * @return AimlessForm
-     */
-    public function createForm($sFormName, $xData, $options = null)
-    {
-        // init and send
-        return new AimlessForm($sFormName, $xData, $options, $this->_OutputService, $this->_DataService, $this->_FormService, $this->_LogService, $this->_TwigService);
-    }
-
-
-    public function getComponentFile($sComponentName, MimotoEntity $entity = null)
-    {
-        // search
-        $nComponentCount = count($this->_aComponents);
-        for ($nComponentIndex = 0; $nComponentIndex < $nComponentCount; $nComponentIndex++)
+        if (!empty($eSelection))
         {
-            // register
-            $component = $this->_aComponents[$nComponentIndex];
+            // create
+            $selection = Mimoto::service('selection')->create($eSelection);
 
-            // verify
-            if ($component->name === $sComponentName)
+            // apply variables
+            foreach ($aVars as $sKey => $value) $selection->applyVar($sKey, $value);
+
+            // load
+            $aInstances = Mimoto::service('data')->select($selection);
+
+            // get first
+            $eInstance = (count($aInstances) > 0) ? $aInstances[0] : null; // #todo - don't allow multiple items or notify
+        }
+
+        if (!empty($eDataset))
+        {
+            $eInstance = $eDataset;
+        }
+
+        // init
+        $layout = Mimoto::service('output')->create($eLayout->getValue('name'), $eInstance);
+
+
+        // read
+        $aContainers = $eOutput->get('containers');
+
+        if (!empty($aContainers))
+        {
+            // parse
+            $nContainerCount = count($aContainers);
+            for ($nContainerIndex = 0; $nContainerIndex < $nContainerCount; $nContainerIndex++)
             {
+                // register
+                $eContainer = $aContainers[$nContainerIndex];
+
                 // read
-                $aTemplates = $component->templates;
+                $sContainerName = $eContainer->get('name');
 
-                // search
-                $nTemplateCount = count($aTemplates);
-                for ($nTemplateIndex = 0; $nTemplateIndex < $nTemplateCount; $nTemplateIndex++)
+                // validate
+                if (!empty($sContainerName))
                 {
-                    // register
-                    $template = $aTemplates[$nTemplateIndex];
+                    // read
+                    $eComponent = $eContainer->get('component');
 
-                    // verify
-                    if (count($template->conditionals) > 0 && $entity !== null)
+                    // validate
+                    if (!empty($eComponent))
                     {
-                        // init
-                        $bValidated = true;
+                        // read
+                        $eSelection = $eContainer->get('selection');
 
-                        // search
-                        $nConditionalCount = count($template->conditionals);
-                        for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
+                        // validate
+                        if (!empty($eSelection))
                         {
                             // register
-                            $conditional = $template->conditionals[$nConditionalIndex];
+                            $sComponentName = $eComponent->get('name');
+                            $aInstances = Mimoto::service('data')->select($eSelection);
 
-                            // toggle
-                            switch ($conditional->type)
-                            {
-                                case ComponentConditional::ENTITY_TYPE:
-
-                                    if (!empty($entity)) {
-                                        if ($entity->getEntityTypeName() !== $conditional->entityName)
-                                        {
-                                            $bValidated = false;
-                                            break;
-                                        }
-                                    }
-                                    break;
-
-                                case ComponentConditional::PROPERTY_VALUE:
-
-                                    if ($entity->getValue($conditional->propertyName) !== $conditional->value)
-                                    {
-                                        $bValidated = false;
-                                        break;
-                                    }
-                                    break;
-                            }
-
-
+                            // add
+                            $layout->fillContainer($sContainerName, $aInstances, $sComponentName);
                         }
-
-                        // verify and send
-                        if ($bValidated) return $template->file;
-                    }
-                    else
-                    {
-                        // send
-                        return $template->file;
                     }
                 }
             }
         }
 
-        Mimoto::service('log')->error("Template `$sComponentName` not found", "I can't find the template you are looking for", true);
+        // output
+        return $layout->render();
     }
 
-
-
-    // --- aimless - dom util
-
-
-
-    public function getComponentConditionalsAsString($sComponentName)
-    {
-        // 1. init
-        $sComponentConditionals = '';
-
-//        // 2. find requested component
-//        $nComponentCount = count($this->_aComponents);
-//        for ($nComponentIndex = 0; $nComponentIndex < $nComponentCount; $nComponentIndex++)
-//        {
-//            // register
-//            $component = $this->_aComponents[$nComponentIndex];
-//
-//            // verify
-//            if ($component->name === $sComponentName)
-//            {
-//                // read
-//                $aTemplates = $component->templates;
-//
-//                // search
-//                $nTemplateCount = count($aTemplates);
-//                for ($nTemplateIndex = 0; $nTemplateIndex < $nTemplateCount; $nTemplateIndex++)
-//                {
-//                    // register
-//                    $template = $aTemplates[$nTemplateIndex];
-//
-//                    if (count($template->conditionals) > 0)
-//                    {
-//                        // init
-//                        $sComponentConditionals = '[';
-//
-//                        // compose
-//                        $nConditionalCount = count($template->conditionals);
-//                        for ($nConditionalIndex = 0; $nConditionalIndex < $nConditionalCount; $nConditionalIndex++)
-//                        {
-//                            // register
-//                            $conditional = $template->conditionals[$nConditionalIndex];
-//
-//                            // store
-//                            //$sComponentConditionals .= $conditional->propertyName;
-//
-//                            // compose
-//                            if ($nConditionalIndex < $nConditionalCount - 1) $sComponentConditionals .= ',';
-//                        }
-//
-//                        // compose
-//                        $sComponentConditionals .= ']';
-//                    }
-//
-//                    break;
-//                }
-//            }
-//        }
-
-        // send
-        return $sComponentConditionals;
-    }
 
     private function loadComponents()
     {

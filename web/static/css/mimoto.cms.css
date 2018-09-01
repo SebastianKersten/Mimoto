@@ -6005,6 +6005,65 @@ div.MimotoCMS_modules_ListItem--drag {
 div.MimotoCMS_modules_ListItem--ghost {
   opacity: 0; }
 
+div.MimotoCMS_modules_PathEditor_PathElement {
+  position: relative;
+  display: inline-block; }
+
+div.MimotoCMS_modules_PathEditor_PathElement-info {
+  color: #ffffff;
+  padding: 10px 20px 10px 15px;
+  background-color: #9dbab7;
+  cursor: pointer; }
+  div.MimotoCMS_modules_PathEditor_PathElement-info:hover {
+    background-color: #000000; }
+
+div.MimotoCMS_modules_PathEditor_PathElement-remove {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 5px 0 5px;
+  display: inline-block;
+  font-size: 14px;
+  color: #ffffff;
+  cursor: pointer; }
+  div.MimotoCMS_modules_PathEditor_PathElement-remove:hover {
+    color: #000000; }
+
+div.MimotoCMS_modules_PathEditor {
+  margin-top: 35px; }
+
+div.MimotoCMS_modules_PathEditor-empty {
+  font-style: italic;
+  color: #9dbab7; }
+
+div.MimotoCMS_modules_PathEditor-absolutepath {
+  margin: 10px 0 15px 0;
+  padding: 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #f1f1f1; }
+  div.MimotoCMS_modules_PathEditor-absolutepath > div {
+    -webkit-flex-basis: auto;
+        -ms-flex-preferred-size: auto;
+            flex-basis: auto; }
+  div.MimotoCMS_modules_PathEditor-absolutepath > div:first-child {
+    padding: 10px 5px 10px 0; }
+
+div.MimotoCMS_modules_PathEditor-container > div:first-child {
+  margin-left: 3px; }
+
+div.MimotoCMS_modules_PathEditor-container > div {
+  margin-right: 3px; }
+
+div.MimotoCMS_modules_PathEditor-container > div:last-child {
+  margin-right: 0; }
+
+div.MimotoCMS_modules_PathEditor-menu {
+  padding: 20px 0 10px 0;
+  text-align: left; }
+
 div.MimotoCMS_modules_PropertyInput {
   position: relative;
   background-color: #ffffff; }
@@ -6125,6 +6184,34 @@ div.MimotoCMS_modules_Tabmenu-container {
     margin-bottom: 1px; }
   div.MimotoCMS_modules_Tabmenu-container > div:last-child {
     margin-bottom: 0; }
+
+div.MimotoCMS_modules_UserRolePermissions_AllowedUserRole {
+  display: inline-block; }
+  div.MimotoCMS_modules_UserRolePermissions_AllowedUserRole > a, div.MimotoCMS_modules_UserRolePermissions_AllowedUserRole > span {
+    padding: 8px 18px; }
+  div.MimotoCMS_modules_UserRolePermissions_AllowedUserRole > a {
+    color: #ffffff;
+    background-color: #9dceca;
+    text-decoration: none; }
+  div.MimotoCMS_modules_UserRolePermissions_AllowedUserRole > a:hover {
+    text-decoration: underline; }
+  div.MimotoCMS_modules_UserRolePermissions_AllowedUserRole > span {
+    color: #000000;
+    background-color: #f1f1f1;
+    font-style: italic; }
+
+div.MimotoCMS_modules_UserRolePermissions > a {
+  color: #9dbab7; }
+
+div.MimotoCMS_modules_UserRolePermissions-empty {
+  font-style: italic; }
+
+div.MimotoCMS_modules_UserRolePermissions-container {
+  margin: 15px 0; }
+  div.MimotoCMS_modules_UserRolePermissions-container > div {
+    margin-right: 3px; }
+  div.MimotoCMS_modules_UserRolePermissions-container > div:last-child {
+    margin-right: 0; }
 
 div.MimotoCMS_entities_overview_Entity {
   -webkit-box-flex: 1;
@@ -7600,7 +7687,8 @@ div.MimotoCMS_pages_selections_SelectionOverview_Selection-settings {
   padding: 0; }
 
 div.MimotoCMS_pages_selections_SelectionOverview_Selection-menu {
-  float: right; }
+  float: right;
+  margin-bottom: 10px; }
   div.MimotoCMS_pages_selections_SelectionOverview_Selection-menu > .MimotoCMS_pages_selections_SelectionOverview_Selection-menuitem {
     display: inline-block;
     margin-top: 4px; }
@@ -8949,45 +9037,6 @@ div.MimotoCMS_pages_components_ComponentDetail_Structure__containers > div:last-
 div.MimotoCMS_api_Overview-empty {
   margin-top: 25px; }
 
-div.MimotoCMS_pages_pages_Detail_AllowedUserRole {
-  display: inline-block; }
-  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a, div.MimotoCMS_pages_pages_Detail_AllowedUserRole > span {
-    padding: 8px 18px; }
-  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a {
-    color: #ffffff;
-    background-color: #9dceca;
-    text-decoration: none; }
-  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a:hover {
-    text-decoration: underline; }
-  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > span {
-    color: #000000;
-    background-color: #f1f1f1;
-    font-style: italic; }
-
-div.MimotoCMS_pages_pages_Detail_PathElement {
-  position: relative;
-  display: inline-block; }
-
-div.MimotoCMS_pages_pages_Detail_PathElement-info {
-  color: #ffffff;
-  padding: 10px 20px 10px 15px;
-  background-color: #9dbab7;
-  cursor: pointer; }
-  div.MimotoCMS_pages_pages_Detail_PathElement-info:hover {
-    background-color: #000000; }
-
-div.MimotoCMS_pages_pages_Detail_PathElement-remove {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0 5px 0 5px;
-  display: inline-block;
-  font-size: 14px;
-  color: #ffffff;
-  cursor: pointer; }
-  div.MimotoCMS_pages_pages_Detail_PathElement-remove:hover {
-    color: #000000; }
-
 div.MimotoCMS_pages_pages_Detail__panel {
   margin-bottom: 25px;
   background-color: #ffffff;
@@ -9030,54 +9079,6 @@ div.MimotoCMS_pages_pages_Detail_Structure__meta {
     font-style: italic;
     color: #9dbab7; }
 
-div.MimotoCMS_pages_pages_Detail-UserRoles > a {
-  color: #9dbab7; }
-
-div.MimotoCMS_pages_pages_Detail-UserRoles-empty {
-  font-style: italic; }
-
-div.MimotoCMS_pages_pages_Detail-UserRoles-container {
-  margin: 15px 0; }
-  div.MimotoCMS_pages_pages_Detail-UserRoles-container > div {
-    margin-right: 3px; }
-  div.MimotoCMS_pages_pages_Detail-UserRoles-container > div:last-child {
-    margin-right: 0; }
-
-div.MimotoCMS_pages_pages_Detail-path {
-  margin-top: 35px; }
-
-div.MimotoCMS_pages_pages_Detail-path-empty {
-  font-style: italic;
-  color: #9dbab7; }
-
-div.MimotoCMS_pages_pages_Detail-absolutepath {
-  margin: 10px 0 15px 0;
-  padding: 10px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  background-color: #f1f1f1; }
-  div.MimotoCMS_pages_pages_Detail-absolutepath > div {
-    -webkit-flex-basis: auto;
-        -ms-flex-preferred-size: auto;
-            flex-basis: auto; }
-  div.MimotoCMS_pages_pages_Detail-absolutepath > div:first-child {
-    padding: 10px 5px 10px 0; }
-
-div.MimotoCMS_pages_pages_Detail-path-container > div:first-child {
-  margin-left: 3px; }
-
-div.MimotoCMS_pages_pages_Detail-path-container > div {
-  margin-right: 3px; }
-
-div.MimotoCMS_pages_pages_Detail-path-container > div:last-child {
-  margin-right: 0; }
-
-div.MimotoCMS_pages_pages_Detail-path-menu {
-  padding: 20px 0 10px 0;
-  text-align: left; }
-
 div.MimotoCMS_pages_pages_Detail__block {
   padding: 15px 15px 10px 15px;
   background-color: #fcfcfc; }
@@ -9114,45 +9115,6 @@ div.MimotoCMS_pages_pages_Detail_Structure__attributes_container > div:last-chil
 
 div.MimotoCMS_pages_pages_Overview-empty {
   margin-top: 25px; }
-
-div.MimotoCMS_pages_pages_Detail_AllowedUserRole {
-  display: inline-block; }
-  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a, div.MimotoCMS_pages_pages_Detail_AllowedUserRole > span {
-    padding: 8px 18px; }
-  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a {
-    color: #ffffff;
-    background-color: #9dceca;
-    text-decoration: none; }
-  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > a:hover {
-    text-decoration: underline; }
-  div.MimotoCMS_pages_pages_Detail_AllowedUserRole > span {
-    color: #000000;
-    background-color: #f1f1f1;
-    font-style: italic; }
-
-div.MimotoCMS_pages_pages_Detail_PathElement {
-  position: relative;
-  display: inline-block; }
-
-div.MimotoCMS_pages_pages_Detail_PathElement-info {
-  color: #ffffff;
-  padding: 10px 20px 10px 15px;
-  background-color: #9dbab7;
-  cursor: pointer; }
-  div.MimotoCMS_pages_pages_Detail_PathElement-info:hover {
-    background-color: #000000; }
-
-div.MimotoCMS_pages_pages_Detail_PathElement-remove {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0 5px 0 5px;
-  display: inline-block;
-  font-size: 14px;
-  color: #ffffff;
-  cursor: pointer; }
-  div.MimotoCMS_pages_pages_Detail_PathElement-remove:hover {
-    color: #000000; }
 
 div.MimotoCMS_pages_pages_Detail_Output {
   margin-top: 5px; }

@@ -44,6 +44,19 @@ class API
                     ]
                 ),
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_ENTITY.'--isEnabled',
+                    // ---
+                    'name' => 'isEnabled',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_API.'--path',
                     // ---
                     'name' => 'path',
@@ -80,15 +93,15 @@ class API
                     ]
                 ),
                 (object) array(
-                    'id' => CoreConfig::MIMOTO_ENTITY.'--selections',
+                    'id' => CoreConfig::MIMOTO_API.'--selections',
                     // ---
-                    'name' => 'properties',
+                    'name' => 'selections',
                     'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
                     'settings' => [
                         'allowedEntityTypes' => (object) array(
                             'key' => 'allowedEntityTypes',
                             'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
-                            'value' => [CoreConfig::MIMOTO_ENTITYPROPERTY]
+                            'value' => [CoreConfig::MIMOTO_SELECTION]
                         ),
                         'allowDuplicates' => (object) array(
                             'key' => 'allowDuplicates',
@@ -96,7 +109,70 @@ class API
                             'value' => CoreConfig::DATA_VALUE_FALSE
                         )
                     ]
-                )
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_API.'--service',
+                    // ---
+                    'name' => 'service',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => CoreConfig::MIMOTO_SERVICE
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_API.'--function',
+                    // ---
+                    'name' => 'function',
+                    'type' => CoreConfig::PROPERTY_TYPE_ENTITY,
+                    'settings' => [
+                        'allowedEntityType' => (object) array(
+                            'key' => EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE,
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => CoreConfig::MIMOTO_SERVICE_FUNCTION
+                        )
+                    ]
+                ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_API.'--settings',
+                    // ---
+                    'name' => 'settings',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_ACTION_SETTING]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_API.'--selections',
+                    // ---
+                    'name' => 'selection',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_SELECTION]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
             ]
         );
     }

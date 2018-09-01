@@ -5,6 +5,7 @@ namespace Mimoto;
 
 // Mimoto classes
 use Mimoto\Action\ActionServiceProvider;
+use Mimoto\API\APIServiceProvider;
 use Mimoto\Core\CoreConfig;
 use Mimoto\Event\EventServiceProvider;
 use Mimoto\Aimless\OutputServiceProvider;
@@ -14,10 +15,12 @@ use Mimoto\Config\ConfigServiceProvider;
 use Mimoto\Form\FormServiceProvider;
 use Mimoto\Log\LogServiceProvider;
 use Mimoto\User\UserServiceProvider;
+use Mimoto\Page\PageServiceProvider;
+use Mimoto\Route\RouteServiceProvider;
 use Mimoto\Selection\SelectionServiceProvider;
-use Mimoto\Message\MessageServiceProvider;
-use Mimoto\Setup\SetupServiceProvider;
 use Mimoto\Session\SessionServiceProvider as MimotoSessionServiceProvider;
+use Mimoto\Setup\SetupServiceProvider;
+use Mimoto\Message\MessageServiceProvider;
 //use Mimoto\Page\PageServiceProvider;
 
 
@@ -150,7 +153,7 @@ class Mimoto
         // setup Silex services
         $app->register(new SessionServiceProvider());
 
-        // setup Mimoto services
+        // setup Mimoto services - DON'T CHANGE ORDER!!
         $app->register(new ConfigServiceProvider($config));
         $app->register(new CacheServiceProvider($config->memcached));
         $app->register(new DataServiceProvider());
@@ -164,7 +167,10 @@ class Mimoto
         $app->register(new MessageServiceProvider());
         $app->register(new MimotoSessionServiceProvider());
         $app->register(new SetupServiceProvider());
-        //$app->register(new PageServiceProvider());
+
+        $app->register(new RouteServiceProvider());
+        $app->register(new APIServiceProvider());
+        $app->register(new PageServiceProvider());
 
 
 
@@ -439,7 +445,7 @@ class Mimoto
                     $sPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
                     // render and output
-                    $result = Mimoto::service('output')->renderRoute($sPath);
+                    $result = Mimoto::service('route')->render($sPath);
 
                     if ($result !== false)
                     {
@@ -449,10 +455,10 @@ class Mimoto
                     else
                     {
                         // handle
-                        if (!empty(Mimoto::service('route')))
+                        if (!empty(Mimoto::service('customRoute')))
                         {
                             // render custom route
-                            $result = Mimoto::service('route')->render($app, $sPath);
+                            $result = Mimoto::service('customRoute')->render($app, $sPath);
 
                             return new Response($result, 404 /* ignored */, array('X-Status-Code' => 200));
                         }

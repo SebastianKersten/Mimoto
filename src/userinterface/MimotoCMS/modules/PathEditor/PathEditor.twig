@@ -1,0 +1,26 @@
+{% if sPropertyName is not defined %}
+    <div style="border:1px solid #cccccc;background-color:#f3f3f3;color:#000000;padding:10px 15px;margin:10px;">
+        <div style="font-weight:bold;color:#7eaad8;font-size:24px;">Module PathEditor</div>
+        Please specify the property name which holds the path elements by passing the value `<span style="font-style:italic;">sPropertyName</span>`.<br><br>
+        <span style="font-weight:bold;">Example usage:</span><br><span style="color:#7eaad8;">Mimoto.module('MimotoCMS_modules_PathEditor', { values:{ sPropertyName:'path' } })</span>
+    </div>
+{% else %}
+    <div class="MimotoCMS_modules_PathEditor">
+
+        Available on the following path:
+
+        <div>
+            <div class="MimotoCMS_modules_PathEditor-absolutepath">
+                <div>/</div>
+                <div class="MimotoCMS_pages_pages_Detail-path-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime(sPropertyName, 'MimotoCMS_modules_PathEditor-PathElement') }}>
+                    {{ Mimoto.data(sPropertyName, 'MimotoCMS_modules_PathEditor-PathElement') }}
+                </div>
+            </div>
+        </div>
+
+        <div class="MimotoCMS_modules_PathEditor-menu">
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add path element', icon:'plus', directive:Mimoto.add(sPropertyName, '_Mimoto_path_element') }) }}
+        </div>
+
+    </div>
+{% endif %}

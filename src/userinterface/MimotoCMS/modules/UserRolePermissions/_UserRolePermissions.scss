@@ -1,0 +1,24 @@
+@import 'AllowedUserRole/AllowedUserRole';
+
+div.MimotoCMS_modules_UserRolePermissions {
+
+    & > a {
+        color: $tower-gray;
+    }
+}
+
+div.MimotoCMS_modules_UserRolePermissions-empty {
+    font-style: italic;
+}
+
+div.MimotoCMS_modules_UserRolePermissions-container {
+    margin: 15px 0;
+
+    & > div {
+        margin-right: 3px;
+    }
+
+    & > div:last-child {
+        margin-right: 0;
+    }
+}

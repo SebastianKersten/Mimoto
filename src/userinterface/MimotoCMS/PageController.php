@@ -105,7 +105,7 @@ class PageController
 
 
         // 5. create
-        $ePage = Mimoto::service('data')->create(Coreconfig::MIMOTO_PAGE);
+        $ePage = Mimoto::service('data')->create(CoreConfig::MIMOTO_PAGE);
 
         // 6. setup
         $ePage->set('name', 'Created from non-existing path: '.$sPath); // #todo - improve security

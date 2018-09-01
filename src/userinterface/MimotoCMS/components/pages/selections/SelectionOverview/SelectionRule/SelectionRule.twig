@@ -32,7 +32,7 @@
 
                             <div>{{ Mimoto.module('MimotoCMS_modules_DataSelectButton', { sEmptyLabel:'select instance', sEntityName:'instance', sSelectionName:'_Mimoto_all_instances_of_entity', options:{vars:{typeVarName:Mimoto.meta('type.id') }, onChange:[['clear', 'property']]}, sValuePropertySelector:'instance', sValuePropertyIndex:0 }) }}</div>
 
-                            <div {{ Mimoto.showWhenValue('idAsVar', false) }}><span class="fa fa-square-o"></span> as var</div>
+                            <div {{ Mimoto.showWhenValue('idAsVar', false) }}><span class="fa fa-square-o" {{ Mimoto.set('idAsVar', true) }}></span> as var</div>
                             <div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenValue('idAsVar', true) }}>{{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'idVarName', sFieldClass:'MimotoCMS_actions_ActionOverview_ActionConditional-name' }) }}</div>
                             <div><span class="fa fa-remove" {{ Mimoto.hideWhenEmpty('instance') }} {{ Mimoto.clear('instance') }}></span></div>
                         </div>

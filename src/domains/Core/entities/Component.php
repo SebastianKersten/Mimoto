@@ -633,24 +633,6 @@ class Component
                 ]
             ),
             (object) array(
-                'name' => 'MimotoCMS_pages_pages_Detail-AllowedUserRole',
-                'templates' => [
-                    (object) array(
-                        'file' => 'MimotoCMS/components/pages/pages/Detail/AllowedUserRole/AllowedUserRole.twig',
-                        'conditionals' => []
-                    )
-                ]
-            ),
-            (object) array(
-                'name' => 'MimotoCMS_pages_pages_Detail-PathElement',
-                'templates' => [
-                    (object) array(
-                        'file' => 'MimotoCMS/components/pages/pages/Detail/PathElement/PathElement.twig',
-                        'conditionals' => []
-                    )
-                ]
-            ),
-            (object) array(
                 'name' => 'MimotoCMS_pages_pages_Detail-Output',
                 'templates' => [
                     (object) array(
@@ -1182,6 +1164,26 @@ class Component
                     )
                 ]
             ),
+
+            (object) array(
+                'name' => 'MimotoCMS_modules_PathEditor',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/PathEditor/PathEditor.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_modules_PathEditor-PathElement',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/PathEditor/PathElement/PathElement.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
             (object) array(
                 'name' => 'MimotoCMS_modules_PropertyInput',
                 'templates' => [
@@ -1205,6 +1207,25 @@ class Component
                 'templates' => [
                     (object) array(
                         'file' => 'MimotoCMS/modules/Tabmenu/Tabmenu.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+            (object) array(
+                'name' => 'MimotoCMS_modules_UserRolePermissions',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/UserRolePermissions/UserRolePermissions.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+            (object) array(
+                'name' => 'MimotoCMS_modules_UserRolePermissions-AllowedUserRole',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/UserRolePermissions/AllowedUserRole/AllowedUserRole.twig',
                         'conditionals' => []
                     )
                 ]

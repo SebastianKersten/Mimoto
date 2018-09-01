@@ -1,0 +1,23 @@
+{% if sPropertyName is not defined %}
+    <div style="border:1px solid #cccccc;background-color:#f3f3f3;color:#000000;padding:10px 15px;margin:10px;">
+        <div style="font-weight:bold;color:#7eaad8;font-size:24px;">Module UserRolePermissions</div>
+        Please specify the property name which holds the allowed user roles by passing the value `<span style="font-style:italic;">sPropertyName</span>`.<br><br>
+        <span style="font-weight:bold;">Example usage:</span><br><span style="color:#7eaad8;">Mimoto.module('MimotoCMS_modules_UserRolePermissions', { values:{ sPropertyName:'allowedUserRoles' } })</span>
+    </div>
+{% else %}
+    <div class="MimotoCMS_modules_UserRolePermissions">
+
+        The following <a href="/mimoto.cms/configuration/userroles">user roles</a> are allowed to see this:
+
+        <div class="MimotoCMS_modules_UserRolePermissions-empty" {{ Mimoto.showWhenEmpty(sPropertyName) }}>
+            Available to view by anyone!
+        </div>
+
+        <div {{ Mimoto.hideWhenEmpty(sPropertyName) }}>
+            <div class="MimotoCMS_modules_UserRolePermissions-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime(sPropertyName, 'MimotoCMS_modules_UserRolePermissions-AllowedUserRole') }}>
+                {{ Mimoto.data('allowedUserRoles', 'MimotoCMS_modules_UserRolePermissions-AllowedUserRole') }}
+            </div>
+        </div>
+
+    </div>
+{% endif %}

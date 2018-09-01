@@ -1,0 +1,8 @@
+<div class="MimotoCMS_modules_PathEditor_PathElement" {{ Mimoto.sortHandle() }} {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
+    <div class="MimotoCMS_modules_PathEditor_PathElement-remove" {{ Mimoto.remove({confirm:'MimotoCMS.confirmRemoval'}) }}>x</div>
+    <div class="MimotoCMS_modules_PathEditor_PathElement-info" {{ Mimoto.edit('_Mimoto_path_element') }}>
+        {% if Mimoto.data('type') == 'var' %}{ {{ Mimoto.data('varName') }} }{% endif %}
+        {% if Mimoto.data('type') == 'static' %}{{ Mimoto.data('staticValue') }}{% endif %}
+        {% if Mimoto.data('type') == 'slash' %}/{% endif %}
+    </div>
+</div>
