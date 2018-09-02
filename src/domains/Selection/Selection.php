@@ -219,6 +219,35 @@ class Selection
         $this->_bAllowDuplicates = $bValue;
     }
 
+    /**
+     * Check if the selection is configured to return a single result
+     * @return boolean The state of returning a single result
+     */
+    public function willReturnSingleResult()
+    {
+        // 1. init
+        $bWillReturnSingleResult = true;
+
+        // 2. investigate
+        $nRuleCount =  count($this->_aRules);
+        for ($nRuleIndex = 0; $nRuleIndex < $nRuleCount; $nRuleIndex++)
+        {
+            // a. register
+            $rule = $this->_aRules[$nRuleIndex];
+
+            // b. verify
+            if (!$rule->willReturnSingleResult())
+            {
+                // I. toggle
+                $bWillReturnSingleResult = false;
+                break;
+            }
+        }
+
+        // 3. respond
+        return $bWillReturnSingleResult;
+    }
+
 
     
     // ----------------------------------------------------------------------------

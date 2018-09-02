@@ -119,7 +119,7 @@ class APIService
 
         // 8. load instances
         $aInstances = [];
-        $bIsSingle = true;
+        $bWillReturnSingleResult = true;
         $aSelections = $eAPI->get('selections');
         $nSelectionCount = count($aSelections);
         for ($nSelectionIndex = 0; $nSelectionIndex < $nSelectionCount; $nSelectionIndex++)
@@ -130,23 +130,23 @@ class APIService
             // b. init
             $selection = new Selection($eSelection);
 
+            // c. apply
+            foreach($aVars as $sVarName => $value) $selection->applyVar($sVarName, $value);
 
-            // todo - check if selection load single or multiple? (add as util to Selection class)
+            // d. verify or toggle
+            if ($bWillReturnSingleResult && !$selection->willReturnSingleResult()) $bWillReturnSingleResult = false;
 
-            // if multi selections -> array
-            // if no instance (or var) -> array
-            // if instance of idVar -> single
-            // if property is set on selection and that property = entity -> single
-            // if property is set on selection and that property = collection -> array
-
-            // c. load
+            // e. load
             $aInstances = array_merge($aInstances, Mimoto::service('data')->select($selection));
         }
-        Mimoto::error('Number of instances = '.count($aInstances).' (this should be 1)');
-        // 9. call and pass clone of settings (unserialize/serialize)
-        $result = call_user_func([$service, $sFunctionName], ($bIsSingle) ? ((count($aInstances) > 0) ? $aInstances[0] : null) : $aInstances, $settings);
 
-        // 10. respond
+        // 9. verify
+        if ($bWillReturnSingleResult && count($aInstances) == 0) return Mimoto::service('messages')->response('No result', 404);
+
+        // 10. call and pass clone of settings (unserialize/serialize)
+        $result = call_user_func([$service, $sFunctionName], ($bWillReturnSingleResult) ? ((count($aInstances) > 0) ? $aInstances[0] : null) : $aInstances, $settings);
+
+        // 11. respond
         return Mimoto::service('messages')->response($result, 200);
     }
 

@@ -242,7 +242,6 @@ class EntityRepository
             return $aEntities;
         }
 
-
         if (!empty($rule->getId()))
         {
             // load

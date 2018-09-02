@@ -2,7 +2,10 @@
 
 // classpath
 namespace Mimoto\Selection;
+
+// Mimoto classes
 use Mimoto\Mimoto;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 
 
 /**
@@ -260,6 +263,74 @@ class SelectionRule
     {
         // store
         return $this->_aChildValues[$xProperty];
+    }
+
+    /**
+     * Check if the selection rule is configured to return a single result
+     * @return boolean The state of returning a single result
+     */
+    public function willReturnSingleResult()
+    {
+        // 1. init
+        $bWillReturnSingleResult = true;
+
+        // 2. verify
+        if (empty($this->getType())) return false;
+
+        // 3. verify id or idVar
+        if (empty($this->getId()))
+        {
+            // a. investigate
+            $bIdAsVarFound = false;
+            foreach ($this->_aVarNames as $value)
+            {
+                if ($value->key == 'id') { $bIdAsVarFound = true; break; }
+            }
+
+            // b. toggle
+            $bWillReturnSingleResult = $bIdAsVarFound;
+        }
+
+        // 3. verify property or propertyVar
+        $bPropertyIsSet = true;
+        if (empty($this->getProperty()))
+        {
+            // a. investigate
+            $bPropertyAsVarFound = false;
+            foreach ($this->_aVarNames as $value)
+            {
+                if ($value->key == 'property') { $bPropertyAsVarFound = true; break; }
+            }
+
+            // b. toggle
+            $bPropertyIsSet = $bPropertyAsVarFound;
+        }
+
+        // 4. check property type
+        if ($bWillReturnSingleResult && $bPropertyIsSet)
+        {
+            // a. verify
+            switch(Mimoto::service('entityConfig')->getPropertyTypeById($this->getProperty()))
+            {
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
+
+                    $bWillReturnSingleResult = true;
+                    break;
+
+                case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
+
+                    $bWillReturnSingleResult = false;
+                    break;
+
+                default:
+
+                    $bWillReturnSingleResult = false;
+                    break;
+            }
+        }
+
+        // 5. respond
+        return $bWillReturnSingleResult;
     }
 
 
