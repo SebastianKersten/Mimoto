@@ -6029,9 +6029,6 @@ div.MimotoCMS_modules_PathEditor_PathElement-remove {
   div.MimotoCMS_modules_PathEditor_PathElement-remove:hover {
     color: #000000; }
 
-div.MimotoCMS_modules_PathEditor {
-  margin-top: 35px; }
-
 div.MimotoCMS_modules_PathEditor-empty {
   font-style: italic;
   color: #9dbab7; }
@@ -6091,7 +6088,7 @@ div.MimotoCMS_modules_PropertyInput__meta {
             flex-grow: 1;
     text-align: right;
     padding-top: 5px; }
-  div.MimotoCMS_modules_PropertyInput__meta span.MimotoCMS_modules_PropertyInput__entityname {
+  div.MimotoCMS_modules_PropertyInput__meta span.MimotoCMS_modules_PropertyInput__entityname, div.MimotoCMS_modules_PropertyInput__meta div.MimotoCMS_modules_PropertyInput__entityname {
     font-size: 24px;
     font-weight: bold; }
   div.MimotoCMS_modules_PropertyInput__meta div.MimotoCMS_modules_PropertyInput__extendedby {
@@ -6100,6 +6097,11 @@ div.MimotoCMS_modules_PropertyInput__meta {
 
 div.MimotoCMS_modules_PropertyInput__usage {
   color: #000000; }
+
+span.MimotoCMS_modules_PropertyInput-isUserExtension {
+  font-style: italic;
+  font-weight: normal;
+  color: #a3a3a3; }
 
 div.MimotoCMS_modules_PropertyInput__properties_empty {
   margin-bottom: 10px; }
@@ -6253,12 +6255,20 @@ div.MimotoCMS_entities_overview_Entity-name {
 span.MimotoCMS_entities_overview_Entity-isUserExtension {
   font-style: italic;
   font-weight: normal;
-  color: #c3c1c2; }
+  color: #a3a3a3; }
 
 div.MimotoCMS_entities_overview_Entity-properties-empty {
   padding: 10px 20px 15px 0;
   font-style: italic;
   color: #858585; }
+
+div.MimotoCMS_entities_overview_Entity-properties-userextension {
+  padding: 10px 20px 10px 20px;
+  font-style: italic; }
+  div.MimotoCMS_entities_overview_Entity-properties-userextension > div.MimotoCMS_entities_overview_Entity-properties-userextension-division {
+    height: 0;
+    padding-top: 20px;
+    border-bottom: 1px solid #e3e3e3; }
 
 div.MimotoCMS_entities_overview_Entity-properties {
   padding: 10px 20px 15px 20px; }
@@ -6300,6 +6310,9 @@ div.MimotoCMS_modules_ListItem--ghost {
 
 span.MimotoCMS_entities_overview_EntityProperty-name {
   color: #000000; }
+
+span.MimotoCMS_entities_overview_EntityProperty-name-fixed {
+  color: #9dbab7; }
 
 span.MimotoCMS_entities_overview_EntityProperty-type {
   color: #c3c1c2; }

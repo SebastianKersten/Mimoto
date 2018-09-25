@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "ce6d774484a8a6b48a95";
+/******/ 	__webpack_require__.h = "be30244456f2a742e925";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.cms.js";
@@ -9676,6 +9676,9 @@ module.exports = function () {
 
 module.exports.prototype = {
 
+    _sActiveTabId: null,
+    _bHasFocusedRequestedTab: false,
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -9685,7 +9688,12 @@ module.exports.prototype = {
      * Constructor
      */
     __construct: function __construct() {
-        // setup
+        // 1. read active tab
+        var sCurrentUrl = document.URL;
+        var aUrlParts = sCurrentUrl.split('#');
+        this._sActiveTabId = aUrlParts.length > 1 ? aUrlParts[1] : null;
+
+        // 2. setup
         this._setupTabMenus();
     },
 
@@ -9718,19 +9726,20 @@ module.exports.prototype = {
      * @private
      */
     _setupTabs: function _setupTabs(elTabmenu) {
-        // register
+        // 1. register
         var elTabContainer = elTabmenu.querySelector('[data-mimotocms-tabmenu-tabcontainer]');
         var elPanelContainer = elTabmenu.querySelector('[data-mimotocms-tabmenu-panelcontainer]');
 
-        // collect
+        // 2. collect
         var aTabElements = elTabContainer.querySelectorAll('[data-mimotocms-tabmenu-tab]');
         var aPanelElements = elPanelContainer.querySelectorAll('[data-mimotocms-tabmenu-panel]');
 
-        // init
+        // 3. init
         var nTabmenuIndex = this._aTabmenus.length;
         this._aTabmenus[nTabmenuIndex] = [];
 
-        // setup
+        // 4. setup
+        var tabToFocus = null;
         var nTabCount = aTabElements.length;
         for (var nTabIndex = 0; nTabIndex < nTabCount; nTabIndex++) {
             // register
@@ -9743,25 +9752,36 @@ module.exports.prototype = {
             var elPanel = aPanelElements[nTabIndex];
 
             // setup
-            this._setupTab(elTab, elPanel, nTabIndex === 0, nTabmenuIndex);
+            this._setupTab(elTab, elPanel, nTabmenuIndex);
 
             // store
             this._aTabmenus[nTabmenuIndex].push({ elTab: elTab, elPanel: elPanel });
+
+            // --- prepare focus of reqeusted tab
+
+            // init
+            if (!tabToFocus) tabToFocus = { elTab: elTab, elPanel: elPanel, nTabmenuIndex: nTabmenuIndex };
+
+            // update
+            if (this._getTabName(elTab) === this._sActiveTabId) tabToFocus = { elTab: elTab, elPanel: elPanel, nTabmenuIndex: nTabmenuIndex };
+        }
+
+        // 5. focus requested tab
+        if (!this._bHasFocusedRequestedTab) {
+            // a. focus
+            this._selectTab(tabToFocus.elTab, tabToFocus.elPanel, tabToFocus.nTabmenuIndex);
+
+            // b. toggle
+            this._bHasFocusedRequestedTab = true;
         }
     },
 
-    _setupTab: function _setupTab(elTab, elPanel, bIsFirst, nTabmenuIndex) {
-        // focus
-        if (bIsFirst) {
-            this._focusTab(elTab, elPanel);
-        }
-
+    _setupTab: function _setupTab(elTab, elPanel, nTabmenuIndex) {
         // register
         var classRoot = this;
 
         // configure
         elTab.addEventListener('click', function (elTab, elPanel, e) {
-            // forward
             classRoot._selectTab(elTab, elPanel, nTabmenuIndex);
         }.bind(this, elTab, elPanel), true);
     },
@@ -9792,8 +9812,12 @@ module.exports.prototype = {
      * Focus tab
      */
     _focusTab: function _focusTab(elTab, elPanel) {
+        // 1. update display
         elTab.classList.add("active");
         elPanel.classList.remove("Mimoto--hidden");
+
+        // 2. update address bar
+        window.location.href = "#" + this._getTabName(elTab);
     },
 
     /**
@@ -9802,6 +9826,11 @@ module.exports.prototype = {
     _blurTab: function _blurTab(elTab, elPanel) {
         elTab.classList.remove("active");
         elPanel.classList.add("Mimoto--hidden");
+    },
+
+    _getTabName: function _getTabName(elTab) {
+        // 1. read, convert and send
+        return elTab.textContent.replace(/\s+/g, '-').toLowerCase();
     }
 
 };

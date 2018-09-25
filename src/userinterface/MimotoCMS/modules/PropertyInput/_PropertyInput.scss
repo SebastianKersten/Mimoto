@@ -21,7 +21,7 @@ div.MimotoCMS_modules_PropertyInput__meta {
         padding-top: 5px;
     }
 
-    span.MimotoCMS_modules_PropertyInput__entityname {
+    span.MimotoCMS_modules_PropertyInput__entityname, div.MimotoCMS_modules_PropertyInput__entityname {
         font-size: 24px;
         font-weight: bold;
     }
@@ -35,6 +35,12 @@ div.MimotoCMS_modules_PropertyInput__meta {
 
 div.MimotoCMS_modules_PropertyInput__usage {
     color: #000000;
+}
+
+span.MimotoCMS_modules_PropertyInput-isUserExtension {
+    font-style: italic;
+    font-weight: normal;
+    color: $silver-chalice;
 }
 
 div.MimotoCMS_modules_PropertyInput__properties_empty {

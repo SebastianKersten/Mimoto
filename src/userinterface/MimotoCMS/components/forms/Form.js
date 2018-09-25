@@ -7,6 +7,9 @@
 'use strict';
 
 
+// Mimoto classes
+let DataUtils = require('./../../../Mimoto/mimoto/modules/display/utils/DataUtils');
+
 // Mimoto input classes
 let FormField = require('./FormField');
 
@@ -109,7 +112,8 @@ module.exports.prototype = {
             let elFormField = aFormFields[nFormFieldIndex];
 
             // b. init
-            let formField = new FormField(elFormField);
+            var dataUtils = new DataUtils();
+            let formField = new FormField(elFormField, !dataUtils.empty(this._nInstanceId));
 
             // c. configure
             elFormField.addEventListener('onMimotoFormfieldChanged', this._onFormFieldChanged.bind(this), true);

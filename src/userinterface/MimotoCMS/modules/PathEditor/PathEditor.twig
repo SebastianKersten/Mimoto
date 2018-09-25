@@ -19,7 +19,10 @@
         </div>
 
         <div class="MimotoCMS_modules_PathEditor-menu">
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add path element', icon:'plus', directive:Mimoto.add(sPropertyName, '_Mimoto_path_element') }) }}
+            Add path element
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'static', icon:'plus', directive:Mimoto.add(sPropertyName, '_Mimoto_path_element', { values:{type:'static'} }) }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'/', icon:'plus', directive:Mimoto.create(sPropertyName, '_Mimoto_path_element', { values:{type:'slash'} }) }) }}
+            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'variable', icon:'plus', directive:Mimoto.add(sPropertyName, '_Mimoto_path_element', { values:{type:'var'} }) }) }}
         </div>
 
     </div>

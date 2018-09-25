@@ -19,6 +19,10 @@ module.exports = function() {
 module.exports.prototype = {
 
 
+    _sActiveTabId: null,
+    _bHasFocusedRequestedTab: false,
+
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -29,7 +33,12 @@ module.exports.prototype = {
      */
     __construct: function ()
     {
-        // setup
+        // 1. read active tab
+        var sCurrentUrl = document.URL;
+        var aUrlParts   = sCurrentUrl.split('#');
+        this._sActiveTabId = (aUrlParts.length > 1) ? aUrlParts[1] : null;
+
+        // 2. setup
         this._setupTabMenus();
     },
 
@@ -67,19 +76,20 @@ module.exports.prototype = {
      */
     _setupTabs: function(elTabmenu)
     {
-        // register
+        // 1. register
         let elTabContainer = elTabmenu.querySelector('[data-mimotocms-tabmenu-tabcontainer]');
         let elPanelContainer = elTabmenu.querySelector('[data-mimotocms-tabmenu-panelcontainer]');
 
-        // collect
+        // 2. collect
         let aTabElements = elTabContainer.querySelectorAll('[data-mimotocms-tabmenu-tab]');
         let aPanelElements = elPanelContainer.querySelectorAll('[data-mimotocms-tabmenu-panel]');
 
-        // init
+        // 3. init
         let nTabmenuIndex = this._aTabmenus.length;
         this._aTabmenus[nTabmenuIndex] = [];
 
-        // setup
+        // 4. setup
+        let tabToFocus = null;
         let nTabCount = aTabElements.length;
         for (let nTabIndex = 0; nTabIndex < nTabCount; nTabIndex++)
         {
@@ -93,25 +103,40 @@ module.exports.prototype = {
             let elPanel = aPanelElements[nTabIndex];
 
             // setup
-            this._setupTab(elTab, elPanel, nTabIndex === 0, nTabmenuIndex);
+            this._setupTab(elTab, elPanel, nTabmenuIndex);
 
             // store
             this._aTabmenus[nTabmenuIndex].push( { elTab: elTab, elPanel: elPanel } );
+
+
+            // --- prepare focus of reqeusted tab
+
+            // init
+            if (!tabToFocus) tabToFocus = { elTab: elTab, elPanel: elPanel, nTabmenuIndex:nTabmenuIndex };
+
+            // update
+            if (this._getTabName(elTab) === this._sActiveTabId) tabToFocus = { elTab: elTab, elPanel: elPanel, nTabmenuIndex:nTabmenuIndex };
+        }
+
+        // 5. focus requested tab
+        if (!this._bHasFocusedRequestedTab)
+        {
+            // a. focus
+            this._selectTab(tabToFocus.elTab, tabToFocus.elPanel, tabToFocus.nTabmenuIndex);
+
+            // b. toggle
+            this._bHasFocusedRequestedTab = true;
         }
     },
 
-    _setupTab: function(elTab, elPanel, bIsFirst, nTabmenuIndex)
+    _setupTab: function(elTab, elPanel, nTabmenuIndex)
     {
-        // focus
-        if (bIsFirst) { this._focusTab(elTab, elPanel); }
-
         // register
         let classRoot = this;
 
         // configure
         elTab.addEventListener('click', function(elTab, elPanel, e)
         {
-            // forward
             classRoot._selectTab(elTab, elPanel, nTabmenuIndex);
 
         }.bind(this, elTab, elPanel), true);
@@ -149,8 +174,12 @@ module.exports.prototype = {
      */
     _focusTab: function(elTab, elPanel)
     {
+        // 1. update display
         elTab.classList.add("active");
         elPanel.classList.remove("Mimoto--hidden");
+
+        // 2. update address bar
+        window.location.href = "#" + this._getTabName(elTab);
     },
 
     /**
@@ -160,6 +189,12 @@ module.exports.prototype = {
     {
         elTab.classList.remove("active");
         elPanel.classList.add("Mimoto--hidden");
+    },
+
+    _getTabName: function(elTab)
+    {
+        // 1. read, convert and send
+        return elTab.textContent.replace(/\s+/g, '-').toLowerCase();
     }
 
 }

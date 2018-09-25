@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "ce6d774484a8a6b48a95";
+/******/ 	__webpack_require__.h = "be30244456f2a742e925";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -21880,8 +21880,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
 
 
 
-// Mimoto input classes
+// Mimoto classes
 
+var DataUtils = __webpack_require__(414);
+
+// Mimoto input classes
 var FormField = __webpack_require__(375);
 
 module.exports = function (elForm) {
@@ -21972,7 +21975,8 @@ module.exports.prototype = {
             var elFormField = aFormFields[nFormFieldIndex];
 
             // b. init
-            var formField = new FormField(elFormField);
+            var dataUtils = new DataUtils();
+            var formField = new FormField(elFormField, !dataUtils.empty(this._nInstanceId));
 
             // c. configure
             elFormField.addEventListener('onMimotoFormfieldChanged', this._onFormFieldChanged.bind(this), true);
@@ -22136,8 +22140,11 @@ module.exports.prototype = {
 
 
 
-// Mimoto input classes
+// Mimoto classes
 
+var DataUtils = __webpack_require__(414);
+
+// Mimoto input classes
 var Textline = __webpack_require__(376);
 var Radiobutton = __webpack_require__(377);
 var Checkbox = __webpack_require__(378);
@@ -22151,10 +22158,10 @@ var Textblock = __webpack_require__(386);
 var Password = __webpack_require__(391);
 var Generic = __webpack_require__(393);
 
-module.exports = function (elFormField) {
+module.exports = function (elFormField, bIsNew) {
 
     // start
-    this.__construct(elFormField);
+    this.__construct(elFormField, bIsNew);
 };
 
 module.exports.prototype = {
@@ -22204,12 +22211,12 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function __construct(elFormField) {
+    __construct: function __construct(elFormField, bIsNew) {
         // store
         this._elFormField = elFormField;
 
         // parse
-        this._parseFormField(elFormField);
+        this._parseFormField(elFormField, bIsNew);
     },
 
     // ----------------------------------------------------------------------------
@@ -22294,7 +22301,7 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
-    _parseFormField: function _parseFormField(elFormField) {
+    _parseFormField: function _parseFormField(elFormField, bIsNew) {
         // 1. register
         this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
         this._elError = elFormField.querySelector('[' + this.DIRECTIVE_MIMOTO_FORM_FIELD_ERROR + ']');
@@ -22335,13 +22342,19 @@ module.exports.prototype = {
         // TEMP
         if (!this._input) return;
 
-        // 7. store initial value
-        this._persistentValue = this._input.getValue();
-
-        // 8. setup validation
+        // 7. setup validation
         if (elFormField.hasAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION)) {
             // a. register
             this._aValidationRules = JSON.parse(elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION));
+        }
+
+        // 8. handle inital data in new instance
+        var dataUtils = new DataUtils();
+        if (bIsNew || !dataUtils.empty(this._input.getValue())) {
+            this._handleInputChange();
+        } else {
+            // a. store initial value
+            this._persistentValue = this._input.getValue();
         }
     },
 
@@ -29080,6 +29093,26 @@ module.exports.prototype = {
 
         // 2. send
         return aArray;
+    },
+
+    empty: function empty(data) {
+        if (typeof data == 'number' || typeof data == 'boolean') {
+            return false;
+        }
+        if (typeof data == 'undefined' || data === null) {
+            return true;
+        }
+        if (typeof data.length != 'undefined') {
+            return data.length == 0;
+        }
+
+        var count = 0;
+        for (var i in data) {
+            if (data.hasOwnProperty(i)) {
+                count++;
+            }
+        }
+        return count == 0;
     }
 
 };

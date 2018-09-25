@@ -39,7 +39,7 @@ class ComponentController
         // 3. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
-                    "label" => 'Components and layouts',
+                    "label" => 'Components, layouts and input elements',
                     "url" => '/mimoto.cms/components'
                 )
             )

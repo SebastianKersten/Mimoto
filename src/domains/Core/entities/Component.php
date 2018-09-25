@@ -1166,6 +1166,16 @@ class Component
             ),
 
             (object) array(
+                'name' => 'MimotoCMS_modules_EntityMetaData',
+                'templates' => [
+                    (object) array(
+                        'file' => 'MimotoCMS/modules/EntityMetaData/EntityMetaData.twig',
+                        'conditionals' => []
+                    )
+                ]
+            ),
+
+            (object) array(
                 'name' => 'MimotoCMS_modules_PathEditor',
                 'templates' => [
                     (object) array(

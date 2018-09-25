@@ -1,10 +1,29 @@
-<div class="MimotoCMS_entities_overview_EntityProperty" {{ Mimoto.realtime() }} {{ Mimoto.reloadOnChange() }}>
-    <span class="MimotoCMS_entities_overview_EntityProperty-name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</span>
+{% if bUseAsStatic|default(false) and data is defined %}
+    {% set sRootRealtime = '' %}
+    {% set sNameRealtime = '' %}
+    {% set sNameData = data.name|default('') %}
+    {% set sNameClass = 'MimotoCMS_entities_overview_EntityProperty-name-fixed' %}
+    {% set sSubtypeRealtime = '' %}
+    {% set sSubtypeData = data.subtype|default('') %}
+    {% set sTypeRealtime = '' %}
+    {% set sTypeData = data.type|default('') %}
+{% else %}
+    {% set sRootRealtime = Mimoto.realtime() ~ Mimoto.reloadOnChange() %}
+    {% set sNameRealtime = Mimoto.realtime('name') %}
+    {% set sNameData = Mimoto.data('name') %}
+    {% set sNameClass = 'MimotoCMS_entities_overview_EntityProperty-name' %}
+    {% set sSubtypeRealtime = Mimoto.realtime('subtype') %}
+    {% set sSubtypeData = Mimoto.data('subtype') %}
+    {% set sTypeRealtime = Mimoto.realtime('type') %}
+    {% set sTypeData = Mimoto.data('type') %}
+{% endif %}
+<div class="MimotoCMS_entities_overview_EntityProperty" {{ sRootRealtime }}>
+    <span class="{{ sNameClass }}" {{ sNameRealtime }}>{{ sNameData }}</span>
     <span class="MimotoCMS_entities_overview_EntityProperty-type"> -
-        {% if Mimoto.data('subtype') is not empty %}
-            <span {{ Mimoto.realtime('subtype') }}>{{ Mimoto.data('subtype') }}</span>
+        {% if sSubtypeData is not empty %}
+            <span {{ sSubtypeRealtime }}>{{ sSubtypeData }}</span>
         {% else %}
-            <span {{ Mimoto.realtime('type') }}>{{ Mimoto.data('type') }}</span>
+            <span {{ sTypeRealtime }}>{{ sTypeData }}</span>
         {% endif %}
     </span>
 

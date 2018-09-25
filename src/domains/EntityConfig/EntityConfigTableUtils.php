@@ -49,7 +49,7 @@ class EntityConfigTableUtils
             "   `mimoto_id` int(10) unsigned NOT NULL AUTO_INCREMENT, ".
             "   `mimoto_created` datetime DEFAULT NULL, ".
             "   `mimoto_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ".
-            "   PRIMARY KEY (`id`) ".
+            "   PRIMARY KEY (`mimoto_id`) ".
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci"
         );
         $params = array();

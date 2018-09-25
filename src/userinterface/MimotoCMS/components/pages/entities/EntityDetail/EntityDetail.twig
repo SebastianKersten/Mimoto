@@ -3,6 +3,7 @@
     {% block tabs %}
 
         <div data-mimotocms-tabmenu-tab>Structure</div>
+        <div data-mimotocms-tabmenu-tab>Forms</div>
         <div data-mimotocms-tabmenu-tab>Instances</div>
         <div data-mimotocms-tabmenu-tab>More</div>
 
@@ -10,150 +11,103 @@
 
     {% block panels %}
 
-        <div data-mimotocms-tabmenu-panel>{{ Mimoto.module('MimotoCMS_modules_PropertyInput', { type:'entity', entityStructure:entityStructure }) }}</div>
+        <div data-mimotocms-tabmenu-panel>
+
+            {{ Mimoto.module('MimotoCMS_modules_EntityMetaData', { type:'entity', entityStructure:entityStructure }) }}
+            {{ Mimoto.module('MimotoCMS_modules_PropertyInput') }}
+
+        </div>
 
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 
-            <b><i>Currently in beta and very raw (no primary labels or realtime updates yet)</i></b><br>
-            <br>
+            {{ Mimoto.module('MimotoCMS_modules_EntityMetaData', { type:'entity', entityStructure:entityStructure }) }}
 
-            <div class="MimotoCMS_pages_entities_EntityDetail_Structure__usage">
-                {% if entityStructure.hasTable %}
-                    This entity has {{ entityStructure.instanceCount }} instance{% if entityStructure.instanceCount != 1 %}s{%  endif %}
-                {% else %}
-                    This entity has no table of its own and is only used for extension purposes
-                {% endif %}
-            </div>
+            <div class="MimotoCMS_modules_PropertyInput__meta">
+                <div class="MimotoCMS_modules_PropertyInput__meta_info">
 
-            <br>
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('forms') }}>
+                        This entity has no form yet.<br>Go ahead, start adding one!
+                    </div>
 
-            <div class="MimotoCMS_pages_entities_EntityDetail_Instances">
-                <div class="MimotoCMS_pages_entities_EntityDetail_Instances__container">
-                    Temporarily disabled ..
-                    {#{{ Mimoto.selection('instances', 'MimotoCMS_entities_EntityDetail_EntityInstance') }}#}
+                    <div {{ Mimoto.hideWhenEmpty('forms') }}>
+                        <ul class="MimotoCMS_pages_entities_EntityDetail_container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('forms', 'MimotoCMS_entities_EntityDetail-Form') }}>
+                            {{ Mimoto.data('forms', 'MimotoCMS_entities_EntityDetail-Form') }}
+                        </ul>
+                    </div>
+
+                    <div class="MimotoCMS_modules_PropertyInput__properties_menu">
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Auto-generate form', icon:'plus', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/form/autogenerate') }) }}
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new form', icon:'plus', directive:Mimoto.add('forms', '_Mimoto_coreform__form') }) }}
+                    </div>
+
                 </div>
             </div>
 
-            <br>
-            <a href="javascript:MimotoCMS.instanceDeleteAll('{{ Mimoto.data('name') }}');">Delete all</a> instances of entity type `{{ Mimoto.data('name') }}`
+
+        </div>
+
+        <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
+
+            {{ Mimoto.module('MimotoCMS_modules_EntityMetaData', { type:'entity', entityStructure:entityStructure }) }}
+
+            <div class="MimotoCMS_modules_PropertyInput__meta">
+                <div class="MimotoCMS_modules_PropertyInput__meta_info">
+
+                    <h1><i>Currently in beta and very raw (no primary labels or realtime updates yet)</i></h1><br>
+                    <br>
+
+                    <div class="MimotoCMS_pages_entities_EntityDetail_Instances">
+                        <div class="MimotoCMS_pages_entities_EntityDetail_Instances__container">
+                            Temporarily disabled ..
+                            {#{{ Mimoto.selection('instances', 'MimotoCMS_entities_EntityDetail_EntityInstance') }}#}
+                        </div>
+                    </div>
+
+                    <br>
+                    <a href="javascript:MimotoCMS.instanceDeleteAll('{{ Mimoto.data('name') }}');">Delete all</a> instances of entity type `{{ Mimoto.data('name') }}`
+
+                </div>
+            </div>
+
         </div>
 
         <!-- more -->
 
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 
-            <b>The user object</b><br>
-            <br>
-            <div {{ Mimoto.hideWhenValue('isUserExtension', true) }}>
-                Use this entity to extend Mimoto's core <u>User</u> object
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Extend user object', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/useasuserextension'), types:['secondary', 'small'] }) }}
-            </div>
-            <div {{ Mimoto.showWhenValue('isUserExtension', true) }}>
-                <b>This entity is being used as the extension of Mimoto's core <u>User</u> object</b><br>
-                The following field are part of the core object:<br>
-                firstName<br>
-                lastName<br>
-                avatar<br>
-                email<br>
+            {{ Mimoto.module('MimotoCMS_modules_EntityMetaData', { type:'entity', entityStructure:entityStructure }) }}
 
-                The `password` cannot be directly read or altered. Use the following methods to<br>
-                Mimoto::service('security')->changePassword()<br>
-                Mimoto::service('security')->validatePassword()<br>
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Stop using as extension of user object', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/stopusingasuserextension'), types:['alert', 'small'] }) }}
-            </div>
-            <br>
-            <br>
-            <b>Danger zone!</b><br>
-            <br>
-            <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
-            <br>
-            {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete entity', icon:'warning', directive:Mimoto.remove({hardDelete:true}), onclick:"window.open('/mimoto.cms/entities', '_self');", types:['alert'] }) }}#}
-            {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete entity', icon:'warning', directive:Mimoto.remove({forceDelete:true}), types:['alert'] }) }}
-        </div>
+            <div class="MimotoCMS_modules_PropertyInput__meta">
+                <div class="MimotoCMS_modules_PropertyInput__meta_info">
 
-    {% endblock %}
-{% endembed %}
-
-
-{% embed "MimotoCMS/modules/Tabmenu/Tabmenu.twig" %}
-
-    {% block tabs %}
-
-        <div data-mimotocms-tabmenu-tab>Forms</div>
-
-    {% endblock %}
-
-    {% block panels %}
-
-        <div data-mimotocms-tabmenu-panel>
-
-            <div class="MimotoCMS_pages_entities_EntityDetail__block">
-
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('forms') }}>
-                    This entity has no form yet.<br>Go ahead, start adding one!
-                </div>
-
-                <div {{ Mimoto.hideWhenEmpty('forms') }}>
-                    <ul class="MimotoCMS_pages_entities_EntityDetail_container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('forms', 'MimotoCMS_entities_EntityDetail-Form') }}>
-                        {{ Mimoto.data('forms', 'MimotoCMS_entities_EntityDetail-Form') }}
-                    </ul>
-                </div>
-
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Auto-generate form', icon:'plus', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/form/autogenerate') }) }}
-                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new form', icon:'plus', directive:Mimoto.add('forms', '_Mimoto_coreform__form') }) }}
+                    <b>The user object</b><br>
+                    <br>
+                    <div {{ Mimoto.hideWhenValue('isUserExtension', true) }}>
+                        Use this entity to extend Mimoto's core <u>User</u> object
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Extend user object', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/useasuserextension'), types:['secondary', 'small'] }) }}
                     </div>
+                    <div {{ Mimoto.showWhenValue('isUserExtension', true) }}>
+                        <b>This entity is being used as the extension of Mimoto's core <u>User</u> object</b><br>
+                        The following field are part of the core object:<br>
+                        firstName<br>
+                        lastName<br>
+                        avatar<br>
+                        email<br>
 
-            </div>
-
-        </div>
-
-    {% endblock %}
-{% endembed %}
-
-
-{% embed "MimotoCMS/modules/Tabmenu/Tabmenu.twig" %}
-
-    {% block tabs %}
-
-        <div data-mimotocms-tabmenu-tab>Components</div>
-
-    {% endblock %}
-
-    {% block panels %}
-
-        <div data-mimotocms-tabmenu-panel>
-
-            <div class="MimotoCMS_pages_entities_EntityDetail__block">
-
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_empty" {{ Mimoto.showWhenEmpty('components') }}>
-                    <div>This entity has no component yet.<br>Go ahead, start adding one!</div>
-                </div>
-
-                <div {{ Mimoto.hideWhenEmpty('components') }}>
-                    <ul class="MimotoCMS_pages_entities_EntityDetail_container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components', 'MimotoCMS_entities_EntityDetail-ComponentListItem') }}>
-                        {{ Mimoto.data('components', 'MimotoCMS_entities_EntityDetail-ComponentListItem') }}
-                    </ul>
-                </div>
-
-                <div class="MimotoCMS_pages_entities_EntityDetail_Structure__properties_menu">
-                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new component', icon:'plus', onclick:"MimotoCMS.entityComponentNew('" ~ Mimoto.meta('id') ~ "');" }) }}
-                </div>
-
-            </div>
-
-            <br>
-
-            <div class="MimotoCMS_pages_entities_EntityDetail__codeexample">
-
-                <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-title">Twig example</div>
-
-                <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-container">
-                    {{ "<div "|escape }}<span class="MimotoCMS_pages_entities_EntityDetail-EntityPropertyExample-aimless-code">{{ '{{ Mimoto.realtime() }}' }}</span>&gt
-                    <div class="MimotoCMS_pages_entities_EntityDetail__codeexample-properties" {{ Mimoto.realtime('properties', 'MimotoCMS_entities_EntityDetail_EntityPropertyExample') }}>
-                        {{ Mimoto.data('properties', 'MimotoCMS_entities_EntityDetail_EntityPropertyExample') }}
+                        The `password` cannot be directly read or altered. Use the following methods to<br>
+                        Mimoto::service('security')->changePassword()<br>
+                        Mimoto::service('security')->validatePassword()<br>
+                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Stop using as extension of user object', directive:Mimoto.api('/mimoto.cms/entity/' ~ Mimoto.meta('id') ~ '/stopusingasuserextension'), types:['alert', 'small'] }) }}
                     </div>
-                    {{ "</div>"|escape }}
+                    <br>
+                    <br>
+                    <b>Danger zone!</b><br>
+                    <br>
+                    <i><u>WARNING</u> - Deleting the entity will result in the LOSS OF ALL DATA related to this entity.</i><br>
+                    <br>
+                    {#{{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete entity', icon:'warning', directive:Mimoto.remove({hardDelete:true}), onclick:"window.open('/mimoto.cms/entities', '_self');", types:['alert'] }) }}#}
+                    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Delete entity', icon:'warning', directive:Mimoto.remove({forceDelete:true}), types:['alert'] }) }}
+
                 </div>
             </div>
 

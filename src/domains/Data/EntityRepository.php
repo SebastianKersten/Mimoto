@@ -110,13 +110,13 @@ class EntityRepository
                 {
                     foreach ($coreData as $sPropertyName => $value)
                     {
-                        $entity->setValue($sPropertyName, $value);
+                        $entity->set($sPropertyName, $value);
                     }
                 }
 
                 else
                 {
-                    if ($entity->hasProperty('name')) $entity->setValue('name', $nEntityId);
+                    if ($entity->hasProperty('name')) $entity->set('name', $nEntityId);
                 }
             }
 

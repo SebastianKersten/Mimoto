@@ -6,6 +6,8 @@
 
 'use strict';
 
+// Mimoto classes
+let DataUtils = require('./../../../Mimoto/mimoto/modules/display/utils/DataUtils');
 
 // Mimoto input classes
 let Textline = require('./input/Textline/Textline');
@@ -22,10 +24,10 @@ let Password = require('./input/Password/Password');
 let Generic = require('./input/Generic/Generic');
 
 
-module.exports = function(elFormField) {
+module.exports = function(elFormField, bIsNew) {
 
     // start
-    this.__construct(elFormField);
+    this.__construct(elFormField, bIsNew);
 };
 
 module.exports.prototype = {
@@ -78,13 +80,13 @@ module.exports.prototype = {
     /**
      * Constructor
      */
-    __construct: function(elFormField)
+    __construct: function(elFormField, bIsNew)
     {
         // store
         this._elFormField = elFormField;
 
         // parse
-        this._parseFormField(elFormField);
+        this._parseFormField(elFormField, bIsNew);
     },
 
 
@@ -187,7 +189,7 @@ module.exports.prototype = {
     // ----------------------------------------------------------------------------
 
 
-    _parseFormField: function(elFormField)
+    _parseFormField: function(elFormField, bIsNew)
     {
         // 1. register
         this._sType = elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_TYPE);
@@ -229,14 +231,23 @@ module.exports.prototype = {
         if (!this._input) return;
 
 
-        // 7. store initial value
-        this._persistentValue = this._input.getValue();
-
-        // 8. setup validation
+        // 7. setup validation
         if (elFormField.hasAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION))
         {
             // a. register
             this._aValidationRules = JSON.parse(elFormField.getAttribute(this.DIRECTIVE_MIMOTO_FORM_FIELD_VALIDATION));
+        }
+
+        // 8. handle inital data in new instance
+        let dataUtils = new DataUtils();
+        if (bIsNew || !dataUtils.empty(this._input.getValue()))
+        {
+            this._handleInputChange();
+        }
+        else
+        {
+            // a. store initial value
+            this._persistentValue = this._input.getValue();
         }
     },
 

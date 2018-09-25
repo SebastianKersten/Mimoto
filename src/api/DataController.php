@@ -177,46 +177,57 @@ class DataController
         //    'response' => ['onSuccess' => ['closePopup' => true]]
         ];
 
+
+        // I. load
+        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
+
+
         // 6. verify
         if ($bManualSave)
         {
             // a. init
             $eNewEntity = null;
 
+
+            // -----
+
+
+            // IV. verify
+            if (isset($options->values))
+            {
+                $eNewEntity = Mimoto::service('data')->create($eParent->get('name'));
+
+                // set default values
+                foreach ($options->values as $sPropertyName => $value)
+                {
+                    if ($eNewEntity->hasProperty($sPropertyName))
+                    {
+                        if ($eNewEntity->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                        {
+                            $eNewEntity->set($sPropertyName, $value);
+                        }
+                    }
+                }
+            }
+
+
+            // -----
+
+
             // b. setup
             $aActions['onCreatedConnectTo'] = $sPropertySelector;
         }
         else
         {
-            // I. load
-            $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
-
-            // II. configure
+            // I. configure
             $aParentEntitySelectionConfigs = [(object) array('type' => $sInstanceType, 'id' => $nInstanceId, 'property' => $sPropertyName)];
 
-            // III. load
-            $result = Mimoto::service('data')->createAndConnect($eParent->getValue('name'), $aParentEntitySelectionConfigs);
+            // II. load
+            $result = Mimoto::service('data')->createAndConnect($eParent->get('name'), $aParentEntitySelectionConfigs, $options);
 
-            // IV. verify
-            if (isset($options->values))
-            {
-                // set default values
-                foreach ($options->values as $sPropertyName => $value)
-                {
-                    if ($result->entity->hasProperty($sPropertyName))
-                    {
-                        $result->entity->set($sPropertyName, $value);
-                    }
-                }
-
-                // store
-                Mimoto::service('data')->store($result->entity);
-            }
-
-            // V. register
+            // III. register
             $eNewEntity = $result->entity;
         }
-
 
 
         // ---
@@ -436,26 +447,27 @@ class DataController
     {
         // 1. load and convert
         $data = MimotoDataUtils::decodePostData($request->get('data'));
+        $options = (!empty($data->options)) ? $data->options : (object) array();
 
-        // 1. register
+        // 2. register
         $sPropertySelector = $data->sPropertySelector;
         $sEntityName = $data->sEntityName;
 
-        // 2. extract
+        // 3. extract
         $sInstanceType = MimotoDataUtils::getEntityTypeFromEntityInstanceSelector($sPropertySelector);
         $nInstanceId = MimotoDataUtils::getEntityIdFromEntityInstanceSelector($sPropertySelector);
         $sPropertyName = MimotoDataUtils::getPropertyFromFromEntityPropertySelector($sPropertySelector);
 
-        // 3. configure
+        // 4. configure
         $aParentEntitySelectionConfigs = [(object) array('type' => $sInstanceType, 'id' => $nInstanceId, 'property' => $sPropertyName)];
 
-        // 4. create and connect
-        $result = Mimoto::service('data')->createAndConnect($sEntityName, $aParentEntitySelectionConfigs);
+        // 5. create and connect
+        $result = Mimoto::service('data')->createAndConnect($sEntityName, $aParentEntitySelectionConfigs, $options);
 
-        // 5. register
+        // 6. register
         $eNewEntity = $result->entity;
 
-        // 6. output
+        // 7. output
         return Mimoto::service('messages')->response("New entity of type `$sEntityName` with id=`".$eNewEntity->getId()."` created and connected to `$sPropertySelector`");
     }
 

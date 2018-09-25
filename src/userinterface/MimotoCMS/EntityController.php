@@ -32,7 +32,11 @@ class EntityController
 
         // 2. create and connect content
         $page->addComponent('content', Mimoto::service('output')->createComponent('MimotoCMS_entities_EntityOverview', $eRoot));
-        
+
+
+        //$page->addComponent('userComponent', Mimoto::service('output')->createComponent('MimotoCMS_entities_EntityOverview', $eRoot));
+
+
         // 3. setup page
         $page->setVar('pageTitle', array(
                 (object) array(
@@ -201,7 +205,7 @@ class EntityController
         if ($entityStructure->hasTable)
         {
             // load
-            $stmt = Mimoto::service('database')->prepare('SELECT count(id) FROM `' . $entity->getValue('name').'`');
+            $stmt = Mimoto::service('database')->prepare('SELECT count(mimoto_id) FROM `' . $entity->getValue('name').'`');
             $params = array();
             $stmt->execute($params);
 
@@ -215,7 +219,7 @@ class EntityController
             else
             {
                 // store
-                $entityStructure->instanceCount = $aResults[0]['count(id)'];
+                $entityStructure->instanceCount = $aResults[0]['count(mimoto_id)'];
             }
         }
 

@@ -14,7 +14,7 @@
 
 
             <div class="MimotoCMS_modules_Tabmenu-panel-menu">
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new component', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component') }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new component', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component', { values:{type:'component'} }) }) }}
             </div>
 
             <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components.{type=component}', 'MimotoCMS_components_ComponentOverview_ListItem') }}>
@@ -26,7 +26,7 @@
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 
             <div class="MimotoCMS_modules_Tabmenu-panel-menu">
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component') }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component', { values:{type:'layout'} }) }) }}
             </div>
 
             <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components.{type=layout}', 'MimotoCMS_components_ComponentOverview_ListItem') }}>
@@ -38,7 +38,7 @@
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 
             <div class="MimotoCMS_modules_Tabmenu-panel-menu">
-                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component') }) }}
+                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new layout', icon:'plus', types:['secondary'], directive:Mimoto.add('components', '_Mimoto_component', { values:{type:'input'} }) }) }}
             </div>
 
             <div class="MimotoCMS_modules_Tabmenu-container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('components.{type=input}', 'MimotoCMS_components_ComponentOverview_ListItem') }}>

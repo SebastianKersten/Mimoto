@@ -95,6 +95,9 @@ class CoreConfig
     // connections
     const MIMOTO_CONNECTION                     = '_Mimoto_connection';
 
+    // apps
+    const MIMOTO_APP                            = '_Mimoto_app';
+
     // views
     const MIMOTO_COMPONENT                      = '_Mimoto_component';
     const MIMOTO_COMPONENT_CONDITIONAL          = '_Mimoto_component_conditional';

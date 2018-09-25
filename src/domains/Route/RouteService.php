@@ -18,6 +18,10 @@ use Mimoto\Data\MimotoDataUtils;
 use Mimoto\Form\FormService;
 use Mimoto\Log\LogService;
 
+// Symfony classes
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 /**
@@ -31,6 +35,9 @@ class RouteService
     // services
     private $_pageService;
     private $_apiService;
+
+    // messages
+    const ERROR_INCORRECT_PERMISSIONS = 'Sorry, you don`t have the correct permissions';
 
 
     
@@ -112,10 +119,42 @@ class RouteService
             if (preg_match('/^\/'.$sPathRegExp.'$/U', $sPath, $aMatches))
             {
                 // I. check permissions
-                // ...
-                // ...
-                // ...
+                $aRoles = $eRoute->get('allowedUserRoles');
+                if (count($aRoles) > 0)
+                {
+                    // 1. check permissions
+                    $bHasPermission = false;
+                    $nRoleCount = count($aRoles);
+                    for ($nRoleIndex = 0; $nRoleIndex < $nRoleCount; $nRoleIndex++)
+                    {
+                        // register
+                        $eRole = $aRoles[$nRoleIndex];
 
+                        if (Mimoto::user()->hasRole($eRole->get('name')))
+                        {
+                            $bHasPermission = true;
+                            break;
+                        }
+                    }
+
+                    // 2. validate
+                    if (!$bHasPermission)
+                    {
+                        // V. toggle
+                        switch($eRoute->getType())
+                        {
+                            case CoreConfig::MIMOTO_API:
+
+                                return (!$eRoute->get('outputRawResponse')) ? Mimoto::service('messages')->response(self::ERROR_INCORRECT_PERMISSIONS, 403) : new Response(self::ERROR_INCORRECT_PERMISSIONS, 403);
+                                break;
+
+                            case CoreConfig::MIMOTO_PAGE:
+
+                                return new JsonResponse('Sorry, you don`t have the correct permissions', 403);
+                                break;
+                        }
+                    }
+                }
 
                 // II. remove full match
                 array_splice($aMatches, 0, 1);
@@ -142,7 +181,15 @@ class RouteService
                 {
                     case CoreConfig::MIMOTO_API:
 
-                        return $this->_apiService->render($eRoute, $aVars);
+                        // 1. verify
+                        if ($eRoute->get('isEnabled'))
+                        {
+                            return $this->_apiService->render($eRoute, $aVars);
+                        }
+                        else
+                        {
+                            return new Response('', 404);
+                        }
                         break;
 
                     case CoreConfig::MIMOTO_PAGE:

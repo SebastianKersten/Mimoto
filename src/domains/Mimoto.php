@@ -293,6 +293,7 @@ class Mimoto
         $app->get('/'.$config->project->path_cms.'/configuration/formatting', 'Mimoto\\UserInterface\\MimotoCMS\\FormattingOptionController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$config->project->path_cms.'/configuration/userroles', 'Mimoto\\UserInterface\\MimotoCMS\\UserRolesController::overview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get('/'.$config->project->path_cms.'/configuration/services', 'Mimoto\\UserInterface\\MimotoCMS\\ServiceController::viewOverview')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
+        $app->get('/'.$config->project->path_cms.'/configuration/migrate/2/mimoto_id', 'Mimoto\\UserInterface\\MimotoCMS\\MigrationController::migrate2_mimoto_id')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
         $app->get ('/'.$config->project->path_cms.'/configuration/memcached/flush', 'Mimoto\\UserInterface\\MimotoCMS\\ConfigurationController::flushMemcached')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 

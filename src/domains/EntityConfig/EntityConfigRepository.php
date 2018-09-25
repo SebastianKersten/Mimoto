@@ -72,6 +72,9 @@ class EntityConfigRepository
                 break;
             }
         }
+
+
+        //Mimoto::error($this->_aEntities);
     }
         
     

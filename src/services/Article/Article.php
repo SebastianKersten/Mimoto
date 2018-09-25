@@ -14,6 +14,9 @@ class Article // extends MimotoService
 //        $this->setServiceName('Article');
 //        $this->setVendorName('The Correspondent');
 //        $this->setVersion('1.0');
+
+
+        //$this->registerAPIService($this->highlightComment);
     }
 
 
@@ -23,7 +26,8 @@ class Article // extends MimotoService
         //Mimoto::error('highlightComment reached!');
 
 
-        return $eInstance->get('message');//$settings;
+        return $settings;
+        //return $eInstance->get('message');
     }
 
 }

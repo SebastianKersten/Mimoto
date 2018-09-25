@@ -154,7 +154,6 @@ class API
                         )
                     ]
                 ),
-
                 (object) array(
                     'id' => CoreConfig::MIMOTO_API.'--selections',
                     // ---
@@ -173,6 +172,19 @@ class API
                         )
                     ]
                 ),
+                (object) array(
+                    'id' => CoreConfig::MIMOTO_API.'--outputRawResponse',
+                    // ---
+                    'name' => 'outputRawResponse',
+                    'type' => CoreConfig::PROPERTY_TYPE_VALUE,
+                    'settings' => [
+                        'type' => (object) array(
+                            'key' => 'type',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                )
             ]
         );
     }

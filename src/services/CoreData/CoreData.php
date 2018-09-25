@@ -228,7 +228,7 @@ class CoreData // extends MimotoService
         switch($eInstance->getEntityTypeName())
         {
             case CoreConfig::MIMOTO_ENTITY: $sTablePrefix = ''; break;
-            case CoreConfig::MIMOTO_COMPONENT: $sTablePrefix = '|Mimoto_component|_'; break;
+            case CoreConfig::MIMOTO_COMPONENT: $sTablePrefix = '_MimotoComponent_'; break;
         }
 
         // 3. send

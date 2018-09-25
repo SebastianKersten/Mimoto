@@ -15,13 +15,10 @@
                 <div class="MimotoCMS_pages_pages_Detail_Structure__meta">
                     <div class="MimotoCMS_pages_pages_Detail_Structure__meta_info">
 
-                        <div class="MimotoCMS_pages_pages_Detail_Structure__name" {{ Mimoto.realtime('name') }}>{{ Mimoto.data('name') }}</div>
-                        <br>
+                        <div class="MimotoCMS_modules_PropertyInput__entityname" {{ Mimoto.realtime('name') }}>
+                            {{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'name', sFieldClass:'MimotoCMS_pages_pages_Detail_Structure__name' }) }}
+                        </div>
 
-                    </div>
-
-                    <div class="MimotoCMS_pages_pages_Detail_Structure__meta_menu">
-                        {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Edit', icon:'', directive:Mimoto.edit('_Mimoto_api') }) }}
                     </div>
                 </div>
 
@@ -32,7 +29,6 @@
                 <div class="MimotoCMS_pages_pages_Detail_Structure__meta">
                     <div class="MimotoCMS_pages_pages_Detail_Structure__meta_info">
 
-                        {{ Mimoto.module('MimotoCMS_modules_UserRolePermissions', { sPropertyName:'allowedUserRoles' }) }}
                         {{ Mimoto.module('MimotoCMS_modules_PathEditor', { sPropertyName:'path' }) }}
 
                     </div>
@@ -43,6 +39,45 @@
 
                 <div class="MimotoCMS_pages_pages_Detail_Structure__meta">
                     <div class="MimotoCMS_pages_pages_Detail_Structure__meta_info">
+
+                        <div class="MimotoCMS_pages_pages_Detail_Structure__name">Settings</div>
+                        <br>
+
+                        <div>
+                            <span {{ Mimoto.showWhenValue('isEnabled', false) }}>
+                                API is <u>not</u> enabled :( &nbsp;&nbsp;
+                                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Enable', icon:'', directive:Mimoto.set('isEnabled', true), types:['secondary', 'small'] }) }}
+                            </span>
+                            <span {{ Mimoto.showWhenValue('isEnabled', true) }}>
+                                API enabled! &nbsp;&nbsp;
+                                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Disable', icon:'', directive:Mimoto.set('isEnabled', false), types:['secondary', 'small'] }) }}
+                            </span>
+                        </div>
+                        <br>
+                        <div>
+                            Output is
+                            <span {{ Mimoto.showWhenValue('outputRawResponse', false) }}>
+                                Mimoto formatted &nbsp;&nbsp;
+                                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Output as raw response', icon:'', directive:Mimoto.set('outputRawResponse', true), types:['secondary', 'small'] }) }}
+                            </span>
+                            <span {{ Mimoto.showWhenValue('outputRawResponse', true) }}>
+                                raw &nbsp;&nbsp;
+                                {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Output as Mimoto formatted response', icon:'', directive:Mimoto.set('outputRawResponse', false), types:['secondary', 'small'] }) }}
+                            </span>
+                        </div>
+                        <br>
+                        {{ Mimoto.module('MimotoCMS_modules_UserRolePermissions', { sPropertyName:'allowedUserRoles' }) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="MimotoCMS_pages_pages_Detail_Structure">
+
+                <div class="MimotoCMS_pages_pages_Detail_Structure__meta">
+                    <div class="MimotoCMS_pages_pages_Detail_Structure__meta_info">
+
+                        <div class="MimotoCMS_pages_pages_Detail_Structure__name">Output</div>
+                        <br>
 
                         Call service:
 

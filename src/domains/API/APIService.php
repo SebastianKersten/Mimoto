@@ -6,6 +6,8 @@ namespace Mimoto\API;
 // Mimoto classes
 use Mimoto\Mimoto;
 use Mimoto\Selection\Selection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -16,7 +18,10 @@ use Mimoto\Selection\Selection;
 class APIService
 {
 
-    
+    const ERROR_SERVICE_NOT_AVAILABLE = 'Service not configured';
+    const ERROR_SERVICE_FUNCTION_NOT_CONFIGURED = 'Service function not available';
+    const ERROR_NO_RESULT = 'No result';
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -44,7 +49,7 @@ class APIService
 
         // 2. validate
         if (empty($sServicesPath) || empty($eService) || empty($sServiceName = $eService->get('name')) || empty($sServiceFile = $eService->get('file')) || empty(($eFunction)) || empty($sFunctionName = $eFunction->get('name')))
-            return Mimoto::service('messages')->response('Service not configured', 500);
+            return (!$eAPI->get('outputRawResponse')) ? Mimoto::service('messages')->response(self::ERROR_SERVICE_NOT_AVAILABLE, 500) : new Response(self::ERROR_SERVICE_NOT_AVAILABLE, 500);
 
         // 3. verify
         if (!class_exists($sServiceName))
@@ -64,7 +69,7 @@ class APIService
         $service = new $sServiceName;
 
         // 5. verify
-        if (!method_exists($service, $sFunctionName)) return Mimoto::service('messages')->response('Service function not available', 500);
+        if (!method_exists($service, $sFunctionName)) return (!$eAPI->get('outputRawResponse')) ? Mimoto::service('messages')->response(self::ERROR_SERVICE_FUNCTION_NOT_CONFIGURED, 500) : new Response(self::ERROR_SERVICE_FUNCTION_NOT_CONFIGURED, 500);
 
         // 6. collect settings
         $settings = (object) array();
@@ -141,13 +146,13 @@ class APIService
         }
 
         // 9. verify
-        if ($bWillReturnSingleResult && count($aInstances) == 0) return Mimoto::service('messages')->response('No result', 404);
+        if (count($aSelections) > 0 && $bWillReturnSingleResult && count($aInstances) == 0) return (!$eAPI->get('outputRawResponse')) ? Mimoto::service('messages')->response(self::ERROR_NO_RESULT, 404) : new Response(self::ERROR_NO_RESULT, 404);
 
         // 10. call and pass clone of settings (unserialize/serialize)
         $result = call_user_func([$service, $sFunctionName], ($bWillReturnSingleResult) ? ((count($aInstances) > 0) ? $aInstances[0] : null) : $aInstances, $settings);
 
         // 11. respond
-        return Mimoto::service('messages')->response($result, 200);
+        return (!$eAPI->get('outputRawResponse')) ? Mimoto::service('messages')->response($result, 200) : new JsonResponse($result, 200);
     }
 
 }

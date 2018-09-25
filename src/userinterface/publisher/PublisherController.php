@@ -32,9 +32,9 @@ class PublisherController
         // __get Mimoto::service('')-> (some basic core services, some extended. Everything overrideable) use interface?
 
 
-        if (!empty(Mimoto::user()->data()->get('biography')))
+        if (!empty(Mimoto::user()->get('biography')))
         {
-            Mimoto::error(Mimoto::user()->data()->get('biography'));
+            //Mimoto::error(Mimoto::user()->get('biography'));
         }
         else
         {
@@ -65,32 +65,11 @@ class PublisherController
         return $page->render();
     }
 
-//    public function viewFeed(Application $app)
-//    {
-//        // 1. load data
-//        $eDatatset = Mimoto::service('data')->selectOne(['type' => CoreConfig::MIMOTO_DATASET, 'values' => ['name' => 'Articles']]);
-//
-//        // 2. create template
-//        $page = Mimoto::service('output')->createPage('Feed', $eDatatset);
-//
-//        // 3. output
-//        return $page->render();
-//    }
-
-//    public function viewArticle(Application $app, $nArticleId)
-//    {
-//        // 1. load data
-//        $eArticle = Mimoto::service('data')->get('article', $nArticleId);
-//
-//        // 2. create template
-//        $page = Mimoto::service('output')->createPage('Article', $eArticle);
-//
-//        // 3. output
-//        return $page->render();
-//    }
-
     public function addComment(Application $app, Request $request, $nArticleId)
     {
+        // ---> replace with inline form
+
+
         // 1. load and convert
         $data = MimotoDataUtils::decodePostData($request->get('data'));
 
@@ -118,6 +97,9 @@ class PublisherController
 
     public function removeComment(Application $app, $nCommentId)
     {
+        // ---> replace with api (check ownershow or group permission
+
+
         // 1. load comment
         $eComment = Mimoto::service('data')->get('comment', $nCommentId);
 

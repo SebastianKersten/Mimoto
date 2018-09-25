@@ -43,6 +43,10 @@ class User
     // ----------------------------------------------------------------------------
 
 
+    public function get($sPropertyName, $bGetConnectionInfo = false, $bGetPersistentValue = false)
+    {
+        return (!empty($this->_eInstance)) ? $this->_eInstance->get($sPropertyName, $bGetConnectionInfo, $bGetPersistentValue) : null;
+    }
 
 
     // get/set, add/remove
@@ -76,7 +80,7 @@ class User
         $eUser = $this->_component->getEntity();
 
         // read
-        $aRoles = $eUser->getValue('roles');
+        $aRoles = $eUser->get('roles');
 
         // init
         $aRolesNames = [];
@@ -89,7 +93,7 @@ class User
             $eRole = $aRoles[$nRoleIndex];
 
             // read and overwrite
-            $aRolesNames[] = $eRole->getValue('name');
+            $aRolesNames[] = $eRole->get('name');
         }
 
         // register

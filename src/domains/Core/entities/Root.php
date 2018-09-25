@@ -26,6 +26,24 @@ class Root
             'forms' => [],
             'properties' => [
                 (object) array(
+                    'id' => CoreConfig::MIMOTO_ROOT.'--apps',
+                    // ---
+                    'name' => 'apps',
+                    'type' => CoreConfig::PROPERTY_TYPE_COLLECTION,
+                    'settings' => [
+                        'allowedEntityTypes' => (object) array(
+                            'key' => 'allowedEntityTypes',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_ARRAY,
+                            'value' => [CoreConfig::MIMOTO_APP]
+                        ),
+                        'allowDuplicates' => (object) array(
+                            'key' => 'allowDuplicates',
+                            'type' => MimotoEntityPropertyValueTypes::VALUETYPE_BOOLEAN,
+                            'value' => CoreConfig::DATA_VALUE_FALSE
+                        )
+                    ]
+                ),
+                (object) array(
                     'id' => CoreConfig::MIMOTO_ROOT.'--entities',
                     // ---
                     'name' => 'entities',

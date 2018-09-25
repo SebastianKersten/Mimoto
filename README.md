@@ -124,7 +124,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset
 ## Packages to add
 
 - "brianlmoon/net_gearman": "dev-master"
-
+- http://svgjs.com
 
 
 

@@ -405,18 +405,40 @@ class DataService
      * @param array $aParentEntitySelectionConfigs Contains object with 'type', 'id' and 'property'
      * @return object Object containing the entity and the connection
      */
-    public function createAndConnect($sEntityType, $aParentEntitySelectionConfigs)
+    public function createAndConnect($sEntityType, $aParentEntitySelectionConfigs, $options = null)
     {
-        // 1. init
+        // 1. validate or init
+        if (empty($options)) $options = (object) array();
+
+        // 2. create
+        $eInstance = Mimoto::service('data')->create($sEntityType);
+
+        // 3. populate
+        if (isset($options->values))
+        {
+            // a. store
+            foreach($options->values as $sPropertyName => $value)
+            {
+                if ($eInstance->hasProperty($sPropertyName))
+                {
+                    if ($eInstance->getPropertyType($sPropertyName) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                    {
+                        $eInstance->set($sPropertyName, $value);
+                    }
+                }
+            }
+        }
+
+        // 4. store
+        Mimoto::service('data')->store($eInstance);
+
+        // 5. init
         $result = (object) array(
-            'entity' => Mimoto::service('data')->create($sEntityType),
+            'entity' => $eInstance,
             'connection' => null
         );
 
-        // 2. store
-        Mimoto::service('data')->store($result->entity);
-
-        // 3. connect to parents
+        // 6. connect to parents
         $nParentCount = count($aParentEntitySelectionConfigs);
         for ($nParentIndex = 0; $nParentIndex < $nParentCount; $nParentIndex++)
         {
@@ -435,7 +457,7 @@ class DataService
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
                         // set
-                        $eParent->setValue($parent->property, $result->entity);
+                        $eParent->set($parent->property, $result->entity);
                         break;
 
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
@@ -460,7 +482,7 @@ class DataService
             }
         }
 
-        // 4. send
+        // 7. send
         return $result;
     }
 

@@ -26,13 +26,24 @@ div.MimotoCMS_entities_overview_Entity-info {
     span.MimotoCMS_entities_overview_Entity-isUserExtension {
         font-style: italic;
         font-weight: normal;
-        color: $pale-slate;
+        color: $silver-chalice;
     }
 
     div.MimotoCMS_entities_overview_Entity-properties-empty {
         padding: 10px 20px 15px 0;
         font-style: italic;
         color: #858585;
+    }
+
+    div.MimotoCMS_entities_overview_Entity-properties-userextension {
+        padding: 10px 20px 10px 20px;
+        font-style: italic;
+
+        & > div.MimotoCMS_entities_overview_Entity-properties-userextension-division {
+            height: 0;
+            padding-top: 20px;
+            border-bottom: 1px solid $mercury;
+        }
     }
 
     div.MimotoCMS_entities_overview_Entity-properties {
