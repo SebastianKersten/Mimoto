@@ -30,6 +30,10 @@ Run realtime server script
 node src/userinterface/Mimoto/realtime.js
 ```
 
+Run js parser
+```
+npm run build-web:dev
+```
 
 
 # Basic instalation

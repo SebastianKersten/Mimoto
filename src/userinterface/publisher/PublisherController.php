@@ -32,22 +32,22 @@ class PublisherController
         // __get Mimoto::service('')-> (some basic core services, some extended. Everything overrideable) use interface?
 
 
-        if (!empty(Mimoto::user()->get('biography')))
-        {
-            //Mimoto::error(Mimoto::user()->get('biography'));
-        }
-        else
-        {
-            Mimoto::error('NOT a owner');
-        }
+//        if (!empty(Mimoto::user()->get('biography')))
+//        {
+//            //Mimoto::error(Mimoto::user()->get('biography'));
+//        }
+//        else
+//        {
+//            Mimoto::error('NOT a owner');
+//        }
 
 
 
-        $eUser = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER, 1);
-        Mimoto::error($eUser);
+//        $eUser = Mimoto::service('data')->get(CoreConfig::MIMOTO_USER, 1);
+//        Mimoto::error($eUser);
 
 
-        $eMember = Mimoto::service('data')->get('member', 1);
+        $eMember = Mimoto::service('data')->get('member', 2);
         Mimoto::error($eMember);
     }
 
@@ -97,7 +97,7 @@ class PublisherController
 
     public function removeComment(Application $app, $nCommentId)
     {
-        // ---> replace with api (check ownershow or group permission
+        // ---> replace with api (check ownershow or group permissionuseAsUserExtension
 
 
         // 1. load comment

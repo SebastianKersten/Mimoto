@@ -14,13 +14,25 @@
         <div data-mimotocms-tabmenu-panel>
 
             {{ Mimoto.module('MimotoCMS_modules_EntityMetaData', { type:'entity', entityStructure:entityStructure }) }}
+
+            <div class="MimotoCMS_pages_entities_EntityDetail__block">
+                <div class="MimotoCMS_entities_overview_Entity-properties-userextension {{ Mimoto.init() }}" {{ Mimoto.showWhenValue('isUserExtension', true) }}>
+                    {{ Mimoto.module('MimotoCMS_entities_EntityOverview_EntityProperty', { bUseAsStatic:true, data: { name:'firstName', type:'value'} } ) }}
+                    {{ Mimoto.module('MimotoCMS_entities_EntityOverview_EntityProperty', { bUseAsStatic:true, data: { name:'lastName', type:'value'} } ) }}
+                    {{ Mimoto.module('MimotoCMS_entities_EntityOverview_EntityProperty', { bUseAsStatic:true, data: { name:'email', type:'value'} } ) }}
+                    {{ Mimoto.module('MimotoCMS_entities_EntityOverview_EntityProperty', { bUseAsStatic:true, data: { name:'password', type:'value'} } ) }}
+                    {{ Mimoto.module('MimotoCMS_entities_EntityOverview_EntityProperty', { bUseAsStatic:true, data: { name:'avatar', subtype:'image'} } ) }}
+                    {{ Mimoto.module('MimotoCMS_entities_EntityOverview_EntityProperty', { bUseAsStatic:true, data: { name:'roles', type:'collection'} } ) }}
+                    {{ Mimoto.module('MimotoCMS_entities_EntityOverview_EntityProperty', { bUseAsStatic:true, data: { name:'settings', type:'collection'} } ) }}
+                    <div class="MimotoCMS_entities_overview_Entity-properties-userextension-division"></div>
+                </div>
+            </div>
+
             {{ Mimoto.module('MimotoCMS_modules_PropertyInput') }}
 
         </div>
 
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
-
-            {{ Mimoto.module('MimotoCMS_modules_EntityMetaData', { type:'entity', entityStructure:entityStructure }) }}
 
             <div class="MimotoCMS_modules_PropertyInput__meta">
                 <div class="MimotoCMS_modules_PropertyInput__meta_info">
@@ -48,8 +60,6 @@
 
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
 
-            {{ Mimoto.module('MimotoCMS_modules_EntityMetaData', { type:'entity', entityStructure:entityStructure }) }}
-
             <div class="MimotoCMS_modules_PropertyInput__meta">
                 <div class="MimotoCMS_modules_PropertyInput__meta_info">
 
@@ -74,8 +84,6 @@
         <!-- more -->
 
         <div data-mimotocms-tabmenu-panel class="{{ Mimoto.init() }}">
-
-            {{ Mimoto.module('MimotoCMS_modules_EntityMetaData', { type:'entity', entityStructure:entityStructure }) }}
 
             <div class="MimotoCMS_modules_PropertyInput__meta">
                 <div class="MimotoCMS_modules_PropertyInput__meta_info">

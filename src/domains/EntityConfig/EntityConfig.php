@@ -171,6 +171,7 @@ class EntityConfig
         // send
         return $this->_aPropertyValues[$sPropertyName];
     }
+
     
     
     // --- structure ---
@@ -180,13 +181,14 @@ class EntityConfig
      * Set value as property
      * @param string $sPropertyName The property's name
      */
-    public function setValueAsProperty($sPropertyName, $nPropertyId, $settings)
+    public function setValueAsProperty($sPropertyName, $nPropertyId, $settings, $xParentEntityTypeId)
     {
         // compose
         $property = (object) array(
             'name' => $sPropertyName,
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE,
             'id' => $nPropertyId,
+            'parentEntityTypeId' => $xParentEntityTypeId,
             'settings' => (object) array(
                 EntityConfig::SETTING_VALUE_TYPE => $settings[EntityConfig::SETTING_VALUE_TYPE]
             )
@@ -207,7 +209,7 @@ class EntityConfig
      * @param string $sPropertyName The property's name
      * @param array $settings Array containing the setting 'entityType'
      */
-    public function setEntityAsProperty($sPropertyName, $nPropertyId, $settings, $sSubtype = null)
+    public function setEntityAsProperty($sPropertyName, $nPropertyId, $settings, $sSubtype = null, $xParentEntityTypeId)
     {
         // compose
         $property = (object) array(
@@ -215,6 +217,7 @@ class EntityConfig
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY,
             'subtype' => $sSubtype,
             'id' => $nPropertyId,
+            'parentEntityTypeId' => $xParentEntityTypeId,
             'settings' => (object) array(
                 EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE => $settings[EntityConfig::SETTING_ENTITY_ALLOWEDENTITYTYPE]->value
             )
@@ -235,13 +238,14 @@ class EntityConfig
      * @param string $sPropertyName The property's name
      * @param array $settings Array containig the settings 'allowedEntityType' and 'allowDuplicates'
      */
-    public function setCollectionAsProperty($sPropertyName, $nPropertyId, $settings)
+    public function setCollectionAsProperty($sPropertyName, $nPropertyId, $settings, $xParentEntityTypeId)
     {
         // compose
         $property = (object) array(
             'name' => $sPropertyName,
             'type' => MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION,
             'id' => $nPropertyId,
+            'parentEntityTypeId' => $xParentEntityTypeId,
             'settings' => (object) array(
                 EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES => $settings[EntityConfig::SETTING_COLLECTION_ALLOWEDENTITYTYPES]->value,
                 EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES => $settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]

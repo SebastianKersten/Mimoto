@@ -52,6 +52,15 @@ class MimotoEntity
      * @var array
      */
     private $_aProperties;
+
+
+    /**
+     * The registry of extended properties connected to this data node
+     *
+     * @var array
+     */
+    private $_aExtendedProperties;
+
     
     /**
      * Track change mode
@@ -59,6 +68,13 @@ class MimotoEntity
      * @var boolean
      */
     private $_bTrackChanges;
+
+
+    /**
+     * The entity's extension id (for extending the USER object
+     * @var int
+     */
+    private $_nExtensionId;
 
 
 
@@ -133,6 +149,22 @@ class MimotoEntity
 
 
 
+    /**
+     * Get the entity's extensionid (for extending the USER object
+     *
+     * @return int
+     */
+    public function getExtensionId() { return $this->_nExtensionId; }
+
+    /**
+     * Set the entity's extension id (for extending the USER object
+     *
+     * @param int $nId The entity's extension id
+     */
+    public function setExtensionId($nExtensionId) { $this->_nExtensionId = $nExtensionId; }
+
+
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -175,17 +207,40 @@ class MimotoEntity
         
         // collect
         foreach ($this->_aProperties as $sPropertyName => $property) { $aPropertyNames[] = $property->getName(); }
-        
+
         // send
         return $aPropertyNames;
     }
+
+    /**
+     * Get entity's own property names
+     * @return array
+     */
+    public function getOwnPropertyNames()
+    {
+        // init
+        $aPropertyNames = [];
+
+        // collect
+        foreach ($this->_aProperties as $sPropertyName => $property)
+        {
+            if ($property->getParentEntityTypeId() == $this->getEntityTypeId())
+            {
+                $aPropertyNames[] = $property->getName();
+            }
+        }
+
+        // send
+        return $aPropertyNames;
+    }
+
     
     /**
      * Setup property by config
      * 
      * @param object $propertyConfig
      */
-    public function setupProperty($propertyConfig)
+    public function setupProperty($propertyConfig, $xEntityTypeId)
     {
         // init
         $property = null;
@@ -195,17 +250,17 @@ class MimotoEntity
         {
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
-                $property = new MimotoEntityProperty_Value($propertyConfig, $this->getId(), $this->getEntityTypeId());
+                $property = new MimotoEntityProperty_Value($propertyConfig, $this->getId(), $xEntityTypeId);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_ENTITY:
 
-                $property = new MimotoEntityProperty_Entity($propertyConfig, $this->getId(), $this->getEntityTypeId());
+                $property = new MimotoEntityProperty_Entity($propertyConfig, $this->getId(), $xEntityTypeId);
                 break;
 
             case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
-                $property = new MimotoEntityProperty_Collection($propertyConfig, $this->getId(), $this->getEntityTypeId());
+                $property = new MimotoEntityProperty_Collection($propertyConfig, $this->getId(), $xEntityTypeId);
                 break;
 
             default:
@@ -256,6 +311,20 @@ class MimotoEntity
     public function typeOf($sEntityTypeName)
     {
         return Mimoto::service('entityConfig')->entityIsTypeOf($this->_config->entityTypeName, $sEntityTypeName);
+    }
+
+    public function importProperty($property)
+    {
+        // import
+        $this->_aProperties[$property->getName()] = $property;
+
+        // register
+        $this->_aExtendedProperties[] = $property->getName();
+    }
+
+    public function exportProperty($sPropertyName)
+    {
+        return $this->_aProperties[$sPropertyName];
     }
 
 

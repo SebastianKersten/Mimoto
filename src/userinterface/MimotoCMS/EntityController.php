@@ -116,6 +116,12 @@ class EntityController
 
     public function useAsUserExtension(Application $app, $nEntityId)
     {
+
+        // #todo - check duplicate field names, ask to confirm via form -> build form and ask values (incl webhook )
+        //return Mimoto::service('messages')->response((object) array('result' => 'Entity `'.$sEntityNameAsUserExtension.'` is now being used as Mimoto`s user object extension! '.date("Y.m.d H:i:s")), 200);
+
+
+
         // init
         $sEntityNameAsUserExtension = '';
 
@@ -177,6 +183,12 @@ class EntityController
 
         // store
         Mimoto::service('data')->store($eEntity);
+
+
+        // clear reference column
+        $stmt = Mimoto::service('database')->prepare("UPDATE `".CoreConfig::MIMOTO_USER."` SET `mimoto_extensionid`=0");
+        $params = array();
+        $stmt->execute($params);
 
         // report
         return Mimoto::service('messages')->response((object) array('result' => 'Entity `'.$sEntityNameAsUserExtension.'` has now stopped from being used as Mimoto`s user object extension! '.date("Y.m.d H:i:s")), 200);

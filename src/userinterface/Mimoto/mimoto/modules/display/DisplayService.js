@@ -863,7 +863,6 @@ module.exports.prototype = {
                             // 2. if double field, auto sync?
                             // 3. handle data submit as form?
 
-
                             if (!element.classList.contains('Mimoto--ineditmode'))
                             {
                                 // toggle mode for button

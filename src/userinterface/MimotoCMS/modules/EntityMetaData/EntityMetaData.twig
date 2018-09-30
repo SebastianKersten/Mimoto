@@ -1,7 +1,8 @@
 <div class="MimotoCMS_modules_PropertyInput__meta">
     <div class="MimotoCMS_modules_PropertyInput__meta_info">
 
-        <span class="MimotoCMS_modules_PropertyInput__entityname" {{ Mimoto.realtime('name') }}>
+
+        <span class="MimotoCMS_modules_PropertyInput__entityname">
             {{ Mimoto.module('MimotoCMS_modules_EditableField', { sPropertyName:'name', sFieldClass:'MimotoCMS_modules_PropertyInput__entityname' }) }}
         </span>
         <span class="MimotoCMS_modules_PropertyInput-isUserExtension {{ Mimoto.init() }}" {{ Mimoto.showWhenValue('isUserExtension', true) }}>- <span class="fa fa-user"></span> extends user </span>

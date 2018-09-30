@@ -26,7 +26,8 @@ class EntityConfigRepository
      */
     private $_aEntityConfigs = [];
     private $_aEntities;
-    private $_nUserExtensionEntityIndex = false;
+    private $_nUserEntityIndex = -1;
+    private $_nUserExtensionEntityIndex = -1;
 
 
 
@@ -66,15 +67,19 @@ class EntityConfigRepository
         {
             $entity = $this->_aEntities[$nEntityIndex];
 
-            if (isset($entity->isUserExtension) && $entity->isUserExtension)
-            {
-                $this->_nUserExtensionEntityIndex = $nEntityIndex;
-                break;
-            }
+            if ($entity->id == CoreConfig::MIMOTO_USER) $this->_nUserEntityIndex = $nEntityIndex;
+            if (isset($entity->isUserExtension) && $entity->isUserExtension) $this->_nUserExtensionEntityIndex = $nEntityIndex;
         }
 
+        // differentiate between original properties and extended properties
 
-        //Mimoto::error($this->_aEntities);
+
+
+        if ($this->_nUserEntityIndex >= 0 && $this->_nUserExtensionEntityIndex >= 0)
+        {
+            $this->_aEntities[$this->_nUserEntityIndex]->properties = array_merge($this->_aEntities[$this->_nUserEntityIndex]->properties, $this->_aEntities[$this->_nUserExtensionEntityIndex]->properties);
+            $this->_aEntities[$this->_nUserExtensionEntityIndex]->properties = array_merge($this->_aEntities[$this->_nUserExtensionEntityIndex]->properties, $this->_aEntities[$this->_nUserEntityIndex]->properties);
+        }
     }
         
     
@@ -337,7 +342,7 @@ class EntityConfigRepository
 
     public function getUserExtensionType()
     {
-        if (!empty($this->_nUserExtensionEntityIndex))
+        if ($this->_nUserExtensionEntityIndex >= 0)
         {
             return $this->_aEntities[$this->_nUserExtensionEntityIndex]->name;
         }
@@ -431,6 +436,11 @@ class EntityConfigRepository
             {
                 // read
                 $property = $entity->properties[$nPropertyIndex];
+
+
+                $property->parentEntityTypeId = $entity->id;
+
+
 
                 $property = $this->setDefaultPropertySettings($property);
 
@@ -725,7 +735,7 @@ class EntityConfigRepository
                         }
 
                         // setup
-                        $entityConfig->setValueAsProperty($property->name, $property->id, $settings);
+                        $entityConfig->setValueAsProperty($property->name, $property->id, $settings, isset($property->parentEntityTypeId) ? $property->parentEntityTypeId : $entity->id);
 
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLColumn($property->name, $property->name);
@@ -756,7 +766,7 @@ class EntityConfigRepository
 
 
                         // setup
-                        $entityConfig->setEntityAsProperty($property->name, $property->id, $settings, $sSubtype);
+                        $entityConfig->setEntityAsProperty($property->name, $property->id, $settings, $sSubtype, isset($property->parentEntityTypeId) ? $property->parentEntityTypeId : $entity->id);
 
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
@@ -790,7 +800,7 @@ class EntityConfigRepository
                         $settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES] = (isset($property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]) && $property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value === 'true') ? true : false;$settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES] = (isset($property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]) && ($property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value == 'true' || $property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value == '1' || $property->settings[EntityConfig::SETTING_COLLECTION_ALLOWDUPLICATES]->value)) ? true : false;
 
                         // setup
-                        $entityConfig->setCollectionAsProperty($property->name, $property->id, $settings);
+                        $entityConfig->setCollectionAsProperty($property->name, $property->id, $settings, isset($property->parentEntityTypeId) ? $property->parentEntityTypeId : $entity->id);
                         
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
