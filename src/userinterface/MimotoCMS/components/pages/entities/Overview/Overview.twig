@@ -1,7 +1,21 @@
 {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Add new entity', icon:'plus', directive:Mimoto.add('entities', '_Mimoto_coreform__entity'), types:['secondary'] }) }}
 
+{#<div class="MimotoCMS_pages_entities_EntityOverview__container" #}{#{{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}#}{#>#}
+    {#Folders, order by {{ Mimoto.data('subitems', 'MimotoCMS_entities_EntityOverview_Subitem') }}#}
+{#</div>#}
+
+
+<div class="MimotoCMS_pages_entities_EntityOverview__container" {#{{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}#}>
+    {#{{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_User', { filter:{'isUserExtension':true}}) }}#}
+    {{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_Entity', { filter:{'isUserExtension':true}}) }}
+</div>
+<div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('entities', { filter:{'isUserExtension':true }} ) }}>
+    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Extend user', icon:'plus', directive:Mimoto.api('/extenduserobject'), types:['secondary'] }) }}
+</div>
+
+
 <div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}>
-    {{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}
+    {{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_Entity', { filter:{'isUserExtension':false}}) }}
 </div>
 
 <div {{ Mimoto.showWhenEmpty('entities') }}>

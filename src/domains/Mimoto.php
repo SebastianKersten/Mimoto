@@ -41,6 +41,7 @@ use Silex\Provider\SecurityServiceProvider;
 // Twig classes
 use Twig_Environment;
 use Twig_Loader_Filesystem;
+use Twig_Extension_Debug;
 
 
 /**
@@ -120,6 +121,7 @@ class Mimoto
 
         // 6. prepare
         $aTwigSettings = [
+//            'debug' => self::$_bDebugMode,
             'autoescape' => (isset($config->twig->autoescape)) ? $config->twig->autoescape : false,
             'strict_variables' => (isset($config->twig->strict_variables)) ? $config->twig->strict_variables : true
         ];
@@ -128,6 +130,12 @@ class Mimoto
         // 7. setup
         $loader = new Twig_Loader_Filesystem([$config->folders->projectroot.$config->folders->components]);
         $twig = new Twig_Environment($loader, $aTwigSettings);
+//        if (self::$_bDebugMode)
+//        {
+//            $twig->addExtension(new Twig_Extension_Debug());
+//            $twig->enableDebug();
+//        }
+
 
         // 8. connect
         Mimoto::setService('database', new \PDO("mysql:host=".$config->mysql->host.";dbname=".$config->mysql->dbname, $config->mysql->username, $config->mysql->password));
@@ -631,7 +639,7 @@ class Mimoto
         $sBackgroundColor = ($bScream) ? '#ffbbbb' : '#f5f5f5';
 
         echo '<div style="background-color:'.$sBackgroundColor.';border:solid 1px '.$sBorderColor.';padding:20px">';
-        if (is_string($sTitle)) echo '<h2><b style="color:'.$sTextColor.'">'.$sTitle.'</b></h2><hr>';
+        if (is_string($sTitle) || is_numeric($sTitle)) echo '<h2><b style="color:'.$sTextColor.'">'.$sTitle.'</b></h2><hr>';
         echo '<pre style="width:100%">';
         if (!empty($data)) echo print_r($data, true);
         echo '</pre>';
@@ -639,18 +647,18 @@ class Mimoto
         echo '<br>';
     }
 
-    public static function error($data = null)
+    public static function error($data = null, $sDescription = '')
     {
         // validate
         if (!self::$_bDebugMode) return;
 
         echo '<div style="display:inline-block; background-color:#DF5B57;color:#ffffff;padding:15px 20px 0 20px; text-overflow: scroll">';
         echo '<div>';
-        echo '<h2><b style="font-size:larger;">Error</b></h2><hr style="border:0;height:1px;background:#ffffff">';
+        echo '<h2><b style="font-size:larger;">Error'.((!empty($sDescription)) ? ' - '.$sDescription : '').'</b></h2><hr style="border:0;height:1px;background:#ffffff">';
         echo '<pre>';
         if (empty($data))
         {
-            echo "<i style='font-style:italic'>No data provided</i>";
+            echo "<i style='font-style:italic'>No data provided or data is empty</i>";
         }
         else
         {
@@ -660,7 +668,7 @@ class Mimoto
         echo '</div>';
         echo '<br>';
 
-        throw new \Exception(print_r($data, true).'');
+        //if (is_string($data)) throw new \Exception(print_r($data, true).''); else throw new \Exception($sDescription);
         die();
     }
 

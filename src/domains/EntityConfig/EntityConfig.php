@@ -104,23 +104,6 @@ class EntityConfig
      * @param string $sName
      */
     public function setName($sName) { $this->_sName = $sName; }
-
-
-    /**
-     * Mark as user extension
-     */
-    public function markAsUserExtension()
-    {
-        $this->_bIsUserExtension = true;
-    }
-
-    /**
-     * Mark as user extension
-     */
-    public function isUserExtension()
-    {
-        return $this->_bIsUserExtension;
-    }
     
     
     

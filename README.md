@@ -17,12 +17,12 @@ An ultra fast, fluid and realtime data management microframework
 
 Run event worker
 ```
-curl http://mimoto.aimless/mimoto.cms/workers/data
+curl http://mimoto.local/mimoto.cms/workers/data
 ```
 
 Run async worker
 ```
-curl http://mimoto.aimless/mimoto.cms/workers/async
+curl http://mimoto.local/mimoto.cms/workers/async
 ```
 
 Run realtime server script

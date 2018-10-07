@@ -49,7 +49,7 @@ class AimlessComponentViewModel
         $values = (!empty($options) && !empty($options['values'])) ? $options['values'] : null;
         $bGetConnectionInfo = (!empty($options) && !empty($options['getConnectionInfo'])) ? $options['getConnectionInfo'] : false;
 
-        return $this->_component->data($sPropertySelector, $bGetConnectionInfo, !empty($sComponentName), $sComponentName, null, $values);
+        return $this->_component->data($sPropertySelector, $bGetConnectionInfo, !empty($sComponentName), $sComponentName, null, $values, $options);
     }
 
     public function parse($sValue)
@@ -413,10 +413,10 @@ class AimlessComponentViewModel
     // ---
 
 
-    public function showWhenEmpty($sPropertySelector)
+    public function showWhenEmpty($sPropertySelector, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY, $sPropertySelector, $this->_component);
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY, $sPropertySelector, $this->_component, $options);
     }
 
     public function showWhenNotEmpty($sPropertySelector)

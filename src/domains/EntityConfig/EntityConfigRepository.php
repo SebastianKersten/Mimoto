@@ -62,24 +62,23 @@ class EntityConfigRepository
         }
 
         // register user extension index
-        $nEntityCount = count($this->_aEntities);
-        for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
-        {
-            $entity = $this->_aEntities[$nEntityIndex];
+//        $nEntityCount = count($this->_aEntities);
+//        for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
+//        {
+//            $entity = $this->_aEntities[$nEntityIndex];
+//
+//            if ($entity->id == CoreConfig::MIMOTO_USER) $this->_nUserEntityIndex = $nEntityIndex;
+//            if (isset($entity->isUserExtension) && $entity->isUserExtension) $this->_nUserExtensionEntityIndex = $nEntityIndex;
+//        }
+//
+//        if ($this->_nUserEntityIndex >= 0 && $this->_nUserExtensionEntityIndex >= 0)
+//        {
+//            $this->_aEntities[$this->_nUserEntityIndex]->properties = array_merge($this->_aEntities[$this->_nUserEntityIndex]->properties, $this->_aEntities[$this->_nUserExtensionEntityIndex]->properties);
+//            $this->_aEntities[$this->_nUserExtensionEntityIndex]->properties = array_merge($this->_aEntities[$this->_nUserExtensionEntityIndex]->properties, $this->_aEntities[$this->_nUserEntityIndex]->properties);
+//        }
 
-            if ($entity->id == CoreConfig::MIMOTO_USER) $this->_nUserEntityIndex = $nEntityIndex;
-            if (isset($entity->isUserExtension) && $entity->isUserExtension) $this->_nUserExtensionEntityIndex = $nEntityIndex;
-        }
 
-        // differentiate between original properties and extended properties
-
-
-
-        if ($this->_nUserEntityIndex >= 0 && $this->_nUserExtensionEntityIndex >= 0)
-        {
-            $this->_aEntities[$this->_nUserEntityIndex]->properties = array_merge($this->_aEntities[$this->_nUserEntityIndex]->properties, $this->_aEntities[$this->_nUserExtensionEntityIndex]->properties);
-            $this->_aEntities[$this->_nUserExtensionEntityIndex]->properties = array_merge($this->_aEntities[$this->_nUserExtensionEntityIndex]->properties, $this->_aEntities[$this->_nUserEntityIndex]->properties);
-        }
+        // fixed user extension
     }
         
     
@@ -706,7 +705,10 @@ class EntityConfigRepository
             $entityConfig->setName($entity->name);
             $entityConfig->setMySQLTable($entity->name);
 
-            if (isset($entity->isUserExtension) && $entity->isUserExtension) $entityConfig->markAsUserExtension();
+            if (isset($entity->isUserExtension) && $entity->isUserExtension)
+            {
+                $entityConfig->markAsUserExtension();
+            }
 
             $sConnectionTable = CoreConfig::MIMOTO_CONNECTION;
 

@@ -234,7 +234,7 @@ class AimlessComponent
     // --- Twig usage
 
 
-    public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null, $sWrapperName = null, $customValues = null)
+    public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null, $sWrapperName = null, $customValues = null, $options = null)
     {
         // find
         $nSeperatorPos = strpos($sPropertySelector, '.');
@@ -246,7 +246,6 @@ class AimlessComponent
 
         //$property = $this->getProperty($sPropertySelector);
         //$sSubpropertySelector = $this->getSubpropertySelector($sPropertySelector, $property);
-
 
 
         if (!empty($this->_entity))
@@ -315,7 +314,7 @@ class AimlessComponent
                     case MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION:
 
                         // read, render and send
-                        return $this->renderCollectionProperty($sPropertySelector, $sComponentName, $sWrapperName, $customValues);
+                        return $this->renderCollectionProperty($sPropertySelector, $sComponentName, $sWrapperName, $customValues, $options);
                         break;
                 }
             }
@@ -577,7 +576,7 @@ class AimlessComponent
      * @param string $sComponentName
      * @return mixed|string Either a rendered component or a value
      */
-    private function renderCollectionProperty($sPropertySelector, $sComponentName = null, $sWrapperName = null, $customValues = null)
+    private function renderCollectionProperty($sPropertySelector, $sComponentName = null, $sWrapperName = null, $customValues = null, $options = null)
     {
 
         // #todo - double code om $this->_aPropertyComponents[$sMainPropertyName] te laten werken
@@ -594,9 +593,60 @@ class AimlessComponent
         // #todo - end
 
 
+
         // 1. read
         $xValue = $this->_entity->get($sPropertySelector);
         $aConnections = $this->_entity->get($sPropertySelector, true);
+
+
+        if (!empty($options) && isset($options['filter']))
+        {
+            if (is_array($xValue))
+            {
+                for ($nInstanceIndex = 0; $nInstanceIndex < count($xValue); $nInstanceIndex++)
+                {
+
+                    // register
+                    $eInstance = $xValue[$nInstanceIndex];
+
+                    if (empty($eInstance)) continue; // HUH?!
+
+                    // validate
+                    $bValidated = true;
+                    foreach ($options['filter'] as $sProperty => $value)
+                    {
+                        if (is_array($value))
+                        {
+                            // 1. for later (equals, greaterThan, count (non-value propertytype) etc
+                            // 2. also support for entity
+                        }
+                        else
+                        {
+                            if ($eInstance->getPropertyType($sProperty) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                            {
+                                if ($eInstance->get($sProperty) != $value)
+                                {
+                                    $bValidated = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    // remove
+                    if (!$bValidated)
+                    {
+                        array_splice($xValue, $nInstanceIndex, 1);
+                        array_splice($aConnections, $nInstanceIndex, 1);
+
+                        // correct
+                        $nInstanceIndex--;
+                    }
+                }
+
+            }
+
+        }
 
 
         // verify and convert selection to options
@@ -634,7 +684,7 @@ class AimlessComponent
         }
 
         // 4. render and send
-        return $this->renderCollection($xValue, $aConnections, $sComponentName, null, null, $sWrapperName, $customValues);
+        return $this->renderCollection($xValue, $aConnections, $sComponentName, null, null, $sWrapperName, $customValues, $options);
 
     }
 

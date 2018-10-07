@@ -125,7 +125,7 @@ class DataService
      * @param int $nId
      * @return MimotoEntity The entity
      */
-    public function get($sEntityType, $nId, $bGetUnextendedObject = false)
+    public function get($sEntityType, $nId)
     {
         // verify and convert
         if (MimotoDataUtils::isValidId($sEntityType)) $sEntityType = $this->_EntityConfigService->getEntityNameById($sEntityType);
@@ -148,7 +148,7 @@ class DataService
         
         try
         {
-            $entity = $this->_entityRepository->get($this->_aEntityConfigs[$sEntityType], $nId, $bGetUnextendedObject);
+            $entity = $this->_entityRepository->get($this->_aEntityConfigs[$sEntityType], $nId);
         }
         catch(MimotoEntityException $e)
         {
@@ -162,7 +162,7 @@ class DataService
     /**
      * Get all entities
      */
-    public function select($xSelection, $bGetUnextendedObject = false)
+    public function select($xSelection)
     {
         // init
         $aRequestedEntities = [];
@@ -211,7 +211,7 @@ class DataService
                 $entityConfig = $this->getEntityConfig($sEntityType);
 
                 // load
-                $aRequestedEntities = array_merge($aRequestedEntities, $this->_entityRepository->select($entityConfig, $rule, $bGetUnextendedObject));
+                $aRequestedEntities = array_merge($aRequestedEntities, $this->_entityRepository->select($entityConfig, $rule));
             }
 
             // #todo remove duplicates
@@ -237,10 +237,10 @@ class DataService
      * @param $xSelection
      * @return array|mixed
      */
-    public function selectOne($xSelection, $bGetUnextendedObject = false)
+    public function selectOne($xSelection)
     {
         // 1. load
-        $aInstances = $this->select($xSelection, $bGetUnextendedObject);
+        $aInstances = $this->select($xSelection);
 
         // 2. filter and send
         return (count($aInstances) > 0) ? $aInstances[0] : $aInstances;

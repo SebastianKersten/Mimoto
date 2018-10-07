@@ -60,10 +60,10 @@ class EntityRepository
      * Create new entity
      * @return MimotoEntity
      */
-    public function create(EntityConfig $entityConfig, $bGetUnextendedObject = false)
+    public function create(EntityConfig $entityConfig)
     {
         // init and send
-        return $this->extendInstance($this->createEntity($entityConfig), $entityConfig, $bGetUnextendedObject);
+        return $this->createEntity($entityConfig);
     }
 
     /**
@@ -72,7 +72,7 @@ class EntityRepository
      * @return MimotoEntity
      * @throws MimotoEntityException
      */
-    public function get(EntityConfig $entityConfig, $nEntityId, $bGetUnextendedObject = false)
+    public function get(EntityConfig $entityConfig, $nEntityId)
     {
         // 1. check if the request related to core data
         if (substr($nEntityId, 0, strlen(CoreConfig::CORE_PREFIX)) == CoreConfig::CORE_PREFIX)
@@ -104,7 +104,7 @@ class EntityRepository
                 );
 
                 // create
-                $entity = $this->extendInstance($this->createEntity($entityConfig, $entityData), $entityConfig, $bGetUnextendedObject);
+                $entity = $this->createEntity($entityConfig, $entityData);
 
                 if ($coreData !== false)
                 {
@@ -170,7 +170,7 @@ class EntityRepository
 
 
             // create and send
-            return $this->extendInstance($this->createEntity($entityConfig, $instanceData), $entityConfig, $bGetUnextendedObject);
+            return $this->createEntity($entityConfig, $instanceData);
 
         }
     }
@@ -241,7 +241,7 @@ class EntityRepository
         }
     }
 
-    public function select(EntityConfig $entityConfig, SelectionRule $rule, $bGetUnextendedObject = false)
+    public function select(EntityConfig $entityConfig, SelectionRule $rule)
     {
         // init
         $aEntities = [];
@@ -259,7 +259,7 @@ class EntityRepository
         if (!empty($rule->getId()))
         {
             // load
-            $eEntity = Mimoto::service('data')->get($rule->getType(), $rule->getId(), $bGetUnextendedObject);
+            $eEntity = Mimoto::service('data')->get($rule->getType(), $rule->getId());
 
             // validate
             if (empty($eEntity)) return $aEntities;
@@ -413,7 +413,7 @@ class EntityRepository
             for ($nResultIndex = 0; $nResultIndex < $nResultCount; $nResultIndex++)
             {
                 // register
-                $aEntities[] = $this->extendInstance($this->createEntity($entityConfig, $aResults[$nResultIndex]), $entityConfig, $bGetUnextendedObject);
+                $aEntities[] = $this->createEntity($entityConfig, $aResults[$nResultIndex]);
             }
         }
 
@@ -1374,87 +1374,4 @@ class EntityRepository
 
     }
 
-
-    private function extendInstance($eInstance, $entityConfig, $bGetUnextendedObject = false)
-    {
-        // load
-        if (($bIsUserExtension = $entityConfig->isUserExtension() || $entityConfig->getName() == CoreConfig::MIMOTO_USER))
-        {
-            if (!$bGetUnextendedObject)
-            {
-                if ($bIsUserExtension)
-                {
-                    if (!empty($eInstance->getId()))
-                    {
-                        // load
-                        $eUser = Mimoto::service('data')->selectOne(['type'=>CoreConfig::MIMOTO_USER, 'values'=>['mimoto_extensionid'=>$eInstance->getId()]], true);
-
-                        // 1. if empty user -> create
-                        if (empty($eUser))
-                        {
-                            // create
-                            $eUser = Mimoto::service('data')->create(CoreConfig::MIMOTO_USER, true);
-
-                            if (!empty($eInstance->getId()))
-                            {
-                                // update
-                                $eUser->setExtensionId($eInstance->getId());
-
-                                // store
-                                Mimoto::service('data')->store($eUser);
-
-//                                // load
-//                                $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
-//
-//                                // add
-//                                $eRoot->add('users', $eUser);
-//
-//                                // store
-//                                Mimoto::service('data')->store($eRoot);
-                            }
-                        }
-
-                        // move properties
-                        $aPropertyNames = $eUser->getOwnPropertyNames();
-                        foreach ($aPropertyNames as $sPropertyName)
-                        {
-                            $eInstance->importProperty($eUser->exportProperty($sPropertyName));
-                        }
-                    }
-                }
-                else
-                {
-                    $sUserExtensionName = Mimoto::service('entityConfig')->getUserExtensionType();
-
-                    $eExtensionInstance = Mimoto::service('data')->get($sUserExtensionName, $eInstance->getExtensionId(), true);
-
-
-                    if (empty($eExtensionInstance))
-                    {
-                        // create
-                        $eExtensionInstance = Mimoto::service('data')->create($sUserExtensionName, true);
-
-                        // store
-                        Mimoto::service('data')->store($eExtensionInstance);
-
-                        // update
-                        $eInstance->setExtensionId($eExtensionInstance->getId());
-
-                        // store
-                        Mimoto::service('data')->store($eInstance);
-                    }
-
-                    // move properties
-                    $aPropertyNames = $eExtensionInstance->getOwnPropertyNames();
-                    foreach ($aPropertyNames as $sPropertyName)
-                    {
-                        $eInstance->importProperty($eExtensionInstance->exportProperty($sPropertyName));
-                    }
-                }
-            }
-        }
-
-        // send
-        return $eInstance;
-    }
 }

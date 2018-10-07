@@ -32,14 +32,16 @@ class PublisherController
         // __get Mimoto::service('')-> (some basic core services, some extended. Everything overrideable) use interface?
 
 
-//        if (!empty(Mimoto::user()->get('biography')))
-//        {
-//            //Mimoto::error(Mimoto::user()->get('biography'));
-//        }
-//        else
-//        {
-//            Mimoto::error('NOT a owner');
-//        }
+        Mimoto::output('email', Mimoto::user()->get('email'));
+
+        if (!empty(Mimoto::user()->get('biography')))
+        {
+            Mimoto::error(Mimoto::user()->get('biography'));
+        }
+        else
+        {
+            Mimoto::error('NOT a owner');
+        }
 
 
 

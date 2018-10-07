@@ -80,13 +80,13 @@ class DisplayOptionUtils
         return self::buildDirective($instructions, $sAction, $sPropertyName, $component, $xValues);
     }
 
-    public static function visibleWhen($sAction, $sPropertyName, AimlessComponent $component, $xValues = null)
+    public static function visibleWhen($sAction, $sPropertyName, AimlessComponent $component, $xValues = null, $options = null)
     {
         // 1. init
         $instructions = (object) array();
 
         // 2. collect, build and send
-        return self::buildDirective($instructions, $sAction, $sPropertyName, $component, $xValues);
+        return self::buildDirective($instructions, $sAction, $sPropertyName, $component, $xValues, $options);
     }
 
 
@@ -96,7 +96,7 @@ class DisplayOptionUtils
     // ----------------------------------------------------------------------------
 
 
-    private static function buildDirective($instructions, $sAction, $sPropertyName, AimlessComponent $component, $xValues = null)
+    private static function buildDirective($instructions, $sAction, $sPropertyName, AimlessComponent $component, $xValues = null, $options = null)
     {
         // 1. add action specific data
         switch($sAction)

@@ -49,7 +49,7 @@ class UserService
     public function login($sUsername, $sPassword)
     {
         // 1. load
-        $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER]);
+        $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER], true);
 
         // 2. find
         $nUserCount = count($aUsers);

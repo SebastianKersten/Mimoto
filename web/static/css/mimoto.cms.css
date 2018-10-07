@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
- * Quill Editor v1.3.4
+ * Quill Editor v1.3.6
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -400,7 +400,7 @@
   right: 15px; }
 
 /*!
- * Quill Editor v1.3.4
+ * Quill Editor v1.3.6
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -4695,7 +4695,7 @@ b[class*="MimotoCMS"] {
   clip: auto; }
 
 /*!
- * Quill Editor v1.3.4
+ * Quill Editor v1.3.6
  * https://quilljs.com/
  * Copyright (c) 2014, Jason Chen
  * Copyright (c) 2013, salesforce.com
@@ -5672,12 +5672,6 @@ input.MimotoCMS_layout_Selection-search {
   width: 100%;
   background-color: #fafafa; }
   input.MimotoCMS_layout_Selection-search::-webkit-input-placeholder {
-    font-style: italic;
-    color: #aaaaaa; }
-  input.MimotoCMS_layout_Selection-search::-moz-placeholder {
-    font-style: italic;
-    color: #aaaaaa; }
-  input.MimotoCMS_layout_Selection-search:-ms-input-placeholder {
     font-style: italic;
     color: #aaaaaa; }
   input.MimotoCMS_layout_Selection-search::-ms-input-placeholder {
