@@ -40,5 +40,4 @@ class Slack // extends MimotoService
         curl_close($ch);
     }
 
-
 }

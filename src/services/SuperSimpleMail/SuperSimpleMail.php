@@ -21,5 +21,4 @@ class SuperSimpleMail // extends MimotoService
 
     }
 
-
 }

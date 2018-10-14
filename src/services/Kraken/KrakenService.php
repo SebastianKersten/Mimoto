@@ -46,5 +46,4 @@ class KrakenService extends MimotoService
         }
     }
 
-
 }
