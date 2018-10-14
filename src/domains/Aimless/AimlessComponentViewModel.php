@@ -373,16 +373,16 @@ class AimlessComponentViewModel
     // --- Show and hide
 
 
-    public function hideWhenEmpty($sPropertySelector)
+    public function hideWhenEmpty($sPropertySelector, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY, $sPropertySelector, $this->_component);
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENEMPTY, $sPropertySelector, $this->_component, null, $options);
     }
 
-    public function hideWhenNotEmpty($sPropertySelector)
+    public function hideWhenNotEmpty($sPropertySelector, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY, $sPropertySelector, $this->_component);
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY, $sPropertySelector, $this->_component, null, $options);
     }
 
     public function hideWhenValue($sPropertySelector, $xValues)
@@ -397,13 +397,13 @@ class AimlessComponentViewModel
         return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTVALUE, $sPropertySelector, $this->_component, $xValues);
     }
 
-    public function hideWhenRegex($sPropertySelector, $xValues, $xClasses)
+    public function hideWhenRegex($sPropertySelector, $xValues)
     {
         // compose and send
         return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENREGEX, $sPropertySelector, $this->_component, $xValues);
     }
 
-    public function hideWhenNotRegex($sPropertySelector, $xValues, $xClasses)
+    public function hideWhenNotRegex($sPropertySelector, $xValues)
     {
         // compose and send
         return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTREGEX, $sPropertySelector, $this->_component, $xValues);
@@ -416,13 +416,13 @@ class AimlessComponentViewModel
     public function showWhenEmpty($sPropertySelector, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY, $sPropertySelector, $this->_component, $options);
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENEMPTY, $sPropertySelector, $this->_component, null, $options);
     }
 
-    public function showWhenNotEmpty($sPropertySelector)
+    public function showWhenNotEmpty($sPropertySelector, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY, $sPropertySelector, $this->_component);
+        return DisplayOptionUtils::visibleWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_SHOWWHENNOTEMPTY, $sPropertySelector, $this->_component, null, $options);
     }
 
     public function showWhenValue($sPropertySelector, $xValues)
@@ -454,16 +454,16 @@ class AimlessComponentViewModel
     // --- Add and remove CSS classes
 
 
-    public function addClassWhenEmpty($sPropertySelector, $xClasses)
+    public function addClassWhenEmpty($sPropertySelector, $xClasses, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::classWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY, $sPropertySelector, $this->_component, $xClasses);
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY, $sPropertySelector, $this->_component, $xClasses, $options);
     }
 
-    public function addClassWhenNotEmpty($sPropertySelector, $xClasses)
+    public function addClassWhenNotEmpty($sPropertySelector, $xClasses, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::classWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY, $sPropertySelector, $this->_component, $xClasses);
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY, $sPropertySelector, $this->_component, $xClasses, $options);
     }
 
     public function addClassWhenValue($sPropertySelector, $xValues, $xClasses)
@@ -494,16 +494,16 @@ class AimlessComponentViewModel
     // ---
 
 
-    public function removeClassWhenEmpty($sPropertySelector, $xClasses)
+    public function removeClassWhenEmpty($sPropertySelector, $xClasses, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::classWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY, $sPropertySelector, $this->_component, $xClasses);
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY, $sPropertySelector, $this->_component, $xClasses, $options);
     }
 
-    public function removeClassWhenNotEmpty($sPropertySelector, $xClasses)
+    public function removeClassWhenNotEmpty($sPropertySelector, $xClasses, $options = null)
     {
         // compose and send
-        return DisplayOptionUtils::classWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY, $sPropertySelector, $this->_component, $xClasses);
+        return DisplayOptionUtils::classWhen(DisplayOptionUtils::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY, $sPropertySelector, $this->_component, $xClasses, $options);
     }
 
     public function removeClassWhenValue($sPropertySelector, $xValues, $xClasses)

@@ -5,20 +5,21 @@
 {#</div>#}
 
 
-<div class="MimotoCMS_pages_entities_EntityOverview__container" {#{{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}#}>
+<div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}>
     {#{{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_User', { filter:{'isUserExtension':true}}) }}#}
     {{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_Entity', { filter:{'isUserExtension':true}}) }}
 </div>
-<div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('entities', { filter:{'isUserExtension':true }} ) }}>
-    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Extend user', icon:'plus', directive:Mimoto.api('/extenduserobject'), types:['secondary'] }) }}
-</div>
 
+<div class="{{ Mimoto.init() }}" {{ Mimoto.showWhenEmpty('entities', { filter:{'isUserExtension':true }} ) }}>
+    {{ Mimoto.module('MimotoCMS_modules_Button', { label:'Extend user', icon:'', directive:Mimoto.api(Mimoto.globalValue('_MIMOTO_CMSROOT')~'extenduserentityconfig'), types:['primary'] }) }}
+</div>
 
 <div class="MimotoCMS_pages_entities_EntityOverview__container" {{ Mimoto.sortable() }} {{ Mimoto.realtime('entities', 'MimotoCMS_entities_EntityOverview_Entity') }}>
     {{ Mimoto.data('entities', 'MimotoCMS_entities_EntityOverview_Entity', { filter:{'isUserExtension':false}}) }}
 </div>
 
 <div {{ Mimoto.showWhenEmpty('entities') }}>
+    Regular entities
     <b>Start building</b> your project by:
     <ul>
         <li>1) starting with <u>entities</u> <i>(the data structure)</i></li>

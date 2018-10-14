@@ -254,9 +254,9 @@ class EntityConfigService
     }
 
 
-    public function getUserExtensionType()
+    public function correctEntityNameForUserExtension($sEntityName)
     {
-        return $this->_entityConfigRepository->getUserExtensionType();
+        return $this->_entityConfigRepository->correctEntityNameForUserExtension($sEntityName);
     }
 
 }

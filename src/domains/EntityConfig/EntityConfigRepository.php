@@ -26,8 +26,7 @@ class EntityConfigRepository
      */
     private $_aEntityConfigs = [];
     private $_aEntities;
-    private $_nUserEntityIndex = -1;
-    private $_nUserExtensionEntityIndex = -1;
+    private $_sUserExtensionEntityName = null;
 
 
 
@@ -60,25 +59,6 @@ class EntityConfigRepository
                 Mimoto::service('cache')->setValue('mimoto.core.entityconfigs', $this->_aEntities);
             }
         }
-
-        // register user extension index
-//        $nEntityCount = count($this->_aEntities);
-//        for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
-//        {
-//            $entity = $this->_aEntities[$nEntityIndex];
-//
-//            if ($entity->id == CoreConfig::MIMOTO_USER) $this->_nUserEntityIndex = $nEntityIndex;
-//            if (isset($entity->isUserExtension) && $entity->isUserExtension) $this->_nUserExtensionEntityIndex = $nEntityIndex;
-//        }
-//
-//        if ($this->_nUserEntityIndex >= 0 && $this->_nUserExtensionEntityIndex >= 0)
-//        {
-//            $this->_aEntities[$this->_nUserEntityIndex]->properties = array_merge($this->_aEntities[$this->_nUserEntityIndex]->properties, $this->_aEntities[$this->_nUserExtensionEntityIndex]->properties);
-//            $this->_aEntities[$this->_nUserExtensionEntityIndex]->properties = array_merge($this->_aEntities[$this->_nUserExtensionEntityIndex]->properties, $this->_aEntities[$this->_nUserEntityIndex]->properties);
-//        }
-
-
-        // fixed user extension
     }
         
     
@@ -339,15 +319,9 @@ class EntityConfigRepository
         return $aEntityConfigs;
     }
 
-    public function getUserExtensionType()
+    public function correctEntityNameForUserExtension($sEntityName)
     {
-        if ($this->_nUserExtensionEntityIndex >= 0)
-        {
-            return $this->_aEntities[$this->_nUserExtensionEntityIndex]->name;
-        }
-
-
-        return null;
+        return ($this->_sUserExtensionEntityName == $sEntityName) ? CoreConfig::MIMOTO_USER : $sEntityName;
     }
 
 
@@ -555,8 +529,34 @@ class EntityConfigRepository
                 }
             }
 
-            // store
-            $this->_aEntities[] = $entity;
+
+            // setup user exception
+            if (isset($entity->isUserExtension) && $entity->isUserExtension)
+            {
+                // register user extension index
+                $nEntityCount = count($this->_aEntities);
+                for ($nEntityIndex = 0; $nEntityIndex < $nEntityCount; $nEntityIndex++)
+                {
+                    // register
+                    $userEntity = $this->_aEntities[$nEntityIndex];
+
+                    // verify
+                    if ($userEntity->id == CoreConfig::MIMOTO_USER)
+                    {
+                        // store
+                        $this->_sUserExtensionEntityName = $entity->name;
+
+                        // add properties to core object
+                        $userEntity->properties = array_merge($userEntity->properties, $entity->properties);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                // store
+                $this->_aEntities[] = $entity;
+            }
         }
     }
 

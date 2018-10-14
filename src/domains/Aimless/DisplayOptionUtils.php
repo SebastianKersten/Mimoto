@@ -85,7 +85,10 @@ class DisplayOptionUtils
         // 1. init
         $instructions = (object) array();
 
-        // 2. collect, build and send
+        // 2. convert
+        if (!empty($options)) $options = self::convertOptionsToObject($options);
+
+        // 3. collect, build and send
         return self::buildDirective($instructions, $sAction, $sPropertyName, $component, $xValues, $options);
     }
 
@@ -106,7 +109,7 @@ class DisplayOptionUtils
             case self::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENEMPTY:
             case self::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENEMPTY:
 
-                $instructions->initialState = $component->isEmpty($sPropertyName);
+                $instructions->initialState = $component->isEmpty($sPropertyName, $options);
                 break;
 
             case self::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENNOTEMPTY:
@@ -114,7 +117,7 @@ class DisplayOptionUtils
             case self::DIRECTIVE_MIMOTO_DISPLAY_ADDCLASSWHENNOTEMPTY:
             case self::DIRECTIVE_MIMOTO_DISPLAY_REMOVECLASSWHENNOTEMPTY:
 
-                $instructions->initialState = !$component->isEmpty($sPropertyName);
+                $instructions->initialState = !$component->isEmpty($sPropertyName, $options);
                 break;
 
             case self::DIRECTIVE_MIMOTO_DISPLAY_HIDEWHENVALUE:
@@ -160,6 +163,7 @@ class DisplayOptionUtils
 
         // 3. add information
         $instructions->propertyType = $component->getPropertyType($sPropertyName);
+        if (!empty($options)) $instructions->options = $options;
 
         // 4. compose and send
         return $sAction.'="'.$sPropertySelector.'|'.htmlentities(json_encode($instructions), ENT_QUOTES, 'UTF-8').'"';
@@ -229,6 +233,25 @@ class DisplayOptionUtils
 
         // 3. send
         return $bValidated;
+    }
+
+    public static function convertOptionsToObject($options)
+    {
+        // 1. verify
+        if (is_array($options))
+        {
+            // a. init
+            $convertedOptions = (object) array();
+
+            // b. migrate
+            foreach ($options as $sKey => $value) $convertedOptions->$sKey = $value;
+
+            // c. replace
+            $options = $convertedOptions;
+        }
+
+        // 2. send
+        return $options;
     }
 
 }

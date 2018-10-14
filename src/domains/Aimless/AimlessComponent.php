@@ -11,6 +11,7 @@ use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\DataService;
 use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Log\LogService;
+use Mimoto\Aimless\DisplayOptionUtils;
 
 
 /**
@@ -236,12 +237,16 @@ class AimlessComponent
 
     public function data($sPropertySelector, $bGetConnectionInfo = false, $bRenderData = false, $sComponentName = null, $sWrapperName = null, $customValues = null, $options = null)
     {
-        // find
+        // 1. find
         $nSeperatorPos = strpos($sPropertySelector, '.');
 
-        // separate
+        // 2. separate
         $sMainPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, 0, $nSeperatorPos) : $sPropertySelector;
         $sSubPropertyName = ($nSeperatorPos !== false) ? substr($sPropertySelector, $nSeperatorPos + 1) : '';
+
+        // 3. convert
+        if (!empty($options)) $options = DisplayOptionUtils::convertOptionsToObject($options);
+
 
 
         //$property = $this->getProperty($sPropertySelector);
@@ -250,7 +255,6 @@ class AimlessComponent
 
         if (!empty($this->_entity))
         {
-
             // read and send
             if (
                 !$bRenderData
@@ -260,8 +264,7 @@ class AimlessComponent
                 && $this->_entity->getPropertySubtype($sPropertySelector) != MimotoEntityPropertyTypes::PROPERTY_SUBTYPE_FILE
             )
             {
-                // 1. in geval van getStructure (connections -> anders oppakken
-
+                // 1. in geval van getStructure (connections -> anders oppakken)
 
 
                 // 1. connections in ViewModel gooien
@@ -285,7 +288,17 @@ class AimlessComponent
 //                }
 
 
-                return $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
+                // a. load
+                $aInstances = $this->_entity->getValue($sPropertySelector, $bGetConnectionInfo);
+
+                // b. verify
+                if (!empty($options) && isset($options->filter) && $this->_entity->getPropertyType($sPropertySelector) == MimotoEntityPropertyTypes::PROPERTY_TYPE_COLLECTION)
+                {
+                    $aInstances = self::filterCollection($aInstances, $options);
+                }
+
+                // c. send
+                return $aInstances;
             }
 
 
@@ -293,9 +306,9 @@ class AimlessComponent
             if (!empty($this->_mapping)) $sMainPropertyName = $this->_mapping[$sMainPropertyName];
 
 
+
             if ($this->_entity->hasProperty($sMainPropertyName))
             {
-
                 // render
                 switch ($this->_entity->getPropertyType($sMainPropertyName))
                 {
@@ -598,56 +611,8 @@ class AimlessComponent
         $xValue = $this->_entity->get($sPropertySelector);
         $aConnections = $this->_entity->get($sPropertySelector, true);
 
-
-        if (!empty($options) && isset($options['filter']))
-        {
-            if (is_array($xValue))
-            {
-                for ($nInstanceIndex = 0; $nInstanceIndex < count($xValue); $nInstanceIndex++)
-                {
-
-                    // register
-                    $eInstance = $xValue[$nInstanceIndex];
-
-                    if (empty($eInstance)) continue; // HUH?!
-
-                    // validate
-                    $bValidated = true;
-                    foreach ($options['filter'] as $sProperty => $value)
-                    {
-                        if (is_array($value))
-                        {
-                            // 1. for later (equals, greaterThan, count (non-value propertytype) etc
-                            // 2. also support for entity
-                        }
-                        else
-                        {
-                            if ($eInstance->getPropertyType($sProperty) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
-                            {
-                                if ($eInstance->get($sProperty) != $value)
-                                {
-                                    $bValidated = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    // remove
-                    if (!$bValidated)
-                    {
-                        array_splice($xValue, $nInstanceIndex, 1);
-                        array_splice($aConnections, $nInstanceIndex, 1);
-
-                        // correct
-                        $nInstanceIndex--;
-                    }
-                }
-
-            }
-
-        }
-
+        // filter
+        if (!empty($options) && isset($options->filter)) $xValue = self::filterCollection($xValue, $options, $aConnections);
 
         // verify and convert selection to options
         if ($this instanceof AimlessInput && $sPropertySelector == 'options')
@@ -1337,11 +1302,11 @@ class AimlessComponent
 
 
 
-    public function isEmpty($sPropertySelector)
+    public function isEmpty($sPropertySelector, $options = null)
     {
         if (isset($this->_entity) && $this->hasProperty($sPropertySelector))
         {
-            return empty($this->data($sPropertySelector));
+            return empty($this->data($sPropertySelector, false, false, null, null, null, $options));
         }
         else
         {
@@ -1450,6 +1415,56 @@ class AimlessComponent
 
         // send
         return array_merge($aOptions, $aOptionsFromSelection);
+    }
+
+    private function filterCollection($aCollection, $options, $aCollectionConections = null)
+    {
+        if (is_array($aCollection))
+        {
+            for ($nInstanceIndex = 0; $nInstanceIndex < count($aCollection); $nInstanceIndex++)
+            {
+
+                // register
+                $eInstance = $aCollection[$nInstanceIndex];
+
+                if (empty($eInstance)) continue; // HUH?!
+
+                // validate
+                $bValidated = true;
+                foreach ($options->filter as $sProperty => $value)
+                {
+                    if (is_array($value))
+                    {
+                        // 1. for later (equals, greaterThan, count (non-value propertytype) etc
+                        // 2. also support for entity
+                    }
+                    else
+                    {
+                        if ($eInstance->getPropertyType($sProperty) == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                        {
+                            if ($eInstance->get($sProperty) != $value)
+                            {
+                                $bValidated = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // remove
+                if (!$bValidated)
+                {
+                    array_splice($aCollection, $nInstanceIndex, 1);
+                    if (!empty($aCollectionConections)) array_splice($aCollectionConections, $nInstanceIndex, 1);
+
+                    // correct
+                    $nInstanceIndex--;
+                }
+            }
+
+        }
+
+        return $aCollection;
     }
 
 }

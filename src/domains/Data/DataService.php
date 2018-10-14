@@ -83,30 +83,33 @@ class DataService
     
     /**
      * Create entity
-     * @param string $sEntityType
+     * @param string $sEntityName
      * @return MimotoEntity The entity
      */
-    public function create($sEntityType)
+    public function create($sEntityName)
     {
-        // verify
-        if (!isset($this->_aEntityConfigs[$sEntityType]))
+        // 1. convert
+        $sEntityName = Mimoto::service('entityConfig')->correctEntityNameForUserExtension($sEntityName);
+
+        // 2. verify
+        if (!isset($this->_aEntityConfigs[$sEntityName]))
         {
             
-            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
-            
+            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityName);
+
             if ($entityConfig !== false)
             {
-                $this->_aEntityConfigs[$sEntityType] = $entityConfig;
+                $this->_aEntityConfigs[$sEntityName] = $entityConfig;
             }
             else
             {
-                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'");
+                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityName'");
             }
         }
         
         try
         {
-            $entity = $this->_entityRepository->create($this->_aEntityConfigs[$sEntityType]);
+            $entity = $this->_entityRepository->create($this->_aEntityConfigs[$sEntityName]);
         }
         catch(MimotoEntityException $e)
         {
@@ -121,41 +124,44 @@ class DataService
     
     /**
      * Get entity by id
-     * @param string $sEntityType
+     * @param string $sEntityName
      * @param int $nId
      * @return MimotoEntity The entity
      */
-    public function get($sEntityType, $nId)
+    public function get($sEntityName, $nId)
     {
-        // verify and convert
-        if (MimotoDataUtils::isValidId($sEntityType)) $sEntityType = $this->_EntityConfigService->getEntityNameById($sEntityType);
+        // 1. convert
+        $sEntityName = Mimoto::service('entityConfig')->correctEntityNameForUserExtension($sEntityName);
+
+        // 2. verify and convert
+        if (MimotoDataUtils::isValidId($sEntityName)) $sEntityName = $this->_EntityConfigService->getEntityNameById($sEntityName);
 
         // verify
-        if (!isset($this->_aEntityConfigs[$sEntityType]))
+        if (!isset($this->_aEntityConfigs[$sEntityName]))
         {
             
-            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityType);
+            $entityConfig = $this->_EntityConfigService->getEntityConfigByName($sEntityName);
 
             if ($entityConfig !== false)
             {
-                $this->_aEntityConfigs[$sEntityType] = $entityConfig;
+                $this->_aEntityConfigs[$sEntityName] = $entityConfig;
             }
             else
             {
-                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityType'");
+                throw new MimotoEntityException("( '-' ) - Sorry, I do not know the entity type '$sEntityName'");
             }
         }
         
         try
         {
-            $entity = $this->_entityRepository->get($this->_aEntityConfigs[$sEntityType], $nId);
+            $entity = $this->_entityRepository->get($this->_aEntityConfigs[$sEntityName], $nId);
         }
         catch(MimotoEntityException $e)
         {
             return null;
         }
         
-        // send
+        // 3. send
         return $entity;
     }
 

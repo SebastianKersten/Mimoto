@@ -271,6 +271,10 @@ class CoreConfig
         // setup
         $aEntities = [
 
+            // users
+            User::getStructure(),
+            UserRole::getStructure(),
+
             // root
             Root::getStructure(),
 
@@ -278,10 +282,6 @@ class CoreConfig
             Entity::getStructure(),
             EntityProperty::getStructure(),
             EntityPropertySetting::getStructure(),
-
-            // users
-            User::getStructure(),
-            UserRole::getStructure(),
 
             // search
             Selection::getStructure(),

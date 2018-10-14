@@ -24,7 +24,6 @@ use Silex\Application;
  */
 class EntityController
 {
-
     public function viewEntityOverview(Application $app)
     {
         // 1. init page
@@ -114,6 +113,49 @@ class EntityController
     }
 
 
+    public function extendUserEntityConfig(Application $app)
+    {
+        // 1. load
+        $eUserExtension = Mimoto::service('data')->selectOne(['type' => CoreConfig::MIMOTO_ENTITY, 'values' => ['isUserExtension' => true]]);
+
+        // 2. verify or report
+        if (!empty($eUserExtension)) return Mimoto::service('messages')->response((object) array('result' => 'Entity `'.$eUserExtension->get('name').'` is already being used as Mimoto`s user object extension! '.date("Y.m.d H:i:s")), 500);
+
+
+        // ---
+
+
+        // 3. create
+        $eUserExtension = Mimoto::service('data')->create(CoreConfig::MIMOTO_ENTITY);
+
+        // 4. setup
+        $eUserExtension->set('name', 'user_extension');
+        $eUserExtension->set('isUserExtension', true);
+
+        // 5. store
+        Mimoto::service('data')->store($eUserExtension);
+
+
+        // ---
+
+
+        // 6. load
+        $eRoot = Mimoto::service('data')->get(CoreConfig::MIMOTO_ROOT, CoreConfig::MIMOTO_ROOT);
+
+        // 7. connect
+        $eRoot->add('entities', $eUserExtension);
+
+        // 8. store
+        Mimoto::service('data')->store($eRoot);
+
+
+        // ---
+
+        // 9. respond
+        return Mimoto::service('messages')->response((object) array('result' => 'User extension is now available! '.date("Y.m.d H:i:s")), 200);
+    }
+
+
     public function useAsUserExtension(Application $app, $nEntityId)
     {
 
@@ -198,16 +240,17 @@ class EntityController
     // --- other ---
 
 
-    private function getEntityStructure(MimotoEntity $entity)
+    private function getEntityStructure(MimotoEntity $eEntity)
     {
         // init
         $entityStructure = (object) array();
-        $entityStructure->name = $entity->getValue('name');
+        $entityStructure->name = ($eEntity->get('isUserExtension')) ? CoreConfig::MIMOTO_USER : $eEntity->get('name');
         $entityStructure->hasTable = true; //(intval($entity->getValue('isAbstract')) === 1) ? false : true;
         $entityStructure->instanceCount = 0;
         $entityStructure->extends = [];
         $entityStructure->extendedBy = [];
         $entityStructure->entityNames = [];
+
 
 
 
@@ -217,7 +260,7 @@ class EntityController
         if ($entityStructure->hasTable)
         {
             // load
-            $stmt = Mimoto::service('database')->prepare('SELECT count(mimoto_id) FROM `' . $entity->getValue('name').'`');
+            $stmt = Mimoto::service('database')->prepare('SELECT count(mimoto_id) FROM `'.$entityStructure->name.'`');
             $params = array();
             $stmt->execute($params);
 
@@ -240,7 +283,7 @@ class EntityController
 
 
         // load
-        $entityExtends = $entity->getValue('extends');
+        $entityExtends = $eEntity->getValue('extends');
 
         if (!empty($entityExtends))
         {
@@ -280,7 +323,7 @@ class EntityController
         // --- extendedBy ---
 
 
-        $entityStructure->extendedBy =$this->getChildExtension($entity->getId());
+        $entityStructure->extendedBy =$this->getChildExtension($eEntity->getId());
 
 
 
@@ -288,7 +331,7 @@ class EntityController
 
 
         // load
-        $aEntityProperties = $entity->getValue('properties');
+        $aEntityProperties = $eEntity->getValue('properties');
 
         $nPropertyCount = count($aEntityProperties);
         for ($i = 0; $i < $nPropertyCount; $i++)

@@ -7,6 +7,7 @@ namespace Mimoto;
 use Mimoto\Action\ActionServiceProvider;
 use Mimoto\API\APIServiceProvider;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\CoreFormUtils;
 use Mimoto\Event\EventServiceProvider;
 use Mimoto\Aimless\OutputServiceProvider;
 use Mimoto\Data\DataServiceProvider;
@@ -321,6 +322,7 @@ class Mimoto
         // Entity
         $app->get ('/'.$config->project->path_cms.'/entity/{nEntityId}/view', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::entityView')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
+        $app->get ('/'.$config->project->path_cms.'/extenduserentityconfig', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::extendUserEntityConfig')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$config->project->path_cms.'/entity/{nEntityId}/useasuserextension', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::useAsUserExtension')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
         $app->get ('/'.$config->project->path_cms.'/entity/{nEntityId}/stopusingasuserextension', 'Mimoto\\UserInterface\\MimotoCMS\\EntityController::stopUsingAsUserExtension')->before('Mimoto\\UserInterface\\MimotoCMS\\SessionController::validateCMSUser');
 
@@ -513,6 +515,10 @@ class Mimoto
 
             return new Response($message);
         });
+
+
+        // global vars
+        self::setGlobalValue(CoreConfig::CORE_PREFIX.'CMSROOT', '/'.$config->project->path_cms.'/');
     }
 
     public static function getSilexApp()
@@ -607,25 +613,17 @@ class Mimoto
 
     public static function user()
     {
-        // init
+        // 1. load
         $eUser = Mimoto::service('session')->currentUser();
 
-        // validate
+        // 2. validate
         if (empty($eUser)) return null;
 
-        // create
+        // 3. create
         $component = Mimoto::service('output')->createComponent('', $eUser);
 
-
-        $eUserExtensionInstance = null;
-        // get extension type
-        if (!empty($sUserExtensionEntityType = Mimoto::service('entityConfig')->getUserExtensionType()))
-        {
-            $eUserExtensionInstance = Mimoto::service('data')->selectOne(['type'=>$sUserExtensionEntityType, 'value'=>['mimoto_userid'=>$eUser->getId()]]);
-        }
-
-        // wrap into viewmodel and send
-        return new User($component, $eUserExtensionInstance);
+        // 4 .wrap into viewmodel and send
+        return new User($component, $eUser);
     }
 
     public static function output($sTitle = '', $data = null, $bScream = false)

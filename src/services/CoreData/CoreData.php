@@ -4,6 +4,7 @@
 // Mimoto classes
 use Mimoto\Mimoto;
 use Mimoto\Core\CoreConfig;
+use Mimoto\Core\entities\User;
 use Mimoto\Data\MimotoEntity;
 use Mimoto\Data\MimotoDataUtils;
 use Mimoto\EntityConfig\EntityConfig;
@@ -23,10 +24,13 @@ class CoreData // extends MimotoService
     }
 
 
-    public function createEntityTable(MimotoEntity $eInstance, $settings = null)
+    public function createEntityTable(MimotoEntity $eEntity, $settings = null)
     {
+        // 1. validate or skip
+        if ($eEntity->get('isUserExtension')) return;
+
         // 1. read
-        $sTableName = $this->getTablePrefix($eInstance).$eInstance->getValue('name');
+        $sTableName = $this->getTablePrefix($eEntity).$eEntity->getValue('name');
 
         // 2. check if entity table name is unique
         if (!EntityConfigTableUtils::tableNameIsUnique($sTableName))
@@ -42,53 +46,69 @@ class CoreData // extends MimotoService
 
         // 4. cleanup cache
         EntityConfigTableUtils::flushEntityConfigCache();
+
+
+        // 5. send
+        // ...
     }
 
-    public function renameEntityTable(MimotoEntity $eInstance, $settings = null)
+    public function renameEntityTable(MimotoEntity $eEntity, $settings = null)
     {
-        // 1. register
-        $sPreviousTableName = $this->getTablePrefix($eInstance).$eInstance->getValue('name', false, true);
-        $sNewTableName = $this->getTablePrefix($eInstance).$eInstance->getValue('name');
+        // 1. validate or skip
+        if ($eEntity->get('isUserExtension')) return;
 
-        // 2. check if entity table name is unique
+        // 2. register
+        $sPreviousTableName = $this->getTablePrefix($eEntity).$eEntity->getValue('name', false, true);
+        $sNewTableName = $this->getTablePrefix($eEntity).$eEntity->getValue('name');
+
+        // 3. check if entity table name is unique
         if (!EntityConfigTableUtils::tableNameIsUnique($sNewTableName))
         {
             Mimoto::service('log')->error("Duplicate table name", "Table '$sNewTableName' for entity '$sPreviousTableName' already exists", true);
         }
 
-        // 3. rename table
+        // 4. rename table
         if (!EntityConfigTableUtils::renameEntityTable($sPreviousTableName, $sNewTableName))
         {
             Mimoto::service('log')->error("Entity table rename issue", "Error while renaming entity table from '$sPreviousTableName' to '$sNewTableName'", true);
         }
 
-        // 4. cleanup cache
+        // 5. cleanup cache
         EntityConfigTableUtils::flushEntityConfigCache();
+
+        // 6. send
+        // ...
     }
 
-    public function deleteEntityTable(MimotoEntity $eInstance, $settings = null)
+    public function deleteEntityTable(MimotoEntity $eEntity, $settings = null)
     {
-        // 1. read
-        $sTableName = $this->getTablePrefix($eInstance).$eInstance->getValue('name');
+        // 1. validate or skip
+        if ($eEntity->get('isUserExtension')) return;
 
-        // 2. delete table
+        // 2. read
+        $sTableName = $this->getTablePrefix($eEntity).$eEntity->getValue('name');
+
+        // 3. delete table
         if (!EntityConfigTableUtils::deleteEntityTable($sTableName))
         {
             Mimoto::service('log')->error("Error deleting table", "Can't delete table '$sTableName'", true);
         }
 
-        // 3. cleanup cache
+        // 4. cleanup cache
         EntityConfigTableUtils::flushEntityConfigCache();
+
+        // 5. send
+        // ...
     }
 
 
-    public function addEntityPropertyColumn(MimotoEntity $eInstance, $settings = null)
+    public function addEntityPropertyColumn(MimotoEntity $eEntity, $settings = null)
     {
         // 1. check if changes were made
-        if (!$eInstance->hasChanges()) return;
+        if (!$eEntity->hasChanges()) return;
 
         // 2. read changes
-        $aChanges = $eInstance->getChanges();
+        $aChanges = $eEntity->getChanges();
 
         // 3. check if any properties were changed
         if (isset($aChanges['properties']))
@@ -107,7 +127,7 @@ class CoreData // extends MimotoService
 
 
                     // 1. toggle on type
-                    switch($eEntityProperty->getValue('type'))
+                    switch($eEntityProperty->get('type'))
                     {
                         case MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE:
 
@@ -130,16 +150,37 @@ class CoreData // extends MimotoService
                     }
 
 
-                    if ($eEntityProperty->getValue('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
+                    if ($eEntityProperty->get('type') == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE)
                     {
                         // load
                         $sColumnType = $this->getColumnTypeFromSetting($eEntityProperty);
 
                         // search
-                        $sColumnOnTheLeft = $this->getColumnOntheLeft($eInstance, $eEntityProperty->getValue('name'));
+                        $sColumnOnTheLeft = $this->getColumnOntheLeft($eEntity, $eEntityProperty->get('name'));
+
+
+                        // ---
+
+
+                        // 3. define
+                        $sTableName = $this->getTablePrefix($eEntity).$eEntity->get('name');
+
+                        // 4. setup user exception
+                        if ($eEntity->get('isUserExtension'))
+                        {
+                            // a. redirect
+                            $sTableName = CoreConfig::MIMOTO_USER;
+
+                            // b. skip when core field
+                            if ($this->isUserCoreField($eEntityProperty->get('name'))) return;
+                        }
+
+
+                        // ---
+
 
                         // add
-                        EntityConfigTableUtils::addPropertyColumnToEntityTable($eInstance->getValue('name'), $eEntityProperty->getValue('name'), $sColumnType, $sColumnOnTheLeft);
+                        EntityConfigTableUtils::addPropertyColumnToEntityTable($sTableName, $eEntityProperty->get('name'), $sColumnType, $sColumnOnTheLeft);
                     }
                 }
             }
@@ -149,50 +190,92 @@ class CoreData // extends MimotoService
         EntityConfigTableUtils::flushEntityConfigCache();
     }
 
-    public function updateEntityPropertyColumn(MimotoEntity $eInstance, $settings = null)
+    public function updateEntityPropertyColumn(MimotoEntity $eEntityProperty, $settings = null)
     {
         // 1. verify
-        if ($eInstance->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
+        if ($eEntityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
 
         // 2. check if changes were made
-        if (!$eInstance->hasChanges()) return;
+        if (!$eEntityProperty->hasChanges()) return;
 
         // 3. read changes
-        $aChanges = $eInstance->getChanges();
+        $aChanges = $eEntityProperty->getChanges();
 
         // 4. check if name was changed
         if (!isset($aChanges['name'])) return;
 
         // 5. register
-        $sOldPropertyName = $eInstance->getValue('name', false, true);
-        $sNewPropertyName = $eInstance->getValue('name');
+        $sOldPropertyName = $eEntityProperty->get('name', false, true);
+        $sNewPropertyName = $eEntityProperty->get('name');
 
         // 6. get parent entity
-        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eInstance);
+        $eEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
 
         // 7. check if parentEntity is known (something to do with store and acceptChanges)
-        if (empty($eParent)) return;
+        if (empty($eEntity)) return;
 
         // 8 verify
-        if ($eInstance->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return;
+        if ($eEntityProperty->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return;
 
         // 9. determinde
-        $sColumnType = $this->getColumnTypeFromSetting($eInstance);
+        $sColumnType = $this->getColumnTypeFromSetting($eEntityProperty);
 
-        // 10. rename
-        EntityConfigTableUtils::renamePropertyColumn($this->getTablePrefix($eParent).$eParent->getValue('name'), $sOldPropertyName, $sNewPropertyName, $sColumnType);
+
+        // ---
+
+
+        // 10. define
+        $sTableName = $this->getTablePrefix($eEntity).$eEntity->get('name');
+
+        // 11. setup user exception
+        if ($eEntity->get('isUserExtension'))
+        {
+            // a. redirect
+            $sTableName = CoreConfig::MIMOTO_USER;
+
+            // b. skip when core field
+            if ($this->isUserCoreField($eEntityProperty->get('name'))) return;
+        }
+
+
+        // ---
+
+
+        // 12. rename
+        EntityConfigTableUtils::renamePropertyColumn($sTableName, $sOldPropertyName, $sNewPropertyName, $sColumnType);
     }
 
-    public function removeEntityPropertyColumn(MimotoEntity $eInstance, $settings = null)
+    public function removeEntityPropertyColumn(MimotoEntity $eEntityProperty, $settings = null)
     {
         // 1. verify
-        if ($eInstance->getValue('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
+        if ($eEntityProperty->get('type') != MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE) return; // #todo - only action if type = value
 
         // 2. get parent entity
-        $eEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eInstance);
+        $eEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--properties', $eEntityProperty);
 
-        // 3. remove column
-        EntityConfigTableUtils::removePropertyColumnFromEntityTable($eEntity->get('name'), $eInstance->get('name'));
+
+        // ---
+
+
+        // 3. define
+        $sTableName = $this->getTablePrefix($eEntity).$eEntity->get('name');
+
+        // 4. setup user exception
+        if ($eEntity->get('isUserExtension'))
+        {
+            // a. redirect
+            $sTableName = CoreConfig::MIMOTO_USER;
+
+            // b. skip when core field
+            if ($this->isUserCoreField($eEntityProperty->get('name'))) return;
+        }
+
+
+        // ---
+
+
+        // 5. remove column
+        EntityConfigTableUtils::removePropertyColumnFromEntityTable($sTableName, $eEntityProperty->get('name'));
     }
 
 
@@ -491,8 +574,8 @@ class CoreData // extends MimotoService
         for ($nPropertyIndex = 0; $nPropertyIndex < $nPropertyCount; $nPropertyIndex++)
         {
             // register
-            $sPropertyName = $aAllProperties[$nPropertyIndex]->getValue('name');
-            $sPropertyType = $aAllProperties[$nPropertyIndex]->getValue('type');
+            $sPropertyName = $aAllProperties[$nPropertyIndex]->get('name');
+            $sPropertyType = $aAllProperties[$nPropertyIndex]->get('type');
 
             // verify
             if ($sPropertyType == MimotoEntityPropertyTypes::PROPERTY_TYPE_VALUE && $sPropertyName != $sRequestedColumn)
@@ -505,4 +588,31 @@ class CoreData // extends MimotoService
         // send
         return $sColumnOnTheLeft;
     }
+
+
+    /**
+     * Check if a propertyname is already taken by the core Mimoto User's definition
+     * @param $sPropertyName
+     * @return bool
+     */
+    private function isUserCoreField($sPropertyName)
+    {
+        // 1. load
+        $userStructure = User::getStructure();
+
+        // 2. find
+        $bFound = false;
+        foreach ($userStructure->properties as $sKey => $property)
+        {
+            if ($property->name == $sPropertyName)
+            {
+                $bFound = false;
+                break;
+            }
+        }
+
+        // 3. send
+        return $bFound;
+    }
+
 }
