@@ -576,7 +576,7 @@ class CoreConfig
 
 
 
-            // TODO - add action to update table user extension with mimoto_userid
+
 //            (object) array(
 //                'owner' => Mimoto::MIMOTO,
 //                'trigger' => [MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITY, CoreConfig::DATA_EVENT_CREATED), MimotoDataUtils::buildSelector(CoreConfig::MIMOTO_ENTITY, CoreConfig::DATA_EVENT_UPDATED)],

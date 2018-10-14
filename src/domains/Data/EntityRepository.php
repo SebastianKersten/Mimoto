@@ -235,8 +235,6 @@ class EntityRepository
         }
         else
         {
-            // if empty(mimoto_userid)
-
             return $aResults[0];
         }
     }
