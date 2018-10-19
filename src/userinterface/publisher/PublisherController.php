@@ -25,6 +25,8 @@ class PublisherController
     public function xxx(Application $app)
     {
 
+
+
         // __get Mimoto::user->get('selector')
         // __get Mimoto::data->
         // __get Mimoto::config->

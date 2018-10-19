@@ -444,16 +444,16 @@ class FormController
         // 4. request
         $sFormName = Mimoto::service('input')->getCoreFormByEntityTypeId($eFormField->getEntityTypeName());
 
-        // 5. load
-        $eForm = Mimoto::service('input')->getFormByName($sFormName);
-
-        // 6. create content
-        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $eForm);
-
         // 5. get parent form
         $eParentForm = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eFormField);
 
-        // 6. setup content
+        // 6. load
+        $eForm = Mimoto::service('input')->getFormByName($sFormName, $eFormField);
+
+        // 7. create content
+        $component = Mimoto::service('output')->createComponent('MimotoCMS_layout_PopupForm', $eForm);
+
+        // 8. setup content
         $component->addForm(
             $sFormName,
             $eFormField,
@@ -462,10 +462,10 @@ class FormController
             ]
         );
 
-        // 7. connect
+        // 9. connect
         $page->addComponent('content', $component);
 
-        // 9. output
+        // 10. output
         return $page->render();
     }
 

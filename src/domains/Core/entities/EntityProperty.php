@@ -95,10 +95,7 @@ class EntityProperty
         );
     }
 
-    public static function getData()
-    {
-
-    }
+    public static function getData($sInstanceId = null) {}
 
     /**
      * Get form structure

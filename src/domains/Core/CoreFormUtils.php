@@ -5,6 +5,7 @@ namespace Mimoto\Core;
 
 // Mimoto classes
 use Mimoto\Core\entities\UserRole;
+use Mimoto\EntityConfig\MimotoEntityPropertyTypes;
 use Mimoto\Mimoto;
 use Mimoto\Core\entities\Input;
 use Mimoto\Data\MimotoEntity;
@@ -59,30 +60,40 @@ class CoreFormUtils
 
     /**
      * Get value input
+     * @var $eInstance
      */
-    public static function addFieldsValueInput(MimotoEntity $form, $eInstance = null)
+    public static function addFieldsValueInput(MimotoEntity $form, MimotoEntity $eInput = null)
     {
-        // register
+        // 1. register
         $sFormId = $form->getId();
 
-
-        // load
+        // 2. load
         $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
 
 
-        // init
+        // ---
+
+
+        // 3. init
         $aParentEntities = [];
+        $bIsUserExtension = false;
 
-
-        // verify
-        if (!empty($eInstance))
+        // 4. verify
+        if (!empty($eInput))
         {
-            // collect
-            $eParentForm = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eInstance);
+            // a. collect
+            $eParentForm = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_FORM, CoreConfig::MIMOTO_FORM.'--fields', $eInput);
             $eParentEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eParentForm);
 
-            // register
-            $aParentEntities = array($eParentEntity);
+            // b. register
+            $aParentEntities[] = $eParentEntity;
+
+            // c. manage Mimoto's User object exception
+            if (!empty($eParentEntity) && Mimoto::service('entityConfig')->correctEntityNameForUserExtension($eParentEntity->get('name')) == CoreConfig::MIMOTO_USER)
+            {
+                // I. toggle
+                $bIsUserExtension = true;
+            }
         }
         else
         {
@@ -97,8 +108,8 @@ class CoreFormUtils
         }
 
 
-
         // --- group start
+
 
         // create
         $field = self::createField(CoreConfig::MIMOTO_FORM_LAYOUT_GROUPSTART, $sFormId, 'groupstart-value');
@@ -107,6 +118,7 @@ class CoreFormUtils
 
         // --- value
 
+
         // 1. create and setup field
         $field = self::createField(CoreConfig::MIMOTO_FORM_INPUT_DROPDOWN, $sFormId, 'value');
         $field->setValue('label', 'Connect to property');
@@ -114,9 +126,6 @@ class CoreFormUtils
 
         // 2. connect to property
         self::addValueToField($field, $eParent->getValue('name'), 'value');
-
-
-        // 1. loop all
 
 
         $nParentEntityCount = count($aParentEntities);
@@ -134,13 +143,37 @@ class CoreFormUtils
                 $entityProperty = $aEntityProperties[$nEntityPropertyIndex];
 
                 // compose
-                $sLabel = (!empty($eInstance)) ? $entityProperty->getValue('name') : $eParentEntity->getValue('name').'.'.$entityProperty->getValue('name');
+                $sLabel = (!empty($eInput)) ? $entityProperty->getValue('name') : $eParentEntity->getValue('name').'.'.$entityProperty->getValue('name');
 
                 // create input options
                 $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
                 $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$entityProperty->getId());
                 $option->setValue('label', $sLabel);
                 $option->setValue('value', $entityProperty->getEntityTypeName().'.'.$entityProperty->getId());
+
+                // store input option
+                $field->addValue('options', $option);
+            }
+        }
+
+        // manage Mimoto's User object exception
+        if ($bIsUserExtension)
+        {
+            // init
+            $aCoreUserFields = ['firstName', 'lastName', 'email', 'password', 'avatar', 'roles'];
+
+            // parse
+            $nCoreUserFieldCount = count($aCoreUserFields);
+            for ($nCoreUserFieldIndex = 0; $nCoreUserFieldIndex < $nCoreUserFieldCount; $nCoreUserFieldIndex++)
+            {
+                // register
+                $sFieldName = $aCoreUserFields[$nCoreUserFieldIndex];
+
+                // create input options
+                $option = Mimoto::service('data')->create(CoreConfig::MIMOTO_FORM_FIELD_OPTION);
+                $option->setId(CoreConfig::COREFORM_ENTITYPROPERTY.'--entityProperty_value_options-valuesettings-collection-'.$sFieldName);
+                $option->setValue('label', $sFieldName.' (part of Mimoto`s core user object)');
+                $option->setValue('value', CoreConfig::MIMOTO_ENTITYPROPERTY.'.'.CoreConfig::MIMOTO_USER.'--'.$sFieldName);
 
                 // store input option
                 $field->addValue('options', $option);

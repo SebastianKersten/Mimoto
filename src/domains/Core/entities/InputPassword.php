@@ -109,7 +109,7 @@ class InputPassword
     /**
      * Get form
      */
-    public static function getForm($eInputTextline = null)
+    public static function getForm($eInputPassword = null)
     {
         // init
         $form = CoreFormUtils::initForm(CoreConfig::MIMOTO_FORM_INPUT_PASSWORD, true);
@@ -144,7 +144,7 @@ class InputPassword
         CoreFormUtils::addField_groupEnd($form);
 
         // add value input
-        CoreFormUtils::addFieldsValueInput($form, $eInputTextline);
+        CoreFormUtils::addFieldsValueInput($form, $eInputPassword);
 
         // send
         return $form;

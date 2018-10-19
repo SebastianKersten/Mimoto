@@ -255,7 +255,9 @@ class EntityConfigRepository
             }
         }
 
-        //error($this->_aEntities);
+        // error($this->_aEntities);
+        //Mimoto::error($this->_aEntities);
+        Mimoto::error($nId);
 
         Mimoto::service('log')->error('Incomplete entity config', "No entity found which contains a property with <b>id=".$nId."</b>", true);
     }
