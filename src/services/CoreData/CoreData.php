@@ -27,7 +27,7 @@ class CoreData // extends MimotoService
     public function createEntityTable(MimotoEntity $eEntity, $settings = null)
     {
         // 1. validate or skip
-        if ($eEntity->get('isUserExtension')) return;
+        if ($eEntity->hasProperty('isUserExtension') && $eEntity->get('isUserExtension')) return;
 
         // 1. read
         $sTableName = $this->getTablePrefix($eEntity).$eEntity->getValue('name');
@@ -55,7 +55,7 @@ class CoreData // extends MimotoService
     public function renameEntityTable(MimotoEntity $eEntity, $settings = null)
     {
         // 1. validate or skip
-        if ($eEntity->get('isUserExtension')) return;
+        if ($eEntity->hasProperty('isUserExtension') && $eEntity->get('isUserExtension')) return;
 
         // 2. register
         $sPreviousTableName = $this->getTablePrefix($eEntity).$eEntity->getValue('name', false, true);
@@ -83,7 +83,7 @@ class CoreData // extends MimotoService
     public function deleteEntityTable(MimotoEntity $eEntity, $settings = null)
     {
         // 1. validate or skip
-        if ($eEntity->get('isUserExtension')) return;
+        if ($eEntity->hasProperty('isUserExtension') && $eEntity->get('isUserExtension')) return;
 
         // 2. read
         $sTableName = $this->getTablePrefix($eEntity).$eEntity->getValue('name');
@@ -166,7 +166,7 @@ class CoreData // extends MimotoService
                         $sTableName = $this->getTablePrefix($eEntity).$eEntity->get('name');
 
                         // 4. setup user exception
-                        if ($eEntity->get('isUserExtension'))
+                        if ($eEntity->hasProperty('isUserExtension') && $eEntity->get('isUserExtension'))
                         {
                             // a. redirect
                             $sTableName = CoreConfig::MIMOTO_USER;
@@ -228,7 +228,7 @@ class CoreData // extends MimotoService
         $sTableName = $this->getTablePrefix($eEntity).$eEntity->get('name');
 
         // 11. setup user exception
-        if ($eEntity->get('isUserExtension'))
+        if ($eEntity->hasProperty('isUserExtension') && $eEntity->get('isUserExtension'))
         {
             // a. redirect
             $sTableName = CoreConfig::MIMOTO_USER;
@@ -261,7 +261,7 @@ class CoreData // extends MimotoService
         $sTableName = $this->getTablePrefix($eEntity).$eEntity->get('name');
 
         // 4. setup user exception
-        if ($eEntity->get('isUserExtension'))
+        if ($eEntity->hasProperty('isUserExtension') && $eEntity->get('isUserExtension'))
         {
             // a. redirect
             $sTableName = CoreConfig::MIMOTO_USER;

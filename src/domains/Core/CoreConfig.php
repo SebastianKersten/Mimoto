@@ -118,6 +118,9 @@ class CoreConfig
     // developers
     const MIMOTO_NOTIFICATION                   = '_Mimoto_notification';
 
+    // access
+    const MIMOTO_MAGICLINK                      = '_Mimoto_magiclink';
+
     // users
     const MIMOTO_USER                           = '_Mimoto_user';
     const MIMOTO_USER_GROUP                     = '_Mimoto_user_group';

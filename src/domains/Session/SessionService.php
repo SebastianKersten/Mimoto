@@ -98,4 +98,57 @@ class SessionService
         // 2. compare
         return ($encryptedPassword->hash == hash_pbkdf2('sha256', $sPassword, $encryptedPassword->salt, $encryptedPassword->iterations, 64));
     }
+
+
+    public static function sendMagicLink($eUser)
+    {
+        // 1. load previously active links
+        $aMagicLinks = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_MAGICLINK, 'values' => ['userId' => $eUser->getId(), 'isActive' => true]]);
+
+        // 2. disable
+        $nLinkCount = count($aMagicLinks);
+        for ($nLinkIndex = 0; $nLinkIndex < $nLinkCount; $nLinkIndex++)
+        {
+            // a. register
+            $eMagicLink = $aMagicLinks[$nLinkIndex];
+
+            // b. update
+            $eMagicLink->set('isActive', false);
+
+            // c. store
+            Mimoto::service('data')->store($eMagicLink);
+        }
+
+
+        // ---
+
+
+        // 3. create
+        $sHash = bin2hex(random_bytes(32));
+
+        // 4. init
+        $eMagicLink = Mimoto::service('data')->create(CoreConfig::MIMOTO_MAGICLINK);
+
+        // 5. setup
+        $eMagicLink->set('hash', $sHash);
+        $eMagicLink->set('expiryDate', date('Y-m-d H:i:s', mktime(date('H'), date('i') + 10, date('s'), date('m'), date('d'), date('Y'))));
+        $eMagicLink->set('isActive', true);
+        $eMagicLink->set('userId', $eUser->getId());
+
+        // 6. store
+        Mimoto::service('data')->store($eMagicLink);
+
+
+        // ---
+
+
+        // 7. determine
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+
+        // 8. build
+        $sURL = $protocol.$_SERVER['HTTP_HOST'].'/login/'.$sHash;
+
+        // 9. send
+        return $sURL;
+    }
 }

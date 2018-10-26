@@ -59,10 +59,10 @@ class UserService
             $eUser = $aUsers[$nUserIndex];
 
             // b. compare
-            if (strtolower($eUser->get('email')) == strtolower($sUsername))
+            if (trim(strtolower($eUser->get('email'))) == trim(strtolower($sUsername)))
             {
                 // I. read
-                $encryptedPassword = $eUser->getValue('password');
+                $encryptedPassword = $eUser->get('password');
 
                 // II. compare
                 if (Mimoto::service('session')->comparePassword($sPassword, $encryptedPassword))
@@ -70,9 +70,9 @@ class UserService
                     // 1. compose
                     $user = (object) array(
                         'id' => $eUser->getId(),
-                        'firstName' => $eUser->getValue('firstName'),
-                        'lastName' => $eUser->getValue('lastName'),
-                        'avatar' => '/'.$eUser->getValue('avatar.path').$eUser->getValue('avatar.name'),
+                        'firstName' => $eUser->get('firstName'),
+                        'lastName' => $eUser->get('lastName'),
+                        'avatar' => '/'.$eUser->get('avatar.path').$eUser->get('avatar.name'),
                     );
 
                     // 2. register

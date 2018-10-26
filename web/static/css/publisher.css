@@ -4976,6 +4976,25 @@ div.Author-button {
   color: #ffffff;
   cursor: pointer; }
 
+div.Author {
+  padding: 15px 20px;
+  background-color: #f5f5f5; }
+
+span.Author-firstName, span.Author-lastName {
+  color: #000000;
+  font-weight: bold; }
+
+div.Author-email {
+  font-style: italic;
+  color: #a5a5a5; }
+
+div.Author-button {
+  display: inline-block;
+  padding: 7px 15px;
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer; }
+
 div.MimotoPublisher_Feed-container {
   padding: 80px 0 100px 0;
   width: 100%; }

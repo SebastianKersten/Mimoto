@@ -524,16 +524,19 @@ class FormService
         return $formResponse;
     }
 
-    public function getFormFieldValues(MimotoEntity $form, $entity, $aFields = null, $nEntityId = null)
+    public function getFormFieldValues(MimotoEntity $eForm, $entity, $aFields = null, $nEntityId = null)
     {
         // 1. register fields
-        $aFormFields = (!empty($aFields)) ? $aFields : $form->getValue('fields');
+        $aFormFields = (!empty($aFields)) ? $aFields : $eForm->get('fields');
 
-        // read
-        $eParent = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $form);
+        // 2. read
+        $eParentEntity = Mimoto::service('entityConfig')->getParent(CoreConfig::MIMOTO_ENTITY, CoreConfig::MIMOTO_ENTITY.'--forms', $eForm);
+
+        // 3. validate
+        if (empty($eParentEntity)) Mimoto::error('Form `'.$eForm->get('name').'` not connected to requested entity');
 
         // set
-        $sEntityName = $eParent->getValue('name');
+        $sEntityName = $eParentEntity->get('name');
 
 
         // 1. init

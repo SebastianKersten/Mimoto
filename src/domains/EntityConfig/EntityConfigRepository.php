@@ -26,6 +26,7 @@ class EntityConfigRepository
      */
     private $_aEntityConfigs = [];
     private $_aEntities;
+    private $_nUserExtensionEntityid = null;
     private $_sUserExtensionEntityName = null;
 
 
@@ -128,15 +129,24 @@ class EntityConfigRepository
         // 1. init
         $sName = null;
 
-        // 2. search
-        $nItemCount = count($this->_aEntities);
-        for ($i = 0; $i < $nItemCount; $i++)
+        // 2. check if user extension
+        if (!empty($this->_nUserExtensionEntityid) && $nId == $this->_nUserExtensionEntityid)
         {
-            // 2a. register
-            $entity = $this->_aEntities[$i];
+            // a. register
+            $sName = $this->_sUserExtensionEntityName;
+        }
+        else
+        {
+            // a. search
+            $nItemCount = count($this->_aEntities);
+            for ($i = 0; $i < $nItemCount; $i++)
+            {
+                // aI. register
+                $entity = $this->_aEntities[$i];
 
-            // 2a. compare and register
-            if ($entity->id == $nId) { $sName = $entity->name; break; }
+                // aII. compare and register
+                if ($entity->id == $nId) { $sName = $entity->name; break; }
+            }
         }
 
         // 3. send
@@ -217,7 +227,7 @@ class EntityConfigRepository
             // register
             $entity = $this->_aEntities[$i];
 
-            if ($entity->id == $sTypeOfEntity)
+            if ($entity->id == $sTypeOfEntity || $entity->id == CoreConfig::MIMOTO_USER && $this->_nUserExtensionEntityid == $sTypeOfEntity)
             {
                 if (!isset($entity->typeOf) || empty($entity->typeOf))
                 {
@@ -626,6 +636,14 @@ class EntityConfigRepository
             {
                 $entity->typeOf = [$entity->id];
                 $entity->typeOfAsNames = [$this->getEntityNameById($entity->id)];
+            }
+
+            // check if user object
+            if ($entity->id == CoreConfig::MIMOTO_USER && !empty($this->_nUserExtensionEntityid))
+            {
+                // extend
+                $entity->typeOf[] = $this->_nUserExtensionEntityid;
+                $entity->typeOfAsNames[] = $this->_sUserExtensionEntityName;
             }
         }
     }

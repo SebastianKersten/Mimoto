@@ -1,0 +1,14 @@
+{% extends "publisher/base.twig" %}
+
+
+{% block content %}
+
+    {% if Mimoto.user.hasRole('contenteditor') %}<button class="MimotoPublisher" style="float:right;"{{ Mimoto.add('data', 'member') }}>Add</button>{% endif %}
+
+    <h1>Authors</h1>
+    <div {{ Mimoto.realtime('data', 'Author', { filter:{type:'author' } } ) }}>{{ Mimoto.data('data', 'Author', { filter:{type:'author' } } ) }}</div>
+
+    <h1>Contributors</h1>
+    <div {{ Mimoto.realtime('data', 'Author', { filter:{type:'contributor' } } ) }}>{{ Mimoto.data('data', 'Author', { filter:{type:'contributor' } } ) }}</div>
+
+{% endblock %}

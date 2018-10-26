@@ -120,6 +120,28 @@ class SessionController
         }
     }
 
+    /**
+     * Login using a magic link
+     * @param Application $app
+     * @param $sHash
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function loginByMagicLink(Application $app, $sHash)
+    {
+        if (Mimoto::service('session')->loginByMagicLink())
+
+        // 1. load
+        $eMagicLink = Mimoto::service('data')->selectOne(['type' => CoreConfig::MIMOTO_MAGICLINK, 'values' => ['hash' => $sHash, 'isActive' => true]]);
+
+        // 2. validate
+        if (empty($eMagicLink) && $eMagicLink->get('expiryDate') >= date('Y-m-d H:i:s')) return $app->redirect(PageController::PAGE_GOODBYE);
+
+
+        // 1. add requestedPage to magiclink
+
+
+    }
+
     public function logout(Application $app)
     {
         // 1. logout
