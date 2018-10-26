@@ -34,8 +34,8 @@ class EntityConfigRepository
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Constructor
      */
@@ -61,18 +61,18 @@ class EntityConfigRepository
             }
         }
     }
-        
-    
+
+
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     public function getAllEntityConfigs()
     {
         return $this->_aEntityConfigs;
     }
-    
+
     public function getEntityConfigByName($sEntityConfigName)
     {
         // load and send
@@ -81,14 +81,14 @@ class EntityConfigRepository
         // build and send
         return $this->_aEntityConfigs[$sEntityConfigName] = $this->composeEntityConfig($sEntityConfigName);
     }
-    
-    
+
+
     public function getAllEntityConfigData()
     {
         return $this->_aEntities;
     }
-    
-    
+
+
     /**
      * Create new entityConfig
      * @return EntityConfig
@@ -98,7 +98,7 @@ class EntityConfigRepository
         // init and send
         return new EntityConfig();
     }
-    
+
     /**
      * Get single entity config by id
      * @param int $nId
@@ -114,8 +114,8 @@ class EntityConfigRepository
         for ($i = 0; $i < $nEntityConfigCount; $i++)
         {
             $entityConfig = $this->_aEntityConfigs[$i];
-            
-           if ($entityConfig->getId() === $nId) { return $entityConfig; }
+
+            if ($entityConfig->getId() === $nId) { return $entityConfig; }
         }
     }
 
@@ -229,7 +229,7 @@ class EntityConfigRepository
 
             if ($entity->id == $sTypeOfEntity || $entity->id == CoreConfig::MIMOTO_USER && $this->_nUserExtensionEntityid == $sTypeOfEntity)
             {
-                if (!isset($entity->typeOf) || empty($entity->typeOf))
+                if (!isset($entity->typeOf) || (is_array($entity->typeOf) && empty($entity->typeOf)))
                 {
                     return ($sTypeOfEntity == $sTypeToCompare);
                 }
@@ -349,12 +349,12 @@ class EntityConfigRepository
      */
     private function loadEntityConfigurations()
     {
-        
+
         // 1. load from cache if present
         // 2. store in cache onLoad
 
 
-        
+
         // init
         $aAllEntity = $this->loadRawEntityData();
         $aAllEntity_Connections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_ENTITY);
@@ -362,6 +362,8 @@ class EntityConfigRepository
         $aAllEntityProperty_Connections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_ENTITYPROPERTY);
         $aAllEntityPropertySettings = $this->loadRawEntityPropertySettingData();
         $aAllEntityPropertySetting_Connections = EntityConfigUtils::loadRawConnectionData(CoreConfig::MIMOTO_ENTITYPROPERTYSETTING);
+
+        $aAllForms = $this->loadRawFormData();
 
 
 
@@ -411,6 +413,11 @@ class EntityConfigRepository
 
                         // register
                         $entity->properties[] = $aAllEntityProperties[$connection->child_id];
+                        break;
+
+                    case CoreConfig::MIMOTO_ENTITY.'--forms':
+
+                        $entity->forms[] = $aAllForms[$connection->child_id]->name;
                         break;
                 }
             }
@@ -556,10 +563,14 @@ class EntityConfigRepository
                     if ($userEntity->id == CoreConfig::MIMOTO_USER)
                     {
                         // store
+                        $this->_nUserExtensionEntityid = $entity->id;
                         $this->_sUserExtensionEntityName = $entity->name;
 
                         // add properties to core object
                         $userEntity->properties = array_merge($userEntity->properties, $entity->properties);
+
+                        // move forms
+                        $userEntity->forms = array_merge($userEntity->forms, $entity->forms);
                         break;
                     }
                 }
@@ -697,7 +708,7 @@ class EntityConfigRepository
         die ("EntityConfigRepository says: Can't find the entity with id=".$xEntityId);
     }
 
-    
+
     /**
      * Create entity config from MySQL result
      * @param MySQL query result $mysqlResult
@@ -709,7 +720,7 @@ class EntityConfigRepository
         // compose
         $nEntityCount = count($this->_aEntities);
         for ($i = 0; $i < $nEntityCount; $i++)
-        {   
+        {
             // read
             $entity = $this->_aEntities[$i];
 
@@ -719,7 +730,7 @@ class EntityConfigRepository
 
             // init
             $entityConfig = new EntityConfig();
-            
+
             // setup
             $entityConfig->setId($entity->id);
             $entityConfig->setName($entity->name);
@@ -823,17 +834,17 @@ class EntityConfigRepository
 
                         // setup
                         $entityConfig->setCollectionAsProperty($property->name, $property->id, $settings, isset($property->parentEntityTypeId) ? $property->parentEntityTypeId : $entity->id);
-                        
+
                         // connect entity to data source
                         $entityConfig->connectPropertyToMySQLConnectionTable($property->name, $sConnectionTable);
                         break;
                 }
             }
-            
+
             // send
             return $entityConfig;
         }
-        
+
         // send error
         return false;
     }
@@ -872,6 +883,7 @@ class EntityConfigRepository
                 'extends' => null,
                 'isUserExtension' => $row['isUserExtension'],
                 'typeOf' => [],
+                'forms' => [],
                 'properties' => []
             );
 
@@ -1009,4 +1021,35 @@ class EntityConfigRepository
         return $property;
     }
 
+    /**
+     * Load raw forms data
+     * @return array Forms
+     */
+    private function loadRawFormData()
+    {
+        // init
+        $aForms = [];
+
+        // load all properties
+        $sql = 'SELECT * FROM `'.CoreConfig::MIMOTO_FORM.'`';
+        foreach (Mimoto::service('database')->query($sql) as $row)
+        {
+            // compose
+            $property = (object) array(
+                'id' => $row['mimoto_id'],
+                'created' => $row['mimoto_created'],
+                'modified' => $row['mimoto_modified'],
+                'name' => $row['name']
+            );
+
+            // register
+            $nFormId = $row['mimoto_id'];
+
+            // store
+            $aForms[$nFormId] = $property;
+        }
+
+        // send
+        return $aForms;
+    }
 }
