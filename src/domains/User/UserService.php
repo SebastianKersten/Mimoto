@@ -37,9 +37,9 @@ class UserService
         // 1. store
         $this->_app = $app;
     }
-    
-    
-    
+
+
+
     // ----------------------------------------------------------------------------
     // --- Public methods----------------------------------------------------------
     // ----------------------------------------------------------------------------
@@ -58,8 +58,11 @@ class UserService
             // a. register
             $eUser = $aUsers[$nUserIndex];
 
+            $sEmail = trim(strtolower($eUser->get('email')));
+
+            //Mimoto::output($sEmail, trim(strtolower($sUsername)));
             // b. compare
-            if (trim(strtolower($eUser->get('email'))) == trim(strtolower($sUsername)))
+            if (!empty($sEmail) && $sEmail == trim(strtolower($sUsername)))
             {
                 // I. read
                 $encryptedPassword = $eUser->get('password');
@@ -78,13 +81,13 @@ class UserService
                     // 2. register
                     Mimoto::getSilexApp()['session']->set('is_user', true);
                     Mimoto::getSilexApp()['session']->set('user', $user);
-
+                    //Mimoto::error('login TRUE');
                     // 3. login successful
                     return true;
                 }
             }
         }
-
+        //Mimoto::error('login FALSE');
         // 3. couldn't login
         return false;
     }
@@ -113,7 +116,7 @@ class UserService
         return (!empty(Mimoto::service('session')->currentUser())) ? Mimoto::service('session')->currentUser()->getId() : null;
         //return Mimoto::service('session')->currentUser()->getId();
     }
-    
+
     /**
      * Notify developer
      */
@@ -146,6 +149,5 @@ class UserService
     {
 
     }
-
 
 }
