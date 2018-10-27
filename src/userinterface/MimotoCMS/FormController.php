@@ -589,35 +589,35 @@ class FormController
             $option = $aOptions[0];
         }
         else
-        if (count($aOptions) > 1 && !empty($sOptionId))
-        {
-            // init
-            $bOptionFound = false;
-
-            $nOptionCount = count($aOptions);
-            for ($nOptionIndex = 0; $nOptionIndex < $nOptionCount; $nOptionIndex++)
+            if (count($aOptions) > 1 && !empty($sOptionId))
             {
-                // register
-                $option = $aOptions[$nOptionIndex];
+                // init
+                $bOptionFound = false;
 
-                // verify
-                if ($option->getId() == $sOptionId)
+                $nOptionCount = count($aOptions);
+                for ($nOptionIndex = 0; $nOptionIndex < $nOptionCount; $nOptionIndex++)
                 {
-                    $bOptionFound = true;
-                    break;
+                    // register
+                    $option = $aOptions[$nOptionIndex];
+
+                    // verify
+                    if ($option->getId() == $sOptionId)
+                    {
+                        $bOptionFound = true;
+                        break;
+                    }
                 }
+
+                if (!$bOptionFound)
+                {
+                    Mimoto::service('log')->error("List option not found", "On adding a new item to a list, the requested list option '$sOptionId' wasn't found", true);
+                }
+
+
+                // 1. load form (or selection) based on option id
+
+
             }
-
-            if (!$bOptionFound)
-            {
-                Mimoto::service('log')->error("List option not found", "On adding a new item to a list, the requested list option '$sOptionId' wasn't found", true);
-            }
-
-
-            // 1. load form (or selection) based on option id
-
-
-        }
 
 
         // validate

@@ -218,14 +218,14 @@ class EntityRepository
 //        }
 //        else
 //        {
-            $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$entityConfig->getMySQLTable().'` WHERE mimoto_id = :id');
-            $params = array(
-                ':id' => $nEntityId
-            );
-            $stmt->execute($params);
+        $stmt = Mimoto::service('database')->prepare('SELECT * FROM `'.$entityConfig->getMySQLTable().'` WHERE mimoto_id = :id');
+        $params = array(
+            ':id' => $nEntityId
+        );
+        $stmt->execute($params);
 
-            // load
-            $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        // load
+        $aResults = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 //        }
 
 
@@ -609,13 +609,6 @@ class EntityRepository
                 {
                     $sQuery .= ', ';
                 }
-            }
-
-
-            if (!empty($eInstance->getExtensionId()))
-            {
-                $sQuery .= ((count($aQueryElements) > 0) ? ', ' : '')."mimoto_extensionid = :mimoto_extensionid";
-                $params[':mimoto_extensionid'] = $eInstance->getExtensionId();
             }
 
 
@@ -1326,13 +1319,11 @@ class EntityRepository
         // load
         $stmt = Mimoto::service('database')->prepare(
             'UPDATE `'.$sDBTable.'` SET '.
-            'mimoto_modified = :modified '.
-            'sortindex = :sortindex, '.
+            'sortindex = :sortindex '.
             'WHERE mimoto_id = :id'
         );
         $params = array(
             ':sortindex' => $existingItem->getSortIndex(),
-            ':modified' => $sNow,
             ':id' => $existingItem->getId()
         );
         $stmt->execute($params);
