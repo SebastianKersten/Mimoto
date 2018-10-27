@@ -28,17 +28,17 @@ class EntityConfigService
 
     // config
     private $_aEntityConfigs = [];
-    
+
     // components
     private $_entityConfigRepository;
 
 
-    
+
     // ----------------------------------------------------------------------------
     // --- Constructor ------------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Constructor
      * @param object $entityConfigRepository
@@ -48,14 +48,14 @@ class EntityConfigService
         // store
         $this->_entityConfigRepository = $entityConfigRepository;
     }
-    
-    
-    
+
+
+
     // ----------------------------------------------------------------------------
     // --- Public methods ---------------------------------------------------------
     // ----------------------------------------------------------------------------
-    
-    
+
+
     /**
      * Get entity by id
      * @param int $nId
@@ -71,18 +71,18 @@ class EntityConfigService
         {
             die($e->getMessage());
         }
-        
+
         // send
         return $entityConfig;
     }
-    
+
     public function getAllEntityConfigData()
     {
         return $this->_entityConfigRepository->getAllEntityConfigData();
     }
-    
-    
-    
+
+
+
     /**
      * Get entity config by name
      */
@@ -90,8 +90,8 @@ class EntityConfigService
     {
         return $this->_entityConfigRepository->getEntityConfigByName($sEntityConfigName);
     }
-    
-    
+
+
     /**
      * Get all entities
      */
@@ -99,12 +99,12 @@ class EntityConfigService
     {
         return $this->_entityConfigRepository->getAllEntityConfigs();
     }
-    
+
     public function getEntityNameById($nId)
     {
         return $this->_entityConfigRepository->getEntityNameById($nId);
     }
-    
+
     public function getEntityIdByName($sName)
     {
         return $this->_entityConfigRepository->getEntityIdByName($sName);
