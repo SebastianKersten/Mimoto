@@ -47,11 +47,11 @@ class MimotoDataUtils
         // 2. preg_math op juiste '[a-zA-Z0-9]' // start met a-zA-Z
         // 3. {xxx='xxx'} of {xxx="xxx"}
         // 4. [[0-9]] of ["[a-zA-Z0-9]"]
-        
+
         return true;
-        
+
     }
-    
+
     public static function isEntity($value)
     {
         return ($value instanceof MimotoEntity);
@@ -133,12 +133,12 @@ class MimotoDataUtils
         // 5. no known type found
         return null;
     }
-    
+
     public static function hasExpression($sPropertySelector)
     {
         return (preg_match("/^{[a-zA-Z0-9=\"',!]*?}$/", $sPropertySelector));
     }
-    
+
     public static function getConditionalsAndSubselector($sPropertySelector)
     {
         // init
@@ -153,7 +153,7 @@ class MimotoDataUtils
 
             // 1. query, with && en || support, comma separated
             // 2. Example: {phase="archived"}
-            
+
             // strip { and }
             $sExpression = substr($sPropertySelector, 1, strlen($sPropertySelector) - 2);
 
@@ -203,7 +203,7 @@ class MimotoDataUtils
                 $selector->conditionals[$sExpressionKey] = $sExpressionValue;
             }
         }
-        
+
         // send
         return $selector;
     }
@@ -212,15 +212,15 @@ class MimotoDataUtils
     public static function connectionsAreSimilar(MimotoEntityConnection $connection1, MimotoEntityConnection $connection2)
     {
         return
-        (
-            ($connection1->getId() == $connection2->getId() || empty($connection1->getId()) || empty($connection2->getId())) &&
-            $connection1->getParentEntityTypeId() == $connection2->getParentEntityTypeId() &&
-            $connection1->getParentPropertyId() == $connection2->getParentPropertyId() &&
-            $connection1->getParentId() == $connection2->getParentId() &&
-            $connection1->getChildEntityTypeId() == $connection2->getChildEntityTypeId() &&
-            $connection1->getChildId() == $connection2->getChildId() // &&
-            //$connection1->getSortIndex() == $connection2->getSortIndex()
-        ) ? true : false;
+            (
+                ($connection1->getId() == $connection2->getId() || empty($connection1->getId()) || empty($connection2->getId())) &&
+                $connection1->getParentEntityTypeId() == $connection2->getParentEntityTypeId() &&
+                $connection1->getParentPropertyId() == $connection2->getParentPropertyId() &&
+                $connection1->getParentId() == $connection2->getParentId() &&
+                $connection1->getChildEntityTypeId() == $connection2->getChildEntityTypeId() &&
+                $connection1->getChildId() == $connection2->getChildId() // &&
+                //$connection1->getSortIndex() == $connection2->getSortIndex()
+            ) ? true : false;
     }
 
     /**
