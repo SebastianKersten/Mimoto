@@ -98,6 +98,30 @@ class UserService
         Mimoto::getSilexApp()['session']->clear();
     }
 
+    public function getUserByUsername($sUsername)
+    {
+        // 1. load
+        $aUsers = Mimoto::service('data')->select(['type' => CoreConfig::MIMOTO_USER], true);
+
+        // 2. find
+        $nUserCount = count($aUsers);
+        for ($nUserIndex = 0; $nUserIndex < $nUserCount; $nUserIndex++)
+        {
+            // a. register
+            $eUser = $aUsers[$nUserIndex];
+
+            $sEmail = trim(strtolower($eUser->get('email')));
+
+            // b. compare
+            if (!empty($sEmail) && $sEmail == trim(strtolower($sUsername)))
+            {
+                return $eUser;
+            }
+        }
+
+        // 3. couldn't login
+        return false;
+    }
 
 
 
