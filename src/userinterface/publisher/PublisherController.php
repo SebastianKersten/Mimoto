@@ -24,7 +24,7 @@ class PublisherController
 {
     public function xxx(Application $app)
     {
-
+        Mimoto::error(Mimoto::config('sendgrid.key'));
 
 
         // __get Mimoto::user->get('selector')

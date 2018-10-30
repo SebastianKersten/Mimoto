@@ -64,6 +64,7 @@ class Mimoto
 
     private static $_nExecutionTimeStart = null;
 
+    private static $_configData = null;
 
 
     const MIMOTO = 'Mimoto';
@@ -110,6 +111,11 @@ class Mimoto
                 </ol>";
             die();
         }
+
+
+        // store
+        self::$_configData = (!empty($config) && isset($config->data)) ? $config->data : (object) array();
+
 
         // 4. store
         $config->folders->projectroot = $sProjectRoot;
@@ -536,6 +542,40 @@ class Mimoto
         else
         {
             return null;
+        }
+    }
+
+    public static function config($sSelector)
+    {
+        // extract
+        $aKeys = explode('.', $sSelector);
+
+        // prepare
+        $dataNode = json_decode(json_encode(self::$_configData));
+
+
+        while (count($aKeys) > 0)
+        {
+            // read and remove
+            $sKey = array_shift($aKeys);
+
+            // prepare
+            $value = null;
+
+            if (is_array($dataNode) && isset($dataNode[$sKey]))
+            {
+                $dataNode = $dataNode[$sKey];
+            }
+            else if (is_object($dataNode) && isset($dataNode->$sKey))
+            {
+                $dataNode = $dataNode->$sKey;
+            }
+            else
+            {
+                return null;
+            }
+
+            if (count($aKeys) == 0) return $dataNode;
         }
     }
 
