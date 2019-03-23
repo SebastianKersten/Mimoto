@@ -720,7 +720,8 @@ class CoreConfig
                 ],
                 'data' => [
                     Service::getData(CoreConfig::MIMOTO_SERVICE.'-Data'),
-                    Service::getData(CoreConfig::MIMOTO_SERVICE.'-Slack')
+                    Service::getData(CoreConfig::MIMOTO_SERVICE.'-Slack'),
+                    Service::getData(CoreConfig::MIMOTO_SERVICE.'-SendGrid')
                 ]
             ),
 
