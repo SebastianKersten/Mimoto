@@ -26,7 +26,7 @@ class SendGridService // extends MimotoService
         if (empty($settings->message) && empty($settings->componentPlain)) return;
 
         // 2. validate config
-        if (empty(Mimoto::config('sendgrid.api_key')) return;
+        if (empty(Mimoto::config('sendgrid.api_key'))) return;
 
 
         // ---
