@@ -138,14 +138,14 @@ class Service
         }
 
         // 4. Service: SendGrid
-        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE.'-SendGrid')
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE.'-SendGridService')
         {
             // a. init
             $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE);
-            $eInstance->setId(CoreConfig::MIMOTO_SERVICE.'-SendGrid');
-            $eInstance->set('name', 'SendGrid');
-            $eInstance->set('file', 'SendGrid/SendGrid.php');
-            $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-SendGrid-sendMail'));
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE.'-SendGridService');
+            $eInstance->set('name', 'SendGridService');
+            $eInstance->set('file', 'SendGridService/SendGridService.php');
+            $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-SendGridService-sendMail'));
             $eInstance->set('owner', Mimoto::MIMOTO);
 
             // b. add or send
