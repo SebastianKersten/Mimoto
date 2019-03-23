@@ -26,7 +26,7 @@ class SendGridService // extends MimotoService
         if (empty($settings->message) && empty($settings->componentPlain)) return;
 
         // 2. validate config
-        if (empty(Mimoto::value('config')) || empty(Mimoto::value('config')->sendgrid) || empty(Mimoto::value('config')->sendgrid->api_key)) return;
+        if (empty(Mimoto::config('sendgrid.api_key')) return;
 
 
         // ---
@@ -63,7 +63,7 @@ class SendGridService // extends MimotoService
 
 
         // 5. init
-        $sg = new SendGrid(Mimoto::value('config')->sendgrid->api_key);
+        $sg = new SendGrid(Mimoto::config('sendgrid.api_key'));
 
 
         // 6. send
