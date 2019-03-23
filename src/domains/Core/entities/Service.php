@@ -143,7 +143,7 @@ class Service
             // a. init
             $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE);
             $eInstance->setId(CoreConfig::MIMOTO_SERVICE.'-SendGrid');
-            $eInstance->set('name', 'SendGrid');
+            $eInstance->set('name', 'SendGridService');
             $eInstance->set('file', 'SendGridService/SendGridService.php');
             $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-SendGrid-sendMail'));
             $eInstance->set('owner', Mimoto::MIMOTO);
