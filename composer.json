@@ -15,7 +15,8 @@
         "silex/silex": "~1.3",
         "twig/twig": "~2.0",
         "symfony/security": "^3.2",
-        "wisembly/elephant.io": "^3.2"
+        "wisembly/elephant.io": "^3.2",
+        "sendgrid/sendgrid": "~6.0"
     },
     "autoload": {
         "psr-4": {
