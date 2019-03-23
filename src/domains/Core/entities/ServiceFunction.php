@@ -105,7 +105,20 @@ class ServiceFunction
             else return $eInstance;
         }
 
-        // 5. send
+        // 5. ServiceFunction: SendGrid.sendMail
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE_FUNCTION.'-SendGrid-sendMail')
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE_FUNCTION);
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-SendGrid-sendMail');
+            $eInstance->set('name', 'sendMail');
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 6. send
         return $aData;
     }
 

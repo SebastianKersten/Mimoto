@@ -137,7 +137,23 @@ class Service
             else return $eInstance;
         }
 
-        // 4. send
+        // 4. Service: SendGrid
+        if (empty($sInstanceId) || $sInstanceId == CoreConfig::MIMOTO_SERVICE.'-SendGrid')
+        {
+            // a. init
+            $eInstance = Mimoto::service('data')->create(CoreConfig::MIMOTO_SERVICE);
+            $eInstance->setId(CoreConfig::MIMOTO_SERVICE.'-SendGrid');
+            $eInstance->set('name', 'SendGrid');
+            $eInstance->set('file', 'SendGrid/SendGrid.php');
+            $eInstance->add('functions', ServiceFunction::getData(CoreConfig::MIMOTO_SERVICE_FUNCTION.'-SendGrid-sendMail'));
+            $eInstance->set('owner', Mimoto::MIMOTO);
+
+            // b. add or send
+            if (empty($sInstanceId)) $aData[] = $eInstance;
+            else return $eInstance;
+        }
+
+        // 5. send
         return $aData;
     }
 
