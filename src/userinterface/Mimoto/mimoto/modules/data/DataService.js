@@ -117,7 +117,13 @@ module.exports.prototype = {
         Mimoto.popup('/mimoto/data/select', postData);
     },
 
-    set: function(sPropertySelector, value, options) {
+    set: function(sPropertySelector, value, options)
+    {
+        if (options && options.confirm)
+        {
+            if (typeof eval(options.confirm) !== 'function') { Mimoto.log('Invalid function for confirmation of item removal'); return; }
+            if (eval(options.confirm)() === false) { Mimoto.log('User cancelled'); return; }
+        }
 
         let postData = {
             sPropertySelector: sPropertySelector,

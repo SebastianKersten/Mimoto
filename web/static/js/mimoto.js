@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// __webpack_hash__
-/******/ 	__webpack_require__.h = "59a4e8e6033287b081fd";
+/******/ 	__webpack_require__.h = "a69218f5cfc3204936ea";
 /******/
 /******/ 	// __webpack_chunkname__
 /******/ 	__webpack_require__.cn = "js/mimoto.js";
@@ -19502,6 +19502,14 @@ module.exports.prototype = {
     },
 
     set: function set(sPropertySelector, value, options) {
+        if (options && options.confirm) {
+            if (typeof eval(options.confirm) !== 'function') {
+                Mimoto.log('Invalid function for confirmation of item removal');return;
+            }
+            if (eval(options.confirm)() === false) {
+                Mimoto.log('User cancelled');return;
+            }
+        }
 
         var postData = {
             sPropertySelector: sPropertySelector,
